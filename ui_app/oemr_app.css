@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	background-image:url(login_bg.png);
+	background-position: bottom;
+	background-attachment:fixed;
+	background-repeat:repeat-x;
+	background-color: #FFF;
+	margin: 0px;
+}
+
+#oemr_logo{
+	margin: 10px;
+	padding: 10px;
+}
+
+#copyright{
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 10px;
+	color: #333;;
+	position: fixed;
+	bottom: 5px;
+	left: 10px;
+}
+
+#copyright a{
+	color: #333;;
+}
