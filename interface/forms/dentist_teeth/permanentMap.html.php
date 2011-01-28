@@ -1,0 +1,35 @@
+<img src="image/tooth_diagram_permanent.png" width="383" height="522" border="0" usemap="#Map">
+<map name="Map">
+  <area shape="poly" coords="111,94,114,81,130,80,139,102,126,109" href="#" alt="te6" onclick="Ext.getCmp(\'te6\').show();">
+  <area shape="poly" coords="105,130,119,128,125,115,111,104,99,103,91,114,90,125" href="#" alt="te5" onclick="Ext.getCmp(\'te5\').show();">
+  <area shape="poly" coords="83,132,76,148,84,158,105,156,110,140,97,132" href="#" alt="te4" onclick="Ext.getCmp(\'te4\').show();">
+  <area shape="poly" coords="77,193,93,188,99,177,100,166,74,158,64,168,64,182" href="#" alt="te3" onclick="Ext.getCmp(\'et3\').show();">
+  <area shape="poly" coords="58,197,66,222,83,221,93,212,95,199,91,192,77,197,66,190" href="#" alt="te2" onclick="Ext.getCmp(\'te2\').show();">
+  <area shape="poly" coords="55,231,60,248,69,255,84,258,91,249,92,238,92,224,77,226,60,223" href="#" alt="te1" onclick="Ext.getCmp(\'te1\').show();">
+  <area shape="poly" coords="67,279,87,276,94,291,91,308,75,308,61,304,60,292" href="#" alt="te32" onclick="Ext.getCmp(\'te32\').show();">
+  <area shape="poly" coords="62,318,62,335,70,346,79,341,89,342,93,335,94,324,83,312,68,311" href="#" alt="te31" onclick="Ext.getCmp(\'te31\').show();">
+  <area shape="poly" coords="69,354,73,371,80,382,91,378,100,376,102,359,93,344,78,347" href="#" alt="te30" onclick="Ext.getCmp(\'te30\').show();">
+  <area shape="poly" coords="83,388,88,402,100,412,112,407,116,388,104,381,91,381" href="#" alt="te29" onclick="Ext.getCmp(\'te29\').show();">
+  <area shape="poly" coords="105,417,112,436,129,437,138,427,132,414,115,407" href="#" alt="te28" onclick="Ext.getCmp(\'te28\').show();">
+  <area shape="poly" coords="127,439,125,451,139,453,150,447,148,436,137,433" href="#" alt="te27" onclick="Ext.getCmp(\'te27\').show();">
+  <area shape="poly" coords="144,459,161,470,168,453,165,443,150,448" href="#" alt="te26" onclick="Ext.getCmp(\'te26\').show();">
+  <area shape="poly" coords="169,466,179,472,191,471,193,462,185,453,176,454" href="#" alt="te25" onclick="Ext.getCmp(\'te25\').show();">
+  <area shape="poly" coords="195,469,214,465,210,452,203,450,197,457" href="#" alt="te24" onclick="Ext.getCmp(\'te24\').show();">
+  <area shape="poly" coords="217,458,223,443,233,448,238,457,233,465,221,467" href="#" alt="te23" onclick="Ext.getCmp(\'te23\').show();">
+  <area shape="poly" coords="235,445,239,433,254,434,258,446,247,456,237,454" href="#" alt="te22" onclick="Ext.getCmp(\'te22\').show();">
+  <area shape="poly" coords="250,428,254,414,268,407,277,412,279,422,273,431,260,434" href="#" alt="te21" onclick="Ext.getCmp(\'te21\').show();">
+  <area shape="poly" coords="269,400,275,385,286,374,302,383,298,397,286,408,274,407" href="#" alt="te20" onclick="Ext.getCmp(\'te20\').show();">
+  <area shape="poly" coords="286,367,297,375,310,377,317,361,314,343,300,340,289,344,285,356" href="#" alt="te19" onclick="Ext.getCmp(\'te19\').show();">
+  <area shape="poly" coords="294,338,291,323,296,309,314,309,323,318,322,332,316,339" href="#" alt="te18" onclick="Ext.getCmp(\'te18\').show();">
+  <area shape="poly" coords="296,304,289,288,294,273,313,278,317,290,320,303,306,306" href="#" alt="te17" onclick="Ext.getCmp(\'te17\').show();">
+  <area shape="poly" coords="290,226,285,245,298,257,311,254,318,244,323,228,301,223" href="#" alt="te16" onclick="Ext.getCmp(\'te16\').show();">
+  <area shape="poly" coords="286,196,292,221,304,221,323,219,325,196,311,187,295,193" href="#" alt="te15" onclick="Ext.getCmp(\'te15\').show();">
+  <area shape="poly" coords="282,163,285,179,292,193,315,185,319,172,314,159,303,154" href="#" alt="te14" onclick="Ext.getCmp(\'te14\').show();">
+  <area shape="poly" coords="272,136,275,156,282,158,293,154,303,152,306,144,297,130,291,128" href="#" alt="te13" onclick="Ext.getCmp(\'te13\').show();">
+  <area shape="poly" coords="258,112,262,127,269,136,286,127,288,115,280,104,266,104" href="#" alt="te12" onclick="Ext.getCmp(\'te12\').show();">
+  <area shape="poly" coords="251,85,244,97,254,110,271,97,273,85,262,82" href="#" alt="te11" onclick="Ext.getCmp(\'te11\').show();">
+  <area shape="poly" coords="229,61,228,89,247,82,257,75,242,60" href="#" alt="te10" onclick="Ext.getCmp(\'te10\').show();">
+  <area shape="poly" coords="191,59,203,79,222,68,226,56,212,48,194,47" href="#" alt="te9" onclick="Ext.getCmp(\'te9\').show();">
+  <area shape="poly" coords="156,57,167,77,186,78,186,67,190,51,172,47,160,50" href="#" alt="te8" onclick="Ext.getCmp(\'te8\').show();">
+  <area shape="poly" coords="127,72,149,88,159,84,159,66,147,59,134,62" href="#" alt="te7" onclick="Ext.getCmp(\'te7\').show();">
+</map>
