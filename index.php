@@ -7,12 +7,9 @@
 // Set the site ID if required.  This must be done before any database
 // access is attempted.
 
-<<<<<<< HEAD
 
 // This is the decision to make: run the LOGIN windows is all is found in place
 // or run the SETUP, when some file are not FOUND!.
-=======
->>>>>>> bda897541eac9d3916c516c3a7793509b0714256
 if (!empty($_GET['site']))
   $site_id = $_GET['site'];
 else if (is_dir("sites/" . $_SERVER['HTTP_HOST']))
