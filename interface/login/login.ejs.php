@@ -181,7 +181,7 @@ var winLogon = new Ext.Window({
 	doAction: {method: 'POST'},
 	border: false,
 	bodyStyle: 'padding: 5px',
-	url: '../main/main_screen.php?auth=login&site=<?php echo htmlspecialchars($_SESSION['site_id']); ?>',
+	url: '../main/main_screen.ejs.php?auth=login&site=<?php echo htmlspecialchars($_SESSION['site_id']); ?>',
 	defaults: {width: 150},
 	formBind: true,
 	standardSubmit: true,

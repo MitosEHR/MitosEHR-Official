@@ -42,10 +42,9 @@ my $TEXT_COL = "code_text";
 #   export DBI_USER=username
 #   export DBI_PASS=password
 #
-my $dbh = DBI->connect("dbi:mysql:dbname=$DBNAME") or die $DBI::errstr;
+#my $dbh = DBI->connect("dbi:mysql:dbname=$DBNAME") or die $DBI::errstr;
 
-# my $dbh = DBI->connect("dbi:mysql:dbname=$DBNAME", "username", "password")
-#   or die $DBI::errstr;
+my $dbh = DBI->connect("dbi:mysql:dbname=$DBNAME", "openemr", "pass") or die $DBI::errstr;
 
 #######################################################################
 #                             Startup                                 #

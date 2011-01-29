@@ -33,7 +33,7 @@ my $START_URL = "http://www.icd9data.com/2010/Volume1/default.htm";
 # to stdout, with no database access.  To update your OpenEMR database
 # directly, specify its name here.
 #
-my $DBNAME = "";
+my $DBNAME = "openemr";
 
 # You can hard-code the database user name and password (see below),
 # or else put them into the environment with bash commands like these
@@ -42,11 +42,10 @@ my $DBNAME = "";
 #   export DBI_USER=username
 #   export DBI_PASS=password
 #
-my $dbh = DBI->connect("dbi:mysql:dbname=$DBNAME") or die $DBI::errstr
-  if ($DBNAME);
+#my $dbh = DBI->connect("dbi:mysql:dbname=$DBNAME") or die $DBI::errstr
+#  if ($DBNAME);
 
-# my $dbh = DBI->connect("dbi:mysql:dbname=$DBNAME", "username", "password")
-#   or die $DBI::errstr if ($DBNAME);
+ my $dbh = DBI->connect("dbi:mysql:dbname=$DBNAME", "openemr", "pass") or die $DBI::errstr if ($DBNAME);
 
 # Comment this out if you want to keep old nonmatching codes.
 #
