@@ -46,7 +46,7 @@ if ($GLOBALS['athletic_team']) {
 	if ($is_expired) {
 		$frame1url = "pwd_expires_alert.php"; //php file which display's password expiration message.
 	} elseif (isset($_GET['mode']) && $_GET['mode'] == "loadcalendar") {
-		$frame1url = "calendar/calendar.ejs.php?pid=" . $_GET['pid'];
+		$frame1url = "../calendar/calendar.ejs.php?pid=" . $_GET['pid'];
 		if (isset($_GET['date'])) $frame1url .= "&date=" . $_GET['date'];
 	} else {
 		if ($GLOBALS['concurrent_layout']) {
@@ -84,7 +84,7 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/examples.css">
 <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
   
-<link rel="stylesheet" type="text/css" href="../themes/style_newui.css" >
+<link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
 <title><?php echo $openemr_name ?></title>
 
 <script type="text/javascript">
@@ -212,7 +212,7 @@ var panel = new Ext.Panel({
 var TopPanel = new Ext.Panel({
 	region: 'center',
 	autoScroll: false,
-	autoLoad: {url:'calendar/calendar.ejs.php', scripts:true},
+	autoLoad: {url:'../calendar/calendar.ejs.php', scripts:true},
 	cls:'empty',
 	id: 'TopPanel'
 });
@@ -226,7 +226,7 @@ var BottomPanel = new Ext.Panel({
 	collapsible: true,
 	titleCollapse: true,
 	split:true,
-	autoLoad: {url:'messages/messages.ejs.php', scripts:true},
+	autoLoad: {url:'../messages/messages.ejs.php', scripts:true},
 	cls:'empty',
 	id: 'BottomPanel'
 });
