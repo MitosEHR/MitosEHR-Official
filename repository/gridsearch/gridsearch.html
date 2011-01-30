@@ -1,0 +1,172 @@
+<!-- vim: ts=2:sw=2:nu:fdc=2:spell
+
+Ext.ux.grid.Search Example Page
+
+@author    Ing.Jozef Sakáloš
+@copyright (c) 2008, by Ing. Jozef Sakáloš
+@date      30. March 2008
+@version   $Id: gridsearch.html 62 2008-04-30 22:36:42Z jozo $
+
+@license gridsearch.html is licensed under the terms of the Open Source
+LGPL 3.0 license. Commercial use is permitted to the extent that the 
+code/component(s) do NOT become part of another Open Source or Commercially
+licensed development library or toolkit without explicit permission.
+ 
+License details: http://www.gnu.org/licenses/lgpl.html
+-->
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="./ext/resources/css/ext-all.css">
+  <link rel="stylesheet" type="text/css" href="./css/icons.css">
+  <link rel="stylesheet" type="text/css" href="./css/Ext.ux.grid.RowActions.css">
+  <link rel="stylesheet" type="text/css" href="./css/empty.css" id="theme">
+  <link rel="stylesheet" type="text/css" href="./css/webpage.css">
+  <link rel="stylesheet" type="text/css" href="./css/gridsearch.css">
+	<link rel="shortcut icon" href="./img/extjs.ico">
+  <script type="text/javascript" src="./ext/adapter/ext/ext-base.js"></script>
+  <script type="text/javascript" src="./ext/ext-all-debug.js"></script>
+  <script type="text/javascript" src="./js/WebPage.js"></script>
+  <script type="text/javascript" src="./js/Ext.ux.ThemeCombo.js"></script>
+  <script type="text/javascript" src="./js/Ext.ux.IconMenu.js"></script>
+  <script type="text/javascript" src="./js/Ext.ux.Toast.js"></script>
+  <script type="text/javascript" src="./js/Ext.ux.grid.Search.js"></script>
+  <script type="text/javascript" src="./js/Ext.ux.grid.RowActions.js"></script>
+  <script type="text/javascript" src="gridsearch.js"></script>
+  <title id="page-title">Ext.ux.grid.Search Plugin by Saki</title>
+</head>
+<body>
+
+<div id="west-content" class="x-hidden">
+	<div id="description">
+		<h3>Description</h3>
+		<p>
+		Ext.ux.grid.Search Plugin adds searching capabilities to Ext grids. It creates menu
+		and trigger field in a grid toolbar where user can select which fields to search
+		and enter the text to search for.
+		</p>
+
+		<div id="adsense-float" class="adsense x-hidden">
+			<script type="text/javascript"><!--
+			google_ad_client = "pub-2768521146228687"
+			/* 125x125 - in text */
+			google_ad_slot = "2156000855";
+			google_ad_width = 125;
+			google_ad_height = 125;
+			//-->
+			</script>
+			<script type="text/javascript"
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
+		</div>
+
+		<p>
+		There are two modes available: <em>local</em>, in which the local store is searched and 
+		<em>remote</em>, in which a request is sent to server that delivers filtered data.
+		</p>
+		<p>
+		The plugin supports all types of grids including auto-configured ones as it implements <em>reconfigure</em>
+		function that takes care about changed ColumnModel and Store.
+		</p>
+		<p>
+		Columns to search can be optionally ignored or disabled and plugin can be optionally rendered to a toolbar
+		of other panel.
+		</p>
+	</div>
+
+	<br/>
+	<a href="http://extjs.com/forum/showthread.php?t=23615">Grid Search Plugin Forum Thread</a><br><br>
+	<b>View Sources:</b><br>
+	<a href="source.php?file=js/Ext.ux.grid.Search.js" target="_blank">Ext.ux.grid.Search.js</a><br>
+	<a href="source.php?file=js/Ext.ux.grid.RowActions.js" target="_blank">Ext.ux.grid.RowActions.js</a><br>
+	<a href="source.php?file=css/Ext.ux.grid.RowActions.css" target="_blank">Ext.ux.grid.RowActions.css</a><br>
+	<a href="source.php?file=process-request.php" target="_blank">process-request.php</a><br>
+	<a href="source.php?file=classes/csql.php" target="_blank">csql.php</a><br>
+	<a href="source.php?file=gridsearch.html" target="_blank">gridsearch.html</a><br>
+	<a href="source.php?file=gridsearch.js" target="_blank">gridsearch.js</a><br>
+	<a href="source.php?file=css/gridsearch.css" target="_blank">gridsearch.css</a><br>
+	<br><a href="http://famfamfam.com/lab/icons/silk" target="_blank">Silk Icons</a><br>
+
+
+	<div id="paypal">
+		<!-- PayPal Donate Button -->
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc-donate.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+		<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+		">
+		</form>
+		<!-- PayPal Donate Button End-->
+	</div>
+
+	<div id="downloads">
+		<p><b>Downloads (stable 1.1):</b></p>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch-1.1.tar.bz2&id=1&pagename=FILE: download/gridsearch/gridsearch-1.1.tar.bz2">gridsearch-1.1.tar.bz2</a><br>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch-1.1.tar.gz&id=1&pagename=FILE: download/gridsearch/gridsearch-1.1.tar.gz">gridsearch-1.1.tar.gz</a><br>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch-1.1.zip&id=1&pagename=FILE: download/gridsearch/gridsearch-1.1.zip">gridsearch-1.1.zip</a></br>
+		<br>
+		<p><b>Downloads (stable 1.0):</b></p>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch-1.0.tar.bz2&id=1&pagename=FILE: download/gridsearch/gridsearch-1.0.tar.bz2">gridsearch-1.0.tar.bz2</a><br>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch-1.0.tar.gz&id=1&pagename=FILE: download/gridsearch/gridsearch-1.0.tar.gz">gridsearch-1.0.tar.gz</a><br>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch-1.0.zip&id=1&pagename=FILE: download/gridsearch/gridsearch-1.0.zip">gridsearch-1.0.zip</a></br>
+		<br>
+		<p><b>Downloads (development):</b></p>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch.tar.bz2&id=1&pagename=FILE: download/gridsearch/gridsearch.tar.bz2">gridsearch.tar.bz2</a><br>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch.tar.gz&id=1&pagename=FILE: download/gridsearch/gridsearch.tar.gz">gridsearch.tar.gz</a><br>
+		<a href="http://extjs.eu/phpmv2/phpmyvisites.php?url=http%3A//gridsearch.extjs.eu/gridsearch.zip&id=1&pagename=FILE: download/gridsearch/gridsearch.zip">gridsearch.zip</a></br>
+	</div>
+	<br/>
+	<p>
+		<b><a href="http://extjs.eu" target="_blank">Other Extensions and Plugins</a></b>
+	</p>
+
+	<!-- digg -->
+	<div id="digg">
+		<script>
+		digg_url = 'http://gridsearch.extjs.eu';
+		</script>
+		<script src="http://digg.com/api/diggthis.js"></script>
+	</div>
+	<!-- digg -->
+
+	<a href="http://www.stumbleupon.com/submit?url=<?=urlencode('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);?>"><img border=0 src="../img/stumble7.gif" alt="StumbleUpon Toolbar"></a>	
+
+</div>
+
+<div id="adrow-content" class="adsense x-hidden">
+	<div id="adsense-top">
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-2768521146228687";
+		/* recordform top row wide */
+		google_ad_slot = "3909046423";
+		google_ad_width = 728;
+		google_ad_height = 15;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+	</div>
+</div>
+
+<div id="center-content" class="x-hidden">
+	<div id="change-log">
+		<h3>Development Change Log:</h3>
+		<ul>
+			<li><b>May 27, 2008</b> - Version 1.1 released. Plugin now supports <code>minChars</code>
+			config option which, if &gt; 0, causes the plugin to start search after <code>minChars</code>
+			number of characters has been typed in the search field.<br>Further, it supports <code>autoFocus</code>
+			config option that, if true, tries to focus the search field on each store load.</li>
+			<li><b>April 29, 2008</b> - Added configuration option <b>menuStyle</b> that can be
+			'checkbox' (default) or 'radio'. If it is radio then only one field can be searched 
+			at a time.</li>
+		</ul>
+	</div>
+</div>
+
+<?if("gridsearch.extjs.eu"===$_SERVER["SERVER_NAME"])include("stats.php");?>
+</body>
+</html>
+<!-- eof -->
