@@ -1,7 +1,7 @@
 <?php
 //--------------------------------------------------------------------------------------------------------------------------
 // calendar.ejs.php
-// v0.0.2
+// v0.0.3
 // Under GPLv3 License
 // Integration Sencha ExtJS Framework
 //
@@ -54,25 +54,13 @@ while ($row = sqlFetchArray($result)) {
 }
 $patData = substr($patData, 0, -2); // Delete the last comma and clear the buff.
 ?>
-<head>
-	<script type="text/javascript" src="../../../library/ext-3.3.0/adapter/ext/ext-base.js"></script>
-    <script type="text/javascript" src="../../../library/ext-3.3.0/ext-all.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../../library/ext-3.3.0/resources/css/ext-all.css">
-
-    <script type="text/javascript" src="../../../library/ext-3.3.0/plugins/gridsearch/js/Ext.ux.grid.Search.js"></script>
-    <script type="text/javascript" src="../../../library/ext-3.3.0/plugins/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="../../../library/ext-3.3.0/plugins/calendar/resources/css/extensible-all.css" />
-    <script type="text/javascript" src="../../../library/ext-3.3.0/plugins/calendar/extensible-all-debug.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="../../../interface/themes/style_newui.css">
 
 <script type="text/javascript">
 
 Ext.onReady(function(){
 
 	Ext.QuickTips.init();
-
+	
 	// *************************************************************************************
 	// Structure and load the data for events grid
 	// AJAX -> load_events.ejs.php
@@ -448,8 +436,8 @@ Ext.onReady(function(){
 	//
 	//*********************************************************************************************************
 	var sidePanel = new Ext.Panel({
-		region	: 'west',
-		border	: true,
+		region	:'west',
+		border	: false,
 		width	: 176,
 		margin	: '0 0 0 0',
 		items:[{ // Date picker
@@ -501,11 +489,12 @@ Ext.onReady(function(){
 	//*********************************************************************************************************
 	var bigCalendar = new C.CalendarPanel({
 		region			: 'center',
+		border			: false,
 		ref				: '../bfCal',
 		id				: 'bfCal',
 		eventStore		: eventStore,
 		calendarStore	: calendarStore,
-		border			: false,
+		border			: true,
 		title			: '...',
 		todayText		: '<?php echo htmlspecialchars(xl('Today'), ENT_NOQUOTES); ?>',
 		monthText		: '<?php echo htmlspecialchars(xl('Month'), ENT_NOQUOTES); ?>',
@@ -554,14 +543,14 @@ Ext.onReady(function(){
 
 
 	//*********************************************************************************************************
-	// The main ViewPort
+	// The main Panel
 	//*********************************************************************************************************
-	var viewport = new Ext.Viewport({
-		layout	:'border',
-		renderTo: document.body,
+	var CalPanel = new Ext.Panel({
+		border	: false,
+		layout	: 'border',
 		items	:[sidePanel, bigCalendar]
 	});
-
+	
 	//*********************************************************************************************************
 	// Add new or edit event Window
 	// This is a override of the extensible-all-debug.js file.
@@ -571,14 +560,14 @@ Ext.onReady(function(){
 		titleTextAdd	: '<?php echo htmlspecialchars(xl('Add Event'), ENT_NOQUOTES); ?>',
 		titleTextEdit	: '<?php echo htmlspecialchars(xl('Edit Event'), ENT_NOQUOTES); ?>',
 		width			: 800,
-		height		: 550,
-		border		: false,
+		height			: 550,
+		border			: false,
 		closeAction		: 'hide',
-		id			: 'winCalendar',
-		modal		: false,
+		id				: 'winCalendar',
+		modal			: false,
 		resizable		: false,
 		labelWidth		: 65,
-		layout		: 'border',
+		layout			: 'border',
 		plain			: true,
 		savingMessage	: '<?php echo htmlspecialchars(xl('Saving changes...'), ENT_NOQUOTES); ?>',
 		deletingMessage	: '<?php echo htmlspecialchars(xl('Deleting event...'), ENT_NOQUOTES); ?>',
@@ -1224,9 +1213,9 @@ Ext.onReady(function(){
 		});
 		Ext.reg('daterangefield', Ext.ensible.cal.DateRangeField);
 
+		// Temporary render DIV
+		CalPanel.render('ext-gen38');
+		
+}); // END EXTJS
 
-	}); // END EXTJS
-    </script>
-</head>
-<body class="ext-gecko ext-gecko2 x-border-layout-ct">
-</body>
+</script>

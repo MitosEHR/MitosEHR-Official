@@ -70,11 +70,21 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript" src="../../library/ext-3.3.0/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" src="../../library/ext-3.3.0/ext-all.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css">
-  <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/form/forms.css">
-  <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/examples.css">
+<!-- ******************************************************************* -->
+<!-- Call for necessary Repository Objects, that we need on the MitosEHR -->
+<!-- ******************************************************************* -->
+<script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.Search.js"></script>
+<script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
+<script type="text/javascript" src="../../repository/calendar-rc1/extensible-all-debug.js"></script>
+<script type="text/javascript" src="../../repository/calendar-rc1/extensible-all.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../../repository/calendar-rc1/resources/css/extensible-all.css" />
+<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css">
+<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/form/forms.css">
+<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/examples.css">
+<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
   
-  <link rel="stylesheet" type="text/css" href="../themes/style_newui.css" >
+<link rel="stylesheet" type="text/css" href="../themes/style_newui.css" >
 <title><?php echo $openemr_name ?></title>
 
 <script type="text/javascript">
@@ -117,7 +127,7 @@ var navigation = new Ext.tree.TreePanel({
 	border: true,
 	rootVisible: false,
 	title: '<?php xl('Navigation', 'e'); ?>',
-	dataUrl: 'navigation/default_leftnav.ejs',
+	dataUrl: 'navigation/default_leftnav.ejs.php',
 	region:'north',
 	height: 450,
 	minSize: 250,
@@ -125,10 +135,10 @@ var navigation = new Ext.tree.TreePanel({
 	lines: false,
 	tools:[{
 		id:'plus',
-		qtip: 'Expand all nodes',
+		qtip: 'Expand all nodes'
 	},{
 		id:'minus',
-		qtip: 'Collapse all nodes',
+		qtip: 'Collapse all nodes'
 	}],
 	root: {
 		text: '<?php xl('Navigation', 'e'); ?>',
@@ -202,21 +212,21 @@ var panel = new Ext.Panel({
 var TopPanel = new Ext.Panel({
 	region: 'center',
 	autoScroll: false,
-	html: '<iframe src="<?php echo $frame1url ?>" scrolling="auto" name="RTop" id="RTop" height="100%" width="100%" frameborder="0" marginheight="0" marginwidth="0"></iframe>',
+	autoLoad: {url:'calendar/calendar.ejs.php', scripts:true},
 	cls:'empty',
-	id: 'TopPanel',
+	id: 'TopPanel'
 });
 
 // Bottom
 var BottomPanel = new Ext.Panel({
 	region: 'south',
 	autoScroll: true,
-	title: 'Messages',
-	height: 300,
+	header: true,
+	height: 200,
 	collapsible: true,
 	titleCollapse: true,
 	split:true,
-	html: '<iframe src="messages/messages.ejs.php" scrolling="auto" name="RBot" id="RBot" height="100%" width="100%" frameborder="0" marginheight="0" marginwidth="0"></iframe>',
+	autoLoad: {url:'messages/messages.ejs.php', scripts:true},
 	cls:'empty',
 	id: 'BottomPanel'
 });
@@ -252,7 +262,3 @@ var viewport = new Ext.Viewport({
 });
 </script>
 
-</head>
-<body class="ext-gecko ext-gecko2 x-border-layout-ct">
-</body>
-</html>

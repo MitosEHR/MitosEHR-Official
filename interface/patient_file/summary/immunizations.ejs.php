@@ -152,7 +152,7 @@ if (isset($_POST['action'])) {
 <script type="text/javascript" src="../../../library/ext-3.3.0/plugins/gridsearch/js/Ext.ux.grid.Search.js"></script>
 <script type="text/javascript" src="../../../library/ext-3.3.0/plugins/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../../library/ext-3.3.0/resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="../../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
 <link rel="stylesheet" type="text/css" href="../../../interface/themes/style_newui.css" />
 <script type="text/javascript">
 
