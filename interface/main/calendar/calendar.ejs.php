@@ -483,18 +483,26 @@ Ext.onReady(function(){
 		}]
 	});
 
+    var tempCal = new Ext.ensible.cal.CalendarPanel({
+        //eventStore: eventStore,
+        //renderTo: 'simple',
+        title: 'Basic Calendar'
+        //idth: 700,
+        //height: 500
+    });
+
+
 
 	//*********************************************************************************************************
 	// The bigFat Calendar Pro
 	//*********************************************************************************************************
 	var bigCalendar = new C.CalendarPanel({
-		region			: 'center',
+		//region			: 'center',
 		border			: false,
 		ref				: '../bfCal',
 		id				: 'bfCal',
 		eventStore		: eventStore,
 		calendarStore	: calendarStore,
-		border			: true,
 		title			: '...',
 		todayText		: '<?php echo htmlspecialchars(xl('Today'), ENT_NOQUOTES); ?>',
 		monthText		: '<?php echo htmlspecialchars(xl('Month'), ENT_NOQUOTES); ?>',
@@ -505,8 +513,10 @@ Ext.onReady(function(){
 		jumpToText		: '<?php echo htmlspecialchars(xl('Jump to:'), ENT_NOQUOTES); ?>',
 		goText			: '<?php echo htmlspecialchars(xl('Go'), ENT_NOQUOTES); ?>',
 		activeItem		: 1, // month view
+		
 		// Any generic view options that should be applied to all sub views:
 		viewConfig		: { enableFx: true },
+
 		// View options specific to a certain view (if the same options exist in viewConfig
 		// they will be overridden by the view-specific config):
 		monthViewCfg: {
@@ -515,6 +525,7 @@ Ext.onReady(function(){
 			showWeekNumbers	: true
 		},
 		multiWeekViewCfg: { weekCount: 3 },
+
 		// Some optional CalendarPanel configs to experiment with:
 		showDayView			: true,
 		showMultiDayView	: true,
@@ -547,8 +558,9 @@ Ext.onReady(function(){
 	//*********************************************************************************************************
 	var CalPanel = new Ext.Panel({
 		border	: false,
-		layout	: 'border',
-		items	:[sidePanel, bigCalendar]
+		//layout	: 'border',
+		items	: [bigCalendar]
+		//items	: [tempCal]
 	});
 	
 	//*********************************************************************************************************
@@ -1213,6 +1225,7 @@ Ext.onReady(function(){
 		});
 		Ext.reg('daterangefield', Ext.ensible.cal.DateRangeField);
 
+		// FIXME
 		// Temporary render DIV
 		CalPanel.render('ext-gen38');
 		

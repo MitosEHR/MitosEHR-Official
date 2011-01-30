@@ -111,6 +111,7 @@ if (count($result3) == 1) { $defaultLanguage = 1; }
 <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="../../ui_app/oemr_app.css" >
+<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
 
 <script type="text/javascript">
 

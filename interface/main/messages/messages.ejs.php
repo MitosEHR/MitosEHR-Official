@@ -624,6 +624,7 @@ var msgGrid = new Ext.grid.GridPanel({
 		})]			
 	}); // END GRID
 
+// FIXME
 // Temporary render DIV
 msgGrid.render('ext-gen42');
 
