@@ -127,7 +127,7 @@ var navigation = new Ext.tree.TreePanel({
 	border: true,
 	rootVisible: false,
 	title: '<?php xl('Navigation', 'e'); ?>',
-	dataUrl: 'navigation/default_leftnav.ejs.php',
+	dataUrl: '../navigation/default_leftnav.ejs.php',
 	region:'north',
 	height: 450,
 	minSize: 250,
