@@ -79,9 +79,9 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript" src="../../repository/calendar-rc1/extensible-all.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../../repository/calendar-rc1/resources/css/extensible-all.css" />
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css">
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/form/forms.css">
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/examples.css">
+<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/form/forms.css" />
+<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/examples.css" />
 <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
   
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
@@ -192,7 +192,7 @@ var helper = new Ext.Panel({
 	}]
 });
 
-var panel = new Ext.Panel({
+var NavPanel = new Ext.Panel({
 	region:'west',
 	layout: 'border',
 	margins:'5 0 5 5',
@@ -214,7 +214,8 @@ var TopPanel = new Ext.Panel({
 	autoScroll: false,
 	autoLoad: {url:'../calendar/calendar.ejs.php', scripts:true},
 	cls:'empty',
-	id: 'TopPanel'
+	id: 'TopPanel',
+	ref: '../TopPanel'
 });
 
 // Bottom
@@ -228,7 +229,8 @@ var BottomPanel = new Ext.Panel({
 	split:true,
 	autoLoad: {url:'../messages/messages.ejs.php', scripts:true},
 	cls:'empty',
-	id: 'BottomPanel'
+	id: 'BottomPanel',
+	ref: '../BottomPanel'
 });
 
 var AppPanel = new Ext.Panel({
@@ -256,7 +258,7 @@ var viewport = new Ext.Viewport({
 			html:'<p class="app_bg" id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'
 		}
 	}),
-	panel, AppPanel ]
+	NavPanel, AppPanel ]
 });
 
 });
