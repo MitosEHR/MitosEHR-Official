@@ -5,6 +5,9 @@
     <link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-3.2.0/resources/css/ext-all.css" />
     <script type="text/javascript" src="http://extjs.cachefly.net/ext-3.2.0/adapter/ext/ext-base-debug.js"></script>
     <script type="text/javascript" src="http://extjs.cachefly.net/ext-3.2.0/ext-all-debug.js"></script>
+    <!--link rel="stylesheet" type="text/css" href="http://localhost/ext-3.3.0/resources/css/ext-all.css" />
+    <script type="text/javascript" src="http://localhost/ext-3.3.0/adapter/ext/ext-base-debug.js"></script>
+    <script type="text/javascript" src="http://localhost/ext-3.3.0/ext-all-debug.js"></script-->
     <!-- Any Ext overrides go here -->
     
     <!-- Extensible includes -->
@@ -14,19 +17,21 @@
     
     <!-- Page-specific includes -->
     <link rel="stylesheet" type="text/css" href="test-app.css" />
-	<script type="text/javascript" src="calendar-list.js"></script>
-    <script type="text/javascript" src="event-list.js"></script>
+	<script type="text/javascript" src="data-calendars.js"></script>
+    <script type="text/javascript" src="data-events.js"></script>
+    <script type="text/javascript" src="CalendarStore.js"></script>
+    <script type="text/javascript" src="MemoryEventStore.js"></script>
 	<script type="text/javascript" src="test-app.js"></script>
 </head>
 <body>
     <div style="display:none;">
     <div id="app-header-content">
         <div id="app-logo">
-            <div class="logo-top">&nbsp;</div>
-            <div id="logo-body">&nbsp;</div>
-            <div class="logo-bottom">&nbsp;</div>
+            <div class="logo-top">&#160;</div>
+            <div id="logo-body">&#160;</div>
+            <div class="logo-bottom">&#160;</div>
         </div>
-        <h1>Extensible Calendar</h1>
+        <h1>Ext Calendar Pro <span>BETA</span></h1>
         <span id="app-msg" class="x-hidden"></span>
     </div>
     </div>

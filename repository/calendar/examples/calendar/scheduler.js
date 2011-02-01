@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 App = function() {
@@ -16,16 +16,14 @@ App = function() {
         },
         
         initStores : function(){
-            this.eventStore = new Ext.data.JsonStore({
-                sortInfo:{field: 'ResourceId', direction: "ASC"},
-                proxy: new Ext.data.MemoryProxy(),
+            this.eventStore = new Ext.ensible.sample.MemoryEventStore({
                 fields : [
                     {name: 'ResourceId'},
                     {name: 'Title'},
                     {name: 'StartDate', type : 'date'},
                     {name: 'EndDate', type : 'date'},
                     'Location'
-                ]
+                ]                
             });
             this.resourceStore = new Ext.data.JsonStore({
                 sortInfo:{field: 'Id', direction: "ASC"},
@@ -33,12 +31,13 @@ App = function() {
                 fields : [
                     'Id', 
                     'Name',
-                    'Type'
+                    'Type',
+                    'ColorId'
                 ],
                 data: [
-                    {Id : '1', Name : 'Rob', Type : 'Sales'},
-                    {Id : '2', Name : 'Mike', Type : 'Sales'},
-                    {Id : '3', Name : 'Kate', Type : 'Product manager'}
+                    {Id : '1', Name : 'Rob', Type : 'Sales', ColorId : 1},
+                    {Id : '2', Name : 'Mike', Type : 'Sales', ColorId : 11},
+                    {Id : '3', Name : 'Kate', Type : 'Product manager', ColorId : 21}
 //                    {id : '4', Name : 'Lisa', Type : 'Developer'},
 //                    {id : '5', Name : 'Dave', Type : 'Developer'},
 //                    {id : '6', Name : 'Arnold', Type : 'Developer'},
@@ -60,7 +59,7 @@ App = function() {
                 var bookingStart = item.get('StartDate');
                 return {
                     headerText : bookingStart.format("G:i"),
-                    footerText : item.get('Title') || '&nbsp;'
+                    footerText : item.get('Title') || '&#160;'
                 };
             };
             
@@ -109,7 +108,7 @@ App = function() {
                 //height: 300,
                 height: 200,
                 clicksToEdit: 1,
-                renderTo: Ext.getBody(),
+                renderTo: 'sched',
                 
                 columns : [
                     {header : 'Staff', sortable:true, width:130, dataIndex : 'Name', editor : new Ext.form.TextField()},
@@ -233,7 +232,7 @@ App = function() {
                     '<dl class="eventTip">', 
                         '<dt class="icon-clock">Time</dt><dd>{[values.StartDate.format("Y-m-d G:i")]}</dd>',
                         '<dt class="icon-task">Task</dt><dd>{Title}</dd>',
-                        '<dt class="icon-earth">Location</dt><dd>{Location}&nbsp;</dd>',
+                        '<dt class="icon-earth">Location</dt><dd>{Location}&#160;</dd>',
                     '</dl>').compile(),
                 
                 plugins : [
@@ -301,12 +300,16 @@ App = function() {
             Ext.ensible.cal.EventMappings.CalendarId.name = 'ResourceId';
             Ext.ensible.cal.EventRecord.reconfigure();
             
+            Ext.ensible.cal.CalendarMappings.CalendarId.name = 'Id';
+            Ext.ensible.cal.CalendarMappings.Title.name = 'Name';
+            Ext.ensible.cal.CalendarRecord.reconfigure();
+            
             new Ext.ensible.cal.CalendarPanel({
                 eventStore: this.eventStore,
                 calendarStore: this.resourceStore,
-                renderTo: Ext.getBody(),
+                renderTo: 'cal',
                 width: 1000,
-                height: 500
+                height: 600
             });
         },
         

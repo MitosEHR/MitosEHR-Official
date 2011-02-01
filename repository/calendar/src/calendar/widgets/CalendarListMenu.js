@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha2
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -13,18 +13,26 @@
  */
 Ext.ensible.cal.CalendarListMenu = Ext.extend(Ext.menu.Menu, {
     /** 
-     * @cfg {Boolean} enableScrolling
-     * @hide 
-     */
-    enableScrolling : false,
-    /** 
      * @cfg {Boolean} hideOnClick
      * False to continue showing the menu after a color is selected, defaults to true.
      */
     hideOnClick : true,
-    
+    /**
+     * @cfg {Boolean} ignoreParentClicks
+     * True to ignore clicks on any item in this menu that is a parent item (displays a submenu) 
+     * so that the submenu is not dismissed when clicking the parent item (defaults to true).
+     */
+    ignoreParentClicks: true,
+    /**
+     * @cfg {String} cls
+     * An optional extra CSS class that will be added to this component's Element (defaults to 'x-calendar-list-menu'). 
+     * This can be useful for adding customized styles to the component or any of its children using standard CSS rules.
+     */
     cls : 'x-calendar-list-menu',
-    
+    /**
+     * @cfg {String} displayOnlyThisCalendarText
+     * The text to display for the 'Display only this calendar' option in the menu.
+     */
     displayOnlyThisCalendarText: 'Display only this calendar',
     /**
      * @cfg {Number} calendarId
@@ -34,6 +42,11 @@ Ext.ensible.cal.CalendarListMenu = Ext.extend(Ext.menu.Menu, {
      */
     
     /** 
+     * @cfg {Boolean} enableScrolling
+     * @hide 
+     */
+    enableScrolling : false,
+    /** 
      * @cfg {Number} maxHeight
      * @hide 
      */
@@ -42,17 +55,18 @@ Ext.ensible.cal.CalendarListMenu = Ext.extend(Ext.menu.Menu, {
      * @hide 
      */
     /**
-     * @property palette
-     * @type ColorPalette
-     * The {@link Ext.ensible.cal.ColorPalette} instance for this CalendarListMenu
-     */
-    /**
      * @event click
      * @hide
      */
     /**
      * @event itemclick
      * @hide
+     */
+    
+    /**
+     * @property palette
+     * @type ColorPalette
+     * The {@link Ext.ensible.cal.ColorPalette ColorPalette} instance for this CalendarListMenu
      */
     
     // private
@@ -77,6 +91,7 @@ Ext.ensible.cal.CalendarListMenu = Ext.extend(Ext.menu.Menu, {
         Ext.ensible.cal.CalendarListMenu.superclass.initComponent.call(this);
     },
     
+    // private
     afterRender: function(){
         Ext.ensible.cal.CalendarListMenu.superclass.afterRender.call(this);
         this.palette = this.findByType('extensible.calendarcolorpalette')[0];

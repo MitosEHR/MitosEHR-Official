@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -38,18 +38,23 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
      * the field's container is narrower than this value it will automatically be rendered on two lines.
      */
     singleLineMinWidth: 490,
+    /**
+     * @cfg {String} dateFormat
+     * The date display format used by the date fields (defaults to 'n/j/Y') 
+     */
+    dateFormat: 'n/j/Y',
     
     // private
     onRender: function(ct, position){
         if(!this.el){
             this.startDate = new Ext.form.DateField({
                 id: this.id+'-start-date',
-                format: 'n/j/Y',
+                format: this.dateFormat,
                 width:100,
                 listeners: {
                     'change': {
                         fn: function(){
-                            this.checkDates('date', 'start');
+                            this.onFieldChange('date', 'start');
                         },
                         scope: this
                     }
@@ -64,7 +69,7 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
                 listeners: {
                     'select': {
                         fn: function(){
-                            this.checkDates('time', 'start');
+                            this.onFieldChange('time', 'start');
                         },
                         scope: this
                     }
@@ -79,7 +84,7 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
                 listeners: {
                     'select': {
                         fn: function(){
-                            this.checkDates('time', 'end');
+                            this.onFieldChange('time', 'end');
                         },
                         scope: this
                     }
@@ -87,13 +92,13 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
             })
             this.endDate = new Ext.form.DateField({
                 id: this.id+'-end-date',
-                format: 'n/j/Y',
+                format: this.dateFormat,
                 hideLabel:true,
                 width:100,
                 listeners: {
                     'change': {
                         fn: function(){
-                            this.checkDates('date', 'end');
+                            this.onFieldChange('date', 'end');
                         },
                         scope: this
                     }
@@ -160,7 +165,13 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
             this.el.child('tr').addClass('ext-dt-range-row1');
         }
     },
-    
+
+    // private
+    onFieldChange: function(type, startend){
+        this.checkDates(type, startend);
+        this.fireEvent('change', this, this.getValue());
+    },
+        
     // private
     checkDates: function(type, startend){
         var startField = Ext.getCmp(this.id+'-start-'+type),
@@ -208,7 +219,7 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
         else{
             return null;
         };
-        if(time != '' && this[startend+'Time'].isVisible()){
+        if(time != ''){
             return Date.parseDate(dt+' '+time, this[startend+'Date'].format+' '+this[startend+'Time'].format);
         }
         return Date.parseDate(dt, this[startend+'Date'].format);
@@ -310,4 +321,4 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
     setRawValue : Ext.emptyFn
 });
 
-Ext.reg('daterangefield', Ext.ensible.cal.DateRangeField);
+Ext.reg('extensible.daterangefield', Ext.ensible.cal.DateRangeField);

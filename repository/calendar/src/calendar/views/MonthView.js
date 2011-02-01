@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -15,6 +15,19 @@
  */
 Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
     /**
+     * @cfg {String} moreText
+     * The text to display in a day box when there are more events than can be displayed and a link is provided to
+     * show a popup window with all events for that day (defaults to '+{0} more...', where {0} will be 
+     * replaced by the number of additional events that are not currently displayed for the day).
+     */
+    moreText: '+{0} more...',
+    /**
+     * @cfg {String} detailsTitleDateFormat
+     * The date format for the title of the details panel that shows when there are hidden events and the "more" link 
+     * is clicked (defaults to 'F j').
+     */
+    detailsTitleDateFormat: 'F j',
+    /**
      * @cfg {Boolean} showTime
      * True to display the current time in today's box in the calendar, false to not display it (defautls to true)
      */
@@ -24,11 +37,6 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
      * True to display the {@link #todayText} string in today's box in the calendar, false to not display it (defautls to true)
      */
     showTodayText: true,
-    /**
-     * @cfg {String} todayText
-     * The text to display in the current day's box in the calendar when {@link #showTodayText} is true (defaults to 'Today')
-     */
-    todayText: 'Today',
     /**
      * @cfg {Boolean} showHeader
      * True to display a header beneath the navigation bar containing the week names above each week's column, false not to 
@@ -70,7 +78,9 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
         this.addEvents({
             /**
              * @event dayclick
-             * Fires after the user clicks within the view container and not on an event element
+             * Fires after the user clicks within the view container and not on an event element. This is a cancelable event, so 
+             * returning false from a handler will cancel the click without displaying the event editor view. This could be useful 
+             * for validating that a user can only create events on certain days.
              * @param {Ext.ensible.cal.MonthView} this
              * @param {Date} dt The date/time that was clicked on
              * @param {Boolean} allday True if the day clicked on represents an all-day box, else false. Clicks within the 
@@ -98,7 +108,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 			view: this,
 			createText: this.ddCreateEventText,
 			moveText: this.ddMoveEventText,
-            ddGroup : 'MonthViewDD'
+            ddGroup : this.ddGroup || this.id+'-MonthViewDD'
 		};
         
         this.dragZone = new Ext.ensible.cal.DragZone(this.el, cfg);
@@ -171,7 +181,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
                         
                     if(t.getDay() == this.prevClockDay){
                         if(el){
-                            el.update(t.format('g:i a'));
+                            el.update(t.format(Ext.ensible.Date.use24HourTime ? 'G:i' : 'g:ia'));
                         }
                     }
                     else{
@@ -190,16 +200,16 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
         if(!this.eventBodyMarkup){
             this.eventBodyMarkup = ['{Title}',
 	            '<tpl if="_isReminder">',
-	                '<i class="ext-cal-ic ext-cal-ic-rem">&nbsp;</i>',
+	                '<i class="ext-cal-ic ext-cal-ic-rem">&#160;</i>',
 	            '</tpl>',
 	            '<tpl if="_isRecurring">',
-	                '<i class="ext-cal-ic ext-cal-ic-rcr">&nbsp;</i>',
+	                '<i class="ext-cal-ic ext-cal-ic-rcr">&#160;</i>',
 	            '</tpl>',
 	            '<tpl if="spanLeft">',
-	                '<i class="ext-cal-spl">&nbsp;</i>',
+	                '<i class="ext-cal-spl">&#160;</i>',
 	            '</tpl>',
 	            '<tpl if="spanRight">',
-	                '<i class="ext-cal-spr">&nbsp;</i>',
+	                '<i class="ext-cal-spr">&#160;</i>',
 	            '</tpl>'
 	        ].join('');
         }
@@ -213,18 +223,18 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
             
 	        tpl = !(Ext.isIE || Ext.isOpera) ? 
 				new Ext.XTemplate(
-		            '<div id="{_elId}" class="{_selectorCls} {_colorCls} {values.spanCls} ext-cal-evt ext-cal-evr">',
+                    '<div class="{_extraCls} {values.spanCls} ext-cal-evt ext-cal-evr">',
 		                body,
 		            '</div>'
 		        ) 
 				: new Ext.XTemplate(
 		            '<tpl if="_renderAsAllDay">',
-		                '<div id="{_elId}" class="{_selectorCls} {values.spanCls} {_colorCls} ext-cal-evt ext-cal-evo">',
+                        '<div class="{_extraCls} {values.spanCls} ext-cal-evt ext-cal-evo">',
 		                    '<div class="ext-cal-evm">',
 		                        '<div class="ext-cal-evi">',
 		            '</tpl>',
 		            '<tpl if="!_renderAsAllDay">',
-		                '<div id="{_elId}" class="{_selectorCls} {_colorCls} ext-cal-evt ext-cal-evr">',
+                        '<div class="{_extraCls} ext-cal-evt ext-cal-evr">',
 		            '</tpl>',
 		            body,
 		            '<tpl if="_renderAsAllDay">',
@@ -242,26 +252,41 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
     // private
     getTemplateEventData : function(evt){
 		var M = Ext.ensible.cal.EventMappings,
-            selector = this.getEventSelectorCls(evt[M.EventId.name]),
-		    title = evt[M.Title.name];
-            
-        return Ext.applyIf({
-			_selectorCls: selector,
-			_colorCls: 'ext-color-' + (evt[M.CalendarId.name] ? 
-                evt[M.CalendarId.name] : 'default') + (evt._renderAsAllDay ? '-ad' : ''),
-            _elId: selector + '-' + evt._weekIndex,
-            _isRecurring: evt.Recurrence && evt.Recurrence != '',
-            _isReminder: evt[M.Reminder.name] && evt[M.Reminder.name] != '',
-            Title: (evt[M.IsAllDay.name] ? '' : evt[M.StartDate.name].format('g:ia ')) + (!title || title.length == 0 ? '(No title)' : title)
-        }, evt);
+            extraClasses = [this.getEventSelectorCls(evt[M.EventId.name])],
+            data = {},
+            recurring = evt[M.RRule.name] != '',
+            colorCls = 'x-cal-default',
+		    title = evt[M.Title.name],
+            fmt = Ext.ensible.Date.use24HourTime ? 'G:i ' : 'g:ia ';
+        
+        if(this.calendarStore && evt[M.CalendarId.name]){
+            var rec = this.calendarStore.getById(evt[M.CalendarId.name]);
+            colorCls = 'x-cal-' + rec.data[Ext.ensible.cal.CalendarMappings.ColorId.name];
+        }
+        colorCls += (evt._renderAsAllDay ? '-ad' : '');
+        extraClasses.push(colorCls);
+        
+        if(this.getEventClass){
+            var rec = this.getEventRecord(evt[M.EventId.name]),
+                cls = this.getEventClass(rec, !!evt._renderAsAllDay, data, this.store);
+            extraClasses.push(cls);
+        }
+        
+		data._extraCls = extraClasses.join(' ');
+        data._isRecurring = evt.Recurrence && evt.Recurrence != '';
+        data._isReminder = evt[M.Reminder.name] && evt[M.Reminder.name] != '';
+        data.Title = (evt[M.IsAllDay.name] ? '' : evt[M.StartDate.name].format(fmt)) + (!title || title.length == 0 ? this.defaultEventTitleText : title);
+        
+        return Ext.applyIf(data, evt);
     },
     
     // private
-	refresh : function(){
+	refresh : function(reloadData){
+        Ext.ensible.log('refresh (MonthView)');
 		if(this.detailPanel){
 			this.detailPanel.hide();
 		}
-		Ext.ensible.cal.MonthView.superclass.refresh.call(this);
+		Ext.ensible.cal.MonthView.superclass.refresh.call(this, reloadData);
         
         if(this.showTime !== false){
             this.initClock();
@@ -279,7 +304,8 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
             templateDataFn: this.getTemplateEventData.createDelegate(this),
             evtMaxCount: this.evtMaxCount,
             weekCount: this.weekCount,
-            dayCount: this.dayCount
+            dayCount: this.dayCount,
+            moreText: this.moreText
         });
         this.fireEvent('eventsrendered', this);
     },
@@ -352,12 +378,12 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
     
     // inherited docs
     moveNext : function(){
-        return this.moveMonths(1);
+        return this.moveMonths(1, true);
     },
     
     // inherited docs
     movePrev : function(){
-        return this.moveMonths(-1);
+        return this.moveMonths(-1, true);
     },
     
     // private
@@ -374,7 +400,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 		if(!this.detailPanel){
 	        this.detailPanel = new Ext.Panel({
 				id: this.id+'-details-panel',
-				title: dt.format('F j'),
+				title: dt.format(this.detailsTitleDateFormat),
 				layout: 'fit',
 				floating: true,
 				renderTo: Ext.getBody(),
@@ -390,6 +416,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 					date: dt,
 					view: this,
 					store: this.store,
+                    calendarStore: this.calendarStore,
 					listeners: {
 						'eventsrendered': this.onDetailViewUpdated.createDelegate(this)
 					}
@@ -397,7 +424,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 			});
 		}
 		else{
-			this.detailPanel.setTitle(dt.format('F j'));
+			this.detailPanel.setTitle(dt.format(this.detailsTitleDateFormat));
 		}
 		this.detailPanel.getComponent(this.id+'-details-view').update(dt);
 	},
@@ -430,23 +457,20 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
         if(this.detailPanel){
             this.detailPanel.hide();
         }
-        if(Ext.ensible.cal.MonthView.superclass.onClick.apply(this, arguments)){
-            // The superclass handled the click already so exit
+        if(el = e.getTarget(this.moreSelector, 3)){
+            var dt = el.id.split(this.moreElIdDelimiter)[1];
+            this.onMoreClick(Date.parseDate(dt, 'Ymd'));
             return;
         }
-		if(this.dropZone){
-			this.dropZone.clearShims();
-		}
         if(el = e.getTarget(this.weekLinkSelector, 3)){
             var dt = el.id.split(this.weekLinkIdDelimiter)[1];
             this.fireEvent('weekclick', this, Date.parseDate(dt, 'Ymd'));
             return;
         }
-		if(el = e.getTarget(this.moreSelector, 3)){
-			var dt = el.id.split(this.moreElIdDelimiter)[1];
-			this.onMoreClick(Date.parseDate(dt, 'Ymd'));
-			return;
-		}
+        if(Ext.ensible.cal.MonthView.superclass.onClick.apply(this, arguments)){
+            // The superclass handled the click already so exit
+            return;
+        }
         if(el = e.getTarget('td', 3)){
             if(el.id && el.id.indexOf(this.dayElIdDelimiter) > -1){
                 var parts = el.id.split(this.dayElIdDelimiter),

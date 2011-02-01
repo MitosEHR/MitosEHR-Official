@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -33,13 +33,14 @@ Ext.ensible.cal.DayHeaderTemplate = function(config){
                         '<td class="ext-cal-hd-days-td"><div class="ext-cal-hd-ad-inner">{allDayTpl}</div></td>',
                         '<td class="ext-cal-gutter-rt"></td>',
                     '</tr>',
-                '</tobdy>',
+                '</tbody>',
             '</table>',
         '</div>'
     );
 };
 
 Ext.extend(Ext.ensible.cal.DayHeaderTemplate, Ext.XTemplate, {
+    // private
     applyTemplate : function(o){
         return Ext.ensible.cal.DayHeaderTemplate.superclass.applyTemplate.call(this, {
             allDayTpl: this.allDayTpl.apply(o)

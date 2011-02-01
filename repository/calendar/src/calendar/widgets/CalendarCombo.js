@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha2
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -11,13 +11,11 @@
  * pass a populated calendar store as the store config or the combo will not work.</p>
  * <p>This is pretty much a standard combo that is simply pre-configured for the options needed by the
  * calendar components. The default configs are as follows:<pre><code>
-    fieldLabel: 'Calendar',
-    valueField: 'CalendarId',
-    displayField: 'Title',
-    triggerAction: 'all',
-    mode: 'local',
-    forceSelection: true,
-    width: 200
+fieldLabel: 'Calendar',
+triggerAction: 'all',
+mode: 'local',
+forceSelection: true,
+width: 200
 </code></pre>
  * @constructor
  * @param {Object} config The config object
@@ -28,18 +26,23 @@ Ext.ensible.cal.CalendarCombo = Ext.extend(Ext.form.ComboBox, {
     mode: 'local',
     forceSelection: true,
     width: 200,
-    defaultCls: 'x-cal-default',
     
-    valueField: Ext.ensible.cal.CalendarMappings.CalendarId.name,
-    displayField: Ext.ensible.cal.CalendarMappings.Title.name,
+    // private
+    defaultCls: 'x-cal-default',
     
     // private
     initComponent: function(){
-        Ext.ensible.cal.CalendarCombo.superclass.initComponent.call(this);
+        var C = Ext.ensible.cal,
+            M = C.CalendarMappings;
+        
+        C.CalendarCombo.superclass.initComponent.call(this);
+        
+        this.valueField = M.CalendarId.name;
+        this.displayField = M.Title.name;
         
         this.tpl = this.tpl ||
-              '<tpl for="."><div class="x-combo-list-item x-cal-{' + Ext.ensible.cal.CalendarMappings.ColorId.name +
-              '}"><div class="ext-cal-picker-icon">&nbsp;</div>{' + this.displayField + '}</div></tpl>';
+              '<tpl for="."><div class="x-combo-list-item x-cal-{' + M.ColorId.name +
+              '}"><div class="ext-cal-picker-icon">&#160;</div>{' + this.displayField + '}</div></tpl>';
     },
     
     // private

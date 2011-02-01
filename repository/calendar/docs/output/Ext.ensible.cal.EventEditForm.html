@@ -5,14 +5,27 @@ to and from the form.</p>
 <p>This form also provides custom events specific to the calendar so that other calendar components can be easily
 notified when an event has been edited via this component.</p>
 <p>The default configs are as follows:</p><pre><code>labelWidth: 65,
-    title: <em>'Event Form'</em>,
-    titleTextAdd: <em>'Add Event'</em>,
-    titleTextEdit: <em>'Edit Event'</em>,
-    bodyStyle: <em>'background:transparent;padding:20px 20px 10px;'</em>,
-    border: false,
-    buttonAlign: <em>'center'</em>,
-    autoHeight: true, <i>// to allow <b>for</b> the notes field to autogrow</i>
-    cls: <em>'ext-evt-edit-form'</em>,</code></pre></div><div class="hr"></div><a id="Ext.ensible.cal.EventEditForm-props"></a><h2>Public Properties</h2><div class="no-members">This class has no public properties.</div><a id="Ext.ensible.cal.EventEditForm-methods"></a><h2>Public Methods</h2><div class="no-members">This class has no public methods.</div><a id="Ext.ensible.cal.EventEditForm-events"></a><h2>Public Events</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Event</th><th class="msource-header">Defined By</th></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.ensible.cal.EventEditForm-eventadd"></a><b><a href="source/EventEditForm.html#event-Ext.ensible.cal.EventEditForm-eventadd">eventadd</a></b> :
+labelWidthRightCol: 65,
+colWidthLeft: .6,
+colWidthRight: .4,
+title: <em>'Event Form'</em>,
+titleTextAdd: <em>'Add Event'</em>,
+titleTextEdit: <em>'Edit Event'</em>,
+titleLabelText: <em>'Title'</em>,
+datesLabelText: <em>'When'</em>,
+reminderLabelText: <em>'Reminder'</em>,
+notesLabelText: <em>'Notes'</em>,
+locationLabelText: <em>'Location'</em>,
+webLinkLabelText: <em>'Web Link'</em>,
+calendarLabelText: <em>'Calendar'</em>,
+repeatsLabelText: <em>'Repeats'</em>,
+saveButtonText: <em>'Save'</em>,
+deleteButtonText: <em>'Delete'</em>,
+cancelButtonText: <em>'Cancel'</em>,
+bodyStyle: <em>'padding:20px 20px 10px;'</em>,
+border: false,
+buttonAlign: <em>'center'</em>,
+autoHeight: true <i>// to allow <b>for</b> the notes field to autogrow</i></code></pre></div><div class="hr"></div><a id="Ext.ensible.cal.EventEditForm-props"></a><h2>Public Properties</h2><div class="no-members">This class has no public properties.</div><a id="Ext.ensible.cal.EventEditForm-methods"></a><h2>Public Methods</h2><div class="no-members">This class has no public methods.</div><a id="Ext.ensible.cal.EventEditForm-events"></a><h2>Public Events</h2><table cellspacing="0" class="member-table"><tbody><tr><th colspan="2" class="sig-header">Event</th><th class="msource-header">Defined By</th></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.ensible.cal.EventEditForm-eventadd"></a><b><a href="source/EventEditForm.html#event-Ext.ensible.cal.EventEditForm-eventadd">eventadd</a></b> :
                                       (&nbsp;<code>Ext.ensible.cal.EventEditForm&nbsp;this</code>,&nbsp;<code>Ext.ensible.cal.EventRecord&nbsp;rec</code>&nbsp;)
     <div class="mdesc"><div class="short">Fires after a new event is added</div><div class="long">Fires after a new event is added<div class="mdetail-params"><strong style="font-weight: normal;">Listeners will be called with the following arguments:</strong><ul><li><code>this</code> : Ext.ensible.cal.EventEditForm<div class="sub-desc"></div></li><li><code>rec</code> : Ext.ensible.cal.EventRecord<div class="sub-desc">The new <a href="output/Ext.ensible.cal.EventRecord.html" ext:cls="Ext.ensible.cal.EventRecord">record</a> that was added</div></li></ul></div></div></div></td><td class="msource">EventEditForm</td></tr><tr class="method-row expandable "><td class="micon"><a href="#expand" class="exi">&nbsp;</a></td><td class="sig"><a id="Ext.ensible.cal.EventEditForm-eventcancel"></a><b><a href="source/EventEditForm.html#event-Ext.ensible.cal.EventEditForm-eventcancel">eventcancel</a></b> :
                                       (&nbsp;<code>Ext.ensible.cal.EventEditForm&nbsp;this</code>,&nbsp;<code>Ext.ensible.cal.EventRecord&nbsp;rec</code>&nbsp;)

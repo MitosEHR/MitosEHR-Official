@@ -1,12 +1,13 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
-
-// http://www.kanzaki.com/docs/ical/rrule.html
-
+/* @private
+ * Currently not used
+ * Rrule info: http://www.kanzaki.com/docs/ical/rrule.html
+ */
 Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
     
     fieldLabel: 'Repeats',
@@ -226,7 +227,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
     },
     
     initSubComponents : function(){
-        var baseComponent = Ext.extend(Ext.Container, {
+        Ext.ensible.cal.recurrenceBase = Ext.extend(Ext.Container, {
             fieldLabel: ' ',
             labelSeparator: '',
             layout: 'table',
@@ -296,7 +297,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             setValue:Ext.emptyFn
         });
         
-        this.repeatEvery = new baseComponent({
+        this.repeatEvery = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-every',
             layoutConfig: {
                 columns: 3
@@ -349,16 +350,21 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             updateLabel: function(type){
                 if(this.rendered){
                     var s = Ext.getCmp(this.id+'-num').getValue() == 1 ? '' : 's';
-                    if(type){
-                        this.type = type.toLowerCase();
+                    this.type = type ? type.toLowerCase() : this.type || 'day';
+                    var lbl = Ext.getCmp(this.id+'-label');
+                    if(lbl.rendered){
+                        lbl.update(this.type + s + ' beginning ' + this.startDate.format('l, F j'));
                     }
-                    Ext.getCmp(this.id+'-label').update(this.type + s + ' beginning ' + this.startDate.format('l, F j'));
                 }
                 return this;
+            },
+            afterRender: function(){
+                Ext.ensible.cal.recurrenceBase.superclass.afterRender.call(this);
+                this.updateLabel();
             }
         });
             
-        this.weekly = new baseComponent({
+        this.weekly = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-weekly',
             layoutConfig: {
                 columns: 2
@@ -430,7 +436,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             }
         });
             
-        this.monthly = new baseComponent({
+        this.monthly = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-monthly',
             layoutConfig: {
                 columns: 3
@@ -474,7 +480,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             }
         });
             
-        this.yearly = new baseComponent({
+        this.yearly = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-yearly',
             layoutConfig: {
                 columns: 3
@@ -519,7 +525,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             }
         });
             
-        this.until = new baseComponent({
+        this.until = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-until',
             untilDateFormat: 'Ymd\\T000000\\Z',
             layoutConfig: {

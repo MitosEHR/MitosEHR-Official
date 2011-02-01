@@ -1,8 +1,11 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
+ */
+/* @private
+ * Currently not used
  */
 Ext.ensible.cal.RecurrenceCombo = Ext.extend(Ext.form.ComboBox, {
     width: 160,

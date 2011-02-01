@@ -1,19 +1,37 @@
+/*!
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
+ * http://ext.ensible.com
+ */
+/*!
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
+ * http://ext.ensible.com
+ */
 
 		Docs.classData ={"id":"apidocs","iconCls":"icon-docs","text":"API Documentation","singleClickExpand":true,"children":[
                 {"id":"pkg-Ext","text":"Ext","iconCls":"icon-pkg","cls":"package","singleClickExpand":true, children:[
-                {"id":"pkg-Ext.dd","text":"dd","iconCls":"icon-pkg","cls":"package","singleClickExpand":true, children:[
-                {"href":"output/Ext.dd.ScrollManager.html","text":"ScrollManager","id":"Ext.dd.ScrollManager","isClass":true,"iconCls":"icon-static","cls":"cls","leaf":true}
-				]}
-				,
                 {"id":"pkg-Ext.ensible","text":"ensible","iconCls":"icon-pkg","cls":"package","singleClickExpand":true, children:[
                 {"id":"pkg-Ext.ensible.cal","text":"cal","iconCls":"icon-pkg","cls":"package","singleClickExpand":true, children:[
                 {"href":"output/Ext.ensible.cal.BoxLayoutTemplate.html","text":"BoxLayoutTemplate","id":"Ext.ensible.cal.BoxLayoutTemplate","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
+                {"href":"output/Ext.ensible.cal.CalendarCombo.html","text":"CalendarCombo","id":"Ext.ensible.cal.CalendarCombo","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
+				,
+                {"href":"output/Ext.ensible.cal.CalendarList.html","text":"CalendarList","id":"Ext.ensible.cal.CalendarList","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
+				,
+                {"href":"output/Ext.ensible.cal.CalendarListMenu.html","text":"CalendarListMenu","id":"Ext.ensible.cal.CalendarListMenu","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
+				,
+                {"href":"output/Ext.ensible.cal.CalendarMappings.html","text":"CalendarMappings","id":"Ext.ensible.cal.CalendarMappings","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
+				,
                 {"href":"output/Ext.ensible.cal.CalendarPanel.html","text":"CalendarPanel","id":"Ext.ensible.cal.CalendarPanel","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
-                {"href":"output/Ext.ensible.cal.CalendarPicker.html","text":"CalendarPicker","id":"Ext.ensible.cal.CalendarPicker","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
+                {"href":"output/Ext.ensible.cal.CalendarRecord.html","text":"CalendarRecord","id":"Ext.ensible.cal.CalendarRecord","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
                 {"href":"output/Ext.ensible.cal.CalendarView.html","text":"CalendarView","id":"Ext.ensible.cal.CalendarView","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
+				,
+                {"href":"output/Ext.ensible.cal.ColorPalette.html","text":"ColorPalette","id":"Ext.ensible.cal.ColorPalette","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
                 {"href":"output/Ext.ensible.cal.DateRangeField.html","text":"DateRangeField","id":"Ext.ensible.cal.DateRangeField","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
@@ -26,6 +44,8 @@
                 {"href":"output/Ext.ensible.cal.DayHeaderView.html","text":"DayHeaderView","id":"Ext.ensible.cal.DayHeaderView","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
                 {"href":"output/Ext.ensible.cal.DayView.html","text":"DayView","id":"Ext.ensible.cal.DayView","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
+				,
+                {"href":"output/Ext.ensible.cal.EventContextMenu.html","text":"EventContextMenu","id":"Ext.ensible.cal.EventContextMenu","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
                 {"href":"output/Ext.ensible.cal.EventEditForm.html","text":"EventEditForm","id":"Ext.ensible.cal.EventEditForm","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
@@ -45,6 +65,8 @@
 				,
                 {"href":"output/Ext.ensible.cal.ReminderField.html","text":"ReminderField","id":"Ext.ensible.cal.ReminderField","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				,
+                {"href":"output/Ext.ensible.cal.StatusProxy.html","text":"StatusProxy","id":"Ext.ensible.cal.StatusProxy","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
+				,
                 {"href":"output/Ext.ensible.cal.WeekView.html","text":"WeekView","id":"Ext.ensible.cal.WeekView","isClass":true,"iconCls":"icon-cls","cls":"cls","leaf":true}
 				]}
 				]}
@@ -52,15 +74,23 @@
 				]};
         Docs.icons = {
         
-			"Ext.dd.ScrollManager":"icon-static"
-			,
 			"Ext.ensible.cal.BoxLayoutTemplate":"icon-cls"
+			,
+			"Ext.ensible.cal.CalendarCombo":"icon-cls"
+			,
+			"Ext.ensible.cal.CalendarList":"icon-cls"
+			,
+			"Ext.ensible.cal.CalendarListMenu":"icon-cls"
+			,
+			"Ext.ensible.cal.CalendarMappings":"icon-cls"
 			,
 			"Ext.ensible.cal.CalendarPanel":"icon-cls"
 			,
-			"Ext.ensible.cal.CalendarPicker":"icon-cls"
+			"Ext.ensible.cal.CalendarRecord":"icon-cls"
 			,
 			"Ext.ensible.cal.CalendarView":"icon-cls"
+			,
+			"Ext.ensible.cal.ColorPalette":"icon-cls"
 			,
 			"Ext.ensible.cal.DateRangeField":"icon-cls"
 			,
@@ -73,6 +103,8 @@
 			"Ext.ensible.cal.DayHeaderView":"icon-cls"
 			,
 			"Ext.ensible.cal.DayView":"icon-cls"
+			,
+			"Ext.ensible.cal.EventContextMenu":"icon-cls"
 			,
 			"Ext.ensible.cal.EventEditForm":"icon-cls"
 			,
@@ -91,6 +123,8 @@
 			"Ext.ensible.cal.MultiWeekView":"icon-cls"
 			,
 			"Ext.ensible.cal.ReminderField":"icon-cls"
+			,
+			"Ext.ensible.cal.StatusProxy":"icon-cls"
 			,
 			"Ext.ensible.cal.WeekView":"icon-cls"
 			};

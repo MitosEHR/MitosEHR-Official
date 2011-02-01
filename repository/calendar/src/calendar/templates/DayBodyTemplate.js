@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -20,7 +20,7 @@ Ext.ensible.cal.DayBodyTemplate = function(config){
     Ext.apply(this, config);
     
     Ext.ensible.cal.DayBodyTemplate.superclass.constructor.call(this,
-        '<table class="ext-cal-bg-tbl" cellspacing="0" cellpadding="0">',
+        '<table class="ext-cal-bg-tbl" cellspacing="0" cellpadding="0" style="height:{dayHeight}px;">',
             '<tbody>',
                 '<tr height="1">',
                     '<td class="ext-cal-gutter"></td>',
@@ -28,8 +28,8 @@ Ext.ensible.cal.DayBodyTemplate = function(config){
                         '<div class="ext-cal-bg-rows">',
                             '<div class="ext-cal-bg-rows-inner">',
                                 '<tpl for="times">',
-                                    '<div class="ext-cal-bg-row">',
-                                        '<div class="ext-cal-bg-row-div ext-row-{[xindex]}"></div>',
+                                    '<div class="ext-cal-bg-row ext-row-{[xindex]}" style="height:{parent.hourHeight}px;">',
+                                        '<div class="ext-cal-bg-row-div {parent.hourSeparatorCls}" style="height:{parent.hourSeparatorHeight}px;"></div>',
                                     '</div>',
                                 '</tpl>',
                             '</div>',
@@ -39,15 +39,15 @@ Ext.ensible.cal.DayBodyTemplate = function(config){
                 '<tr>',
                     '<td class="ext-cal-day-times">',
                         '<tpl for="times">',
-                            '<div class="ext-cal-bg-row">',
-                                '<div class="ext-cal-day-time-inner">{.}</div>',
+                            '<div class="ext-cal-bg-row" style="height:{parent.hourHeight}px;">',
+                                '<div class="ext-cal-day-time-inner"  style="height:{parent.hourHeight-1}px;">{.}</div>',
                             '</div>',
                         '</tpl>',
                     '</td>',
                     '<tpl for="days">',
                         '<td class="ext-cal-day-col">',
                             '<div class="ext-cal-day-col-inner">',
-                                '<div id="{[this.id]}-day-col-{.:date("Ymd")}" class="ext-cal-day-col-gutter"></div>',
+                                '<div id="{[this.id]}-day-col-{.:date("Ymd")}" class="ext-cal-day-col-gutter" style="height:{parent.dayHeight}px;"></div>',
                             '</div>',
                         '</td>',
                     '</tpl>',
@@ -70,16 +70,27 @@ Ext.extend(Ext.ensible.cal.DayBodyTemplate, Ext.XTemplate, {
             days[i] = dt.add(Date.DAY, i);
         }
 
-        var times = [], dt = new Date().clearTime();
-        for(i=0; i<24; i++){
-            times.push(dt.format('ga'));
-            dt = dt.add(Date.HOUR, 1);
+        var times = [],
+            start = this.viewStartHour,
+            end = this.viewEndHour,
+            mins = this.hourIncrement,
+            dt = new Date().clearTime().add(Date.HOUR, start),
+            dayHeight = this.hourHeight * (end - start)
+            fmt = Ext.ensible.Date.use24HourTime ? 'G:i' : 'ga';
+        
+        for(i=start; i<end; i++){
+            times.push(dt.format(fmt));
+            dt = dt.add(Date.MINUTE, mins);
         }
         
         return Ext.ensible.cal.DayBodyTemplate.superclass.applyTemplate.call(this, {
             days: days,
             dayCount: days.length,
-            times: times
+            times: times,
+            hourHeight: this.hourHeight,
+            hourSeparatorCls: this.showHourSeparator ? '' : 'no-sep', // the class suppresses the default separator
+            dayHeight: dayHeight,
+            hourSeparatorHeight: (this.hourHeight / 2) - 1
         });
     }
 });

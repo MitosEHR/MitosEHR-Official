@@ -1,10 +1,10 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
-/*
+/* @private
  * Internal drag zone implementation for the calendar components. This provides base functionality
  * and is primarily for the month view -- DayViewDD adds day/week view-specific functionality.
  */
@@ -83,16 +83,23 @@ Ext.ensible.cal.DragZone = Ext.extend(Ext.dd.DragZone, {
     
     afterInvalidDrop : function(e, id){
         Ext.select('.ext-dd-shim').hide();
-    }
+    },
+    
+    destroy : function(){
+        Ext.ensible.cal.DragZone.superclass.destroy.call(this);
+        delete Ext.ensible.cal._statusProxyInstance;
+    }    
 });
 
-/*
+/* @private
  * Internal drop zone implementation for the calendar components. This provides base functionality
  * and is primarily for the month view -- DayViewDD adds day/week view-specific functionality.
  */
 Ext.ensible.cal.DropZone = Ext.extend(Ext.dd.DropZone, {
     ddGroup : 'CalendarDD',
     eventSelector : '.ext-cal-evt',
+    dateRangeFormat : '{0}-{1}',
+    dateFormat : 'n/j',
     
     // private
     shims : [],
@@ -113,12 +120,14 @@ Ext.ensible.cal.DropZone = Ext.extend(Ext.dd.DropZone, {
         
         if(!this.dragStartDate || !this.dragEndDate || (D.diffDays(start, this.dragStartDate) != 0) || (D.diffDays(end, this.dragEndDate) != 0)){
             this.dragStartDate = start;
-            this.dragEndDate = end.clearTime().add(Date.DAY, 1).add(Date.MILLI, -1);
+            this.dragEndDate = end.clearTime().add(Date.DAY, 1).add(Date.MINUTE, -30);
             this.shim(start, end);
             
-            var range = start.format('n/j');
+            var range = start.format(this.dateFormat);
+                
             if(D.diffDays(start, end) > 0){
-                range += '-'+end.format('n/j');
+                end = end.format(this.dateFormat);
+                range = String.format(this.dateRangeFormat, range, end);
             }
             var msg = String.format(data.type == 'eventdrag' ? this.moveText : this.createText, range);
             data.proxy.updateMsg(msg);
@@ -180,12 +189,13 @@ Ext.ensible.cal.DropZone = Ext.extend(Ext.dd.DropZone, {
     },
     
     createShim : function(){
+        var owner = this.view.ownerCalendarPanel ? this.view.ownerCalendarPanel : this.view;
         if(!this.shimCt){
-            this.shimCt = Ext.get('ext-dd-shim-ct');
+            this.shimCt = Ext.get('ext-dd-shim-ct-'+owner.id);
             if(!this.shimCt){
                 this.shimCt = document.createElement('div');
-                this.shimCt.id = 'ext-dd-shim-ct';
-                Ext.getBody().appendChild(this.shimCt);
+                this.shimCt.id = 'ext-dd-shim-ct-'+owner.id;
+                owner.getEl().parent().appendChild(this.shimCt);
             }
         }
         var el = document.createElement('div');
@@ -242,11 +252,6 @@ Ext.ensible.cal.DropZone = Ext.extend(Ext.dd.DropZone, {
     onContainerDrop : function(dd, e, data){
         this.onCalendarDragComplete();
         return false;
-    },
-    
-    destroy: function(){
-        Ext.ensible.cal.DropZone.superclass.destroy.call(this);
-        Ext.destroy(this.shimCt);
     }
 });
 

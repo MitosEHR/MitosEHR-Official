@@ -1,8 +1,12 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
+ */
+
+/*
+ * Not currently in use, may or may not be implemented...
  */
 Ext.ensible.cal.AttendeeCombo = Ext.extend(Ext.ux.form.SuperBoxSelect, {
     fieldLabel: 'Attendees',

@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 App = function() {
@@ -10,52 +10,19 @@ App = function() {
             
             Ext.BLANK_IMAGE_URL = 'http://extjs.cachefly.net/ext-3.1.0/resources/images/default/s.gif';
 
-            // This is an example calendar store that enables the events to have
-            // different colors based on CalendarId. This is not a fully-realized
-            // multi-calendar implementation, which is beyond the scope of this sample app
-            this.calendarStore = new Ext.data.JsonStore({
-                storeId: 'calendarStore',
-                root: 'calendars',
-                idProperty: 'id',
-                data: calendarList, // defined in calendar-list.js
-                proxy: new Ext.data.MemoryProxy(),
-                autoLoad: true,
-                fields: [
-                    {name:'CalendarId', mapping: 'id', type: 'int'},
-                    {name:'Title', mapping: 'title', type: 'string'}
-                ],
-                sortInfo: {
-                    field: 'CalendarId',
-                    direction: 'ASC'
-                }
+            // This is an example calendar store that enables event color-coding
+            this.calendarStore = new Ext.ensible.sample.CalendarStore({
+                // defined in data-calendars.js
+                data: Ext.ensible.sample.CalendarData
             });
-            
-            // This is an example for how you can provide custom data mappings. The JSON data
-            // in event-list.js uses "t" as the title key, but by default Ext.ensible.cal.EventRecord
-            // expects "title". To resolve this you can simply update the mapping on the
-            // Ext.ensible.cal.EventMappings object and call EventRecord.reconfigure() after all
-            // mappings are updated. You can also update any other properties in the 
-            // EventMappings object the same way, including name, type, etc. Make sure you
-            // reconfigure the EventRecord if necessary before configuring your store.
-            Ext.ensible.cal.EventMappings.Title.mapping = 't';
-            //Ext.ensible.cal.EventMappings.Title.name = 'Foo';
-            Ext.ensible.cal.EventRecord.reconfigure();
 
             // A sample event store that loads static JSON from a local file. Obviously a real
             // implementation would likely be loading remote data via an HttpProxy, but the
-            // underlying store functionality is the same.  Note that if you would like to 
-            // provide custom data mappings for events, see EventRecord.js.
-		    this.eventStore = new Ext.data.JsonStore({
-		        id: 'eventStore',
-		        root: 'evts',
-		        data: eventList, // defined in event-list.js
-				proxy: new Ext.data.MemoryProxy(),
-		        fields: Ext.ensible.cal.EventRecord.prototype.fields.getRange(),
-		        sortInfo: {
-		            field: Ext.ensible.cal.EventMappings.StartDate.name,
-		            direction: 'ASC'
-		        }
-		    });
+            // underlying store functionality is the same.
+            this.eventStore = new Ext.ensible.sample.MemoryEventStore({
+                // defined in data-events.js
+                data: Ext.ensible.sample.EventData
+            });
             
             // This is the app UI layout code.  All of the calendar views are subcomponents of
             // CalendarPanel, but the app title bar and sidebar/navigation calendar are separate
@@ -75,6 +42,11 @@ App = function() {
                     title: '...', // will be updated to the current view's date range
                     region: 'center',
                     layout: 'border',
+                    listeners: {
+                        'afterrender': function(){
+                            Ext.getCmp('app-center').header.addClass('app-center-header');
+                        }
+                    },
                     items: [{
                         id:'app-west',
                         region: 'west',
@@ -92,6 +64,11 @@ App = function() {
                                     scope: this
                                 }
                             }
+                        },{
+                            xtype: 'extensible.calendarlist',
+                            store: this.calendarStore,
+                            border: false,
+                            width: 175
                         }]
                     },{
                         xtype: 'extensible.calendarpanel',
@@ -100,11 +77,15 @@ App = function() {
                         border: false,
                         id:'app-calendar',
                         region: 'center',
-                        activeItem: 3, // month view
+                        activeItem: 1, // month view
                         
                         // Any generic view options that should be applied to all sub views:
                         viewConfig: {
-                            //enableFx: false
+                            //enableFx: false,
+                            //ddIncrement: 10, //only applies to DayView and subclasses, but convenient to put it here
+                            //viewStartHour: 6,
+                            //viewEndHour: 18,
+                            //minEventDisplayMinutes: 15
                         },
                         
                         // View options specific to a certain view (if the same options exist in viewConfig
@@ -120,6 +101,7 @@ App = function() {
                         },
                         
                         // Some optional CalendarPanel configs to experiment with:
+                        //readOnly: true,
                         //showDayView: false,
                         //showMultiDayView: true,
                         //showWeekView: false,
@@ -128,6 +110,8 @@ App = function() {
                         //showNavBar: false,
                         //showTodayText: false,
                         //showTime: false,
+                        //editModal: true,
+                        //enableEditDetails: false,
                         //title: 'My Calendar', // the header of the calendar, could be a subtitle for the app
                         
                         // Once this component inits it will set a reference to itself as an application
@@ -136,10 +120,6 @@ App = function() {
                             App.calendarPanel = this;
                             this.constructor.prototype.initComponent.apply(this, arguments);
                         },
-                        
-//                        plugins: [{
-//                            ptype: 'ext.ensible.cal.contextmenu'
-//                        }],
                         
                         listeners: {
                             'eventclick': {

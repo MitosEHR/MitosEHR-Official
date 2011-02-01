@@ -3,7 +3,7 @@
 // *************************************************************************************
 // Load OpenEMR Globals
 // *************************************************************************************
-include_once("../../globals.php");
+include_once("../globals.php");
 include_once($GLOBALS['fileroot']."library/acl.inc");
 include_once($GLOBALS['fileroot']."custom/code_types.inc.php");
 include_once($GLOBALS['fileroot']."library/patient.inc");

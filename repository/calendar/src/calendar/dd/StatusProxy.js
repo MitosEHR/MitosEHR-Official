@@ -1,10 +1,10 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
-/*
+/**
  * @class Ext.ensible.cal.StatusProxy
  * A specialized drag proxy that supports a drop status icon, {@link Ext.Layer} styles and auto-repair. It also
  * contains a calendar-specific drag status message containing details about the dragged event's target drop date range.  
@@ -60,7 +60,7 @@ Ext.extend(Ext.ensible.cal.StatusProxy, Ext.dd.StatusProxy, {
         }
     },
     
-    /**
+    /* @private
      * Update the calendar-specific drag status message without altering the ghost element.
      * @param {String} msg The new status message
      */

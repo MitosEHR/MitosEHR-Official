@@ -1,10 +1,10 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
-/*
+/* @private
  * Internal drag zone implementation for the calendar day and week views.
  */
 Ext.ensible.cal.DayViewDragZone = Ext.extend(Ext.ensible.cal.DragZone, {
@@ -51,14 +51,18 @@ Ext.ensible.cal.DayViewDragZone = Ext.extend(Ext.ensible.cal.DragZone, {
     }
 });
 
-/*
+/* @private
  * Internal drop zone implementation for the calendar day and week views.
  */
 Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
     ddGroup : 'DayViewDD',
+    dateRangeFormat : '{0}-{1}',
+    dateFormat : 'n/j',
     
     onNodeOver : function(n, dd, e, data){
-        var dt, text = this.createText;
+        var dt, text = this.createText,
+            timeFormat = Ext.ensible.Date.use24HourTime ? 'G:i' : 'g:ia';
+            
         if(data.type == 'caldrag'){
             if(!this.dragStartMarker){
                 // Since the container can scroll, this gets a little tricky.
@@ -81,10 +85,10 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
             if(e.xy[1] < box.y){
                 box.height += n.timeBox.height;
                 box.y = box.y - box.height + n.timeBox.height;
-                endDt = this.dragCreateDt.add(Date.MINUTE, 30);
+                endDt = this.dragCreateDt.add(Date.MINUTE, this.ddIncrement);
             }
             else{
-                n.date = n.date.add(Date.MINUTE, 30);
+                n.date = n.date.add(Date.MINUTE, this.ddIncrement);
             }
             this.shim(this.dragCreateDt, box);
             
@@ -92,7 +96,7 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
             this.dragStartDate = Ext.ensible.Date.min(this.dragCreateDt, curr);
             this.dragEndDate = endDt || Ext.ensible.Date.max(this.dragCreateDt, curr);
                 
-            dt = this.dragStartDate.format('g:ia-') + this.dragEndDate.format('g:ia');
+            dt = String.format(this.dateRangeFormat, this.dragStartDate.format(timeFormat), this.dragEndDate.format(timeFormat));
         }
         else{
             var evtEl = Ext.get(data.ddel),
@@ -109,7 +113,7 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
                 else{
                     box.y = n.timeBox.y;
                 }
-                dt = n.date.format('n/j g:ia');
+                dt = n.date.format(this.dateFormat + ' ' + timeFormat);
                 box.x = n.el.getLeft();
                 
                 this.shim(n.date, box);
@@ -125,7 +129,7 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
                     box.y -= box.height;
                 }
                 else{
-                    n.date = n.date.add(Date.MINUTE, 30);
+                    n.date = n.date.add(Date.MINUTE, this.ddIncrement);
                 }
                 this.shim(this.resizeDt, box);
                 
@@ -137,7 +141,7 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
                     StartDate: start,
                     EndDate: end
                 }
-                dt = start.format('g:ia-') + end.format('g:ia');
+                dt = String.format(this.dateRangeFormat, start.format(timeFormat), end.format(timeFormat));
                 text = this.resizeText;
             }
         }

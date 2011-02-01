@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -10,26 +10,55 @@
  * <p>A custom window containing a basic edit form used for quick editing of events.</p>
  * <p>This window also provides custom events specific to the calendar so that other calendar components can be easily
  * notified when an event has been edited via this component.</p>
+ * <p>The default configs are as follows:</p><pre><code>
+titleTextAdd: 'Add Event',
+titleTextEdit: 'Edit Event',
+width: 600,
+border: true,
+closeAction: 'hide',
+modal: false,
+resizable: false,
+buttonAlign: 'left',
+labelWidth: 65,
+detailsLinkText: 'Edit Details...',
+savingMessage: 'Saving changes...',
+deletingMessage: 'Deleting event...',
+saveButtonText: 'Save',
+deleteButtonText: 'Delete',
+cancelButtonText: 'Cancel',
+titleLabelText: 'Title',
+datesLabelText: 'When',
+calendarLabelText: 'Calendar',
+editDetailsLinkClass: 'edit-dtl-link',
+bodyStyle: 'padding:5px 10px;',
+enableEditDetails: true
+</code></pre>
  * @constructor
  * @param {Object} config The config object
  */
 Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
     titleTextAdd: 'Add Event',
     titleTextEdit: 'Edit Event',
-    width: 580,
+    width: 600,
     border: true,
     closeAction: 'hide',
     modal: false,
     resizable: false,
     buttonAlign: 'left',
     labelWidth: 65,
+    detailsLinkText: 'Edit Details...',
     savingMessage: 'Saving changes...',
     deletingMessage: 'Deleting event...',
+    saveButtonText: 'Save',
+    deleteButtonText: 'Delete',
+    cancelButtonText: 'Cancel',
+    titleLabelText: 'Title',
+    datesLabelText: 'When',
+    calendarLabelText: 'Calendar',
     editDetailsLinkClass: 'edit-dtl-link',
+    bodyStyle: 'padding:5px 10px;',
+    enableEditDetails: true,
     
-    // private
-	newId: 10000,
-	
     // private
     initComponent: function(){
         this.addEvents({
@@ -78,15 +107,19 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
             editdetails: true
         });
         
-        this.fbar = [{
-            xtype: 'tbtext', text: '<a href="#" class="'+this.editDetailsLinkClass+'">Edit Details...</a>'
-        },'->',{
-            text:'Save', disabled:false, handler:this.onSave, scope:this
+        this.fbar = ['->',{
+            text:this.saveButtonText, disabled:false, handler:this.onSave, scope:this
         },{
-            id:this.id+'-delete-btn', text:'Delete', disabled:false, handler:this.onDelete, scope:this, hideMode:'offsets'
+            id:this.id+'-delete-btn', text:this.deleteButtonText, disabled:false, handler:this.onDelete, scope:this, hideMode:'offsets'
         },{
-            text:'Cancel', disabled:false, handler:this.onCancel, scope:this
+            text:this.cancelButtonText, disabled:false, handler:this.onCancel, scope:this
         }];
+        
+        if(this.enableEditDetails !== false){
+            this.fbar.unshift({
+                xtype: 'tbtext', text: '<a href="#" class="'+this.editDetailsLinkClass+'">'+this.detailsLinkText+'</a>'
+            });
+        }
         
         Ext.ensible.cal.EventEditWindow.superclass.initComponent.call(this);
     },
@@ -97,20 +130,21 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
         
         this.titleField = new Ext.form.TextField({
             name: Ext.ensible.cal.EventMappings.Title.name,
-            fieldLabel: 'Title',
+            fieldLabel: this.titleLabelText,
             anchor: '100%'
         });
         this.dateRangeField = new Ext.ensible.cal.DateRangeField({
-            anchor: '100%',
-            fieldLabel: 'When'
+            anchor: '95%',
+            fieldLabel: this.datesLabelText
         });
         
         var items = [this.titleField, this.dateRangeField];
         
         if(this.calendarStore){
-            this.calendarField = new Ext.ensible.cal.CalendarPicker({
+            this.calendarField = new Ext.ensible.cal.CalendarCombo({
                 name: Ext.ensible.cal.EventMappings.CalendarId.name,
                 anchor: '100%',
+                fieldLabel: this.calendarLabelText,
                 store: this.calendarStore
             });
             items.push(this.calendarField);
@@ -155,22 +189,23 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
      */
     show: function(o, animateTarget){
 		// Work around the CSS day cell height hack needed for initial render in IE8/strict:
-		var anim = (Ext.isIE8 && Ext.isStrict) ? null : animateTarget;
+		var anim = (Ext.isIE8 && Ext.isStrict) ? null : animateTarget,
+            M = Ext.ensible.cal.EventMappings;
 
 		Ext.ensible.cal.EventEditWindow.superclass.show.call(this, anim, function(){
             this.titleField.focus(false, 100);
         });
-        this.deleteBtn[o.data && o.data[Ext.ensible.cal.EventMappings.EventId.name] ? 'show' : 'hide']();
+        this.deleteBtn[o.data && o.data[M.EventId.name] ? 'show' : 'hide']();
         
         var rec, f = this.formPanel.form;
 
         if(o.data){
             rec = o;
-			this.isAdd = !!rec.data[Ext.ensible.cal.EventMappings.IsNew.name];
-			if(this.isAdd){
+			//this.isAdd = !!rec.data[Ext.ensible.cal.EventMappings.IsNew.name];
+			if(rec.phantom){
 				// Enable adding the default record that was passed in
 				// if it's new even if the user makes no changes 
-				rec.markDirty();
+				//rec.markDirty();
 				this.setTitle(this.titleTextAdd);
 			}
 			else{
@@ -180,30 +215,28 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
             f.loadRecord(rec);
         }
         else{
-			this.isAdd = true;
+			//this.isAdd = true;
             this.setTitle(this.titleTextAdd);
 
-            var M = Ext.ensible.cal.EventMappings,
-                eventId = M.EventId.name,
-                start = o[M.StartDate.name],
+            var start = o[M.StartDate.name],
                 end = o[M.EndDate.name] || start.add('h', 1);
                 
             rec = new Ext.ensible.cal.EventRecord();
-            rec.data[M.EventId.name] = this.newId++;
+            //rec.data[M.EventId.name] = this.newId++;
             rec.data[M.StartDate.name] = start;
             rec.data[M.EndDate.name] = end;
             rec.data[M.IsAllDay.name] = !!o[M.IsAllDay.name] || start.getDate() != end.clone().add(Date.MILLI, 1).getDate();
-            rec.data[M.IsNew.name] = true;
             
             f.reset();
             f.loadRecord(rec);
         }
         
         if(this.calendarStore){
-            this.calendarField.setValue(rec.data[Ext.ensible.cal.EventMappings.CalendarId.name]);
+            this.calendarField.setValue(rec.data[M.CalendarId.name]);
         }
         this.dateRangeField.setValue(rec.data);
         this.activeRecord = rec;
+        this.el.setStyle('z-index', 12000);
         
 		return this;
     },
@@ -223,7 +256,7 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
 
     // private
     cleanup: function(hide){
-        if(this.activeRecord && this.activeRecord.dirty){
+        if(this.activeRecord){
             this.activeRecord.reject();
         }
         delete this.activeRecord;
@@ -237,17 +270,47 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
     
     // private
     updateRecord: function(){
-        var f = this.formPanel.form,
-            dates = this.dateRangeField.getValue(),
-            M = Ext.ensible.cal.EventMappings;
+        var dates = this.dateRangeField.getValue(),
+            M = Ext.ensible.cal.EventMappings,
+            rec = this.activeRecord,
+            form = this.formPanel.form,
+            fs = rec.fields,
+            dirty = false;
             
-        f.updateRecord(this.activeRecord);
-        this.activeRecord.set(M.StartDate.name, dates[0]);
-        this.activeRecord.set(M.EndDate.name, dates[1]);
-        this.activeRecord.set(M.IsAllDay.name, dates[2]);
-        if(this.calendarStore){
-            this.activeRecord.set(M.CalendarId.name, this.calendarField.getValue());
-        }
+        rec.beginEdit();
+
+        //TODO: This block is copied directly from BasicForm.updateRecord.
+        // Unfortunately since that method internally calls begin/endEdit all
+        // updates happen and the record dirty status is reset internally to
+        // that call. We need the dirty status, plus currently the DateRangeField
+        // does not map directly to the record values, so for now we'll duplicate
+        // the setter logic here (we need to be able to pick up any custom-added 
+        // fields generically). Need to revisit this later and come up with a better solution.
+        fs.each(function(f){
+            var field = form.findField(f.name);
+            if(field){
+                var value = field.getValue();
+                if (value.getGroupValue) {
+                    value = value.getGroupValue();
+                } 
+                else if (field.eachItem) {
+                    value = [];
+                    field.eachItem(function(item){
+                        value.push(item.getValue());
+                    });
+                }
+                rec.set(f.name, value);
+            }
+        }, this);
+        
+        rec.set(M.StartDate.name, dates[0]);
+        rec.set(M.EndDate.name, dates[1]);
+        rec.set(M.IsAllDay.name, dates[2]);
+        
+        dirty = rec.dirty;
+        rec.endEdit();
+        
+        return dirty;
     },
     
     // private
@@ -255,14 +318,11 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
         if(!this.formPanel.form.isValid()){
             return;
         }
-        this.updateRecord();
-		
-		if(!this.activeRecord.dirty){
+		if(!this.updateRecord()){
 			this.onCancel();
 			return;
 		}
-		
-		this.fireEvent(this.isAdd ? 'eventadd' : 'eventupdate', this, this.activeRecord, this.animateTarget);
+		this.fireEvent(this.activeRecord.phantom ? 'eventadd' : 'eventupdate', this, this.activeRecord, this.animateTarget);
     },
     
     // private

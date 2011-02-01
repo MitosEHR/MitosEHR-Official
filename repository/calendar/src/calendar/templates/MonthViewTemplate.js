@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -22,7 +22,7 @@ Ext.ensible.cal.MonthViewTemplate = function(config){
     this.weekTpl = new Ext.ensible.cal.BoxLayoutTemplate(config);
     this.weekTpl.compile();
     
-    var weekLinkTpl = this.showWeekLinks ? '<div class="ext-cal-week-link-hd">&nbsp;</div>' : '';
+    var weekLinkTpl = this.showWeekLinks ? '<div class="ext-cal-week-link-hd">&#160;</div>' : '';
     
     Ext.ensible.cal.MonthViewTemplate.superclass.constructor.call(this,
 	    '<div class="ext-cal-inner-ct {extraClasses}">',
@@ -32,7 +32,7 @@ Ext.ensible.cal.MonthViewTemplate = function(config){
 		            '<tbody>',
                         '<tr>',
                             '<tpl for="days">',
-		                        '<th class="ext-cal-hd-day{[xindex==1 ? " ext-cal-day-first" : ""]}" title="{.:date("l, F j, Y")}">{.:date("D")}</th>',
+		                        '<th class="ext-cal-hd-day{[xindex==1 ? " ext-cal-day-first" : ""]}" title="{title}">{name}</th>',
 		                    '</tpl>',
                         '</tr>',
 		            '</tbody>',
@@ -44,6 +44,18 @@ Ext.ensible.cal.MonthViewTemplate = function(config){
 };
 
 Ext.extend(Ext.ensible.cal.MonthViewTemplate, Ext.XTemplate, {
+    /**
+     * @cfg {String} dayHeaderFormat
+     * The date format to use for day headers, if used (defaults to 'D', e.g. 'Mon' for Monday)
+     */
+    dayHeaderFormat: 'D',
+    /**
+     * @cfg {String} dayHeaderTitleFormat
+     * The date format to use for the day header's HTML title attribute displayed on mouseover 
+     * (defaults to 'l, F j, Y', e.g. 'Monday, December 27, 2010')
+     */
+    dayHeaderTitleFormat: 'l, F j, Y',
+    
     // private
     applyTemplate : function(o){
         var days = [],
@@ -51,7 +63,11 @@ Ext.extend(Ext.ensible.cal.MonthViewTemplate, Ext.XTemplate, {
             dt = o.viewStart;
         
         for(var i = 0; i < 7; i++){
-            days.push(dt.add(Date.DAY, i));
+            var d = dt.add(Date.DAY, i);
+            days.push({
+                name: d.format(this.dayHeaderFormat),
+                title: d.format(this.dayHeaderTitleFormat)
+            });
         }
         
         var extraClasses = this.showHeader === true ? '' : 'ext-cal-noheader';
@@ -62,7 +78,7 @@ Ext.extend(Ext.ensible.cal.MonthViewTemplate, Ext.XTemplate, {
         return Ext.ensible.cal.MonthViewTemplate.superclass.applyTemplate.call(this, {
             days: days,
             weeks: weeks,
-            extraClasses: extraClasses 
+            extraClasses: extraClasses
         });
     }
 });

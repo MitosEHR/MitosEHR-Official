@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -21,10 +21,13 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
     allDayOnly: true,
     monitorResize: false,
     
+    // The event is declared in MonthView but we're just overriding the docs:
     /**
      * @event dayclick
-     * Fires after the user clicks within the day view container and not on an event element
-     * @param {Ext.ensible.cal.DayBodyView} this
+     * Fires after the user clicks within the view container and not on an event element. This is a cancelable event, so 
+     * returning false from a handler will cancel the click without displaying the event editor view. This could be useful 
+     * for validating that a user can only create events on certain days.
+     * @param {Ext.ensible.cal.DayHeaderView} this
      * @param {Date} dt The date/time that was clicked on
      * @param {Boolean} allday True if the day clicked on represents an all-day box, else false. Clicks within the 
      * DayHeaderView always return true for this param.
@@ -51,8 +54,9 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
     forceSize: Ext.emptyFn,
     
     // private
-    refresh : function(){
-        Ext.ensible.cal.DayHeaderView.superclass.refresh.call(this);
+    refresh : function(reloadData){
+        Ext.ensible.log('refresh (DayHeaderView)');
+        Ext.ensible.cal.DayHeaderView.superclass.refresh.call(this, reloadData);
         this.recalcHeaderBox();
     },
     
@@ -63,25 +67,20 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
         
         this.el.setHeight(h+7);
         
-        if(Ext.isIE && Ext.isStrict){
-            this.el.child('.ext-cal-hd-ad-inner').setHeight(h+4);
-        }
-        if(Ext.isOpera){
-            //TODO: figure out why Opera refuses to refresh height when
-            //the new height is lower than the previous one
-//            var ct = this.el.child('.ext-cal-hd-ct');
-//            ct.repaint();
-        }
+        // These should be auto-height, but since that does not work reliably
+        // across browser / doc type, we have to size them manually
+        this.el.child('.ext-cal-hd-ad-inner').setHeight(h+5);
+        this.el.child('.ext-cal-bg-tbl').setHeight(h+5);
     },
     
     // private
-    moveNext : function(noRefresh){
-        this.moveDays(this.dayCount, noRefresh);
+    moveNext : function(){
+        this.moveDays(this.dayCount);
     },
 
     // private
-    movePrev : function(noRefresh){
-        this.moveDays(-this.dayCount, noRefresh);
+    movePrev : function(){
+        this.moveDays(-this.dayCount);
     },
     
     // private
@@ -91,7 +90,7 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
                 var parts = el.id.split(this.dayElIdDelimiter),
                     dt = parts[parts.length-1];
                     
-                this.fireEvent('dayclick', this, Date.parseDate(dt, 'Ymd'), true, Ext.get(this.getDayId(dt)));
+                this.onDayClick(Date.parseDate(dt, 'Ymd'), true, Ext.get(this.getDayId(dt, true)));
                 return;
             }
         }

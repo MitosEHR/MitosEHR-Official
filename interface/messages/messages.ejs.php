@@ -90,10 +90,10 @@ var storeMsgs = new Ext.data.Store({
 	proxy : new Ext.data.HttpProxy({
 		method		: 'POST',
 		api: {
-			read	: 'data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
-			create	: 'data_create.ejs.php',
-			update	: 'data_update.ejs.php',
-			destroy : 'data_destroy.ejs.php'
+			read	: '../messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
+			create	: '../messages/data_create.ejs.php',
+			update	: '../messages/data_update.ejs.php',
+			destroy : '../messages/data_destroy.ejs.php'
 		}
 	}),
 
@@ -121,7 +121,7 @@ storeMsgs.load();
 // *************************************************************************************
 var storePat = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: 'component_data.ejs.php?task=patients'
+		url: '../messages/component_data.ejs.php?task=patients'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'id',
@@ -144,7 +144,7 @@ storePat.load();
 // *************************************************************************************
 var toData = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: 'component_data.ejs.php?task=users'
+		url: '../messages/component_data.ejs.php?task=users'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'user',
@@ -163,7 +163,7 @@ toData.load();
 // *************************************************************************************
 var typeData = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: 'component_data.ejs.php?task=types'
+		url: '../messages/component_data.ejs.php?task=types'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'option_id',
@@ -182,7 +182,7 @@ typeData.load();
 // *************************************************************************************
 var statusData = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: 'component_data.ejs.php?task=status'
+		url: '../messages/component_data.ejs.php?task=status'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'option_id',
@@ -470,6 +470,7 @@ var winMessage = new  Ext.Window({
 // Create the GridPanel
 // *************************************************************************************
 var msgGrid = new Ext.grid.GridPanel({
+		renderTo	: Ext.getCmp('BottomPanel').body,
 		id			: 'msgGrid',
 		store		: storeMsgs,
 		stripeRows	: true,
@@ -623,10 +624,6 @@ var msgGrid = new Ext.grid.GridPanel({
 			position		: 'top'
 		})]			
 	}); // END GRID
-
-// FIXME
-// Temporary render DIV
-msgGrid.render('ext-gen42');
 
 }); // END EXTJS
 

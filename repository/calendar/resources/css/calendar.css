@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 
@@ -54,6 +54,14 @@
 .ext-cal-ct td,
 .ext-cal-mdv td {
     font-size: 11px;
+}
+
+/* Window specific rules */
+.x-window .x-window-mc .x-cal-body {
+    border: 0 !important;
+}
+.x-window .ext-cal-toolbar {
+    border: 0 !important;
 }
 
 /* Background layout table for week rows */
@@ -189,6 +197,9 @@
     height: 20px;
     margin-bottom: 20px;
 }
+.ext-cal-dayview .ext-cal-bg-row .no-sep {
+    border-bottom: 0;
+}
 .ext-cal-dayview .ext-row-1 {
     border-top: 0;
 }
@@ -321,6 +332,10 @@
 .ext-cal-dtitle {
     cursor: pointer;
 }
+.ext-cal-readonly .ext-cal-day,
+.ext-cal-readonly .ext-cal-dtitle {
+    cursor: default;
+} 
 .ext-day-over {
     background: #D1EAEF !important;
 }
@@ -409,10 +424,6 @@ td.ext-cal-dtitle-today div {
 	text-overflow: ellipsis;
     border: 0;
 }
-.ext-cal-day-col .ext-cal-evr {
-    border-width: 1px;
-    border-style: solid;
-}
 /* Nested event divs (IE/Opera) */
 .ext-cal-evo { /* outer */
     border-top: 1px solid;
@@ -469,7 +480,8 @@ td.ext-cal-dtitle-today div {
 .ext-cal-evdm {
     border: 1px solid;
     -moz-border-radius: 3px;
-    -webkit-border-radius: 3px
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 .ext-cal-evdm dt {
     margin-top: 0
@@ -484,7 +496,7 @@ td.ext-cal-dtitle-today div {
 .ext-cal-evb {
     height: 1px;
     overflow: hidden;
-    margin: 0 1px;
+    margin: 0 2px;
     border-top-width: 1px;
     border-top-style: solid;
 }
@@ -663,94 +675,6 @@ td.ext-cal-dtitle-today div {
     filter:alpha(opacity=50);
 }
 
-/* 
- * Calendar event colors 
- */
-.ext-cal-evr,
-.ext-cal-evi,
-.ext-cal-evt dl {
-	color: #fff;
-}
-
-.ext-color-default,
-.ext-ie .ext-color-default-ad,
-.ext-opera .ext-color-default-ad {
-    color: #668CB3;
-}
-.ext-cal-day-col .ext-color-default,
-.ext-dd-drag-proxy .ext-color-default,
-.ext-color-default-ad,
-.ext-color-default-ad .ext-cal-evm,
-.ext-color-default .ext-cal-picker-icon,
-.ext-color-default-x dl,
-.ext-color-default-x .ext-cal-evb {
-    background: #668CB3;
-}
-.ext-color-default.ext-cal-evr,
-.ext-color-default-x .ext-cal-evb,
-.ext-color-default-x dl {
-    border-color: #29527A;
-}
-
-.ext-color-1,
-.ext-ie .ext-color-1-ad,
-.ext-opera .ext-color-1-ad {
-	color: #668CB3;
-}
-.ext-cal-day-col .ext-color-1,
-.ext-dd-drag-proxy .ext-color-1,
-.ext-color-1-ad,
-.ext-color-1-ad .ext-cal-evm,
-.ext-color-1 .ext-cal-picker-icon,
-.ext-color-1-x dl,
-.ext-color-1-x .ext-cal-evb {
-	background: #668CB3;
-}
-.ext-color-1.ext-cal-evr,
-.ext-color-1-x .ext-cal-evb,
-.ext-color-1-x dl {
-    border-color: #29527A;
-}
-
-.ext-color-2,
-.ext-ie .ext-color-2-ad,
-.ext-opera .ext-color-2-ad {
-	color: #c33;
-}
-.ext-cal-day-col .ext-color-2,
-.ext-dd-drag-proxy .ext-color-2,
-.ext-color-2-ad,
-.ext-color-2-ad .ext-cal-evm,
-.ext-color-2 .ext-cal-picker-icon,
-.ext-color-2-x dl,
-.ext-color-2-x .ext-cal-evb {
-	background: #c33;
-}
-.ext-color-2.ext-cal-evr,
-.ext-color-2-x .ext-cal-evb,
-.ext-color-2-x dl {
-    border-color: #711616;
-}
-.ext-color-3,
-.ext-ie .ext-color-3-ad,
-.ext-opera .ext-color-3-ad {
-    color: #e80;
-}
-.ext-cal-day-col .ext-color-3,
-.ext-dd-drag-proxy .ext-color-3,
-.ext-color-3-ad,
-.ext-color-3-ad .ext-cal-evm,
-.ext-color-3 .ext-cal-picker-icon,
-.ext-color-3-x dl,
-.ext-color-3-x .ext-cal-evb {
-    background: #e80;
-}
-.ext-color-3.ext-cal-evr,
-.ext-color-3-x .ext-cal-evb,
-.ext-color-3-x dl {
-    border-color: #8C500B;
-}
-
 .ext-cal-day-col .ext-cal-evt {
     position: absolute;
 }
@@ -842,12 +766,14 @@ td.ext-cal-dtitle-today div {
  * Calendar editor window styles
  *
  ******************************************/
+.ext-cal-evt-win {
+    z-index: 12100;
+}
 .ext-gecko .ext-cal-event-win .x-window-body .x-form-item {
     overflow: hidden;
 }
 .ext-cal-event-win .x-window-body .x-form {
     background: transparent;
-    padding: 5px 10px 10px;
 }
 .ext-cal-event-win a:link,
 .ext-cal-event-win a:visited {
@@ -917,4 +843,75 @@ td.ext-cal-dtitle-today div {
 }
 .extensible-cal-icon-evt-move {
     background-image:url(../images/default/silk/date_go.png) !important;
+}
+
+/*******************************************
+ * 
+ * CalendarList styles
+ *
+ ******************************************/
+.x-calendar-list .x-panel-body {
+    padding: 4px 2px 2px;
+    background: #fff !important;
+    font-family: helvetica, arial, sans-serif;
+    font-size: 12px;
+    border-bottom: 1px solid #99BBE8;
+}
+.x-calendar-list .x-panel-header-text {
+    color: #555;
+}
+.x-calendar-list li {
+    position: relative;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+.x-calendar-list li em {
+    background-image: url(../images/default/calendar-sprites.gif);
+    background-repeat: no-repeat;
+    display: inline-block;
+    position: absolute;
+    height: 11px;
+    line-height: 11px;
+    width: 12px;
+    top: 2px;
+    background-position: -40px 0;
+    right: 0;
+}
+.x-calendar-list .hover em {
+    background-position: -28px 0;
+    right: 2px;
+    opacity:.7;
+    -moz-opacity:.7;
+}
+.x-calendar-list .ext-cal-evr {
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+}
+.x-calendar-list .ext-cal-hidden,
+/* IE/Opera: */
+.x-calendar-list .ext-cal-hidden .ext-cal-evi {
+    background-image: url(../images/default/ext-cal-list-hidden.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    opacity:.5;
+    -moz-opacity:.5;
+}
+.ext-ie .x-calendar-list .ext-cal-hidden {
+    filter: alpha(opacity=50);
+    zoom: 1;
+}
+.ext-ie .x-calendar-list .ext-cal-hidden .ext-cal-evi  {
+    /* the following works around an IE bug that won't apply the opacity filter correctly without dimensions */
+    width: 100%;
+    height: 100%;
+}
+.ext-ie6 .x-calendar-list .ext-cal-hidden .ext-cal-evi {
+    background-image: url(../images/default/ext-cal-list-hidden-ie6.png);
+}
+.extensible-cal-icon-cal-show {
+    background-image:url(../images/default/silk/calendar_view_month.png) !important;
+}
+.extensible-cal-icon-cal-colors {
+    background-image:url(../images/default/silk/color_wheel.png) !important;
 }

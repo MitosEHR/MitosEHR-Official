@@ -67,7 +67,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	var storeCalEvent = new Ext.data.Store({
 		proxy: new Ext.data.ScriptTagProxy({
-		url: 'load_events.ejs.php?task=load_events&group=%'
+		url: '../calendar/load_events.ejs.php?task=load_events&group=%'
 	}),
 	reader: new Ext.data.JsonReader({
 		id: 'pc_eid',
@@ -105,7 +105,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	var provData = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: 'load_form.ejs.php?task=cmbProv'
+		url: '../calendar/load_form.ejs.php?task=cmbProv'
 	}),
 	reader: new Ext.data.JsonReader({
 		id: 'username',
@@ -125,7 +125,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	var provData_Edit = new Ext.data.Store({
 		proxy: new Ext.data.ScriptTagProxy({
-			url: 'load_form.ejs.php?task=cmbProvEdit'
+			url: '../calendar/load_form.ejs.php?task=cmbProvEdit'
 		}),
 		reader: new Ext.data.JsonReader({
 			id: 'username',
@@ -144,7 +144,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	var statusData = new Ext.data.Store({
 		proxy: new Ext.data.ScriptTagProxy({
-			url: 'load_form.ejs.php?task=cmbStatus'
+			url: '../calendar/load_form.ejs.php?task=cmbStatus'
 		}),
 		reader: new Ext.data.JsonReader({
 			id: 'option_id',
@@ -163,7 +163,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	var catData = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: 'load_form.ejs.php?task=cmbCat'
+		url: '../calendar/load_form.ejs.php?task=cmbCat'
 	}),
 	reader: new Ext.data.JsonReader({
 		id: 'id',
@@ -259,7 +259,7 @@ Ext.onReady(function(){
 	var eventStore = new Ext.data.JsonStore({
 		id: 'eventStore',
 		proxy: new Ext.data.ScriptTagProxy({
-			url: 'load_events.ejs.php'
+			url: '../calendar/load_events.ejs.php'
 		}),
 		fields	: C.EventRecord.prototype.fields.getRange(),
 		sortInfo: {
@@ -438,10 +438,10 @@ Ext.onReady(function(){
 	var sidePanel = new Ext.Panel({
 		region	:'west',
 		border	: false,
-		width	: 176,
+		width	: 177,
 		layout: 'fit',
 		autoHeight	: true,
-		margin	: '0 0 0 0',
+		//margin	: '0 0 0 0',
 		items:[{ // Date picker
 			xtype		: 'datepicker',
 			id			: 'app-nav-picker',
@@ -494,6 +494,7 @@ Ext.onReady(function(){
 		ref				: '../bfCal',
 		id				: 'bfCal',
 		eventStore		: eventStore,
+		layout			: 'fit',
 		calendarStore	: calendarStore,
 		title			: '...',
 		todayText		: '<?php echo htmlspecialchars(xl('Today'), ENT_NOQUOTES); ?>',
@@ -563,14 +564,15 @@ Ext.onReady(function(){
 	//*********************************************************************************************************
 	var CalPanel = new Ext.Panel({
 		border	: false,
-		renderTo: 'ext-gen38',
+		id		: 'CalPanel',
+		renderTo: Ext.getCmp('TopPanel').body,
 		layout	: 'border',
 		autoWidth: true,
-		//autoHeight: true,
-		height: 500,
+		stateful: true,
+		monitorResize: true,
+		viewConfig:{forceFit:true},
 		items	: [sidePanel, bigCalendar]
 	});
-
 
 }); // END EXTJS
 

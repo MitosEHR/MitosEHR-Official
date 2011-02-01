@@ -12,7 +12,14 @@ class Events extends ApplicationController {
 		$res = new Response();
 		$res->success = true;
 		$res->message = "Loaded data";
-		$res->data = Event::all();
+		//var_dump($this->request);
+        if (isset($_REQUEST['start'])) {
+            $this->startDate = $_REQUEST['start'];
+            $this->endDate = $_REQUEST['end'];
+            $res->data = Event::range($this->startDate, $this->endDate);
+        } else {
+        	$res->data = Event::all();
+        }
 		return $res->to_json();
 	}
 	/**
@@ -29,10 +36,10 @@ class Events extends ApplicationController {
 			$res->success = true;
 			$res->message = "Created " . count($res->data) . ' records';
 		} else {
-			if ($rec =  Event::create($this->params)) {
-				$res->success = true;
+			if ($rec = Event::create($this->params)) {
 				$res->data = $rec->to_hash();
-				$res->message = "Created record";
+                $res->success = true;
+                $res->message = "Created record";
 			} else {
 				$res->success = false;
 				$res->message = "Failed to create record";
@@ -59,15 +66,8 @@ class Events extends ApplicationController {
 		} else {
 			if ($rec = Event::update($this->params->id, $this->params)) {
 				$res->data = $rec->to_hash();
-
-				// SIMULATE ERROR:  All records having odd-numbered ID have error.
-				if ($rec->id % 2) {
-					$res->success = false;
-					$res->message = "SIMULATED ERROR:  Lorem ipsum dolor sit amet, placerat consectetuer, nec lacus imperdiet velit dui interdum vestibulum, sagittis lectus morbi, urna aliquet minus natoque commodo egestas non, libero libero arcu sed sed.";
-				} else {
-					$res->success = true;
-					$res->message = "Updated record";
-				}
+				$res->success = true;
+				$res->message = "Updated record";
 			} else {
 				$res->message = "Failed to updated record " . $this->params->id;
 				$res->success = false;
@@ -94,8 +94,8 @@ class Events extends ApplicationController {
 			$res->message = 'Destroyed ' . count($destroyed) . ' records';
 		} else {
 			if ($rec = Event::destroy($this->id)) {
-				$res->message = "Destroyed event";
-				$res->success = true;
+                $res->success = true;
+                $res->message = "Destroyed record";
 			} else {
 				$res->message = "Failed to Destroy event";
 			}

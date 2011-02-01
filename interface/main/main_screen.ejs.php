@@ -77,11 +77,11 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
 <script type="text/javascript" src="../../repository/calendar-rc1/extensible-all-debug.js"></script>
 <script type="text/javascript" src="../../repository/calendar-rc1/extensible-all.js"></script>
+<script type="text/javascript" src="../../repository/fittoparent/Ext.ux.FitToParent.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../../repository/calendar-rc1/resources/css/extensible-all.css" />
 <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css" />
 <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/form/forms.css" />
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/examples.css" />
 <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
   
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
@@ -215,18 +215,28 @@ var TopPanel = new Ext.Panel({
 	autoLoad: {url:'../calendar/calendar.ejs.php', scripts:true},
 	cls:'empty',
 	id: 'TopPanel',
-	ref: '../TopPanel'
+	ref: '../TopPanel',
+	monitorResize: true,
+
+	// Monitor and send the new height value to the panel
+	listeners : {
+		bodyresize : function(panel, width, height) {
+			Ext.getCmp('CalPanel').setHeight(height);
+		}
+	}
 });
 
 // Bottom
 var BottomPanel = new Ext.Panel({
 	region: 'south',
+	id	: 'BottomPanel',
 	autoScroll: true,
 	header: true,
-	height: 200,
+	height: 300,
 	collapsible: true,
 	titleCollapse: true,
 	split:true,
+	monitorResize: true,
 	autoLoad: {url:'../messages/messages.ejs.php', scripts:true},
 	cls:'empty',
 	id: 'BottomPanel',

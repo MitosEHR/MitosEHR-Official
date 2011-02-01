@@ -1,7 +1,7 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
 /**
@@ -11,13 +11,30 @@
  */
 (function(){
     
-    Ext.ns('Ext.ensible.ux','Ext.ensible.cal');
+    Ext.ns('Ext.ensible.ux', 'Ext.ensible.sample', 'Ext.ensible.plugins', 'Ext.ensible.cal');
     
     Ext.apply(Ext.ensible, {
-    
-        version : '1.0-alpha-1',
+        /**
+         * The version of the framework
+         * @type String
+         */
+        version : '1.0-rc1',
+        /**
+         * The version of the framework, broken out into its numeric parts. This returns an
+         * object that contains the following integer properties: major, minor and patch.
+         * @type Object
+         */
+        versionDetails : {
+            major: 1,
+            minor: 0,
+            patch: 0
+        },
         
         hasBorderRadius : !(Ext.isIE || Ext.isOpera),
+        
+        log : function(s){
+            //console.log(s);
+        },
     
        /**
         * @class Ext.ensible.cal.Date
@@ -27,16 +44,53 @@
         */
 	    Date : {
             /**
-             * Calculates the number of days between two dates, ignoring time values.
+             * Determines whether times used throughout all Extensible components should be displayed as
+             * 12 hour times with am/pm (default) or 24 hour / military format. Note that some locale files
+             * may override this value by default.
+             * @type Boolean
+             * @property use24HourTime
+             */
+            use24HourTime : false,
+            
+            /**
+             * Returns the time duration between two dates in the specified units. For finding the number
+             * of calendar days (ignoring time) between two dates use {@link Ext.ensible.Date.diffDays diffDays} instead.
              * @param {Date} start The start date
              * @param {Date} end The end date
-             * @return {Number} The number of days difference between the dates
+             * @param {String} unit (optional) The time unit to return. Valid values are 'ms' (milliseconds, the default), 's' (seconds),
+             * 'm' (minutes) or 'h' (hours).
+             * @return {Number} The time difference between the dates in the units specified by the unit param
              */
-	        diffDays : function(start, end){
-	            day = 1000*60*60*24;
-	            diff = end.clearTime(true).getTime() - start.clearTime(true).getTime();
-	            return Math.ceil(diff/day);
-	        },
+            diff : function(start, end, unit){
+                var denom = 1,
+                    diff = end.getTime() - start.getTime();
+                
+                if(unit == 's'){ 
+                    denom = 1000;
+                }
+                else if(unit == 'm'){
+                    denom = 1000*60;
+                }
+                else if(unit == 'h'){
+                    denom = 1000*60*60;
+                }
+                return Math.round(diff/denom);
+            },
+            
+            /**
+             * Calculates the number of calendar days between two dates, ignoring time values. 
+             * A time span that starts at 11pm (23:00) on Monday and ends at 1am (01:00) on Wednesday is 
+             * only 26 total hours, but it spans 3 calendar days, so this function would return 3. For the
+             * exact time difference, use {@link Ext.ensible.Date.diff diff} instead.
+             * @param {Date} start The start date
+             * @param {Date} end The end date
+             * @return {Number} The number of calendar days difference between the dates
+             */
+            diffDays : function(start, end){
+                day = 1000*60*60*24;
+                diff = end.clearTime(true).getTime() - start.clearTime(true).getTime();
+                return Math.ceil(diff/day);
+            },
             
             /**
              * Copies the time value from one date object into another without altering the target's 
@@ -108,11 +162,31 @@
              */
 			min : function(){
 	            return this.maxOrMin.apply(this, [false, arguments]);
-	        }
+	        },
+            
+            isInRange : function(dt, rangeStart, rangeEnd) {
+                return  (dt >= rangeStart && dt <= rangeEnd);
+            },
+            
+            /**
+             * Returns true if two date ranges overlap (either one starts or ends within the other, or one completely
+             * overlaps the start and end of the other), else false if they do not.
+             * @param {Date} start1 The start date of range 1
+             * @param {Date} end1   The end date of range 1
+             * @param {Date} start2 The start date of range 2
+             * @param {Date} end2   The end date of range 2
+             * @return {Booelan} True if the ranges overlap, else false
+             */
+            rangesOverlap : function(start1, end1, start2, end2){
+                var startsInRange = (start1 >= start2 && start1 <= end2),
+                    endsInRange = (end1 >= start2 && end1 <= end2),
+                    spansRange = (start1 <= start2 && end1 >= end2);
+                
+                return (startsInRange || endsInRange || spansRange);
+            }
 	    }
     });
 })();
-
 //TODO: remove this once we are synced to trunk again
 Ext.override(Ext.XTemplate, {
     applySubTemplate : function(id, values, parent, xindex, xcount){
@@ -155,6 +229,123 @@ Ext.override(Ext.form.DateField, {
         }
     }
 });
+
+
+/* This override applies to the current 3.3.x line to fix duplicate remote actions */
+Ext.override(Ext.data.Store, {
+    add : function(records) {
+        var i, record, index;
+        
+        records = [].concat(records);
+        if (records.length < 1) {
+            return;
+        }
+        
+        for (i = 0, len = records.length; i < len; i++) {
+            record = records[i];
+            
+            record.join(this);
+            
+            //Extensible: Added the modified.indexOf check to avoid adding duplicate recs
+            if ((record.dirty || record.phantom) && this.modified.indexOf(record) == -1) {
+                this.modified.push(record);
+            }
+        }
+        
+        index = this.data.length;
+        this.data.addAll(records);
+        
+        if (this.snapshot) {
+            this.snapshot.addAll(records);
+        }
+        
+        this.fireEvent('add', this, records, index);
+    },
+    insert : function(index, records) {
+        var i, record;
+        
+        records = [].concat(records);
+        for (i = 0, len = records.length; i < len; i++) {
+            record = records[i];
+            
+            this.data.insert(index + i, record);
+            record.join(this);
+            
+            //Extensible: Added the modified.indexOf check to avoid adding duplicate recs
+            if ((record.dirty || record.phantom) && this.modified.indexOf(record) == -1) {
+                this.modified.push(record);
+            }
+        }
+        
+        if (this.snapshot) {
+            this.snapshot.addAll(records);
+        }
+        
+        this.fireEvent('add', this, records, index);
+    },
+    
+    // Interestingly, this method has no changes, but is included here because without it a very strange
+    // race condition occurs. This method is used as a callback internally for the add event which
+    // is fired from the add method (overridden above). As long as both methods are here everything is OK
+    // but with createRecords removed and defaulted to the original class you end up with duplicate copies
+    // of added records in the store's modified collection (since both methods add to it). Not sure exactly
+    // how that happens, but including this fixes it.
+    createRecords : function(store, records, index) {
+        var modified = this.modified,
+            length   = records.length,
+            record, i;
+        
+        for (i = 0; i < length; i++) {
+            record = records[i];
+            
+            if (record.phantom && record.isValid()) {
+                record.markDirty();  // <-- Mark new records dirty (Ed: why?)
+                
+                //Extensible: Added the modified.indexOf check to avoid adding duplicate recs
+                if (modified.indexOf(record) == -1) {
+                    modified.push(record);
+                }
+            }
+        }
+        if (this.autoSave === true) {
+            this.save();
+        }
+    }
+});
+
+
+// Have to add in full API support so that EventMemoryProxy can do its thing.
+// Won't hurt normal read-only MemoryProxy read actions.
+Ext.data.MemoryProxy = function(data){
+    var api = {};
+    api[Ext.data.Api.actions.read] = true;
+    api[Ext.data.Api.actions.create] = true;
+    api[Ext.data.Api.actions.update] = true;
+    api[Ext.data.Api.actions.destroy] = true;
+    Ext.data.MemoryProxy.superclass.constructor.call(this, {
+        api: api
+    });
+    this.data = data;
+};
+
+Ext.extend(Ext.data.MemoryProxy, Ext.data.DataProxy, {
+    doRequest : function(action, rs, params, reader, callback, scope, arg) {
+        if(action === Ext.data.Api.actions.read){
+            params = params || {};
+            var result;
+            try {
+                result = reader.readRecords(this.data);
+            }catch(e){
+                // @deprecated loadexception
+                this.fireEvent("loadexception", this, null, arg, e);
+                this.fireEvent('exception', this, 'response', action, arg, null, e);
+                callback.call(scope, null, arg, false);
+                return;
+            }
+            callback.call(scope, result, arg, true);
+        }
+    }
+});
 /**
  * @class Ext.ensible.cal.DayHeaderTemplate
  * @extends Ext.XTemplate
@@ -184,13 +375,14 @@ Ext.ensible.cal.DayHeaderTemplate = function(config){
                         '<td class="ext-cal-hd-days-td"><div class="ext-cal-hd-ad-inner">{allDayTpl}</div></td>',
                         '<td class="ext-cal-gutter-rt"></td>',
                     '</tr>',
-                '</tobdy>',
+                '</tbody>',
             '</table>',
         '</div>'
     );
 };
 
 Ext.extend(Ext.ensible.cal.DayHeaderTemplate, Ext.XTemplate, {
+    // private
     applyTemplate : function(o){
         return Ext.ensible.cal.DayHeaderTemplate.superclass.applyTemplate.call(this, {
             allDayTpl: this.allDayTpl.apply(o)
@@ -215,7 +407,7 @@ Ext.ensible.cal.DayBodyTemplate = function(config){
     Ext.apply(this, config);
     
     Ext.ensible.cal.DayBodyTemplate.superclass.constructor.call(this,
-        '<table class="ext-cal-bg-tbl" cellspacing="0" cellpadding="0">',
+        '<table class="ext-cal-bg-tbl" cellspacing="0" cellpadding="0" style="height:{dayHeight}px;">',
             '<tbody>',
                 '<tr height="1">',
                     '<td class="ext-cal-gutter"></td>',
@@ -223,8 +415,8 @@ Ext.ensible.cal.DayBodyTemplate = function(config){
                         '<div class="ext-cal-bg-rows">',
                             '<div class="ext-cal-bg-rows-inner">',
                                 '<tpl for="times">',
-                                    '<div class="ext-cal-bg-row">',
-                                        '<div class="ext-cal-bg-row-div ext-row-{[xindex]}"></div>',
+                                    '<div class="ext-cal-bg-row ext-row-{[xindex]}" style="height:{parent.hourHeight}px;">',
+                                        '<div class="ext-cal-bg-row-div {parent.hourSeparatorCls}" style="height:{parent.hourSeparatorHeight}px;"></div>',
                                     '</div>',
                                 '</tpl>',
                             '</div>',
@@ -234,15 +426,15 @@ Ext.ensible.cal.DayBodyTemplate = function(config){
                 '<tr>',
                     '<td class="ext-cal-day-times">',
                         '<tpl for="times">',
-                            '<div class="ext-cal-bg-row">',
-                                '<div class="ext-cal-day-time-inner">{.}</div>',
+                            '<div class="ext-cal-bg-row" style="height:{parent.hourHeight}px;">',
+                                '<div class="ext-cal-day-time-inner"  style="height:{parent.hourHeight-1}px;">{.}</div>',
                             '</div>',
                         '</tpl>',
                     '</td>',
                     '<tpl for="days">',
                         '<td class="ext-cal-day-col">',
                             '<div class="ext-cal-day-col-inner">',
-                                '<div id="{[this.id]}-day-col-{.:date("Ymd")}" class="ext-cal-day-col-gutter"></div>',
+                                '<div id="{[this.id]}-day-col-{.:date("Ymd")}" class="ext-cal-day-col-gutter" style="height:{parent.dayHeight}px;"></div>',
                             '</div>',
                         '</td>',
                     '</tpl>',
@@ -265,16 +457,27 @@ Ext.extend(Ext.ensible.cal.DayBodyTemplate, Ext.XTemplate, {
             days[i] = dt.add(Date.DAY, i);
         }
 
-        var times = [], dt = new Date().clearTime();
-        for(i=0; i<24; i++){
-            times.push(dt.format('ga'));
-            dt = dt.add(Date.HOUR, 1);
+        var times = [],
+            start = this.viewStartHour,
+            end = this.viewEndHour,
+            mins = this.hourIncrement,
+            dt = new Date().clearTime().add(Date.HOUR, start),
+            dayHeight = this.hourHeight * (end - start)
+            fmt = Ext.ensible.Date.use24HourTime ? 'G:i' : 'ga';
+        
+        for(i=start; i<end; i++){
+            times.push(dt.format(fmt));
+            dt = dt.add(Date.MINUTE, mins);
         }
         
         return Ext.ensible.cal.DayBodyTemplate.superclass.applyTemplate.call(this, {
             days: days,
             dayCount: days.length,
-            times: times
+            times: times,
+            hourHeight: this.hourHeight,
+            hourSeparatorCls: this.showHourSeparator ? '' : 'no-sep', // the class suppresses the default separator
+            dayHeight: dayHeight,
+            hourSeparatorHeight: (this.hourHeight / 2) - 1
         });
     }
 });
@@ -304,7 +507,7 @@ Ext.ensible.cal.BoxLayoutTemplate = function(config){
                     '<tbody>',
                         '<tr>',
                             '<tpl for=".">',
-                                 '<td id="{[this.id]}-day-{date:date("Ymd")}" class="{cellCls}">&nbsp;</td>',
+                                 '<td id="{[this.id]}-day-{date:date("Ymd")}" class="{cellCls}">&#160;</td>',
                             '</tpl>',
                         '</tr>',
                     '</tbody>',
@@ -331,6 +534,37 @@ Ext.ensible.cal.BoxLayoutTemplate = function(config){
 };
 
 Ext.extend(Ext.ensible.cal.BoxLayoutTemplate, Ext.XTemplate, {
+    /**
+     * @cfg {String} firstWeekDateFormat
+     * The date format used for the day boxes in the first week of the view only (subsequent weeks
+     * use the {@link #otherWeeksDateFormat} config). Defaults to 'D j'. Note that if the day names header is displayed
+     * above the first row (e.g., {@link Ext.ensible.cal.MonthView#showHeader MonthView.showHeader} = true)
+     * then this value is ignored and {@link #otherWeeksDateFormat} will be used instead.
+     */
+    firstWeekDateFormat: 'D j',
+    /**
+     * @cfg {String} otherWeeksDateFormat
+     * The date format used for the date in day boxes (other than the first week, which is controlled by
+     * {@link #firstWeekDateFormat}). Defaults to 'j'.
+     */
+    otherWeeksDateFormat: 'j',
+    /**
+     * @cfg {String} singleDayDateFormat
+     * The date format used for the date in the header when in single-day view (defaults to 'l, F j, Y').
+     */
+    singleDayDateFormat: 'l, F j, Y',
+    /**
+     * @cfg {String} multiDayFirstDayFormat
+     * The date format used for the date in the header when more than one day are visible (defaults to 'M j, Y').
+     */
+    multiDayFirstDayFormat: 'M j, Y',
+    /**
+     * @cfg {String} multiDayMonthStartFormat
+     * The date format to use for the first day in a month when more than one day are visible (defaults to 'M j').
+     * Note that if this day falls on the first day within the view, {@link #multiDayFirstDayFormat} takes precedence.
+     */
+    multiDayMonthStartFormat: 'M j',
+    
     // private
     applyTemplate : function(o){
         
@@ -357,7 +591,7 @@ Ext.extend(Ext.ensible.cal.BoxLayoutTemplate, Ext.XTemplate, {
                 if(dt.getDay() == 1){
                     // The ISO week format 'W' is relative to a Monday week start. If we
                     // make this check on Sunday the week number will be off.
-                    weeks[w].weekNum = this.showWeekNumbers ? dt.format('W') : '&nbsp;';
+                    weeks[w].weekNum = this.showWeekNumbers ? dt.format('W') : '&#160;';
                     weeks[w].weekLinkId = 'ext-cal-week-'+dt.format('Ymd');
                 }
                 
@@ -366,11 +600,12 @@ Ext.extend(Ext.ensible.cal.BoxLayoutTemplate, Ext.XTemplate, {
                         title = this.getTodayText();
                     }
                     else{
-                        title = dt.format(this.dayCount == 1 ? 'l, F j, Y' : (first ? 'M j, Y' : 'M j'));
+                        title = dt.format(this.dayCount == 1 ? this.singleDayDateFormat : 
+                                (first ? this.multiDayFirstDayFormat : this.multiDayMonthStartFormat));
                     }
                 }
                 else{
-                    var dayFmt = (w == 0 && this.showHeader !== true) ? 'D j' : 'j';
+                    var dayFmt = (w == 0 && this.showHeader !== true) ? this.firstWeekDateFormat : this.otherWeeksDateFormat;
                     title = isToday ? this.getTodayText() : dt.format(dayFmt);
                 }
                 
@@ -398,16 +633,16 @@ Ext.extend(Ext.ensible.cal.BoxLayoutTemplate, Ext.XTemplate, {
     
     // private
     getTodayText : function(){
-        var dt = new Date().format('l, F j, Y'),
+        var timeFmt = Ext.ensible.Date.use24HourTime ? 'G:i ' : 'g:ia ',
             todayText = this.showTodayText !== false ? this.todayText : '',
             timeText = this.showTime !== false ? ' <span id="'+this.id+'-clock" class="ext-cal-dtitle-time">' + 
-                    new Date().format('g:i a') + '</span>' : '',
-            separator = todayText.length > 0 || timeText.length > 0 ? ' &mdash; ' : '';
+                    new Date().format(timeFmt) + '</span>' : '',
+            separator = todayText.length > 0 || timeText.length > 0 ? ' &#8212; ' : ''; // &#8212; == &mdash;
         
         if(this.dayCount == 1){
-            return dt + separator + todayText + timeText;
+            return new Date().format(this.singleDayDateFormat) + separator + todayText + timeText;
         }
-        fmt = this.weekCount == 1 ? 'D j' : 'j';
+        fmt = this.weekCount == 1 ? this.firstWeekDateFormat : this.otherWeeksDateFormat;
         return todayText.length > 0 ? todayText + timeText : new Date().format(fmt) + timeText;
     }
 });
@@ -431,7 +666,7 @@ Ext.ensible.cal.MonthViewTemplate = function(config){
     this.weekTpl = new Ext.ensible.cal.BoxLayoutTemplate(config);
     this.weekTpl.compile();
     
-    var weekLinkTpl = this.showWeekLinks ? '<div class="ext-cal-week-link-hd">&nbsp;</div>' : '';
+    var weekLinkTpl = this.showWeekLinks ? '<div class="ext-cal-week-link-hd">&#160;</div>' : '';
     
     Ext.ensible.cal.MonthViewTemplate.superclass.constructor.call(this,
 	    '<div class="ext-cal-inner-ct {extraClasses}">',
@@ -441,7 +676,7 @@ Ext.ensible.cal.MonthViewTemplate = function(config){
 		            '<tbody>',
                         '<tr>',
                             '<tpl for="days">',
-		                        '<th class="ext-cal-hd-day{[xindex==1 ? " ext-cal-day-first" : ""]}" title="{.:date("l, F j, Y")}">{.:date("D")}</th>',
+		                        '<th class="ext-cal-hd-day{[xindex==1 ? " ext-cal-day-first" : ""]}" title="{title}">{name}</th>',
 		                    '</tpl>',
                         '</tr>',
 		            '</tbody>',
@@ -453,6 +688,18 @@ Ext.ensible.cal.MonthViewTemplate = function(config){
 };
 
 Ext.extend(Ext.ensible.cal.MonthViewTemplate, Ext.XTemplate, {
+    /**
+     * @cfg {String} dayHeaderFormat
+     * The date format to use for day headers, if used (defaults to 'D', e.g. 'Mon' for Monday)
+     */
+    dayHeaderFormat: 'D',
+    /**
+     * @cfg {String} dayHeaderTitleFormat
+     * The date format to use for the day header's HTML title attribute displayed on mouseover 
+     * (defaults to 'l, F j, Y', e.g. 'Monday, December 27, 2010')
+     */
+    dayHeaderTitleFormat: 'l, F j, Y',
+    
     // private
     applyTemplate : function(o){
         var days = [],
@@ -460,7 +707,11 @@ Ext.extend(Ext.ensible.cal.MonthViewTemplate, Ext.XTemplate, {
             dt = o.viewStart;
         
         for(var i = 0; i < 7; i++){
-            days.push(dt.add(Date.DAY, i));
+            var d = dt.add(Date.DAY, i);
+            days.push({
+                name: d.format(this.dayHeaderFormat),
+                title: d.format(this.dayHeaderTitleFormat)
+            });
         }
         
         var extraClasses = this.showHeader === true ? '' : 'ext-cal-noheader';
@@ -471,13 +722,13 @@ Ext.extend(Ext.ensible.cal.MonthViewTemplate, Ext.XTemplate, {
         return Ext.ensible.cal.MonthViewTemplate.superclass.applyTemplate.call(this, {
             days: days,
             weeks: weeks,
-            extraClasses: extraClasses 
+            extraClasses: extraClasses
         });
     }
 });
 
 Ext.ensible.cal.MonthViewTemplate.prototype.apply = Ext.ensible.cal.MonthViewTemplate.prototype.applyTemplate;
-/**
+/* @private
  * @class Ext.dd.ScrollManager
  * <p>Provides automatic scrolling of overflow regions in the page during drag operations.</p>
  * <p>The ScrollManager configs will be used as the defaults for any scroll container registered with it,
@@ -675,7 +926,7 @@ Ext.dd.ScrollManager = function(){
             }
         }
     };
-}();/*
+}();/**
  * @class Ext.ensible.cal.StatusProxy
  * A specialized drag proxy that supports a drop status icon, {@link Ext.Layer} styles and auto-repair. It also
  * contains a calendar-specific drag status message containing details about the dragged event's target drop date range.  
@@ -731,14 +982,14 @@ Ext.extend(Ext.ensible.cal.StatusProxy, Ext.dd.StatusProxy, {
         }
     },
     
-    /**
+    /* @private
      * Update the calendar-specific drag status message without altering the ghost element.
      * @param {String} msg The new status message
      */
     updateMsg : function(msg){
         this.message.update(msg);
     }
-});/*
+});/* @private
  * Internal drag zone implementation for the calendar components. This provides base functionality
  * and is primarily for the month view -- DayViewDD adds day/week view-specific functionality.
  */
@@ -817,16 +1068,23 @@ Ext.ensible.cal.DragZone = Ext.extend(Ext.dd.DragZone, {
     
     afterInvalidDrop : function(e, id){
         Ext.select('.ext-dd-shim').hide();
-    }
+    },
+    
+    destroy : function(){
+        Ext.ensible.cal.DragZone.superclass.destroy.call(this);
+        delete Ext.ensible.cal._statusProxyInstance;
+    }    
 });
 
-/*
+/* @private
  * Internal drop zone implementation for the calendar components. This provides base functionality
  * and is primarily for the month view -- DayViewDD adds day/week view-specific functionality.
  */
 Ext.ensible.cal.DropZone = Ext.extend(Ext.dd.DropZone, {
     ddGroup : 'CalendarDD',
     eventSelector : '.ext-cal-evt',
+    dateRangeFormat : '{0}-{1}',
+    dateFormat : 'n/j',
     
     // private
     shims : [],
@@ -847,12 +1105,14 @@ Ext.ensible.cal.DropZone = Ext.extend(Ext.dd.DropZone, {
         
         if(!this.dragStartDate || !this.dragEndDate || (D.diffDays(start, this.dragStartDate) != 0) || (D.diffDays(end, this.dragEndDate) != 0)){
             this.dragStartDate = start;
-            this.dragEndDate = end.clearTime().add(Date.DAY, 1).add(Date.MILLI, -1);
+            this.dragEndDate = end.clearTime().add(Date.DAY, 1).add(Date.MINUTE, -30);
             this.shim(start, end);
             
-            var range = start.format('n/j');
+            var range = start.format(this.dateFormat);
+                
             if(D.diffDays(start, end) > 0){
-                range += '-'+end.format('n/j');
+                end = end.format(this.dateFormat);
+                range = String.format(this.dateRangeFormat, range, end);
             }
             var msg = String.format(data.type == 'eventdrag' ? this.moveText : this.createText, range);
             data.proxy.updateMsg(msg);
@@ -914,12 +1174,13 @@ Ext.ensible.cal.DropZone = Ext.extend(Ext.dd.DropZone, {
     },
     
     createShim : function(){
+        var owner = this.view.ownerCalendarPanel ? this.view.ownerCalendarPanel : this.view;
         if(!this.shimCt){
-            this.shimCt = Ext.get('ext-dd-shim-ct');
+            this.shimCt = Ext.get('ext-dd-shim-ct-'+owner.id);
             if(!this.shimCt){
                 this.shimCt = document.createElement('div');
-                this.shimCt.id = 'ext-dd-shim-ct';
-                Ext.getBody().appendChild(this.shimCt);
+                this.shimCt.id = 'ext-dd-shim-ct-'+owner.id;
+                owner.getEl().parent().appendChild(this.shimCt);
             }
         }
         var el = document.createElement('div');
@@ -976,15 +1237,10 @@ Ext.ensible.cal.DropZone = Ext.extend(Ext.dd.DropZone, {
     onContainerDrop : function(dd, e, data){
         this.onCalendarDragComplete();
         return false;
-    },
-    
-    destroy: function(){
-        Ext.ensible.cal.DropZone.superclass.destroy.call(this);
-        Ext.destroy(this.shimCt);
     }
 });
 
-/*
+/* @private
  * Internal drag zone implementation for the calendar day and week views.
  */
 Ext.ensible.cal.DayViewDragZone = Ext.extend(Ext.ensible.cal.DragZone, {
@@ -1031,14 +1287,18 @@ Ext.ensible.cal.DayViewDragZone = Ext.extend(Ext.ensible.cal.DragZone, {
     }
 });
 
-/*
+/* @private
  * Internal drop zone implementation for the calendar day and week views.
  */
 Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
     ddGroup : 'DayViewDD',
+    dateRangeFormat : '{0}-{1}',
+    dateFormat : 'n/j',
     
     onNodeOver : function(n, dd, e, data){
-        var dt, text = this.createText;
+        var dt, text = this.createText,
+            timeFormat = Ext.ensible.Date.use24HourTime ? 'G:i' : 'g:ia';
+            
         if(data.type == 'caldrag'){
             if(!this.dragStartMarker){
                 // Since the container can scroll, this gets a little tricky.
@@ -1061,10 +1321,10 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
             if(e.xy[1] < box.y){
                 box.height += n.timeBox.height;
                 box.y = box.y - box.height + n.timeBox.height;
-                endDt = this.dragCreateDt.add(Date.MINUTE, 30);
+                endDt = this.dragCreateDt.add(Date.MINUTE, this.ddIncrement);
             }
             else{
-                n.date = n.date.add(Date.MINUTE, 30);
+                n.date = n.date.add(Date.MINUTE, this.ddIncrement);
             }
             this.shim(this.dragCreateDt, box);
             
@@ -1072,7 +1332,7 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
             this.dragStartDate = Ext.ensible.Date.min(this.dragCreateDt, curr);
             this.dragEndDate = endDt || Ext.ensible.Date.max(this.dragCreateDt, curr);
                 
-            dt = this.dragStartDate.format('g:ia-') + this.dragEndDate.format('g:ia');
+            dt = String.format(this.dateRangeFormat, this.dragStartDate.format(timeFormat), this.dragEndDate.format(timeFormat));
         }
         else{
             var evtEl = Ext.get(data.ddel),
@@ -1089,7 +1349,7 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
                 else{
                     box.y = n.timeBox.y;
                 }
-                dt = n.date.format('n/j g:ia');
+                dt = n.date.format(this.dateFormat + ' ' + timeFormat);
                 box.x = n.el.getLeft();
                 
                 this.shim(n.date, box);
@@ -1105,7 +1365,7 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
                     box.y -= box.height;
                 }
                 else{
-                    n.date = n.date.add(Date.MINUTE, 30);
+                    n.date = n.date.add(Date.MINUTE, this.ddIncrement);
                 }
                 this.shim(this.resizeDt, box);
                 
@@ -1117,7 +1377,7 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
                     StartDate: start,
                     EndDate: end
                 }
-                dt = start.format('g:ia-') + end.format('g:ia');
+                dt = String.format(this.dateRangeFormat, start.format(timeFormat), end.format(timeFormat));
                 text = this.resizeText;
             }
         }
@@ -1176,35 +1436,247 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
         return false;
     }
 });
+
+Ext.ensible.cal.EventStore = Ext.extend(Ext.data.Store, {
+    constructor: function(config){
+        // By default autoLoad will cause the store to load itself during the
+        // constructor, before the owning calendar view has a chance to set up
+        // the initial date params to use during loading.  We replace autoLoad
+        // with a deferLoad property that the view can check for and use to set
+        // up default params as needed, then call the load itself. 
+        this.deferLoad = config.autoLoad;
+        config.autoLoad = false;
+        
+        //this._dateCache = [];
+        
+        Ext.ensible.cal.EventStore.superclass.constructor.apply(this, arguments);
+    },
+    
+    load : function(o){
+        Ext.ensible.log('store load');
+        
+        // if params are passed delete the one-time defaults
+        if(o.params){
+            delete this.initialParams;
+        }
+        // this.initialParams will only be set if the store is being loaded manually
+        // for the first time (autoLoad = false) so the owning calendar view set
+        // the initial start and end date params to use. Every load after that will
+        // have these params set automatically during normal UI navigation.
+        if(this.initialParams){
+            o = Ext.isObject(o) ? o : {};
+            o.params = o.params || {};
+            Ext.apply(o.params, this.initialParams);
+            delete this.initialParams;
+        }
+        
+        Ext.ensible.cal.EventStore.superclass.load.call(this, o);
+    }
+    
+//    execute : function(action, rs, options, /* private */ batch) {
+//        if(action=='read'){
+//            var i = 0, 
+//                dc = this._dateCache, 
+//                len = dc.length,
+//                range,
+//                p = options.params,
+//                start = p.start,
+//                end = p.end;
+//                
+//            //options.add = true;
+//            for(i; i<len; i++){
+//                range = dc[i];
+//                
+//            }
+//        }
+//        Ext.ensible.cal.EventStore.superclass.execute.apply(this, arguments);
+//    }
+});
+
+Ext.reg('extensible.eventstore', Ext.ensible.cal.EventStore);
 /**
  * @class Ext.ensible.cal.EventMappings
  * @extends Object
- * A simple object that provides the field definitions for EventRecords so that they can be easily overridden.
+ * <p>A simple object that provides the field definitions for 
+ * {@link Ext.ensible.cal.EventRecord EventRecord}s so that they can be easily overridden.</p>
+ * 
+ * <p>There are several ways of overriding the default Event record mappings to customize how 
+ * Ext records are mapped to your back-end data model. If you only need to change a handful 
+ * of field properties you can directly modify the EventMappings object as needed and then 
+ * reconfigure it. The simplest approach is to only override specific field attributes:</p>
+ * <pre><code>
+var M = Ext.ensible.cal.EventMappings;
+M.Title.mapping = 'evt_title';
+M.Title.name = 'EventTitle';
+Ext.ensible.cal.EventRecord.reconfigure();
+</code></pre>
+ * 
+ * <p>You can alternately override an entire field definition using object-literal syntax, or 
+ * provide your own custom field definitions (as in the following example). Note that if you do 
+ * this, you <b>MUST</b> include a complete field definition, including the <tt>type</tt> attribute
+ * if the field is not the default type of <tt>string</tt>.</p>
+ * <pre><code>
+// Add a new field that does not exist in the default EventMappings:
+Ext.ensible.cal.EventMappings.Timestamp = {
+    name: 'Timestamp',
+    mapping: 'timestamp',
+    type: 'date'
+};
+Ext.ensible.cal.EventRecord.reconfigure();
+</code></pre>
+ * 
+ * <p>If you are overriding a significant number of field definitions it may be more convenient 
+ * to simply redefine the entire EventMappings object from scratch. The following example
+ * redefines the same fields that exist in the standard EventRecord object but the names and 
+ * mappings have all been customized. Note that the name of each field definition object 
+ * (e.g., 'EventId') should <b>NOT</b> be changed for the default EventMappings fields as it 
+ * is the key used to access the field data programmatically.</p>
+ * <pre><code>
+Ext.ensible.cal.EventMappings = {
+    EventId:     {name: 'ID', mapping:'evt_id', type:'int'},
+    CalendarId:  {name: 'CalID', mapping: 'cal_id', type: 'int'},
+    Title:       {name: 'EvtTitle', mapping: 'evt_title'},
+    StartDate:   {name: 'StartDt', mapping: 'start_dt', type: 'date', dateFormat: 'c'},
+    EndDate:     {name: 'EndDt', mapping: 'end_dt', type: 'date', dateFormat: 'c'},
+    RRule:       {name: 'RecurRule', mapping: 'recur_rule'},
+    Location:    {name: 'Location', mapping: 'location'},
+    Notes:       {name: 'Desc', mapping: 'full_desc'},
+    Url:         {name: 'LinkUrl', mapping: 'link_url'},
+    IsAllDay:    {name: 'AllDay', mapping: 'all_day', type: 'boolean'},
+    Reminder:    {name: 'Reminder', mapping: 'reminder'},
+    
+    // We can also add some new fields that do not exist in the standard EventRecord:
+    CreatedBy:   {name: 'CreatedBy', mapping: 'created_by'},
+    IsPrivate:   {name: 'Private', mapping:'private', type:'boolean'}
+};
+// Don't forget to reconfigure!
+Ext.ensible.cal.EventRecord.reconfigure();
+</code></pre>
+ * 
+ * <p><b>NOTE:</b> Any record reconfiguration you want to perform must be done <b>PRIOR to</b> 
+ * initializing your data store, otherwise the changes will not be reflected in the store's records.</p>
+ * 
+ * <p>Another important note is that if you alter the default mapping for <tt>EventId</tt>, make sure to add
+ * that mapping as the <tt>idProperty</tt> of your data reader, otherwise it won't recognize how to
+ * access the data correctly and will treat existing records as phantoms. Here's an easy way to make sure
+ * your mapping is always valid:</p>
+ * <pre><code>
+var reader = new Ext.data.JsonReader({
+    totalProperty: 'total',
+    successProperty: 'success',
+    root: 'data',
+    messageProperty: 'message',
+    
+    // read the id property generically, regardless of the mapping:
+    idProperty: Ext.ensible.cal.EventMappings.EventId.mapping  || 'id',
+    
+    // this is also a handy way to configure your reader's fields generically:
+    fields: Ext.ensible.cal.EventRecord.prototype.fields.getRange()
+});
+</code></pre>
  */
 Ext.ensible.cal.EventMappings = {
-    EventId: {name: 'EventId', mapping:'id', type:'int'},
-    CalendarId: {name:'CalendarId', mapping: 'cid', type: 'int'},
-    Title: {name:'Title', mapping: 'title', type: 'string'},
-    StartDate: {name:'StartDate', mapping: 'start', type: 'date', dateFormat: 'c'},
-    EndDate: {name:'EndDate', mapping: 'end', type: 'date', dateFormat: 'c'},
-    Location: {name:'Location', mapping: 'loc', type: 'string'},
-    Notes: {name:'Notes', mapping: 'notes', type: 'string'},
-    Url: {name:'Url', mapping: 'url', type: 'string'},
-    IsAllDay: {name:'IsAllDay', mapping: 'ad', type: 'boolean'},
-    Reminder: {name:'Reminder', mapping: 'rem', type: 'string'},
-    IsNew: {name:'IsNew', mapping: 'n', type: 'boolean'}
+    EventId:     {name: 'EventId', mapping:'id', type:'int'},
+    CalendarId:  {name: 'CalendarId', mapping: 'cid', type: 'int'},
+    Title:       {name: 'Title', mapping: 'title', type: 'string'},
+    StartDate:   {name: 'StartDate', mapping: 'start', type: 'date', dateFormat: 'c'},
+    EndDate:     {name: 'EndDate', mapping: 'end', type: 'date', dateFormat: 'c'},
+    RRule:       {name: 'RecurRule', mapping: 'recur_rule'}, // not currently used
+    Location:    {name: 'Location', mapping: 'loc', type: 'string'},
+    Notes:       {name: 'Notes', mapping: 'notes', type: 'string'},
+    Url:         {name: 'Url', mapping: 'url', type: 'string'},
+    IsAllDay:    {name: 'IsAllDay', mapping: 'ad', type: 'boolean'},
+    Reminder:    {name: 'Reminder', mapping: 'rem', type: 'string'}
+};/**
+ * @class Ext.ensible.cal.CalendarMappings
+ * @extends Object
+ * A simple object that provides the field definitions for 
+ * {@link Ext.ensible.cal.CalendarRecord CalendarRecord}s so that they can be easily overridden.
+ * 
+ * <p>There are several ways of overriding the default Calendar record mappings to customize how 
+ * Ext records are mapped to your back-end data model. If you only need to change a handful 
+ * of field properties you can directly modify the CalendarMappings object as needed and then 
+ * reconfigure it. The simplest approach is to only override specific field attributes:</p>
+ * <pre><code>
+var M = Ext.ensible.cal.CalendarMappings;
+M.Title.mapping = 'cal_title';
+M.Title.name = 'CalTitle';
+Ext.ensible.cal.CalendarRecord.reconfigure();
+</code></pre>
+ * 
+ * <p>You can alternately override an entire field definition using object-literal syntax, or 
+ * provide your own custom field definitions (as in the following example). Note that if you do 
+ * this, you <b>MUST</b> include a complete field definition, including the <tt>type</tt> attribute
+ * if the field is not the default type of <tt>string</tt>.</p>
+ * <pre><code>
+// Add a new field that does not exist in the default CalendarMappings:
+Ext.ensible.cal.CalendarMappings.Owner = {
+    name: 'Owner',
+    mapping: 'owner',
+    type: 'string'
 };
-
-/**
+Ext.ensible.cal.CalendarRecord.reconfigure();
+</code></pre>
+ * 
+ * <p>If you are overriding a significant number of field definitions it may be more convenient 
+ * to simply redefine the entire CalendarMappings object from scratch. The following example
+ * redefines the same fields that exist in the standard CalendarRecord object but the names and 
+ * mappings have all been customized. Note that the name of each field definition object 
+ * (e.g., 'CalendarId') should <b>NOT</b> be changed for the default CalendarMappings fields as it 
+ * is the key used to access the field data programmatically.</p>
+ * <pre><code>
+Ext.ensible.cal.CalendarMappings = {
+    CalendarId:   {name:'ID', mapping: 'id', type: 'int'},
+    Title:        {name:'CalTitle', mapping: 'title', type: 'string'},
+    Description:  {name:'Desc', mapping: 'desc', type: 'string'},
+    ColorId:      {name:'Color', mapping: 'color', type: 'int'},
+    IsHidden:     {name:'Hidden', mapping: 'hidden', type: 'boolean'},
+    
+    // We can also add some new fields that do not exist in the standard CalendarRecord:
+    Owner:        {name: 'Owner', mapping: 'owner'}
+};
+// Don't forget to reconfigure!
+Ext.ensible.cal.CalendarRecord.reconfigure();
+</code></pre>
+ * 
+ * <p><b>NOTE:</b> Any record reconfiguration you want to perform must be done <b>PRIOR to</b> 
+ * initializing your data store, otherwise the changes will not be reflected in the store's records.</p>
+ * 
+ * <p>Another important note is that if you alter the default mapping for <tt>CalendarId</tt>, make sure to add
+ * that mapping as the <tt>idProperty</tt> of your data reader, otherwise it won't recognize how to
+ * access the data correctly and will treat existing records as phantoms. Here's an easy way to make sure
+ * your mapping is always valid:</p>
+ * <pre><code>
+var reader = new Ext.data.JsonReader({
+    totalProperty: 'total',
+    successProperty: 'success',
+    root: 'data',
+    messageProperty: 'message',
+    
+    // read the id property generically, regardless of the mapping:
+    idProperty: Ext.ensible.cal.CalendarMappings.CalendarId.mapping  || 'id',
+    
+    // this is also a handy way to configure your reader's fields generically:
+    fields: Ext.ensible.cal.CalendarRecord.prototype.fields.getRange()
+});
+</code></pre>
+ */
+Ext.ensible.cal.CalendarMappings = {
+    CalendarId:   {name:'CalendarId', mapping: 'id', type: 'int'},
+    Title:        {name:'Title', mapping: 'title', type: 'string'},
+    Description:  {name:'Description', mapping: 'desc', type: 'string'},
+    ColorId:      {name:'ColorId', mapping: 'color', type: 'int'},
+    IsHidden:     {name:'IsHidden', mapping: 'hidden', type: 'boolean'}
+};/**
  * @class Ext.ensible.cal.EventRecord
  * @extends Ext.data.Record
  * <p>This is the {@link Ext.data.Record Record} specification for calendar event data used by the
  * {@link Ext.ensible.cal.CalendarPanel CalendarPanel}'s underlying store. It can be overridden as 
- * necessary to customize the fields supported by events, although the existing column names should
- * not be altered. If your model fields are named differently you should update the <b>mapping</b>
+ * necessary to customize the fields supported by events, although the existing field definition names 
+ * should not be altered. If your model fields are named differently you should update the <b>mapping</b>
  * configs accordingly.</p>
- * <p>The only required fields when creating a new event record instance are StartDate and
- * EndDate.  All other fields are either optional are will be defaulted if blank.</p>
+ * <p>The only required fields when creating a new event record instance are <tt>StartDate</tt> and
+ * <tt>EndDate</tt>.  All other fields are either optional or will be defaulted if blank.</p>
  * <p>Here is a basic example for how to create a new record of this type:<pre><code>
 rec = new Ext.ensible.cal.EventRecord({
     StartDate: '2101-01-12 12:00:00',
@@ -1213,11 +1685,11 @@ rec = new Ext.ensible.cal.EventRecord({
     Notes: 'Some notes'
 });
 </code></pre>
- * If you have overridden any of the record's data mappings via the Ext.ensible.cal.EventMappings object
- * you may need to set the values using this alternate syntax to ensure that the fields match up correctly:<pre><code>
-var M = Ext.ensible.cal.EventMappings;
+ * If you have overridden any of the record's data mappings via the {@link Ext.ensible.cal.EventMappings EventMappings} object
+ * you may need to set the values using this alternate syntax to ensure that the field names match up correctly:<pre><code>
+var M = Ext.ensible.cal.EventMappings,
+    rec = new Ext.ensible.cal.EventRecord();
 
-rec = new Ext.ensible.cal.EventRecord();
 rec.data[M.StartDate.name] = '2101-01-12 12:00:00';
 rec.data[M.EndDate.name] = '2101-01-12 13:30:00';
 rec.data[M.Title.name] = 'My cool event';
@@ -1233,45 +1705,113 @@ rec.data[M.Notes.name] = 'Some notes';
  * id is not specified a {@link #phantom}
  * Record will be created with an {@link #Record.id automatically generated id}.
  */
-(function(){
-    var M = Ext.ensible.cal.EventMappings;
-    
-    Ext.ensible.cal.EventRecord = Ext.data.Record.create([
-        M.EventId,
-        M.CalendarId,
-        M.Title,
-        M.StartDate,
-        M.EndDate,
-        M.Location,
-        M.Notes,
-        M.Url,
-        M.IsAllDay,
-        M.Reminder,
-        M.IsNew
-    ]);
+Ext.ensible.cal.EventRecord = Ext.extend(Ext.data.Record, {
+    fields: new Ext.util.MixedCollection(false, function(field){
+        return field.name;
+    })
+});
 
-    /**
-     * Reconfigures the default record definition based on the current Ext.ensible.cal.EventMappings object
-     */
-    Ext.ensible.cal.EventRecord.reconfigure = function(){
-        Ext.ensible.cal.EventRecord = Ext.data.Record.create([
-            M.EventId,
-            M.CalendarId,
-            M.Title,
-            M.StartDate,
-            M.EndDate,
-            M.Location,
-            M.Notes,
-            M.Url,
-            M.IsAllDay,
-            M.Reminder,
-            M.IsNew
-        ]);
-    };
-})();
-/*
+/**
+ * Reconfigures the default record definition based on the current {@link Ext.ensible.cal.EventMappings EventMappings}
+ * object. See the header documentation for {@link Ext.ensible.cal.EventMappings} for complete details and 
+ * examples of reconfiguring an EventRecord.
+ * @method create
+ * @static
+ * @return {Function} The updated EventRecord constructor function
+ */
+Ext.ensible.cal.EventRecord.reconfigure = function(){
+    var C = Ext.ensible.cal,
+        M = C.EventMappings,
+        proto = C.EventRecord.prototype,
+        fields = [];
+    
+    for(prop in M){
+        if(M.hasOwnProperty(prop)){
+            fields.push(M[prop]);
+        }
+    }
+    proto.fields.clear();
+    for(var i = 0, len = fields.length; i < len; i++){
+        proto.fields.add(new Ext.data.Field(fields[i]));
+    }
+    return C.EventRecord;
+};
+
+// Create the default definition now:
+Ext.ensible.cal.EventRecord.reconfigure();
+/**
+ * @class Ext.ensible.cal.CalendarRecord
+ * @extends Ext.data.Record
+ * <p>This is the {@link Ext.data.Record Record} specification for calendar items used by the
+ * {@link Ext.ensible.cal.CalendarPanel CalendarPanel}'s calendar store. If your model fields 
+ * are named differently you should update the <b>mapping</b> configs accordingly.</p>
+ * <p>The only required fields when creating a new calendar record instance are CalendarId and
+ * Title.  All other fields are either optional or will be defaulted if blank.</p>
+ * <p>Here is a basic example for how to create a new record of this type:<pre><code>
+rec = new Ext.ensible.cal.CalendarRecord({
+    CalendarId: 5,
+    Title: 'My Holidays',
+    Description: 'My personal holiday schedule',
+    ColorId: 3
+});
+</code></pre>
+ * If you have overridden any of the record's data mappings via the {@link Ext.ensible.cal.CalendarMappings CalendarMappings} object
+ * you may need to set the values using this alternate syntax to ensure that the fields match up correctly:<pre><code>
+var M = Ext.ensible.cal.CalendarMappings;
+
+rec = new Ext.ensible.cal.CalendarRecord();
+rec.data[M.CalendarId.name] = 5;
+rec.data[M.Title.name] = 'My Holidays';
+rec.data[M.Description.name] = 'My personal holiday schedule';
+rec.data[M.ColorId.name] = 3;
+</code></pre>
+ * @constructor
+ * @param {Object} data (Optional) An object, the properties of which provide values for the new Record's
+ * fields. If not specified the {@link Ext.data.Field#defaultValue defaultValue}
+ * for each field will be assigned.
+ * @param {Object} id (Optional) The id of the Record. The id is used by the
+ * {@link Ext.data.Store} object which owns the Record to index its collection
+ * of Records (therefore this id should be unique within each store). If an
+ * id is not specified a {@link #phantom}
+ * Record will be created with an {@link #Record.id automatically generated id}.
+ */
+Ext.ensible.cal.CalendarRecord = Ext.extend(Ext.data.Record, {
+    fields: new Ext.util.MixedCollection(false, function(field){
+        return field.name;
+    })
+});
+
+/**
+ * Reconfigures the default record definition based on the current {@link Ext.ensible.cal.CalendarMappings CalendarMappings}
+ * object. See the header documentation for {@link Ext.ensible.cal.CalendarMappings} for complete details and 
+ * examples of reconfiguring a CalendarRecord.
+ * @method create
+ * @static
+ * @return {Function} The updated CalendarRecord constructor function
+ */
+Ext.ensible.cal.CalendarRecord.reconfigure = function(){
+    var C = Ext.ensible.cal,
+        M = C.CalendarMappings,
+        proto = C.CalendarRecord.prototype,
+        fields = [];
+    
+    for(prop in M){
+        if(M.hasOwnProperty(prop)){
+            fields.push(M[prop]);
+        }
+    }
+    proto.fields.clear();
+    for(var i = 0, len = fields.length; i < len; i++){
+        proto.fields.add(new Ext.data.Field(fields[i]));
+    }
+    return C.CalendarRecord;
+};
+
+// Create the default definition now:
+Ext.ensible.cal.CalendarRecord.reconfigure();/* @private
  * This is an internal helper class for the calendar views and should not be overridden.
- * It is responsible for the base event rendering logic underlying all of the calendar views.
+ * It is responsible for the base event rendering logic underlying all views based on a 
+ * box-oriented layout that supports day spanning (MonthView, MultiWeekView, DayHeaderView).
  */
 Ext.ensible.cal.WeekEventRenderer = function(){
     
@@ -1298,166 +1838,158 @@ Ext.ensible.cal.WeekEventRenderer = function(){
                 dayCount = o.weekCount == 1 ? o.dayCount : 7;
             
             for(; w < weekCount; w++){
-                if(!grid[w] || grid[w].length == 0){
-                    // no events or span cells for the entire week
-                    if(weekCount == 1){
-                        row = getEventRow(o.id, w, 0);
-                        var cellCfg = {
-                            tag: 'td',
-                            cls: 'ext-cal-ev',
-                            id: o.id+'-empty-0-day-'+dt.format('Ymd'),
-                            html: '&nbsp;'
-                        }
-                        if(dayCount > 1){
-                            cellCfg.colspan = dayCount;
-                        }
-                        Ext.DomHelper.append(row, cellCfg);
-                    }
-                    dt = dt.add(Date.DAY, 7);
-                }else{
-                    var row, d = 0, wk = grid[w];
-                    var startOfWeek = dt.clone();
-                    var endOfWeek = startOfWeek.add(Date.DAY, dayCount).add(Date.MILLI, -1);
-                    
-                    for(; d < dayCount; d++){
-                        if(wk[d]){
-                            var ev = emptyCells = skipped = 0, 
-                                day = wk[d], ct = day.length, evt;
-                            
-                            for(; ev < ct; ev++){
-                                if(!day[ev]){
-                                    emptyCells++;
-                                    continue;
-                                }
-                                if(emptyCells > 0 && ev-emptyCells < max){
-                                    row = getEventRow(o.id, w, ev-emptyCells);
-                                    var cellCfg = {
-                                        tag: 'td',
-                                        cls: 'ext-cal-ev',
-                                        id: o.id+'-empty-'+ct+'-day-'+dt.format('Ymd')
-                                    }
-                                    if(emptyCells > 1 && max-ev > emptyCells){
-                                        cellCfg.rowspan = Math.min(emptyCells, max-ev);
-                                    }
-                                    Ext.DomHelper.append(row, cellCfg);
-                                    emptyCells = 0;
-                                }
-                                
-                                if(ev >= max){
-                                    skipped++;
-                                    continue;
-                                }
-                                evt = day[ev];
-                                
-                                if(!evt.isSpan || evt.isSpanStart){ //skip non-starting span cells
-                                    var item = evt.data || evt.event.data;
-                                    item._weekIndex = w;
-                                    item._renderAsAllDay = item[Ext.ensible.cal.EventMappings.IsAllDay.name] || evt.isSpanStart;
-                                    item.spanLeft = item[Ext.ensible.cal.EventMappings.StartDate.name].getTime() < startOfWeek.getTime();
-                                    item.spanRight = item[Ext.ensible.cal.EventMappings.EndDate.name].getTime() > endOfWeek.getTime();
-                                    item.spanCls = (item.spanLeft ? (item.spanRight ? 'ext-cal-ev-spanboth' : 
-                                        'ext-cal-ev-spanleft') : (item.spanRight ? 'ext-cal-ev-spanright' : ''));
-                                            
-                                    var row = getEventRow(o.id, w, ev),
-                                        cellCfg = {
-                                            tag: 'td',
-                                            cls: 'ext-cal-ev',
-                                            cn : eventTpl.apply(o.templateDataFn(item))
-                                        },
-                                        diff = Ext.ensible.Date.diffDays(dt, item[Ext.ensible.cal.EventMappings.EndDate.name]) + 1,
-                                        cspan = Math.min(diff, dayCount-d);
-                                        
-                                    if(cspan > 1){
-                                        cellCfg.colspan = cspan;
-                                    }
-                                    Ext.DomHelper.append(row, cellCfg);
-                                }
+                var row, d = 0, wk = grid[w];
+                var startOfWeek = dt.clone();
+                var endOfWeek = startOfWeek.add(Date.DAY, dayCount).add(Date.MILLI, -1);
+                
+                for(; d < dayCount; d++){
+                    if(wk && wk[d]){
+                        var ev = emptyCells = skipped = 0, 
+                            day = wk[d], ct = day.length, evt;
+                        
+                        for(; ev < ct; ev++){
+                            if(!day[ev]){
+                                emptyCells++;
+                                continue;
                             }
-                            if(ev > max){
-                                row = getEventRow(o.id, w, max);
-                                Ext.DomHelper.append(row, {
-                                    tag: 'td',
-                                    cls: 'ext-cal-ev-more',
-                                    id: 'ext-cal-ev-more-'+dt.format('Ymd'),
-                                    cn: {
-                                        tag: 'a',
-                                        html: '+'+skipped+' more...'
-                                    }
-                                });
-                            }
-                            if(ct < o.evtMaxCount[w]){
-                                row = getEventRow(o.id, w, ct);
-                                if(row){
-                                    var cellCfg = {
-                                        tag: 'td',
-                                        cls: 'ext-cal-ev',
-                                        id: o.id+'-empty-'+(ct+1)+'-day-'+dt.format('Ymd')
-                                    };
-                                    var rowspan = o.evtMaxCount[w] - ct;
-                                    if(rowspan > 1){
-                                        cellCfg.rowspan = rowspan;
-                                    }
-                                    Ext.DomHelper.append(row, cellCfg);
-                                }
-                            }
-                        }else{
-                            row = getEventRow(o.id, w, 0);
-                            if(row){
+                            if(emptyCells > 0 && ev-emptyCells < max){
+                                row = getEventRow(o.id, w, ev-emptyCells);
                                 var cellCfg = {
                                     tag: 'td',
                                     cls: 'ext-cal-ev',
-                                    id: o.id+'-empty-day-'+dt.format('Ymd')
-                                };
-                                if(o.evtMaxCount[w] > 1){
-                                    cellCfg.rowSpan = o.evtMaxCount[w];
+                                    html: '&#160;',
+                                    id: o.id+'-empty-'+ct+'-day-'+dt.format('Ymd')
+                                }
+                                if(emptyCells > 1 && max-ev > emptyCells){
+                                    cellCfg.rowspan = Math.min(emptyCells, max-ev);
+                                }
+                                Ext.DomHelper.append(row, cellCfg);
+                                emptyCells = 0;
+                            }
+                            
+                            if(ev >= max){
+                                skipped++;
+                                continue;
+                            }
+                            evt = day[ev];
+                            
+                            if(!evt.isSpan || evt.isSpanStart){ //skip non-starting span cells
+                                var item = evt.data || evt.event.data;
+                                item._weekIndex = w;
+                                item._renderAsAllDay = item[Ext.ensible.cal.EventMappings.IsAllDay.name] || evt.isSpanStart;
+                                item.spanLeft = item[Ext.ensible.cal.EventMappings.StartDate.name].getTime() < startOfWeek.getTime();
+                                item.spanRight = item[Ext.ensible.cal.EventMappings.EndDate.name].getTime() > endOfWeek.getTime();
+                                item.spanCls = (item.spanLeft ? (item.spanRight ? 'ext-cal-ev-spanboth' : 
+                                    'ext-cal-ev-spanleft') : (item.spanRight ? 'ext-cal-ev-spanright' : ''));
+                                        
+                                var row = getEventRow(o.id, w, ev),
+                                    cellCfg = {
+                                        tag: 'td',
+                                        cls: 'ext-cal-ev',
+                                        cn : eventTpl.apply(o.templateDataFn(item))
+                                    },
+                                    diff = Ext.ensible.Date.diffDays(dt, item[Ext.ensible.cal.EventMappings.EndDate.name]) + 1,
+                                    cspan = Math.min(diff, dayCount-d);
+                                    
+                                if(cspan > 1){
+                                    cellCfg.colspan = cspan;
                                 }
                                 Ext.DomHelper.append(row, cellCfg);
                             }
                         }
-                        dt = dt.add(Date.DAY, 1);
+                        if(ev > max){
+                            row = getEventRow(o.id, w, max);
+                            Ext.DomHelper.append(row, {
+                                tag: 'td',
+                                cls: 'ext-cal-ev-more',
+                                id: 'ext-cal-ev-more-'+dt.format('Ymd'),
+                                cn: {
+                                    tag: 'a',
+                                    html: String.format(o.moreText, skipped)
+                                }
+                            });
+                        }
+                        if(ct < o.evtMaxCount[w]){
+                            row = getEventRow(o.id, w, ct);
+                            if(row){
+                                var cellCfg = {
+                                    tag: 'td',
+                                    cls: 'ext-cal-ev',
+                                    //html: '&#160;',
+                                    id: o.id+'-empty-'+(ct+1)+'-day-'+dt.format('Ymd')
+                                };
+                                var rowspan = o.evtMaxCount[w] - ct;
+                                if(rowspan > 1){
+                                    cellCfg.rowspan = rowspan;
+                                }
+                                Ext.DomHelper.append(row, cellCfg);
+                            }
+                        }
+                    }else{
+                        row = getEventRow(o.id, w, 0);
+                        if(row){
+                            var cellCfg = {
+                                tag: 'td',
+                                cls: 'ext-cal-ev',
+                                html: '&#160;',
+                                id: o.id+'-empty-day-'+dt.format('Ymd')
+                            };
+                            if(o.evtMaxCount[w] > 1){
+                                cellCfg.rowSpan = o.evtMaxCount[w];
+                            }
+                            Ext.DomHelper.append(row, cellCfg);
+                        }
                     }
+                    dt = dt.add(Date.DAY, 1);
                 }
             }
         }
     };
 }();
 /**
- * @class Ext.ensible.cal.CalendarPicker
+ * @class Ext.ensible.cal.CalendarCombo
  * @extends Ext.form.ComboBox
- * <p>A custom combo used for choosing from the list of available calendars to assign an event to.</p>
+ * <p>A custom combo used for choosing from the list of available calendars to assign an event to. You must
+ * pass a populated calendar store as the store config or the combo will not work.</p>
  * <p>This is pretty much a standard combo that is simply pre-configured for the options needed by the
  * calendar components. The default configs are as follows:<pre><code>
-    fieldLabel: 'Calendar',
-    valueField: 'CalendarId',
-    displayField: 'Title',
-    triggerAction: 'all',
-    mode: 'local',
-    forceSelection: true,
-    width: 200
+fieldLabel: 'Calendar',
+triggerAction: 'all',
+mode: 'local',
+forceSelection: true,
+width: 200
 </code></pre>
  * @constructor
  * @param {Object} config The config object
  */
-Ext.ensible.cal.CalendarPicker = Ext.extend(Ext.form.ComboBox, {
+Ext.ensible.cal.CalendarCombo = Ext.extend(Ext.form.ComboBox, {
     fieldLabel: 'Calendar',
-    valueField: 'CalendarId',
-    displayField: 'Title',
     triggerAction: 'all',
     mode: 'local',
     forceSelection: true,
     width: 200,
     
     // private
+    defaultCls: 'x-cal-default',
+    
+    // private
     initComponent: function(){
-        Ext.ensible.cal.CalendarPicker.superclass.initComponent.call(this);
+        var C = Ext.ensible.cal,
+            M = C.CalendarMappings;
+        
+        C.CalendarCombo.superclass.initComponent.call(this);
+        
+        this.valueField = M.CalendarId.name;
+        this.displayField = M.Title.name;
+        
         this.tpl = this.tpl ||
-              '<tpl for="."><div class="x-combo-list-item ext-color-{' + this.valueField +
-              '}"><div class="ext-cal-picker-icon">&nbsp;</div>{' + this.displayField + '}</div></tpl>';
+              '<tpl for="."><div class="x-combo-list-item x-cal-{' + M.ColorId.name +
+              '}"><div class="ext-cal-picker-icon">&#160;</div>{' + this.displayField + '}</div></tpl>';
     },
     
     // private
     afterRender: function(){
-        Ext.ensible.cal.CalendarPicker.superclass.afterRender.call(this);
+        Ext.ensible.cal.CalendarCombo.superclass.afterRender.call(this);
         
         this.wrap = this.el.up('.x-form-field-wrap');
         this.wrap.addClass('ext-calendar-picker');
@@ -1467,19 +1999,27 @@ Ext.ensible.cal.CalendarPicker = Ext.extend(Ext.form.ComboBox, {
         });
     },
     
+    // private
+    getStyleClass: function(calendarId){
+        if(calendarId && calendarId !== ''){
+            var rec = this.store.getById(calendarId);
+            return 'x-cal-' + rec.data[Ext.ensible.cal.CalendarMappings.ColorId.name];
+        }
+    },
+    
     // inherited docs
     setValue: function(value) {
-        this.wrap.removeClass('ext-color-'+this.getValue());
-        if(!value && this.store !== undefined){
-            // always default to a valid calendar
-            value = this.store.getAt(0).data.CalendarId;
-        }
-        Ext.ensible.cal.CalendarPicker.superclass.setValue.call(this, value);
-        this.wrap.addClass('ext-color-'+value);
+        this.wrap.removeClass(this.getStyleClass(this.getValue()));
+        value = value || this.store.getAt(0).data[Ext.ensible.cal.CalendarMappings.CalendarId.name];
+        Ext.ensible.cal.CalendarCombo.superclass.setValue.call(this, value);
+        this.wrap.addClass(this.getStyleClass(value));
     }
 });
 
-Ext.reg('calendarpicker', Ext.ensible.cal.CalendarPicker);
+Ext.reg('extensible.calendarcombo', Ext.ensible.cal.CalendarCombo);
+/* @private
+ * Currently not used
+ */
 Ext.ensible.cal.RecurrenceCombo = Ext.extend(Ext.form.ComboBox, {
     width: 160,
     fieldLabel: 'Repeats',
@@ -1533,9 +2073,10 @@ Ext.ensible.cal.RecurrenceCombo = Ext.extend(Ext.form.ComboBox, {
 });
 
 Ext.reg('extensible.recurrencecombo', Ext.ensible.cal.RecurrenceCombo);
-
-// http://www.kanzaki.com/docs/ical/rrule.html
-
+/* @private
+ * Currently not used
+ * Rrule info: http://www.kanzaki.com/docs/ical/rrule.html
+ */
 Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
     
     fieldLabel: 'Repeats',
@@ -1755,7 +2296,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
     },
     
     initSubComponents : function(){
-        var baseComponent = Ext.extend(Ext.Container, {
+        Ext.ensible.cal.recurrenceBase = Ext.extend(Ext.Container, {
             fieldLabel: ' ',
             labelSeparator: '',
             layout: 'table',
@@ -1825,7 +2366,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             setValue:Ext.emptyFn
         });
         
-        this.repeatEvery = new baseComponent({
+        this.repeatEvery = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-every',
             layoutConfig: {
                 columns: 3
@@ -1878,16 +2419,21 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             updateLabel: function(type){
                 if(this.rendered){
                     var s = Ext.getCmp(this.id+'-num').getValue() == 1 ? '' : 's';
-                    if(type){
-                        this.type = type.toLowerCase();
+                    this.type = type ? type.toLowerCase() : this.type || 'day';
+                    var lbl = Ext.getCmp(this.id+'-label');
+                    if(lbl.rendered){
+                        lbl.update(this.type + s + ' beginning ' + this.startDate.format('l, F j'));
                     }
-                    Ext.getCmp(this.id+'-label').update(this.type + s + ' beginning ' + this.startDate.format('l, F j'));
                 }
                 return this;
+            },
+            afterRender: function(){
+                Ext.ensible.cal.recurrenceBase.superclass.afterRender.call(this);
+                this.updateLabel();
             }
         });
             
-        this.weekly = new baseComponent({
+        this.weekly = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-weekly',
             layoutConfig: {
                 columns: 2
@@ -1959,7 +2505,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             }
         });
             
-        this.monthly = new baseComponent({
+        this.monthly = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-monthly',
             layoutConfig: {
                 columns: 3
@@ -2003,7 +2549,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             }
         });
             
-        this.yearly = new baseComponent({
+        this.yearly = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-yearly',
             layoutConfig: {
                 columns: 3
@@ -2048,7 +2594,7 @@ Ext.ensible.cal.RecurrenceField = Ext.extend(Ext.form.Field, {
             }
         });
             
-        this.until = new baseComponent({
+        this.until = new Ext.ensible.cal.recurrenceBase({
             id: this.id+'-until',
             untilDateFormat: 'Ymd\\T000000\\Z',
             layoutConfig: {
@@ -2188,18 +2734,23 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
      * the field's container is narrower than this value it will automatically be rendered on two lines.
      */
     singleLineMinWidth: 490,
+    /**
+     * @cfg {String} dateFormat
+     * The date display format used by the date fields (defaults to 'n/j/Y') 
+     */
+    dateFormat: 'n/j/Y',
     
     // private
     onRender: function(ct, position){
         if(!this.el){
             this.startDate = new Ext.form.DateField({
                 id: this.id+'-start-date',
-                format: 'n/j/Y',
+                format: this.dateFormat,
                 width:100,
                 listeners: {
                     'change': {
                         fn: function(){
-                            this.checkDates('date', 'start');
+                            this.onFieldChange('date', 'start');
                         },
                         scope: this
                     }
@@ -2214,7 +2765,7 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
                 listeners: {
                     'select': {
                         fn: function(){
-                            this.checkDates('time', 'start');
+                            this.onFieldChange('time', 'start');
                         },
                         scope: this
                     }
@@ -2229,7 +2780,7 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
                 listeners: {
                     'select': {
                         fn: function(){
-                            this.checkDates('time', 'end');
+                            this.onFieldChange('time', 'end');
                         },
                         scope: this
                     }
@@ -2237,13 +2788,13 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
             })
             this.endDate = new Ext.form.DateField({
                 id: this.id+'-end-date',
-                format: 'n/j/Y',
+                format: this.dateFormat,
                 hideLabel:true,
                 width:100,
                 listeners: {
                     'change': {
                         fn: function(){
-                            this.checkDates('date', 'end');
+                            this.onFieldChange('date', 'end');
                         },
                         scope: this
                     }
@@ -2310,7 +2861,13 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
             this.el.child('tr').addClass('ext-dt-range-row1');
         }
     },
-    
+
+    // private
+    onFieldChange: function(type, startend){
+        this.checkDates(type, startend);
+        this.fireEvent('change', this, this.getValue());
+    },
+        
     // private
     checkDates: function(type, startend){
         var startField = Ext.getCmp(this.id+'-start-'+type),
@@ -2358,7 +2915,7 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
         else{
             return null;
         };
-        if(time != '' && this[startend+'Time'].isVisible()){
+        if(time != ''){
             return Date.parseDate(dt+' '+time, this[startend+'Date'].format+' '+this[startend+'Time'].format);
         }
         return Date.parseDate(dt, this[startend+'Date'].format);
@@ -2460,20 +3017,30 @@ Ext.ensible.cal.DateRangeField = Ext.extend(Ext.form.Field, {
     setRawValue : Ext.emptyFn
 });
 
-Ext.reg('daterangefield', Ext.ensible.cal.DateRangeField);
+Ext.reg('extensible.daterangefield', Ext.ensible.cal.DateRangeField);
 /**
  * @class Ext.ensible.cal.ReminderField
  * @extends Ext.form.ComboBox
  * <p>A custom combo used for choosing a reminder setting for an event.</p>
  * <p>This is pretty much a standard combo that is simply pre-configured for the options needed by the
  * calendar components. The default configs are as follows:<pre><code>
-    width: 200,
-    fieldLabel: 'Reminder',
-    mode: 'local',
-    triggerAction: 'all',
-    forceSelection: true,
-    displayField: 'desc',
-    valueField: 'value'
+width: 200,
+fieldLabel: 'Reminder',
+mode: 'local',
+triggerAction: 'all',
+forceSelection: true,
+displayField: 'desc',
+valueField: 'value',
+noneText: 'None',
+atStartTimeText: 'At start time',
+minutesText: 'minutes',
+hourText: 'hour',
+hoursText: 'hours',
+dayText: 'day',
+daysText: 'days',
+weekText: 'week',
+weeksText: 'weeks',
+reminderValueFormat: '{0} {1} before start'
 </code></pre>
  * @constructor
  * @param {Object} config The config object
@@ -2486,34 +3053,54 @@ Ext.ensible.cal.ReminderField = Ext.extend(Ext.form.ComboBox, {
     forceSelection: true,
     displayField: 'desc',
     valueField: 'value',
+    noneText: 'None',
+    atStartTimeText: 'At start time',
+    minutesText: 'minutes',
+    hourText: 'hour',
+    hoursText: 'hours',
+    dayText: 'day',
+    daysText: 'days',
+    weekText: 'week',
+    weeksText: 'weeks',
+    reminderValueFormat: '{0} {1} before start',
+    
+    /**
+     * Returns the list of reminder values used as the contents of the combo list. This method is provided so that
+     * the value list can be easily overridden as needed.
+     * @return {Array} A 2-dimensional array of type [{String}, {String}] which contains the value and description
+     * respectively of each item in the combo list. By default the value is the number of minutes for the selected 
+     * time value (e.g., value 120 == '2 hours') with empty string for no value, but these can be set to anything.
+     */
+    getValueList: function(){
+        return [
+            ['', this.noneText],
+            ['0', this.atStartTimeText],
+            ['5', String.format(this.reminderValueFormat, '5', this.minutesText)],
+            ['15', String.format(this.reminderValueFormat, '15', this.minutesText)],
+            ['30', String.format(this.reminderValueFormat, '30', this.minutesText)],
+            ['60', String.format(this.reminderValueFormat, '1', this.hourText)],
+            ['90', String.format(this.reminderValueFormat, '1.5', this.hoursText)],
+            ['120', String.format(this.reminderValueFormat, '2', this.hoursText)],
+            ['180', String.format(this.reminderValueFormat, '3', this.hoursText)],
+            ['360', String.format(this.reminderValueFormat, '6', this.hoursText)],
+            ['720', String.format(this.reminderValueFormat, '12', this.hoursText)],
+            ['1440', String.format(this.reminderValueFormat, '1', this.dayText)],
+            ['2880', String.format(this.reminderValueFormat, '2', this.daysText)],
+            ['4320', String.format(this.reminderValueFormat, '3', this.daysText)],
+            ['5760', String.format(this.reminderValueFormat, '4', this.daysText)],
+            ['7200', String.format(this.reminderValueFormat, '5', this.daysText)],
+            ['10080', String.format(this.reminderValueFormat, '1', this.weekText)],
+            ['20160', String.format(this.reminderValueFormat, '2', this.weeksText)]
+        ]
+    },
     
     // private
     initComponent: function(){
         Ext.ensible.cal.ReminderField.superclass.initComponent.call(this);
-        
         this.store = this.store || new Ext.data.ArrayStore({
-            fields: ['value', 'desc'],
+            fields: [this.valueField, this.displayField],
             idIndex: 0,
-            data: [
-                ['', 'None'],
-                ['0', 'At start time'],
-                ['5', '5 minutes before start'],
-                ['15', '15 minutes before start'],
-                ['30', '30 minutes before start'],
-                ['60', '1 hour before start'],
-                ['90', '1.5 hours before start'],
-                ['120', '2 hours before start'],
-                ['180', '3 hours before start'],
-                ['360', '6 hours before start'],
-                ['720', '12 hours before start'],
-                ['1440', '1 day before start'],
-                ['2880', '2 days before start'],
-                ['4320', '3 days before start'],
-                ['5760', '4 days before start'],
-                ['7200', '5 days before start'],
-                ['10080', '1 week before start'],
-                ['20160', '2 weeks before start']
-            ]
+            data: this.getValueList()
         });
     },
     
@@ -2529,8 +3116,610 @@ Ext.ensible.cal.ReminderField = Ext.extend(Ext.form.ComboBox, {
     }
 });
 
-Ext.reg('reminderfield', Ext.ensible.cal.ReminderField);
+Ext.reg('extensible.reminderfield', Ext.ensible.cal.ReminderField);
 /**
+ * @class Ext.ensible.cal.ColorPalette
+ * @extends Ext.ColorPalette
+ * Simple color palette class for choosing colors specifically for calendars. This is a lightly modified version
+ * of the default Ext ColorPalette that is based on calendar ids rather than hex color codes so that the colors
+ * can be easily modified via CSS and automatically applied to calendars. The specific colors used by default are
+ * also chosen to provide good color contrast when displayed in calendars.
+</code></pre>
+ * @constructor
+ * Create a new ColorPalette
+ * @param {Object} config The config object
+ * @xtype extensible.calendarcolorpalette
+ */
+Ext.ensible.cal.ColorPalette = Ext.extend(Ext.ColorPalette, {
+
+    // private
+    colorCount: 32,
+    
+    /**
+     * @cfg {Function} handler
+     * Optional. A function that will handle the select event of this color palette.
+     * The handler is passed the following parameters:<div class="mdetail-params"><ul>
+     * <li><code>palette</code> : ColorPalette<div class="sub-desc">The {@link #palette Ext.ensible.cal.ColorPalette} instance.</div></li>
+     * <li><code>colorId</code> : String<div class="sub-desc">The id that identifies the selected color and relates it to a calendar.</div></li>
+     * </ul></div>
+     */
+    
+    // private
+    initComponent: function(){
+        Ext.ensible.cal.ColorPalette.superclass.initComponent.call(this);
+        this.addClass('x-calendar-palette');
+        this.tpl = new Ext.XTemplate('<tpl for="."><a class="x-unselectable x-cal-color" id="' + this.id +
+            '-color-{.}" href="#" hidefocus="on"><em><span class="x-cal-{.}">&#160;</span></em></a></tpl>');
+            
+        if(this.handler){
+            this.on('select', this.handler, this.scope || this);
+        }
+        
+        this.colors = [];
+        for(var i=1; i<=this.colorCount; i++){
+            this.colors.push(i);
+        }
+    },
+    
+    // private
+    handleClick : function(e, t){
+        e.preventDefault();
+        var el = e.getTarget('.x-cal-color', 3, true);
+        if(el){
+            var id = el.id.split('-color-')[1];
+            this.select(id);
+        }
+    },
+    
+    /**
+     * Selects the specified color in the palette (fires the {@link #select} event)
+     * @param {Number} colorId The id that identifies the selected color and relates it to a calendar
+     * @param {Boolean} suppressEvent (optional) True to stop the select event from firing. Defaults to <tt>false</tt>.
+     */
+    select : function(colorId, suppressEvent){
+        if(colorId != this.value){
+            if(this.value){
+                Ext.fly(this.id+'-color-'+this.value).removeClass('x-color-palette-sel');
+            }
+            Ext.get(this.id+'-color-'+colorId).addClass('x-color-palette-sel');
+            this.value = colorId;
+            
+            if(suppressEvent !== true){
+                this.fireEvent('select', this, colorId);
+            }
+        }
+    }
+});
+
+Ext.reg('extensible.calendarcolorpalette', Ext.ensible.cal.ColorPalette);/**
+ * @class Ext.ensible.cal.CalendarListMenu
+ * @extends Ext.menu.Menu
+ * <p>A menu containing a {@link Ext.ensible.cal.ColorPalette palette} for choosing calendar colors, 
+ * as well as other calendar-specific options.</p>
+ * @xtype extensible.calendarlistmenu
+ */
+Ext.ensible.cal.CalendarListMenu = Ext.extend(Ext.menu.Menu, {
+    /** 
+     * @cfg {Boolean} hideOnClick
+     * False to continue showing the menu after a color is selected, defaults to true.
+     */
+    hideOnClick : true,
+    /**
+     * @cfg {Boolean} ignoreParentClicks
+     * True to ignore clicks on any item in this menu that is a parent item (displays a submenu) 
+     * so that the submenu is not dismissed when clicking the parent item (defaults to true).
+     */
+    ignoreParentClicks: true,
+    /**
+     * @cfg {String} cls
+     * An optional extra CSS class that will be added to this component's Element (defaults to 'x-calendar-list-menu'). 
+     * This can be useful for adding customized styles to the component or any of its children using standard CSS rules.
+     */
+    cls : 'x-calendar-list-menu',
+    /**
+     * @cfg {String} displayOnlyThisCalendarText
+     * The text to display for the 'Display only this calendar' option in the menu.
+     */
+    displayOnlyThisCalendarText: 'Display only this calendar',
+    /**
+     * @cfg {Number} calendarId
+     * The id of the calendar to be associated with this menu. This calendarId will be passed
+     * back with any events from this menu to identify the calendar to be acted upon. The calendar
+     * id can also be changed at any time after creation by calling {@link setCalendar}.
+     */
+    
+    /** 
+     * @cfg {Boolean} enableScrolling
+     * @hide 
+     */
+    enableScrolling : false,
+    /** 
+     * @cfg {Number} maxHeight
+     * @hide 
+     */
+    /** 
+     * @cfg {Number} scrollIncrement
+     * @hide 
+     */
+    /**
+     * @event click
+     * @hide
+     */
+    /**
+     * @event itemclick
+     * @hide
+     */
+    
+    /**
+     * @property palette
+     * @type ColorPalette
+     * The {@link Ext.ensible.cal.ColorPalette ColorPalette} instance for this CalendarListMenu
+     */
+    
+    // private
+    initComponent : function(){
+        this.addEvents(
+            'showcalendar',
+            'hidecalendar',
+            'radiocalendar',
+            'colorchange'
+        );
+        
+        Ext.apply(this, {
+            items: [{
+                text: this.displayOnlyThisCalendarText,
+                iconCls: 'extensible-cal-icon-cal-show',
+                handler: this.handleRadioCalendarClick.createDelegate(this)
+            }, '-', {
+                xtype: 'extensible.calendarcolorpalette',
+                handler: this.handleColorSelect.createDelegate(this)
+            }]
+        });
+        Ext.ensible.cal.CalendarListMenu.superclass.initComponent.call(this);
+    },
+    
+    // private
+    afterRender: function(){
+        Ext.ensible.cal.CalendarListMenu.superclass.afterRender.call(this);
+        this.palette = this.findByType('extensible.calendarcolorpalette')[0];
+        
+        if(this.colorId){
+            this.palette.select(this.colorId, true);
+        }
+    },
+    
+    // private
+    handleRadioCalendarClick: function(e, t){
+        this.fireEvent('radiocalendar', this, this.calendarId);
+    },
+    
+    // private
+    handleColorSelect: function(cp, selColorId){
+        this.fireEvent('colorchange', this, this.calendarId, selColorId, this.colorId);
+        this.colorId = selColorId;
+        this.menuHide();
+    },
+    
+    /**
+     * Sets the calendar id and color id to be associated with this menu. This should be called each time the
+     * menu is shown relative to a new calendar.
+     * @param {Number} calendarId The id of the calendar to be associated
+     * @param {Number} colorId The id of the color to be pre-selected in the color palette
+     * @return {Ext.ensible.cal.CalendarListMenu} this
+     */
+    setCalendar: function(id, cid){
+        this.calendarId = id;
+        this.colorId = cid;
+        
+        if(this.rendered){
+            this.palette.select(cid, true);
+        }
+        return this;
+    },
+
+    // private
+    menuHide : function(){
+        if(this.hideOnClick){
+            this.hide(true);
+        }
+    }
+});
+
+Ext.reg('extensible.calendarlistmenu', Ext.ensible.cal.CalendarListMenu);/**
+ * @class Ext.ensible.cal.EventContextMenu
+ * @extends Ext.menu.Menu
+ * The context menu displayed for calendar events in any {@link Ext.ensible.cal.CalendarView CalendarView} subclass. 
+ * @xtype extensible.eventcontextmenu
+ */
+Ext.ensible.cal.EventContextMenu = Ext.extend(Ext.menu.Menu, {
+    /** 
+     * @cfg {Boolean} hideOnClick
+     * False to continue showing the menu after a color is selected, defaults to true.
+     */
+    hideOnClick : true,
+    /**
+     * @cfg {Boolean} ignoreParentClicks
+     * True to ignore clicks on any item in this menu that is a parent item (displays a submenu) 
+     * so that the submenu is not dismissed when clicking the parent item (defaults to true).
+     */
+    ignoreParentClicks: true,
+    /**
+     * @cfg {String} editDetailsText
+     * The text to display for the 'Edit Details' option in the menu.
+     */
+    editDetailsText: 'Edit Details',
+    /**
+     * @cfg {String} deleteText
+     * The text to display for the 'Delete' option in the menu.
+     */
+    deleteText: 'Delete',
+    /**
+     * @cfg {String} moveToText
+     * The text to display for the 'Move to...' option in the menu.
+     */
+    moveToText: 'Move to...',
+    
+    /** 
+     * @cfg {Boolean} enableScrolling
+     * @hide 
+     */
+    enableScrolling : false,
+    /** 
+     * @cfg {Number} maxHeight
+     * @hide 
+     */
+    /** 
+     * @cfg {Number} scrollIncrement
+     * @hide 
+     */
+    /**
+     * @event click
+     * @hide
+     */
+    /**
+     * @event itemclick
+     * @hide
+     */
+    
+    // private
+    initComponent : function(){
+        this.addEvents(
+            /**
+             * @event editdetails
+             * Fires when the user selects the option to edit the event details
+             * (by default, in an instance of {@link Ext.ensible.cal.EventEditForm}. Handling code should 
+             * transfer the current event record to the appropriate instance of the detailed form by showing
+             * the form and calling {@link Ext.ensible.cal.EventEditForm#loadRecord loadRecord}.
+             * @param {Ext.ensible.cal.EventContextMenu} this
+             * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} that is currently being edited
+             * @param {Ext.Element} el The element associated with this context menu
+             */
+            'editdetails',
+            /**
+             * @event eventdelete
+             * Fires after the user selectes the option to delete an event. Note that this menu does not actually
+             * delete the event from the data store. This is simply a notification that the menu option was selected --
+             * it is the responsibility of handling code to perform the deletion and any clean up required.
+             * @param {Ext.ensible.cal.EventContextMenu} this
+             * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event to be deleted
+             * @param {Ext.Element} el The element associated with this context menu
+             */
+            'eventdelete',
+            /**
+             * @event eventmove
+             * Fires after the user selects a date in the calendar picker under the "move event" menu option. Note that this menu does not actually
+             * update the event in the data store. This is simply a notification that the menu option was selected --
+             * it is the responsibility of handling code to perform the move action and any clean up required.
+             * @param {Ext.ensible.cal.EventContextMenu} this
+             * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event to be moved
+             * @param {Date} dt The new start date for the event (the existing event start time will be preserved)
+             */
+            'eventmove'
+        );
+        this.buildMenu();
+        Ext.ensible.cal.CalendarListMenu.superclass.initComponent.call(this);
+    },
+    
+    // private
+    buildMenu: function(){
+        this.dateMenu = new Ext.menu.DateMenu({
+            scope: this,
+            handler: function(dp, dt){
+                dt = Ext.ensible.Date.copyTime(this.rec.data[Ext.ensible.cal.EventMappings.StartDate.name], dt);
+                this.fireEvent('eventmove', this, this.rec, dt);
+            }
+        });
+        
+        Ext.apply(this, {
+            items: [{
+                text: this.editDetailsText,
+                iconCls: 'extensible-cal-icon-evt-edit',
+                scope: this,
+                handler: function(){
+                    this.fireEvent('editdetails', this, this.rec, this.ctxEl);
+                }
+            },{
+                text: this.deleteText,
+                iconCls: 'extensible-cal-icon-evt-del',
+                scope: this,
+                handler: function(){
+                    this.fireEvent('eventdelete', this, this.rec, this.ctxEl);
+                }
+            },'-',{
+                text: this.moveToText,
+                iconCls: 'extensible-cal-icon-evt-move',
+                menu: this.dateMenu
+            }]
+        });
+    },
+    
+    /**
+     * Shows the specified event at the given XY position. 
+     * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event
+     * @param {Ext.Element} el The element associated with this context menu
+     * @param {Array} xy The X & Y [x, y] values for the position at which to show the menu (coordinates are page-based) 
+     */
+    showForEvent: function(rec, el, xy){
+        this.rec = rec;
+        this.ctxEl = el;
+        this.dateMenu.picker.setValue(rec.data[Ext.ensible.cal.EventMappings.StartDate.name]);
+        this.showAt(xy);
+    },
+    
+    // private
+    onHide : function(){
+        Ext.ensible.cal.CalendarListMenu.superclass.onHide.call(this);
+        delete this.ctxEl;
+    }
+});
+
+Ext.reg('extensible.eventcontextmenu', Ext.ensible.cal.EventContextMenu);/**
+ * @class Ext.ensible.cal.CalendarList
+ * @extends Ext.Panel
+ * <p>This is a {@link Ext.Panel panel} subclass that renders a list of available calendars
+ * @constructor
+ * @param {Object} config The config object
+ * @xtype calendarpanel
+ */
+Ext.ensible.cal.CalendarList = Ext.extend(Ext.Panel, {
+    title: 'Calendars',
+    collapsible: true,
+    autoHeight: true,
+    layout: 'fit',
+    menuSelector: 'em',
+    width: 100, // this should be overridden by this container's layout
+    
+    /**
+     * @cfg {Ext.data.Store} store
+     * A {@link Ext.data.Store store} containing records of type {@link Ext.ensible.cal.CalendarRecord CalendarRecord}.
+     * This is a required config and is used to populate the calendar list.  The CalendarList widget will also listen for events from
+     * the store and automatically refresh iteself in the event that the underlying calendar records in the store change.
+     */
+    
+    // private
+    initComponent: function(){
+        this.addClass('x-calendar-list');
+        Ext.ensible.cal.CalendarList.superclass.initComponent.call(this);
+    },
+    
+    // private
+    afterRender : function(ct, position){
+        Ext.ensible.cal.CalendarList.superclass.afterRender.call(this);
+        
+        if(this.store){
+            this.setStore(this.store, true);
+        }
+        this.refresh();
+        
+        this.body.on('click', this.onClick, this);
+        this.body.on('mouseover', this.onMouseOver, this, {delegate: 'li'});
+        this.body.on('mouseout', this.onMouseOut, this, {delegate: 'li'});
+    },
+    
+    // private
+    getListTemplate : function(){
+        if(!this.tpl){
+            this.tpl = !(Ext.isIE || Ext.isOpera) ? 
+                new Ext.XTemplate(
+                    '<ul class="x-unselectable"><tpl for=".">',
+                        '<li id="{cmpId}" class="ext-cal-evr {colorCls} {hiddenCls}">{title}<em>&#160;</em></li>',
+                    '</tpl></ul>'
+                )
+                : new Ext.XTemplate(
+                    '<ul class="x-unselectable"><tpl for=".">',
+                        '<li id="{cmpId}" class="ext-cal-evo {colorCls} {hiddenCls}">',
+                            '<div class="ext-cal-evm">',
+                                '<div class="ext-cal-evi">{title}<em>&#160;</em></div>',
+                            '</div>',
+                        '</li>',
+                    '</tpl></ul>'
+                );
+            this.tpl.compile();
+        }
+        return this.tpl;
+    },
+    
+    /**
+     * Sets the store used to display the available calendars. It should contain 
+     * records of type {@link Ext.ensible.cal.CalendarRecord CalendarRecord}.
+     * @param {Ext.data.Store} store
+     */
+    setStore : function(store, initial){
+        if(!initial && this.store){
+            this.store.un("datachanged", this.refresh, this);
+            this.store.un("add", this.refresh, this);
+            this.store.un("remove", this.refresh, this);
+            this.store.un("update", this.onUpdate, this);
+            this.store.un("clear", this.refresh, this);
+        }
+        if(store){
+            store.on("datachanged", this.refresh, this);
+            store.on("add", this.refresh, this);
+            store.on("remove", this.refresh, this);
+            store.on("update", this.onUpdate, this);
+            store.on("clear", this.refresh, this);
+        }
+        this.store = store;
+    },
+    
+    // private
+    onUpdate : function(ds, rec, operation){
+        // ignore EDIT notifications, only refresh after a commit
+        if(operation == Ext.data.Record.COMMIT){
+            this.refresh();
+        }
+    },
+    
+    /**
+     * Refreshes the calendar list so that it displays based on the most current state of
+     * the underlying calendar store. Usually this method does not need to be called directly
+     * as the control is automatically bound to the store's events, but it is available in the
+     * event that a manual refresh is ever needed.
+     */
+    refresh: function(){
+        if(this.skipRefresh){
+            return;
+        }
+        var data = [], i = 0, o = null,
+            CM = Ext.ensible.cal.CalendarMappings,
+            recs = this.store.getRange(),
+            len = recs.length;
+            
+        for(; i < len; i++){
+            o = {
+                cmpId: this.id + '__' + recs[i].data[CM.CalendarId.name],
+                title: recs[i].data[CM.Title.name],
+                colorCls: this.getColorCls(recs[i].data[CM.ColorId.name])
+            };
+            if(recs[i].data[CM.IsHidden.name] === true){
+                o.hiddenCls = 'ext-cal-hidden';
+            }
+            data[data.length] = o;
+        }
+        this.getListTemplate().overwrite(this.body, data);
+    },
+    
+    // private
+    getColorCls: function(colorId){
+        return 'x-cal-'+colorId+'-ad';
+    },
+    
+    // private
+    toggleCalendar: function(id, commit){
+        var rec = this.store.getById(id),
+            CM = Ext.ensible.cal.CalendarMappings,
+            isHidden = rec.data[CM.IsHidden.name]; 
+        
+        rec.set([CM.IsHidden.name], !isHidden);
+        
+        if(commit !== false){
+            rec.commit();
+        }
+    },
+    
+    // private
+    showCalendar: function(id, commit){
+        var rec = this.store.getById(id);
+        if(rec.data[Ext.ensible.cal.CalendarMappings.IsHidden.name] === true){
+            this.toggleCalendar(id, commit);
+        }
+    },
+    
+    // private
+    hideCalendar: function(id, commit){
+        var rec = this.store.getById(id);
+        if(rec.data[Ext.ensible.cal.CalendarMappings.IsHidden.name] !== true){
+            this.toggleCalendar(id, commit);
+        }
+    },
+    
+    // private
+    radioCalendar: function(id){
+        var i = 0, recId,
+            calendarId = Ext.ensible.cal.CalendarMappings.CalendarId.name,
+            recs = this.store.getRange(),
+            len = recs.length;
+            
+        for(; i < len; i++){
+            recId = recs[i].data[calendarId];
+            // make a truthy check so that either numeric or string ids can match
+            if(recId == id){
+                this.showCalendar(recId, false);
+            }
+            else{
+                this.hideCalendar(recId, false);
+            }
+        }
+        
+        // store.commitChanges() just loops over each modified record and calls rec.commit(),
+        // which in turns fires an update event that would cause a full refresh for each record.
+        // To avoid this we simply set a flag and make sure we only refresh once per commit set.
+        this.skipRefresh = true;
+        this.store.commitChanges();
+        delete this.skipRefresh;
+        this.refresh();
+    },
+    
+    // private
+    onMouseOver: function(e, t){
+        Ext.fly(t).addClass('hover');
+    },
+    
+    // private
+    onMouseOut: function(e, t){
+        Ext.fly(t).removeClass('hover');
+    },
+    
+    // private
+    getCalendarId: function(el){
+        return el.id.split('__')[1];
+    },
+    
+    // private
+    getCalendarItemEl: function(calendarId){
+        return Ext.get(this.id+'__'+calendarId);
+    },
+    
+    // private
+    onClick : function(e, t){
+        var el;
+        if(el = e.getTarget(this.menuSelector, 3, true)){
+            this.showEventMenu(el, e.getXY());
+        }
+        else if(el = e.getTarget('li', 3, true)){
+            this.toggleCalendar(this.getCalendarId(el));
+        } 
+    },
+    
+    // private
+    handleColorChange: function(menu, id, colorId, origColorId){
+        var rec = this.store.getById(id);
+        rec.data[Ext.ensible.cal.CalendarMappings.ColorId.name] = colorId;
+        rec.commit();
+    },
+    
+    // private
+    handleRadioCalendar: function(menu, id){
+        this.radioCalendar(id);
+    },
+    
+    // private
+    showEventMenu : function(el, xy){
+        var id = this.getCalendarId(el.parent('li')),
+            rec = this.store.getById(id),
+            colorId = rec.data[Ext.ensible.cal.CalendarMappings.ColorId.name];
+            
+        if(!this.menu){
+            this.menu = new Ext.ensible.cal.CalendarListMenu();
+            this.menu.on('colorchange', this.handleColorChange, this);
+            this.menu.on('radiocalendar', this.handleRadioCalendar, this);
+        }
+        this.menu.setCalendar(id, colorId);
+        this.menu.showAt(xy);
+    }
+});
+
+Ext.reg('extensible.calendarlist', Ext.ensible.cal.CalendarList);/**
  * @class Ext.ensible.cal.EventEditForm
  * @extends Ext.form.FormPanel
  * <p>A custom form used for detailed editing of events.</p>
@@ -2540,33 +3729,68 @@ Ext.reg('reminderfield', Ext.ensible.cal.ReminderField);
  * <p>This form also provides custom events specific to the calendar so that other calendar components can be easily
  * notified when an event has been edited via this component.</p>
  * <p>The default configs are as follows:</p><pre><code>
-    labelWidth: 65,
-    title: 'Event Form',
-    titleTextAdd: 'Add Event',
-    titleTextEdit: 'Edit Event',
-    bodyStyle: 'background:transparent;padding:20px 20px 10px;',
-    border: false,
-    buttonAlign: 'center',
-    autoHeight: true, // to allow for the notes field to autogrow
-    cls: 'ext-evt-edit-form',
+labelWidth: 65,
+labelWidthRightCol: 65,
+colWidthLeft: .6,
+colWidthRight: .4,
+title: 'Event Form',
+titleTextAdd: 'Add Event',
+titleTextEdit: 'Edit Event',
+titleLabelText: 'Title',
+datesLabelText: 'When',
+reminderLabelText: 'Reminder',
+notesLabelText: 'Notes',
+locationLabelText: 'Location',
+webLinkLabelText: 'Web Link',
+calendarLabelText: 'Calendar',
+repeatsLabelText: 'Repeats',
+saveButtonText: 'Save',
+deleteButtonText: 'Delete',
+cancelButtonText: 'Cancel',
+bodyStyle: 'padding:20px 20px 10px;',
+border: false,
+buttonAlign: 'center',
+autoHeight: true // to allow for the notes field to autogrow
 </code></pre>
  * @constructor
  * @param {Object} config The config object
  */
 Ext.ensible.cal.EventEditForm = Ext.extend(Ext.form.FormPanel, {
     labelWidth: 65,
+    labelWidthRightCol: 65,
+    colWidthLeft: .6,
+    colWidthRight: .4,
     title: 'Event Form',
     titleTextAdd: 'Add Event',
     titleTextEdit: 'Edit Event',
+    titleLabelText: 'Title',
+    datesLabelText: 'When',
+    reminderLabelText: 'Reminder',
+    notesLabelText: 'Notes',
+    locationLabelText: 'Location',
+    webLinkLabelText: 'Web Link',
+    calendarLabelText: 'Calendar',
+    repeatsLabelText: 'Repeats',
+    saveButtonText: 'Save',
+    deleteButtonText: 'Delete',
+    cancelButtonText: 'Cancel',
     bodyStyle: 'padding:20px 20px 10px;',
     border: false,
     buttonAlign: 'center',
     autoHeight: true, // to allow for the notes field to autogrow
-    cls: 'ext-evt-edit-form',
+    
+    /* // not currently supported
+     * @cfg {Boolean} enableRecurrence
+     * True to show the recurrence field, false to hide it (default). Note that recurrence requires
+     * something on the server-side that can parse the iCal RRULE format in order to generate the
+     * instances of recurring events to display on the calendar, so this field should only be enabled
+     * if the server supports it.
+     */
+    enableRecurrence: false,
     
     // private properties:
-    newId: 10000,
     layout: 'column',
+    cls: 'ext-evt-edit-form',
     
     // private
     initComponent: function(){
@@ -2603,41 +3827,56 @@ Ext.ensible.cal.EventEditForm = Ext.extend(Ext.form.FormPanel, {
         });
                 
         this.titleField = new Ext.form.TextField({
-            fieldLabel: 'Title',
+            fieldLabel: this.titleLabelText,
             name: Ext.ensible.cal.EventMappings.Title.name,
             anchor: '90%'
         });
         this.dateRangeField = new Ext.ensible.cal.DateRangeField({
-            fieldLabel: 'When',
-            anchor: '90%'
+            fieldLabel: this.datesLabelText,
+            singleLine: false,
+            anchor: '90%',
+            listeners: {
+                'change': this.onDateChange.createDelegate(this)
+            }
         });
         this.reminderField = new Ext.ensible.cal.ReminderField({
-            name: 'Reminder'
+            name: Ext.ensible.cal.EventMappings.Reminder.name,
+            fieldLabel: this.reminderLabelText
         });
         this.notesField = new Ext.form.TextArea({
-            fieldLabel: 'Notes',
+            fieldLabel: this.notesLabelText,
             name: Ext.ensible.cal.EventMappings.Notes.name,
             grow: true,
             growMax: 150,
             anchor: '100%'
         });
         this.locationField = new Ext.form.TextField({
-            fieldLabel: 'Location',
+            fieldLabel: this.locationLabelText,
             name: Ext.ensible.cal.EventMappings.Location.name,
             anchor: '100%'
         });
         this.urlField = new Ext.form.TextField({
-            fieldLabel: 'Web Link',
+            fieldLabel: this.webLinkLabelText,
             name: Ext.ensible.cal.EventMappings.Url.name,
             anchor: '100%'
         });
         
         var leftFields = [this.titleField, this.dateRangeField, this.reminderField], 
             rightFields = [this.notesField, this.locationField, this.urlField];
+            
+        if(this.enableRecurrence){
+            this.recurrenceField = new Ext.ensible.cal.RecurrenceField({
+                name: Ext.ensible.cal.EventMappings.RRule.name,
+                fieldLabel: this.repeatsLabelText,
+                anchor: '100%'
+            });
+            leftFields.splice(2, 0, this.recurrenceField);
+        }
         
         if(this.calendarStore){
-            this.calendarField = new Ext.ensible.cal.CalendarPicker({
+            this.calendarField = new Ext.ensible.cal.CalendarCombo({
                 store: this.calendarStore,
+                fieldLabel: this.calendarLabelText,
                 name: Ext.ensible.cal.EventMappings.CalendarId.name
             });
             leftFields.splice(2, 0, this.calendarField);
@@ -2645,40 +3884,53 @@ Ext.ensible.cal.EventEditForm = Ext.extend(Ext.form.FormPanel, {
         
         this.items = [{
             id: this.id+'-left-col',
-            columnWidth: .65,
+            columnWidth: this.colWidthLeft,
             layout: 'form',
             border: false,
             items: leftFields
         },{
             id: this.id+'-right-col',
-            columnWidth: .35,
+            columnWidth: this.colWidthRight,
             layout: 'form',
+            labelWidth: this.labelWidthRightCol || this.labelWidth,
             border: false,
             items: rightFields
         }];
         
         this.fbar = [{
-            text:'Save', scope: this, handler: this.onSave
+            text:this.saveButtonText, scope: this, handler: this.onSave
         },{
-            cls:'ext-del-btn', text:'Delete', scope:this, handler:this.onDelete
+            cls:'ext-del-btn', text:this.deleteButtonText, scope:this, handler:this.onDelete
         },{
-            text:'Cancel', scope: this, handler: this.onCancel
+            text:this.cancelButtonText, scope: this, handler: this.onCancel
         }];
         
         Ext.ensible.cal.EventEditForm.superclass.initComponent.call(this);
     },
     
+    // private
+    onDateChange: function(dateRangeField, val){
+        if(this.recurrenceField){
+            this.recurrenceField.setStartDate(val[0]);
+        }
+    },
+    
     // inherited docs
     loadRecord: function(rec){
-        this.form.loadRecord.apply(this.form, arguments);
+        this.form.reset().loadRecord.apply(this.form, arguments);
         this.activeRecord = rec;
         this.dateRangeField.setValue(rec.data);
+        
+        if(this.recurrenceField){
+            this.recurrenceField.setStartDate(rec.data[Ext.ensible.cal.EventMappings.StartDate.name]);
+        }
         if(this.calendarStore){
             this.form.setValues({'calendar': rec.data[Ext.ensible.cal.EventMappings.CalendarId.name]});
         }
-        this.isAdd = !!rec.data[Ext.ensible.cal.EventMappings.IsNew.name];
-        if(this.isAdd){
-            rec.markDirty();
+        
+        //this.isAdd = !!rec.data[Ext.ensible.cal.EventMappings.IsNew.name];
+        if(rec.phantom){
+            //rec.markDirty();
             this.setTitle(this.titleTextAdd);
             Ext.select('.ext-del-btn').setDisplayed(false);
         }
@@ -2691,12 +3943,46 @@ Ext.ensible.cal.EventEditForm = Ext.extend(Ext.form.FormPanel, {
     
     // inherited docs
     updateRecord: function(){
-        var dates = this.dateRangeField.getValue();
+        var dates = this.dateRangeField.getValue(),
+            M = Ext.ensible.cal.EventMappings,
+            rec = this.activeRecord,
+            fs = rec.fields,
+            dirty = false;
             
-        this.form.updateRecord(this.activeRecord);
-        this.activeRecord.set(Ext.ensible.cal.EventMappings.StartDate.name, dates[0]);
-        this.activeRecord.set(Ext.ensible.cal.EventMappings.EndDate.name, dates[1]);
-        this.activeRecord.set(Ext.ensible.cal.EventMappings.IsAllDay.name, dates[2]);
+        rec.beginEdit();
+        
+        //TODO: This block is copied directly from BasicForm.updateRecord.
+        // Unfortunately since that method internally calls begin/endEdit all
+        // updates happen and the record dirty status is reset internally to
+        // that call. We need the dirty status, plus currently the DateRangeField
+        // does not map directly to the record values, so for now we'll duplicate
+        // the setter logic here (we need to be able to pick up any custom-added 
+        // fields generically). Need to revisit this later and come up with a better solution.
+        fs.each(function(f){
+            var field = this.form.findField(f.name);
+            if(field){
+                var value = field.getValue();
+                if (value.getGroupValue) {
+                    value = value.getGroupValue();
+                } 
+                else if (field.eachItem) {
+                    value = [];
+                    field.eachItem(function(item){
+                        value.push(item.getValue());
+                    });
+                }
+                rec.set(f.name, value);
+            }
+        }, this);
+        
+        rec.set(M.StartDate.name, dates[0]);
+        rec.set(M.EndDate.name, dates[1]);
+        rec.set(M.IsAllDay.name, dates[2]);
+        
+        dirty = rec.dirty;
+        rec.endEdit();
+        
+        return dirty;
     },
     
     // private
@@ -2707,7 +3993,7 @@ Ext.ensible.cal.EventEditForm = Ext.extend(Ext.form.FormPanel, {
     
     // private
     cleanup: function(hide){
-        if(this.activeRecord && this.activeRecord.dirty){
+        if(this.activeRecord){
             this.activeRecord.reject();
         }
         delete this.activeRecord;
@@ -2722,14 +4008,11 @@ Ext.ensible.cal.EventEditForm = Ext.extend(Ext.form.FormPanel, {
         if(!this.form.isValid()){
             return;
         }
-        this.updateRecord();
-        
-        if(!this.activeRecord.dirty){
+        if(!this.updateRecord()){
             this.onCancel();
             return;
         }
-        
-        this.fireEvent(this.isAdd ? 'eventadd' : 'eventupdate', this, this.activeRecord);
+        this.fireEvent(this.activeRecord.phantom ? 'eventadd' : 'eventupdate', this, this.activeRecord);
     },
 
     // private
@@ -2745,26 +4028,55 @@ Ext.reg('extensible.eventeditform', Ext.ensible.cal.EventEditForm);
  * <p>A custom window containing a basic edit form used for quick editing of events.</p>
  * <p>This window also provides custom events specific to the calendar so that other calendar components can be easily
  * notified when an event has been edited via this component.</p>
+ * <p>The default configs are as follows:</p><pre><code>
+titleTextAdd: 'Add Event',
+titleTextEdit: 'Edit Event',
+width: 600,
+border: true,
+closeAction: 'hide',
+modal: false,
+resizable: false,
+buttonAlign: 'left',
+labelWidth: 65,
+detailsLinkText: 'Edit Details...',
+savingMessage: 'Saving changes...',
+deletingMessage: 'Deleting event...',
+saveButtonText: 'Save',
+deleteButtonText: 'Delete',
+cancelButtonText: 'Cancel',
+titleLabelText: 'Title',
+datesLabelText: 'When',
+calendarLabelText: 'Calendar',
+editDetailsLinkClass: 'edit-dtl-link',
+bodyStyle: 'padding:5px 10px;',
+enableEditDetails: true
+</code></pre>
  * @constructor
  * @param {Object} config The config object
  */
 Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
     titleTextAdd: 'Add Event',
     titleTextEdit: 'Edit Event',
-    width: 580,
+    width: 600,
     border: true,
     closeAction: 'hide',
     modal: false,
     resizable: false,
     buttonAlign: 'left',
     labelWidth: 65,
+    detailsLinkText: 'Edit Details...',
     savingMessage: 'Saving changes...',
     deletingMessage: 'Deleting event...',
+    saveButtonText: 'Save',
+    deleteButtonText: 'Delete',
+    cancelButtonText: 'Cancel',
+    titleLabelText: 'Title',
+    datesLabelText: 'When',
+    calendarLabelText: 'Calendar',
     editDetailsLinkClass: 'edit-dtl-link',
+    bodyStyle: 'padding:5px 10px;',
+    enableEditDetails: true,
     
-    // private
-	newId: 10000,
-	
     // private
     initComponent: function(){
         this.addEvents({
@@ -2813,15 +4125,19 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
             editdetails: true
         });
         
-        this.fbar = [{
-            xtype: 'tbtext', text: '<a href="#" class="'+this.editDetailsLinkClass+'">Edit Details...</a>'
-        },'->',{
-            text:'Save', disabled:false, handler:this.onSave, scope:this
+        this.fbar = ['->',{
+            text:this.saveButtonText, disabled:false, handler:this.onSave, scope:this
         },{
-            id:this.id+'-delete-btn', text:'Delete', disabled:false, handler:this.onDelete, scope:this, hideMode:'offsets'
+            id:this.id+'-delete-btn', text:this.deleteButtonText, disabled:false, handler:this.onDelete, scope:this, hideMode:'offsets'
         },{
-            text:'Cancel', disabled:false, handler:this.onCancel, scope:this
+            text:this.cancelButtonText, disabled:false, handler:this.onCancel, scope:this
         }];
+        
+        if(this.enableEditDetails !== false){
+            this.fbar.unshift({
+                xtype: 'tbtext', text: '<a href="#" class="'+this.editDetailsLinkClass+'">'+this.detailsLinkText+'</a>'
+            });
+        }
         
         Ext.ensible.cal.EventEditWindow.superclass.initComponent.call(this);
     },
@@ -2832,20 +4148,21 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
         
         this.titleField = new Ext.form.TextField({
             name: Ext.ensible.cal.EventMappings.Title.name,
-            fieldLabel: 'Title',
+            fieldLabel: this.titleLabelText,
             anchor: '100%'
         });
         this.dateRangeField = new Ext.ensible.cal.DateRangeField({
-            anchor: '100%',
-            fieldLabel: 'When'
+            anchor: '95%',
+            fieldLabel: this.datesLabelText
         });
         
         var items = [this.titleField, this.dateRangeField];
         
         if(this.calendarStore){
-            this.calendarField = new Ext.ensible.cal.CalendarPicker({
+            this.calendarField = new Ext.ensible.cal.CalendarCombo({
                 name: Ext.ensible.cal.EventMappings.CalendarId.name,
                 anchor: '100%',
+                fieldLabel: this.calendarLabelText,
                 store: this.calendarStore
             });
             items.push(this.calendarField);
@@ -2890,22 +4207,23 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
      */
     show: function(o, animateTarget){
 		// Work around the CSS day cell height hack needed for initial render in IE8/strict:
-		var anim = (Ext.isIE8 && Ext.isStrict) ? null : animateTarget;
+		var anim = (Ext.isIE8 && Ext.isStrict) ? null : animateTarget,
+            M = Ext.ensible.cal.EventMappings;
 
 		Ext.ensible.cal.EventEditWindow.superclass.show.call(this, anim, function(){
             this.titleField.focus(false, 100);
         });
-        this.deleteBtn[o.data && o.data[Ext.ensible.cal.EventMappings.EventId.name] ? 'show' : 'hide']();
+        this.deleteBtn[o.data && o.data[M.EventId.name] ? 'show' : 'hide']();
         
         var rec, f = this.formPanel.form;
 
         if(o.data){
             rec = o;
-			this.isAdd = !!rec.data[Ext.ensible.cal.EventMappings.IsNew.name];
-			if(this.isAdd){
+			//this.isAdd = !!rec.data[Ext.ensible.cal.EventMappings.IsNew.name];
+			if(rec.phantom){
 				// Enable adding the default record that was passed in
 				// if it's new even if the user makes no changes 
-				rec.markDirty();
+				//rec.markDirty();
 				this.setTitle(this.titleTextAdd);
 			}
 			else{
@@ -2915,30 +4233,28 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
             f.loadRecord(rec);
         }
         else{
-			this.isAdd = true;
+			//this.isAdd = true;
             this.setTitle(this.titleTextAdd);
 
-            var M = Ext.ensible.cal.EventMappings,
-                eventId = M.EventId.name,
-                start = o[M.StartDate.name],
+            var start = o[M.StartDate.name],
                 end = o[M.EndDate.name] || start.add('h', 1);
                 
             rec = new Ext.ensible.cal.EventRecord();
-            rec.data[M.EventId.name] = this.newId++;
+            //rec.data[M.EventId.name] = this.newId++;
             rec.data[M.StartDate.name] = start;
             rec.data[M.EndDate.name] = end;
             rec.data[M.IsAllDay.name] = !!o[M.IsAllDay.name] || start.getDate() != end.clone().add(Date.MILLI, 1).getDate();
-            rec.data[M.IsNew.name] = true;
             
             f.reset();
             f.loadRecord(rec);
         }
         
         if(this.calendarStore){
-            this.calendarField.setValue(rec.data[Ext.ensible.cal.EventMappings.CalendarId.name]);
+            this.calendarField.setValue(rec.data[M.CalendarId.name]);
         }
         this.dateRangeField.setValue(rec.data);
         this.activeRecord = rec;
+        this.el.setStyle('z-index', 12000);
         
 		return this;
     },
@@ -2958,7 +4274,7 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
 
     // private
     cleanup: function(hide){
-        if(this.activeRecord && this.activeRecord.dirty){
+        if(this.activeRecord){
             this.activeRecord.reject();
         }
         delete this.activeRecord;
@@ -2972,17 +4288,47 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
     
     // private
     updateRecord: function(){
-        var f = this.formPanel.form,
-            dates = this.dateRangeField.getValue(),
-            M = Ext.ensible.cal.EventMappings;
+        var dates = this.dateRangeField.getValue(),
+            M = Ext.ensible.cal.EventMappings,
+            rec = this.activeRecord,
+            form = this.formPanel.form,
+            fs = rec.fields,
+            dirty = false;
             
-        f.updateRecord(this.activeRecord);
-        this.activeRecord.set(M.StartDate.name, dates[0]);
-        this.activeRecord.set(M.EndDate.name, dates[1]);
-        this.activeRecord.set(M.IsAllDay.name, dates[2]);
-        if(this.calendarStore){
-            this.activeRecord.set(M.CalendarId.name, this.calendarField.getValue());
-        }
+        rec.beginEdit();
+
+        //TODO: This block is copied directly from BasicForm.updateRecord.
+        // Unfortunately since that method internally calls begin/endEdit all
+        // updates happen and the record dirty status is reset internally to
+        // that call. We need the dirty status, plus currently the DateRangeField
+        // does not map directly to the record values, so for now we'll duplicate
+        // the setter logic here (we need to be able to pick up any custom-added 
+        // fields generically). Need to revisit this later and come up with a better solution.
+        fs.each(function(f){
+            var field = form.findField(f.name);
+            if(field){
+                var value = field.getValue();
+                if (value.getGroupValue) {
+                    value = value.getGroupValue();
+                } 
+                else if (field.eachItem) {
+                    value = [];
+                    field.eachItem(function(item){
+                        value.push(item.getValue());
+                    });
+                }
+                rec.set(f.name, value);
+            }
+        }, this);
+        
+        rec.set(M.StartDate.name, dates[0]);
+        rec.set(M.EndDate.name, dates[1]);
+        rec.set(M.IsAllDay.name, dates[2]);
+        
+        dirty = rec.dirty;
+        rec.endEdit();
+        
+        return dirty;
     },
     
     // private
@@ -2990,14 +4336,11 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
         if(!this.formPanel.form.isValid()){
             return;
         }
-        this.updateRecord();
-		
-		if(!this.activeRecord.dirty){
+		if(!this.updateRecord()){
 			this.onCancel();
 			return;
 		}
-		
-		this.fireEvent(this.isAdd ? 'eventadd' : 'eventupdate', this, this.activeRecord, this.animateTarget);
+		this.fireEvent(this.activeRecord.phantom ? 'eventadd' : 'eventupdate', this, this.activeRecord, this.animateTarget);
     },
     
     // private
@@ -3019,6 +4362,18 @@ Ext.reg('extensible.eventeditwindow', Ext.ensible.cal.EventEditWindow);/**
  * @param {Object} config The config object
  */
 Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
+    /*
+     * @cfg {Boolean} enableRecurrence
+     * True to show the recurrence field, false to hide it (default). Note that recurrence requires
+     * something on the server-side that can parse the iCal RRULE format in order to generate the
+     * instances of recurring events to display on the calendar, so this field should only be enabled
+     * if the server supports it.
+     */
+    //enableRecurrence: false,
+    /**
+     * @cfg {Boolean} readOnly
+     * True to prevent clicks on events or the view from providing CRUD capabilities, false to enable CRUD (the default).
+     */
     /**
      * @cfg {Number} startDay
      * The 0-based index for the day on which the calendar week begins (0=Sunday, which is the default)
@@ -3096,6 +4451,11 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
      */
     monitorResize: true,
     /**
+     * @cfg {String} todayText
+     * The text to display in the current day's box in the calendar when {@link #showTodayText} is true (defaults to 'Today')
+     */
+    todayText: 'Today',
+    /**
      * @cfg {String} ddCreateEventText
      * The text to display inside the drag proxy while dragging over the calendar to create a new event (defaults to 
      * 'Create event for {0}' where {0} is a date range supplied by the view)
@@ -3115,6 +4475,29 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
      * that allow resizing of events.
      */
     ddResizeEventText: 'Update event to {0}',
+    /**
+     * @cfg {String} defaultEventTitleText
+     * The default text to display as the title of an event that has a null or empty string title value (defaults to '(No title)')
+     */
+    defaultEventTitleText: '(No title)',
+    /**
+     * @cfg {String} dateParamFormat
+     * The format to use for date parameters sent with requests to retrieve events for the calendar (defaults to 'Y-m-d', e.g. '2010-10-31')
+     */
+    dateParamFormat: 'Y-m-d',
+    /**
+     * @cfg {Boolean} editModal
+     * True to show the default event editor window modally over the entire page, false to allow user interaction with the page
+     * while showing the window (the default). Note that if you replace the default editor window with some alternate component this
+     * config will no longer apply. 
+     */
+    editModal: false,
+    /**
+     * @cfg {Boolean} enableEditDetails
+     * True to show a link on the event edit window to allow switching to the detailed edit form (the default), false to remove the
+     * link and disable detailed event editing. 
+     */
+    enableEditDetails: true,
     
     //private properties -- do not override:
     weekCount: 1,
@@ -3146,11 +4529,57 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
      */
     getEventTemplate : Ext.emptyFn, // must be implemented by a subclass
     
+    /**
+     * This is undefined by default, but can be implemented to allow custom CSS classes and template data to be
+     * conditionally applied to events during rendering. This function will be called with the parameter list shown
+     * below and is expected to return the CSS class name (or empty string '' for none) that will be added to the 
+     * event element's wrapping div. To apply multiple class names, simply return them space-delimited within the 
+     * string (e.g., 'my-class another-class'). Example usage, applied in a CalendarPanel config:
+     * <pre><code>
+// This example assumes a custom field of 'IsHoliday' has been added to EventRecord
+viewConfig: {
+    getEventClass: function(rec, allday, templateData, store){
+        if(rec.data.IsHoliday){
+            templateData.iconCls = 'holiday';
+            return 'evt-holiday';
+        }
+        templateData.iconCls = 'plain';
+        return '';
+    },
+    getEventBodyMarkup : function(){
+        // This is simplified, but shows the symtax for how you could add a
+        // custom placeholder that maps back to the templateData property created
+        // in getEventClass. Note that this is standard Ext template syntax.
+        if(!this.eventBodyMarkup){
+            this.eventBodyMarkup = '&lt;span class="{iconCls}">&lt;/span> {Title}';
+        }
+        return this.eventBodyMarkup;
+    }
+}
+</code></pre>
+     * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} being rendered
+     * @param {Boolean} isAllDay A flag indicating whether the event will be <em>rendered</em> as an all-day event. Note that this
+     * will not necessarily correspond with the value of the <tt>EventRecord.IsAllDay</tt> field &mdash; events that span multiple
+     * days will be rendered using the all-day event template regardless of the field value. If your logic for this function
+     * needs to know whether or not the event will be rendered as an all-day event, this value should be used. 
+     * @param {Object} templateData A plain JavaScript object that is empty by default. You can add custom properties
+     * to this object that will then be passed into the event template for the specific event being rendered. If you have 
+     * overridden the default event template and added custom data placeholders, you can use this object to pass the data
+     * into the template that will replace those placeholders.
+     * @param {Ext.data.Store} store The Event data store in use by the view
+     * @method getEventClass
+     * @return {String} A space-delimited CSS class string (or '')
+     */
+    
     // private
     initComponent : function(){
         this.setStartDate(this.startDate || new Date());
-
+        
         Ext.ensible.cal.CalendarView.superclass.initComponent.call(this);
+        
+        if(this.readOnly === true){
+            this.addClass('ext-cal-readonly');
+        }
 		
         this.addEvents({
             /**
@@ -3161,7 +4590,9 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             eventsrendered: true,
             /**
              * @event eventclick
-             * Fires after the user clicks on an event element
+             * Fires after the user clicks on an event element. This is a cancelable event, so returning false from a 
+             * handler will cancel the click without displaying the event editor view. This could be useful for 
+             * validating the rules by which events should be editable by the user.
              * @param {Ext.ensible.cal.CalendarView} this
              * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event that was clicked on
              * @param {HTMLNode} el The DOM node that was clicked on
@@ -3197,7 +4628,8 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             beforedatechange: true,
             /**
              * @event datechange
-             * Fires after the start date of the view changes
+             * Fires after the start date of the view has changed. If you need to cancel the date change you should handle the 
+             * {@link #beforedatechange} event and return false from your handler function.
              * @param {Ext.ensible.cal.CalendarView} this
              * @param {Date} startDate The start date of the view (as explained in {@link #getStartDate}
              * @param {Date} viewStart The first displayed date in the view
@@ -3206,7 +4638,10 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             datechange: true,
             /**
              * @event rangeselect
-             * Fires after the user drags on the calendar to select a range of dates/times in which to create an event
+             * Fires after the user drags on the calendar to select a range of dates/times in which to create an event. This is a 
+             * cancelable event, so returning false from a handler will cancel the drag operation and clean up any drag shim elements
+             * without displaying the event editor view. This could be useful for validating that a user can only create events within
+             * a certain range.
              * @param {Ext.ensible.cal.CalendarView} this
              * @param {Object} dates An object containing the start (StartDate property) and end (EndDate property) dates selected
              * @param {Function} callback A callback function that MUST be called after the event handling is complete so that
@@ -3218,14 +4653,17 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             /**
              * @event beforeeventmove
              * Fires before an event element is dragged by the user and dropped in a new position. This is a cancelable event, so 
-             * returning false from a handler will cancel the move operation.
+             * returning false from a handler will cancel the move operation. This could be useful for validating that a user can 
+             * only move events within a certain date range.
              * @param {Ext.ensible.cal.CalendarView} this
              * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event that will be moved
+             * @param {Date} dt The new start date to be set (the end date will be automaticaly adjusted to match the event duration)
              */
             beforeeventmove: true,
             /**
              * @event eventmove
-             * Fires after an event element is dragged by the user and dropped in a new position
+             * Fires after an event element has been dragged by the user and dropped in a new position. If you need to cancel the 
+             * move operation you should handle the {@link #beforeeventmove} event and return false from your handler function.
              * @param {Ext.ensible.cal.CalendarView} this
              * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event that was moved with
              * updated start and end dates
@@ -3265,6 +4703,27 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
              */
             editdetails: true,
             /**
+             * @event eventadd
+             * Fires after a new event has been added to the underlying store
+             * @param {Ext.ensible.cal.CalendarView} this
+             * @param {Ext.ensible.cal.EventRecord} rec The new {@link Ext.ensible.cal.EventRecord record} that was added
+             */
+            eventadd: true,
+            /**
+             * @event eventupdate
+             * Fires after an existing event has been updated
+             * @param {Ext.ensible.cal.CalendarView} this
+             * @param {Ext.ensible.cal.EventRecord} rec The new {@link Ext.ensible.cal.EventRecord record} that was updated
+             */
+            eventupdate: true,
+            /**
+             * @event eventcancel
+             * Fires after an event add/edit operation has been canceled by the user and no store update took place
+             * @param {Ext.ensible.cal.CalendarView} this
+             * @param {Ext.ensible.cal.EventRecord} rec The new {@link Ext.ensible.cal.EventRecord record} that was canceled
+             */
+            eventcancel: true,
+            /**
              * @event beforeeventdelete
              * Fires before an event is deleted by the user. This is a cancelable event, so returning false from a handler 
              * will cancel the delete operation.
@@ -3275,7 +4734,8 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             beforeeventdelete: true,
             /**
              * @event eventdelete
-             * Fires after an event is deleted by the user.
+             * Fires after an event has been deleted by the user. If you need to cancel the delete operation you should handle the 
+             * {@link #beforeeventdelete} event and return false from your handler function.
              * @param {Ext.ensible.cal.CalendarView} this
              * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event that was deleted
              * @param {Ext.Element} el The target element
@@ -3291,7 +4751,19 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
         this.renderTemplate();
         
         if(this.store){
+            this.saveRequired = !this.store.autoSave;
             this.setStore(this.store, true);
+            
+            if(this.store.deferLoad){
+                this.reloadStore(this.store.deferLoad);
+                delete this.store.deferLoad;
+            }
+            else {
+                this.store.initialParams = this.getStoreParams();
+            }
+        }
+        if(this.calendarStore){
+            this.setCalendarStore(this.calendarStore, true);
         }
 
         this.el.on({
@@ -3309,12 +4781,28 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 		
 		this.el.unselectable();
         
-        if(this.enableDD && this.initDD){
+        if(this.enableDD && this.readOnly !== true && this.initDD){
 			this.initDD();
         }
         
         this.on('eventsrendered', this.forceSize);
         this.forceSize.defer(100, this);
+    },
+    
+    getStoreParams : function(){
+        return {
+            start: this.viewStart.format(this.dateParamFormat),
+            end: this.viewEnd.format(this.dateParamFormat)
+        };
+    },
+    
+    reloadStore : function(o){
+        Ext.ensible.log('reloadStore');
+        o = Ext.isObject(o) ? o : {};
+        o.params = o.params || {};
+        
+        Ext.apply(o.params, this.getStoreParams());
+        this.store.load(o);
     },
     
     // private
@@ -3332,7 +4820,11 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
         }
     },
 
-    refresh : function(){
+    refresh : function(reloadData){
+        Ext.ensible.log('refresh (base), reload = '+reloadData);
+        if(reloadData === true){
+            this.reloadStore();
+        }
         this.prepareData();
         this.renderTemplate();
         this.renderItems();
@@ -3391,15 +4883,17 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             max = this.maxEventsPerDay ? this.maxEventsPerDay : 999;
         
         evts.each(function(evt){
-            var M = Ext.ensible.cal.EventMappings,
-                days = Ext.ensible.Date.diffDays(
-                Ext.ensible.Date.max(this.viewStart, evt.data[M.StartDate.name]),
-                Ext.ensible.Date.min(this.viewEnd, evt.data[M.EndDate.name])) + 1;
+            var M = Ext.ensible.cal.EventMappings;
             
-            if(days > 1 || Ext.ensible.Date.diffDays(evt.data[M.StartDate.name], evt.data[M.EndDate.name]) > 1){
-                this.prepareEventGridSpans(evt, this.eventGrid, w, d, days);
-                this.prepareEventGridSpans(evt, this.allDayGrid, w, d, days, true);
-            }else{
+            if(Ext.ensible.Date.diffDays(evt.data[M.StartDate.name], evt.data[M.EndDate.name]) > 0){
+                var daysInView = Ext.ensible.Date.diffDays(
+                    Ext.ensible.Date.max(this.viewStart, evt.data[M.StartDate.name]),
+                    Ext.ensible.Date.min(this.viewEnd, evt.data[M.EndDate.name])) + 1;
+                    
+                this.prepareEventGridSpans(evt, this.eventGrid, w, d, daysInView);
+                this.prepareEventGridSpans(evt, this.allDayGrid, w, d, daysInView, true);
+            }
+            else{
                 row = this.findEmptyRowIndex(w,d);
                 this.eventGrid[w][d] = this.eventGrid[w][d] || [];
                 this.eventGrid[w][d][row] = evt;
@@ -3496,7 +4990,7 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 	
     // private
 	onResize : function(){
-		this.refresh();
+		this.refresh(false);
 	},
 	
     // private
@@ -3513,13 +5007,21 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 	onCalendarEndDrag : function(start, end, onComplete){
         // set this flag for other event handlers that might conflict while we're waiting
         this.dragPending = true;
-        // have to wait for the user to save or cancel before finalizing the dd interaction
-        var dates = {};
+        
+        var dates = {},
+            onComplete = this.onCalendarEndDragComplete.createDelegate(this, [onComplete]);
+        
         dates[Ext.ensible.cal.EventMappings.StartDate.name] = start;
         dates[Ext.ensible.cal.EventMappings.EndDate.name] = end;
         
-		//this.fireEvent('rangeselect', this, o, null, this.onCalendarEndDragComplete.createDelegate(this, [onComplete]));
-        this.onRangeSelect(dates, null, this.onCalendarEndDragComplete.createDelegate(this, [onComplete]));
+        if(this.fireEvent('rangeselect', this, dates, onComplete) !== false){
+            this.showEventEditor(dates, null);
+            this.editWin.on('hide', onComplete, this, {single:true});
+        }
+        else{
+            // client code canceled the selection so clean up immediately
+            this.onCalendarEndDragComplete(onComplete);
+        }
 	},
     
     // private
@@ -3532,11 +5034,18 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 	
     // private
     onUpdate : function(ds, rec, operation){
-		if(this.monitorStoreEvents === false) {
-			return;
-		}
+        if(this.hidden === true || this.monitorStoreEvents === false){
+            return;
+        }
         if(operation == Ext.data.Record.COMMIT){
-            this.refresh();
+            Ext.ensible.log('onUpdate');
+            this.dismissEventEditor();
+            
+            var rrule = rec.data[Ext.ensible.cal.EventMappings.RRule.name];
+            // if the event has a recurrence rule we have to reload the store in case
+            // any event instances were updated on the server
+            this.refresh(rrule !== undefined && rrule !== '');
+            
 			if(this.enableFx && this.enableUpdateFx){
 				this.doUpdateFx(this.getEventEls(rec.data[Ext.ensible.cal.EventMappings.EventId.name]), {
                     scope: this
@@ -3551,12 +5060,24 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 	
     // private
     onAdd : function(ds, records, index){
-		if(this.monitorStoreEvents === false) {
-			return;
-		}
-		var rec = records[0];
+        if(this.hidden === true || this.monitorStoreEvents === false || records[0].phantom){
+            return;
+        }
+        if(records[0]._deleting){
+            delete records[0]._deleting;
+            return;
+        }
+        
+        Ext.ensible.log('onAdd');
+        
+		var rec = records[0],
+            rrule = rec.data[Ext.ensible.cal.EventMappings.RRule.name];
+        
+        this.dismissEventEditor();    
 		this.tempEventId = rec.id;
-		this.refresh();
+        // if the new event has a recurrence rule we have to reload the store in case
+        // new event instances were generated on the server
+		this.refresh(rrule !== undefined && rrule !== '');
 		
 		if(this.enableFx && this.enableAddFx){
 			this.doAddFx(this.getEventEls(rec.data[Ext.ensible.cal.EventMappings.EventId.name]), {
@@ -3571,19 +5092,28 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 	
     // private
     onRemove : function(ds, rec){
-		if(this.monitorStoreEvents === false) {
-			return;
-		}
+        if(this.hidden === true || this.monitorStoreEvents === false){
+            return;
+        }
+        
+        Ext.ensible.log('onRemove');
+        this.dismissEventEditor();
+        
+        var rrule = rec.data[Ext.ensible.cal.EventMappings.RRule.name],
+            // if the new event has a recurrence rule we have to reload the store in case
+            // new event instances were generated on the server
+            isRecurring = rrule !== undefined && rrule !== '';
+        
 		if(this.enableFx && this.enableRemoveFx){
 			this.doRemoveFx(this.getEventEls(rec.data[Ext.ensible.cal.EventMappings.EventId.name]), {
 	            remove: true,
 	            scope: this,
-				callback: this.refresh
+				callback: this.refresh.createDelegate(this, [isRecurring])
 			});
 		}
 		else{
 			this.getEventEls(rec.data[Ext.ensible.cal.EventMappings.EventId.name]).remove();
-            this.refresh();
+            this.refresh(isRecurring);
 		}
     },
 	
@@ -3600,7 +5130,6 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 	
 	/**
 	 * Visually highlights an event using {@link Ext.Fx#highlight} config options.
-	 * If {@link #highlightEventActions} is false this method will have no effect.
 	 * @param {Ext.CompositeElement} els The element(s) to highlight
 	 * @param {Object} color (optional) The highlight color. Should be a 6 char hex 
 	 * color without the leading # (defaults to yellow: 'ffff9c')
@@ -3626,16 +5155,30 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 	 * Retrieve an Event object's id from its corresponding node in the DOM.
 	 * @param {String/Element/HTMLElement} el An {@link Ext.Element}, DOM node or id
 	 */
-	getEventIdFromEl : function(el){
-		el = Ext.get(el);
-		var id = el.id.split(this.eventElIdDelimiter)[1];
-        if(id.indexOf('-') > -1){
-            //This id has the index of the week it is rendered in as the suffix.
-            //This allows events that span across weeks to still have reproducibly-unique DOM ids.
-            id = id.split('-')[0];
-        }
+//	getEventIdFromEl : function(el){
+//		el = Ext.get(el);
+//		var id = el.id.split(this.eventElIdDelimiter)[1];
+//        if(id.indexOf('-w_') > -1){
+//            //This id has the index of the week it is rendered in as part of the suffix.
+//            //This allows events that span across weeks to still have reproducibly-unique DOM ids.
+//            id = id.split('-w_')[0];
+//        }
+//        return id;
+//	},
+    getEventIdFromEl : function(el){
+        el = Ext.get(el);
+        var parts, id = '', cls, classes = el.dom.className.split(' ');
+        
+        Ext.each(classes, function(cls){
+            parts = cls.split(this.eventElIdDelimiter);
+            if(parts.length > 1){
+                id = parts[1];
+                return false;
+            }
+        }, this);
+        
         return id;
-	},
+    },
 	
 	// private
 	getEventId : function(eventId){
@@ -3665,7 +5208,7 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 	 * boundary will contain more than one internal Element.
 	 */
 	getEventEls : function(eventId){
-		var els = Ext.select(this.getEventSelectorCls(this.getEventId(eventId), true), false, this.el.id);
+		var els = this.el.select(this.getEventSelectorCls(this.getEventId(eventId), true), false);
 		return new Ext.CompositeElement(els);
 	},
     
@@ -3680,22 +5223,28 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 
     // private
     onDataChanged : function(store){
-        this.refresh();
+        Ext.ensible.log('onDataChanged');
+        this.refresh(false);
     },
     
     // private
     isEventVisible : function(evt){
+        var M = Ext.ensible.cal.EventMappings,
+            data = evt.data ? evt.data : evt,
+            calId = data[M.CalendarId.name],
+            calRec = this.calendarStore ? this.calendarStore.getById(calId) : null;
+            
+        if(calRec && calRec.data[Ext.ensible.cal.CalendarMappings.IsHidden.name] === true){
+            // if the event is on a hidden calendar then no need to test the date boundaries
+            return false;
+        }
+            
         var start = this.viewStart.getTime(),
             end = this.viewEnd.getTime(),
-            M = Ext.ensible.cal.EventMappings,
-            evStart = (evt.data ? evt.data[M.StartDate.name] : evt[M.StartDate.name]).getTime(),
-            evEnd = (evt.data ? evt.data[M.EndDate.name] : evt[M.EndDate.name]).add(Date.SECOND, -1).getTime(),
+            evStart = data[M.StartDate.name].getTime(),
+            evEnd = data[M.EndDate.name].getTime();
             
-            startsInRange = (evStart >= start && evStart <= end),
-            endsInRange = (evEnd >= start && evEnd <= end),
-            spansRange = (evStart < start && evEnd > end);
-        
-        return (startsInRange || endsInRange || spansRange);
+        return Ext.ensible.Date.rangesOverlap(start, end, evStart, evEnd);
     },
     
     // private
@@ -3706,7 +5255,8 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             start1 = ev1[M.StartDate.name].getTime(),
             end1 = ev1[M.EndDate.name].add(Date.SECOND, -1).getTime(),
             start2 = ev2[M.StartDate.name].getTime(),
-            end2 = ev2[M.EndDate.name].add(Date.SECOND, -1).getTime();
+            end2 = ev2[M.EndDate.name].add(Date.SECOND, -1).getTime(),
+            startDiff = Ext.ensible.Date.diff(ev1[M.StartDate.name], ev2[M.StartDate.name], 'm');
             
             if(end1<start1){
                 end1 = start1;
@@ -3715,11 +5265,15 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
                 end2 = start2;
             }
             
-            var ev1startsInEv2 = (start1 >= start2 && start1 <= end2),
-            ev1EndsInEv2 = (end1 >= start2 && end1 <= end2),
-            ev1SpansEv2 = (start1 < start2 && end1 > end2);
+//            var ev1startsInEv2 = (start1 >= start2 && start1 <= end2),
+//            ev1EndsInEv2 = (end1 >= start2 && end1 <= end2),
+//            ev1SpansEv2 = (start1 < start2 && end1 > end2),
+            var evtsOverlap = Ext.ensible.Date.rangesOverlap(start1, end1, start2, end2),
+                minimumMinutes = this.minEventDisplayMinutes || 0, // applies in day/week body view only for vertical overlap
+                ev1MinHeightOverlapsEv2 = minimumMinutes > 0 && (startDiff > -minimumMinutes && startDiff < minimumMinutes);
         
-        return (ev1startsInEv2 || ev1EndsInEv2 || ev1SpansEv2);
+        //return (ev1startsInEv2 || ev1EndsInEv2 || ev1SpansEv2 || ev1MinHeightOverlapsEv2);
+        return (evtsOverlap || ev1MinHeightOverlapsEv2);
     },
     
     getDayEl : function(dt){
@@ -3748,18 +5302,13 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
      * earliest and latest dates that match the view requirements and contain the date passed to this function.
      * @param {Date} dt The date used to calculate the new view boundaries
      */
-    setStartDate : function(start, refresh){
+    setStartDate : function(start, /*private*/reload){
+        Ext.ensible.log('setStartDate (base) '+start.format('Y-m-d'));
         if(this.fireEvent('beforedatechange', this, this.startDate, start, this.viewStart, this.viewEnd) !== false){
             this.startDate = start.clearTime();
             this.setViewBounds(start);
-            this.store.load({
-                params: {
-                    start: this.viewStart.format('m-d-Y'),
-                    end: this.viewEnd.format('m-d-Y')
-                }
-            });
-            if(refresh === true){
-                this.refresh();
+            if(this.rendered){
+                this.refresh(reload);
             }
             this.fireEvent('datechange', this, this.startDate, this.viewStart, this.viewEnd);
         }
@@ -3773,20 +5322,28 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
         switch(this.weekCount){
             case 0:
             case 1:
-                this.viewStart = this.dayCount < 7 ? start : start.add(Date.DAY, -offset).clearTime(true);
+                this.viewStart = this.dayCount < 7 && !this.startDayIsStatic ? start : start.add(Date.DAY, -offset).clearTime(true);
                 this.viewEnd = this.viewStart.add(Date.DAY, this.dayCount || 7).add(Date.SECOND, -1);
                 return;
             
             case -1: // auto by month
                 start = start.getFirstDateOfMonth();
                 offset = start.getDay() - this.startDay;
-                    
+                if(offset < 0){
+                    // if the offset is negative then some days will be in the previous week so add a week to the offset
+                    offset += 7;
+                }
                 this.viewStart = start.add(Date.DAY, -offset).clearTime(true);
                 
                 // start from current month start, not view start:
                 var end = start.add(Date.MONTH, 1).add(Date.SECOND, -1);
                 // fill out to the end of the week:
-                this.viewEnd = end.add(Date.DAY, 6-end.getDay()); 
+                offset = this.startDay;
+                if(offset > end.getDay()){
+                    // if the offset is larger than the end day index then the last row will be empty so skip it
+                    offset -= 7;
+                }
+                this.viewEnd = end.add(Date.DAY, 6-end.getDay()+offset);
                 return;
             
             default:
@@ -3795,7 +5352,18 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
         }
     },
     
-    // private
+    /**
+     * Returns the start and end boundary dates currently displayed in the view. The method
+     * returns an object literal that contains the following properties:<ul>
+     * <li><b>start</b> Date : <div class="sub-desc">The start date of the view</div></li>
+     * <li><b>end</b> Date : <div class="sub-desc">The end date of the view</div></li></ul>
+     * For example:<pre><code>
+var bounds = view.getViewBounds();
+alert('Start: '+bounds.start);
+alert('End: '+bounds.end);
+</code></pre>
+     * @return {Object} An object literal containing the start and end values
+     */
     getViewBounds : function(){
         return {
             start: this.viewStart,
@@ -3864,12 +5432,9 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
      * Updates the view to contain the passed date
      * @param {Date} dt The date to display
      */
-    moveTo : function(dt, noRefresh){
+    moveTo : function(dt, /*private*/reload){
         if(Ext.isDate(dt)){
-            this.setStartDate(dt);
-            if(noRefresh!==false){
-                this.refresh();
-            }
+            this.setStartDate(dt, reload);
             return this.startDate;
         }
         return dt;
@@ -3877,48 +5442,54 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
 
     /**
      * Updates the view to the next consecutive date(s)
+     * @return {Date} The new date
      */
-    moveNext : function(noRefresh){
-        return this.moveTo(this.viewEnd.add(Date.DAY, 1));
+    moveNext : function(/*private*/reload){
+        return this.moveTo(this.viewEnd.add(Date.DAY, 1), reload);
     },
 
     /**
      * Updates the view to the previous consecutive date(s)
+     * @return {Date} The new date
      */
-    movePrev : function(noRefresh){
+    movePrev : function(/*private*/reload){
         var days = Ext.ensible.Date.diffDays(this.viewStart, this.viewEnd)+1;
-        return this.moveDays(-days, noRefresh);
+        return this.moveDays(-days, reload);
     },
     
     /**
      * Shifts the view by the passed number of months relative to the currently set date
      * @param {Number} value The number of months (positive or negative) by which to shift the view
+     * @return {Date} The new date
      */
-    moveMonths : function(value, noRefresh){
-        return this.moveTo(this.startDate.add(Date.MONTH, value), noRefresh);
+    moveMonths : function(value, /*private*/reload){
+        return this.moveTo(this.startDate.add(Date.MONTH, value), reload);
     },
     
     /**
      * Shifts the view by the passed number of weeks relative to the currently set date
      * @param {Number} value The number of weeks (positive or negative) by which to shift the view
+     * @return {Date} The new date
      */
-    moveWeeks : function(value, noRefresh){
-        return this.moveTo(this.startDate.add(Date.DAY, value*7), noRefresh);
+    moveWeeks : function(value, /*private*/reload){
+        return this.moveTo(this.startDate.add(Date.DAY, value*7), reload);
     },
     
     /**
      * Shifts the view by the passed number of days relative to the currently set date
      * @param {Number} value The number of days (positive or negative) by which to shift the view
+     * @return {Date} The new date
      */
-    moveDays : function(value, noRefresh){
-        return this.moveTo(this.startDate.add(Date.DAY, value), noRefresh);
+    moveDays : function(value, /*private*/reload){
+        return this.moveTo(this.startDate.add(Date.DAY, value), reload);
     },
     
     /**
      * Updates the view to show today
+     * @return {Date} Today's date
      */
-    moveToday : function(noRefresh){
-        return this.moveTo(new Date(), noRefresh);
+    moveToday : function(/*private*/reload){
+        return this.moveTo(new Date(), reload);
     },
     
     /**
@@ -3926,12 +5497,16 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
      * @param {Ext.data.Store} store
      */
     setStore : function(store, initial){
-        if(!initial && this.store){
-            this.store.un("datachanged", this.onDataChanged, this);
-            this.store.un("add", this.onAdd, this);
-            this.store.un("remove", this.onRemove, this);
-            this.store.un("update", this.onUpdate, this);
-            this.store.un("clear", this.refresh, this);
+        var currStore = this.store;
+        
+        if(!initial && currStore){
+            currStore.un("datachanged", this.onDataChanged, this);
+            currStore.un("add", this.onAdd, this);
+            currStore.un("remove", this.onRemove, this);
+            currStore.un("update", this.onUpdate, this);
+            currStore.un("clear", this.refresh, this);
+            currStore.un("save", this.onSave, this);
+            currStore.un("exception", this.onException, this);
         }
         if(store){
             store.on("datachanged", this.onDataChanged, this);
@@ -3939,11 +5514,39 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             store.on("remove", this.onRemove, this);
             store.on("update", this.onUpdate, this);
             store.on("clear", this.refresh, this);
+            store.on("save", this.onSave, this);
+            store.on("exception", this.onException, this);
         }
         this.store = store;
-        if(store && store.getCount() > 0){
-            this.refresh();
+    },
+    
+    onException : function(proxy, type, action, o, res, arg){
+        // form edits are explicitly canceled, but we may not know if a drag/drop operation
+        // succeeded until after a server round trip. if the update failed we have to explicitly
+        // reject the changes so that the record doesn't stick around in the store's modified list 
+        if(arg.reject){
+            arg.reject();
         }
+    },
+    
+    /**
+     * Sets the calendar store used by the calendar (contains records of type {@link Ext.ensible.cal.CalendarRecord CalendarRecord}).
+     * @param {Ext.data.Store} store
+     */
+    setCalendarStore : function(store, initial){
+        if(!initial && this.calendarStore){
+            this.calendarStore.un("datachanged", this.refresh, this);
+            this.calendarStore.un("add", this.refresh, this);
+            this.calendarStore.un("remove", this.refresh, this);
+            this.calendarStore.un("update", this.refresh, this);
+        }
+        if(store){
+            store.on("datachanged", this.refresh, this);
+            store.on("add", this.refresh, this);
+            store.on("remove", this.refresh, this);
+            store.on("update", this.refresh, this);
+        }
+        this.calendarStore = store;
     },
 	
     getEventRecord : function(id){
@@ -3975,24 +5578,26 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
             this.editWin = new Ext.ensible.cal.EventEditWindow({
                 id: 'ext-cal-editwin',
                 calendarStore: this.calendarStore,
+                modal: this.editModal,
+                enableEditDetails: this.enableEditDetails,
                 listeners: {
                     'eventadd': {
                         fn: function(win, rec, animTarget){
-                            win.hide(animTarget);
+                            //win.hide(animTarget);
                             win.currentView.onEventAdd(null, rec);
                         },
                         scope: this
                     },
                     'eventupdate': {
                         fn: function(win, rec, animTarget){
-                            win.hide(animTarget);
+                            //win.hide(animTarget);
                             win.currentView.onEventUpdate(null, rec);
                         },
                         scope: this
                     },
                     'eventdelete': {
                         fn: function(win, rec, animTarget){
-                            win.hide(animTarget);
+                            //win.hide(animTarget);
                             win.currentView.onEventDelete(null, rec);
                         },
                         scope: this
@@ -4006,7 +5611,7 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
                     },
                     'eventcancel': {
                         fn: function(win, rec, animTarget){
-                            win.hide(animTarget);
+                            this.dismissEventEditor(animTarget);
                             win.currentView.onEventCancel();
                         },
                         scope: this
@@ -4027,27 +5632,64 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
      * @param {Ext.Element/HTMLNode} animateTarget The reference element that is being edited. By default this is
      * used as the target for animating the editor window opening and closing. If this method is being overridden to
      * supply a custom editor this parameter can be ignored if it does not apply.
+     * @return {Ext.ensible.cal.CalendarView} this
      */
     showEventEditor : function(rec, animateTarget){
         this.getEventEditor().show(rec, animateTarget, this);
+        return this;
+    },
+    
+    /**
+     * Dismiss the currently configured event editor view (by default the shared instance of 
+     * {@link Ext.ensible.cal.EventEditWindow EventEditWindow}, which will be hidden).
+     * @param {String} dismissMethod (optional) The method name to call on the editor that will dismiss it 
+     * (defaults to 'hide' which will be called on the default editor window)
+     * @return {Ext.ensible.cal.CalendarView} this
+     */
+    dismissEventEditor : function(dismissMethod, /*private*/ animTarget){
+        if(this.newRecord && this.newRecord.phantom){
+            this.store.remove(this.newRecord);
+        }
+        delete this.newRecord;
+        
+        // grab the manager's ref so that we dismiss it properly even if the active view has changed
+        var editWin = Ext.WindowMgr.get('ext-cal-editwin');
+        if(editWin){
+            editWin[dismissMethod ? dismissMethod : 'hide'](animTarget);
+        }
+        return this;
+    },
+    
+    save: function(){
+        if(this.saveRequired){
+            this.store.save();
+        }
+    },
+    
+    onSave: function(store, batch, data){
+        Ext.ensible.log('onSave');
+        //console.dir(data);
     },
     
     // private
     onEventAdd: function(form, rec){
-        rec.data[Ext.ensible.cal.EventMappings.IsNew.name] = false;
+        //rec.data[Ext.ensible.cal.EventMappings.IsNew.name] = false;
+        this.newRecord = rec;
         this.store.add(rec);
+        //this.store.save();
         this.fireEvent('eventadd', this, rec);
     },
     
     // private
     onEventUpdate: function(form, rec){
-        rec.commit();
+        this.save();
         this.fireEvent('eventupdate', this, rec);
     },
     
     // private
     onEventDelete: function(form, rec){
         this.store.remove(rec);
+        //this.save();
         this.fireEvent('eventdelete', this, rec);
     },
     
@@ -4058,107 +5700,95 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
     
     // private -- called from subclasses
     onDayClick: function(dt, ad, el){
-        if(this.fireEvent('dayclick', this, dt, ad, el) !== false){
-            this.showEventEditor({
-                StartDate: dt,
-                IsAllDay: ad
-            }, el);
+        if(this.readOnly === true){
+            return;
         }
-    },
-    
-    // private
-    onRangeSelect: function(dates, el, onComplete){
-        if(this.fireEvent('rangeselect', this, dates, el, onComplete) !== false){
-            this.showEventEditor(dates, el);
-            this.editWin.on('hide', onComplete, this, {single:true});
+        if(this.fireEvent('dayclick', this, dt, ad, el) !== false){
+            var M = Ext.ensible.cal.EventMappings,
+                data = {};
+                
+            data[M.StartDate.name] = dt;
+            data[M.IsAllDay.name] = ad;
+                
+            this.showEventEditor(data, el);
         }
     },
     
     // private
     showEventMenu : function(el, xy){
         if(!this.eventMenu){
-            var dateMenu = new Ext.menu.DateMenu({
-                handler: function(dp, dt){
-                    this.menuActive = false;
-                    dt = Ext.ensible.Date.copyTime(this.eventMenu.rec.data[Ext.ensible.cal.EventMappings.StartDate.name], dt);
-                    this.moveEvent(this.eventMenu.rec, dt);
-                },
-                scope: this
+            this.eventMenu = new Ext.ensible.cal.EventContextMenu({
+                listeners: {
+                    'editdetails': this.onEditDetails.createDelegate(this),
+                    'eventdelete': this.onDeleteEvent.createDelegate(this),
+                    'eventmove': this.onMoveEvent.createDelegate(this)
+                }
             });
-            this.eventMenu = new Ext.menu.Menu({
-                id: this.id+'-evt-ctxmenu',
-                items: [{
-                    iconCls:'extensible-cal-icon-evt-edit',
-                    text: 'Edit Details',
-                    scope: this,
-                    handler: function(){
-                        this.menuActive = false;
-                        this.fireEvent('editdetails', this, this.eventMenu.rec, this.eventMenu.ctxEl);
-                    }
-                },{
-                    text: 'Delete',
-                    iconCls:'extensible-cal-icon-evt-del',
-                    scope: this,
-                    handler:function(){
-                        this.menuActive = false;
-                        this.deleteEvent(this.eventMenu.rec, this.eventMenu.ctxEl);
-                    }
-                },'-',{
-                    iconCls:'extensible-cal-icon-evt-move',
-                    text:'Move to...',
-                    scope: this,
-                    menu: dateMenu
-                }]
-            });
-            this.eventMenu.on('hide', this.onEventContextHide, this);
-            this.eventMenu.datePicker = dateMenu.picker;
         }
-        if(this.eventMenu.ctxEl){
-            this.eventMenu.ctxEl = null;
-        }
-        this.eventMenu.ctxEl = el;
-        this.eventMenu.rec = this.getEventRecordFromEl(el); 
-        this.eventMenu.datePicker.setValue(this.eventMenu.rec.data[Ext.ensible.cal.EventMappings.StartDate.name]);
-        this.eventMenu.showAt(xy);
+        this.eventMenu.showForEvent(this.getEventRecordFromEl(el), el, xy);
         this.menuActive = true;
     },
     
+    // private
+    onEditDetails : function(menu, rec, el){
+        this.fireEvent('editdetails', this, rec, el);
+        this.menuActive = false;
+    },
+    
+    // private
+    onMoveEvent : function(menu, rec, dt){
+        this.moveEvent(rec, dt);
+        this.menuActive = false;
+    },
+    
+    /**
+     * Move the event to a new start date, preserving the original event duration.
+     * @param {Object} rec The event {@link Ext.ensible.cal.EventRecord record}
+     * @param {Object} dt The new start date
+     */
     moveEvent : function(rec, dt){
         if(Ext.ensible.Date.compare(rec.data[Ext.ensible.cal.EventMappings.StartDate.name], dt) === 0){
             // no changes
             return;
         }
-        if(this.fireEvent('beforeeventmove', this, rec) !== false){
+        if(this.fireEvent('beforeeventmove', this, rec, dt) !== false){
             var diff = dt.getTime() - rec.data[Ext.ensible.cal.EventMappings.StartDate.name].getTime();
+            rec.beginEdit();
             rec.set(Ext.ensible.cal.EventMappings.StartDate.name, dt);
             rec.set(Ext.ensible.cal.EventMappings.EndDate.name, rec.data[Ext.ensible.cal.EventMappings.EndDate.name].add(Date.MILLI, diff));
-            this.onEventUpdate(null, rec);
+            rec.endEdit();
+            this.save();
             
             this.fireEvent('eventmove', this, rec);
         }
     },
     
     // private
+    onDeleteEvent: function(menu, rec, el){
+        rec._deleting = true;
+        this.deleteEvent(rec, el);
+        this.menuActive = false;
+    },
+    
+    /**
+     * Delete the specified event.
+     * @param {Object} rec The event {@link Ext.ensible.cal.EventRecord record}
+     * @param {Object} el The {@link Ext.Element Element} corresponding to the event
+     */
     deleteEvent: function(rec, el){
         if(this.fireEvent('beforeeventdelete', this, rec, el) !== false){
             this.store.remove(rec);
+            //this.save();
             this.fireEvent('eventdelete', this, rec, el);
         }
     },
     
     // private
-    onEventContextHide : function(){
-        if(this.eventMenu.ctxEl){
-            this.eventMenu.ctxEl = null;
-        }
-    },
-    
-    // private
     onContextMenu : function(e, t){
-        var match = false;
+        var el, match = false;
         
         if(el = e.getTarget(this.eventSelector, 5, true)){
-            this.showEventMenu(el, e.getXY());
+            this.dismissEventEditor().showEventMenu(el, e.getXY());
             match = true;
         }
         
@@ -4173,6 +5803,12 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
      * can handle the click (and so the subclass should ignore it) else false.
      */
     onClick : function(e, t){
+        if(this.readOnly === true){
+            return true;
+        }
+        if(this.dropZone){
+            this.dropZone.clearShims();
+        }
         if(this.menuActive === true){
             // ignore the first click if a context menu is active (let it close)
             this.menuActive = false;
@@ -4261,6 +5897,17 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
     // private, MUST be implemented by subclasses
     renderItems : function(){
         throw 'This method must be implemented by a subclass';
+    },
+    
+    // private
+    destroy: function(){
+        Ext.ensible.cal.CalendarView.superclass.destroy.call(this);
+        Ext.destroy(
+            this.editWin, 
+            this.eventMenu,
+            this.dragZone,
+            this.dropZone
+        );
     }
 });/**
  * @class Ext.ensible.cal.MonthView
@@ -4273,6 +5920,19 @@ Ext.ensible.cal.CalendarView = Ext.extend(Ext.BoxComponent, {
  */
 Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
     /**
+     * @cfg {String} moreText
+     * The text to display in a day box when there are more events than can be displayed and a link is provided to
+     * show a popup window with all events for that day (defaults to '+{0} more...', where {0} will be 
+     * replaced by the number of additional events that are not currently displayed for the day).
+     */
+    moreText: '+{0} more...',
+    /**
+     * @cfg {String} detailsTitleDateFormat
+     * The date format for the title of the details panel that shows when there are hidden events and the "more" link 
+     * is clicked (defaults to 'F j').
+     */
+    detailsTitleDateFormat: 'F j',
+    /**
      * @cfg {Boolean} showTime
      * True to display the current time in today's box in the calendar, false to not display it (defautls to true)
      */
@@ -4282,11 +5942,6 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
      * True to display the {@link #todayText} string in today's box in the calendar, false to not display it (defautls to true)
      */
     showTodayText: true,
-    /**
-     * @cfg {String} todayText
-     * The text to display in the current day's box in the calendar when {@link #showTodayText} is true (defaults to 'Today')
-     */
-    todayText: 'Today',
     /**
      * @cfg {Boolean} showHeader
      * True to display a header beneath the navigation bar containing the week names above each week's column, false not to 
@@ -4328,7 +5983,9 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
         this.addEvents({
             /**
              * @event dayclick
-             * Fires after the user clicks within the view container and not on an event element
+             * Fires after the user clicks within the view container and not on an event element. This is a cancelable event, so 
+             * returning false from a handler will cancel the click without displaying the event editor view. This could be useful 
+             * for validating that a user can only create events on certain days.
              * @param {Ext.ensible.cal.MonthView} this
              * @param {Date} dt The date/time that was clicked on
              * @param {Boolean} allday True if the day clicked on represents an all-day box, else false. Clicks within the 
@@ -4356,7 +6013,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 			view: this,
 			createText: this.ddCreateEventText,
 			moveText: this.ddMoveEventText,
-            ddGroup : 'MonthViewDD'
+            ddGroup : this.ddGroup || this.id+'-MonthViewDD'
 		};
         
         this.dragZone = new Ext.ensible.cal.DragZone(this.el, cfg);
@@ -4429,7 +6086,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
                         
                     if(t.getDay() == this.prevClockDay){
                         if(el){
-                            el.update(t.format('g:i a'));
+                            el.update(t.format(Ext.ensible.Date.use24HourTime ? 'G:i' : 'g:ia'));
                         }
                     }
                     else{
@@ -4448,16 +6105,16 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
         if(!this.eventBodyMarkup){
             this.eventBodyMarkup = ['{Title}',
 	            '<tpl if="_isReminder">',
-	                '<i class="ext-cal-ic ext-cal-ic-rem">&nbsp;</i>',
+	                '<i class="ext-cal-ic ext-cal-ic-rem">&#160;</i>',
 	            '</tpl>',
 	            '<tpl if="_isRecurring">',
-	                '<i class="ext-cal-ic ext-cal-ic-rcr">&nbsp;</i>',
+	                '<i class="ext-cal-ic ext-cal-ic-rcr">&#160;</i>',
 	            '</tpl>',
 	            '<tpl if="spanLeft">',
-	                '<i class="ext-cal-spl">&nbsp;</i>',
+	                '<i class="ext-cal-spl">&#160;</i>',
 	            '</tpl>',
 	            '<tpl if="spanRight">',
-	                '<i class="ext-cal-spr">&nbsp;</i>',
+	                '<i class="ext-cal-spr">&#160;</i>',
 	            '</tpl>'
 	        ].join('');
         }
@@ -4471,18 +6128,18 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
             
 	        tpl = !(Ext.isIE || Ext.isOpera) ? 
 				new Ext.XTemplate(
-		            '<div id="{_elId}" class="{_selectorCls} {_colorCls} {values.spanCls} ext-cal-evt ext-cal-evr">',
+                    '<div class="{_extraCls} {values.spanCls} ext-cal-evt ext-cal-evr">',
 		                body,
 		            '</div>'
 		        ) 
 				: new Ext.XTemplate(
 		            '<tpl if="_renderAsAllDay">',
-		                '<div id="{_elId}" class="{_selectorCls} {values.spanCls} {_colorCls} ext-cal-evt ext-cal-evo">',
+                        '<div class="{_extraCls} {values.spanCls} ext-cal-evt ext-cal-evo">',
 		                    '<div class="ext-cal-evm">',
 		                        '<div class="ext-cal-evi">',
 		            '</tpl>',
 		            '<tpl if="!_renderAsAllDay">',
-		                '<div id="{_elId}" class="{_selectorCls} {_colorCls} ext-cal-evt ext-cal-evr">',
+                        '<div class="{_extraCls} ext-cal-evt ext-cal-evr">',
 		            '</tpl>',
 		            body,
 		            '<tpl if="_renderAsAllDay">',
@@ -4500,26 +6157,41 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
     // private
     getTemplateEventData : function(evt){
 		var M = Ext.ensible.cal.EventMappings,
-            selector = this.getEventSelectorCls(evt[M.EventId.name]),
-		    title = evt[M.Title.name];
-            
-        return Ext.applyIf({
-			_selectorCls: selector,
-			_colorCls: 'ext-color-' + (evt[M.CalendarId.name] ? 
-                evt[M.CalendarId.name] : 'default') + (evt._renderAsAllDay ? '-ad' : ''),
-            _elId: selector + '-' + evt._weekIndex,
-            _isRecurring: evt.Recurrence && evt.Recurrence != '',
-            _isReminder: evt[M.Reminder.name] && evt[M.Reminder.name] != '',
-            Title: (evt[M.IsAllDay.name] ? '' : evt[M.StartDate.name].format('g:ia ')) + (!title || title.length == 0 ? '(No title)' : title)
-        }, evt);
+            extraClasses = [this.getEventSelectorCls(evt[M.EventId.name])],
+            data = {},
+            recurring = evt[M.RRule.name] != '',
+            colorCls = 'x-cal-default',
+		    title = evt[M.Title.name],
+            fmt = Ext.ensible.Date.use24HourTime ? 'G:i ' : 'g:ia ';
+        
+        if(this.calendarStore && evt[M.CalendarId.name]){
+            var rec = this.calendarStore.getById(evt[M.CalendarId.name]);
+            colorCls = 'x-cal-' + rec.data[Ext.ensible.cal.CalendarMappings.ColorId.name];
+        }
+        colorCls += (evt._renderAsAllDay ? '-ad' : '');
+        extraClasses.push(colorCls);
+        
+        if(this.getEventClass){
+            var rec = this.getEventRecord(evt[M.EventId.name]),
+                cls = this.getEventClass(rec, !!evt._renderAsAllDay, data, this.store);
+            extraClasses.push(cls);
+        }
+        
+		data._extraCls = extraClasses.join(' ');
+        data._isRecurring = evt.Recurrence && evt.Recurrence != '';
+        data._isReminder = evt[M.Reminder.name] && evt[M.Reminder.name] != '';
+        data.Title = (evt[M.IsAllDay.name] ? '' : evt[M.StartDate.name].format(fmt)) + (!title || title.length == 0 ? this.defaultEventTitleText : title);
+        
+        return Ext.applyIf(data, evt);
     },
     
     // private
-	refresh : function(){
+	refresh : function(reloadData){
+        Ext.ensible.log('refresh (MonthView)');
 		if(this.detailPanel){
 			this.detailPanel.hide();
 		}
-		Ext.ensible.cal.MonthView.superclass.refresh.call(this);
+		Ext.ensible.cal.MonthView.superclass.refresh.call(this, reloadData);
         
         if(this.showTime !== false){
             this.initClock();
@@ -4537,7 +6209,8 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
             templateDataFn: this.getTemplateEventData.createDelegate(this),
             evtMaxCount: this.evtMaxCount,
             weekCount: this.weekCount,
-            dayCount: this.dayCount
+            dayCount: this.dayCount,
+            moreText: this.moreText
         });
         this.fireEvent('eventsrendered', this);
     },
@@ -4610,12 +6283,12 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
     
     // inherited docs
     moveNext : function(){
-        return this.moveMonths(1);
+        return this.moveMonths(1, true);
     },
     
     // inherited docs
     movePrev : function(){
-        return this.moveMonths(-1);
+        return this.moveMonths(-1, true);
     },
     
     // private
@@ -4632,7 +6305,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 		if(!this.detailPanel){
 	        this.detailPanel = new Ext.Panel({
 				id: this.id+'-details-panel',
-				title: dt.format('F j'),
+				title: dt.format(this.detailsTitleDateFormat),
 				layout: 'fit',
 				floating: true,
 				renderTo: Ext.getBody(),
@@ -4648,6 +6321,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 					date: dt,
 					view: this,
 					store: this.store,
+                    calendarStore: this.calendarStore,
 					listeners: {
 						'eventsrendered': this.onDetailViewUpdated.createDelegate(this)
 					}
@@ -4655,7 +6329,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 			});
 		}
 		else{
-			this.detailPanel.setTitle(dt.format('F j'));
+			this.detailPanel.setTitle(dt.format(this.detailsTitleDateFormat));
 		}
 		this.detailPanel.getComponent(this.id+'-details-view').update(dt);
 	},
@@ -4688,23 +6362,20 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
         if(this.detailPanel){
             this.detailPanel.hide();
         }
-        if(Ext.ensible.cal.MonthView.superclass.onClick.apply(this, arguments)){
-            // The superclass handled the click already so exit
+        if(el = e.getTarget(this.moreSelector, 3)){
+            var dt = el.id.split(this.moreElIdDelimiter)[1];
+            this.onMoreClick(Date.parseDate(dt, 'Ymd'));
             return;
         }
-		if(this.dropZone){
-			this.dropZone.clearShims();
-		}
         if(el = e.getTarget(this.weekLinkSelector, 3)){
             var dt = el.id.split(this.weekLinkIdDelimiter)[1];
             this.fireEvent('weekclick', this, Date.parseDate(dt, 'Ymd'));
             return;
         }
-		if(el = e.getTarget(this.moreSelector, 3)){
-			var dt = el.id.split(this.moreElIdDelimiter)[1];
-			this.onMoreClick(Date.parseDate(dt, 'Ymd'));
-			return;
-		}
+        if(Ext.ensible.cal.MonthView.superclass.onClick.apply(this, arguments)){
+            // The superclass handled the click already so exit
+            return;
+        }
         if(el = e.getTarget('td', 3)){
             if(el.id && el.id.indexOf(this.dayElIdDelimiter) > -1){
                 var parts = el.id.split(this.dayElIdDelimiter),
@@ -4746,10 +6417,13 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
     allDayOnly: true,
     monitorResize: false,
     
+    // The event is declared in MonthView but we're just overriding the docs:
     /**
      * @event dayclick
-     * Fires after the user clicks within the day view container and not on an event element
-     * @param {Ext.ensible.cal.DayBodyView} this
+     * Fires after the user clicks within the view container and not on an event element. This is a cancelable event, so 
+     * returning false from a handler will cancel the click without displaying the event editor view. This could be useful 
+     * for validating that a user can only create events on certain days.
+     * @param {Ext.ensible.cal.DayHeaderView} this
      * @param {Date} dt The date/time that was clicked on
      * @param {Boolean} allday True if the day clicked on represents an all-day box, else false. Clicks within the 
      * DayHeaderView always return true for this param.
@@ -4776,8 +6450,9 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
     forceSize: Ext.emptyFn,
     
     // private
-    refresh : function(){
-        Ext.ensible.cal.DayHeaderView.superclass.refresh.call(this);
+    refresh : function(reloadData){
+        Ext.ensible.log('refresh (DayHeaderView)');
+        Ext.ensible.cal.DayHeaderView.superclass.refresh.call(this, reloadData);
         this.recalcHeaderBox();
     },
     
@@ -4788,25 +6463,20 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
         
         this.el.setHeight(h+7);
         
-        if(Ext.isIE && Ext.isStrict){
-            this.el.child('.ext-cal-hd-ad-inner').setHeight(h+4);
-        }
-        if(Ext.isOpera){
-            //TODO: figure out why Opera refuses to refresh height when
-            //the new height is lower than the previous one
-//            var ct = this.el.child('.ext-cal-hd-ct');
-//            ct.repaint();
-        }
+        // These should be auto-height, but since that does not work reliably
+        // across browser / doc type, we have to size them manually
+        this.el.child('.ext-cal-hd-ad-inner').setHeight(h+5);
+        this.el.child('.ext-cal-bg-tbl').setHeight(h+5);
     },
     
     // private
-    moveNext : function(noRefresh){
-        this.moveDays(this.dayCount, noRefresh);
+    moveNext : function(){
+        this.moveDays(this.dayCount);
     },
 
     // private
-    movePrev : function(noRefresh){
-        this.moveDays(-this.dayCount, noRefresh);
+    movePrev : function(){
+        this.moveDays(-this.dayCount);
     },
     
     // private
@@ -4816,7 +6486,7 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
                 var parts = el.id.split(this.dayElIdDelimiter),
                     dt = parts[parts.length-1];
                     
-                this.fireEvent('dayclick', this, Date.parseDate(dt, 'Ymd'), true, Ext.get(this.getDayId(dt)));
+                this.onDayClick(Date.parseDate(dt, 'Ymd'), true, Ext.get(this.getDayId(dt, true)));
                 return;
             }
         }
@@ -4825,7 +6495,7 @@ Ext.ensible.cal.DayHeaderView = Ext.extend(Ext.ensible.cal.MonthView, {
 });
 
 Ext.reg('extensible.dayheaderview', Ext.ensible.cal.DayHeaderView);
-/**S
+/**
  * @class Ext.ensible.cal.DayBodyView
  * @extends Ext.ensible.cal.CalendarView
  * <p>This is the scrolling container within the day and week views where non-all-day events are displayed.
@@ -4838,10 +6508,17 @@ Ext.reg('extensible.dayheaderview', Ext.ensible.cal.DayHeaderView);
 Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
     //private
     dayColumnElIdDelimiter: '-day-col-',
+    hourIncrement: 60,
     
     //private
     initComponent : function(){
         Ext.ensible.cal.DayBodyView.superclass.initComponent.call(this);
+        
+        if(this.readOnly === true){
+            this.enableEventResize = false;
+        }
+        this.incrementsPerHour = this.hourIncrement / this.ddIncrement;
+        this.minEventHeight = this.minEventDisplayMinutes / (this.hourIncrement / this.hourHeight);
         
         this.addEvents({
             /**
@@ -4855,7 +6532,8 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
             beforeeventresize: true,
             /**
              * @event eventresize
-             * Fires after the user drags the resize handle of an event and the resize operation is complete.
+             * Fires after the user has drag-dropped the resize handle of an event and the resize operation is complete. If you need 
+             * to cancel the resize operation you should handle the {@link #beforeeventresize} event and return false from your handler function.
              * @param {Ext.ensible.cal.DayBodyView} this
              * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event that was resized
              * containing the updated start and end dates
@@ -4863,7 +6541,9 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
             eventresize: true,
             /**
              * @event dayclick
-             * Fires after the user clicks within the day view container and not on an event element
+             * Fires after the user clicks within the view container and not on an event element. This is a cancelable event, so 
+             * returning false from a handler will cancel the click without displaying the event editor view. This could be useful 
+             * for validating that a user can only create events on certain days.
              * @param {Ext.ensible.cal.DayBodyView} this
              * @param {Date} dt The date/time that was clicked on
              * @param {Boolean} allday True if the day clicked on represents an all-day box, else false. Clicks within the 
@@ -4877,9 +6557,12 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
     //private
     initDD : function(){
         var cfg = {
+            view: this,
             createText: this.ddCreateEventText,
             moveText: this.ddMoveEventText,
-            resizeText: this.ddResizeEventText
+            resizeText: this.ddResizeEventText,
+            ddIncrement: this.ddIncrement,
+            ddGroup: this.ddGroup || this.id+'-DayViewDD'
         };
 
         this.el.ddScrollConfig = {
@@ -4889,24 +6572,22 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
             hthresh: -1,
             frequency: 50,
             increment: 100,
-            ddGroup: 'DayViewDD'
+            ddGroup: this.ddGroup || this.id+'-DayViewDD'
         };
+        
         this.dragZone = new Ext.ensible.cal.DayViewDragZone(this.el, Ext.apply({
-            view: this,
             containerScroll: true
         }, cfg));
         
-        this.dropZone = new Ext.ensible.cal.DayViewDropZone(this.el, Ext.apply({
-            view: this
-        }, cfg));
+        this.dropZone = new Ext.ensible.cal.DayViewDropZone(this.el, cfg);
     },
     
     //private
-    refresh : function(){
+    refresh : function(reloadData){
+        Ext.ensible.log('refresh (DayBodyView)');
         var top = this.el.getScroll().top;
-        this.prepareData();
-        this.renderTemplate();
-        this.renderItems();
+        
+        Ext.ensible.cal.DayBodyView.superclass.refresh.call(this, reloadData);
         
         // skip this if the initial render scroll position has not yet been set.
         // necessary since IE/Opera must be deferred, so the first refresh will
@@ -4948,7 +6629,12 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
                 dayCount: this.dayCount,
                 showTodayText: this.showTodayText,
                 todayText: this.todayText,
-                showTime: this.showTime
+                showTime: this.showTime,
+                showHourSeparator: this.showHourSeparator,
+                viewStartHour: this.viewStartHour,
+                viewEndHour: this.viewEndHour,
+                hourIncrement: this.hourIncrement,
+                hourHeight: this.hourHeight
             });
         }
         this.tpl.compile();
@@ -4957,8 +6643,13 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
         
         Ext.ensible.cal.DayBodyView.superclass.afterRender.call(this);
         
-        // default scroll position to 7am:
-        this.scrollTo(7*42);
+        // default scroll position to scrollStartHour (7am by default) or min view hour if later
+        var startHour = Math.max(this.scrollStartHour, this.viewStartHour),
+            scrollStart = Math.max(0, startHour - this.viewStartHour);
+            
+        if(scrollStart > 0){
+            this.scrollTo(scrollStart * this.hourHeight);
+        }
     },
     
     // private
@@ -4989,16 +6680,16 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
         if(!this.eventBodyMarkup){
             this.eventBodyMarkup = ['{Title}',
                 '<tpl if="_isReminder">',
-                    '<i class="ext-cal-ic ext-cal-ic-rem">&nbsp;</i>',
+                    '<i class="ext-cal-ic ext-cal-ic-rem">&#160;</i>',
                 '</tpl>',
                 '<tpl if="_isRecurring">',
-                    '<i class="ext-cal-ic ext-cal-ic-rcr">&nbsp;</i>',
+                    '<i class="ext-cal-ic ext-cal-ic-rcr">&#160;</i>',
                 '</tpl>'
 //                '<tpl if="spanLeft">',
-//                    '<i class="ext-cal-spl">&nbsp;</i>',
+//                    '<i class="ext-cal-spl">&#160;</i>',
 //                '</tpl>',
 //                '<tpl if="spanRight">',
-//                    '<i class="ext-cal-spr">&nbsp;</i>',
+//                    '<i class="ext-cal-spr">&#160;</i>',
 //                '</tpl>'
             ].join('');
         }
@@ -5010,21 +6701,21 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
         if(!this.eventTpl){
             this.eventTpl = !(Ext.isIE || Ext.isOpera) ? 
                 new Ext.XTemplate(
-                    '<div id="{_elId}" class="{_selectorCls} {_colorCls} ext-cal-evt ext-cal-evr" style="left: {_left}%; width: {_width}%; top: {_top}px; height: {_height}px;">',
+                    '<div id="{_elId}" class="{_extraCls} ext-cal-evt ext-cal-evr" style="left: {_left}%; width: {_width}%; top: {_top}px; height: {_height}px;">',
                         '<div class="ext-evt-bd">', this.getEventBodyMarkup(), '</div>',
-                        '<div class="ext-evt-rsz"><div class="ext-evt-rsz-h">&nbsp;</div></div>',
+                        this.enableEventResize ? '<div class="ext-evt-rsz"><div class="ext-evt-rsz-h">&#160;</div></div>' : '',
                     '</div>'
                 )
                 : new Ext.XTemplate(
-                    '<div id="{_elId}" class="ext-cal-evt {_selectorCls} {_colorCls}-x" style="left: {_left}%; width: {_width}%; top: {_top}px;">',
-                        '<div class="ext-cal-evb">&nbsp;</div>',
+                    '<div id="{_elId}" class="ext-cal-evt {_extraCls}" style="left: {_left}%; width: {_width}%; top: {_top}px;">',
+                        '<div class="ext-cal-evb">&#160;</div>',
                         '<dl style="height: {_height}px;" class="ext-cal-evdm">',
                             '<dd class="ext-evt-bd">',
                                 this.getEventBodyMarkup(),
                             '</dd>',
-                            '<div class="ext-evt-rsz"><div class="ext-evt-rsz-h">&nbsp;</div></div>',
+                            this.enableEventResize ? '<div class="ext-evt-rsz"><div class="ext-evt-rsz-h">&#160;</div></div>' : '',
                         '</dl>',
-                        '<div class="ext-cal-evb">&nbsp;</div>',
+                        '<div class="ext-cal-evb">&#160;</div>',
                     '</div>'
                 );
             this.eventTpl.compile();
@@ -5049,13 +6740,13 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
             
             tpl = !(Ext.isIE || Ext.isOpera) ? 
                 new Ext.XTemplate(
-                    '<div id="{_elId}" class="{_selectorCls} {_colorCls} {values.spanCls} ext-cal-evt ext-cal-evr" style="left: {_left}%; width: {_width}%; top: {_top}px; height: {_height}px;">',
+                    '<div class="{_extraCls} {values.spanCls} ext-cal-evt ext-cal-evr" style="left: {_left}%; width: {_width}%; top: {_top}px; height: {_height}px;">',
                         body,
                     '</div>'
                 ) 
                 : new Ext.XTemplate(
-                    '<div id="{_elId}" class="ext-cal-evt" style="left: {_left}%; width: {_width}%; top: {_top}px; height: {_height}px;">',
-                    '<div class="{_selectorCls} {values.spanCls} {_colorCls} ext-cal-evo">',
+                    '<div class="ext-cal-evt" style="left: {_left}%; width: {_width}%; top: {_top}px; height: {_height}px;">',
+                    '<div class="{_extraCls} {values.spanCls} ext-cal-evo">',
                         '<div class="ext-cal-evm">',
                             '<div class="ext-cal-evi">',
                                 body,
@@ -5071,37 +6762,70 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
     
     // private
     getTemplateEventData : function(evt){
-        var selector = this.getEventSelectorCls(evt[Ext.ensible.cal.EventMappings.EventId.name]),
+        var M = Ext.ensible.cal.EventMappings,
+            extraClasses = [this.getEventSelectorCls(evt[M.EventId.name])],
             data = {},
-            M = Ext.ensible.cal.EventMappings;
+            colorCls = 'x-cal-default',
+            title = evt[M.Title.name],
+            fmt = Ext.ensible.Date.use24HourTime ? 'G:i ' : 'g:ia ',
+            recurring = evt[M.RRule.name] != '';
         
         this.getTemplateEventBox(evt);
         
-        data._selectorCls = selector;
-        data._colorCls = 'ext-color-' + (evt[M.CalendarId.name] ? 
-                evt[M.CalendarId.name] : 'default') + (evt._renderAsAllDay ? '-ad' : '');
-        data._elId = selector + (evt._weekIndex ? '-' + evt._weekIndex : '');
+        if(this.calendarStore && evt[M.CalendarId.name]){
+            var rec = this.calendarStore.getById(evt[M.CalendarId.name]);
+            colorCls = 'x-cal-' + rec.data[Ext.ensible.cal.CalendarMappings.ColorId.name];
+        }
+        colorCls += (evt._renderAsAllDay ? '-ad' : '') + (Ext.isIE || Ext.isOpera ? '-x' : '');
+        extraClasses.push(colorCls);
+        
+        if(this.getEventClass){
+            var rec = this.getEventRecord(evt[M.EventId.name]),
+                cls = this.getEventClass(rec, !!evt._renderAsAllDay, data, this.store);
+            extraClasses.push(cls);
+        }
+        
+        data._extraCls = extraClasses.join(' ');
         data._isRecurring = evt.Recurrence && evt.Recurrence != '';
         data._isReminder = evt[M.Reminder.name] && evt[M.Reminder.name] != '';
-        var title = evt[M.Title.name];
-        data.Title = (evt[M.IsAllDay.name] ? '' : evt[M.StartDate.name].format('g:ia ')) + (!title || title.length == 0 ? '(No title)' : title);
+        data.Title = (evt[M.IsAllDay.name] ? '' : evt[M.StartDate.name].format(fmt)) + (!title || title.length == 0 ? this.defaultEventTitleText : title);
         
         return Ext.applyIf(data, evt);
     },
     
     // private
+    getEventPositionOffsets: function(){
+        return {
+            top: 1,
+            height: -2
+        }
+    },
+    
+    // private
     getTemplateEventBox : function(evt){
-        var heightFactor = .7,
+        var heightFactor = this.hourHeight / this.hourIncrement,
             start = evt[Ext.ensible.cal.EventMappings.StartDate.name],
             end = evt[Ext.ensible.cal.EventMappings.EndDate.name],
-            startMins = start.getHours() * 60 + start.getMinutes(),
-            endMins = end.getHours() * 60 + end.getMinutes(), 
-            diffMins = endMins - startMins;
-        
+            startOffset = Math.max(start.getHours() - this.viewStartHour, 0),
+            endOffset = Math.min(end.getHours() - this.viewStartHour, this.viewEndHour - this.viewStartHour),
+            startMins = startOffset * this.hourIncrement,
+            endMins = endOffset * this.hourIncrement,
+            viewEndDt = end.clearTime(true).add(Date.HOUR, this.viewEndHour),
+            evtOffsets = this.getEventPositionOffsets();
+            
+        if(start.getHours() >= this.viewStartHour){
+            // only add the minutes if the start is visible, otherwise it offsets the event incorrectly
+            startMins += start.getMinutes();
+        }
+        if(end <= viewEndDt){
+            // only add the minutes if the end is visible, otherwise it offsets the event incorrectly
+            endMins += end.getMinutes();
+        }
+
         evt._left = 0;
         evt._width = 100;
-        evt._top = Math.round(startMins * heightFactor) + 1;
-        evt._height = Math.max((diffMins * heightFactor) - 2, 15);
+        evt._top = startMins * heightFactor + evtOffsets.top;
+        evt._height = Math.max(((endMins - startMins) * heightFactor), this.minEventHeight) + evtOffsets.height;
     },
 
     // private
@@ -5118,8 +6842,14 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
                 if(!evt){
                     continue;
                 }
-                var item = evt.data || evt.event.data;
-                if(item._renderAsAllDay){
+                var item = evt.data || evt.event.data,
+                    M = Ext.ensible.cal.EventMappings,
+                    ad = item[M.IsAllDay.name] === true,
+                    span = Ext.ensible.Date.diffDays(item[M.StartDate.name], item[M.EndDate.name]) > 0,
+                    renderAsAllDay = ad || span;
+                         
+                if(renderAsAllDay){
+                    // this event is already rendered in the header view
                     continue;
                 }
                 Ext.apply(item, {
@@ -5206,11 +6936,11 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
             dayIndex = Math.floor(relX / daySize.width), // clicked col index
             scroll = this.el.getScroll(),
             row = this.el.child('.ext-cal-bg-row'), // first avail row, just to calc size
-            rowH = row.getHeight() / 2, // 30 minute increment since a row is 60 minutes
+            rowH = row.getHeight() / this.incrementsPerHour,
             relY = y - viewBox.y - rowH + scroll.top,
             rowIndex = Math.max(0, Math.ceil(relY / rowH)),
-            mins = rowIndex * 30,
-            dt = this.viewStart.add(Date.DAY, dayIndex).add(Date.MINUTE, mins),
+            mins = rowIndex * (this.hourIncrement / this.incrementsPerHour),
+            dt = this.viewStart.add(Date.DAY, dayIndex).add(Date.MINUTE, mins).add(Date.HOUR, this.viewStartHour),
             el = this.getDayEl(dt),
             timeX = x;
         
@@ -5224,7 +6954,7 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
             // this is the box for the specific time block in the day that was clicked on:
             timeBox: {
                 x: timeX,
-                y: (rowIndex * 21) + viewBox.y - scroll.top,
+                y: (rowIndex * this.hourHeight / this.incrementsPerHour) + viewBox.y - scroll.top,
                 width: daySize.width,
                 height: rowH
             } 
@@ -5245,14 +6975,12 @@ Ext.ensible.cal.DayBodyView = Ext.extend(Ext.ensible.cal.CalendarView, {
         if(el){
             if(el.id && el.id.indexOf(this.dayElIdDelimiter) > -1){
                 var dt = this.getDateFromId(el.id, this.dayElIdDelimiter);
-                //this.fireEvent('dayclick', this, Date.parseDate(dt, 'Ymd'), true, Ext.get(this.getDayId(dt, true)));
-                this.onDayClick(Date.parseDate(dt, 'Ymd'), true, Ext.get(this.getDayId(dt, true)));
+                this.onDayClick(Date.parseDate(dt, 'Ymd'), true, Ext.get(this.getDayId(dt)));
                 return;
             }
         }
         var day = this.getDayAt(e.xy[0], e.xy[1]);
         if(day && day.date){
-            //this.fireEvent('dayclick', this, day.date, false, null);
             this.onDayClick(day.date, false, null);
         }
     }
@@ -5273,6 +7001,26 @@ Ext.reg('extensible.daybodyview', Ext.ensible.cal.DayBodyView);
  */
 Ext.ensible.cal.DayView = Ext.extend(Ext.Container, {
     /**
+     * @cfg {String} todayText
+     * The text to display in the current day's box in the calendar when {@link #showTodayText} is true (defaults to 'Today')
+     */
+    /**
+     * @cfg {Boolean} readOnly
+     * True to prevent clicks on events or the view from providing CRUD capabilities, false to enable CRUD (the default).
+     */
+    /**
+     * @cfg {String} ddCreateEventText
+     * The text to display inside the drag proxy while dragging over the calendar to create a new event (defaults to 
+     * 'Create event for {0}' where {0} is a date range supplied by the view)
+     */
+    ddCreateEventText: Ext.ensible.cal.CalendarView.prototype.ddCreateEventText,
+    /**
+     * @cfg {String} ddMoveEventText
+     * The text to display inside the drag proxy while dragging an event to reposition it (defaults to 
+     * 'Move event to {0}' where {0} is the updated event start date/time supplied by the view)
+     */
+    ddMoveEventText: Ext.ensible.cal.CalendarView.prototype.ddMoveEventText,
+    /**
      * @cfg {Boolean} showTime
      * True to display the current time in today's box in the calendar, false to not display it (defautls to true)
      */
@@ -5283,27 +7031,79 @@ Ext.ensible.cal.DayView = Ext.extend(Ext.Container, {
      */
     showTodayText: true,
     /**
-     * @cfg {String} todayText
-     * The text to display in the current day's box in the calendar when {@link #showTodayText} is true (defaults to 'Today')
-     */
-    todayText: 'Today',
-    /**
-     * @cfg {String} ddCreateEventText
-     * The text to display inside the drag proxy while dragging over the calendar to create a new event (defaults to 
-     * 'Create event for {0}' where {0} is a date range supplied by the view)
-     */
-    ddCreateEventText: 'Create event for {0}',
-    /**
-     * @cfg {String} ddMoveEventText
-     * The text to display inside the drag proxy while dragging an event to reposition it (defaults to 
-     * 'Move event to {0}' where {0} is the updated event start date/time supplied by the view)
-     */
-    ddMoveEventText: 'Move event to {0}',
-    /**
      * @cfg {Number} dayCount
      * The number of days to display in the view (defaults to 1). Only values from 1 to 7 are allowed.
      */
     dayCount: 1,
+    /**
+     * @cfg {Boolean} enableEventResize
+     * True to allow events in the view's scrolling body area to be updated by a resize handle at the 
+     * bottom of the event, false to disallow it (defaults to true). If {@link #readOnly} is true event 
+     * resizing will be disabled automatically.
+     */
+    enableEventResize: true,
+    /**
+     * @cfg {Integer} ddIncrement
+     * <p>The number of minutes between each step during various drag/drop operations in the view (defaults to 30).
+     * This controls the number of times the dragged object will "snap" to the view during a drag operation, and does
+     * not have to match with the time boundaries displayed in the view. E.g., the view could be displayed in 30 minute
+     * increments (the default) but you could configure ddIncrement to 10, which would snap a dragged object to the
+     * view at 10 minute increments.</p>
+     * <p>This config currently applies while dragging to move an event, resizing an event by its handle or dragging 
+     * on the view to create a new event.</p>
+     */
+    ddIncrement: 30,
+    /**
+     * @cfg {Integer} minEventDisplayMinutes
+     * This is the minimum <b>display</b> height, in minutes, for events shown in the view (defaults to 30). This setting
+     * ensures that events with short duration are still readable (e.g., by default any event where the start and end
+     * times were the same would have 0 height). It also applies when calculating whether multiple events should be
+     * displayed as overlapping. In datetime terms, an event that starts and ends at 9:00 and another event that starts
+     * and ends at 9:05 do not overlap, but visually the second event would obscure the first in the view. This setting
+     * provides a way to ensure that such events will still be calculated as overlapping and displayed correctly.
+     */
+    minEventDisplayMinutes: 30,
+    /**
+     * @cfg {Boolean} showHourSeparator
+     * True to display a dotted line that separates each hour block in the scrolling body area at the half-hour mark 
+     * (the default), false to hide it.
+     */
+    showHourSeparator: true,
+    /**
+     * @cfg {Integer} viewStartHour
+     * The hour of the day at which to begin the scrolling body area's times (defaults to 0, which equals early 12am / 00:00).
+     * Valid values are integers from 0 to 24, but should be less than the value of {@link viewEndHour}.
+     */
+    viewStartHour: 0,
+    /**
+     * @cfg {Integer} viewEndHour
+     * The hour of the day at which to end the scrolling body area's times (defaults to 24, which equals late 12am / 00:00).
+     * Valid values are integers from 0 to 24, but should be greater than the value of {@link viewStartHour}. 
+     */
+    viewEndHour: 24,
+    /**
+     * @cfg {Integer} scrollStartHour
+     * The default hour of the day at which to set the body scroll position on view load (defaults to 7, which equals 7am / 07:00).
+     * Note that if the body is not sufficiently overflowed to allow this positioning this setting will have no effect.
+     * This setting should be equal to or greater than {@link viewStartHour}.
+     */
+    scrollStartHour: 7,
+    /**
+     * @cfg {Integer} hourHeight
+     * <p>The height, in pixels, of each hour block displayed in the scrolling body area of the view (defautls to 42).</p> 
+     * <br><p><b>Important note:</b> While this config can be set to any reasonable integer value, note that it is also used to 
+     * calculate the ratio used when assigning event heights. By default, an hour is 60 minutes and 42 pixels high, so the
+     * pixel-to-minute ratio is 42 / 60, or 0.7. This same ratio is then used when rendering events. When rendering a 
+     * 30 minute event, the rendered height would be 30 minutes * 0.7 = 21 pixels (as expected).</p>
+     * <p>This is important to understand when changing this value because some browsers may handle pixel rounding in
+     * different ways which could lead to inconsistent visual results in some cases. If you have any problems with pixel
+     * precision in how events are laid out, you might try to stick with hourHeight values that will generate discreet ratios.
+     * This is easily done by simply multiplying 60 minutes by different discreet ratios (.6, .8, 1.1, etc.) to get the 
+     * corresponding hourHeight pixel values (36, 48, 66, etc.) that will map back to those ratios. By contrast, if you 
+     * chose an hourHeight of 50 for example, the resulting height ratio would be 50 / 60 = .833333... This will work just
+     * fine, just be aware that browsers may sometimes round the resulting height values inconsistently.
+     */
+    hourHeight: 42,
     
     // private
     initComponent : function(){
@@ -5312,19 +7112,30 @@ Ext.ensible.cal.DayView = Ext.extend(Ext.Container, {
         
         var cfg = Ext.apply({}, this.initialConfig);
         cfg.showTime = this.showTime;
-        cfg.showTodatText = this.showTodayText;
+        cfg.showTodayText = this.showTodayText;
         cfg.todayText = this.todayText;
         cfg.dayCount = this.dayCount;
-        cfg.wekkCount = 1; 
+        cfg.weekCount = 1;
+        cfg.readOnly = this.readOnly;
+        cfg.ddIncrement = this.ddIncrement;
+        cfg.minEventDisplayMinutes = this.minEventDisplayMinutes;
         
         var header = Ext.applyIf({
             xtype: 'extensible.dayheaderview',
-            id: this.id+'-hd'
+            id: this.id+'-hd',
+            ownerCalendarPanel: this.ownerCalendarPanel
         }, cfg);
         
         var body = Ext.applyIf({
             xtype: 'extensible.daybodyview',
-            id: this.id+'-bd'
+            enableEventResize: this.enableEventResize,
+            showHourSeparator: this.showHourSeparator,
+            viewStartHour: this.viewStartHour,
+            viewEndHour: this.viewEndHour,
+            scrollStartHour: this.scrollStartHour,
+            hourHeight: this.hourHeight,
+            id: this.id+'-bd',
+            ownerCalendarPanel: this.ownerCalendarPanel
         }, cfg);
         
         this.items = [header, body];
@@ -5344,6 +7155,7 @@ Ext.ensible.cal.DayView = Ext.extend(Ext.Container, {
     
     // private
     refresh : function(){
+        Ext.ensible.log('refresh (DayView)');
         this.header.refresh();
         this.body.refresh();
     },
@@ -5365,6 +7177,16 @@ Ext.ensible.cal.DayView = Ext.extend(Ext.Container, {
     // private
     onResize : function(){
         this.forceSize();
+        this.refresh.defer(1, this); //IE needs the defer
+    },
+    
+    /*
+     * We have to "relay" this Component method so that the hidden
+     * state will be properly reflected when the views' active state changes
+     */
+    doHide: function(){
+        this.header.doHide.apply(this, arguments);
+        this.body.doHide.apply(this, arguments);
     },
     
     // private
@@ -5389,7 +7211,7 @@ Ext.ensible.cal.DayView = Ext.extend(Ext.Container, {
      */
     setStartDate: function(dt){
         this.header.setStartDate(dt, true);
-        this.body.setStartDate(dt, true);
+        this.body.setStartDate(dt);
     },
 
     // private
@@ -5409,43 +7231,72 @@ Ext.ensible.cal.DayView = Ext.extend(Ext.Container, {
     /**
      * Updates the view to contain the passed date
      * @param {Date} dt The date to display
+     * @return {Date} The new date
      */
-    moveTo : function(dt, noRefresh){
-        this.header.moveTo(dt, noRefresh);
-        this.body.moveTo(dt, noRefresh);
+    moveTo : function(dt){
+        this.header.moveTo(dt);
+        return this.body.moveTo(dt, true);
     },
     
     /**
      * Updates the view to the next consecutive date(s)
+     * @return {Date} The new date
      */
-    moveNext : function(noRefresh){
-        this.header.moveNext(noRefresh);
-        this.body.moveNext(noRefresh);
+    moveNext : function(){
+        this.header.moveNext();
+        return this.body.moveNext(true);
     },
     
     /**
      * Updates the view to the previous consecutive date(s)
+     * @return {Date} The new date
      */
     movePrev : function(noRefresh){
-        this.header.movePrev(noRefresh);
-        this.body.movePrev(noRefresh);
+        this.header.movePrev();
+        return this.body.movePrev(true);
     },
 
     /**
      * Shifts the view by the passed number of days relative to the currently set date
      * @param {Number} value The number of days (positive or negative) by which to shift the view
+     * @return {Date} The new date
      */
-    moveDays : function(value, noRefresh){
-        this.header.moveDays(value, noRefresh);
-        this.body.moveDays(value, noRefresh);
+    moveDays : function(value){
+        this.header.moveDays(value);
+        return this.body.moveDays(value, true);
     },
     
     /**
      * Updates the view to show today
+     * @return {Date} Today's date
      */
-    moveToday : function(noRefresh){
-        this.header.moveToday(noRefresh);
-        this.body.moveToday(noRefresh);
+    moveToday : function(){
+        this.header.moveToday();
+        return this.body.moveToday(true);
+    },
+    
+    /**
+     * Show the currently configured event editor view (by default the shared instance of 
+     * {@link Ext.ensible.cal.EventEditWindow EventEditWindow}).
+     * @param {Ext.ensible.cal.EventRecord} rec The event record
+     * @param {Ext.Element/HTMLNode} animateTarget The reference element that is being edited. By default this is
+     * used as the target for animating the editor window opening and closing. If this method is being overridden to
+     * supply a custom editor this parameter can be ignored if it does not apply.
+     * @return {Ext.ensible.cal.DayView} this
+     */
+    showEventEditor : function(rec, animateTarget){
+        return Ext.ensible.cal.CalendarView.prototype.showEventEditor.apply(this, arguments);
+    },
+    
+    /**
+     * Dismiss the currently configured event editor view (by default the shared instance of 
+     * {@link Ext.ensible.cal.EventEditWindow EventEditWindow}, which will be hidden).
+     * @param {String} dismissMethod (optional) The method name to call on the editor that will dismiss it 
+     * (defaults to 'hide' which will be called on the default editor window)
+     * @return {Ext.ensible.cal.DayView} this
+     */
+    dismissEventEditor : function(dismissMethod){
+        return Ext.ensible.cal.CalendarView.prototype.dismissEventEditor.apply(this, arguments);
     }
 });
 
@@ -5463,19 +7314,61 @@ Ext.ensible.cal.MultiDayView = Ext.extend(Ext.ensible.cal.DayView, {
      * @cfg {Number} dayCount
      * The number of days to display in the view (defaults to 3).  Only values from 1 to 7 are allowed.
      */
-    dayCount: 3
+    dayCount: 3,
+    
+    /**
+     * @cfg {Boolean} startDayIsStatic
+     * <p>By default, any configuration of a multi-day view that contains fewer than 7 days will have a rolling
+     * start day. If you view the next or previous views, the dates will be adjusted as needed so that each
+     * view is contiguous (e.g., if the last day in the current view is Wednesday and you go to the next view
+     * it will always begin with Thursday, regardless of the value of {@link #startDay}.</p>
+     * <p>If you set <tt>startDayIsStatic</tt> to <tt>true</tt>, then the view will <em>always</em> begin on
+     * {@link #startDay}. For any {@link #dayCount} less than 7, days outside the startDay + dayCount range
+     * will not be viewable. If a date that is not in the viewable range is set into the view it will 
+     * automatically advance to the first viewable date for the current range.  This could be useful for 
+     * creating custom views like a weekday-only or weekend-only view.</p>
+     * <p>Some example {@link Ext.ensible.cal.CalendarPanel CalendarPanel} configs:</p>
+     * <pre><code>
+    // Weekdays only:
+    showMultiDayView: true,
+    multiDayViewCfg: {
+        dayCount: 5,
+        startDay: 1,
+        startDayIsStatic: true
+    }
+    
+    // Weekends only:
+    showMultiDayView: true,
+    multiDayViewCfg: {
+        dayCount: 2,
+        startDay: 6,
+        startDayIsStatic: true
+    }
+     * </code></pre>
+     */
+    startDayIsStatic: false,
+    
+    // inherited docs
+    moveNext : function(/*private*/reload){
+        return this.moveDays(this.startDayIsStatic ? 7 : this.dayCount, reload);
+    },
+
+    // inherited docs
+    movePrev : function(/*private*/reload){
+        return this.moveDays(this.startDayIsStatic ? -7 : -this.dayCount, reload);
+    }
 });
 
 Ext.reg('extensible.multidayview', Ext.ensible.cal.MultiDayView);/**
  * @class Ext.ensible.cal.WeekView
- * @extends Ext.ensible.cal.DayView
+ * @extends Ext.ensible.cal.MultiDayView
  * <p>Displays a calendar view by week. This class does not usually need to be used directly as you can
  * use a {@link Ext.ensible.cal.CalendarPanel CalendarPanel} to manage multiple calendar views at once including
  * the week view.</p>
  * @constructor
  * @param {Object} config The config object
  */
-Ext.ensible.cal.WeekView = Ext.extend(Ext.ensible.cal.DayView, {
+Ext.ensible.cal.WeekView = Ext.extend(Ext.ensible.cal.MultiDayView, {
     /**
      * @cfg {Number} dayCount
      * The number of days to display in the view (defaults to 7)
@@ -5500,12 +7393,12 @@ Ext.ensible.cal.MultiWeekView = Ext.extend(Ext.ensible.cal.MonthView, {
     
     // inherited docs
     moveNext : function(){
-        return this.moveWeeks(this.weekCount);
+        return this.moveWeeks(this.weekCount, true);
     },
     
     // inherited docs
     movePrev : function(){
-        return this.moveWeeks(-this.weekCount);
+        return this.moveWeeks(-this.weekCount, true);
     }
 });
 
@@ -5574,9 +7467,17 @@ Ext.ensible.cal.MonthDayDetailView = Ext.extend(Ext.BoxComponent, {
 			
 			evts = this.store.queryBy(function(rec){
 				var thisDt = this.date.clearTime(true).getTime(),
-					recStart = rec.data[Ext.ensible.cal.EventMappings.StartDate.name].clearTime(true).getTime(),
+                    M = Ext.ensible.cal.EventMappings,
+					recStart = rec.data[M.StartDate.name].clearTime(true).getTime(),
 	            	startsOnDate = (thisDt == recStart),
-					spansDate = false;
+					spansDate = false,
+                    calId = rec.data[M.CalendarId.name],
+                    calRec = this.calendarStore ? this.calendarStore.getById(calId) : null;
+                    
+                if(calRec && calRec.data[Ext.ensible.cal.CalendarMappings.IsHidden.name] === true){
+                    // if the event is on a hidden calendar then no need to test the date boundaries
+                    return false;
+                }
 				
 				if(!startsOnDate){
 					var recEnd = rec.data[Ext.ensible.cal.EventMappings.EndDate.name].clearTime(true).getTime();
@@ -5615,17 +7516,28 @@ Ext.reg('extensible.monthdaydetailview', Ext.ensible.cal.MonthDayDetailView);
 /**
  * @class Ext.ensible.cal.CalendarPanel
  * @extends Ext.Panel
- * <p>This is the default container for Ext calendar views. It supports day, week and month views as well
+ * <p>This is the default container for calendar views. It supports day, week, multi-week and month views as well
  * as a built-in event edit form. The only requirement for displaying a calendar is passing in a valid
- * {@link #calendarStore} config containing records of type {@link Ext.ensible.cal.EventRecord EventRecord}. In order
- * to make the calendar interactive (enable editing, drag/drop, etc.) you can handle any of the various
- * events fired by the underlying views and exposed through the CalendarPanel.</p>
- * {@link #layoutConfig} option if needed.</p>
+ * {@link #Ext.data.Store store} config containing records of type {@link Ext.ensible.cal.EventRecord EventRecord}.</p>
  * @constructor
  * @param {Object} config The config object
  * @xtype calendarpanel
  */
 Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
+    /**
+     * @cfg {Number} activeItem
+     * The 0-based index within the available views to set as the default active view (defaults to undefined). If not 
+     * specified the default view will be set as the last one added to the panel. You can retrieve a reference to the
+     * active {@link Ext.ensible.cal.CalendarView view} at any time using the {@link #activeView} property.
+     */
+    /*
+     * @cfg {Boolean} enableRecurrence
+     * True to show the recurrence field, false to hide it (default). Note that recurrence requires
+     * something on the server-side that can parse the iCal RRULE format in order to generate the
+     * instances of recurring events to display on the calendar, so this field should only be enabled
+     * if the server supports it.
+     */
+    enableRecurrence: false, // not currently implemented
     /**
      * @cfg {Boolean} showDayView
      * True to include the day view (and toolbar button), false to hide them (defaults to true).
@@ -5675,17 +7587,40 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
      * (defaults to true).
      */
     showTime: true,
-    
+    /**
+     * @cfg {Boolean} readOnly
+     * True to prevent clicks on events or calendar views from providing CRUD capabilities, false to enable CRUD 
+     * (the default). This option is passed into all views managed by this CalendarPanel.
+     */
     readOnly: false,
-    
+    /**
+     * @cfg {Boolean} showNavToday
+     * True to display the "Today" button in the calendar panel's navigation header, false to not
+     * show it (defaults to true).
+     */
     showNavToday: true,
+    /**
+     * @cfg {Boolean} showNavJump
+     * True to display the "Jump to:" label in the calendar panel's navigation header, false to not
+     * show it (defaults to true).
+     */
     showNavJump: true,
+    /**
+     * @cfg {Boolean} showNavNextPrev
+     * True to display the left/right arrow buttons in the calendar panel's navigation header, false to not
+     * show it (defaults to true).
+     */
     showNavNextPrev: true,
-    
-    todayText: 'Today',
+    /**
+     * @cfg {String} jumpToText
+     * Text to use for the 'Jump to:' navigation label.
+     */
     jumpToText: 'Jump to:',
+    /**
+     * @cfg {String} goText
+     * Text to use for the 'Go' navigation button.
+     */
     goText: 'Go',
-    
     /**
      * @cfg {String} dayText
      * Text to use for the 'Day' nav bar button.
@@ -5713,30 +7648,54 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
      * Text to use for the 'Month' nav bar button.
      */
     monthText: 'Month',
+    /**
+     * @cfg {Boolean} editModal
+     * True to show the default event editor window modally over the entire page, false to allow user interaction with the page
+     * while showing the window (the default). Note that if you replace the default editor window with some alternate component this
+     * config will no longer apply. 
+     */
+    editModal: false,
+    /**
+     * @cfg {Boolean} enableEditDetails
+     * True to show a link on the event edit window to allow switching to the detailed edit form (the default), false to remove the
+     * link and disable detailed event editing. 
+     */
+    enableEditDetails: true,
     
     /**
      * @cfg {Object} viewConfig
-     * 
+     * A config object that will be applied to all {@link Ext.ensible.cal.CalendarView views} managed by this CalendarPanel. Any
+     * options on this object that do not apply to any particular view will simply be ignored.
      */
     /**
      * @cfg {Object} dayViewCfg
-     * 
+     * A config object that will be applied only to the {@link Ext.ensible.cal.DayView DayView} managed by this CalendarPanel.
      */
     /**
      * @cfg {Object} multiDayViewCfg
-     * 
+     * A config object that will be applied only to the {@link Ext.ensible.cal.MultiDayView MultiDayView} managed by this CalendarPanel.
      */
     /**
      * @cfg {Object} weekViewCfg
-     * 
+     * A config object that will be applied only to the {@link Ext.ensible.cal.WeekView WeekView} managed by this CalendarPanel.
      */
     /**
      * @cfg {Object} multiWeekViewCfg
-     * 
+     * A config object that will be applied only to the {@link Ext.ensible.cal.MultiWeekView MultiWeekView} managed by this CalendarPanel.
      */
     /**
      * @cfg {Object} monthViewCfg
-     * 
+     * A config object that will be applied only to the {@link Ext.ensible.cal.MonthView MonthView} managed by this CalendarPanel.
+     */
+    /**
+     * @cfg {Object} editViewCfg
+     * A config object that will be applied only to the {@link Ext.ensible.cal.EventEditForm EventEditForm} managed by this CalendarPanel.
+     */
+    
+    /**
+     * A reference to the {@link Ext.ensible.cal.CalendarView view} that is currently active.
+     * @type {Ext.ensible.cal.CalendarView}
+     * @property activeView
      */
     
     // private
@@ -5876,52 +7835,13 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
              */
             viewchange: true,
             /**
-             * @event eventclick
-             * <p>Fires after the user clicks on an event element.</p>
-             * <p><strong>NOTE:</strong> This version of <code>eventclick</code> differs from the same event fired directly by
-             * {@link Ext.ensible.cal.CalendarView CalendarView} subclasses in that it provides a default implementation (showing
-             * the default edit window) and is also cancelable (if a handler returns <code>false</code> the edit window will not be shown).
-             * This event when fired from a view class is simply a notification that an event was clicked and has no default behavior.
-             * @param {Ext.ensible.cal.CalendarPanel} this
-             * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event that was clicked on
-             * @param {HTMLNode} el The DOM node that was clicked on
-             */
-            //eventclick: true,
-            /**
-             * @event rangeselect
-             * Fires after the user drags on the calendar to select a range of dates/times in which to create an event
-             * @param {Ext.ensible.cal.CalendarPanel} this
-             * @param {Object} dates An object containing the start (StartDate property) and end (EndDate property) dates selected
-             * @param {Function} callback A callback function that MUST be called after the event handling is complete so that
-             * the view is properly cleaned up (shim elements are persisted in the view while the user is prompted to handle the
-             * range selection). The callback is already created in the proper scope, so it simply needs to be executed as a standard
-             * function call (e.g., callback()).
-             */
-            //rangeselect: true,
-            /**
-             * @event eventmove
-             * Fires after an event element is dragged by the user and dropped in a new position
-             * @param {Ext.ensible.cal.CalendarPanel} this
-             * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event that was moved with
-             * updated start and end dates
-             */
-            eventmove: true,
-            /**
-             * @event dayclick
-             * Fires after the user clicks within a day/week view container and not on an event element
-             * @param {Ext.ensible.cal.CalendarPanel} this
-             * @param {Date} dt The date/time that was clicked on
-             * @param {Boolean} allday True if the day clicked on represents an all-day box, else false.
-             * @param {Ext.Element} el The Element that was clicked on
-             */
-            //dayclick: true,
-            /**
              * @event editdetails
-             * Fires when the user selects the option in this window to continue editing in the detailed edit form
-             * (by default, an instance of {@link Ext.ensible.cal.EventEditForm}. Handling code should hide this window
-             * and transfer the current event record to the appropriate instance of the detailed form by showing it
+             * Fires when the user selects the option to edit the selected event in the detailed edit form
+             * (by default, an instance of {@link Ext.ensible.cal.EventEditForm}). Handling code should hide the active
+             * event editor and transfer the current event record to the appropriate instance of the detailed form by showing it
              * and calling {@link Ext.ensible.cal.EventEditForm#loadRecord loadRecord}.
-             * @param {Ext.ensible.cal.CalendarPanel} this
+             * @param {Ext.ensible.cal.CalendarPanel} this The CalendarPanel
+             * @param {Ext.ensible.cal.CalendarView} view The currently active {@link Ext.ensible.cal.CalendarView CalendarView} subclass
              * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} that is currently being edited
              * @param {Ext.Element} el The target element
              */
@@ -5936,6 +7856,27 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
              * @event eventsrendered
              * Fires after events are finished rendering in the view
              * @param {Ext.ensible.cal.CalendarPanel} this 
+             */
+            /**
+             * @event eventclick
+             * <p>Fires after the user clicks on an event element.</p>
+             * <p><strong>NOTE:</strong> This version of <code>eventclick</code> differs from the same event fired directly by
+             * {@link Ext.ensible.cal.CalendarView CalendarView} subclasses in that it provides a default implementation (showing
+             * the default edit window) and is also cancelable (if a handler returns <code>false</code> the edit window will not be shown).
+             * This event when fired from a view class is simply a notification that an event was clicked and has no default behavior.
+             * @param {Ext.ensible.cal.CalendarPanel} this
+             * @param {Ext.ensible.cal.EventRecord} rec The {@link Ext.ensible.cal.EventRecord record} for the event that was clicked on
+             * @param {HTMLNode} el The DOM node that was clicked on
+             */
+            /**
+             * @event rangeselect
+             * Fires after the user drags on the calendar to select a range of dates/times in which to create an event
+             * @param {Ext.ensible.cal.CalendarPanel} this
+             * @param {Object} dates An object containing the start (StartDate property) and end (EndDate property) dates selected
+             * @param {Function} callback A callback function that MUST be called after the event handling is complete so that
+             * the view is properly cleaned up (shim elements are persisted in the view while the user is prompted to handle the
+             * range selection). The callback is already created in the proper scope, so it simply needs to be executed as a standard
+             * function call (e.g., callback()).
              */
             /**
              * @event eventover
@@ -5961,6 +7902,14 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
              * @param {Date} newStartDate The new start date that will be set when the view changes
              * @param {Date} viewStart The first displayed date in the current view
              * @param {Date} viewEnd The last displayed date in the current view
+             */
+            /**
+             * @event dayclick
+             * Fires after the user clicks within a day/week view container and not on an event element
+             * @param {Ext.ensible.cal.CalendarPanel} this
+             * @param {Date} dt The date/time that was clicked on
+             * @param {Boolean} allday True if the day clicked on represents an all-day box, else false.
+             * @param {Ext.Element} el The Element that was clicked on
              */
             /**
              * @event datechange
@@ -6025,11 +7974,24 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
         this.layout = 'card'; // do not allow override
         this.addClass('x-cal-panel');
         
+        if(this.eventStore){
+            this.store = this.eventStore;
+            delete this.eventStore;
+        }
+        this.setStore(this.store);
+        
         var sharedViewCfg = {
             showToday: this.showToday,
+            todayText: this.todayText,
             showTodayText: this.showTodayText,
             showTime: this.showTime,
-            readOnly: this.readOnly
+            readOnly: this.readOnly,
+            enableRecurrence: this.enableRecurrence,
+            store: this.store,
+            calendarStore: this.calendarStore,
+            editModal: this.editModal,
+            enableEditDetails: this.enableEditDetails,
+            ownerCalendarPanel: this
         };
         
         if(this.showDayView){
@@ -6040,7 +8002,6 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
             
             day = Ext.apply(Ext.apply(day, this.viewConfig), this.dayViewCfg);
             day.id = this.id+'-day';
-            day.store = day.store || this.eventStore;
             this.initEventRelay(day);
             this.add(day);
         }
@@ -6052,7 +8013,6 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
             
             mday = Ext.apply(Ext.apply(mday, this.viewConfig), this.multiDayViewCfg);
             mday.id = this.id+'-multiday';
-            mday.store = mday.store || this.eventStore;
             this.initEventRelay(mday);
             this.add(mday);
         }
@@ -6064,7 +8024,6 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
             
             wk = Ext.apply(Ext.apply(wk, this.viewConfig), this.weekViewCfg);
             wk.id = this.id+'-week';
-            wk.store = wk.store || this.eventStore;
             this.initEventRelay(wk);
             this.add(wk);
         }
@@ -6076,7 +8035,6 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
             
             mwk = Ext.apply(Ext.apply(mwk, this.viewConfig), this.multiWeekViewCfg);
             mwk.id = this.id+'-multiweek';
-            mwk.store = mwk.store || this.eventStore;
             this.initEventRelay(mwk);
             this.add(mwk);
         }
@@ -6096,7 +8054,6 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
             
             month = Ext.apply(Ext.apply(month, this.viewConfig), this.monthViewCfg);
             month.id = this.id+'-month';
-            month.store = month.store || this.eventStore;
             this.initEventRelay(month);
             this.add(month);
         }
@@ -6105,6 +8062,7 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
             xtype: 'extensible.eventeditform',
             id: this.id+'-edit',
             calendarStore: this.calendarStore,
+            enableRecurrence: this.enableRecurrence,
             listeners: {
                 'eventadd':    { scope: this, fn: this.onEventAdd },
                 'eventupdate': { scope: this, fn: this.onEventUpdate },
@@ -6122,13 +8080,9 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
                 // relay view events so that app code only has to handle them in one place.
                 // these events require no special handling by the calendar panel 
                 this.relayEvents(c, ['eventsrendered','eventclick','dayclick','eventover','eventout','beforedatechange',
-                    'datechange','rangeselect','beforeeventmove','eventmove','initdrag','dayover','dayout','beforeeventresize','eventresize']);
+                    'datechange','rangeselect','beforeeventmove','eventmove','initdrag','dayover','dayout','beforeeventresize',
+                    'eventresize','eventadd','eventupdate','eventdelete','eventcancel']);
                 
-                // these events can be fired either by a contained view or by the panel itself, and they have
-                // default handling code, so the handler functions are defined in this class
-                //c.on('eventclick', this.onEventClick, this);
-                //c.on('dayclick', this.onDayClick, this);
-                //c.on('rangeselect', this.onRangeSelect, this);
                 c.on('editdetails', this.onEditDetails, this);
             },
             scope: this,
@@ -6140,6 +8094,7 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
     afterRender: function(){
         Ext.ensible.cal.CalendarPanel.superclass.afterRender.call(this);
         this.body.addClass('x-cal-body');
+        this.activeView = this.getLayout().activeItem;
         this.fireViewChange();
     },
     
@@ -6152,80 +8107,49 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
         }
     },
     
-//    // private 
-//    onEventClick: function(vw, rec, el){
-//        if(this.fireEvent('eventclick', this, rec, el) !== false){
-//            this.showEditWindow(rec, el);
-//        }
-//    },
-//    
-//    showEditWindow : function(rec, animateTarget){
-//        // only create one instance of the edit window, even if there are multiple CalendarPanels
-//        this.editWin = this.editWin || Ext.WindowMgr.get('ext-cal-editwin');
-//        
-//        if(!this.editWin){
-//            this.editWin = new Ext.ensible.ux.cal.EventEditWindow({
-//                id: 'ext-cal-editwin',
-//                calendarStore: this.calendarStore,
-//                listeners: {
-//                    'eventadd': {
-//                        fn: function(win, rec, animTarget){
-//                            win.hide(animTarget);
-//                            this.onEventAdd(null, rec);
-//                        },
-//                        scope: this
-//                    },
-//                    'eventupdate': {
-//                        fn: function(win, rec, animTarget){
-//                            win.hide(animTarget);
-//                            this.onEventUpdate(null, rec);
-//                        },
-//                        scope: this
-//                    },
-//                    'eventdelete': {
-//                        fn: function(win, rec, animTarget){
-//                            win.hide(animTarget);
-//                            this.onEventDelete(null, rec);
-//                        },
-//                        scope: this
-//                    },
-//                    'editdetails': {
-//                        fn: function(win, rec, animTarget){
-//                            win.hide(animTarget);
-//                            this.showEditForm(rec);
-//                        },
-//                        scope: this
-//                    },
-//                    'eventcancel': {
-//                        fn: function(win, rec, animTarget){
-//                            win.hide(animateTarget);
-//                            this.onEventCancel();
-//                        },
-//                        scope: this
-//                    }
-//                }
-//            });
-//        }
-//        this.editWin.show(rec, animateTarget);
-//    },
-//    
-//    // private 
-//    onDayClick: function(vw, dt, ad, el){
-//        if(this.fireEvent('dayclick', this, dt, ad, el) !== false){
-//            this.showEditWindow({
-//                StartDate: dt,
-//                IsAllDay: ad
-//            }, el);
-//        }
-//    },
-//    
-//    // private
-//    onRangeSelect: function(win, dates, el, onComplete){
-//        if(this.fireEvent('rangeselect', this, dates, el, onComplete) !== false){
-//            this.showEditWindow(dates, el);
-//            this.editWin.on('hide', onComplete, this, {single:true});
-//        }
-//    },
+    /**
+     * Sets the event store used by the calendar to display {@link Ext.ensible.cal.EventRecord events}.
+     * @param {Ext.data.Store} store
+     */
+    setStore : function(store, initial){
+        var currStore = this.store;
+        
+        if(!initial && currStore){
+            currStore.un("add", this.onStoreAdd, this);
+            currStore.un("remove", this.onStoreRemove, this);
+            currStore.un("update", this.onStoreUpdate, this);
+        }
+        if(store){
+            store.on("add", this.onStoreAdd, this);
+            store.on("remove", this.onStoreRemove, this);
+            store.on("update", this.onStoreUpdate, this);
+        }
+        this.store = store;
+    },
+    
+    // private
+    onStoreAdd : function(ds, records, index){
+        if(records[0].phantom){
+            return;
+        }
+        if(records[0]._deleting){
+            delete records[0]._deleting;
+            return;
+        }
+        this.hideEditForm();
+    },
+    
+    // private
+    onStoreUpdate : function(ds, rec, operation){
+        if(operation == Ext.data.Record.COMMIT){
+            this.hideEditForm();
+        }
+    },
+
+    // private
+    onStoreRemove : function(ds, rec){
+        this.hideEditForm();
+    },
     
     // private
     onEditDetails: function(vw, rec, el){
@@ -6235,46 +8159,29 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
     },
     
     // private
-    onEventDelete: function(vw, rec, el){
-        if(this.fireEvent('beforeeventdelete', this, rec, el) !== false){
-            this.store.remove(rec);
-            this.fireEvent('eventdelete', this, rec, el);
-        }
-    },
-    
-//    // private
-//    onEventMove: function(vw, rec){
-//        if(this.fireEvent('eventmove', this, rec) !== false){
-//            this.onEventUpdate(null, rec);
-//        }
-//    },
-    
-//    // private
-//    onEventResize: function(vw, rec){
-//        if(this.fireEvent('eventresize', this, rec) !== false){
-//            this.onEventUpdate(null, rec);
-//        }
-//    },
-    
-    // private
     onEventAdd: function(form, rec){
-        rec.data[Ext.ensible.cal.EventMappings.IsNew.name] = false;
-        this.eventStore.add(rec);
-        this.hideEditForm();
+        //rec.data[Ext.ensible.cal.EventMappings.IsNew.name] = false;
+        this.newRecord = rec;
+        this.store.add(rec);
+        //this.hideEditForm();
         this.fireEvent('eventadd', this, rec);
     },
     
     // private
     onEventUpdate: function(form, rec){
-        rec.commit();
-        this.hideEditForm();
+        if(!this.store.autoSave){
+            this.store.save();
+        }
+        //rec.commit();
+        //this.hideEditForm();
         this.fireEvent('eventupdate', this, rec);
     },
     
     // private
     onEventDelete: function(form, rec){
-        this.eventStore.remove(rec);
-        this.hideEditForm();
+        rec._deleting = true;
+        this.store.remove(rec);
+        //this.hideEditForm();
         this.fireEvent('eventdelete', this, rec);
     },
     
@@ -6303,6 +8210,11 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
      * @return {Ext.ensible.cal.CalendarPanel} this
      */
     hideEditForm: function(){
+        if(this.newRecord && this.newRecord.phantom){
+            this.store.remove(this.newRecord);
+        }
+        delete this.newRecord;
+        
         if(this.preEditView){
             this.setActiveView(this.preEditView);
             delete this.preEditView;
@@ -6312,17 +8224,25 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
     
     // private
     setActiveView: function(id){
-        var l = this.layout;
+        var l = this.layout,
+            tb = this.getTopToolbar();
+            
         l.setActiveItem(id);
         
         if(id == this.id+'-edit'){
-            this.getTopToolbar().hide();
+            if(tb){
+                tb.hide();
+            }
             this.doLayout();
         }
         else{
-            l.activeItem.refresh();
-            this.getTopToolbar().show();
-            this.updateNavState();
+            if(id !== this.preEditView){
+                l.activeItem.setStartDate(this.startDate, true);
+            }
+            if(tb){
+               tb.show();
+           }
+           this.updateNavState();
         }
         this.activeView = l.activeItem;
         this.fireViewChange();
@@ -6334,12 +8254,15 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
             view = this.layout.activeItem;
             
         if(view.getViewBounds){
-            vb = view.getViewBounds(),
+            var vb = view.getViewBounds(),
             info = {
                 activeDate: view.getStartDate(),
                 viewStart: vb.start,
                 viewEnd: vb.end
             }
+        }
+        if(view.dismissEventEditor){
+            view.dismissEventEditor();
         }
         this.fireEvent('viewchange', this, view, info);
     },
@@ -6360,12 +8283,16 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
 
     /**
      * Sets the start date for the currently-active calendar view.
-     * @param {Date} dt
+     * @param {Date} dt The new start date
+     * @return {Ext.ensible.cal.CalendarPanel} this
      */
     setStartDate: function(dt){
+        Ext.ensible.log('setStartDate (CalendarPanel');
+        this.startDate = dt;
         this.layout.activeItem.setStartDate(dt, true);
         this.updateNavState();
         this.fireViewChange();
+        return this;
     },
         
     // private
@@ -6376,7 +8303,7 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
     
     // private
     onTodayClick: function(){
-        this.startDate = this.layout.activeItem.moveToday();
+        this.startDate = this.layout.activeItem.moveToday(true);
         this.updateNavState();
         this.fireViewChange();
     },
@@ -6385,7 +8312,7 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
     onJumpClick: function(){
         var dt = Ext.getCmp(this.id+'-tb-jump-dt').getValue();
         if(dt !== ''){
-            this.startDate = this.layout.activeItem.moveTo(dt);
+            this.startDate = this.layout.activeItem.moveTo(dt, true);
             this.updateNavState();
             // TODO: check that view actually changed:
             this.fireViewChange();
@@ -6394,14 +8321,14 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
     
     // private
     onPrevClick: function(){
-        this.startDate = this.layout.activeItem.movePrev();
+        this.startDate = this.layout.activeItem.movePrev(true);
         this.updateNavState();
         this.fireViewChange();
     },
     
     // private
     onNextClick: function(){
-        this.startDate = this.layout.activeItem.moveNext();
+        this.startDate = this.layout.activeItem.moveNext(true);
         this.updateNavState();
         this.fireViewChange();
     },

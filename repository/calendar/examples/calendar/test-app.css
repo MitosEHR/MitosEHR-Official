@@ -1,14 +1,18 @@
 /*!
- * Extensible 1.0-alpha1
- * Copyright(c) 2010 ThinkFirst, LLC
- * team@ext.ensible.com
+ * Extensible 1.0-rc1
+ * Copyright(c) 2010-2011 Extensible, LLC
+ * licensing@ext.ensible.com
  * http://ext.ensible.com
  */
+h1 span {
+    font-size: 50%;
+    color: #9F2727;
+}
 #app-header {
     text-align: center;
     font-family: arial;
 }
-#app-center .x-panel-header {
+.app-center-header {
     font-size: 13px;
     text-align: center;
     padding-left: 178px;

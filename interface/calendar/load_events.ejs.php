@@ -22,7 +22,7 @@ $fake_register_globals=false;
 // *************************************************************************************
 // Load the OpenEMR Libraries
 // *************************************************************************************
-include_once("../../globals.php");
+include_once("../globals.php");
 include_once("$srcdir/sql.inc");
 include_once("$srcdir/options.inc.php");
 include_once("$srcdir/patient.inc");
@@ -44,8 +44,8 @@ switch ($_GET['task']) {
 	case "load_events":
 		$groupname = '%';
 		$buff = '';
-		$query = "SELECT 
-						* 
+		$query = "SELECT
+					*
 					FROM 
 						events 
 					WHERE 
