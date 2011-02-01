@@ -71,12 +71,10 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript" src="../../library/ext-3.3.0/ext-all.js"></script>
 
 <!-- ******************************************************************* -->
-<!-- Call for necessary Repository Objects, that we need on the MitosEHR -->
+<!-- Call for mandatory repository objects, that we need on the MitosEHR -->
 <!-- ******************************************************************* -->
 <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.Search.js"></script>
 <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
-<script type="text/javascript" src="../../repository/calendar/extensible-all-debug.js"></script>
-<script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script>
 <script type="text/javascript" src="../../repository/fittoparent/Ext.ux.FitToParent.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../../repository/calendar/resources/css/extensible-all.css" />

@@ -55,6 +55,12 @@ while ($row = sqlFetchArray($result)) {
 $patData = substr($patData, 0, -2); // Delete the last comma and clear the buff.
 ?>
 
+<!-- ******************************************************************* -->
+<!-- Call for necessary Repository Objects, that we need on the MitosEHR -->
+<!-- ******************************************************************* -->
+<script type="text/javascript" src="../../repository/calendar/extensible-all-debug.js"></script>
+<script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script>
+
 <script type="text/javascript">
 
 Ext.onReady(function(){
