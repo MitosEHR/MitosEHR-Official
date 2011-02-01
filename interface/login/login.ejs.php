@@ -37,7 +37,7 @@ $res2 = sqlStatement("SELECT
 					FROM
 						lang_languages
 					WHERE lang_description = '".$GLOBALS['language_default']."'");
-for ($iter = 0;$row = sqlFetchArray($res2);$iter++) $result2[$iter] = $row;
+for ( $iter = 0; $row = sqlFetchArray($res2); $iter++) $result2[$iter] = $row;
 
 if (count($result2) == 1) {
 	$defaultLangID = $result2[0]{"lang_id"};

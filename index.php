@@ -1,23 +1,19 @@
 <?php
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// Set the site ID if required.  This must be done before any database
-// access is attempted.
-
-
+//************************************************************************************
 // This is the decision to make: run the LOGIN windows is all is found in place
 // or run the SETUP, when some file are not FOUND!.
-if (!empty($_GET['site']))
-  $site_id = $_GET['site'];
-else if (is_dir("sites/" . $_SERVER['HTTP_HOST']))
-  $site_id = $_SERVER['HTTP_HOST'];
-else
-  $site_id = 'default';
-
+//
+// It need more work than this, but it's OK.
+//************************************************************************************
+if ( !empty($_GET['site']) ){
+	$site_id = $_GET['site'];
+} else if ( is_dir("sites/" . $_SERVER['HTTP_HOST']) ){
+	$site_id = $_SERVER['HTTP_HOST'];
+} else {
+	$site_id = 'default';
+}
 require_once("sites/$site_id/sqlconf.php");
+
 ?>
 <html>
 <?php if ($config == 1) { ?>

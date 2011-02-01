@@ -1,10 +1,18 @@
-Welcome to OpenEMR!!!
+******************************************************
+MitosEHR (Electronic Health Records)
+******************************************************
+MitosEHR is a Open source Web-Based Software for:
+* Practice management
+* Electronic Medical Records
+* Prescription writing and medical billing application
 
-OpenEMR is a free Open source, Practice management, Electronic Medical
-Records, prescription writing and medical billing application for
-Unix-like systems (Linux, UNIX, and BSD systems), Microsoft systems,
-Mac OS X and other platforms.
+And it can be installed on the following systems:
+* Unix-like systems (Linux, UNIX, and BSD systems)
+* Microsoft systems
+* Mac OS X
+* And other platforms that can run Apache Web server, MySQL
 
-Setup documentation can be found in the INSTALL file, and extensive
-documentation can be found on the OpenEMR wiki at:
-http://www.openmedsoftware.org/
+Setup documentation can be found in the INSTALL file,
+and extensive documentation can be found on the
+MitosEHR web site at:
+http://www.mitosehr.org/
