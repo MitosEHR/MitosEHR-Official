@@ -1,5 +1,5 @@
 <? function physician_history_report( $pid, $encounter, $cols, $id) { 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 include_once("$srcdir/forms.inc");
 include_once("$srcdir/calendar.inc");

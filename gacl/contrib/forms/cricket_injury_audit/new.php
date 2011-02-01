@@ -18,7 +18,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 include_once("$srcdir/forms.inc");
 include_once('cia.inc.php');

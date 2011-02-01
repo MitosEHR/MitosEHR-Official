@@ -11,7 +11,7 @@ if (!isset($_GET["codefrom"]) ) {
 	$code_page = $_GET["codefrom"];
 }
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 
 // Session pid must be right.
 //

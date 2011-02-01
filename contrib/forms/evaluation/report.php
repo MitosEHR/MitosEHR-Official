@@ -1,6 +1,6 @@
 <?php
 //------------Forms generated from formsWiz
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once($GLOBALS["srcdir"]."/api.inc");
 include_once($GLOBALS["srcdir"]."/sql.inc");
 function evaluation_report( $pid, $encounter, $cols, $id) {

@@ -11,7 +11,7 @@
 // http://www.openmedsoftware.org/wiki/Active_Projects#PLAN
 
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("../../library/acl.inc");
 require_once("../../custom/code_types.inc.php");
 require_once("$srcdir/patient.inc");

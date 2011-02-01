@@ -1,5 +1,5 @@
 <?
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 formHeader('Habits form submitted');
 

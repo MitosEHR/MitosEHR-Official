@@ -1,6 +1,6 @@
 <!-- Form created by Andres paglayan -->
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 ?>
 <html><head>
 <?php echo  html_header_show();?>

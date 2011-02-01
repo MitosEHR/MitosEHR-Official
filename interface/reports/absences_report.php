@@ -9,7 +9,7 @@
 // This module is for team sports use and reports on absences by
 // injury type (diagnosis) for a given time period.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/acl.inc");
 require_once("../../custom/code_types.inc.php");

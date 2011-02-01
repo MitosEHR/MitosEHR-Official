@@ -3,7 +3,7 @@
 # Progress Notes Form created by Kam Sharifi	      #
 # kam@sharmen.com				      #
 #######################################################
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once($GLOBALS["srcdir"]."/api.inc");
 function progressnotes_report( $pid, $encounter, $cols, $id) {
 $count = 0;

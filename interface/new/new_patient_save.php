@@ -1,5 +1,5 @@
 <?php
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/sql.inc");
 
 // Validation for non-unique external patient identifier.

@@ -3,7 +3,7 @@
  * The page shown when the user requests a new form
  */
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 
 /** CHANGE THIS name to the name of your form **/

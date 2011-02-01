@@ -3,7 +3,7 @@
   * This popup is called when choosing a list for a form layout
   */
 
-include_once("../globals.php");
+include_once("../registry.php");
 
 ?>
 

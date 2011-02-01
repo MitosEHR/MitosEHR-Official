@@ -10,7 +10,7 @@ Requierements:
 	* MySQL Server
 ----------------------------------------------------------------------------------------------------*/
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 include_once("$srcdir/forms.inc");
 require_once("$srcdir/formdata.inc.php");

@@ -5,7 +5,7 @@
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2
 //------------Forms generated from formsWiz
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once($GLOBALS["srcdir"] . "/api.inc");
 function approved_physical_report( $pid, $encounter, $cols, $id) {
   $count = 0;
@@ -1237,7 +1237,7 @@ if ( ($data["col_58"] != "N/A" && $data["col_58"] != "" && $data["col_58"] != "-
 		}
 		echo "</td>";
 		echo "<td width='300px' valign='top'>";
-		echo "<span class='text'><i>Description of patient’s judgment and insight</i></span>";
+		echo "<span class='text'><i>Description of patientï¿½s judgment and insight</i></span>";
 		echo "</td>";
 		echo "<td valign='top'>";
 		if ( $data['col_58_textbox'] != null ) {

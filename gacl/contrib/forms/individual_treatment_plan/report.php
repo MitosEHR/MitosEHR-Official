@@ -1,6 +1,6 @@
 <?php
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once($GLOBALS["srcdir"]."/api.inc");
 function individual_treatment_plan_report( $pid, $encounter, $cols, $id) {
 $count = 0;

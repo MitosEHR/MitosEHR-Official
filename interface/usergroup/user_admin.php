@@ -3,7 +3,7 @@
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("../../library/acl.inc");
 require_once("$srcdir/md5.js");
 require_once("$srcdir/sql.inc");

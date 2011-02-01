@@ -1,6 +1,6 @@
 <!-- view.php --> 
  <?php 
- include_once("../../globals.php"); 
+ include_once("../../registry.php");
  include_once("$srcdir/api.inc"); 
  formHeader("Form: Forms2_Cardiology"); 
  $obj = formFetch("form_Forms2_Cardiology", $_GET["id"]);  //#Use the formFetch function from api.inc to get values for existing form. 

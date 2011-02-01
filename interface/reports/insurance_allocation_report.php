@@ -8,7 +8,7 @@
  // that are seen within a given time period.  Each patient that had
  // a visit is counted only once, regardless of how many visits.
 
- include_once("../globals.php");
+ include_once("../registry.php");
  include_once("../../library/patient.inc");
  include_once("../../library/acl.inc");
  require_once("../../library/formatting.inc.php");

@@ -1,5 +1,5 @@
 <?php
- include_once("../globals.php");
+ include_once("../registry.php");
  include_once("$srcdir/acl.inc");
 
  $ie_auth = ((acl_check('encounters', 'notes') == 'write' ||

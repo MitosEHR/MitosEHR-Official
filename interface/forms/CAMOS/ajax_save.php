@@ -1,6 +1,6 @@
 <?php
 //------------This file inserts your field data into the MySQL database
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("../../../library/api.inc");
 include_once("../../../library/forms.inc");
 include_once("../../../library/sql.inc");

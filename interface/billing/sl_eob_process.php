@@ -11,7 +11,7 @@
     // Buffer all output so we can archive it to a file.
     ob_start();
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/invoice_summary.inc.php");
 require_once("$srcdir/sl_eob.inc.php");
 require_once("$srcdir/parse_era.inc.php");

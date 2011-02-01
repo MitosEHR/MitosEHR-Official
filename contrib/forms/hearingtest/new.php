@@ -1,6 +1,6 @@
 <!-- Form generated from formsWiz  -->
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 formHeader("Form: hearingtest");
 ?>

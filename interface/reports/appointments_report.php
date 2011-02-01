@@ -9,7 +9,7 @@
  // This report shows upcoming appointments with filtering and
  // sorting by patient, practitioner, appointment type, and date.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("../../library/patient.inc");
 require_once("$srcdir/formatting.inc.php");
 require_once "$srcdir/options.inc.php";

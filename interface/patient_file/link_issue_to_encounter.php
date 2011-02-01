@@ -9,7 +9,7 @@
 // This links a specified or newly created GCAC issue to a specified
 // encounter. It is invoked from pos_checkout.php via a jquery getScript().
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/lists.inc");
 require_once("$srcdir/acl.inc");
 

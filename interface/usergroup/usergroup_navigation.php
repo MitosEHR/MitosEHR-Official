@@ -1,5 +1,5 @@
 <?php
-include_once("../globals.php");
+include_once("../registry.php");
 include_once("../../library/acl.inc");
 ?>
 <html>

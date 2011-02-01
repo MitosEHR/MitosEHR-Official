@@ -9,7 +9,7 @@
 
 // This report lists non reported patient diagnoses for a given date range.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/formatting.inc.php");
 

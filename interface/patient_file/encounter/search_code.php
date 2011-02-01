@@ -4,7 +4,7 @@
 // THIS MODULE REPLACES cptcm_codes.php, hcpcs_codes.php AND icd9cm_codes.php.
 ////////////////////////////////////////////////////////////////////////////////
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("../../../custom/code_types.inc.php");
 include_once("$srcdir/sql.inc");
 

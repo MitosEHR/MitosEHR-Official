@@ -6,7 +6,7 @@
 // All rights reserved.
 // 
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once($GLOBALS["srcdir"]."/api.inc");
 
 //****************************************************************************************

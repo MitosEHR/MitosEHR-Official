@@ -3,7 +3,7 @@
 // Immunization storage and update module
 //
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 include_once("$srcdir/forms.inc");
 

@@ -6,7 +6,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
     
-    require_once("../globals.php");
+    require_once("../registry.php");
     require_once("$srcdir/lab_exchange_api.php");
     require_once("lab_exchange_match.php");
     require_once("../main/messages/lab_results_messages.php");

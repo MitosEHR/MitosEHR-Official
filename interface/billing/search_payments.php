@@ -28,7 +28,7 @@
 //Payments in database can be searched through this screen and edit popup is also its part.
 //Deletion of the payment is done with logging.
 //===============================================================================
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/log.inc");
 require_once("../../library/acl.inc");
 require_once("../../custom/code_types.inc.php");

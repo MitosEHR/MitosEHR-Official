@@ -10,7 +10,7 @@ Requierements:
 	* MySQL Server
 ----------------------------------------------------------------------------------------------------*/
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 formHeader("Form: Ambulance");
 ?>
@@ -678,7 +678,7 @@ formHeader("Form: Ambulance");
 
 <table>
 
-<tr><td> <?php xl("Conciencia",'e') ?> </td> <td><label><input type="checkbox" name="conciencia[]" value="Alerta" /> <?php xl("Alerta",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Conciente" /> <?php xl("Conciente",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Orientado" /> <?php xl("Orientado",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Letárgico" /> <?php xl("Letárgico",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Incoherente" /> <?php xl("Incoherente",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Inconciente" /> <?php xl("Inconciente",'e') ?> </label></td></tr>
+<tr><td> <?php xl("Conciencia",'e') ?> </td> <td><label><input type="checkbox" name="conciencia[]" value="Alerta" /> <?php xl("Alerta",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Conciente" /> <?php xl("Conciente",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Orientado" /> <?php xl("Orientado",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Letï¿½rgico" /> <?php xl("Letï¿½rgico",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Incoherente" /> <?php xl("Incoherente",'e') ?> </label> <label><input type="checkbox" name="conciencia[]" value="Inconciente" /> <?php xl("Inconciente",'e') ?> </label></td></tr>
 
 </table>
 

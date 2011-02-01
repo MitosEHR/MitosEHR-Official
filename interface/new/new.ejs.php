@@ -1,5 +1,5 @@
 <?php 
-include_once("../globals.php");
+include_once("../registry.php");
 ?>
 <script type="text/javascript">
 

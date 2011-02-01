@@ -8,7 +8,7 @@
 
 // custom from for uploading scanned documents into the emr.
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 
 include_once("../../../library/api.inc");
 

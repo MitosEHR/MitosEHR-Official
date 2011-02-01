@@ -1,7 +1,7 @@
 <? function plist_report( $pid, $encounter, $cols, $id) { ?>
 
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 global $srcdir;
 include_once("$srcdir/api.inc");
    $fres = sqlStatement("select * from form_plist where id=$id");

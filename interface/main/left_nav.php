@@ -83,7 +83,7 @@
  // form data, and add logic to the save routines to make sure they match
  // the corresponding session values.
 
- include_once("../globals.php");
+ include_once("../registry.php");
  include_once($GLOBALS['fileroot']."/library/acl.inc");
  include_once($GLOBALS['fileroot']."/custom/code_types.inc.php");
  include_once($GLOBALS['fileroot']."/library/patient.inc");

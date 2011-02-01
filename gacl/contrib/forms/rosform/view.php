@@ -1,6 +1,6 @@
 <!-- Forms generated from formsWiz -->
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 ?>
 <html><head>
 <?php html_header_show();?>

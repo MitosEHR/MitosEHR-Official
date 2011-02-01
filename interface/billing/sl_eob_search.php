@@ -12,7 +12,7 @@
 // This is the first of two pages to support posting of EOBs.
 // The second is sl_eob_invoice.php.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/sql-ledger.inc");
 require_once("$srcdir/invoice_summary.inc.php");

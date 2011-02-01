@@ -1,5 +1,5 @@
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/onotes.inc");
 
 //display all of the notes for the day, as well as others that are active from previous dates, up to a certain number, $N

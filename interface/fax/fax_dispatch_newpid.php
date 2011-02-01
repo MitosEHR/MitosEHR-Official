@@ -11,7 +11,7 @@
 // specific data when a patient is selected.  Currently this data
 // is just the caller's selection list of recent encounters.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/sql.inc");
 
 $res = sqlStatement("SELECT date, encounter, reason FROM form_encounter " .

@@ -1,5 +1,5 @@
 <? function routine_screening_record_report( $pid, $encounter, $cols, $id) {
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 include_once("$srcdir/forms.inc");
 include_once("$srcdir/calendar.inc");formHeader("Form: Routine screening record");
@@ -70,7 +70,7 @@ UNDER AGE 25</td>
     </tr>
     <tr align="center" valign="middle">
       <td class="fibody2" id="bordR">40-64</td>
-      <td class="fibody2" id="bordR">EVERY 2–3 YEARS AFTER 3
+      <td class="fibody2" id="bordR">EVERY 2ï¿½3 YEARS AFTER 3
         CONSECuTIVE NEGATIVE TEST
         RESULTS IF NO HISTORY OF
         CIN 2 OR 3,
@@ -81,7 +81,7 @@ UNDER AGE 25</td>
       <td class="fibody2" id="bordR">EVERY 5 YEARS
         BEGINNING
         AT AGE 45</td>
-      <td class="fibody2" id="bordR">EVERY 1–2 YEARS UNTIL
+      <td class="fibody2" id="bordR">EVERY 1ï¿½2 YEARS UNTIL
         AGE 50; YEARLY
         BEGINNING AT AGE 50</td>
       <td class="fibody2" id="bordR">        BEGINNING AT AGE 50
@@ -104,7 +104,7 @@ UNDER AGE 25</td>
     </tr>
     <tr align="center" valign="middle">
       <td class="fibody2" id="bordR">65 and older </td>
-      <td class="fibody2" id="bordR">EVERY 2–3 YEARS AFTER 3<br>
+      <td class="fibody2" id="bordR">EVERY 2ï¿½3 YEARS AFTER 3<br>
         CONSECUTIVE NEGATIVE TEST
         RESULTS IF NO HISTORY OF
         CIN 2 OR 3,

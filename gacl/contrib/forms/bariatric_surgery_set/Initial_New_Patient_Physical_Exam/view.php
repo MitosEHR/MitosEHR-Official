@@ -6,7 +6,7 @@
 //sam@zhholdings.com
 //Initial New Patient Physical Exam
 //================================================
- include_once("../../globals.php"); 
+ include_once("../../registry.php");
  include_once("$srcdir/api.inc"); 
  $obj = formFetch("form_Initial_New_Patient_Physical_Exam", $_GET["id"]);  //#Use the formFetch function from api.inc to get values for existing form. 
   

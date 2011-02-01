@@ -19,6 +19,6 @@
 // of the License, or (at your option) any later version.
 
 $spreadsheet_form_name = 'treatment_protocols';
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/spreadsheet.inc.php");
 ?>

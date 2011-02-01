@@ -6,7 +6,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("../../custom/code_types.inc.php");
 require_once("$srcdir/sql.inc");
 require_once("$srcdir/formatting.inc.php");

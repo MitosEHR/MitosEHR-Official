@@ -1,6 +1,6 @@
 <!-- view.php --> 
  <?php 
- include_once("../../globals.php"); 
+ include_once("../../registry.php");
  include_once("$srcdir/api.inc"); 
  formHeader("Form: Chiro_personal_injury_form"); 
  $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
@@ -282,7 +282,7 @@
   
  <table> 
   
- <tr><td class="text" > Attorney’s Phone # (Telefone de Abegado)</td><td class="text"   ><input type="text" name="_attorney_phone_number" value="<?php $result = chkdata_Txt($obj,"_attorney_phone_number"); echo $result;?>"></td></tr> 
+ <tr><td class="text" > Attorneyï¿½s Phone # (Telefone de Abegado)</td><td class="text"   ><input type="text" name="_attorney_phone_number" value="<?php $result = chkdata_Txt($obj,"_attorney_phone_number"); echo $result;?>"></td></tr> 
   
  </table> 
      </td> 

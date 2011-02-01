@@ -38,7 +38,7 @@ $fake_register_globals=false;
 // *************************************************************************************
 // Load the OpenEMR Libraries
 // *************************************************************************************
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/pnotes.inc");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/acl.inc");

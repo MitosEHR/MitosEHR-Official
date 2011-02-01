@@ -7,13 +7,26 @@
 // 
 // Integration Sencha ExtJS Framework
 //
-// Integrated by: IdeasGroup Inc. in 2010
+// Integrated by: GI Technologies & MitosEHR.org in 2011
 // 
-// OpenEMR is a free medical practice management, electronic medical records, prescription writing, 
-// and medical billing application. These programs are also referred to as electronic health records. 
-// OpenEMR is licensed under the General Gnu Public License (General GPL). It is a free open source replacement 
-// for medical applications such as Medical Manager, Health Pro, and Misys. It features support for EDI billing 
-// to clearing houses such as Availity, MD-Online, MedAvant and ZirMED using ANSI X12.
+//******************************************************
+//MitosEHR (Electronic Health Records)
+//******************************************************
+//MitosEHR is a Open source Web-Based Software for:
+//* Practice management
+//* Electronic Medical Records
+//* Prescription writing and medical billing application
+//
+//And it can be installed on the following systems:
+//* Unix-like systems (Linux, UNIX, and BSD systems)
+//* Microsoft systems
+//* Mac OS X
+//* And other platforms that can run Apache Web server, MySQL
+//
+//Setup documentation can be found in the INSTALL file,
+//and extensive documentation can be found on the
+//MitosEHR web site at:
+//http://www.mitosehr.org/
 //
 // Sencha ExtJS
 // Ext JS is a cross-browser JavaScript library for building rich internet applications. Build rich,
@@ -37,7 +50,7 @@ $fake_register_globals=false;
 // *************************************************************************************
 // Load the OpenEMR Libraries
 // *************************************************************************************
-require_once("../globals.php");
+require_once("../registry.php");
 ?>
 
 <script type="text/javascript">

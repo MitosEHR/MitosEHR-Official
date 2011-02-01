@@ -1,7 +1,7 @@
 <?php
 //
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once($GLOBALS["srcdir"]."/api.inc");
 
 function well_child_care_report( $pid, $encounter, $cols, $id) {

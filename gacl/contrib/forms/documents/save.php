@@ -5,7 +5,7 @@
 # uploading documents form.
 # does not support modifying.
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 include_once("$srcdir/forms.inc");
 formHeader('Document Input submitted');

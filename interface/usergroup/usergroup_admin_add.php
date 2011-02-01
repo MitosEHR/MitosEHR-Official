@@ -1,5 +1,5 @@
 <?php
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("../../library/acl.inc");
 require_once("$srcdir/md5.js");
 require_once("$srcdir/sql.inc");

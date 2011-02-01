@@ -1,6 +1,6 @@
 <?php
 //------------Forms generated from formsWiz
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once($GLOBALS["srcdir"]."/api.inc");
 function mh_therapy_progress_report( $pid, $encounter, $cols, $id) {
 $count = 0;

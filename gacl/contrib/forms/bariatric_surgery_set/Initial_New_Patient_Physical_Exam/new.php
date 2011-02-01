@@ -6,7 +6,7 @@
 //sam@zhholdings.com
 //Initial New Patient Physical Exam
 //================================================
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 ?>

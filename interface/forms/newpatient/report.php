@@ -1,5 +1,5 @@
 <?
-include_once(dirname(__file__)."/../../globals.php");
+include_once(dirname(__file__)."/../../registry.php");
 
 function newpatient_report( $pid, $encounter, $cols, $id) {
 	$res = sqlStatement("select * from form_encounter where pid='$pid' and id='$id'");

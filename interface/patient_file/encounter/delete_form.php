@@ -1,5 +1,5 @@
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 
 // allow a custom 'delete' form
 $deleteform = $incdir . "/forms/" . $_GET["formname"]."/delete.php";

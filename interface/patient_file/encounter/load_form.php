@@ -5,7 +5,7 @@
 // of the License, or (at your option) any later version.
 
 $special_timeout = 3600;
-include_once("../../globals.php");
+include_once("../../registry.php");
 if (substr($_GET["formname"], 0, 3) === 'LBF') {
   // Use the List Based Forms engine for all LBFxxxxx forms.
   include_once("$incdir/forms/LBF/new.php");

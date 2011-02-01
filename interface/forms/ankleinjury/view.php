@@ -1,6 +1,6 @@
 <!-- Ankle Injury View Form created by Nikolai Vitsyn by 2004/02/19 -->
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 ?>
 <html><head>
 <?php html_header_show();?>

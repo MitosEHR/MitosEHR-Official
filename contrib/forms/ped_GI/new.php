@@ -12,7 +12,7 @@
 
 
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 
 include_once("../../../library/api.inc");
 
