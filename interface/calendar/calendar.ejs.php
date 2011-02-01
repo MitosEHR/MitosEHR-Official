@@ -104,17 +104,17 @@ Ext.onReady(function(){
 	// AJAX -> load_form.ejs.php
 	// *************************************************************************************
 	var provData = new Ext.data.Store({
-	proxy: new Ext.data.ScriptTagProxy({
-		url: '../calendar/load_form.ejs.php?task=cmbProv'
-	}),
-	reader: new Ext.data.JsonReader({
-		id: 'username',
-		totalProperty: 'results',
-		root: 'row'
-	},[
-		{name: 'username', type: 'string', mapping: 'username'},
-		{name: 'name', type: 'string', mapping: 'name'}
-	])
+		proxy: new Ext.data.ScriptTagProxy({
+			url: '../calendar/load_form.ejs.php?task=cmbProv'
+		}),
+		reader: new Ext.data.JsonReader({
+			id: 'username',
+			totalProperty: 'results',
+			root: 'row'
+		},[
+			{name: 'username', type: 'string', mapping: 'username'},
+			{name: 'name', type: 'string', mapping: 'name'}
+		])
 	});
 	provData.load();
 
@@ -162,17 +162,17 @@ Ext.onReady(function(){
 	// AJAX -> load_form.ejs.php
 	// *************************************************************************************
 	var catData = new Ext.data.Store({
-	proxy: new Ext.data.ScriptTagProxy({
-		url: '../calendar/load_form.ejs.php?task=cmbCat'
-	}),
-	reader: new Ext.data.JsonReader({
-		id: 'id',
-		totalProperty: 'results',
-		root: 'row'
-	},[
-		{name: 'id', type: 'number', mapping: 'id'},
-		{name: 'name', type: 'string', mapping: 'name'}
-	])
+		proxy: new Ext.data.ScriptTagProxy({
+			url: '../calendar/load_form.ejs.php?task=cmbCat'
+		}),
+		reader: new Ext.data.JsonReader({
+			id: 'id',
+			totalProperty: 'results',
+			root: 'row'
+		},[
+			{name: 'id', type: 'number', mapping: 'id'},
+			{name: 'name', type: 'string', mapping: 'name'}
+		])
 	});
 	catData.load();
 
@@ -562,9 +562,9 @@ Ext.onReady(function(){
 	//*********************************************************************************************************
 	// The main Panel
 	//*********************************************************************************************************
-	var CalPanel = new Ext.Panel({
+	var RenderPanel = new Ext.Panel({
 		border	: false,
-		id		: 'CalPanel',
+		id		: 'RenderPanel',
 		renderTo: Ext.getCmp('TopPanel').body,
 		layout	: 'border',
 		autoWidth: true,
@@ -573,6 +573,13 @@ Ext.onReady(function(){
 		viewConfig:{forceFit:true},
 		items	: [sidePanel, bigCalendar]
 	});
+
+	//*********************************************************************************************************
+	// Make sure that the RenderPanel height has the same height of the TopPanel
+	// at first run.
+	// This is standard.
+	//*********************************************************************************************************
+	Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 
 }); // END EXTJS
 

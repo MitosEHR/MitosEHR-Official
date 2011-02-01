@@ -1,29 +1,7 @@
 <?php
 /* $Id$ */
-//  ------------------------------------------------------------------------ //
-//                OpenEMR Electronic Medical Records System                  //
-//                   Copyright (c) 2005-2010 oemr.org                        //
-//                       <http://www.oemr.org/>                              //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+// MitosEHR v1.0
+// This file will be later called registry.
 
 // Is this windows or non-windows? Create a boolean definition.
 if (!defined('IS_WINDOWS'))
@@ -112,7 +90,7 @@ $GLOBALS['OE_SITES_BASE'] = "$webserver_root/sites";
 // Now that restore_session() is implemented in javaScript, session IDs are
 // effectively saved in the top level browser window and there is no longer
 // any need to change the session name for different OpenEMR instances.
-session_name("OpenEMR");
+session_name("MitosEHR");
 
 session_start();
 
@@ -243,7 +221,7 @@ else {
   $GLOBALS['translate_appt_categories'] = true;
   $GLOBALS['concurrent_layout'] = 2;
   $timeout = 7200;
-  $openemr_name = 'OpenEMR';
+  $openemr_name = 'MitosEHR';
   $css_header = "$rootdir/themes/style_default.css";
   $GLOBALS['css_header'] = $css_header;
   $GLOBALS['schedule_start'] = 8;
@@ -403,6 +381,11 @@ if (version_compare(phpversion(), "5.2.1", ">=")) {
 
 // turn off PHP compatibility warnings
 ini_set("session.bug_compat_warn","off");
+
+// Sencha ExtJS Framework switcher
+$GLOBALS['ext_path'] = "ext-3.3.0";
+
+$GLOBALS['app_name'] = "MitosEHR";
 
 //////////////////////////////////////////////////////////////////
 ?>

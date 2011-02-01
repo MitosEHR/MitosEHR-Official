@@ -1,7 +1,7 @@
 <?php
 
 // *************************************************************************************
-// OpenEMR Globals
+// MitosEHR Globals
 // *************************************************************************************
 include_once("../globals.php");
 require_once("$srcdir/formdata.inc.php");
@@ -38,7 +38,7 @@ if($GLOBALS['password_expiration_days'] != 0){
 
 
 // *************************************************************************************
-// Navigation Layout if OpenEMR will work for a Athletic Clinic
+// Navigation Layout if MitosEHR will work for a Athletic Clinic
 // *************************************************************************************
 if ($GLOBALS['athletic_team']) {
 	$frame1url = "../reports/players_report.php?embed=1";
@@ -75,17 +75,17 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <!-- ******************************************************************* -->
 <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.Search.js"></script>
 <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
-<script type="text/javascript" src="../../repository/calendar-rc1/extensible-all-debug.js"></script>
-<script type="text/javascript" src="../../repository/calendar-rc1/extensible-all.js"></script>
+<script type="text/javascript" src="../../repository/calendar/extensible-all-debug.js"></script>
+<script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script>
 <script type="text/javascript" src="../../repository/fittoparent/Ext.ux.FitToParent.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../repository/calendar-rc1/resources/css/extensible-all.css" />
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css" />
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/examples/form/forms.css" />
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
+<link rel="stylesheet" type="text/css" href="../../repository/calendar/resources/css/extensible-all.css" />
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/examples/form/forms.css" />
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/xtheme-gray.css" />
   
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
-<title><?php echo $openemr_name ?></title>
+<title><?php echo $GLOBALS['app_name']; ?></title>
 
 <script type="text/javascript">
 <?php require($GLOBALS['srcdir'] . "/restoreSession.php"); ?>
@@ -95,16 +95,16 @@ Ext.onReady(function() {
 // Immunization Window Dialog
 // *************************************************************************************
 var winPopup = new  Ext.Window({
+	id	: 'winPopup',
 	width:800,
 	height: 600,
 	modal: false,
 	resizable: true,
-	autoScroll: false,
+	autoScroll: true,
 	title:	'<?php echo htmlspecialchars( xl('Immunizations'), ENT_NOQUOTES); ?>',
 	closeAction: 'hide',
 	id: 'winPopup',
 	bodyStyle:'padding: 5px',
-	html: '<iframe src="" scrolling="auto" name="popWin" id="popWin" height="100%" width="100%" frameborder="0" marginheight="0" marginwidth="0"></iframe>',
 	defaults: {scripts: true},
 	maximizable: true,
 	// Window Bottom Bar
@@ -147,15 +147,33 @@ var navigation = new Ext.tree.TreePanel({
 	}
 });
 
+// *************************************************************************************
 // Assign the changeLayout function to be called on tree node click.
+// *************************************************************************************
 navigation.on('click', function(n){
 	var sn = this.selModel.selNode || {}; // selNode is null on initial selection
-	if( n.attributes.pos == "top"){	document.getElementById('RTop').src = '../' + n.attributes.id; }
-	if( n.attributes.pos == "bot"){	document.getElementById('RBot').src = '../' + n.attributes.id; }
-	if( n.attributes.pos == "pop"){ winPopup.show(); document.getElementById('popWin').src = n.attributes.id; }
+
+	// Loads the screen on the top panel
+	if( n.attributes.pos == "top"){
+		Ext.getCmp('TopPanel').load({url:'../' + n.attributes.id, scripts:true});
+	}
+
+	// Loads the screen on the bottom panel
+	if( n.attributes.pos == "bot"){
+		Ext.getCmp('BottomPanel').load({url:'../' + n.attributes.id, scripts:true});
+	}
+
+	// Loads the screen on the dialog window
+	if( n.attributes.pos == "pop"){
+		Ext.getCmp('winPopup').load({url:'../' + n.attributes.id, scripts:true});
+		winPopup.show();
+	}
 	//Ext.Msg.alert('Navigation Tree Click', n.attributes.id);
 });
 
+// *************************************************************************************
+// The Helper Panel
+// *************************************************************************************
 var helper = new Ext.Panel({
 	title: '<?php xl('Quick Patient Lookup', 'e'); ?>',
 	xtype: 'form',
@@ -192,6 +210,9 @@ var helper = new Ext.Panel({
 	}]
 });
 
+// *************************************************************************************
+// Navigation Panel
+// *************************************************************************************
 var NavPanel = new Ext.Panel({
 	region:'west',
 	layout: 'border',
@@ -211,6 +232,7 @@ var NavPanel = new Ext.Panel({
 // Top
 var TopPanel = new Ext.Panel({
 	region: 'center',
+	id	: 'TopPanel',
 	autoScroll: false,
 	autoLoad: {url:'../calendar/calendar.ejs.php', scripts:true},
 	cls:'empty',
@@ -221,7 +243,7 @@ var TopPanel = new Ext.Panel({
 	// Monitor and send the new height value to the panel
 	listeners : {
 		bodyresize : function(panel, width, height) {
-			Ext.getCmp('CalPanel').setHeight(height);
+			Ext.getCmp('RenderPanel').setHeight(height);
 		}
 	}
 });

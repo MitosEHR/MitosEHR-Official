@@ -4,9 +4,9 @@
 // Load OpenEMR Globals
 // *************************************************************************************
 include_once("../globals.php");
-include_once($GLOBALS['fileroot']."library/acl.inc");
-include_once($GLOBALS['fileroot']."custom/code_types.inc.php");
-include_once($GLOBALS['fileroot']."library/patient.inc");
+include_once($GLOBALS['fileroot']."/library/acl.inc");
+include_once($GLOBALS['fileroot']."/custom/code_types.inc.php");
+include_once($GLOBALS['fileroot']."/library/patient.inc");
 
 // *************************************************************************************
 // This array defines the list of primary documents that may be
@@ -19,7 +19,7 @@ include_once($GLOBALS['fileroot']."library/patient.inc");
 $primary_docs = array(
 	'ros' => array(xl('Roster')    , 0, 'reports/players_report.php?embed=1'),
 	'cal' => array(xl('Calendar')  , 0, 'main/main_info.php'),
-	'msg' => array(xl('Messages')  , 0, 'main/messages/messages.ejs.php'),
+	'msg' => array(xl('Messages')  , 0, 'messages/messages.ejs.php'),
 	'pwd' => array(xl('Password')  , 0, 'usergroup/user_info.php'),
 	'adm' => array(xl('Admin')     , 0, 'usergroup/admin_frameset.php'),
 	'rep' => array(xl('Reports')   , 0, 'reports/index.php'),
@@ -33,7 +33,7 @@ $primary_docs = array(
 	'bil' => array(xl('Billing')   , 0, 'billing/billing_report.php'),
 	'sup' => array(xl('Superbill') , 0, 'patient_file/encounter/superbill_custom_full.ejs.php'),
 	'aun' => array(xl('Authorizations'), 0, 'main/authorizations/authorizations.php'),
-	'new' => array(xl('New Pt')    , 0, 'new/new.php'),
+	'new' => array(xl('New Pt')    , 0, 'new/new.ejs.php'),
 	'dem' => array(xl('Patient')   , 1,  "patient_file/summary/demographics.php"),
 	'his' => array(xl('History')   , 1, 'patient_file/history/history.php'),
 	'ens' => array(xl('Visit History'), 1, 'patient_file/history/encounters.php'),
