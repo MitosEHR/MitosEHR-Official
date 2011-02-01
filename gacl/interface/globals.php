@@ -112,7 +112,7 @@ $GLOBALS['OE_SITES_BASE'] = "$webserver_root/sites";
 // Now that restore_session() is implemented in javaScript, session IDs are
 // effectively saved in the top level browser window and there is no longer
 // any need to change the session name for different OpenEMR instances.
-session_name("OpenEMR");
+session_name("MitosEMR");
 
 session_start();
 
@@ -243,8 +243,6 @@ else {
   $GLOBALS['translate_appt_categories'] = true;
   $GLOBALS['concurrent_layout'] = 2;
   $timeout = 7200;
-  $openemr_name = 'OpenEMR';
-  $css_header = "$rootdir/themes/style_default.css";
   $GLOBALS['css_header'] = $css_header;
   $GLOBALS['schedule_start'] = 8;
   $GLOBALS['schedule_end'] = 17;
@@ -310,7 +308,7 @@ if (!empty($special_timeout)) {
 
 //Version tags
 require_once(dirname(__FILE__) . "/../version.php");
-$openemr_version = "$v_major.$v_minor.$v_patch".$v_tag;	// Version tag used by program
+$mitosehr_version = "$v_major.$v_minor.$v_patch".$v_tag;	// Version tag used by program
 
 $srcdir = $GLOBALS['srcdir'];
 $login_screen = $GLOBALS['login_screen'];
@@ -403,6 +401,9 @@ if (version_compare(phpversion(), "5.2.1", ">=")) {
 
 // turn off PHP compatibility warnings
 ini_set("session.bug_compat_warn","off");
+
+$GLOBALS['ext_path'] = "ext-3.3.0";
+$GLOBALS['codeig_path'] = "CodeIgniter_2.0.0";
 
 //////////////////////////////////////////////////////////////////
 ?>

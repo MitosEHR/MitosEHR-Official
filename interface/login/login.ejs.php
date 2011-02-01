@@ -150,11 +150,11 @@ var winCopyright = new Ext.Window({
 	bodyStyle: 'padding: 5px;',
 	modal: false,
 	resizable: true,
-	title: '<?php xl('OpenEMR Copyright Notice','e'); ?>',
+	title: '<?php xl('MitosEHR Copyright Notice','e'); ?>',
 	draggable: true,
 	closable: true,
 	autoLoad: 'copyright_notice.html',
-	animateTarget: 'oemr_logo',
+	animateTarget: 'copyright',
 	autoScroll: true
 });
 
@@ -169,7 +169,7 @@ var winLogon = new Ext.Window({
 	plain: true,
 	modal: false,
 	resizable: false,
-	title: 'OpenEMR Logon',
+	title: 'MitosEHR Logon',
 	draggable: false,
 	closable: false,
 
@@ -233,7 +233,7 @@ winLogon.authUser.focus();
 </script>
 </head>
 <body id="login">
-<div id="copyright">OpenEMR v5.0 Development | <a href="javascript:void()" onClick="Ext.getCmp('winCopyright').show();" >Copyright Notice</a></div>
+<div id="copyright">MitosEHR v1.0 Development | <a href="javascript:void()" onClick="Ext.getCmp('winCopyright').show();" >Copyright Notice</a></div>
 
 </body>
 </html>
