@@ -10,7 +10,7 @@
  // This imports patient demographics from our custom XML format.
  /////////////////////////////////////////////////////////////////////
 
- include_once("../interface/globals.php");
+ include_once("../interface/registry.php");
  include_once("$srcdir/patient.inc");
  include_once("$srcdir/acl.inc");
 

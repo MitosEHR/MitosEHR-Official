@@ -8,7 +8,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
-require_once("../../globals.php");
+require_once("../../registry.php");
 require_once("$srcdir/patient.inc");
 require_once("history.inc.php");
 require_once("$srcdir/acl.inc");

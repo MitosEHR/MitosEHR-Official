@@ -1,5 +1,5 @@
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/sql.inc");
 
 //the number of rows to display before resetting and starting a new column:

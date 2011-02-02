@@ -5,7 +5,7 @@
 // of the License, or (at your option) any later version.
 
 //INCLUDES, DO ANY ACTIONS, THEN GET OUR DATA
-include_once("../globals.php");
+include_once("../registry.php");
 include_once("$srcdir/registry.inc");
 include_once("$srcdir/sql.inc");
 if ($_GET['method'] == "enable"){
@@ -161,7 +161,7 @@ if ($bigdata != false)
 foreach ( $inDir as $fname )
 {
         // added 8-2009 by BM - do not show the metric vitals form as option since deprecated
-	//  also added a toggle in globals.php in case user wants the option to add this deprecated form
+	//  also added a toggle in registry.php in case user wants the option to add this deprecated form
         if (($fname == "vitalsM") && ($GLOBALS['disable_deprecated_metrics_form'])) continue;   
     
 	if (stristr($fname, ".tar.gz") || stristr($fname, ".tar") || stristr($fname, ".zip") || stristr($fname, ".gz"))

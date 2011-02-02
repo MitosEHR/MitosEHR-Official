@@ -31,7 +31,7 @@
 //  page2.css
 //
 
-include_once ("../../../../interface/globals.php");
+include_once ("../../../../interface/registry.php");
 include_once ($GLOBALS['fileroot']."/library/patient.inc");
 $chartpath = $GLOBALS['fileroot']."/interface/forms/vitals/growthchart/";
 
@@ -151,7 +151,7 @@ function get_age($dob, $date=null) {
     return compact('age','ageinYMD');
 }
 
-// convert to applicable weight units from the globals.php setting
+// convert to applicable weight units from the registry.php setting
 function unitsWt($wt) {
     if (($GLOBALS['units_of_measurement'] == 2) || ($GLOBALS['units_of_measurement'] == 4)) {
         //convert to metric
@@ -163,7 +163,7 @@ function unitsWt($wt) {
     }
 }
 
-// convert to applicable weight units from the globals.php setting
+// convert to applicable weight units from the registry.php setting
 function unitsDist($dist) {
     if (($GLOBALS['units_of_measurement'] == 2) || ($GLOBALS['units_of_measurement'] == 4)) {
         //convert to metric

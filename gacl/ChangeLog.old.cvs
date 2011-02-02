@@ -1,6 +1,6 @@
 2004-02-06 14:55  duhlman
 
-	* ChangeLog, interface/globals.php: tagging wackiness, moving to
+	* ChangeLog, interface/registry.php: tagging wackiness, moving to
 	  2.2.4
 
 2004-02-06 14:51  duhlman
@@ -56,7 +56,7 @@
 
 2004-02-05 12:08  duhlman
 
-	* interface/: globals.php, main/myadmin/config.inc.php: the
+	* interface/: registry.php, main/myadmin/config.inc.php: the
 	  variable  is used by myadmin in queries, changed to
 
 2004-02-04 16:21  duhlman
@@ -244,7 +244,7 @@
 
 2004-01-27 14:36  duhlman
 
-	* interface/: globals.php,
+	* interface/: registry.php,
 	  main/calendar/modules/PostCalendar/pcSmarty.class.php,
 	  main/calendar/modules/PostCalendar/pnuser.php,
 	  main/calendar/modules/PostCalendar/pnuserapi.php,
@@ -848,7 +848,7 @@
 
 2004-01-21 11:47  duhlman
 
-	* interface/globals.php: updated version information
+	* interface/registry.php: updated version information
 
 2004-01-21 11:37  duhlman
 
@@ -964,7 +964,7 @@
 
 2004-01-16 13:31  duhlman
 
-	* interface/globals.php: added default category for find_patient
+	* interface/registry.php: added default category for find_patient
 	  screen
 
 2004-01-16 13:16  duhlman
@@ -1279,7 +1279,7 @@
 
 2004-01-07 03:28  duhlman
 
-	* openemr.webprj, interface/globals.php, interface/main/main.php,
+	* openemr.webprj, interface/registry.php, interface/main/main.php,
 	  interface/main/main_info.php, interface/main/main_screen.php,
 	  interface/main/calendar/index.php,
 	  interface/main/calendar/pnAPI.php,
@@ -1586,7 +1586,7 @@
 	  Documentation/NoIP.txt, Documentation/OpenEMR Backend Spec.txt,
 	  Documentation/Package.txt, Documentation/Readme.txt,
 	  Documentation/User Documentation.pdf, Documentation/User
-	  Documentation.txt, interface/errorWin.php, interface/globals.php,
+	  Documentation.txt, interface/errorWin.php, interface/registry.php,
 	  interface/index.php, interface/login_screen.php,
 	  interface/logout.php, interface/version_info.php,
 	  interface/billing/billing_report.php,
@@ -1776,7 +1776,7 @@
 	  Documentation/NoIP.txt, Documentation/OpenEMR Backend Spec.txt,
 	  Documentation/Package.txt, Documentation/Readme.txt,
 	  Documentation/User Documentation.pdf, Documentation/User
-	  Documentation.txt, interface/errorWin.php, interface/globals.php,
+	  Documentation.txt, interface/errorWin.php, interface/registry.php,
 	  interface/index.php, interface/login_screen.php,
 	  interface/logout.php, interface/version_info.php,
 	  interface/billing/billing_report.php,

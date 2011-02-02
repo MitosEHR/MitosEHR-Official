@@ -21,5 +21,5 @@ Emergency Login username should start with "breakglass" or "emergency".
 
 When Emergency User is activated, a notication mail is sent to the email-id configured in $GLOBALS['Emergency_Login_email_id'] 
 
-Emergency Login Activation mail will be sent only if "$GLOBALS['Emergency_Login_email']" and "$GLOBALS['Emergency_Login_email_id']" is configured in globals.php
+Emergency Login Activation mail will be sent only if "$GLOBALS['Emergency_Login_email']" and "$GLOBALS['Emergency_Login_email_id']" is configured in registry.php
 

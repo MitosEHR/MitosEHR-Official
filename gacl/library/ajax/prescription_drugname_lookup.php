@@ -13,7 +13,7 @@
 //
 // Important - Ensure that display_errors=Off in php.ini settings.
 //
-include_once("../../interface/globals.php");
+include_once("../../interface/registry.php");
 include_once("{$GLOBALS['srcdir']}/sql.inc");
 include_once("{$GLOBALS['srcdir']}/formdata.inc.php");
 

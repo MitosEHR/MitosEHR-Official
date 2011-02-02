@@ -4,7 +4,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 
 if (substr($_GET["formname"], 0, 3) === 'LBF') {
   // Use the List Based Forms engine for all LBFxxxxx forms.

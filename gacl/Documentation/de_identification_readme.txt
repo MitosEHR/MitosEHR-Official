@@ -3,7 +3,7 @@
 1.Make sure that /interface/de_identification_forms/de_identification_procedure.sh and
 /interface/de_identification_forms/re_identification_procedure.sh have execute permission for apache user
 
-2.Set 'include_de_identification' to 1 in globals.php (currently de-identification works fine only with linux machines)
+2.Set 'include_de_identification' to 1 in registry.php (currently de-identification works fine only with linux machines)
 
 3.After successful login to openemr, create few patients and add issues, prescriptions, immunizations to the patients
 

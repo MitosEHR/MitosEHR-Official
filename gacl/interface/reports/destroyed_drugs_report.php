@@ -9,7 +9,7 @@
  // This report lists destroyed drug lots within a specified date
  // range.
 
- require_once("../globals.php");
+ require_once("../registry.php");
  require_once("$srcdir/patient.inc");
  require_once("../drugs/drugs.inc.php");
  require_once("$srcdir/formatting.inc.php");

@@ -31,7 +31,7 @@ $form_fill = empty($_GET['fill']) ? 0 : 1;
 if (file_exists("../../custom/fee_sheet_codes.php"))
   include_once ("../../custom/fee_sheet_codes.php");
 
-// TBD: Move these to globals.php, or make them user-specific.
+// TBD: Move these to registry.php, or make them user-specific.
 $fontsize = 7;
 $page_height = 700;
 

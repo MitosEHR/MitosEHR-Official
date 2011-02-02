@@ -25,7 +25,7 @@ $ignoreAuth = true; // no login required
 //set de_identification_config to 1 to run the de_identification_upgrade script
 $de_identification_config = 0;
 
-require_once('../../interface/globals.php');
+require_once('../../interface/registry.php');
 require_once('../../library/sql.inc');
 require_once('../../library/sqlconf.php');
 

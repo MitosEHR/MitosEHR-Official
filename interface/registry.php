@@ -78,7 +78,7 @@ if (preg_match("/^[^\/]/",$web_root)) {
 
 // This is the directory that contains site-specific data.  Change this
 // only if you have some reason to.
-$REGISTRY['OE_SITES_BASE'] = "$webserver_root/sites";
+$GLOBALS['OE_SITES_BASE'] = "$webserver_root/sites";
 
 // The session name names a cookie stored in the browser.
 // If you modify session_name, then need to place the identical name in
@@ -100,7 +100,7 @@ if (empty($_SESSION['site_id']) || !empty($_GET['site'])) {
   else {
     if (!$ignoreAuth) die("Site ID is missing from session data!");
     $tmp = $_SERVER['HTTP_HOST'];
-    if (!is_dir($REGISTRY['OE_SITES_BASE'] . "/$tmp")) $tmp = "default";
+    if (!is_dir($GLOBALS['OE_SITES_BASE'] . "/$tmp")) $tmp = "default";
   }
   if (!isset($_SESSION['site_id']) || $_SESSION['site_id'] != $tmp) {
     $_SESSION['site_id'] = $tmp;
@@ -109,9 +109,9 @@ if (empty($_SESSION['site_id']) || !empty($_GET['site'])) {
 }
 
 // Set the site-specific directory path.
-$REGISTRY['OE_SITE_DIR'] = $REGISTRY['OE_SITES_BASE'] . "/" . $_SESSION['site_id'];
+$GLOBALS['OE_SITE_DIR'] = $GLOBALS['OE_SITES_BASE'] . "/" . $_SESSION['site_id'];
 
-require_once($REGISTRY['OE_SITE_DIR'] . "/config.php");
+require_once($GLOBALS['OE_SITE_DIR'] . "/config.php");
 
 // Collecting the utf8 disable flag from the sqlconf.php file in order
 // to set the correct html encoding. utf8 vs iso-8859-1. If flag is set
@@ -127,24 +127,24 @@ else {
 }
 
 // Root directory, relative to the webserver root:
-$REGISTRY['rootdir'] = "$web_root/interface";
-$rootdir = $REGISTRY['rootdir'];
+$GLOBALS['rootdir'] = "$web_root/interface";
+$rootdir = $GLOBALS['rootdir'];
 // Absolute path to the source code include and headers file directory (Full path):
-$REGISTRY['srcdir'] = "$webserver_root/library";
+$GLOBALS['srcdir'] = "$webserver_root/library";
 // Absolute path to the location of documentroot directory for use with include statements:
-$REGISTRY['fileroot'] = "$webserver_root";
+$GLOBALS['fileroot'] = "$webserver_root";
 // Absolute path to the location of interface directory for use with include statements:
 $include_root = "$webserver_root/interface";
 // Absolute path to the location of documentroot directory for use with include statements:
-$REGISTRY['webroot'] = $web_root;
+$GLOBALS['webroot'] = $web_root;
 
-$REGISTRY['template_dir'] = $REGISTRY['fileroot'] . "/templates/";
-$REGISTRY['incdir'] = $include_root;
+$GLOBALS['template_dir'] = $GLOBALS['fileroot'] . "/templates/";
+$GLOBALS['incdir'] = $include_root;
 // Location of the login screen file
-$REGISTRY['login_screen'] = $REGISTRY['rootdir'] . "/login_screen.php";
+$GLOBALS['login_screen'] = $GLOBALS['rootdir'] . "/login_screen.php";
 
 // Variable set for Eligibility Verification [EDI-271] path 
-$REGISTRY['edi_271_file_path'] = $REGISTRY['OE_SITE_DIR'] . "/edi/";
+$GLOBALS['edi_271_file_path'] = $GLOBALS['OE_SITE_DIR'] . "/edi/";
 
 // Include the translation engine. This will also call sql.inc to
 //  open the openemr mysql connection.
@@ -154,50 +154,49 @@ include_once (dirname(__FILE__) . "/../library/translation.inc.php");
 include_once (dirname(__FILE__) . "/../library/date_functions.php");
 
 // Defaults for specific applications.
-$REGISTRY['athletic_team'] = false;
-$REGISTRY['weight_loss_clinic'] = false;
-$REGISTRY['ippf_specific'] = false;
-$REGISTRY['cene_specific'] = false;
+$GLOBALS['athletic_team'] = false;
+$GLOBALS['weight_loss_clinic'] = false;
+$GLOBALS['ippf_specific'] = false;
+$GLOBALS['cene_specific'] = false;
 
 // Defaults for drugs and products.
-$REGISTRY['inhouse_pharmacy'] = false;
-$REGISTRY['sell_non_drug_products'] = 0;
+$GLOBALS['inhouse_pharmacy'] = false;
+$GLOBALS['sell_non_drug_products'] = 0;
 
 $glrow = sqlQuery("SHOW TABLES LIKE 'globals'");
 if (!empty($glrow)) {
   // Set global parameters from the database globals table.
   // Some parameters require custom handling.
   //
-  $REGISTRY['language_menu_show'] = array();
-  $glres = sqlStatement("SELECT gl_name, gl_index, gl_value FROM globals " .
-    "ORDER BY gl_name, gl_index");
+  $GLOBALS['language_menu_show'] = array();
+  $glres = sqlStatement("SELECT gl_name, gl_index, gl_value FROM globals ORDER BY gl_name, gl_index");
   while ($glrow = sqlFetchArray($glres)) {
     $gl_name  = $glrow['gl_name'];
     $gl_value = $glrow['gl_value'];
     if ($gl_name == 'language_menu_other') {
-      $REGISTRY['language_menu_show'][] = $gl_value;
+      $GLOBALS['language_menu_show'][] = $gl_value;
     }
     else if ($gl_name == 'css_header') {
-      $REGISTRY[$gl_name] = "$rootdir/themes/" . $gl_value;
+      $GLOBALS[$gl_name] = "$rootdir/themes/" . $gl_value;
     }
     else if ($gl_name == 'specific_application') {
-      if      ($gl_value == '1') $REGISTRY['athletic_team'] = true;
-      else if ($gl_value == '2') $REGISTRY['ippf_specific'] = true;
-      else if ($gl_value == '3') $REGISTRY['weight_loss_clinic'] = true;
+      if      ($gl_value == '1') $GLOBALS['athletic_team'] = true;
+      else if ($gl_value == '2') $GLOBALS['ippf_specific'] = true;
+      else if ($gl_value == '3') $GLOBALS['weight_loss_clinic'] = true;
     }
     else if ($gl_name == 'inhouse_pharmacy') {
-      if ($gl_value) $REGISTRY['inhouse_pharmacy'] = true;
-      if ($gl_value == '2') $REGISTRY['sell_non_drug_products'] = 1;
-      else if ($gl_value == '3') $REGISTRY['sell_non_drug_products'] = 2;
+      if ($gl_value) $GLOBALS['inhouse_pharmacy'] = true;
+      if ($gl_value == '2') $GLOBALS['sell_non_drug_products'] = 1;
+      else if ($gl_value == '3') $GLOBALS['sell_non_drug_products'] = 2;
     }
     else {
-      $REGISTRY[$gl_name] = $glrow['gl_value'];
+      $GLOBALS[$gl_name] = $glrow['gl_value'];
     }
   }
   // Language cleanup stuff.
-  $REGISTRY['language_menu_login'] = false;
-  if ((count($REGISTRY['language_menu_show']) >= 1) || $REGISTRY['language_menu_showall']) {
-    $REGISTRY['language_menu_login'] = true;
+  $GLOBALS['language_menu_login'] = false;
+  if ((count($GLOBALS['language_menu_show']) >= 1) || $GLOBALS['language_menu_showall']) {
+    $GLOBALS['language_menu_login'] = true;
   }
   //
   // End of globals table processing.
@@ -206,27 +205,27 @@ else {
   // Temporary stuff to handle the case where the globals table does not
   // exist yet.  This will happen in sql_upgrade.php on upgrading to the
   // first release containing this table.
-  $REGISTRY['language_menu_login'] = true;
-  $REGISTRY['language_menu_showall'] = true;
-  $REGISTRY['language_menu_show'] = array('English (Standard)','Swedish');
-  $REGISTRY['language_default'] = "English (Standard)";
-  $REGISTRY['translate_layout'] = true;
-  $REGISTRY['translate_lists'] = true;
-  $REGISTRY['translate_gacl_groups'] = true;
-  $REGISTRY['translate_form_titles'] = true;
-  $REGISTRY['translate_document_categories'] = true;
-  $REGISTRY['translate_appt_categories'] = true;
-  $REGISTRY['concurrent_layout'] = 2;
+  $GLOBALS['language_menu_login'] = true;
+  $GLOBALS['language_menu_showall'] = true;
+  $GLOBALS['language_menu_show'] = array('English (Standard)','Swedish');
+  $GLOBALS['language_default'] = "English (Standard)";
+  $GLOBALS['translate_layout'] = true;
+  $GLOBALS['translate_lists'] = true;
+  $GLOBALS['translate_gacl_groups'] = true;
+  $GLOBALS['translate_form_titles'] = true;
+  $GLOBALS['translate_document_categories'] = true;
+  $GLOBALS['translate_appt_categories'] = true;
+  $GLOBALS['concurrent_layout'] = 2;
   $timeout = 7200;
   $openemr_name = 'MitosEHR';
   $css_header = "$rootdir/themes/style_default.css";
-  $REGISTRY['css_header'] = $css_header;
-  $REGISTRY['schedule_start'] = 8;
-  $REGISTRY['schedule_end'] = 17;
-  $REGISTRY['calendar_interval'] = 15;
-  $REGISTRY['phone_country_code'] = '1';
-  $REGISTRY['disable_non_default_groups'] = true;
-  $REGISTRY['ippf_specific'] = false;
+  $GLOBALS['css_header'] = $css_header;
+  $GLOBALS['schedule_start'] = 8;
+  $GLOBALS['schedule_end'] = 17;
+  $GLOBALS['calendar_interval'] = 15;
+  $GLOBALS['phone_country_code'] = '1';
+  $GLOBALS['disable_non_default_groups'] = true;
+  $GLOBALS['ippf_specific'] = false;
 }
 
 // If >0 this will enforce a separate PHP session for each top-level
@@ -234,19 +233,19 @@ else {
 // thoroughly tested yet and some browsers might have trouble with it,
 // so make it 0 if you must.  Alternatively, you can set it to 2 to be
 // notified when the session ID changes.
-$REGISTRY['restore_sessions'] = 1; // 0=no, 1=yes, 2=yes+debug
+$GLOBALS['restore_sessions'] = 1; // 0=no, 1=yes, 2=yes+debug
 
 // Theme definition.  All this stuff should be moved to CSS.
 //
-if ($REGISTRY['concurrent_layout']) {
+if ($GLOBALS['concurrent_layout']) {
  $top_bg_line = ' bgcolor="#dddddd" ';
- $REGISTRY['style']['BGCOLOR2'] = "#dddddd";
+ $GLOBALS['style']['BGCOLOR2'] = "#dddddd";
  $bottom_bg_line = $top_bg_line;
  $title_bg_line = ' bgcolor="#bbbbbb" ';
  $nav_bg_line = ' bgcolor="#94d6e7" ';
 } else {
  $top_bg_line = ' bgcolor="#94d6e7" ';
- $REGISTRY['style']['BGCOLOR2'] = "#94d6e7";
+ $GLOBALS['style']['BGCOLOR2'] = "#94d6e7";
  $bottom_bg_line = ' background="'.$rootdir.'/pic/aquabg.gif" ';
  $title_bg_line = ' bgcolor="#aaffff" ';
  $nav_bg_line = ' bgcolor="#94d6e7" ';
@@ -256,16 +255,16 @@ $login_body_line = ' background="'.$rootdir.'/pic/aquabg.gif" ';
 $logocode = "<img src='$web_root/sites/" . $_SESSION['site_id'] . "/images/login_logo.gif'>";
 $linepic = "$rootdir/pic/repeat_vline9.gif";
 $table_bg = ' bgcolor="#cccccc" ';
-$REGISTRY['style']['BGCOLOR1'] = "#cccccc";
-$REGISTRY['style']['TEXTCOLOR11'] = "#222222";
-$REGISTRY['style']['HIGHLIGHTCOLOR'] = "#dddddd";
-$REGISTRY['style']['BOTTOM_BG_LINE'] = $bottom_bg_line;
+$GLOBALS['style']['BGCOLOR1'] = "#cccccc";
+$GLOBALS['style']['TEXTCOLOR11'] = "#222222";
+$GLOBALS['style']['HIGHLIGHTCOLOR'] = "#dddddd";
+$GLOBALS['style']['BOTTOM_BG_LINE'] = $bottom_bg_line;
 // The height in pixels of the Logo bar at the top of the login page:
-$REGISTRY['logoBarHeight'] = 110;
+$GLOBALS['logoBarHeight'] = 110;
 // The height in pixels of the Navigation bar:
-$REGISTRY['navBarHeight'] = 22;
+$GLOBALS['navBarHeight'] = 22;
 // The height in pixels of the Title bar:
-$REGISTRY['titleBarHeight'] = 40;
+$GLOBALS['titleBarHeight'] = 40;
 
 // The assistant word, MORE printed next to titles that can be clicked:
 //   Note this label gets translated here via the xl function
@@ -287,20 +286,20 @@ if (!empty($special_timeout)) {
 require_once(dirname(__FILE__) . "/../version.php");
 $openemr_version = "$v_major.$v_minor.$v_patch".$v_tag;	// Version tag used by program
 
-$srcdir = $REGISTRY['srcdir'];
-$login_screen = $REGISTRY['login_screen'];
-$REGISTRY['css_header'] = $css_header;
-$REGISTRY['backpic'] = $backpic;
+$srcdir = $GLOBALS['srcdir'];
+$login_screen = $GLOBALS['login_screen'];
+$GLOBALS['css_header'] = $css_header;
+$GLOBALS['backpic'] = $backpic;
 
 // 1 = send email message to given id for Emergency Login user activation,
 // else 0.
-$REGISTRY['Emergency_Login_email'] = $REGISTRY['Emergency_Login_email_id'] ? 1 : 0;
+$GLOBALS['Emergency_Login_email'] = $GLOBALS['Emergency_Login_email_id'] ? 1 : 0;
 
 //set include_de_identification to enable De-identification (currently de-identification works fine only with linux machines)
 //Run de_identification_upgrade.php script to upgrade OpenEMR database to include procedures,  
 //functions, tables for de-identification(Mysql root user and password is required for successful
 //execution of the de-identification upgrade script)
-$REGISTRY['include_de_identification']=0;
+$GLOBALS['include_de_identification']=0;
 // Include the authentication module code here, but the rule is
 // if the file has the word "login" in the source code file name,
 // don't include the authentication module - we do this to avoid
@@ -313,14 +312,14 @@ if (!$ignoreAuth) {
 // If you do not want your accounting system to have a customer added to it
 // for each insurance company, then set this to true.  SQL-Ledger currently
 // (2005-03-21) does nothing useful with insurance companies as customers.
-$REGISTRY['insurance_companies_are_not_customers'] = true;
+$GLOBALS['insurance_companies_are_not_customers'] = true;
 
 // This is the background color to apply to form fields that are searchable.
 // Currently it is applicable only to the "Search or Add Patient" form.
-$REGISTRY['layout_search_color'] = '#ffff55';
+$GLOBALS['layout_search_color'] = '#ffff55';
 
 //EMAIL SETTINGS
-$SMTP_Auth = !empty($REGISTRY['SMTP_USER']);
+$SMTP_Auth = !empty($GLOBALS['SMTP_USER']);
 
 // The following credentials are provided by OpenEMR Support LLC for testing.
 // When you sign up with their Lab Exchange service, they will provide you with your own credentials.
@@ -373,16 +372,16 @@ function strterm($string,$length) {
 
 // Override temporary_files_dir if PHP >= 5.2.1.
 if (version_compare(phpversion(), "5.2.1", ">=")) {
- $REGISTRY['temporary_files_dir'] = rtrim(sys_get_temp_dir(),'/');
+ $GLOBALS['temporary_files_dir'] = rtrim(sys_get_temp_dir(),'/');
 }
 
 // turn off PHP compatibility warnings
 ini_set("session.bug_compat_warn","off");
 
 // Sencha ExtJS Framework switcher
-$REGISTRY['ext_path'] = "ext-3.3.0";
-$REGISTRY['code_igniter_path'] = "CodeIgniter_2.0.0";
-$REGISTRY['app_name'] = "MitosEHR";
+$GLOBALS['ext_path'] = "ext-3.3.0";
+$GLOBALS['code_igniter_path'] = "CodeIgniter_2.0.0";
+$GLOBALS['app_name'] = "MitosEHR";
 
 //////////////////////////////////////////////////////////////////
 ?>

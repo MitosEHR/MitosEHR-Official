@@ -17,7 +17,7 @@
  // permits selection of one of them via the same set_insurance()
  // function.
 
- include_once("../globals.php");
+ include_once("../registry.php");
  include_once("$srcdir/acl.inc");
 
  // Putting a message here will cause a popup window to display it.

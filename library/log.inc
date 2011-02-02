@@ -488,7 +488,7 @@ function auditSQLEvent($statement, $outcome)
    }
 // ViCarePlus : Fix for Audit Issue :: Sep 24, 2010 
 
-// Issue:  When the audit logging is enabled and when SELECT QUERY (query=1 in globals.php) is enabled to log, 
+// Issue:  When the audit logging is enabled and when SELECT QUERY (query=1 in registry.php) is enabled to log, 
 // the issue of LAST_INSERT_ID arises.  
 // This is because, the function sql_checksum_of_modified_row() is triggered more than 
 // once for SELECT Queries and thus the expected value (LAST_INSERT_ID) in the $GLOBALS['lastidado'] is getting altered. 

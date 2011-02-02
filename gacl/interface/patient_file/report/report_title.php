@@ -1,5 +1,5 @@
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/patient.inc");
 require_once("$srcdir/classes/Pharmacy.class.php");
 ?>

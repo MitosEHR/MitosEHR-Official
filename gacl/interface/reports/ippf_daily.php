@@ -1,7 +1,7 @@
 <?php
 // This module creates the Barbados Daily Record.
 
-include_once("../globals.php");
+include_once("../registry.php");
 include_once("../../library/patient.inc");
 include_once("../../library/acl.inc");
 

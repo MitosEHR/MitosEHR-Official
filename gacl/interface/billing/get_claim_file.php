@@ -4,7 +4,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-require_once(dirname(__FILE__) . "/../globals.php");
+require_once(dirname(__FILE__) . "/../registry.php");
 require_once(dirname(__FILE__) . "/../../includes/config.php");
 
 $fconfig = $GLOBALS['oer_config']['freeb'];

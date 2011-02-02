@@ -1,7 +1,7 @@
 <!-- Form created by Nikolai Vitsyn: 2004/01/23  -->
 <!--                          Update 2004/01/29  -->
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 formHeader("Form: bronchitis");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';

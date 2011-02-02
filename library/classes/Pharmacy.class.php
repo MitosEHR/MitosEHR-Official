@@ -8,7 +8,7 @@ This file was generated on %date% at %time%
 The original location of this file is /home/duhlman/uml-generated-code/prescription.php
 **************************************************************************/
 
-//require_once("../../interface/globals.php");
+//require_once("../../interface/registry.php");
 require_once("PhoneNumber.class.php");
 require_once("Address.class.php");
 //$GLOBALS['fileroot'] = "/var/www/openemr";

@@ -1,5 +1,5 @@
 <?php
-include_once ('../../globals.php'); 
+include_once ('../../registry.php'); 
 include_once ('../../../library/sql.inc'); 
 include_once ('../../../library/classes/Prescription.class.php');
 include_once("../../../library/formdata.inc.php");

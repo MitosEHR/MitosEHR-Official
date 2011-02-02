@@ -25,7 +25,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
-require_once("../../globals.php");
+require_once("../../registry.php");
 
 ?>
 <div id='vitals' style='margin-top: 3px; margin-left: 10px; margin-right: 10px'><!--outer div-->

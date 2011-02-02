@@ -20,7 +20,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
- include_once("../../globals.php");
+ include_once("../../registry.php");
  include_once("$srcdir/patient.inc");
  include_once("$srcdir/formdata.inc.php");
 

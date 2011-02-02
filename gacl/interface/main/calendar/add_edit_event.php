@@ -20,7 +20,7 @@
  //       [Save]  [Find Available]  [Delete]  [Cancel]         //
  //------------------------------------------------------------//
 
- include_once("../../globals.php");
+ include_once("../../registry.php");
  include_once("$srcdir/patient.inc");
  include_once("$srcdir/forms.inc");
  include_once("$srcdir/calendar.inc");

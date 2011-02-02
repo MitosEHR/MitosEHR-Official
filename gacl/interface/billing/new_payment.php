@@ -27,7 +27,7 @@
 //===============================================================================
 //This screen handles the cash/cheque entry and its distribution to various charges.
 //===============================================================================
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/invoice_summary.inc.php");
 require_once("$srcdir/sl_eob.inc.php");
 require_once("$srcdir/parse_era.inc.php");

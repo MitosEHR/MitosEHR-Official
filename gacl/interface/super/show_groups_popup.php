@@ -3,7 +3,7 @@
   * This popup is called when choosing a group into which to move fields
   */
 
-include_once("../globals.php");
+include_once("../registry.php");
 
 ?>
 

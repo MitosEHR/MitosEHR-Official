@@ -9,7 +9,7 @@
  // This report lists patients that were seen within a given date
  // range.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/formatting.inc.php");
 

@@ -8,7 +8,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/transactions.inc");
 require_once("$srcdir/options.inc.php");
 ?>

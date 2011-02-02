@@ -30,7 +30,7 @@
 // include base api
 
 //$ignoreAuth = true;
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/calendar.inc");
 include_once("$srcdir/patient.inc");
 include "includes/pnre.inc.php";

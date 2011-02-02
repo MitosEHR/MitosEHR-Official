@@ -8,7 +8,7 @@
 //Email ID:- vicareplus_engg@visolve.com
 //-------------------------------------------------------------------
 // Display a message indicating that the user's password has/will expire.
-include_once("../globals.php");
+include_once("../registry.php");
 include_once("$srcdir/sql.inc");
 require_once("$srcdir/translation.inc.php");
 

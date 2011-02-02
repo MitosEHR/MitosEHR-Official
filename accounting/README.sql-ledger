@@ -64,7 +64,7 @@ as ws_server.pl.  Alternatively you can create a suitable symbolic link in
 that directory.  Then, examine the resulting ws_server.pl and change the
 "use lib qw" statement as indicated.
 
-5. Edit the openemr/interface/globals.php and put the right data for the
+5. Edit the openemr/interface/registry.php and put the right data for the
 following variables:
 
 $sl_dbname = 'openemr';    // sql-ledger database name

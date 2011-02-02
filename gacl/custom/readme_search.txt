@@ -30,7 +30,7 @@ We used the facility record ID as the List ID and entered an short title to matc
 * Admin restrictions are based solely on the user name 'admin'.  This should be based on the gacl role of "administrator"
  
 Manual steps:
-- To activate patient search restriction, you must add the following lines to interface/globals.php:
+- To activate patient search restriction, you must add the following lines to interface/registry.php:
 
 // If these options are omitted, patient searches will not be restricted.
 $GLOBALS['pt_restrict_field'] = "userlist3"; // Custom map to assigned facility ID#

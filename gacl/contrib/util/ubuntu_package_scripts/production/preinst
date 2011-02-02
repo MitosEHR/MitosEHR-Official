@@ -210,14 +210,14 @@ case "$1" in
          #collect current version
          #TODO
          #(TODO for post-4.0 release will need to look in version.php file for version)
-         #TODO (will need mechanism that works with pre 4.0 versions also; ie look in globals.php first, then look in version.php; and make flag for below issue)
-         v1=$(collect_var \$v_major $OPENEMR/interface/globals.php)
-         v2=$(collect_var \$v_minor $OPENEMR/interface/globals.php)
-         v3=$(collect_var \$v_patch $OPENEMR/interface/globals.php)
+         #TODO (will need mechanism that works with pre 4.0 versions also; ie look in registry.php first, then look in version.php; and make flag for below issue)
+         v1=$(collect_var \$v_major $OPENEMR/interface/registry.php)
+         v2=$(collect_var \$v_minor $OPENEMR/interface/registry.php)
+         v3=$(collect_var \$v_patch $OPENEMR/interface/registry.php)
          #TODO
          #(TODO for post-4.0 release will need to use v_tag rather than tag)
          #TODO (use flag from above to know whether to use tag vs v_tag)
-         v4=$(collect_var \$tag $OPENEMR/interface/globals.php)
+         v4=$(collect_var \$tag $OPENEMR/interface/registry.php)
          RAWVERSION="$v1.$v2.$v3$v4"
 
          #attempt upgrade, if user desires

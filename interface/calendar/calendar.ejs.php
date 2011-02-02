@@ -216,7 +216,7 @@ Ext.onReady(function(){
 		M.Reminder,
 		M.IsNew,
 
-		// OpentEMR requiered fields
+		// MitosEHR requiered fields
 		M.provider_id,
 		M.status_id,
 		M.comments,

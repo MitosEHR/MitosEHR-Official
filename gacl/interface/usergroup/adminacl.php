@@ -11,7 +11,7 @@
 // javascript/jquery dependent. All ajax functions are called
 // from adminacl_ajax.php
 //
-include_once("../globals.php");
+include_once("../registry.php");
 include_once("$srcdir/acl.inc");
 
 //ensure user has proper access

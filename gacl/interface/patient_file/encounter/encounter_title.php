@@ -1,5 +1,5 @@
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/forms.inc");
 include_once("$srcdir/encounter.inc");
 include_once("$srcdir/patient.inc");

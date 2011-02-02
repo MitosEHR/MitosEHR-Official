@@ -40,7 +40,7 @@
 
 $ignoreAuth = true; // no login required
 
-require_once('interface/globals.php');
+require_once('interface/registry.php');
 
 //Ensure that phpGACL has been installed
 include_once('library/acl.inc');

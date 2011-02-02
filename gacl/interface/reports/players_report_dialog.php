@@ -16,7 +16,7 @@
 // o link an issue to the player's fitness for that day
 //////////////////////////////////////////////////////////////////////
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/lists.inc");
 require_once("$srcdir/pnotes.inc");

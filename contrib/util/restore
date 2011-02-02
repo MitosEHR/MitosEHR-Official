@@ -184,9 +184,9 @@ OEDBPASS=`grep '^\$pass'  sites/$SITEID/sqlconf.php | cut -d \' -f 2 | cut -d \"
 SLDBNAME=''
 # SL support is becoming obsolete, but we're leaving it in for now.
 if [ -f ../sql-ledger.sql ]; then
-  SLDBNAME=`grep '^\$sl_dbname' interface/globals.php | cut -d \' -f 2`
-  SLDBUSER=`grep '^\$sl_dbuser' interface/globals.php | cut -d \' -f 2`
-  SLDBPASS=`grep '^\$sl_dbpass' interface/globals.php | cut -d \' -f 2`
+  SLDBNAME=`grep '^\$sl_dbname' interface/registry.php | cut -d \' -f 2`
+  SLDBUSER=`grep '^\$sl_dbuser' interface/registry.php | cut -d \' -f 2`
+  SLDBPASS=`grep '^\$sl_dbpass' interface/registry.php | cut -d \' -f 2`
 fi
 # Likewise, external phpGACL is discouraged because it will not work
 # with multiple sites.
@@ -317,7 +317,7 @@ if [ $TRASH -ne 1 ]; then
   dlg_msg "Error: The OpenEMR directory path '$OEDIR' does not start with '/'."
   exit 1
 fi
-if [ -e "$OEDIR" -a ! -e "$OEDIR/interface/globals.php" ]; then
+if [ -e "$OEDIR" -a ! -e "$OEDIR/interface/registry.php" ]; then
   dlg_msg "Error: $OEDIR already exists but does not look like an OpenEMR directory." "If you are really sure you want to replace it, please remove it first."
   exit 1
 fi
@@ -543,13 +543,13 @@ fi
 #
 if [ $CHANGES -gt 0 ]; then
   if [ ! -z "$SLDIR" ]; then
-    dlg_info "Modifying $OEDIR/interface/globals.php ..."
+    dlg_info "Modifying $OEDIR/interface/registry.php ..."
     cd $OEDIR/interface
-    mv -f globals.php globals.php.old
-    sed "s^sl_dbname *= '.*'^sl_dbname = '$SLDBNAME'^" globals.php.old | \
+    mv -f registry.php registry.php.old
+    sed "s^sl_dbname *= '.*'^sl_dbname = '$SLDBNAME'^" registry.php.old | \
     sed "s^sl_dbuser *= '.*'^sl_dbuser = '$SLDBUSER'^"                 | \
     sed "s^sl_dbpass *= '.*'^sl_dbpass = '$SLDBPASS'^"                   \
-    > globals.php
+    > registry.php
   fi
   #
   dlg_info "Modifying $OEDIR/sites/$SITEID/sqlconf.php ..."

@@ -1618,7 +1618,7 @@ class FormApprovedPhysical extends ORDataObject {
 		}
 	}
 	
-	// ----- Description of patient’s judgment and insight -----
+	// ----- Description of patientï¿½s judgment and insight -----
 
 	var $col_58;
 	var $col_58_textbox;

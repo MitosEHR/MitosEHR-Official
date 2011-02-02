@@ -34,7 +34,7 @@
 // Do not assume that it works for you until you have successfully
 // tested a restore!
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/log.inc");
 

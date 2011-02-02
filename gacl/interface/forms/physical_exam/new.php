@@ -6,12 +6,12 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 include_once("$srcdir/forms.inc");
 include_once("lines.php");
 
-if (! $encounter) { // comes from globals.php
+if (! $encounter) { // comes from registry.php
  die("Internal error: we do not seem to be in an encounter!");
 }
 

@@ -25,7 +25,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
-require_once("../../globals.php");
+require_once("../../registry.php");
 require_once("$srcdir/sql.inc");
 require_once("$srcdir/log.inc");
 

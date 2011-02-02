@@ -1,6 +1,6 @@
 <?php
 //------------report.php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("../../../library/api.inc");
 include_once("content_parser.php");
 function CAMOS_report( $pid, $encounter, $cols, $id) {

@@ -8,7 +8,7 @@
 // of the License, or (at your option) any later version.
 
 $special_timeout = 3600;
-include_once("../../globals.php");
+include_once("../../registry.php");
 
 $formname = $_GET["formname"];
 $is_lbf = substr($formname, 0, 3) === 'LBF';

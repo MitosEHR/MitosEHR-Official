@@ -1,7 +1,7 @@
 <?php
 //these are the functions used to access the forms registry database
 //
-//include_once("../../globals.php");
+//include_once("../../registry.php");
 include_once("{$GLOBALS['srcdir']}/sql.inc");
 
 function registerForm ( $directory , $sql_run=0 , $unpackaged=1 , $state=0 )

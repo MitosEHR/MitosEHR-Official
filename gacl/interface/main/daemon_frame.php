@@ -14,7 +14,7 @@
  // event every time we run.
  $GLOBALS['DAEMON_FLAG'] = true;
 
- include_once("../globals.php");
+ include_once("../registry.php");
 
  $daemon_interval = 120; // Interval in seconds between reloads.
  $colorh = '#ff0000';    // highlight color

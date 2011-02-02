@@ -16,7 +16,7 @@
 	$fake_register_globals=false;
 	//
 
-	require_once("../globals.php");
+	require_once("../registry.php");
 	require_once("$srcdir/forms.inc");
 	require_once("$srcdir/billing.inc");
 	require_once("$srcdir/patient.inc");

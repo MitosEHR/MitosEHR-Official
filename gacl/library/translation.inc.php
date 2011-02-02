@@ -243,7 +243,7 @@ function html_header_show() {
     
     // Below line was commented by the UTF-8 project on 05-2009 by BM.
     //  We commented this out since we are now standardizing encoding
-    //  in the globals.php file.
+    //  in the registry.php file.
     // echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> '."\n";
 }
 

@@ -209,15 +209,15 @@ if ($it_died != 0) {
 }
 fclose($fd);
 
-	//Now, use new name and fix globals.php and rename directory!!!
+	//Now, use new name and fix registry.php and rename directory!!!
 	$d = getcwd();
 	$dn = dirname($d);
-	$contents = file_get_contents($d.'/interface/globals.php');
+	$contents = file_get_contents($d.'/interface/registry.php');
 	$contents = preg_replace('/\$webserver_root\s+=\s+[\"\'].*?[\"\'];/',
 		"\$webserver_root = '".$dn."/".$newname."';",$contents);
 	$contents = preg_replace('/\$web_root\s+=\s+[\"\'].*?[\"\'];/',
 		"\$web_root = '/".$newname."';",$contents);
-	file_put_contents($d.'/interface/globals.php',$contents);
+	file_put_contents($d.'/interface/registry.php',$contents);
 	if (rename($d,$dn.'/'.$newname)) {
 		echo "<br/><a href='http://localhost/".$newname."'>click here</a>";
 	}

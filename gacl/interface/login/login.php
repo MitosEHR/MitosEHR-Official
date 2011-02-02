@@ -5,7 +5,7 @@
 // of the License, or (at your option) any later version.
 
 $ignoreAuth=true;
-include_once("../globals.php");
+include_once("../registry.php");
 include_once("$srcdir/md5.js");
 include_once("$srcdir/sql.inc");
 ?>

@@ -14,7 +14,7 @@
 //   on succcess = JSON data, array of "value":"title" for new list of options
 */
 
-include_once("../../interface/globals.php");
+include_once("../../interface/registry.php");
 include_once("{$GLOBALS['srcdir']}/sql.inc");
 
 // check for required values

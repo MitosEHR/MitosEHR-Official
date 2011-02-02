@@ -1,6 +1,6 @@
 <?php
 
-require_once (dirname(__FILE__) . "/../globals.php");
+require_once (dirname(__FILE__) . "/../registry.php");
 require_once (dirname(__FILE__) . "/../../library/sql.inc");
 require_once (dirname(__FILE__) . "/../../library/Smarty.class.php");
 require_once (dirname(__FILE__) . "/../../library/adodb/adodb-pager.inc.php");
@@ -17,10 +17,10 @@ $smarty = new Smarty();
 //tell smarty where it can compile the templates, this is the defacto becuases postcalendar's smarty already uses it
 $smarty->compile_dir = dirname(__FILE__) . "/../main/calendar/modules/PostCalendar/pntemplates/compiled";
 
-//assign the styles setup in globals.php
+//assign the styles setup in registry.php
 $smarty->assign("STYLE",$GLOBALS['style']);
 
-// assign the style sheet theme as defined in globals.php -- JRM
+// assign the style sheet theme as defined in registry.php -- JRM
 $smarty->assign("css_header", $GLOBALS['css_header']);
 
 //There is not real ALL, so for this purpose we say 20,000

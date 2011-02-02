@@ -11,7 +11,7 @@
  // them to an Atlas LabWorks server to facilitate lab requisitions.
  /////////////////////////////////////////////////////////////////////
 
- include_once("../interface/globals.php");
+ include_once("../interface/registry.php");
  include_once("../library/patient.inc");
 
  // FTP parameters that you must customize.  If you are not sending

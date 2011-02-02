@@ -1176,7 +1176,7 @@ Emergency Contact Phone Number
 Emergency Contraception
 Emergency Login
 Emergency Login ACL is chosen. The user is still in active state, please de-activate the user and activate the same when required during emergency situations. Visit Administration->Users for activation or de-activation.
-Emergency Login activation email will be circulated only if following settings in the interface/globals.php file are configured:
+Emergency Login activation email will be circulated only if following settings in the interface/registry.php file are configured:
 Emergency Login Email Address
 Emergency Login user can do anything
 Emergency Phone

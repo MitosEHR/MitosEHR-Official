@@ -6,7 +6,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-	include_once('../../interface/globals.php');
+	include_once('../../interface/registry.php');
 
 function getRelayHealthLink() {
 	$result = sqlQuery("select ssi_relayhealth from users where id={$_SESSION['authUserID']};");

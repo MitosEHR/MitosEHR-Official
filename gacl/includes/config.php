@@ -6,6 +6,6 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-// $GLOBALS['OE_SITE_DIR'] is set in globals.php.
+// $GLOBALS['OE_SITE_DIR'] is set in registry.php.
 require_once $GLOBALS['OE_SITE_DIR'] . "/config.php";
 ?>

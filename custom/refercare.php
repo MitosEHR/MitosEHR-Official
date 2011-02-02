@@ -10,7 +10,7 @@
  // This program invokes ReferCare to create a new referral.
  /////////////////////////////////////////////////////////////////////
 
- include_once("../interface/globals.php");
+ include_once("../interface/registry.php");
 
  $query = "SELECT * FROM patient_data WHERE pid = '$pid' LIMIT 1";
  $row = sqlFetchArray(sqlStatement($query));

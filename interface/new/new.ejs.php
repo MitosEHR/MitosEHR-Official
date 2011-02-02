@@ -82,7 +82,7 @@ Ext.onReady(function(){
 	//*********************************************************************************************************
 	// Make sure that the RenderPanel height has the same height of the TopPanel
 	// at first run.
-	// This is standard.
+	// This is mandatory.
 	//*********************************************************************************************************
 	Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 

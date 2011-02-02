@@ -1,6 +1,6 @@
 <?php
 
-include_once("../../../interface/globals.php");
+include_once("../../../interface/registry.php");
 echo "Building Statement<br>";
 flush();
 

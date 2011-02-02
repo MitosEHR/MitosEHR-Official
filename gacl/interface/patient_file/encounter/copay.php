@@ -1,5 +1,5 @@
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/sql.inc");
 
 // This may be more appropriate to move to the library

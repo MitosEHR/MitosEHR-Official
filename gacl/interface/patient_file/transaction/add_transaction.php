@@ -15,7 +15,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
-require_once("../../globals.php");
+require_once("../../registry.php");
 require_once("$srcdir/transactions.inc");
 require_once("$srcdir/options.inc.php");
 

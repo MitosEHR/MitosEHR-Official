@@ -16,7 +16,7 @@ $CPR = 4; // cells per row
 
 $pprow = array();
 
-if (! $encounter) { // comes from globals.php
+if (! $encounter) { // comes from registry.php
  die("Internal error: we do not seem to be in an encounter!");
 }
 

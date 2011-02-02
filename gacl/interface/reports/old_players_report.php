@@ -9,7 +9,7 @@
  // This report simply lists all players/patients by name within
  // squad.  It is applicable only for sports teams.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/acl.inc");
 

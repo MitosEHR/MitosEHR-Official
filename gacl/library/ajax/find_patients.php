@@ -14,7 +14,7 @@
 //
 // Important - Ensure that display_errors=Off in php.ini settings.
 //
-require_once("../../interface/globals.php");
+require_once("../../interface/registry.php");
 require_once("{$GLOBALS['srcdir']}/sql.inc");
 require_once("{$GLOBALS['srcdir']}/formdata.inc.php");
 

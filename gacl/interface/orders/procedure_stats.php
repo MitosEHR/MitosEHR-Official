@@ -9,7 +9,7 @@
 // This module creates statistical reports related to lab tests and
 // other procedure orders.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("../../library/patient.inc");
 require_once("../../library/acl.inc");
 require_once("../../custom/code_types.inc.php");

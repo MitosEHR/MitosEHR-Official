@@ -115,7 +115,7 @@ START
 #new.php
 my $new_php =<<'START';
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 formHeader("Form: FORM_NAME");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
@@ -141,7 +141,7 @@ START
 #print.php
 my $print_php=<<'START';
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 formHeader("Form: FORM_NAME");
 ?>
@@ -164,7 +164,7 @@ START
 my $report_php=<<'START';
 <?php
 //------------report.php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once($GLOBALS["srcdir"]."/api.inc");
 function FORM_NAME_report( $pid, $encounter, $cols, $id) {
 $count = 0;
@@ -198,7 +198,7 @@ START
 my $save_php=<<'START';
 <?php
 //------------This file inserts your field data into the MySQL database
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 include_once("$srcdir/forms.inc");
 require_once("$srcdir/formdata.inc.php");
@@ -301,7 +301,7 @@ START
 my $view_php =<<'START';
 <!-- view.php -->
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 formHeader("Form: FORM_NAME");
 $obj = formFetch("form_FORM_NAME", $_GET["id"]);  //#Use the formFetch function from api.inc to get values for existing form.

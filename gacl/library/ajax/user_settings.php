@@ -19,7 +19,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
-require_once(dirname(__FILE__) . "/../../interface/globals.php");
+require_once(dirname(__FILE__) . "/../../interface/registry.php");
 require_once(dirname(__FILE__) . "/../user.inc");
 
 //If 'mode' is either a 1 or 0 and 'target' ends with _expand

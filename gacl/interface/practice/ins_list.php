@@ -10,7 +10,7 @@
  // companies that match the passed-in search strings, and to allow
  // one of them to be selected.
 
- include_once("../globals.php");
+ include_once("../registry.php");
 
  // Putting a message here will cause a popup window to display it.
  $info_msg = "";

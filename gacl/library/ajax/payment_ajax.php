@@ -27,7 +27,7 @@
 //===============================================================================
 //This section handles ajax for insurance,patient and for encounters.
 //===============================================================================
-require_once("../../interface/globals.php");
+require_once("../../interface/registry.php");
 require_once("$srcdir/sql.inc");
 require_once("$srcdir/formatting.inc.php");
 //=================================

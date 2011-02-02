@@ -98,7 +98,7 @@ include_once("../../library/acl.inc");
 
 <?php if (acl_check('admin', 'super')) { ?>
 <td valign="middle" nowrap>
-&nbsp;<a class="menu" target=Main href="../super/edit_globals.php"
+&nbsp;<a class="menu" target=Main href="../super/edit_registry.php"
  onclick="top.restoreSession()"
  title="Global System Parameters"><?php xl('Globals','e'); ?></a>&nbsp;
 </td>

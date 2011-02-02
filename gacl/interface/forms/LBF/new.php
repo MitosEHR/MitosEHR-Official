@@ -6,7 +6,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-require_once("../../globals.php");
+require_once("../../registry.php");
 require_once("$srcdir/api.inc");
 require_once("$srcdir/forms.inc");
 require_once("$srcdir/options.inc.php");
@@ -17,7 +17,7 @@ $CPR = 4; // cells per row
 
 $pprow = array();
 
-if (! $encounter) { // comes from globals.php
+if (! $encounter) { // comes from registry.php
  die("Internal error: we do not seem to be in an encounter!");
 }
 

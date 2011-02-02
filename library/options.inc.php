@@ -14,7 +14,7 @@
 //   at library/translation.inc.php. The functions are titled
 //   xl_list_label() and xl_layout_label() and are controlled by the
 //   $GLOBALS['translate_lists'] and $GLOBALS['translate_layout']
-//   flags in globals.php
+//   flags in registry.php
 
 // Documentation for layout_options.edit_options:
 //

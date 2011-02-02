@@ -9,7 +9,7 @@
 // This module creates statistical reports related to family planning
 // and sexual and reproductive health.
 
-include_once("../globals.php");
+include_once("../registry.php");
 include_once("../../library/patient.inc");
 include_once("../../library/acl.inc");
 

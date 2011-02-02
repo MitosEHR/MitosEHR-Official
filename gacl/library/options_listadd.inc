@@ -9,7 +9,7 @@
  * REQUIRED to make work:
  *  - jQuery
  *  - form element with the class '.addtolist'
- *  - be used in a file that already includes globals.php
+ *  - be used in a file that already includes registry.php
  */
 ?>
 

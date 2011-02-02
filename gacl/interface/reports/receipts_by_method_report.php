@@ -15,7 +15,7 @@
 // a payment method like Cash, Check, VISA, etc. into the "source"
 // column of the SQL-Ledger acc_trans table or ar_session table.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/sql-ledger.inc");
 require_once("$srcdir/acl.inc");

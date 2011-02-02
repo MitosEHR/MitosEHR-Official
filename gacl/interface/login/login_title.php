@@ -1,6 +1,6 @@
 <?php
 $ignoreAuth=true;
-include_once("../globals.php");
+include_once("../registry.php");
 ?>
 <html>
 <head>

@@ -730,7 +730,7 @@ class Smarty
         if ($this->_smarty_vars !== null)
             return;
 
-        $globals_map = array('g'  => 'HTTP_GET_VARS',
+        $GLOBALS_map = array('g'  => 'HTTP_GET_VARS',
                              'p'  => 'HTTP_POST_VARS',
                              'c'  => 'HTTP_COOKIE_VARS',
                              's'  => 'HTTP_SERVER_VARS',
@@ -739,8 +739,8 @@ class Smarty
         $smarty  = array('request'  => array());
 
         foreach (preg_split('!!', strtolower($this->request_vars_order)) as $c) {
-            if (isset($globals_map[$c])) {
-                $smarty['request'] = array_merge($smarty['request'], $GLOBALS[$globals_map[$c]]);
+            if (isset($GLOBALS_map[$c])) {
+                $smarty['request'] = array_merge($smarty['request'], $GLOBALS[$GLOBALS_map[$c]]);
             }
         }
         $smarty['request'] = @array_merge($smarty['request'], $GLOBALS['HTTP_SESSION_VARS']);

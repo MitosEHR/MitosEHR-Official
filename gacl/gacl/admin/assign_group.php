@@ -1,6 +1,6 @@
 <?php
 //First make sure user has access
-include_once("../../interface/globals.php");
+include_once("../../interface/registry.php");
 include_once("$srcdir/acl.inc");
 //ensure user has proper access
 if (!acl_check('admin', 'acl')) {

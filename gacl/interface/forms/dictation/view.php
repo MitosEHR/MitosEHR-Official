@@ -1,6 +1,6 @@
 <!-- Forms generated from formsWiz -->
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 ?>
 <html><head>

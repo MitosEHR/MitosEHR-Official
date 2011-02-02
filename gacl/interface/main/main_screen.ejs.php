@@ -3,7 +3,7 @@
 // *************************************************************************************
 // OpenEMR Globals
 // *************************************************************************************
-include_once("../globals.php");
+include_once("../registry.php");
 require_once("$srcdir/formdata.inc.php");
 $_SESSION["encounter"] = "";
 

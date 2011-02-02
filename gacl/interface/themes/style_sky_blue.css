@@ -160,7 +160,7 @@ a:hover {
 }
 
 /*=============================================================
- * Here we have taken variables from globals.php and turned them into CSS classes 
+ * Here we have taken variables from registry.php and turned them into CSS classes 
  * these should be used in place of the GLOBAL variables -- JRM March 2008
  *=============================================================*/
 .body_top { background-color: #94d6e7; margin: 8px }    /* $top_bg_line */

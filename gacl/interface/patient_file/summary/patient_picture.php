@@ -8,7 +8,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
-require_once("../../globals.php");
+require_once("../../registry.php");
 require_once("$srcdir/sql.inc");
 function pic_array() {
     $picture_directory = "Patient Photograph"; //change this if you want

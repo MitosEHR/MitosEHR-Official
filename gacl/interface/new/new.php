@@ -1,5 +1,5 @@
 <?php
-include_once("../globals.php");
+include_once("../registry.php");
 
 if ($GLOBALS['full_new_patient_form']) {
   require("new_comprehensive.php");

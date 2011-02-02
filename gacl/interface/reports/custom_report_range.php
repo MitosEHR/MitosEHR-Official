@@ -4,7 +4,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-require_once(dirname(__file__)."/../globals.php");
+require_once(dirname(__file__)."/../registry.php");
 require_once("$srcdir/forms.inc");
 require_once("$srcdir/billing.inc");
 require_once("$srcdir/pnotes.inc");

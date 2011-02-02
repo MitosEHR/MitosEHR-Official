@@ -1,6 +1,6 @@
 <?php
 
-include_once("../globals.php");
+include_once("../registry.php");
 set_time_limit(0);
 $format = $_GET['format'];
 $billkey = escapeshellarg($_GET['billkey']);

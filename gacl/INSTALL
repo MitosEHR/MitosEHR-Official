@@ -69,7 +69,7 @@ The setup script will step you through the configuration of the OpenEMR.
 
 The first screen of the setup script will ensure that the webserver user
 (in linux, often is "apache", "www-data", or "nobody") has write privileges on
-certain files and directories. The files include openemr/interface/globals.php and
+certain files and directories. The files include openemr/interface/registry.php and
 openemr/library/sqlconf.php. In linux, these can be set by "chmod a+w filename"
 command to grant global write permissions to the file, The directories include
 openemr/gacl/admin/templates_c, openemr/edi, openemr/era, openemr/documents,
@@ -161,7 +161,7 @@ confusion, either forward or backward slashes can be used.
 Step 3 is where setup will configure OpenEMR.  It will first create the database
 and connect to it to create the initial tables.  It will then write the mysql
 database configuration to a file.  It will then write the webserver root
-directory to the /openemr/interface/globals.php file.  Should anything fail
+directory to the /openemr/interface/registry.php file.  Should anything fail
 during step 3, you may have to remove the existing database or tables before
 you can try again. If no errors occur, you will see a "Continue" button at the bottom.
 
@@ -227,7 +227,7 @@ needed. For information on using OpenEMR, consult the User Documentation located
 in the Documentation folder, the wiki at http://www.oemr.org, and the forums
 at http://sourceforge.net/projects/openemr.
 
-Reading openemr/includes/config.php and openemr/interface/globals.php is a
+Reading openemr/includes/config.php and openemr/interface/registry.php is a
 good idea. These files contain many options to choose from including themes.
 
 To create custom encounter forms, see the files
@@ -243,7 +243,7 @@ Everything should work out of the installation without touching those, but if
 you want fax, sql-ledger, and/or Freeb integration you will need to adjust some
 parameters in that file.
 
-General-purpose fax support requires customization of interface/globals.php
+General-purpose fax support requires customization of interface/registry.php
 and custom/faxcover.txt; it also requires the following utilities:
 
 * faxstat and sendfax from the HylaFAX client package
@@ -276,7 +276,7 @@ Ensure you copy your settings from the following old openemr
 files to the new configuration files (we do not recommend simply
 copying the entire files):
 
-  openemr/interface/globals.php 
+  openemr/interface/registry.php 
   openemr/includes/config.php (if you have modified it)
 
 The following directories should be copied from the old version to the

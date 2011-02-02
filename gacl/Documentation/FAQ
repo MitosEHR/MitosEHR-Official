@@ -4,7 +4,7 @@ version 1.1
 
 * After installation and setup, I get errors from login.php at lines 3 and 4 about failing to opening md5.js and sql.inc.
 
-Please check the openemr/interface/globals.php file and edit the line that sets $webserver_root.
+Please check the openemr/interface/registry.php file and edit the line that sets $webserver_root.
 $webserver_root = "/var/www/html/openemr";
 It should be set to the absolute path of the openemr web directory, as shown above.
 

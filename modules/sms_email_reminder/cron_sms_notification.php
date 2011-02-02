@@ -15,7 +15,7 @@ $backpic = "";
 
 // email notification
 $ignoreAuth=1;
-include_once("../../interface/globals.php");
+include_once("../../interface/registry.php");
 include_once("cron_functions.php");
 
 // check command line for quite option

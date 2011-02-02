@@ -9,7 +9,7 @@
 // This is a report of sales by item description.  It's driven from
 // SQL-Ledger so as to include all types of invoice items.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/sql-ledger.inc");
 require_once("$srcdir/acl.inc");

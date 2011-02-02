@@ -14,7 +14,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 //
 
-require_once("../interface/globals.php");
+require_once("../interface/registry.php");
 require_once("$srcdir/sql.inc");
 ?>
 <html>

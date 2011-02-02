@@ -26,7 +26,7 @@ $scale_file_name = '/tmp/tanita_scale.txt';
 $scale_file_age = -1;
 $row = array();
 
-if (! $encounter) { // comes from globals.php
+if (! $encounter) { // comes from registry.php
  die("Internal error: we do not seem to be in an encounter!");
 }
 // encode a string from a form field for database writing.

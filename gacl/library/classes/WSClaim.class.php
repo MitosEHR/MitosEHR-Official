@@ -232,7 +232,7 @@ class WSClaim extends WSWrapper{
       echo "No payer id for this claim could be found";
       return false;
     }
-    // See comments in globals.php:
+    // See comments in registry.php:
     if ($GLOBALS['insurance_companies_are_not_customers']) {
       $this->foreign_payer_id = $this->payer_id;
     }

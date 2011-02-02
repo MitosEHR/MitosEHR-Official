@@ -6,7 +6,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/globals.inc.php");
@@ -88,7 +88,7 @@ $(document).ready(function(){
 
 <body class="body_top">
 
-<form method='post' name='theform' id='theform' action='edit_globals.php' onsubmit='return top.restoreSession()'>
+<form method='post' name='theform' id='theform' action='edit_registry.php' onsubmit='return top.restoreSession()'>
 
 <p><b><?php xl('Edit Global Settings','e'); ?></b>
 

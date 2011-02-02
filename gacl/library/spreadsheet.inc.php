@@ -62,7 +62,7 @@ $start_date = '';
 
 $form_completed = '0';
 
-if (!$popup && !$encounter) { // $encounter comes from globals.php
+if (!$popup && !$encounter) { // $encounter comes from registry.php
  die("Internal error: we do not seem to be in an encounter!");
 }
 

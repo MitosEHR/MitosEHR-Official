@@ -395,7 +395,7 @@ echo "<font class='alert'>".xl('Emergency Login ACL is chosen. The user is still
 }
 if ($show_message == 1){
  echo "<font class='alert'>".xl('The following Emergency Login User is activated:')." "."<b>".$_GET['fname']."</b>"."</font><br>";
- echo "<font class='alert'>".xl('Emergency Login activation email will be circulated only if following settings in the interface/globals.php file are configured:')." \$GLOBALS['Emergency_Login_email'], \$GLOBALS['Emergency_Login_email_id']</font>";
+ echo "<font class='alert'>".xl('Emergency Login activation email will be circulated only if following settings in the interface/registry.php file are configured:')." \$GLOBALS['Emergency_Login_email'], \$GLOBALS['Emergency_Login_email_id']</font>";
 }
 
 ?>

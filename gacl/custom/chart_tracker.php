@@ -10,7 +10,7 @@
 //
 // INSERT INTO list_options VALUES ('lists','chartloc','Chart Storage Locations',51,0,0);
 
-require_once("../interface/globals.php");
+require_once("../interface/registry.php");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/options.inc.php");
 

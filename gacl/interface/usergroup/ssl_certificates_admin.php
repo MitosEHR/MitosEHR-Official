@@ -1,5 +1,5 @@
 <?php
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("../../library/create_ssl_certificate.php");
 require_once("../../library/sql.inc");
 require_once("$srcdir/formdata.inc.php");
@@ -36,14 +36,14 @@ require_once("$srcdir/translation.inc.php");
 $error_msg = "";
 
 /* This function is called when the "Save Certificate Settings" button is clicked.
- * Save the certificate settings to the file globals.php.
+ * Save the certificate settings to the file registry.php.
  * The following form inputs are used:
  *   cakey_location - The path to the CA key file
  *   cacrt_location - The path to the CA certificate file
  *   clientCertValidity_hidden - Number of days client certificates are valid.
  *   isClientAuthenticationEnabled - Enable/disable client certificate authentication.
  *
- * Save these values to the following variables in globals.php:
+ * Save these values to the following variables in registry.php:
  *   $certificate_authority_key
  *   $certificate_authority_crt
  *   $client_certificate_valid_in_days
@@ -83,9 +83,9 @@ $error_msg = "";
     $Authority_crt = str_replace('\\\\', '/', $Authority_crt);
     $Authority_crt = str_replace('\\', '/', $Authority_crt);
 
-    // Read in the globals.php file 
-    $globals_file = $GLOBALS['webserver_root'] . "/interface/globals.php";
-    $inputdata = file($globals_file) or die( xl('Could not read file','e')." ". $globals_file);
+    // Read in the registry.php file 
+    $GLOBALS_file = $GLOBALS['webserver_root'] . "/interface/registry.php";
+    $inputdata = file($GLOBALS_file) or die( xl('Could not read file','e')." ". $GLOBALS_file);
     $outputdata = "";
 
     $wrote_key = false;
@@ -93,7 +93,7 @@ $error_msg = "";
     $wrote_enable = false;
     $wrote_validity = false;
 
-    // Loop through each line in globals.php, replacing any certificate variables with the new settings.
+    // Loop through each line in registry.php, replacing any certificate variables with the new settings.
      
     foreach ($inputdata as $line) {
         if ((strpos($line,"\$certificate_authority_key = \"")) !== false) {
@@ -136,10 +136,10 @@ $error_msg = "";
         $outputdata .= "\n?>\n";
     }
 
-    // Write the modified globals.php back to disk 
-    $fd = @fopen($globals_file, 'w');
+    // Write the modified registry.php back to disk 
+    $fd = @fopen($GLOBALS_file, 'w');
     if ($fd === false) {
-        $error_msg .= xl('Error, unable to open file', 'e') . ' ' . $globals_file;
+        $error_msg .= xl('Error, unable to open file', 'e') . ' ' . $GLOBALS_file;
         return;
     }
     fwrite($fd, $outputdata);
@@ -675,7 +675,7 @@ else if ($_POST["mode"] == "download_certificates") {
       <input type='hidden' name='clientCertValidity_hidden' value=''>
       </br>
            
-          <?php xl('Update the following variables in file', 'e'); ?>: globals.php</br></br>
+          <?php xl('Update the following variables in file', 'e'); ?>: registry.php</br></br>
 	  <?php xl('To enable Client side ssl certificates', 'e'); ?></br>
 	  <?php xl('Set', 'e'); ?> 'is_client_ssl_enabled' <?php xl('to', 'e'); ?> 'true' </br></br>
 	  <?php xl('Provide absolute path of file', 'e'); ?> CertificateAuthority.key</br>	
@@ -687,7 +687,7 @@ else if ($_POST["mode"] == "download_certificates") {
     <ul>
       <li><?php xl('To Enable Client side SSL certificates authentication, HTTPS should be enabled.', 'e'); ?>
       <li><?php xl('After performing above configurations, import the admin client certificate to the browser and restart Apache server (empty password).', 'e'); ?>
-      <li><?php xl('To Disable client side SSL certificates, comment above lines in Apache configuration file and set', 'e'); ?> 'false' <?php xl('for variable', 'e'); ?> 'is_client_ssl_enabled' (globals.php) <?php xl('and restart Apache server.', 'e'); ?>
+      <li><?php xl('To Disable client side SSL certificates, comment above lines in Apache configuration file and set', 'e'); ?> 'false' <?php xl('for variable', 'e'); ?> 'is_client_ssl_enabled' (registry.php) <?php xl('and restart Apache server.', 'e'); ?>
     </form>
   </div>
   <br>

@@ -1,7 +1,7 @@
 <!-- Form created by Nikolai Vitsyn: 2004/02/13  -->
 
 <?php
-include_once("../../globals.php");
+include_once("../../registry.php");
 include_once("$srcdir/api.inc");
 formHeader("Form: ankleinjury");
 ?>

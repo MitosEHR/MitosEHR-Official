@@ -69,7 +69,7 @@ class C_InsuranceCompany extends Controller {
 		$this->icompanies[0]->populate();
 
 		// Post insurance companies as customers to the accounting system
-		// unless globals.php requests otherwise.
+		// unless registry.php requests otherwise.
 		//
 		if (! $GLOBALS['insurance_companies_are_not_customers'])
 			$this->_sync_ws($this->icompanies[0]);

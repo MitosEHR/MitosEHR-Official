@@ -25,7 +25,7 @@ include_once('cia.inc.php');
 
 $row = array();
 
-if (! $encounter) { // comes from globals.php
+if (! $encounter) { // comes from registry.php
  die("Internal error: we do not seem to be in an encounter!");
 }
 

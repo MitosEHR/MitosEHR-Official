@@ -88,7 +88,7 @@ $(document).ready(function(){
 
 <body class="body_top">
 
-<form method='post' name='theform' id='theform' action='edit_globals.php' onsubmit='return top.restoreSession()'>
+<form method='post' name='theform' id='theform' action='edit_registry.php' onsubmit='return top.restoreSession()'>
 
 <p><b><?php xl('Edit Global Settings','e'); ?></b>
 

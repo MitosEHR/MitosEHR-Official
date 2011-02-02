@@ -28,7 +28,7 @@
 //Payments can be edited here.It includes deletion of an allocation,modifying the 
 //same or adding a new allocation.Log is kept for the deleted ones.
 //===============================================================================
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/log.inc");
 require_once("$srcdir/invoice_summary.inc.php");
 require_once("$srcdir/sl_eob.inc.php");

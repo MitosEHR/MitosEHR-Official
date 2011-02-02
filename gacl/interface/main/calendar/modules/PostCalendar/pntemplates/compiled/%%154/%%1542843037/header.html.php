@@ -2,7 +2,7 @@
          compiled from default/views/header.html */ ?>
 <html>
 <head>
-<!-- Get the style sheet for the theme defined in globals.php -->
+<!-- Get the style sheet for the theme defined in registry.php -->
 <link rel="stylesheet" href="<?php echo $GLOBALS['css_header'] ?>" type="text/css">
 
 <?php if ($this->_tpl_vars['cal_ui'] == 3): ?>

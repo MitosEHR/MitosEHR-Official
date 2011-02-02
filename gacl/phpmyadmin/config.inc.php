@@ -17,7 +17,7 @@ if (stripos(PHP_OS,'WIN') === 0) $webserver_root = str_replace("\\","/",$webserv
 $GLOBALS['OE_SITE_DIR'] = "$webserver_root/sites/" . $_SESSION['site_id'];
 require_once("../library/sqlconf.php");
 
-// this is the acl check (note can't use globals.php)
+// this is the acl check (note can't use registry.php)
 $GLOBALS['phpmyadmin_acl_check'] = true;
 require_once("../library/acl.inc");
 if (! acl_check('admin', 'database')) {

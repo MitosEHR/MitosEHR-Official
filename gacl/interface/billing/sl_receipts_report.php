@@ -11,7 +11,7 @@
   // but I wanted to make the code available to the project because
   // many other practices have this same need. - rod@sunsetsystems.com
 
-  require_once("../globals.php");
+  require_once("../registry.php");
   require_once("$srcdir/patient.inc");
   require_once("$srcdir/sql-ledger.inc");
   require_once("$srcdir/acl.inc");

@@ -10,7 +10,7 @@
  // This program exports patient demographics to a custom XML format.
  /////////////////////////////////////////////////////////////////////
 
- include_once("../interface/globals.php");
+ include_once("../interface/registry.php");
  include_once("../library/patient.inc");
 
  $out = "";

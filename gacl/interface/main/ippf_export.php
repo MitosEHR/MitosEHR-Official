@@ -9,7 +9,7 @@
 // This script creates an export file and sends it to the users's
 // browser for download.
 
-require_once("../globals.php");
+require_once("../registry.php");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/patient.inc");
 

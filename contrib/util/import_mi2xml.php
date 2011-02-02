@@ -10,7 +10,7 @@
 // See import_mi2xml-xpaths.txt for a field structure details
 
 $ignoreAuth = true;
-include_once("../interface/globals.php");
+include_once("../interface/registry.php");
 include_once("$srcdir/patient.inc");
 include_once("$srcdir/forms.inc");
 include_once("$srcdir/acl.inc");
