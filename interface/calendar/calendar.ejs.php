@@ -214,6 +214,10 @@ Ext.ensible.sample.MemoryEventStore = Ext.extend(Ext.data.Store, {
     data: Ext.ensible.sample.EventData
   });
 	
+	//*********************************************************************************************************
+	// sidePanel
+	// This panel will hold the DatePicker and the providers
+	//*********************************************************************************************************
   var sidePanel = new Ext.Panel({
     id:'sidePanel',
     region: 'west',
@@ -226,7 +230,10 @@ Ext.ensible.sample.MemoryEventStore = Ext.extend(Ext.data.Store, {
     }]
   });
   
-      
+  //*********************************************************************************************************
+  // The Big Calendar
+  // This is the calendar that the user will interact.
+  //*********************************************************************************************************
   var bigCalendar = new Ext.ensible.cal.CalendarPanel({
     eventStore: eventStore,
     title: 'Basic Calendar',
@@ -267,6 +274,13 @@ Ext.ensible.sample.MemoryEventStore = Ext.extend(Ext.data.Store, {
 		viewConfig:{forceFit:true},
 		items	: [sidePanel, bigCalendar]
 	});
+	
+	//*********************************************************************************************************
+	// Grab the full attention of the user
+	// Use this function below to maximize the panel
+	// Only when it's needed.
+	//*********************************************************************************************************
+	Ext.getCmp('BottomPanel').collapse( true );
 
 	//*********************************************************************************************************
 	// Make sure that the RenderPanel height has the same height of the TopPanel
