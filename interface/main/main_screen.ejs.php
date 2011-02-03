@@ -90,6 +90,9 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript">
 <?php require($GLOBALS['srcdir'] . "/restoreSession.php"); ?>
 Ext.onReady(function() {
+
+Ext.QuickTips.init();
+Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 					 
 // *************************************************************************************
 // Immunization Window Dialog
@@ -127,20 +130,12 @@ var navigation = new Ext.tree.TreePanel({
 	containerScroll: true,
 	border: true,
 	rootVisible: false,
-	title: '<?php xl('Navigation', 'e'); ?>',
 	dataUrl: '../navigation/default_leftnav.ejs.php',
 	region:'north',
 	height: 450,
 	minSize: 250,
 	split: true,
 	lines: false,
-	tools:[{
-		id:'plus',
-		qtip: 'Expand all nodes'
-	},{
-		id:'minus',
-		qtip: 'Collapse all nodes'
-	}],
 	root: {
 		text: '<?php xl('Navigation', 'e'); ?>',
 		draggable: false,
@@ -169,7 +164,6 @@ navigation.on('click', function(n){
 		Ext.getCmp('winPopup').load({url:'../' + n.attributes.id, scripts:true});
 		winPopup.show();
 	}
-	//Ext.Msg.alert('Navigation Tree Click', n.attributes.id);
 });
 
 // *************************************************************************************
@@ -215,6 +209,7 @@ var helper = new Ext.Panel({
 // Navigation Panel
 // *************************************************************************************
 var NavPanel = new Ext.Panel({
+  title: '<?php xl('Navigation', 'e'); ?>',
 	region:'west',
 	layout: 'border',
 	margins:'5 0 5 5',
