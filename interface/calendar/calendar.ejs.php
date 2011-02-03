@@ -256,7 +256,7 @@ Ext.ensible.sample.MemoryEventStore = Ext.extend(Ext.data.Store, {
     //showTodayText: false,
     showTime: true
     //editModal: true,
-    //enableEditDetails: false,
+    enableEditDetails: false
   });
 
 	//*********************************************************************************************************
@@ -277,7 +277,7 @@ Ext.ensible.sample.MemoryEventStore = Ext.extend(Ext.data.Store, {
 	
 	//*********************************************************************************************************
 	// Grab the full attention of the user
-	// Use this function below to maximize the panel
+	// Use this function below to maximize the Top Panel
 	// Only when it's needed.
 	//*********************************************************************************************************
 	Ext.getCmp('BottomPanel').collapse( true );

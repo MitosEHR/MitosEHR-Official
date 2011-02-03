@@ -4,8 +4,6 @@
 // v0.0.1
 // Under GPLv3 License
 //
-// Integration Sencha ExtJS Framework
-//
 // Integrated by: Gi Technologies. in 2011
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.

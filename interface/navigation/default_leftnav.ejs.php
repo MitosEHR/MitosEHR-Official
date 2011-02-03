@@ -19,7 +19,7 @@ include_once($GLOBALS['fileroot']."/library/patient.inc");
 // *************************************************************************************
 $primary_docs = array(
 	'ros' => array(xl('Roster')    , 0, 'reports/players_report.php?embed=1'),
-	'cal' => array(xl('Calendar')  , 0, 'main/main_info.php'),
+	'cal' => array(xl('Calendar')  , 0, '../calendar/calendar.ejs.php'),
 	'msg' => array(xl('Messages')  , 0, 'messages/messages.ejs.php'),
 	'pwd' => array(xl('Password')  , 0, 'usergroup/user_info.php'),
 	'adm' => array(xl('Admin')     , 0, 'usergroup/admin_frameset.php'),
@@ -95,26 +95,6 @@ $disallowed['cht'] = !is_readable("$webserver_root/custom/chart_tracker.php");
 
 $disallowed['pre'] = !(acl_check('patients', 'med'));
 
-
-// *************************************************************************************
-// Renders the items of the navigation panel
-// Athletic Clinic
-// *************************************************************************************
-if ($GLOBALS['athletic_team']) {
-
-$buff .= "[" . chr(13);
-// -------------------------------------------
-// Patient/Client Folder (Athletic Clinic)
-// -------------------------------------------
-$buff .= '{ "text":"' . xl('Patient/Client') . '", "cls":"folder", ' . chr(13);
-$buff .= 'children: [' . chr(13); // ^ Folder
-$buff .= '	{ "text":"' . ($GLOBALS["full_new_patient_form"] ? xl("New/Search") : xl("New")) . '", "pos":"top", "leaf":true, "cls":"file", "id":"' . $primary_docs['new'][2] . '"},' . chr(13);
-$buff .= '	{ "text":"' . xl('Current') . '", "pos":"top", "leaf":true, "cls":"file", "id":"' . $primary_docs['dem'][2] . '"},' . chr(13);
-$buff .= "]}" . chr(13);
-
-$buff .= "]" . chr(13);
-
-} else {
 // *************************************************************************************
 // Renders the items of the navigation panel
 // Non-Athletic Clinic
@@ -366,7 +346,6 @@ $buff .= '		{"text":"' . xl('Password') . '", "pos":"top", "leaf":true, "cls":"f
 $buff .= '		]}' . chr(13);
 
 $buff .= "]" . chr(13);
-}
 
 echo $buff;
 ?>
