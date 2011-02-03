@@ -483,12 +483,14 @@ var winMessage = new  Ext.Window({
 // Create the GridPanel
 // *************************************************************************************
 var msgGrid = new Ext.grid.GridPanel({
-		renderTo	: Ext.getCmp('BottomPanel').body,
-		id			: 'msgGrid',
-		store		: storeMsgs,
-		stripeRows	: true,
-		frame		: false,
-		//viewConfig	: {forceFit: true}, // force the grid to the width of the containing panel
+		renderTo	 : Ext.getCmp('BottomPanel').body,
+		id			   : 'msgGrid',
+		store		   : storeMsgs,
+		stripeRows : true,
+		autoHeight : true,    // .<--- new    was only showing the 1st message
+ 		border     : false,   //  <--- new    
+ 		frame		   : false,
+		viewConfig	: {forceFit: true}, //  <--- comments removed, I think looks better this way.  // force the grid to the width of the containing panel
 		sm			: new Ext.grid.RowSelectionModel({singleSelect:true}),
 		listeners: {
 		
