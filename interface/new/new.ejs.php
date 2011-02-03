@@ -38,15 +38,19 @@ var patientBasicForm = {
     defaults: {labelAlign: 'top'},
     autoScroll: true, // <-- New
     items: [{
-        layout: 'form',
-        border:false,
-        bodyStyle:'padding: 0 5px',
-        items:
-        [
-          { xtype:'textfield', fieldLabel: 'First name', name: 'pfname'},
-          { xtype:'textfield', fieldLabel: 'External ID', name: 'pexternalid' },
-          { xtype:'textfield', fieldLabel: 'Marital Status', name: 'pmarital' }
-        ]
+          width:'150',
+          style:'padding: 0 5px; margin-left:10px; margin-top:4px;',
+          html: '<img src="../../ui_app/missing_photo.png" width="128" height="128" alt="Patient Image">'
+        },{
+          layout: 'form',
+          border:false,
+          bodyStyle:'padding: 0 5px',
+          items:
+          [
+            { xtype:'textfield', fieldLabel: 'First name', name: 'pfname'},
+            { xtype:'textfield', fieldLabel: 'External ID', name: 'pexternalid' },
+            { xtype:'textfield', fieldLabel: 'Marital Status', name: 'pmarital' }
+          ]
         },{
           layout: 'form',
           border:false,
@@ -77,11 +81,8 @@ var patientBasicForm = {
             { xtype:'textfield', fieldLabel: 'License/ID', name: 'plicence' },
             { xtype:'textfield', fieldLabel: 'User Defined', name: 'userdefiined3' }
           ]
-          },{
-            width:'150',
-            style:'padding: 0 5px; margin-left:10px; margin-top:4px;',
-            html: '<img src="../../ui_app/missing_photo.png" width="128" height="128" alt="Patient Image">'
-          }]
+        }
+      ]
 };
 
 ////////////////////////////////////////////////////////
