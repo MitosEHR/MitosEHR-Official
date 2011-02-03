@@ -561,6 +561,8 @@ Ext.onReady(function(){
 
 	//*********************************************************************************************************
 	// The main Panel
+  // The name of the object and the ID "RenderPanel" is mandatory
+  // MitosEHR look for this panel and modify the height.
 	//*********************************************************************************************************
 	var RenderPanel = new Ext.Panel({
 		border	: false,
@@ -577,7 +579,7 @@ Ext.onReady(function(){
 	//*********************************************************************************************************
 	// Make sure that the RenderPanel height has the same height of the TopPanel
 	// at first run.
-	// This is standard.
+	// This is mandatory.
 	//*********************************************************************************************************
 	Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 

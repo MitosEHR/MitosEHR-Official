@@ -4,11 +4,16 @@ include_once(dirname(__FILE__) . "/sqlconf.php");
 require_once(dirname(__FILE__) . "/adodb/adodb.inc.php");
 include_once(dirname(__FILE__) . "/log.inc");
 
+// Integrating CodeIgniter
+//include_once(dirname(__FILE__) . "/CodeIgniter_2.0.0/system/database/DB.php");
+
 if (!defined('ADODB_FETCH_ASSOC')) define('ADODB_FETCH_ASSOC', 2);
 $database = NewADOConnection("mysql");
 $database->PConnect($host, $login, $pass, $dbase);
 $GLOBALS['adodb']['db'] = $database;
 $GLOBALS['dbh'] = $database->_connectionID;
+
+//$data = new DB();
 
 // Modified 5/2009 by BM for UTF-8 project ---------
 if (!$disable_utf8_flag) {

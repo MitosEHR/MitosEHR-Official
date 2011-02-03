@@ -5,6 +5,24 @@
 // Referenced from /library/sqlconf.php.
 // *********************************************************
 
+// *********************************************************
+// New configuration for MitosEHR
+// Using CodeIgniter v2.0.0
+// Database configuration
+// *********************************************************
+//$site['hostname'] = "localhost";
+//$site['username'] = "openemr";
+//$site['password'] = "pass";
+//$site['database'] = "openemr";
+//$site['dbdriver'] = "mysql";
+//$site['dbprefix'] = "";
+//$site['pconnect'] = TRUE;
+//$site['db_debug'] = FALSE;
+//$site['cache_on'] = FALSE;
+//$site['cachedir'] = "";
+//$site['char_set'] = "utf8";
+//$site['dbcollat'] = "utf8_general_ci";
+
 $host	= 'localhost';
 $port	= '3306';
 $login	= 'openemr';
