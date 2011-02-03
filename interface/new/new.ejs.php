@@ -35,6 +35,7 @@ var patientBasicForm = {
     title: 'Patient Basic Information',
     layout:'column',
     border:false,
+    defaults: {labelAlign: 'top'},
     autoScroll: true, // <-- New
     items: [{
         layout: 'form',
@@ -79,7 +80,7 @@ var patientBasicForm = {
           },{
             width:'150',
             style:'padding: 0 5px; margin-left:10px; margin-top:4px;',
-            html: '<img src="ui_app/missing_photo.png" width="128" height="128" alt="Patient Image">'
+            html: '<img src="../../ui_app/missing_photo.png" width="128" height="128" alt="Patient Image">'
           }]
 };
 
@@ -89,6 +90,7 @@ var patientBasicForm = {
 var contactPanel = {
   title:'Contact',
   border:false,
+  defaults: {labelAlign: 'top'},
   autoScroll: true, // <-- New
   items : [{
     layout : 'form',
@@ -96,7 +98,7 @@ var contactPanel = {
     bodyStyle : 'padding: 0 5px',
     items :
     [
-      { width : 250, xtype : 'textfield', fieldLabel : 'Address', name : 'address', tabIndex : 3 },
+      { width : 200, xtype : 'textfield', fieldLabel : 'Address', name : 'address', tabIndex : 3 },
       { xtype : 'textfield', fieldLabel : 'City', name : 'city', tabIndex : 3 },
       { xtype : 'combo', fieldLabel : 'Sate', name : 'state', width : 130, emptyText : 'Select', tabIndex : 3 },
       { xtype : 'textfield', fieldLabel : 'Postal Code', name : 'postal_code', tabIndex : 3 },
@@ -105,8 +107,8 @@ var contactPanel = {
     },{
       layout : 'form',
       border : false,
-      bodyStyle : 'padding: 0 5px',
-      defaults : { width : 230 },
+      bodyStyle : 'padding: 0 10px',
+      defaults : { width : 200 },
       items :
       [
         { xtype : 'textfield', fieldLabel : 'Guardian\'s Name', name : 'guardians_name', tabIndex : 3 },
@@ -118,7 +120,7 @@ var contactPanel = {
       },{
         layout : 'form',
         border : false,
-        bodyStyle : 'padding: 0 5px',
+        bodyStyle : 'padding: 0 10px',
         items :
         [
         {
@@ -126,7 +128,9 @@ var contactPanel = {
           title : 'Emergancy Contact Info',
           layout : 'form',
           style : 'background-color:#ffe4e1',
-          defaults : { width : 230 },
+          labelAlign: 'top',
+          width : 230,
+          defaults : { width : 200 },
           items :
           [
             { xtype : 'textfield', fieldLabel : 'Full Name', name : 'emer_fullname', tabIndex : 5 },
@@ -145,11 +149,11 @@ var choicesPanel = {
     title:'Choices',
     border: false,
     autoScroll: true, // <-- New
-    defaults: {layout:'form'},
+    defaults: {layout:'form',labelAlign: 'top'},
     items : [{
       layout : 'form',
       border : false,
-      bodyStyle : 'padding: 0 5px',
+      bodyStyle : 'padding: 0 10px',
       defaults : { width : 200 },
       items :
       [
@@ -161,7 +165,7 @@ var choicesPanel = {
       },{
         layout : 'form',
         border : false,
-        bodyStyle : 'padding: 0 5px',
+        bodyStyle : 'padding: 0 10px',
         defaults : { width : 200 },
         items :
         [
@@ -173,7 +177,7 @@ var choicesPanel = {
         },{
           layout : 'form',
           border : false,
-          bodyStyle : 'padding: 0 5px',
+          bodyStyle : 'padding: 0 10px',
           width : 220,
           defaults : { width : 200 },
           items :
@@ -193,11 +197,11 @@ var employerPanel = {
     title:'Employer',
     border: false,
     autoScroll: true, // <-- New
-    defaults: {layout:'form'},
+    defaults: {layout:'form',labelAlign: 'top'},
     items : [{
       layout : 'form',
       border : false,
-      bodyStyle : 'padding: 0 5px',
+      bodyStyle : 'padding: 0 10px',
       defaults : { width : 200 },
       items :
       [
@@ -209,7 +213,7 @@ var employerPanel = {
     },{
       layout : 'form',
       border : false,
-      bodyStyle : 'padding: 0 5px',
+      bodyStyle : 'padding: 0 10px',
       defaults : { width : 200 },
       items :
       [
@@ -227,11 +231,11 @@ var statsPanel = {
   title:'Stats',
   autoScroll: true, // <-- New
   border: false,
-  defaults: {layout:'form'},
+  defaults: {layout:'form',labelAlign: 'top'},
   items : [ {
     layout : 'form',
     border : false,
-    bodyStyle : 'padding: 0 5px',
+    bodyStyle : 'padding: 0 10px',
     defaults : { width : 200 },
     items :
     [
@@ -244,7 +248,7 @@ var statsPanel = {
     },{
     layout : 'form',
     border : false,
-    bodyStyle : 'padding: 0 5px',
+    bodyStyle : 'padding: 0 10px',
     defaults : { width : 200 },
     items :
     [
@@ -257,7 +261,7 @@ var statsPanel = {
     },{
     layout : 'form',
     border : false,
-    bodyStyle : 'padding: 0 5px',
+    bodyStyle : 'padding: 0 10px',
     width : 200,
     items :
     [
@@ -273,12 +277,12 @@ var primaryInsurancePanel = {
   title:'Primary Insurance',
   autoScroll: true, // <-- New
   border: false,
-  defaults: {layout:'form', width : 240},
+  defaults: {layout:'form', width : 200,labelAlign: 'top'},
   items : [{
     layout : 'form',
     border : false,
     bodyStyle : 'padding: 0 5px',
-    defaults : { width : 220 },
+    defaults : { width : 180 },
     items :
     [
       { xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select' },
@@ -292,13 +296,13 @@ var primaryInsurancePanel = {
     title: 'Subscriber Info',
     layout : 'column',
     autoHeight : true,
-    width : 420,
+    width : 370,
     style : 'padding: 5px 10px; margin-right:10px',
-    defaults : { width : 190, border:false },
+    defaults : { width : 170, border:false,labelAlign: 'top'},
     items: [{
       layout : 'form',
       bodyStyle : 'padding: 0 5px',
-      defaults : { width : 180 },
+      defaults : { width : 160 },
       items:
       [
         { xtype: 'textfield', fieldLabel: 'Full Name', name : 'company' },
@@ -310,7 +314,7 @@ var primaryInsurancePanel = {
       },{
       layout: 'form',
       bodyStyle : 'padding: 0 5px',
-      defaults : { width : 180 },
+      defaults : { width : 160 },
       items:
       [
         { xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select' },
@@ -326,7 +330,7 @@ var primaryInsurancePanel = {
       layout : 'form',
       autoHeight : true,
       style : 'padding: 5px 10px',
-      defaults : { width : 200 },
+      defaults : { width : 160 },
       items :
       [
         { xtype : 'textfield', fieldLabel : 'Subscriber Employer', name : 'company' },
@@ -345,12 +349,12 @@ var secondaryInsurancePanel = {
 title:'Secondary Insurance',
 autoScroll: true, // <-- New
 border: false,
-    defaults: {layout:'form', width : 240},
-    items : [{
+defaults: {layout:'form', width : 200,labelAlign: 'top'},
+items : [{
 layout : 'form',
 border : false,
 bodyStyle : 'padding: 0 5px',
-defaults : { width : 220 },
+defaults : { width : 180 },
 items :
 [
 { xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select' },
@@ -364,13 +368,13 @@ xtype : 'fieldset',
 title: 'Subscriber Info',
 layout : 'column',
 autoHeight : true,
-width : 420,
+width : 370,
 style : 'padding: 5px 10px; margin-right:10px',
-defaults : { width : 190, border:false },
+defaults : { width : 170, border:false,labelAlign: 'top'},
 items: [{
   layout : 'form',
   bodyStyle : 'padding: 0 5px',
-  defaults : { width : 180 },
+  defaults : { width : 160 },
   items:
   [
   { xtype: 'textfield', fieldLabel: 'Full Name', name : 'company' },
@@ -382,7 +386,7 @@ items: [{
   },{
   layout: 'form',
   bodyStyle : 'padding: 0 5px',
-  defaults : { width : 180 },
+  defaults : { width : 160 },
   items:
   [
   { xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select' },
@@ -398,7 +402,7 @@ title: 'Subscriber Employer (SE) Info',
 layout : 'form',
 autoHeight : true,
 style : 'padding: 5px 10px',
-defaults : { width : 200 },
+defaults : { width : 160 },
 items :
 [
 { xtype : 'textfield', fieldLabel : 'Subscriber Employer', name : 'company' },
@@ -417,12 +421,13 @@ var teritaryInsurancePanel = {
 title:'Teritary Insurance',
 autoScroll: true, // <-- New
 border: false,
-defaults: {layout:'form', width : 240},
+labelAlign: 'top',
+defaults: {layout:'form', width : 200,labelAlign: 'top'},
 items : [{
 layout : 'form',
 border : false,
 bodyStyle : 'padding: 0 5px',
-defaults : { width : 220 },
+defaults : { width : 180 },
 items :
 [
 { xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select' },
@@ -436,13 +441,13 @@ xtype : 'fieldset',
 title: 'Subscriber Info',
 layout : 'column',
 autoHeight : true,
-width : 420,
+width : 370,
 style : 'padding: 5px 10px; margin-right:10px',
-defaults : { width : 190, border:false },
+defaults : { width : 170, border:false,labelAlign: 'top' },
 items: [{
 layout : 'form',
 bodyStyle : 'padding: 0 5px',
-defaults : { width : 180 },
+defaults : { width : 160 },
 items:
 [
 { xtype: 'textfield', fieldLabel: 'Full Name', name : 'company' },
@@ -454,7 +459,7 @@ items:
 },{
 layout: 'form',
 bodyStyle : 'padding: 0 5px',
-defaults : { width : 180 },
+defaults : { width : 160 },
 items:
 [
 { xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select' },
@@ -470,7 +475,7 @@ title: 'Subscriber Employer (SE) Info',
 layout : 'form',
 autoHeight : true,
 style : 'padding: 5px 10px',
-defaults : { width : 200 },
+defaults : { width : 160 },
 items :
 [
 { xtype : 'textfield', fieldLabel : 'Subscriber Employer', name : 'company' },
@@ -513,6 +518,7 @@ var RenderPanel = new Ext.TabPanel({
   labelAlign: 'top',
   bodyStyle:'padding: 10px',
   activeTab: 0,
+  defaults:{bodyStyle:'padding:10px',autoScroll:true, layout:'column'},  
   items: [ 
     patientBasicForm,
     contactPanel, 
