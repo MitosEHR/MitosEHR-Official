@@ -17,10 +17,10 @@ require_once("sites/$site_id/sqlconf.php");
 ?>
 <html>
 <?php if ($config == 1) { ?>
-<body ONLOAD="javascript:top.location.href='<?php echo "interface/login/login.ejs.php?site=$site_id" ?>';">
+  <body ONLOAD="javascript:top.location.href='<?php echo "interface/login/login.ejs.php?site=$site_id" ?>';">
 <?php } else { ?>
-<body ONLOAD="javascript:top.location.href='<?php echo "setup.php?site=$site_id" ?>';">     
+  <body ONLOAD="javascript:top.location.href='<?php echo "setup.php?site=$site_id" ?>';">     
 <?php } ?>
-Redirecting...
+Loading...
 </body>
 </html>

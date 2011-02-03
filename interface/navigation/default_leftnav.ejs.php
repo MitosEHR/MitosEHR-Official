@@ -1,7 +1,8 @@
 <?php
 
 // *************************************************************************************
-// Load OpenEMR Globals
+// Load MitosEHR Globals
+// This code produces JSON formatted data
 // *************************************************************************************
 include_once("../registry.php");
 include_once($GLOBALS['fileroot']."/library/acl.inc");

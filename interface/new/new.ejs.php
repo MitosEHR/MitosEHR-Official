@@ -492,6 +492,8 @@ cls:'x-plain',
     layout:'fit',
     items: {
         xtype:'htmleditor',
+        autoWidth: true,
+        autoHeight: true,
         id:'bio2',
         fieldLabel:'Biography'
     }
