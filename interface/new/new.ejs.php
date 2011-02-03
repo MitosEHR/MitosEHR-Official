@@ -100,9 +100,9 @@ var contactPanel = {
     [
       { width : 200, xtype : 'textfield', fieldLabel : 'Address', name : 'address', tabIndex : 3 },
       { xtype : 'textfield', fieldLabel : 'City', name : 'city', tabIndex : 3 },
-      { xtype : 'combo', fieldLabel : 'Sate', name : 'state', width : 130, emptyText : 'Select', tabIndex : 3 },
+      { xtype : 'combo', fieldLabel : 'Sate', name : 'state', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
       { xtype : 'textfield', fieldLabel : 'Postal Code', name : 'postal_code', tabIndex : 3 },
-      { xtype : 'combo', fieldLabel : 'Country', name : 'country', width : 130, emptyText : 'Select', tabIndex : 3 },
+      { xtype : 'combo', fieldLabel : 'Country', name : 'country', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
     ]
     },{
       layout : 'form',
@@ -157,9 +157,9 @@ var choicesPanel = {
       defaults : { width : 200 },
       items :
       [
-        { xtype : 'combo', fieldLabel : 'Provider', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
-        { xtype : 'combo', fieldLabel : 'Parmacy', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
-        { xtype : 'combo', fieldLabel : 'HIPAA notice Received', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
+        { xtype : 'combo', fieldLabel : 'Provider', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+        { xtype : 'combo', fieldLabel : 'Parmacy', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+        { xtype : 'combo', fieldLabel : 'HIPAA notice Received', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
         { xtype : 'textfield', fieldLabel : 'Leave Message With', name : 'none' }
       ]
       },{
@@ -169,10 +169,10 @@ var choicesPanel = {
         defaults : { width : 200 },
         items :
         [
-          { xtype : 'combo', fieldLabel : 'Allow SMS', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
-          { xtype : 'combo', fieldLabel : 'Allow Immunization Registry Use', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
-          { xtype : 'combo', fieldLabel : 'Allow Health Information Exchange', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
-          { xtype : 'combo', fieldLabel : 'Allow Voice Message', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' }
+          { xtype : 'combo', fieldLabel : 'Allow SMS', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+          { xtype : 'combo', fieldLabel : 'Allow Immunization Registry Use', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+          { xtype : 'combo', fieldLabel : 'Allow Health Information Exchange', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+          { xtype : 'combo', fieldLabel : 'Allow Voice Message', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false }
         ]
         },{
           layout : 'form',
@@ -182,10 +182,10 @@ var choicesPanel = {
           defaults : { width : 200 },
           items :
           [
-            { xtype : 'combo', fieldLabel : 'Allow Voice Message', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
-            { xtype : 'combo', fieldLabel : 'Allow Mail Message', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
-            { xtype : 'combo', fieldLabel : 'Allow Email', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' },
-            { xtype : 'combo', fieldLabel : 'Allow Immunization Info Sharing', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans' }
+            { xtype : 'combo', fieldLabel : 'Allow Voice Message', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+            { xtype : 'combo', fieldLabel : 'Allow Mail Message', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+            { xtype : 'combo', fieldLabel : 'Allow Email', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+            { xtype : 'combo', fieldLabel : 'Allow Immunization Info Sharing', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false }
           ]
     }]
 };
@@ -207,8 +207,8 @@ var employerPanel = {
       [
         { xtype : 'textfield', fieldLabel : 'Occupation', name : 'company' },
         { xtype : 'textfield', fieldLabel : 'Employer Address', name : 'company' },
-        { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select' },
-        { xtype : 'combo', fieldLabel : 'Country', name : 'suffix', width : 130, emptyText : 'Select' }
+        { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', fieldLabel : 'Country', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
       ]
     },{
       layout : 'form',
@@ -239,8 +239,8 @@ var statsPanel = {
     defaults : { width : 200 },
     items :
     [
-      { xtype : 'combo', fieldLabel : 'Language', name : 'planguage', width : 130, emptyText : 'Select' },
-      { xtype : 'combo', fieldLabel : 'Race', name : 'prace', width : 130, emptyText : 'Select' },
+      { xtype : 'combo', fieldLabel : 'Language', name : 'planguage', width : 130, emptyText : 'Select', editable: false },
+      { xtype : 'combo', fieldLabel : 'Race', name : 'prace', width : 130, emptyText : 'Select', editable: false },
       { xtype : 'textfield', fieldLabel : 'Family Size', name : 'company' },
       { xtype : 'textfield', fieldLabel : 'Homeless, etc.', name : 'company' },
       { xtype : 'textfield', fieldLabel : 'Migrant/Seasonal', name : 'pmigrant' }
@@ -252,11 +252,11 @@ var statsPanel = {
     defaults : { width : 200 },
     items :
     [
-      { xtype : 'combo', fieldLabel : 'Ethnicity', name : 'pvfc', width : 130, emptyText : 'Select' },
+      { xtype : 'combo', fieldLabel : 'Ethnicity', name : 'pvfc', width : 130, emptyText : 'Select', editable: false },
       { xtype : 'textfield', fieldLabel : 'Financial Review Date', name : 'email' },
       { xtype : 'textfield', fieldLabel : 'Monthly Income', name : 'email' },
       { xtype : 'textfield', fieldLabel : 'Interpreter', name : 'email', vtype : 'email' },
-      { xtype : 'combo', fieldLabel : 'Referral Source', name : 'pvfc', width : 130, emptyText : 'Select' }
+      { xtype : 'combo', fieldLabel : 'Referral Source', name : 'pvfc', width : 130, emptyText : 'Select', editable: false }
     ]
     },{
     layout : 'form',
@@ -265,7 +265,7 @@ var statsPanel = {
     width : 200,
     items :
     [
-      { xtype : 'combo', fieldLabel : 'VFC', name : 'pvfc', width : 130, emptyText : 'Select' }
+      { xtype : 'combo', fieldLabel : 'VFC', name : 'pvfc', width : 130, emptyText : 'Select', editable: false }
     ]
   }]
 };
@@ -285,7 +285,7 @@ var primaryInsurancePanel = {
     defaults : { width : 180 },
     items :
     [
-      { xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select' },
+      { xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
       { xtype : 'textfield', fieldLabel : 'Plan Name', name : 'company' },
       { xtype : 'datefield', fieldLabel : 'Effective Date', name : 'company' },
       { xtype : 'textfield', fieldLabel : 'Policy Number', name : 'company' },
@@ -306,9 +306,9 @@ var primaryInsurancePanel = {
       items:
       [
         { xtype: 'textfield', fieldLabel: 'Full Name', name : 'company' },
-        { xtype : 'combo', fieldLabel : 'Date of Birth', name : 'suffix', width : 130, emptyText : 'Select' },
+        { xtype : 'combo', fieldLabel : 'Date of Birth', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : 'Subscriber Address', name : 'company' },
-        { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select' },
+        { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : 'Zip Code', name : 'company' }
       ]
       },{
@@ -317,10 +317,10 @@ var primaryInsurancePanel = {
       defaults : { width : 160 },
       items:
       [
-        { xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select' },
-        { xtype : 'combo', fieldLabel : 'Sex', name : 'suffix', width : 130, emptyText : 'Select' },
+        { xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', fieldLabel : 'Sex', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : 'City', name : 'company' },
-        { xtype : 'combo', fieldLabel : 'Country', name : 'suffix', width : 130, emptyText : 'Select' },
+        { xtype : 'combo', fieldLabel : 'Country', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : 'S.S.', name : 'company' }
       ]
       }]
@@ -336,8 +336,8 @@ var primaryInsurancePanel = {
         { xtype : 'textfield', fieldLabel : 'Subscriber Employer', name : 'company' },
         { xtype : 'textfield', fieldLabel : 'SE Address', name : 'company' },
         { xtype : 'textfield', fieldLabel : 'SE City', name : 'company' },
-        { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select' },
-        { xtype : 'combo', fieldLabel : 'SE Country', name : 'suffix', width : 130, emptyText : 'Select' }
+        { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', fieldLabel : 'SE Country', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
       ]
     }]
 };
@@ -346,145 +346,145 @@ var primaryInsurancePanel = {
 ////////////SECONDARY INSURANCE PANEL///////////////////
 ////////////////////////////////////////////////////////
 var secondaryInsurancePanel = {
-title:'Secondary Insurance',
-autoScroll: true, // <-- New
-border: false,
-defaults: {layout:'form', width : 200,labelAlign: 'top'},
-items : [{
-layout : 'form',
-border : false,
-bodyStyle : 'padding: 0 5px',
-defaults : { width : 180 },
-items :
-[
-{ xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'textfield', fieldLabel : 'Plan Name', name : 'company' },
-{ xtype : 'datefield', fieldLabel : 'Effective Date', name : 'company' },
-{ xtype : 'textfield', fieldLabel : 'Policy Number', name : 'company' },
-{ xtype : 'textfield', fieldLabel : 'Group Number', name : 'company' }
-]
-},{
-xtype : 'fieldset',
-title: 'Subscriber Info',
-layout : 'column',
-autoHeight : true,
-width : 370,
-style : 'padding: 5px 10px; margin-right:10px',
-defaults : { width : 170, border:false,labelAlign: 'top'},
-items: [{
-  layout : 'form',
-  bodyStyle : 'padding: 0 5px',
-  defaults : { width : 160 },
-  items:
-  [
-  { xtype: 'textfield', fieldLabel: 'Full Name', name : 'company' },
-  { xtype : 'combo', fieldLabel : 'Date of Birth', name : 'suffix', width : 130, emptyText : 'Select' },
-  { xtype : 'textfield', fieldLabel : 'Subscriber Address', name : 'company' },
-  { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select' },
-  { xtype : 'textfield', fieldLabel : 'Zip Code', name : 'company' }
-  ]
+  title:'Secondary Insurance',
+  autoScroll: true, // <-- New
+  border: false,
+  defaults: {layout:'form', width : 200,labelAlign: 'top'},
+  items : [{
+    layout : 'form',
+    border : false,
+    bodyStyle : 'padding: 0 5px',
+    defaults : { width : 180 },
+    items :
+    [
+      { xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select',  editable: false },
+      { xtype : 'textfield', fieldLabel : 'Plan Name', name : 'company' },
+      { xtype : 'datefield', fieldLabel : 'Effective Date', name : 'company' },
+      { xtype : 'textfield', fieldLabel : 'Policy Number', name : 'company' },
+      { xtype : 'textfield', fieldLabel : 'Group Number', name : 'company' }
+    ]
+    },{
+    xtype : 'fieldset',
+    title: 'Subscriber Info',
+    layout : 'column',
+    autoHeight : true,
+    width : 370,
+    style : 'padding: 5px 10px; margin-right:10px',
+    defaults : { width : 170, border:false,labelAlign: 'top'},
+    items: [{
+      layout : 'form',
+      bodyStyle : 'padding: 0 5px',
+      defaults : { width : 160 },
+      items:
+      [
+        { xtype: 'textfield', fieldLabel: 'Full Name', name : 'company' },
+        { xtype : 'combo', fieldLabel : 'Date of Birth', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'textfield', fieldLabel : 'Subscriber Address', name : 'company' },
+        { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'textfield', fieldLabel : 'Zip Code', name : 'company' }
+      ]
+    },{
+      layout: 'form',
+      bodyStyle : 'padding: 0 5px',
+      defaults : { width : 160 },
+      items:
+      [
+        { xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', fieldLabel : 'Sex', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'textfield', fieldLabel : 'City', name : 'company' },
+        { xtype : 'combo', fieldLabel : 'Country', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'textfield', fieldLabel : 'S.S.', name : 'company' }
+      ]
+    }]
   },{
-  layout: 'form',
-  bodyStyle : 'padding: 0 5px',
+  xtype : 'fieldset',
+  title: 'Subscriber Employer (SE) Info',
+  layout : 'form',
+  autoHeight : true,
+  style : 'padding: 5px 10px',
   defaults : { width : 160 },
-  items:
+  items :
   [
-  { xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select' },
-  { xtype : 'combo', fieldLabel : 'Sex', name : 'suffix', width : 130, emptyText : 'Select' },
-  { xtype : 'textfield', fieldLabel : 'City', name : 'company' },
-  { xtype : 'combo', fieldLabel : 'Country', name : 'suffix', width : 130, emptyText : 'Select' },
-  { xtype : 'textfield', fieldLabel : 'S.S.', name : 'company' }
+    { xtype : 'textfield', fieldLabel : 'Subscriber Employer', name : 'company' },
+    { xtype : 'textfield', fieldLabel : 'SE Address', name : 'company' },
+    { xtype : 'textfield', fieldLabel : 'SE City', name : 'company' },
+    { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+    { xtype : 'combo', fieldLabel : 'SE Country', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
   ]
   }]
-    },{
-xtype : 'fieldset',
-title: 'Subscriber Employer (SE) Info',
-layout : 'form',
-autoHeight : true,
-style : 'padding: 5px 10px',
-defaults : { width : 160 },
-items :
-[
-{ xtype : 'textfield', fieldLabel : 'Subscriber Employer', name : 'company' },
-{ xtype : 'textfield', fieldLabel : 'SE Address', name : 'company' },
-{ xtype : 'textfield', fieldLabel : 'SE City', name : 'company' },
-{ xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'combo', fieldLabel : 'SE Country', name : 'suffix', width : 130, emptyText : 'Select' }
-]
-}]
 };
 
 ////////////////////////////////////////////////////////
 ////////////TERITARY INSURANCE PANEL////////////////////
 ////////////////////////////////////////////////////////
 var teritaryInsurancePanel = {
-title:'Teritary Insurance',
-autoScroll: true, // <-- New
-border: false,
-labelAlign: 'top',
-defaults: {layout:'form', width : 200,labelAlign: 'top'},
-items : [{
-layout : 'form',
-border : false,
-bodyStyle : 'padding: 0 5px',
-defaults : { width : 180 },
-items :
-[
-{ xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'textfield', fieldLabel : 'Plan Name', name : 'company' },
-{ xtype : 'datefield', fieldLabel : 'Effective Date', name : 'company' },
-{ xtype : 'textfield', fieldLabel : 'Policy Number', name : 'company' },
-{ xtype : 'textfield', fieldLabel : 'Group Number', name : 'company' }
-]
-},{
-xtype : 'fieldset',
-title: 'Subscriber Info',
-layout : 'column',
-autoHeight : true,
-width : 370,
-style : 'padding: 5px 10px; margin-right:10px',
-defaults : { width : 170, border:false,labelAlign: 'top' },
-items: [{
-layout : 'form',
-bodyStyle : 'padding: 0 5px',
-defaults : { width : 160 },
-items:
-[
-{ xtype: 'textfield', fieldLabel: 'Full Name', name : 'company' },
-{ xtype : 'combo', fieldLabel : 'Date of Birth', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'textfield', fieldLabel : 'Subscriber Address', name : 'company' },
-{ xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'textfield', fieldLabel : 'Zip Code', name : 'company' }
-]
-},{
-layout: 'form',
-bodyStyle : 'padding: 0 5px',
-defaults : { width : 160 },
-items:
-[
-{ xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'combo', fieldLabel : 'Sex', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'textfield', fieldLabel : 'City', name : 'company' },
-{ xtype : 'combo', fieldLabel : 'Country', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'textfield', fieldLabel : 'S.S.', name : 'company' }
-]
-}]
-},{
-xtype : 'fieldset',
-title: 'Subscriber Employer (SE) Info',
-layout : 'form',
-autoHeight : true,
-style : 'padding: 5px 10px',
-defaults : { width : 160 },
-items :
-[
-{ xtype : 'textfield', fieldLabel : 'Subscriber Employer', name : 'company' },
-{ xtype : 'textfield', fieldLabel : 'SE Address', name : 'company' },
-{ xtype : 'textfield', fieldLabel : 'SE City', name : 'company' },
-{ xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select' },
-{ xtype : 'combo', fieldLabel : 'SE Country', name : 'suffix', width : 130, emptyText : 'Select' }
-]
-}]
+  title:'Teritary Insurance',
+  autoScroll: true, // <-- New
+  border: false,
+  labelAlign: 'top',
+  defaults: {layout:'form', width : 200,labelAlign: 'top'},
+  items : [{
+    layout : 'form',
+    border : false,
+    bodyStyle : 'padding: 0 5px',
+    defaults : { width : 180 },
+    items :
+    [
+      { xtype : 'combo', fieldLabel : 'Provider', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+      { xtype : 'textfield', fieldLabel : 'Plan Name', name : 'company' },
+      { xtype : 'datefield', fieldLabel : 'Effective Date', name : 'company' },
+      { xtype : 'textfield', fieldLabel : 'Policy Number', name : 'company' },
+      { xtype : 'textfield', fieldLabel : 'Group Number', name : 'company' }
+    ]
+    },{
+      xtype : 'fieldset',
+      title: 'Subscriber Info',
+      layout : 'column',
+      autoHeight : true,
+      width : 370,
+      style : 'padding: 5px 10px; margin-right:10px',
+      defaults : { width : 170, border:false,labelAlign: 'top' },
+      items: [{
+        layout : 'form',
+        bodyStyle : 'padding: 0 5px',
+        defaults : { width : 160 },
+        items:
+        [
+          { xtype: 'textfield', fieldLabel: 'Full Name', name : 'company' },
+          { xtype : 'combo', fieldLabel : 'Date of Birth', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'textfield', fieldLabel : 'Subscriber Address', name : 'company' },
+          { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'textfield', fieldLabel : 'Zip Code', name : 'company' }
+        ]
+      },{
+        layout: 'form',
+        bodyStyle : 'padding: 0 5px',
+        defaults : { width : 160 },
+        items:
+        [
+          { xtype : 'combo', fieldLabel : 'Relationship', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'combo', fieldLabel : 'Sex', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'textfield', fieldLabel : 'City', name : 'company' },
+          { xtype : 'combo', fieldLabel : 'Country', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'textfield', fieldLabel : 'S.S.', name : 'company' }
+        ]
+      }]
+      },{
+      xtype : 'fieldset',
+      title: 'Subscriber Employer (SE) Info',
+      layout : 'form',
+      autoHeight : true,
+      style : 'padding: 5px 10px',
+      defaults : { width : 160 },
+      items :
+      [
+        { xtype : 'textfield', fieldLabel : 'Subscriber Employer', name : 'company' },
+        { xtype : 'textfield', fieldLabel : 'SE Address', name : 'company' },
+        { xtype : 'textfield', fieldLabel : 'SE City', name : 'company' },
+        { xtype : 'combo', fieldLabel : 'State', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', fieldLabel : 'SE Country', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
+      ]
+  }]
 };
 
 ////////////////////////////////////////////////////////
@@ -532,6 +532,7 @@ var RenderPanel = new Ext.TabPanel({
     teritaryInsurancePanel, 
     patientNotesPanel 
   ],
+  
   bbar:[{
     text :'<?php echo htmlspecialchars( xl('Save'), ENT_NOQUOTES); ?>',
     iconCls : 'save',
@@ -539,14 +540,14 @@ var RenderPanel = new Ext.TabPanel({
     formBind : true,
     disabled : true
     },'-',{
-    text :'<?php echo htmlspecialchars( xl('Search Patient'), ENT_NOQUOTES); ?>
+        text :'<?php echo htmlspecialchars( xl('Search Patient'), ENT_NOQUOTES); ?>
         ',
         iconCls : 'searchUsers',
         ref : '../paSave',
         formBind : true,
         disabled : false
-        }]
-        });
+    }]
+    });
 
         //*********************************************************************************************************
         // Make sure that the RenderPanel height has the same height of the TopPanel
