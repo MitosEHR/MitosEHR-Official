@@ -285,10 +285,10 @@ var viewport = new Ext.Viewport({
 	items:[
 	new Ext.BoxComponent({
 		region: 'north',
-		height: 30, // give north and south regions a height
+		height: 30, // give north region a height
 		autoEl: {
 			tag: 'div',
-			html:'<p class="app_bg" id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'
+			html:'<img src="../../ui_app/mitosehr_small_logo.png" style="float:left; margin: 3px 10px 0 14px;" alt="MitosEHR" title="MitosEHR"><p class="app_bg" id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'
 		}
 	}),
 	NavPanel, AppPanel ]
