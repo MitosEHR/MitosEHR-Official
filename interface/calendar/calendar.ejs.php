@@ -254,7 +254,7 @@ Ext.ensible.sample.MemoryEventStore = Ext.extend(Ext.data.Store, {
     showMonthView: true,
     showNavBar: true,
     //showTodayText: false,
-    showTime: true
+    showTime: true,
     //editModal: true,
     enableEditDetails: false
   });

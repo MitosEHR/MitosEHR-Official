@@ -19,7 +19,7 @@ include_once($GLOBALS['fileroot']."/library/patient.inc");
 // *************************************************************************************
 $primary_docs = array(
 	'ros' => array(xl('Roster')    , 0, 'reports/players_report.php?embed=1'),
-	'cal' => array(xl('Calendar')  , 0, '../calendar/calendar.ejs.php'),
+	'cal' => array(xl('Calendar')  , 0, '../../calendar/calendar.ejs.php'),
 	'msg' => array(xl('Messages')  , 0, 'messages/messages.ejs.php'),
 	'pwd' => array(xl('Password')  , 0, 'usergroup/user_info.php'),
 	'adm' => array(xl('Admin')     , 0, 'usergroup/admin_frameset.php'),
