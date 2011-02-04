@@ -113,7 +113,7 @@ $tip1 = strtr($tip1, "\n\r", "  ");
 
 <form action="<?php echo $rootdir;?>/forms/physical_examination/save.php?mode=update&id=<?php echo $id; ?>" method="post" enctype="multipart/form-data" name="my_form">
 
-<?php include("../../acog_menu.inc"); ?>
+<?php include("../../acog_menu.inc.php"); ?>
 
 <div style="border: solid 2px black; background-color: white;">
 

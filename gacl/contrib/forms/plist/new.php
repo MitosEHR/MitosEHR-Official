@@ -45,7 +45,7 @@ if ($old) {
 <body class="body_top">
 
 <form action="<?php echo $rootdir;?>/forms/plist/save.php?mode=new" method="post" enctype="multipart/form-data" name="my_form">
-<?php include("../../acog_menu.inc"); ?>
+<?php include("../../acog_menu.inc.php"); ?>
   <table width="70%"  border="0" cellspacing="0" cellpadding="4">
   <tr>
     <td width="120" align="left" valign="bottom" class="srvCaption">Patient name:</td>

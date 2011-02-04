@@ -45,7 +45,7 @@ window.onload = initialize;
 <body <?echo $top_bg_line;?>>
 
 <form action="<?echo $rootdir;?>/forms/high_risk_screening_record/save.php?mode=new" method="post" enctype="multipart/form-data" name="my_form">
-<? include("../../acog_menu.inc"); ?>
+<? include("../../acog_menu.inc.php"); ?>
 <div class="srvChapter">High risk screening  record <a href="#" onMouseOver="toolTip('See Table of High-Risk Factors.')" onMouseOut="toolTip();"><img src="../../pic/mark_q.png" width="13" height="13" border="0" align="texttop"></a></div>
 <div style="border: solid 2px black; background-color:#FFFFFF;">
   <table  border="0" cellpadding="2" cellspacing="0">

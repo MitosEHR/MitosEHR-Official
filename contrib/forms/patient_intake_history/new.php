@@ -64,7 +64,7 @@ $addmenu = <<<EOL
 </blockquote>
 EOL;
 ?> 
-<?php include("../../acog_menu.inc"); ?>  
+<?php include("../../acog_menu.inc.php"); ?>  
   <table width="50%"  border="0" cellspacing="0" cellpadding="2">
     <tr>
       <td align="left" valign="bottom" nowrap class="fibody3">For office use only </td>

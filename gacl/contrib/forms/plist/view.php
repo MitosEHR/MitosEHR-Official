@@ -63,7 +63,7 @@ window.onload = initialize;
 
 <form action="<?php echo $rootdir;?>/forms/plist/save.php?mode=update&id=<?php echo $_GET["id"];?>" method="post" enctype="multipart/form-data" name="my_form">
 
-<?php include("../../acog_menu.inc"); ?>
+<?php include("../../acog_menu.inc.php"); ?>
 
   <table width="70%"  border="0" cellspacing="0" cellpadding="4">
 

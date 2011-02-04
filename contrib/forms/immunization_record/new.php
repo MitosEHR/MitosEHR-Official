@@ -48,7 +48,7 @@ window.onload = initialize;
 
 
 <form action="<?echo $rootdir;?>/forms/immunization_record/save.php?mode=new" method="post" enctype="multipart/form-data" name="my_form">
-<? include("../../acog_menu.inc"); ?>
+<? include("../../acog_menu.inc.php"); ?>
 <div class="srvChapter">Immunization record<sup><a href="#" onClick="toolTip('The Immunization Record lists immunization services recommended by ACOG for either routine use or in high-risk patients, as defined in the enclosed table of high-risk factors. space for listing problems and immunization services allows the same form to be used for years.<br><br>For immunizations based on risk refer to the Table of High-Risk Factors')" onMouseOut="toolTip();"><img src="../../pic/mark_q.png" width="13" height="13" border="0"></a></sup></div>
 <div style="border: solid 2px black; background-color:#FFFFFF;">
   <table width="100%"  border="0" cellspacing="0" cellpadding="2">

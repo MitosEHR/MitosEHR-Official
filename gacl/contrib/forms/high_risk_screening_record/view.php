@@ -65,7 +65,7 @@ window.onload = initialize;
 
 <form action="<?echo $rootdir;?>/forms/high_risk_screening_record/save.php?mode=update&id=<? echo $id; ?>" method="post" enctype="multipart/form-data" name="my_form">
 
-<? include("../../acog_menu.inc"); ?>
+<? include("../../acog_menu.inc.php"); ?>
 
 <div class="srvChapter">High risk screening  record <a href="#" onMouseOver="toolTip('See Table of High-Risk Factors.')" onMouseOut="toolTip();"><img src="../../pic/mark_q.png" width="13" height="13" border="0" align="texttop"></a></div>
 

@@ -59,7 +59,7 @@ window.onload = initialize;
 
 <form action="<?echo $rootdir;?>/forms/medical_decision/save.php?mode=new" method="post" enctype="multipart/form-data" name="my_form">
 
-<? include("../../acog_menu.inc"); ?>
+<? include("../../acog_menu.inc.php"); ?>
 
 <div style="border: solid 2px black; background-color: white;">
 

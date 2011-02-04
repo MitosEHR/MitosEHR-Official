@@ -65,7 +65,7 @@ window.onload = initialize;
 
 <form action="<?php echo $rootdir;?>/forms/routine_screening_record/save.php?mode=update&id=<?php echo $id;?>" method="post" enctype="multipart/form-data" name="my_form">
 
-<?php include("../../acog_menu.inc"); ?>
+<?php include("../../acog_menu.inc.php"); ?>
 
 <div class="srvChapter">Routine screening record <a href="#" onMouseOver="toolTip('The <strong>Routine Screening Record</strong> includes those screening tests recommended by ACOG for routine use and provides reminders for recommended frequency of services.', 300)" onMouseOut="toolTip();"><img src="../../pic/mark_q.png" width="13" height="13" border="0" align="texttop"></a></div>
 
