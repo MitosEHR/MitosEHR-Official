@@ -111,7 +111,7 @@ if ($GLOBALS['language_menu_login']) {
 
 <link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="../../interface/themes/style_newui.css" >
-<link rel="stylesheet" type="text/css" href="../../ui_app/oemr_app.css" >
+<link rel="stylesheet" type="text/css" href="../../ui_app/mitosehr_app.css" >
 
 <script type="text/javascript">
 

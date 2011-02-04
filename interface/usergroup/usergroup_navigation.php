@@ -11,7 +11,7 @@ include_once("../../library/acl.inc.php");
 </head>
 <body class="body_nav">
 
-<form border=0 method=post target="_top" name="find_patient" action="../main/finder/patient_finder.php">
+<form border=0 method=post target="_top" name="find_patient" action="../finder/patient_finder.php">
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
 <tr>

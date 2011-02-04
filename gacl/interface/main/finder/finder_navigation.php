@@ -13,7 +13,7 @@ include_once("../../registry.php");
 <body class="body_nav">
 
 <div id="nav_topmenu">
-<form method='post' target="_top" name="find_patient" action="<?php echo $rootdir?>/main/finder/patient_finder.php" onsubmit="return top.restoreSession()">
+<form method='post' target="_top" name="find_patient" action="<?php echo $rootdir?>/finder/patient_finder.php" onsubmit="return top.restoreSession()">
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
 <tr>
@@ -27,7 +27,7 @@ include_once("../../registry.php");
 <option value="SSN" <?php if ($_REQUEST['findBy'] == 'SSN') echo 'selected' ?>><?php xl('SSN','e');?></option>
 <option value="DOB" <?php if ($_REQUEST['findBy'] == 'DOB') echo 'selected' ?>><?php xl('DOB','e');?></option>
 </select>
-<a href="javascript:top.restoreSession();document.find_patient.action='<?php echo $rootdir?>/main/finder/patient_finder.php';document.find_patient.submit();" class="link">&nbsp;<?php xl('Find Patient','e');?></a>
+<a href="javascript:top.restoreSession();document.find_patient.action='<?php echo $rootdir?>/finder/patient_finder.php';document.find_patient.submit();" class="link">&nbsp;<?php xl('Find Patient','e');?></a>
 </td>
 
 <td style="text-align:left">

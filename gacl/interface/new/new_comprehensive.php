@@ -273,7 +273,7 @@ function selBlur(elem) {
 // This invokes the patient search dialog.
 function searchme() {
  var f = document.forms[0];
- var url = '../main/finder/patient_select.php?popup=1';
+ var url = '../finder/patient_select.php?popup=1';
 
 <?php
 $lres = getLayoutRes();

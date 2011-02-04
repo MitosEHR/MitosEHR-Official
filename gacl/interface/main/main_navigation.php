@@ -11,13 +11,12 @@ include_once("../../library/acl.inc.php");
 </head>
 <body class="body_nav">
 
-<form border=0 method=post target="_top" name="find_patient" action="<?php echo $rootdir?>/main/finder/patient_finder.php">
+<form border=0 method=post target="_top" name="find_patient" action="<?php echo $rootdir?>/finder/patient_finder.php">
 
 <div id="nav_topmenu">
 <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
 <tr>
 <td width="10%" nowrap>
-<?php ///<a href="javascript:document.find_patient.action='finder/patient_finder_keyboard.php';document.find_patient.submit();" class='link'>Find Patient:</a> ?>
 	<input type="entry" size="10" name="patient" />
 	<select name="findBy" size=1>
 	<option value="Last" selected><?php xl ('Name','e'); ?></option>
@@ -29,7 +28,7 @@ include_once("../../library/acl.inc.php");
 </td>
 
 <td width="5%" nowrap>
-<a href="javascript:top.restoreSession();document.find_patient.action='<?php echo $rootdir?>/main/finder/patient_finder.php';document.find_patient.submit();"
+<a href="javascript:top.restoreSession();document.find_patient.action='<?php echo $rootdir?>/finder/patient_finder.php';document.find_patient.submit();"
  class='link'>&nbsp;<?php xl('Find','e'); ?>&nbsp;<?php xl('Patient','e'); ?></a>
 &nbsp;
 </td>

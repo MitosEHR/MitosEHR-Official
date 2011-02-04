@@ -753,7 +753,7 @@ function removeOptionSelected(EncounterId)
 <body class="body_nav">
 
 <form method='post' name='find_patient' target='RTop'
- action='<?php echo $rootdir ?>/main/finder/patient_select.php'>
+ action='<?php echo $rootdir ?>/finder/patient_select.php'>
 
 <?php if ($GLOBALS['concurrent_layout'] == 2) { ?>
 
