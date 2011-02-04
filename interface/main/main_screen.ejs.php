@@ -283,7 +283,7 @@ var viewport = new Ext.Viewport({
 		height: 30, // give north region a height
 		autoEl: {
 			tag: 'div',
-			html:'<img src="../../ui_app/mitosehr_small_logo.png" style="float:left; margin: 3px 10px 0 14px;" alt="MitosEHR" title="MitosEHR"><p class="app_bg" id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'
+			html:'<img src="../../ui_app/app_logo.png" style="float:left; margin: 1px 1px 1px 1px;" alt="MitosEHR" title="MitosEHR"><p class="app_bg" id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'
 		}
 	}),
 	NavPanel, AppPanel ]
