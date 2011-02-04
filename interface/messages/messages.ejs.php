@@ -59,6 +59,7 @@ require_once("../registry.php");
 // Start Sencha Framework
 // *************************************************************************************
 Ext.onReady(function() {
+Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
 // *************************************************************************************
 // Global variables

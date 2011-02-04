@@ -61,6 +61,7 @@ $sql = "SELECT
 Ext.onReady(function(){
 
 	Ext.QuickTips.init();
+	Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 	
 	var today = new Date().clearTime();
 /*!
