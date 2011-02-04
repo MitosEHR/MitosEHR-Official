@@ -7,7 +7,7 @@
 // of the License, or (at your option) any later version.
 
 	include_once('registry.php');
-	include_once('../library/auth.inc');
+	include_once('../library/auth.inc.php');
 	include_once('../library/relayhealth.inc.php');
 
 	// verify globals are set

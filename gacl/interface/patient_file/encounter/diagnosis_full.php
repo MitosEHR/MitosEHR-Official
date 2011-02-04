@@ -1,6 +1,6 @@
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/billing.inc");
+include_once("$srcdir/billing.inc.php");
 
 $targparm = $GLOBALS['concurrent_layout'] ? "" : "target='Main'";
 

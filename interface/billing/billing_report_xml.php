@@ -1,10 +1,10 @@
 <?php 
 include_once("../registry.php");
-include_once("$srcdir/upload.inc");
+include_once("$srcdir/upload.inc.php");
 
-include_once("$srcdir/patient.inc");
-include_once("$srcdir/billrep.inc");
-include_once("$srcdir/log.inc");
+include_once("$srcdir/patient.inc.php");
+include_once("$srcdir/billrep.inc.php");
+include_once("$srcdir/log.inc.php");
 
 
 //global variables:

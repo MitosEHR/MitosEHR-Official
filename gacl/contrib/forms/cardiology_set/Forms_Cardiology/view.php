@@ -1,9 +1,9 @@
 <!-- view.php --> 
  <?php 
  include_once("../../registry.php");
- include_once("$srcdir/api.inc"); 
+ include_once("$srcdir/acl.inc.php"); 
  formHeader("Form: Forms_Cardiology"); 
- $obj = formFetch("form_Forms_Cardiology", $_GET["id"]);  //#Use the formFetch function from api.inc to get values for existing form. 
+ $obj = formFetch("form_Forms_Cardiology", $_GET["id"]);  //#Use the formFetch function from acl.inc.php to get values for existing form. 
   
  function chkdata_Txt(&$obj, $var) { 
          return htmlentities($obj{"$var"}); 

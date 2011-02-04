@@ -6,7 +6,7 @@
 
 //  OpenEMR
 //  MySQL Config
-//  Needed by sql.inc
+//  Needed by sql.inc.php
 
 // Database parameters are now site-specific.
 // $GLOBALS['OE_SITE_DIR'] is set in interface/registry.php.

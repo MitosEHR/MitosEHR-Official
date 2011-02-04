@@ -30,9 +30,9 @@ $fake_register_globals = false;
 // Load the OpenEMR Libraries
 // *************************************************************************************
 include_once("../registry.php");
-include_once("$srcdir/sql.inc");
+include_once("$srcdir/sql.inc.php");
 include_once("$srcdir/options.inc.php");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 
 // *************************************************************************************
 // Pull the patients from the database

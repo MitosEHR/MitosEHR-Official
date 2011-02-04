@@ -2,7 +2,7 @@
 // Cloned from patient_encounter.php.
 
 include_once("../../registry.php");
-include_once("$srcdir/encounter.inc");
+include_once("$srcdir/encounter.inc.php");
 ?>
 <html>
 <head>

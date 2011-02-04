@@ -10,8 +10,8 @@
 // browser for download.
 
 require_once("../registry.php");
-require_once("$srcdir/acl.inc");
-require_once("$srcdir/patient.inc");
+require_once("$srcdir/acl.inc.php");
+require_once("$srcdir/patient.inc.php");
 
 if (!acl_check('admin', 'super')) die("Not authorized!");
 

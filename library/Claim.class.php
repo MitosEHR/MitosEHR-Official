@@ -8,7 +8,7 @@
 
 require_once(dirname(__FILE__) . "/classes/Address.class.php");
 require_once(dirname(__FILE__) . "/classes/InsuranceCompany.class.php");
-require_once(dirname(__FILE__) . "/sql-ledger.inc");
+require_once(dirname(__FILE__) . "/sql-ledger.inc.php");
 require_once(dirname(__FILE__) . "/invoice_summary.inc.php");
 
 // This enforces the X12 Basic Character Set. Page A2.

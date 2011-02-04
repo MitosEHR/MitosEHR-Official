@@ -5,19 +5,19 @@
 // of the License, or (at your option) any later version.
 
 require_once("../../registry.php");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/acl.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/formatting.inc.php");
 
  // Session pid must be right or bad things can happen when demographics are saved!
  //
- include_once("$srcdir/pid.inc");
+ include_once("$srcdir/pid.inc.php");
  $set_pid = $_GET["set_pid"] ? $_GET["set_pid"] : $_GET["pid"];
  if ($set_pid && $set_pid != $_SESSION["pid"]) {
   setpid($set_pid);
  }
 
- include_once("$srcdir/patient.inc");
+ include_once("$srcdir/patient.inc.php");
 
  $result = getPatientData($pid, "*, DATE_FORMAT(DOB,'%Y-%m-%d') as DOB_YMD");
  $result2 = getEmployerData($pid);

@@ -43,13 +43,13 @@ $ignoreAuth = true; // no login required
 require_once('interface/registry.php');
 
 //Ensure that phpGACL has been installed
-include_once('library/acl.inc');
+include_once('library/acl.inc.php');
 if (isset ($phpgacl_location)) {
 	include_once("$phpgacl_location/gacl_api.class.php");
 	$gacl = new gacl_api();
 }
 else {
-	die("You must first set up library/acl.inc to use phpGACL!");
+	die("You must first set up library/acl.inc.php to use phpGACL!");
 }
 
 

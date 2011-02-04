@@ -1,11 +1,11 @@
 <?php
 
 require_once (dirname(__FILE__) . "/../registry.php");
-require_once (dirname(__FILE__) . "/../../library/sql.inc");
+require_once (dirname(__FILE__) . "/../../library/sql.inc.php");
 require_once (dirname(__FILE__) . "/../../library/Smarty.class.php");
 require_once (dirname(__FILE__) . "/../../library/adodb/adodb-pager.inc.php");
 
-//get db connection setup in sql.inc
+//get db connection setup in sql.inc.php
 $db = $GLOBALS['adodb']['db'];
 
 //define smarty template directory

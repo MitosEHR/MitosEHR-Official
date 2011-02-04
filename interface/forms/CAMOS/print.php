@@ -1,6 +1,6 @@
 <?php
 include_once("../../registry.php");
-include_once("../../../library/api.inc");
+include_once("../../../library/acl.inc.php");
 formHeader("Form: CAMOS");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 ?>

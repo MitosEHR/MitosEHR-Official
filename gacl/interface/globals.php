@@ -171,7 +171,7 @@ $GLOBALS['login_screen'] = $GLOBALS['rootdir'] . "/login_screen.php";
 // Variable set for Eligibility Verification [EDI-271] path 
 $GLOBALS['edi_271_file_path'] = $GLOBALS['OE_SITE_DIR'] . "/edi/";
 
-// Include the translation engine. This will also call sql.inc to
+// Include the translation engine. This will also call sql.inc.php to
 //  open the openemr mysql connection.
 include_once (dirname(__FILE__) . "/../library/translation.inc.php");
 
@@ -330,7 +330,7 @@ $GLOBALS['include_de_identification']=0;
 // include loops.
 
 if (!$ignoreAuth) {
-  include_once("$srcdir/auth.inc");
+  include_once("$srcdir/auth.inc.php");
 }
 
 // If you do not want your accounting system to have a customer added to it

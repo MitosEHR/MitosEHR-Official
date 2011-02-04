@@ -1,6 +1,6 @@
 <?php
  include_once("../registry.php");
- include_once("$srcdir/acl.inc");
+ include_once("$srcdir/acl.inc.php");
 
  $ie_auth = ((acl_check('encounters', 'notes') == 'write' ||
               acl_check('encounters', 'notes_a') == 'write') &&

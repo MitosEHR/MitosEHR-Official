@@ -1,5 +1,5 @@
 <?php
-require_once("{$GLOBALS['srcdir']}/sql.inc");
+require_once("{$GLOBALS['srcdir']}/sql.inc.php");
 
 if (!empty($GLOBALS['ippf_specific'])) {
   $ISSUE_TYPES = array(

@@ -10,7 +10,7 @@ include_once("C_WellChildCare.class.php");
 <body class="body_top">
 
 <?php
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 $obj = formFetch("form_well_child_care", $_GET["id"]);
 ?>
 

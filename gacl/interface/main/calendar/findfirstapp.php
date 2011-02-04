@@ -1,7 +1,7 @@
 <?php
 include_once("../../registry.php");
 include_once("$srcdir/calendar.inc");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 ?>
 <html>
 <head>

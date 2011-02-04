@@ -1,6 +1,6 @@
 <? function routine_screening_record_report( $pid, $encounter, $cols, $id) {
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/forms.inc");
 include_once("$srcdir/calendar.inc");formHeader("Form: Routine screening record");
    $fres=sqlStatement("select * from patient_data where pid='".$pid."'");

@@ -15,9 +15,9 @@ $fake_register_globals=false;
 //
 
 include_once("../../registry.php");
-require_once("$srcdir/transactions.inc");
+require_once("$srcdir/transactions.inc.php");
 require_once("$srcdir/options.inc.php");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 
 $template_file = $GLOBALS['OE_SITE_DIR'] . "/referral_template.html";
 

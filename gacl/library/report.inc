@@ -4,8 +4,8 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-require_once("{$GLOBALS['srcdir']}/sql.inc");
-require_once("{$GLOBALS['srcdir']}/acl.inc");
+require_once("{$GLOBALS['srcdir']}/sql.inc.php");
+require_once("{$GLOBALS['srcdir']}/acl.inc.php");
 require_once("{$GLOBALS['srcdir']}/formatting.inc.php");
 require_once("{$GLOBALS['srcdir']}/formdata.inc.php");
 

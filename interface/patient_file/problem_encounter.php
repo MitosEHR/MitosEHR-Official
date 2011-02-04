@@ -7,9 +7,9 @@
  // of the License, or (at your option) any later version.
 
  include_once("../registry.php");
- include_once("$srcdir/patient.inc");
- include_once("$srcdir/acl.inc");
- include_once("$srcdir/lists.inc");
+ include_once("$srcdir/patient.inc.php");
+ include_once("$srcdir/acl.inc.php");
+ include_once("$srcdir/lists.inc.php");
 
  $patdata = getPatientData($pid, "fname,lname,squad");
 

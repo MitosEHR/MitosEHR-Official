@@ -4,7 +4,7 @@ include_once("../../../interface/registry.php");
 echo "Building Statement<br>";
 flush();
 
-$sqlLibPath = "../../../library/sql.inc";
+$sqlLibPath = "../../../library/sql.inc.php";
 $tablename = "example";
 //our first six columns are NEEDED for operation of the suite
 $create = "

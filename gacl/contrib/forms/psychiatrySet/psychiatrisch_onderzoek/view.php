@@ -7,8 +7,8 @@
 ////////////////////////////////////////////////////////////////////
 
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/acl.inc.php");
+include_once("$srcdir/patient.inc.php");
 
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 
@@ -169,7 +169,7 @@ function autosave( )
 </script>
 
 <?php
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 //$obj = formFetch("form_psychiatrisch_onderzoek", (int)$_GET["id"]);
 ?>
 

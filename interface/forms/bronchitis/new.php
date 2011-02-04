@@ -2,7 +2,7 @@
 <!--                          Update 2004/01/29  -->
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 formHeader("Form: bronchitis");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 ?>

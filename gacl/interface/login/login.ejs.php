@@ -13,7 +13,7 @@
 
 $ignoreAuth = true;
 include_once ("../registry.php");
-include_once("$srcdir/sql.inc");
+include_once("$srcdir/sql.inc.php");
 
 //************************************************************************************************************
 // Collect groups

@@ -19,7 +19,7 @@ To create a set of patient encounter forms for use with OpenEMR, at least a limi
  ******* Initialization *******
 
 To initialize the 3rd party php library (from interface/forms/your_script_name/myfile.php):
-	include_once("../../../library/api.inc");
+	include_once("../../../library/acl.inc.php");
 
 
  ******* Functions *******

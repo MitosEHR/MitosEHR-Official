@@ -7,8 +7,8 @@
 // of the License, or (at your option) any later version.
 
 require_once("../../registry.php");
-require_once("$srcdir/acl.inc");
-require_once("$srcdir/api.inc");
+require_once("$srcdir/acl.inc.php");
+require_once("$srcdir/acl.inc.php");
 require_once("codes.php");
 require_once("../../../custom/code_types.inc.php");
 require_once("../../drugs/drugs.inc.php");

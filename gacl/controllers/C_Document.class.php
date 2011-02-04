@@ -142,8 +142,8 @@ class C_Document extends Controller {
 		global $gacl_object, $phpgacl_location;
 		global $ISSUE_TYPES;
 
-		require_once(dirname(__FILE__) . "/../library/acl.inc");
-		require_once(dirname(__FILE__) . "/../library/lists.inc");
+		require_once(dirname(__FILE__) . "/../library/acl.inc.php");
+		require_once(dirname(__FILE__) . "/../library/lists.inc.php");
 
 		$d = new Document($doc_id);	
 		$n = new Note();

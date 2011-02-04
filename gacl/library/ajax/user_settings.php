@@ -20,7 +20,7 @@ $fake_register_globals=false;
 //
 
 require_once(dirname(__FILE__) . "/../../interface/registry.php");
-require_once(dirname(__FILE__) . "/../user.inc");
+require_once(dirname(__FILE__) . "/../user.inc.php");
 
 //If 'mode' is either a 1 or 0 and 'target' ends with _expand
 //  Then will update the appropriate user _expand flag

@@ -9,7 +9,7 @@
   // This allows entry and editing of a "billing note" for the patient.
 
   include_once("../registry.php");
-  include_once("../../library/patient.inc");
+  include_once("../../library/patient.inc.php");
   include_once("../../library/forms.inc");
 
   $info_msg = "";

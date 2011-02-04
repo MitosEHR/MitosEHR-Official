@@ -1,5 +1,5 @@
 <?php
-require_once("{$GLOBALS['srcdir']}/sql.inc");
+require_once("{$GLOBALS['srcdir']}/sql.inc.php");
 
 function getTransById ($id, $cols = "*")
 {

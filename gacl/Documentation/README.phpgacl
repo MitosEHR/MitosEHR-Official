@@ -5,7 +5,7 @@ Installation Instructions
 
 phpGACL access controls are embedded and installed by default in OpenEMR
 versions 2.9.0.3 or later.  The administration of the access controls is
-within OpenEMR in the admin->acl menu. The library/acl.inc file can be
+within OpenEMR in the admin->acl menu. The library/acl.inc.php file can be
 easily modified to turn off phpGACL or to use an external version.
 
 
@@ -22,7 +22,7 @@ For Developers
 
 If you add a new Access Control Object to the OpenEMR codebase, then
 also add it to the following three sites:
-1. Header notes of the library/acl.inc file
+1. Header notes of the library/acl.inc.php file
 2. acl_setup.php file
 3. acl_upgrade.php file
 
@@ -39,7 +39,7 @@ installation and configuration instructions can be found on the wiki at the
 www.oemr.org site.
 
 Alternatively, it's possible to set up your own access rules without
-using phpGACL by customizing the code in library/acl.inc.  See that
+using phpGACL by customizing the code in library/acl.inc.php.  See that
 module for more information.
 
 phpGACL is available from http://phpgacl.sourceforge.net/.  Read
@@ -64,7 +64,7 @@ odd that the phpGACL GUI does not control access to itself!
 Note that OpenEMR does not use AXOs, so ignore the AXO Group Admin
 tab and other references to AXOs.
 
-After you have installed phpGACL and modified library/acl.inc
+After you have installed phpGACL and modified library/acl.inc.php
 appropriately, you should run the acl_setup.php program using your
 web browser (e.g. http://openemr.location/acl_setup.php).  This will
 create some required and sample objects in the phpGACL database for
@@ -77,7 +77,7 @@ You may also create such objects yourself using the "ACL Admin"
 tab of the phpGACL GUI.
 
 The Access Control Objects (ACOs) for OpenEMR have a very specific
-structure.  This is described in the file library/acl.inc, which
+structure.  This is described in the file library/acl.inc.php, which
 you must also modify in order to enable use of phpGACL.
 
 You must manually create an ARO in this "users" section for each

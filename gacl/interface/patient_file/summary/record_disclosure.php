@@ -27,7 +27,7 @@ $fake_register_globals=false;
 
 
 require_once("../../registry.php");
-require_once("$srcdir/sql.inc");
+require_once("$srcdir/sql.inc.php");
 require_once("$srcdir/options.inc.php");
 
 //if the edit button for editing disclosure is set.

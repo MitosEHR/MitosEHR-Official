@@ -11,7 +11,7 @@
 
 require_once("adLDAP.php");
 require_once("adLDAP_conf.inc");
-require_once("../sql.inc");
+require_once("../sql.inc.php");
 
 /*====================================================
   Usernames to ignore when querying Active Directory

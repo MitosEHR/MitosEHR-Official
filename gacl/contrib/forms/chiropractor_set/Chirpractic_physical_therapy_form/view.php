@@ -1,10 +1,10 @@
 <!-- view.php --> 
  <?php 
  include_once("../../registry.php");
- include_once("$srcdir/api.inc"); 
+ include_once("$srcdir/acl.inc.php"); 
  formHeader("Form: Chirpractic_physical_therapy_form"); 
  $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
- $obj = formFetch("form_Chirpractic_physical_therapy_form", $_GET["id"]);  //#Use the formFetch function from api.inc to get values for existing form. 
+ $obj = formFetch("form_Chirpractic_physical_therapy_form", $_GET["id"]);  //#Use the formFetch function from acl.inc.php to get values for existing form. 
   
  function chkdata_Txt(&$obj, $var) { 
          return htmlentities($obj{"$var"}); 

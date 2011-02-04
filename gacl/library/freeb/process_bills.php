@@ -1,9 +1,9 @@
 <?php
 set_time_limit(0);
 require_once("xmlrpc.inc");
-require_once(dirname(__FILE__) . "/../sql.inc");
+require_once(dirname(__FILE__) . "/../sql.inc.php");
 require_once(dirname(__FILE__) . "/../../includes/config.php");
-require_once(dirname(__FILE__) . "/../billing.inc");
+require_once(dirname(__FILE__) . "/../billing.inc.php");
 
 if ($argv[1] != "bill") {
 	echo "This script can only be accessed as a CLI program.\n";

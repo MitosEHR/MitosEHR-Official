@@ -9,7 +9,7 @@ $fake_register_globals=false;
 //
 
 include_once("../../registry.php");
-include_once("$srcdir/sql.inc");
+include_once("$srcdir/sql.inc.php");
 include_once("$srcdir/options.inc.php");
 
 if (isset($_GET['mode'])) {

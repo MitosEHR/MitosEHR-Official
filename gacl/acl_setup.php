@@ -8,7 +8,7 @@
  //
  // This program is run by the OpenEMR setup.php script to install phpGACL
  // and creates the Access Control Objects and their sections.
- // See openemr/library/acl.inc file for the list of
+ // See openemr/library/acl.inc.php file for the list of
  // currently supported Access Control Objects(ACO), which this
  // script will install.  This script also creates several
  // ARO groups, an "admin" ARO, and some reasonable ACL entries for
@@ -30,9 +30,9 @@
  // On 06/2009, added pertinent comments below each entry to allow capture
  //  of these terms by the translation engine.
 
- require_once(dirname(__FILE__).'/library/acl.inc');
+ require_once(dirname(__FILE__).'/library/acl.inc.php');
 
- if (! $phpgacl_location) die("You must first set up library/acl.inc to use phpGACL!");
+ if (! $phpgacl_location) die("You must first set up library/acl.inc.php to use phpGACL!");
 
  require_once("$phpgacl_location/gacl_api.class.php");
 

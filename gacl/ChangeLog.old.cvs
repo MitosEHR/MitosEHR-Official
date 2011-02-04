@@ -37,7 +37,7 @@
 
 2004-02-05 13:22  duhlman
 
-	* library/billing.inc: changed billing to link on provider id not
+	* library/billing.inc.php: changed billing to link on provider id not
 	  username
 
 2004-02-05 13:21  duhlman
@@ -597,7 +597,7 @@
 	* interface/patient_file/summary/demographics.php,
 	  interface/patient_file/summary/demographics_full.php,
 	  interface/patient_file/summary/demographics_save.php,
-	  library/patient.inc: added field for mobile phone, fixed some
+	  library/patient.inc.php: added field for mobile phone, fixed some
 	  ugly nested logic/html issues in demographics_summary
 
 2004-01-26 15:29  duhlman
@@ -632,7 +632,7 @@
 
 	* interface/patient_file/summary/demographics_full.php,
 	  interface/patient_file/summary/demographics_save.php,
-	  library/patient.inc: strtotime cleanups, added copay field to
+	  library/patient.inc.php: strtotime cleanups, added copay field to
 	  insurance data
 
 2004-01-26 13:24  duhlman
@@ -659,7 +659,7 @@
 
 	* interface/patient_file/summary/demographics_full.php,
 	  interface/patient_file/summary/demographics_save.php,
-	  library/patient.inc: added generic fields to demographics
+	  library/patient.inc.php: added generic fields to demographics
 
 2004-01-26 10:25  duhlman
 
@@ -897,12 +897,12 @@
 
 2004-01-20 16:56  duhlman
 
-	* library/patient.inc: reverting strtotime in browse and other
+	* library/patient.inc.php: reverting strtotime in browse and other
 	  location fixes to enable release
 
 2004-01-20 15:33  duhlman
 
-	* interface/patient_file/summary/browse.php, library/patient.inc:
+	* interface/patient_file/summary/browse.php, library/patient.inc.php:
 	  display date fixes relating to strtotime, insert problems on
 	  insurance data remain
 
@@ -977,7 +977,7 @@
 
 2004-01-16 09:49  duhlman
 
-	* interface/main/finder/patient_select.php, library/patient.inc:
+	* interface/main/finder/patient_select.php, library/patient.inc.php:
 	  additional strtotime glitch workarounds
 
 2004-01-16 09:23  duhlman
@@ -1069,7 +1069,7 @@
 
 	* interface/main/calendar/modules/PostCalendar/common.api.php,
 	  interface/main/calendar/modules/PostCalendar/pnuser.php,
-	  library/auth.inc, library/calendar.inc, library/patient.inc: edit
+	  library/auth.inc.php, library/calendar.inc, library/patient.inc.php: edit
 	  permissions, default conditions code cleanups
 
 2004-01-14 10:45  duhlman
@@ -1114,7 +1114,7 @@
 
 2004-01-09 07:23  duhlman
 
-	* interface/main/calendar/find_patient.php, library/patient.inc:
+	* interface/main/calendar/find_patient.php, library/patient.inc.php:
 	  find_patient uses new event system with automatic updating of
 	  default provider and patient in event submit form
 
@@ -1122,7 +1122,7 @@
 
 	*
 	  interface/main/calendar/modules/PostCalendar/pntemplates/default/user/submit_no_nav.html,
-	  library/patient.inc: fixed queries where like was being used when
+	  library/patient.inc.php: fixed queries where like was being used when
 	  = should have been
 
 2004-01-09 06:40  duhlman
@@ -1134,14 +1134,14 @@
 
 	* interface/patient_file/summary/demographics.php,
 	  interface/patient_file/summary/demographics_full.php,
-	  library/patient.inc: referrer display references changed to link
+	  library/patient.inc.php: referrer display references changed to link
 	  to a providerID lookup
 
 2004-01-09 05:56  duhlman
 
 	* interface/patient_file/summary/demographics_full.php,
 	  interface/patient_file/summary/demographics_save.php,
-	  library/calendar.inc, library/patient.inc: added providerID
+	  library/calendar.inc, library/patient.inc.php: added providerID
 	  support to demographic_full.php
 
 2004-01-09 05:14  duhlman
@@ -1160,7 +1160,7 @@
 	  interface/main/calendar/modules/PostCalendar/common.api.php,
 	  interface/main/calendar/modules/PostCalendar/pnuser.php,
 	  interface/main/calendar/modules/PostCalendar/pntemplates/default/user/details.html,
-	  library/auth.inc: user can edit events owned by users sharing a
+	  library/auth.inc.php: user can edit events owned by users sharing a
 	  group
 
 2004-01-09 01:33  duhlman
@@ -1211,7 +1211,7 @@
 
 2004-01-08 06:15  duhlman
 
-	* openemr.webprj, library/auth.inc, library/patient.inc: assorted
+	* openemr.webprj, library/auth.inc.php, library/patient.inc.php: assorted
 	  date/calendar stubs, polishes, and fixes
 
 2004-01-08 06:15  duhlman
@@ -1234,14 +1234,14 @@
 
 	* interface/main/calendar/modules/PostCalendar/pnuserapi.php,
 	  interface/main/calendar/modules/PostCalendar/pntemplates/default/views/day/default.html,
-	  library/patient.inc: events diplay patient info
+	  library/patient.inc.php: events diplay patient info
 
 2004-01-07 08:59  duhlman
 
 	* interface/main/calendar/modules/PostCalendar/common.api.php,
 	  interface/main/calendar/modules/PostCalendar/pnuser.php,
 	  interface/main/calendar/modules/PostCalendar/pntemplates/default/user/submit.html,
-	  library/patient.inc: event submit saves patient id
+	  library/patient.inc.php: event submit saves patient id
 
 2004-01-07 08:13  duhlman
 
@@ -1258,7 +1258,7 @@
 
 2004-01-07 07:05  duhlman
 
-	* library/auth.inc, library/calendar.inc,
+	* library/auth.inc.php, library/calendar.inc,
 	  interface/main/calendar/index.php,
 	  interface/main/calendar/modules/PostCalendar/common.api.php,
 	  interface/main/calendar/modules/PostCalendar/pnuser.php,
@@ -1313,7 +1313,7 @@
 	  interface/main/calendar/modules/PostCalendar/pntemplates/default/views/month/list.html,
 	  interface/main/calendar/modules/PostCalendar/pntemplates/default/views/week/default.html,
 	  interface/main/calendar/modules/PostCalendar/pntemplates/default/views/year/default.html,
-	  library/auth.inc: first revision of new calendar integration
+	  library/auth.inc.php: first revision of new calendar integration
 	  changes, focused on session integration, theme integration
 
 2004-01-06 08:01  duhlman
@@ -1482,32 +1482,32 @@
 	  pnadodb/datadict/datadict-generic.inc.php,
 	  pnadodb/datadict/datadict-ibase.inc.php,
 	  pnadodb/datadict/datadict-informix.inc.php,
-	  pnadodb/datadict/datadict-mssql.inc.php,
-	  pnadodb/datadict/datadict-mysql.inc.php,
+	  pnadodb/datadict/datadict-mssql.inc.php.php,
+	  pnadodb/datadict/datadict-mysql.inc.php.php,
 	  pnadodb/datadict/datadict-oci8.inc.php,
 	  pnadodb/datadict/datadict-postgres.inc.php,
 	  pnadodb/datadict/index.html,
 	  pnadodb/drivers/adodb-access.inc.php,
 	  pnadodb/drivers/adodb-ado.inc.php,
 	  pnadodb/drivers/adodb-ado_access.inc.php,
-	  pnadodb/drivers/adodb-ado_mssql.inc.php,
+	  pnadodb/drivers/adodb-ado_mssql.inc.php.php,
 	  pnadodb/drivers/adodb-borland_ibase.inc.php,
 	  pnadodb/drivers/adodb-csv.inc.php,
 	  pnadodb/drivers/adodb-db2.inc.php,
-	  pnadodb/drivers/adodb-fbsql.inc.php,
+	  pnadodb/drivers/adodb-fbsql.inc.php.php,
 	  pnadodb/drivers/adodb-firebird.inc.php,
 	  pnadodb/drivers/adodb-ibase.inc.php,
 	  pnadodb/drivers/adodb-informix.inc.php,
 	  pnadodb/drivers/adodb-informix72.inc.php,
-	  pnadodb/drivers/adodb-mssql.inc.php,
+	  pnadodb/drivers/adodb-mssql.inc.php.php,
 	  pnadodb/drivers/adodb-mssqlpo.inc.php,
-	  pnadodb/drivers/adodb-mysql.inc.php,
+	  pnadodb/drivers/adodb-mysql.inc.php.php,
 	  pnadodb/drivers/adodb-mysqlt.inc.php,
 	  pnadodb/drivers/adodb-oci8.inc.php,
 	  pnadodb/drivers/adodb-oci805.inc.php,
 	  pnadodb/drivers/adodb-oci8po.inc.php,
 	  pnadodb/drivers/adodb-odbc.inc.php,
-	  pnadodb/drivers/adodb-odbc_mssql.inc.php,
+	  pnadodb/drivers/adodb-odbc_mssql.inc.php.php,
 	  pnadodb/drivers/adodb-odbc_oracle.inc.php,
 	  pnadodb/drivers/adodb-oracle.inc.php,
 	  pnadodb/drivers/adodb-postgres.inc.php,
@@ -1528,7 +1528,7 @@
 2004-01-06 05:53  duhlman
 
 	* openemr.webprj, interface/patient_file/summary/demographics.php,
-	  library/patient.inc: even more fixDate dixes
+	  library/patient.inc.php: even more fixDate dixes
 
 2004-01-06 05:30  duhlman
 
@@ -1538,15 +1538,15 @@
 2004-01-06 04:35  duhlman
 
 	* interface/patient_file/summary/demographics_save.php,
-	  library/patient.inc: final fixDate changes
+	  library/patient.inc.php: final fixDate changes
 
 2004-01-06 04:25  duhlman
 
-	* library/patient.inc: fixDate fix for preg_match
+	* library/patient.inc.php: fixDate fix for preg_match
 
 2004-01-06 04:17  duhlman
 
-	* library/patient.inc: even more strtotime date glitch fixes
+	* library/patient.inc.php: even more strtotime date glitch fixes
 
 2004-01-06 04:16  duhlman
 
@@ -1555,11 +1555,11 @@
 
 2004-01-06 04:08  duhlman
 
-	* library/patient.inc: first fixDate function
+	* library/patient.inc.php: first fixDate function
 
 2004-01-06 03:53  duhlman
 
-	* library/patient.inc: fixed day/month glitch in DOB_TS query, %m
+	* library/patient.inc.php: fixed day/month glitch in DOB_TS query, %m
 	  is month not %c
 
 2004-01-06 03:31  duhlman
@@ -1574,7 +1574,7 @@
 
 2004-01-06 03:25  duhlman
 
-	* library/patient.inc: Added DOB_TS field to patientdata query,
+	* library/patient.inc.php: Added DOB_TS field to patientdata query,
 	  worksaround broken strtotime issues for display at least
 
 2004-01-05 05:47  duhlman
@@ -1755,15 +1755,15 @@
 	  interface/usergroup/usergroup.php,
 	  interface/usergroup/usergroup_admin.php,
 	  interface/usergroup/usergroup_navigation.php,
-	  interface/usergroup/usergroup_title.php, library/api.inc,
-	  library/auth.inc, library/billing.inc, library/billrep.inc,
+	  interface/usergroup/usergroup_title.php, library/acl.inc.php,
+	  library/auth.inc.php, library/billing.inc.php, library/billrep.inc.php,
 	  library/calendar.inc, library/calendar_nikki.inc,
-	  library/encounter.inc, library/forms.inc, library/lists.inc,
-	  library/log.inc, library/md5.js, library/need_service.inc,
-	  library/onotes.inc, library/patient.inc, library/pid.inc,
-	  library/pnotes.inc, library/registry.inc, library/report.inc,
-	  library/sql.inc, library/sqlconf.php, library/transactions.inc,
-	  library/upload.inc, sql/database.sql, sql/database.old.sql,
+	  library/encounter.inc.php, library/forms.inc, library/lists.inc.php,
+	  library/log.inc.php, library/md5.js, library/need_service.inc.php,
+	  library/onotes.inc.php, library/patient.inc.php, library/pid.inc.php,
+	  library/pnotes.inc.php, library/registry.inc.php, library/report.inc.php,
+	  library/sql.inc.php, library/sqlconf.php, library/transactions.inc.php,
+	  library/upload.inc.php, sql/database.sql, sql/database.old.sql,
 	  sql/defaults.sql, sql/icd9.sql, sql/openemr_table_mods.sql:
 	  Initial revision
 
@@ -1945,15 +1945,15 @@
 	  interface/usergroup/usergroup.php,
 	  interface/usergroup/usergroup_admin.php,
 	  interface/usergroup/usergroup_navigation.php,
-	  interface/usergroup/usergroup_title.php, library/api.inc,
-	  library/auth.inc, library/billing.inc, library/billrep.inc,
+	  interface/usergroup/usergroup_title.php, library/acl.inc.php,
+	  library/auth.inc.php, library/billing.inc.php, library/billrep.inc.php,
 	  library/calendar.inc, library/calendar_nikki.inc,
-	  library/encounter.inc, library/forms.inc, library/lists.inc,
-	  library/log.inc, library/md5.js, library/need_service.inc,
-	  library/onotes.inc, library/patient.inc, library/pid.inc,
-	  library/pnotes.inc, library/registry.inc, library/report.inc,
-	  library/sql.inc, library/sqlconf.php, library/transactions.inc,
-	  library/upload.inc, sql/database.sql, sql/database.old.sql,
+	  library/encounter.inc.php, library/forms.inc, library/lists.inc.php,
+	  library/log.inc.php, library/md5.js, library/need_service.inc.php,
+	  library/onotes.inc.php, library/patient.inc.php, library/pid.inc.php,
+	  library/pnotes.inc.php, library/registry.inc.php, library/report.inc.php,
+	  library/sql.inc.php, library/sqlconf.php, library/transactions.inc.php,
+	  library/upload.inc.php, sql/database.sql, sql/database.old.sql,
 	  sql/defaults.sql, sql/icd9.sql, sql/openemr_table_mods.sql: first
 	  import of openemr
 

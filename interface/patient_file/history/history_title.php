@@ -9,7 +9,7 @@ $fake_register_globals=false;
 //
 
 include_once("../../registry.php");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 require_once("$srcdir/classes/Pharmacy.class.php");
 ?>
 

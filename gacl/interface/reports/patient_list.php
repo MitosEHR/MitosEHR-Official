@@ -10,7 +10,7 @@
  // range, or all patients if no date range is entered.
 
  require_once("../registry.php");
- require_once("$srcdir/patient.inc");
+ require_once("$srcdir/patient.inc.php");
  require_once("$srcdir/formatting.inc.php");
 
  // $from_date = fixDate($_POST['form_from_date'], date('Y-01-01'));

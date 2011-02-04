@@ -25,9 +25,9 @@ $fake_register_globals=false;
 //
 
 require_once("../registry.php");
-require_once("$srcdir/patient.inc");
-require_once("$srcdir/sql-ledger.inc");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/patient.inc.php");
+require_once("$srcdir/sql-ledger.inc.php");
+require_once("$srcdir/acl.inc.php");
 require_once("$srcdir/formatting.inc.php");
 
 // Specify if product or warehouse is the first column.

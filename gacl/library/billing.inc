@@ -1,7 +1,7 @@
 <?php
 
-// require_once("{$GLOBALS['srcdir']}/sql.inc");
-require_once(dirname(__FILE__) . "/sql.inc");
+// require_once("{$GLOBALS['srcdir']}/sql.inc.php");
+require_once(dirname(__FILE__) . "/sql.inc.php");
 
 function getBillingById ($id, $cols = "*")
 {

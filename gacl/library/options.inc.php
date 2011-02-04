@@ -31,7 +31,7 @@
 
 require_once("formdata.inc.php");
 require_once("formatting.inc.php");
-require_once("user.inc");
+require_once("user.inc.php");
 
 $date_init = "";
 

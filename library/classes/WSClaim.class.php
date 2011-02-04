@@ -2,7 +2,7 @@
 
 require_once (dirname(__FILE__) . "/WSWrapper.class.php");
 include_once (dirname(__FILE__) . "/../sqlconf.php");
-include_once (dirname(__FILE__) . "/../sql.inc");
+include_once (dirname(__FILE__) . "/../sql.inc.php");
 include_once (dirname(__FILE__) . "/../../includes/config.php");
 
 class WSClaim extends WSWrapper{

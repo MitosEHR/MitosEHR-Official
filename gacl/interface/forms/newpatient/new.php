@@ -1,7 +1,7 @@
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/acl.inc");
-include_once("$srcdir/lists.inc");
+include_once("$srcdir/acl.inc.php");
+include_once("$srcdir/lists.inc.php");
 
 // Check permission to create encounters.
 $tmp = getPatientData($pid, "squad");

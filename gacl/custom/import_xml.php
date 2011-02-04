@@ -11,8 +11,8 @@
  /////////////////////////////////////////////////////////////////////
 
  include_once("../interface/registry.php");
- include_once("$srcdir/patient.inc");
- include_once("$srcdir/acl.inc");
+ include_once("$srcdir/patient.inc.php");
+ include_once("$srcdir/acl.inc.php");
 
  function setInsurance($pid, $ainsurance, $asubscriber, $seq) {
   $iwhich = $seq == '2' ? "secondary" : ($seq == '3' ? "tertiary" : "primary");

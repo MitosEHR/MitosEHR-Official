@@ -1,7 +1,7 @@
 <?php
 //------------report.php
 include_once("../../registry.php");
-include_once("../../../library/api.inc");
+include_once("../../../library/acl.inc.php");
 include_once("content_parser.php");
 function CAMOS_report( $pid, $encounter, $cols, $id) {
   $data = formFetch("form_CAMOS", $id);

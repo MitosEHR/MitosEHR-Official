@@ -5,9 +5,9 @@
 // of the License, or (at your option) any later version.
 
 include_once("../../registry.php");
-include_once("$srcdir/billing.inc");
-include_once("$srcdir/sql.inc");
-include_once("$srcdir/acl.inc");
+include_once("$srcdir/billing.inc.php");
+include_once("$srcdir/sql.inc.php");
+include_once("$srcdir/acl.inc.php");
 require_once("$srcdir/formatting.inc.php");
 
 $mode              = $_REQUEST['mode'];

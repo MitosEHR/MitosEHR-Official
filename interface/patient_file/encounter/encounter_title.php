@@ -1,8 +1,8 @@
 <?php
 include_once("../../registry.php");
 include_once("$srcdir/forms.inc");
-include_once("$srcdir/encounter.inc");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/encounter.inc.php");
+include_once("$srcdir/patient.inc.php");
 require_once("$srcdir/classes/Pharmacy.class.php");
 ?>
 

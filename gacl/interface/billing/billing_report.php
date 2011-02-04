@@ -12,11 +12,11 @@
 
 
 require_once("../registry.php");
-require_once("../../library/acl.inc");
+require_once("../../library/acl.inc.php");
 require_once("../../custom/code_types.inc.php");
-require_once("$srcdir/patient.inc");
-include_once("$srcdir/../interface/reports/report.inc.php");//Criteria Section common php page
-require_once("$srcdir/billrep.inc");
+require_once("$srcdir/patient.inc.php");
+include_once("$srcdir/../interface/reports/report.inc.php.php");//Criteria Section common php page
+require_once("$srcdir/billrep.inc.php");
 require_once(dirname(__FILE__) . "/../../library/classes/OFX.class.php");
 require_once(dirname(__FILE__) . "/../../library/classes/X12Partner.class.php");
 require_once("$srcdir/formatting.inc.php");
@@ -415,7 +415,7 @@ $ThisPageSearchCriteriaQueryDropDownMasterDefaultKey[1]="all";//Only one item wi
 //The below section is needed if there is any 'include' type in the $ThisPageSearchCriteriaDataTypeMaster
 //Function name is added here.Corresponding include files need to be included in the respective pages as done in this page.
 //It is labled(Included for Insurance ajax criteria)(Line:-279-299).
-$ThisPageSearchCriteriaIncludeMaster[1]="InsuranceCompanyDisplay";//This is php function defined in the file 'report.inc.php'
+$ThisPageSearchCriteriaIncludeMaster[1]="InsuranceCompanyDisplay";//This is php function defined in the file 'report.inc.php.php'
 
 if(!isset($_REQUEST['mode']))//default case
  {

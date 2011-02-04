@@ -1,6 +1,6 @@
 <?
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 formHeader('Habits form submitted');
 
 $id = formSubmit('habits', $_POST);

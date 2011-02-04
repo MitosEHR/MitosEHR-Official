@@ -1,6 +1,6 @@
 <?php
 include_once ('../../registry.php'); 
-include_once ('../../../library/sql.inc'); 
+include_once ('../../../library/sql.inc.php'); 
 include_once ('../../../library/classes/Prescription.class.php');
 include_once("../../../library/formdata.inc.php");
 //practice data

@@ -7,7 +7,7 @@
 // of the License, or (at your option) any later version.
 
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"] . "/api.inc");
+include_once($GLOBALS["srcdir"] . "/acl.inc.php");
 include_once("lines.php");
 
 function physical_exam_report($pid, $encounter, $cols, $id) {

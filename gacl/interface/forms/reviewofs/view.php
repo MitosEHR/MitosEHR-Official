@@ -9,7 +9,7 @@ $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_enco
 </head>
 <body class="body_top">
 <?php
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 $obj = formFetch("form_reviewofs", $_GET["id"]);
 ?>
 <form method=post action="<?php echo $rootdir?>/forms/reviewofs/save.php?mode=update&id=<?php echo $_GET["id"];?>"

@@ -1,7 +1,7 @@
 <?php
 //------------Forms generated from formsWiz
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 function soap_report( $pid, $encounter, $cols, $id) {
  $cols = 1; // force always 1 column
  $count = 0;

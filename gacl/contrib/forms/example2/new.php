@@ -4,7 +4,7 @@
  */
 
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 
 /** CHANGE THIS name to the name of your form **/
 $form_name = "My Example Form";

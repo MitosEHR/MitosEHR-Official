@@ -23,7 +23,7 @@ Thu Sep 22 2005
 Wed Sep 21 2005
 	mikeb - Addslashes to JS creation code in assign_group.php.
 Thu Sep 08 2005
-	mikeb - Added support for MS-SQL in setup.php, thanks to François Tissandier <francois.tissandier@tebu-bio.com>
+	mikeb - Added support for MS-SQL in setup.php, thanks to Franï¿½ois Tissandier <francois.tissandier@tebu-bio.com>
 Sat Sep 03 2005
 	mikeb - Fixed typo in manual
 	mikeb - Fixed comments in gacl.class.php
@@ -33,7 +33,7 @@ Mon Aug 22 2005
 Thu Aug 04 2005
 	mikeb - Fixed bug with config ini file path in setup.php
 Thu Jul 28 2005
-	mikeb - Fixed bug with double/single quotes on line 3526. Jérémy Cohen Solal <jeremy@eiole.com>
+	mikeb - Fixed bug with double/single quotes on line 3526. Jï¿½rï¿½my Cohen Solal <jeremy@eiole.com>
 Sun Jul 24 2005
 	mikeb - Removed table prefix comment regarding not using "_". Apparently it works now
 	mikeb - Fixed comments in gacl.class.php regarding group IDs, it now correctly says group values.
@@ -426,7 +426,7 @@ Sun Nov 17 2002
         - Re-wrote API aro/aco/group specific functions to be generic to help support AXO's.
         - Re-wrote aro/aco/group specific admin scripts to be generic to help support AXO's.
         - Added AXO support to acl_admin.php.
-        - Updated gacl.inc.php to support AXO's.
+        - Updated gacl.inc.php.php to support AXO's.
 
 Mon Nov 11 2002
         - Changed the ordering of the main acl_query() SQL query. It wasn't properly preferring the deepest groups ACLs. - Thanks to Mauro

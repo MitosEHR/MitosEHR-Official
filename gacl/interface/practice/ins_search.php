@@ -18,7 +18,7 @@
  // function.
 
  include_once("../registry.php");
- include_once("$srcdir/acl.inc");
+ include_once("$srcdir/acl.inc.php");
 
  // Putting a message here will cause a popup window to display it.
  $info_msg = "";

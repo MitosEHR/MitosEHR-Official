@@ -21,7 +21,7 @@
  //------------------------------------------------------------//
 
  include_once("../../registry.php");
- include_once("$srcdir/patient.inc");
+ include_once("$srcdir/patient.inc.php");
  include_once("$srcdir/forms.inc");
  include_once("$srcdir/calendar.inc");
  include_once("$srcdir/formdata.inc.php");

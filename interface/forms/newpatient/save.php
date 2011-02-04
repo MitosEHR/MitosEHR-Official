@@ -6,9 +6,9 @@
 
 require_once("../../registry.php");
 require_once("$srcdir/forms.inc");
-require_once("$srcdir/sql.inc");
-require_once("$srcdir/encounter.inc");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/sql.inc.php");
+require_once("$srcdir/encounter.inc.php");
+require_once("$srcdir/acl.inc.php");
 require_once("$srcdir/formatting.inc.php");
 
 foreach ($_POST as $k => $var) {

@@ -1,5 +1,5 @@
 <?php
-require (dirname(__FILE__) . "/../sql.inc");
+require (dirname(__FILE__) . "/../sql.inc.php");
 
 class DataObjectBase {
 

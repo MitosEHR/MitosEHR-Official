@@ -9,7 +9,7 @@
 //-------------------------------------------------------------------
 // Display a message indicating that the user's password has/will expire.
 include_once("../registry.php");
-include_once("$srcdir/sql.inc");
+include_once("$srcdir/sql.inc.php");
 require_once("$srcdir/translation.inc.php");
 
 $pwd_expires = "";

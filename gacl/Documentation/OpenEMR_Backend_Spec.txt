@@ -1,12 +1,12 @@
 ********** internal backend functions **********
 
------ library/auth.inc ------
+----- library/auth.inc.php ------
 
 NOTICE: Please note that this Backend Spec is a development document, and was used during the developmental stages of OpenEMR. It was last updated for OpenEMR version 1.3, and therefore does not completely detail all of the newer library functions.
 
 --------------------------------------------------------
 
-we will ALWAYS look for $_GET['auth'], if it is login we will do so, if it is logout we will do so. all our post vars must be set to have a chance getting in.  auth.inc should ALWAYS BE CALLED ABSOLUTELY FIRST.
+we will ALWAYS look for $_GET['auth'], if it is login we will do so, if it is logout we will do so. all our post vars must be set to have a chance getting in.  auth.inc.php should ALWAYS BE CALLED ABSOLUTELY FIRST.
 
 authNewSession(username, md5sum of password, provider)
 returns boolean, is pass checks out or not.  if true, also sets:
@@ -50,7 +50,7 @@ returns the ID of the group
 delGroup(groupname)
 deletes the group from the system
 
------ library/sql.inc - Matthew Beale, Ted Dziuba -----
+----- library/sql.inc.php - Matthew Beale, Ted Dziuba -----
 we will ALWAYS create a connection to sql, and set $GLOBALS['dbh']  to our database connection.
 
 sqlConnect()
@@ -74,8 +74,8 @@ returns the first result from the database.
 
 ********** public backend functions **********
 
------ library/lists.inc - Matthew Beale -----
-used for accessing openemr.lists in the db, we require_once('sql.inc')
+----- library/lists.inc.php - Matthew Beale -----
+used for accessing openemr.lists in the db, we require_once('sql.inc.php')
 
 getListById(id, columns - default all)
 returns the first record returned, the most recent (although there _should_ only be one.
@@ -92,8 +92,8 @@ returns true
 reappearList (id)
 returns true
 
------ library/transactions.inc - Matt Koch, Matthew Beale ------
-used for accessing openemr.transactions in the db, we require_once('sql.inc')
+----- library/transactions.inc.php - Matt Koch, Matthew Beale ------
+used for accessing openemr.transactions in the db, we require_once('sql.inc.php')
 
 getTransById(id, columns - default all)
 returns the first record returned, the most recent (although there _should_ only be one.
@@ -107,8 +107,8 @@ returns id of inserted record
 authorizeTransaction(id, authorized w/ default '1')
 returns useless data. if you want it to return something let us know.
 
------ library/pnotes.inc - Matt Koch, Matthew Beale -----
-used for accessing openemr.pnotes in the db, we require_once('sql.inc')
+----- library/pnotes.inc.php - Matt Koch, Matthew Beale -----
+used for accessing openemr.pnotes in the db, we require_once('sql.inc.php')
 
 getByPnoteId(id, columns - default all)
 returns the first record returned, the most recent (although there _should_ only be one.
@@ -131,8 +131,8 @@ returns true
 reappearPnote (id)
 returns true
 
------ library/onotes.inc - Ted Dziuba, Matthew Beale -----
-used for accessing openemr.onotes, we require('sql.inc')
+----- library/onotes.inc.php - Ted Dziuba, Matthew Beale -----
+used for accessing openemr.onotes, we require('sql.inc.php')
 
 getOnoteById(id, cols wanted w/default all)
 returns the first record returned, the most recent
@@ -169,7 +169,7 @@ returns useless data. if you want it to return something let us know.
 function getEncounters($pid)
 returns array of all encounters filed under a given pid, in order by date descending
 
------ library/billing.inc - Matthew Beale, Ted Dziuba -----
+----- library/billing.inc.php - Matthew Beale, Ted Dziuba -----
 
 getBillingById(id, cols w/ default all)
 returns billing record from id
@@ -188,7 +188,7 @@ returns useless data. if you want it to return something let us know
 
 function deleteBilling($id)
 makes a billing entry not active - misnomer - does not actually delete it, but makes it invisible to interface
------ library/log.inc - Matthew Beale, Ted Dziuba -----
+----- library/log.inc.php - Matthew Beale, Ted Dziuba -----
 
 newEvent(event(login||logout||backup||view), user, groupname, comment w/ default "")
 return id generated in insert
@@ -197,7 +197,7 @@ getEventByDate($date, $cols w/ default all)
 returns nested array of results
 
 
------ library/patient.inc - Matthew Beale, Ted Dziuba -----
+----- library/patient.inc.php - Matthew Beale, Ted Dziuba -----
 
 DEPRECATED
 getPatientById(id, cols w/default *, type w/ default "primary") << "table_name_col_name, table2_name_col2_name"
@@ -340,7 +340,7 @@ return array of cols specified by given of patients with last name lname
 getPatientIds(cols w/ default "pid, id, lname, fname, mname", orderby w/ default "id ASC", limit w/ default "all", start w/ default "0")
 returns array of cols specified by cols of all unique pids
 
------ library/report.inc - Matthew Beale -----
+----- library/report.inc.php - Matthew Beale -----
 
 getPatientReport(pid)
 returns nested array of column name containing 'content' at time of change and 'date'
@@ -355,12 +355,12 @@ getInsuranceReport(pid, type)
 returns nested array of column name containing 'content' at time of change and 'date
 
 
------ library/encounter.inc - Matthew Stack -----
+----- library/encounter.inc.php - Matthew Stack -----
 
 function setencounter(encounter)
 set the global encounter session variable - if encounter is "", then it creates an entry in the forms table to represent a blank encounter
 
------ library/pid.inc - Matthew Stack -----
+----- library/pid.inc.php - Matthew Stack -----
 
 function setpid(pid)
 set the global pid session variable

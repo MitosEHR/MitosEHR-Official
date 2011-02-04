@@ -1,5 +1,5 @@
 <?
-include("../../../library/api.inc");
+include("../../../library/acl.inc.php");
 formHeader("View my form");
 ?>
 

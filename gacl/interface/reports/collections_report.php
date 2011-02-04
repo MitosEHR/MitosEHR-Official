@@ -7,8 +7,8 @@
 // of the License, or (at your option) any later version.
 
 require_once("../registry.php");
-require_once("../../library/patient.inc");
-require_once("../../library/sql-ledger.inc");
+require_once("../../library/patient.inc.php");
+require_once("../../library/sql-ledger.inc.php");
 require_once("../../library/invoice_summary.inc.php");
 require_once("../../library/sl_eob.inc.php");
 require_once("../../library/formatting.inc.php");

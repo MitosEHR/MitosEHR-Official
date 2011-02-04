@@ -9,7 +9,7 @@
  // This script runs in a hidden frame, reloads itself periodically,
  // and does whatever might need doing in the background.
 
- // Tell auth.inc that this is the daemon script; this is so that
+ // Tell auth.inc.php that this is the daemon script; this is so that
  // inactivity timeouts will still work, and to avoid logging an
  // event every time we run.
  $GLOBALS['DAEMON_FLAG'] = true;

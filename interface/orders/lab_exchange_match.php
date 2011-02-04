@@ -6,7 +6,7 @@
 // of the License, or (at your option) any later version.
 
 require_once("../registry.php");
-require_once("$srcdir/sql.inc");
+require_once("$srcdir/sql.inc.php");
 require_once("$srcdir/formdata.inc.php");
 
 // Find and match the patient with the incoming lab report.

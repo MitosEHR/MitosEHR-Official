@@ -3,7 +3,7 @@
 # saves what cames from habits/new.php
 
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/forms.inc");
 formHeader('Habits form submitted');
 

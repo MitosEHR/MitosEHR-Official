@@ -11,7 +11,7 @@
  /////////////////////////////////////////////////////////////////////
 
  include_once("../interface/registry.php");
- include_once("../library/patient.inc");
+ include_once("../library/patient.inc.php");
 
  $out = "";
  $indent = 0;

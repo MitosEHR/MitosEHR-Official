@@ -7,8 +7,8 @@
 // of the License, or (at your option) any later version.
 
 require_once("../registry.php");
-require_once("$srcdir/patient.inc");
-require_once("$srcdir/pnotes.inc");
+require_once("$srcdir/patient.inc.php");
+require_once("$srcdir/pnotes.inc.php");
 require_once("$srcdir/forms.inc");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/gprelations.inc.php");

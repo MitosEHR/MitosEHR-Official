@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/forms.inc");
 include_once("$srcdir/calendar.inc");
 ?>

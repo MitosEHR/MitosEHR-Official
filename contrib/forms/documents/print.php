@@ -1,7 +1,7 @@
 <?
 # print scanned documents
 
-include("../../../library/api.inc");
+include("../../../library/acl.inc.php");
 
 formHeader("Patient's Scanned Documents");
 

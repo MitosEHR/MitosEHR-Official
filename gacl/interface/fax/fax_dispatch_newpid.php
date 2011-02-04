@@ -12,7 +12,7 @@
 // is just the caller's selection list of recent encounters.
 
 require_once("../registry.php");
-require_once("$srcdir/sql.inc");
+require_once("$srcdir/sql.inc.php");
 
 $res = sqlStatement("SELECT date, encounter, reason FROM form_encounter " .
   "WHERE pid = '" . $_GET['p'] . "' " .

@@ -15,8 +15,8 @@ $fake_register_globals=false;
 //
 
  include_once("../../registry.php");
- include_once("$srcdir/log.inc");
- include_once("$srcdir/acl.inc");
+ include_once("$srcdir/log.inc.php");
+ include_once("$srcdir/acl.inc.php");
 
  $feid = $_GET['feid'] + 0; // id from form_encounter table
 

@@ -1,13 +1,13 @@
 <?php 
 include_once("../registry.php");
 
-include_once("$srcdir/patient.inc");
-include_once("$srcdir/../interface/reports/report.inc.php");
-include_once("$srcdir/billrep.inc");
+include_once("$srcdir/patient.inc.php");
+include_once("$srcdir/../interface/reports/report.inc.php.php");
+include_once("$srcdir/billrep.inc.php");
 include_once("$srcdir/forms.inc");
-include_once("$srcdir/billing.inc");
-include_once("$srcdir/pnotes.inc");
-include_once("$srcdir/report.inc");
+include_once("$srcdir/billing.inc.php");
+include_once("$srcdir/pnotes.inc.php");
+include_once("$srcdir/report.inc.php");
 
 //how many columns to use when displaying information
 $COLS=6;

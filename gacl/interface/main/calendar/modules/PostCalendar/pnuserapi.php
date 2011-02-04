@@ -29,7 +29,7 @@
 //=========================================================================
 //  Require utility classes
 //=========================================================================
-require_once($GLOBALS['fileroot']."/library/patient.inc");
+require_once($GLOBALS['fileroot']."/library/patient.inc.php");
 $pcModInfo = pnModGetInfo(pnModGetIDFromName(__POSTCALENDAR__));
 $pcDir = pnVarPrepForOS($pcModInfo['directory']);
 require_once("modules/$pcDir/common.api.php");

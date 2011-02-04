@@ -6,11 +6,11 @@
   // as published by the Free Software Foundation; either version 2
   // of the License, or (at your option) any later version.
 
-  include_once("patient.inc");
-  include_once("billing.inc");
+  include_once("patient.inc.php");
+  include_once("billing.inc.php");
 
   if ($GLOBALS['oer_config']['ws_accounting']['enabled'] !== 2) {
-    include_once("sql-ledger.inc");
+    include_once("sql-ledger.inc.php");
     include_once("invoice_summary.inc.php");
   }
 

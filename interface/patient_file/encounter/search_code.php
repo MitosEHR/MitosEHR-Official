@@ -6,7 +6,7 @@
 
 include_once("../../registry.php");
 include_once("../../../custom/code_types.inc.php");
-include_once("$srcdir/sql.inc");
+include_once("$srcdir/sql.inc.php");
 
 //the maximum number of records to pull out with the search:
 $M = 30;

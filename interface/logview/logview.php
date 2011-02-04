@@ -1,6 +1,6 @@
 <?php
 include_once("../registry.php");
-include_once("$srcdir/log.inc");
+include_once("$srcdir/log.inc.php");
 include_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/formatting.inc.php");
 ?>

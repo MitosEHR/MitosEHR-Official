@@ -1,6 +1,6 @@
 <? function medical_decision_report( $pid, $encounter, $cols, $id) { 
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/forms.inc");
 include_once("$srcdir/calendar.inc");
    $fres=sqlStatement("select * from patient_data where pid='".$pid."'");

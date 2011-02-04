@@ -12,7 +12,7 @@
  /////////////////////////////////////////////////////////////////////
 
  include_once("../interface/registry.php");
- include_once("../library/patient.inc");
+ include_once("../library/patient.inc.php");
 
  // FTP parameters that you must customize.  If you are not sending
  // then set $FTP_SERVER to an empty string.

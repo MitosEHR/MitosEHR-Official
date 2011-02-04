@@ -26,8 +26,8 @@ $fake_register_globals=false;
 //
 
 require_once("../../registry.php");
-require_once("$srcdir/sql.inc");
-require_once("$srcdir/log.inc");
+require_once("$srcdir/sql.inc.php");
+require_once("$srcdir/log.inc.php");
 
 //retrieve the user name
 $res = sqlQuery("select username from users where username=?", array($_SESSION{"authUser"}) );

@@ -1,7 +1,7 @@
 <?php
 require_once("../registry.php");
-require_once("../../library/acl.inc");
-require_once("$srcdir/sql.inc");
+require_once("../../library/acl.inc.php");
+require_once("$srcdir/sql.inc.php");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/classes/POSRef.class.php");
 

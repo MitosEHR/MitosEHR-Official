@@ -1,6 +1,6 @@
 <?
 include_once("../../registry.php");
-include_once("../../../library/sql.inc");	
+include_once("../../../library/sql.inc.php");	
 include_once("../../../library/formdata.inc.php");
 
 function addAppt($days,$time) {
@@ -23,13 +23,13 @@ function addVitals($weight, $height, $systolic, $diastolic, $pulse, $temp) {
   $_POST['bpd'] = $diastolic;
   $_POST['pulse'] = $pulse;
   $_POST['temperature'] = $temp;
-  include_once("../../../library/api.inc");
+  include_once("../../../library/acl.inc.php");
   require ("../vitals/C_FormVitals.class.php");
   $c = new C_FormVitals();
   echo $c->default_action_process($_POST);
 }
 
-//This function was copied from billing.inc and altered to support 'justify'
+//This function was copied from billing.inc.php and altered to support 'justify'
 function addBilling2($encounter, $code_type, $code, $code_text, $modifier="",$units="",$fee="0.00",$justify)
 {
   $justify_string = '';

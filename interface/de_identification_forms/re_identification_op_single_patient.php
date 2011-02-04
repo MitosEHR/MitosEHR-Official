@@ -17,11 +17,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.  *
  \********************************************************************************/
 require_once("../registry.php");
-require_once("$srcdir/lists.inc");
-require_once("$srcdir/patient.inc");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/lists.inc.php");
+require_once("$srcdir/patient.inc.php");
+require_once("$srcdir/acl.inc.php");
 require_once("$srcdir/options.inc.php");
-include_once("../../library/sql.inc");
+include_once("../../library/sql.inc.php");
 require_once("$srcdir/formdata.inc.php");
 $query = "SELECT status FROM re_identification_status";
 $res = sqlStatement($query);

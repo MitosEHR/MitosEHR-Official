@@ -11,7 +11,7 @@
 // INSERT INTO list_options VALUES ('lists','chartloc','Chart Storage Locations',51,0,0);
 
 require_once("../interface/registry.php");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/acl.inc.php");
 require_once("$srcdir/options.inc.php");
 
 $form_newid   = isset($_POST['form_newid'  ]) ? trim($_POST['form_newid'  ]) : '';

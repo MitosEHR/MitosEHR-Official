@@ -1,7 +1,7 @@
 <?php
 //------------report.php
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 function Chirpractic_physical_therapy_form_report( $pid, $encounter, $cols, $id) {
 $count = 0;
 $data = formFetch("form_Chirpractic_physical_therapy_form", $id);

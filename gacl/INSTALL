@@ -260,7 +260,7 @@ within OpenEMR in the admin->acl menu.  This is very powerful
 access control software.  To learn more about phpGACL
 (see http://phpgacl.sourceforge.net/), recommend reading the phpGACL manual,
 the /openemr/Documentation/README.phpgacl file, and the online wiki at
-www.oemr.org. Also recommend reading the comments in /openemr/library/acl.inc.
+www.oemr.org. Also recommend reading the comments in /openemr/library/acl.inc.php.
 
 V. Upgrading
 

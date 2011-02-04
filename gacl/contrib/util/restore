@@ -194,7 +194,7 @@ GADIR=''
 GACONFIGDIR=''
 GADBNAME=''
 if [ -f ../phpgacl.tar.gz ]; then
-  GADIR=`grep '^\s*\$phpgacl_location' library/acl.inc | cut -d \" -f 2`
+  GADIR=`grep '^\s*\$phpgacl_location' library/acl.inc.php | cut -d \" -f 2`
   GACONFIGDIR="$GADIR"
   mkdir ../phpgacl
   cd    ../phpgacl
@@ -210,7 +210,7 @@ if [ -f ../phpgacl.tar.gz ]; then
     GADBPASS=`grep '^\s*var \$_db_password' gacl.class.php | cut -d \' -f 2`
   fi
 elif [ -e gacl ]; then
-  grep '^\s*\$phpgacl_location' library/acl.inc > /dev/null
+  grep '^\s*\$phpgacl_location' library/acl.inc.php > /dev/null
   if [ $? -eq 0 ]; then
     GACONFIGDIR="$OEDIR/gacl"
     if [ -f ../phpgacl.sql.gz ]; then
@@ -575,10 +575,10 @@ if [ ! -z "$GADIR" ]; then
   fi
   #
   if [ $CHANGES -gt 0 ]; then
-    dlg_info "Modifying $OEDIR/library/acl.inc ..."
+    dlg_info "Modifying $OEDIR/library/acl.inc.php ..."
     cd $OEDIR/library
-    mv -f acl.inc acl.inc.old
-    sed "s^phpgacl_location *= *\"/.*\"^phpgacl_location = \"$GADIR\"^" acl.inc.old > acl.inc
+    mv -f acl.inc.php acl.inc.php.old
+    sed "s^phpgacl_location *= *\"/.*\"^phpgacl_location = \"$GADIR\"^" acl.inc.php.old > acl.inc.php
   fi
 fi
 

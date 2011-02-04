@@ -7,9 +7,9 @@
 require_once("../../registry.php");
 require_once("$srcdir/forms.inc");
 require_once("$srcdir/calendar.inc");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/acl.inc.php");
 require_once("$srcdir/formatting.inc.php");
-require_once("$srcdir/patient.inc");
+require_once("$srcdir/patient.inc.php");
 ?>
 <html>
 

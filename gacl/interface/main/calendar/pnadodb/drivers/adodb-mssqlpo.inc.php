@@ -19,7 +19,7 @@
 	the more standard || string concatenation operator.
 */
 	
-include_once(ADODB_DIR.'/drivers/adodb-mssql.inc.php');
+include_once(ADODB_DIR.'/drivers/adodb-mssql.inc.php.php');
 
 class ADODB_mssqlpo extends ADODB_mssql {
 	var $databaseType = "mssqlpo";

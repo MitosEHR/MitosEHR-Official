@@ -9,7 +9,7 @@ $fake_register_globals=false;
 //
 
 require_once("../../registry.php");
-require_once("$srcdir/sql.inc");
+require_once("$srcdir/sql.inc.php");
 function pic_array() {
     $picture_directory = "Patient Photograph"; //change this if you want
     $pics = array();

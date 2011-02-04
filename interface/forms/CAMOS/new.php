@@ -1,7 +1,7 @@
 <?php
 include_once("../../registry.php");
-include_once("../../../library/api.inc");
-include_once("../../../library/sql.inc");
+include_once("../../../library/acl.inc.php");
+include_once("../../../library/sql.inc.php");
 include_once("../../../library/formdata.inc.php");
 $out_of_encounter = false;
 if ( (($_SESSION['encounter'] == '') || ($_SESSION['pid'] == '')) || ($_GET['mode'] == 'external')) {

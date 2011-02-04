@@ -1,9 +1,9 @@
 <?php
 //------------This file inserts your field data into the MySQL database
 include_once("../../registry.php");
-include_once("../../../library/api.inc");
+include_once("../../../library/acl.inc.php");
 include_once("../../../library/forms.inc");
-include_once("../../../library/sql.inc");
+include_once("../../../library/sql.inc.php");
 include_once("content_parser.php");
 include_once("../../../library/formdata.inc.php");
 

@@ -18,7 +18,7 @@
  \********************************************************************************/
 
 require_once("../registry.php");
-require_once("$srcdir/patient.inc");
+require_once("$srcdir/patient.inc.php");
 require_once("../../custom/code_types.inc.php");
 
 $info_msg = "";

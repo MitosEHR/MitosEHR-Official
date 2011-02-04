@@ -11,8 +11,8 @@
   // see sl_eob_process.php.
 
   require_once("../registry.php");
-  require_once("$srcdir/log.inc");
-  require_once("$srcdir/patient.inc");
+  require_once("$srcdir/log.inc.php");
+  require_once("$srcdir/patient.inc.php");
   require_once("$srcdir/forms.inc");
   require_once("$srcdir/sl_eob.inc.php");
   require_once("$srcdir/invoice_summary.inc.php");

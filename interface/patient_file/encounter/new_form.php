@@ -28,7 +28,7 @@ function openNewForm(sel) {
 <body class="body_top">
 <dl>
 <?php //DYNAMIC FORM RETREIVAL
-include_once("$srcdir/registry.inc");
+include_once("$srcdir/registry.inc.php");
 
 function myGetRegistered($state="1", $limit="unlimited", $offset="0") {
   $sql = "SELECT category, nickname, name, state, directory, id, sql_run, " .

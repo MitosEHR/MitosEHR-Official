@@ -1,6 +1,6 @@
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 formHeader("Form: note");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 $provider_results = sqlQuery("select fname, lname from users where username='" . $_SESSION{"authUser"} . "'");

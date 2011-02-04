@@ -1,7 +1,7 @@
 <?php
 //------------Forms created by Nikolai Vitsyn 2004/01/23
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"] . "/api.inc");
+include_once($GLOBALS["srcdir"] . "/acl.inc.php");
 
 function ankleinjury_report($pid, $encounter, $cols, $id) {
  $count = 0;

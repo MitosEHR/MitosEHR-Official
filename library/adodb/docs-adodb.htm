@@ -2923,7 +2923,7 @@ $<font color="#663300">rs</font>   = $<font color="#663300">conn</font>->Execute
 <p>More complicated is a totally new database driver that connects to a new PHP 
   extension. Then you will need to implement several functions. Fortunately, you 
   do not have to modify most of the complex code. You only need to override a 
-  few stub functions. See <b>adodb-mysql.inc.php</b> for example.</p>
+  few stub functions. See <b>adodb-mysql.inc.php.php</b> for example.</p>
 <p>The default date format of ADOdb internally is YYYY-MM-DD (Ansi-92). All dates 
   should be converted to that format when passing to an ADOdb date function. See 
   Oracle for an example how we use ALTER SESSION to change the default date format 
@@ -3003,7 +3003,7 @@ $<font color="#663300">rs</font>   = $<font color="#663300">conn</font>->Execute
 This will break backward compat, if Prepare/Execute is used instead of ExecuteCursor. Reported by Chris Jones.
 <p>Added InParameter() and OutParameter(). Wrapper functions to Parameter(), but nicer because they
 are self-documenting.
-<p>Added 'R' handling in ActualType() to datadict-mysql.inc.php
+<p>Added 'R' handling in ActualType() to datadict-mysql.inc.php.php
 <p>Added ADOConnection::SerializableRS($rs). Returns a recordset that can be serialized in a session.
 <p>Added "Run SQL" to performance UI().
 <p>Misc spelling corrections in adodb-mysqli.inc.php, adodb-oci8.inc.php and datadict-oci8.inc.php, from Heinz Hombergs.
@@ -3038,7 +3038,7 @@ data dictionary parser now detects `field name` and generates column names with 
 <p>Added $db->length, which holds name of function that returns strlen.
 <p>Fixed error handling for bad driver in ADONewConnection - passed too few params to error-handler.
 <p>Datadict did not handle types like 16.0 properly in _GetSize. Fixed.
-<p>Oci8 driver SelectLimit() bug &= instead of =& used. Thx to Swen Thümmler.
+<p>Oci8 driver SelectLimit() bug &= instead of =& used. Thx to Swen Thï¿½mmler.
 <p>Jesse Mullan suggested not flushing outp when output buffering enabled. Due to Apache 2.0 bug. Added.
 <p>MetaTables/MetaColumns return ref bug with PHP5 fixed in adodb-datadict.inc.php.
 <p>New mysqli driver contributed by Arjen de Rijke. Based on adodb 3.40 driver.
@@ -3100,7 +3100,7 @@ which call sql, etc.
 <p>Oci8 stored procedure support, eg. "begin func(); end;" was incorrect in _query. Fixed.
 <p>Tiraboschi Massimiliano contributed italian language file.
 <p>Fernando Ortiz, fortiz#lacorona.com.mx, contributed informix performance monitor.
-<p>Added _varchar (varchar arrays) support for postgresql. Reported by PREVOT Stéphane.
+<p>Added _varchar (varchar arrays) support for postgresql. Reported by PREVOT Stï¿½phane.
 <p><b>3.92 22 Sept 2003</b> 
 <p>Added GetAssoc and CacheGetAssoc to connection object.
 <p>Removed TextMax and CharMax functions from adodb.inc.php. 

@@ -7,7 +7,7 @@
 $ignoreAuth=true;
 include_once("../registry.php");
 include_once("$srcdir/md5.js");
-include_once("$srcdir/sql.inc");
+include_once("$srcdir/sql.inc.php");
 ?>
 <html>
 <head>

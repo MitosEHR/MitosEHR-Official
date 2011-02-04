@@ -1,10 +1,10 @@
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/sql.inc");
+include_once("$srcdir/sql.inc.php");
 
 // This may be more appropriate to move to the library
 // later
-require_once("{$GLOBALS['srcdir']}/sql.inc");
+require_once("{$GLOBALS['srcdir']}/sql.inc.php");
 function getInsuranceCompanies($pid) {
   $res = sqlStatement("SELECT * FROM insurance_data WHERE pid = '$pid' " .
     "ORDER BY type ASC, date DESC");

@@ -10,8 +10,8 @@
 // encounter. It is invoked from pos_checkout.php via a jquery getScript().
 
 require_once("../registry.php");
-require_once("$srcdir/lists.inc");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/lists.inc.php");
+require_once("$srcdir/acl.inc.php");
 
 $issue   = 0 + (empty($_REQUEST['issue']) ? 0 : $_REQUEST['issue']);
 $thispid = 0 + (empty($_REQUEST['thispid']) ? $pid : $_REQUEST['thispid']);

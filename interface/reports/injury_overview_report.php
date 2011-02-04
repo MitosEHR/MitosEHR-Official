@@ -7,9 +7,9 @@
 // of the License, or (at your option) any later version.
 
 require_once("../registry.php");
-require_once("../../library/patient.inc");
-require_once("../../library/lists.inc");
-require_once("../../library/acl.inc");
+require_once("../../library/patient.inc.php");
+require_once("../../library/lists.inc.php");
+require_once("../../library/acl.inc.php");
 require_once("../../custom/code_types.inc.php");
 
 // Might want something different here.

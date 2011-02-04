@@ -3,7 +3,7 @@
 <?php
 include_once("../../registry.php");
 global $srcdir;
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
    $fres = sqlStatement("select * from form_plist where id=$id");
    $repdata = sqlFetchArray($fres);
    $fres=sqlStatement("select * from patient_data where pid=".$_SESSION["pid"]);

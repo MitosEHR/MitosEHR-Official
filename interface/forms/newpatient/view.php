@@ -1,7 +1,7 @@
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/acl.inc");
-include_once("$srcdir/lists.inc");
+include_once("$srcdir/acl.inc.php");
+include_once("$srcdir/lists.inc.php");
 
 $disabled = "disabled";
 

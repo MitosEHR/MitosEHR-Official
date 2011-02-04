@@ -9,9 +9,9 @@ $fake_register_globals=false;
 //
 
  include_once("../../registry.php");
- include_once("$srcdir/pnotes.inc");
- include_once("$srcdir/patient.inc");
- include_once("$srcdir/acl.inc");
+ include_once("$srcdir/pnotes.inc.php");
+ include_once("$srcdir/patient.inc.php");
+ include_once("$srcdir/acl.inc.php");
  include_once("$srcdir/options.inc.php");
 
  $prow = getPatientData($pid, "squad, title, fname, mname, lname");

@@ -26,7 +26,7 @@ $ignoreAuth = true; // no login required
 $de_identification_config = 0;
 
 require_once('../../interface/registry.php');
-require_once('../../library/sql.inc');
+require_once('../../library/sql.inc.php');
 require_once('../../library/sqlconf.php');
 
 function tableExists($tblname) {

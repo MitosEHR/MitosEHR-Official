@@ -14,7 +14,7 @@ V4.20 22 Feb 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights rese
 */
 
 
-include_once(ADODB_DIR."/drivers/adodb-mysql.inc.php");
+include_once(ADODB_DIR."/drivers/adodb-mysql.inc.php.php");
 
 
 class ADODB_mysqlt extends ADODB_mysql {

@@ -7,9 +7,9 @@
 ////////////////////////////////////////////////////////////////////
 
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
-include_once("$srcdir/patient.inc");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/acl.inc.php");
+include_once("$srcdir/patient.inc.php");
+include_once("$srcdir/patient.inc.php");
 formHeader("Form: intakeverslag");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 

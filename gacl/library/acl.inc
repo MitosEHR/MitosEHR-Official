@@ -323,7 +323,7 @@
 
       //see if this user is gacl protected (ie. do not allow
       //removal from the Administrators group)
-      require_once(dirname(__FILE__).'/user.inc');
+      require_once(dirname(__FILE__).'/user.inc.php');
       require_once(dirname(__FILE__).'/calendar.inc');
       $userNametoID = getIDfromUser($user_name);
       if (checkUserSetting("gacl_protect","1",$userNametoID) || $user_name == "admin") {

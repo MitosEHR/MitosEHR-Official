@@ -17,9 +17,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.  *
  \********************************************************************************/
 require_once("../registry.php");
-require_once("$srcdir/lists.inc");
-require_once("$srcdir/patient.inc");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/lists.inc.php");
+require_once("$srcdir/patient.inc.php");
+require_once("$srcdir/acl.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/translation.inc.php");
 ?>

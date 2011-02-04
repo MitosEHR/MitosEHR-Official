@@ -7,7 +7,7 @@
 // of the License, or (at your option) any later version.
 
 include_once("../registry.php");
-include_once($GLOBALS['srcdir'] . "/patient.inc");
+include_once($GLOBALS['srcdir'] . "/patient.inc.php");
 
 $template_dir = $GLOBALS['OE_SITE_DIR'] . "/letter_templates";
 

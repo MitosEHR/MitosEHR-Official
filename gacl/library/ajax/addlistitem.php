@@ -15,7 +15,7 @@
 */
 
 include_once("../../interface/registry.php");
-include_once("{$GLOBALS['srcdir']}/sql.inc");
+include_once("{$GLOBALS['srcdir']}/sql.inc.php");
 
 // check for required values
 if ($_GET['listid'] == "" || trim($_GET['newitem']) == "" || trim($_GET['newitem_abbr']) == "") exit;

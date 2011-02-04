@@ -23,7 +23,7 @@ ini_set('max_execution_time', '0');
 $ignoreAuth=true; // no login required
 
 require_once('interface/registry.php');
-require_once('library/sql-ledger.inc');
+require_once('library/sql-ledger.inc.php');
 require_once('library/invoice_summary.inc.php');
 require_once('library/sl_eob.inc.php');
 

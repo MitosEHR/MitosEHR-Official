@@ -10,7 +10,7 @@ $fake_register_globals=false;
 
 include_once("../../registry.php");
 include_once("$srcdir/calendar.inc");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 
 //the maximum number of patient records to display:
 $M = 100;

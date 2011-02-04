@@ -7,7 +7,7 @@
 // 
 
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 
 //****************************************************************************************
 // OpenEMR Core :: Call this function to layout the report

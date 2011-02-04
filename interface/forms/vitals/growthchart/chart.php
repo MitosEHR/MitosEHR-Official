@@ -32,7 +32,7 @@
 //
 
 include_once ("../../../../interface/registry.php");
-include_once ($GLOBALS['fileroot']."/library/patient.inc");
+include_once ($GLOBALS['fileroot']."/library/patient.inc.php");
 $chartpath = $GLOBALS['fileroot']."/interface/forms/vitals/growthchart/";
 
 $name = "";

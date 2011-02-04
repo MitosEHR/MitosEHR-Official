@@ -7,7 +7,7 @@
 // of the License, or (at your option) any later version.
 
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"] . "/api.inc");
+include_once($GLOBALS["srcdir"] . "/acl.inc.php");
 
 function scanned_notes_report($pid, $useless_encounter, $cols, $id) {
  global $webserver_root, $web_root, $encounter;

@@ -2,7 +2,7 @@
 function immunization_record_report( $pid, $encounter, $cols, $id) { 
 
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
    $fres=sqlStatement("select * from patient_data where pid='".$pid."'");
    if ($fres){
      $patient = sqlFetchArray($fres);

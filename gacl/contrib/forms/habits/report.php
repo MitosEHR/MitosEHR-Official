@@ -3,7 +3,7 @@
 # for reporting the habits entered in the form
 
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 
 function habits_report( $pid, $encounter, $cols, $id) {
 

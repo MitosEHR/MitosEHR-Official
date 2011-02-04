@@ -9,13 +9,13 @@ $fake_register_globals=false;
 //
 
 include_once("../../registry.php");
-include_once("$srcdir/log.inc");
-include_once("$srcdir/billing.inc");
+include_once("$srcdir/log.inc.php");
+include_once("$srcdir/billing.inc.php");
 include_once("$srcdir/forms.inc");
-include_once("$srcdir/pnotes.inc");
-include_once("$srcdir/transactions.inc");
-include_once("$srcdir/lists.inc");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/pnotes.inc.php");
+include_once("$srcdir/transactions.inc.php");
+include_once("$srcdir/lists.inc.php");
+include_once("$srcdir/patient.inc.php");
 include_once("$srcdir/options.inc.php");
 
 // The number of authorizations to display in the quick view:

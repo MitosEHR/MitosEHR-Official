@@ -4,9 +4,9 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 require_once("../registry.php");
-require_once("../../library/acl.inc");
+require_once("../../library/acl.inc.php");
 require_once("$srcdir/md5.js");
-require_once("$srcdir/sql.inc");
+require_once("$srcdir/sql.inc.php");
 require_once("$srcdir/calendar.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/options.inc.php");

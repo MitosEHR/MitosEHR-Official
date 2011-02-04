@@ -25,8 +25,8 @@
 //  ------------------------------------------------------------------------ //
  
 require_once(dirname(__FILE__) . "/../interface/registry.php");
-require_once(dirname(__FILE__) . "/../library/sql-ccr.inc");
-require_once(dirname(__FILE__) . "/../library/sql.inc");
+require_once(dirname(__FILE__) . "/../library/sql-ccr.inc.php");
+require_once(dirname(__FILE__) . "/../library/sql.inc.php");
 require_once(dirname(__FILE__) . "/uuid.php");
 ?>
 

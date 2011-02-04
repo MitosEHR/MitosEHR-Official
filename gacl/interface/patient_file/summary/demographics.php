@@ -13,18 +13,18 @@ $fake_register_globals=false;
 //
 
  require_once("../../registry.php");
- require_once("$srcdir/patient.inc");
- require_once("$srcdir/acl.inc");
+ require_once("$srcdir/patient.inc.php");
+ require_once("$srcdir/acl.inc.php");
  require_once("$srcdir/classes/Address.class.php");
  require_once("$srcdir/classes/InsuranceCompany.class.php");
  require_once("$srcdir/classes/Document.class.php");
  require_once("$srcdir/options.inc.php");
  require_once("../history/history.inc.php");
  require_once("$srcdir/formatting.inc.php");
- require_once("$srcdir/edi.inc");
+ require_once("$srcdir/edi.inc.php");
 
   if ($GLOBALS['concurrent_layout'] && $_GET['set_pid']) {
-  include_once("$srcdir/pid.inc");
+  include_once("$srcdir/pid.inc.php");
   setpid($_GET['set_pid']);
  }
 

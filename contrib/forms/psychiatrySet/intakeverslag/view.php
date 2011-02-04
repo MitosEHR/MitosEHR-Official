@@ -7,8 +7,8 @@
 ////////////////////////////////////////////////////////////////////
 
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/acl.inc.php");
+include_once("$srcdir/patient.inc.php");
 
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 
@@ -68,7 +68,7 @@ if( $tmpDate && $tmpDate != '0000-00-00 00:00:00' ) $m_strEventDate = $tmpDate;
 
 <body <?echo $top_bg_line;?> topmargin=0 rightmargin=0 leftmargin=2 bottommargin=0 marginwidth=2 marginheight=0>
 <?php
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 //$obj = formFetch("form_intakeverslag", (int)$_GET["id"]);
 ?>
 

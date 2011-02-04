@@ -1,5 +1,5 @@
 <?php
-	require_once (dirname(__FILE__) ."/../sql.inc");
+	require_once (dirname(__FILE__) ."/../sql.inc.php");
         require_once (dirname(__FILE__) ."/../formdata.inc.php");
 	require_once("Patient.class.php");
 	require_once("Person.class.php");

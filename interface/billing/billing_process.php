@@ -5,9 +5,9 @@
 // of the License, or (at your option) any later version.
 
 include_once("../registry.php");
-include_once("$srcdir/patient.inc");
-include_once("$srcdir/billrep.inc");
-include_once("$srcdir/billing.inc");
+include_once("$srcdir/patient.inc.php");
+include_once("$srcdir/billrep.inc.php");
+include_once("$srcdir/billing.inc.php");
 include_once("$srcdir/gen_x12_837.inc.php");
 include_once("$srcdir/gen_hcfa_1500.inc.php");
 include_once(dirname(__FILE__) . "/../../library/classes/WSClaim.class.php");

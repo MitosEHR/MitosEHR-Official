@@ -6,7 +6,7 @@
 // as published by the Free Software Foundation; either version 2
 //------------Forms generated from formsWiz
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"] . "/api.inc");
+include_once($GLOBALS["srcdir"] . "/acl.inc.php");
 function medical_orders_report( $pid, $encounter, $cols, $id) {
   $count = 0;
   $data = formFetch("form_medical_orders", $id);

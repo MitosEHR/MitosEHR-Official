@@ -15,7 +15,7 @@ $fake_register_globals=false;
 //
 
 require_once("../interface/registry.php");
-require_once("$srcdir/sql.inc");
+require_once("$srcdir/sql.inc.php");
 ?>
 <html>
 <head>

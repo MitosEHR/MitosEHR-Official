@@ -6,7 +6,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-require_once(dirname(__FILE__) . "/sql.inc");
+require_once(dirname(__FILE__) . "/sql.inc.php");
 require_once(dirname(__FILE__) . "/formdata.inc.php");
 
 //This will return the user setting(s) from the 'users' table.

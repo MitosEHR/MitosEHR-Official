@@ -60,7 +60,7 @@
  // * interface/patient_file/encounter/diagnosis_full.php: target and link
  //   changes.
  // * interface/main/authorizations/authorizations.php: link and target changes.
- // * library/api.inc: url change.
+ // * library/acl.inc.php: url change.
  // * interface/patient_file/summary/rx_frameset.php: new frameset.
  // * interface/patient_file/summary/rx_left.php: new for prescriptions.
  // * all encounter forms: remove all instances of "target=Main" and change
@@ -84,9 +84,9 @@
  // the corresponding session values.
 
  include_once("../registry.php");
- include_once($GLOBALS['fileroot']."/library/acl.inc");
+ include_once($GLOBALS['fileroot']."/library/acl.inc.php");
  include_once($GLOBALS['fileroot']."/custom/code_types.inc.php");
- include_once($GLOBALS['fileroot']."/library/patient.inc");
+ include_once($GLOBALS['fileroot']."/library/patient.inc.php");
 
  // This array defines the list of primary documents that may be
  // chosen.  Each element value is an array of 3 values:
@@ -934,7 +934,7 @@ if (sqlNumRows($lres)) {
       "patient_file/encounter/load_form.php?formname=$option_id");
   }
 }
-include_once("$srcdir/registry.inc");
+include_once("$srcdir/registry.inc.php");
 $reg = getRegistered();
 if (!empty($reg)) {
   foreach ($reg as $entry) {
@@ -1169,7 +1169,7 @@ if (!empty($reg)) {
 <?php
  // To use RelayHealth, see comments and parameters in includes/config.php.
  if (!empty($GLOBALS['ssi']['rh'])) {
-  include_once("../../library/ssi.inc");
+  include_once("../../library/ssi.inc.php");
   echo getRelayHealthLink() ."<br /><hr />\n";
  }
 ?>

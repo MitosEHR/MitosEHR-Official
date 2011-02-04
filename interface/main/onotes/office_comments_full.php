@@ -1,6 +1,6 @@
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/onotes.inc");
+include_once("$srcdir/onotes.inc.php");
 
 //the number of records to display per screen
 $N = 10;

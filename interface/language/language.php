@@ -10,9 +10,9 @@ $fake_register_globals=false;
 
 //INCLUDES, DO ANY ACTIONS, THEN GET OUR DATA
 include_once("../registry.php");
-include_once("$srcdir/registry.inc");
-include_once("$srcdir/sql.inc");
-include_once("../../library/acl.inc");
+include_once("$srcdir/registry.inc.php");
+include_once("$srcdir/sql.inc.php");
+include_once("../../library/acl.inc.php");
 require_once("language.inc.php");
 require_once("$srcdir/formdata.inc.php");
 

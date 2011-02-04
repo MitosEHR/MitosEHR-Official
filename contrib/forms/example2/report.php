@@ -1,6 +1,6 @@
 <?php
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 
 /** CHANGE THIS, the name of the function is significant and  **
  **              must be changed to match the folder name     **/

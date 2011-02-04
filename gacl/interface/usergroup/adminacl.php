@@ -12,7 +12,7 @@
 // from adminacl_ajax.php
 //
 include_once("../registry.php");
-include_once("$srcdir/acl.inc");
+include_once("$srcdir/acl.inc.php");
 
 //ensure user has proper access
 if (!acl_check('admin', 'acl')) {

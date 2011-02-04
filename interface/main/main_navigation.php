@@ -1,6 +1,6 @@
 <?php
 include_once("../registry.php");
-include_once("../../library/acl.inc");
+include_once("../../library/acl.inc.php");
 ?>
 <html>
 <head>

@@ -1,6 +1,6 @@
 <?php
 require_once("../registry.php");
-require_once("$srcdir/sql.inc");
+require_once("$srcdir/sql.inc.php");
 
 // Validation for non-unique external patient identifier.
 if (!empty($_POST["pubpid"])) {
@@ -14,8 +14,8 @@ if (!empty($_POST["pubpid"])) {
   }
 }
 
-require_once("$srcdir/pid.inc");
-require_once("$srcdir/patient.inc");
+require_once("$srcdir/pid.inc.php");
+require_once("$srcdir/patient.inc.php");
 
 //here, we lock the patient data table while we find the most recent max PID
 //other interfaces can still read the data during this lock, however

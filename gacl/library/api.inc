@@ -1,8 +1,8 @@
 <?php
 //our api for 3rd party developers
 include_once("../../registry.php");
-include_once("{$GLOBALS['srcdir']}/sql.inc");
-include_once("{$GLOBALS['srcdir']}/billing.inc");
+include_once("{$GLOBALS['srcdir']}/sql.inc.php");
+include_once("{$GLOBALS['srcdir']}/billing.inc.php");
 
 $GLOBALS['form_exit_url'] = $GLOBALS['concurrent_layout'] ?
 	"$rootdir/patient_file/encounter/encounter_top.php" :

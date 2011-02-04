@@ -14,8 +14,8 @@
 // Important - Ensure that display_errors=Off in php.ini settings.
 //
 include_once("../../interface/registry.php");
-include_once("$srcdir/acl.inc");
-include_once("$srcdir/user.inc");
+include_once("$srcdir/acl.inc.php");
+include_once("$srcdir/user.inc.php");
 include_once("$srcdir/calendar.inc");
 
 header("Content-type: text/xml");

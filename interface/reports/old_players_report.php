@@ -10,8 +10,8 @@
  // squad.  It is applicable only for sports teams.
 
 require_once("../registry.php");
-require_once("$srcdir/patient.inc");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/patient.inc.php");
+require_once("$srcdir/acl.inc.php");
 
 // Temporary variable while new logic is being tested.
 // True means that missing days in the daily_fitness table default to

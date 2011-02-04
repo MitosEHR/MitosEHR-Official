@@ -1,6 +1,6 @@
 <?php
-#require_once("{$GLOBALS['srcdir']}/sql.inc");
-require_once(dirname(__FILE__). "/sql.inc");
+#require_once("{$GLOBALS['srcdir']}/sql.inc.php");
+require_once(dirname(__FILE__). "/sql.inc.php");
 
 function newEvent($event, $user, $groupname, $success, $comments="") {
     $adodb = $GLOBALS['adodb']['db'];
@@ -496,7 +496,7 @@ function auditSQLEvent($statement, $outcome)
 // this issue is arised.
 
 // Fix:
-// The task of assigning LAST_INSERT_ID  to a global variable $GLOBALS['lastidado']  is moved from sql.inc to this file.
+// The task of assigning LAST_INSERT_ID  to a global variable $GLOBALS['lastidado']  is moved from sql.inc.php to this file.
 // Following code will get executed, when (a) when audit is enabled (b) When break glass is invoked.
 // Retrieve LAST_INSERT_ID and assign it to a global variable and eventually it can be used by other functions.
     $lastid=mysql_insert_id($GLOBALS['dbh']);

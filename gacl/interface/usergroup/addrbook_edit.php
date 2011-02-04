@@ -7,7 +7,7 @@
  // of the License, or (at your option) any later version.
 
  include_once("../registry.php");
- include_once("$srcdir/acl.inc");
+ include_once("$srcdir/acl.inc.php");
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/formdata.inc.php");
 

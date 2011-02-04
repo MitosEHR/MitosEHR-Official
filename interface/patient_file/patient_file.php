@@ -1,6 +1,6 @@
 <?php
 include_once("../registry.php");
-include_once("$srcdir/pid.inc");
+include_once("$srcdir/pid.inc.php");
 setpid($_GET["set_pid"]);
 ?>
 <HTML>

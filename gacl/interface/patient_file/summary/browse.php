@@ -9,7 +9,7 @@ $fake_register_globals=false;
 //
 
 include_once("../../registry.php");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 include_once("$srcdir/options.inc.php");
 
 //the maximum number of patient records to display:

@@ -1,6 +1,6 @@
 <?php
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 
 function review_of_systems_report( $pid, $encounter, $cols, $id) {
 $count = 0;

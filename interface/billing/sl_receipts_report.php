@@ -12,9 +12,9 @@
   // many other practices have this same need. - rod@sunsetsystems.com
 
   require_once("../registry.php");
-  require_once("$srcdir/patient.inc");
-  require_once("$srcdir/sql-ledger.inc");
-  require_once("$srcdir/acl.inc");
+  require_once("$srcdir/patient.inc.php");
+  require_once("$srcdir/sql-ledger.inc.php");
+  require_once("$srcdir/acl.inc.php");
   require_once("$srcdir/formatting.inc.php");
   require_once "$srcdir/options.inc.php";
   require_once "$srcdir/formdata.inc.php";

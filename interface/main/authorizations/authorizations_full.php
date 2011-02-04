@@ -9,7 +9,7 @@ $fake_register_globals=false;
 //
 
 include_once("../../registry.php");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 
 if (isset($_GET["mode"]) && $_GET["mode"] == "authorize") {
 newEvent("authorize",$_SESSION["authUser"],$_SESSION["authProvider"],1,$_GET["pid"]);

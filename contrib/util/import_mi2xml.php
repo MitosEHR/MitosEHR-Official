@@ -11,9 +11,9 @@
 
 $ignoreAuth = true;
 include_once("../interface/registry.php");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 include_once("$srcdir/forms.inc");
-include_once("$srcdir/acl.inc");
+include_once("$srcdir/acl.inc.php");
 
 // set name of XML file
 if ( $argc < 1 ) {

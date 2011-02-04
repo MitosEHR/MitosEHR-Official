@@ -7,7 +7,7 @@
  // of the License, or (at your option) any later version.
 
  include_once("../../registry.php");
- include_once("$srcdir/acl.inc");
+ include_once("$srcdir/acl.inc.php");
 
  $line_id = $_REQUEST['lineid'];
  $info_msg = "";

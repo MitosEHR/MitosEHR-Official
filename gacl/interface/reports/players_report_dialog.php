@@ -17,9 +17,9 @@
 //////////////////////////////////////////////////////////////////////
 
 require_once("../registry.php");
-require_once("$srcdir/acl.inc");
-require_once("$srcdir/lists.inc");
-require_once("$srcdir/pnotes.inc");
+require_once("$srcdir/acl.inc.php");
+require_once("$srcdir/lists.inc.php");
+require_once("$srcdir/pnotes.inc.php");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/calendar_events.inc.php");
 

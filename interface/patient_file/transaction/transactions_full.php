@@ -9,7 +9,7 @@ $fake_register_globals=false;
 //
 
 include_once("../../registry.php");
-include_once("$srcdir/transactions.inc");
+include_once("$srcdir/transactions.inc.php");
 require_once("$srcdir/options.inc.php");
 ?>
 

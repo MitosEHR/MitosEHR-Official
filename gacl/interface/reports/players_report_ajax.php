@@ -7,7 +7,7 @@
 // of the License, or (at your option) any later version.
 
 require_once("../registry.php");
-require_once("$srcdir/lists.inc");
+require_once("$srcdir/lists.inc.php");
 
 $plid = $_GET['plid'] + 0; // pid
 $s = '';

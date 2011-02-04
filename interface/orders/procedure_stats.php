@@ -10,8 +10,8 @@
 // other procedure orders.
 
 require_once("../registry.php");
-require_once("../../library/patient.inc");
-require_once("../../library/acl.inc");
+require_once("../../library/patient.inc.php");
+require_once("../../library/acl.inc.php");
 require_once("../../custom/code_types.inc.php");
 require_once "$srcdir/options.inc.php";
 require_once "$srcdir/formdata.inc.php";

@@ -1,10 +1,10 @@
 <?php
  include_once("../../registry.php");
  include_once("$srcdir/forms.inc");
- include_once("$srcdir/billing.inc");
- include_once("$srcdir/pnotes.inc");
- include_once("$srcdir/patient.inc");
- include_once("$srcdir/report.inc");
+ include_once("$srcdir/billing.inc.php");
+ include_once("$srcdir/pnotes.inc.php");
+ include_once("$srcdir/patient.inc.php");
+ include_once("$srcdir/report.inc.php");
  require_once("$srcdir/options.inc.php");
  include_once(dirname(__file__) . "/../../../library/classes/Document.class.php");
  include_once(dirname(__file__) . "/../../../library/classes/Note.class.php");

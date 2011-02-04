@@ -6,9 +6,9 @@
 // of the License, or (at your option) any later version.
 
 require_once("$include_root/registry.php");
-require_once("$srcdir/pnotes.inc");
-require_once("$srcdir/patient.inc");
-require_once("$srcdir/auth.inc");
+require_once("$srcdir/pnotes.inc.php");
+require_once("$srcdir/patient.inc.php");
+require_once("$srcdir/auth.inc.php");
 include_once("$srcdir/formdata.inc.php");
 
 function lab_results_messages($set_pid, $rid, $provider_id="") {

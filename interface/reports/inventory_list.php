@@ -15,7 +15,7 @@ $fake_register_globals=false;
 //
 
  require_once("../registry.php");
- require_once("$srcdir/acl.inc");
+ require_once("$srcdir/acl.inc.php");
  require_once("$srcdir/options.inc.php");
  require_once("$include_root/drugs/drugs.inc.php");
 

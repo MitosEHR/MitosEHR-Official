@@ -7,7 +7,7 @@
 //Initial New Patient Physical Exam
 //================================================
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 function Initial_New_Patient_Physical_Exam_report( $pid, $encounter, $cols, $id) {
 $count = 0;
 $data = formFetch("form_Initial_New_Patient_Physical_Exam", $id);

@@ -16,7 +16,7 @@ V4.92a 29 Aug 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights res
 // security - hide paths
 if (!defined('ADODB_DIR')) die();
 
-include_once(ADODB_DIR."/drivers/adodb-mysql.inc.php");
+include_once(ADODB_DIR."/drivers/adodb-mysql.inc.php.php");
 
 
 class ADODB_mysqlt extends ADODB_mysql {

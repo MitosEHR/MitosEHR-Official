@@ -19,7 +19,7 @@ require_once("claim_status_codes.php");
 require_once("adjustment_reason_codes.php");
 require_once("remark_codes.php");
 require_once("$srcdir/formatting.inc.php");
-require_once("$srcdir/billing.inc");
+require_once("$srcdir/billing.inc.php");
 
     $debug = $_GET['debug'] ? 1 : 0; // set to 1 for debugging mode
     $paydate = parse_date($_GET['paydate']);

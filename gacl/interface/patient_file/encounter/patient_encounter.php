@@ -15,7 +15,7 @@ include_once("../../registry.php");
 
 // Session pid must be right.
 //
-include_once("$srcdir/pid.inc");
+include_once("$srcdir/pid.inc.php");
 if ($_GET["set_pid"] && $_GET["set_pid"] != $_SESSION["pid"]) {
 	setpid($_GET["set_pid"]);
 }
@@ -23,7 +23,7 @@ else if ($_GET["pid"] && $_GET["pid"] != $_SESSION["pid"]) {
 	setpid($_GET["pid"]);
 }
 
-include_once("$srcdir/encounter.inc");
+include_once("$srcdir/encounter.inc.php");
 
 
 //only set the global encounter variable if it has been explicityly passed

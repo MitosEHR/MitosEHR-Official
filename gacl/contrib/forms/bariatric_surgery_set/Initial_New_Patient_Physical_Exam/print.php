@@ -7,7 +7,7 @@
 //Initial New Patient Physical Exam
 //================================================
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 formHeader("Form: Initial New Patient Physical Exam");
 ?>
 <html><head>

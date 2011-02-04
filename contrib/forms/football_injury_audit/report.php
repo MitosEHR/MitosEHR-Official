@@ -8,7 +8,7 @@
 // of the License, or (at your option) any later version.
 
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"] . "/api.inc");
+include_once($GLOBALS["srcdir"] . "/acl.inc.php");
 
 $fi_report_cols  = 2;
 $fi_report_colno = 0;
@@ -27,7 +27,7 @@ function fi_report_item($title, $value) {
   "<span class='text'>$value &nbsp;</span></td>\n";
 }
 
-// This function is invoked from printPatientForms in report.inc
+// This function is invoked from printPatientForms in report.inc.php
 // when viewing a "comprehensive patient report".  Also from
 // interface/patient_file/encounter/forms.php.
 //

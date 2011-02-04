@@ -1,6 +1,6 @@
 <?php
-require_once (dirname(__FILE__) . "/../sql.inc");
-require_once (dirname(__FILE__) . "/../lists.inc");
+require_once (dirname(__FILE__) . "/../sql.inc.php");
+require_once (dirname(__FILE__) . "/../lists.inc.php");
 require_once("ORDataObject.class.php");
 require_once("Patient.class.php");
 require_once("Person.class.php");

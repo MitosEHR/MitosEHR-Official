@@ -2,7 +2,7 @@
 
 require_once ($GLOBALS['fileroot'] . "/library/classes/Controller.class.php");
 require_once ($GLOBALS['fileroot'] . "/library/forms.inc");
-require_once ($GLOBALS['fileroot'] . "/library/sql.inc");
+require_once ($GLOBALS['fileroot'] . "/library/sql.inc.php");
 require_once("FormAdultProgressNote.class.php");
 
 class C_FormAdultProgressNote extends Controller {

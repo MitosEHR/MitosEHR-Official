@@ -1,6 +1,6 @@
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 formHeader("Form: Chirpractic_physical_therapy_form");
 ?>
 <html><head>

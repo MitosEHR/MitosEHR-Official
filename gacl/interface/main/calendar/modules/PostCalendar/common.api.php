@@ -1007,7 +1007,7 @@ function postcalendar_userapi_buildSubmitForm($args,$admin=false)
     // limit the number of results returned by getPatientPID
     // this helps to prevent the server from stalling on a request with
     // no PID and thousands of PIDs in the database -- JRM
-    // the function getPatientPID($pid, $given, $orderby, $limit, $start) <-- defined in library/patient.inc
+    // the function getPatientPID($pid, $given, $orderby, $limit, $start) <-- defined in library/patient.inc.php
     $plistlimit = 500;
     if (is_numeric($PatientID)) {
         $tpl->assign('PatientList', getPatientPID(array('pid'=>$PatientID, 'limit'=>$plistlimit)));

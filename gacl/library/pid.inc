@@ -1,6 +1,6 @@
 <?php
 include_once("$srcdir/../interface/registry.php");
-include_once("$srcdir/log.inc");
+include_once("$srcdir/log.inc.php");
 
 //function called to set the global session variable for patient id (pid) number
 function setpid($new_pid) {

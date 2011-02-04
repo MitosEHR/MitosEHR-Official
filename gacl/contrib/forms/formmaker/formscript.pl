@@ -116,7 +116,7 @@ START
 my $new_php =<<'START';
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 formHeader("Form: FORM_NAME");
 $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
 ?>
@@ -142,7 +142,7 @@ START
 my $print_php=<<'START';
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 formHeader("Form: FORM_NAME");
 ?>
 <html><head>
@@ -165,7 +165,7 @@ my $report_php=<<'START';
 <?php
 //------------report.php
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 function FORM_NAME_report( $pid, $encounter, $cols, $id) {
 $count = 0;
 $data = formFetch("form_FORM_NAME", $id);
@@ -199,7 +199,7 @@ my $save_php=<<'START';
 <?php
 //------------This file inserts your field data into the MySQL database
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/forms.inc");
 require_once("$srcdir/formdata.inc.php");
 
@@ -302,9 +302,9 @@ my $view_php =<<'START';
 <!-- view.php -->
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 formHeader("Form: FORM_NAME");
-$obj = formFetch("form_FORM_NAME", $_GET["id"]);  //#Use the formFetch function from api.inc to get values for existing form.
+$obj = formFetch("form_FORM_NAME", $_GET["id"]);  //#Use the formFetch function from acl.inc.php to get values for existing form.
 
 function chkdata_Txt(&$obj, $var) {
         return htmlspecialchars($obj{"$var"},ENT_QUOTES);

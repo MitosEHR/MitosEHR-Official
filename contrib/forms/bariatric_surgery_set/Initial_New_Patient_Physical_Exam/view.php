@@ -7,8 +7,8 @@
 //Initial New Patient Physical Exam
 //================================================
  include_once("../../registry.php");
- include_once("$srcdir/api.inc"); 
- $obj = formFetch("form_Initial_New_Patient_Physical_Exam", $_GET["id"]);  //#Use the formFetch function from api.inc to get values for existing form. 
+ include_once("$srcdir/acl.inc.php"); 
+ $obj = formFetch("form_Initial_New_Patient_Physical_Exam", $_GET["id"]);  //#Use the formFetch function from acl.inc.php to get values for existing form. 
   
  function chkdata_Txt(&$obj, $var) { 
          return htmlspecialchars($obj{"$var"},ENT_QUOTES); 

@@ -18,8 +18,8 @@
  \********************************************************************************/
  
 /* 
-*  Here /interface/registry.php is not referred, because it includes auth.inc. 
-*   auth.inc verifies for user authentication information & login session variables. 
+*  Here /interface/registry.php is not referred, because it includes auth.inc.php. 
+*   auth.inc.php verifies for user authentication information & login session variables. 
 *  Pass these variables $webserver_root & $_GLOBALS[backup_log_dir] as parameters for CRON.
 */
 include_once ("$argv[1]/library/sqlconf.php");

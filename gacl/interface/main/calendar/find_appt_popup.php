@@ -7,7 +7,7 @@
  // of the License, or (at your option) any later version.
 
  include_once("../../registry.php");
- include_once("$srcdir/patient.inc");
+ include_once("$srcdir/patient.inc.php");
 
  $input_catid = $_REQUEST['catid'];
 

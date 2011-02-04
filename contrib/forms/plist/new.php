@@ -1,9 +1,9 @@
 <?php
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/forms.inc");
 include_once("$srcdir/calendar.inc");
-include_once("$srcdir/lists.inc");
+include_once("$srcdir/lists.inc.php");
 $frmn = 'form_plist';
 $ftitle = 'Problem list';
 $old = sqlStatement("select form_id, formdir from forms where (form_name='${ftitle}') and (pid=$pid) order by date desc limit 1");

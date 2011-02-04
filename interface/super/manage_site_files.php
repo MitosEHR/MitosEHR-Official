@@ -14,7 +14,7 @@ $sanitize_all_escapes = true;
 $fake_register_globals = false;
 
 require_once("../registry.php");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/acl.inc.php");
 
 if (!acl_check('admin', 'super')) die(htmlspecialchars(xl('Not authorized')));
 

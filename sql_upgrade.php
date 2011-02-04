@@ -16,7 +16,7 @@ ini_set('max_execution_time', '0');
 $ignoreAuth = true; // no login required
 
 require_once('interface/registry.php');
-require_once('library/sql.inc');
+require_once('library/sql.inc.php');
 
 // Force logging off
 $GLOBALS["enable_auditlog"]=0;

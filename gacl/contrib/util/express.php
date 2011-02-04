@@ -165,7 +165,7 @@ if ($fd == FALSE) {
 $string = "<?
 //  OpenEMR
 //  MySQL Config
-//  Referenced from sql.inc
+//  Referenced from sql.inc.php
 
 ";
 

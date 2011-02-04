@@ -2,11 +2,11 @@
 include_once("../../registry.php");
 
 include_once("$srcdir/forms.inc");
-include_once("$srcdir/billing.inc");
-include_once("$srcdir/pnotes.inc");
-include_once("$srcdir/patient.inc");
-include_once("$srcdir/report.inc");
-include_once("$srcdir/acl.inc");
+include_once("$srcdir/billing.inc.php");
+include_once("$srcdir/pnotes.inc.php");
+include_once("$srcdir/patient.inc.php");
+include_once("$srcdir/report.inc.php");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/options.inc.php");
 
 // get various authorization levels

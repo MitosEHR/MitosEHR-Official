@@ -4,7 +4,7 @@
  */
 
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 
 /** CHANGE THIS - name of the database table associated with this form **/
 $table_name = "form_example";

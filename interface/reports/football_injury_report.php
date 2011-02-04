@@ -3,8 +3,8 @@
 // of injuries for a given time period and reporting key.
 
 include_once("../registry.php");
-include_once("../../library/patient.inc");
-include_once("../../library/acl.inc");
+include_once("../../library/patient.inc.php");
+include_once("../../library/acl.inc.php");
 include_once("../forms/football_injury_audit/fia.inc.php");
 
 // Might want something different here.

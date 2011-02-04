@@ -1,5 +1,5 @@
 <?php
-require_once("{$GLOBALS['srcdir']}/sql.inc");
+require_once("{$GLOBALS['srcdir']}/sql.inc.php");
 
 function send_file ($fp,$size)
 {
@@ -9,7 +9,7 @@ function send_file ($fp,$size)
 
 	if ($billing_server == "" || $billing_user == "" || $billing_pass == "") {
 		
-		include_once("{$GLOBALS["srcdir"]}/need_service.inc");
+		include_once("{$GLOBALS["srcdir"]}/need_service.inc.php");
 
 		return FALSE;
 	}

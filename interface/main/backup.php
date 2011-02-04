@@ -35,8 +35,8 @@
 // tested a restore!
 
 require_once("../registry.php");
-require_once("$srcdir/acl.inc");
-require_once("$srcdir/log.inc");
+require_once("$srcdir/acl.inc.php");
+require_once("$srcdir/log.inc.php");
 
 if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
 

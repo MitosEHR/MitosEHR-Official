@@ -32,7 +32,7 @@
 //$ignoreAuth = true;
 include_once("../../registry.php");
 include_once("$srcdir/calendar.inc");
-include_once("$srcdir/patient.inc");
+include_once("$srcdir/patient.inc.php");
 include "includes/pnre.inc.php";
 include 'includes/pnAPI.php';
 

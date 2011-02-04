@@ -1,7 +1,7 @@
 <?php
 //------------Forms generated from formsWiz
 include_once("../../registry.php");
-include_once($GLOBALS["srcdir"]."/api.inc");
+include_once($GLOBALS["srcdir"]."/acl.inc.php");
 function prosthesis_report( $pid, $encounter, $cols, $id) {
 $count = 0;
 $data = formFetch("form_prosthesis", $id);

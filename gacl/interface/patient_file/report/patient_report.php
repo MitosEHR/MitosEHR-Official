@@ -1,8 +1,8 @@
 <?php
 
 include_once("../../registry.php");
-include_once("$srcdir/lists.inc");
-include_once("$srcdir/acl.inc");
+include_once("$srcdir/lists.inc.php");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/forms.inc");
 
 // get various authorization levels

@@ -10,7 +10,7 @@
  // range.
 
  require_once("../registry.php");
- require_once("$srcdir/patient.inc");
+ require_once("$srcdir/patient.inc.php");
  require_once("../drugs/drugs.inc.php");
  require_once("$srcdir/formatting.inc.php");
 

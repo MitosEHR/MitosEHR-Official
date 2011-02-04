@@ -1,7 +1,7 @@
 <?php
 //------------This file inserts your field data into the MySQL database
 include_once("../../registry.php");
-include_once("$srcdir/api.inc");
+include_once("$srcdir/acl.inc.php");
 include_once("$srcdir/forms.inc");
 
 //process form variables here

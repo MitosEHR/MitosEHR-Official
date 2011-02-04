@@ -1,9 +1,9 @@
 <?php
 //INCLUDES, DO ANY ACTIONS, THEN GET OUR DATA
 include_once("../registry.php");
-include_once("$srcdir/registry.inc");
-include_once("$srcdir/sql.inc");
-include_once("../../library/acl.inc");
+include_once("$srcdir/registry.inc.php");
+include_once("$srcdir/sql.inc.php");
+include_once("../../library/acl.inc.php");
 include_once("batchcom.inc.php");
 
 // gacl control

@@ -1,5 +1,5 @@
 <?php
-include_once(dirname(__FILE__) . '/sql.inc'); // fixes vulnerability with register_globals
+include_once(dirname(__FILE__) . '/sql.inc.php'); // fixes vulnerability with register_globals
 require_once(dirname(__FILE__) . '/formdata.inc.php');
 
 // Translation function

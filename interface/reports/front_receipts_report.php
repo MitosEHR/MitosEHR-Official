@@ -9,7 +9,7 @@
  // This report lists front office receipts for a given date range.
 
 require_once("../registry.php");
-require_once("$srcdir/patient.inc");
+require_once("$srcdir/patient.inc.php");
 require_once("$srcdir/formatting.inc.php");
 
  $from_date = fixDate($_POST['form_from_date'], date('Y-m-d'));

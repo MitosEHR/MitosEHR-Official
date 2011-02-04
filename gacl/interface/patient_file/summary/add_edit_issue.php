@@ -7,9 +7,9 @@
 // of the License, or (at your option) any later version.
 
 require_once("../../registry.php");
-require_once("$srcdir/lists.inc");
-require_once("$srcdir/patient.inc");
-require_once("$srcdir/acl.inc");
+require_once("$srcdir/lists.inc.php");
+require_once("$srcdir/patient.inc.php");
+require_once("$srcdir/acl.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/../custom/code_types.inc.php");
 require_once("$srcdir/csv_like_join.php");

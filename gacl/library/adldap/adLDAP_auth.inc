@@ -1,12 +1,12 @@
 <?php
 //----------THINGS WE ALWAYS DO
 
-require_once("{$GLOBALS['srcdir']}/log.inc");
-require_once("{$GLOBALS['srcdir']}/sql.inc");
+require_once("{$GLOBALS['srcdir']}/log.inc.php");
+require_once("{$GLOBALS['srcdir']}/sql.inc.php");
 require_once("{$GLOBALS['srcdir']}/adldap/adLDAP.php");
 require_once("{$GLOBALS['srcdir']}/adldap/adLDAP_conf.inc");
 // added for the phpGACL group check -- JRM
-require_once("{$GLOBALS['srcdir']}/acl.inc");
+require_once("{$GLOBALS['srcdir']}/acl.inc.php");
 
 /* to use adLDAP authentication we require the password in cleartext 
  */
@@ -42,7 +42,7 @@ else
     {
         if (isset($_SESSION['pid']) && empty($GLOBALS['DAEMON_FLAG']))
         {
-            require_once("{$GLOBALS['srcdir']}/patient.inc");
+            require_once("{$GLOBALS['srcdir']}/patient.inc.php");
             $logpatient = getPatientData($_SESSION['pid'], "lname, fname, mname");
             newEvent("view", $_SESSION['authUser'], $_SESSION['authProvider'],
                 "{$logpatient['lname']}, {$logpatient['fname']} {$logpatient['mname']} :: encounter " .

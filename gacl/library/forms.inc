@@ -1,6 +1,6 @@
 <?php
 
-require_once("{$GLOBALS['srcdir']}/sql.inc");
+require_once("{$GLOBALS['srcdir']}/sql.inc.php");
 
 $GLOBALS['form_exit_url'] = $GLOBALS['concurrent_layout'] ?
 	"$rootdir/patient_file/encounter/encounter_top.php" :

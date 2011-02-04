@@ -2,8 +2,8 @@
 // Cloned from patient_encounter.php.
 
 include_once("../../registry.php");
-include_once("$srcdir/pid.inc");
-include_once("$srcdir/encounter.inc");
+include_once("$srcdir/pid.inc.php");
+include_once("$srcdir/encounter.inc.php");
 
 if (isset($_GET["set_encounter"])) {
  // The billing page might also be setting a new pid.

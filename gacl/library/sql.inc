@@ -2,7 +2,7 @@
 
 include_once(dirname(__FILE__) . "/sqlconf.php");
 require_once(dirname(__FILE__) . "/adodb/adodb.inc.php");
-include_once(dirname(__FILE__) . "/log.inc");
+include_once(dirname(__FILE__) . "/log.inc.php");
 
 if (!defined('ADODB_FETCH_ASSOC')) define('ADODB_FETCH_ASSOC', 2);
 $database = NewADOConnection("mysql");
@@ -14,7 +14,7 @@ $GLOBALS['dbh'] = $database->_connectionID;
 if (!$disable_utf8_flag) {
  $success_flag = $database->Execute("SET NAMES 'utf8'");
   if (!$success_flag) {
-   error_log("PHP custom error: from openemr library/sql.inc  - Unable to set up UTF8 encoding with mysql database: ".$database->ErrorMsg(), 0);
+   error_log("PHP custom error: from openemr library/sql.inc.php  - Unable to set up UTF8 encoding with mysql database: ".$database->ErrorMsg(), 0);
   }
 }
 
@@ -121,7 +121,7 @@ function sqlInsert($statement, $binds=array())
 //   FALSE or an array() - Run adodb Execute with binding,
 //     if applicable.
 //   TRUE - run mysql_query for a specific case in the audit engine
-//     (library/log.inc) to skip auditing and reporting if the query
+//     (library/log.inc.php) to skip auditing and reporting if the query
 //     does not work.
 function sqlQuery($statement, $status_or_binds=FALSE)
 {
@@ -173,7 +173,7 @@ function sqlInsertClean_audit($statement)
 // ViCarePlus :: Fix for Audit logging Issue :: Sep 24,2010 .
 // Issue:: The LAST_INSERT_ID of the audit log table overrides the value in the $GLOBALS['lastidado'] variable. 
 //         In a single transaction, when more than one query is being executed, this issue happens. 
-// Fix: This code has been taken care by the function auditSQLEvent() in log.inc file
+// Fix: This code has been taken care by the function auditSQLEvent() in log.inc.php file
 //  if ($GLOBALS['lastidado'] > 0)
 //	{ /* do nothing */ }
 //        else {

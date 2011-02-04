@@ -2,7 +2,7 @@
 # print the habits form.
 
 
-include("../../../library/api.inc");
+include("../../../library/acl.inc.php");
 
 formHeader("Habits form");
 
