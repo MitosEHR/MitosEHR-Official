@@ -3,8 +3,8 @@
 Ext.onReady(function(){
   var demographicsTabPanels = {
     xtype: 'tabpanel',
-    height:200,
-    defaults: {style: 'height:200px'},
+    defaults: {style: 'padding:5px'},
+    activeTab: 0,
     border:false,
     items: [{
       title: 'Basic Info',
@@ -42,79 +42,120 @@ Ext.onReady(function(){
 	//**************************************************************************************
 	var billingSumm = {
 		title: 'Billing Summary',
-		collapsible: true,
-		collapsed: true,
-		titleCollapse: true,
 		bodyStyle: 'padding:15px; background-color:#ffe4e1',
 		html:'<div><p>Balance due: [Balance token]</p></div>'
 	};
 	var demographicsSumm = {
 		title: 'Demographics',
-		items: [demographicsTabPanels]
+		collapsed: false,
+		items: [demographicsTabPanels],
+		bbar: [{
+		  text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+		  iconCls : 'save'
+		}]
 	};
 	var notesSumm = {
 		title: 'Notes',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	var disclosuresSumm = {
 		title: 'Disclosures',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	var vitalsSumm = {
 		title: 'Vitals',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Trend'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	//**************************************************************************************
 	//  Right Accordion Panel Items
 	//**************************************************************************************
 	var appointmentsSumm = {
 		title: 'Appointments',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Add'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	var medicalProblemsSumm = {
 		title: 'Mediacal Problems',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	var allergiesSumm = {
 		title: 'Allergies',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	var mediactionsSumm = {
 		title: 'Medications',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	var immunizationsSumm = {
 		title: 'Immunizations',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	var prescriptionsSumm = {
 		title: 'Prescriptions',
-		html:'<p>Placeholder</p>'
+		html:'<p>Placeholder</p>',
+		bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
 	};
 	var centerAccordionPanel = {
-		layout:'accordion',
+		//layout:'accordion',
 		border: false,
 		layoutConfig: { animate: true},
-		defaults:{border: false, autoScroll: true},
-		items: [ demographicsSumm, notesSumm, disclosuresSumm, vitalsSumm ]
+		defaults:{ layout: 'form', style: 'margin:5px 0', bodyStyle: 'padding:5px', autoScroll: true, collapsible: true, collapsed: true, titleCollapse: true},
+		items: [ billingSumm, demographicsSumm, notesSumm, disclosuresSumm, vitalsSumm ]
 	};
 	var rightAccordionPanel = {
-		layout:'accordion',
+		//layout:'accordion',
+		border: false,
 		layoutConfig: { animate: true},
-		defaults:{border: false, autoScroll: true},
+		defaults:{ layout: 'form', style: 'margin:5px  0', bodyStyle: 'background-color:#e7e7e7; padding:5px', autoScroll: true, collapsible: true, collapsed: false, titleCollapse: true},
 		items: [ appointmentsSumm, medicalProblemsSumm, allergiesSumm, mediactionsSumm, immunizationsSumm, prescriptionsSumm ]
 	};
 	var centerPanel = {
 		title: '[ Patient Name ] Record Summary',
 		region:'center',
+		autoScroll:true,
 		split:true,
 		defaults: {style: 'padding:5px' },
-		items: [ billingSumm,centerAccordionPanel ]
+		items: [ centerAccordionPanel ]
 	};
 	var rightPanel = {
 		title: 'Sats Summary',
 		width: 200,
 		region:'east',
+		autoScroll:true,
 		split:true,
 		defaults: {style: 'padding:5px'},
 		items: [ rightAccordionPanel ]
@@ -125,7 +166,6 @@ Ext.onReady(function(){
 	var RenderPanel = new Ext.Panel({
 		layout				: 'border',
 		border  			: false,
-		stateful			: true,
 		monitorResize	: true,                    		   // <-- Mandatory
 		autoWidth			: true,                        	   // <-- Mandatory
 		id					  : 'RenderPanel',                     // <-- Mandatory
