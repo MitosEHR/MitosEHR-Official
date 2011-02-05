@@ -18,7 +18,7 @@ include_once($GLOBALS['fileroot']."/library/patient.inc.php");
 // *************************************************************************************
 $primary_docs = array(
 	'ros' => array(xl('Roster')    , 0, 'reports/players_report.php?embed=1'),
-	'cal' => array(xl('Calendar')  , 0, 'main/main_info.php'),
+	'cal' => array(xl('Calendar')  , 0, 'calendar/calendar.ejs.php'),
 	'msg' => array(xl('Messages')  , 0, 'main/messages/messages.ejs.php'),
 	'pwd' => array(xl('Password')  , 0, 'usergroup/user_info.php'),
 	'adm' => array(xl('Admin')     , 0, 'usergroup/admin_frameset.php'),
@@ -34,7 +34,7 @@ $primary_docs = array(
 	'sup' => array(xl('Superbill') , 0, 'patient_file/encounter/superbill_custom_full.ejs.php'),
 	'aun' => array(xl('Authorizations'), 0, 'main/authorizations/authorizations.php'),
 	'new' => array(xl('New Pt')    , 0, 'new/new.php'),
-	'dem' => array(xl('Patient')   , 1,  "patient_file/summary/demographics.php"),
+	'dem' => array(xl('Patient')   , 1,  "patient_file/summary/demographics.ejs.php"),
 	'his' => array(xl('History')   , 1, 'patient_file/history/history.php'),
 	'ens' => array(xl('Visit History'), 1, 'patient_file/history/encounters.php'),
 	'nen' => array(xl('Create Visit'), 1, 'forms/newpatient/new.php?autoloaded=1&calenc='),
