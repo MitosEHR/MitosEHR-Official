@@ -35,7 +35,7 @@ $primary_docs = array(
 	'sup' => array(xl('Superbill') , 0, 'patient_file/encounter/superbill_custom_full.ejs.php'),
 	'aun' => array(xl('Authorizations'), 0, 'main/authorizations/authorizations.php'),
 	'new' => array(xl('New Pt')    , 0, 'new/new.ejs.php'),
-	'dem' => array(xl('Patient')   , 1,  "patient_file/summary/demographics.php"),
+	'dem' => array(xl('Patient')   , 1,  "patient_file/summary/demographics.ejs.php"),
 	'his' => array(xl('History')   , 1, 'patient_file/history/history.php'),
 	'ens' => array(xl('Visit History'), 1, 'patient_file/history/encounters.php'),
 	'nen' => array(xl('Create Visit'), 1, 'forms/newpatient/new.php?autoloaded=1&calenc='),

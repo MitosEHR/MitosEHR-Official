@@ -121,6 +121,12 @@ Ext.onReady(function(){
   });
 
 // *************************************************************************************
+// turn on validation errors beside the field globally
+// *************************************************************************************
+Ext.form.Field.prototype.msgTarget = 'under';
+
+
+// *************************************************************************************
 // Structure of the patient record
 // creates a subclass of Ext.data.Record
 //
@@ -251,6 +257,53 @@ var storeMsgs = new Ext.data.Store({
 });
 storeMsgs.load();
 
+// *************************************************************************************
+// Validation Object 
+// Description:
+// Code to validate diferent kind of fields
+// damn, I miss my old days.
+// ************************************************************************************* 
+Ext.apply(Ext.form.VTypes, {
+
+  // --------------------------------------- 
+  // Validate Empty fields, empty field not allowed
+  // Less than 3 characters will be no good
+  // --------------------------------------- 
+  empty_3chr : function(val, field) {
+    if(val.length <= 3){ return false; } else { return true }
+  }, empty3Text: 'This field must have one word and not empty.',
+
+  // --------------------------------------- 
+  // Validate Empty fields, empty field not allowed
+  // --------------------------------------- 
+  empty : function(val, field) {
+    if(val.length <= 0){ return false; } else { return true }
+  }, emptyText: 'This field must not be empty.',
+    
+  // --------------------------------------- 
+  // Validate Social Security Numbers fields, empty field not allowed
+  // Less than 3 characters will be no good
+  // --------------------------------------- 
+  SocialSecurity : function(val, field) {
+      // Regular Expresion for Social Security
+      var ss = /^([0-6]\d{2}|7[0-6]\d|77[0-2])([ \-]?)(\d{2})\2(\d{4})$/;
+      
+      if (val.length <= 0){ return false; }
+      if (!ss.test(val)) { return false; }
+      if (val.length){ return false; }
+      
+      // valid format
+      if (val.indexOf("-") != -1) { temp = (val.split("-")).join(""); }
+      if (val.indexOf(" ") != -1) { temp = (val.split(" ")).join(""); }
+      if (temp.substring(0, 3) == "000") { return false; }
+      if (temp.substring(3, 5) == "00") { return false; }
+      if (temp.substring(5, 9) == "0000") { return false; }
+       
+      return true;
+  }, SocialSecurityText: 'Social Security Numbers, must no be empty or in the wrong format. (555-55-5555).'
+
+});
+
 
 ////////////////////////////////////////////////////////
 ////////////TOP BASIC INFO FORM/////////////////////////
@@ -258,12 +311,13 @@ storeMsgs.load();
 var patientBasicForm = {
     title: '<?php xl('Patient Basic Information', 'e'); ?>',
     layout:'column',
+    name  : 'frm_PBF',
     border:false,
     defaults: {labelAlign: 'top'},
     autoScroll: true,
     items: [{
           width:'150',
-          style:'padding: 0 5px; margin-left:10px; margin-top:4px;',
+          style:'padding: 0 5px; margin-left: 10px; margin-top:4px;',
           html: '<img src="../../ui_app/missing_photo.png" width="128" height="128" alt="Patient Image">'
         },{
           layout: 'form',
@@ -271,7 +325,7 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'pfname'},
+            { xtype:'textfield', width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'pfname'},
             { xtype:'textfield', fieldLabel: '<?php xl('External ID', 'e'); ?>', name: 'pexternalid' },
             { xtype:'textfield', fieldLabel: '<?php xl('Marital Status', 'e'); ?>', name: 'pmarital' }
           ]
@@ -281,7 +335,7 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', fieldLabel: '<?php xl('Middle name', 'e'); ?>', name: 'pmname' },
+            { xtype:'textfield', width: 50, fieldLabel: '<?php xl('Middle name', 'e'); ?>', name: 'pmname' },
             { xtype:'textfield', fieldLabel: '<?php xl('Date of birth', 'e'); ?>', name: 'pdob' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined1' }
           ]
@@ -291,8 +345,8 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', fieldLabel: '<?php xl('Last name', 'e'); ?>', name: 'plname' },
-            { xtype:'textfield', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
+            { xtype:'textfield', width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('Last name', 'e'); ?>', name: 'plname' },
+            { xtype:'textfield', vtype: 'SocialSecurity', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined2' }
           ]
         },{
@@ -315,6 +369,7 @@ var patientBasicForm = {
 var contactPanel = {
   title:'<?php xl('Contact Information', 'e'); ?>',
   border:false,
+  name  : 'frm_C',
   defaults: {labelAlign: 'top'},
   autoScroll: true, // <-- New
   items : [{
@@ -373,6 +428,7 @@ var contactPanel = {
 var choicesPanel = {
     title:'<?php xl('Choices', 'e'); ?>',
     border: false,
+    name  : 'frm_Choice',
     autoScroll: true, // <-- New
     defaults: {layout:'form',labelAlign: 'top'},
     items : [{
@@ -506,6 +562,7 @@ var primaryInsurancePanel = {
   defaults: {layout:'form', width : 200,labelAlign: 'top'},
   items : [{
     layout : 'form',
+    name  : 'pi',
     border : false,
     bodyStyle : 'padding: 0 5px',
     defaults : { width : 180 },
@@ -578,6 +635,7 @@ var secondaryInsurancePanel = {
   defaults: {layout:'form', width : 200,labelAlign: 'top'},
   items : [{
     layout : 'form',
+    name  : 'frm_si',
     border : false,
     bodyStyle : 'padding: 0 5px',
     defaults : { width : 180 },
@@ -626,6 +684,7 @@ var secondaryInsurancePanel = {
   xtype : 'fieldset',
   title: '<?php xl('Subscriber Employer (SE) Info', 'e'); ?>',
   layout : 'form',
+  name  : 'frm_se',
   autoHeight : true,
   style : 'padding: 5px 10px',
   defaults : { width : 160 },
