@@ -91,8 +91,8 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <?php require($GLOBALS['srcdir'] . "/restoreSession.php"); ?>
 Ext.onReady(function() {
 
-Ext.QuickTips.init();
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
+  Ext.QuickTips.init();
+  Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 					 
 // *************************************************************************************
 // Immunization Window Dialog
