@@ -1,16 +1,56 @@
 <?php include_once("../../registry.php"); ?>
 <script type="text/javascript">
 Ext.onReady(function(){
+  var demographicsTabPanels = {
+    xtype: 'tabpanel',
+    height:200,
+    defaults: {style: 'height:200px'},
+    border:false,
+    items: [{
+      title: 'Basic Info',
+      html:'<p>Placeholder</p>'
+    },{
+      title: 'Contact info',
+      html:'<p>Placeholder</p>'
+    },{
+      title: 'Choices',
+      html:'<p>Placeholder</p>'
+    },{
+      title: 'Employer',
+      html:'<p>Placeholder</p>'
+    },{
+      title: 'Stats',
+      html:'<p>Placeholder</p>'
+    },{
+      title: 'Primary Insurance',
+      html:'<p>Placeholder</p>'
+    },{
+      title: 'Secondary Insurance',
+      html:'<p>Placeholder</p>'
+    },{
+      title: 'Teritary Insurance',
+      html:'<p>Placeholder</p>'
+    },{
+      title: 'Notes',
+      html:'<p>Placeholder</p>'
+    }]
+  };
+
+
 	//**************************************************************************************
 	//  Center Accordion Panel Items
 	//**************************************************************************************
 	var billingSumm = {
-		title: 'Billing',
-		html:'<p>Placeholder</p>'
+		title: 'Billing Summary',
+		collapsible: true,
+		collapsed: true,
+		titleCollapse: true,
+		bodyStyle: 'padding:15px; background-color:#ffe4e1',
+		html:'<div><p>Balance due: [Balance token]</p></div>'
 	};
 	var demographicsSumm = {
 		title: 'Demographics',
-		html:'<p>Placeholder</p>'
+		items: [demographicsTabPanels]
 	};
 	var notesSumm = {
 		title: 'Notes',
@@ -56,7 +96,7 @@ Ext.onReady(function(){
 		border: false,
 		layoutConfig: { animate: true},
 		defaults:{border: false, autoScroll: true},
-		items: [ billingSumm, demographicsSumm, notesSumm, disclosuresSumm, vitalsSumm ]
+		items: [ demographicsSumm, notesSumm, disclosuresSumm, vitalsSumm ]
 	};
 	var rightAccordionPanel = {
 		layout:'accordion',
@@ -68,8 +108,8 @@ Ext.onReady(function(){
 		title: '[ Patient Name ] Record Summary',
 		region:'center',
 		split:true,
-		defaults: {style: 'padding:5px'},
-		items: [ centerAccordionPanel ]
+		defaults: {style: 'padding:5px' },
+		items: [ billingSumm,centerAccordionPanel ]
 	};
 	var rightPanel = {
 		title: 'Sats Summary',
@@ -86,13 +126,13 @@ Ext.onReady(function(){
 		layout				: 'border',
 		border  			: false,
 		stateful			: true,
-		monitorResize		: true,                    		// <-- Mandatory
-		autoWidth			: true,                        	// <-- Mandatory
-		id					: 'RenderPanel',                // <-- Mandatory
-		renderTo			: Ext.getCmp('TopPanel').body,  // <-- Mandatory
-		viewConfig			: {forceFit:true},             	// <-- Mandatory
+		monitorResize	: true,                    		   // <-- Mandatory
+		autoWidth			: true,                        	   // <-- Mandatory
+		id					  : 'RenderPanel',                     // <-- Mandatory
+		renderTo			: Ext.getCmp('TopPanel').body,     // <-- Mandatory
+		viewConfig		: {forceFit:true},             	 // <-- Mandatory
 		bodyStyle			: 'padding: 10px',
-		items				: [ centerPanel, rightPanel ],
+		items				  : [ centerPanel, rightPanel ],
 	});
 	//*********************************************************************************************************
 	// Make sure that the RenderPanel height has the same height of the TopPanel
