@@ -98,7 +98,7 @@
 
  $primary_docs = array(
   'ros' => array(xl('Roster')    , 0, 'reports/players_report.php?embed=1'),
-  'cal' => array(xl('Calendar')  , 0, ''),
+  'cal' => array(xl('Calendar')  , 0, 'main/main_info.php'),
   'msg' => array(xl('Messages')  , 0, 'main/messages/messages.ejs.php'),
   'pwd' => array(xl('Password')  , 0, 'usergroup/user_info.php'),
   'adm' => array(xl('Admin')     , 0, 'usergroup/admin_frameset.php'),
