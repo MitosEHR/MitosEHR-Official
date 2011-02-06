@@ -62,7 +62,6 @@ $disallowed = array();
 
 // Administration Rules
 $disallowed['adm'] = !(acl_check('admin', 'calendar') ||
-						acl_check('admin', 'database') || 
 						acl_check('admin', 'forms') ||
 						acl_check('admin', 'practice') || 
 						acl_check('admin', 'users') ||
@@ -217,7 +216,6 @@ if (acl_check('admin', 'language')) $buff .= '		{"text":"' . xl('Language') . '"
 if (acl_check('admin', 'forms')) $buff .= '		{"text":"' . xl('Forms') . '", "pos":"top", "leaf":true, "cls":"file", "id":"forms_admin/forms_admin.php"},'.chr(13);
 if (acl_check('admin', 'calendar') && !$GLOBALS['disable_calendar']) $buff .= '		{"text":"' . xl('Calendar') . '", "pos":"top", "leaf":true, "cls":"file", "id":"main/calendar/calendar.ejs.php?module=PostCalendar&type=admin&func=modifyconfig"},'.chr(13);
 if (acl_check('admin', 'users')) $buff .= '		{"text":"' . xl('Logs') . '", "pos":"top", "leaf":true, "cls":"file", "id":"logview/logview.php"},'.chr(13);
-if ((!$GLOBALS['disable_phpmyadmin_link']) && acl_check('admin', 'database')) $buff .= '		{"text":"' . xl('Database') . '", "pos":"top", "leaf":true, "cls":"file", "id":"../phpmyadmin/index.php"},'.chr(13);
 if (acl_check('admin', 'users')) $buff .= '		{"text":"' . xl('Certificates') . '", "pos":"top", "leaf":true, "cls":"file", "id":"usergroup/ssl_certificates_admin.php"}'.chr(13);
 $buff .= '		]}' . chr(13);
 $buff .= '		]},' . chr(13);
