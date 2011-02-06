@@ -25,7 +25,7 @@ var ImmunizationTable = Ext.data.Record.create([
 
 // *************************************************************************************
 // Structure and load the data for Immunization List
-// AJAX -> immunization_data_logic.ejs.php
+// AJAX -> interface/patient_file/immnunization/immunization_data_logic.ejs.php
 // *************************************************************************************
 var storeImmList = new Ext.data.Store({
   autoSave  : false,
@@ -94,7 +94,7 @@ Ext.onReady(function(){
   };
 
   //**************************************************************************************
-  //  Center Accordion Panel Items
+  //  Center (center region) Panel Items
   //**************************************************************************************
   var billingSumm = {
     title: 'Billing Summary',
@@ -135,7 +135,7 @@ Ext.onReady(function(){
     }]
   };
   //**************************************************************************************
-  //  Right Accordion Panel Items
+  //  Right (east region) Panel Items
   //**************************************************************************************
   // appointments grid
   var appointmentsSumm = {
@@ -153,7 +153,7 @@ Ext.onReady(function(){
         { sortable: false, dataIndex: 'immunization_id', hidden: true},
         { sortable: false, dataIndex: 'administered_date', hidden: true},
         { sortable: false, dataIndex: 'administered_by_id', hidden: true},
-        { sortable: false, dataIndex: 'vis_date'},
+        { width: 200, sortable: false, dataIndex: 'vis_date'},
         { sortable: false, dataIndex: 'vaccine'},
         { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
       ],
@@ -177,7 +177,7 @@ Ext.onReady(function(){
         { sortable: false, dataIndex: 'immunization_id', hidden: true},
         { sortable: false, dataIndex: 'administered_date', hidden: true},
         { sortable: false, dataIndex: 'administered_by_id', hidden: true},
-        { sortable: false, dataIndex: 'vis_date'},
+        { width: 200, sortable: false, dataIndex: 'vis_date'},
         { sortable: false, dataIndex: 'vaccine'},
         { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
       ],
@@ -201,7 +201,7 @@ Ext.onReady(function(){
         { sortable: false, dataIndex: 'immunization_id', hidden: true},
         { sortable: false, dataIndex: 'administered_date', hidden: true},
         { sortable: false, dataIndex: 'administered_by_id', hidden: true},
-        { sortable: false, dataIndex: 'vis_date'},
+        { width: 200, sortable: false, dataIndex: 'vis_date'},
         { sortable: false, dataIndex: 'vaccine'},
         { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
       ],
@@ -225,7 +225,7 @@ Ext.onReady(function(){
         { sortable: false, dataIndex: 'immunization_id', hidden: true},
         { sortable: false, dataIndex: 'administered_date', hidden: true},
         { sortable: false, dataIndex: 'administered_by_id', hidden: true},
-        { sortable: false, dataIndex: 'vis_date'},
+        { width: 200, sortable: false, dataIndex: 'vis_date'},
         { sortable: false, dataIndex: 'vaccine'},
         { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
       ],
@@ -249,7 +249,7 @@ Ext.onReady(function(){
         { sortable: false, dataIndex: 'immunization_id', hidden: true},
         { sortable: false, dataIndex: 'administered_date', hidden: true},
         { sortable: false, dataIndex: 'administered_by_id', hidden: true},
-        { sortable: false, dataIndex: 'vis_date'},
+        { width: 200, sortable: false, dataIndex: 'vis_date'},
         { sortable: false, dataIndex: 'vaccine'},
         { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
       ],
@@ -273,7 +273,7 @@ Ext.onReady(function(){
         { sortable: false, dataIndex: 'immunization_id', hidden: true},
         { sortable: false, dataIndex: 'administered_date', hidden: true},
         { sortable: false, dataIndex: 'administered_by_id', hidden: true},
-        { sortable: false, dataIndex: 'vis_date'},
+        { width: 200, sortable: false, dataIndex: 'vis_date'},
         { sortable: false, dataIndex: 'vaccine'},
         { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
       ],
@@ -327,11 +327,11 @@ Ext.onReady(function(){
   var RenderPanel = new Ext.Panel({
     layout        : 'border',
     border        : false,
-    monitorResize : true,                          // <-- Mandatory
-    autoWidth     : true,                            // <-- Mandatory
-    id            : 'RenderPanel',                     // <-- Mandatory
-    renderTo      : Ext.getCmp('TopPanel').body,     // <-- Mandatory
-    viewConfig    : {forceFit:true},               // <-- Mandatory
+    monitorResize : true,                             // <-- Mandatory
+    autoWidth     : true,                             // <-- Mandatory
+    id            : 'RenderPanel',                    // <-- Mandatory
+    renderTo      : Ext.getCmp('TopPanel').body,      // <-- Mandatory
+    viewConfig    : {forceFit:true},                  // <-- Mandatory
     bodyStyle     : 'padding: 10px',
     items         : [ centerPanel, rightPanel ],
   });
