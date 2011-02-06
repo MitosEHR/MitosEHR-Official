@@ -285,21 +285,15 @@ Ext.apply(Ext.form.VTypes, {
   // Less than 3 characters will be no good
   // --------------------------------------- 
   SocialSecurity : function(val, field) {
-      // Regular Expresion for Social Security
-      var ss = /^([0-6]\d{2}|7[0-6]\d|77[0-2])([ \-]?)(\d{2})\2(\d{4})$/;
-      
-      if (val.length <= 0){ return false; }
-      if (!ss.test(val)) { return false; }
-      if (val.length){ return false; }
-      
-      // valid format
-      if (val.indexOf("-") != -1) { temp = (val.split("-")).join(""); }
-      if (val.indexOf(" ") != -1) { temp = (val.split(" ")).join(""); }
-      if (temp.substring(0, 3) == "000") { return false; }
-      if (temp.substring(3, 5) == "00") { return false; }
-      if (temp.substring(5, 9) == "0000") { return false; }
-       
-      return true;
+	var matchArr = val.match(/^(\d{3})-?\d{2}-?\d{4}$/);
+	var numDashes = val.split('-').length - 1;
+	if (matchArr == null || numDashes == 1) {
+		return false;
+	} else if (parseInt(matchArr[1],10)==0) {
+		return false;
+	} else {
+		return true;
+	}
   }, SocialSecurityText: 'Social Security Numbers, must no be empty or in the wrong format. (555-55-5555).'
 
 });
