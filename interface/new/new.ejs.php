@@ -236,19 +236,19 @@ var storeMsgs = new Ext.data.Store({
 
   // JSON Writer options
   writer: new Ext.data.JsonWriter({
-    returnJson    : true,
-    writeAllFields  : true,
-    listful     : true,
-    writeAllFields  : true
+    returnJson		: true,
+    writeAllFields	: true,
+    listful			: true,
+    writeAllFields	: true
   }, 
     PatientRecord
   ),
 
   // JSON Reader options
   reader: new Ext.data.JsonReader({
-    idProperty: 'id',
-    totalProperty: 'results',
-    root: 'row'
+    idProperty		: 'id',
+    totalProperty	: 'results',
+    root			: 'row'
   }, 
     PatientRecord 
   )
@@ -260,12 +260,12 @@ storeMsgs.load();
 ////////////TOP BASIC INFO FORM/////////////////////////
 ////////////////////////////////////////////////////////
 var patientBasicForm = {
-    title: '<?php xl('Patient Basic Information', 'e'); ?>',
-    layout:'column',
-    name  : 'frm_PBF',
-    border:false,
-    defaults: {labelAlign: 'top'},
-    autoScroll: true,
+    title		: '<?php xl('Patient Basic Information', 'e'); ?>',
+    layout		:'column',
+    name		: 'frm_PBF',
+    border		:false,
+    defaults	: {labelAlign: 'top'},
+    autoScroll	: true,
     items: [{
           width:'150',
           style:'padding: 0 5px; margin-left: 10px; margin-top:4px;',
@@ -541,7 +541,7 @@ var primaryInsurancePanel = {
       items:
       [
         { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'datefield', vtype: 'dateVal', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'subs_dob', width : 130},
         { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
         { xtype : 'combo', fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
@@ -556,7 +556,7 @@ var primaryInsurancePanel = {
         { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
         { xtype : 'combo', fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+        { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
       ]
       }]
       },{
@@ -614,7 +614,7 @@ var secondaryInsurancePanel = {
       items:
       [
         { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'secondaryInsuranceDate', width : 130 },
         { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
         { xtype : 'combo', fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
@@ -629,7 +629,7 @@ var secondaryInsurancePanel = {
         { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
         { xtype : 'combo', fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+        { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
       ]
     }]
   },{
@@ -688,7 +688,7 @@ var teritaryInsurancePanel = {
         items:
         [
           { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-          { xtype : 'combo', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
           { xtype : 'combo', fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
@@ -703,7 +703,7 @@ var teritaryInsurancePanel = {
           { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
           { xtype : 'combo', fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-          { xtype : 'textfield', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+          { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
         ]
       }]
       },{
