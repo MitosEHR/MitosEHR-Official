@@ -102,8 +102,7 @@ Ext.onReady(function(){
 
   //Suffix Combo Data
   Ext.namespace('Ext.suffixData');
-  Ext.suffixData.suffix = [ [ 'Unassigned', 'Unassigned' ], [ 'Mr.', 'Mr.' ],
-                          [ 'Mrs.', 'Mrs.' ], [ 'Ms.', 'Ms.' ], [ 'Dr.', 'Dr.' ], ];
+  Ext.suffixData.suffix = [ [ 'Unassigned', 'Unassigned' ], [ 'Mr.', 'Mr.' ], [ 'Mrs.', 'Mrs.' ], [ 'Ms.', 'Ms.' ], [ 'Dr.', 'Dr.' ], ];
   //simple array store
   var suffixStore = new Ext.data.ArrayStore( {
     fields : [ 'value', 'suffix' ],
@@ -237,19 +236,19 @@ var storeMsgs = new Ext.data.Store({
 
   // JSON Writer options
   writer: new Ext.data.JsonWriter({
-    returnJson    : true,
-    writeAllFields  : true,
-    listful     : true,
-    writeAllFields  : true
+    returnJson		: true,
+    writeAllFields	: true,
+    listful			: true,
+    writeAllFields	: true
   }, 
     PatientRecord
   ),
 
   // JSON Reader options
   reader: new Ext.data.JsonReader({
-    idProperty: 'id',
-    totalProperty: 'results',
-    root: 'row'
+    idProperty		: 'id',
+    totalProperty	: 'results',
+    root			: 'row'
   }, 
     PatientRecord 
   )
@@ -257,64 +256,16 @@ var storeMsgs = new Ext.data.Store({
 });
 storeMsgs.load();
 
-// *************************************************************************************
-// Validation Object 
-// Description:
-// Code to validate diferent kind of fields
-// damn, I miss my old days.
-// ************************************************************************************* 
-Ext.apply(Ext.form.VTypes, {
-
-  // --------------------------------------- 
-  // Validate Empty fields, empty field not allowed
-  // Less than 3 characters will be no good
-  // --------------------------------------- 
-  empty_3chr : function(val, field) {
-    if(val.length <= 3){ return false; } else { return true }
-  }, empty3Text: 'This field must have one word and not empty.',
-
-  // --------------------------------------- 
-  // Validate Empty fields, empty field not allowed
-  // --------------------------------------- 
-  empty : function(val, field) {
-    if(val.length <= 0){ return false; } else { return true }
-  }, emptyText: 'This field must not be empty.',
-    
-  // --------------------------------------- 
-  // Validate Social Security Numbers fields, empty field not allowed
-  // Less than 3 characters will be no good
-  // --------------------------------------- 
-  SocialSecurity : function(val, field) {
-      // Regular Expresion for Social Security
-      var ss = /^([0-6]\d{2}|7[0-6]\d|77[0-2])([ \-]?)(\d{2})\2(\d{4})$/;
-      
-      if (val.length <= 0){ return false; }
-      if (!ss.test(val)) { return false; }
-      if (val.length){ return false; }
-      
-      // valid format
-      if (val.indexOf("-") != -1) { temp = (val.split("-")).join(""); }
-      if (val.indexOf(" ") != -1) { temp = (val.split(" ")).join(""); }
-      if (temp.substring(0, 3) == "000") { return false; }
-      if (temp.substring(3, 5) == "00") { return false; }
-      if (temp.substring(5, 9) == "0000") { return false; }
-       
-      return true;
-  }, SocialSecurityText: 'Social Security Numbers, must no be empty or in the wrong format. (555-55-5555).'
-
-});
-
-
 ////////////////////////////////////////////////////////
 ////////////TOP BASIC INFO FORM/////////////////////////
 ////////////////////////////////////////////////////////
 var patientBasicForm = {
-    title: '<?php xl('Patient Basic Information', 'e'); ?>',
-    layout:'column',
-    name  : 'frm_PBF',
-    border:false,
-    defaults: {labelAlign: 'top'},
-    autoScroll: true,
+    title		: '<?php xl('Patient Basic Information', 'e'); ?>',
+    layout		:'column',
+    name		: 'frm_PBF',
+    border		:false,
+    defaults	: {labelAlign: 'top'},
+    autoScroll	: true,
     items: [{
           width:'150',
           style:'padding: 0 5px; margin-left: 10px; margin-top:4px;',
@@ -325,9 +276,10 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'pfname'},
+            { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'pfname'},
+            { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'sex', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
             { xtype:'textfield', fieldLabel: '<?php xl('External ID', 'e'); ?>', name: 'pexternalid' },
-            { xtype:'textfield', fieldLabel: '<?php xl('Marital Status', 'e'); ?>', name: 'pmarital' }
+            { xtype : 'combo', fieldLabel : '<?php xl('Marital Status', 'e'); ?>', name : 'marital_status', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
           ]
         },{
           layout: 'form',
@@ -335,8 +287,8 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', width: 50, fieldLabel: '<?php xl('Middle name', 'e'); ?>', name: 'pmname' },
-            { xtype:'textfield', fieldLabel: '<?php xl('Date of birth', 'e'); ?>', name: 'pdob' },
+            { xtype:'textfield', maxLength: 25, width: 50, fieldLabel: '<?php xl('Middle name', 'e'); ?>', name: 'pmname' },
+            { xtype:'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel: '<?php xl('Date of birth', 'e'); ?>', name: 'pdob' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined1' }
           ]
         },{
@@ -345,8 +297,8 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('Last name', 'e'); ?>', name: 'plname' },
-            { xtype:'textfield', vtype: 'SocialSecurity', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
+            { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('Last name', 'e'); ?>', name: 'plname' },
+            { xtype:'textfield', maxLength: 11, vtype: 'SSN', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined2' }
           ]
         },{
@@ -355,8 +307,8 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', fieldLabel: '<?php xl('Mother mainden name', 'e'); ?>', name: 'pmmname' },
-            { xtype:'textfield', fieldLabel: '<?php xl('License/ID', 'e'); ?>', name: 'plicence' },
+            { xtype:'textfield', maxLength: 25, fieldLabel: '<?php xl('Mother mainden name', 'e'); ?>', name: 'pmmname' },
+            { xtype:'textfield', maxLength: 10, fieldLabel: '<?php xl('License/ID', 'e'); ?>', name: 'plicence' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'userdefiined3' }
           ]
         }
@@ -380,7 +332,7 @@ var contactPanel = {
     [
       { width : 200, xtype : 'textfield', fieldLabel : '<?php xl('Address', 'e'); ?>', name : 'address', tabIndex : 3 },
       { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'city', tabIndex : 3 },
-      { xtype : 'combo', fieldLabel : '<?php xl('Sate', 'e'); ?>', name : 'state', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
+      { xtype : 'combo', fieldLabel : '<?php xl('State', 'e'); ?>', name : 'state', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
       { xtype : 'textfield', fieldLabel : '<?php xl('Postal Code', 'e'); ?>', name : 'postal_code', tabIndex : 3 },
       { xtype : 'combo', fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'country', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
     ]
@@ -589,7 +541,7 @@ var primaryInsurancePanel = {
       items:
       [
         { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'datefield', vtype: 'dateVal', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'subs_dob', width : 130},
         { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
         { xtype : 'combo', fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
@@ -604,7 +556,7 @@ var primaryInsurancePanel = {
         { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
         { xtype : 'combo', fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+        { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
       ]
       }]
       },{
@@ -662,7 +614,7 @@ var secondaryInsurancePanel = {
       items:
       [
         { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'secondaryInsuranceDate', width : 130 },
         { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
         { xtype : 'combo', fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
@@ -677,7 +629,7 @@ var secondaryInsurancePanel = {
         { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
         { xtype : 'combo', fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+        { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
       ]
     }]
   },{
@@ -736,7 +688,7 @@ var teritaryInsurancePanel = {
         items:
         [
           { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-          { xtype : 'combo', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
           { xtype : 'combo', fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
@@ -751,7 +703,7 @@ var teritaryInsurancePanel = {
           { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
           { xtype : 'combo', fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-          { xtype : 'textfield', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+          { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
         ]
       }]
       },{
@@ -794,7 +746,7 @@ cls:'x-plain',
 ////////////////////////////////////////////////////////
 //New patient Form Panel
 var RenderPanel = new Ext.TabPanel({
-  title: '<?php xl('Patient Search or Add Patient', 'e'); ?>',
+  //title: '<?php xl('Patient Search or Add Patient', 'e'); ?>',
   border  : false,
   stateful: true,
   monitorResize: true,                    
@@ -805,7 +757,7 @@ var RenderPanel = new Ext.TabPanel({
   labelAlign: 'top',
   bodyStyle:'padding: 10px',
   activeTab: 0,
-  defaults:{bodyStyle:'padding:10px',autoScroll:true, layout:'column'},  
+  defaults:{ bodyStyle:'padding:10px',autoScroll:true, layout:'column' },  
   items: [ 
     patientBasicForm,
     contactPanel, 
