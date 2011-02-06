@@ -8,6 +8,8 @@
  
 .noHeader .x-grid3-header {
   visibility:hidden !important;  /* class use to hide grid colunm header */
+  height:0 !important;
+  margin-top:-8px !important;
 }
  
 .addService{
