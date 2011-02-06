@@ -102,8 +102,7 @@ Ext.onReady(function(){
 
   //Suffix Combo Data
   Ext.namespace('Ext.suffixData');
-  Ext.suffixData.suffix = [ [ 'Unassigned', 'Unassigned' ], [ 'Mr.', 'Mr.' ],
-                          [ 'Mrs.', 'Mrs.' ], [ 'Ms.', 'Ms.' ], [ 'Dr.', 'Dr.' ], ];
+  Ext.suffixData.suffix = [ [ 'Unassigned', 'Unassigned' ], [ 'Mr.', 'Mr.' ], [ 'Mrs.', 'Mrs.' ], [ 'Ms.', 'Ms.' ], [ 'Dr.', 'Dr.' ], ];
   //simple array store
   var suffixStore = new Ext.data.ArrayStore( {
     fields : [ 'value', 'suffix' ],
@@ -257,48 +256,6 @@ var storeMsgs = new Ext.data.Store({
 });
 storeMsgs.load();
 
-// *************************************************************************************
-// Validation Object 
-// Description:
-// Code to validate diferent kind of fields
-// damn, I miss my old days.
-// ************************************************************************************* 
-Ext.apply(Ext.form.VTypes, {
-
-  // --------------------------------------- 
-  // Validate Empty fields, empty field not allowed
-  // Less than 3 characters will be no good
-  // --------------------------------------- 
-  empty_3chr : function(val, field) {
-    if(val.length <= 3){ return false; } else { return true }
-  }, empty3Text: 'This field must have one word and not empty.',
-
-  // --------------------------------------- 
-  // Validate Empty fields, empty field not allowed
-  // --------------------------------------- 
-  empty : function(val, field) {
-    if(val.length <= 0){ return false; } else { return true }
-  }, emptyText: 'This field must not be empty.',
-    
-  // --------------------------------------- 
-  // Validate Social Security Numbers fields, empty field not allowed
-  // Less than 3 characters will be no good
-  // --------------------------------------- 
-  SocialSecurity : function(val, field) {
-	var matchArr = val.match(/^(\d{3})-?\d{2}-?\d{4}$/);
-	var numDashes = val.split('-').length - 1;
-	if (matchArr == null || numDashes == 1) {
-		return false;
-	} else if (parseInt(matchArr[1],10)==0) {
-		return false;
-	} else {
-		return true;
-	}
-  }, SocialSecurityText: 'Social Security Numbers, must no be empty or in the wrong format. (555-55-5555).'
-
-});
-
-
 ////////////////////////////////////////////////////////
 ////////////TOP BASIC INFO FORM/////////////////////////
 ////////////////////////////////////////////////////////
@@ -320,8 +277,9 @@ var patientBasicForm = {
           items:
           [
             { xtype:'textfield', width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'pfname'},
+            { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'sex', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
             { xtype:'textfield', fieldLabel: '<?php xl('External ID', 'e'); ?>', name: 'pexternalid' },
-            { xtype:'textfield', fieldLabel: '<?php xl('Marital Status', 'e'); ?>', name: 'pmarital' }
+            { xtype : 'combo', fieldLabel : '<?php xl('Marital Status', 'e'); ?>', name : 'marital_status', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
           ]
         },{
           layout: 'form',
@@ -330,7 +288,7 @@ var patientBasicForm = {
           items:
           [
             { xtype:'textfield', width: 50, fieldLabel: '<?php xl('Middle name', 'e'); ?>', name: 'pmname' },
-            { xtype:'textfield', fieldLabel: '<?php xl('Date of birth', 'e'); ?>', name: 'pdob' },
+            { xtype:'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel: '<?php xl('Date of birth', 'e'); ?>', name: 'pdob' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined1' }
           ]
         },{
@@ -340,7 +298,7 @@ var patientBasicForm = {
           items:
           [
             { xtype:'textfield', width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('Last name', 'e'); ?>', name: 'plname' },
-            { xtype:'textfield', vtype: 'SocialSecurity', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
+            { xtype:'textfield', vtype: 'SSN', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined2' }
           ]
         },{
@@ -374,7 +332,7 @@ var contactPanel = {
     [
       { width : 200, xtype : 'textfield', fieldLabel : '<?php xl('Address', 'e'); ?>', name : 'address', tabIndex : 3 },
       { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'city', tabIndex : 3 },
-      { xtype : 'combo', fieldLabel : '<?php xl('Sate', 'e'); ?>', name : 'state', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
+      { xtype : 'combo', fieldLabel : '<?php xl('State', 'e'); ?>', name : 'state', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
       { xtype : 'textfield', fieldLabel : '<?php xl('Postal Code', 'e'); ?>', name : 'postal_code', tabIndex : 3 },
       { xtype : 'combo', fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'country', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
     ]
