@@ -137,47 +137,37 @@ Ext.onReady(function(){
   //**************************************************************************************
   //  Right Accordion Panel Items
   //**************************************************************************************
+  // appointments grid
   var appointmentsSumm = {
-    title: 'Appointments',
-    html:'<p>Placeholder</p>',
-    bbar: [{
-      text: '<?php echo htmlspecialchars( xl('Add'), ENT_NOQUOTES); ?>',
-      iconCls : 'save'
-    }]
-  };
-  var medicalProblemsSumm = {
-    title: 'Mediacal Problems',
-    html:'<p>Placeholder</p>',
-    bbar: [{
-      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
-      iconCls : 'save'
-    }]
-  };
-  var allergiesSumm = {
-    title: 'Allergies',
-    html:'<p>Placeholder</p>',
-    bbar: [{
-      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
-      iconCls : 'save'
-    }]
-  };
-  var mediactionsSumm = {
-    title: 'Medications',
-    html:'<p>Placeholder</p>',
-    bbar: [{
-      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
-      iconCls : 'save'
-    }]
-  };
-  //******************************************************************************
-  //  Immunization grid  
-  //******************************************************************************
-  var immunizationsSumm = {
-      title: '<?php xl("Immunizations", 'e'); ?>', 
+      title: '<?php xl("Appointments", 'e'); ?>', 
       xtype: 'grid', 
       store: storeImmList,
       autoHeight: true,
-      style: 'padding:0',
+      cls : 'noHeader',
+      collapsed: true,
+      stripeRows: false,
+      frame: false,
+      viewConfig: {forceFit: true}, // this is the option which will force the grid to the width of the containing panel
+      columns: [
+        { sortable: false, dataIndex: 'id', hidden: true},
+        { sortable: false, dataIndex: 'immunization_id', hidden: true},
+        { sortable: false, dataIndex: 'administered_date', hidden: true},
+        { sortable: false, dataIndex: 'administered_by_id', hidden: true},
+        { sortable: false, dataIndex: 'vis_date'},
+        { sortable: false, dataIndex: 'vaccine'},
+        { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
+      ],
+    bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
+  };
+  // medical problems grid
+  var medicalProblemsSumm = {
+      title: '<?php xl("Medical Problems", 'e'); ?>', 
+      xtype: 'grid', 
+      store: storeImmList,
+      autoHeight: true,
       cls : 'noHeader',
       stripeRows: false,
       frame: false,
@@ -196,28 +186,121 @@ Ext.onReady(function(){
       iconCls : 'save'
     }]
   };
-  var prescriptionsSumm = {
-    title: 'Prescriptions',
-    html:'<p>Placeholder</p>',
+  // allergies grid
+  var allergiesSumm = {
+      title: '<?php xl("Allergies", 'e'); ?>', 
+      xtype: 'grid', 
+      store: storeImmList,
+      autoHeight: true,
+      cls : 'noHeader',
+      stripeRows: false,
+      frame: false,
+      viewConfig: {forceFit: true}, // this is the option which will force the grid to the width of the containing panel
+      columns: [
+        { sortable: false, dataIndex: 'id', hidden: true},
+        { sortable: false, dataIndex: 'immunization_id', hidden: true},
+        { sortable: false, dataIndex: 'administered_date', hidden: true},
+        { sortable: false, dataIndex: 'administered_by_id', hidden: true},
+        { sortable: false, dataIndex: 'vis_date'},
+        { sortable: false, dataIndex: 'vaccine'},
+        { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
+      ],
     bbar: [{
       text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
       iconCls : 'save'
     }]
   };
+  // medications grid
+  var mediactionsSumm = {
+      title: '<?php xl("Medications", 'e'); ?>', 
+      xtype: 'grid', 
+      store: storeImmList,
+      autoHeight: true,
+      cls : 'noHeader',
+      stripeRows: false,
+      frame: false,
+      viewConfig: {forceFit: true}, // this is the option which will force the grid to the width of the containing panel
+      columns: [
+        { sortable: false, dataIndex: 'id', hidden: true},
+        { sortable: false, dataIndex: 'immunization_id', hidden: true},
+        { sortable: false, dataIndex: 'administered_date', hidden: true},
+        { sortable: false, dataIndex: 'administered_by_id', hidden: true},
+        { sortable: false, dataIndex: 'vis_date'},
+        { sortable: false, dataIndex: 'vaccine'},
+        { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
+      ],
+    bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
+  };
+  // immunizations grid
+  var immunizationsSumm = {
+      title: '<?php xl("Immunizations", 'e'); ?>', 
+      xtype: 'grid', 
+      store: storeImmList,
+      autoHeight: true,
+      cls : 'noHeader',
+      stripeRows: false,
+      frame: false,
+      viewConfig: {forceFit: true}, // this is the option which will force the grid to the width of the containing panel
+      columns: [
+        { sortable: false, dataIndex: 'id', hidden: true},
+        { sortable: false, dataIndex: 'immunization_id', hidden: true},
+        { sortable: false, dataIndex: 'administered_date', hidden: true},
+        { sortable: false, dataIndex: 'administered_by_id', hidden: true},
+        { sortable: false, dataIndex: 'vis_date'},
+        { sortable: false, dataIndex: 'vaccine'},
+        { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
+      ],
+    bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
+  };
+  // prescriptions grid
+  var prescriptionsSumm = {
+      title: '<?php xl("Prescriptions", 'e'); ?>', 
+      xtype: 'grid', 
+      store: storeImmList,
+      autoHeight: true,
+      cls : 'noHeader',
+      stripeRows: false,
+      frame: false,
+      viewConfig: {forceFit: true}, // this is the option which will force the grid to the width of the containing panel
+      columns: [
+        { sortable: false, dataIndex: 'id', hidden: true},
+        { sortable: false, dataIndex: 'immunization_id', hidden: true},
+        { sortable: false, dataIndex: 'administered_date', hidden: true},
+        { sortable: false, dataIndex: 'administered_by_id', hidden: true},
+        { sortable: false, dataIndex: 'vis_date'},
+        { sortable: false, dataIndex: 'vaccine'},
+        { xtype: 'datecolumn', format: 'Y-m-d', sortable: true, dataIndex: 'create_date' }
+      ],
+    bbar: [{
+      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+      iconCls : 'save'
+    }]
+  };
+  //**************************************************************************************
+  //  Center Panel Layout
+  //**************************************************************************************
   var centerAccordionPanel = {
-    //layout:'accordion',
     border: false,
-    layoutConfig: { animate: true},
     defaults:{ layout: 'form', style: 'margin:5px 0', bodyStyle: 'padding:5px', autoScroll: true, collapsible: true, collapsed: true, titleCollapse: true},
     items: [ billingSumm, demographicsSumm, notesSumm, disclosuresSumm, vitalsSumm ]
   };
+  //**************************************************************************************
+  //  Right Panel Layout
+  //**************************************************************************************
   var rightAccordionPanel = {
-    //layout:'accordion',
     border: false,
-    layoutConfig: { animate: true},
     defaults:{ layout: 'form', style: 'margin:5px  0; font-size:12px', bodyStyle: 'background-color:#e7e7e7; padding:5px', autoScroll: true, collapsible: true, collapsed: false, titleCollapse: true},
     items: [ appointmentsSumm, medicalProblemsSumm, allergiesSumm, mediactionsSumm, immunizationsSumm, prescriptionsSumm ]
   };
+  //**************************************************************************************
+  //  Center Main Panel 
+  //**************************************************************************************
   var centerPanel = {
     title: '[ Patient Name ] Record Summary',
     region:'center',
@@ -226,6 +309,9 @@ Ext.onReady(function(){
     defaults: {style: 'padding:5px' },
     items: [ centerAccordionPanel ]
   };
+  //**************************************************************************************
+  //  Right Main Panel 
+  //**************************************************************************************
   var rightPanel = {
     title: 'Sats Summary',
     width: 200,
