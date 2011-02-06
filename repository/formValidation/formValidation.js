@@ -11,7 +11,7 @@ Ext.apply(Ext.form.VTypes, {
   // --------------------------------------- 
   empty_3chr : function(val, field) {
     if(val.length <= 2){ return false; } else { return true; }
-  }, empty_3chrText: 'This field must have one word and not empty.',
+  }, empty_3chrText: 'This field must have more than 3 characters and must be not empty.',
 
   // --------------------------------------- 
   // Validate Empty fields, empty field not allowed

@@ -276,7 +276,7 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'pfname'},
+            { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'pfname'},
             { xtype : 'combo', fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'sex', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
             { xtype:'textfield', fieldLabel: '<?php xl('External ID', 'e'); ?>', name: 'pexternalid' },
             { xtype : 'combo', fieldLabel : '<?php xl('Marital Status', 'e'); ?>', name : 'marital_status', width : 130, emptyText : 'Select', tabIndex : 3, editable: false },
@@ -287,7 +287,7 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', width: 50, fieldLabel: '<?php xl('Middle name', 'e'); ?>', name: 'pmname' },
+            { xtype:'textfield', maxLength: 25, width: 50, fieldLabel: '<?php xl('Middle name', 'e'); ?>', name: 'pmname' },
             { xtype:'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel: '<?php xl('Date of birth', 'e'); ?>', name: 'pdob' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined1' }
           ]
@@ -297,8 +297,8 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('Last name', 'e'); ?>', name: 'plname' },
-            { xtype:'textfield', vtype: 'SSN', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
+            { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('Last name', 'e'); ?>', name: 'plname' },
+            { xtype:'textfield', maxLength: 11, vtype: 'SSN', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined2' }
           ]
         },{
@@ -307,8 +307,8 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', fieldLabel: '<?php xl('Mother mainden name', 'e'); ?>', name: 'pmmname' },
-            { xtype:'textfield', fieldLabel: '<?php xl('License/ID', 'e'); ?>', name: 'plicence' },
+            { xtype:'textfield', maxLength: 25, fieldLabel: '<?php xl('Mother mainden name', 'e'); ?>', name: 'pmmname' },
+            { xtype:'textfield', maxLength: 10, fieldLabel: '<?php xl('License/ID', 'e'); ?>', name: 'plicence' },
             { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'userdefiined3' }
           ]
         }
@@ -746,7 +746,7 @@ cls:'x-plain',
 ////////////////////////////////////////////////////////
 //New patient Form Panel
 var RenderPanel = new Ext.TabPanel({
-  title: '<?php xl('Patient Search or Add Patient', 'e'); ?>',
+  //title: '<?php xl('Patient Search or Add Patient', 'e'); ?>',
   border  : false,
   stateful: true,
   monitorResize: true,                    
@@ -757,7 +757,7 @@ var RenderPanel = new Ext.TabPanel({
   labelAlign: 'top',
   bodyStyle:'padding: 10px',
   activeTab: 0,
-  defaults:{bodyStyle:'padding:10px',autoScroll:true, layout:'column'},  
+  defaults:{ bodyStyle:'padding:10px',autoScroll:true, layout:'column' },  
   items: [ 
     patientBasicForm,
     contactPanel, 
