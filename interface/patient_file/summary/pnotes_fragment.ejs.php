@@ -45,6 +45,7 @@ $fake_register_globals=false;
 //
 
  require_once("../../registry.php");
+ include_once("$srcdir/sql.inc.php");
  require_once("$srcdir/pnotes.inc.php");
  require_once("$srcdir/acl.inc.php");
  require_once("$srcdir/patient.inc.php");
@@ -77,10 +78,18 @@ $fake_register_globals=false;
  //   $result = getPnotesByDate("", 1, "id,date,body,user,title,assigned_to",
  //   $pid, "$N", 0, '', $docid);
  //   if ($result != null) {
-      
-$count = 0;
+    
+  
 
-$sql = "SELECT
+//*********************
+// $pid for debuging **
+// VVVVVVVVVVVVVVVVV **  
+//*********************  
+$pid = "1";    
+
+
+$count = 0;
+    $sql = "SELECT
       pnotes.id,
       pnotes.user,
       pnotes.pid,
@@ -93,38 +102,23 @@ $sql = "SELECT
         WHERE
       pnotes.message_status != 'Done' AND
       pnotes.deleted != '1' AND
-      pnotes.assigned_to LIKE ?";
-$result = sqlStatement($sql, array($_GET['show']) );
-while ($myrow = sqlFetchArray($result)) {
-  $count++;
-  // build the message
-  $buff .= "{";
-  $buff .= " id: '" . htmlspecialchars( $myrow['id'], ENT_QUOTES) . "',";
-  $buff .= " date: '" . htmlspecialchars( oeFormatShortDate(substr($myrow['date'], 0, strpos($myrow['date'], " "))), ENT_NOQUOTES) . "',";
-  $buff .= " body: '" . htmlspecialchars( $myrow['body'], ENT_QUOTES) . "',";
-  $buff .= " user: '" . htmlspecialchars( $myrow['user'], ENT_QUOTES) . "',";
-  $buff .= " title: '" . htmlspecialchars( $myrow['title'], ENT_NOQUOTES) . "',";
-  $buff .= " status: '" . htmlspecialchars( $myrow['message_status'], ENT_NOQUOTES) . "'}," . chr(13);
-}
-
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo $_GET['callback'] . '({';
-echo "results: " . $count . ", " . chr(13);
-echo "row: [" . chr(13);
-echo $buff;
-echo "]})" . chr(13);
-   // };
-    
-     
-   //         ******* to be remove  **********
-   //
-   //         echo htmlspecialchars(xl( "There are no notes on file for this patient."),ENT_NOQUOTES);
-   //         echo " ";
-	 //         echo htmlspecialchars(xl("To add notes, please click "),ENT_NOQUOTES);
-	 //         echo "<a href='pnotes_full.php'>";
-	 //         echo htmlspecialchars(xl("here"),ENT_NOQUOTES);
-	 //         echo "</a>."; 
-	 //         echo htmlspecialchars(xl('Displaying the following number of most recent notes:'),ENT_NOQUOTES);
-	 //         echo htmlspecialchars(xl('Click here to view them all.'),ENT_NOQUOTES); 
-	    
+      pnotes.pid ='" . $pid . "'";
+    $result = sqlStatement($sql);
+    while ($row = sqlFetchArray($result)) {
+      $count++; 
+      $buff .= "{";
+      $buff .= " id: '" . htmlspecialchars( $row['id'], ENT_QUOTES) . "',";
+      $buff .= " user: '" . htmlspecialchars( $row['user'], ENT_NOQUOTES) . "'," ;
+      $buff .= " pid: '" . htmlspecialchars( $row['pid'], ENT_QUOTES) . "',";
+      $buff .= " title: '" . htmlspecialchars( $row['title'], ENT_NOQUOTES) . "',";
+      $buff .= " date: '" . htmlspecialchars( oeFormatShortDate(substr($row['date'], 0, strpos($row['date'], " "))), ENT_NOQUOTES) . "',";
+      $buff .= " body: '" . htmlspecialchars( $row['body'], ENT_QUOTES) . "',";
+      $buff .= " message_status: '" . htmlspecialchars( $myrow['message_status'], ENT_NOQUOTES) . "'}," . chr(13);
+    }
+    $buff = substr($buff, 0, -2); // Delete the last comma.
+    echo $_GET['callback'] . '({';
+    echo "results: " . $count . ", " . chr(13);
+    echo "row: [" . chr(13);
+    echo $buff;
+    echo "]})" . chr(13);    
 ?>
