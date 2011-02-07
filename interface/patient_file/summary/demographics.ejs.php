@@ -63,11 +63,12 @@ var immunizationTable = Ext.data.Record.create([
 var pnotesTable = Ext.data.Record.create([
   // on the database table
   {name: 'id', type: 'int', mapping: 'id'},
+  {name: 'user', type: 'string', mapping: 'user'},
+  {name: 'pid', type: 'int', mapping: 'pid'},
+  {name: 'title', type: 'string', mapping: 'title'},
   {name: 'date', type: 'string', mapping: 'date'},
   {name: 'body', type: 'string', mapping: 'body'},
-  {name: 'user', type: 'string', mapping: 'user'},
-  {name: 'title', type: 'string', mapping: 'title'},
-  {name: 'status', type: 'string', mapping: 'status'}
+  {name: 'message_status', type: 'string', mapping: 'message_status'}
 ]);
 
 // *************************************************************************************
@@ -181,7 +182,7 @@ Ext.onReady(function(){
       xtype: 'grid', 
       store: storePnoteList,
       autoHeight: true,
-      cls : 'noHeader',
+      //cls : 'noHeader',
       collapsed: true,
       stripeRows: false,
       frame: false,
@@ -189,9 +190,8 @@ Ext.onReady(function(){
       viewConfig: {forceFit: true, DeferEmptyText: false, emptyText: 'No notes found for this patient'}, // this is the option which will force the grid to the width of the containing panel
       columns: [
         { sortable: false, dataIndex: 'id', hidden: true},
-        { width: 10, header: 'Date', xtype: 'datecolumn', format: 'Y-m-d', sortable: false, dataIndex: 'date' },
         { width: 20, header: 'Title', sortable: false, dataIndex: 'title' },
-        { header: 'body', sortable: false, dataIndex: 'body' }        
+        { header: 'Message', sortable: false, dataIndex: 'body' }              
       ],
       bbar: [{
         text: '<?php echo htmlspecialchars( xl('View all notes'), ENT_NOQUOTES); ?>',
