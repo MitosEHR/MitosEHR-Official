@@ -1,6 +1,43 @@
-<?php include_once("../../registry.php"); ?>
+<?php 
+//--------------------------------------------------------------------------------------------------------------------------
+// messages.ejs.php 
+// v0.0.3 -> Integrated AJAX
+// Under GPLv3 License
+// 
+// Integration Sencha ExtJS Framework
+//
+// Integrated by: GI Technologies & MitosEHR.org in 2011
+// 
+//******************************************************
+//MitosEHR (Electronic Health Records)
+//******************************************************
+//MitosEHR is a Open source Web-Based Software for:
+//* Practice management
+//* Electronic Medical Records
+//* Prescription writing and medical billing application
+//
+//And it can be installed on the following systems:
+//* Unix-like systems (Linux, UNIX, and BSD systems)
+//* Microsoft systems
+//* Mac OS X
+//* And other platforms that can run Apache Web server, MySQL
+//
+//Setup documentation can be found in the INSTALL file,
+//and extensive documentation can be found on the
+//MitosEHR web site at:
+//http://www.mitosehr.org/
+//
+// Sencha ExtJS
+// Ext JS is a cross-browser JavaScript library for building rich internet applications. Build rich,
+// sustainable web applications faster than ever. It includes:
+// * High performance, customizable UI widgets
+// * Well designed and extensible Component model
+// * An intuitive, easy to use API
+// * Commercial and Open Source licenses available
+//--------------------------------------------------------------------------------------------------------------------------
+include_once("../../registry.php"); 
+?>
 <script type="text/javascript">
-
 var ImmunizationTable = Ext.data.Record.create([
   // on the database table
   {name: 'id', type: 'int', mapping: 'id'},
@@ -112,7 +149,7 @@ Ext.onReady(function(){
   };
   var notesSumm = {
     title: 'Notes',
-    html:'<p>Placeholder</p>',
+    html:'<iframe src="../patient_file/summary/pnotes_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
     bbar: [{
       text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
       iconCls : 'save'
@@ -120,7 +157,7 @@ Ext.onReady(function(){
   };
   var disclosuresSumm = {
     title: 'Disclosures',
-    html:'<p>Placeholder</p>',
+    html:'<iframe src="../patient_file/summary/disc_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
     bbar: [{
       text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
       iconCls : 'save'
@@ -128,7 +165,7 @@ Ext.onReady(function(){
   };
   var vitalsSumm = {
     title: 'Vitals',
-    html:'<p>Placeholder</p>',
+    html:'<iframe src="../patient_file/summary/vitals_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
     bbar: [{
       text: '<?php echo htmlspecialchars( xl('Trend'), ENT_NOQUOTES); ?>',
       iconCls : 'save'
