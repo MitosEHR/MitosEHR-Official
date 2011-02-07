@@ -20,7 +20,7 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 
 // *************************************************************************************
-// Load the OpenEMR Libraries
+// Load the MitosEHR Libraries
 // *************************************************************************************
 require_once("../registry.php");
 //require_once("$srcdir/patient.inc.php");

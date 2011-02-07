@@ -860,7 +860,7 @@ cls:'x-plain',
 ////////////////////////////////////////////////////////
 //New patient Form Panel
 var RenderPanel = new Ext.TabPanel({
-  //title: '<?php xl('Patient Search or Add Patient', 'e'); ?>',
+  title: '<?php xl('Patient Search or Add Patient', 'e'); ?>',
   border  : false,
   stateful: true,
   monitorResize: true,                    
@@ -869,7 +869,6 @@ var RenderPanel = new Ext.TabPanel({
   renderTo: Ext.getCmp('TopPanel').body,  
   viewConfig:{forceFit:true},             
   labelAlign: 'top',
-  bodyStyle:'padding: 10px',
   activeTab: 0,
   defaults:{ bodyStyle:'padding:10px',autoScroll:true, layout:'column' },  
   items: [ 
