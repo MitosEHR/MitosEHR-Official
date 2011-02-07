@@ -59,13 +59,13 @@ $fake_register_globals=false;
     //display all of the notes for the day, as well as others that are active from previous dates, up to a certain number, $N
     $N = 3; 
 
-    //  $has_notes = 0;
-    //  $thisauth = acl_check('patients', 'notes');
-    //  if ($thisauth) {
-    //      $tmp = getPatientData($pid, "squad");
-    //  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-    //      $thisauth = 0;
-    //  }
+      $has_notes = 0;
+      $thisauth = acl_check('patients', 'notes');
+      if ($thisauth) {
+          $tmp = getPatientData($pid, "squad");
+      if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
+          $thisauth = 0;
+      }
     //  if (!$thisauth) {
     //      echo "<p>(" . htmlspecialchars(xl('Notes not authorized'),ENT_NOQUOTES) . ")</p>\n";
     //  } else {

@@ -115,7 +115,7 @@ var storePnoteList = new Ext.data.Store({
   }, pnotesTable )
 
 });
-storeImmList.load();
+storePnoteList.load();
 
 Ext.onReady(function(){
   //**************************************************************************************
@@ -185,7 +185,8 @@ Ext.onReady(function(){
       collapsed: true,
       stripeRows: false,
       frame: false,
-      viewConfig: {forceFit: true}, // this is the option which will force the grid to the width of the containing panel
+      bodyStyle: 'padding:0',
+      viewConfig: {forceFit: true, DeferEmptyText: false, emptyText: 'No notes found for this patient'}, // this is the option which will force the grid to the width of the containing panel
       columns: [
         { sortable: false, dataIndex: 'id', hidden: true},
         { width: 10, header: 'Date', xtype: 'datecolumn', format: 'Y-m-d', sortable: false, dataIndex: 'date' },
@@ -193,7 +194,7 @@ Ext.onReady(function(){
         { header: 'body', sortable: false, dataIndex: 'body' }        
       ],
       bbar: [{
-        text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+        text: '<?php echo htmlspecialchars( xl('View all notes'), ENT_NOQUOTES); ?>',
         iconCls : 'save'
       }]
   };
