@@ -44,6 +44,15 @@ Ext.apply(Ext.form.VTypes, {
 	// String format yyyy-mm-dd
 	var rgx = /^[0-9]{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/;
 	if(!val.match(rgx)){ return false; } else { return true; }
-  }, dateValText: 'Incorrect date format (YYYY-MM-DD).'
+  }, dateValText: 'Incorrect date format (YYYY-MM-DD).',
+
+  // --------------------------------------- 
+  // Validate email, empty field not allowed
+  // abc@abc.com
+  // ---------------------------------------  
+  checkEmail : function(val, field){
+	var rgx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/ 
+ 	if(!val.match(rgx)){ return false; } else { return true; }
+  }, checkEmailText: 'This field should be an email address in the format user@domain.com'
   
 });

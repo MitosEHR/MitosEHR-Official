@@ -76,9 +76,9 @@ switch ($_GET['task']) {
 			$count++;
 			// Merge firstname with lastname
 			if ($urow['fname']){
-				$username = htmlspecialchars( $urow['fname'], ENT_NOQUOTES);
+				$username = $urow['fname'] . ", " . $urow['lname'];
 			} else {
-				$username = htmlspecialchars( $urow['fname'], ENT_NOQUOTES) . ", " . htmlspecialchars( $urow['lname'], ENT_NOQUOTES);
+				$username = $urow['lname'];
 			}
 			$buff .= " { user: '" . htmlspecialchars( $urow['username'], ENT_NOQUOTES) . "', full_name: '" . $username . "' },". chr(13);
 		}

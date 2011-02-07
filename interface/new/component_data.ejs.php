@@ -1,6 +1,6 @@
 <?php
 //--------------------------------------------------------------------------------------------------------------------------
-// manage_messages.ejs.php
+// component_data.ejs.php
 // v0.0.1
 // Under GPLv3 License
 //
@@ -23,15 +23,14 @@ $fake_register_globals=false;
 // Load the OpenEMR Libraries
 // *************************************************************************************
 require_once("../registry.php");
-require_once("$srcdir/pnotes.inc.php");
-require_once("$srcdir/patient.inc.php");
-require_once("$srcdir/acl.inc.php");
-require_once("$srcdir/log.inc.php");
-require_once("$srcdir/options.inc.php");
-require_once("$srcdir/formdata.inc.php");
-require_once("$srcdir/classes/Document.class.php");
-require_once("$srcdir/gprelations.inc.php");
-require_once("$srcdir/formatting.inc.php");
+//require_once("$srcdir/patient.inc.php");
+//require_once("$srcdir/acl.inc.php");
+//require_once("$srcdir/log.inc.php");
+//require_once("$srcdir/options.inc.php");
+//require_once("$srcdir/formdata.inc.php");
+//require_once("$srcdir/classes/Document.class.php");
+//require_once("$srcdir/gprelations.inc.php");
+//require_once("$srcdir/formatting.inc.php");
 
 // Count records variable
 $count = 0;
@@ -41,6 +40,106 @@ $count = 0;
 // *************************************************************************************
 switch ($_GET['task']) {
 
+	// *************************************************************************************
+	// Data for for cmbSex
+	// *************************************************************************************
+	case "sex":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'sex'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
+	// *************************************************************************************
+	// Data for for cmbMarital
+	// *************************************************************************************
+	case "marital":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'marital'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
+	// *************************************************************************************
+	// Data for for cmbState
+	// *************************************************************************************
+	case "state":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'state'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
+	// *************************************************************************************
+	// Data for for cmbCountry
+	// *************************************************************************************
+	case "country":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'country'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
 	// *************************************************************************************
 	// Pull users from the database
 	// *************************************************************************************
@@ -60,9 +159,9 @@ switch ($_GET['task']) {
 			$count++;
 			// Merge firstname with lastname
 			if ($urow['fname']){
-				$username = htmlspecialchars( $urow['fname'], ENT_NOQUOTES);
+				$username = $urow['fname'] . ", " . $urow['lname'];
 			} else {
-				$username = htmlspecialchars( $urow['fname'], ENT_NOQUOTES) . ", " . htmlspecialchars( $urow['lname'], ENT_NOQUOTES);
+				$username = $urow['lname'];
 			}
 			$buff .= " { user: '" . htmlspecialchars( $urow['username'], ENT_NOQUOTES) . "', full_name: '" . $username . "' },". chr(13);
 		}
@@ -74,17 +173,16 @@ switch ($_GET['task']) {
 		echo "]})" . chr(13);
 	break;
 
-
 	// *************************************************************************************
-	// Data for for cmb_Type
+	// Pull Relationship from the database
 	// *************************************************************************************
-	case "types":
+	case "relationship":
 		$sql = "SELECT
 					*
 				FROM
 					list_options
 				WHERE
-					list_id = 'note_type'
+					list_id = 'sub_relation'
 				ORDER BY
 					seq, title";
 		$result = sqlStatement($sql);
@@ -99,62 +197,6 @@ switch ($_GET['task']) {
 		echo $buff;
 		echo "]})" . chr(13);
 	break;
-
-
-	// *************************************************************************************
-	// Pull Status from the database
-	// *************************************************************************************
-	case "status";
-		$sql = "SELECT
-					*
-				FROM
-					list_options
-				WHERE
-					list_id = 'message_status'
-				ORDER BY
-					seq, title";
-		$result = sqlStatement($sql);
-		while($row = sqlFetchArray($result)){
-			$count++;
-			$buff .= "{ option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
-		}
-		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
-		echo "row: [" . chr(13);
-		echo $buff;
-		echo "]})" . chr(13);
-	break;
-
-
-	// *************************************************************************************
-	// Pull the patients from the database
-	// *************************************************************************************
-	case "patients";
-		$sql = "SELECT
-					*
-				FROM
-					patient_data
-				ORDER BY
-					lname ASC, fname ASC";
-		$result = sqlStatement($sql);
-		while ($row = sqlFetchArray($result)) {
-			$count++;
-			$buff .= "{ id: '" . htmlspecialchars( $row['id'], ENT_QUOTES) . "',";
-			$buff .= " name: '" . htmlspecialchars( $row['fname'], ENT_QUOTES) . ", " . htmlspecialchars( $row['lname'], ENT_QUOTES)  . "',";
-			$buff .= " phone: '" . htmlspecialchars( "Contact: ".$row['phone_contact']." | Home: " . $row['phone_home']." | Cell: ".$row['phone_cell']." | Work: ".$row['phone_biz'], ENT_QUOTES) . "',";
-			$buff .= " ss: '" . htmlspecialchars( $row['ss'], ENT_QUOTES) . "',";
-			$buff .= " dob: '" . htmlspecialchars( $row['DOB'], ENT_QUOTES) . "',";
-			$buff .= " pid: '" . htmlspecialchars( $row['pid'], ENT_QUOTES) . "'},".chr(13);
-		}
-		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
-		echo "row: [" . chr(13);
-		echo $buff;
-		echo "]})" . chr(13);
-	break;
-
 }
 
 ?>
