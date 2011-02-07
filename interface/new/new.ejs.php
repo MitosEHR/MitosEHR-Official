@@ -514,7 +514,7 @@ var choicesPanel = {
       items :
       [
         { xtype : 'combo', hiddenName: 'assigned_to', displayField: 'full_name', valueField: 'user', mode: 'local', triggerAction: 'all', store: storeProvider, fieldLabel : '<?php xl('Provider', 'e'); ?>', name : 'storeProvider', emptyText : 'Select', editable: false },
-        { xtype : 'combo', fieldLabel : '<?php xl('Parmacy', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Parmacy', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
         { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('HIPAA notice Received', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('Leave Message With', 'e'); ?>', name : 'none' }
       ]
@@ -525,7 +525,7 @@ var choicesPanel = {
         defaults : { width : 200 },
         items :
         [
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow SMS', 'e'); ?>', name : 'none', emptyText : 'Select', ditable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow SMS', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
           { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Immunization Registry Use', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
           { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Health Information Exchange', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
           { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Voice Message', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false }
