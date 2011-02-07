@@ -197,6 +197,31 @@ switch ($_GET['task']) {
 		echo $buff;
 		echo "]})" . chr(13);
 	break;
+	
+	// *************************************************************************************
+	// Pull Relationship from the database
+	// *************************************************************************************
+	case "yesno":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'yesno'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
 }
 
 ?>

@@ -109,16 +109,6 @@ Ext.onReady(function(){
     data : Ext.suffixData.suffix
   });
 
-  //Yes and No Combo Data
-  Ext.namespace('Ext.YesNoData');
-  Ext.YesNoData.YesNo = [['Yes', 'Yes'], ['No','No']];
-
-  //simple array store
-  var YesNoStore = new Ext.data.ArrayStore( {
-    fields : [ 'value', 'ans' ],
-    data : Ext.YesNoData.YesNo
-  });
-
 // *************************************************************************************
 // turn on validation errors beside the field globally
 // *************************************************************************************
@@ -216,10 +206,10 @@ var PatientRecord = Ext.data.Record.create([
 ]);
 
 // *************************************************************************************
-// Structure and load the data for cmbSex
+// Structure and load the data for storeSex
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-var cmbSex = new Ext.data.Store({
+var storeSex = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
 		url: '../new/component_data.ejs.php?task=sex'
 	}),
@@ -232,13 +222,13 @@ var cmbSex = new Ext.data.Store({
 		{name: 'title', type: 'string', mapping: 'title'}
 	])
 });
-cmbSex.load();
+storeSex.load();
 
 // *************************************************************************************
-// Structure and load the data for cmbMarital
+// Structure and load the data for storeMarital
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-var cmbMarital = new Ext.data.Store({
+var storeMarital = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
 		url: '../new/component_data.ejs.php?task=marital'
 	}),
@@ -251,13 +241,13 @@ var cmbMarital = new Ext.data.Store({
 		{name: 'title', type: 'string', mapping: 'title'}
 	])
 });
-cmbMarital.load();
+storeMarital.load();
 
 // *************************************************************************************
-// Structure and load the data for cmbState
+// Structure and load the data for storeState
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-var cmbState = new Ext.data.Store({
+var storeState = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
 		url: '../new/component_data.ejs.php?task=state'
 	}),
@@ -270,13 +260,13 @@ var cmbState = new Ext.data.Store({
 		{name: 'title', type: 'string', mapping: 'title'}
 	])
 });
-cmbState.load();
+storeState.load();
 
 // *************************************************************************************
-// Structure and load the data for cmbCountry
+// Structure and load the data for storeCountry
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-var cmbCountry = new Ext.data.Store({
+var storeCountry = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
 		url: '../new/component_data.ejs.php?task=country'
 	}),
@@ -289,13 +279,13 @@ var cmbCountry = new Ext.data.Store({
 		{name: 'title', type: 'string', mapping: 'title'}
 	])
 });
-cmbCountry.load();
+storeCountry.load();
 
 // *************************************************************************************
-// Structure and load the data for cmbRelationship
+// Structure and load the data for storeRelationship
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-var cmbRelationship = new Ext.data.Store({
+var storeRelationship = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
 		url: '../new/component_data.ejs.php?task=relationship'
 	}),
@@ -308,13 +298,13 @@ var cmbRelationship = new Ext.data.Store({
 		{name: 'title', type: 'string', mapping: 'title'}
 	])
 });
-cmbRelationship.load();
+storeRelationship.load();
 
 // *************************************************************************************
-// Structure and load the data for cmbProvider
+// Structure and load the data for storeProvider
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-var cmbProvider = new Ext.data.Store({
+var storeProvider = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
 		url: '../new/component_data.ejs.php?task=users'
 	}),
@@ -327,7 +317,26 @@ var cmbProvider = new Ext.data.Store({
 		{name: 'full_name', type: 'string', mapping: 'full_name'}
 	])
 });
-cmbProvider.load();
+storeProvider.load();
+
+// *************************************************************************************
+// Structure and load the data for storeYesNo
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+var storeYesNo = new Ext.data.Store({
+	proxy: new Ext.data.ScriptTagProxy({
+		url: '../new/component_data.ejs.php?task=yesno'
+	}),
+	reader: new Ext.data.JsonReader({
+		idProperty: 'option_id',
+		totalProperty: 'results',
+		root: 'row'
+	},[
+		{name: 'option_id', type: 'string', mapping: 'option_id'},
+		{name: 'title', type: 'string', mapping: 'title'}
+	])
+});
+storeYesNo.load();
 
 // *************************************************************************************
 // Structure and load the data for Patient New Screen
@@ -391,9 +400,9 @@ var patientBasicForm = {
           items:
           [
             { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'pfname'},
-            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'cmbSex', width: 80, emptyText: 'Select', tabIndex : 3, editable: false },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'storeSex', width: 80, emptyText: 'Select', tabIndex : 3, editable: false },
             { xtype:'textfield', fieldLabel: '<?php xl('External ID', 'e'); ?>', name: 'pexternalid' },
-            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbMarital, fieldLabel : '<?php xl('Marital Status', 'e'); ?>', name : 'cmbMarital', width : 130, emptyText: 'Select', tabIndex : 3, editable: false },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeMarital, fieldLabel : '<?php xl('Marital Status', 'e'); ?>', name : 'storeMarital', width : 130, emptyText: 'Select', tabIndex : 3, editable: false },
           ]
         },{
           layout: 'form',
@@ -446,9 +455,9 @@ var contactPanel = {
     [
       { width : 200, xtype : 'textfield', fieldLabel : '<?php xl('Address', 'e'); ?>', name : 'address', tabIndex : 3 },
       { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'city', tabIndex : 3 },
-      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'cmbState', width : 80, emptyText : 'Select', tabIndex : 3, editable: false },
+      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'storeState', width : 80, emptyText : 'Select', tabIndex : 3, editable: false },
       { xtype : 'textfield', fieldLabel : '<?php xl('Postal Code', 'e'); ?>', name : 'postal_code', tabIndex : 3 },
-      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'country', width : 130, emptyText : 'Select', tabIndex : 3, editable: true },
+      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'country', width : 130, emptyText : 'Select', tabIndex : 3, editable: true },
     ]
     },{
       layout : 'form',
@@ -504,9 +513,9 @@ var choicesPanel = {
       defaults : { width : 200 },
       items :
       [
-        { xtype : 'combo', hiddenName: 'assigned_to', displayField: 'full_name', valueField: 'user', mode: 'local', triggerAction: 'all', store: cmbProvider, fieldLabel : '<?php xl('Provider', 'e'); ?>', name : 'cmbProvider', emptyText : 'Select', editable: false },
+        { xtype : 'combo', hiddenName: 'assigned_to', displayField: 'full_name', valueField: 'user', mode: 'local', triggerAction: 'all', store: storeProvider, fieldLabel : '<?php xl('Provider', 'e'); ?>', name : 'storeProvider', emptyText : 'Select', editable: false },
         { xtype : 'combo', fieldLabel : '<?php xl('Parmacy', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
-        { xtype : 'combo', fieldLabel : '<?php xl('HIPAA notice Received', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('HIPAA notice Received', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('Leave Message With', 'e'); ?>', name : 'none' }
       ]
       },{
@@ -516,10 +525,10 @@ var choicesPanel = {
         defaults : { width : 200 },
         items :
         [
-          { xtype : 'combo', fieldLabel : '<?php xl('Allow SMS', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
-          { xtype : 'combo', fieldLabel : '<?php xl('Allow Immunization Registry Use', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
-          { xtype : 'combo', fieldLabel : '<?php xl('Allow Health Information Exchange', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
-          { xtype : 'combo', fieldLabel : '<?php xl('Allow Voice Message', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false }
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow SMS', 'e'); ?>', name : 'none', emptyText : 'Select', ditable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Immunization Registry Use', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Health Information Exchange', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Voice Message', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false }
         ]
         },{
           layout : 'form',
@@ -529,10 +538,10 @@ var choicesPanel = {
           defaults : { width : 200 },
           items :
           [
-            { xtype : 'combo', fieldLabel : '<?php xl('Allow Voice Message', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
-            { xtype : 'combo', fieldLabel : '<?php xl('Allow Mail Message', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
-            { xtype : 'combo', fieldLabel : '<?php xl('Allow Email', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false },
-            { xtype : 'combo', fieldLabel : '<?php xl('Allow Immunization Info Sharing', 'e'); ?>', name : 'none', emptyText : 'Select', store: YesNoStore, mode : 'local', displayField : 'ans', editable: false }
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Voice Message', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Mail Message', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Email', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Immunization Info Sharing', 'e'); ?>', name : 'none', emptyText : 'Select', editable: false }
           ]
     }]
 };
@@ -554,8 +563,8 @@ var employerPanel = {
       [
         { xtype : 'textfield', fieldLabel : '<?php xl('Occupation', 'e'); ?>', name : 'employer_company' },
         { xtype : 'textfield', fieldLabel : '<?php xl('Employer Address', 'e'); ?>', name : 'employer_address' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'employer_state', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'employer_country', width : 130, emptyText : 'Select', editable: false }
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'employer_state', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'employer_country', width : 130, emptyText : 'Select', editable: false }
 
       ]
     },{
@@ -657,7 +666,7 @@ var primaryInsurancePanel = {
         { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
         { xtype : 'datefield', vtype: 'dateVal', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'subs_dob', width : 130},
         { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
       ]
       },{
@@ -666,10 +675,10 @@ var primaryInsurancePanel = {
       defaults : { width : 160 },
       items:
       [
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
       ]
       }]
@@ -685,8 +694,8 @@ var primaryInsurancePanel = {
         { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Employer', 'e'); ?>', name : 'company' },
         { xtype : 'textfield', fieldLabel : '<?php xl('SE Address', 'e'); ?>', name : 'company' },
         { xtype : 'textfield', fieldLabel : '<?php xl('SE City', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
       ]
     }]
 };
@@ -730,7 +739,7 @@ var secondaryInsurancePanel = {
         { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
         { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'secondaryInsuranceDate', width : 130 },
         { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'si_zipcode' }
       ]
     },{
@@ -739,10 +748,10 @@ var secondaryInsurancePanel = {
       defaults : { width : 160 },
       items:
       [
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
         { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
       ]
     }]
@@ -759,8 +768,8 @@ var secondaryInsurancePanel = {
     { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Employer', 'e'); ?>', name : 'company' },
     { xtype : 'textfield', fieldLabel : '<?php xl('SE Address', 'e'); ?>', name : 'company' },
     { xtype : 'textfield', fieldLabel : '<?php xl('SE City', 'e'); ?>', name : 'company' },
-    { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-    { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
+    { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+    { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
   ]
   }]
 };
@@ -804,7 +813,7 @@ var teritaryInsurancePanel = {
           { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
           { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
         ]
       },{
@@ -813,10 +822,10 @@ var teritaryInsurancePanel = {
         defaults : { width : 160 },
         items:
         [
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
           { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
         ]
       }]
@@ -832,8 +841,8 @@ var teritaryInsurancePanel = {
         { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Employer', 'e'); ?>', name : 'company' },
         { xtype : 'textfield', fieldLabel : '<?php xl('SE Address', 'e'); ?>', name : 'company' },
         { xtype : 'textfield', fieldLabel : '<?php xl('SE City', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: cmbCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false }
       ]
   }]
 };
