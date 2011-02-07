@@ -60,6 +60,16 @@ var ImmunizationTable = Ext.data.Record.create([
   {name: 'vaccine', type: 'string', mapping:'vaccine'}
 ]);
 
+var pnotesTable = Ext.data.Record.create([
+  // on the database table
+  {name: 'id', type: 'int', mapping: 'id'},
+  {name: 'date', type: 'int', mapping: 'date'},
+  {name: 'body', type: 'string', mapping: 'body'},
+  {name: 'user', type: 'int', mapping: 'user'},
+  {name: 'title', type: 'string', mapping: 'manufacturer'},
+  {name: 'assigned_to', type: 'int', mapping: 'administered_by_id'}
+]);
+
 // *************************************************************************************
 // Structure and load the data for Immunization List
 // AJAX -> interface/patient_file/immnunization/immunization_data_logic.ejs.php
@@ -74,15 +84,6 @@ var storeImmList = new Ext.data.Store({
       read    : '../patient_file/immnunization/immunizations_data_logic.ejs.php?task=load'
     }
   }),
-
-  // JSON Writer options
-  writer: new Ext.data.JsonWriter({
-    returnJson    : true,
-    writeAllFields  : true,
-    listful     : true,
-    writeAllFields  : true
-  }, ImmunizationTable ),
-
   // JSON Reader options
   reader: new Ext.data.JsonReader({
     idProperty: 'noteid',
@@ -92,9 +93,34 @@ var storeImmList = new Ext.data.Store({
 
 });
 storeImmList.load();
+// *************************************************************************************
+// Structure and load the data for pnotes List
+// AJAX -> interface/patient_file/summary/pnotes_fragment.ejs.php
+// *************************************************************************************
+var storePnoteList = new Ext.data.Store({
+  autoSave  : false,
 
+  // HttpProxy will only allow requests on the same domain.
+  proxy : new Ext.data.HttpProxy({
+    method    : 'POST',
+    api: {
+      read    : '../patient_file/summary/pnotes_fragment.ejs.php'
+    }
+  }),
+  // JSON Reader options
+  reader: new Ext.data.JsonReader({
+    idProperty: 'id',
+    totalProperty: 'results',
+    root: 'row'
+  }, pnotesTable )
+
+});
+storeImmList.load();
 
 Ext.onReady(function(){
+  //**************************************************************************************
+  //  Demographics tab panel Items
+  //**************************************************************************************
   var demographicsTabPanels = {
     xtype: 'tabpanel',
     defaults: {style: 'padding:5px'},
@@ -133,43 +159,61 @@ Ext.onReady(function(){
   //**************************************************************************************
   //  Center (center region) Panel Items
   //**************************************************************************************
+  // billing summary (Balance due)
   var billingSumm = {
-    title: 'Billing Summary',
-    bodyStyle: 'padding:15px; background-color:#ffe4e1',
-    html:'<div><p><?php echo htmlspecialchars(xl('Balance Due'),ENT_NOQUOTES) . " : [ balance token ] ";?></p></div>'
+      title: 'Billing Summary',
+      bodyStyle: 'padding:15px; background-color:#ffe4e1',
+      html:'<div><p><?php echo htmlspecialchars(xl('Balance Due'),ENT_NOQUOTES) . " : [ balance token ] ";?></p></div>'
   };
+  // demograpchis panel 
   var demographicsSumm = {
-    title: 'Demographics',
-    collapsed: false,
-    items: [demographicsTabPanels],
-    bbar: [{
-      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
-      iconCls : 'save'
-    }]
+      title: 'Demographics',
+      collapsed: false,
+      items: [demographicsTabPanels],
+      bbar: [{
+        text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+        iconCls : 'save'
+      }]
   };
+  // notes grid
   var notesSumm = {
-    title: 'Notes',
-    html:'<iframe src="../patient_file/summary/pnotes_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
-    bbar: [{
-      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
-      iconCls : 'save'
-    }]
+      title: '<?php xl("Notes", 'e'); ?>', 
+      xtype: 'grid', 
+      store: storePnoteList,
+      autoHeight: true,
+      //cls : 'noHeader',
+      collapsed: true,
+      stripeRows: false,
+      frame: false,
+      viewConfig: {forceFit: true}, // this is the option which will force the grid to the width of the containing panel
+      columns: [
+        { sortable: false, dataIndex: 'id', hidden: true},
+        { width: 10, header: 'Date', xtype: 'datecolumn', format: 'Y-m-d', sortable: false, dataIndex: 'date' },
+        { width: 20, header: 'Title', sortable: false, dataIndex: 'title' },
+        { header: 'body', sortable: false, dataIndex: 'body' }        
+      ],
+      bbar: [{
+        text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+        iconCls : 'save'
+      }]
   };
+  // disclosure grid
   var disclosuresSumm = {
-    title: 'Disclosures',
-    html:'<iframe src="../patient_file/summary/disc_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
-    bbar: [{
-      text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
-      iconCls : 'save'
-    }]
+      title: 'Disclosures',
+      html:'<iframe src="../patient_file/summary/disc_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
+      bbar: [{
+        text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
+        iconCls : 'save'
+      }]
   };
+  // vitals grid
   var vitalsSumm = {
-    title: 'Vitals',
-    html:'<iframe src="../patient_file/summary/vitals_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
-    bbar: [{
-      text: '<?php echo htmlspecialchars( xl('Trend'), ENT_NOQUOTES); ?>',
-      iconCls : 'save'
-    }]
+      title: 'Vitals',
+      html:'<iframe src="../patient_file/summary/vitals_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
+      bbar: [{
+        text: '<?php echo htmlspecialchars( xl('Trend'), ENT_NOQUOTES); ?>',
+        iconCls : 'save'
+      }]
   };
   //**************************************************************************************
   //  Right (east region) Panel Items
