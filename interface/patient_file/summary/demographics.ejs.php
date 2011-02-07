@@ -201,7 +201,7 @@ Ext.onReady(function(){
   // disclosure grid
   var disclosuresSumm = {
       title: 'Disclosures',
-      html:'<iframe src="../patient_file/summary/disc_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
+      html:'<iframe src="../patient_file/summary/disc_fragment.php" frameborder="0" height ="100px" width="100%"></iframe>',
       bbar: [{
         text: '<?php echo htmlspecialchars( xl('Edit'), ENT_NOQUOTES); ?>',
         iconCls : 'save'
@@ -210,7 +210,7 @@ Ext.onReady(function(){
   // vitals grid
   var vitalsSumm = {
       title: 'Vitals',
-      html:'<iframe src="../patient_file/summary/vitals_fragment.php" frameborder="0" height ="50px" width="100%"></iframe>',
+      html:'<iframe src="../patient_file/summary/vitals_fragment.php" frameborder="0" height ="100px" width="100%"></iframe>',
       bbar: [{
         text: '<?php echo htmlspecialchars( xl('Trend'), ENT_NOQUOTES); ?>',
         iconCls : 'save'
