@@ -51,46 +51,69 @@ $fake_register_globals=false;
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/classes/Document.class.php");
  require_once("$srcdir/formatting.inc.php");
+ 
+
+
 
  // form parameter docid can be passed to restrict the display to a document.
  // $docid = empty($_REQUEST['docid']) ? 0 : 0 + $_REQUEST['docid'];
 
 
     //display all of the notes for the day, as well as others that are active from previous dates, up to a certain number, $N
-    $N = 3; 
+ //   $N = 3; 
 
-      $has_notes = 0;
-      $thisauth = acl_check('patients', 'notes');
-      if ($thisauth) {
-          $tmp = getPatientData($pid, "squad");
-      if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-          $thisauth = 0;
-      }
+ //     $has_notes = 0;
+ //     $thisauth = acl_check('patients', 'notes');
+ //     if ($thisauth) {
+ //         $tmp = getPatientData($pid, "squad");
+ //     if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
+ //         $thisauth = 0;
+ //     }
     //  if (!$thisauth) {
     //      echo "<p>(" . htmlspecialchars(xl('Notes not authorized'),ENT_NOQUOTES) . ")</p>\n";
     //  } else {
 
     //retrieve all active notes
-    $result = getPnotesByDate("", 1, "id,date,body,user,title,assigned_to",
-    $pid, "$N", 0, '', $docid);
-    if ($result != null) {
-    $count = mysql_num_rows($result);
-    while ($row = sqlFetchArray($result)) {
-      $buff .= "{
-             id: '" . htmlspecialchars( $row["id"], ENT_NOQUOTES) . "'," .
-            "date: '" . $row['date'] . "'," .
-            "body: '" . htmlspecialchars( $row["body"], ENT_NOQUOTES) . "'," .
-            "user: '" . htmlspecialchars( $row["user"], ENT_NOQUOTES) . "'," .
-            "title: '" . htmlspecialchars( $row["title"], ENT_NOQUOTES) . "'," .
-            "assigned_to: '" . htmlspecialchars( $row["assigned_to"], ENT_NOQUOTES) . "'},". chr(13);
-    }
-    $buff = substr($buff, 0, -2); // Delete the last comma.
-    echo $_GET['callback'] . '({';
-    echo "results: " . $count . ", " . chr(13);
-    echo "row: [" . chr(13);
-    echo $buff;
-    echo "]})" . chr(13);
-    };
+ //   $result = getPnotesByDate("", 1, "id,date,body,user,title,assigned_to",
+ //   $pid, "$N", 0, '', $docid);
+ //   if ($result != null) {
+      
+$count = 0;
+
+$sql = "SELECT
+      pnotes.id,
+      pnotes.user,
+      pnotes.pid,
+      pnotes.title,
+      pnotes.date,
+      pnotes.body,
+      pnotes.message_status
+    FROM
+      pnotes
+        WHERE
+      pnotes.message_status != 'Done' AND
+      pnotes.deleted != '1' AND
+      pnotes.assigned_to LIKE ?";
+$result = sqlStatement($sql, array($_GET['show']) );
+while ($myrow = sqlFetchArray($result)) {
+  $count++;
+  // build the message
+  $buff .= "{";
+  $buff .= " id: '" . htmlspecialchars( $myrow['id'], ENT_QUOTES) . "',";
+  $buff .= " date: '" . htmlspecialchars( oeFormatShortDate(substr($myrow['date'], 0, strpos($myrow['date'], " "))), ENT_NOQUOTES) . "',";
+  $buff .= " body: '" . htmlspecialchars( $myrow['body'], ENT_QUOTES) . "',";
+  $buff .= " user: '" . htmlspecialchars( $myrow['user'], ENT_QUOTES) . "',";
+  $buff .= " title: '" . htmlspecialchars( $myrow['title'], ENT_NOQUOTES) . "',";
+  $buff .= " status: '" . htmlspecialchars( $myrow['message_status'], ENT_NOQUOTES) . "'}," . chr(13);
+}
+
+$buff = substr($buff, 0, -2); // Delete the last comma.
+echo $_GET['callback'] . '({';
+echo "results: " . $count . ", " . chr(13);
+echo "row: [" . chr(13);
+echo $buff;
+echo "]})" . chr(13);
+   // };
     
      
    //         ******* to be remove  **********

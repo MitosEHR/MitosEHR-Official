@@ -38,7 +38,7 @@
 include_once("../../registry.php"); 
 ?>
 <script type="text/javascript">
-var ImmunizationTable = Ext.data.Record.create([
+var immunizationTable = Ext.data.Record.create([
   // on the database table
   {name: 'id', type: 'int', mapping: 'id'},
   {name: 'patient_id', type: 'int', mapping: 'patient_id'},
@@ -63,11 +63,11 @@ var ImmunizationTable = Ext.data.Record.create([
 var pnotesTable = Ext.data.Record.create([
   // on the database table
   {name: 'id', type: 'int', mapping: 'id'},
-  {name: 'date', type: 'int', mapping: 'date'},
+  {name: 'date', type: 'string', mapping: 'date'},
   {name: 'body', type: 'string', mapping: 'body'},
-  {name: 'user', type: 'int', mapping: 'user'},
-  {name: 'title', type: 'string', mapping: 'manufacturer'},
-  {name: 'assigned_to', type: 'int', mapping: 'administered_by_id'}
+  {name: 'user', type: 'string', mapping: 'user'},
+  {name: 'title', type: 'string', mapping: 'title'},
+  {name: 'status', type: 'string', mapping: 'status'}
 ]);
 
 // *************************************************************************************
@@ -89,7 +89,7 @@ var storeImmList = new Ext.data.Store({
     idProperty: 'noteid',
     totalProperty: 'results',
     root: 'row'
-  }, ImmunizationTable )
+  }, immunizationTable )
 
 });
 storeImmList.load();
@@ -181,7 +181,7 @@ Ext.onReady(function(){
       xtype: 'grid', 
       store: storePnoteList,
       autoHeight: true,
-      //cls : 'noHeader',
+      cls : 'noHeader',
       collapsed: true,
       stripeRows: false,
       frame: false,
