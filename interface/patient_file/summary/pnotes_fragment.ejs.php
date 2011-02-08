@@ -86,8 +86,7 @@ $fake_register_globals=false;
 // VVVVVVVVVVVVVVVVV **  
 //*********************  
 $pid = "1";    
-
-
+// SQL query to pull all messages for current patient 
 $count = 0;
     $sql = "SELECT
       pnotes.id,
@@ -96,12 +95,14 @@ $count = 0;
       pnotes.title,
       pnotes.date,
       pnotes.body,
-      pnotes.message_status
+      pnotes.message_status,
+      pnotes.reply_id
     FROM
       pnotes
         WHERE
       pnotes.message_status != 'Done' AND
       pnotes.deleted != '1' AND
+      pnotes.reply_id IS NULL AND
       pnotes.pid ='" . $pid . "'";
     $result = sqlStatement($sql);
     while ($row = sqlFetchArray($result)) {
