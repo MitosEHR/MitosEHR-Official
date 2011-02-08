@@ -63,7 +63,7 @@ function getPnotesByPid ($pid, $activity = "1", $cols = "*", $limit=10, $start=0
   return $all;
 }
 
-function addPnote($pid, $newtext, $authorized = '0', $activity = '1',
+function addPnote($pid, $subject, $newtext, $authorized = '0', $activity = '1',
   $title='Unassigned', $assigned_to = '', $datetime = '', $message_status = "New")
 {
   if (empty($datetime)) $datetime = date('Y-m-d H:i:s');
@@ -72,9 +72,9 @@ function addPnote($pid, $newtext, $authorized = '0', $activity = '1',
   if ($assigned_to) $body .= " to $assigned_to";
   $body = $body . ') ' . $newtext;
 
-  return sqlInsert("INSERT INTO pnotes (date, body, pid, user, groupname, " .
-    "authorized, activity, title, assigned_to, message_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    array($datetime, $body, $pid, $_SESSION['authUser'], $_SESSION['authProvider'], $authorized, $activity, $title, $assigned_to, $message_status) );
+  return sqlInsert("INSERT INTO pnotes (date, subject, body, pid, user, groupname, " .
+    "authorized, activity, title, assigned_to, message_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    array($datetime, $subject, $body, $pid, $_SESSION['authUser'], $_SESSION['authProvider'], $authorized, $activity, $title, $assigned_to, $message_status) );
 }
 
 function updatePnote($id, $newtext, $title, $assigned_to, $message_status = "")

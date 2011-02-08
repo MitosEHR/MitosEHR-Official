@@ -56,11 +56,16 @@ $count = 0;
 // Update the message record
 // *************************************************************************************
 $data = json_decode ( $_POST['row'] );
-updatePnoteMessageStatus($data[0]->noteid, $data[0]->status);
-updatePnote($data[0]->noteid, // Internal OpenEMR Function
-			$data[0]->body,
-			$data[0]->type,
-			$data[0]->user,
-			$data[0]->status);
+updatePnoteMessageStatus(
+  $data[0]->noteid, 
+  $data[0]->status
+);
+updatePnote(
+  $data[0]->noteid, // Internal OpenEMR Function
+	$data[0]->body,
+	$data[0]->type,
+	$data[0]->user,
+	$data[0]->status
+);
 
 ?>

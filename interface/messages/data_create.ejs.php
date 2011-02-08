@@ -69,21 +69,24 @@ $count = 0;
 $data = json_decode ( $_POST['row'] );
 
 if ($noteid) {
-	updatePnote($data[0]->noteid, // Internal OpenEMR Function
-				$data[0]->body,
-				$data[0]->type,
-				$data[0]->user,
-				$data[0]->status);
+	updatePnote(
+	   $data[0]->noteid, // Internal OpenEMR Function
+		 $data[0]->body,
+		 $data[0]->type,
+		 $data[0]->user,
+	   $data[0]->status);
 	$noteid = '';
 } else {
-	$noteid = addPnote($data[0]->reply_to, // Internal OpenEMR Function
-						$data[0]->body,
-						$userauthorized,
-						'1',
-						$data[0]->type,
-						$data[0]->user,
-						'',
-						$data[0]->status);
+	$noteid = addPnote(
+	   $data[0]->reply_to, // Internal OpenEMR Function
+	   $data[0]->subject,
+		 $data[0]->body,
+		 $userauthorized,
+		 '1',
+		 $data[0]->type,
+		 $data[0]->user,
+		 '',
+		 $data[0]->status);
 }
 
 ?>

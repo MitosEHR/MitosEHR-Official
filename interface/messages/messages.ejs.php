@@ -82,22 +82,24 @@ body_content = '<?php echo htmlspecialchars( xl('Nothing posted yet...'), ENT_NO
 // 
 // *************************************************************************************
 var MessageRecord = Ext.data.Record.create([
-	{name: 'noteid',	type: 'int',	mapping: 'noteid'},
-	{name: 'user',		type: 'string', mapping: 'user'},
-	{name: 'body',		type: 'string', mapping: 'body'},
-	{name: 'from',		type: 'string', mapping: 'from'},
-	{name: 'patient',	type: 'string', mapping: 'patient'},
-	{name: 'type',		type: 'string', mapping: 'type'},
-	{name: 'date',		type: 'string', mapping: 'date'},
-	{name: 'status',	type: 'string', mapping: 'status'},
-	{name: 'reply_to',	type: 'int',	mapping: 'reply_to'}
+	{name: 'noteid',	  type: 'int',	   mapping: 'noteid'},
+	{name: 'user',		  type: 'string',  mapping: 'user'},
+	{name: 'subject',   type: 'string',  mapping: 'subject'},
+	{name: 'body',		  type: 'string',  mapping: 'body'},
+	{name: 'from',	  	type: 'string',  mapping: 'from'},
+	{name: 'patient',  	type: 'string',  mapping: 'patient'},
+	{name: 'type',	  	type: 'string',  mapping: 'type'},
+	{name: 'date',	  	type: 'string',  mapping: 'date'},
+	{name: 'status',   	type: 'string',  mapping: 'status'},
+	{name: 'reply_id',  type: 'int',     mapping: 'reply_id'},
+	{name: 'reply_to',	type: 'int',	   mapping: 'reply_to'}
 ]);
 
 // *************************************************************************************
 // Structure and load the data for Messages
 // AJAX -> data_*.ejs.php
 // *************************************************************************************
-var storeMsgs = new Ext.data.Store({
+var storeMsgs = new Ext.data.GroupingStore({
 	autoSave	: false,
 
 	// HttpProxy will only allow requests on the same domain.
@@ -124,7 +126,10 @@ var storeMsgs = new Ext.data.Store({
 		idProperty: 'noteid',
 		totalProperty: 'results',
 		root: 'row'
-	}, MessageRecord )
+	}, MessageRecord ),
+	
+	groupField:'subject'
+
 	
 });
 storeMsgs.load();
@@ -315,28 +320,28 @@ var prvMsg = new Ext.Panel({
 // Message Window Dialog
 // *************************************************************************************
 var winMessage = new  Ext.Window({
-	width		: 540,
-	autoHeight	: true,
-	modal		: true,
-	resizable	: false,
-	autoScroll	: true,
-	title		: '<?php echo htmlspecialchars( xl('Compose Message'), ENT_NOQUOTES); ?>',
-	closeAction	: 'hide',
-	renderTo	: document.body,
+	width		      : 540,
+	autoHeight	  : true,
+	modal		      : true,
+	resizable	    : false,
+	autoScroll	  : true,
+	title		      : '<?php echo htmlspecialchars( xl('Compose Message'), ENT_NOQUOTES); ?>',
+	closeAction	  : 'hide',
+	renderTo	    : document.body,
 	items: [
 		// Top panel, for appended messages.
 		prvMsg,
 		{
-		xtype		: 'form',
-		region		:'center',
+		xtype		    : 'form',
+		region		  :'center',
 		labelWidth	: 100,
-		id			: 'frmMessage',
-		frame		: true,
-		bodyStyle	: 'padding: 5px',
-		defaults	: {width: 180},
-		formBind	: true,
+		id			    : 'frmMessage',
+		frame		    : true,
+		bodyStyle	  : 'padding: 5px',
+		defaults	  : {width: 180},
+		formBind	  : true,
 		buttonAlign	: 'left',
-		split		: true,
+		split		    : true,
 		items: [
 			{ xtype: 'button', 
 				ref: '../patient_name',
@@ -388,6 +393,13 @@ var winMessage = new  Ext.Window({
 				displayField: 'title',
 				store: statusData
 			},
+			{ xtype: 'textfield', 
+			  ref: '../subject',
+			  fieldLabel: '<?php echo htmlspecialchars( xl('Subject'), ENT_NOQUOTES); ?>',
+        id: 'subject',
+        name: 'subject',
+        width: 350
+      },
 			{ xtype: 'textarea', 
 				ref: '../note',
 				fieldLabel: '<?php echo htmlspecialchars( xl('Message'), ENT_NOQUOTES); ?>',
@@ -408,7 +420,13 @@ var winMessage = new  Ext.Window({
 				id: 'reply_to',
 				hidden: true,
 				name: 'reply_to'
-			}
+			},
+			{ xtype: 'textfield',
+        ref: '../reply_id',
+        id: 'reply_id',
+        hidden: true,
+        name: 'reply_id'
+      }
 		]
 	}],
 	// Window Bottom Bar
@@ -434,14 +452,16 @@ var winMessage = new  Ext.Window({
 				var msgRec = storeMsgs.getById( Ext.getCmp("noteid").getValue() );
 
 				// Update the record in the Memory Store
-				msgRec.set('noteid', Ext.getCmp("noteid").getValue());
-				msgRec.set('user', Ext.getCmp("cmb_assigned_to").getValue());
-				msgRec.set('body', Ext.getCmp("note").getValue());
-				msgRec.set('from', Ext.getCmp("cmb_assigned_to").getValue());
-				msgRec.set('patient', Ext.getCmp("patient_name").getText());
-				msgRec.set('reply_to', Ext.getCmp("reply_to").getValue());
-				msgRec.set('type', Ext.getCmp("cmb_form_note_type").getValue());
-				msgRec.set('status', Ext.getCmp("cmb_form_message_status").getValue());
+				msgRec.set('noteid',    Ext.getCmp("noteid").getValue());
+				msgRec.set('user',      Ext.getCmp("cmb_assigned_to").getValue());
+				msgRec.set('subject',   Ext.getCmp("subject").getValue());
+				msgRec.set('body',      Ext.getCmp("note").getValue());
+				msgRec.set('from',      Ext.getCmp("cmb_assigned_to").getValue());
+				msgRec.set('patient',   Ext.getCmp("patient_name").getText());
+				msgRec.set('reply_to',  Ext.getCmp("reply_to").getValue());
+				msgRec.set('type',      Ext.getCmp("cmb_form_note_type").getValue());
+				msgRec.set('status',    Ext.getCmp("cmb_form_message_status").getValue());
+				msgRec.set('reply_id',  Ext.getCmp("reply_id").getValue()); 
 
 				// Save the changes and`fires the data_update.ejs.php
 				storeMsgs.save();
@@ -452,15 +472,16 @@ var winMessage = new  Ext.Window({
 
 				// Copy the form fields into a new record
 				var Message = new MessageRecord({
-					noteid	: Ext.getCmp("noteid").getValue(),
-					user	: Ext.getCmp('cmb_assigned_to').getValue(),
-					body	: Ext.getCmp('note').getValue(),
-					from	: Ext.getCmp('cmb_assigned_to').getValue(),
-					patient	: Ext.getCmp('patient_name').getText(),
-					reply_to: Ext.getCmp('reply_to').getValue(),
-					type	: Ext.getCmp('cmb_form_note_type').getValue(),
-					status	: Ext.getCmp('cmb_form_message_status').getValue(),
-					date	: year + "-" + month + "-" + day + " " + hours + ":" + minutes
+					noteid	  : Ext.getCmp("noteid").getValue(),
+					user	    : Ext.getCmp('cmb_assigned_to').getValue(),
+					subject   : Ext.getCmp('subject').getValue(),
+					body	    : Ext.getCmp('note').getValue(),
+					from	    : Ext.getCmp('cmb_assigned_to').getValue(),
+					patient	  : Ext.getCmp('patient_name').getText(),
+					reply_to  : Ext.getCmp('reply_to').getValue(),
+					type	    : Ext.getCmp('cmb_form_note_type').getValue(),
+					status	  : Ext.getCmp('cmb_form_message_status').getValue(),
+					date	    : year + "-" + month + "-" + day + " " + hours + ":" + minutes
 				});
 
 				// Save the changes and fires the data_update.ejs.php
@@ -524,6 +545,8 @@ var msgGrid = new Ext.grid.GridPanel({
 				winMessage.reply_to.setValue(rowContent.get('user'));
 				winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
 				winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
+				winMessage.subject.setValue(rowContent.get('subject'));
+				winMessage.reply_id.setValue(rowContent.get('reply_id'));
 				winMessage.noteid.setValue(rowContent.get('noteid'));
 				winMessage.note.setValue("");
 					
@@ -536,15 +559,22 @@ var msgGrid = new Ext.grid.GridPanel({
 			}
 		},
 		columns: [
-			{header: 'noteid', sortable: false, dataIndex: 'noteid', hidden: true},
-			{header: 'user', sortable: false, dataIndex: 'user', hidden: true},
+			{ header: 'noteid', sortable: false, dataIndex: 'noteid', hidden: true},
+			{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
+			{ header: 'user', sortable: false, dataIndex: 'user', hidden: true},
 			{ header: 'body', sortable: true, dataIndex: 'body', hidden: true },
+			{ header: '<?php echo htmlspecialchars( xl('Subject'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'subject', id: 'subject' },
 			{ width: 200, header: '<?php echo htmlspecialchars( xl('From'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'from' },
 			{ header: '<?php echo htmlspecialchars( xl('Patient'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'patient' },
 			{ header: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'type' },
 			{ header: '<?php echo htmlspecialchars( xl('Date'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'date' }, 
 			{ header: '<?php echo htmlspecialchars( xl('Status'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'status' },
 		],
+		view: new Ext.grid.GroupingView({
+      forceFit:true,
+      groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
+    }),
+
 		// *************************************************************************************
 		// Grid Menu
 		// *************************************************************************************
@@ -566,6 +596,8 @@ var msgGrid = new Ext.grid.GridPanel({
 				winMessage.cmb_assigned_to.setValue(null);
 				winMessage.cmb_form_note_type.setValue('Unassigned');
 				winMessage.cmb_form_message_status.setValue('New');
+				winMessage.reply_id.setValue(null);
+
 				
 				// Set the buttons state
 				winMessage.patient_name.enable();
@@ -592,6 +624,8 @@ var msgGrid = new Ext.grid.GridPanel({
 				winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
 				winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
 				winMessage.noteid.setValue(rowContent.get('noteid'));
+				winMessage.subject.setValue(rowContent.get('subject'));
+				winMessage.reply_id.setValue(rowContent.get('reply_id'));
 				
 				// Set the buttons state
 				winMessage.cmb_assigned_to.readOnly = true;

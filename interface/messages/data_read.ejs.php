@@ -59,7 +59,9 @@ $sql = "SELECT
 			pnotes.title,
 			pnotes.date,
 			pnotes.body,
+			pnotes.subject,
 			pnotes.message_status,
+			pnotes.reply_id,
 			users.fname AS users_fname,
 			users.lname AS users_lname,
 			patient_data.fname AS patient_data_fname,
@@ -85,11 +87,12 @@ while ($myrow = sqlFetchArray($result)) {
 	$buff .= "{";
 	$buff .= " noteid: '" . htmlspecialchars( $myrow['id'], ENT_QUOTES) . "',";
 	$buff .= " user: '" . htmlspecialchars( $myrow['user'], ENT_QUOTES) . "',";
+	$buff .= " subject: '" . htmlspecialchars( $myrow['subject'], ENT_QUOTES) . "',";
 	$buff .= " body: '" . $p_body . "',";
 	$buff .= " from: '" . htmlspecialchars( $name, ENT_NOQUOTES) . "'," ;
 	$buff .= " patient: '" . htmlspecialchars( $patient, ENT_NOQUOTES) . "',";
-	$buff .= " type: '" . htmlspecialchars( $myrow['title'], ENT_NOQUOTES) . "',";
 	$buff .= " date: '" . htmlspecialchars( oeFormatShortDate(substr($myrow['date'], 0, strpos($myrow['date'], " "))), ENT_NOQUOTES) . "',";
+	$buff .= " reply_id: '" . htmlspecialchars( $myrow['reply_id'], ENT_NOQUOTES) . "',";
 	$buff .= " status: '" . htmlspecialchars( $myrow['message_status'], ENT_NOQUOTES) . "'}," . chr(13);
 }
 
