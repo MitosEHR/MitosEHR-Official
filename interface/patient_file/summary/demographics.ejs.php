@@ -181,33 +181,34 @@ Ext.onReady(function(){
       }]
   };
   // notes grid
-  var notesSumm = new Ext.grid.GridPanel ({
+  var notesSumm = {
       title: '<?php xl("Notes", 'e'); ?>', 
-      //xtype: 'grid', 
+      xtype: 'grid', 
       store: storePnoteList,
       autoHeight: true,
-      //cls : 'noHeader',
+      cls : 'noHeader',
       collapsed: true,
       stripeRows: false,
       frame: false,
-      bodyStyle: 'padding:0',
-      //viewConfig: {forceFit: true, DeferEmptyText: false, emptyText: 'No notes found for this patient'}, // this is the option which will force the grid to the width of the containing panel
+      //bodyStyle: 'padding:0',
       columns: [
         { sortable: false, dataIndex: 'id', hidden: true},
-        { id:'subject', header: 'Subject', sortable: false, dataIndex: 'subject' },
+        { width: 30, id:'subject', header: 'Subject', sortable: false, dataIndex: 'subject' },
         { width: 20, header: 'Title', sortable: false, dataIndex: 'title' },
         { header: 'Message', sortable: false, dataIndex: 'body' }              
       ],
       view: new Ext.grid.GroupingView({
             forceFit:true,
-            groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
+            groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})',
+            DeferEmptyText: false, 
+            emptyText: 'No notes found for this patient'
         }),
 
       bbar: [{
-        text: '<?php echo htmlspecialchars( xl('View all notes'), ENT_NOQUOTES); ?>',
+        text: '<?php echo htmlspecialchars( xl('View all patient notes'), ENT_NOQUOTES); ?>',
         iconCls : 'save'
       }]
-  });
+  };
   // disclosure grid
   var disclosuresSumm = {
       title: 'Disclosures',
