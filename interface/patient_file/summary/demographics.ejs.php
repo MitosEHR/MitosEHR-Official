@@ -66,9 +66,11 @@ var pnotesTable = Ext.data.Record.create([
   {name: 'user', type: 'string', mapping: 'user'},
   {name: 'pid', type: 'int', mapping: 'pid'},
   {name: 'title', type: 'string', mapping: 'title'},
+  {name: 'subject', type: 'string', mapping: 'subject'},
   {name: 'date', type: 'string', mapping: 'date'},
   {name: 'body', type: 'string', mapping: 'body'},
-  {name: 'message_status', type: 'string', mapping: 'message_status'}
+  {name: 'message_status', type: 'string', mapping: 'message_status'},
+  {name: 'reply_id', type: 'int', mapping: 'reply_id'}
 ]);
 
 // *************************************************************************************
@@ -98,7 +100,7 @@ storeImmList.load();
 // Structure and load the data for pnotes List
 // AJAX -> interface/patient_file/summary/pnotes_fragment.ejs.php
 // *************************************************************************************
-var storePnoteList = new Ext.data.Store({
+var storePnoteList = new Ext.data.GroupingStore({
   autoSave  : false,
 
   // HttpProxy will only allow requests on the same domain.
@@ -113,7 +115,9 @@ var storePnoteList = new Ext.data.Store({
     idProperty: 'id',
     totalProperty: 'results',
     root: 'row'
-  }, pnotesTable )
+  }, pnotesTable ),
+  sortInfo:{field: 'date', direction: "ASC"},
+  groupField:'subject'
 
 });
 storePnoteList.load();
@@ -182,19 +186,26 @@ Ext.onReady(function(){
       xtype: 'grid', 
       store: storePnoteList,
       autoHeight: true,
-      //cls : 'noHeader',
+      cls : 'noHeader',
       collapsed: true,
       stripeRows: false,
       frame: false,
-      bodyStyle: 'padding:0',
-      viewConfig: {forceFit: true, DeferEmptyText: false, emptyText: 'No notes found for this patient'}, // this is the option which will force the grid to the width of the containing panel
+      //bodyStyle: 'padding:0',
       columns: [
         { sortable: false, dataIndex: 'id', hidden: true},
+        { width: 30, id:'subject', header: 'Subject', sortable: false, dataIndex: 'subject' },
         { width: 20, header: 'Title', sortable: false, dataIndex: 'title' },
         { header: 'Message', sortable: false, dataIndex: 'body' }              
       ],
+      view: new Ext.grid.GroupingView({
+            forceFit:true,
+            groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})',
+            DeferEmptyText: false, 
+            emptyText: 'No notes found for this patient'
+        }),
+
       bbar: [{
-        text: '<?php echo htmlspecialchars( xl('View all notes'), ENT_NOQUOTES); ?>',
+        text: '<?php echo htmlspecialchars( xl('View all patient notes'), ENT_NOQUOTES); ?>',
         iconCls : 'save'
       }]
   };
