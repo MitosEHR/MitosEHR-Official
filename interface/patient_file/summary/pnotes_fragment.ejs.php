@@ -92,6 +92,7 @@ $count = 0;
       pnotes.id,
       pnotes.user,
       pnotes.pid,
+      pnotes.subject,
       pnotes.title,
       pnotes.date,
       pnotes.body,
@@ -102,7 +103,6 @@ $count = 0;
         WHERE
       pnotes.message_status != 'Done' AND
       pnotes.deleted != '1' AND
-      pnotes.reply_id IS NULL AND
       pnotes.pid ='" . $pid . "'";
     $result = sqlStatement($sql);
     while ($row = sqlFetchArray($result)) {
@@ -112,6 +112,7 @@ $count = 0;
       $buff .= " user: '" . htmlspecialchars( $row['user'], ENT_NOQUOTES) . "'," ;
       $buff .= " pid: '" . htmlspecialchars( $row['pid'], ENT_QUOTES) . "',";
       $buff .= " title: '" . htmlspecialchars( $row['title'], ENT_NOQUOTES) . "',";
+      $buff .= " subject: '" . htmlspecialchars( $row['subject'], ENT_NOQUOTES) . "',";
       $buff .= " date: '" . htmlspecialchars( oeFormatShortDate(substr($row['date'], 0, strpos($row['date'], " "))), ENT_NOQUOTES) . "',";
       $buff .= " body: '" . htmlspecialchars( $row['body'], ENT_QUOTES) . "',";
       $buff .= " message_status: '" . htmlspecialchars( $myrow['message_status'], ENT_NOQUOTES) . "'}," . chr(13);
