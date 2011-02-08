@@ -16,6 +16,11 @@
 	background-image: url(../ui_icons/service_ico.png) !important;
 }
 
+.facilities{
+	background-image: url(../ui_icons/facilities.png) !important;
+}
+
+
 .delete{
 	background-image: url(../ui_icons/delete.png) !important;
 }

@@ -23,14 +23,6 @@ $fake_register_globals=false;
 // Load the MitosEHR Libraries
 // *************************************************************************************
 require_once("../registry.php");
-//require_once("$srcdir/patient.inc.php");
-//require_once("$srcdir/acl.inc.php");
-//require_once("$srcdir/log.inc.php");
-//require_once("$srcdir/options.inc.php");
-//require_once("$srcdir/formdata.inc.php");
-//require_once("$srcdir/classes/Document.class.php");
-//require_once("$srcdir/gprelations.inc.php");
-//require_once("$srcdir/formatting.inc.php");
 
 // Count records variable
 $count = 0;
@@ -53,6 +45,7 @@ switch ($_GET['task']) {
 				ORDER BY
 					seq, title";
 		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
 		while($row = sqlFetchArray($result)){
 			$count++;
 			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
@@ -78,6 +71,7 @@ switch ($_GET['task']) {
 				ORDER BY
 					seq, title";
 		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
 		while($row = sqlFetchArray($result)){
 			$count++;
 			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
@@ -103,6 +97,7 @@ switch ($_GET['task']) {
 				ORDER BY
 					seq, title";
 		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
 		while($row = sqlFetchArray($result)){
 			$count++;
 			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
@@ -128,6 +123,7 @@ switch ($_GET['task']) {
 				ORDER BY
 					seq, title";
 		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
 		while($row = sqlFetchArray($result)){
 			$count++;
 			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
@@ -186,6 +182,7 @@ switch ($_GET['task']) {
 				ORDER BY
 					seq, title";
 		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
 		while($row = sqlFetchArray($result)){
 			$count++;
 			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
@@ -211,6 +208,7 @@ switch ($_GET['task']) {
 				ORDER BY
 					seq, title";
 		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
 		while($row = sqlFetchArray($result)){
 			$count++;
 			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
@@ -222,6 +220,111 @@ switch ($_GET['task']) {
 		echo $buff;
 		echo "]})" . chr(13);
 	break;
+	
+	// *************************************************************************************
+	// Pull Ethnicity from the database
+	// *************************************************************************************
+	case "ethnicity":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'ethrace'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
+	// *************************************************************************************
+	// Pull Language from the database
+	// *************************************************************************************
+	case "language":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'language'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
+	// *************************************************************************************
+	// Pull Race from the database
+	// *************************************************************************************
+	case "race":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'race'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
+	// *************************************************************************************
+	// Pull Referral Source from the database
+	// *************************************************************************************
+	case "refsource":
+		$sql = "SELECT
+					*
+				FROM
+					list_options
+				WHERE
+					list_id = 'refsource'
+				ORDER BY
+					seq, title";
+		$result = sqlStatement($sql);
+		$buff .= " { option_id: 'unassigned', title: 'Unassigned' },". chr(13);
+		while($row = sqlFetchArray($result)){
+			$count++;
+			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
 }
 
 ?>

@@ -37,32 +37,6 @@ if($GLOBALS['password_expiration_days'] != 0){
 }
 
 
-// *************************************************************************************
-// Navigation Layout if MitosEHR will work for a Athletic Clinic
-// *************************************************************************************
-if ($GLOBALS['athletic_team']) {
-	$frame1url = "../reports/players_report.php?embed=1";
-} else {
-	if ($is_expired) {
-		$frame1url = "pwd_expires_alert.php"; //php file which display's password expiration message.
-	} elseif (isset($_GET['mode']) && $_GET['mode'] == "loadcalendar") {
-		$frame1url = "../calendar/calendar.ejs.php?pid=" . $_GET['pid'];
-		if (isset($_GET['date'])) $frame1url .= "&date=" . $_GET['date'];
-	} else {
-		if ($GLOBALS['concurrent_layout']) {
-		// new layout
-		if ($GLOBALS['default_top_pane']) {
-			$frame1url=$GLOBALS['default_top_pane'];
-		} else {
-			$frame1url = "main_info.php";
-		}
-	} else
-		// old layout
-		$frame1url = "main.php?mode=" . $_GET['mode'];
-	}
-}
-
-$nav_area_width = $GLOBALS['athletic_team'] ? '230' : '130';
 if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_area_width'];
 ?>
 <html>
