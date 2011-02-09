@@ -106,7 +106,9 @@ $count = 0;
       pnotes.pid ='" . $pid . "'";
     $result = sqlStatement($sql);
     while ($row = sqlFetchArray($result)) {
-      $count++; 
+      $count++;
+      $p_body = str_replace(chr(10), "<br>", $row['body'] );
+       
       $buff .= "{";
       $buff .= " id: '" . htmlspecialchars( $row['id'], ENT_QUOTES) . "',";
       $buff .= " user: '" . htmlspecialchars( $row['user'], ENT_NOQUOTES) . "'," ;
@@ -114,7 +116,7 @@ $count = 0;
       $buff .= " title: '" . htmlspecialchars( $row['title'], ENT_NOQUOTES) . "',";
       $buff .= " subject: '" . htmlspecialchars( $row['subject'], ENT_NOQUOTES) . "',";
       $buff .= " date: '" . htmlspecialchars( oeFormatShortDate(substr($row['date'], 0, strpos($row['date'], " "))), ENT_NOQUOTES) . "',";
-      $buff .= " body: '" . htmlspecialchars( $row['body'], ENT_QUOTES) . "',";
+      $buff .= " body: '" . $p_body . "',";
       $buff .= " message_status: '" . htmlspecialchars( $myrow['message_status'], ENT_NOQUOTES) . "'}," . chr(13);
     }
     $buff = substr($buff, 0, -2); // Delete the last comma.
