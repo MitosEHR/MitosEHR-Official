@@ -11,7 +11,13 @@
   height:0 !important;
   margin-top:-8px !important;
 }
- 
+.x-grid3-cell-inner { white-space: normal !important; }
+.x-grid-wrap-cells td.x-grid3-cell {
+    overflow: hidden !important;
+}
+.x-grid-wrap-cells td.x-grid3-cell div.x-grid3-cell-inner {
+    white-space: normal !important;
+}
 .addService{
 	background-image: url(../ui_icons/service_ico.png) !important;
 }

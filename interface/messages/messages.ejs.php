@@ -147,12 +147,12 @@ var storePat = new Ext.data.Store({
 		totalProperty: 'results',
 		root: 'row'
 	},[
-		{name: 'id', type: 'int', mapping: 'id'},
-		{name: 'name', type: 'string', mapping: 'name'},
+		{name: 'id',    type: 'int',    mapping: 'id'},
+		{name: 'name',  type: 'string', mapping: 'name'},
 		{name: 'phone', type: 'string', mapping: 'phone'},
-		{name: 'ss', type: 'string', mapping: 'ss'},
-		{name: 'dob', type: 'string', mapping: 'dob'},
-		{name: 'pid', type: 'string', mapping: 'pid'}
+		{name: 'ss',    type: 'string', mapping: 'ss'},
+		{name: 'dob',   type: 'string', mapping: 'dob'},
+		{name: 'pid',   type: 'string', mapping: 'pid'}
 	])
 });
 storePat.load();
@@ -170,7 +170,7 @@ var toData = new Ext.data.Store({
 		totalProperty: 'results',
 		root: 'row'
 	},[
-		{name: 'user', type: 'string', mapping: 'user'},
+		{name: 'user',      type: 'string', mapping: 'user'},
 		{name: 'full_name', type: 'string', mapping: 'full_name'}
 	])
 });
@@ -190,7 +190,7 @@ var typeData = new Ext.data.Store({
 		root: 'row'
 	},[
 		{name: 'option_id', type: 'string', mapping: 'option_id'},
-		{name: 'title', type: 'string', mapping: 'title'}
+		{name: 'title',     type: 'string', mapping: 'title'}
 	])
 });
 typeData.load();
@@ -209,7 +209,7 @@ var statusData = new Ext.data.Store({
 		root: 'row'
 	},[
 		{name: 'option_id', type: 'string', mapping: 'option_id'},
-		{name: 'title', type: 'string', mapping: 'title'}
+		{name: 'title',     type: 'string', mapping: 'title'}
 	])
 });
 statusData.load();
@@ -218,23 +218,23 @@ statusData.load();
 // Patient Select Dialog
 // *************************************************************************************
 var winPatients = new  Ext.Window({
-	width		: 900,
-	height		: 400,
-	modal		: true,
-	resizable	: true,
+	width		    : 900,
+	height		  : 400,
+	modal		    : true,
+	resizable	  : true,
 	autoScroll	: true,
-	title		:	'<?php echo htmlspecialchars( xl('Patients'), ENT_NOQUOTES); ?>',
+	title		    :	'<?php echo htmlspecialchars( xl('Patients'), ENT_NOQUOTES); ?>',
 	closeAction	: 'hide',
-	renderTo	: document.body,
+	renderTo	  : document.body,
 	items: [{
-			xtype		: 'grid',
-			name		: 'gridPatients',
+			xtype		    : 'grid',
+			name		    : 'gridPatients',
 			autoHeight	: true,
-			store		: storePat,
+			store		    : storePat,
 			stripeRows	: true,
-			frame		: false,
+			frame		    : false,
 			viewConfig	: {forceFit: true}, // force the grid to the width of the containing panel
-			sm			: new Ext.grid.RowSelectionModel({singleSelect:true}),
+			sm			    : new Ext.grid.RowSelectionModel({singleSelect:true}),
 			listeners: {
 				
 				// Single click to select the record, and copy the variables
@@ -258,15 +258,15 @@ var winPatients = new  Ext.Window({
 			],
 			tbar:[],
 			plugins: [new Ext.ux.grid.Search({
-				mode			: 'local',
-				iconCls			: false,
+				mode			      : 'local',
+				iconCls			    : false,
 				deferredRender	: false,
-				dateFormat		: 'm/d/Y',
-				minLength		: 4,
-				align			: 'left',
-				width			: 250,
+				dateFormat		  : 'm/d/Y',
+				minLength		    : 4,
+				align			      : 'left',
+				width			      : 250,
 				disableIndexes	: ['id'],
-				position		: 'top'
+				position		    : 'top'
 			})]
 	}],
 
@@ -274,7 +274,7 @@ var winPatients = new  Ext.Window({
 	bbar:[{
 		text		:'<?php echo htmlspecialchars( xl('Select'), ENT_NOQUOTES); ?>',
 		iconCls		: 'select',
-		ref			: '../patSelect',
+		ref			  : '../patSelect',
 		formBind	: true,
 		disabled	: true,
 		handler: function() {
@@ -284,9 +284,9 @@ var winPatients = new  Ext.Window({
 			winPatients.hide();
 		}
 	},{
-		text		: '<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
+		text		  : '<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
 		iconCls		: 'delete',
-		ref			: '../patClose',
+		ref			  : '../patClose',
 		formBind	: true,
 		handler		: function(){ winPatients.hide(); }
 	}]
@@ -299,17 +299,17 @@ var winPatients = new  Ext.Window({
 var prvMsg = new Ext.Panel({
 	title			: '<?php xl('Past Messages', 'e'); ?>',
 	labelWidth		: 100,
-	minSize			: 300,
-	height			: 100,
-	region			: 'north',
-	bodyStyle		: 'padding: 5px;',
+	minSize			  : 300,
+	height			  : 200,
+	region			  : 'north',
+	bodyStyle		  : 'padding: 5px;',
 	autoScroll		: true,
-	border			: false,
+	border			  : false,
 	animCollapse	: false,
 	collapsible		: true,
 	titleCollapse	: true,
-	split			: true,
-	html			: '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>',
+	split			    : true,
+	html			    : '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>',
 	listeners: {
 		collapse: function() { winMessage.syncShadow(); },
 		expand: function(){ winMessage.syncShadow(); }
@@ -320,7 +320,7 @@ var prvMsg = new Ext.Panel({
 // Message Window Dialog
 // *************************************************************************************
 var winMessage = new  Ext.Window({
-	width		      : 540,
+	width		      : 640,
 	autoHeight	  : true,
 	modal		      : true,
 	resizable	    : false,
@@ -328,16 +328,13 @@ var winMessage = new  Ext.Window({
 	title		      : '<?php echo htmlspecialchars( xl('Compose Message'), ENT_NOQUOTES); ?>',
 	closeAction	  : 'hide',
 	renderTo	    : document.body,
-	items: [
-		// Top panel, for appended messages.
-		prvMsg,
-		{
+	items: [{
 		xtype		    : 'form',
 		region		  :'center',
-		labelWidth	: 100,
+		labelWidth	: 75,
 		id			    : 'frmMessage',
 		frame		    : true,
-		bodyStyle	  : 'padding: 5px',
+		bodyStyle	  : 'padding: 5px 5px 0 5px',
 		defaults	  : {width: 180},
 		formBind	  : true,
 		buttonAlign	: 'left',
@@ -398,15 +395,15 @@ var winMessage = new  Ext.Window({
 			  fieldLabel: '<?php echo htmlspecialchars( xl('Subject'), ENT_NOQUOTES); ?>',
         id: 'subject',
         name: 'subject',
-        width: 350
+        width: 520
       },
-			{ xtype: 'textarea', 
+			{ xtype: 'htmleditor', 
 				ref: '../note',
-				fieldLabel: '<?php echo htmlspecialchars( xl('Message'), ENT_NOQUOTES); ?>',
+				fieldLabel: '<?php echo htmlspecialchars( xl('Messages'), ENT_NOQUOTES); ?>',
 				id: 'note',
 				name: 'note',
-				width: 350,
-				height: 100
+				width: 520,
+				height: 130
 			},
 			{ xtype: 'textfield', 
 				ref: '../noteid',
@@ -428,7 +425,8 @@ var winMessage = new  Ext.Window({
         name: 'reply_id'
       }
 		]
-	}],
+		// Top panel, for appended messages.
+	}, prvMsg ],
 	// Window Bottom Bar
 	bbar:[{
 		text		:'<?php echo htmlspecialchars( xl('Send'), ENT_NOQUOTES); ?>',
@@ -512,8 +510,8 @@ var msgGrid = new Ext.grid.GridPanel({
 		autoHeight : true,    // .<--- new    was only showing the 1st message
  		border     : false,   //  <--- new    
  		frame		   : false,
-		viewConfig	: {forceFit: true}, //  <--- comments removed, I think looks better this way.  // force the grid to the width of the containing panel
-		sm			: new Ext.grid.RowSelectionModel({singleSelect:true}),
+		viewConfig : {forceFit: true}, //  <--- comments removed, I think looks better this way.  // force the grid to the width of the containing panel
+		sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
 		listeners: {
 		
 			// Single click to select the record, and copy the variables
@@ -606,13 +604,13 @@ var msgGrid = new Ext.grid.GridPanel({
 				winMessage.show();
 			}
 		},'-',{
-			xtype	:'button',
-			id		: 'editMsg',
-			ref		: '../editMsg',
-			text	: '<?php xl("Reply message", 'e'); ?>',
-			iconCls	: 'edit',
-			disabled: true,
-			handler: function(){ 
+			xtype	   :'button',
+			id		   : 'editMsg',
+			ref		   : '../editMsg',
+			text	   : '<?php xl("Reply message", 'e'); ?>',
+			iconCls	 : 'edit',
+			disabled : true,
+			handler  : function(){ 
 			
 				// Copy the BODY Message into the form
 				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
@@ -635,10 +633,10 @@ var msgGrid = new Ext.grid.GridPanel({
 				winMessage.show();
 			}
 		},'-',{
-			xtype		:'button',
-			id			: 'delMsg',
-			ref			: '../delMsg',
-			text		: '<?php xl("Delete message", 'e'); ?>',
+			xtype		  :'button',
+			id			  : 'delMsg',
+			ref			  : '../delMsg',
+			text		  : '<?php xl("Delete message", 'e'); ?>',
 			iconCls		: 'delete',
 			disabled	: true,
 			handler: function(msgGrid){
@@ -663,15 +661,15 @@ var msgGrid = new Ext.grid.GridPanel({
 			}
 		}], // END GRID TOP MENU
 		plugins: [new Ext.ux.grid.Search({
-			mode			: 'local',
-			iconCls			: false,
+			mode			      : 'local',
+			iconCls			    : false,
 			deferredRender	: false,
-			dateFormat		: 'm/d/Y',
-			minLength		: 4,
-			align			: 'left',
-			width			: 250,
+			dateFormat		  : 'm/d/Y',
+			minLength		    : 4,
+			align			      : 'left',
+			width			      : 250,
 			disableIndexes	: ['noteid', 'user', 'body'],
-			position		: 'top'
+			position		    : 'top'
 		})]			
 	}); // END GRID
 

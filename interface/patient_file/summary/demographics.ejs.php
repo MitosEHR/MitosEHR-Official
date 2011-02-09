@@ -68,7 +68,7 @@ var pnotesTable = Ext.data.Record.create([
   {name: 'title', type: 'string', mapping: 'title'},
   {name: 'subject', type: 'string', mapping: 'subject'},
   {name: 'date', type: 'string', mapping: 'date'},
-  {name: 'body', type: 'string', mapping: 'body'},
+  {name: 'body', type: 'auto', mapping: 'body'},
   {name: 'message_status', type: 'string', mapping: 'message_status'},
   {name: 'reply_id', type: 'int', mapping: 'reply_id'}
 ]);
