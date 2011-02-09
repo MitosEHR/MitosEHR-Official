@@ -23,7 +23,7 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 // This destructions must be called for all the objects that
 // are rendered on the document.body 
 //******************************************************************************
-if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); } 
+if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
 
 // *************************************************************************************
 // Structure of the message record
@@ -91,7 +91,7 @@ var storeFacilities = new Ext.data.Store({
 storeFacilities.load();
 
 // *************************************************************************************
-// Structure, data for cmb_TaxID
+// Structure, data for storeTaxID
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
 var storeTaxID = new Ext.data.Store({
@@ -110,7 +110,7 @@ var storeTaxID = new Ext.data.Store({
 storeTaxID.load();
 
 // *************************************************************************************
-// Structure, data for cmb_TaxID
+// Structure, data for storePOSCode
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
 var storePOSCode = new Ext.data.Store({
@@ -151,12 +151,12 @@ var frmFacility = new Ext.FormPanel({
 		{ xtype: 'textfield', id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
 		{ xtype: 'textfield', id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
 		{ xtype: 'textfield', id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
+		{ xtype: 'combo', autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
 		{ xtype: 'textfield', id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
 		{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
 		{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
 		{ xtype: 'checkbox', id: 'service_location', name: 'service_location', fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
+		{ xtype: 'combo', autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
 		{ xtype: 'textfield', id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
 		{ xtype: 'textfield', id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' },
 	],
@@ -182,7 +182,7 @@ var frmFacility = new Ext.FormPanel({
 // *************************************************************************************
 var winFacility = new Ext.Window({
 	id			: 'winFacility',
-	width		: 600,
+	width		: 390,
 	autoHeight	: true,
 	modal		: true,
 	resizable	: false,

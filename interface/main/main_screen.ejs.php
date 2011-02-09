@@ -50,7 +50,6 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.Search.js"></script>
 <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
 <script type="text/javascript" src="../../repository/fittoparent/Ext.ux.FitToParent.js"></script>
-<script type="text/javascript" src="../../repository/calendar/extensible-all-debug.js"></script>
 <script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script>
 <script type="text/javascript" src="../../repository/formValidation/formValidation.js"></script>
 
@@ -215,7 +214,7 @@ var TopPanel = new Ext.Panel({
 	// Monitor and send the new height value to the panel
 	listeners : {
 		bodyresize : function(panel, width, height) {
-			Ext.getCmp('RenderPanel').setHeight(height);
+			if ( Ext.getCmp('RenderPanel') ){ Ext.getCmp('RenderPanel').setHeight(height); }
 		}
 	}
 	
