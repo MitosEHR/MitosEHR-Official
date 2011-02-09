@@ -571,8 +571,8 @@ var msgGrid = new Ext.grid.GridPanel({
 			{ header: '<?php echo htmlspecialchars( xl('Status'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'status' },
 		],
 		view: new Ext.grid.GroupingView({
-      forceFit:true,
-      groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
+      	forceFit:true,
+      	groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
     }),
 
 		// *************************************************************************************
