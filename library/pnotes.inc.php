@@ -83,7 +83,7 @@ function updatePnote($id, $newtext, $title, $assigned_to, $message_status = "")
   if (! $row) die("updatePnote() did not find id '$id'");
   $activity = $assigned_to ? '1' : '0';
 
-  $body = $row['body'] . "\n" . date('Y-m-d H:i') .
+  $body = $row['body'] . " " . date('Y-m-d H:i') .
     ' (' . $_SESSION['authUser'];
   if ($assigned_to) $body .= " to $assigned_to";
   $body = $body . ') ' . $newtext;
