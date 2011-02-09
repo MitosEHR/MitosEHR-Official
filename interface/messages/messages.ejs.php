@@ -297,7 +297,7 @@ var winPatients = new  Ext.Window({
 // Previuos Messages Panel
 // *************************************************************************************
 var prvMsg = new Ext.Panel({
-	title			: '<?php xl('Past Messages', 'e'); ?>',
+	title			: '<?php xl('Reply History', 'e'); ?>',
 	labelWidth		: 100,
 	minSize			  : 300,
 	height			  : 200,
@@ -399,9 +399,10 @@ var winMessage = new  Ext.Window({
       },
 			{ xtype: 'htmleditor', 
 				ref: '../note',
-				fieldLabel: '<?php echo htmlspecialchars( xl('Messages'), ENT_NOQUOTES); ?>',
+				fieldLabel: '<?php echo htmlspecialchars( xl('Message'), ENT_NOQUOTES); ?>',
 				id: 'note',
 				name: 'note',
+				labelWidth  : 0,
 				width: 520,
 				height: 130
 			},
