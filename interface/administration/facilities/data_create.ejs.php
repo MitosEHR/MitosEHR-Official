@@ -22,7 +22,7 @@ $fake_register_globals=false;
 // *************************************************************************************
 // Load the OpenEMR Libraries
 // *************************************************************************************
-require_once("../registry.php");
+require_once("../../registry.php");
 
 
 // Count records variable

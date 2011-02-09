@@ -17,6 +17,14 @@ include_once("../../registry.php");
 Ext.onReady(function(){
 Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
+//******************************************************************************
+// Sanitizing Objects
+// Destroy them, if already exists in the browser memory.
+// This procedures must be called for all the objects declared here
+//******************************************************************************
+if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); } 
+
+
 // *************************************************************************************
 // Structure of the message record
 // creates a subclass of Ext.data.Record
@@ -88,7 +96,7 @@ storeFacilities.load();
 // *************************************************************************************
 var storeTaxID = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: '../administration/faclities/component_data.ejs.php?task=taxid'
+		url: '../administration/facilities/component_data.ejs.php?task=taxid'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'option_id',
@@ -101,30 +109,56 @@ var storeTaxID = new Ext.data.Store({
 });
 storeTaxID.load();
 
+// *************************************************************************************
+// Structure, data for cmb_TaxID
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+var storePOSCode = new Ext.data.Store({
+	proxy: new Ext.data.ScriptTagProxy({
+		url: '../administration/facilities/component_data.ejs.php?task=poscodes'
+	}),
+	reader: new Ext.data.JsonReader({
+		idProperty: 'option_id',
+		totalProperty: 'results',
+		root: 'row'
+	},[
+		{name: 'option_id', type: 'string', mapping: 'option_id'},
+		{name: 'title', type: 'string', mapping: 'title'}
+	])
+});
+storePOSCode.load();
+
+
+// *************************************************************************************
+// Facility Form
+// Add or Edit purpose
+// *************************************************************************************
 var frmFacility = new Ext.FormPanel({
-	id: 'frmFacility',
+	id			: 'frmFacility',
 	autoHeight	: true,
 	autoWidth	: true,
-	defaults	: {width: 180, labelWidth: 100},
+	labelWidth	: 150,
+	defaults	: {width: 200},
+	bodyStyle	: 'padding: 5px;',
 	updateRecord: FacilityRecord,
 	loadRecord: FacilityRecord,
 	items: [
-		{ xtype: 'textfield', id: 'name', name: 'name', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'street', name: 'street', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'city', name: 'city', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'state', name: 'state', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'country_code', name: 'country_code', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Country'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'phone', name: 'phone', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'fax', name: 'fax', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'postal_code', name: 'postal_code', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
-		{ xtype: 'textfield', id: 'facility_npi', name: 'facility_npi', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'checkbox', id: 'service_location', name: 'service_location', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'combo', id: 'pos_code', name: 'pos_code', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'attn', name: 'attn', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
-		{ xtype: 'textfield', id: 'domain_identifier', name: 'domain_identifier', labelWidth: 100, fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'name', name: 'name', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'state', name: 'state', fieldLabel: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'country_code', name: 'country_code', fieldLabel: '<?php echo htmlspecialchars( xl('Country'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
+		{ xtype: 'textfield', id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'checkbox', id: 'service_location', name: 'service_location', fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
+		{ xtype: 'textfield', id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
+		{ xtype: 'textfield', id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' },
 	],
 	// Window Bottom Bar
 	bbar:[{
@@ -146,7 +180,8 @@ var frmFacility = new Ext.FormPanel({
 // *************************************************************************************
 // Message Window Dialog
 // *************************************************************************************
-var winFacility = new  Ext.Window({
+var winFacility = new Ext.Window({
+	id			: 'winFacility',
 	width		: 600,
 	autoHeight	: true,
 	modal		: true,
@@ -255,8 +290,8 @@ var RenderPanel = new Ext.Panel({
   items: [ 
     facilitiesGrid
   ]
-
 });
 
 }); // End ExtJS
+
 </script>

@@ -22,16 +22,8 @@ $fake_register_globals=false;
 // *************************************************************************************
 // Load the OpenEMR Libraries
 // *************************************************************************************
-require_once("../registry.php");
-require_once("$srcdir/pnotes.inc.php");
-require_once("$srcdir/patient.inc.php");
-require_once("$srcdir/acl.inc.php");
-require_once("$srcdir/log.inc.php");
-require_once("$srcdir/options.inc.php");
-require_once("$srcdir/formdata.inc.php");
-require_once("$srcdir/classes/Document.class.php");
-require_once("$srcdir/gprelations.inc.php");
-require_once("$srcdir/formatting.inc.php");
+require_once("../../registry.php");
+
 
 // Count records variable
 $count = 0;

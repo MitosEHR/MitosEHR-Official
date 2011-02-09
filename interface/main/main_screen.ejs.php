@@ -64,11 +64,12 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 
 <script type="text/javascript">
 <?php require($GLOBALS['srcdir'] . "/restoreSession.php"); ?>
+
 Ext.onReady(function() {
 
 Ext.QuickTips.init();
 Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
-					 
+
 // *************************************************************************************
 // Immunization Window Dialog
 // *************************************************************************************
@@ -123,7 +124,7 @@ var navigation = new Ext.tree.TreePanel({
 // *************************************************************************************
 navigation.on('click', function(n){
 	var sn = this.selModel.selNode || {}; // selNode is null on initial selection
-
+	
 	// Loads the screen on the top panel
 	if( n.attributes.pos == "top"){
 		Ext.getCmp('TopPanel').load({url:'../' + n.attributes.id, scripts:true});
@@ -176,7 +177,7 @@ var helper = new Ext.Panel({
 		text:'Filter',
 		iconCls: 'icoFilter',
 		formBind: true,
-		handler: function() { Ext.getCmp('frmImmunizations').getForm().submit(); }
+		handler: function() { }
 	}]
 });
 
@@ -217,6 +218,7 @@ var TopPanel = new Ext.Panel({
 			Ext.getCmp('RenderPanel').setHeight(height);
 		}
 	}
+	
 });
 
 // Bottom
@@ -233,7 +235,7 @@ var BottomPanel = new Ext.Panel({
 	autoLoad: {url:'../messages/messages.ejs.php', scripts:true},
 	cls:'empty',
 	id: 'BottomPanel',
-	ref: '../BottomPanel'
+	ref: '../BottomPanel',
 });
 
 var AppPanel = new Ext.Panel({

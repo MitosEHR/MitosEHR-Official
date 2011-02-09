@@ -61,6 +61,14 @@ require_once("../registry.php");
 Ext.onReady(function() {
 Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
+//******************************************************************************
+// Sanitizing Objects
+// Destroy them, if already exists in the browser memory.
+// This procedures must be called for all the objects declared here
+//******************************************************************************
+if ( Ext.getCmp('winPatients') ){ Ext.getCmp('winPatients').destroy(); }
+if ( Ext.getCmp('winMessage') ){ Ext.getCmp('winMessage').destroy(); }
+
 // *************************************************************************************
 // Global variables
 // *************************************************************************************
@@ -82,10 +90,10 @@ body_content = '<?php echo htmlspecialchars( xl('Nothing posted yet...'), ENT_NO
 // 
 // *************************************************************************************
 var MessageRecord = Ext.data.Record.create([
-	{name: 'noteid',	  type: 'int',	   mapping: 'noteid'},
-	{name: 'user',		  type: 'string',  mapping: 'user'},
+	{name: 'noteid',	type: 'int',	   mapping: 'noteid'},
+	{name: 'user',		type: 'string',  mapping: 'user'},
 	{name: 'subject',   type: 'string',  mapping: 'subject'},
-	{name: 'body',		  type: 'string',  mapping: 'body'},
+	{name: 'body',		type: 'string',  mapping: 'body'},
 	{name: 'from',	  	type: 'string',  mapping: 'from'},
 	{name: 'patient',  	type: 'string',  mapping: 'patient'},
 	{name: 'type',	  	type: 'string',  mapping: 'type'},
@@ -505,7 +513,7 @@ var winMessage = new  Ext.Window({
 // *************************************************************************************
 var msgGrid = new Ext.grid.GridPanel({
 		renderTo	 : Ext.getCmp('BottomPanel').body,
-		id			   : 'msgGrid',
+		id			   : 'RenderPanel',
 		store		   : storeMsgs,
 		stripeRows : true,
 		autoHeight : true,    // .<--- new    was only showing the 1st message
