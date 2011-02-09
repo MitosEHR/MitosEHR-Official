@@ -21,9 +21,9 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 // Sanitizing Objects
 // Destroy them, if already exists in the browser memory.
 // This procedures must be called for all the objects declared here
+// Partial Fix.
 //******************************************************************************
 if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); } 
-
 
 // *************************************************************************************
 // Structure of the message record

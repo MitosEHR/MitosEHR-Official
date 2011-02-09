@@ -253,6 +253,7 @@ var AppPanel = new Ext.Panel({
 // *************************************************************************************
 var viewport = new Ext.Viewport({
 	layout:'border',
+	id: 'MainBody',
 	renderTo: document.body,
 	items:[
 	new Ext.BoxComponent({
