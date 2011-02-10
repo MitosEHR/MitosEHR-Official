@@ -88,7 +88,7 @@ var addressBookRecord = Ext.data.Record.create([
 // Structure and load the data for Messages
 // AJAX -> data_*.ejs.php
 // *************************************************************************************
-var storeFacilities = new Ext.data.Store({
+var storeAddressBook = new Ext.data.Store({
   autoSave  : false,
 
   // HttpProxy will only allow requests on the same domain.
@@ -108,17 +108,17 @@ var storeFacilities = new Ext.data.Store({
     writeAllFields  : true,
     listful     : true,
     writeAllFields  : true
-  }, FacilityRecord ),
+  }, addressBookRecord ),
 
   // JSON Reader options
   reader: new Ext.data.JsonReader({
     idProperty: 'noteid',
     totalProperty: 'results',
     root: 'row'
-  }, FacilityRecord )
+  }, addressBookRecord )
   
 });
-storeFacilities.load();
+storeAddressBook.load();
 
 // *************************************************************************************
 // Structure, data for cmb_TaxID
@@ -163,15 +163,15 @@ storePOSCode.load();
 // Facility Form
 // Add or Edit purpose
 // *************************************************************************************
-var frmFacility = new Ext.FormPanel({
-  id      : 'frmFacility',
+var frmAddressBokk = new Ext.FormPanel({
+  id      : 'frmAddressBokk',
   autoHeight  : true,
   autoWidth : true,
   labelWidth  : 150,
   defaults  : {width: 200},
   bodyStyle : 'padding: 5px;',
-  updateRecord: FacilityRecord,
-  loadRecord: FacilityRecord,
+  updateRecord: addressBookRecord,
+  loadRecord: addressBookRecord,
   items: [
     { xtype: 'textfield', id: 'name', name: 'name', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
     { xtype: 'textfield', id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
@@ -197,20 +197,20 @@ var frmFacility = new Ext.FormPanel({
     iconCls   : 'save',
     disabled  : true,
     handler: function() {
-      frmFacility.getForm().submit();
-      winFacility.hide();
+      frmAddressBokk.getForm().submit();
+      winAddressBook.hide();
     }
   },{
     text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
     iconCls: 'delete',
-    handler: function(){ winFacility.hide(); }
+    handler: function(){ winAddressBook.hide(); }
   }]
 });
 
 // *************************************************************************************
 // Message Window Dialog
 // *************************************************************************************
-var winFacility = new Ext.Window({
+var winAddressBook = new Ext.Window({
   id      : 'winFacility',
   width   : 600,
   autoHeight  : true,
@@ -220,16 +220,16 @@ var winFacility = new Ext.Window({
   title   : '<?php echo htmlspecialchars( xl('Add/Edit Facility'), ENT_NOQUOTES); ?>',
   closeAction : 'hide',
   renderTo  : document.body,
-  items: [ frmFacility ],
+  items: [ frmAddressBokk ],
 }); // END WINDOW
 
 
 // *************************************************************************************
 // Create the GridPanel
 // *************************************************************************************
-var facilitiesGrid = new Ext.grid.GridPanel({
+var addressBookGrid = new Ext.grid.GridPanel({
   id       : 'facilitiesGrid',
-  store    : storeFacilities,
+  store    : storeAddressBook,
   stripeRows : true,
   autoHeight : true,
   border     : false,    
@@ -239,18 +239,18 @@ var facilitiesGrid = new Ext.grid.GridPanel({
   listeners: {
   
     // Single click to select the record, and copy the variables
-    rowclick: function(facilitiesGrid, rowIndex, e) {
+    rowclick: function(addressBookGrid, rowIndex, e) {
     
       //Copy the selected message ID into the variable
-      rowContent = Ext.getCmp('facilitiesGrid').getStore().getAt(rowIndex);
+      rowContent = Ext.getCmp('addressBookGrid').getStore().getAt(rowIndex);
       
       // Enable buttons
-      facilitiesGrid.editFacility.enable();
-      facilitiesGrid.deleteFacility.enable();
+      addressBookGrid.editFacility.enable();
+      addressBookGrid.deleteFacility.enable();
     },
 
     // Double click to select the record, and edit the record
-    rowdblclick:  function(facilitiesGrid, rowIndex, e) {
+    rowdblclick:  function(addressBookGrid, rowIndex, e) {
         
       //Copy the selected message ID into the variable
       rowContent = Ext.getCmp('facilitiesGrid').getStore().getAt(rowIndex);
@@ -258,8 +258,8 @@ var facilitiesGrid = new Ext.grid.GridPanel({
       winFacility.show();
       
       // Enable buttons
-      facilitiesGrid.editFacility.enable();
-      facilitiesGrid.deleteFacility.enable();
+      addressBookGrid.editAddressBook.enable();
+      addressBookGrid.deleteFacility.enable();
     }
   },
   columns: [
@@ -273,7 +273,7 @@ var facilitiesGrid = new Ext.grid.GridPanel({
   // *************************************************************************************
   tbar: [{
     xtype :'button',
-    id    : 'addFacility',
+    id    : 'addAddressBook',
     text  : '<?php xl("Add facility", 'e'); ?>',
     iconCls : 'facilities',
     handler: function(){
@@ -281,7 +281,7 @@ var facilitiesGrid = new Ext.grid.GridPanel({
     }
   },'-',{
     xtype :'button',
-    id    : 'editFacility',
+    id    : 'editAddressBook',
     ref   : '../editFacility',
     text  : '<?php xl("Edit facility", 'e'); ?>',
     iconCls : 'edit',
@@ -318,7 +318,7 @@ var RenderPanel = new Ext.Panel({
   renderTo: Ext.getCmp('TopPanel').body,
   viewConfig:{forceFit:true},
   items: [ 
-    facilitiesGrid
+    addressBookGrid
   ]
 });
 
