@@ -25,7 +25,7 @@ $primary_docs = array(
 	'rep' => array(xl('Reports')   , 0, 'reports/index.php'),
 	'ono' => array(xl('Ofc Notes') , 0, 'main/onotes/office_comments.php'),
 	'fax' => array(xl('Fax/Scan')  , 0, 'fax/faxq.php'),
-	'adb' => array(xl('Addr Bk')   , 0, 'usergroup/addrbook_list.php'),
+	'adb' => array(xl('Addr Bk')   , 0, 'miscellaneous/addressbook/addressbook.ejs.php'),
 	'ort' => array(xl('Proc Cat')  , 0, 'orders/types.php'),
 	'orb' => array(xl('Proc Bat')  , 0, 'orders/orders_results.php?batch=1'),
 	'cht' => array(xl('Chart Trk') , 0, '../custom/chart_tracker.php'),
