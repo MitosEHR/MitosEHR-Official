@@ -56,6 +56,7 @@ while ($myrow = sqlFetchArray($result)) {
   $buff .= " fname: '" . htmlspecialchars( $myrow['fname'], ENT_QUOTES) . "',";
   $buff .= " mname: '" . htmlspecialchars( $myrow['mname'], ENT_QUOTES) . "',";
   $buff .= " lname: '" . htmlspecialchars( $myrow['lname'], ENT_QUOTES) . "',";
+  $buff .= " fullname: '" . htmlspecialchars( $myrow['lname'], ENT_QUOTES) . ", " . htmlspecialchars( $myrow['fname'], ENT_QUOTES) . " " . htmlspecialchars( $myrow['mname'], ENT_QUOTES) . "',";
   $buff .= " federaltaxid: '" . htmlspecialchars( $myrow['federaltaxid'], ENT_QUOTES) . "',";
   $buff .= " federaldrugid: '" . htmlspecialchars( $myrow['federaldrugid'], ENT_QUOTES) . "',";
   $buff .= " upin: '" . htmlspecialchars( $myrow['upin'], ENT_QUOTES) . "',";
