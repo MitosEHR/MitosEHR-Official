@@ -37,10 +37,9 @@ $data = json_decode ( $_POST['row'] );
 // *************************************************************************************
 $row['name'] = trim($data[0]->name);
 $row['phone'] = trim($data[0]->phone);
-$row['phone'] = trim($data[0]->phone);
+$row['fax'] = trim($data[0]->fax);
 $row['street'] = trim($data[0]->street);
 $row['city'] = trim($data[0]->city);
-$row['state'] = trim($data[0]->state);
 $row['state'] = trim($data[0]->state);
 $row['postal_code'] = trim($data[0]->postal_code);
 $row['country_code'] = trim($data[0]->country_code);
@@ -50,6 +49,7 @@ $row['accepts_assignment'] = (trim($data[0]->accepts_assignment) == 'on' ? 1 : 0
 $row['billing_location'] = (trim($data[0]->billing_location) == 'on' ? 1 : 0);
 $row['pos_code'] = trim($data[0]->pos_code);
 $row['domain_identifier'] = trim($data[0]->domain_identifier);
+$row['x12_sender_id'] = trim($data[0]->x12_sender_id);
 $row['attn'] = trim($data[0]->attn);
 $row['tax_id_type'] = trim($data[0]->tax_id_type);
 $row['facility_npi'] = trim($data[0]->facility_npi);

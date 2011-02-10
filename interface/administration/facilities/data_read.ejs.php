@@ -29,6 +29,7 @@ $count = 0;
 
 // *************************************************************************************
 // Verify if a $_GET['id'] has passed to select a facility.
+// and execute the apropriate SQL statement
 // *************************************************************************************
 if ($_GET['id']){
 	$sql = "SELECT
@@ -50,19 +51,31 @@ $result = sqlStatement( $sql );
 
 while ($myrow = sqlFetchArray($result)) {
 	$count++;
+	
+	// Parse some data
+	$rec['service_location'] = ($myrow['service_location'] == '1' ? 'on' : 'off');
+	$rec['billing_location'] = ($myrow['billing_location'] == '1' ? 'on' : 'off');
+	$rec['accepts_assignment'] = ($myrow['accepts_assignment'] == '1' ? 'on' : 'off');
+	if (strlen($myrow['pos_code']) <= 1){
+		$rec['pos_code'] = '0'.$myrow['pos_code'];
+	} else {
+		$rec['pos_code'] = $myrow['pos_code'];
+	}
+	
 	$buff .= "{";
 	$buff .= " id: '" . htmlspecialchars( $myrow['id'], ENT_QUOTES) . "',";
 	$buff .= " name: '" . htmlspecialchars( $myrow['name'], ENT_QUOTES) . "',";
 	$buff .= " phone: '" . htmlspecialchars( $myrow['phone'], ENT_QUOTES) . "',";
+	$buff .= " fax: '" . htmlspecialchars( $myrow['fax'], ENT_QUOTES) . "',";
 	$buff .= " street: '" . htmlspecialchars( $myrow['street'], ENT_NOQUOTES) . "'," ;
 	$buff .= " city: '" . htmlspecialchars( $myrow['city'], ENT_NOQUOTES) . "',";
 	$buff .= " state: '" . htmlspecialchars( $myrow['state'], ENT_NOQUOTES) . "',";
 	$buff .= " postal_code: '" . htmlspecialchars( $myrow['postal_code'], ENT_NOQUOTES ) . "',";
 	$buff .= " federal_ein: '" . htmlspecialchars( $myrow['federal_ein'], ENT_NOQUOTES ) . "',";
-	$buff .= " service_location: '" . htmlspecialchars( $myrow['service_location'], ENT_NOQUOTES ) . "',";
-	$buff .= " billing_location: '" . htmlspecialchars( $myrow['billing_location'], ENT_NOQUOTES ) . "',";
-	$buff .= " accepts_assignment: '" . htmlspecialchars( $myrow['accepts_assignment'], ENT_NOQUOTES ) . "',";
-	$buff .= " pos_code: '" . htmlspecialchars( $myrow['pos_code'], ENT_NOQUOTES ) . "',";
+	$buff .= " service_location: '" . $rec['service_location'] . "',";
+	$buff .= " billing_location: '" . $rec['billing_location'] . "',";
+	$buff .= " accepts_assignment: '" . $rec['accepts_assignment'] . "',";
+	$buff .= " pos_code: '" . $rec['pos_code'] . "',";
 	$buff .= " x12_sender_id: '" . htmlspecialchars( $myrow['x12_sender_id'], ENT_NOQUOTES ) . "',";
 	$buff .= " attn: '" . htmlspecialchars( $myrow['attn'], ENT_NOQUOTES ) . "',";
 	$buff .= " domain_identifier: '" . htmlspecialchars( $myrow['domain_identifier'], ENT_NOQUOTES ) . "',";

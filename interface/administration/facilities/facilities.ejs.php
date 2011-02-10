@@ -42,16 +42,16 @@ var FacilityRecord = Ext.data.Record.create([
 	{name: 'state', type: 'string', mapping: 'state'},
 	{name: 'postal_code', type: 'string', mapping: 'postal_code'},
 	{name: 'country_code', type: 'string',	mapping: 'country_code'},
-	{name: 'federal_ein', type: 'string',	mapping: 'postal_code'},
-	{name: 'service_location', type: 'string',	mapping: 'postal_code'},
-	{name: 'billing_location', type: 'string',	mapping: 'postal_code'},
-	{name: 'accepts_assignment', type: 'string',	mapping: 'postal_code'},
-	{name: 'pos_code', type: 'string',	mapping: 'postal_code'},
-	{name: 'x12_sender_id', type: 'string',	mapping: 'postal_code'},
-	{name: 'attn', type: 'string',	mapping: 'postal_code'},
-	{name: 'domain_identifier', type: 'string',	mapping: 'postal_code'},
-	{name: 'facility_npi', type: 'string',	mapping: 'postal_code'},
-	{name: 'tax_id_type', type: 'string',	mapping: 'postal_code'}
+	{name: 'federal_ein', type: 'string',	mapping: 'federal_ein'},
+	{name: 'service_location', type: 'string',	mapping: 'service_location'},
+	{name: 'billing_location', type: 'string',	mapping: 'billing_location'},
+	{name: 'accepts_assignment', type: 'string',	mapping: 'accepts_assignment'},
+	{name: 'pos_code', type: 'string',	mapping: 'pos_code'},
+	{name: 'x12_sender_id', type: 'string',	mapping: 'x12_sender_id'},
+	{name: 'attn', type: 'string',	mapping: 'attn'},
+	{name: 'domain_identifier', type: 'string',	mapping: 'domain_identifier'},
+	{name: 'facility_npi', type: 'string',	mapping: 'facility_npi'},
+	{name: 'tax_id_type', type: 'string',	mapping: 'tax_id_type'}
 ]);
 
 // *************************************************************************************
@@ -164,7 +164,7 @@ var frmFacility = new Ext.FormPanel({
 		defaults: { labelWidth: 150 },
         items: 
 		[
-			{ xtype: 'combo', width: 60, autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
+			{ xtype: 'combo', width: 60, autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', hiddenName: 'tax_id_type', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
 			{ xtype: 'textfield', id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
@@ -227,28 +227,19 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 	sm			: new Ext.grid.RowSelectionModel({singleSelect:true}),
 	listeners: {
 	
-		// Single click to select the record, and copy the variables
+		// Single click to select the record
 		rowclick: function(facilitiesGrid, rowIndex, e) {
-		
-			//Copy the selected message ID into the variable
-			rowContent = Ext.getCmp('facilitiesGrid').getStore().getAt(rowIndex);
-			
-			// Enable buttons
+			var rec = storeFacilities.getAt(rowIndex);
+			Ext.getCmp('frmFacility').getForm().loadRecord(rec);
 			facilitiesGrid.editFacility.enable();
-			facilitiesGrid.deleteFacility.enable();
 		},
 
 		// Double click to select the record, and edit the record
 		rowdblclick:  function(facilitiesGrid, rowIndex, e) {
-				
-			//Copy the selected message ID into the variable
-			rowContent = Ext.getCmp('facilitiesGrid').getStore().getAt(rowIndex);
-				
-			winFacility.show();
-			
-			// Enable buttons
+			var rec = storeFacilities.getAt(rowIndex);
+			Ext.getCmp('frmFacility').getForm().loadRecord(rec);
 			facilitiesGrid.editFacility.enable();
-			facilitiesGrid.deleteFacility.enable();
+			winFacility.show();
 		}
 	},
 	columns: [

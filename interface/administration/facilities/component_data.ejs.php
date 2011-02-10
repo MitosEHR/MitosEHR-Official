@@ -38,7 +38,7 @@ switch ($_GET['task']) {
 	case "taxid":
 		$buff .= " { option_id: 'EI', title: '" . xl('EIN','r') . "' },". chr(13);
 		$count++;
-		$buff .= " { option_id: 'SSN', title: '" . xl('SSN','r') . "' },". chr(13);
+		$buff .= " { option_id: 'SY', title: '" . xl('SSN','r') . "' },". chr(13);
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
 		echo "results: " . $count . ", " . chr(13);
@@ -152,8 +152,8 @@ switch ($_GET['task']) {
 		$pos[] = array ("code" => "98","title" => "Unassigned", "description" => "N/A");
 		$pos[] = array ("code" => "99","title" => "Other Place of Service", "description" => "Other place of service not identified above. ");
 		foreach ($pos as $values) {
-			$buff .= " { option_id: '" . $values["code"] . "', title: '" . $values["code"]  . ": " . $values["title"] . "' }," . chr(13);
 			$count++;
+			$buff .= " { option_id: '" . $values["code"] . "', title: '" . $values["code"]  . ": " . $values["title"] . "' }," . chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
