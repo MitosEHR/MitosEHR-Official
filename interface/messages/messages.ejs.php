@@ -329,14 +329,15 @@ var prvMsg = new Ext.Panel({
 // Message Window Dialog
 // *************************************************************************************
 var winMessage = new  Ext.Window({
-	width		      : 640,
-	autoHeight	  : true,
-	modal		      : true,
-	resizable	    : false,
-	autoScroll	  : true,
-	title		      : '<?php echo htmlspecialchars( xl('Compose Message'), ENT_NOQUOTES); ?>',
-	closeAction	  : 'hide',
-	renderTo	    : document.body,
+	width		: 640,
+	autoHeight	: true,
+	modal		: true,
+	resizable	: false,
+	autoScroll	: true,
+	id			: 'winMessage',
+	title		: '<?php echo htmlspecialchars( xl('Compose Message'), ENT_NOQUOTES); ?>',
+	closeAction	: 'hide',
+	renderTo	: document.body,
 	items: [{
 		xtype		    : 'form',
 		region		  :'center',
