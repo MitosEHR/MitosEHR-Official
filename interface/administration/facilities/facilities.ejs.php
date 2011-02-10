@@ -136,8 +136,8 @@ storePOSCode.load();
 var frmFacility = new Ext.FormPanel({
 	id			: 'frmFacility',
 	bodyStyle	: 'padding: 5px;',
-	updateRecord: FacilityRecord,
-	loadRecord	: FacilityRecord,
+	method		: 'POST',
+	url			: '../administration/facilities/data_create.ejs.php',
 	layout: 'column',
 	items: [{
 		layout: 'form',
@@ -179,10 +179,10 @@ var frmFacility = new Ext.FormPanel({
 		text		:'<?php echo htmlspecialchars( xl('Save'), ENT_NOQUOTES); ?>',
 		ref			: '../save',
 		iconCls		: 'save',
-		disabled	: true,
 		handler: function() {
 			frmFacility.getForm().submit();
-			winFacility.hide();
+			//winFacility.hide();
+			//Ext.getCmp('facilitiesGrid').reload();
 		}
 	},{
 		text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',

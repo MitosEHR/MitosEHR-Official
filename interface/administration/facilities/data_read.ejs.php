@@ -20,18 +20,32 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 
 // *************************************************************************************
-// Load the OpenEMR Libraries
+// Load the MitosEMR Libraries
 // *************************************************************************************
 require_once("../../registry.php");
 
 // Count records variable
 $count = 0;
 
-$sql = "SELECT
-			* 
-		FROM
-			facility
-		ORDER BY name";
+// *************************************************************************************
+// Verify if a $_GET['id'] has passed to select a facility.
+// *************************************************************************************
+if ($_GET['id']){
+	$sql = "SELECT
+				* 
+			FROM
+				facility
+			ORDER BY 
+				name
+			WHERE id=" . $_GET['id'];
+} else { // if not select all of them
+	$sql = "SELECT
+				* 
+			FROM
+				facility
+			ORDER BY 
+				name";
+}
 $result = sqlStatement( $sql );
 
 while ($myrow = sqlFetchArray($result)) {
