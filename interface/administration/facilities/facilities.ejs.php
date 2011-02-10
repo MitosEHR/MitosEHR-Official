@@ -68,7 +68,7 @@ var storeFacilities = new Ext.data.Store({
 			read	: '../administration/facilities/data_read.ejs.php',
 			create	: '../administration/facilities/data_create.ejs.php',
 			update	: '../administration/facilities/data_update.ejs.php',
-			destroy : '../administration/facilities/data_destroy.ejs.php'
+			//destroy : '../administration/facilities/data_destroy.ejs.php' <- You can not destroy facilities, HIPPA Compliant
 		}
 	}),
 
@@ -82,7 +82,7 @@ var storeFacilities = new Ext.data.Store({
 
 	// JSON Reader options
 	reader: new Ext.data.JsonReader({
-		idProperty: 'noteid',
+		idProperty: 'id',
 		totalProperty: 'results',
 		root: 'row'
 	}, FacilityRecord )
@@ -136,8 +136,7 @@ storePOSCode.load();
 var frmFacility = new Ext.FormPanel({
 	id			: 'frmFacility',
 	bodyStyle	: 'padding: 5px;',
-	method		: 'POST',
-	url			: '../administration/facilities/data_create.ejs.php',
+	
 	layout: 'column',
 	items: [{
 		layout: 'form',
@@ -154,7 +153,9 @@ var frmFacility = new Ext.FormPanel({
 			{ xtype: 'textfield', id: 'country_code', name: 'country_code', fieldLabel: '<?php echo htmlspecialchars( xl('Country'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'textfield', id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'textfield', id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' }
+			{ xtype: 'textfield', id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
+			// Hidden fields
+			{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'}
         ]},{
 		layout : 'form',
 		border : false,
@@ -168,7 +169,7 @@ var frmFacility = new Ext.FormPanel({
 			{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'service_location', name: 'service_location', fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'combo', width: 300, autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
+			{ xtype: 'combo', width: 300, autoSelect: true, displayField: 'title', hiddenName: 'pos_code', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
 			{ xtype: 'textfield', id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'textfield', id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' }
 		]}
@@ -180,9 +181,13 @@ var frmFacility = new Ext.FormPanel({
 		ref			: '../save',
 		iconCls		: 'save',
 		handler: function() {
-			frmFacility.getForm().submit();
-			//winFacility.hide();
-			//Ext.getCmp('facilitiesGrid').reload();
+			var obj = eval('(' + Ext.util.JSON.encode(frmFacility.getForm().getValues()) + ')'); // Convert the form data into a JSON data Object
+			var rec  = new FacilityRecord(obj); // Re-format the Object to be a valid record (FacilityRecord)
+			storeFacilities.add( rec ); // Add the re-formated record to the dataStore
+			storeFacilities.save(); // Save the record to the dataStore
+			storeFacilities.commitChanges(); // Commit the changes
+			storeFacilities.reload(); // Reload the dataSore from the database
+			winFacility.hide(); // Finally hide the dialog window
 		}
 	},{
 		text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
@@ -247,7 +252,9 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 		}
 	},
 	columns: [
+		// Hidden cells
 		{header: 'id', sortable: false, dataIndex: 'id', hidden: true},
+		// Viewable cells
 		{ width: 200, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'name' },
 		{ header: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'street' },
 		{ header: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phone' }

@@ -86,7 +86,9 @@ var winPopup = new  Ext.Window({
 	defaults: {scripts: true},
 	maximizable: true,
 	
+	//----------------------------------------------------------------------
 	// Window Bottom Bar
+	//----------------------------------------------------------------------
 	bbar:[{
 		text:'Close',
 		iconCls: 'delete',
@@ -124,17 +126,32 @@ var navigation = new Ext.tree.TreePanel({
 navigation.on('click', function(n){
 	var sn = this.selModel.selNode || {}; // selNode is null on initial selection
 	
+	//----------------------------------------------------------------------
 	// Loads the screen on the top panel
+	//----------------------------------------------------------------------
 	if( n.attributes.pos == "top"){
 		Ext.getCmp('TopPanel').load({url:'../' + n.attributes.id, scripts:true});
 	}
 
+	//----------------------------------------------------------------------
 	// Loads the screen on the bottom panel
+	//----------------------------------------------------------------------
 	if( n.attributes.pos == "bot"){
-		Ext.getCmp('BottomPanel').load({url:'../' + n.attributes.id, scripts:true});
+	
+		//----------------------------------------------------------------------
+		// If the bottom panel is collapsed, then render it on the top panel.
+		// FIXME: is not working correctly.
+		//----------------------------------------------------------------------
+		if ( Ext.getCmp('BottomPanel').collapsed ){
+			Ext.getCmp('TopPanel').load({url:'../' + n.attributes.id, scripts:true});
+		} else {
+			Ext.getCmp('BottomPanel').load({url:'../' + n.attributes.id, scripts:true});
+		}
 	}
 
+	//----------------------------------------------------------------------
 	// Loads the screen on the dialog window
+	//----------------------------------------------------------------------
 	if( n.attributes.pos == "pop"){
 		Ext.getCmp('winPopup').load({url:'../' + n.attributes.id, scripts:true});
 		winPopup.show();
@@ -212,7 +229,9 @@ var TopPanel = new Ext.Panel({
 	ref: '../TopPanel',
 	monitorResize: true,
 
+	//----------------------------------------------------------------------
 	// Monitor and send the new height value to the panel
+	//----------------------------------------------------------------------
 	listeners : {
 		bodyresize : function(panel, width, height) {
 			if ( Ext.getCmp('RenderPanel') ){ Ext.getCmp('RenderPanel').setHeight(height); }

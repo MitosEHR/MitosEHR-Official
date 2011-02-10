@@ -49,9 +49,6 @@ require_once("$srcdir/classes/Document.class.php");
 require_once("$srcdir/gprelations.inc.php");
 require_once("$srcdir/formatting.inc.php");
 
-// Count records variable
-$count = 0;
-
 // Current structure of the record ExtJS Mappings
 // informational only
 //
