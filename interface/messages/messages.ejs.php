@@ -529,7 +529,7 @@ var msgGrid = new Ext.grid.GridPanel({
 			rowclick: function(msgGrid, rowIndex, e) {
 			
 				//Copy the selected message ID into the variable
-				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
+				rowContent = Ext.getCmp('RenderPanel').getStore().getAt(rowIndex);
 				
 				// Copy the BODY Message into the form
 				document.getElementById('previousMsg').innerHTML = rowContent.get('body');
@@ -543,7 +543,7 @@ var msgGrid = new Ext.grid.GridPanel({
 			rowdblclick:  function(msgGrid, rowIndex, e) {
 					
 				//Copy the selected message ID into the variable
-				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
+				rowContent = Ext.getCmp('RenderPanel').getStore().getAt(rowIndex);
 					
 				// Copy the BODY Message into the form
 				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
@@ -555,7 +555,6 @@ var msgGrid = new Ext.grid.GridPanel({
 				winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
 				winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
 				winMessage.subject.setValue(rowContent.get('subject'));
-				winMessage.reply_id.setValue(rowContent.get('reply_id'));
 				winMessage.noteid.setValue(rowContent.get('noteid'));
 				winMessage.note.setValue("");
 					
@@ -661,7 +660,7 @@ var msgGrid = new Ext.grid.GridPanel({
 							// The datastore object will save the data
 							// as soon changes is detected on the datastore
 							// It's a AJAX thing
-							var rows = Ext.getCmp('msgGrid').selModel.getSelections();
+							var rows = Ext.getCmp('RenderPanel').selModel.getSelections();
 							storeMsgs.remove(rows);
 							storeMsgs.save();
 							storeMsgs.commitChanges();
