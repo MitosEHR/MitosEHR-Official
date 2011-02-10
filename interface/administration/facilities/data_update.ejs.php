@@ -38,14 +38,14 @@ $data = json_decode ( $_POST['row'] );
 $row['id'] = trim($data[0]->id);
 $row['name'] = trim($data[0]->name);
 $row['phone'] = trim($data[0]->phone);
-$row['phone'] = trim($data[0]->phone);
+$row['fax'] = trim($data[0]->phone);
 $row['street'] = trim($data[0]->street);
 $row['city'] = trim($data[0]->city);
-$row['state'] = trim($data[0]->state);
 $row['state'] = trim($data[0]->state);
 $row['postal_code'] = trim($data[0]->postal_code);
 $row['country_code'] = trim($data[0]->country_code);
 $row['federal_ein'] = trim($data[0]->federal_ein);
+$row['x12_sender_id'] = trim($data[0]->x12_sender_id);
 $row['service_location'] = (trim($data[0]->service_location) == 'on' ? 1 : 0);
 $row['accepts_assignment'] = (trim($data[0]->accepts_assignment) == 'on' ? 1 : 0);
 $row['billing_location'] = (trim($data[0]->billing_location) == 'on' ? 1 : 0);
@@ -80,6 +80,7 @@ sqlStatement("UPDATE
 				domain_identifier = '" . $row['domain_identifier'] . "', " . "
 				attn = '" . $row['attn'] . "', " . " 
 				tax_id_type = '" . $row['tax_id_type'] . "', " . "
-				facility_npi = '" . $row['facility_npi'] . "'");
+				facility_npi = '" . $row['facility_npi'] . "' " . " 
+			WHERE id ='" . $row['id'] . "'");
 
 ?>
