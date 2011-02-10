@@ -165,41 +165,43 @@ var frmAddressbook = new Ext.FormPanel({
   bodyStyle : 'padding: 5px;',
   layout: 'column',
   items: [{
-    layout: 'form',
-    autoWidth: true,
-    border: false,
-    bodyStyle : 'padding: 0 5px',
-    defaults: { labelWidth: 50 },
-        items: 
-    [
-      //{ xtype: 'textfield', id: 'name', name: 'name', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'textfield', id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'textfield', id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'textfield', id: 'state', name: 'state', fieldLabel: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'textfield', id: 'country_code', name: 'country_code', fieldLabel: '<?php echo htmlspecialchars( xl('Country'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'textfield', id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'textfield', id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'textfield', id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
-      // Hidden fields
-      //{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'}
-        ]},{
-    layout : 'form',
-    border : false,
-    autoWidth: true,
-    bodyStyle : 'padding: 0 5px',
-    defaults: { labelWidth: 150 },
-        items: 
-    [
-      //{ xtype: 'combo', width: 60, autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
-      //{ xtype: 'textfield', id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'checkbox', id: 'service_location', name: 'service_location', fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'combo', width: 300, autoSelect: true, displayField: 'title', hiddenName: 'pos_code', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
-      //{ xtype: 'textfield', id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
-      //{ xtype: 'textfield', id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' }
-    ]}
-  ], 
+      layout: 'form',
+      autoWidth: true,
+      border: false,
+      bodyStyle : 'padding: 0 5px',
+      defaults: { labelWidth: 50 },
+      items: 
+      [ 
+        { xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
+        { xtype: 'textfield', id: 'fname', name: 'fname', fieldLabel: '<?php echo htmlspecialchars( xl('First Name'), ENT_NOQUOTES); ?>' },
+        { xtype: 'textfield', id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
+        { xtype: 'textfield', id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' }
+      ]
+      },{
+      layout : 'form',
+      border : false,
+      autoWidth: true,
+      bodyStyle : 'padding: 0 5px',
+      defaults: { labelWidth: 50 },
+      items: 
+      [
+        { xtype: 'textfield', id: 'mnane', name: 'mnane', fieldLabel: '<?php echo htmlspecialchars( xl('Middle Name'), ENT_NOQUOTES); ?>' },
+        { xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
+        { xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' }
+      ]
+      },{
+      layout : 'form',
+      border : false,
+      autoWidth: true,
+      bodyStyle : 'padding: 0 5px',
+      defaults: { labelWidth: 50 },
+      items: 
+      [
+        { xtype: 'textfield', id: 'lname', name: 'lname', fieldLabel: '<?php echo htmlspecialchars( xl('Last Name'), ENT_NOQUOTES); ?>' },
+        { xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
+        { xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' }
+      ]
+  }], 
   // Window Bottom Bar
   bbar:[{
     text    :'<?php echo htmlspecialchars( xl('Save'), ENT_NOQUOTES); ?>',
@@ -225,7 +227,7 @@ var frmAddressbook = new Ext.FormPanel({
 // *************************************************************************************
 var winAddressbook = new Ext.Window({
   id      : 'winAddressbook',
-  width   : 700,
+  width   : 800,
   autoHeight  : true,
   modal   : true,
   resizable : false,
