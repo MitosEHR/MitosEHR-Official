@@ -514,14 +514,13 @@ var winMessage = new  Ext.Window({
 // Create the GridPanel
 // *************************************************************************************
 var msgGrid = new Ext.grid.GridPanel({
-		renderTo	 : Ext.getCmp('BottomPanel').body,
-		id			   : 'RenderPanel',
+		id			   : 'msgGrid',
 		store		   : storeMsgs,
 		stripeRows : true,
-		autoHeight : true,    // .<--- new    was only showing the 1st message
- 		border     : false,   //  <--- new    
+		autoHeight : true,    
+ 		border     : false,       
  		frame		   : false,
-		viewConfig : {forceFit: true}, //  <--- comments removed, I think looks better this way.  // force the grid to the width of the containing panel
+		viewConfig : {forceFit: true}, // force the grid to the width of the containing panel
 		sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
 		listeners: {
 		
@@ -529,10 +528,10 @@ var msgGrid = new Ext.grid.GridPanel({
 			rowclick: function(msgGrid, rowIndex, e) {
 			
 				//Copy the selected message ID into the variable
-				rowContent = Ext.getCmp('RenderPanel').getStore().getAt(rowIndex);
+				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 				
 				// Copy the BODY Message into the form
-				document.getElementById('previousMsg').innerHTML = rowContent.get('body');
+				// document.getElementById('msgGrid').innerHTML = rowContent.get('body');     << ------ REMOVED ASK GINO!!!!!!!
 					
 				// Enable buttons
 				msgGrid.editMsg.enable();
@@ -543,7 +542,7 @@ var msgGrid = new Ext.grid.GridPanel({
 			rowdblclick:  function(msgGrid, rowIndex, e) {
 					
 				//Copy the selected message ID into the variable
-				rowContent = Ext.getCmp('RenderPanel').getStore().getAt(rowIndex);
+				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 					
 				// Copy the BODY Message into the form
 				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
@@ -660,7 +659,7 @@ var msgGrid = new Ext.grid.GridPanel({
 							// The datastore object will save the data
 							// as soon changes is detected on the datastore
 							// It's a AJAX thing
-							var rows = Ext.getCmp('RenderPanel').selModel.getSelections();
+							var rows = Ext.getCmp('msgGrid').selModel.getSelections();
 							storeMsgs.remove(rows);
 							storeMsgs.save();
 							storeMsgs.commitChanges();
@@ -682,6 +681,20 @@ var msgGrid = new Ext.grid.GridPanel({
 			position		    : 'top'
 		})]			
 	}); // END GRID
+
+
+var RenderPanel = new Ext.Panel({
+  border  : false,
+  stateful: true,
+  monitorResize: true,
+  autoWidth: true,
+  id: 'RenderPanel',
+  renderTo: Ext.getCmp('BottomPanel').body,
+  viewConfig:{forceFit:true},
+  items: [ 
+    msgGrid
+  ]
+});
 
 }); // END EXTJS
 
