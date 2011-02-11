@@ -136,7 +136,6 @@ storePOSCode.load();
 var frmFacility = new Ext.FormPanel({
 	id			: 'frmFacility',
 	bodyStyle	: 'padding: 5px;',
-	
 	layout: 'column',
 	items: [{
 		layout: 'form',
