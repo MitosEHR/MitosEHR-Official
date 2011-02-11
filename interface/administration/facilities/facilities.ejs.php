@@ -103,7 +103,7 @@ storeFacilities.load();
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
 var storeTaxID = new Ext.data.Store({
-	proxy: new Ext.data.ScriptTagProxy({
+	proxy: new Ext.data.HttpProxy({
 		url: '../administration/facilities/component_data.ejs.php?task=taxid'
 	}),
 	reader: new Ext.data.JsonReader({
@@ -122,7 +122,7 @@ storeTaxID.load();
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
 var storePOSCode = new Ext.data.Store({
-	proxy: new Ext.data.ScriptTagProxy({
+	proxy: new Ext.data.HttpProxy({
 		url: '../administration/facilities/component_data.ejs.php?task=poscodes'
 	}),
 	reader: new Ext.data.JsonReader({
@@ -153,14 +153,14 @@ var frmFacility = new Ext.FormPanel({
 		defaults: { labelWidth: 50 },
         items: 
 		[
-			{ xtype: 'textfield', id: 'name', name: 'name', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'state', name: 'state', fieldLabel: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 3, id: 'name', name: 'name', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 3, id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 3, id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 2, id: 'state', name: 'state', fieldLabel: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'textfield', id: 'country_code', name: 'country_code', fieldLabel: '<?php echo htmlspecialchars( xl('Country'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 7, id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 7, id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 3, id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
 			// Hidden fields
 			{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'}
         ]},{
@@ -172,13 +172,13 @@ var frmFacility = new Ext.FormPanel({
         items: 
 		[
 			{ xtype: 'combo', width: 60, autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', hiddenName: 'tax_id_type', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
-			{ xtype: 'textfield', id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 5, id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'service_location', name: 'service_location', fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'combo', width: 300, autoSelect: true, displayField: 'title', hiddenName: 'pos_code', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
-			{ xtype: 'textfield', id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' }
+			{ xtype: 'textfield', minLength: 10, id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLength: 5, id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' }
 		]}
 	],
 	
@@ -201,12 +201,11 @@ var frmFacility = new Ext.FormPanel({
 			// Update:
 			// Add: The re-formated record to the dataStore
 			//----------------------------------------------------------------
-			if (frmFacility.getForm().findField('id').getValue()){
+			if (frmFacility.getForm().findField('id').getValue()){ // Update
 				var record = storeFacilities.getAt(rowPos);
-				var fieldValues = frmFacility.getForm().getFieldValues(true);
-				alert( fieldValues);
-				//record.set( fieldValues );
-			} else {
+				var fieldValues = frmFacility.getForm().getValues();
+				for (key in fieldValues){ record.set( key, fieldValues[key] ); }
+			} else { // Add
 				storeFacilities.add( rec );
 			}
 
@@ -267,7 +266,7 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 		// -----------------------------------------
 		rowclick: function(facilitiesGrid, rowIndex, e) {
 			rowPos = rowIndex;
-			var rec = storeFacilities.getAt(rowIndex);
+			var rec = storeFacilities.getAt(rowPos);
 			Ext.getCmp('frmFacility').getForm().loadRecord(rec);
 			facilitiesGrid.editFacility.enable();
 		},
@@ -277,8 +276,8 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 		// -----------------------------------------
 		rowdblclick:  function(facilitiesGrid, rowIndex, e) {
 			rowPos = rowIndex;
-			var rec = storeFacilities.getAt(rowIndex);
-			Ext.getCmp('frmFacility').getForm().loadRecord(rec);
+			var rec = storeFacilities.getAt(rowPos); // get the record from the store
+			Ext.getCmp('frmFacility').getForm().loadRecord(rec); // load the record selected into the form
 			facilitiesGrid.editFacility.enable();
 			winFacility.show();
 		}

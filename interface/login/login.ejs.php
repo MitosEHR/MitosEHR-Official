@@ -172,7 +172,6 @@ var winLogon = new Ext.Window({
 	title: 'MitosEHR Logon',
 	draggable: false,
 	closable: false,
-
 	items: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: '../../ui_app/logon_header.png'} },{
 	xtype: 'form',
 	labelWidth: 300,
@@ -242,12 +241,16 @@ var winLogon = new Ext.Window({
 			// Submit the form
 			Ext.getCmp('frmLogin').getForm().submit();
 		}
-	}]
+	}],
+	listeners:{
+		render: function(){
+			Ext.getCmp('authUser').focus(true, 10);
+		}
+	}
 }]
 }); // End Logon Window
 
 winLogon.show();
-winLogon.authUser.focus();
 
 }); // End App
 
