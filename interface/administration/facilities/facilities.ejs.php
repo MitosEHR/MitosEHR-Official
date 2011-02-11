@@ -153,14 +153,14 @@ var frmFacility = new Ext.FormPanel({
 		defaults: { labelWidth: 50 },
         items: 
 		[
-			{ xtype: 'textfield', minLength: 3, id: 'name', name: 'name', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLength: 3, id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLength: 3, id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLength: 2, id: 'state', name: 'state', fieldLabel: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', id: 'country_code', name: 'country_code', fieldLabel: '<?php echo htmlspecialchars( xl('Country'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLength: 7, id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLength: 7, id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLength: 3, id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'name', name: 'name', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', maxLength:50, minLengthText: 'Must contain at least 2 characters.', minLength: 2, id: 'state', name: 'state', fieldLabel: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', maxLength: 10, id: 'country_code', name: 'country_code', fieldLabel: '<?php echo htmlspecialchars( xl('Country'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', maxLength: 30, minLengthText: 'Must contain at least 7 characters.', minLength: 7, id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', maxLength: 30, minLengthText: 'Must contain at least 7 characters.', minLength: 7, id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', maxLength: 11, minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
 			// Hidden fields
 			{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'}
         ]},{
@@ -172,13 +172,13 @@ var frmFacility = new Ext.FormPanel({
         items: 
 		[
 			{ xtype: 'combo', width: 60, autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', hiddenName: 'tax_id_type', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
-			{ xtype: 'textfield', minLength: 5, id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', maxLength: 15, minLengthText: 'Must contain at least 5 characters.', minLength: 5, id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'checkbox', id: 'service_location', name: 'service_location', fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'checkbox', checked: true, id: 'service_location', name: 'service_location', fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'combo', width: 300, autoSelect: true, displayField: 'title', hiddenName: 'pos_code', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
-			{ xtype: 'textfield', minLength: 10, id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLength: 5, id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' }
+			{ xtype: 'textfield', maxLength: 65, minLengthText: 'Must contain at least 10 characters.', minLength: 10, id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
+			{ xtype: 'textfield', maxLength: 60, minLengthText: 'Must contain at least 5 characters.', minLength: 5, id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' }
 		]}
 	],
 	
@@ -198,7 +198,8 @@ var frmFacility = new Ext.FormPanel({
 			
 			//----------------------------------------------------------------
 			// Check if it has to add or update
-			// Update:
+			// Update: 1. Get the record from store, 2. get the values from the form, 3. copy all the 
+			// values from the form and push it into the store record.
 			// Add: The re-formated record to the dataStore
 			//----------------------------------------------------------------
 			if (frmFacility.getForm().findField('id').getValue()){ // Update
