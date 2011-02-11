@@ -163,43 +163,79 @@ storeAddressbook.load();
 var frmAddressbook = new Ext.FormPanel({
   id      : 'frmAddressbook',
   bodyStyle : 'padding: 5px;',
-  layout: 'column',
   items: [{
       layout: 'form',
       autoWidth: true,
       border: false,
-      bodyStyle : 'padding: 0 5px',
-      defaults: { labelWidth: 50 },
+      labelWidth: 120,
+      bodyStyle : 'padding: 20px',
       items: 
       [ 
         { xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
-        { xtype: 'textfield', id: 'fname', name: 'fname', fieldLabel: '<?php echo htmlspecialchars( xl('First Name'), ENT_NOQUOTES); ?>' },
-        { xtype: 'textfield', id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
-        { xtype: 'textfield', id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' }
-      ]
-      },{
-      layout : 'form',
-      border : false,
-      autoWidth: true,
-      bodyStyle : 'padding: 0 5px',
-      defaults: { labelWidth: 50 },
-      items: 
-      [
-        { xtype: 'textfield', id: 'mnane', name: 'mnane', fieldLabel: '<?php echo htmlspecialchars( xl('Middle Name'), ENT_NOQUOTES); ?>' },
-        { xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
-        { xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' }
-      ]
-      },{
-      layout : 'form',
-      border : false,
-      autoWidth: true,
-      bodyStyle : 'padding: 0 5px',
-      defaults: { labelWidth: 50 },
-      items: 
-      [
-        { xtype: 'textfield', id: 'lname', name: 'lname', fieldLabel: '<?php echo htmlspecialchars( xl('Last Name'), ENT_NOQUOTES); ?>' },
-        { xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
-        { xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' }
+        { xtype: 'compositefield',
+          msgTarget : 'side', 
+          fieldLabel: 'Full Name',
+          items: [
+            { width: 160, xtype: 'textfield', id: 'fname', name: 'fname', emptyText: 'First Name', },
+            { width: 160, xtype: 'textfield', id: 'mname', name: 'mname', emptyText: 'Middle Name' },
+            { width: 250, xtype: 'textfield', id: 'lname', name: 'lname', emptyText: 'Last Name(s)', }
+          ] 
+        },
+        { width: 580, xtype: 'textfield', id: 'specialty', name: 'specialty', emptyText: 'Specialty', },
+        { width: 580, xtype: 'textfield', id: 'organization', name: 'organization', emptyText: 'Organization', },
+        { width: 580, xtype: 'textfield', id: 'valedictory', name: 'valedictory', emptyText: 'Valedictory', },
+        { 
+          xtype: 'compositefield',
+          fieldLabel: 'Primary Address',
+          items: [
+            { width: 160, xtype: 'textfield', id: 'street', name: 'street', emptyText: 'Street', },
+            { width: 160, xtype: 'textfield', id: 'streetb', name: 'streetb', emptyText: 'Atp. (Optional)', },
+            { width: 70, xtype: 'textfield', id: 'city', name: 'city', emptyText: 'City' },
+            { width: 70, xtype: 'textfield', id: 'state', name: 'state', emptyText: 'State', },
+            { width: 100, xtype: 'textfield', id: 'zip', name: 'zip', emptyText: 'Pastal Code', }
+          ] 
+        },{ 
+          xtype: 'compositefield',
+          fieldLabel: 'Secondary Address',
+          items: [
+            { width: 160, xtype: 'textfield', id: 'street2', name: 'street2', emptyText: 'Strete', },
+            { width: 160, xtype: 'textfield', id: 'streetb2', name: 'streetb2', emptyText: 'Atp. (Optional)', },
+            { width: 70, xtype: 'textfield', id: 'city2', name: 'city2', emptyText: 'City' },
+            { width: 70, xtype: 'textfield', id: 'state2', name: 'state2', emptyText: 'State', },
+            { width: 100, xtype: 'textfield', id: 'zip2', name: 'zip2', emptyText: 'Pastal Code', }
+          ]
+        },{ 
+          xtype: 'compositefield',
+          fieldLabel: 'Phones',
+          items: [
+            { width: 160, xtype: 'textfield', id: 'phone', name: 'phone', emptyText: 'Home Phone', },
+            { width: 160, xtype: 'textfield', id: 'phonecell', name: 'phonecell', emptyText: 'Mobile Phone', }
+          ]
+        },{ 
+          xtype: 'compositefield',
+          items: [
+            { width: 160, xtype: 'textfield', id: 'phonew1', name: 'phonew1', emptyText: 'Work Phone', },
+            { width: 160, xtype: 'textfield', id: 'phonew2', name: 'phonew2', emptyText: 'Work Phone 2', },
+            { width: 160, xtype: 'textfield', id: 'fax', name: 'fax', emptyText: 'Fax', }
+          ]
+        },
+        { width: 580, xtype: 'textfield', id: 'email', name: 'email', emptyText: 'Email', },
+        { width: 580, xtype: 'textfield', id: 'assistant', name: 'assistant', emptyText: 'Assistant', },
+        { width: 580, xtype: 'textfield', id: 'url', name: 'url', emptyText: 'Website', },
+        { 
+          xtype: 'compositefield',
+          items: [
+            { xtype: 'displayfield', value: 'UPIN: '},
+            { width: 100, xtype: 'textfield', id: 'upin', name: 'upin', emptyText: '???', },
+            { xtype: 'displayfield', value: 'NPI: '},
+            { width: 100, xtype: 'textfield', id: 'npi', name: 'noi', emptyText: 'NPI', },
+            { xtype: 'displayfield', value: 'TIN: '},
+            { width: 100, xtype: 'textfield', id: 'fax', name: 'fax', emptyText: 'TIN', },
+            { xtype: 'displayfield', value: 'Taxonomy: '},
+            { width: 105, xtype: 'textfield', id: 'taxonomy', name: 'taxonomy', emptyText: 'Taxonomy', }
+          ]
+        },
+        { width: 580, xtype: 'htmleditor', id: 'notes', name: 'notes', emptyText: 'Notes', },
       ]
   }], 
   // Window Bottom Bar
@@ -227,7 +263,7 @@ var frmAddressbook = new Ext.FormPanel({
 // *************************************************************************************
 var winAddressbook = new Ext.Window({
   id      : 'winAddressbook',
-  width   : 800,
+  width   : 780,
   autoHeight  : true,
   modal   : true,
   resizable : false,
@@ -280,7 +316,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     { header: '<?php echo htmlspecialchars( xl('Mobile'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonecell' },
     { header: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fax' },
     { header: '<?php echo htmlspecialchars( xl('Email'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'email' },
-    { header: '<?php echo htmlspecialchars( xl('Stree'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'stree' },
+    { header: '<?php echo htmlspecialchars( xl('Street'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'street' },
     { header: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'city' },
     { header: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'state' },
     { header: '<?php echo htmlspecialchars( xl('Postal'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'zip' }
