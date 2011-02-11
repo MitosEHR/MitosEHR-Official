@@ -18,6 +18,11 @@ Ext.onReady(function(){
 Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
 //******************************************************************************
+// ExtJS Global variables 
+//******************************************************************************
+var rowPos;
+
+//******************************************************************************
 // Sanitizing Objects
 // Destroy them, if already exists in the browser memory.
 // This destructions must be called for all the objects that
@@ -68,7 +73,10 @@ var storeFacilities = new Ext.data.Store({
 			read	: '../administration/facilities/data_read.ejs.php',
 			create	: '../administration/facilities/data_create.ejs.php',
 			update	: '../administration/facilities/data_update.ejs.php',
-			//destroy : '../administration/facilities/data_destroy.ejs.php' <- You can not destroy facilities, HIPPA Compliant
+			
+			// ON the facility screen, we can't allow user to delete the facility
+			// HIPPA compliant
+			//destroy : '../administration/facilities/data_destroy.ejs.php'
 		}
 	}),
 
@@ -180,9 +188,28 @@ var frmFacility = new Ext.FormPanel({
 		ref			: '../save',
 		iconCls		: 'save',
 		handler: function() {
-			var obj = eval('(' + Ext.util.JSON.encode(frmFacility.getForm().getValues()) + ')'); // Convert the form data into a JSON data Object
-			var rec  = new FacilityRecord(obj); // Re-format the Object to be a valid record (FacilityRecord)
-			storeFacilities.add( rec ); // Add the re-formated record to the dataStore
+			
+			//----------------------------------------------------------------
+			// 1. Convert the form data into a JSON data Object
+			// 2. Re-format the Object to be a valid record (FacilityRecord)
+			//----------------------------------------------------------------
+			var obj = eval('(' + Ext.util.JSON.encode(frmFacility.getForm().getValues()) + ')');
+			var rec  = new FacilityRecord(obj);
+			
+			//----------------------------------------------------------------
+			// Check if it has to add or update
+			// Update:
+			// Add: The re-formated record to the dataStore
+			//----------------------------------------------------------------
+			if (frmFacility.getForm().findField('id').getValue()){
+				var record = storeFacilities.getAt(rowPos);
+				var fieldValues = frmFacility.getForm().getFieldValues(true);
+				alert( fieldValues);
+				//record.set( fieldValues );
+			} else {
+				storeFacilities.add( rec );
+			}
+
 			storeFacilities.save(); // Save the record to the dataStore
 			storeFacilities.commitChanges(); // Commit the changes
 			storeFacilities.reload(); // Reload the dataSore from the database
@@ -205,10 +232,19 @@ var winFacility = new Ext.Window({
 	modal		: true,
 	resizable	: false,
 	autoScroll	: true,
-	title		: '<?php echo htmlspecialchars( xl('Add or Edit Facility'), ENT_NOQUOTES); ?>',
+	title		: '...',
 	closeAction	: 'hide',
 	renderTo	: document.body,
 	items: [ frmFacility ],
+	listeners: {
+		show: function(){
+			if ( Ext.getCmp('id').getValue() ){
+				winFacility.setTitle('<?php echo htmlspecialchars( xl('Edit Facility'), ENT_NOQUOTES); ?>');
+			} else {
+				winFacility.setTitle('<?php echo htmlspecialchars( xl('Add Facility'), ENT_NOQUOTES); ?>');
+			}
+		}
+	}
 }); // END WINDOW
 
 
@@ -226,15 +262,21 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 	sm			: new Ext.grid.RowSelectionModel({singleSelect:true}),
 	listeners: {
 	
+		// -----------------------------------------
 		// Single click to select the record
+		// -----------------------------------------
 		rowclick: function(facilitiesGrid, rowIndex, e) {
+			rowPos = rowIndex;
 			var rec = storeFacilities.getAt(rowIndex);
 			Ext.getCmp('frmFacility').getForm().loadRecord(rec);
 			facilitiesGrid.editFacility.enable();
 		},
 
+		// -----------------------------------------
 		// Double click to select the record, and edit the record
+		// -----------------------------------------
 		rowdblclick:  function(facilitiesGrid, rowIndex, e) {
+			rowPos = rowIndex;
 			var rec = storeFacilities.getAt(rowIndex);
 			Ext.getCmp('frmFacility').getForm().loadRecord(rec);
 			facilitiesGrid.editFacility.enable();
@@ -249,15 +291,16 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 		{ header: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'street' },
 		{ header: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phone' }
 	],
-	// *************************************************************************************
+	// -----------------------------------------
 	// Grid Menu
-	// *************************************************************************************
+	// -----------------------------------------
 	tbar: [{
 		xtype	:'button',
 		id		: 'addFacility',
 		text	: '<?php xl("Add facility", 'e'); ?>',
 		iconCls	: 'facilities',
 		handler: function(){
+			Ext.getCmp('frmFacility').getForm().reset(); // Clear the form
 			winFacility.show();
 		}
 	},'-',{
