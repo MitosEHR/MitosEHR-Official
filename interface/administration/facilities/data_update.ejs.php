@@ -36,24 +36,24 @@ $data = json_decode ( $_POST['row'] );
 // just in case 
 // *************************************************************************************
 $row['id'] = trim($data[0]->id);
-$row['name'] = mysql_real_escape_string( trim($data[0]->name) );
-$row['phone'] = mysql_real_escape_string( trim($data[0]->phone) );
-$row['fax'] = mysql_real_escape_string( trim($data[0]->phone) );
-$row['street'] = mysql_real_escape_string( trim($data[0]->street) );
-$row['city'] = mysql_real_escape_string( trim($data[0]->city) );
-$row['state'] = mysql_real_escape_string( trim($data[0]->state) );
-$row['postal_code'] = mysql_real_escape_string( trim($data[0]->postal_code) );
-$row['country_code'] = mysql_real_escape_string( trim($data[0]->country_code) );
-$row['federal_ein'] = mysql_real_escape_string( trim($data[0]->federal_ein) );
-$row['x12_sender_id'] = mysql_real_escape_string( trim($data[0]->x12_sender_id) );
+$row['name'] = htmlspecialchars( trim($data[0]->name), ENT_NOQUOTES );
+$row['phone'] = htmlspecialchars( trim($data[0]->phone), ENT_NOQUOTES );
+$row['fax'] = htmlspecialchars( trim($data[0]->fax), ENT_NOQUOTES );
+$row['street'] = htmlspecialchars( trim($data[0]->street), ENT_NOQUOTES );
+$row['city'] = htmlspecialchars( trim($data[0]->city), ENT_NOQUOTES );
+$row['state'] = htmlspecialchars( trim($data[0]->state), ENT_NOQUOTES );
+$row['postal_code'] = htmlspecialchars( trim($data[0]->postal_code), ENT_NOQUOTES );
+$row['country_code'] = htmlspecialchars( trim($data[0]->country_code), ENT_NOQUOTES );
+$row['federal_ein'] = htmlspecialchars( trim($data[0]->federal_ein), ENT_NOQUOTES );
+$row['x12_sender_id'] = htmlspecialchars( trim($data[0]->x12_sender_id), ENT_NOQUOTES );
 $row['service_location'] = (trim($data[0]->service_location) == 'on' ? 1 : 0);
 $row['accepts_assignment'] = (trim($data[0]->accepts_assignment) == 'on' ? 1 : 0);
 $row['billing_location'] = (trim($data[0]->billing_location) == 'on' ? 1 : 0);
-$row['pos_code'] = mysql_real_escape_string( trim($data[0]->pos_code) );
-$row['domain_identifier'] = mysql_real_escape_string( trim($data[0]->domain_identifier) );
-$row['attn'] = mysql_real_escape_string( trim($data[0]->attn) );
-$row['tax_id_type'] = mysql_real_escape_string( trim($data[0]->tax_id_type) );
-$row['facility_npi'] = mysql_real_escape_string( trim($data[0]->facility_npi) );
+$row['pos_code'] = htmlspecialchars( trim($data[0]->pos_code), ENT_NOQUOTES );
+$row['domain_identifier'] = htmlspecialchars( trim($data[0]->domain_identifier), ENT_NOQUOTES );
+$row['attn'] = htmlspecialchars( trim($data[0]->attn), ENT_NOQUOTES );
+$row['tax_id_type'] = htmlspecialchars( trim($data[0]->tax_id_type), ENT_NOQUOTES );
+$row['facility_npi'] = htmlspecialchars( trim($data[0]->facility_npi), ENT_NOQUOTES );
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database

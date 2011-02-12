@@ -63,25 +63,25 @@ while ($myrow = sqlFetchArray($result)) {
 	}
 	
 	$buff .= "{";
-	$buff .= " id: '" . htmlspecialchars( $myrow['id'], ENT_QUOTES) . "',";
-	$buff .= " name: '" . htmlspecialchars( $myrow['name'], ENT_QUOTES) . "',";
-	$buff .= " phone: '" . htmlspecialchars( $myrow['phone'], ENT_QUOTES) . "',";
-	$buff .= " fax: '" . htmlspecialchars( $myrow['fax'], ENT_QUOTES) . "',";
-	$buff .= " street: '" . htmlspecialchars( $myrow['street'], ENT_NOQUOTES) . "'," ;
-	$buff .= " city: '" . htmlspecialchars( $myrow['city'], ENT_NOQUOTES) . "',";
-	$buff .= " state: '" . htmlspecialchars( $myrow['state'], ENT_NOQUOTES) . "',";
+	$buff .= " id: '" . htmlspecialchars( $myrow['id'], ENT_NOQUOTES ) . "',";
+	$buff .= " name: '" . htmlspecialchars_decode( $myrow['name'], ENT_NOQUOTES ) . "',";
+	$buff .= " phone: '" . htmlspecialchars( $myrow['phone'], ENT_NOQUOTES ) . "',";
+	$buff .= " fax: '" . htmlspecialchars( $myrow['fax'], ENT_NOQUOTES ) . "',";
+	$buff .= " street: '" . htmlspecialchars( $myrow['street'], ENT_NOQUOTES ) . "'," ;
+	$buff .= " city: '" . htmlspecialchars( $myrow['city'], ENT_NOQUOTES ) . "',";
+	$buff .= " state: '" . htmlspecialchars( $myrow['state'], ENT_NOQUOTES ) . "',";
 	$buff .= " postal_code: '" . htmlspecialchars( $myrow['postal_code'], ENT_NOQUOTES ) . "',";
 	$buff .= " federal_ein: '" . htmlspecialchars( $myrow['federal_ein'], ENT_NOQUOTES ) . "',";
-	$buff .= " service_location: '" . $rec['service_location'] . "',";
-	$buff .= " billing_location: '" . $rec['billing_location'] . "',";
-	$buff .= " accepts_assignment: '" . $rec['accepts_assignment'] . "',";
-	$buff .= " pos_code: '" . $rec['pos_code'] . "',";
+	$buff .= " service_location: '" . htmlspecialchars( $rec['service_location'], ENT_NOQUOTES ) . "',";
+	$buff .= " billing_location: '" . htmlspecialchars( $rec['billing_location'], ENT_NOQUOTES ) . "',";
+	$buff .= " accepts_assignment: '" . htmlspecialchars( $rec['accepts_assignment'], ENT_NOQUOTES ) . "',";
+	$buff .= " pos_code: '" . htmlspecialchars( $rec['pos_code'], ENT_NOQUOTES ) . "',";
 	$buff .= " x12_sender_id: '" . htmlspecialchars( $myrow['x12_sender_id'], ENT_NOQUOTES ) . "',";
 	$buff .= " attn: '" . htmlspecialchars( $myrow['attn'], ENT_NOQUOTES ) . "',";
 	$buff .= " domain_identifier: '" . htmlspecialchars( $myrow['domain_identifier'], ENT_NOQUOTES ) . "',";
 	$buff .= " facility_npi: '" . htmlspecialchars( $myrow['facility_npi'], ENT_NOQUOTES ) . "',";
 	$buff .= " tax_id_type: '" . htmlspecialchars( $myrow['tax_id_type'], ENT_NOQUOTES ) . "',";
-	$buff .= " country_code: '" . htmlspecialchars( $myrow['country_code'], ENT_NOQUOTES) . "'}," . chr(13);
+	$buff .= " country_code: '" . htmlspecialchars( $myrow['country_code'], ENT_NOQUOTES ) . "'}," . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.

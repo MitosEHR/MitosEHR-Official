@@ -38,7 +38,7 @@ if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
 // 
 // *************************************************************************************
 var FacilityRecord = Ext.data.Record.create([
-	{name: 'id', type: 'int',	mapping: 'id'},
+	{name: 'id', type: 'int', mapping: 'id'},
 	{name: 'name', type: 'string', mapping: 'name'},
 	{name: 'phone', type: 'string', mapping: 'phone'},
 	{name: 'fax', type: 'string', mapping: 'fax'},
@@ -194,7 +194,7 @@ var frmFacility = new Ext.FormPanel({
 			// 2. Re-format the Object to be a valid record (FacilityRecord)
 			//----------------------------------------------------------------
 			var obj = eval('(' + Ext.util.JSON.encode(frmFacility.getForm().getValues()) + ')');
-			var rec  = new FacilityRecord(obj);
+			var rec = new FacilityRecord(obj);
 			
 			//----------------------------------------------------------------
 			// Check if it has to add or update
