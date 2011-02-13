@@ -75,7 +75,7 @@ if ($noteid) {
 		 dataEncode( $data[0]->body ),
 		 dataEncode( $data[0]->type ),
 		 dataEncode( $data[0]->user ),
-	   dataEncode( $data[0]->status);
+	   dataEncode( $data[0]->status) );
 	$noteid = '';
 } else {
 	$noteid = addPnote(
@@ -87,7 +87,7 @@ if ($noteid) {
 		 dataEncode( $data[0]->type ),
 		 dataEncode( $data[0]->user ),
 		 '',
-		 dataEncode( $data[0]->status );
+		 dataEncode( $data[0]->status ) );
 }
 
 ?>
