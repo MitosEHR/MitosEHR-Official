@@ -217,7 +217,7 @@ $buff .= '{ "text":"' . xl('Administration') . '", "cls":"folder", ' . chr(13);
 $buff .= '		children: [' . chr(13); // ^ Folder
 if (acl_check('admin', 'super')) $buff .= '		{"text":"' . xl('Globals') . '", "pos":"top", "leaf":true, "cls":"file", "id":"super/edit_registry.php"},'.chr(13);
 if (acl_check('admin', 'users')) $buff .= '		{"text":"' . xl('Facilities') . '", "pos":"top", "leaf":true, "cls":"file", "id":"usergroup/facilities.php"},'.chr(13);
-if (acl_check('admin', 'users')) $buff .= '		{"text":"' . xl('Users') . '", "pos":"top", "leaf":true, "cls":"file", "id":"usergroup/usergroup_admin.php"},'.chr(13);
+if (acl_check('admin', 'users')) $buff .= '		{"text":"' . xl('Users') . '", "pos":"top", "leaf":true, "cls":"file", "id":"administration/users/users.ejs.php"},'.chr(13);
 if (acl_check('admin', 'practice')) $buff .= '		{"text":"' . xl('Practice') . '", "pos":"top", "leaf":true, "cls":"file", "id":"../controller.php?practice_settings&pharmacy&action=list"},'.chr(13);
 if (acl_check('admin', 'superbill')) $buff .= '		{"text":"' . xl('Services') . '", "pos":"top", "leaf":true, "cls":"file", "id":"super/edit_layout.php"},'.chr(13);
 if (acl_check('admin', 'super')) $buff .= '		{"text":"' . xl('Layouts') . '", "pos":"top", "leaf":true, "cls":"file", "id":"super/edit_registry.php"},'.chr(13);

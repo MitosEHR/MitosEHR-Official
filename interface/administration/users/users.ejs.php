@@ -97,9 +97,9 @@ var storeAddressbook = new Ext.data.Store({
   proxy     : new Ext.data.HttpProxy({
     method      : 'POST',
     api: {
-      read      : '../miscellaneous/addressbook/data_read.ejs.php',
-      create    : '../miscellaneous/addressbook/data_create.ejs.php',
-      update    : '../miscellaneous/addressbook/data_update.ejs.php'
+      read      : '../administration/users/data_read.ejs.php',
+      create    : '../administration/users/data_create.ejs.php',
+      update    : '../administration/users/data_update.ejs.php'
       //destroy :  <- You can not destroy conatacts, HIPPA Compliant
     }
   }),
@@ -126,7 +126,7 @@ storeAddressbook.load();
 // *************************************************************************************
 var storeTitles = new Ext.data.Store({
   proxy: new Ext.data.ScriptTagProxy({
-    url: '../miscellaneous/addressbook/component_data.ejs.php?task=titles'
+    url: '../administration/users/component_data.ejs.php?task=titles'
   }),
   reader: new Ext.data.JsonReader({
     idProperty: 'option_id',
@@ -145,7 +145,7 @@ storeTitles.load();
 // *************************************************************************************
 var storeTypes = new Ext.data.Store({
   proxy: new Ext.data.ScriptTagProxy({
-    url: '../miscellaneous/addressbook/component_data.ejs.php?task=types'
+    url: '../administration/users/component_data.ejs.php?task=types'
   }),
   reader: new Ext.data.JsonReader({
     idProperty: 'option_id',
