@@ -41,8 +41,8 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 ?>
 <html>
 <head>
-<script type="text/javascript" src="../../library/ext-3.3.0/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="../../library/ext-3.3.0/ext-all.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/ext-all.js"></script>
 
 <!-- ******************************************************************* -->
 <!-- Call for mandatory repository objects, that we need on the MitosEHR -->

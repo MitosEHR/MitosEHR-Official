@@ -104,14 +104,14 @@ if (count($result3) == 1) { $defaultLanguage = 1; }
 <head>
 <TITLE><?php xl ('Login','e'); ?></TITLE>
 
-<script type="text/javascript" src="../../library/ext-3.3.0/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="../../library/ext-3.3.0/ext-all.js"></script>
-<script type="text/javascript" src="../../library/ext-3.3.0/plugins/md5/ext.util.md5.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/ext-all.js"></script>
+<script type="text/javascript" src="../../repository/extMD5/ext.util.md5.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/ext-all.css">
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="../../ui_app/mitosehr_app.css" >
-<link rel="stylesheet" type="text/css" href="../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/xtheme-gray.css" />
 
 <script type="text/javascript">
 

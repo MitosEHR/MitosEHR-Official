@@ -28,7 +28,7 @@ var rowPos;
 // This destructions must be called for all the objects that
 // are rendered on the document.body 
 //******************************************************************************
-if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
+if ( Ext.getCmp('winList) ){ Ext.getCmp('winList').destroy(); }
 
 // *************************************************************************************
 // Structure of the message record
@@ -37,7 +37,7 @@ if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
 // This should be the structure of the database table
 // 
 // *************************************************************************************
-var FacilityRecord = Ext.data.Record.create([
+var ListRecord = Ext.data.Record.create([
 	{name: 'list_id', type: 'int',	mapping: 'list_id'},
 	{name: 'option_id', type: 'string', mapping: 'option_id'},
 	{name: 'title', type: 'string', mapping: 'title'},
