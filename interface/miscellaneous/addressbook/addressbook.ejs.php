@@ -413,14 +413,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     handler: function(){ 
       winAddressbook.show();
     }
-  }], // END GRID TOP MENU
-   bbar: [new Ext.PagingToolbar({
-    pageSize: 2,
-    store: storeAddressbook,
-    displayInfo: true,
-    displayMsg: 'Displaying contacts {0} - {1} of {2}',
-    emptyMsg: "No contacts to display"
-  })],
+  }],
   plugins: [new Ext.ux.grid.Search({
     mode            : 'local',
     iconCls         : false,
@@ -448,8 +441,21 @@ var RenderPanel = new Ext.Panel({
   viewConfig:{forceFit:true},
   items: [ 
     addressbookGrid
-  ]
+  ], // END GRID TOP MENU
+   bbar: [new Ext.PagingToolbar({
+    pageSize: 2,
+    hideBorders: true,
+    store: storeAddressbook,
+    displayInfo: true,
+    displayMsg: 'Displaying contacts {0} - {1} of {2}',
+    emptyMsg: "No contacts to display"
+  })]
 });
+
+//******************************************************************************
+// Get the actual height of the TopPanel and apply it to this panel
+//******************************************************************************
+Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 
 }); // End ExtJS
 </script>
