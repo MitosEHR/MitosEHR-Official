@@ -379,8 +379,7 @@ if (version_compare(phpversion(), "5.2.1", ">=")) {
 ini_set("session.bug_compat_warn","off");
 
 // Sencha ExtJS Framework switcher
-$GLOBALS['ext_path'] = "ext-3.3.0";
-$GLOBALS['code_igniter_path'] = "CodeIgniter_2.0.0";
+$GLOBALS['ext_path'] = "ext-3.3.1";
 $GLOBALS['app_name'] = "MitosEHR";
 
 //////////////////////////////////////////////////////////////////
