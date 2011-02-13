@@ -18,7 +18,6 @@ function dataEncode($str){
 
 // Decode the string to be safe on JSON
 function dataDecode($str){
-	//$buff = htmlspecialchars_decode( trim($str), ENT_QUOTES );
 	return stripslashes($str);
 }
 

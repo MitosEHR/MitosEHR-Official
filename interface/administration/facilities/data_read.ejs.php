@@ -66,25 +66,25 @@ while ($myrow = sqlFetchArray($result)) {
 	}
 	
 	$buff .= "{";
-	$buff .= " id: '" . dataDecode( $myrow['id'] ) . "',";
-	$buff .= " name: '" . dataDecode( $myrow['name'] ) . "',";
-	$buff .= " phone: '" . dataDecode( $myrow['phone'] ) . "',";
-	$buff .= " fax: '" . dataDecode( $myrow['fax'] ) . "',";
-	$buff .= " street: '" . dataDecode( $myrow['street'] ) . "'," ;
-	$buff .= " city: '" . dataDecode( $myrow['city'] ) . "',";
-	$buff .= " state: '" . dataDecode( $myrow['state'] ) . "',";
-	$buff .= " postal_code: '" . dataDecode( $myrow['postal_code'] ) . "',";
-	$buff .= " federal_ein: '" . dataDecode( $myrow['federal_ein'] ) . "',";
-	$buff .= " service_location: '" . dataDecode( $rec['service_location'] ) . "',";
-	$buff .= " billing_location: '" . dataDecode( $rec['billing_location'] ) . "',";
-	$buff .= " accepts_assignment: '" . dataDecode( $rec['accepts_assignment'] ) . "',";
-	$buff .= " pos_code: '" . dataDecode( $rec['pos_code'] ) . "',";
-	$buff .= " x12_sender_id: '" . dataDecode( $myrow['x12_sender_id'] ) . "',";
-	$buff .= " attn: '" . dataDecode( $myrow['attn'] ) . "',";
-	$buff .= " domain_identifier: '" . dataDecode( $myrow['domain_identifier'] ) . "',";
-	$buff .= " facility_npi: '" . dataDecode( $myrow['facility_npi'] ) . "',";
-	$buff .= " tax_id_type: '" . dataDecode( $myrow['tax_id_type'] ) . "',";
-	$buff .= " country_code: '" . dataDecode( $myrow['country_code'] ) . "'}," . chr(13);
+	$buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
+	$buff .= " name: '" . dataEncode( $myrow['name'] ) . "',";
+	$buff .= " phone: '" . dataEncode( $myrow['phone'] ) . "',";
+	$buff .= " fax: '" . dataEncode( $myrow['fax'] ) . "',";
+	$buff .= " street: '" . dataEncode( $myrow['street'] ) . "'," ;
+	$buff .= " city: '" . dataEncode( $myrow['city'] ) . "',";
+	$buff .= " state: '" . dataEncode( $myrow['state'] ) . "',";
+	$buff .= " postal_code: '" . dataEncode( $myrow['postal_code'] ) . "',";
+	$buff .= " federal_ein: '" . dataEncode( $myrow['federal_ein'] ) . "',";
+	$buff .= " service_location: '" . dataEncode( $rec['service_location'] ) . "',";
+	$buff .= " billing_location: '" . dataEncode( $rec['billing_location'] ) . "',";
+	$buff .= " accepts_assignment: '" . dataEncode( $rec['accepts_assignment'] ) . "',";
+	$buff .= " pos_code: '" . dataEncode( $rec['pos_code'] ) . "',";
+	$buff .= " x12_sender_id: '" . dataEncode( $myrow['x12_sender_id'] ) . "',";
+	$buff .= " attn: '" . dataEncode( $myrow['attn'] ) . "',";
+	$buff .= " domain_identifier: '" . dataEncode( $myrow['domain_identifier'] ) . "',";
+	$buff .= " facility_npi: '" . dataEncode( $myrow['facility_npi'] ) . "',";
+	$buff .= " tax_id_type: '" . dataEncode( $myrow['tax_id_type'] ) . "',";
+	$buff .= " country_code: '" . dataEncode( $myrow['country_code'] ) . "'}," . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.
