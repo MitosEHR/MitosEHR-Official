@@ -77,12 +77,17 @@ while ($myrow = sqlFetchArray($result)) {
   $buff .= " assistant: '" . dataEncode( $myrow['assistant'] ) . "',";
   $buff .= " organization: '" . dataEncode( $myrow['organization'] ) . "',";
   $buff .= " valedictory: '" . dataEncode( $myrow['valedictory'] ) . "',";
-  if(dataEncode( $myrow['street']) != NULL) { $rec['street'] = dataEncode( $myrow['street'] ) . "<br>";} else {"";}
-  if(dataEncode( $myrow['streetb']) != NULL) { $rec['streetb'] = dataEncode( $myrow['streetb'] ) . "<br>";} else {"";}
-  if(dataEncode( $myrow['city']) != NULL)    { $rec['city'] = dataEncode( $myrow['city'] ) . ", ";} else {"";}
-  if(dataEncode( $myrow['state']) != NULL)   { $rec['state'] = dataEncode( $myrow['state'] ) . " ";} else {"";}
-  if(dataEncode( $myrow['zip']) != NULL)     { $rec['zip'] = dataEncode( $myrow['zip'] ) . " ";} else {"";}
-  $buff .= " fulladdress: '" . dataEncode( $rec['street'] ) . dataEncode( $rec['streetb'] ) . dataEncode( $rec['city'] ) . " ". dataEncode( $rec['state'] ) . " " . dataEncode( $rec['zip'] ) . "',";
+  //append a <br> or "," to fulladdress if colounm not NULL or blank 
+  if($myrow['street']  != NULL || $myrow['street']  != "" ) {
+     $rec['street']   = dataEncode( $myrow['street']) . "<br>";} else { $rec['street'] = dataEncode( $myrow['street']) ;
+  }
+  if($myrow['streetb'] != NULL || $myrow['streetb'] != "" ) {
+     $rec['streetb']  = dataEncode( $myrow['streetb']) . "<br>";} else { $rec['streetb'] = dataEncode( $myrow['streetb']) ;
+  }
+  if($myrow['city']    != NULL || $myrow['city']    != "" ) {
+     $rec['city']     = dataEncode( $myrow['city']) . ", ";} else { $rec['city'] = dataEncode( $myrow['city']) ;
+  }
+  $buff .= " fulladdress: '" . $rec['street'] . $rec['streetb'] . $rec['city']  . " ".  dataEncode( $myrow['state']) . " " .  dataEncode( $myrow['zip'])  . "',";
   $buff .= " street: '" . dataEncode( $myrow['street'] ) . "',";
   $buff .= " streetb: '" . dataEncode( $myrow['streetb'] ) . "',";
   $buff .= " city: '" . dataEncode( $myrow['city'] ) . "',";
