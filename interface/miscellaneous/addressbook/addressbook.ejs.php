@@ -210,7 +210,7 @@ var frmAddressbook = new Ext.FormPanel({
             { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Valedictory'), ENT_NOQUOTES); ?>: '},
             { width: 140, xtype: 'textfield', id: 'valedictory',  name: 'valedictory' }
           ] 
-        },{html: '<hr style="margin:5px 0">', border:false},{ 
+        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>: '},
@@ -228,7 +228,7 @@ var frmAddressbook = new Ext.FormPanel({
             { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Postal Code'), ENT_NOQUOTES); ?>: '},
             { width: 140, xtype: 'textfield', id: 'zip',      name: 'zip' }
           ] 
-        },{html: '<hr style="margin:5px 0">', border:false},{ 
+        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>: '},
@@ -246,7 +246,7 @@ var frmAddressbook = new Ext.FormPanel({
             { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Postal Code'), ENT_NOQUOTES); ?>: '},
             { width: 140, xtype: 'textfield', id: 'zip2',     name: 'zip2' }
           ]
-        },{html: '<hr style="margin:5px 0">', border:false},{ 
+        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Home Phone'), ENT_NOQUOTES); ?>: '},
@@ -264,7 +264,7 @@ var frmAddressbook = new Ext.FormPanel({
             { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('FAX'), ENT_NOQUOTES); ?>: '},
             { width: 140, xtype: 'textfield', id: 'fax',     name: 'fax'   }
           ]
-        },{html: '<hr style="margin:5px 0">', border:false},{ 
+        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Email'), ENT_NOQUOTES); ?>: '},
@@ -274,7 +274,7 @@ var frmAddressbook = new Ext.FormPanel({
             { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Website'), ENT_NOQUOTES); ?>: '},
             { width: 140, xtype: 'textfield', id: 'url',       name: 'url' }
           ]
-        },{html: '<hr style="margin:5px 0">', border:false},{ 
+        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('UPIN'), ENT_NOQUOTES); ?>: '},
