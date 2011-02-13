@@ -29,7 +29,8 @@ require_once("../../../repository/dataExchange/dataExchange.inc.php");
 $count = "0";
 $sql = "SELECT 
           users.*, 
-          list_options.option_id AS ab_name 
+          list_options.option_id AS ab_name,
+          list_options.title AS ab_title  
         FROM 
           users
         LEFT JOIN 
@@ -102,8 +103,8 @@ while ($myrow = sqlFetchArray($result)) {
   $buff .= " pwd_history2: '" . dataEncode( $myrow['pwd_history2'] ) . "',";
   $buff .= " default_warehouse: '" . dataEncode( $myrow['default_warehouse'] ) . "',";
   $buff .= " irnpool: '" . dataEncode( $myrow['irnpool'] ) . "',";
-  
-  $buff .= " ab_name: '" . dataEncode( $myrow['ab_name'] ) . "'}," . chr(13);
+  $buff .= " ab_name: '" . dataEncode( $myrow['ab_name'] ) . "',";
+  $buff .= " ab_title: '" . dataEncode( $myrow['ab_title'] ) . "'}," . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.

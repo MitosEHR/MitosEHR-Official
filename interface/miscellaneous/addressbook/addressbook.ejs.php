@@ -98,8 +98,8 @@ var addressbookRecord = Ext.data.Record.create([
   {name: 'pwd_history1',          type: 'string',           mapping: 'pwd_history1'},
   {name: 'pwd_history2',          type: 'string',           mapping: 'pwd_history2'},
   {name: 'default_warehouse',     type: 'string',           mapping: 'default_warehouse'},
-  {name: 'irnpool',               type: 'string',           mapping: 'irnpool'},
-  {name: 'ab_name',               type: 'string',           mapping: 'ab_name'}
+  {name: 'ab_name',               type: 'string',           mapping: 'ab_name'},
+  {name: 'ab_title',              type: 'string',           mapping: 'ab_title'}
 ]);
 // *************************************************************************************
 // Structure and load the data for Messages
@@ -195,13 +195,13 @@ var frmAddressbook = new Ext.FormPanel({
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'combo', id: 'type', name: 'type', displayField: 'title', valueField: 'option_id', hiddenName: 'type', mode: 'local', triggerAction: 'all', store: storeTypes }
+            { width: 130, xtype: 'combo', id: 'abook_type', name: 'abook_type', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'abook_type', mode: 'local', triggerAction: 'all', store: storeTypes }
           ] 
         },{ xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('First, Middle, Last'), ENT_NOQUOTES); ?>: '},
-            { width: 50,  xtype: 'combo',     id: 'title', name: 'title', displayField: 'title', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
+            { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
             { width: 130, xtype: 'textfield', id: 'fname', name: 'fname' },
             { width: 100, xtype: 'textfield', id: 'mname', name: 'mname' },
             { width: 300, xtype: 'textfield', id: 'lname', name: 'lname' }
@@ -395,8 +395,8 @@ var addressbookGrid = new Ext.grid.GridPanel({
     {header: 'lname', sortable: false, dataIndex: 'lname', hidden: true},
     // Viewable cells
     { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
-    { header: '<?php echo htmlspecialchars( xl('Local'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
-    { header: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'ab_name' },
+    { width: 50,  header: '<?php echo htmlspecialchars( xl('Local'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
+    { header: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'ab_title' },
     { header: '<?php echo htmlspecialchars( xl('Specialty'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'specialty' },
     { header: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonew1' },
     { header: '<?php echo htmlspecialchars( xl('Mobile'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonecell' },

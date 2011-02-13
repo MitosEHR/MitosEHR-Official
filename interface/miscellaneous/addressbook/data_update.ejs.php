@@ -39,6 +39,8 @@ $data = json_decode ( $_POST['row'] );
 $row['id'] = trim($data[0]->id);
 
 // general info
+$row['abook_type']        = dataEncode($data[0]->abook_type);
+$row['title']             = dataEncode($data[0]->title);
 $row['fname']             = dataEncode($data[0]->fname);
 $row['mname']             = dataEncode($data[0]->mname);
 $row['lname']             = dataEncode($data[0]->lname);
@@ -83,6 +85,8 @@ sqlStatement("UPDATE
         users 
       SET
         id                = '" . $row['id'] . "', " . "
+        abook_type        = '" . $row['abook_type'] . "', " . "
+        title             = '" . $row['title'] . "', " . "
         fname             = '" . $row['fname'] . "', " . "
         mname             = '" . $row['mname'] . "', " . "
         lname             = '" . $row['lname'] . "', " . "

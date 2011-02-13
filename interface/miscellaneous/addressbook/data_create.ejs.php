@@ -36,40 +36,42 @@ $data = json_decode ( $_POST['row'] );
 // just in case 
 // *************************************************************************************
 // general info
-$row['fname']             = dataEncode($data[0]->fname);
-$row['mname']             = dataEncode($data[0]->mname);
-$row['lname']             = dataEncode($data[0]->lname);
-$row['specialty']         = dataEncode($data[0]->specialty);
-$row['organization']      = dataEncode($data[0]->organization);
-$row['valedictory']       = dataEncode($data[0]->valedictory);
+$row['abook_type']    = dataEncode($data[0]->abook_type);
+$row['title']         = dataEncode($data[0]->title);
+$row['fname']         = dataEncode($data[0]->fname);
+$row['mname']         = dataEncode($data[0]->mname);
+$row['lname']         = dataEncode($data[0]->lname);
+$row['specialty']     = dataEncode($data[0]->specialty);
+$row['organization']  = dataEncode($data[0]->organization);
+$row['valedictory']   = dataEncode($data[0]->valedictory);
 // primary address
-$row['street']            = dataEncode($data[0]->street);
-$row['streetb']           = dataEncode($data[0]->streetb);
-$row['city']              = dataEncode($data[0]->city);
-$row['state']             = dataEncode($data[0]->state);
-$row['zip']               = dataEncode($data[0]->zip);
+$row['street']        = dataEncode($data[0]->street);
+$row['streetb']       = dataEncode($data[0]->streetb);
+$row['city']          = dataEncode($data[0]->city);
+$row['state']         = dataEncode($data[0]->state);
+$row['zip']           = dataEncode($data[0]->zip);
 // secondary address
-$row['street2']           = dataEncode($data[0]->street2);
-$row['streetb2']          = dataEncode($data[0]->streetb2);
-$row['city2']             = dataEncode($data[0]->city2);
-$row['state2']            = dataEncode($data[0]->state2);
-$row['zip2']              = dataEncode($data[0]->zip2);
+$row['street2']       = dataEncode($data[0]->street2);
+$row['streetb2']      = dataEncode($data[0]->streetb2);
+$row['city2']         = dataEncode($data[0]->city2);
+$row['state2']        = dataEncode($data[0]->state2);
+$row['zip2']          = dataEncode($data[0]->zip2);
 // phones
-$row['phone']             = dataEncode($data[0]->phone);
-$row['phonew1']           = dataEncode($data[0]->phonew1);
-$row['phonew2']           = dataEncode($data[0]->phonew2);
-$row['phonecell']         = dataEncode($data[0]->phonecell);
-$row['fax']               = dataEncode($data[0]->fax);
+$row['phone']         = dataEncode($data[0]->phone);
+$row['phonew1']       = dataEncode($data[0]->phonew1);
+$row['phonew2']       = dataEncode($data[0]->phonew2);
+$row['phonecell']     = dataEncode($data[0]->phonecell);
+$row['fax']           = dataEncode($data[0]->fax);
 //additional info
-$row['email']             = dataEncode($data[0]->email);
-$row['assistant']         = dataEncode($data[0]->assistant);
-$row['url']               = dataEncode($data[0]->url);
+$row['email']         = dataEncode($data[0]->email);
+$row['assistant']     = dataEncode($data[0]->assistant);
+$row['url']           = dataEncode($data[0]->url);
 
-$row['upin']              = dataEncode($data[0]->upin);
-$row['npi']               = dataEncode($data[0]->npi);
-$row['federaltaxid']      = dataEncode($data[0]->federaltaxid);
-$row['taxonomy']          = dataEncode($data[0]->taxonomy);
-$row['notes']             = dataEncode($data[0]->notes);
+$row['upin']          = dataEncode($data[0]->upin);
+$row['npi']           = dataEncode($data[0]->npi);
+$row['federaltaxid']  = dataEncode($data[0]->federaltaxid);
+$row['taxonomy']      = dataEncode($data[0]->taxonomy);
+$row['notes']         = dataEncode($data[0]->notes);
 
 
 
@@ -83,6 +85,8 @@ sqlStatement("INSERT INTO
       SET
         username          = '" . "" . "', " . "
         password          = '" . "" . "', " . "
+        abook_type        = '" . $row['abook_type'] . "', " . "
+        title             = '" . $row['title'] . "', " . "
         fname             = '" . $row['fname'] . "', " . "
         mname             = '" . $row['mname'] . "', " . "
         lname             = '" . $row['lname'] . "', " . "
