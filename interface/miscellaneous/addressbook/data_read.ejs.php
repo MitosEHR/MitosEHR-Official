@@ -47,10 +47,11 @@ $result = sqlStatement( $sql );
 
 while ($myrow = sqlFetchArray($result)) {
   $count++;
+  $rec['username'] = ($myrow['username'] != '' ? 'X' : '');
+  
   $buff .= "{";
   $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
-  $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
-  $buff .= " username: '" . dataEncode( $myrow['username'] ) . "',";
+  $buff .= " username: '" . dataEncode( $rec['username'] ) . "',";
   $buff .= " password: '" . dataEncode( $myrow['password'] ) . "',";
   $buff .= " authorized: '" . dataEncode( $myrow['authorized'] ) . "',";
   $buff .= " info: '" . dataEncode( $myrow['info'] ) . "',";

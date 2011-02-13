@@ -138,39 +138,39 @@ storeAddressbook.load();
 // Structure, data for storeTaxID
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-//var storeTaxID = new Ext.data.Store({
-//  proxy: new Ext.data.ScriptTagProxy({
-//    url: '../administration/facilities/component_data.ejs.php?task=taxid'
-//  }),
-//  reader: new Ext.data.JsonReader({
-//    idProperty: 'option_id',
-//    totalProperty: 'results',
-//    root: 'row'
-// },[
-//    {name: 'option_id', type: 'string', mapping: 'option_id'},
-//    {name: 'title', type: 'string', mapping: 'title'}
-//  ])
-//});
-//storeTaxID.load();
+var storeTitles = new Ext.data.Store({
+  proxy: new Ext.data.ScriptTagProxy({
+    url: '../miscellaneous/addressbook/component_data.ejs.php?task=titles'
+  }),
+  reader: new Ext.data.JsonReader({
+    idProperty: 'option_id',
+    totalProperty: 'results',
+    root: 'row'
+ },[
+    {name: 'option_id', type: 'string', mapping: 'option_id'},
+    {name: 'title', type: 'string', mapping: 'title'}
+  ])
+});
+storeTitles.load();
 
 // *************************************************************************************
 // Structure, data for storePOSCode
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-//var storePOSCode = new Ext.data.Store({
-//  proxy: new Ext.data.ScriptTagProxy({
-//    url: '../administration/facilities/component_data.ejs.php?task=poscodes'
-//  }),
-//  reader: new Ext.data.JsonReader({
-//    idProperty: 'option_id',
-//    totalProperty: 'results',
-//    root: 'row'
-//  },[
-//    {name: 'option_id', type: 'string', mapping: 'option_id'},
-//    {name: 'title', type: 'string', mapping: 'title'}
-//  ])
-//});
-//storePOSCode.load();
+var storeTypes = new Ext.data.Store({
+  proxy: new Ext.data.ScriptTagProxy({
+    url: '../miscellaneous/addressbook/component_data.ejs.php?task=types'
+  }),
+  reader: new Ext.data.JsonReader({
+    idProperty: 'option_id',
+    totalProperty: 'results',
+    root: 'row'
+  },[
+    {name: 'option_id', type: 'string', mapping: 'option_id'},
+    {name: 'title', type: 'string', mapping: 'title'}
+  ])
+});
+storeTypes.load();
 
 
 // *************************************************************************************
@@ -194,13 +194,20 @@ var frmAddressbook = new Ext.FormPanel({
         { xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>: '},
+            { width: 130, xtype: 'combo', id: 'type', name: 'type', displayField: 'title', valueField: 'option_id', hiddenName: 'type', mode: 'local', triggerAction: 'all', store: storeTypes }
+          ] 
+        },{ xtype: 'compositefield',
+          msgTarget : 'side', 
+          items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('First, Middle, Last'), ENT_NOQUOTES); ?>: '},
+            { width: 50,  xtype: 'combo',     id: 'title', name: 'title', displayField: 'title', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
             { width: 130, xtype: 'textfield', id: 'fname', name: 'fname' },
             { width: 100, xtype: 'textfield', id: 'mname', name: 'mname' },
-            { width: 360, xtype: 'textfield', id: 'lname', name: 'lname' }
+            { width: 300, xtype: 'textfield', id: 'lname', name: 'lname' }
           ] 
-        },
-        { xtype: 'compositefield',
+        },{ 
+          xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Specialty'), ENT_NOQUOTES); ?>: '},
@@ -388,7 +395,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     {header: 'lname', sortable: false, dataIndex: 'lname', hidden: true},
     // Viewable cells
     { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
-    { header: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
+    { header: '<?php echo htmlspecialchars( xl('Local'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
     { header: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'ab_name' },
     { header: '<?php echo htmlspecialchars( xl('Specialty'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'specialty' },
     { header: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonew1' },
