@@ -39,15 +39,19 @@ $fake_register_globals=false;
 // Load the OpenEMR Libraries
 // *************************************************************************************
 require_once("../registry.php");
-require_once("$srcdir/pnotes.inc.php");
-require_once("$srcdir/patient.inc.php");
-require_once("$srcdir/acl.inc.php");
-require_once("$srcdir/log.inc.php");
-require_once("$srcdir/options.inc.php");
-require_once("$srcdir/formdata.inc.php");
-require_once("$srcdir/classes/Document.class.php");
-require_once("$srcdir/gprelations.inc.php");
-require_once("$srcdir/formatting.inc.php");
+require_once("../../repository/dataExchange/dataExchange.inc.php");
+
+// OpenEMR
+require_once("../../library/pnotes.inc.php");
+require_once("../../library/patient.inc.php");
+require_once("../../library/acl.inc.php");
+require_once("../../library/log.inc.php");
+require_once("../../library/options.inc.php");
+require_once("../../library/formdata.inc.php");
+require_once("../../library/classes/Document.class.php");
+require_once("../../library/gprelations.inc.php");
+require_once("../../library/formatting.inc.php");
+
 
 // Current structure of the record ExtJS Mappings
 // informational only
@@ -67,23 +71,23 @@ $data = json_decode ( $_POST['row'] );
 
 if ($noteid) {
 	updatePnote(
-	   $data[0]->noteid, // Internal OpenEMR Function
-		 $data[0]->body,
-		 $data[0]->type,
-		 $data[0]->user,
-	   $data[0]->status);
+	   dataEncode( $data[0]->noteid ), // Internal OpenEMR Function
+		 dataEncode( $data[0]->body ),
+		 dataEncode( $data[0]->type ),
+		 dataEncode( $data[0]->user ),
+	   dataEncode( $data[0]->status) );
 	$noteid = '';
 } else {
 	$noteid = addPnote(
-	   $data[0]->reply_to, // Internal OpenEMR Function
-	   $data[0]->subject,
-		 $data[0]->body,
-		 $userauthorized,
+	   dataEncode( $data[0]->reply_to ), // Internal OpenEMR Function
+	   dataEncode( $data[0]->subject ),
+		 dataEncode( $data[0]->body ),
+		 dataEncode( $userauthorized ),
 		 '1',
-		 $data[0]->type,
-		 $data[0]->user,
+		 dataEncode( $data[0]->type ),
+		 dataEncode( $data[0]->user ),
 		 '',
-		 $data[0]->status);
+		 dataEncode( $data[0]->status ) );
 }
 
 ?>

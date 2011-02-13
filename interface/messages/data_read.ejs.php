@@ -39,15 +39,20 @@ $fake_register_globals=false;
 // Load the OpenEMR Libraries
 // *************************************************************************************
 require_once("../registry.php");
-require_once("$srcdir/pnotes.inc.php");
-require_once("$srcdir/patient.inc.php");
-require_once("$srcdir/acl.inc.php");
-require_once("$srcdir/log.inc.php");
-require_once("$srcdir/options.inc.php");
-require_once("$srcdir/formdata.inc.php");
-require_once("$srcdir/classes/Document.class.php");
-require_once("$srcdir/gprelations.inc.php");
-require_once("$srcdir/formatting.inc.php");
+require_once("../../repository/dataExchange/dataExchange.inc.php");
+
+// OpenEMR
+require_once("../../library/pnotes.inc.php");
+require_once("../../library/patient.inc.php");
+require_once("../../library/acl.inc.php");
+require_once("../../library/log.inc.php");
+require_once("../../library/options.inc.php");
+require_once("../../library/formdata.inc.php");
+require_once("../../library/classes/Document.class.php");
+require_once("../../library/gprelations.inc.php");
+require_once("../../library/formatting.inc.php");
+
+
 
 // Count records variable
 $count = 0;
@@ -76,24 +81,24 @@ $result = sqlStatement($sql, array($_GET['show']) );
 
 while ($myrow = sqlFetchArray($result)) {
 	$count++;
-	$name = $myrow['user'];
-	$name = $myrow['users_lname'];
-	$p_body = str_replace(chr(10), "<br>", $myrow['body'] );
-	if ($myrow['users_fname']) { $name .= ", " . $myrow['users_fname']; }
-	$patient = $myrow['pid'];
-	$patient = $myrow['patient_data_lname'];
-	if ($myrow['patient_data_fname']) { $patient .= ", " . $myrow['patient_data_fname']; }
+	$name = dataEncode( $myrow['user'] );
+	$name = dataEncode( $myrow['users_lname'] );
+	$p_body = str_replace(chr(10), "<br>", dataEncode( $myrow['body'] ));
+	if ($myrow['users_fname']) { $name .= ", " . dataEncode( $myrow['users_fname'] ); }
+	$patient = dataEncode( $myrow['pid'] );
+	$patient = dataEncode( $myrow['patient_data_lname'] );
+	if ($myrow['patient_data_fname']) { $patient .= ", " . dataEncode( $myrow['patient_data_fname'] ); }
 	// build the message
 	$buff .= "{";
-	$buff .= " noteid: '" . htmlspecialchars( $myrow['id'], ENT_QUOTES) . "',";
-	$buff .= " user: '" . htmlspecialchars( $myrow['user'], ENT_QUOTES) . "',";
-	$buff .= " subject: '" . htmlspecialchars( $myrow['subject'], ENT_QUOTES) . "',";
+	$buff .= " noteid: '" . dataEncode( $myrow['id'] ) . "',";
+	$buff .= " user: '" . dataEncode( $myrow['user'] ) . "',";
+	$buff .= " subject: '" . dataEncode( $myrow['subject'] ) . "',";
 	$buff .= " body: '" . $p_body . "',";
-	$buff .= " from: '" . htmlspecialchars( $name, ENT_NOQUOTES) . "'," ;
-	$buff .= " patient: '" . htmlspecialchars( $patient, ENT_NOQUOTES) . "',";
-	$buff .= " date: '" . htmlspecialchars( oeFormatShortDate(substr($myrow['date'], 0, strpos($myrow['date'], " "))), ENT_NOQUOTES) . "',";
-	$buff .= " reply_id: '" . htmlspecialchars( $myrow['reply_id'], ENT_NOQUOTES) . "',";
-	$buff .= " status: '" . htmlspecialchars( $myrow['message_status'], ENT_NOQUOTES) . "'}," . chr(13);
+	$buff .= " from: '" . dataEncode( $name ) . "'," ;
+	$buff .= " patient: '" . dataEncode( $patient ) . "',";
+	$buff .= " date: '" . oeFormatShortDate(substr($myrow['date'], 0, strpos($myrow['date'], " "))) . "',";
+	$buff .= " reply_id: '" . dataEncode( $myrow['reply_id'] ) . "',";
+	$buff .= " status: '" . dataEncode( $myrow['message_status'] ) . "'}," . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.

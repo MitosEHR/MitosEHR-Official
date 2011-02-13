@@ -23,6 +23,7 @@ $fake_register_globals=false;
 // Load the MitosEMR Libraries
 // *************************************************************************************
 require_once("../../registry.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
 // Count records variable
 $count = 0;
@@ -52,7 +53,9 @@ $result = sqlStatement( $sql );
 while ($myrow = sqlFetchArray($result)) {
 	$count++;
 	
+	//----------------------------------------------------
 	// Parse some data
+	//----------------------------------------------------
 	$rec['service_location'] = ($myrow['service_location'] == '1' ? 'on' : 'off');
 	$rec['billing_location'] = ($myrow['billing_location'] == '1' ? 'on' : 'off');
 	$rec['accepts_assignment'] = ($myrow['accepts_assignment'] == '1' ? 'on' : 'off');
@@ -63,25 +66,25 @@ while ($myrow = sqlFetchArray($result)) {
 	}
 	
 	$buff .= "{";
-	$buff .= " id: '" . htmlspecialchars( $myrow['id'], ENT_NOQUOTES ) . "',";
-	$buff .= " name: '" . htmlspecialchars_decode( $myrow['name'], ENT_NOQUOTES ) . "',";
-	$buff .= " phone: '" . htmlspecialchars( $myrow['phone'], ENT_NOQUOTES ) . "',";
-	$buff .= " fax: '" . htmlspecialchars( $myrow['fax'], ENT_NOQUOTES ) . "',";
-	$buff .= " street: '" . htmlspecialchars( $myrow['street'], ENT_NOQUOTES ) . "'," ;
-	$buff .= " city: '" . htmlspecialchars( $myrow['city'], ENT_NOQUOTES ) . "',";
-	$buff .= " state: '" . htmlspecialchars( $myrow['state'], ENT_NOQUOTES ) . "',";
-	$buff .= " postal_code: '" . htmlspecialchars( $myrow['postal_code'], ENT_NOQUOTES ) . "',";
-	$buff .= " federal_ein: '" . htmlspecialchars( $myrow['federal_ein'], ENT_NOQUOTES ) . "',";
-	$buff .= " service_location: '" . htmlspecialchars( $rec['service_location'], ENT_NOQUOTES ) . "',";
-	$buff .= " billing_location: '" . htmlspecialchars( $rec['billing_location'], ENT_NOQUOTES ) . "',";
-	$buff .= " accepts_assignment: '" . htmlspecialchars( $rec['accepts_assignment'], ENT_NOQUOTES ) . "',";
-	$buff .= " pos_code: '" . htmlspecialchars( $rec['pos_code'], ENT_NOQUOTES ) . "',";
-	$buff .= " x12_sender_id: '" . htmlspecialchars( $myrow['x12_sender_id'], ENT_NOQUOTES ) . "',";
-	$buff .= " attn: '" . htmlspecialchars( $myrow['attn'], ENT_NOQUOTES ) . "',";
-	$buff .= " domain_identifier: '" . htmlspecialchars( $myrow['domain_identifier'], ENT_NOQUOTES ) . "',";
-	$buff .= " facility_npi: '" . htmlspecialchars( $myrow['facility_npi'], ENT_NOQUOTES ) . "',";
-	$buff .= " tax_id_type: '" . htmlspecialchars( $myrow['tax_id_type'], ENT_NOQUOTES ) . "',";
-	$buff .= " country_code: '" . htmlspecialchars( $myrow['country_code'], ENT_NOQUOTES ) . "'}," . chr(13);
+	$buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
+	$buff .= " name: '" . dataEncode( $myrow['name'] ) . "',";
+	$buff .= " phone: '" . dataEncode( $myrow['phone'] ) . "',";
+	$buff .= " fax: '" . dataEncode( $myrow['fax'] ) . "',";
+	$buff .= " street: '" . dataEncode( $myrow['street'] ) . "'," ;
+	$buff .= " city: '" . dataEncode( $myrow['city'] ) . "',";
+	$buff .= " state: '" . dataEncode( $myrow['state'] ) . "',";
+	$buff .= " postal_code: '" . dataEncode( $myrow['postal_code'] ) . "',";
+	$buff .= " federal_ein: '" . dataEncode( $myrow['federal_ein'] ) . "',";
+	$buff .= " service_location: '" . dataEncode( $rec['service_location'] ) . "',";
+	$buff .= " billing_location: '" . dataEncode( $rec['billing_location'] ) . "',";
+	$buff .= " accepts_assignment: '" . dataEncode( $rec['accepts_assignment'] ) . "',";
+	$buff .= " pos_code: '" . dataEncode( $rec['pos_code'] ) . "',";
+	$buff .= " x12_sender_id: '" . dataEncode( $myrow['x12_sender_id'] ) . "',";
+	$buff .= " attn: '" . dataEncode( $myrow['attn'] ) . "',";
+	$buff .= " domain_identifier: '" . dataEncode( $myrow['domain_identifier'] ) . "',";
+	$buff .= " facility_npi: '" . dataEncode( $myrow['facility_npi'] ) . "',";
+	$buff .= " tax_id_type: '" . dataEncode( $myrow['tax_id_type'] ) . "',";
+	$buff .= " country_code: '" . dataEncode( $myrow['country_code'] ) . "'}," . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.

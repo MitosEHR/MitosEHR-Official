@@ -39,15 +39,19 @@ $fake_register_globals=false;
 // Load the OpenEMR Libraries
 // *************************************************************************************
 require_once("../registry.php");
-require_once("$srcdir/pnotes.inc.php");
-require_once("$srcdir/patient.inc.php");
-require_once("$srcdir/acl.inc.php");
-require_once("$srcdir/log.inc.php");
-require_once("$srcdir/options.inc.php");
-require_once("$srcdir/formdata.inc.php");
-require_once("$srcdir/classes/Document.class.php");
-require_once("$srcdir/gprelations.inc.php");
-require_once("$srcdir/formatting.inc.php");
+require_once("../../repository/dataExchange/dataExchange.inc.php");
+
+// OpenEMR
+require_once("../../library/pnotes.inc.php");
+require_once("../../library/patient.inc.php");
+require_once("../../library/acl.inc.php");
+require_once("../../library/log.inc.php");
+require_once("../../library/options.inc.php");
+require_once("../../library/formdata.inc.php");
+require_once("../../library/classes/Document.class.php");
+require_once("../../library/gprelations.inc.php");
+require_once("../../library/formatting.inc.php");
+
 
 // Count records variable
 $count = 0;
@@ -80,7 +84,7 @@ switch ($_GET['task']) {
 			} else {
 				$username = $urow['lname'];
 			}
-			$buff .= " { user: '" . htmlspecialchars( $urow['username'], ENT_NOQUOTES) . "', full_name: '" . $username . "' },". chr(13);
+			$buff .= " { user: '" . dataDecode( $urow['username'] ) . "', full_name: '" . $username . "' },". chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
@@ -106,7 +110,7 @@ switch ($_GET['task']) {
 		$result = sqlStatement($sql);
 		while($row = sqlFetchArray($result)){
 			$count++;
-			$buff .= " { option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+			$buff .= " { option_id: '" . dataDecode( $row{'option_id'} ) . "', title: '" . dataDecode( $row{'title'} ) . "' },". chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
@@ -132,7 +136,7 @@ switch ($_GET['task']) {
 		$result = sqlStatement($sql);
 		while($row = sqlFetchArray($result)){
 			$count++;
-			$buff .= "{ option_id: '" . htmlspecialchars( $row{'option_id'}, ENT_QUOTES) . "', title: '" . htmlspecialchars( $row{'title'}, ENT_NOQUOTES) . "' },". chr(13);
+			$buff .= "{ option_id: '" . dataDecode( $row{'option_id'} ) . "', title: '" . dataDecode( $row{'title'} ) . "' },". chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
@@ -156,12 +160,12 @@ switch ($_GET['task']) {
 		$result = sqlStatement($sql);
 		while ($row = sqlFetchArray($result)) {
 			$count++;
-			$buff .= "{ id: '" . htmlspecialchars( $row['id'], ENT_QUOTES) . "',";
-			$buff .= " name: '" . htmlspecialchars( $row['fname'], ENT_QUOTES) . ", " . htmlspecialchars( $row['lname'], ENT_QUOTES)  . "',";
-			$buff .= " phone: '" . htmlspecialchars( "Contact: ".$row['phone_contact']." | Home: " . $row['phone_home']." | Cell: ".$row['phone_cell']." | Work: ".$row['phone_biz'], ENT_QUOTES) . "',";
-			$buff .= " ss: '" . htmlspecialchars( $row['ss'], ENT_QUOTES) . "',";
-			$buff .= " dob: '" . htmlspecialchars( $row['DOB'], ENT_QUOTES) . "',";
-			$buff .= " pid: '" . htmlspecialchars( $row['pid'], ENT_QUOTES) . "'},".chr(13);
+			$buff .= "{ id: '" . dataDecode( $row['id'] ) . "',";
+			$buff .= " name: '" . dataDecode( $row['fname'] ) . ", " . dataDecode( $row['lname'] )  . "',";
+			$buff .= " phone: '" . dataDecode( "Contact: ".$row['phone_contact']." | Home: " . $row['phone_home']." | Cell: ".$row['phone_cell']." | Work: ".$row['phone_biz'] ) . "',";
+			$buff .= " ss: '" . dataDecode( $row['ss'] ) . "',";
+			$buff .= " dob: '" . dataDecode( $row['DOB'] ) . "',";
+			$buff .= " pid: '" . dataDecode( $row['pid'] ) . "'},".chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';

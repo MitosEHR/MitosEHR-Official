@@ -605,7 +605,6 @@ var msgGrid = new Ext.grid.GridPanel({
 				winMessage.cmb_form_message_status.setValue('New');
 				winMessage.reply_id.setValue(null);
 
-				
 				// Set the buttons state
 				winMessage.patient_name.enable();
 				winMessage.send.disable();
