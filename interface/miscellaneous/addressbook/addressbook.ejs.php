@@ -14,21 +14,6 @@ include_once("../../registry.php");
 <script type="text/javascript">
 Ext.onReady(function(){
 
-Ext.form.Action.Submit.prototype.run = Ext.form.Action.Submit.prototype.run.createInterceptor(function() {
-  this.form.items.each(function(item) {
-    if (item.el.getValue() == item.emptyText) {
-      item.el.dom.value = '';
-    }
-    });
- });
-Ext.form.Action.Submit.prototype.run = Ext.form.Action.Submit.prototype.run.createSequence(function() {
-  this.form.items.each(function(item) {
-    if (item.el.getValue() == '' && item.emptyText) {
-      item.el.dom.value = item.emptyText;
-    }
-    });
- });
-
 Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
 //******************************************************************************
