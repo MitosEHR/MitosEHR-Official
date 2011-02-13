@@ -348,6 +348,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
   autoHeight  : true,
   border      : false,    
   frame       : false,
+  loadMask    : true,
   viewConfig  : {forceFit: true},
   sm          : new Ext.grid.RowSelectionModel({singleSelect:true}),
     listeners: {
