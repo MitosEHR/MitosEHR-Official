@@ -118,7 +118,7 @@ var storeAddressbook = new Ext.data.Store({
     root            : 'row'
   }, addressbookRecord )
 });
-storeAddressbook.load();
+storeAddressbook.load({params:{start:0, limit:2}});
 
 // *************************************************************************************
 // Structure, data for storeTaxID
@@ -413,6 +413,13 @@ var addressbookGrid = new Ext.grid.GridPanel({
       winAddressbook.show();
     }
   }], // END GRID TOP MENU
+   bbar: [new Ext.PagingToolbar({
+    pageSize: 2,
+    store: storeAddressbook,
+    displayInfo: true,
+    displayMsg: 'Displaying contacts {0} - {1} of {2}',
+    emptyMsg: "No contacts to display"
+  })],
   plugins: [new Ext.ux.grid.Search({
     mode            : 'local',
     iconCls         : false,
