@@ -58,6 +58,7 @@ var addressbookRecord = Ext.data.Record.create([
   {name: 'assistant',             type: 'string',           mapping: 'assistant'},
   {name: 'organization',          type: 'string',           mapping: 'organization'},
   {name: 'valedictory',           type: 'string',           mapping: 'valedictory'},
+  {name: 'fulladdress',           type: 'string',           mapping: 'fulladdress'},
   {name: 'street',                type: 'string',           mapping: 'street'},
   {name: 'streetb',               type: 'string',           mapping: 'streetb'},
   {name: 'city',                  type: 'string',           mapping: 'city'},
@@ -170,7 +171,6 @@ var frmAddressbook = new Ext.FormPanel({
       autoWidth       : true,
       border          : false,
       hideLabels      : true,
-      submitEmptyText : true,
       id              : 'formfileds',
       bodyStyle       : 'padding: 20px',
       items: 
@@ -387,10 +387,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     { header: '<?php echo htmlspecialchars( xl('Mobile'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonecell' },
     { header: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fax' },
     { header: '<?php echo htmlspecialchars( xl('Email'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'email' },
-    { header: '<?php echo htmlspecialchars( xl('Street'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'street' },
-    { header: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'city' },
-    { header: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'state' },
-    { header: '<?php echo htmlspecialchars( xl('Postal'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'zip' }
+    { width: 150, header: '<?php echo htmlspecialchars( xl('Primary Address'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fulladdress' }
   ],
   // *************************************************************************************
   // Grid Menu
