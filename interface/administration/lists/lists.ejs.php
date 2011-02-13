@@ -38,31 +38,31 @@ if ( Ext.getCmp('winList) ){ Ext.getCmp('winList').destroy(); }
 // 
 // *************************************************************************************
 var ListRecord = Ext.data.Record.create([
-	{name: 'list_id', type: 'int',	mapping: 'list_id'},
-	{name: 'option_id', type: 'string', mapping: 'option_id'},
-	{name: 'title', type: 'string', mapping: 'title'},
-	{name: 'seq', type: 'string', mapping: 'seq'},
-	{name: 'is_default', type: 'string', mapping: 'is_default'},
-	{name: 'option_value', type: 'string', mapping: 'option_value'},
-	{name: 'mapping', type: 'string', mapping: 'mapping'},
-	{name: 'notes', type: 'string', mapping: 'notes'}
+	{name: 'list_id', 		type: 'int',	mapping: 'list_id'},
+	{name: 'option_id', 	type: 'string', mapping: 'option_id'},
+	{name: 'title', 		type: 'string', mapping: 'title'},
+	{name: 'seq', 			type: 'string', mapping: 'seq'},
+	{name: 'is_default', 	type: 'string', mapping: 'is_default'},
+	{name: 'option_value', 	type: 'string', mapping: 'option_value'},
+	{name: 'mapping', 		type: 'string', mapping: 'mapping'},
+	{name: 'notes', 		type: 'string', mapping: 'notes'}
 ]);
 
 // *************************************************************************************
 // Structure and load the data for Messages
 // AJAX -> data_*.ejs.php
 // *************************************************************************************
-var storeFacilities = new Ext.data.Store({
+var storeListsOption = new Ext.data.Store({
 	autoSave	: false,
 
 	// HttpProxy will only allow requests on the same domain.
 	proxy : new Ext.data.HttpProxy({
 		method		: 'POST',
 		api: {
-			read	: '../administration/facilities/data_read.ejs.php',
-			create	: '../administration/facilities/data_create.ejs.php',
-			update	: '../administration/facilities/data_update.ejs.php',
-			destroy : '../administration/facilities/data_destroy.ejs.php'
+			read	: '../administration/lists/data_read.ejs.php',
+			create	: '../administration/lists/data_create.ejs.php',
+			update	: '../administration/lists/data_update.ejs.php',
+			destroy : '../administration/lists/data_destroy.ejs.php'
 		}
 	}),
 
@@ -90,7 +90,7 @@ storeFacilities.load();
 // *************************************************************************************
 var storeEditList = new Ext.data.Store({
 	proxy: new Ext.data.HttpProxy({
-		url: '../administration/facilities/component_data.ejs.php?task=editlist'
+		url: '../administration/lists/component_data.ejs.php?task=editlist'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'option_id',
@@ -107,15 +107,15 @@ storeEditList.load();
 // Facility Form
 // Add or Edit purpose
 // *************************************************************************************
-var frmFacility = new Ext.FormPanel({
-	id			: 'frmFacility',
-	bodyStyle	: 'padding: 5px;',
+var frmLists = new Ext.FormPanel({
+	id			: 'frmLists',
+	bodyStyle	: 'padding: 3px;',
 	layout: 'column',
 	items: [{
 		layout: 'form',
 		autoWidth: true,
 		border: false,
-		bodyStyle : 'padding: 0 5px',
+		bodyStyle : 'padding: 0 3px',
 		defaults: { labelWidth: 50 },
         items: 
 		[
@@ -133,7 +133,7 @@ var frmFacility = new Ext.FormPanel({
 		layout : 'form',
 		border : false,
 		autoWidth: true,
-		bodyStyle : 'padding: 0 5px',
+		bodyStyle : 'padding: 0 3px',
 		defaults: { labelWidth: 150 },
         items: 
 		[
@@ -191,8 +191,8 @@ var frmFacility = new Ext.FormPanel({
 // *************************************************************************************
 // Message Window Dialog
 // *************************************************************************************
-var winFacility = new Ext.Window({
-	id			: 'winFacility',
+var winLists = new Ext.Window({
+	id			: 'winLists',
 	width		: 700,
 	autoHeight	: true,
 	modal		: true,
@@ -201,13 +201,13 @@ var winFacility = new Ext.Window({
 	title		: '...',
 	closeAction	: 'hide',
 	renderTo	: document.body,
-	items: [ frmFacility ],
+	items: [ frmLists ],
 	listeners: {
 		show: function(){
 			if ( Ext.getCmp('id').getValue() ){
-				winFacility.setTitle('<?php echo htmlspecialchars( xl('Edit Facility'), ENT_NOQUOTES); ?>');
+				winLists.setTitle('<?php echo htmlspecialchars( xl('Edit List'), ENT_NOQUOTES); ?>');
 			} else {
-				winFacility.setTitle('<?php echo htmlspecialchars( xl('Add Facility'), ENT_NOQUOTES); ?>');
+				winLists.setTitle('<?php echo htmlspecialchars( xl('Create List'), ENT_NOQUOTES); ?>');
 			}
 		}
 	}
@@ -217,9 +217,9 @@ var winFacility = new Ext.Window({
 // *************************************************************************************
 // Create the GridPanel
 // *************************************************************************************
-var facilitiesGrid = new Ext.grid.GridPanel({
-	id		   : 'facilitiesGrid',
-	store	   : storeFacilities,
+var listGrid = new Ext.grid.GridPanel({
+	id		   : 'listGrid',
+	store	   : storeListsOption,
 	stripeRows : true,
 	autoHeight : true,
 	border     : false,    
@@ -231,22 +231,22 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 		// -----------------------------------------
 		// Single click to select the record
 		// -----------------------------------------
-		rowclick: function(facilitiesGrid, rowIndex, e) {
+		rowclick: function(storeListsOption, rowIndex, e) {
 			rowPos = rowIndex;
-			var rec = storeFacilities.getAt(rowPos);
-			Ext.getCmp('frmFacility').getForm().loadRecord(rec);
-			facilitiesGrid.editFacility.enable();
+			var rec = storeListsOption.getAt(rowPos);
+			Ext.getCmp('frmLists').getForm().loadRecord(rec);
+			listGrid.editList.enable();
 		},
 
 		// -----------------------------------------
 		// Double click to select the record, and edit the record
 		// -----------------------------------------
-		rowdblclick:  function(facilitiesGrid, rowIndex, e) {
+		rowdblclick:  function(storeListsOption, rowIndex, e) {
 			rowPos = rowIndex;
-			var rec = storeFacilities.getAt(rowPos); // get the record from the store
-			Ext.getCmp('frmFacility').getForm().loadRecord(rec); // load the record selected into the form
-			facilitiesGrid.editFacility.enable();
-			winFacility.show();
+			var rec = storeListsOption.getAt(rowPos); // get the record from the store
+			Ext.getCmp('frmLists').getForm().loadRecord(rec); // load the record selected into the form
+			listGrid.editList.enable();
+			winLists.show();
 		}
 	},
 	columns: [
@@ -267,7 +267,7 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 		iconCls	: 'facilities',
 		handler: function(){
 			Ext.getCmp('frmFacility').getForm().reset(); // Clear the form
-			winFacility.show();
+			winLists.show();
 		}
 	},'-',{
 		xtype	:'button',
@@ -277,7 +277,7 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 		iconCls	: 'edit',
 		disabled: true,
 		handler: function(){ 
-			winFacility.show();
+			winLists.show();
 		}
 	}], // END GRID TOP MENU
 	plugins: [new Ext.ux.grid.Search({
