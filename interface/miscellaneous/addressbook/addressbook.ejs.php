@@ -337,6 +337,7 @@ var winAddressbook = new Ext.Window({
   renderTo    : document.body,
   items: [ frmAddressbook ],
 }); // END WINDOW
+
 // *************************************************************************************
 // Create the GridPanel
 // *************************************************************************************
@@ -396,7 +397,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     xtype     :'button',
     id        : 'addAddressbook',
     text      : '<?php xl("Add Contact", 'e'); ?>',
-    iconCls   : 'facilities',
+    iconCls   : 'icoAddressBook',
     handler   : function(){
       Ext.getCmp('frmAddressbook').getForm().reset(); // Clear the form
       winAddressbook.show();

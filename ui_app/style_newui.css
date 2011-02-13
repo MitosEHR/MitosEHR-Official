@@ -58,6 +58,9 @@
 .icoFilter{
 	background-image: url(../ui_icons/icoFilter.png) !important;
 }
+.icoAddressBook{
+	background-image: url(../ui_icons/address_book.png) !important;
+}
 .newMessage{
 	background-image: url(../ui_icons/new_message.png) !important;
 }
@@ -73,6 +76,7 @@
 .list{
 	background-image: url(../ui_icons/list_bullets.png) !important;
 }
+
 .app_bg{
 	background-image: url(../ui_icons/app_bg.png) !important;
 	background-repeat: repeat-x;
