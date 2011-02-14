@@ -61,6 +61,9 @@
 .icoAddressBook{
 	background-image: url(../ui_icons/address_book.png) !important;
 }
+.icoListOptions{
+	background-image: url(../ui_icons/list.png) !important;
+}
 .newMessage{
 	background-image: url(../ui_icons/new_message.png) !important;
 }

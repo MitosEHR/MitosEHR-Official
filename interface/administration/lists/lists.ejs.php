@@ -28,7 +28,7 @@ var rowPos;
 // This destructions must be called for all the objects that
 // are rendered on the document.body 
 //******************************************************************************
-if ( Ext.getCmp('winList) ){ Ext.getCmp('winList').destroy(); }
+if ( Ext.getCmp('winList') ){ Ext.getCmp('winList').destroy(); }
 
 // *************************************************************************************
 // Structure of the message record
@@ -72,17 +72,17 @@ var storeListsOption = new Ext.data.Store({
 		writeAllFields	: true,
 		listful			: true,
 		writeAllFields	: true
-	}, FacilityRecord ),
+	}, ListRecord ),
 
 	// JSON Reader options
 	reader: new Ext.data.JsonReader({
 		idProperty: 'id',
 		totalProperty: 'results',
 		root: 'row'
-	}, FacilityRecord )
+	}, ListRecord )
 	
 });
-storeFacilities.load();
+storeListsOption.load();
 
 // *************************************************************************************
 // Structure, data for storeEditList
@@ -119,33 +119,9 @@ var frmLists = new Ext.FormPanel({
 		defaults: { labelWidth: 50 },
         items: 
 		[
-			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'name', name: 'name', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'street', name: 'street', fieldLabel: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'city', name: 'city', fieldLabel: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', maxLength:50, minLengthText: 'Must contain at least 2 characters.', minLength: 2, id: 'state', name: 'state', fieldLabel: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', maxLength: 10, id: 'country_code', name: 'country_code', fieldLabel: '<?php echo htmlspecialchars( xl('Country'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', maxLength: 30, minLengthText: 'Must contain at least 7 characters.', minLength: 7, id: 'phone', name: 'phone', fieldLabel: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', maxLength: 30, minLengthText: 'Must contain at least 7 characters.', minLength: 7, id: 'fax', name: 'fax', fieldLabel: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', maxLength: 11, minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'postal_code', name: 'postal_code', fieldLabel: '<?php echo htmlspecialchars( xl('Zip Code'), ENT_NOQUOTES); ?>' },
-			// Hidden fields
-			{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'}
-        ]},{
-		layout : 'form',
-		border : false,
-		autoWidth: true,
-		bodyStyle : 'padding: 0 3px',
-		defaults: { labelWidth: 150 },
-        items: 
-		[
-			{ xtype: 'combo', width: 60, autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', hiddenName: 'tax_id_type', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
-			{ xtype: 'textfield', maxLength: 15, minLengthText: 'Must contain at least 5 characters.', minLength: 5, id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'checkbox', checked: true, id: 'service_location', name: 'service_location', fieldLabel: '<?php echo htmlspecialchars( xl('Service Location'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'combo', width: 300, autoSelect: true, displayField: 'title', hiddenName: 'pos_code', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php echo htmlspecialchars( xl('POS Code'), ENT_NOQUOTES); ?>', editable: false },
-			{ xtype: 'textfield', maxLength: 65, minLengthText: 'Must contain at least 10 characters.', minLength: 10, id: 'attn', name: 'attn', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Attn'), ENT_NOQUOTES); ?>' },
-			{ xtype: 'textfield', maxLength: 60, minLengthText: 'Must contain at least 5 characters.', minLength: 5, id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php echo htmlspecialchars( xl('CLIA Number'), ENT_NOQUOTES); ?>' }
-		]}
+			{ xtype: 'textfield', hidden: true, id: 'list_id', name: 'list_id'},
+			{ xtype: 'textfield', id: 'title', name: 'title', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' }
+        ]}
 	],
 	
 	// Window Bottom Bar
@@ -159,8 +135,8 @@ var frmLists = new Ext.FormPanel({
 			// 1. Convert the form data into a JSON data Object
 			// 2. Re-format the Object to be a valid record (FacilityRecord)
 			//----------------------------------------------------------------
-			var obj = eval('(' + Ext.util.JSON.encode(frmFacility.getForm().getValues()) + ')');
-			var rec  = new FacilityRecord(obj);
+			var obj = eval('(' + Ext.util.JSON.encode(frmLists.getForm().getValues()) + ')');
+			var rec  = new ListRecord(obj);
 			
 			//----------------------------------------------------------------
 			// Check if it has to add or update
@@ -168,23 +144,23 @@ var frmLists = new Ext.FormPanel({
 			// values from the form and push it into the store record.
 			// Add: The re-formated record to the dataStore
 			//----------------------------------------------------------------
-			if (frmFacility.getForm().findField('id').getValue()){ // Update
-				var record = storeFacilities.getAt(rowPos);
-				var fieldValues = frmFacility.getForm().getValues();
+			if (frmLists.getForm().findField('id').getValue()){ // Update
+				var record = ListRecord.getAt(rowPos);
+				var fieldValues = frmLists.getForm().getValues();
 				for (key in fieldValues){ record.set( key, fieldValues[key] ); }
 			} else { // Add
-				storeFacilities.add( rec );
+				storeListsOption.add( rec );
 			}
 
-			storeFacilities.save(); // Save the record to the dataStore
-			storeFacilities.commitChanges(); // Commit the changes
-			storeFacilities.reload(); // Reload the dataSore from the database
-			winFacility.hide(); // Finally hide the dialog window
+			storeListsOption.save(); // Save the record to the dataStore
+			storeListsOption.commitChanges(); // Commit the changes
+			storeListsOption.reload(); // Reload the dataSore from the database
+			winLists.hide(); // Finally hide the dialog window
 		}
 	},{
 		text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
 		iconCls: 'delete',
-		handler: function(){ winFacility.hide(); }
+		handler: function(){ winLists.hide(); }
 	}]
 });
 
@@ -250,30 +226,30 @@ var listGrid = new Ext.grid.GridPanel({
 		}
 	},
 	columns: [
-		// Hidden cells
-		{header: 'id', sortable: false, dataIndex: 'id', hidden: true},
 		// Viewable cells
-		{ width: 200, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'name' },
-		{ header: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'street' },
-		{ header: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phone' }
+		{ width: 50, header: 'ID', sortable: true, dataIndex: 'list_id'},
+		{ width: 150, header: '<?php echo htmlspecialchars( xl('Title'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'title' },
+		{ header: '<?php echo htmlspecialchars( xl('Order'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'order' },
+		{ header: '<?php echo htmlspecialchars( xl('Default'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'is_default' },
+		{ header: '<?php echo htmlspecialchars( xl('Notes'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'notes' },
 	],
 	// -----------------------------------------
 	// Grid Menu
 	// -----------------------------------------
 	tbar: [{
 		xtype	:'button',
-		id		: 'addFacility',
-		text	: '<?php xl("Add facility", 'e'); ?>',
-		iconCls	: 'facilities',
+		id		: 'addList',
+		text	: '<?php xl("Create a list", 'e'); ?>',
+		iconCls	: 'icoListOptions',
 		handler: function(){
-			Ext.getCmp('frmFacility').getForm().reset(); // Clear the form
+			Ext.getCmp('frmLists').getForm().reset(); // Clear the form
 			winLists.show();
 		}
 	},'-',{
 		xtype	:'button',
-		id		: 'editFacility',
-		ref		: '../editFacility',
-		text	: '<?php xl("Edit facility", 'e'); ?>',
+		id		: 'editList',
+		ref		: '../editList',
+		text	: '<?php xl("Edit list", 'e'); ?>',
 		iconCls	: 'edit',
 		disabled: true,
 		handler: function(){ 
@@ -308,9 +284,15 @@ var RenderPanel = new Ext.Panel({
   renderTo: Ext.getCmp('TopPanel').body,
   viewConfig:{forceFit:true},
   items: [ 
-    facilitiesGrid
+    listGrid
   ]
 });
+
+//******************************************************************************
+// Get the actual height of the TopPanel and apply it to this panel
+// This is mandatory statement.
+//******************************************************************************
+Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 
 }); // End ExtJS
 
