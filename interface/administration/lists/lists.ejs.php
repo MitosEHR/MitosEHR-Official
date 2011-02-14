@@ -49,7 +49,7 @@ var ListRecord = Ext.data.Record.create([
 ]);
 
 // *************************************************************************************
-// Structure and load the data for Messages
+// Structure and load the data for ListsOptions
 // AJAX -> data_*.ejs.php
 // *************************************************************************************
 var storeListsOption = new Ext.data.Store({
@@ -152,10 +152,10 @@ var frmLists = new Ext.FormPanel({
 				storeListsOption.add( rec );
 			}
 
-			storeListsOption.save(); // Save the record to the dataStore
-			storeListsOption.commitChanges(); // Commit the changes
-			storeListsOption.reload(); // Reload the dataSore from the database
-			winLists.hide(); // Finally hide the dialog window
+			storeListsOption.save();
+			storeListsOption.commitChanges();
+			storeListsOption.reload();
+			winLists.hide();
 		}
 	},{
 		text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',

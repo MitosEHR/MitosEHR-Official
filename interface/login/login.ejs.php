@@ -16,20 +16,6 @@ include_once ("../registry.php");
 include_once("$srcdir/sql.inc.php");
 
 //************************************************************************************************************
-// Collect groups
-//************************************************************************************************************
-$res = sqlStatement("SELECT
-						distinct name
-					FROM
-						groups");
-for ($iter = 0; $row = sqlFetchArray($res); $iter++){
-	$group_buff .= "['" . $iter . "', '" . $row['name'] . "'],". chr(13);
-	$result[$iter] = $row;
-}
-$group_buff = substr($group_buff, 0, -2); // Delete the last comma and clear the buff.
-if (count($result) == 1) { $resvalue = $result[0]{"name"}; }
-
-//************************************************************************************************************
 // Collect default language id
 //************************************************************************************************************
 $res2 = sqlStatement("SELECT
@@ -187,7 +173,6 @@ var winLogon = new Ext.Window({
 	standardSubmit: true,
 	items: [
 		{ xtype: 'textfield', ref: '../authPass', id: 'authPass', hidden: true, name: 'authPass', value: '' },
-		{ xtype: 'combo', id: 'authProvider', name: 'authProvider', value: '<?php echo htmlspecialchars( $resvalue, ENT_QUOTES); ?>', forceSelection: true, fieldLabel: '<?php echo htmlspecialchars( xl('Group'), ENT_NOQUOTES); ?>', editable: false, triggerAction: 'all', store: groupData, mode: 'local', valueField: 'id', displayField: 'name' },
 		{ xtype: 'textfield', 
 			minLength: 3,
 			maxLength: 32, 
