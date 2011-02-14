@@ -22,7 +22,7 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 // This destructions must be called for all the objects that
 // are rendered on the document.body 
 //******************************************************************************
-if ( Ext.getCmp('winAddressbook') ){ Ext.getCmp('winAddressbook').destroy(); }
+if ( Ext.getCmp('winUsers') ){ Ext.getCmp('winUsers').destroy(); }
 
 // *************************************************************************************
 // Structure of the message record
@@ -31,7 +31,7 @@ if ( Ext.getCmp('winAddressbook') ){ Ext.getCmp('winAddressbook').destroy(); }
 // This should be the structure of the database table
 // 
 // *************************************************************************************
-var addressbookRecord = Ext.data.Record.create([
+var usersRecord = Ext.data.Record.create([
   {name: 'id',                    type: 'int',              mapping: 'id'},
   {name: 'username',              type: 'string',           mapping: 'username'},
   {name: 'password',              type: 'string',           mapping: 'password'},
@@ -91,7 +91,7 @@ var addressbookRecord = Ext.data.Record.create([
 // Structure and load the data for Messages
 // AJAX -> data_*.ejs.php
 // *************************************************************************************
-var storeAddressbook = new Ext.data.Store({
+var storeUsers = new Ext.data.Store({
   autoSave  : false,
   // HttpProxy will only allow requests on the same domain.
   proxy     : new Ext.data.HttpProxy({
@@ -109,16 +109,16 @@ var storeAddressbook = new Ext.data.Store({
     writeAllFields  : true,
     listful         : true,
     writeAllFields  : true
-  }, addressbookRecord ),
+  }, usersRecord ),
 
   // JSON Reader options
   reader: new Ext.data.JsonReader({
     idProperty      : 'id',
-    totalProperty   : 'results',
+    totalProperty   : 'totals',
     root            : 'row'
-  }, addressbookRecord )
+  }, usersRecord )
 });
-storeAddressbook.load();
+storeUsers.load({params:{start:0, limit:10}});
 
 // *************************************************************************************
 // Structure, data for storeTaxID
@@ -130,7 +130,7 @@ var storeTitles = new Ext.data.Store({
   }),
   reader: new Ext.data.JsonReader({
     idProperty: 'option_id',
-    totalProperty: 'results',
+    totalProperty: 'totals',
     root: 'row'
  },[
     {name: 'option_id', type: 'string', mapping: 'option_id'},
@@ -149,7 +149,7 @@ var storeTypes = new Ext.data.Store({
   }),
   reader: new Ext.data.JsonReader({
     idProperty: 'option_id',
-    totalProperty: 'results',
+    totalProperty: 'totals',
     root: 'row'
   },[
     {name: 'option_id', type: 'string', mapping: 'option_id'},
@@ -163,8 +163,8 @@ storeTypes.load();
 // Facility Form
 // Add or Edit purpose
 // *************************************************************************************
-var frmAddressbook = new Ext.FormPanel({
-  id          : 'frmAddressbook',
+var frmUsers = new Ext.FormPanel({
+  id          : 'frmUsers',
   bodyStyle   : 'padding: 5px;',
   items: [{
       layout          : 'form',
@@ -293,8 +293,8 @@ var frmAddressbook = new Ext.FormPanel({
       // 1. Convert the form data into a JSON data Object
       // 2. Re-format the Object to be a valid record (FacilityRecord)
       //----------------------------------------------------------------
-      var obj = eval('(' + Ext.util.JSON.encode(frmAddressbook.getForm().getValues()) + ')');
-      var rec = new addressbookRecord(obj);
+      var obj = eval('(' + Ext.util.JSON.encode(frmUsers.getForm().getValues()) + ')');
+      var rec = new usersRecord(obj);
       
       //----------------------------------------------------------------
       // Check if it has to add or update
@@ -302,51 +302,54 @@ var frmAddressbook = new Ext.FormPanel({
       // values from the form and push it into the store record.
       // Add: The re-formated record to the dataStore
       //----------------------------------------------------------------
-      if (frmAddressbook.getForm().findField('id').getValue()){ // Update
-        var record = storeAddressbook.getAt(rowPos);
-        var fieldValues = frmAddressbook.getForm().getValues();
+      if (frmUsers.getForm().findField('id').getValue()){ // Update
+        var record = storeUsers.getAt(rowPos);
+        var fieldValues = frmUsers.getForm().getValues();
         for (key in fieldValues){ record.set( key, fieldValues[key] ); }
       } else { // Add
-        storeAddressbook.add( rec );
+        storeUsers.add( rec );
       }
 
-      storeAddressbook.save();          // Save the record to the dataStore
-      storeAddressbook.commitChanges(); // Commit the changes
-      storeAddressbook.reload();        // Reload the dataSore from the database
-      winAddressbook.hide();            // Finally hide the dialog window
+      storeUsers.save();          // Save the record to the dataStore
+      storeUsers.commitChanges(); // Commit the changes
+      storeUsers.reload();        // Reload the dataSore from the database
+      winUsers.hide();            // Finally hide the dialog window
     }
   },{
     text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
     iconCls: 'delete',
-    handler: function(){ winAddressbook.hide(); }
+    handler: function(){ winUsers.hide(); }
   }]
 });
 
 // *************************************************************************************
 // Message Window Dialog
 // *************************************************************************************
-var winAddressbook = new Ext.Window({
-  id          : 'winAddressbook',
+var winUsers = new Ext.Window({
+  id          : 'winUsers',
   width       : 773,
   autoHeight  : true,
   modal       : true,
   resizable   : false,
   autoScroll  : true,
-  title       : '<?php echo htmlspecialchars( xl('Add or Edit Contact'), ENT_NOQUOTES); ?>',
+  title       : '<?php echo htmlspecialchars( xl('Add or Edit User'), ENT_NOQUOTES); ?>',
   closeAction : 'hide',
   renderTo    : document.body,
-  items: [ frmAddressbook ],
+  items: [ frmUsers ],
 }); // END WINDOW
+
 // *************************************************************************************
 // Create the GridPanel
 // *************************************************************************************
 var addressbookGrid = new Ext.grid.GridPanel({
   id          : 'addressbookGrid',
-  store       : storeAddressbook,
+  store       : storeUsers,
   stripeRows  : true,
   autoHeight  : true,
   border      : false,    
   frame       : false,
+  loadMask    : true,
+  autoScroll  : true,
   viewConfig  : {forceFit: true},
   sm          : new Ext.grid.RowSelectionModel({singleSelect:true}),
     listeners: {
@@ -356,8 +359,8 @@ var addressbookGrid = new Ext.grid.GridPanel({
     // -----------------------------------------
     rowclick: function(addressbookGrid, rowIndex, e) {
       rowPos = rowIndex;
-      var rec = storeAddressbook.getAt(rowPos);
-      Ext.getCmp('frmAddressbook').getForm().loadRecord(rec);
+      var rec = storeUsers.getAt(rowPos);
+      Ext.getCmp('frmUsers').getForm().loadRecord(rec);
       addressbookGrid.editAddressbook.enable();
     },
 
@@ -366,28 +369,20 @@ var addressbookGrid = new Ext.grid.GridPanel({
     // -----------------------------------------
     rowdblclick:  function(addressbookGrid, rowIndex, e) {
       rowPos = rowIndex;
-      var rec = storeAddressbook.getAt(rowPos); // get the record from the store
-      Ext.getCmp('frmAddressbook').getForm().loadRecord(rec); // load the record selected into the form
+      var rec = storeUsers.getAt(rowPos); // get the record from the store
+      Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
       addressbookGrid.editAddressbook.enable();
-      winAddressbook.show();
+      winUsers.show();
     }
   },
   columns: [
     // Hidden cells
     {header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-    {header: 'fname', sortable: false, dataIndex: 'fname', hidden: true},
-    {header: 'mnane', sortable: false, dataIndex: 'mnane', hidden: true},
-    {header: 'lname', sortable: false, dataIndex: 'lname', hidden: true},
     // Viewable cells
+    { width: 100,  header: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
     { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
-    { width: 50,  header: '<?php echo htmlspecialchars( xl('Local'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
-    { header: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'ab_title' },
-    { header: '<?php echo htmlspecialchars( xl('Specialty'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'specialty' },
-    { header: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonew1' },
-    { header: '<?php echo htmlspecialchars( xl('Mobile'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonecell' },
-    { header: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fax' },
-    { header: '<?php echo htmlspecialchars( xl('Email'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'email' },
-    { width: 150, header: '<?php echo htmlspecialchars( xl('Primary Address'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fulladdress' }
+    { width: 200,  header: '<?php echo htmlspecialchars( xl('Aditional info'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
+    { header: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'authorized' }
   ],
   // *************************************************************************************
   // Grid Menu
@@ -395,23 +390,23 @@ var addressbookGrid = new Ext.grid.GridPanel({
   tbar: [{
     xtype     :'button',
     id        : 'addAddressbook',
-    text      : '<?php xl("Add Contact", 'e'); ?>',
-    iconCls   : 'facilities',
+    text      : '<?php xl("Add User", 'e'); ?>',
+    iconCls   : 'icoAddressBook',
     handler   : function(){
-      Ext.getCmp('frmAddressbook').getForm().reset(); // Clear the form
-      winAddressbook.show();
+      Ext.getCmp('frmUsers').getForm().reset(); // Clear the form
+      winUsers.show();
     }
   },'-',{
     xtype     :'button',
     id        : 'editAddressbook',
     ref       : '../editAddressbook',
-    text      : '<?php xl("Edit Contact", 'e'); ?>',
+    text      : '<?php xl("Edit User", 'e'); ?>',
     iconCls   : 'edit',
     disabled  : true,
     handler: function(){ 
-      winAddressbook.show();
+      winUsers.show();
     }
-  }], // END GRID TOP MENU
+  }],
   plugins: [new Ext.ux.grid.Search({
     mode            : 'local',
     iconCls         : false,
@@ -429,7 +424,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
 // This panel is mandatory for all layouts.
 //******************************************************************************
 var RenderPanel = new Ext.Panel({
-  title: '<?php xl('Address Book', 'e'); ?>',
+  title: '<?php xl('List of Users', 'e'); ?>',
   border        : false,
   stateful      : true,
   monitorResize : true,
@@ -439,8 +434,22 @@ var RenderPanel = new Ext.Panel({
   viewConfig:{forceFit:true},
   items: [ 
     addressbookGrid
-  ]
+  ], // END GRID TOP MENU
+   bbar: [new Ext.PagingToolbar({
+    pageSize: 10,
+    hideBorders: true,
+    store: storeUsers,
+    displayInfo: true,
+    displayMsg: 'Displaying contacts {0} - {1} of {2}',
+    emptyMsg: "No contacts to display"
+  })]
 });
+
+//******************************************************************************
+// Get the actual height of the TopPanel and apply it to this panel
+// This is mandatory statement.
+//******************************************************************************
+Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 
 }); // End ExtJS
 </script>
