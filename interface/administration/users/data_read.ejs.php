@@ -24,9 +24,9 @@ $fake_register_globals=false;
 // *************************************************************************************
 require_once("../../registry.php");
 require_once("../../../repository/dataExchange/dataExchange.inc.php");
-
-
-$count = "0";
+// Setting defults incase no request is sent by sencha
+$start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
+$count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 $sql = "SELECT 
           users.*, 
           list_options.option_id AS ab_name,
@@ -36,20 +36,15 @@ $sql = "SELECT
         LEFT JOIN 
           list_options ON list_id = 'abook_type' AND option_id = users.abook_type
         WHERE 
-          users.active = 1 AND ( users.authorized = 1 OR users.username = '' ) ";
-          
-        // if ($form_lname) $query .= "AND u.lname LIKE '$form_lname%' ";
-        // if ($form_fname) $query .= "AND u.fname LIKE '$form_fname%' ";
-        // if ($form_specialty) $query .= "AND u.specialty LIKE '%$form_specialty%' ";
-        // if ($form_abook_type) $query .= "AND u.abook_type LIKE '$form_abook_type' ";
-        // if ($form_external) $query .= "AND u.username = '' ";
-        // $query .= "ORDER BY u.lname, u.fname, u.mname LIMIT 500";
+          users.active = 1 AND ( users.authorized = 1 OR users.username = '' )
+        LIMIT ".$start.",".$count;
 $result = sqlStatement( $sql );
+// Total of rows in database
+$total = mysql_query("SELECT COUNT(id) FROM users");
+$total = mysql_result($total, 0);
 
 while ($myrow = sqlFetchArray($result)) {
-  $count++;
   $rec['username'] = ($myrow['username'] != '' ? 'X' : '');
-  
   $buff .= "{";
   $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
   $buff .= " username: '" . dataEncode( $rec['username'] ) . "',";
@@ -120,7 +115,7 @@ while ($myrow = sqlFetchArray($result)) {
 
 $buff = substr($buff, 0, -2); // Delete the last comma.
 echo $_GET['callback'] . '({';
-echo "results: " . $count . ", " . chr(13);
+echo "totals: " . $total . ", " . chr(13);
 echo "row: [" . chr(13);
 echo $buff;
 echo "]})" . chr(13);
