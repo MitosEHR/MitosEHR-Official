@@ -379,15 +379,10 @@ var addressbookGrid = new Ext.grid.GridPanel({
     // Hidden cells
     {header: 'id', sortable: false, dataIndex: 'id', hidden: true},
     // Viewable cells
+    { width: 100,  header: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
     { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
-    { width: 50,  header: '<?php echo htmlspecialchars( xl('Local'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
-    { header: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'ab_title' },
-    { header: '<?php echo htmlspecialchars( xl('Specialty'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'specialty' },
-    { header: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonew1' },
-    { header: '<?php echo htmlspecialchars( xl('Mobile'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phonecell' },
-    { header: '<?php echo htmlspecialchars( xl('Fax'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fax' },
-    { header: '<?php echo htmlspecialchars( xl('Email'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'email' },
-    { width: 150, header: '<?php echo htmlspecialchars( xl('Primary Address'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fulladdress' }
+    { width: 200,  header: '<?php echo htmlspecialchars( xl('Aditional info'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
+    { header: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'authorized' }
   ],
   // *************************************************************************************
   // Grid Menu

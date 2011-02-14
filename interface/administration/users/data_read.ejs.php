@@ -36,7 +36,7 @@ $sql = "SELECT
         LEFT JOIN 
           list_options ON list_id = 'abook_type' AND option_id = users.abook_type
         WHERE 
-          users.active = 1 AND ( users.authorized = 1 OR users.username = '' )
+          users.active = 1 AND ( users.authorized = 1 OR users.username != '' )
         LIMIT ".$start.",".$count;
 $result = sqlStatement( $sql );
 // Total of rows in database
@@ -44,10 +44,9 @@ $total = mysql_query("SELECT COUNT(id) FROM users");
 $total = mysql_result($total, 0);
 
 while ($myrow = sqlFetchArray($result)) {
-  $rec['username'] = ($myrow['username'] != '' ? 'X' : '');
   $buff .= "{";
   $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
-  $buff .= " username: '" . dataEncode( $rec['username'] ) . "',";
+  $buff .= " username: '" . dataEncode( $myrow['username'] ) . "',";
   $buff .= " password: '" . dataEncode( $myrow['password'] ) . "',";
   $buff .= " authorized: '" . dataEncode( $myrow['authorized'] ) . "',";
   $buff .= " info: '" . dataEncode( $myrow['info'] ) . "',";
