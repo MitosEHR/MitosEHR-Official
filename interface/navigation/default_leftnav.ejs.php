@@ -202,7 +202,7 @@ if (acl_check('admin', 'users')) $buff .= '		{"text":"' . xl('Users') . '", "pos
 if (acl_check('admin', 'practice')) $buff .= '		{"text":"' . xl('Practice') . '", "pos":"top", "leaf":true, "cls":"file", "id":"../controller.php?practice_settings&pharmacy&action=list"},'.chr(13);
 if (acl_check('admin', 'superbill')) $buff .= '		{"text":"' . xl('Services') . '", "pos":"top", "leaf":true, "cls":"file", "id":"super/edit_layout.php"},'.chr(13);
 if (acl_check('admin', 'super')) $buff .= '		{"text":"' . xl('Layouts') . '", "pos":"top", "leaf":true, "cls":"file", "id":"super/edit_registry.php"},'.chr(13);
-if (acl_check('admin', 'super')) $buff .= '		{"text":"' . xl('Lists') . '", "pos":"top", "leaf":true, "cls":"file", "id":"super/edit_list.php"},'.chr(13);
+if (acl_check('admin', 'super')) $buff .= '		{"text":"' . xl('Lists') . '", "pos":"top", "leaf":true, "cls":"file", "id":"administration/lists/lists.ejs.php"},'.chr(13);
 if (acl_check('admin', 'acl')) $buff .= '		{"text":"' . xl('ACL') . '", "pos":"top", "leaf":true, "cls":"file", "id":"usergroup/adminacl.php"},'.chr(13);
 if (($GLOBALS['include_de_identification']) && acl_check('admin', 'super')) $buff .= '		{"text":"' . xl('De Identification') . '", "pos":"top", "leaf":true, "cls":"file", "id":"de_identification_forms/de_identification_screen1.php"},'.chr(13);
 if (($GLOBALS['include_de_identification']) && acl_check('admin', 'super')) $buff .= '		{"text":"' . xl('Re Identification') . '", "pos":"top", "leaf":true, "cls":"file", "id":"de_identification_forms/re_identification_input_screen.php"},'.chr(13);

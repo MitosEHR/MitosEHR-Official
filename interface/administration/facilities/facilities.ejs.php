@@ -346,6 +346,12 @@ var RenderPanel = new Ext.Panel({
   ]
 });
 
+//******************************************************************************
+// Get the actual height of the TopPanel and apply it to this panel
+// This is mandatory statement.
+//******************************************************************************
+Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
+
 }); // End ExtJS
 
 </script>
