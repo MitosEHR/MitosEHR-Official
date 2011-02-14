@@ -114,11 +114,11 @@ var storeAddressbook = new Ext.data.Store({
   // JSON Reader options
   reader: new Ext.data.JsonReader({
     idProperty      : 'id',
-    totalProperty   : 'results',
+    totalProperty   : 'totals',
     root            : 'row'
   }, addressbookRecord )
 });
-storeAddressbook.load({params:{start:0, limit:2}});
+storeAddressbook.load({params:{start:0, limit:10}});
 
 // *************************************************************************************
 // Structure, data for storeTaxID
@@ -130,7 +130,7 @@ var storeTitles = new Ext.data.Store({
   }),
   reader: new Ext.data.JsonReader({
     idProperty: 'option_id',
-    totalProperty: 'results',
+    totalProperty: 'totals',
     root: 'row'
  },[
     {name: 'option_id', type: 'string', mapping: 'option_id'},
@@ -149,7 +149,7 @@ var storeTypes = new Ext.data.Store({
   }),
   reader: new Ext.data.JsonReader({
     idProperty: 'option_id',
-    totalProperty: 'results',
+    totalProperty: 'totals',
     root: 'row'
   },[
     {name: 'option_id', type: 'string', mapping: 'option_id'},
@@ -348,6 +348,8 @@ var addressbookGrid = new Ext.grid.GridPanel({
   autoHeight  : true,
   border      : false,    
   frame       : false,
+  loadMask    : true,
+  autoScroll  : true,
   viewConfig  : {forceFit: true},
   sm          : new Ext.grid.RowSelectionModel({singleSelect:true}),
     listeners: {
@@ -376,9 +378,6 @@ var addressbookGrid = new Ext.grid.GridPanel({
   columns: [
     // Hidden cells
     {header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-    {header: 'fname', sortable: false, dataIndex: 'fname', hidden: true},
-    {header: 'mnane', sortable: false, dataIndex: 'mnane', hidden: true},
-    {header: 'lname', sortable: false, dataIndex: 'lname', hidden: true},
     // Viewable cells
     { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
     { width: 50,  header: '<?php echo htmlspecialchars( xl('Local'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
@@ -442,7 +441,7 @@ var RenderPanel = new Ext.Panel({
     addressbookGrid
   ], // END GRID TOP MENU
    bbar: [new Ext.PagingToolbar({
-    pageSize: 2,
+    pageSize: 10,
     hideBorders: true,
     store: storeAddressbook,
     displayInfo: true,

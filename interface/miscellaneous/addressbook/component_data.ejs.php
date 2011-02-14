@@ -48,7 +48,7 @@ switch ($_GET['task']) {
   }
   $buff = substr($buff, 0, -2); // Delete the last comma.
   echo $_GET['callback'] . '({';
-  echo "results: " . $count . ", " . chr(13);
+  echo "totals: " . $count . ", " . chr(13);
   echo "row: [" . chr(13);
   echo $buff;
   echo "]})" . chr(13);   
@@ -74,7 +74,7 @@ switch ($_GET['task']) {
   }
   $buff = substr($buff, 0, -2); // Delete the last comma.
   echo $_GET['callback'] . '({';
-  echo "results: " . $count . ", " . chr(13);
+  echo "totals: " . $count . ", " . chr(13);
   echo "row: [" . chr(13);
   echo $buff;
   echo "]})" . chr(13);   
