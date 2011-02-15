@@ -44,11 +44,12 @@ $total = mysql_query("SELECT COUNT(id) FROM users");
 $total = mysql_result($total, 0);
 
 while ($myrow = sqlFetchArray($result)) {
+  $rec['authorized'] = ($myrow['authorized'] == '1' ? 'Yes' : 'No');
   $buff .= "{";
   $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
   $buff .= " username: '" . dataEncode( $myrow['username'] ) . "',";
   $buff .= " password: '" . dataEncode( $myrow['password'] ) . "',";
-  $buff .= " authorized: '" . dataEncode( $myrow['authorized'] ) . "',";
+  $buff .= " authorized: '" . dataEncode( $rec['authorized'] ) . "',";
   $buff .= " info: '" . dataEncode( $myrow['info'] ) . "',";
   $buff .= " source: '" . dataEncode( $myrow['source'] ) . "',";
   $buff .= " fname: '" . dataEncode( $myrow['fname'] ) . "',";
