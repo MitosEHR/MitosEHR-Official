@@ -1,5 +1,5 @@
 <?php
-#require_once("{$GLOBALS['srcdir']}/sql.inc.php");
+#require_once("{$GLOBALS['srcdir']}/sql.inc");
 require_once(dirname(__FILE__). "/sql.inc.php");
 
 function newEvent($event, $user, $groupname, $success, $comments="") {
@@ -10,7 +10,7 @@ function newEvent($event, $user, $groupname, $success, $comments="") {
             "values ( NOW(), " . $adodb->qstr($event) . "," . $adodb->qstr($user) .
             "," . $adodb->qstr($groupname) . "," . $adodb->qstr($success) . "," .
             $adodb->qstr($comments) ."," .
-            $adodb->qstr($crt_user) .  ")";
+            $adodb->qstr($crt_user) . ")";
     //$ret = sqlInsertClean($sql);
     // Call the new function created for audit log
     $ret = sqlInsertClean_audit($sql);
@@ -32,14 +32,14 @@ function getEventByDate($date, $user="", $cols="DISTINCT date, event, user, grou
 /******************
  * Get records from the LOG and Extended_Log table
  * using the optional parameters:
- *   date : a specific date  (defaults to today)
- *   user : a specific user  (defaults to none)
- *   cols : gather specific columns  (defaults to date,event,user,groupname,comments)
- *   sortby : sort the results by  (defaults to none)
+ * date : a specific date (defaults to today)
+ * user : a specific user (defaults to none)
+ * cols : gather specific columns (defaults to date,event,user,groupname,comments)
+ * sortby : sort the results by (defaults to none)
  * RETURNS:
- *   array of results
+ * array of results
  ******************/
-function getEvents($params) 
+function getEvents($params)
 {
     // parse the parameters
     $cols = "DISTINCT date, event, user, groupname, patient_id, success, comments,checksum,crt_user";
@@ -72,8 +72,8 @@ function getEvents($params)
     if ($event!=""){
     if ($sortby == "comments") $sortby = "description";
     if ($sortby == "groupname") $sortby = ""; //VicarePlus :: since there is no groupname in extended_log
-    if ($sortby == "success") $sortby = "";   //VicarePlus :: since there is no success field in extended_log
-    if ($sortby == "checksum") $sortby = "";  //VicarePlus :: since there is no checksum field in extended_log
+    if ($sortby == "success") $sortby = ""; //VicarePlus :: since there is no success field in extended_log
+    if ($sortby == "checksum") $sortby = ""; //VicarePlus :: since there is no checksum field in extended_log
     $columns = "DISTINCT date, event, user, recipient,patient_id,description";
     $sql = "SELECT $columns FROM extended_log WHERE date >= '$date1 00:00:00' AND date <= '$date2 23:59:59'";
     if ($user != "") $sql .= " AND user LIKE '$user'";
@@ -103,7 +103,7 @@ function getEvents($params)
 /* Given an SQL insert/update that was just performeds:
  * - Find the table and primary id of the row that was created/modified
  * - Calculate the MD5 checksum of that row (with all the
- *   column values concatenated together).
+ * column values concatenated together).
  * - Return the MD5 checksum as a 32 char hex string.
  * If this is not an insert/update query, return "".
  * If multiple rows were modified, return "".
@@ -119,7 +119,7 @@ function sql_checksum_of_modified_row($statement)
         if((strcasecmp($tokens[0],"INSERT")==0) || (strcasecmp($tokens[0],"REPLACE")==0)){
         $table = $tokens[2];
         $rid = mysql_insert_id($GLOBALS['dbh']);
-	/* For handling the table that doesn't have auto-increment column */
+/* For handling the table that doesn't have auto-increment column */
         if ($rid === 0 || $rid === FALSE) {
           if($table == "gacl_aco_map" || $table == "gacl_aro_groups_map" || $table == "gacl_aro_map" || $table == "gacl_axo_groups_map" || $table == "gacl_axo_map")
            $id="acl_id";
@@ -127,23 +127,23 @@ function sql_checksum_of_modified_row($statement)
           $id="group_id";
           else
            $id="id";
-	  /* To handle insert statements */
+/* To handle insert statements */
           if($tokens[3] == $id){
              for($i=4;$i<count($tokens);$i++){
-		 if(strcasecmp($tokens[$i],"VALUES")==0){
+if(strcasecmp($tokens[$i],"VALUES")==0){
                   $rid=$tokens[$i+1];
                      break;
                 }// if close
               }//for close
             }//if close
-	/* To handle replace statements */
+/* To handle replace statements */
           else if(strcasecmp($tokens[3],"SET")==0){
-		 if((strcasecmp($tokens[4],"ID")==0) || (strcasecmp($tokens[4],"`ID`")==0)){
+if((strcasecmp($tokens[4],"ID")==0) || (strcasecmp($tokens[4],"`ID`")==0)){
                   $rid=$tokens[6];
            }// if close
         }
 
-	else {		
+else {
             return "";
           }
         }
@@ -155,32 +155,32 @@ function sql_checksum_of_modified_row($statement)
         $offset = 3;
         $total = count($tokens);
 
-        /* Identifying the primary key column for the updated record */ 
+        /* Identifying the primary key column for the updated record */
         if ($table == "form_physical_exam") {
             $id = "forms_id";
         }
-	else if ($table == "claims"){
-	    $id = "patient_id";
-	}
-	else if ($table == "openemr_postcalendar_events") {
-	    $id = "pc_eid";
-	}
-	 else if ($table == "lang_languages"){
+else if ($table == "claims"){
+$id = "patient_id";
+}
+else if ($table == "openemr_postcalendar_events") {
+$id = "pc_eid";
+}
+else if ($table == "lang_languages"){
             $id = "lang_id";
-	 }
-	 else if ($table == "openemr_postcalendar_categories" || $table == "openemr_postcalendar_topics"){
+}
+else if ($table == "openemr_postcalendar_categories" || $table == "openemr_postcalendar_topics"){
             $id = "pc_catid";
-	 }
-	 else if ($table == "openemr_postcalendar_limits"){
+}
+else if ($table == "openemr_postcalendar_limits"){
             $id = "pc_limitid";
-	 }
+}
          else if($table == "gacl_aco_map" || $table == "gacl_aro_groups_map" || $table == "gacl_aro_map" || $table == "gacl_axo_groups_map" || $table == "gacl_axo_map"){
            $id="acl_id";
           }
           else if($table == "gacl_groups_aro_map" || $table == "gacl_groups_axo_map"){
           $id="group_id";
           }
-	   else {
+else {
             $id = "id";
            }
         
@@ -190,7 +190,7 @@ function sql_checksum_of_modified_row($statement)
              * ('id', '=', '123')
              * ('id=', '123')
              * ('id=123')
-	     * ('id', '=123')
+* ('id', '=123')
              */
             $rid = "";
            /*id=', '123'*/
@@ -198,25 +198,25 @@ function sql_checksum_of_modified_row($statement)
                 $rid = $tokens[$offset+1];
                 break;
             }
-	   /* 'id', '=', '123' */
+/* 'id', '=', '123' */
             else if ($tokens[$offset] == "$id" && $tokens[$offset+1] == "=" && ($offset+2 < $total)) {
                 $rid = $tokens[$offset+2];
                 break;
              }
             /*id=123*/
-   	    else if (strpos($tokens[$offset], "$id=") === 0) {
+    else if (strpos($tokens[$offset], "$id=") === 0) {
                 $tid = substr($tokens[$offset], strlen($id)+1);
-		if(is_numeric($tid))
-		 $rid=$tid;
-		 break;
+if(is_numeric($tid))
+$rid=$tid;
+break;
              }
-	   /*'id', '=123' */
-	     else if($tokens[$offset] == "$id") {
+/*'id', '=123' */
+else if($tokens[$offset] == "$id") {
                 $tid = substr($tokens[$offset+1],1);
                 if(is_numeric($tid))
                  $rid=$tid;
                 break;
-	      }	
+}
             $offset += 1;
         }//while ($offset < $total)
     }// else if ($tokens[0] == 'update' || $tokens[0] == 'UPDATE' )
@@ -224,12 +224,12 @@ function sql_checksum_of_modified_row($statement)
     if ($table == "" || $rid == "") {
         return "";
     }
-   /* Framing sql statements for calculating checksum */ 
+   /* Framing sql statements for calculating checksum */
    if ($table == "form_physical_exam") {
         $sql = "select * from $table where forms_id = $rid";
     }
    else if ($table == "claims"){
-		$sql = "select * from $table where patient_id = $rid";
+$sql = "select * from $table where patient_id = $rid";
         }
    else if ($table == "openemr_postcalendar_events") {
             $sql = "select * from $table where pc_eid = $rid";
@@ -238,21 +238,21 @@ function sql_checksum_of_modified_row($statement)
             $sql = "select * from $table where lang_id = $rid";
     }
     else if ($table == "openemr_postcalendar_categories" || $table == "openemr_postcalendar_topics"){
-	    $sql = "select * from $table where pc_catid = $rid";
-    	 }
+$sql = "select * from $table where pc_catid = $rid";
+     }
     else if ($table == "openemr_postcalendar_limits"){
            $sql = "select * from $table where pc_limitid = $rid";
-	 }
-    else if ($table ==  "gacl_aco_map" || $table == "gacl_aro_groups_map" || $table == "gacl_aro_map" || $table == "gacl_axo_groups_map" || $table == "gacl_axo_map"){
+}
+    else if ($table == "gacl_aco_map" || $table == "gacl_aro_groups_map" || $table == "gacl_aro_map" || $table == "gacl_axo_groups_map" || $table == "gacl_axo_map"){
            $sql = "select * from $table where acl_id = $rid";
          }
      else if($table == "gacl_groups_aro_map" || $table == "gacl_groups_axo_map"){
-	   $sql = "select * from $table where group_id = $rid";
+$sql = "select * from $table where group_id = $rid";
       }
      else {
         $sql = "select * from $table where id = $rid";
     }
-    $results = sqlQuery($sql,'true');    
+    $results = sqlQuery($sql,'true');
     $column_values = "";
    /* Concatenating the column values for the row inserted/updated */
     if (is_array($results)) {
@@ -267,7 +267,7 @@ function sql_checksum_of_modified_row($statement)
  * The parameters passed are the column values (from table 'log')
  * for a single audit record.
  */
-function create_rfc3881_msg($user, $group, $event, $patient_id, $outcome, $comments)
+function create_rfc3881_msg($user, $event, $patient_id, $outcome, $comments)
 {
 
     /* Event action codes indicate whether the event is read/write.
@@ -361,7 +361,7 @@ function create_rfc3881_msg($user, $group, $event, $patient_id, $outcome, $comme
     }
 
     /* Construct the XML audit message, and save to $msg */
-    $msg =  '<?xml version="1.0" encoding="ASCII"?>';
+    $msg = '<?xml version="1.0" encoding="ASCII"?>';
     $msg .= '<AuditMessage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ';
     $msg .= 'xsi:noNamespaceSchemaLocation="healthcare-security-audit.xsd">';
 
@@ -414,7 +414,7 @@ function create_rfc3881_msg($user, $group, $event, $patient_id, $outcome, $comme
 /* Create a TLS (SSLv3) connection to the given host/port.
  * $localcert is the path to a PEM file with a client certificate and private key.
  * $cafile is the path to the CA certificate file, for
- *  authenticating the remote machine's certificate.
+ * authenticating the remote machine's certificate.
  * If $cafile is "", the remote machine's certificate is not verified.
  * If $localcert is "", we don't pass a client certificate in the connection.
  *
@@ -449,10 +449,10 @@ function create_tls_conn($host, $port, $localcert, $cafile) {
  * Given the fields in a single audit record:
  * - Create an XML audit message according to RFC 3881, including the RFC5425 syslog header.
  * - Create a TLS connection that performs bi-directions certificate authentication,
- *   according to RFC 5425.
+ * according to RFC 5425.
  * - Send the XML message on the TLS connection.
  */
-function send_atna_audit_msg($user, $group, $event, $patient_id, $outcome, $comments)
+function send_atna_audit_msg($user, $event, $patient_id, $outcome, $comments)
 {
     /* If no ATNA repository server is configured, return */
     if ($GLOBALS['atna_audit_host'] === null || $GLOBALS['atna_audit_host'] == "" || !($GLOBALS['enable_atna_audit'])) {
@@ -464,7 +464,7 @@ function send_atna_audit_msg($user, $group, $event, $patient_id, $outcome, $comm
     $cacert = $GLOBALS['atna_audit_cacert'];
     $conn = create_tls_conn($host, $port, $localcert, $cacert);
     if ($conn !== FALSE) {
-        $msg = create_rfc3881_msg($user, $group, $event, $patient_id, $outcome, $comments);
+        $msg = create_rfc3881_msg($user, $event, $patient_id, $outcome, $comments);
         $len = strlen($msg);
         fwrite($conn, $msg);
         fclose($conn);
@@ -474,34 +474,34 @@ function send_atna_audit_msg($user, $group, $event, $patient_id, $outcome, $comm
 
 /* Add an entry into the audit log table, indicating that an
  * SQL query was performed. $outcome is true if the statement
- * successfully completed.  Determine the event type based on
+ * successfully completed. Determine the event type based on
  * the tables present in the SQL query.
  */
 function auditSQLEvent($statement, $outcome)
 {
-    $user =  $_SESSION['authUser'];
-	/* Don't log anything if the audit logging is not enabled. Exception for "emergency" users */
+    $user = $_SESSION['authUser'];
+/* Don't log anything if the audit logging is not enabled. Exception for "emergency" users */
    if (!($GLOBALS['enable_auditlog']))
    {
-   	    if ((soundex($user) != soundex("emergency")) && (soundex($user) != soundex("breakglass")))
-   	    return;
+    if ((soundex($user) != soundex("emergency")) && (soundex($user) != soundex("breakglass")))
+    return;
    }
-// ViCarePlus : Fix for Audit Issue :: Sep 24, 2010 
+// ViCarePlus : Fix for Audit Issue :: Sep 24, 2010
 
-// Issue:  When the audit logging is enabled and when SELECT QUERY (query=1 in registry.php) is enabled to log, 
-// the issue of LAST_INSERT_ID arises.  
-// This is because, the function sql_checksum_of_modified_row() is triggered more than 
-// once for SELECT Queries and thus the expected value (LAST_INSERT_ID) in the $GLOBALS['lastidado'] is getting altered. 
-// Since, the $GLOBALS['lastidado'] is manipulated by the other function calls(sql_checksum_of_modified_row), 
+// Issue: When the audit logging is enabled and when SELECT QUERY (query=1 in globals.php) is enabled to log,
+// the issue of LAST_INSERT_ID arises.
+// This is because, the function sql_checksum_of_modified_row() is triggered more than
+// once for SELECT Queries and thus the expected value (LAST_INSERT_ID) in the $GLOBALS['lastidado'] is getting altered.
+// Since, the $GLOBALS['lastidado'] is manipulated by the other function calls(sql_checksum_of_modified_row),
 // this issue is arised.
 
 // Fix:
-// The task of assigning LAST_INSERT_ID  to a global variable $GLOBALS['lastidado']  is moved from sql.inc.php to this file.
+// The task of assigning LAST_INSERT_ID to a global variable $GLOBALS['lastidado'] is moved from sql.inc to this file.
 // Following code will get executed, when (a) when audit is enabled (b) When break glass is invoked.
 // Retrieve LAST_INSERT_ID and assign it to a global variable and eventually it can be used by other functions.
     $lastid=mysql_insert_id($GLOBALS['dbh']);
     $GLOBALS['lastidado']=$lastid;
-// ViCarePlus : Audit fix - ends here :: Sep 24,2010 
+// ViCarePlus : Audit fix - ends here :: Sep 24,2010
 
    $statement = trim($statement);
 
@@ -513,7 +513,6 @@ function auditSQLEvent($statement, $outcome)
         return;
     }
 
-    $group = $_SESSION['authGroup'];
     $comments = $statement;
     $success = 1;
     $checksum = "";
@@ -538,7 +537,7 @@ function auditSQLEvent($statement, $outcome)
                     "claims" => "patient-record",
                     "employer_data" => "patient-record",
                     "forms" => "patient-record",
-		    "form_encounter" => "patient-record",
+"form_encounter" => "patient-record",
                     "form_dictation" => "patient-record",
                     "form_misc_billing_options" => "patient-record",
                     "form_reviewofs" => "patient-record",
@@ -549,11 +548,11 @@ function auditSQLEvent($statement, $outcome)
                     "immunizations" => "patient-record",
                     "insurance_data" => "patient-record",
                     "issue_encounter" => "patient-record",
-		    "lists" => "patient-record",
+"lists" => "patient-record",
                     "patient_data" => "patient-record",
                     "payments" => "patient-record",
                     "pnotes" => "patient-record",
-		    "onotes" => "patient-record",
+"onotes" => "patient-record",
                     "prescriptions" => "order",
                     "transactions" => "patient-record",
                     "facility" => "security-administration",
@@ -563,51 +562,50 @@ function auditSQLEvent($statement, $outcome)
                     "x12_partners" => "security-administration",
                     "insurance_companies" => "security-administration",
                     "codes" => "security-administration",
-                    "registry" => "security-administration", 
+                    "registry" => "security-administration",
                     "users" => "security-administration",
-                    "groups" => "security-administration",
                     "openemr_postcalendar_events" => "scheduling",
-    				"openemr_postcalendar_categories" => "security-administration",
-    				"openemr_postcalendar_limits" => "security-administration",
-    				"openemr_postcalendar_topics" => "security-administration",
-    				"gacl_acl" => "security-administration",
-    				"gacl_acl_sections" => "security-administration",
-    				"gacl_acl_seq" => "security-administration",
-    				"gacl_aco" => "security-administration",
-    				"gacl_aco_map" => "security-administration",
-    				"gacl_aco_sections" => "security-administration",
-    				"gacl_aco_sections_seq" => "security-administration",
-    				"gacl_aco_seq" => "security-administration",
-    				"gacl_aro" => "security-administration",
-    				"gacl_aro_groups" => "security-administration",    				
-    				"gacl_aro_groups_id_seq" => "security-administration",
-    				"gacl_aro_groups_map" => "security-administration",
-    				"gacl_aro_map" => "security-administration",
-    				"gacl_aro_sections" => "security-administration",
-    				"gacl_aro_sections_seq" => "security-administration",
-    				"gacl_aro_seq" => "security-administration",
-    				"gacl_axo" => "security-administration",
-    				"gacl_axo_groups" => "security-administration",
-    				"gacl_axo_groups_map" => "security-administration",
-    				"gacl_axo_map" => "security-administration",
-    				"gacl_axo_sections" => "security-administration",
-    				"gacl_groups_aro_map" => "security-administration",
-    				"gacl_groups_axo_map" => "security-administration",
-    				"gacl_phpgacl" => "security-administration"    				
+     "openemr_postcalendar_categories" => "security-administration",
+     "openemr_postcalendar_limits" => "security-administration",
+     "openemr_postcalendar_topics" => "security-administration",
+     "gacl_acl" => "security-administration",
+     "gacl_acl_sections" => "security-administration",
+     "gacl_acl_seq" => "security-administration",
+     "gacl_aco" => "security-administration",
+     "gacl_aco_map" => "security-administration",
+     "gacl_aco_sections" => "security-administration",
+     "gacl_aco_sections_seq" => "security-administration",
+     "gacl_aco_seq" => "security-administration",
+     "gacl_aro" => "security-administration",
+     "gacl_aro_groups" => "security-administration",
+     "gacl_aro_groups_id_seq" => "security-administration",
+     "gacl_aro_groups_map" => "security-administration",
+     "gacl_aro_map" => "security-administration",
+     "gacl_aro_sections" => "security-administration",
+     "gacl_aro_sections_seq" => "security-administration",
+     "gacl_aro_seq" => "security-administration",
+     "gacl_axo" => "security-administration",
+     "gacl_axo_groups" => "security-administration",
+     "gacl_axo_groups_map" => "security-administration",
+     "gacl_axo_map" => "security-administration",
+     "gacl_axo_sections" => "security-administration",
+     "gacl_groups_aro_map" => "security-administration",
+     "gacl_groups_axo_map" => "security-administration",
+     "gacl_phpgacl" => "security-administration"
                   );
 
     /* When searching for table names, truncate the SQL statement,
      * removing any WHERE, SET, or VALUE clauses.
      */
-	$truncated_sql = $statement;
-	$truncated_sql = str_replace("\n", " ", $truncated_sql);
-	if ($querytype == "select") {
-	$startwhere = stripos($truncated_sql, " where ");
+$truncated_sql = $statement;
+$truncated_sql = str_replace("\n", " ", $truncated_sql);
+if ($querytype == "select") {
+$startwhere = stripos($truncated_sql, " where ");
         if ($startwhere > 0) {
         $truncated_sql = substr($truncated_sql, 0, $startwhere);
     }
  }
-	else {
+else {
      $startparen = stripos($truncated_sql, "(" );
      $startset = stripos($truncated_sql, " set ");
      $startvalues = stripos($truncated_sql, " values ");
@@ -634,7 +632,7 @@ function auditSQLEvent($statement, $outcome)
     }
 
     /* Avoid filling the audit log with trivial SELECT statements.
-     * Skip SELECTs from unknown tables.  
+     * Skip SELECTs from unknown tables.
      * Skip SELECT count() statements.
      * Skip the SELECT made by the authCheckSession() function.
      */
@@ -658,15 +656,15 @@ function auditSQLEvent($statement, $outcome)
 
     /* If query events are not enabled, don't log them */
     if (($querytype == "select") && !($GLOBALS['audit_events_query']))
-    { 
+    {
        if ((soundex($user) != soundex("emergency")) && (soundex($user) != soundex("breakglass")))
        return;
     }
 
-    if (!($GLOBALS["audit_events_${event}"])) 
+    if (!($GLOBALS["audit_events_${event}"]))
     {
-    	if ((soundex($user) != soundex("emergency")) && (soundex($user) != soundex("breakglass")))
-    	return;
+     if ((soundex($user) != soundex("emergency")) && (soundex($user) != soundex("breakglass")))
+     return;
     }
            
 
@@ -678,29 +676,28 @@ function auditSQLEvent($statement, $outcome)
     if (strpos($comments, "sequences") !== FALSE) return;
 
     $sql = "insert into log (date, event, user, groupname, comments, patient_id, success, checksum,crt_user) " .
-         "values ( NOW(), " . 
+         "values ( NOW(), " .
          $adodb->qstr($event) . ", " .
-         $adodb->qstr($user) . "," . 
-         $adodb->qstr($group) . "," .
+         $adodb->qstr($user) . "," .
          $adodb->qstr($comments) . "," .
          $adodb->qstr($pid) . "," .
-         $adodb->qstr($success) . "," . 
+         $adodb->qstr($success) . "," .
          $adodb->qstr($checksum) . "," .
          $adodb->qstr($_SERVER['SSL_CLIENT_S_DN_CN']) .")";
 
     //$ret = sqlInsertClean($sql);
     //ViSolve: Call the new function created for audit logs
     sqlInsertClean_audit($sql);
-    send_atna_audit_msg($user, $group, $event, $pid, $success, $comments);
+    send_atna_audit_msg($user, $event, $pid, $success, $comments);
     //return $ret;
 }
 /**
  * Record the patient disclosures.
- * @param $dates    - The date when the disclosures are sent to the thrid party.
- * @param $event    - The type of the disclosure.
- * @param $pid      - The id of the patient for whom the disclosures are recorded.
- * @param $comment  - The recipient name and description of the disclosure.
- * @uname           - The username who is recording the disclosure.
+ * @param $dates - The date when the disclosures are sent to the thrid party.
+ * @param $event - The type of the disclosure.
+ * @param $pid - The id of the patient for whom the disclosures are recorded.
+ * @param $comment - The recipient name and description of the disclosure.
+ * @uname - The username who is recording the disclosure.
  */
 function recordDisclosure($dates,$event,$pid,$recipient,$description,$user)
 {
@@ -717,17 +714,17 @@ function recordDisclosure($dates,$event,$pid,$recipient,$description,$user)
 }
 /**
  * Edit the disclosures that is recorded.
- * @param $dates  - The date when the disclosures are sent to the thrid party.
- * @param $event  - The type of the disclosure.
+ * @param $dates - The date when the disclosures are sent to the thrid party.
+ * @param $event - The type of the disclosure.
  * param $comment - The recipient and the description of the disclosure are appended.
- * $logeventid    - The id of the record which is to be edited.
+ * $logeventid - The id of the record which is to be edited.
  */
 function updateRecordedDisclosure($dates,$event,$recipient,$description,$disclosure_id)
 {
          $adodb = $GLOBALS['adodb']['db'];
          $sql="update extended_log set
                 event=" . $adodb->qstr($event) . ",
-                date=" .  $adodb->qstr($dates) . ",
+                date=" . $adodb->qstr($dates) . ",
                 recipient=" . $adodb->qstr($recipient) . ",
                 description=" . $adodb->qstr($description) . "
                 where id=" . $adodb->qstr($disclosure_id) . "";

@@ -12,7 +12,7 @@ include_once("./registry.php");
 <a href='<?php echo "$rootdir/login/login.ejs.php"; ?>'><?php xl('Follow manually','e'); ?></a>
 
 <p>
-<?php xl('OpenEMR requires Javascript to perform user authentication.','e'); ?>
+<?php xl('MitosEHR requires Javascript to perform user authentication.','e'); ?>
 
 </body>
 </html>

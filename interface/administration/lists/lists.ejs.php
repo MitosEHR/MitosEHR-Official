@@ -93,6 +93,7 @@ var storeEditList = new Ext.data.Store({
 		url: '../administration/lists/component_data.ejs.php?task=editlist'
 	}),
 	reader: new Ext.data.JsonReader({
+		idIndex: 0,
 		idProperty: 'option_id',
 		totalProperty: 'results',
 		root: 'row'
@@ -102,6 +103,9 @@ var storeEditList = new Ext.data.Store({
 	])
 });
 storeEditList.load();
+storeEditList.on('load',function(ds,records,o){ // Select the first item on the combobox
+	Ext.getCmp('cmbList').setValue(records[0].data.title);
+});
 
 // *************************************************************************************
 // Facility Form
@@ -255,6 +259,20 @@ var listGrid = new Ext.grid.GridPanel({
 		handler: function(){ 
 			winLists.show();
 		}
+	},'-','<?php xl("Select list", 'e'); ?>: ',{
+		name			: 'cmbList', 
+		width			: 250,
+		xtype			: 'combo',
+		displayField	: 'title',
+		id				: 'cmbList',
+		mode			: 'local',
+		triggerAction	: 'all', 
+		hiddenName		: 'option_id',
+		valueField		: 'option_id',
+		ref				: '../cmbList',
+		iconCls			: 'icoListOptions',
+		editable		: false,
+		store			: storeEditList
 	}], // END GRID TOP MENU
 	plugins: [new Ext.ux.grid.Search({
 		mode			: 'local',

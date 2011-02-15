@@ -21,6 +21,8 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 // ExtJS Global variables 
 //******************************************************************************
 var rowPos;
+var cmbTaxId;
+var cmbPOSCode;
 
 //******************************************************************************
 // Sanitizing Objects
@@ -116,6 +118,9 @@ var storeTaxID = new Ext.data.Store({
 	])
 });
 storeTaxID.load();
+storeTaxID.on('load',function(ds,records,o){ // Select the first item on the combobox
+	cmbTaxId = records[0].data.title;
+});
 
 // *************************************************************************************
 // Structure, data for storePOSCode
@@ -135,6 +140,9 @@ var storePOSCode = new Ext.data.Store({
 	])
 });
 storePOSCode.load();
+storePOSCode.on('load',function(ds,records,o){ // Select the first item on the combobox
+	cmbPOSCode = records[0].data.title;
+});
 
 
 // *************************************************************************************
@@ -171,7 +179,7 @@ var frmFacility = new Ext.FormPanel({
 		defaults: { labelWidth: 150 },
         items: 
 		[
-			{ xtype: 'combo', width: 60, autoSelect: true, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', hiddenName: 'tax_id_type', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
+			{ xtype: 'combo', width: 60, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', hiddenName: 'tax_id_type', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php echo htmlspecialchars( xl('Tax ID'), ENT_NOQUOTES); ?>', editable: false },
 			{ xtype: 'textfield', maxLength: 15, minLengthText: 'Must contain at least 5 characters.', minLength: 5, id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php echo htmlspecialchars( xl('Facility NPI'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php echo htmlspecialchars( xl('Billing Location'), ENT_NOQUOTES); ?>' },
 			{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php echo htmlspecialchars( xl('Accepts Assignment'), ENT_NOQUOTES); ?>' },
@@ -301,6 +309,8 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 		iconCls	: 'facilities',
 		handler: function(){
 			Ext.getCmp('frmFacility').getForm().reset(); // Clear the form
+			Ext.getCmp('tax_id_type').setValue(cmbTaxId);
+			Ext.getCmp('pos_code').setValue(cmbPOSCode);
 			winFacility.show();
 		}
 	},'-',{
