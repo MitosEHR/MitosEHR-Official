@@ -23,8 +23,8 @@ $res = sqlStatement("SELECT
 					FROM
 						groups");
 for ($iter = 0; $row = sqlFetchArray($res); $iter++){
-	$group_buff .= "['" . $iter . "', '" . $row['name'] . "'],". chr(13);
-	$result[$iter] = $row;
+$group_buff .= "['" . $iter . "', '" . $row['name'] . "'],". chr(13);
+$result[$iter] = $row;
 }
 $group_buff = substr($group_buff, 0, -2); // Delete the last comma and clear the buff.
 if (count($result) == 1) { $resvalue = $result[0]{"name"}; }
@@ -124,9 +124,9 @@ Ext.QuickTips.init();
 // *************************************************************************************
 var group_Data = [ <?php echo $group_buff; ?> ];
 var groupData = new Ext.data.ArrayStore({
-	id: 'id',
-	fields: [ 'id', 'name' ],
-	data: group_Data
+id: 'id',
+fields: [ 'id', 'name' ],
+data: group_Data
 });
 
 // *************************************************************************************
@@ -186,8 +186,8 @@ var winLogon = new Ext.Window({
 	formBind: true,
 	standardSubmit: true,
 	items: [
-		{ xtype: 'textfield', ref: '../authPass', id: 'authPass', hidden: true, name: 'authPass', value: '' },
 		{ xtype: 'combo', id: 'authProvider', name: 'authProvider', value: '<?php echo htmlspecialchars( $resvalue, ENT_QUOTES); ?>', forceSelection: true, fieldLabel: '<?php echo htmlspecialchars( xl('Group'), ENT_NOQUOTES); ?>', editable: false, triggerAction: 'all', store: groupData, mode: 'local', valueField: 'id', displayField: 'name' },
+		{ xtype: 'textfield', ref: '../authPass', id: 'authPass', hidden: true, name: 'authPass', value: '' },
 		{ xtype: 'textfield', 
 			minLength: 3,
 			maxLength: 32, 
