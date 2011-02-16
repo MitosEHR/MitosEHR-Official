@@ -20,7 +20,8 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 //******************************************************************************
 // ExtJS Global variables 
 //******************************************************************************
-var rowPos, currList;
+var rowPos;
+var currList;
 
 //******************************************************************************
 // Sanitizing Objects
@@ -69,7 +70,8 @@ var storeEditList = new Ext.data.Store({
 storeEditList.load();
 storeEditList.on('load',function(ds,records,o){ // Select the first item on the combobox
 	Ext.getCmp('cmbList').setValue(records[0].data.title);
-	currList = records[0].data.option_id;
+	currList = records[0].data.option_id; // Get first result for first grid data
+	storeListsOption.load({params:{list_id: currList}}); // Filter the data store from the currList value
 });
 
 // *************************************************************************************
@@ -106,7 +108,6 @@ var storeListsOption = new Ext.data.Store({
 	}, ListRecord )
 	
 });
-storeListsOption.load();
 
 // *************************************************************************************
 // Facility Form
@@ -194,49 +195,73 @@ var winLists = new Ext.Window({
 	}
 }); // END WINDOW
 
+// *************************************************************************************
+// RowEditor Class
+// *************************************************************************************
+var editor = new Ext.ux.grid.RowEditor({
+	saveText: 'Update'
+});
 
 // *************************************************************************************
 // Create the GridPanel
 // *************************************************************************************
 var listGrid = new Ext.grid.GridPanel({
-	id		   : 'listGrid',
-	store	   : storeListsOption,
-	stripeRows : true,
-	autoHeight : true,
-	border     : false,    
-	frame	   : false,
+	id			: 'listGrid',
+	store		: storeListsOption,
+	stripeRows	: true,
+	border		: false,    
+	frame	  	: false,
 	viewConfig	: {forceFit: true},
 	sm			: new Ext.grid.RowSelectionModel({singleSelect:true}),
-	listeners: {
-	
-		// -----------------------------------------
-		// Single click to select the record
-		// -----------------------------------------
-		rowclick: function(storeListsOption, rowIndex, e) {
-			rowPos = rowIndex;
-			var rec = storeListsOption.getAt(rowPos);
-			Ext.getCmp('frmLists').getForm().loadRecord(rec);
-			listGrid.editList.enable();
-		},
-
-		// -----------------------------------------
-		// Double click to select the record, and edit the record
-		// -----------------------------------------
-		rowdblclick:  function(storeListsOption, rowIndex, e) {
-			rowPos = rowIndex;
-			var rec = storeListsOption.getAt(rowPos); // get the record from the store
-			Ext.getCmp('frmLists').getForm().loadRecord(rec); // load the record selected into the form
-			listGrid.editList.enable();
-			winLists.show();
-		}
-	},
 	columns: [
 		// Viewable cells
-		{ width: 50, header: 'ID', sortable: true, dataIndex: 'list_id'},
-		{ width: 150, header: '<?php echo htmlspecialchars( xl('Title'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'title' },
-		{ header: '<?php echo htmlspecialchars( xl('Order'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'order' },
-		{ header: '<?php echo htmlspecialchars( xl('Default'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'is_default' },
-		{ header: '<?php echo htmlspecialchars( xl('Notes'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'notes' },
+		{ 	
+			width: 50, 
+			header: 'ID', 
+			sortable: true, 
+			dataIndex: 'list_id',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            }
+		},
+		{ 
+			width: 150, 
+			header: '<?php echo htmlspecialchars( xl('Title'), ENT_NOQUOTES); ?>', 
+			sortable: true, 
+			dataIndex: 'title',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            }
+		},
+		{ 
+			header: '<?php echo htmlspecialchars( xl('Order'), ENT_NOQUOTES); ?>', 
+			sortable: true, 
+			dataIndex: 'seq',
+			editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            }
+		},
+		{ 
+			header: '<?php echo htmlspecialchars( xl('Default'), ENT_NOQUOTES); ?>', 
+			sortable: true, 
+			dataIndex: 'is_default',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            } 
+		},
+		{ 
+			header: '<?php echo htmlspecialchars( xl('Notes'), ENT_NOQUOTES); ?>', 
+			sortable: true, 
+			dataIndex: 'notes',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: true
+            } 
+		}
 	],
 	// -----------------------------------------
 	// Grid Menu
@@ -280,9 +305,16 @@ var listGrid = new Ext.grid.GridPanel({
 		ref				: '../cmbList',
 		iconCls			: 'icoListOptions',
 		editable		: false,
-		store			: storeEditList
+		store			: storeEditList,
+		ctCls			: 'fieldMark',
+		listeners: {
+			select: function( cmb, rec, indx){
+				// Reload the data store to reflect the new selected filter
+				storeListsOption.reload({params:{list_id: rec.data.option_id }});
+			}
+		}
 	}], // END GRID TOP MENU
-	plugins: [new Ext.ux.grid.Search({
+	plugins: [editor, new Ext.ux.grid.Search({
 		mode			: 'local',
 		iconCls			: false,
 		deferredRender	: false,
@@ -311,7 +343,12 @@ var RenderPanel = new Ext.Panel({
   viewConfig:{forceFit:true},
   items: [ 
     listGrid
-  ]
+  ],
+  listeners:{
+	resize: function(){
+		Ext.getCmp('listGrid').setHeight( Ext.getCmp('RenderPanel').getHeight() );
+	}
+  }
 });
 
 //******************************************************************************

@@ -29,55 +29,63 @@ require_once("../../../repository/dataExchange/dataExchange.inc.php");
 $count = 0;
 
 // *************************************************************************************
-// Verify if a $_GET['id'] has passed to select a facility.
+// Get the $_GET['list_id'] 
 // and execute the apropriate SQL statement
 // *************************************************************************************
-if ($_GET['list_id']){
+$currList = $_REQUEST['list_id'];
+	
 	$lang_id = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
 	if (($lang_id == '1' && !empty($GLOBALS['skip_english_translation'])) || !$GLOBALS['translate_lists']) {
-  		$sql = sqlStatement("SELECT 
-  									option_id, 
-  									title 
-	  							FROM 
-  									list_options 
-  								WHERE 
-  									list_id = '" . $_GET['list_id'] . "' 
-  								ORDER BY title, seq");
+  		$sql = "SELECT 
+					*
+				FROM 
+					list_options 
+				WHERE 
+					list_id = '$currList' 
+  				ORDER BY 
+  					title, seq";
 	} else {
 		// Use and sort by the translated list name.
-		$sql = sqlStatement("SELECT 
-									lo.option_id, 
-									IF(LENGTH(ld.definition),ld.definition,lo.title) AS title 
-								FROM list_options AS lo 
-									LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title 
-									LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '$lang_id' 
-								WHERE 
-									lo.list_id = '" . $_GET['list_id'] . "' 
-								ORDER BY 
-									IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
+		$sql = "SELECT 
+					lo.list_id,
+					lo.option_id, 
+					IF(LENGTH(ld.definition),ld.definition,lo.title) AS title ,
+					lo.seq,
+					lo.is_default,
+					lo.option_value,
+					lo.mapping,
+					lo.notes 
+				FROM 
+					list_options AS lo 
+					LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title 
+					LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '$lang_id' 
+				WHERE 
+					lo.list_id = '$currList' 
+				ORDER BY 
+					IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq";
 	}
 
-$result = sqlStatement( $sql );
+	$result = sqlStatement( $sql );
+	$buff = "";
+	while ($myrow = sqlFetchArray($result)) {
+		$count++;
+		$buff .= "{";
+		$buff .= " list_id: '" . dataEncode( $myrow['list_id'] ) . "',";
+		$buff .= " option_id: '" . dataEncode( $myrow['option_id'] ) . "',";
+		$buff .= " title: '" . dataEncode( $myrow['title'] ) . "',";
+		$buff .= " seq: '" . dataEncode( $myrow['seq'] ) . "',";
+		$buff .= " is_default: '" . dataEncode( $myrow['is_default'] ) . "'," ;
+		$buff .= " option_value: '" . dataEncode( $myrow['option_value'] ) . "',";
+		$buff .= " mapping: '" . dataEncode( $myrow['mapping'] ) . "',";
+		$buff .= " notes: '" . dataEncode( $myrow['notes'] ) . "'}," . chr(13);
+	}
 
-while ($myrow = sqlFetchArray($result)) {
-	$count++;
-	$buff .= "{";
-	$buff .= " list_id: '" . dataEncode( $myrow['list_id'] ) . "',";
-	$buff .= " option_id: '" . dataEncode( $myrow['option_id'] ) . "',";
-	$buff .= " title: '" . dataEncode( $myrow['title'] ) . "',";
-	$buff .= " seq: '" . dataEncode( $myrow['seq'] ) . "',";
-	$buff .= " is_default: '" . dataEncode( $myrow['is_default'] ) . "'," ;
-	$buff .= " option_value: '" . dataEncode( $myrow['option_value'] ) . "',";
-	$buff .= " mapping: '" . dataEncode( $myrow['mapping'] ) . "',";
-	$buff .= " notes: '" . dataEncode( $myrow['notes'] ) . "'}," . chr(13);
-}
-
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo $_GET['callback'] . '({';
-echo "results: " . $count . ", " . chr(13);
-echo "row: [" . chr(13);
-echo $buff;
-echo "]})" . chr(13);
+	$buff = substr($buff, 0, -2); // Delete the last comma.
+	echo $_GET['callback'] . '({';
+	echo "results: " . $count . ", " . chr(13);
+	echo "row: [" . chr(13);
+	echo $buff;
+	echo "]})" . chr(13);
 
 
 ?>

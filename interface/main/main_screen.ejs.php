@@ -52,8 +52,10 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript" src="../../repository/fittoparent/Ext.ux.FitToParent.js"></script>
 <script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script>
 <script type="text/javascript" src="../../repository/formValidation/formValidation.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/examples/ux/RowEditor.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../../repository/calendar/resources/css/extensible-all.css" />
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/examples/ux/css/RowEditor.css" />
 <link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext-all.css" />
 <link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/examples/form/forms.css" />
 <link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/xtheme-gray.css" />
