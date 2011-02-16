@@ -20,7 +20,7 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 //******************************************************************************
 // ExtJS Global variables 
 //******************************************************************************
-var rowPos;
+var rowPos, currList;
 
 //******************************************************************************
 // Sanitizing Objects
@@ -38,7 +38,7 @@ if ( Ext.getCmp('winList') ){ Ext.getCmp('winList').destroy(); }
 // 
 // *************************************************************************************
 var ListRecord = Ext.data.Record.create([
-	{name: 'list_id', 		type: 'int',	mapping: 'list_id'},
+	{name: 'list_id', 		type: 'string',	mapping: 'list_id'},
 	{name: 'option_id', 	type: 'string', mapping: 'option_id'},
 	{name: 'title', 		type: 'string', mapping: 'title'},
 	{name: 'seq', 			type: 'string', mapping: 'seq'},
@@ -47,6 +47,30 @@ var ListRecord = Ext.data.Record.create([
 	{name: 'mapping', 		type: 'string', mapping: 'mapping'},
 	{name: 'notes', 		type: 'string', mapping: 'notes'}
 ]);
+
+// *************************************************************************************
+// Structure, data for storeEditList
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+var storeEditList = new Ext.data.Store({
+	proxy: new Ext.data.HttpProxy({
+		url: '../administration/lists/component_data.ejs.php?task=editlist'
+	}),
+	reader: new Ext.data.JsonReader({
+		idIndex: 0,
+		idProperty: 'option_id',
+		totalProperty: 'results',
+		root: 'row'
+	},[
+		{name: 'option_id', type: 'string', mapping: 'option_id'},
+		{name: 'title', type: 'string', mapping: 'title'}
+	])
+});
+storeEditList.load();
+storeEditList.on('load',function(ds,records,o){ // Select the first item on the combobox
+	Ext.getCmp('cmbList').setValue(records[0].data.title);
+	currList = records[0].data.option_id;
+});
 
 // *************************************************************************************
 // Structure and load the data for ListsOptions
@@ -83,29 +107,6 @@ var storeListsOption = new Ext.data.Store({
 	
 });
 storeListsOption.load();
-
-// *************************************************************************************
-// Structure, data for storeEditList
-// AJAX -> component_data.ejs.php
-// *************************************************************************************
-var storeEditList = new Ext.data.Store({
-	proxy: new Ext.data.HttpProxy({
-		url: '../administration/lists/component_data.ejs.php?task=editlist'
-	}),
-	reader: new Ext.data.JsonReader({
-		idIndex: 0,
-		idProperty: 'option_id',
-		totalProperty: 'results',
-		root: 'row'
-	},[
-		{name: 'option_id', type: 'string', mapping: 'option_id'},
-		{name: 'title', type: 'string', mapping: 'title'}
-	])
-});
-storeEditList.load();
-storeEditList.on('load',function(ds,records,o){ // Select the first item on the combobox
-	Ext.getCmp('cmbList').setValue(records[0].data.title);
-});
 
 // *************************************************************************************
 // Facility Form
@@ -259,6 +260,13 @@ var listGrid = new Ext.grid.GridPanel({
 		handler: function(){ 
 			winLists.show();
 		}
+	},'-',{
+		xtype		  :'button',
+		id			  : 'delList',
+		ref			  : '../delList',
+		text		  : '<?php xl("Delete list", 'e'); ?>',
+		iconCls		: 'delete',
+		disabled	: true,
 	},'-','<?php xl("Select list", 'e'); ?>: ',{
 		name			: 'cmbList', 
 		width			: 250,
