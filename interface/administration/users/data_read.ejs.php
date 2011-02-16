@@ -37,6 +37,8 @@ $sql = "SELECT
           list_options ON list_id = 'abook_type' AND option_id = users.abook_type
         WHERE 
           users.active = 1 AND ( users.authorized = 1 OR users.username != '' )
+        ORDER BY 
+        	username
         LIMIT ".$start.",".$count;
 $result = sqlStatement( $sql );
 // Total of rows in database
