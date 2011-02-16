@@ -29,68 +29,63 @@ require_once("../../../repository/dataExchange/dataExchange.inc.php");
 $count = 0;
 
 // *************************************************************************************
-// Verify if a $_GET['id'] has passed to select a facility.
+// Get the $_GET['list_id'] 
 // and execute the apropriate SQL statement
 // *************************************************************************************
-if ($_GET['id']){
-	$sql = "SELECT
-				* 
-			FROM
-				facility
-			ORDER BY 
-				name
-			WHERE id=" . $_GET['id'];
-} else { // if not select all of them
-	$sql = "SELECT
-				* 
-			FROM
-				facility
-			ORDER BY 
-				name";
-}
-$result = sqlStatement( $sql );
-
-while ($myrow = sqlFetchArray($result)) {
-	$count++;
+$currList = $_REQUEST['list_id'];
 	
-	// Parse some data
-	$rec['service_location'] = ($myrow['service_location'] == '1' ? 'on' : 'off');
-	$rec['billing_location'] = ($myrow['billing_location'] == '1' ? 'on' : 'off');
-	$rec['accepts_assignment'] = ($myrow['accepts_assignment'] == '1' ? 'on' : 'off');
-	if (strlen($myrow['pos_code']) <= 1){
-		$rec['pos_code'] = '0'.$myrow['pos_code'];
+	$lang_id = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
+	if (($lang_id == '1' && !empty($GLOBALS['skip_english_translation'])) || !$GLOBALS['translate_lists']) {
+  		$sql = "SELECT 
+					*
+				FROM 
+					list_options 
+				WHERE 
+					list_id = '$currList' 
+  				ORDER BY 
+  					title, seq";
 	} else {
-		$rec['pos_code'] = $myrow['pos_code'];
+		// Use and sort by the translated list name.
+		$sql = "SELECT 
+					lo.list_id,
+					lo.option_id, 
+					IF(LENGTH(ld.definition),ld.definition,lo.title) AS title ,
+					lo.seq,
+					lo.is_default,
+					lo.option_value,
+					lo.mapping,
+					lo.notes 
+				FROM 
+					list_options AS lo 
+					LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title 
+					LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '$lang_id' 
+				WHERE 
+					lo.list_id = '$currList' 
+				ORDER BY 
+					IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq";
 	}
-	
-	$buff .= "{";
-	$buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
-	$buff .= " name: '" . dataEncode( $myrow['name'] ) . "',";
-	$buff .= " phone: '" . dataEncode( $myrow['phone'] ) . "',";
-	$buff .= " fax: '" . dataEncode( $myrow['fax'] ) . "',";
-	$buff .= " street: '" . dataEncode( $myrow['street'] ) . "'," ;
-	$buff .= " city: '" . dataEncode( $myrow['city'] ) . "',";
-	$buff .= " state: '" . dataEncode( $myrow['state'] ) . "',";
-	$buff .= " postal_code: '" . dataEncode( $myrow['postal_code'] ) . "',";
-	$buff .= " federal_ein: '" . dataEncode( $myrow['federal_ein'] ) . "',";
-	$buff .= " service_location: '" . $rec['service_location'] . "',";
-	$buff .= " billing_location: '" . $rec['billing_location'] . "',";
-	$buff .= " accepts_assignment: '" . $rec['accepts_assignment'] . "',";
-	$buff .= " pos_code: '" . $rec['pos_code'] . "',";
-	$buff .= " x12_sender_id: '" . dataEncode( $myrow['x12_sender_id'] ) . "',";
-	$buff .= " attn: '" . dataEncode( $myrow['attn'] ) . "',";
-	$buff .= " domain_identifier: '" . dataEncode( $myrow['domain_identifier'] ) . "',";
-	$buff .= " facility_npi: '" . dataEncode( $myrow['facility_npi'] ) . "',";
-	$buff .= " tax_id_type: '" . dataEncode( $myrow['tax_id_type'] ) . "',";
-	$buff .= " country_code: '" . dataEncode( $myrow['country_code'] ) . "'}," . chr(13);
-}
 
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo $_GET['callback'] . '({';
-echo "results: " . $count . ", " . chr(13);
-echo "row: [" . chr(13);
-echo $buff;
-echo "]})" . chr(13);
+	$result = sqlStatement( $sql );
+	$buff = "";
+	while ($myrow = sqlFetchArray($result)) {
+		$count++;
+		$buff .= "{";
+		$buff .= " list_id: '" . dataEncode( $myrow['list_id'] ) . "',";
+		$buff .= " option_id: '" . dataEncode( $myrow['option_id'] ) . "',";
+		$buff .= " title: '" . dataEncode( $myrow['title'] ) . "',";
+		$buff .= " seq: '" . dataEncode( $myrow['seq'] ) . "',";
+		$buff .= " is_default: '" . dataEncode( $myrow['is_default'] ) . "'," ;
+		$buff .= " option_value: '" . dataEncode( $myrow['option_value'] ) . "',";
+		$buff .= " mapping: '" . dataEncode( $myrow['mapping'] ) . "',";
+		$buff .= " notes: '" . dataEncode( $myrow['notes'] ) . "'}," . chr(13);
+	}
+
+	$buff = substr($buff, 0, -2); // Delete the last comma.
+	echo $_GET['callback'] . '({';
+	echo "results: " . $count . ", " . chr(13);
+	echo "row: [" . chr(13);
+	echo $buff;
+	echo "]})" . chr(13);
 
 
 ?>

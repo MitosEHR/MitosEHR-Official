@@ -21,6 +21,7 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 // ExtJS Global variables 
 //******************************************************************************
 var rowPos;
+var currList;
 
 //******************************************************************************
 // Sanitizing Objects
@@ -38,7 +39,7 @@ if ( Ext.getCmp('winList') ){ Ext.getCmp('winList').destroy(); }
 // 
 // *************************************************************************************
 var ListRecord = Ext.data.Record.create([
-	{name: 'list_id', 		type: 'int',	mapping: 'list_id'},
+	{name: 'list_id', 		type: 'string',	mapping: 'list_id'},
 	{name: 'option_id', 	type: 'string', mapping: 'option_id'},
 	{name: 'title', 		type: 'string', mapping: 'title'},
 	{name: 'seq', 			type: 'string', mapping: 'seq'},
@@ -47,6 +48,31 @@ var ListRecord = Ext.data.Record.create([
 	{name: 'mapping', 		type: 'string', mapping: 'mapping'},
 	{name: 'notes', 		type: 'string', mapping: 'notes'}
 ]);
+
+// *************************************************************************************
+// Structure, data for storeEditList
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+var storeEditList = new Ext.data.Store({
+	proxy: new Ext.data.HttpProxy({
+		url: '../administration/lists/component_data.ejs.php?task=editlist'
+	}),
+	reader: new Ext.data.JsonReader({
+		idIndex: 0,
+		idProperty: 'option_id',
+		totalProperty: 'results',
+		root: 'row'
+	},[
+		{name: 'option_id', type: 'string', mapping: 'option_id'},
+		{name: 'title', type: 'string', mapping: 'title'}
+	])
+});
+storeEditList.load();
+storeEditList.on('load',function(ds,records,o){ // Select the first item on the combobox
+	Ext.getCmp('cmbList').setValue(records[0].data.title);
+	currList = records[0].data.option_id; // Get first result for first grid data
+	storeListsOption.load({params:{list_id: currList}}); // Filter the data store from the currList value
+});
 
 // *************************************************************************************
 // Structure and load the data for ListsOptions
@@ -81,30 +107,6 @@ var storeListsOption = new Ext.data.Store({
 		root: 'row'
 	}, ListRecord )
 	
-});
-storeListsOption.load();
-
-// *************************************************************************************
-// Structure, data for storeEditList
-// AJAX -> component_data.ejs.php
-// *************************************************************************************
-var storeEditList = new Ext.data.Store({
-	proxy: new Ext.data.HttpProxy({
-		url: '../administration/lists/component_data.ejs.php?task=editlist'
-	}),
-	reader: new Ext.data.JsonReader({
-		idIndex: 0,
-		idProperty: 'option_id',
-		totalProperty: 'results',
-		root: 'row'
-	},[
-		{name: 'option_id', type: 'string', mapping: 'option_id'},
-		{name: 'title', type: 'string', mapping: 'title'}
-	])
-});
-storeEditList.load();
-storeEditList.on('load',function(ds,records,o){ // Select the first item on the combobox
-	Ext.getCmp('cmbList').setValue(records[0].data.title);
 });
 
 // *************************************************************************************
@@ -193,49 +195,73 @@ var winLists = new Ext.Window({
 	}
 }); // END WINDOW
 
+// *************************************************************************************
+// RowEditor Class
+// *************************************************************************************
+var editor = new Ext.ux.grid.RowEditor({
+	saveText: 'Update'
+});
 
 // *************************************************************************************
 // Create the GridPanel
 // *************************************************************************************
 var listGrid = new Ext.grid.GridPanel({
-	id		   : 'listGrid',
-	store	   : storeListsOption,
-	stripeRows : true,
-	autoHeight : true,
-	border     : false,    
-	frame	   : false,
+	id			: 'listGrid',
+	store		: storeListsOption,
+	stripeRows	: true,
+	border		: false,    
+	frame	  	: false,
 	viewConfig	: {forceFit: true},
 	sm			: new Ext.grid.RowSelectionModel({singleSelect:true}),
-	listeners: {
-	
-		// -----------------------------------------
-		// Single click to select the record
-		// -----------------------------------------
-		rowclick: function(storeListsOption, rowIndex, e) {
-			rowPos = rowIndex;
-			var rec = storeListsOption.getAt(rowPos);
-			Ext.getCmp('frmLists').getForm().loadRecord(rec);
-			listGrid.editList.enable();
-		},
-
-		// -----------------------------------------
-		// Double click to select the record, and edit the record
-		// -----------------------------------------
-		rowdblclick:  function(storeListsOption, rowIndex, e) {
-			rowPos = rowIndex;
-			var rec = storeListsOption.getAt(rowPos); // get the record from the store
-			Ext.getCmp('frmLists').getForm().loadRecord(rec); // load the record selected into the form
-			listGrid.editList.enable();
-			winLists.show();
-		}
-	},
 	columns: [
 		// Viewable cells
-		{ width: 50, header: 'ID', sortable: true, dataIndex: 'list_id'},
-		{ width: 150, header: '<?php echo htmlspecialchars( xl('Title'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'title' },
-		{ header: '<?php echo htmlspecialchars( xl('Order'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'order' },
-		{ header: '<?php echo htmlspecialchars( xl('Default'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'is_default' },
-		{ header: '<?php echo htmlspecialchars( xl('Notes'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'notes' },
+		{ 	
+			width: 50, 
+			header: 'ID', 
+			sortable: true, 
+			dataIndex: 'list_id',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            }
+		},
+		{ 
+			width: 150, 
+			header: '<?php echo htmlspecialchars( xl('Title'), ENT_NOQUOTES); ?>', 
+			sortable: true, 
+			dataIndex: 'title',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            }
+		},
+		{ 
+			header: '<?php echo htmlspecialchars( xl('Order'), ENT_NOQUOTES); ?>', 
+			sortable: true, 
+			dataIndex: 'seq',
+			editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            }
+		},
+		{ 
+			header: '<?php echo htmlspecialchars( xl('Default'), ENT_NOQUOTES); ?>', 
+			sortable: true, 
+			dataIndex: 'is_default',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: false
+            } 
+		},
+		{ 
+			header: '<?php echo htmlspecialchars( xl('Notes'), ENT_NOQUOTES); ?>', 
+			sortable: true, 
+			dataIndex: 'notes',
+            editor: {
+                xtype: 'textfield',
+                allowBlank: true
+            } 
+		}
 	],
 	// -----------------------------------------
 	// Grid Menu
@@ -259,6 +285,13 @@ var listGrid = new Ext.grid.GridPanel({
 		handler: function(){ 
 			winLists.show();
 		}
+	},'-',{
+		xtype		  :'button',
+		id			  : 'delList',
+		ref			  : '../delList',
+		text		  : '<?php xl("Delete list", 'e'); ?>',
+		iconCls		: 'delete',
+		disabled	: true,
 	},'-','<?php xl("Select list", 'e'); ?>: ',{
 		name			: 'cmbList', 
 		width			: 250,
@@ -272,9 +305,16 @@ var listGrid = new Ext.grid.GridPanel({
 		ref				: '../cmbList',
 		iconCls			: 'icoListOptions',
 		editable		: false,
-		store			: storeEditList
+		store			: storeEditList,
+		ctCls			: 'fieldMark',
+		listeners: {
+			select: function( cmb, rec, indx){
+				// Reload the data store to reflect the new selected filter
+				storeListsOption.reload({params:{list_id: rec.data.option_id }});
+			}
+		}
 	}], // END GRID TOP MENU
-	plugins: [new Ext.ux.grid.Search({
+	plugins: [editor, new Ext.ux.grid.Search({
 		mode			: 'local',
 		iconCls			: false,
 		deferredRender	: false,
@@ -303,7 +343,12 @@ var RenderPanel = new Ext.Panel({
   viewConfig:{forceFit:true},
   items: [ 
     listGrid
-  ]
+  ],
+  listeners:{
+	resize: function(){
+		Ext.getCmp('listGrid').setHeight( Ext.getCmp('RenderPanel').getHeight() );
+	}
+  }
 });
 
 //******************************************************************************
