@@ -64,6 +64,9 @@
 .icoListOptions{
 	background-image: url(../ui_icons/list.png) !important;
 }
+.icoAddRecord{
+	background-image: url(../ui_icons/add_record.png) !important;
+}
 .newMessage{
 	background-image: url(../ui_icons/new_message.png) !important;
 }

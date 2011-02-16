@@ -20,8 +20,9 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 //******************************************************************************
 // ExtJS Global variables 
 //******************************************************************************
-var rowPos;
-var currList;
+var rowPos; // Stores the current Grid Row Position (int)
+var currList; // Stores the current List Option (string)
+var currRec; // Store the current record (Object)
 
 //******************************************************************************
 // Sanitizing Objects
@@ -69,7 +70,7 @@ var storeEditList = new Ext.data.Store({
 });
 storeEditList.load();
 storeEditList.on('load',function(ds,records,o){ // Select the first item on the combobox
-	Ext.getCmp('cmbList').setValue(records[0].data.title);
+	Ext.getCmp('cmbList').setValue(records[0].data.option_id);
 	currList = records[0].data.option_id; // Get first result for first grid data
 	storeListsOption.load({params:{list_id: currList}}); // Filter the data store from the currList value
 });
@@ -129,9 +130,7 @@ var frmLists = new Ext.FormPanel({
 		text		:'<?php echo htmlspecialchars( xl('Save'), ENT_NOQUOTES); ?>',
 		ref			: '../save',
 		iconCls		: 'save',
-		handler: function() {
-			winLists.hide();
-		}
+		handler: function() { winLists.hide(); }
 	},{
 		text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
 		iconCls: 'delete',
@@ -159,7 +158,8 @@ var winLists = new Ext.Window({
 // RowEditor Class
 // *************************************************************************************
 var editor = new Ext.ux.grid.RowEditor({
-	saveText: 'Update'
+	saveText: 'Update',
+	errorSummary: false
 });
 
 // *************************************************************************************
@@ -223,6 +223,11 @@ var listGrid = new Ext.grid.GridPanel({
             } 
 		}
 	],
+	listeners:{
+		cellclick: function(grid, rowIndex, columnIndex, e){
+			currRec = storeListsOption.getAt(rowIndex);
+		}
+	},
 	// -----------------------------------------
 	// Grid Top Menu
 	// -----------------------------------------
@@ -269,12 +274,31 @@ var listGrid = new Ext.grid.GridPanel({
 	bbar:[{
 		text		:'<?php echo htmlspecialchars( xl('Add record'), ENT_NOQUOTES); ?>',
 		ref			: '../add',
-		iconCls		: 'add',
-		handler: function() { }
+		iconCls		: 'icoAddRecord',
+		handler: function() {
+			editor.stopEditing();
+			var rec = new ListRecord();
+			rec.set('list_id', Ext.getCmp('cmbList').value);
+			storeListsOption.add( rec );
+			editor.startEditing( storeListsOption.getTotalCount() );
+		}
 	},{
 		text:'<?php echo htmlspecialchars( xl('Delete record'), ENT_NOQUOTES); ?>',
 		iconCls: 'delete',
-		handler: function(){ }
+		handler: function(){ 
+			Ext.Msg.show({
+				title: '<?php xl("Please confirm...", 'e'); ?>', 
+				icon: Ext.MessageBox.QUESTION,
+				msg:'<?php xl("Are you sure to delete this record?<br>From: ", 'e'); ?>',
+				buttons: Ext.Msg.YESNO,
+				fn:function(btn,msgGrid){
+					if(btn=='yes'){
+						editor.stopEditing();
+						storeListsOption.remove( currRec );
+		    	    }
+				}
+				});
+		}
 	}], // END GRID BOTTOM BAR
 	plugins: [editor, new Ext.ux.grid.Search({
 		mode			: 'local',

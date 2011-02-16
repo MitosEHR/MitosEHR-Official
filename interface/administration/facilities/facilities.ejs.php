@@ -351,9 +351,7 @@ var RenderPanel = new Ext.Panel({
   id: 'RenderPanel',
   renderTo: Ext.getCmp('TopPanel').body,
   viewConfig:{forceFit:true},
-  items: [ 
-    facilitiesGrid
-  ]
+  items: [ facilitiesGrid ]
 });
 
 //******************************************************************************
