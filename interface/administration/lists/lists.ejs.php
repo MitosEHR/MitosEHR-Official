@@ -115,20 +115,14 @@ var storeListsOption = new Ext.data.Store({
 // *************************************************************************************
 var frmLists = new Ext.FormPanel({
 	id			: 'frmLists',
-	bodyStyle	: 'padding: 3px;',
-	layout: 'column',
-	items: [{
-		layout: 'form',
-		autoWidth: true,
-		border: false,
-		bodyStyle : 'padding: 0 3px',
-		defaults: { labelWidth: 50 },
-        items: 
-		[
-			{ xtype: 'textfield', hidden: true, id: 'list_id', name: 'list_id'},
-			{ xtype: 'textfield', id: 'title', name: 'title', fieldLabel: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>' }
-        ]}
-	],
+	autoWidth	: true,
+	border		: false,
+	bodyStyle	: 'padding: 5px',
+	defaults	: { labelWidth: 50 },
+	items: 
+	[
+		{ xtype: 'textfield', width: 200, id: 'list_name', name: 'list_name', fieldLabel: '<?php echo htmlspecialchars( xl('List Name'), ENT_NOQUOTES); ?>' }
+    ],
 	
 	// Window Bottom Bar
 	bbar:[{
@@ -136,31 +130,6 @@ var frmLists = new Ext.FormPanel({
 		ref			: '../save',
 		iconCls		: 'save',
 		handler: function() {
-			
-			//----------------------------------------------------------------
-			// 1. Convert the form data into a JSON data Object
-			// 2. Re-format the Object to be a valid record (FacilityRecord)
-			//----------------------------------------------------------------
-			var obj = eval('(' + Ext.util.JSON.encode(frmLists.getForm().getValues()) + ')');
-			var rec  = new ListRecord(obj);
-			
-			//----------------------------------------------------------------
-			// Check if it has to add or update
-			// Update: 1. Get the record from store, 2. get the values from the form, 3. copy all the 
-			// values from the form and push it into the store record.
-			// Add: The re-formated record to the dataStore
-			//----------------------------------------------------------------
-			if (frmLists.getForm().findField('id').getValue()){ // Update
-				var record = ListRecord.getAt(rowPos);
-				var fieldValues = frmLists.getForm().getValues();
-				for (key in fieldValues){ record.set( key, fieldValues[key] ); }
-			} else { // Add
-				storeListsOption.add( rec );
-			}
-
-			storeListsOption.save();
-			storeListsOption.commitChanges();
-			storeListsOption.reload();
 			winLists.hide();
 		}
 	},{
@@ -174,25 +143,16 @@ var frmLists = new Ext.FormPanel({
 // Message Window Dialog
 // *************************************************************************************
 var winLists = new Ext.Window({
-	id			: 'winLists',
-	width		: 700,
+	id			: 'winList',
+	width		: 400,
 	autoHeight	: true,
 	modal		: true,
 	resizable	: false,
-	autoScroll	: true,
-	title		: '...',
+	autoScroll	: false,
+	title		: '<?php echo htmlspecialchars( xl('Create List'), ENT_NOQUOTES); ?>',
 	closeAction	: 'hide',
 	renderTo	: document.body,
-	items: [ frmLists ],
-	listeners: {
-		show: function(){
-			if ( Ext.getCmp('id').getValue() ){
-				winLists.setTitle('<?php echo htmlspecialchars( xl('Edit List'), ENT_NOQUOTES); ?>');
-			} else {
-				winLists.setTitle('<?php echo htmlspecialchars( xl('Create List'), ENT_NOQUOTES); ?>');
-			}
-		}
-	}
+	items: [ frmLists ]
 }); // END WINDOW
 
 // *************************************************************************************
@@ -219,7 +179,7 @@ var listGrid = new Ext.grid.GridPanel({
 			width: 50, 
 			header: 'ID', 
 			sortable: true, 
-			dataIndex: 'list_id',
+			dataIndex: 'option_id',
             editor: {
                 xtype: 'textfield',
                 allowBlank: false
@@ -264,7 +224,7 @@ var listGrid = new Ext.grid.GridPanel({
 		}
 	],
 	// -----------------------------------------
-	// Grid Menu
+	// Grid Top Menu
 	// -----------------------------------------
 	tbar: [{
 		xtype	:'button',
@@ -276,22 +236,11 @@ var listGrid = new Ext.grid.GridPanel({
 			winLists.show();
 		}
 	},'-',{
-		xtype	:'button',
-		id		: 'editList',
-		ref		: '../editList',
-		text	: '<?php xl("Edit list", 'e'); ?>',
-		iconCls	: 'edit',
-		disabled: true,
-		handler: function(){ 
-			winLists.show();
-		}
-	},'-',{
 		xtype		  :'button',
 		id			  : 'delList',
 		ref			  : '../delList',
 		text		  : '<?php xl("Delete list", 'e'); ?>',
 		iconCls		: 'delete',
-		disabled	: true,
 	},'-','<?php xl("Select list", 'e'); ?>: ',{
 		name			: 'cmbList', 
 		width			: 250,
@@ -314,6 +263,19 @@ var listGrid = new Ext.grid.GridPanel({
 			}
 		}
 	}], // END GRID TOP MENU
+	// -----------------------------------------
+	// Grid Bottom Menu
+	// -----------------------------------------
+	bbar:[{
+		text		:'<?php echo htmlspecialchars( xl('Add record'), ENT_NOQUOTES); ?>',
+		ref			: '../add',
+		iconCls		: 'add',
+		handler: function() { }
+	},{
+		text:'<?php echo htmlspecialchars( xl('Delete record'), ENT_NOQUOTES); ?>',
+		iconCls: 'delete',
+		handler: function(){ }
+	}], // END GRID BOTTOM BAR
 	plugins: [editor, new Ext.ux.grid.Search({
 		mode			: 'local',
 		iconCls			: false,
@@ -346,7 +308,7 @@ var RenderPanel = new Ext.Panel({
   ],
   listeners:{
 	resize: function(){
-		Ext.getCmp('listGrid').setHeight( Ext.getCmp('RenderPanel').getHeight() );
+		Ext.getCmp('listGrid').setHeight( Ext.getCmp('TopPanel').getHeight()-27 ); // -27 to show the bottom bar
 	}
   }
 });

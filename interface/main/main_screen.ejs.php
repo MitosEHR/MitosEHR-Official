@@ -54,6 +54,9 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript" src="../../repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/examples/ux/RowEditor.js"></script>
 
+<!-- ******************************************************************* -->
+<!-- Call for mandatory library objects, that we need on the MitosEHR    -->
+<!-- ******************************************************************* -->
 <link rel="stylesheet" type="text/css" href="../../repository/calendar/resources/css/extensible-all.css" />
 <link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/examples/ux/css/RowEditor.css" />
 <link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext-all.css" />
