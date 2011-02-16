@@ -179,107 +179,79 @@ var frmUsers = new Ext.FormPanel({
         { xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'combo', id: 'abook_type', name: 'abook_type', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'abook_type', mode: 'local', triggerAction: 'all', store: storeTypes }
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'textfield', id: 'username', name: 'Username' },
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Password'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'textfield', id: 'password', name: 'password' }
           ] 
         },{ xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('First, Middle, Last'), ENT_NOQUOTES); ?>: '},
             { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
-            { width: 130, xtype: 'textfield', id: 'fname', name: 'fname' },
-            { width: 100, xtype: 'textfield', id: 'mname', name: 'mname' },
-            { width: 300, xtype: 'textfield', id: 'lname', name: 'lname' }
+            { width: 80, xtype: 'textfield', id: 'fname', name: 'fname' },
+            { width: 70, xtype: 'textfield', id: 'mname', name: 'mname' },
+            { width: 95, xtype: 'textfield', id: 'lname', name: 'lname' },
           ] 
         },{ 
           xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Specialty'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'specialty',    name: 'specialty' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Organization'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'organization', name: 'organization' },
-            { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Valedictory'), ENT_NOQUOTES); ?>: '},
-            { width: 140, xtype: 'textfield', id: 'valedictory',  name: 'valedictory' }
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Access Control'), ENT_NOQUOTES); ?>: '},
+            { width: 100,  xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeTitles },
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorizations'), ENT_NOQUOTES); ?>: '},
+            { width: 100,  xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeTitles }
           ] 
-        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
+        },{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'street',   name: 'street' },
+            { width: 100, xtype: 'textfield', id: 'street',   name: 'street' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Addrress Cont'), ENT_NOQUOTES); ?>: '},
-            { width: 360, xtype: 'textfield', id: 'streetb',  name: 'streetb' }
+            { width: 100, xtype: 'textfield', id: 'streetb',  name: 'streetb' }
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'city',     name: 'city' },
+            { width: 100, xtype: 'textfield', id: 'city',     name: 'city' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'state',    name: 'state' },
-            { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Postal Code'), ENT_NOQUOTES); ?>: '},
-            { width: 140, xtype: 'textfield', id: 'zip',      name: 'zip' }
+            { width: 100, xtype: 'textfield', id: 'state',    name: 'state' }
           ] 
-        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
+        },{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'street2',  name: 'street2' },
+            { width: 100, xtype: 'textfield', id: 'street2',  name: 'street2' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Cont.'), ENT_NOQUOTES); ?>: '},
-            { width: 360, xtype: 'textfield', id: 'streetb2', name: 'streetb2' },
+            { width: 100, xtype: 'textfield', id: 'streetb2', name: 'streetb2' },
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'city2',    name: 'city2' },
+            { width: 100, xtype: 'textfield', id: 'city2',    name: 'city2' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'state2',   name: 'state2' },
-            { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Postal Code'), ENT_NOQUOTES); ?>: '},
-            { width: 140, xtype: 'textfield', id: 'zip2',     name: 'zip2' }
-          ]
-        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
-          xtype: 'compositefield',
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Home Phone'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'phone',     name: 'phone' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Mobile Phone'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'phonecell', name: 'phonecell' }
+            { width: 100, xtype: 'textfield', id: 'state2',   name: 'state2' }
           ]
         },{ 
-          xtype: 'compositefield',
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Work Phone'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'phonew1', name: 'phonew1' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Work Phone'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'phonew2', name: 'phonew2' },
-            { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('FAX'), ENT_NOQUOTES); ?>: '},
-            { width: 140, xtype: 'textfield', id: 'fax',     name: 'fax'   }
-          ]
-        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Email'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'email',     name: 'email' },
+            { width: 100, xtype: 'textfield', id: 'email',     name: 'email' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Assistant'), ENT_NOQUOTES); ?>: '},
-            { width: 130, xtype: 'textfield', id: 'assistant', name: 'assistant' },
-            { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Website'), ENT_NOQUOTES); ?>: '},
-            { width: 140, xtype: 'textfield', id: 'url',       name: 'url' }
+            { width: 100, xtype: 'textfield', id: 'assistant', name: 'assistant' }
           ]
-        },{html: '<hr style="margin:5px 0; border: 1px solid #ccc">', border:false},{ 
+        },{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('UPIN'), ENT_NOQUOTES); ?>: '},
-            { width: 80,  xtype: 'textfield', id: 'upin',          name: 'upin' },
-            { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('NPI'), ENT_NOQUOTES); ?>: '},
-            { width: 80,  xtype: 'textfield', id: 'npi',           name: 'npi', },
-            { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('TIN'), ENT_NOQUOTES); ?>: '},
-            { width: 80,  xtype: 'textfield', id: 'federaltaxid',  name: 'federaltaxid' },
-            { width: 80,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Taxonomy'), ENT_NOQUOTES); ?>: '},
-            { width: 80,  xtype: 'textfield', id: 'taxonomy',      name: 'taxonomy' }
+            { width: 100,  xtype: 'textfield', id: 'upin', name: 'upin' },
+            { width: 100,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('NPI'), ENT_NOQUOTES); ?>: '},
+            { width: 100,  xtype: 'textfield', id: 'npi',  name: 'npi', }
           ]
         },{html: '<hr style="margin:5px 0">', border:false},
-        { width: 705, xtype: 'htmleditor', id: 'notes', name: 'notes', emptyText: 'Notes', },
+        { width: 420, xtype: 'htmleditor', id: 'notes', name: 'notes', emptyText: 'Notes', },
       ]
   }], 
   // Window Bottom Bar
@@ -327,7 +299,7 @@ var frmUsers = new Ext.FormPanel({
 // *************************************************************************************
 var winUsers = new Ext.Window({
   id          : 'winUsers',
-  width       : 773,
+  width       : 490,
   autoHeight  : true,
   modal       : true,
   resizable   : false,
