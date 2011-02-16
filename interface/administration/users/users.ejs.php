@@ -157,8 +157,61 @@ var storeTypes = new Ext.data.Store({
   ])
 });
 storeTypes.load();
-
-
+// *************************************************************************************
+// Structure, data for storePOSCode
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+var storeFacilities = new Ext.data.Store({
+  proxy: new Ext.data.ScriptTagProxy({
+    url: '../administration/users/component_data.ejs.php?task=facilities'
+  }),
+  reader: new Ext.data.JsonReader({
+    idProperty: 'id',
+    totalProperty: 'totals',
+    root: 'row'
+  },[
+    {name: 'id', type: 'string', mapping: 'id'},
+    {name: 'name', type: 'string', mapping: 'name'}
+  ])
+});
+storeFacilities.load();
+// *************************************************************************************
+// Structure, data for storeSeeAuthorizations
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+var storeSeeAuthorizations = new Ext.data.Store({
+  proxy: new Ext.data.ScriptTagProxy({
+    url: '../administration/users/component_data.ejs.php?task=seeAuthorizations'
+  }),
+  reader: new Ext.data.JsonReader({
+    idProperty: 'id',
+    totalProperty: 'totals',
+    root: 'row'
+  },[
+    {name: 'id', type: 'string', mapping: 'id'},
+    {name: 'name', type: 'string', mapping: 'name'}
+  ])
+});
+storeSeeAuthorizations.load();
+// *************************************************************************************
+// Structure, data for storeSeeAuthorizations
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+var storeAccessControls = new Ext.data.Store({
+  proxy: new Ext.data.ScriptTagProxy({
+    url: '../administration/users/component_data.ejs.php?task=accessControls'
+  }),
+  reader: new Ext.data.JsonReader({
+    idProperty: 'id',
+    totalProperty: 'totals',
+    root: 'row'
+  },[
+    {name: 'id', type: 'string', mapping: 'id'},
+    {name: 'value', type: 'value', mapping: 'value'},
+    {name: 'name', type: 'string', mapping: 'name'}
+  ])
+});
+storeAccessControls.load();
 // *************************************************************************************
 // Facility Form
 // Add or Edit purpose
@@ -182,7 +235,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>: '},
             { width: 100, xtype: 'textfield', id: 'username', name: 'Username' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Password'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'password', name: 'password' }
+            { width: 105, xtype: 'textfield', id: 'password', name: 'password' }
           ] 
         },{ xtype: 'compositefield',
           msgTarget : 'side', 
@@ -190,67 +243,50 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('First, Middle, Last'), ENT_NOQUOTES); ?>: '},
             { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
             { width: 80, xtype: 'textfield', id: 'fname', name: 'fname' },
-            { width: 70, xtype: 'textfield', id: 'mname', name: 'mname' },
-            { width: 95, xtype: 'textfield', id: 'lname', name: 'lname' },
+            { width: 65, xtype: 'textfield', id: 'mname', name: 'mname' },
+            { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
           ] 
         },{ 
           xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Access Control'), ENT_NOQUOTES); ?>: '},
-            { width: 100,  xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeTitles },
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Default Facility'), ENT_NOQUOTES); ?>: '},
+            { width: 100,  xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorizations'), ENT_NOQUOTES); ?>: '},
-            { width: 100,  xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeTitles }
+            { width: 105,  xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'street',   name: 'street' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Addrress Cont'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'streetb',  name: 'streetb' }
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Access Control'), ENT_NOQUOTES); ?>: '},
+            { width: 100,  xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Taxonomy'), ENT_NOQUOTES); ?>: '},
+            { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'city',     name: 'city' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'state',    name: 'state' }
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Federal Tax ID'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Fed Drug ID'), ENT_NOQUOTES); ?>: '},
+            { width: 105, xtype: 'textfield', id: 'federaldrugid', name: 'federaldrugid' }
+ 
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Address'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'street2',  name: 'street2' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Cont.'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'streetb2', name: 'streetb2' },
-          ] 
-        },{ 
-          xtype: 'compositefield',
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('City'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'city2',    name: 'city2' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('State'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'state2',   name: 'state2' }
+           	{ width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('UPIN'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('NPI'), ENT_NOQUOTES); ?>: '},
+            { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
           ]
-        },{ 
+                },{ 
           xtype: 'compositefield',
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Email'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'email',     name: 'email' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Assistant'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'assistant', name: 'assistant' }
-          ]
-        },{ 
-          xtype: 'compositefield',
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('UPIN'), ENT_NOQUOTES); ?>: '},
-            { width: 100,  xtype: 'textfield', id: 'upin', name: 'upin' },
-            { width: 100,  xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('NPI'), ENT_NOQUOTES); ?>: '},
-            { width: 100,  xtype: 'textfield', id: 'npi',  name: 'npi', }
-          ]
-        },{html: '<hr style="margin:5px 0">', border:false},
+           	{ width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Job Description'), ENT_NOQUOTES); ?>: '},
+            { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
+          ]  
+        },{html: '<hr style="margin:5px 0"><p><?php echo htmlspecialchars( xl('Additional Info'), ENT_NOQUOTES); ?>:</p>', border:false},
         { width: 420, xtype: 'htmleditor', id: 'notes', name: 'notes', emptyText: 'Notes', },
       ]
   }], 
