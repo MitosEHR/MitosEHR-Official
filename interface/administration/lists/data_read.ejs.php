@@ -1,6 +1,6 @@
 <?php
 //--------------------------------------------------------------------------------------------------------------------------
-// manage_messages.ejs.php
+// data_read.ejs.php / List Options
 // v0.0.1
 // Under GPLv3 License
 //
@@ -47,6 +47,7 @@ $currList = $_REQUEST['list_id'];
 	} else {
 		// Use and sort by the translated list name.
 		$sql = "SELECT 
+					lo.id,
 					lo.list_id,
 					lo.option_id, 
 					IF(LENGTH(ld.definition),ld.definition,lo.title) AS title ,
@@ -70,6 +71,7 @@ $currList = $_REQUEST['list_id'];
 	while ($myrow = sqlFetchArray($result)) {
 		$count++;
 		$buff .= "{";
+		$buff .= " id: '" . $myrow['id'] . "',";
 		$buff .= " list_id: '" . dataEncode( $myrow['list_id'] ) . "',";
 		$buff .= " option_id: '" . dataEncode( $myrow['option_id'] ) . "',";
 		$buff .= " title: '" . dataEncode( $myrow['title'] ) . "',";

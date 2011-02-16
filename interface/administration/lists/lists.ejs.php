@@ -40,14 +40,15 @@ if ( Ext.getCmp('winList') ){ Ext.getCmp('winList').destroy(); }
 // 
 // *************************************************************************************
 var ListRecord = Ext.data.Record.create([
-	{name: 'list_id', 		type: 'string',	mapping: 'list_id'},
-	{name: 'option_id', 	type: 'string', mapping: 'option_id'},
-	{name: 'title', 		type: 'string', mapping: 'title'},
-	{name: 'seq', 			type: 'string', mapping: 'seq'},
-	{name: 'is_default', 	type: 'string', mapping: 'is_default'},
-	{name: 'option_value', 	type: 'string', mapping: 'option_value'},
-	{name: 'mapping', 		type: 'string', mapping: 'mapping'},
-	{name: 'notes', 		type: 'string', mapping: 'notes'}
+	{name: 'id',			type: 'int',		mapping: 'id'},
+	{name: 'list_id', 		type: 'string',		mapping: 'list_id'},
+	{name: 'option_id', 	type: 'string',		mapping: 'option_id'},
+	{name: 'title', 		type: 'string',		mapping: 'title'},
+	{name: 'seq', 			type: 'int', 		mapping: 'seq'},
+	{name: 'is_default', 	type: 'boolean',	mapping: 'is_default'},
+	{name: 'option_value', 	type: 'string',		mapping: 'option_value'},
+	{name: 'mapping', 		type: 'string',		mapping: 'mapping'},
+	{name: 'notes', 		type: 'string',		mapping: 'notes'}
 ]);
 
 // *************************************************************************************
@@ -69,7 +70,11 @@ var storeEditList = new Ext.data.Store({
 	])
 });
 storeEditList.load();
-storeEditList.on('load',function(ds,records,o){ // Select the first item on the combobox
+
+//--------------------------
+// When the data is loaded
+//--------------------------
+storeEditList.on('load',function(ds,records,o){
 	Ext.getCmp('cmbList').setValue(records[0].data.option_id);
 	currList = records[0].data.option_id; // Get first result for first grid data
 	storeListsOption.load({params:{list_id: currList}}); // Filter the data store from the currList value
@@ -95,10 +100,10 @@ var storeListsOption = new Ext.data.Store({
 
 	// JSON Writer options
 	writer: new Ext.data.JsonWriter({
+		encodeDelete	: true,
 		returnJson		: true,
 		writeAllFields	: true,
-		listful			: true,
-		writeAllFields	: true
+		listful			: true
 	}, ListRecord ),
 
 	// JSON Reader options
@@ -159,7 +164,14 @@ var winLists = new Ext.Window({
 // *************************************************************************************
 var editor = new Ext.ux.grid.RowEditor({
 	saveText: 'Update',
-	errorSummary: false
+	errorSummary: false,
+	listeners:{
+		afteredit: function(roweditor, changes, record, rowIndex){
+			storeListsOption.save();
+			storeListsOption.commitChanges();
+			storeListsOption.reload();
+		}
+	}
 });
 
 // *************************************************************************************
@@ -209,7 +221,7 @@ var listGrid = new Ext.grid.GridPanel({
 			sortable: true, 
 			dataIndex: 'is_default',
             editor: {
-                xtype: 'textfield',
+                xtype: 'checkbox',
                 allowBlank: false
             } 
 		},
@@ -225,7 +237,7 @@ var listGrid = new Ext.grid.GridPanel({
 	],
 	listeners:{
 		cellclick: function(grid, rowIndex, columnIndex, e){
-			currRec = storeListsOption.getAt(rowIndex);
+			currRec = storeListsOption.getAt(rowIndex); // Copy the record to the global variable
 		}
 	},
 	// -----------------------------------------
@@ -263,15 +275,17 @@ var listGrid = new Ext.grid.GridPanel({
 		ctCls			: 'fieldMark',
 		listeners: {
 			select: function( cmb, rec, indx){
-				// Reload the data store to reflect the new selected filter
+				// Reload the data store to reflect the new selected list filter
 				storeListsOption.reload({params:{list_id: rec.data.option_id }});
 			}
 		}
 	}], // END GRID TOP MENU
+	
 	// -----------------------------------------
 	// Grid Bottom Menu
 	// -----------------------------------------
 	bbar:[{
+		// Add a new record.
 		text		:'<?php echo htmlspecialchars( xl('Add record'), ENT_NOQUOTES); ?>',
 		ref			: '../add',
 		iconCls		: 'icoAddRecord',
@@ -282,7 +296,8 @@ var listGrid = new Ext.grid.GridPanel({
 			storeListsOption.add( rec );
 			editor.startEditing( storeListsOption.getTotalCount() );
 		}
-	},{
+	},'-',{
+		// Delete the selected record.
 		text:'<?php echo htmlspecialchars( xl('Delete record'), ENT_NOQUOTES); ?>',
 		iconCls: 'delete',
 		handler: function(){ 
@@ -295,6 +310,8 @@ var listGrid = new Ext.grid.GridPanel({
 					if(btn=='yes'){
 						editor.stopEditing();
 						storeListsOption.remove( currRec );
+						storeListsOption.save();
+						storeListsOption.reload();
 		    	    }
 				}
 				});

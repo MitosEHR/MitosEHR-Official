@@ -1,6 +1,6 @@
 <?php
 //--------------------------------------------------------------------------------------------------------------------------
-// data_create.ejs.php
+// data_create.ejs.php / List Options
 // v0.0.2
 // Under GPLv3 License
 //
@@ -36,24 +36,13 @@ $data = json_decode ( $_POST['row'] );
 // although Sencha EXTJS make good validation, we could check again 
 // just in case 
 // *************************************************************************************
-$row['name'] = dataEncode($data[0]->name);
-$row['phone'] = dataEncode($data[0]->phone);
-$row['fax'] = dataEncode($data[0]->fax);
-$row['street'] = dataEncode($data[0]->street);
-$row['city'] = dataEncode($data[0]->city);
-$row['state'] = dataEncode($data[0]->state);
-$row['postal_code'] = dataEncode($data[0]->postal_code);
-$row['country_code'] = dataEncode($data[0]->country_code);
-$row['federal_ein'] = trdataEncodeim($data[0]->federal_ein);
-$row['service_location'] = (trim($data[0]->service_location) == 'on' ? 1 : 0);
-$row['accepts_assignment'] = (trim($data[0]->accepts_assignment) == 'on' ? 1 : 0);
-$row['billing_location'] = (trim($data[0]->billing_location) == 'on' ? 1 : 0);
-$row['pos_code'] = dataEncode($data[0]->pos_code);
-$row['domain_identifier'] = dataEncode($data[0]->domain_identifier);
-$row['x12_sender_id'] = dataEncode($data[0]->x12_sender_id);
-$row['attn'] = dataEncode($data[0]->attn);
-$row['tax_id_type'] = dataEncode($data[0]->tax_id_type);
-$row['facility_npi'] = dataEncode($data[0]->facility_npi);
+$row['list_id'] = dataEncode($data[0]->list_id);
+$row['option_id'] = dataEncode($data[0]->option_id);
+$row['title'] = dataEncode($data[0]->title);
+$row['is_default'] = (trim($data[0]->is_default) == 'on' ? 1 : 0);
+$row['option_value'] = dataEncode($data[0]->option_value);
+$row['mapping'] = dataEncode($data[0]->mapping);
+$row['notes'] = dataEncode($data[0]->notes);
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
@@ -61,24 +50,14 @@ $row['facility_npi'] = dataEncode($data[0]->facility_npi);
 // if not run the INSERT stament
 // *************************************************************************************
 sqlStatement("INSERT INTO 
-				facility 
+				list_options 
 			SET
-				name = '" . $row['name'] . "', " . "
-				phone = '" . $row['phone'] . "', " . "
-				fax = '" . $row['fax'] . "', " . "
-				street = '" . $row['street'] . "', " . "
-				city = '" . $row['city'] . "', " . "
-				state = '" . $row['state'] . "', " . "
-				postal_code = '" . $row['postal_code'] . "', " . "
-				country_code = '" . $row['country_code'] . "', " . "
-				federal_ein = '" . $row['federal_ein'] . "', " . "
-				service_location = '" . $row['service_location'] . "', " . " 
-				billing_location = '" . $row['billing_location'] . "', " . "
-				accepts_assignment = '" . $row['accepts_assignment'] . "', " . "
-				pos_code = '" . $row['pos_code'] . "', " . "
-				domain_identifier = '" . $row['domain_identifier'] . "', " . "
-				attn = '" . $row['attn'] . "', " . " 
-				tax_id_type = '" . $row['tax_id_type'] . "', " . "
-				facility_npi = '" . $row['facility_npi'] . "'");
+				list_id = '" . $row['list_id'] . "', " . "
+				option_id = '" . $row['option_id'] . "', " . "
+				title = '" . $row['title'] . "', " . "
+				is_default = '" . $row['is_default'] . "', " . "
+				option_value = '" . $row['option_value'] . "', " . "
+				mapping = '" . $row['mapping'] . "', " . "
+				notes = '" . $row['notes'] . "'");
 
 ?>
