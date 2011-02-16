@@ -24,22 +24,14 @@ $fake_register_globals=false;
 // *************************************************************************************
 require_once("../../registry.php");
 require_once("../../../repository/dataExchange/dataExchange.inc.php");
+require_once("../../../library/phpAES/AES.class.php");
+$z = "abcdefghijuklmno0123456789012345"; // 256-bit key
+$aes = new AES($z);
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
-$sql = "SELECT 
-          users.*, 
-          list_options.option_id AS ab_name,
-          list_options.title AS ab_title  
-        FROM 
-          users
-        LEFT JOIN 
-          list_options ON list_id = 'abook_type' AND option_id = users.abook_type
-        WHERE 
-          users.active = 1 AND ( users.authorized = 1 OR users.username != '' )
-        ORDER BY 
-        	username
-        LIMIT ".$start.",".$count;
+$sql = "SELECT * FROM users WHERE users.active = 1 AND ( users.authorized = 1 OR users.username != '' )
+        ORDER BY username LIMIT ".$start.",".$count;
 $result = sqlStatement( $sql );
 // Total of rows in database
 $total = mysql_query("SELECT COUNT(id) FROM users");
@@ -50,7 +42,7 @@ while ($myrow = sqlFetchArray($result)) {
   $buff .= "{";
   $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
   $buff .= " username: '" . dataEncode( $myrow['username'] ) . "',";
-  $buff .= " password: '" . dataEncode( $myrow['password'] ) . "',";
+  $buff .= " password: '" . $aes->decrypt( $myrow['password'] ) . "',";
   $buff .= " authorized: '" . dataEncode( $rec['authorized'] ) . "',";
   $buff .= " info: '" . dataEncode( $myrow['info'] ) . "',";
   $buff .= " source: '" . dataEncode( $myrow['source'] ) . "',";

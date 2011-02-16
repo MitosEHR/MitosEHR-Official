@@ -34,7 +34,7 @@ if ( Ext.getCmp('winUsers') ){ Ext.getCmp('winUsers').destroy(); }
 var usersRecord = Ext.data.Record.create([
   {name: 'id',                    type: 'int',              mapping: 'id'},
   {name: 'username',              type: 'string',           mapping: 'username'},
-  {name: 'password',              type: 'string',           mapping: 'password'},
+  {name: 'password',              type: 'auto',             mapping: 'password'},
   {name: 'authorized',            type: 'string',           mapping: 'authorized'},
   {name: 'info',                  type: 'string',           mapping: 'info'},
   {name: 'source',                type: 'int',              mapping: 'source'},
@@ -233,9 +233,9 @@ var frmUsers = new Ext.FormPanel({
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'username', name: 'Username' },
+            { width: 100, xtype: 'textfield', id: 'username', name: 'username' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Password'), ENT_NOQUOTES); ?>: '},
-            { width: 105, xtype: 'textfield', id: 'password', name: 'password' }
+            { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
           ] 
         },{ xtype: 'compositefield',
           msgTarget : 'side', 

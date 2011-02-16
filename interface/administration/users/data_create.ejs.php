@@ -25,7 +25,6 @@ $fake_register_globals=false;
 require_once("../../registry.php");
 require_once("../../../repository/dataExchange/dataExchange.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
-
 $z = "abcdefghijuklmno0123456789012345"; // 256-bit key
 $aes = new AES($z);
 // *************************************************************************************
@@ -41,23 +40,22 @@ $data = json_decode ( $_POST['row'] );
 // *************************************************************************************
 // general info
 $row['username']     = dataEncode($data[0]->username);
-$row['password']     = $aes->decrypt($aes->encrypt($data[0]->password));
-
-$row['abook_type']   = dataEncode($data[0]->abook_type);
+$row['password']     = $aes->encrypt($data[0]->password);
 $row['title']        = dataEncode($data[0]->title);
 $row['fname']        = dataEncode($data[0]->fname);
 $row['mname']        = dataEncode($data[0]->mname);
 $row['lname']        = dataEncode($data[0]->lname);
-$row['specialty']    = dataEncode($data[0]->specialty);
-$row['organization'] = dataEncode($data[0]->organization);
-$row['valedictory']  = dataEncode($data[0]->valedictory);
-// primary address
-
+$row['facility_id']  = dataEncode($data[0]->facility_id);
+$row['see_auth'] 	 = dataEncode($data[0]->see_auth);
+// access control placeholder...
+// $row['none'] 	 = dataEncode($data[0]->none);
+$row['federaltaxid'] = dataEncode($data[0]->federaltaxid);
+$row['federaldrugid']= dataEncode($data[0]->federaldrugid);
 $row['upin']         = dataEncode($data[0]->upin);
 $row['npi']          = dataEncode($data[0]->npi);
 $row['federaltaxid'] = dataEncode($data[0]->federaltaxid);
-$row['taxonomy']     = dataEncode($data[0]->taxonomy);
-$row['info']        = dataEncode($data[0]->info);
+$row['specialty']    = dataEncode($data[0]->specialty);
+$row['info']         = dataEncode($data[0]->info);
 
 
 
@@ -69,37 +67,19 @@ $row['info']        = dataEncode($data[0]->info);
 sqlStatement("INSERT INTO 
         users 
       SET
-        username          = '" . "" . "', " . "
-        password          = '" . "" . "', " . "
-        abook_type        = '" . $row['abook_type'] . "', " . "
+        username          = '" . $row['username'] . "', " . "
+        password          = '" . $row['password'] . "', " . "
         title             = '" . $row['title'] . "', " . "
         fname             = '" . $row['fname'] . "', " . "
         mname             = '" . $row['mname'] . "', " . "
         lname             = '" . $row['lname'] . "', " . "
-        specialty         = '" . $row['specialty'] . "', " . "
-        organization      = '" . $row['organization'] . "', " . "
-        valedictory       = '" . $row['valedictory'] . "', " . "
-        street            = '" . $row['street'] . "', " . "
-        streetb           = '" . $row['streetb'] . "', " . "
-        city              = '" . $row['city'] . "', " . "
-        state             = '" . $row['state'] . "', " . "
-        zip               = '" . $row['zip'] . "', " . "
-        street2           = '" . $row['street2'] . "', " . "
-        streetb2          = '" . $row['streetb2'] . "', " . "
-        city2             = '" . $row['city2'] . "', " . "
-        state2            = '" . $row['state2'] . "', " . "
-        zip2              = '" . $row['zip2'] . "', " . "
-        phone             = '" . $row['phone'] . "', " . "
-        phonew1           = '" . $row['phonew1'] . "', " . "
-        phonew2           = '" . $row['phonew2'] . "', " . "
-        phonecell         = '" . $row['phonecell'] . "', " . "
-        fax               = '" . $row['fax'] . "', " . "
-        email             = '" . $row['email'] . "', " . "
-        assistant         = '" . $row['assistant'] . "', " . "
-        url               = '" . $row['url'] . "', " . "
+        facility_id       = '" . $row['facility_id'] . "', " . "
+        see_auth      	  = '" . $row['see_auth'] . "', " . "
+        taxonomy          = '" . $row['taxonomy'] . "', " . "
+        federaltaxid      = '" . $row['federaltaxid'] . "', " . "
+        federaldrugid     = '" . $row['federaldrugid'] . "', " . "
         upin              = '" . $row['upin'] . "', " . "
         npi               = '" . $row['npi'] . "', " . "
-        federaltaxid      = '" . $row['federaltaxid'] . "', " . "
-        taxonomy          = '" . $row['taxonomy'] . "', " . "
-        notes             = '" . $row['notes'] . "'");
+        specialty     	  = '" . $row['specialty'] . "', " . "
+        info              = '" . $row['info'] . "'");
 ?>
