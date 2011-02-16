@@ -242,8 +242,8 @@ var frmUsers = new Ext.FormPanel({
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('First, Middle, Last'), ENT_NOQUOTES); ?>: '},
             { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
-            { width: 80, xtype: 'textfield', id: 'fname', name: 'fname' },
-            { width: 65, xtype: 'textfield', id: 'mname', name: 'mname' },
+            { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
+            { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
             { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
           ] 
         },{ 
@@ -251,15 +251,15 @@ var frmUsers = new Ext.FormPanel({
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Default Facility'), ENT_NOQUOTES); ?>: '},
-            { width: 100,  xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
+            { width: 100, xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorizations'), ENT_NOQUOTES); ?>: '},
-            { width: 105,  xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
+            { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Access Control'), ENT_NOQUOTES); ?>: '},
-            { width: 100,  xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
+            { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Taxonomy'), ENT_NOQUOTES); ?>: '},
             { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
           ] 
@@ -287,7 +287,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
           ]  
         },{html: '<hr style="margin:5px 0"><p><?php echo htmlspecialchars( xl('Additional Info'), ENT_NOQUOTES); ?>:</p>', border:false},
-        { width: 420, xtype: 'htmleditor', id: 'notes', name: 'notes', emptyText: 'Notes', },
+        { width: 420, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
       ]
   }], 
   // Window Bottom Bar
