@@ -292,9 +292,9 @@ var Header = new Ext.Panel({
             iconAlign: 'right',
             menu : {
             	items: [{
-            		text:'Menu Item 1'
+            		text:'My Account'
             	},{
-            		text:'Menu Item 2'
+            		text:'Cahange Password'
             	},{
             		text:'Logout',
             		handler:function(){
