@@ -140,7 +140,7 @@ var storeTitles = new Ext.data.Store({
 storeTitles.load();
 
 // *************************************************************************************
-// Structure, data for storePOSCode
+// Structure, data for storeTypes
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
 var storeTypes = new Ext.data.Store({
@@ -158,7 +158,7 @@ var storeTypes = new Ext.data.Store({
 });
 storeTypes.load();
 // *************************************************************************************
-// Structure, data for storePOSCode
+// Structure, data for storeFacilities
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
 var storeFacilities = new Ext.data.Store({
@@ -179,22 +179,18 @@ storeFacilities.load();
 // Structure, data for storeSeeAuthorizations
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-var storeSeeAuthorizations = new Ext.data.Store({
-  proxy: new Ext.data.ScriptTagProxy({
-    url: '../administration/users/component_data.ejs.php?task=seeAuthorizations'
-  }),
-  reader: new Ext.data.JsonReader({
-    idProperty: 'id',
-    totalProperty: 'totals',
-    root: 'row'
-  },[
-    {name: 'id', type: 'string', mapping: 'id'},
-    {name: 'name', type: 'string', mapping: 'name'}
-  ])
+Ext.namespace('Ext.data');
+Ext.data.authorizations = [
+    ['1', 'None'],
+    ['2', 'Only Mine'],
+    ['3', 'All']
+];
+var storeSeeAuthorizations = new Ext.data.ArrayStore({
+    fields: ['id', 'name'],
+    data : Ext.data.authorizations // from states.js
 });
-storeSeeAuthorizations.load();
 // *************************************************************************************
-// Structure, data for storeSeeAuthorizations
+// Structure, data for storeAccessControls
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
 var storeAccessControls = new Ext.data.Store({
