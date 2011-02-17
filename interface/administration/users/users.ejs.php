@@ -35,6 +35,7 @@ var usersRecord = Ext.data.Record.create([
   {name: 'id',                    type: 'int',              mapping: 'id'},
   {name: 'username',              type: 'string',           mapping: 'username'},
   {name: 'password',              type: 'auto',             mapping: 'password'},
+  {name: 'authorizedd',           type: 'string',           mapping: 'authorizedd'},
   {name: 'authorized',            type: 'string',           mapping: 'authorized'},
   {name: 'info',                  type: 'string',           mapping: 'info'},
   {name: 'source',                type: 'int',              mapping: 'source'},
@@ -241,7 +242,16 @@ var frmUsers = new Ext.FormPanel({
             { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
             { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
             { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
-          ] 
+          ]
+        },{ 
+          xtype: 'compositefield',
+          msgTarget : 'side', 
+          items: [
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Active?'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'checkbox', id: 'active', name: 'active', mode: 'local' },
+            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>: '},
+            { width: 105, xtype: 'checkbox', id: 'authorized', name: 'authorized', mode: 'local' }
+          ]  
         },{ 
           xtype: 'compositefield',
           msgTarget : 'side', 
@@ -386,7 +396,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     { width: 100,  header: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
     { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
     { width: 200,  header: '<?php echo htmlspecialchars( xl('Aditional info'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'info' },
-    { header: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'authorized' }
+    { header: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'authorizedd' }
   ],
   // *************************************************************************************
   // Grid Menu
