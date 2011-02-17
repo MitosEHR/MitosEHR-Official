@@ -272,6 +272,13 @@ var AppPanel = new Ext.Panel({
 	items: [TopPanel, BottomPanel]
 });
 
+var Header = new Ext.Panel({
+	region: 'north',
+	height: 40, // give north region a height
+	items: [
+		{html:'<img src="../../ui_app/app_logo.png" style="float:left; margin: 1px 1px 1px 1px;" alt="MitosEHR" title="MitosEHR"><p class="app_bg" style="padding: 10px 0 0 <?php echo $nav_area_width + 10; ?>px; " id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'}
+	]
+});
 
 // *************************************************************************************
 // Create the ViewPort (Browser)
@@ -280,16 +287,7 @@ var viewport = new Ext.Viewport({
 	layout:'border',
 	id: 'MainBody',
 	renderTo: document.body,
-	items:[
-	new Ext.BoxComponent({
-		region: 'north',
-		height: 30, // give north region a height
-		autoEl: {
-			tag: 'div',
-			html:'<img src="../../ui_app/app_logo.png" style="float:left; margin: 1px 1px 1px 1px;" alt="MitosEHR" title="MitosEHR"><p class="app_bg" style="padding: 10px 0 0 <?php echo $nav_area_width + 10; ?>px;" id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'
-		}
-	}),
-	NavPanel, AppPanel ]
+	items:[ Header, NavPanel, AppPanel ]
 });
 
 });
