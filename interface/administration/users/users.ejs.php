@@ -36,8 +36,8 @@ var usersRecord = Ext.data.Record.create([
   {name: 'username',              type: 'string',           mapping: 'username'},
   {name: 'password',              type: 'auto',             mapping: 'password'},
   {name: 'authorizedd',           type: 'string',           mapping: 'authorizedd'},
-  {name: 'authorized',            type: 'string',           mapping: 'authorized'},
-  {name: 'active',            	  type: 'string',           mapping: 'active'},
+  {name: 'authorized',            type: 'string',          mapping: 'authorized'},
+  {name: 'active',            	  type: 'string',          mapping: 'active'},
   {name: 'info',                  type: 'string',           mapping: 'info'},
   {name: 'source',                type: 'int',              mapping: 'source'},
   {name: 'fname',                 type: 'string',           mapping: 'fname'},
@@ -91,10 +91,10 @@ var storeUsers = new Ext.data.Store({
   }),
   // JSON Writer options
   writer: new Ext.data.JsonWriter({
-    returnJson      : true,
-    writeAllFields  : true,
-    listful         : true,
-    writeAllFields  : true
+	encodeDelete	: true,
+	returnJson		: true,
+	writeAllFields	: true,
+	listful			: true
   }, usersRecord ),
 
   // JSON Reader options
@@ -233,9 +233,9 @@ var frmUsers = new Ext.FormPanel({
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Active?'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'checkbox', id: 'active', name: 'active', mode: 'local' },
+            { width: 100, xtype: 'checkbox', id: 'active', name: 'active' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>: '},
-            { width: 105, xtype: 'checkbox', id: 'authorized', name: 'authorized', mode: 'local' }
+            { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
           ]  
         },{ 
           xtype: 'compositefield',
@@ -303,7 +303,7 @@ var frmUsers = new Ext.FormPanel({
       //----------------------------------------------------------------
       if (frmUsers.getForm().findField('id').getValue()){ // Update
         var record = storeUsers.getAt(rowPos);
-        var fieldValues = frmUsers.getForm().getValues();
+        var fieldValues = frmUsers.getForm().getValues(false);
         for (key in fieldValues){ record.set( key, fieldValues[key] ); }
       } else { // Add
         storeUsers.add( rec );
