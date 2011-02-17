@@ -360,7 +360,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
       rowPos = rowIndex;
       var rec = storeUsers.getAt(rowPos);
       Ext.getCmp('frmUsers').getForm().loadRecord(rec);
-      addressbookGrid.editAddressbook.enable();
+      addressbookGrid.editUsers.enable();
     },
 
     // -----------------------------------------
@@ -370,7 +370,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
       rowPos = rowIndex;
       var rec = storeUsers.getAt(rowPos); // get the record from the store
       Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
-      addressbookGrid.editAddressbook.enable();
+      addressbookGrid.editUsers.enable();
       winUsers.show();
     }
   },
@@ -388,7 +388,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
   // *************************************************************************************
   tbar: [{
     xtype     :'button',
-    id        : 'addAddressbook',
+    id        : 'addUsers',
     text      : '<?php xl("Add User", 'e'); ?>',
     iconCls   : 'icoAddressBook',
     handler   : function(){
@@ -397,8 +397,8 @@ var addressbookGrid = new Ext.grid.GridPanel({
     }
   },'-',{
     xtype     :'button',
-    id        : 'editAddressbook',
-    ref       : '../editAddressbook',
+    id        : 'editUsers',
+    ref       : '../editUsers',
     text      : '<?php xl("Edit User", 'e'); ?>',
     iconCls   : 'edit',
     disabled  : true,
