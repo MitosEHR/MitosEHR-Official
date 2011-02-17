@@ -45,8 +45,11 @@ $row['title']        = dataEncode($data[0]->title);
 $row['fname']        = dataEncode($data[0]->fname);
 $row['mname']        = dataEncode($data[0]->mname);
 $row['lname']        = dataEncode($data[0]->lname);
+$row['authorized']   = (trim($data[0]->authorized) == 'on' ? 1 : 0);
+$row['active']   	 = (trim($data[0]->active) == 'on' ? 1 : 0);
 $row['facility_id']  = dataEncode($data[0]->facility_id);
 $row['see_auth'] 	 = dataEncode($data[0]->see_auth);
+$row['taxonomy'] 	 = dataEncode($data[0]->taxonomy);
 // access control placeholder...
 // $row['none'] 	 = dataEncode($data[0]->none);
 $row['federaltaxid'] = dataEncode($data[0]->federaltaxid);
@@ -73,6 +76,8 @@ sqlStatement("INSERT INTO
         fname             = '" . $row['fname'] . "', " . "
         mname             = '" . $row['mname'] . "', " . "
         lname             = '" . $row['lname'] . "', " . "
+        authorized        = '" . $row['authorized'] . "', " . "
+        active            = '" . $row['active'] . "', " . "
         facility_id       = '" . $row['facility_id'] . "', " . "
         see_auth      	  = '" . $row['see_auth'] . "', " . "
         taxonomy          = '" . $row['taxonomy'] . "', " . "
