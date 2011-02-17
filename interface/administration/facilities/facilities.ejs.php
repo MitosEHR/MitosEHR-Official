@@ -84,10 +84,10 @@ var storeFacilities = new Ext.data.Store({
 
 	// JSON Writer options
 	writer: new Ext.data.JsonWriter({
+		encodeDelete	: true,
 		returnJson		: true,
 		writeAllFields	: true,
-		listful			: true,
-		writeAllFields	: true
+		listful			: true
 	}, FacilityRecord ),
 
 	// JSON Reader options
