@@ -5,13 +5,23 @@
  * New Styles
  * by Gino Rivera Falu
  *============================================================*/
- 
+body {
+	background-image: url(../ui_icons/app_bg.png) !important;
+	background-repeat: repeat-x !important;
+}
+.topheader .x-panel-body {
+	background-color: transparent !important;
+	border: none !important; 
+}
+
 .noHeader .x-grid3-header {
   visibility:hidden !important;  /* class use to hide grid colunm header */
   height:0 !important;
   margin-top:-8px !important;
 }
+
 .x-grid3-cell-inner { white-space: normal !important; }
+
 .x-grid-wrap-cells td.x-grid3-cell {
     overflow: hidden !important;
 }
@@ -84,13 +94,10 @@
 }
 
 .app_bg{
-	background-image: url(../ui_icons/app_bg.png) !important;
-	background-repeat: repeat-x;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	text-shadow: #6374AB 1px 1px 1px;
 	font-size: 18px;
 	color: #FFF;
-	height: 479px;
 }
 
 .searchCriteria{

@@ -274,9 +274,36 @@ var AppPanel = new Ext.Panel({
 
 var Header = new Ext.Panel({
 	region: 'north',
-	height: 40, // give north region a height
-	items: [
-		{html:'<img src="../../ui_app/app_logo.png" style="float:left; margin: 1px 1px 1px 1px;" alt="MitosEHR" title="MitosEHR"><p class="app_bg" style="padding: 10px 0 0 <?php echo $nav_area_width + 10; ?>px; " id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'}
+	cls: 'topheader',
+	border: false,
+	height: 30, // give north region a height
+	items: [{
+		style: 'float:left',
+		html:'<img src="../../ui_app/app_logo.png" style="float:left; margin: 1px 1px 1px 1px;" alt="MitosEHR" title="MitosEHR"><p class="app_bg" style="padding: 10px 0 0 <?php echo $nav_area_width - 120; ?>px; float:left;" id="current_patient"><strong><?php xl('Patient', 'e'); ?>:&nbsp;</strong><?php xl('None','e'); ?></p>'
+	},{
+		xtype: 'form',
+		style: 'float:right',
+		defaultType: 'splitbutton',
+		items: [{
+			text: '<?php echo " - ".$authUser; ?>',
+            iconCls: 'add16',
+            scale: 'small',
+            style: 'margin: 7px',
+            iconAlign: 'right',
+            menu : {
+            	items: [{
+            		text:'Menu Item 1'
+            	},{
+            		text:'Menu Item 2'
+            	},{
+            		text:'Logout',
+            		handler:function(){
+            			window.location = '../logout.php'
+            		} 
+            	}]
+            }
+		}]
+	}
 	]
 });
 
@@ -286,6 +313,7 @@ var Header = new Ext.Panel({
 var viewport = new Ext.Viewport({
 	layout:'border',
 	id: 'MainBody',
+	border: false,
 	renderTo: document.body,
 	items:[ Header, NavPanel, AppPanel ]
 });
