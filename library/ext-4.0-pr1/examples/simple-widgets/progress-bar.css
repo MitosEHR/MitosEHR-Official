@@ -1,0 +1,25 @@
+.status {
+    color:#555;
+}
+
+.x-progress.custom {
+    height: 19px;
+    border: 1px solid #686868;
+}
+
+.ext-strict .x-progress.custom {
+    height: 17px;
+}
+
+.custom .x-progress-bar {
+    height: 17px;
+    border-bottom: 1px solid #EFEFEF;
+    border-top: 1px solid #BEBEBE;
+    border-left: 2px solid #fff;
+    border-right: 1px solid #fff;
+    background: transparent url(images/custom-bar.gif) repeat-x 0 0;
+}
+
+.ext-strict .x-progress-bar {
+    height: 15px;
+}

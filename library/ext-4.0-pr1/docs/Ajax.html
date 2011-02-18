@@ -1,0 +1,124 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.Ajax"></div>/**
+ * @class Ext.Ajax
+ * @extends Ext.data.Connection
+ * A singleton instance of an {@link Ext.data.Connection}. This class
+ * is used to communicate with your server side code. It can be used as follows:
+ * <pre><code>
+Ext.Ajax.request({
+    url: 'page.php',
+    params: {
+        id: 1
+    },
+    success: function(response){
+        var text = response.responseText;
+        // process server response here
+    }
+});
+ * </code></pre>
+ * <p>
+ * Default options for all requests can be set be changing a property on the Ext.Ajax class:
+ * <pre><code>
+Ext.Ajax.timeout = 60000; // 60 seconds
+ * </code></pre>
+ * Any options specified in the request method for the Ajax request will override any
+ * defaults set on the Ext.Ajax class. In the code sample below, the timeout for the
+ * reuqest will be 60 seconds.
+ * <pre><code>
+Ext.Ajax.timeout = 120000; // 120 seconds
+Ext.Ajax.request({
+    url: 'page.aspx',
+    timeout: 60000
+});
+ * </code></pre>
+ * </p>
+ * 
+ * <p>
+ * In general, this class will be used for all Ajax requests in your application. 
+ * The main reason for creating a separate {@link Ext.data.Connection} is for a 
+ * series of requests that share common settings that are different to all other 
+ * requests in the application.
+ * </p>
+ * @singleton
+ */
+Ext.define('Ext.Ajax', {
+    extend: 'Ext.data.Connection',
+    singleton: true,
+    
+    <div id="cfg-Ext.Ajax-url"></div>/**
+     * @cfg {String} url @hide
+     */
+    <div id="cfg-Ext.Ajax-extraParams"></div>/**
+     * @cfg {Object} extraParams @hide
+     */
+    <div id="cfg-Ext.Ajax-defaultHeaders"></div>/**
+     * @cfg {Object} defaultHeaders @hide
+     */
+    <div id="cfg-Ext.Ajax-method"></div>/**
+     * @cfg {String} method (Optional) @hide
+     */
+    <div id="cfg-Ext.Ajax-timeout"></div>/**
+     * @cfg {Number} timeout (Optional) @hide
+     */
+    <div id="cfg-Ext.Ajax-autoAbort"></div>/**
+     * @cfg {Boolean} autoAbort (Optional) @hide
+     */
+
+    <div id="cfg-Ext.Ajax-disableCaching"></div>/**
+     * @cfg {Boolean} disableCaching (Optional) @hide
+     */
+
+    <div id="prop-Ext.Ajax-disableCaching"></div>/**
+     * @property  disableCaching
+     * True to add a unique cache-buster param to GET requests. (defaults to true)
+     * @type Boolean
+     */
+    <div id="prop-Ext.Ajax-url"></div>/**
+     * @property  url
+     * The default URL to be used for requests to the server. (defaults to undefined)
+     * If the server receives all requests through one URL, setting this once is easier than
+     * entering it on every request.
+     * @type String
+     */
+    <div id="prop-Ext.Ajax-extraParams"></div>/**
+     * @property  extraParams
+     * An object containing properties which are used as extra parameters to each request made
+     * by this object (defaults to undefined). Session information and other data that you need
+     * to pass with each request are commonly put here.
+     * @type Object
+     */
+    <div id="prop-Ext.Ajax-defaultHeaders"></div>/**
+     * @property  defaultHeaders
+     * An object containing request headers which are added to each request made by this object
+     * (defaults to undefined).
+     * @type Object
+     */
+    <div id="prop-Ext.Ajax-method"></div>/**
+     * @property  method
+     * The default HTTP method to be used for requests. Note that this is case-sensitive and
+     * should be all caps (defaults to undefined; if not set but params are present will use
+     * <tt>"POST"</tt>, otherwise will use <tt>"GET"</tt>.)
+     * @type String
+     */
+    <div id="prop-Ext.Ajax-timeout"></div>/**
+     * @property  timeout
+     * The timeout in milliseconds to be used for requests. (defaults to 30000)
+     * @type Number
+     */
+
+    <div id="prop-Ext.Ajax-autoAbort"></div>/**
+     * @property  autoAbort
+     * Whether a new request should abort any pending requests. (defaults to false)
+     * @type Boolean
+     */
+    autoAbort : false
+});</pre>    
+</body>
+</html>

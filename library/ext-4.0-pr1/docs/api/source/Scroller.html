@@ -1,0 +1,201 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.grid.Scroller"></div>/**
+ * @class Ext.grid.Scroller
+ * @extends Ext.Component
+ *
+ * Docked in GridPanels, controls virtualized scrolling across GridSections.
+ */
+
+Ext.define('Ext.grid.Scroller', {
+    extend: 'Ext.Component',
+    alias: 'widget.gridscroller',
+    
+    cls: Ext.baseCSSPrefix + 'scroller',
+    
+    <div id="cfg-Ext.grid.Scroller-scrollDelta"></div>/**
+     * @cfg {Number} scrollDelta
+     * Number of pixels to scroll when scrolling with mousewheel.
+     * Defaults to 40.
+     */
+    scrollDelta: 40,
+    
+    renderTpl: ['<div class="' + Ext.baseCSSPrefix + 'stretcher"></div>'],
+    
+    initComponent: function() {
+        var dock     = this.dock,
+            cls      = Ext.baseCSSPrefix + 'scroller-vertical',
+            sizeProp = 'width',
+            // TODO: Determine why +2 in getScrollBarWidth
+            // BrowserBug: IE8 dictates that there must be at least 1px of viewable
+            // area before it will allow you to scroll when clicking on the open
+            // area. This adds a 1px visual artificat in IE8.
+            scrollbarWidth = Ext.getScrollBarWidth() - (Ext.isIE ? 1 : 2);
+        this.offsets = {bottom: 0};
+
+        if (dock === 'top' || dock === 'bottom') {
+            cls = Ext.baseCSSPrefix + 'scroller-horizontal';
+            sizeProp = 'height';
+        } else {
+            this.offsets.bottom = scrollbarWidth;
+        }
+        this[sizeProp] = scrollbarWidth;
+        
+        this.cls += (' ' + cls);
+        
+        Ext.applyIf(this.renderSelectors, {
+            stretchEl: '.' + Ext.baseCSSPrefix + 'stretcher'
+        });
+        Ext.grid.Scroller.superclass.initComponent.call(this);
+    },
+    
+    
+    afterRender: function() {
+        Ext.grid.Scroller.superclass.afterRender.call(this);
+        
+        var dockOwner = this.ownerCt,
+            dock      = this.dock;
+        
+        dockOwner.on('afterlayout', this.onOwnerAfterLayout, this);
+        this.el.on('scroll', this.onElScroll, this);
+    },
+    
+    invalidate: function() {
+        if (!this.el) {
+            return;
+        }
+        
+        var owner  = this.ownerCt,
+            dock   = this.dock,
+            elDom  = this.el.dom,
+            width  = 1,
+            height = 1;
+            
+        if (dock === 'top' || dock === 'bottom') {
+            // TODO: Must gravitate to a single region..
+            // Horizontal scrolling only scrolls virtualized region
+            var items  = owner.query('gridview'),
+                center = items[1] || items[0];
+            
+            if (!center) {
+                return;
+            }
+            
+            var centerEl          = center.el.dom,
+                centerScrollWidth = centerEl.scrollWidth,
+                // clientWidth often returns 0 in IE resulting in an
+                // infinity result, here we use offsetWidth bc there are
+                // no possible scrollbars and we dont care about margins
+                centerClientWidth = centerEl.offsetWidth,
+                scrollerWidth     = this.getWidth(),
+                threshold = Ext.getScrollBarWidth() - 2;
+                
+            width = Math.round(centerScrollWidth * scrollerWidth / centerClientWidth);
+            // because the scroller is completely virtualized, it is easy to get into a couple
+            // pixel rounding error. This makes no overflow occur if the user is +/- the threshold
+            if (scrollerWidth > (width - threshold) /*&& scrollerWidth < (width + threshold)*/) {
+                width = scrollerWidth;
+            }
+
+        } else {
+            var tbl = owner.el.down('.' + Ext.baseCSSPrefix + 'grid-view');
+            if (!tbl) {
+                return;
+            }
+            
+            // needs to also account for header and scroller (if still in picture)
+            // should calculate from headerCt.
+            height = tbl.dom.scrollHeight;
+        }
+        if (isNaN(width)) {
+            width = 1;
+        }
+        if (isNaN(height)) {
+            height = 1;
+        }
+        this.stretchEl.setSize(width, height);
+        
+        // BrowserBug: IE7
+        // This makes the scroller enabled, when initially rendering.
+        elDom.scrollTop = elDom.scrollTop;
+    },
+    
+    
+    onOwnerAfterLayout: function(owner, layout) {
+        if (Ext.isIE) {
+            Ext.Function.defer(this.invalidate, 1, this);
+        } else {
+            this.invalidate();
+        }
+        
+    },
+    
+        
+    <div id="method-Ext.grid.Scroller-setScrollTop"></div>/**
+     * Sets the scrollTop and constrains the value between 0 and max.
+     * @param {Number} scrollTop
+     */
+    setScrollTop: function(scrollTop) {
+        var elDom = this.el.dom;
+        elDom.scrollTop = Ext.Number.constrain(scrollTop, 0, elDom.scrollHeight - elDom.clientHeight);
+    },
+    
+    <div id="method-Ext.grid.Scroller-setScrollLeft"></div>/**
+     * Sets the scrollLeft and constrains the value between 0 and max.
+     * @param {Number} scrollTop
+     */
+    setScrollLeft: function(scrollLeft) {
+        var elDom = this.el.dom;
+        elDom.scrollLeft = Ext.Number.constrain(scrollLeft, 0, elDom.scrollWidth - elDom.clientWidth);
+    },
+    
+    <div id="method-Ext.grid.Scroller-scrollByDeltaY"></div>/**
+     * Scroll by delta
+     * @param {Number} delta
+     */
+    scrollByDeltaY: function(delta) {
+        var elDom = this.el.dom;
+        this.setScrollTop(elDom.scrollTop + delta);
+    },
+    
+    scrollByDeltaX: function(delta) {
+        var elDom = this.el.dom;
+        this.setScrollLeft(elDom.scrollLeft + delta);
+    },
+    
+    
+    scrollToTop : function(){
+        this.setScrollTop(0);
+    },
+    
+    // synchronize the scroller with the bound gridviews
+    onElScroll: function(e, t) {
+        var dock = this.dock,
+            owner = this.ownerCt,
+            items = owner.query('gridview');
+            
+        if (dock === 'top' || dock === 'bottom') {
+            var center = items[1] || items[0],
+                centerEl = center.el.dom,
+                centerScrollWidth = centerEl.scrollWidth,
+                centerClientWidth = centerEl.offsetWidth,
+                
+                width = this.getWidth();
+
+            centerEl.scrollLeft = Math.ceil(t.scrollLeft/width * centerClientWidth);
+        } else {
+            for (var i = 0, ln = items.length; i < ln; i++) {
+                items[i].el.dom.scrollTop = t.scrollTop;
+            }
+        }
+    }
+});
+</pre>    
+</body>
+</html>

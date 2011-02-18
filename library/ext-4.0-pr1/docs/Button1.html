@@ -1,0 +1,62 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.layout.component.Button"></div>/**
+ * Component layout for buttons
+ * @class Ext.layout.component.Button
+ * @extends Ext.layout.Component
+ */
+Ext.define('Ext.layout.component.Button', {
+
+    /* Begin Definitions */
+
+    alias: ['layout.button'],
+
+    extend: 'Ext.layout.Component',
+
+    /* End Definitions */
+
+    type: 'button',
+
+    cellClsRE: /-btn-(tl|br)\b/,
+
+    <div id="method-Ext.layout.component.Button-onLayout"></div>/**
+     * Set the dimensions of the inner &lt;button&gt; element to match the
+     * component dimensions.
+     */
+    onLayout: function(width, height) {
+        var me = this,
+            isNum = Ext.isNumber,
+            owner = this.owner,
+            outerEl = owner.el,
+            btnEl = owner.btnEl,
+            minWidth = owner.minWidth,
+            btnWidth, btnHeight,
+            frameSize = me.frameSize,
+            adjWidth = frameSize.left + frameSize.right + outerEl.getBorderWidth('lr') + outerEl.getPadding('lr'),
+            adjHeight = frameSize.top + frameSize.bottom + outerEl.getBorderWidth('tb') + outerEl.getPadding('tb');
+
+        me.callParent(arguments);
+
+
+        btnWidth = (isNum(width) ? width - adjWidth : width);
+        btnHeight = (isNum(height) ? height - adjHeight : height);
+        me.setElementSize(btnEl, btnWidth, btnHeight);
+
+        // Handle minWidth config
+        if (minWidth && !isNum(width)) {
+            btnEl.setStyle('width', 'auto');
+            if (outerEl.getWidth() < minWidth) {
+                me.setElementSize(btnEl, minWidth - adjWidth, btnHeight);
+            }
+        }
+    }
+});
+</pre>    
+</body>
+</html>

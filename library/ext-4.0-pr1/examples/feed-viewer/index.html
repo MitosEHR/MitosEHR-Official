@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Feed Viewer</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext.css">
+    <link rel="stylesheet" type="text/css" href="Feed-Viewer.css">
+    <script type="text/javascript" src="../../bootstrap.js"></script>
+    <script type="text/javascript" src="viewer/FeedPost.js"></script>
+    <script type="text/javascript" src="viewer/FeedDetail.js"></script>
+    <script type="text/javascript" src="viewer/FeedGrid.js"></script>
+    <script type="text/javascript" src="viewer/FeedInfo.js"></script>
+    <script type="text/javascript" src="viewer/FeedPanel.js"></script>
+    <script type="text/javascript" src="viewer/FeedViewer.js"></script>
+    <script type="text/javascript" src="viewer/FeedWindow.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.setConfig({enabled: true});
+        Ext.Loader.setPath('Ext.ux', '../ux/');
+        Ext.require([
+            'Ext.grid.*',
+            'Ext.data.*',
+            'Ext.util.*',
+            'Ext.Action',
+            'Ext.tab.*',
+            'Ext.layout.container.Card',
+            'Ext.layout.container.Border',
+            'Ext.ux.PreviewPlugin'
+        ]);
+        Ext.onReady(function(){
+            var app = new FeedViewer.App();
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
+

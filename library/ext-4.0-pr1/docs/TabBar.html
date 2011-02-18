@@ -1,0 +1,129 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.tab.TabBar"></div>/**
+ * @author Ed Spencer
+ * @class Ext.tab.TabBar
+ * @extends Ext.panel.Panel
+ * 
+ */
+Ext.define('Ext.tab.TabBar', {
+    extend: 'Ext.panel.Header',
+    alias: 'widget.tabbar',
+    baseCls: Ext.baseCSSPrefix + 'tab-bar',
+    
+    // @private
+    defaultType: 'tab',
+    
+    <div id="cfg-Ext.tab.TabBar-plain"></div>/**
+     * @cfg Boolean plain
+     * True to not show the full background on the tabbar
+     */
+    plain: false,
+    
+    // @private
+    renderTpl: [
+        '<div class="{baseCls}-strip"></div>',
+        '<div class="{baseCls}-body<tpl if="ui"> {baseCls}-body-{ui}</tpl>"<tpl if="bodyStyle"> style="{bodyStyle}"</tpl>></div>'
+    ],
+    
+    // @private
+    initComponent: function() {
+        var me = this;
+        
+        Ext.applyIf(me, {
+            layout: {
+                type: 'hbox',
+                pack: 'start'
+            }
+        });
+        
+        if (me.plain) {
+            me.ui = 'plain';
+        }
+        
+        me.addEvents(
+            <div id="event-Ext.tab.TabBar-change"></div>/**
+             * @event change
+             * Fired when the currently-active tab has changed
+             * @param {Ext.tab.TabBar} tabBar The TabBar
+             * @param {Ext.Tab} tab The new Tab
+             * @param {Ext.Component} card The card that was just shown in the TabPanel
+             */
+            'change'
+        );
+        
+        Ext.tab.TabBar.superclass.initComponent.apply(me, arguments);
+        
+    },
+    
+    // @private
+    afterRender: function() {
+        this.mon(this.el, {
+            scope: this,
+            click: this.onClick,
+            delegate: '.' + Ext.baseCSSPrefix + 'tab'
+        });
+        
+        return Ext.tab.TabBar.superclass.afterRender.apply(this, arguments);
+    },
+        
+    // @private
+    onClick: function(e, target) {
+        // target is a valid tab el since the click event is filtered in the event handler
+        var tab = Ext.getCmp(target.id);
+        this.setActiveTab(tab);
+        if (this.ownerCt) {
+            this.ownerCt.setActiveTab(tab.card);
+        }
+    },
+    
+    /**
+     * @private
+     * Closes the given tab by removing it from the TabBar and removing the corresponding card from the TabPanel
+     * @param {Ext.Tab} tab The tab to close
+     */
+    closeTab: function(tab) {
+        var card    = tab.card,
+            ownerCt = this.ownerCt;
+        
+        this.remove(tab);
+        
+        if (ownerCt && card) {
+            ownerCt.remove(card);
+        }
+    },
+    
+    /**
+     * @private
+     * Marks the given tab as active
+     * @param {Ext.Tab} tab The tab to mark active
+     */
+    setActiveTab: function(tab) {
+        if (tab.disabled) {
+            return;
+        }
+        var me = this;
+        
+        if (me.rendered) {
+            if (me.activeTab) {
+                me.activeTab.deactivate();
+            }
+            tab.activate();
+            
+
+            me.doComponentLayout();
+        }
+        
+        me.activeTab = tab;
+        this.fireEvent('change', this, tab, tab.card);
+    }
+});
+</pre>    
+</body>
+</html>

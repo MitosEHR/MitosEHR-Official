@@ -1,0 +1,73 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.form.Hidden"></div>/**
+ * @class Ext.form.Hidden
+ * @extends Ext.form.BaseField
+ * <p>A basic hidden field for storing hidden values in forms that need to be passed in the form submit.</p>
+ * <p>This creates an actual input element with type="submit" in the DOM. While its label is
+ * {@link #hideLabel not rendered} by default, it is still a real component and may be sized according to
+ * its owner container's layout.</p>
+ * <p>Because of this, in most cases it is more convenient and less problematic to simply
+ * {@link Ext.form.action.Action#params pass hidden parameters} directly when
+ * {@link Ext.form.Basic#submit submitting the form}.</p>
+ * <p>Example:</p>
+ * <pre><code>new Ext.form.FormPanel({
+    title: 'My Form',
+    items: [{
+        xtype: 'textfield',
+        fieldLabel: 'Text Field',
+        name: 'text_field',
+        value: 'value from text field'
+    }, {
+        xtype: 'hiddenfield',
+        name: 'hidden_field_1',
+        value: 'value from hidden field'
+    }],
+
+    buttons: [{
+        text: 'Submit',
+        handler: function() {
+            this.up('form').getForm().submit({
+                params: {
+                    hidden_field_2: 'value from submit call'
+                }
+            });
+        }
+    }]
+});</code></pre>
+ * <p>Submitting the above form will result in three values sent to the server:
+ * <code>text_field=value+from+text+field&hidden_field_1=value+from+hidden+field&<br>hidden_field_2=value+from+submit+call</code></p>
+ *
+ * @constructor
+ * Create a new Hidden field.
+ * @param {Object} config Configuration options
+ * 
+ * @xtype hiddenfield
+ */
+Ext.define('Ext.form.Hidden', {
+    extend:'Ext.form.BaseField',
+    alias: ['widget.hiddenfield', 'widget.hidden'],
+
+    // private
+    inputType : 'hidden',
+    hideLabel: true,
+
+    // These are all private overrides
+    initEvents: Ext.emptyFn,
+    setSize : Ext.emptyFn,
+    setWidth : Ext.emptyFn,
+    setHeight : Ext.emptyFn,
+    setPosition : Ext.emptyFn,
+    setPagePosition : Ext.emptyFn,
+    markInvalid : Ext.emptyFn,
+    clearInvalid : Ext.emptyFn
+});
+</pre>    
+</body>
+</html>

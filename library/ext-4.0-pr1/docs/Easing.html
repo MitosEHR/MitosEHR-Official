@@ -1,0 +1,43 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.fx.Easing"></div>/**
+ * Singleton that determines how an animation proceeds from start to end.
+ * @class Ext.fx.Easing
+ * Easing is now calculated exclusively with the use of cubic-bezier curves and follows the
+ * <a href="http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag">CSS3
+ * specification for 'transition-timing-function'</a>.
+ * <h2>Standard CSS3 Easing Values:</h2>
+ * <div class="mdetail-params"><ul>
+ * <li><b><tt>ease</tt></b>: The ease function is equivalent to cubic-bezier(0.25, 0.1, 0.25, 1.0).</li>
+ * <li><b><tt>linear</tt></b>: The linear function is equivalent to cubic-bezier(0.0, 0.0, 1.0, 1.0).</li>
+ * <li><b><tt>ease-in</tt></b>: The ease-in function is equivalent to cubic-bezier(0.42, 0, 1.0, 1.0).</li>
+ * <li><b><tt>ease-out</tt></b>: The ease-out function is equivalent to cubic-bezier(0, 0, 0.58, 1.0).</li>
+ * <li><b><tt>ease-in-out</tt></b>: The ease-in-out function is equivalent to cubic-bezier(0.42, 0, 0.58, 1.0)</li>
+ * <li><b><tt>cubic-bezier</tt></b>: Specifies a cubic-bezier curve. The four values specify points P1 and P2 of
+ * the curve as (x1, y1, x2, y2). All values must be in the range [0, 1] or the definition is invalid.</li>
+ * </ul></div>
+ * @singleton
+ */
+Ext.ns('Ext.fx');
+
+Ext.require('Ext.fx.CubicBezier', function() {
+    Ext.fx.Easing = {
+        ease: Ext.fx.CubicBezier.cubicBezier(0.25, 0.1, 0.25, 1),
+        linear: Ext.fx.CubicBezier.cubicBezier(0, 0, 1, 1),
+        'ease-in': Ext.fx.CubicBezier.cubicBezier(0.42, 0, 1, 1),
+        'ease-out': Ext.fx.CubicBezier.cubicBezier(0, 0.58, 1, 1),
+        'ease-in-out': Ext.fx.CubicBezier.cubicBezier(0.42, 0, 0.58, 1),
+        'easeIn': Ext.fx.CubicBezier.cubicBezier(0.42, 0, 1, 1),
+        'easeOut': Ext.fx.CubicBezier.cubicBezier(0, 0.58, 1, 1),
+        'easeInOut': Ext.fx.CubicBezier.cubicBezier(0.42, 0, 0.58, 1)
+    };
+    
+});</pre>    
+</body>
+</html>

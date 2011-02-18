@@ -1,0 +1,204 @@
+/*$include-default: false;
+
+@import 'ext';
+
+@include extjs-button;
+@include extjs-panel;
+@include extjs-frame;
+@include extjs-toolbar;
+
+.ext-generator {
+  $padding: 0 !default;
+  
+  .x-btn {
+    border-width: $button-border-width;
+    @include border-radius($button-border-radius, $button-border-radius-vertical);
+    
+    table {
+      border-width: $button-inner-border-width;
+      border-style: solid;
+      @include border-radius($button-border-radius, $button-border-radius-vertical);
+      border-collapse: separate;
+    }
+    
+    &.x-btn-small {
+      button {
+        @if $button-small-padding < $button-border-radius {
+          $padding: $button-border-radius - $button-border-radius;
+        }
+        @else {
+          $padding: $button-small-padding - $button-border-radius;
+        }
+        
+        padding: $padding !important;
+      }
+      
+      //left
+      &.x-btn-text-icon-small-left {
+        button {
+          padding-left: $button-small-icon-size + 2px !important;
+        }
+      }
+      
+      //top
+      &.x-btn-text-icon-small-top {
+        button {
+          padding-top: $button-small-icon-size + ($padding * 2) !important;
+        } 
+      }
+      
+      &.x-btn-icon {
+        button {
+          width: $button-small-icon-size !important;
+          height: $button-small-icon-size !important;
+        }
+      }
+    }
+  
+    &.x-btn-medium {
+      button {
+        @if $button-medium-padding < $button-border-radius {
+          $padding: $button-border-radius - $button-border-radius;
+        }
+        @else {
+          $padding: $button-medium-padding - $button-border-radius;
+        }
+        
+        padding: $padding !important;
+      }
+      
+      //left
+      &.x-btn-text-icon-medium-left {
+        button {
+          padding-left: $button-medium-icon-size + 2px !important;
+        }
+      }
+      
+      //top
+      &.x-btn-text-icon-medium-top {
+        button {
+          padding-top: $button-medium-icon-size + ($padding * 2) + 5px !important;
+        } 
+      }
+      
+      &.x-btn-icon {
+        button {
+          width: $button-medium-icon-size !important;
+          height: $button-medium-icon-size !important;
+        }
+      }
+    }
+  
+    &.x-btn-large {
+      button {
+        @if $button-large-padding < $button-border-radius {
+          $padding: $button-border-radius - $button-border-radius;
+        }
+        @else {
+          $padding: $button-large-padding - $button-border-radius;
+        }
+        
+        padding: $padding !important;
+      }
+      
+      //left
+      &.x-btn-text-icon-large-left {
+        button {
+          padding-left: $button-large-icon-size + 2px !important;
+        }
+      }
+      
+      //top
+      &.x-btn-text-icon-large-top {
+        button {
+          padding-top: $button-large-icon-size + ($padding * 2) !important;
+        } 
+      }
+      
+      &.x-btn-icon {
+        button {
+          width: $button-large-icon-size !important;
+          height: $button-large-icon-size !important;
+        }
+      }
+    }
+  }
+}
+
+.ext-generator {
+  .x-window,
+  .x-panel {
+    @include border-radius($panel-border-radius);
+  
+    .x-window-frameCt,
+    .x-panel-frameCt {
+      .x-window-header,
+      .x-panel-header {
+        border-width: $panel-header-border-width;
+        border-style: $panel-header-border-style;
+        @include border-radius($panel-border-radius);
+      
+        .x-box-inner {
+          border-width: 0;
+        }
+        
+        .x-panel-header-wrapper {
+          @include border-radius($panel-border-radius);
+        }
+      }
+    }
+    
+    &.x-window-frame,
+    &.x-panel-frame {
+      @include border-radius($frame-border-radius);
+    
+      .x-window-frameCt,
+      .x-panel-frameCt {
+        .x-window-header,
+        .x-panel-header {
+          border-width: $frame-border-width;
+          border-style: $frame-border-style;
+          @include border-radius($frame-border-radius);
+        
+          .x-box-inner {
+            border-width: 0;
+          }
+          
+          .x-panel-header-wrapper {
+            border-width: $frame-header-inner-border-width;
+            border-style: $frame-header-inner-border-style;
+            border-color: $frame-header-inner-border-color;
+            @include border-radius($frame-border-radius);
+          }
+        }
+      }
+    }
+  }
+}
+
+@include extjs-theme-button-generate(
+  $theme-name,
+  
+  #fff,
+  #fff,
+  #fff,
+  
+  'glossy-button',
+  'glossy-button-over',
+  'glossy-button-click',
+  
+  #A5A5A5,
+  #7FA2CE,
+  #7797C2,
+  
+  #fff,
+  #fff,
+  #A5C0DD
+);
+
+.x-btn {
+  button {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}*/

@@ -1,0 +1,63 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js">Ext.GridCellSelectionModel = Ext.extend(Ext.AbstractStoreSelectionModel, {
+    <div id="cfg-Ext.grid.EditorGridPanel-enableKeyNav"></div>/**
+     * @cfg {Boolean} enableKeyNav
+     * Turns on/off keyboard navigation within the grid. Defaults to true.
+     */
+    enableKeyNav: true,
+
+    bindComponent: function(grid) {
+        this.grid = grid;
+        this.bind(grid.getStore());
+        grid.on({
+            cellmousedown: this.onCellMouseDown,
+            scope: this
+        });
+
+        var view = grid.getView();
+        view.on({
+            refresh: this.refresh,
+            rowupdated: this.onRowUpdated,
+            beforerowremoved: this.clearSelections,
+            beforerowsinserted: this.clearSelections,
+            scope: this
+        });
+
+        if (this.enableKeyNav) {
+            this.initKeyNav();
+        }
+
+        // handle before editing
+    },
+
+    initKeyNav: function() {
+        var grid = this.grid;
+        if (!grid.rendered) {
+            this.grid.on('render', this.initKeyNav, this, {single: true});
+            return;
+        }
+
+        var view = grid.view;
+        // view.el has tabIndex -1 to allow for
+        // keyboard events to be passed to it.
+        this.keyNav = new Ext.util.KeyNav(view.el, {
+            "up": this.onKeyUp,
+            "down": this.onKeyDown,
+            "pageDown": this.onKeyPageDown,
+            "pageUp": this.onKeyPageUp,
+            "home": this.onKeyHome,
+            "end": this.onKeyEnd,
+            scope: this
+        });
+        view.el.on(Ext.EventManager.getKeyEvent(), this.onKeyPress, this);
+    }
+});</pre>    
+</body>
+</html>
