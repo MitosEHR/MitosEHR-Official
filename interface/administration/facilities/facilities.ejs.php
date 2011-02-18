@@ -208,14 +208,15 @@ var frmFacility = new Ext.FormPanel({
 			// Check if it has to add or update
 			// Update: 1. Get the record from store, 2. get the values from the form, 3. copy all the 
 			// values from the form and push it into the store record.
-			// Add: The re-formated record to the dataStore
+			// Add: Push the re-formated record to the dataStore
 			//----------------------------------------------------------------
 			if (frmFacility.getForm().findField('id').getValue()){ // Update
 				var record = storeFacilities.getAt(rowPos);
 				var fieldValues = frmFacility.getForm().getValues();
-				alert( FacilityRecord );
-				//for (key in FacilityRecord){ alert( key ); }
-				//for (key in fieldValues){ record.set( key, fieldValues[key] ); }
+				for ( k=0; k <= storeFacilities.fields.getCount()-1; k++) {
+					i = storeFacilities.fields.get(k).name;
+					record.set( i, fieldValues[i] );
+				}
 			} else { // Add
 				storeFacilities.add( rec );
 			}
