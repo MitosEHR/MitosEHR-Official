@@ -39,7 +39,8 @@ $total = mysql_result($total, 0);
 
 while ($myrow = sqlFetchArray($result)) {
   // returns "Yes" or "NO" for main grid		
-  $rec['authorizedd'] = ($myrow['authorized'] == '1' ? 'Yes' : 'No');
+  $rec['authorizedd']= ($myrow['authorized'] == '1' ? 'Yes' : 'No');
+  $rec['actived'] 	 = ($myrow['active'] 	== '1' ? 'Yes' : 'No');
   
   // returns "on" or "off" for checkboxes
   $rec['active'] 	 = ($myrow['active'] 	 == '1' ? 'on' : 'off');
