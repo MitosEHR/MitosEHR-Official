@@ -236,7 +236,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Active?'), ENT_NOQUOTES); ?>: '},
             { width: 100, xtype: 'checkbox', id: 'active', name: 'active', hiddenName: 'active' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>: '},
-            { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized', hiddenName: 'authorized' }
+            { width: 105, xtype: 'checkbox', id: 'authorized', name: 'authorized', hiddenName: 'authorized' }
           ]  
         },{ 
           xtype: 'compositefield',
