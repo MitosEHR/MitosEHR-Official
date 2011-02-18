@@ -25,7 +25,7 @@ var currList; // Stores the current List Option (string)
 var currRec; // Store the current record (Object)
 
 //******************************************************************************
-// Sanitizing Objects
+// Sanitizing Objects!
 // Destroy them, if already exists in the browser memory.
 // This destructions must be called for all the objects that
 // are rendered on the document.body 
@@ -73,6 +73,7 @@ storeEditList.load();
 
 //--------------------------
 // When the data is loaded
+// Select the first record
 //--------------------------
 storeEditList.on('load',function(ds,records,o){
 	Ext.getCmp('cmbList').setValue(records[0].data.option_id);
@@ -116,8 +117,8 @@ var storeListsOption = new Ext.data.Store({
 });
 
 // *************************************************************************************
-// Facility Form
-// Add or Edit purpose
+// List Create Form
+// Create or Closse purpose
 // *************************************************************************************
 var frmLists = new Ext.FormPanel({
 	id			: 'frmLists',
@@ -144,7 +145,7 @@ var frmLists = new Ext.FormPanel({
 });
 
 // *************************************************************************************
-// Message Window Dialog
+// Create list Window Dialog
 // *************************************************************************************
 var winLists = new Ext.Window({
 	id			: 'winList',
