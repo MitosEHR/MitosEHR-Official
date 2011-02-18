@@ -1,27 +1,18 @@
 <?php
 require_once("registry.php");
+
+//start the session
+session_start();
+$_SESSION = array();
+$params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+    $params["path"], $params["domain"],
+    $params["secure"], $params["httponly"]
+);
+session_unset();
+session_destroy(); 
+
+header("location: login/login.ejs.php");
+
 ?>
 
-<html>
-<head>
-<?php html_header_show(); ?>
-
-<link rel=stylesheet href="<?php echo $css_header; ?>" type="text/css">
-
-</head>
-<body bgcolor=#ffffff topmargin=0 rightmargin=0 leftmargin=2 bottommargin=0 marginwidth=2 marginheight=0>
-
-<span class=text><?php xl('Logged out.','e'); ?></span>
-
-<br><br>
-
-<?php xl('This page will inline include the login page, so that we do not have to click relogin every time.','e'); ?>
-
-<br><br>
-
-<a class=link href="login_screen.php"><?php xl('Relogin','e'); ?></a>
-
-<br><br>
-
-</body>
-</html>
