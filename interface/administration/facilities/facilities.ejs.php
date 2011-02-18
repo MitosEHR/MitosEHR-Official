@@ -213,7 +213,9 @@ var frmFacility = new Ext.FormPanel({
 			if (frmFacility.getForm().findField('id').getValue()){ // Update
 				var record = storeFacilities.getAt(rowPos);
 				var fieldValues = frmFacility.getForm().getValues();
-				for (key in fieldValues){ record.set( key, fieldValues[key] ); }
+				alert( FacilityRecord );
+				//for (key in FacilityRecord){ alert( key ); }
+				//for (key in fieldValues){ record.set( key, fieldValues[key] ); }
 			} else { // Add
 				storeFacilities.add( rec );
 			}
