@@ -302,20 +302,21 @@ var frmUsers = new Ext.FormPanel({
       // Add: The re-formated record to the dataStore
       //----------------------------------------------------------------
       if (frmUsers.getForm().findField('id').getValue()){ // Update
-		var record = storeUsers.getAt(rowPos);
-		var fieldValues = frmUsers.getForm().getValues();
-		for ( k=0; k <= storeUsers.fields.getCount()-1; k++) {
-			i = storeUsers.fields.get(k).name;
-			record.set( i, fieldValues[i] );
-		}
+      	  var record = storeUsers.getAt(rowPos);
+          var fieldValues = frmUsers.getForm().getValues();
+          for ( k=0; k <= storeUsers.fields.getCount()-1; k++) {
+			  i = storeUsers.fields.get(k).name;
+			  record.set( i, fieldValues[i] );
+		  }
       } else { // Add
         storeUsers.add( rec );
       }
 
       storeUsers.save();          // Save the record to the dataStore
       storeUsers.commitChanges(); // Commit the changes
-      storeUsers.reload();        // Reload the dataSore from the database
       winUsers.hide();            // Finally hide the dialog window
+      storeUsers.reload();        // Reload the dataSore from the database
+      
     }
   },{
     text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
