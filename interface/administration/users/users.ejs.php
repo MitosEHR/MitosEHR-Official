@@ -36,9 +36,8 @@ var usersRecord = Ext.data.Record.create([
   {name: 'username',              type: 'string',           mapping: 'username'},
   {name: 'password',              type: 'auto',             mapping: 'password'},
   {name: 'authorizedd',           type: 'string',           mapping: 'authorizedd'},
-  {name: 'authorized',            type: 'string',           mapping: 'authorized'},
-  {name: 'actived',            	  type: 'string',           mapping: 'actived'},
-  {name: 'active',            	  type: 'string',           mapping: 'active'},
+  {name: 'authorized',            type: 'string',          mapping: 'authorized'},
+  {name: 'active',            	  type: 'string',          mapping: 'active'},
   {name: 'info',                  type: 'string',           mapping: 'info'},
   {name: 'source',                type: 'int',              mapping: 'source'},
   {name: 'fname',                 type: 'string',           mapping: 'fname'},
@@ -234,9 +233,9 @@ var frmUsers = new Ext.FormPanel({
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Active?'), ENT_NOQUOTES); ?>: '},
-            { width: 100, xtype: 'checkbox', id: 'active', name: 'active', hiddenName: 'active' },
+            { width: 100, xtype: 'checkbox', id: 'active', name: 'active' },
             { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>: '},
-            { width: 105, xtype: 'checkbox', id: 'authorized', name: 'authorized', hiddenName: 'authorized' }
+            { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
           ]  
         },{ 
           xtype: 'compositefield',
@@ -303,9 +302,12 @@ var frmUsers = new Ext.FormPanel({
       // Add: The re-formated record to the dataStore
       //----------------------------------------------------------------
       if (frmUsers.getForm().findField('id').getValue()){ // Update
-        var record = storeUsers.getAt(rowPos);
-        var fieldValues = frmUsers.getForm().getValues(false);
-        for (key in fieldValues){ record.set( key, fieldValues[key] ); }
+		var record = storeUsers.getAt(rowPos);
+		var fieldValues = frmUsers.getForm().getValues();
+		for ( k=0; k <= storeUsers.fields.getCount()-1; k++) {
+			i = storeUsers.fields.get(k).name;
+			record.set( i, fieldValues[i] );
+		}
       } else { // Add
         storeUsers.add( rec );
       }
@@ -336,21 +338,11 @@ var winUsers = new Ext.Window({
   closeAction : 'hide',
   renderTo    : document.body,
   items: [ frmUsers ],
-  listeners: {
-		show: function(){
-			if ( Ext.getCmp('id').getValue() ){
-				winUsers.setTitle('<?php echo htmlspecialchars( xl('Edit User'), ENT_NOQUOTES); ?>');
-			} else {
-				winUsers.setTitle('<?php echo htmlspecialchars( xl('Add User'), ENT_NOQUOTES); ?>');
-			}
-		}
-	}
 }); // END WINDOW
 
 // *************************************************************************************
 // Create the GridPanel
 // *************************************************************************************
-
 var addressbookGrid = new Ext.grid.GridPanel({
   id          : 'addressbookGrid',
   store       : storeUsers,
@@ -371,7 +363,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
       rowPos = rowIndex;
       var rec = storeUsers.getAt(rowPos);
       Ext.getCmp('frmUsers').getForm().loadRecord(rec);
-      addressbookGrid.editUsers.enable();
+      addressbookGrid.editAddressbook.enable();
     },
 
     // -----------------------------------------
@@ -381,7 +373,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
       rowPos = rowIndex;
       var rec = storeUsers.getAt(rowPos); // get the record from the store
       Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
-      addressbookGrid.editUsers.enable();
+      addressbookGrid.editAddressbook.enable();
       winUsers.show();
     }
   },
@@ -392,7 +384,6 @@ var addressbookGrid = new Ext.grid.GridPanel({
     { width: 100,  header: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
     { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
     { width: 200,  header: '<?php echo htmlspecialchars( xl('Aditional info'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'info' },
-    { header: '<?php echo htmlspecialchars( xl('Active?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'actived' },
     { header: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'authorizedd' }
   ],
   // *************************************************************************************
@@ -400,7 +391,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
   // *************************************************************************************
   tbar: [{
     xtype     :'button',
-    id        : 'addUsers',
+    id        : 'addAddressbook',
     text      : '<?php xl("Add User", 'e'); ?>',
     iconCls   : 'icoAddressBook',
     handler   : function(){
@@ -409,8 +400,8 @@ var addressbookGrid = new Ext.grid.GridPanel({
     }
   },'-',{
     xtype     :'button',
-    id        : 'editUsers',
-    ref       : '../editUsers',
+    id        : 'editAddressbook',
+    ref       : '../editAddressbook',
     text      : '<?php xl("Edit User", 'e'); ?>',
     iconCls   : 'edit',
     disabled  : true,
