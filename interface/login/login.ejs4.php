@@ -15,6 +15,91 @@ $ignoreAuth = true;
 include_once ("../registry.php");
 include_once("$srcdir/sql.inc.php");
 
+//************************************************************************************************************
+// Collect groups
+//************************************************************************************************************
+$res = sqlStatement("SELECT
+						distinct name
+					FROM
+						groups");
+for ($iter = 0; $row = sqlFetchArray($res); $iter++){
+$group_buff .= "['" . $iter . "', '" . $row['name'] . "'],". chr(13);
+$result[$iter] = $row;
+}
+$group_buff = substr($group_buff, 0, -2); // Delete the last comma and clear the buff.
+if (count($result) == 1) { $resvalue = $result[0]{"name"}; }
+
+//************************************************************************************************************
+// Collect default language id
+//************************************************************************************************************
+$res2 = sqlStatement("SELECT
+						*
+					FROM
+						lang_languages
+					WHERE lang_description = '".$GLOBALS['language_default']."'");
+for ( $iter = 0; $row = sqlFetchArray($res2); $iter++) $result2[$iter] = $row;
+
+if (count($result2) == 1) {
+	$defaultLangID = $result2[0]{"lang_id"};
+	$defaultLangName = $result2[0]{"lang_description"};
+} else {
+	//default to english if any problems
+	$defaultLangID = 1;
+	$defaultLangName = "English";
+}
+
+//************************************************************************************************************
+// Set session variable to default so login information appears in default language
+//************************************************************************************************************
+$_SESSION['language_choice'] = $defaultLangID;
+
+//************************************************************************************************************
+// Collect languages if showing language menu
+//************************************************************************************************************
+if ($GLOBALS['language_menu_login']) {
+
+// sorting order of language titles depends on language translation options.
+$mainLangID = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
+if ($mainLangID == '1' && !empty($GLOBALS['skip_english_translation'])) {
+$sql = "SELECT
+			*
+		FROM
+			lang_languages
+		ORDER BY
+			lang_description,
+			lang_id";
+$res3=SqlStatement($sql);
+} else {
+	// Use and sort by the translated language name.
+	$sql = "SELECT
+				ll.lang_id,
+			IF(LENGTH(ld.definition),
+				ld.definition,
+				ll.lang_description) AS trans_lang_description,
+				ll.lang_description
+			FROM
+				lang_languages AS ll
+				LEFT JOIN lang_constants AS lc
+				ON lc.constant_name = ll.lang_description
+				LEFT JOIN lang_definitions AS ld
+				ON ld.cons_id = lc.cons_id AND ld.lang_id = '$mainLangID'
+			ORDER BY
+				IF(LENGTH(ld.definition),
+				ld.definition,
+				ll.lang_description),
+				ll.lang_id";
+	$res3=SqlStatement($sql);
+}
+
+for ($iter = 0;$row = sqlFetchArray($res3);$iter++) {
+	$lang_buff .= "['" . $row['lang_id'] . "', '" . $row['lang_description'] . "'],". chr(13);
+	$result3[$iter] = $row;
+}
+$lang_buff = substr($lang_buff, 0, -2); // Delete the last comma and clear the buff.
+
+//default to english if only return one language
+if (count($result3) == 1) { $defaultLanguage = 1; }
+}
 ?>
 <head>
 <TITLE><?php xl ('Login','e'); ?></TITLE>
@@ -35,10 +120,24 @@ include_once("$srcdir/sql.inc.php");
  * 
  */
 Ext.require([
-    'Ext.window.*'
+    'Ext.window.*',
+    'Ext.tip.QuickTips'
 ]);
 Ext.onReady(function(){
 Ext.QuickTips.init();
+
+// *************************************************************************************
+// Structure, data for storeTaxID
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+var lang_Data = [ <?php echo $lang_buff; ?> ];
+var langData = new Ext.data.ArrayStore({
+	id: 'lang_id',
+	fields: [ 'lang_id', 'lang_description' ],
+	data: lang_Data
+});
+
+
 
 var winCopyright = new Ext.create('widget.window', {
 	id				: 'winCopyright',
@@ -100,23 +199,52 @@ var formLogin = new Ext.create('Ext.form.FormPanel', {
 		validationEvent: false,
 		fieldLabel: '<?php echo htmlspecialchars( xl('Password'), ENT_NOQUOTES); ?>',
 		minLengthText: 'Password must be at least 4 characters long.'
-    //},{ 
-    //	xtype: 'combo', 
-    //	id: 'languageChoice', 
-    //	name: 'languageChoice', 
-    //	value: '<?php echo $defaultLangName; ?>', 
-    //	forceSelection: true, 
-    //	fieldLabel: '<?php echo htmlspecialchars( xl('Language'), ENT_NOQUOTES); ?>', 
-    //	editable: false, 
-    //	triggerAction: 'all', 
-    //	mode: 'local', 
-    //	valueField: 'lang_id', 
-    //	hiddenName: 'lang_id', 
-    //	displayField: 'lang_description' 
+    },{ 
+    	xtype: 'combo', 
+    	id: 'languageChoice', 
+    	name: 'languageChoice', 
+    	store: langData,
+    	emptyText: '<?php echo $defaultLangName; ?>', 
+    	forceSelection: true, 
+    	fieldLabel: '<?php echo htmlspecialchars( xl('Language'), ENT_NOQUOTES); ?>', 
+    	editable: false, 
+    	triggerAction: 'all', 
+    	valueField: 'lang_id', 
+    	displayField: 'lang_description' 
     }],
     buttons: [{
-        text: '<?php echo htmlspecialchars( "Login", ENT_QUOTES); ?>'
-    }]
+        text: '<?php echo htmlspecialchars( "Login", ENT_QUOTES); ?>',
+        id: 'btn_login',
+		name: 'btn_login',
+		text: '<?php echo htmlspecialchars( "Login", ENT_QUOTES); ?>',
+		handler: function() {
+			// Do the MD5 heavy work, and copy it to the correct field.
+			formLogin.authPass.setRawValue(Ext.util.MD5(formLogin.clearPass.getRawValue()));
+			// Set the cookie
+			var olddate = new Date();
+			olddate.setFullYear(olddate.getFullYear() - 1);
+			document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
+			// Submit the form
+			Ext.getCmp('frmLogin').getForm().submit();
+		}
+    }],
+    keys: [{
+		key: [Ext.EventObject.ENTER], handler: function() {
+			// Do the MD5 heavy work, and copy it to the correct field.
+			formLogin.authPass.setRawValue(Ext.util.MD5(formLogin.clearPass.getRawValue()));
+			// Set the cookie
+			var olddate = new Date();
+			olddate.setFullYear(olddate.getFullYear() - 1);
+			document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
+			// Submit the form
+			Ext.getCmp('frmLogin').getForm().submit();
+		}
+	}],
+	listeners:{
+		render: function(){
+			Ext.getCmp('authUser').focus(true, 10);
+		}
+	}
 });
 
     
