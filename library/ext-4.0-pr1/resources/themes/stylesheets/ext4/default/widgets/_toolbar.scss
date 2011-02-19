@@ -1,0 +1,62 @@
+@mixin extjs-toolbar {
+  .#{$prefix}-toolbar {
+    font-size: 11px;
+
+    border: 1px solid;
+    border-color: $toolbar-border-color;
+    background-color: $toolbar-background-color;
+
+    .#{$prefix}-box-inner {
+      border-style: solid;
+      border-width: $toolbar-border-inner-width;
+      border-color: $toolbar-border-inner-color;
+    }
+
+    .#{$prefix}-btn {
+      margin: $toolbar-margin;
+    }
+  }
+
+  .#{$prefix}-toolbar-footer {
+    background: transparent;
+    border: 0px none;
+    margin-top: 3px;
+    .#{$prefix}-box-inner {
+      border-width: 0;
+    }
+    .#{$prefix}-box-item {
+      margin-bottom: 0px;
+    }
+  }
+
+  .xtb-text {
+    line-height: 18px;
+    white-space: nowrap;
+    color: mix($mix-color, #000, 30) !important;
+    text-shadow: 0 1px 0 lighten($mix-color, 24);
+  }
+
+  .xtb-text,
+  .xtb-sep {
+    height: 22px;
+    height: 17px\9;
+    *height: 21px;
+    
+    //margin-left: $toolbar-side-margin !important;
+    //margin-right: $toolbar-side-margin !important;
+  }
+
+  .#{$prefix}-toolbar-separator {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: theme-image($theme-name, 'grid/grid-blue-split.gif');
+    display: block;
+    font-size: 1px;
+    height: 16px;
+    width: 4px;
+    overflow: hidden;
+    cursor: default;
+    margin: 0 2px 0;
+    border: 0;
+  }
+}

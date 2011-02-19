@@ -1,0 +1,272 @@
+var manifest = {
+    widgets: [
+        {
+            xtype: 'widget.button',
+            config: {
+                scale: 'small',
+                ui: 'default',
+                text: 'Button'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            filename: 'btn-default-small-over',
+            config: {
+                scale: 'small',
+                ui: 'default',
+                text: 'Button',
+                cls: 'x-btn-default-small-over'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            filename: 'btn-default-small-pressed',
+            config: {
+                scale: 'small',
+                ui: 'default',
+                text: 'Button',
+                cls: 'x-btn-default-small-pressed'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            filename: 'btn-toolbar-small-over',
+            config: {
+                scale: 'small',
+                ui: 'toolbar',
+                text: 'Button',
+                cls: 'x-btn-toolbar-small-over'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            filename: 'btn-toolbar-small-pressed',
+            config: {
+                scale: 'small',
+                ui: 'toolbar',
+                text: 'Button',
+                cls: 'x-btn-toolbar-small-pressed'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            config: {
+                scale: 'medium',
+                ui: 'default',
+                text: 'Button'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            filename: 'btn-default-medium-over',
+            config: {
+                scale: 'medium',
+                ui: 'default',
+                text: 'Button',
+                cls: 'x-btn-default-medium-over'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            filename: 'btn-default-medium-pressed',
+            config: {
+                scale: 'medium',
+                ui: 'default',
+                text: 'Button',
+                cls: 'x-btn-default-medium-pressed'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            config: {
+                scale: 'large',
+                ui: 'default',
+                text: 'Button'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            filename: 'btn-default-large-over',
+            config: {
+                scale: 'large',
+                ui: 'default',
+                text: 'Button',
+                cls: 'x-btn-default-large-over'
+            }
+        },
+        {
+            xtype: 'widget.button',
+            filename: 'btn-default-large-pressed',
+            config: {
+                scale: 'large',
+                ui: 'default',
+                text: 'Button',
+                cls: 'x-btn-default-large-pressed'
+            }
+        },
+        {
+            xtype: 'widget.panel',
+            filename: 'panel-framed',
+            config: {
+                height: 180,
+                width: 250,
+                frame: true,
+                html: 'Framed panel'
+            }
+        },
+        {
+            xtype: 'widget.toolbar',
+            filename: 'toolbar',
+            config: {
+                width: 200,
+                items: [{
+                    text: 'test'
+                }]
+            }
+        },
+        {
+            xtype: 'widget.header',
+            filename: 'panel-header',
+            config: {
+                title: 'Header',
+                baseCls: 'x-panel-header',
+                tools: [
+                    {type: 'toggle'},
+                    {type: 'close'},
+                    {type: 'minimize'},
+                    {type: 'maximize'},
+                    {type: 'restore'},
+                    {type: 'gear'},
+                    {type: 'pin'},
+                    {type: 'unpin'},
+                    {type: 'right'},
+                    {type: 'left'},
+                    {type: 'up'},
+                    {type: 'down'},
+                    {type: 'refresh'},
+                    {type: 'minus'},
+                    {type: 'plus'},
+                    {type: 'help'},
+                    {type: 'search'},
+                    {type: 'save'},
+                    {type: 'print'}
+                ] 
+            }
+        },
+        {
+            xtype: 'widget.header',
+            filename: 'panel-header-framed',
+            config: {
+                title: 'Framed Panel Header',
+                baseCls: 'x-panel-header',
+                frame: true
+            }
+        },
+        {
+            xtype: 'widget.header',
+            filename: 'panel-header-vertical',
+            config: {
+                title: 'Vertical Panel Header',
+                baseCls: 'x-panel-header',
+                orientation: 'vertical',
+                height: 200
+            }
+        },
+        {
+            xtype: 'widget.header',
+            filename: 'window-header',
+            config: {
+                title: 'Window Header',
+                baseCls: 'x-window-header'
+            }
+        },
+        {
+            xtype: 'widget.window',
+            filename: 'window',
+            title: 'Window',
+            config: {
+                setup: function(window, ct) {
+                    this.show();
+                },
+                height: 200,
+                width: 200,
+                x: 300,
+                y: 10,
+                fbar: {
+                    items: [{
+                        text: 'Submit'
+                    }]
+                },
+                tbar: {
+                    items: [{
+                        text: 'Button'
+                    }]
+                }
+            }
+        },
+        {
+            xtype: 'widget.tabpanel',
+            filename: 'tabpanel',
+            config: {
+                height: 200,
+                width: 200,
+                items: [{
+                    title: 'Tab 1',
+                    html: 'test'
+                }, {
+                    title: 'Tab 2',
+                    html: 'test'
+                }]
+            }
+        },
+        {
+            xtype: 'widget.tabbar',
+            filename: 'tab-bar',
+            delegate: '.x-tab-bar-body > .x-box-inner',
+            config: {
+                items: [{
+                    text: 'Tab 1'
+                }],
+                width: 300
+            }
+        },
+        {
+            xtype: 'widget.tab',
+            filename: 'tab-default',
+            config: {
+                text: 'Normal Tab'
+            }
+        },
+        {
+            xtype: 'widget.tab',
+            filename: 'tab-default-active',
+            config: {
+                active: true,
+                text: 'Active Tab'
+            }
+        },
+        {
+            xtype: 'widget.tab',
+            filename: 'tab-default-over',
+            config: {
+                cls: 'x-tab-over',
+                text: 'Over Tab'
+            }
+        },
+        {
+            xtype: 'widget.component',
+            folder: 'mask',
+            filename: 'mask',
+            delegate: '.x-mask-msg',
+            config: {
+                height: 200,
+                width: 200,
+                style: 'position: relative',
+                setup: function(component, ct) {
+                    component.render(ct);
+                    component.setLoading();
+                }
+            }
+        }
+    ]
+};

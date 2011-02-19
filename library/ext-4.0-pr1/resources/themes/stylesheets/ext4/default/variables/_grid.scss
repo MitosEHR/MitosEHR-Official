@@ -1,0 +1,9 @@
+/**
+ * @class Ext.grid.*
+ */
+
+$grid-base-color: lighten($panel-base-color, 5) !default;
+
+//header
+$grid-header-background-color: $grid-base-color !default;
+$grid-header-border-color: $panel-body-border-color !default;

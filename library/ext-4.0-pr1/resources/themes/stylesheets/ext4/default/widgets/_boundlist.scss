@@ -1,0 +1,39 @@
+@mixin extjs-boundlist {
+  .#{$prefix}-boundlist {
+    border: 1px solid $boundlist-border-color;
+    
+    background: $boundlist-background-color;
+  }
+
+	.#{$prefix}-boundlist-item {
+    padding: 2px;
+    
+    @include no-select;
+    
+    cursor: pointer;
+    cursor: hand;
+    
+    border: 1px $boundlist-item-border-style $boundlist-background-color;
+  } 
+  
+  .#{$prefix}-boundlist-selected {
+    background: $boundlist-item-selected-background-color;
+    
+		border-color: $boundlist-item-selected-border-color;
+  }
+
+	.#{$prefix}-boundlist-item-over {
+		background: $boundlist-item-over-background-color;
+    
+		border-color: $boundlist-item-over-border-color;
+  }
+  
+  .#{$prefix}-boundlist-floating {
+		border-top-width: 0;
+  }
+  
+  .#{$prefix}-boundlist-above {
+		border-top-width: 1px;
+		border-bottom-width: 1px;
+  }
+}

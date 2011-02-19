@@ -1,0 +1,189 @@
+/**
+ * @class Ext.menu.*
+ */
+@mixin extjs-menu {
+  .#{$prefix}-menu {
+    @include no-select;
+    zoom: 1;
+    overflow: hidden;
+    background: $menu-background-color;
+    padding: 2px;
+    
+    /* so separator can be abs positioned if the menu isn't floating */
+    position: relative;
+  }
+  
+  .#{$prefix}-menu-floating {
+    border: 1px solid $menu-border-color;
+  }
+  
+  .#{$prefix}-menu-icon-separator {
+    position: absolute;
+    top: 0px;
+    left: $menu-item-indent;
+    z-index: -1;
+    zoom: 1;
+    border-left: solid 1px $menu-separator-border-color;
+    background-color: $menu-separator-background-color;
+    width: 2px;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .#{$prefix}-menu-plain {
+    .#{$prefix}-menu-icon-separator {
+      display: none;
+    }
+  }
+  
+  .#{$prefix}-menu-item {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .#{$prefix}-menu-item-cmp {
+    margin-bottom: 1px;
+  }
+    
+  .#{$prefix}-menu-item-link {
+    display: block;
+    padding: 0px 2px;
+    text-decoration: none !important;
+    border: 1px solid transparent;
+    line-height: 16px;
+    cursor: default;
+  }
+  
+  @if $include-ie {
+    .ext-ie6 {
+      .#{$prefix}-menu-item-link {
+        border-color: $menu-background-color;
+      }
+    }
+  }
+  
+  .#{$prefix}-menu-item-icon {
+    width: 16px;
+    height: 16px;
+    margin: 4px 11px 0px 2px;
+    background: no-repeat center center;
+  }
+  
+  .#{$prefix}-menu-item-text {
+    position: relative;
+    font-size: 11px;
+    color: $menu-text-color;
+    top: -4px;
+  }
+  
+  .#{$prefix}-menu-item-checked {
+    background-image: theme-image($theme-name, 'menu/checked.gif') !important;
+  }
+  
+  .#{$prefix}-menu-item-unchecked {
+    background-image: theme-image($theme-name, 'menu/unchecked.gif') !important;
+  }
+  
+  .#{$prefix}-menu-group-item {
+    .#{$prefix}-menu-item-checked {
+      background-image: theme-image($theme-name, 'menu/group-checked.gif') !important;
+    }
+    
+    .#{$prefix}-menu-item-unchecked {
+      background-image: none !important;
+    }
+  }
+  
+  .#{$prefix}-menu-item-separator {
+    height: 2px;
+    border-top: solid 1px $menu-separator-border-color;
+    background-color: $menu-separator-background-color;
+    margin: 2px 0px;
+    overflow: hidden;
+  }
+  
+  .#{$prefix}-menu-item-arrow {
+    position: absolute;
+    width: 12px;
+    height: 9px;
+    top: 9px;
+    right: 0px;
+    background: theme-image($theme-name, 'menu/menu-parent.gif') no-repeat center center;
+  }
+  
+  .#{$prefix}-menu-item-indent {
+    padding-left: $menu-item-indent;
+  }
+  
+  .#{$prefix}-menu-item-active {
+    cursor: pointer;
+    
+    .#{$prefix}-menu-item-link {
+      @include background-gradient($menu-item-active-background-color, 'matte');
+      border-color: $menu-item-active-border-color;
+      cursor: pointer;
+    }
+  }
+  
+  .#{$prefix}-menu-item-disabled {
+    @include opacity(.5);
+  }
+  
+  @if $include-ie {
+    .ext-ie {
+      .#{$prefix}-menu-item-link {
+        line-height: 17px;
+      }
+      
+      .#{$prefix}-menu-item-disabled {
+        .#{$prefix}-menu-item-icon {
+          @include opacity(.5);
+        }
+        
+        .#{$prefix}-menu-item-text {
+          // IE opacity/cleartype bug workaround
+          background-color: $menu-background-color;
+        }
+      }
+      
+      .#{$prefix}-menu-icon-separator {
+        width: 1px;
+      }
+      
+      .#{$prefix}-menu-item-separator {
+        height: 1px;
+      }
+    }
+    
+    .ext-border-box .ext-ie {
+      .#{$prefix}-menu-icon-separator {
+        width: 2px;
+      }
+      
+      .#{$prefix}-menu-item-separator {
+        height: 2px;
+      }
+    }
+    
+    .ext-ie6, .ext-ie7 {
+      .#{$prefix}-menu-item-link {
+        padding: {
+          top: 3px;
+          bottom: 3px;
+        }
+      }
+      
+      .#{$prefix}-menu-item-icon {
+        margin-top: 1px;
+      }
+    }
+  }
+
+  @if $include-no-gradients {
+    .ext-no-linear-gradients {
+      .#{$prefix}-menu-item-active {
+        background: theme-image($theme-name, 'menu/item-over.gif') repeat-x left bottom;
+      }
+    }
+  }
+}
