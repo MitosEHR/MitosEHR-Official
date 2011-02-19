@@ -10,18 +10,13 @@
 // Already have the hidden field, but need the combobox when
 // it has more than one provider. And do some tests.
 //--------------------------------------------------------------------------------------------------------------------------
-
 $ignoreAuth = true;
 include_once ("../registry.php");
 include_once("$srcdir/sql.inc.php");
-
 //************************************************************************************************************
 // Collect groups
 //************************************************************************************************************
-$res = sqlStatement("SELECT
-						distinct name
-					FROM
-						groups");
+$res = sqlStatement("SELECT DISTINCT name FROM groups");
 for ($iter = 0; $row = sqlFetchArray($res); $iter++){
 $group_buff .= "['" . $iter . "', '" . $row['name'] . "'],". chr(13);
 $result[$iter] = $row;
@@ -32,11 +27,7 @@ if (count($result) == 1) { $resvalue = $result[0]{"name"}; }
 //************************************************************************************************************
 // Collect default language id
 //************************************************************************************************************
-$res2 = sqlStatement("SELECT
-						*
-					FROM
-						lang_languages
-					WHERE lang_description = '".$GLOBALS['language_default']."'");
+$res2 = sqlStatement("SELECT * FROM lang_languages WHERE lang_description = '".$GLOBALS['language_default']."'");
 for ( $iter = 0; $row = sqlFetchArray($res2); $iter++) $result2[$iter] = $row;
 
 if (count($result2) == 1) {
@@ -47,27 +38,18 @@ if (count($result2) == 1) {
 	$defaultLangID = 1;
 	$defaultLangName = "English";
 }
-
 //************************************************************************************************************
 // Set session variable to default so login information appears in default language
 //************************************************************************************************************
 $_SESSION['language_choice'] = $defaultLangID;
-
 //************************************************************************************************************
 // Collect languages if showing language menu
 //************************************************************************************************************
 if ($GLOBALS['language_menu_login']) {
-
 // sorting order of language titles depends on language translation options.
 $mainLangID = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
 if ($mainLangID == '1' && !empty($GLOBALS['skip_english_translation'])) {
-$sql = "SELECT
-			*
-		FROM
-			lang_languages
-		ORDER BY
-			lang_description,
-			lang_id";
+$sql = "SELECT * FROM lang_languages ORDER BY lang_description, lang_id";
 $res3=SqlStatement($sql);
 } else {
 	// Use and sort by the translated language name.
@@ -102,18 +84,14 @@ if (count($result3) == 1) { $defaultLanguage = 1; }
 }
 ?>
 <head>
-<TITLE><?php xl ('Login','e'); ?></TITLE>
-
+<title><?php xl ('Login','e'); ?></title>
 <script type="text/javascript" src="../../library/ext-4.0-pr1/bootstrap.js"></script>
-
 <link rel="stylesheet" type="text/css" href="../../library/ext-4.0-pr1/resources/css/ext.css">
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="../../ui_app/mitosehr_app.css" >
-
 <script type="text/javascript">
-
 /*!
- * Ext JS Library 3.3.1
+ * Ext JS Library 4.0
  * Copyright(c) 2006-2010 Sencha Inc.
  * licensing@sencha.com
  * http://www.sencha.com/license
@@ -125,10 +103,8 @@ Ext.require([
 ]);
 Ext.onReady(function(){
 Ext.QuickTips.init();
-
 // *************************************************************************************
-// Structure, data for storeTaxID
-// AJAX -> component_data.ejs.php
+// Structure, data for language Data
 // *************************************************************************************
 var lang_Data = [ <?php echo $lang_buff; ?> ];
 var langData = new Ext.data.ArrayStore({
@@ -136,8 +112,6 @@ var langData = new Ext.data.ArrayStore({
 	fields: [ 'lang_id', 'lang_description' ],
 	data: lang_Data
 });
-
-
 
 var winCopyright = new Ext.create('widget.window', {
 	id				: 'winCopyright',
@@ -155,12 +129,8 @@ var winCopyright = new Ext.create('widget.window', {
 	autoScroll		: true
 });
 
-
-    /*
-     * ================  Simple form  =======================
-     */
 var formLogin = new Ext.create('Ext.form.FormPanel', {
-	id				: 'frmLogin',
+	id				: 'formLogin',
     url				: '../main/main_screen.ejs.php?auth=login&site=<?php echo htmlspecialchars($_SESSION['site_id']); ?>',
     bodyStyle		:'padding:5px 5px 0',
 	frame			: false,
@@ -170,13 +140,6 @@ var formLogin = new Ext.create('Ext.form.FormPanel', {
     defaultType		: 'textfield',
     defaults		: { anchor: '100%' },
     items: [{ 
-    	xtype: 'textfield', 
-    	ref: '../authPass', 
-    	id: 'authPass', 
-    	hidden: true, 
-    	name: 'authPass', 
-    	value: '' 
-    },{
         minLength: 3,
 		maxLength: 32, 
 		allowBlank: false, 
@@ -192,10 +155,10 @@ var formLogin = new Ext.create('Ext.form.FormPanel', {
 		maxLength: 10, 
 		allowBlank: false,
 		blankText:'Enter your password', 
-		ref: '../clearPass', 
+		ref: '../authPass', 
 		inputType: 'password', 
-		id: 'clearPass', 
-		name: 'clearPass', 
+		id: 'authPass', 
+		name: 'authPass', 
 		validationEvent: false,
 		fieldLabel: '<?php echo htmlspecialchars( xl('Password'), ENT_NOQUOTES); ?>',
 		minLengthText: 'Password must be at least 4 characters long.'
@@ -213,31 +176,31 @@ var formLogin = new Ext.create('Ext.form.FormPanel', {
     	displayField: 'lang_description' 
     }],
     buttons: [{
-        text: '<?php echo htmlspecialchars( "Login", ENT_QUOTES); ?>',
+    	        text: '<?php echo htmlspecialchars( "Reset", ENT_QUOTES); ?>',
+        id: 'btn_reset',
+		name: 'btn_reset',
+		handler: function() {
+            formLogin.getForm().reset();
+		}
+	},{
+		text: '<?php echo htmlspecialchars( "Login", ENT_QUOTES); ?>',
         id: 'btn_login',
 		name: 'btn_login',
-		text: '<?php echo htmlspecialchars( "Login", ENT_QUOTES); ?>',
 		handler: function() {
-			// Do the MD5 heavy work, and copy it to the correct field.
-			formLogin.authPass.setRawValue(Ext.util.MD5(formLogin.clearPass.getRawValue()));
-			// Set the cookie
 			var olddate = new Date();
 			olddate.setFullYear(olddate.getFullYear() - 1);
 			document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
 			// Submit the form
-			Ext.getCmp('frmLogin').getForm().submit();
+            formLogin.getForm().submit();
 		}
     }],
     keys: [{
 		key: [Ext.EventObject.ENTER], handler: function() {
-			// Do the MD5 heavy work, and copy it to the correct field.
-			formLogin.authPass.setRawValue(Ext.util.MD5(formLogin.clearPass.getRawValue()));
-			// Set the cookie
 			var olddate = new Date();
 			olddate.setFullYear(olddate.getFullYear() - 1);
 			document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
 			// Submit the form
-			Ext.getCmp('frmLogin').getForm().submit();
+			formLogin.getForm().submit();
 		}
 	}],
 	listeners:{
@@ -246,9 +209,6 @@ var formLogin = new Ext.create('Ext.form.FormPanel', {
 		}
 	}
 });
-
-    
-
 
 var winLogin = new Ext.create('widget.window', {
     title: '<?php xl('MitosEHR Logon','e'); ?>',
@@ -269,7 +229,6 @@ var winLogin = new Ext.create('widget.window', {
 winLogin.show();
    
 });
-
 </script>
 </head>
 <body id="login">
