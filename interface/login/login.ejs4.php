@@ -135,7 +135,8 @@ var formLogin = new Ext.create('Ext.form.FormPanel', {
     bodyStyle		:'padding:5px 5px 0',
 	frame			: false,
 	border			: false,
-	doAction		: {method: 'POST'},
+	standardSubmit	: true,   // new ext 4
+	method			: 'POST', 	//new ext 4
     fieldDefaults	: { msgTarget: 'side', labelWidth: 300 },
     defaultType		: 'textfield',
     defaults		: { anchor: '100%' },
