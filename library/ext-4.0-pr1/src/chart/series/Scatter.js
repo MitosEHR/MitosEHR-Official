@@ -3,7 +3,7 @@
  * @extends Ext.chart.series.Cartesian
  * 
  * Creates a Scatter Chart. The scatter plot is useful when trying to display more than two variables in the same visualization. 
- * These variables can be mapped into x, y coordinates and`also to an element's radius/size, color, etc.
+ * These variables can be mapped into x, y coordinates and also to an element's radius/size, color, etc.
  * As with all other series, the Scatter Series must be appended in the *series* Chart array configuration. See the Chart 
  * documentation for more information on creating charts. A typical configuration object for the scatter could be:
  * 
