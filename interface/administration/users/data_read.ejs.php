@@ -52,6 +52,7 @@ while ($myrow = sqlFetchArray($result)) {
   $buff .= " password: '" . $aes->decrypt( $myrow['password'] ) . "',";
   $buff .= " authorizedd: '" . dataEncode( $rec['authorizedd'] ) . "',";
   $buff .= " authorized: '" . dataEncode( $rec['authorized'] ) . "',";
+  $buff .= " actived: '" . dataEncode( $rec['actived'] ) . "',";
   $buff .= " active: '" . dataEncode( $rec['active'] ) . "',";
   $buff .= " info: '" . dataEncode( $myrow['info'] ) . "',";
   $buff .= " source: '" . dataEncode( $myrow['source'] ) . "',";

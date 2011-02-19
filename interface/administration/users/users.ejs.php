@@ -36,8 +36,9 @@ var usersRecord = Ext.data.Record.create([
   {name: 'username',              type: 'string',           mapping: 'username'},
   {name: 'password',              type: 'auto',             mapping: 'password'},
   {name: 'authorizedd',           type: 'string',           mapping: 'authorizedd'},
-  {name: 'authorized',            type: 'string',          mapping: 'authorized'},
-  {name: 'active',            	  type: 'string',          mapping: 'active'},
+  {name: 'authorized',            type: 'string',           mapping: 'authorized'},
+  {name: 'actived',            	  type: 'string',           mapping: 'actived'},
+  {name: 'active',            	  type: 'string',           mapping: 'active'},
   {name: 'info',                  type: 'string',           mapping: 'info'},
   {name: 'source',                type: 'int',              mapping: 'source'},
   {name: 'fname',                 type: 'string',           mapping: 'fname'},
@@ -385,6 +386,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     { width: 100,  header: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
     { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
     { width: 200,  header: '<?php echo htmlspecialchars( xl('Aditional info'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'info' },
+    { header: '<?php echo htmlspecialchars( xl('Active?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'actived' },
     { header: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'authorizedd' }
   ],
   // *************************************************************************************
