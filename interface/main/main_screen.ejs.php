@@ -60,7 +60,6 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <link rel="stylesheet" type="text/css" href="../../repository/calendar/resources/css/extensible-all.css" />
 <link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/examples/ux/css/RowEditor.css" />
 <link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext-all.css" />
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/examples/form/forms.css" />
 <link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/xtheme-gray.css" />
   
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
