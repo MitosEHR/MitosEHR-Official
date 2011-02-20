@@ -1,7 +1,7 @@
 <?php
 //--------------------------------------------------------------------------------------------------------------------------
 // login.ejs.php
-// v0.0.3
+// v0.0.4
 // Under GPLv3 License
 // Integration Sencha ExtJS Framework
 //
@@ -13,229 +13,158 @@
 
 $ignoreAuth = true;
 include_once ("../registry.php");
-include_once("$srcdir/sql.inc.php");
+include_once("$srcdir/adoHelper/adoHelper.inc.php");
 
-//************************************************************************************************************
-// Collect default language id
-//************************************************************************************************************
-$res2 = sqlStatement("SELECT
-						*
-					FROM
-						lang_languages
-					WHERE lang_description = '".$GLOBALS['language_default']."'");
-for ( $iter = 0; $row = sqlFetchArray($res2); $iter++) $result2[$iter] = $row;
-
-if (count($result2) == 1) {
-	$defaultLangID = $result2[0]{"lang_id"};
-	$defaultLangName = $result2[0]{"lang_description"};
-} else {
-	//default to english if any problems
-	$defaultLangID = 1;
-	$defaultLangName = "English";
-}
-
-//************************************************************************************************************
-// Set session variable to default so login information appears in default language
-//************************************************************************************************************
-$_SESSION['language_choice'] = $defaultLangID;
-
-//************************************************************************************************************
-// Collect languages if showing language menu
-//************************************************************************************************************
-if ($GLOBALS['language_menu_login']) {
-
-// sorting order of language titles depends on language translation options.
-$mainLangID = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
-if ($mainLangID == '1' && !empty($GLOBALS['skip_english_translation'])) {
-$sql = "SELECT
-			*
-		FROM
-			lang_languages
-		ORDER BY
-			lang_description,
-			lang_id";
-$res3=SqlStatement($sql);
-} else {
-	// Use and sort by the translated language name.
-	$sql = "SELECT
-				ll.lang_id,
-			IF(LENGTH(ld.definition),
-				ld.definition,
-				ll.lang_description) AS trans_lang_description,
-				ll.lang_description
-			FROM
-				lang_languages AS ll
-				LEFT JOIN lang_constants AS lc
-				ON lc.constant_name = ll.lang_description
-				LEFT JOIN lang_definitions AS ld
-				ON ld.cons_id = lc.cons_id AND ld.lang_id = '$mainLangID'
-			ORDER BY
-				IF(LENGTH(ld.definition),
-				ld.definition,
-				ll.lang_description),
-				ll.lang_id";
-	$res3=SqlStatement($sql);
-}
-
-for ($iter = 0;$row = sqlFetchArray($res3);$iter++) {
-	$lang_buff .= "['" . $row['lang_id'] . "', '" . $row['lang_description'] . "'],". chr(13);
-	$result3[$iter] = $row;
-}
-$lang_buff = substr($lang_buff, 0, -2); // Delete the last comma and clear the buff.
-
-//default to english if only return one language
-if (count($result3) == 1) { $defaultLanguage = 1; }
-}
 ?>
 <head>
 <TITLE><?php xl ('Login','e'); ?></TITLE>
 
-<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/ext-all.js"></script>
-<script type="text/javascript" src="../../repository/extMD5/ext.util.md5.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext-all.css">
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext.css">
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="../../ui_app/mitosehr_app.css" >
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/xtheme-gray.css" />
 
 <script type="text/javascript">
-
+Ext.require([
+	'Ext.form.*',
+    'Ext.window.*',
+    'Ext.tip.QuickTips'
+]);
 Ext.onReady(function(){
-
-Ext.QuickTips.init();
 
 // *************************************************************************************
 // Structure, data for storeGroup
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-var storeGroup = new Ext.data.Store({
-	proxy: new Ext.data.HttpProxy({
+Ext.regModel('Group', { fields: ['id', 'name'] } );
+var storeGroup = Ext.data.Store({
+	model: 'Group',
+	proxy: new Ext.data.AjaxProxy({
 		url: '../login/component_data.ejs.php?task=groups'
 	}),
-	reader: new Ext.data.JsonReader({
+	reader: { // The default reader is JSON
 		idIndex: 0,
 		idProperty: 'id',
 		totalProperty: 'results',
 		root: 'row'
-	},[
-		{name: 'id', type: 'int', mapping: 'id'},
-		{name: 'name', type: 'string', mapping: 'name'}
-	])
+	},
+	autoLoad: true
 });
-storeGroup.load();
 
 // *************************************************************************************
-// Structure and load data for Language Combo Box
+// Structure, data for storeLang
+// AJAX -> component_data.ejs.php
 // *************************************************************************************
-var lang_Data = [ <?php echo $lang_buff; ?> ];
-var langData = new Ext.data.ArrayStore({
-	id: 'lang_id',
-	fields: [ 'lang_id', 'lang_description' ],
-	data: lang_Data
+Ext.regModel('Lang', { fields: ['lang_id', 'lang_description'] } );
+var storeLang = new Ext.data.Store({
+	model: 'Lang',
+	proxy: new Ext.data.AjaxProxy({
+		url: '../login/component_data.ejs.php?task=lang'
+	}),
+	reader: { // The default reader is JSON
+		idIndex: 0,
+		idProperty: 'land_id',
+		totalProperty: 'results',
+		root: 'row'
+	},
+	autoLoad: true
 });
 
 // *************************************************************************************
 // The Copyright Notice Window
 // *************************************************************************************
-var winCopyright = new Ext.Window({
+var winCopyright = Ext.create('widget.window', {
+	id: 'winCopyright',
 	width:600,
 	height:500,
-	id: 'winCopyright',
 	closeAction:'hide',
 	bodyStyle: 'padding: 5px;',
 	modal: false,
 	resizable: true,
-	title: '<?php xl('MitosEHR Copyright Notice','e'); ?>',
+	title: 'MitosEHR Copyright Notice',
 	draggable: true,
 	closable: true,
 	autoLoad: 'copyright_notice.html',
-	animateTarget: 'copyright',
 	autoScroll: true
 });
 
 // *************************************************************************************
-// The Logon Window
+// Form Layout [Login]
 // *************************************************************************************
-var winLogon = new Ext.Window({
-	width:500,
-	height:320,
-	id:'logon-window',
-	closeAction:'hide',
-	plain: true,
-	modal: false,
-	resizable: false,
-	title: 'MitosEHR Logon',
-	draggable: false,
-	closable: false,
-	items: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: '../../ui_app/logon_header.png'} },{
-	xtype: 'form',
-	labelWidth: 300,
-	height:300,
-	id: 'frmLogin',
-	frame: false,
-	doAction: {method: 'POST'},
-	border: false,
-	bodyStyle: 'padding: 5px',
-	url: '../main/main_screen.ejs.php?auth=login&site=<?php echo htmlspecialchars($_SESSION['site_id']); ?>',
-	defaults: {width: 150},
-	formBind: true,
-	standardSubmit: true,
-	items: [
-		{ xtype: 'combo', id: 'authProvider', name: 'authProvider', value: '<?php echo htmlspecialchars( $resvalue, ENT_QUOTES); ?>', forceSelection: true, fieldLabel: '<?php echo htmlspecialchars( xl('Group'), ENT_NOQUOTES); ?>', editable: false, triggerAction: 'all', store: storeGroup, mode: 'local', valueField: 'id', displayField: 'name' },
-		{ xtype: 'textfield', ref: '../authPass', id: 'authPass', hidden: true, name: 'authPass', value: '' },
-		{ xtype: 'textfield', 
-			minLength: 3,
-			maxLength: 32, 
-			allowBlank: false, 
-			blankText:'Enter your username', 
-			ref: '../authUser', 
-			id: 'authUser', 
-			name: 'authUser', 
-			validationEvent: false, 
-			fieldLabel: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>',
-			minLengthText: 'Username must be at least 3 characters long.' },
-		{ xtype: 'textfield', 
-			minLength: 4,
-			maxLength: 10, 
-			allowBlank: false,
-			blankText:'Enter your password', 
-			ref: '../clearPass', 
-			inputType: 'password', 
-			id: 'clearPass', 
-			name: 'clearPass', 
-			validationEvent: false,
-			fieldLabel: '<?php echo htmlspecialchars( xl('Password'), ENT_NOQUOTES); ?>',
-			minLengthText: 'Password must be at least 4 characters long.' },
-		{ xtype: 'combo', id: 'languageChoice', name: 'languageChoice', value: '<?php echo $defaultLangName; ?>', forceSelection: true, fieldLabel: '<?php echo htmlspecialchars( xl('Language'), ENT_NOQUOTES); ?>', editable: false, triggerAction: 'all', store: langData, mode: 'local', valueField: 'lang_id', hiddenName: 'lang_id', displayField: 'lang_description' },
-		// Special button, this little guy does a lot of work.
-		// So, we need to dismantle it a little bit, for easy reading.
-		{ xtype: 'button',
-			id: 'btn_login',
-			name: 'btn_login',
-			text: '<?php echo htmlspecialchars( "Login", ENT_QUOTES); ?>',
-			handler: function() {
-				// Do the MD5 heavy work, and copy it to the correct field.
-				winLogon.authPass.setRawValue(Ext.util.MD5(winLogon.clearPass.getRawValue()));
-				// Set the cookie
-				var olddate = new Date();
-				olddate.setFullYear(olddate.getFullYear() - 1);
-				document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
-				// Submit the form
-				Ext.getCmp('frmLogin').getForm().submit();
-			}
-		} // end of button
-	],
-	keys: [{
-		key: [Ext.EventObject.ENTER], handler: function() {
-			// Do the MD5 heavy work, and copy it to the correct field.
-			winLogon.authPass.setRawValue(Ext.util.MD5(winLogon.clearPass.getRawValue()));
-			// Set the cookie
+var formLogin = Ext.create('Ext.form.FormPanel', {
+	id				: 'formLogin',
+    url				: '../main/main_screen.ejs.php?auth=login&site=<?php echo htmlspecialchars($_SESSION['site_id']); ?>',
+    bodyStyle		:'padding:5px 5px 0',
+	frame			: false,
+	border			: false,
+	standardSubmit	: true,   // new ext 4
+	method			: 'POST', 	//new ext 4
+    fieldDefaults	: { msgTarget: 'side', labelWidth: 300 },
+    defaultType		: 'textfield',
+    defaults		: { anchor: '100%' },
+    items: [{ 
+        minLength: 3,
+		maxLength: 32, 
+		allowBlank: false, 
+		blankText:'Enter your username', 
+		ref: '../authUser', 
+		id: 'authUser', 
+		name: 'authUser', 
+		validationEvent: false, 
+		fieldLabel: '<?php echo xl('Username'); ?>',
+		minLengthText: 'Username must be at least 3 characters long.' 
+	},{
+        minLength: 4,
+		maxLength: 10, 
+		allowBlank: false,
+		blankText:'Enter your password', 
+		ref: '../authPass', 
+		inputType: 'password', 
+		id: 'authPass', 
+		name: 'authPass', 
+		validationEvent: false,
+		fieldLabel: '<?php echo xl('Password'); ?>',
+		minLengthText: 'Password must be at least 4 characters long.'
+    },{ 
+    	xtype: 'combo', 
+    	id: 'languageChoice', 
+    	name: 'languageChoice', 
+    	store: storeLang,
+    	emptyText: '<?php echo $defaultLangName; ?>', 
+    	forceSelection: true, 
+    	fieldLabel: '<?php echo xl('Language'); ?>', 
+    	editable: false, 
+    	triggerAction: 'all', 
+    	valueField: 'lang_id', 
+    	displayField: 'lang_description' 
+    }],
+    buttons: [{
+        text: 'Reset',
+        id: 'btn_reset',
+		name: 'btn_reset',
+		handler: function() {
+            formLogin.getForm().reset();
+		}
+	},{
+		text: 'Login',
+        id: 'btn_login',
+		name: 'btn_login',
+		handler: function() {
 			var olddate = new Date();
 			olddate.setFullYear(olddate.getFullYear() - 1);
 			document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
 			// Submit the form
-			Ext.getCmp('frmLogin').getForm().submit();
+            formLogin.getForm().submit();
+		}
+    }],
+    keys: [{
+		key: [Ext.EventObject.ENTER], handler: function() {
+			var olddate = new Date();
+			olddate.setFullYear(olddate.getFullYear() - 1);
+			document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
+			// Submit the form
+			formLogin.getForm().submit();
 		}
 	}],
 	listeners:{
@@ -243,8 +172,26 @@ var winLogon = new Ext.Window({
 			Ext.getCmp('authUser').focus(true, 10);
 		}
 	}
-}]
-}); // End Logon Window
+});
+
+// *************************************************************************************
+// The Logon Window
+// *************************************************************************************
+var winLogon = new Ext.create('widget.window', {
+    title: '<?php xl('MitosEHR Logon','e'); ?>',
+    closable: true,
+    width:499,
+	height:300,
+	bodyPadding :2,  		//new 4.0 
+	closeAction:'hide',
+    plain: true,
+	modal: false,
+	resizable: false,
+	draggable: false,
+	closable: false,
+    bodyStyle: 'padding: 5px;',
+    items: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: '../../ui_app/logon_header.png'}}, formLogin ]
+});
 
 winLogon.show();
 
@@ -254,6 +201,5 @@ winLogon.show();
 </head>
 <body id="login">
 <div id="copyright">MitosEHR v1.0 Development | <a href="javascript:void()" onClick="Ext.getCmp('winCopyright').show();" >Copyright Notice</a></div>
-
 </body>
 </html>
