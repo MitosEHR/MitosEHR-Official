@@ -133,7 +133,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
     	editable: false, 
     	triggerAction: 'all', 
     	valueField: 'lang_id', 
-    	displayField: 'lang_description' 
+    	displayField: 'lang_description',
     }],
     buttons: [{
         text: 'Reset',

@@ -27,60 +27,61 @@ require_once("../../../repository/dataExchange/dataExchange.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
 $z = "abcdefghijuklmno0123456789012345"; // 256-bit key
 $aes = new AES($z);
+
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 $sql = "SELECT * FROM users WHERE users.authorized = 1 OR users.username != '' 
         ORDER BY username LIMIT ".$start.",".$count;
-$result = sqlStatement( $sql );
+
 // Total of rows in database
 $total = mysql_query("SELECT COUNT(id) FROM users");
 $total = mysql_result($total, 0);
 
-while ($myrow = sqlFetchArray($result)) {
+foreach (sqlStatement($sql) as $urow) {
   // returns "Yes" or "NO" for main grid		
-  $rec['authorizedd']= ($myrow['authorized'] == '1' ? 'Yes' : 'No');
-  $rec['actived'] 	 = ($myrow['active'] 	== '1' ? 'Yes' : 'No');
+  $rec['authorizedd']= ($urow['authorized'] == '1' ? 'Yes' : 'No');
+  $rec['actived'] 	 = ($urow['active'] 	== '1' ? 'Yes' : 'No');
   
   // returns "on" or "off" for checkboxes
-  $rec['active'] 	 = ($myrow['active'] 	 == '1' ? 'on' : 'off');
-  $rec['authorized'] = ($myrow['authorized'] == '1' ? 'on' : 'off');
+  $rec['active'] 	 = ($urow['active'] 	 == '1' ? 'on' : 'off');
+  $rec['authorized'] = ($urow['authorized'] == '1' ? 'on' : 'off');
   
   $buff .= "{";
-  $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
-  $buff .= " username: '" . dataEncode( $myrow['username'] ) . "',";
-  $buff .= " password: '" . $aes->decrypt( $myrow['password'] ) . "',";
+  $buff .= " id: '" . dataEncode( $urow['id'] ) . "',";
+  $buff .= " username: '" . dataEncode( $urow['username'] ) . "',";
+  $buff .= " password: '" . $aes->decrypt( $urow['password'] ) . "',";
   $buff .= " authorizedd: '" . dataEncode( $rec['authorizedd'] ) . "',";
   $buff .= " authorized: '" . dataEncode( $rec['authorized'] ) . "',";
   $buff .= " actived: '" . dataEncode( $rec['actived'] ) . "',";
   $buff .= " active: '" . dataEncode( $rec['active'] ) . "',";
-  $buff .= " info: '" . dataEncode( $myrow['info'] ) . "',";
-  $buff .= " source: '" . dataEncode( $myrow['source'] ) . "',";
-  $buff .= " fname: '" . dataEncode( $myrow['fname'] ) . "',";
-  $buff .= " mname: '" . dataEncode( $myrow['mname'] ) . "',";
-  $buff .= " lname: '" . dataEncode( $myrow['lname'] ) . "',";
-  $buff .= " fullname: '" . dataEncode( $myrow['lname'] ) . ", " . dataEncode( $myrow['fname'] ) . " " . dataEncode( $myrow['mname'] ) . "',";
-  $buff .= " federaltaxid: '" . dataEncode( $myrow['federaltaxid'] ) . "',";
-  $buff .= " federaldrugid: '" . dataEncode( $myrow['federaldrugid'] ) . "',";
-  $buff .= " upin: '" . dataEncode( $myrow['upin'] ) . "',";
-  $buff .= " facility: '" . dataEncode( $myrow['facility'] ) . "',";
-  $buff .= " facility_id: '" . dataEncode( $myrow['facility_id'] ) . "',";
-  $buff .= " see_auth: '" . dataEncode( $myrow['see_auth'] ) . "',";
-  $buff .= " active: '" . dataEncode( $myrow['active'] ) . "',";
-  $buff .= " npi: '" . dataEncode( $myrow['npi'] ) . "',";
-  $buff .= " title: '" . dataEncode( $myrow['title'] ) . "',";
-  $buff .= " specialty: '" . dataEncode( $myrow['specialty'] ) . "',";
-  $buff .= " billname: '" . dataEncode( $myrow['billname'] ) . "',";
-  $buff .= " valedictory: '" . dataEncode( $myrow['valedictory'] ) . "',";
-  $buff .= " cal_ui: '" . dataEncode( $myrow['cal_ui'] ) . "',";
-  $buff .= " taxonomy: '" . dataEncode( $myrow['taxonomy'] ) . "',";
-  $buff .= " ssi_relayhealth: '" . dataEncode( $myrow['ssi_relayhealth'] ) . "',";
-  $buff .= " calendar: '" . dataEncode( $myrow['calendar'] ) . "',";
-  $buff .= " pwd_expiration_date: '" . dataEncode( $myrow['pwd_expiration_date'] ) . "',";
-  $buff .= " pwd_history1: '" . dataEncode( $myrow['pwd_history1'] ) . "',";
-  $buff .= " pwd_history2: '" . dataEncode( $myrow['pwd_history2'] ) . "',";
-  $buff .= " default_warehouse: '" . dataEncode( $myrow['default_warehouse'] ) . "',";
-  $buff .= " irnpool: '" . dataEncode( $myrow['irnpool'] ) . "'}," . chr(13);
+  $buff .= " info: '" . dataEncode( $urow['info'] ) . "',";
+  $buff .= " source: '" . dataEncode( $urow['source'] ) . "',";
+  $buff .= " fname: '" . dataEncode( $urow['fname'] ) . "',";
+  $buff .= " mname: '" . dataEncode( $urow['mname'] ) . "',";
+  $buff .= " lname: '" . dataEncode( $urow['lname'] ) . "',";
+  $buff .= " fullname: '" . dataEncode( $urow['lname'] ) . ", " . dataEncode( $urow['fname'] ) . " " . dataEncode( $urow['mname'] ) . "',";
+  $buff .= " federaltaxid: '" . dataEncode( $urow['federaltaxid'] ) . "',";
+  $buff .= " federaldrugid: '" . dataEncode( $urow['federaldrugid'] ) . "',";
+  $buff .= " upin: '" . dataEncode( $urow['upin'] ) . "',";
+  $buff .= " facility: '" . dataEncode( $urow['facility'] ) . "',";
+  $buff .= " facility_id: '" . dataEncode( $urow['facility_id'] ) . "',";
+  $buff .= " see_auth: '" . dataEncode( $urow['see_auth'] ) . "',";
+  $buff .= " active: '" . dataEncode( $urow['active'] ) . "',";
+  $buff .= " npi: '" . dataEncode( $urow['npi'] ) . "',";
+  $buff .= " title: '" . dataEncode( $urow['title'] ) . "',";
+  $buff .= " specialty: '" . dataEncode( $urow['specialty'] ) . "',";
+  $buff .= " billname: '" . dataEncode( $urow['billname'] ) . "',";
+  $buff .= " valedictory: '" . dataEncode( $urow['valedictory'] ) . "',";
+  $buff .= " cal_ui: '" . dataEncode( $urow['cal_ui'] ) . "',";
+  $buff .= " taxonomy: '" . dataEncode( $urow['taxonomy'] ) . "',";
+  $buff .= " ssi_relayhealth: '" . dataEncode( $urow['ssi_relayhealth'] ) . "',";
+  $buff .= " calendar: '" . dataEncode( $urow['calendar'] ) . "',";
+  $buff .= " pwd_expiration_date: '" . dataEncode( $urow['pwd_expiration_date'] ) . "',";
+  $buff .= " pwd_history1: '" . dataEncode( $urow['pwd_history1'] ) . "',";
+  $buff .= " pwd_history2: '" . dataEncode( $urow['pwd_history2'] ) . "',";
+  $buff .= " default_warehouse: '" . dataEncode( $urow['default_warehouse'] ) . "',";
+  $buff .= " irnpool: '" . dataEncode( $urow['irnpool'] ) . "'}," . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.

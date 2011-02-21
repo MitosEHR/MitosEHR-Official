@@ -66,20 +66,19 @@ $currList = $_REQUEST['list_id'];
 					IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq";
 	}
 
-	$result = sqlStatement( $sql );
 	$buff = "";
-	while ($myrow = sqlFetchArray($result)) {
+	foreach (sqlStatement($sql) as $urow) {
 		$count++;
 		$buff .= "{";
-		$buff .= " id: '" . $myrow['id'] . "',";
-		$buff .= " list_id: '" . dataEncode( $myrow['list_id'] ) . "',";
-		$buff .= " option_id: '" . dataEncode( $myrow['option_id'] ) . "',";
-		$buff .= " title: '" . dataEncode( $myrow['title'] ) . "',";
-		$buff .= " seq: '" . dataEncode( $myrow['seq'] ) . "',";
-		$buff .= " is_default: '" . dataEncode( $myrow['is_default'] ) . "'," ;
-		$buff .= " option_value: '" . dataEncode( $myrow['option_value'] ) . "',";
-		$buff .= " mapping: '" . dataEncode( $myrow['mapping'] ) . "',";
-		$buff .= " notes: '" . dataEncode( $myrow['notes'] ) . "'}," . chr(13);
+		$buff .= " id: '" . $urow['id'] . "',";
+		$buff .= " list_id: '" . dataEncode( $urow['list_id'] ) . "',";
+		$buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";
+		$buff .= " title: '" . dataEncode( $urow['title'] ) . "',";
+		$buff .= " seq: '" . dataEncode( $urow['seq'] ) . "',";
+		$buff .= " is_default: '" . dataEncode( $urow['is_default'] ) . "'," ;
+		$buff .= " option_value: '" . dataEncode( $urow['option_value'] ) . "',";
+		$buff .= " mapping: '" . dataEncode( $urow['mapping'] ) . "',";
+		$buff .= " notes: '" . dataEncode( $urow['notes'] ) . "'}," . chr(13);
 	}
 
 	$buff = substr($buff, 0, -2); // Delete the last comma.

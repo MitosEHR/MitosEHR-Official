@@ -76,7 +76,7 @@ switch ($_GET['task']) {
 							ORDER BY
 								lname,
 								fname");
-		while ($urow = sqlFetchArray($sql)) {
+		foreach (sqlStatement($sql) as $urow) {
 			$count++;
 			// Merge firstname with lastname
 			if ($urow['fname']){
@@ -107,10 +107,9 @@ switch ($_GET['task']) {
 					list_id = 'note_type'
 				ORDER BY
 					seq, title";
-		$result = sqlStatement($sql);
-		while($row = sqlFetchArray($result)){
+		foreach (sqlStatement($sql) as $urow) {
 			$count++;
-			$buff .= " { option_id: '" . dataDecode( $row{'option_id'} ) . "', title: '" . dataDecode( $row{'title'} ) . "' },". chr(13);
+			$buff .= " { option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
@@ -133,10 +132,9 @@ switch ($_GET['task']) {
 					list_id = 'message_status'
 				ORDER BY
 					seq, title";
-		$result = sqlStatement($sql);
-		while($row = sqlFetchArray($result)){
+		foreach (sqlStatement($sql) as $urow) {
 			$count++;
-			$buff .= "{ option_id: '" . dataDecode( $row{'option_id'} ) . "', title: '" . dataDecode( $row{'title'} ) . "' },". chr(13);
+			$buff .= "{ option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
@@ -157,15 +155,14 @@ switch ($_GET['task']) {
 					patient_data
 				ORDER BY
 					lname ASC, fname ASC";
-		$result = sqlStatement($sql);
-		while ($row = sqlFetchArray($result)) {
+		foreach (sqlStatement($sql) as $urow) {
 			$count++;
-			$buff .= "{ id: '" . dataDecode( $row['id'] ) . "',";
-			$buff .= " name: '" . dataDecode( $row['fname'] ) . ", " . dataDecode( $row['lname'] )  . "',";
-			$buff .= " phone: '" . dataDecode( "Contact: ".$row['phone_contact']." | Home: " . $row['phone_home']." | Cell: ".$row['phone_cell']." | Work: ".$row['phone_biz'] ) . "',";
-			$buff .= " ss: '" . dataDecode( $row['ss'] ) . "',";
-			$buff .= " dob: '" . dataDecode( $row['DOB'] ) . "',";
-			$buff .= " pid: '" . dataDecode( $row['pid'] ) . "'},".chr(13);
+			$buff .= "{ id: '" . dataDecode( $urow['id'] ) . "',";
+			$buff .= " name: '" . dataDecode( $urow['fname'] ) . ", " . dataDecode( $urow['lname'] )  . "',";
+			$buff .= " phone: '" . dataDecode( "Contact: ".$urow['phone_contact']." | Home: " . $urow['phone_home']." | Cell: ".$urow['phone_cell']." | Work: ".$urow['phone_biz'] ) . "',";
+			$buff .= " ss: '" . dataDecode( $urow['ss'] ) . "',";
+			$buff .= " dob: '" . dataDecode( $urow['DOB'] ) . "',";
+			$buff .= " pid: '" . dataDecode( $urow['pid'] ) . "'},".chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';

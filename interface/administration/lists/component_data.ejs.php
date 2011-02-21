@@ -61,7 +61,7 @@ switch ($_GET['task']) {
 								ORDER BY 
 									IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
 		}
-		while ($urow = sqlFetchArray($sql)) {
+		foreach (sqlStatement($sql) as $urow) {
 			$buff .= " { option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
 			$count++;
 		}

@@ -7,11 +7,6 @@
  */
 
 //**********************************************************************
-// Use the field name association intead of numbers
-//**********************************************************************
-define ('ADODB_FETCH_ASSOC',2); 
-
-//**********************************************************************
 // Include the main library of ADOdb
 //**********************************************************************
 include_once($_SESSION['site']['root'] . "/library/adodb/adodb.inc.php");
@@ -19,14 +14,17 @@ include_once($_SESSION['site']['root'] . "/library/adodb/adodb.inc.php");
 //**********************************************************************
 // Connect to the database
 //**********************************************************************
-$database = NewADOConnection("mysql");
-$database->PConnect($_SESSION['db']['host'].":".$_SESSION['db']['port'], $_SESSION['db']['username'], $_SESSION['db']['password'], $_SESSION['db']['database']);
+$conn = NewADOConnection("mysql");
+$conn->PConnect($_SESSION['db']['host'].":".$_SESSION['db']['port'], $_SESSION['db']['username'], $_SESSION['db']['password'], $_SESSION['db']['database']);
+$conn->SetFetchMode(ADODB_FETCH_ASSOC); 
 
 //**********************************************************************
-// Simple SQL Stament, with Event LOG injection
+// Simple SQL Stament, with no Event LOG injection
+// return: Array of records
 //**********************************************************************
 function sqlStatement($sql){
-	$recordset = $database->Execute($sql);
+	global $conn;
+	$recordset = $conn->GetAll($sql);
 	return $recordset;
 }
 

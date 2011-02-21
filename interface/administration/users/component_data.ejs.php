@@ -33,13 +33,12 @@ switch ($_GET['task']) {
 	// *************************************************************************************
 	case "titles":
 	    $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'titles' ";
-	  $result = sqlStatement( $sql );
 	  
-	  while ($myrow = sqlFetchArray($result)) {
+	  foreach (sqlStatement($sql) as $urow) {
 	    $count++;
 	    $buff .= "{";
-	    $buff .= " option_id: '" . dataEncode( $myrow['option_id'] ) . "',";
-	    $buff .= " title: '" . dataEncode( $myrow['title'] ) . "'}," . chr(13);
+	    $buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";
+	    $buff .= " title: '" . dataEncode( $urow['title'] ) . "'}," . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
 	  echo $_GET['callback'] . '({';
@@ -53,13 +52,12 @@ switch ($_GET['task']) {
 	// *************************************************************************************
 	case "types":
 	  $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'abook_type' ";
-	  $result = sqlStatement( $sql );
 	  
-	  while ($myrow = sqlFetchArray($result)) {
+	  foreach (sqlStatement($sql) as $urow) {
 	    $count++;
 	    $buff .= "{";
-	    $buff .= " option_id: '" . dataEncode( $myrow['option_id'] ) . "',";
-	    $buff .= " title: '" . dataEncode( $myrow['title'] ) . "'}," . chr(13);
+	    $buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";
+	    $buff .= " title: '" . dataEncode( $urow['title'] ) . "'}," . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
 	  echo $_GET['callback'] . '({';
@@ -73,13 +71,12 @@ switch ($_GET['task']) {
 	// *************************************************************************************
 	case "facilities":
 	  $sql = "SELECT * FROM facility WHERE service_location != 0 ORDER BY name";
-	  $result = sqlStatement( $sql );
 	  
-	  while ($myrow = sqlFetchArray($result)) {
+	  foreach (sqlStatement($sql) as $urow) {
 	    $count++;
 	    $buff .= "{";
-	    $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
-	    $buff .= " name: '" . dataEncode( $myrow['name'] ) . "'}," . chr(13);
+	    $buff .= " id: '" . dataEncode( $urow['id'] ) . "',";
+	    $buff .= " name: '" . dataEncode( $urow['name'] ) . "'}," . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
 	  echo $_GET['callback'] . '({';
@@ -101,14 +98,13 @@ switch ($_GET['task']) {
 	// *************************************************************************************
 	case "accessControls":
 	  $sql = "SELECT id, value, name FROM gacl_aco_sections ORDER BY name";
-	  $result = sqlStatement( $sql );
 	  
-	  while ($myrow = sqlFetchArray($result)) {
+	  foreach (sqlStatement($sql) as $urow) {
 	    $count++;
 	    $buff .= "{";
-	    $buff .= " id: '" . dataEncode( $myrow['id'] ) . "',";
-	    $buff .= " value: '" . dataEncode( $myrow['value'] ) . "',";
-	    $buff .= " name: '" . dataEncode( $myrow['name'] ) . "'}," . chr(13);
+	    $buff .= " id: '" . dataEncode( $urow['id'] ) . "',";
+	    $buff .= " value: '" . dataEncode( $urow['value'] ) . "',";
+	    $buff .= " name: '" . dataEncode( $urow['name'] ) . "'}," . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
 	  echo $_GET['callback'] . '({';

@@ -1,4 +1,4 @@
-?php
+<?php
 //--------------------------------------------------------------------------------------------------------------------------
 // component_data.ejs.php / List Options
 // v0.0.1
@@ -13,7 +13,8 @@
 // Load the MitosEHR Libraries
 // *************************************************************************************
 require_once("../registry.php");
-require_once("../../repository/dataExchange/dataExchange.inc.php");
+require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
+require_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
 
 // Count records variable
 $count = 0;
@@ -31,7 +32,7 @@ switch ($_GET['task']) {
 								*
 							FROM
 								groups");
-		while ($urow = sqlFetchArray($sql)) {
+		foreach (sqlStatement($sql) as $urow) {
 			$buff .= " { id: '" . dataDecode( $urow['id'] ) . "', user: '" . dataDecode( $urow['user'] ) . "', name: '" . dataDecode( $urow['name'] ) . "' },". chr(13);
 			$count++;
 		}
@@ -55,7 +56,7 @@ switch ($_GET['task']) {
 				ORDER BY
 					lang_description,
 					lang_id";
-		while ($urow = sqlFetchArray($sql)) {
+		foreach (sqlStatement($sql) as $urow) {
 			$buff .= " { lang_id: '" . dataDecode( $urow['lang_id'] ) . "', lang_description: '" . dataDecode( $urow['lang_description'] ) . "' },". chr(13);
 			$count++;
 		}
