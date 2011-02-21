@@ -44,7 +44,7 @@ $_SESSION['dir']['adoHelper'] = "adoHelper";
 $_SESSION['ver']['codeName']= "Vega";
 $_SESSION['ver']['major'] = '1';
 $_SESSION['ver']['rev'] = '0';
-$_SESSION['ver']['minor'] = '0';
+$_SESSION['ver']['minor'] = '0 Development';
 
 //**********************************************************************
 // Database Init Configuration
