@@ -23,7 +23,6 @@ $fake_register_globals=false;
 // Load the MitosEHR Libraries
 // *************************************************************************************
 require_once("../registry.php");
-include_once("$srcdir/sql.inc.php");
 require_once("../../repository/dataExchange/dataExchange.inc.php");
 
 // Count records variable

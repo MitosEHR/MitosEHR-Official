@@ -2,33 +2,23 @@
 // *********************************************************
 // MitosEHR Configuration file per site
 // MySQL Config
-// Referenced from /library/sqlconf.php.
 // *********************************************************
 
-$host	= 'localhost';
-$port	= '3306';
-$login	= 'openemr';
-$pass	= 'pass';
-$dbase	= 'openemr';
+//**********************************************************************
+// Database Init Configuration
+//**********************************************************************
+$_SESSION['db']['type'] = 'localhost';
+$_SESSION['db']['host'] = 'localhost';
+$_SESSION['db']['port'] = '3306';
+$_SESSION['db']['username'] = 'openemr';
+$_SESSION['db']['password'] = 'pass';
+$_SESSION['db']['database'] = 'openemr';
 
-//Added ability to disable
-//utf8 encoding - bm 05-2009
-global $disable_utf8_flag;
-$disable_utf8_flag = false;
+//**********************************************************************
+// Setup Command
+// If it's true, the application will
+// run the Setup Wizard 
+//**********************************************************************
+$_SESSION['site']['setup'] = false;
 
-$sqlconf = array();
-global $sqlconf;
-$sqlconf["host"]= $host;
-$sqlconf["port"] = $port;
-$sqlconf["login"] = $login;
-$sqlconf["pass"] = $pass;
-$sqlconf["dbase"] = $dbase;
-//////////////////////////
-//////////////////////////
-//////////////////////////
-//////DO NOT TOUCH THIS///
-$config = 1; /////////////
-//////////////////////////
-//////////////////////////
-//////////////////////////
 ?>

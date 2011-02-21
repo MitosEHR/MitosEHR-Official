@@ -1,19 +1,14 @@
 <?php
-//--------------------------------------------------------------------------------------------------------------------------
-// login.ejs.php
-// v0.0.4
-// Under GPLv3 License
-// Integration Sencha ExtJS Framework
-//
-// NOTE:
-// Need to finish the provider dropdown combobox
-// Already have the hidden field, but need the combobox when
-// it has more than one provider. And do some tests.
-//--------------------------------------------------------------------------------------------------------------------------
+/* Logon Screen Window
+ * 
+ * version 0.0.2
+ * revision: N/A
+ * author: Gino Rivera Falu
+ */
 
 $ignoreAuth = true;
 include_once ("../registry.php");
-include_once("$srcdir/adoHelper/adoHelper.inc.php");
+include_once("../../library/adoHelper/adoHelper.inc.php");
 
 ?>
 <head>

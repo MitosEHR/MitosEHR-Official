@@ -6,17 +6,24 @@
  * Author: Gino Rivera Falu
  */
 
- // Include the main library of ADOdb
+//**********************************************************************
+// Include the main library of ADOdb
+//**********************************************************************
 require_once(dirname(__FILE__) . "/adodb/adodb.inc.php");
 
-// Use the field name association intead of numbers
-define('ADODB_FETCH_ASSOC',2);
-
+//**********************************************************************
 // Connect to the database
+//**********************************************************************
 $database = NewADOConnection("mysql");
-$database->PConnect($host, $login, $pass, $dbase);
-$GLOBALS['adodb']['db'] = $database;
-$GLOBALS['dbh'] = $database->_connectionID;
+$database->PConnect($_SESSION['db']['host'].":".$_SESSION['db']['port'], $_SESSION['db']['username'], $_SESSION['db']['password'], $_SESSION['db']['database']);
+
+//**********************************************************************
+// Simple SQL Stament, with Event LOG injection
+//**********************************************************************
+function sqlStament($sql){
+	
+	
+}
 
 ?>
 
