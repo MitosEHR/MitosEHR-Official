@@ -20,8 +20,7 @@ $database->PConnect($_SESSION['db']['host'].":".$_SESSION['db']['port'], $_SESSI
 //**********************************************************************
 // Simple SQL Stament, with Event LOG injection
 //**********************************************************************
-function sqlStament($sql){
-	
+function sqlStatement($sql){
 	
 }
 
