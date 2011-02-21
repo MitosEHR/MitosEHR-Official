@@ -5,17 +5,18 @@
  * 
  * version 0.0.1
  * revision: N/A
- * author: Gino Rivera Falu
+ * author: Gino Rivera Falú
  */
  
- session_name ( "MitosEHR" );
- session_start();
+session_name ( "MitosEHR" );
+session_start();
  
 //**********************************************************************
 // Read the SITES directory first
 // To get the sqlconf.php
 //**********************************************************************
-$d = dir("../sites/");
+$pieces = explode("/", $_SERVER['PHP_SELF']);
+$d = dir($_SERVER['DOCUMENT_ROOT']."/".$pieces[1]."/sites/");
 while (false !== ($entry = $d->read())) {
 	if ( $entry != "." && $entry != ".."){ $confs[] = $entry . "/sqlconf.php"; } 
 	if ( $entry != "." && $entry != ".." && $entry == "default" ){ $default = $entry; }
@@ -24,11 +25,15 @@ while (false !== ($entry = $d->read())) {
 $_SESSION['site']['sites'] = $sites;
 $_SESSION['site']['default'] = $default;
 $_SESSION['site']['sites_conf'] = $confs;
+$_SESSION['site']['root'] = $_SERVER['DOCUMENT_ROOT']."/".$pieces[1];
+$_SESSION['site']['siteFolder'] = $pieces[1];
+$_SESSION['site']['setup'] = false; 
 
 //**********************************************************************
-// Site Setup Wizard Trigger
+// Language Related variables
 //**********************************************************************
-$_SESSION['site']['setup'] = false;
+$_SESSION['lang']['code'] = "en";
+$_SESSION['lang']['language'] = "English";
 
 //**********************************************************************
 // Directory related variables
@@ -57,12 +62,46 @@ $_SESSION['db']['password'] = 'pass';
 $_SESSION['db']['database'] = 'openemr';
 
 //**********************************************************************
-// Use the field name association intead of numbers
+// Server related variables
 //**********************************************************************
-define ('ADODB_FETCH_ASSOC',2); 
+$_SESSION['server'] = $_SERVER;
+$_SESSION['server']['OS'] = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "win") ? "Windows" : "Linux"); 
 
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
+//**********************************************************************
+// Client related variables
+//**********************************************************************
+$operating_systems = array  (
+	// User Agent String will have a information about Os. Lets identify them.
+	'Windows 3.11' => 'Win16',
+	'Windows 95' => '(Windows 95)|(Win95)|(Windows_95)',
+	'Windows 98' => '(Windows 98)|(Win98)',
+	'Windows 2000' => '(Windows NT 5.0)|(Windows 2000)',
+	'Windows XP' => '(Windows NT 5.1)|(Windows XP)',
+	'Windows Server 2003 ' => '(Windows NT 5.2)',
+	'Windows Vista ' => '(Windows NT 6.0)',
+	'Windows 7' => '(Windows NT 7.0)',
+	'Windows NT 4.0' => '(Windows NT 4.0)|(WinNT4.0)|(WinNT)|(Windows NT)',
+	'Windows ME' => '(Windows 98)|(Win 9x 4.90)|(Windows ME)',
+	'Open BSD' => 'OpenBSD',
+	'Sun OS' => 'SunOS',
+	'Linux' => '(Linux)|(X11)',
+	'Mac OS' => '(Mac_PowerPC)|(Macintosh)',
+	'QNX' => 'QNX',
+	'BeOS' => 'BeOS',
+	'OS/2' => 'OS/2',
+);
+// Match against our array of operating systems, To match
+foreach($operating_systems as $current_os=>$found){
+	if (eregi($found, $_SERVER['HTTP_USER_AGENT'])){
+		$_SESSION['client']['os'] = $current_os;
+		break;
+	} else {
+		$_SESSION['client']['os'] = 'Unknow';
+	}
+}
+
+//echo "<pre>";
+//print_r($_SESSION);
+//echo "</pre>";
 ?>
 

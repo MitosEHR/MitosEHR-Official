@@ -7,9 +7,14 @@
  */
 
 //**********************************************************************
+// Use the field name association intead of numbers
+//**********************************************************************
+define ('ADODB_FETCH_ASSOC',2); 
+
+//**********************************************************************
 // Include the main library of ADOdb
 //**********************************************************************
-require_once(dirname(__FILE__) . "/adodb/adodb.inc.php");
+include_once($_SESSION['site']['root'] . "/library/adodb/adodb.inc.php");
 
 //**********************************************************************
 // Connect to the database
@@ -21,7 +26,8 @@ $database->PConnect($_SESSION['db']['host'].":".$_SESSION['db']['port'], $_SESSI
 // Simple SQL Stament, with Event LOG injection
 //**********************************************************************
 function sqlStatement($sql){
-	
+	$recordset = $database->Execute($sql);
+	return $recordset;
 }
 
 ?>

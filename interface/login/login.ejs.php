@@ -6,17 +6,18 @@
  * author: Gino Rivera Falu
  */
 
-$ignoreAuth = true;
 include_once ("../registry.php");
-include_once("../../library/adoHelper/adoHelper.inc.php");
+include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 ?>
 <head>
-<TITLE><?php xl ('Login','e'); ?></TITLE>
+<TITLE><?php i18n('Login'); ?></TITLE>
 
-<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/bootstrap.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext.css">
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext.css">
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext4.css">
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="../../ui_app/mitosehr_app.css" >
 
@@ -89,7 +90,7 @@ var winCopyright = Ext.create('widget.window', {
 // *************************************************************************************
 var formLogin = Ext.create('Ext.form.FormPanel', {
 	id				: 'formLogin',
-    url				: '../main/main_screen.ejs.php?auth=login&site=<?php echo htmlspecialchars($_SESSION['site_id']); ?>',
+    url				: '../main/main_screen.ejs.php?auth=login&site=<?php echo $_SESSION['site']['default']; ?>',
     bodyStyle		:'padding:5px 5px 0',
 	frame			: false,
 	border			: false,
@@ -102,33 +103,33 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
         minLength: 3,
 		maxLength: 32, 
 		allowBlank: false, 
-		blankText:'Enter your username', 
+		blankText:'<?php i18n('Enter your username'); ?>', 
 		ref: '../authUser', 
 		id: 'authUser', 
 		name: 'authUser', 
 		validationEvent: false, 
-		fieldLabel: '<?php echo xl('Username'); ?>',
-		minLengthText: 'Username must be at least 3 characters long.' 
+		fieldLabel: '<?php i18n('Username'); ?>',
+		minLengthText: '<?php i18n('Username must be at least 3 characters long.'); ?>' 
 	},{
         minLength: 4,
 		maxLength: 10, 
 		allowBlank: false,
-		blankText:'Enter your password', 
+		blankText:'<?php i18n('Enter your password'); ?>', 
 		ref: '../authPass', 
 		inputType: 'password', 
 		id: 'authPass', 
 		name: 'authPass', 
 		validationEvent: false,
-		fieldLabel: '<?php echo xl('Password'); ?>',
-		minLengthText: 'Password must be at least 4 characters long.'
+		fieldLabel: '<?php i18n('Password'); ?>',
+		minLengthText: '<?php i18n('Password must be at least 4 characters long.'); ?>'
     },{ 
     	xtype: 'combo', 
     	id: 'languageChoice', 
     	name: 'languageChoice', 
     	store: storeLang,
-    	emptyText: '<?php echo $defaultLangName; ?>', 
+    	emptyText: '<?php echo $_SESSION['lang']['language']; ?>', 
     	forceSelection: true, 
-    	fieldLabel: '<?php echo xl('Language'); ?>', 
+    	fieldLabel: '<?php i18n('Language'); ?>', 
     	editable: false, 
     	triggerAction: 'all', 
     	valueField: 'lang_id', 
@@ -173,7 +174,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 // The Logon Window
 // *************************************************************************************
 var winLogon = new Ext.create('widget.window', {
-    title: '<?php xl('MitosEHR Logon','e'); ?>',
+    title: '<?php i18n('MitosEHR Logon'); ?>',
     closable: true,
     width:499,
 	height:300,
