@@ -1,0 +1,1 @@
+ADOdb dll version 5.03 is stored here. This does not support mysqli.

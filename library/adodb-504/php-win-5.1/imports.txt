@@ -1,0 +1,70 @@
+Microsoft (R) COFF Binary File Dumper Version 6.00.8447
+Copyright (C) Microsoft Corp 1992-1998. All rights reserved.
+
+
+Dump of file adodb.dll
+
+File Type: DLL
+
+  Section contains the following imports:
+
+    php5ts.dll
+              100061F8 Import Address Table
+              100060DC Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                  D7  convert_to_long
+                  2D  _emalloc
+                 907  zend_get_parameters_ex
+                 A10  zend_wrong_param_count
+                 8E5  zend_error
+                  C3  call_user_function_ex
+                 101  executor_globals_id
+                  88  _zval_copy_ctor_func
+                 91A  zend_hash_find
+                 A21  zval_add_ref
+                  8C  _zval_ptr_dtor
+                  29  _array_init
+                  AD  add_next_index_zval
+                 99C  zend_register_double_constant
+                 9A8  zend_register_long_constant
+                 9AC  zend_register_string_constant
+                 263  php_sprintf
+                 201  php_info_print_table_row
+                 203  php_info_print_table_start
+                  D5  convert_to_boolean
+                 1FF  php_info_print_table_end
+
+    MSVCRT.dll
+              1000619C Import Address Table
+              10006080 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                 186  _onexit
+                  9D  _adjust_fdiv
+                 291  malloc
+                 10F  _initterm
+                 25E  free
+                 2C0  strncmp
+                 2BE  strlen
+                 2B5  sscanf
+                  AF  _chkesp
+                  55  __dllonexit
+
+    KERNEL32.dll
+              1000616C Import Address Table
+              10006050 Import Name Table
+                     0 time date stamp
+                     0 Index of first forwarder reference
+
+                  5D  DisableThreadLibraryCalls
+
+  Summary
+
+        1000 .data
+        1000 .idata
+        1000 .rdata
+        1000 .reloc
+        3000 .text
