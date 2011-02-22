@@ -20,10 +20,10 @@ include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 <!-- ******************************************************************* -->
 <!-- Call for mandatory repository objects, that we need on the MitosEHR -->
 <!-- ******************************************************************* -->
-<script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.Search.js"></script>
-<script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
-<script type="text/javascript" src="../../repository/fittoparent/Ext.ux.FitToParent.js"></script>
-<script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script>
+<!-- <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.Search.js"></script> -->
+<!-- <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.RowActions.js"></script> -->
+<!-- <script type="text/javascript" src="../../repository/fittoparent/Ext.ux.FitToParent.js"></script> -->
+<!-- <script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script> -->
 <script type="text/javascript" src="../../repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="../../library/<?php echo $_SESSION['dir']['ext']; ?>/src/grid/RowEditor.js"></script>
 
@@ -52,7 +52,7 @@ var winPopup = new  Ext.Window({
 	modal: false,
 	resizable: true,
 	autoScroll: true,
-	title:	'<?php echo htmlspecialchars( xl('Immunizations'), ENT_NOQUOTES); ?>',
+	title:	'<?php i18n('Immunizations'); ?>',
 	closeAction: 'hide',
 	id: 'winPopup',
 	bodyStyle:'padding: 5px',
@@ -87,7 +87,7 @@ var navigation = new Ext.tree.TreePanel({
 	split: true,
 	lines: false,
 	root: {
-		text: '<?php xl('Navigation', 'e'); ?>',
+		text: '<?php i18n('Navigation'); ?>',
 		draggable: false,
 		id: ''
 	}
@@ -134,12 +134,12 @@ navigation.on('click', function(n){
 // *************************************************************************************
 // The Helper Panel
 // *************************************************************************************
-var helper = new Ext.Panel({
-	title: '<?php xl('Quick Patient Lookup', 'e'); ?>',
+var helper = Ext.create('Ext.Panel', {
+	title: '<?php i18n('Quick Patient Lookup'); ?>',
 	xtype: 'form',
 	labelWidth: 100,
 	minSize: 300,
-	defaults: {width: <?php echo $nav_area_width - 13; ?>},
+	defaults: {width: 200},
 	formBind: true,
 	buttonAlign: 'left',
 	standardSubmit: true,
@@ -173,8 +173,8 @@ var helper = new Ext.Panel({
 // *************************************************************************************
 // Navigation Panel
 // *************************************************************************************
-var NavPanel = new Ext.Panel({
-  title: '<?php xl('Navigation', 'e'); ?>',
+var NavPanel = Ext.create('Ext.Panel', {
+  title: '<?php i18n('Navigation'); ?>',
 	region:'west',
 	layout: 'border',
 	margins:'5 0 5 5',
@@ -182,7 +182,7 @@ var NavPanel = new Ext.Panel({
 	titleCollapse: true,
 	split:true,
 	border: false,
-	width: <?php echo $nav_area_width; ?>,
+	width: 200,
 	items: [navigation, helper]
 });
 
@@ -191,12 +191,12 @@ var NavPanel = new Ext.Panel({
 // Application Content [TopPanel, BottomPanel]
 // *************************************************************************************
 // Top
-var TopPanel = new Ext.Panel({
+var TopPanel = Ext.create('Ext.Panel', {
 	region: 'center',
 	id	: 'TopPanel',
 	autoScroll: false,
 	waitMsg: 'Loading...',
-	autoLoad: {url:'../calendar/calendar.ejs.php', scripts:true},
+	//autoLoad: {url:'../calendar/calendar.ejs.php', scripts:true},
 	cls:'empty',
 	id: 'TopPanel',
 	ref: '../TopPanel',
@@ -214,7 +214,7 @@ var TopPanel = new Ext.Panel({
 });
 
 // Bottom
-var BottomPanel = new Ext.Panel({
+var BottomPanel = Ext.create('Ext.Panel', {
 	region: 'south',
 	id	: 'BottomPanel',
 	autoScroll: true,
@@ -225,13 +225,13 @@ var BottomPanel = new Ext.Panel({
 	split:true,
 	monitorResize: true,
 	waitMsg:'Loading...',
-	autoLoad: {url:'../messages/messages.ejs.php', scripts:true},
+	//autoLoad: {url:'../messages/messages.ejs.php', scripts:true},
 	cls:'empty',
 	id: 'BottomPanel',
 	ref: '../BottomPanel',
 });
 
-var AppPanel = new Ext.Panel({
+var AppPanel = Ext.create('Ext.Panel', {
 	region:'center',
 	layout: 'border',
 	margins:'5 5 5 0',
@@ -240,7 +240,7 @@ var AppPanel = new Ext.Panel({
 	items: [TopPanel, BottomPanel]
 });
 
-var Header = new Ext.Panel({
+var Header = Ext.create('Ext.Panel', {
 	region: 'north',
 	cls: 'topheader',
 	border: false,
@@ -253,7 +253,7 @@ var Header = new Ext.Panel({
 		style: 'float:right',
 		defaultType: 'splitbutton',
 		items: [{
-			text: '<?php echo " - ".$authUser; ?>',
+			text: 'User',
             iconCls: 'add16',
             scale: 'small',
             style: 'margin: 7px',
@@ -278,7 +278,7 @@ var Header = new Ext.Panel({
 // *************************************************************************************
 // Create the ViewPort (Browser)
 // *************************************************************************************
-var viewport = new Ext.Viewport({
+var viewport = Ext.create('Ext.Viewport', {
 	layout:'border',
 	id: 'MainBody',
 	border: false,
