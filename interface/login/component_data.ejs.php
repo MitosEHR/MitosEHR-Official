@@ -28,10 +28,10 @@ switch ($_GET['task']) {
 	// Data for for storeGroups
 	// *************************************************************************************
 	case "groups":
-		$sql = sqlStatement("SELECT
-								*
-							FROM
-								groups");
+		$sql = "SELECT
+					*
+				FROM
+					groups");
 		foreach (sqlStatement($sql) as $urow) {
 			$buff .= " { id: '" . dataDecode( $urow['id'] ) . "', user: '" . dataDecode( $urow['user'] ) . "', name: '" . dataDecode( $urow['name'] ) . "' },". chr(13);
 			$count++;

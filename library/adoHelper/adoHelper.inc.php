@@ -50,6 +50,15 @@ function sqlStatementLog($sql){
 	// return the recordset 
 	return $recordset;
 }
+
+//**********************************************************************
+// Return the number of records
+//**********************************************************************
+function sqlTotalCount($resourse){
+	if ($resource) { return; }
+	return $resource->RecordCount();
+}
+
 ?>
 
 
