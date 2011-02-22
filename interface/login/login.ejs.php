@@ -12,6 +12,7 @@ include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 ?>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <TITLE><?php i18n('Login'); ?></TITLE>
 
 <script type="text/javascript" src="../../library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
@@ -25,6 +26,7 @@ include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 Ext.require([
 	'Ext.form.*',
     'Ext.window.*',
+    'Ext.data.*',
     'Ext.tip.QuickTips'
 ]);
 Ext.onReady(function(){
@@ -33,14 +35,19 @@ Ext.onReady(function(){
 // Structure, data for storeGroup
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Group', { fields: ['id', 'name'] } );
+Ext.regModel('Group', { fields: 
+	[
+	{ type: 'int', name: 'id'},
+	{ type: 'string', name: 'name'}
+	] 
+});
 var storeGroup = Ext.data.Store({
 	model: 'Group',
 	proxy: new Ext.data.AjaxProxy({
 		url: '../login/component_data.ejs.php?task=groups'
 	}),
-	reader: { // The default reader is JSON
-		idIndex: 0,
+	reader: {
+		type: 'json',
 		idProperty: 'id',
 		totalProperty: 'results',
 		root: 'row'
@@ -52,15 +59,44 @@ var storeGroup = Ext.data.Store({
 // Structure, data for storeLang
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Lang', { fields: ['lang_id', 'lang_description'] } );
+Ext.regModel('Lang', { fields: 
+	[
+	{ type: 'int', name: 'lang_id'},
+	{ type: 'string', name: 'lang_description'}
+	] 
+});
 var storeLang = new Ext.data.Store({
 	model: 'Lang',
 	proxy: new Ext.data.AjaxProxy({
 		url: '../login/component_data.ejs.php?task=lang'
 	}),
-	reader: { // The default reader is JSON
-		idIndex: 0,
+	reader: {
+		type: 'json',
 		idProperty: 'land_id',
+		totalProperty: 'results',
+		root: 'row'
+	},
+	autoLoad: true
+});
+
+// *************************************************************************************
+// Structure, data for storeLang
+// AJAX -> component_data.ejs.php
+// *************************************************************************************
+Ext.regModel('Sites', { fields: 
+	[
+	{ type: 'int', name: 'site_id'},
+	{ type: 'string', name: 'site'}
+	] 
+});
+var storeSites = new Ext.data.Store({
+	model: 'Sites',
+	proxy: new Ext.data.AjaxProxy({
+		url: '../login/component_data.ejs.php?task=sites'
+	}),
+	reader: {
+		type: 'json',
+		idProperty: 'site_id',
 		totalProperty: 'results',
 		root: 'row'
 	},
@@ -90,7 +126,7 @@ var winCopyright = Ext.create('widget.window', {
 // *************************************************************************************
 var formLogin = Ext.create('Ext.form.FormPanel', {
 	id				: 'formLogin',
-    url				: '../main/main_screen.ejs.php?auth=login&site=<?php echo $_SESSION['site']['default']; ?>',
+    url				: '../main/main_screen.ejs.php',
     bodyStyle		:'padding:5px 5px 0',
 	frame			: false,
 	border			: false,
@@ -100,6 +136,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
     defaultType		: 'textfield',
     defaults		: { anchor: '100%' },
     items: [{ 
+    	xtype: 'textfield',
         minLength: 3,
 		maxLength: 32, 
 		allowBlank: false, 
@@ -107,7 +144,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 		ref: '../authUser', 
 		id: 'authUser', 
 		name: 'authUser', 
-		validationEvent: false, 
+		validationEvent: false,
 		fieldLabel: '<?php i18n('Username'); ?>',
 		minLengthText: '<?php i18n('Username must be at least 3 characters long.'); ?>' 
 	},{
@@ -128,12 +165,24 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
     	name: 'languageChoice', 
     	store: storeLang,
     	emptyText: '<?php echo $_SESSION['lang']['language']; ?>', 
-    	forceSelection: true, 
     	fieldLabel: '<?php i18n('Language'); ?>', 
     	editable: false, 
     	triggerAction: 'all', 
-    	valueField: 'lang_id', 
+    	valueField: 'lang_id',
     	displayField: 'lang_description',
+    	queryMode: 'local'
+    },{ 
+    	xtype: 'combo', 
+    	id: 'choiseSite', 
+    	name: 'choiseSite', 
+    	store: storeSites,
+    	emptyText: 'default',
+    	fieldLabel: '<?php i18n('Site'); ?>', 
+    	editable: false, 
+    	triggerAction: 'all', 
+    	valueField: 'site_id', 
+    	displayField: 'site',
+    	queryMode: 'local'
     }],
     buttons: [{
         text: 'Reset',
@@ -174,19 +223,19 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 // The Logon Window
 // *************************************************************************************
 var winLogon = new Ext.create('widget.window', {
-    title: '<?php i18n('MitosEHR Logon'); ?>',
-    closable: true,
-    width:499,
-	height:300,
-	bodyPadding :2,  		//new 4.0 
-	closeAction:'hide',
-    plain: true,
-	modal: false,
-	resizable: false,
-	draggable: false,
-	closable: false,
-    bodyStyle: 'padding: 5px;',
-    items: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: '../../ui_app/logon_header.png'}}, formLogin ]
+    title		: '<?php i18n('MitosEHR Logon'); ?>',
+    closable	: true,
+    width		: 499,
+	height		: 315,
+	bodyPadding	: 2,  		//new 4.0 
+	closeAction	: 'hide',
+    plain		: true,
+	modal		: false,
+	resizable	: false,
+	draggable	: false,
+	closable	: false,
+    bodyStyle	: 'padding: 5px;',
+    items		: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: '../../ui_app/logon_header.png'}}, formLogin ]
 });
 
 winLogon.show();

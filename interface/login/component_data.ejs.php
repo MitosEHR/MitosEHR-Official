@@ -48,7 +48,6 @@ switch ($_GET['task']) {
 	// Data for storeLang
 	// *************************************************************************************
 	case "lang":
-		$mainLangID = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
 		$sql = "SELECT
 					*
 				FROM
@@ -58,6 +57,22 @@ switch ($_GET['task']) {
 					lang_id";
 		foreach (sqlStatement($sql) as $urow) {
 			$buff .= " { lang_id: '" . dataDecode( $urow['lang_id'] ) . "', lang_description: '" . dataDecode( $urow['lang_description'] ) . "' },". chr(13);
+			$count++;
+		}
+		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
+		echo $_GET['callback'] . '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
+	break;
+	
+	// *************************************************************************************
+	// Data for storeSites
+	// *************************************************************************************
+	case "sites":
+		foreach ($_SESSION['site']['sites'] as $urow) {
+			$buff .= " { site_id: '" . $count . "', site: '" . $urow . "' },". chr(13);
 			$count++;
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
