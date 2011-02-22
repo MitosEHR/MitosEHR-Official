@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -53,9 +53,11 @@ Ext.onReady(function(){
     
     new Ext.ensible.cal.CalendarPanel({
         eventStore: new Ext.ensible.sample.MemoryEventStore({
+            // defined in data/events.js
             data: Ext.ensible.sample.EventData
         }),
         calendarStore: new Ext.ensible.sample.CalendarStore({
+            // defined in data/calendars.js
             data: Ext.ensible.sample.CalendarData
         }),
         renderTo: 'cal',

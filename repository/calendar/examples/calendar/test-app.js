@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -12,7 +12,7 @@ App = function() {
 
             // This is an example calendar store that enables event color-coding
             this.calendarStore = new Ext.ensible.sample.CalendarStore({
-                // defined in data-calendars.js
+                // defined in data/calendars.js
                 data: Ext.ensible.sample.CalendarData
             });
 
@@ -20,8 +20,12 @@ App = function() {
             // implementation would likely be loading remote data via an HttpProxy, but the
             // underlying store functionality is the same.
             this.eventStore = new Ext.ensible.sample.MemoryEventStore({
-                // defined in data-events.js
-                data: Ext.ensible.sample.EventData
+                // defined in data/events.js
+                data: Ext.ensible.sample.EventData,
+                // This disables the automatic CRUD messaging built into the sample data store.
+                // This test application will provide its own custom messaging. See the source
+                // of MemoryEventStore to see how automatic store messaging is implemented.
+                autoMsg: false
             });
             
             // This is the app UI layout code.  All of the calendar views are subcomponents of

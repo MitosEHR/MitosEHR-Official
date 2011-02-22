@@ -31,6 +31,8 @@ Ext.require([
 ]);
 Ext.onReady(function(){
 
+Ext.tip.QuickTips.init();
+
 // *************************************************************************************
 // Structure, data for storeGroup
 // AJAX -> component_data.ejs.php
@@ -68,14 +70,14 @@ Ext.regModel('Lang', { fields:
 var storeLang = new Ext.data.Store({
 	model: 'Lang',
 	proxy: new Ext.data.AjaxProxy({
-		url: '../login/component_data.ejs.php?task=lang'
+		url: '../login/component_data.ejs.php?task=lang',
+		reader: {
+			type: 'json',
+			idProperty: 'land_id',
+			totalProperty: 'results',
+			root: 'row'
+		}
 	}),
-	reader: {
-		type: 'json',
-		idProperty: 'land_id',
-		totalProperty: 'results',
-		root: 'row'
-	},
 	autoLoad: true
 });
 
@@ -92,14 +94,14 @@ Ext.regModel('Sites', { fields:
 var storeSites = new Ext.data.Store({
 	model: 'Sites',
 	proxy: new Ext.data.AjaxProxy({
-		url: '../login/component_data.ejs.php?task=sites'
+		url: '../login/component_data.ejs.php?task=sites',
+		reader: {
+			type: 'json',
+			idProperty: 'site_id',
+			totalProperty: 'results',
+			root: 'row'
+		}
 	}),
-	reader: {
-		type: 'json',
-		idProperty: 'site_id',
-		totalProperty: 'results',
-		root: 'row'
-	},
 	autoLoad: true
 });
 
@@ -107,18 +109,18 @@ var storeSites = new Ext.data.Store({
 // The Copyright Notice Window
 // *************************************************************************************
 var winCopyright = Ext.create('widget.window', {
-	id: 'winCopyright',
-	width:600,
-	height:500,
-	closeAction:'hide',
-	bodyStyle: 'padding: 5px;',
-	modal: false,
-	resizable: true,
-	title: 'MitosEHR Copyright Notice',
-	draggable: true,
-	closable: true,
-	autoLoad: 'copyright_notice.html',
-	autoScroll: true
+	id				: 'winCopyright',
+	width			: 600,
+	height			: 500,
+	closeAction		: 'hide',
+	bodyStyle		: 'padding: 5px;',
+	modal			: false,
+	resizable		: true,
+	title			: 'MitosEHR Copyright Notice',
+	draggable		: true,
+	closable		: true,
+	autoLoad		: 'copyright_notice.html',
+	autoScroll		: true
 });
 
 // *************************************************************************************
@@ -148,6 +150,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 		fieldLabel: '<?php i18n('Username'); ?>',
 		minLengthText: '<?php i18n('Username must be at least 3 characters long.'); ?>' 
 	},{
+		xtype: 'textfield',
         minLength: 4,
 		maxLength: 10, 
 		allowBlank: false,
@@ -160,7 +163,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 		fieldLabel: '<?php i18n('Password'); ?>',
 		minLengthText: '<?php i18n('Password must be at least 4 characters long.'); ?>'
     },{ 
-    	xtype: 'combo', 
+    	xtype: 'combobox',
     	id: 'languageChoice', 
     	name: 'languageChoice', 
     	store: storeLang,
@@ -172,7 +175,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
     	displayField: 'lang_description',
     	queryMode: 'local'
     },{ 
-    	xtype: 'combo', 
+    	xtype: 'combobox', 
     	id: 'choiseSite', 
     	name: 'choiseSite', 
     	store: storeSites,

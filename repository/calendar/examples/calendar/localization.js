@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -16,6 +16,7 @@ Ext.ensible.LocaleSample = function(){
                     ['da', 'Danish'],
                     ['en', 'English (US)'],
                     ['fr', 'French (France)'],
+                    ['pl', 'Polish'],
                     ['pt_BR', 'Portuguese (Brazil)'],
                     ['pt_PT', 'Portuguese (Portugal)'],
                     ['ro', 'Romanian'],
@@ -84,7 +85,7 @@ Ext.ensible.LocaleSample = function(){
                 width: 800,
                 height: 600,
                 eventStore: new Ext.ensible.sample.MemoryEventStore({
-                    // defined in data-events.js
+                    // defined in data/events.js
                     data: Ext.ensible.sample.EventData
                 })
             });

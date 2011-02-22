@@ -1,15 +1,3 @@
-/*!
- * Extensible 1.0-rc1
- * Copyright(c) 2010-2011 Extensible, LLC
- * licensing@ext.ensible.com
- * http://ext.ensible.com
- */
-/*!
- * Extensible 1.0-rc1
- * Copyright(c) 2010-2011 Extensible, LLC
- * licensing@ext.ensible.com
- * http://ext.ensible.com
- */
 
 		Docs.classData ={"id":"apidocs","iconCls":"icon-docs","text":"API Documentation","singleClickExpand":true,"children":[
                 {"id":"pkg-Ext","text":"Ext","iconCls":"icon-pkg","cls":"package","singleClickExpand":true, children:[

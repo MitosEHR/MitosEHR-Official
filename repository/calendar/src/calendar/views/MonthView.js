@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -29,12 +29,12 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
     detailsTitleDateFormat: 'F j',
     /**
      * @cfg {Boolean} showTime
-     * True to display the current time in today's box in the calendar, false to not display it (defautls to true)
+     * True to display the current time in today's box in the calendar, false to not display it (defaults to true)
      */
     showTime: true,
     /**
      * @cfg {Boolean} showTodayText
-     * True to display the {@link #todayText} string in today's box in the calendar, false to not display it (defautls to true)
+     * True to display the {@link #todayText} string in today's box in the calendar, false to not display it (defaults to true)
      */
     showTodayText: true,
     /**
@@ -347,7 +347,12 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
     getEventHeight : function(){
         if(!this.eventHeight){
             var evt = this.el.select('.ext-cal-evt').first();
-            this.eventHeight = evt ? evt.parent('tr').getHeight() : 18;
+            if(evt){
+                this.eventHeight = evt.parent('tr').getHeight();
+            }
+            else {
+                return 16; // no events rendered, so try setting this.eventHeight again later
+            }
         }
         return this.eventHeight;
     },
@@ -356,7 +361,8 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 	getMaxEventsPerDay : function(){
 		var dayHeight = this.getDaySize(true).height,
 			h = this.getEventHeight(),
-            max = Math.max(Math.floor((dayHeight-h) / h), 0);
+            bottomPad = 5,
+            max = Math.max(Math.floor((dayHeight-h-bottomPad) / h), 0);
 		
 		return max;
 	},
@@ -422,6 +428,7 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
 					}
 				}
 			});
+            this.detailPanel.body.on('contextmenu', this.onContextMenu, this);
 		}
 		else{
 			this.detailPanel.setTitle(dt.format(this.detailsTitleDateFormat));
@@ -491,6 +498,14 @@ Ext.ensible.cal.MonthView = Ext.extend(Ext.ensible.cal.CalendarView, {
             return;
         }
         Ext.ensible.cal.MonthView.superclass.handleDayMouseEvent.apply(this, arguments);
+    },
+    
+    // private
+    destroy: function(){
+        Ext.ensible.cal.MonthView.superclass.destroy.call(this);
+        if(this.detailsPanel){
+            this.detailPanel.body.un('contextmenu', this.onContextMenu, this);
+        }
     }
 });
 

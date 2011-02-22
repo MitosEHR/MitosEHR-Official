@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -36,7 +36,7 @@ Ext.ensible.cal.DragZone = Ext.extend(Ext.dd.DragZone, {
         
         // If not dragging an event then we are dragging on 
         // the calendar to add a new event
-        t = this.view.getDayAt(e.getPageX(), e.getPageY());
+        t = this.view.getDayAt(e.xy[0], e.xy[1]);
         if(t.el){
             return {
                 type: 'caldrag',

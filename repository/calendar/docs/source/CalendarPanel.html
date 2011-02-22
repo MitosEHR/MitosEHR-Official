@@ -154,6 +154,19 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
      */
     enableEditDetails: true,
     
+    <div id="cfg-Ext.ensible.cal.CalendarPanel-eventStore"></div>/**
+     * @cfg {Ext.data.Store} eventStore
+     * The {@link Ext.data.Store store} which is bound to this calendar and contains {@link Ext.ensible.cal.EventRecord EventRecords}.
+     * Note that this is an alias to the default {@link #store} config (to differentiate that from the optional {@link #calendarStore}
+     * config), and either can be used interchangeably.
+     */
+    <div id="cfg-Ext.ensible.cal.CalendarPanel-calendarStore"></div>/**
+     * @cfg {Ext.data.Store} calendarStore
+     * The {@link Ext.data.Store store} which is bound to this calendar and contains {@link Ext.ensible.cal.CalendarRecord CalendarRecords}.
+     * This is an optional store that provides multi-calendar (and multi-color) support. If available an additional field for selecting the
+     * calendar in which to save an event will be shown in the edit forms. If this store is not available then all events will simply use
+     * the default calendar (and color).
+     */
     <div id="cfg-Ext.ensible.cal.CalendarPanel-viewConfig"></div>/**
      * @cfg {Object} viewConfig
      * A config object that will be applied to all {@link Ext.ensible.cal.CalendarView views} managed by this CalendarPanel. Any
@@ -607,25 +620,18 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
         var currStore = this.store;
         
         if(!initial && currStore){
-            currStore.un("add", this.onStoreAdd, this);
-            currStore.un("remove", this.onStoreRemove, this);
-            currStore.un("update", this.onStoreUpdate, this);
+            currStore.un("write", this.onWrite, this);
         }
         if(store){
-            store.on("add", this.onStoreAdd, this);
-            store.on("remove", this.onStoreRemove, this);
-            store.on("update", this.onStoreUpdate, this);
+            store.on("write", this.onWrite, this);
         }
         this.store = store;
     },
     
     // private
-    onStoreAdd : function(ds, records, index){
-        if(records[0].phantom){
-            return;
-        }
-        if(records[0]._deleting){
-            delete records[0]._deleting;
+    onStoreAdd : function(ds, recs, index){
+        var rec = Ext.isArray(recs) ? recs[0] : recs;
+        if(rec.phantom){
             return;
         }
         this.hideEditForm();
@@ -644,6 +650,21 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
     },
     
     // private
+    onWrite: function(store, action, data, resp, rec){
+        switch(action){
+            case 'create': 
+                this.onStoreAdd(store, rec);
+                break;
+            case 'update':
+                this.onStoreUpdate(store, rec, Ext.data.Record.COMMIT);
+                break;
+            case 'destroy':
+                this.onStoreRemove(store, rec);
+                break;
+        }
+    },
+    
+    // private
     onEditDetails: function(vw, rec, el){
         if(this.fireEvent('editdetails', this, vw, rec, el) !== false){
             this.showEditForm(rec);
@@ -651,29 +672,27 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
     },
     
     // private
+    save: function(){
+        this.store.save();
+    },
+    
+    // private
     onEventAdd: function(form, rec){
-        //rec.data[Ext.ensible.cal.EventMappings.IsNew.name] = false;
-        this.newRecord = rec;
         this.store.add(rec);
-        //this.hideEditForm();
+        this.save();
         this.fireEvent('eventadd', this, rec);
     },
     
     // private
     onEventUpdate: function(form, rec){
-        if(!this.store.autoSave){
-            this.store.save();
-        }
-        //rec.commit();
-        //this.hideEditForm();
+        this.save();
         this.fireEvent('eventupdate', this, rec);
     },
     
     // private
     onEventDelete: function(form, rec){
-        rec._deleting = true;
         this.store.remove(rec);
-        //this.hideEditForm();
+        this.save();
         this.fireEvent('eventdelete', this, rec);
     },
     
@@ -702,11 +721,6 @@ Ext.ensible.cal.CalendarPanel = Ext.extend(Ext.Panel, {
      * @return {Ext.ensible.cal.CalendarPanel} this
      */
     hideEditForm: function(){
-        if(this.newRecord && this.newRecord.phantom){
-            this.store.remove(this.newRecord);
-        }
-        delete this.newRecord;
-        
         if(this.preEditView){
             this.setActiveView(this.preEditView);
             delete this.preEditView;

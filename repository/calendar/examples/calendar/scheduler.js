@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -38,11 +38,6 @@ App = function() {
                     {Id : '1', Name : 'Rob', Type : 'Sales', ColorId : 1},
                     {Id : '2', Name : 'Mike', Type : 'Sales', ColorId : 11},
                     {Id : '3', Name : 'Kate', Type : 'Product manager', ColorId : 21}
-//                    {id : '4', Name : 'Lisa', Type : 'Developer'},
-//                    {id : '5', Name : 'Dave', Type : 'Developer'},
-//                    {id : '6', Name : 'Arnold', Type : 'Developer'},
-//                    {id : '7', Name : 'Lee', Type : 'Marketing'},
-//                    {id : '8', Name : 'Jong', Type : 'Marketing'}
                 ]
             });
         },
@@ -105,7 +100,6 @@ App = function() {
             
             var g = new Sch.EditorSchedulerPanel({
                 width: 1000,
-                //height: 300,
                 height: 200,
                 clicksToEdit: 1,
                 renderTo: 'sched',
@@ -200,14 +194,6 @@ App = function() {
                             g.setView(g.getStart(), g.getStart().add(Date.DAY, 42), 'weekAndMonths', Sch.ViewBehaviour.MonthView, renderer);
                         }
                     },
-//                    {
-//                        iconCls : 'icon-cleardatabase',
-//                        tooltip: 'Clear database',
-//                        scale : 'medium',
-//                        handler : function() {
-//                            g.eventStore.removeAll();
-//                        }
-//                    },
                     {
                         iconCls : 'icon-next',
                         scale : 'medium',
@@ -297,14 +283,16 @@ App = function() {
         },
         
         createCalendar : function(){
-            Ext.ensible.cal.EventMappings.CalendarId.name = 'ResourceId';
-            Ext.ensible.cal.EventRecord.reconfigure();
+            // Remap some default calendar fields to match the scheduler
+            var Cal = Ext.ensible.cal; 
+            Cal.EventMappings.CalendarId.name = 'ResourceId';
+            Cal.EventRecord.reconfigure();
             
-            Ext.ensible.cal.CalendarMappings.CalendarId.name = 'Id';
-            Ext.ensible.cal.CalendarMappings.Title.name = 'Name';
-            Ext.ensible.cal.CalendarRecord.reconfigure();
+            Cal.CalendarMappings.CalendarId.name = 'Id';
+            Cal.CalendarMappings.Title.name = 'Name';
+            Cal.CalendarRecord.reconfigure();
             
-            new Ext.ensible.cal.CalendarPanel({
+            new Cal.CalendarPanel({
                 eventStore: this.eventStore,
                 calendarStore: this.resourceStore,
                 renderTo: 'cal',

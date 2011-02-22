@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -77,14 +77,12 @@ Ext.ensible.cal.CalendarList = Ext.extend(Ext.Panel, {
      */
     setStore : function(store, initial){
         if(!initial && this.store){
-            this.store.un("datachanged", this.refresh, this);
             this.store.un("add", this.refresh, this);
             this.store.un("remove", this.refresh, this);
             this.store.un("update", this.onUpdate, this);
             this.store.un("clear", this.refresh, this);
         }
         if(store){
-            store.on("datachanged", this.refresh, this);
             store.on("add", this.refresh, this);
             store.on("remove", this.refresh, this);
             store.on("update", this.onUpdate, this);

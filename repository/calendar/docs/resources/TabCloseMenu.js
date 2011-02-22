@@ -1,15 +1,3 @@
-/*!
- * Extensible 1.0-rc1
- * Copyright(c) 2010-2011 Extensible, LLC
- * licensing@ext.ensible.com
- * http://ext.ensible.com
- */
-/*!
- * Extensible 1.0-rc1
- * Copyright(c) 2010-2011 Extensible, LLC
- * licensing@ext.ensible.com
- * http://ext.ensible.com
- */
 // Very simple plugin for adding a close context menu to tabs
 Ext.ux.TabCloseMenu = function(){
     var tabs, menu, ctxItem;

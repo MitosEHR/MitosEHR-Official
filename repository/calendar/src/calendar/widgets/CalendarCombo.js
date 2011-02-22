@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -25,6 +25,7 @@ Ext.ensible.cal.CalendarCombo = Ext.extend(Ext.form.ComboBox, {
     triggerAction: 'all',
     mode: 'local',
     forceSelection: true,
+    selectOnFocus: true,
     width: 200,
     
     // private
@@ -55,6 +56,35 @@ Ext.ensible.cal.CalendarCombo = Ext.extend(Ext.form.ComboBox, {
         this.icon = Ext.DomHelper.append(this.wrap, {
             tag: 'div', cls: 'ext-cal-picker-icon ext-cal-picker-mainicon'
         });
+    },
+    
+    // private
+    assertValue  : function(){
+        var val = this.getRawValue(),
+            rec = this.findRecord(this.displayField, val);
+
+        if(!rec && this.forceSelection){
+            if(val.length > 0 && val != this.emptyText){
+                // Override this method simply to fix the original logic that was here.
+                // The orignal method simply reverts the displayed text but the store remains
+                // filtered with the invalid query, meaning it contains no records. This causes
+                // problems with redisplaying the field -- much better to clear the filter and
+                // reset the original value so everything works as expected.
+                this.store.clearFilter();
+                this.setValue(this.value);
+                this.applyEmptyText();
+            }else{
+                this.clearValue();
+            }
+        }else{
+            if(rec){
+                if (val == rec.get(this.displayField) && this.value == rec.get(this.valueField)){
+                    return;
+                }
+                val = rec.get(this.valueField || this.displayField);
+            }
+            this.setValue(val);
+        }
     },
     
     // private

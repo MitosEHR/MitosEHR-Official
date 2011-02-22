@@ -1,15 +1,3 @@
-/*!
- * Extensible 1.0-rc1
- * Copyright(c) 2010-2011 Extensible, LLC
- * licensing@ext.ensible.com
- * http://ext.ensible.com
- */
-/*!
- * Extensible 1.0-rc1
- * Copyright(c) 2010-2011 Extensible, LLC
- * licensing@ext.ensible.com
- * http://ext.ensible.com
- */
 Ext.BLANK_IMAGE_URL = 'resources/s.gif';
 
 Docs = {};

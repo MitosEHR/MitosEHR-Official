@@ -13,6 +13,7 @@
     }
     echo $doctype;
 ?>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Extensible : Doctype Tester</title>
@@ -27,10 +28,13 @@
     <script type="text/javascript" src="../../extensible-all-debug.js"></script>
     <!-- Any Extensible overrides go here -->
     
-    <!-- Page-specific includes -->
+    <!-- Shared example includes -->
     <link rel="stylesheet" type="text/css" href="../examples.css" />
-    <script type="text/javascript" src="data-events.js"></script>
-    <script type="text/javascript" src="data-calendars.js"></script>
+    <script type="text/javascript" src="../examples.js"></script>
+    
+    <!-- Page-specific includes -->
+    <script type="text/javascript" src="data/events.js"></script>
+    <script type="text/javascript" src="data/calendars.js"></script>
     <script type="text/javascript" src="CalendarStore.js"></script>
     <script type="text/javascript" src="MemoryEventStore.js"></script>
     <script type="text/javascript" src="doc-types.js"></script>

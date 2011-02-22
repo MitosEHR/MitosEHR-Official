@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -7,7 +7,7 @@
 Ext.onReady(function(){
     
     this.eventStore = new Ext.ensible.sample.MemoryEventStore({
-        // defined in data-events.js
+        // defined in data/events.js
         data: Ext.ensible.sample.EventData
     });
     

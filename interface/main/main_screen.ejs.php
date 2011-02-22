@@ -3,46 +3,19 @@
 // MitosEHR Globals
 // v0.0.1
 // *************************************************************************************
-include_once("../registry.php");
-require_once("$srcdir/formdata.inc.php");
-$_SESSION["encounter"] = "";
+include_once ("../registry.php");
+include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
-// *************************************************************************************
-// Fetching the password expiration date
-// *************************************************************************************
-if($GLOBALS['password_expiration_days'] != 0){
-	$is_expired = false;
-	$q=formData('authUser','P');
-	$result = sqlStatement("SELECT
-						   		pwd_expiration_date
-							FROM 
-								users
-							WHERE
-								username = '".$q."'");
-	$current_date = date("Y-m-d");
-	$pwd_expires_date = $current_date;
-	if($row = sqlFetchArray($result)) {
-		$pwd_expires_date = $row['pwd_expiration_date'];
-	}
-	// *************************************************************************************
-	// Displaying the password expiration message
-	// (starting from 7 days before the password gets expired)
-	// *************************************************************************************
-	$pwd_alert_date = date("Y-m-d", strtotime($pwd_expires_date . "-7 days"));
-	if (strtotime($pwd_alert_date) != "" && strtotime($current_date) >= strtotime($pwd_alert_date) && 
-		(!isset($_SESSION['expiration_msg']) or $_SESSION['expiration_msg'] == 0)) {
-			$is_expired = true;
-		$_SESSION['expiration_msg'] = 1; // only show the expired message once
-	}
-}
-
-
-if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_area_width'];
 ?>
 <html>
 <head>
-<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/ext-all.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext.css">
+<link rel="stylesheet" type="text/css" href="../../library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext4.css">
+<link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
+<link rel="stylesheet" type="text/css" href="../../ui_app/mitosehr_app.css" >
 
 <!-- ******************************************************************* -->
 <!-- Call for mandatory repository objects, that we need on the MitosEHR -->
@@ -52,15 +25,12 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 <script type="text/javascript" src="../../repository/fittoparent/Ext.ux.FitToParent.js"></script>
 <script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script>
 <script type="text/javascript" src="../../repository/formValidation/formValidation.js"></script>
-<script type="text/javascript" src="../../library/<?php echo $GLOBALS['ext_path']; ?>/src/widgets/grid/RowEditor.js"></script>
+<script type="text/javascript" src="../../library/<?php echo $_SESSION['dir']['ext']; ?>/src/grid/RowEditor.js"></script>
 
 <!-- ******************************************************************* -->
 <!-- Call for mandatory library objects, that we need on the MitosEHR    -->
 <!-- ******************************************************************* -->
 <link rel="stylesheet" type="text/css" href="../../repository/calendar/resources/css/extensible-all.css" />
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/ext-all.css" />
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/RowEditor.css" />
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/css/xtheme-gray.css" />
   
 <link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
 <title><?php echo $GLOBALS['app_name']; ?></title>
@@ -71,7 +41,6 @@ if (!empty($GLOBALS['gbl_nav_area_width'])) $nav_area_width = $GLOBALS['gbl_nav_
 Ext.onReady(function() {
 
 Ext.QuickTips.init();
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
 // *************************************************************************************
 // Immunization Window Dialog

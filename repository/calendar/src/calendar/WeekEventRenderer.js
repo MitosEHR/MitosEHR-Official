@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -131,7 +131,7 @@ Ext.ensible.cal.WeekEventRenderer = function(){
                                 id: o.id+'-empty-day-'+dt.format('Ymd')
                             };
                             if(o.evtMaxCount[w] > 1){
-                                cellCfg.rowSpan = o.evtMaxCount[w];
+                                cellCfg.rowspan = o.evtMaxCount[w];
                             }
                             Ext.DomHelper.append(row, cellCfg);
                         }

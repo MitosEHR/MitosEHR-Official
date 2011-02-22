@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -308,6 +308,7 @@ Ext.ensible.cal.EventEditWindow = Ext.extend(Ext.Window, {
         rec.set(M.IsAllDay.name, dates[2]);
         
         dirty = rec.dirty;
+        //delete rec.store; // make sure the record does not try to autosave
         rec.endEdit();
         
         return dirty;

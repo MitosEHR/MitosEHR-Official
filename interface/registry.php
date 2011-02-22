@@ -33,7 +33,7 @@ $_SESSION['site']['setup'] = false;
 // Language Related variables
 //**********************************************************************
 $_SESSION['lang']['code'] = "en";
-$_SESSION['lang']['language'] = "English";
+$_SESSION['lang']['language'] = "English (Standard)";
 
 //**********************************************************************
 // Directory related variables

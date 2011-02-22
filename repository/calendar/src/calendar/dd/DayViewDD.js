@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.0-rc1
+ * Extensible 1.0-rc2
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -19,6 +19,7 @@ Ext.ensible.cal.DayViewDragZone = Ext.extend(Ext.ensible.cal.DragZone, {
             
             return {
                 type: 'eventresize',
+                xy: e.xy,
                 ddel: p.dom,
                 eventStart: rec.data[Ext.ensible.cal.EventMappings.StartDate.name],
                 eventEnd: rec.data[Ext.ensible.cal.EventMappings.EndDate.name],
@@ -30,6 +31,7 @@ Ext.ensible.cal.DayViewDragZone = Ext.extend(Ext.ensible.cal.DragZone, {
             var rec = this.view.getEventRecordFromEl(t);
             return {
                 type: 'eventdrag',
+                xy: e.xy,
                 ddel: t,
                 eventStart: rec.data[Ext.ensible.cal.EventMappings.StartDate.name],
                 eventEnd: rec.data[Ext.ensible.cal.EventMappings.EndDate.name],
@@ -39,7 +41,7 @@ Ext.ensible.cal.DayViewDragZone = Ext.extend(Ext.ensible.cal.DragZone, {
         
         // If not dragging/resizing an event then we are dragging on 
         // the calendar to add a new event
-        t = this.view.getDayAt(e.getPageX(), e.getPageY());
+        t = this.view.getDayAt(e.xy[0], e.xy[1]);
         if(t.el){
             return {
                 type: 'caldrag',
@@ -76,8 +78,9 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
                 this.dragStartMarker = n.el.parent().createChild({
                     style: 'position:absolute;'
                 });
-                this.dragStartMarker.setBox(n.timeBox);
-                this.dragCreateDt = n.date;
+                // use the original dayInfo values from the drag start
+                this.dragStartMarker.setBox(data.dayInfo.timeBox);
+                this.dragCreateDt = data.dayInfo.date;
             }
             var endDt, box = this.dragStartMarker.getBox();
             box.height = Math.ceil(Math.abs(e.xy[1] - box.y) / n.timeBox.height) * n.timeBox.height;
@@ -107,8 +110,8 @@ Ext.ensible.cal.DayViewDropZone = Ext.extend(Ext.ensible.cal.DropZone, {
             
             if(data.type == 'eventdrag'){
                 if(this.dragOffset === undefined){
-                    this.dragOffset = n.timeBox.y-box.y;
-                    box.y = n.timeBox.y-this.dragOffset;
+                    this.dragOffset = data.xy[1]-box.y;
+                    box.y = data.xy[1]-this.dragOffset;
                 }
                 else{
                     box.y = n.timeBox.y;
