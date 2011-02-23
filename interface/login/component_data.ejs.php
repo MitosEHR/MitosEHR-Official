@@ -31,7 +31,7 @@ switch ($_GET['task']) {
 		$sql = "SELECT
 					*
 				FROM
-					groups");
+					groups";
 		foreach (sqlStatement($sql) as $urow) {
 			$buff .= " { id: '" . dataDecode( $urow['id'] ) . "', user: '" . dataDecode( $urow['user'] ) . "', name: '" . dataDecode( $urow['name'] ) . "' },". chr(13);
 			$count++;

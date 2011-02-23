@@ -30,7 +30,6 @@ Ext.require([
     'Ext.window.*',
     'Ext.data.*',
     'Ext.tree.TreePanel',
-    'Ext.tree.TreeNode',
     'Ext.Loader',
     'Ext.tip.QuickTips'
 ]);
@@ -123,7 +122,7 @@ Ext.create('Ext.Viewport', {
 		title: 'Center',
 		layout: 'border',
 		border: false,
-		items: [MainApp, BottomPanel]
+		items: [ MainApp, BottomPanel ]
 	}]
 });
 
