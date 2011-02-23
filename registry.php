@@ -1,0 +1,107 @@
+<?php
+/* The MitosEHR Registry File, this will containt all the global variables
+ * used by MitosEHR, putting here variable is a security risk please consider
+ * first putting here variables that are not sesible to the database.
+ * 
+ * version 0.0.1
+ * revision: N/A
+ * author: Gino Rivera Falú
+ */
+ 
+session_name ( "MitosEHR" );
+session_start();
+ 
+//**********************************************************************
+// Read the SITES directory first
+// To get the sqlconf.php
+//**********************************************************************
+$pieces = explode("/", $_SERVER['PHP_SELF']);
+$d = dir($_SERVER['DOCUMENT_ROOT']."/".$pieces[1]."/sites/");
+while (false !== ($entry = $d->read())) {
+	if ( $entry != "." && $entry != ".."){ $confs[] = $entry . "/sqlconf.php"; } 
+	if ( $entry != "." && $entry != ".." && $entry == "default" ){ $default = $entry; }
+	if ( $entry != "." && $entry != ".."){ $sites[] = $entry; }
+}
+$_SESSION['site']['self'] = $_SERVER['PHP_SELF'];
+$_SESSION['site']['file'] = dirname(__FILE__);
+$_SESSION['site']['sites'] = $sites;
+$_SESSION['site']['default'] = $default;
+$_SESSION['site']['sites_conf'] = $confs;
+$_SESSION['site']['root'] = $_SERVER['DOCUMENT_ROOT']."/".$pieces[1];
+$_SESSION['site']['siteFolder'] = $pieces[1];
+$_SESSION['site']['setup'] = false; 
+
+
+//**********************************************************************
+// Language Related variables
+//**********************************************************************
+$_SESSION['lang']['code'] = "en";
+$_SESSION['lang']['language'] = "English (Standard)";
+
+//**********************************************************************
+// Directory related variables
+//**********************************************************************
+$_SESSION['dir']['ext'] = "ext-4.0-pr1";
+$_SESSION['dir']['AES'] = "phpAES";
+$_SESSION['dir']['ADOdb'] = "adodb";
+$_SESSION['dir']['adoHelper'] = "adoHelper";
+
+//**********************************************************************
+// Version related variables
+//**********************************************************************
+$_SESSION['ver']['codeName']= "Vega";
+$_SESSION['ver']['major'] = '1';
+$_SESSION['ver']['rev'] = '0';
+$_SESSION['ver']['minor'] = '0 Development';
+
+//**********************************************************************
+// Database Init Configuration
+//**********************************************************************
+$_SESSION['db']['type'] = 'localhost';
+$_SESSION['db']['host'] = 'localhost';
+$_SESSION['db']['port'] = '3306';
+$_SESSION['db']['username'] = 'openemr';
+$_SESSION['db']['password'] = 'pass';
+$_SESSION['db']['database'] = 'openemr';
+
+//**********************************************************************
+// Server related variables
+//**********************************************************************
+$_SESSION['server'] = $_SERVER;
+$_SESSION['server']['OS'] = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "win") ? "Windows" : "Linux"); 
+
+//**********************************************************************
+// Client related variables
+//**********************************************************************
+$operating_systems = array  (
+	// User Agent String will have a information about Os. Lets identify them.
+	'Windows 3.11' => 'Win16',
+	'Windows 95' => '(Windows 95)|(Win95)|(Windows_95)',
+	'Windows 98' => '(Windows 98)|(Win98)',
+	'Windows 2000' => '(Windows NT 5.0)|(Windows 2000)',
+	'Windows XP' => '(Windows NT 5.1)|(Windows XP)',
+	'Windows Server 2003 ' => '(Windows NT 5.2)',
+	'Windows Vista ' => '(Windows NT 6.0)',
+	'Windows 7' => '(Windows NT 7.0)',
+	'Windows NT 4.0' => '(Windows NT 4.0)|(WinNT4.0)|(WinNT)|(Windows NT)',
+	'Windows ME' => '(Windows 98)|(Win 9x 4.90)|(Windows ME)',
+	'Open BSD' => 'OpenBSD',
+	'Sun OS' => 'SunOS',
+	'Linux' => '(Linux)|(X11)',
+	'Mac OS' => '(Mac_PowerPC)|(Macintosh)',
+	'QNX' => 'QNX',
+	'BeOS' => 'BeOS',
+	'OS/2' => 'OS/2',
+);
+// Match against our array of operating systems, To match
+foreach($operating_systems as $current_os=>$found){
+	if (eregi($found, $_SERVER['HTTP_USER_AGENT'])){
+		$_SESSION['client']['os'] = $current_os;
+		break;
+	} else {
+		$_SESSION['client']['os'] = 'Unknow';
+	}
+}
+
+?>
+
