@@ -15,6 +15,15 @@ session_start();
 // Read the SITES directory first
 // To get the sqlconf.php
 //**********************************************************************
+
+// this returns the current folder and defined it as a root.
+// ya el registry esta en el root file asi que lo que hay que definir la variable y ya!
+// no lo he testiado, asi no funciona dejame saber  :-)
+
+// $mitos_root = dirname(__FILE__); 
+// $d =  $mitos_root . "/sites/");
+// while (false !== ($entry = $d->read())) {
+	
 $pieces = explode("/", $_SERVER['PHP_SELF']);
 $d = dir($_SERVER['DOCUMENT_ROOT']."/".$pieces[1]."/sites/");
 while (false !== ($entry = $d->read())) {
