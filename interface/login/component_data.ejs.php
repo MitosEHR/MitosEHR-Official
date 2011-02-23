@@ -12,7 +12,9 @@
 // *************************************************************************************
 // Load the MitosEHR Libraries
 // *************************************************************************************
-require_once("../registry.php");
+session_name ( "MitosEHR" );
+session_start();
+
 require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 require_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
 

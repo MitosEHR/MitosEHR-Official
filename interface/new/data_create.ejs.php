@@ -9,20 +9,13 @@
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
 
-// *************************************************************************************
-//SANITIZE ALL ESCAPES
-// *************************************************************************************
-$sanitize_all_escapes=true;
+session_name ( "MitosEHR" );
+session_start();
 
-// *************************************************************************************
-//STOP FAKE REGISTER GLOBALS
-// *************************************************************************************
-$fake_register_globals=false;
+include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
+require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 
-// *************************************************************************************
-// Load the OpenEMR Libraries
-// *************************************************************************************
-require_once("../registry.php");
 require_once("$srcdir/pnotes.inc.php");
 require_once("$srcdir/patient.inc.php");
 require_once("$srcdir/acl.inc.php");
