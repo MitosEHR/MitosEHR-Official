@@ -8,23 +8,21 @@
  * author: Gino Rivera Falú
  */
 
-session_name ( "MitosEHR" );
-session_start();
-
-include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
+echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
 
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <TITLE>MitosEHR</TITLE>
 
-<script type="text/javascript" src="../../library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+<script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext.css">
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext4.css">
-<link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
-<link rel="stylesheet" type="text/css" href="../../ui_app/mitosehr_app.css" >
+<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext.css">
+<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext4.css">
+<link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
+<link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 
 <script type="text/javascript">
 Ext.require([
@@ -36,7 +34,6 @@ Ext.require([
     'Ext.tip.QuickTips'
 ]);
 Ext.onReady(function() {
-
 
 //****************************************************************
 // Navigation Panel
@@ -52,7 +49,7 @@ var Navigation = Ext.create('Ext.tree.TreePanel', {
     animate: true,
     enableDD: true,
     containerScroll: true,
-	dataUrl: '../navigation/default_leftnav.ejs.php',
+	dataUrl: 'interface/navigation/default_leftnav.ejs.php',
 	title: '<?php i18n('Navigation'); ?>',
 	split: true,
 	width: 200,

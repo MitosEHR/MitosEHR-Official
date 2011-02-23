@@ -6,23 +6,17 @@
  * author: Gino Rivera Falu
  */
 
-session_name ( "MitosEHR" );
-session_start();
-
-include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<TITLE><?php i18n('Login'); ?></TITLE>
+<TITLE>MitosEHR Logon Screen</TITLE>
 
-<script type="text/javascript" src="../../library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+<script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext.css">
-<link rel="stylesheet" type="text/css" href="../../library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext4.css">
-<link rel="stylesheet" type="text/css" href="../../ui_app/style_newui.css" >
-<link rel="stylesheet" type="text/css" href="../../ui_app/mitosehr_app.css" >
+<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext.css">
+<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext4.css">
+<link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
+<link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 
 <script type="text/javascript">
 Ext.require([
@@ -48,7 +42,7 @@ Ext.regModel('Group', { fields:
 var storeGroup = Ext.data.Store({
 	model: 'Group',
 	proxy: new Ext.data.AjaxProxy({
-		url: '../login/component_data.ejs.php?task=groups'
+		url: 'interface/login/component_data.ejs.php?task=groups'
 	}),
 	reader: {
 		type: 'json',
@@ -72,7 +66,7 @@ Ext.regModel('Lang', { fields:
 var storeLang = new Ext.data.Store({
 	model: 'Lang',
 	proxy: new Ext.data.AjaxProxy({
-		url: '../login/component_data.ejs.php?task=lang',
+		url: 'interface/login/component_data.ejs.php?task=lang',
 		reader: {
 			type: 'json',
 			idProperty: 'land_id',
@@ -96,7 +90,7 @@ Ext.regModel('Sites', { fields:
 var storeSites = new Ext.data.Store({
 	model: 'Sites',
 	proxy: new Ext.data.AjaxProxy({
-		url: '../login/component_data.ejs.php?task=sites',
+		url: 'interface/login/component_data.ejs.php?task=sites',
 		reader: {
 			type: 'json',
 			idProperty: 'site_id',
@@ -130,7 +124,8 @@ var winCopyright = Ext.create('widget.window', {
 // *************************************************************************************
 var formLogin = Ext.create('Ext.form.FormPanel', {
 	id				: 'formLogin',
-    url				: '../main/main_screen.ejs.php',
+    url				: 'index.php',
+    baseParams		: {auth: 'true'},
     bodyStyle		:'padding:5px 5px 0',
 	frame			: false,
 	border			: false,
@@ -144,33 +139,33 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
         minLength: 3,
 		maxLength: 32, 
 		allowBlank: false, 
-		blankText:'<?php i18n('Enter your username'); ?>', 
+		blankText:'Enter your username', 
 		ref: '../authUser', 
 		id: 'authUser', 
 		name: 'authUser', 
 		validationEvent: false,
-		fieldLabel: '<?php i18n('Username'); ?>',
-		minLengthText: '<?php i18n('Username must be at least 3 characters long.'); ?>' 
+		fieldLabel: 'Username',
+		minLengthText: 'Username must be at least 3 characters long.' 
 	},{
 		xtype: 'textfield',
         minLength: 4,
 		maxLength: 10, 
 		allowBlank: false,
-		blankText:'<?php i18n('Enter your password'); ?>', 
+		blankText:'Enter your password', 
 		ref: '../authPass', 
 		inputType: 'password', 
 		id: 'authPass', 
 		name: 'authPass', 
 		validationEvent: false,
-		fieldLabel: '<?php i18n('Password'); ?>',
-		minLengthText: '<?php i18n('Password must be at least 4 characters long.'); ?>'
+		fieldLabel: 'Password',
+		minLengthText: 'Password must be at least 4 characters long.'
     },{ 
     	xtype: 'combobox',
     	id: 'languageChoice', 
     	name: 'languageChoice', 
     	store: storeLang,
     	emptyText: '<?php echo $_SESSION['lang']['language']; ?>', 
-    	fieldLabel: '<?php i18n('Language'); ?>', 
+    	fieldLabel: 'Language', 
     	editable: false, 
     	triggerAction: 'all', 
     	valueField: 'lang_id',
@@ -182,7 +177,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
     	name: 'choiseSite', 
     	store: storeSites,
     	emptyText: 'default',
-    	fieldLabel: '<?php i18n('Site'); ?>', 
+    	fieldLabel: 'Site', 
     	editable: false, 
     	triggerAction: 'all', 
     	valueField: 'site_id', 
@@ -228,7 +223,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 // The Logon Window
 // *************************************************************************************
 var winLogon = new Ext.create('widget.window', {
-    title		: '<?php i18n('MitosEHR Logon'); ?>',
+    title		: 'MitosEHR Logon',
     closable	: true,
     width		: 499,
 	height		: 315,
@@ -240,7 +235,7 @@ var winLogon = new Ext.create('widget.window', {
 	draggable	: false,
 	closable	: false,
     bodyStyle	: 'padding: 5px;',
-    items		: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: '../../ui_app/logon_header.png'}}, formLogin ]
+    items		: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: 'ui_app/logon_header.png'}}, formLogin ]
 });
 
 winLogon.show();

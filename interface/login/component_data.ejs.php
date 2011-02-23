@@ -15,8 +15,8 @@
 session_name ( "MitosEHR" );
 session_start();
 
-require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
-require_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
+require_once("repository/dataExchange/dataExchange.inc.php");
+require_once("library/adoHelper/adoHelper.inc.php");
 
 // Count records variable
 $count = 0;

@@ -38,8 +38,9 @@ $_SESSION['site']['default'] = $default;
 $_SESSION['site']['sites_conf'] = $confs;
 $_SESSION['site']['root'] = $_SERVER['DOCUMENT_ROOT']."/".$pieces[1];
 $_SESSION['site']['siteFolder'] = $pieces[1];
-$_SESSION['site']['setup'] = false; 
 
+// Defined in sites/?/conf.php
+//$_SESSION['site']['setup'] = false;
 
 //**********************************************************************
 // Language Related variables
@@ -65,13 +66,14 @@ $_SESSION['ver']['minor'] = '0 Development';
 
 //**********************************************************************
 // Database Init Configuration
+// Defined in sites/?/conf.php
 //**********************************************************************
-$_SESSION['db']['type'] = 'localhost';
-$_SESSION['db']['host'] = 'localhost';
-$_SESSION['db']['port'] = '3306';
-$_SESSION['db']['username'] = 'openemr';
-$_SESSION['db']['password'] = 'pass';
-$_SESSION['db']['database'] = 'openemr';
+//$_SESSION['db']['type'] = 'localhost';
+//$_SESSION['db']['host'] = 'localhost';
+//$_SESSION['db']['port'] = '3306';
+//$_SESSION['db']['username'] = 'openemr';
+//$_SESSION['db']['password'] = 'pass';
+//$_SESSION['db']['database'] = 'openemr';
 
 //**********************************************************************
 // Server related variables

@@ -9,13 +9,13 @@
 //**********************************************************************
 // Include the main library of ADOdb
 //**********************************************************************
-include_once($_SESSION['site']['root'] . "/library/adodb/adodb.inc.php");
+include_once("library/adodb/adodb.inc.php");
 
 //**********************************************************************
 // Connect to the database
 //**********************************************************************
 $conn = NewADOConnection("mysql");
-$conn->PConnect($_SESSION['db']['host'].":".$_SESSION['db']['port'], $_SESSION['db']['username'], $_SESSION['db']['password'], $_SESSION['db']['database']);
+$conn->PConnect($_SESSION['site']['db']['host'].":".$_SESSION['site']['db']['port'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'], $_SESSION['site']['db']['database']);
 $conn->SetFetchMode(ADODB_FETCH_ASSOC); 
 
 //**********************************************************************
