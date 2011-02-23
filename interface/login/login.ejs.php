@@ -9,9 +9,6 @@
 session_name ( "MitosEHR" );
 session_start();
 
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
 include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
