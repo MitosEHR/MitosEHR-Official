@@ -3,9 +3,9 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
+include_once("library/adoHelper/adoHelper.inc.php");
+include_once("library/I18n/I18n.inc.php");
+require_once("repository/dataExchange/dataExchange.inc.php");
 
 // *************************************************************************************
 // This array defines the list of primary documents that may be

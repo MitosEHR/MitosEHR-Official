@@ -13,14 +13,9 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
-
 ?>
 <script type="text/javascript">
 Ext.onReady(function(){
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
 //******************************************************************************
 // ExtJS Global variables 
@@ -62,7 +57,7 @@ var ListRecord = Ext.data.Record.create([
 // *************************************************************************************
 var storeEditList = new Ext.data.Store({
 	proxy: new Ext.data.HttpProxy({
-		url: '../administration/lists/component_data.ejs.php?task=editlist'
+		url: 'interface/administration/lists/component_data.ejs.php?task=editlist'
 	}),
 	reader: new Ext.data.JsonReader({
 		idIndex: 0,
@@ -97,10 +92,10 @@ var storeListsOption = new Ext.data.Store({
 	proxy : new Ext.data.HttpProxy({
 		method		: 'POST',
 		api: {
-			read	: '../administration/lists/data_read.ejs.php',
-			create	: '../administration/lists/data_create.ejs.php',
-			update	: '../administration/lists/data_update.ejs.php',
-			destroy : '../administration/lists/data_destroy.ejs.php'
+			read	: 'interface/administration/lists/data_read.ejs.php',
+			create	: 'interface/administration/lists/data_create.ejs.php',
+			update	: 'interface/administration/lists/data_update.ejs.php',
+			destroy : 'interface/administration/lists/data_destroy.ejs.php'
 		}
 	}),
 

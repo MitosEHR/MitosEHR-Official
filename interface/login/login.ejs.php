@@ -30,54 +30,6 @@ Ext.onReady(function(){
 Ext.tip.QuickTips.init();
 
 // *************************************************************************************
-// Structure, data for storeGroup
-// AJAX -> component_data.ejs.php
-// *************************************************************************************
-Ext.regModel('Group', { fields: 
-	[
-	{ type: 'int', name: 'id'},
-	{ type: 'string', name: 'name'}
-	] 
-});
-var storeGroup = Ext.data.Store({
-	model: 'Group',
-	proxy: new Ext.data.AjaxProxy({
-		url: 'interface/login/component_data.ejs.php?task=groups'
-	}),
-	reader: {
-		type: 'json',
-		idProperty: 'id',
-		totalProperty: 'results',
-		root: 'row'
-	},
-	autoLoad: true
-});
-
-// *************************************************************************************
-// Structure, data for storeLang
-// AJAX -> component_data.ejs.php
-// *************************************************************************************
-Ext.regModel('Lang', { fields: 
-	[
-	{ type: 'int', name: 'lang_id'},
-	{ type: 'string', name: 'lang_description'}
-	] 
-});
-var storeLang = new Ext.data.Store({
-	model: 'Lang',
-	proxy: new Ext.data.AjaxProxy({
-		url: 'interface/login/component_data.ejs.php?task=lang',
-		reader: {
-			type: 'json',
-			idProperty: 'land_id',
-			totalProperty: 'results',
-			root: 'row'
-		}
-	}),
-	autoLoad: true
-});
-
-// *************************************************************************************
 // Structure, data for storeLang
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
@@ -159,18 +111,6 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 		validationEvent: false,
 		fieldLabel: 'Password',
 		minLengthText: 'Password must be at least 4 characters long.'
-    },{ 
-    	xtype: 'combobox',
-    	id: 'languageChoice', 
-    	name: 'languageChoice', 
-    	store: storeLang,
-    	emptyText: '<?php echo $_SESSION['lang']['language']; ?>', 
-    	fieldLabel: 'Language', 
-    	editable: false, 
-    	triggerAction: 'all', 
-    	valueField: 'lang_id',
-    	displayField: 'lang_description',
-    	queryMode: 'local'
     },{ 
     	xtype: 'combobox', 
     	id: 'choiseSite', 

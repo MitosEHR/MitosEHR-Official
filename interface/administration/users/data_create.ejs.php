@@ -9,6 +9,9 @@
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
 
+session_name ( "MitosEHR" );
+session_start();
+
 include_once("library/adoHelper/adoHelper.inc.php");
 include_once("library/I18n/I18n.inc.php");
 require_once("repository/dataExchange/dataExchange.inc.php");

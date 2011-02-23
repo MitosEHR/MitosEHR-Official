@@ -24,26 +24,25 @@ session_start();
 // $d =  $mitos_root . "/sites/");
 // while (false !== ($entry = $d->read())) {
 	
-$pieces = explode("/", $_SERVER['PHP_SELF']);
-$d = dir($_SERVER['DOCUMENT_ROOT']."/".$pieces[1]."/sites/");
+//$pieces = explode("/", $_SERVER['PHP_SELF']);
+//$d = dir($_SERVER['DOCUMENT_ROOT']."/".$pieces[1]."/sites/");
+$d = dir("sites/");
 while (false !== ($entry = $d->read())) {
-	if ( $entry != "." && $entry != ".."){ $confs[] = $entry . "/sqlconf.php"; } 
+	if ( $entry != "." && $entry != ".."){ $confs[] = $entry . "/conf.php"; } 
 	if ( $entry != "." && $entry != ".." && $entry == "default" ){ $default = $entry; }
 	if ( $entry != "." && $entry != ".."){ $sites[] = $entry; }
 }
 $_SESSION['site']['self'] = $_SERVER['PHP_SELF'];
-$_SESSION['site']['file'] = dirname(__FILE__);
 $_SESSION['site']['sites'] = $sites;
 $_SESSION['site']['default'] = $default;
 $_SESSION['site']['sites_conf'] = $confs;
-$_SESSION['site']['root'] = $_SERVER['DOCUMENT_ROOT']."/".$pieces[1];
-$_SESSION['site']['siteFolder'] = $pieces[1];
+$_SESSION['site']['root'] = dirname(__FILE__);
 
 // Defined in sites/?/conf.php
 //$_SESSION['site']['setup'] = false;
 
 //**********************************************************************
-// Language Related variables
+// Default Language Related variables
 //**********************************************************************
 $_SESSION['lang']['code'] = "en";
 $_SESSION['lang']['language'] = "English (Standard)";

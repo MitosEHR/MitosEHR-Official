@@ -14,10 +14,6 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
-
 ?>
 
 <script type="text/javascript">

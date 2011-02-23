@@ -12,14 +12,9 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 ?>
 <script type="text/javascript">
 Ext.onReady(function(){
-
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
 //******************************************************************************
 // Sanitizing Objects
@@ -102,9 +97,9 @@ var storeAddressbook = new Ext.data.Store({
   proxy     : new Ext.data.HttpProxy({
     method      : 'POST',
     api: {
-      read      : '../miscellaneous/addressbook/data_read.ejs.php',
-      create    : '../miscellaneous/addressbook/data_create.ejs.php',
-      update    : '../miscellaneous/addressbook/data_update.ejs.php'
+      read      : 'interface/miscellaneous/addressbook/data_read.ejs.php',
+      create    : 'interface/miscellaneous/addressbook/data_create.ejs.php',
+      update    : 'interface/miscellaneous/addressbook/data_update.ejs.php'
       //destroy :  <- You can not destroy conatacts, HIPPA Compliant
     }
   }),
@@ -131,7 +126,7 @@ storeAddressbook.load({params:{start:0, limit:10}});
 // *************************************************************************************
 var storeTitles = new Ext.data.Store({
   proxy: new Ext.data.ScriptTagProxy({
-    url: '../miscellaneous/addressbook/component_data.ejs.php?task=titles'
+    url: 'interface/miscellaneous/addressbook/component_data.ejs.php?task=titles'
   }),
   reader: new Ext.data.JsonReader({
     idProperty: 'option_id',
@@ -150,7 +145,7 @@ storeTitles.load();
 // *************************************************************************************
 var storeTypes = new Ext.data.Store({
   proxy: new Ext.data.ScriptTagProxy({
-    url: '../miscellaneous/addressbook/component_data.ejs.php?task=types'
+    url: 'interface/miscellaneous/addressbook/component_data.ejs.php?task=types'
   }),
   reader: new Ext.data.JsonReader({
     idProperty: 'option_id',

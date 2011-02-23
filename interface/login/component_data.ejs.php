@@ -9,14 +9,8 @@
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
 
-// *************************************************************************************
-// Load the MitosEHR Libraries
-// *************************************************************************************
 session_name ( "MitosEHR" );
 session_start();
-
-require_once("repository/dataExchange/dataExchange.inc.php");
-require_once("library/adoHelper/adoHelper.inc.php");
 
 // Count records variable
 $count = 0;
@@ -26,49 +20,6 @@ $count = 0;
 // *************************************************************************************
 switch ($_GET['task']) {
 
-	// *************************************************************************************
-	// Data for for storeGroups
-	// *************************************************************************************
-	case "groups":
-		$sql = "SELECT
-					*
-				FROM
-					groups";
-		foreach (sqlStatement($sql) as $urow) {
-			$buff .= " { id: '" . dataDecode( $urow['id'] ) . "', user: '" . dataDecode( $urow['user'] ) . "', name: '" . dataDecode( $urow['name'] ) . "' },". chr(13);
-			$count++;
-		}
-		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
-		echo "row: [" . chr(13);
-		echo $buff;
-		echo "]})" . chr(13);
-	break;
-	
-	// *************************************************************************************
-	// Data for storeLang
-	// *************************************************************************************
-	case "lang":
-		$sql = "SELECT
-					*
-				FROM
-					lang_languages
-				ORDER BY
-					lang_description,
-					lang_id";
-		foreach (sqlStatement($sql) as $urow) {
-			$buff .= " { lang_id: '" . dataDecode( $urow['lang_id'] ) . "', lang_description: '" . dataDecode( $urow['lang_description'] ) . "' },". chr(13);
-			$count++;
-		}
-		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
-		echo "row: [" . chr(13);
-		echo $buff;
-		echo "]})" . chr(13);
-	break;
-	
 	// *************************************************************************************
 	// Data for storeSites
 	// *************************************************************************************
