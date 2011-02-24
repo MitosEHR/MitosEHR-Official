@@ -21,22 +21,6 @@ session_start();
 //-------------------------------------------
 include_once("../../library/phpAES/AES.class.php");
 include_once("../../repository/dataExchange/dataExchange.inc.php");
-include_once("../../library/phpAES/AES.class.php");
-
-//-------------------------------------------
-// Find the AES key in the selected site
-// And include the rest of the remaining 
-// variables to connect to the database.
-//-------------------------------------------
-$_SESSION['site']['site'] = $_REQUEST['choiseSite'];
-$fileConf = "../../sites/" . $_SESSION['site']['site'] . "/conf.php";
-if (file_exists($fileConf)){
-	include_once("../../sites/" . $_SESSION['site']['site'] . "/conf.php");
-	include_once("../../library/dbHelper/dbHelper.inc.php");
-} else {
-	echo "{ success: false, errors: { reason: 'No configuration file found on the select site, contact support.' }}";
- 	return;
-}
 
 //-------------------------------------------
 // Simple check username
@@ -51,6 +35,21 @@ if (!$_REQUEST['authUser']){
 //------------------------------------------- 
 if (!$_REQUEST['authPass']){
 	echo "{ success: false, errors: { reason: 'The password field can not be in blank. Try again.' }}";
+ 	return;
+}
+
+//-------------------------------------------
+// Find the AES key in the selected site
+// And include the rest of the remaining 
+// variables to connect to the database.
+//-------------------------------------------
+$_SESSION['site']['site'] = $_REQUEST['choiseSite'];
+$fileConf = "../../sites/" . $_SESSION['site']['site'] . "/conf.php";
+if (file_exists($fileConf)){
+	include_once("../../sites/" . $_SESSION['site']['site'] . "/conf.php");
+	include_once("../../library/dbHelper/dbHelper.inc.php");
+} else {
+	echo "{ success: false, errors: { reason: 'No configuration file found on the select site, contact support.' }}";
  	return;
 }
 
