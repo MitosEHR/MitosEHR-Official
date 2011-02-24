@@ -40,9 +40,10 @@ function sqlStatement($sql){
 	
 	// Get all the records
 	$recordset = $conn->query($sql);
+	$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	
 	// return the recordset 
-	return $recordset;
+	return $result;
 }
 
 //**********************************************************************
@@ -69,9 +70,9 @@ function sqlStatementLog($sql){
 				VALUES (NOW(), '" . $eventLog . "', '" . $sql . "', '" . $_SESSION['user']['name'] . "', '" . $_SESSION['patient']['id'] . "')";
 		$conn->query($eventSQL);
 	}
-	
+	$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	// return the recordset 
-	return $recordset;
+	return $result;
 }
 
 //**********************************************************************
@@ -84,13 +85,13 @@ function sqlStatementEvent($eventLog, $sql){
 	
 	// Execute the SQL stament
 	$conn->query($sql);
-	
+		
 	// If the QUERY has INSERT, DELETE, ALTER then has to 
 	// insert the event to the database.
-		$eventSQL = "INSERT INTO log 
-				(date, event, comments, user, patient_id) 
-				VALUES (NOW(), '" . $eventLog . "', '" . $sql . "', '" . $_SESSION['user']['name'] . "', '" . $_SESSION['patient']['id'] . "')";
-		$conn->query($eventSQL);
+	$eventSQL = "INSERT INTO log 
+			(date, event, comments, user, patient_id) 
+			VALUES (NOW(), '" . $eventLog . "', '" . $sql . "', '" . $_SESSION['user']['name'] . "', '" . $_SESSION['patient']['id'] . "')";
+	$conn->query($eventSQL);
 	
 	// return the recordset 
 	return $recordset;
@@ -116,7 +117,7 @@ function sqlEventLog($eventLog, $comments, $userNotes=NULL){
 // Return the number of records
 //**********************************************************************
 function sqlTotalCount($resource){
-	if ($resource) { return; }
+	if (!$resource) { return; }
 	return $resource->RecordCount();
 }
 

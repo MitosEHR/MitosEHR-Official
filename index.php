@@ -8,37 +8,16 @@
  * the user and start the main application
  * 
  * Author: Gino Rivera Falú
- * Ver: 0.0.1
+ * Ver: 0.0.2
  * 
  */
 
+session_name ( "MitosEHR" );
+session_start();
 include_once("registry.php");
 
 // Make the auth process
-if ($_REQUEST['auth'] == TRUE){
-	//----------------------------------------------------------------
-	// Get the remaining configuration SESSION variables
-	//----------------------------------------------------------------
-	include_once("sites/" . $_REQUEST['choiseSite'] . "/conf.php");
-	
-	//----------------------------------------------------------------
-	// Validate user
-	// Include here all the necessary libraries to start 
-	// the application
-	//----------------------------------------------------------------
-	include_once("library/I18n/I18n.inc.php");
-	include_once("library/phpAES/AES.class.php");
-	include_once("library/dbHelper/dbHelper.inc.php");
-	include_once("repository/dataExchange/dataExchange.inc.php");
-	$sql = "SELECT 
-				* 
-			FROM 
-				users 
-			WHERE 
-				username='" . $_REQUEST['authUser'] . "' and 
-				password='" . $_REQUEST['authPassword'] . "' and 
-				authorized='1'";
-	$rec = sqlStatement($sql);
+if ($_SESSION['user']['auth'] == TRUE){
 	//----------------------------------------------------------------
 	// Load the main screen
 	//----------------------------------------------------------------

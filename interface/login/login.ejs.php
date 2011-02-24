@@ -1,7 +1,7 @@
 <?php
 /* Logon Screen Window
  * 
- * version 0.0.2
+ * version 0.0.3
  * revision: N/A
  * author: Gino Rivera Falu
  */
@@ -20,6 +20,8 @@
 
 <script type="text/javascript">
 Ext.require([
+	'Ext.Msg.*',
+	'Ext.JSON.*',
 	'Ext.form.*',
     'Ext.window.*',
     'Ext.data.*',
@@ -76,13 +78,11 @@ var winCopyright = Ext.create('widget.window', {
 // *************************************************************************************
 var formLogin = Ext.create('Ext.form.FormPanel', {
 	id				: 'formLogin',
-    url				: 'index.php',
+    url				: 'library/authProcedures/auth.inc.php',
     baseParams		: {auth: 'true'},
     bodyStyle		:'padding:5px 5px 0',
 	frame			: false,
 	border			: false,
-	standardSubmit	: true,   // new ext 4
-	method			: 'POST', 	//new ext 4
     fieldDefaults	: { msgTarget: 'side', labelWidth: 300 },
     defaultType		: 'textfield',
     defaults		: { anchor: '100%' },
@@ -136,20 +136,50 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
         id: 'btn_login',
 		name: 'btn_login',
 		handler: function() {
-			var olddate = new Date();
-			olddate.setFullYear(olddate.getFullYear() - 1);
-			document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
-			// Submit the form
-            formLogin.getForm().submit();
+			formLogin.getForm().submit({
+				method:'POST', 
+				waitTitle:'Connecting', 
+				waitMsg:'Sending data...',
+				// Logon Success
+				success:function(){ 
+					var redirect = 'index.php'; 
+					window.location = redirect;
+				},
+				// Failed to logon
+				failure:function(form, action){ 
+					if(action.failureType == 'server'){ 
+						obj = Ext.JSON.decode(action.response.responseText); 
+						Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+					}else{ 
+						Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+					}
+					formLogin.getForm().reset(); 
+				}
+			})
 		}
     }],
     keys: [{
 		key: [Ext.EventObject.ENTER], handler: function() {
-			var olddate = new Date();
-			olddate.setFullYear(olddate.getFullYear() - 1);
-			document.cookie = '<?php echo session_name() . '=' . session_id() ?>; path=/; expires=' + olddate.toGMTString();
-			// Submit the form
-			formLogin.getForm().submit();
+			formLogin.getForm().submit({
+				method:'POST', 
+				waitTitle:'Connecting', 
+				waitMsg:'Sending data...',
+				// Logon Success
+				success:function(){ 
+					var redirect = 'index.php'; 
+					window.location = redirect;
+				},
+				// Failed to logon
+				failure:function(form, action){ 
+					if(action.failureType == 'server'){ 
+						obj = Ext.JSON.decode(action.response.responseText); 
+						Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+					}else{ 
+						Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+					}
+					formLogin.getForm().reset(); 
+				}
+			})
 		}
 	}],
 	listeners:{
