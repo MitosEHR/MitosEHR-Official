@@ -13,19 +13,10 @@ session_start();
  
 //**********************************************************************
 // Read the SITES directory first
-// To get the sqlconf.php
+// To get the conf.php
 //**********************************************************************
-
 // this returns the current folder and defined it as a root.
-// ya el registry esta en el root file asi que lo que hay que definir la variable y ya!
-// no lo he testiado, asi no funciona dejame saber  :-)
 
-// $mitos_root = dirname(__FILE__); 
-// $d =  $mitos_root . "/sites/");
-// while (false !== ($entry = $d->read())) {
-	
-//$pieces = explode("/", $_SERVER['PHP_SELF']);
-//$d = dir($_SERVER['DOCUMENT_ROOT']."/".$pieces[1]."/sites/");
 $d = dir("sites/");
 while (false !== ($entry = $d->read())) {
 	if ( $entry != "." && $entry != ".."){ $confs[] = $entry . "/conf.php"; } 
@@ -38,9 +29,6 @@ $_SESSION['site']['sitesCount'] = count($sites);
 $_SESSION['site']['default'] = $default;
 $_SESSION['site']['sites_conf'] = $confs;
 $_SESSION['site']['root'] = dirname(__FILE__);
-
-// Defined in sites/?/conf.php
-//$_SESSION['site']['setup'] = false;
 
 //**********************************************************************
 // Default Language Related variables
@@ -75,17 +63,6 @@ $_SESSION['user']['email'] = "";
 //**********************************************************************
 $_SESSION['patient']['id'] = "";
 $_SESSION['patient']['name'] = "";
-
-//**********************************************************************
-// Database Init Configuration
-// Defined in sites/?/conf.php
-//**********************************************************************
-//$_SESSION['db']['type'] = 'localhost';
-//$_SESSION['db']['host'] = 'localhost';
-//$_SESSION['db']['port'] = '3306';
-//$_SESSION['db']['username'] = 'openemr';
-//$_SESSION['db']['password'] = 'pass';
-//$_SESSION['db']['database'] = 'openemr';
 
 //**********************************************************************
 // Server related variables

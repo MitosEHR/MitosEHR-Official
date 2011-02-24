@@ -67,7 +67,7 @@ var winCopyright = Ext.create('widget.window', {
 	title			: 'MitosEHR Copyright Notice',
 	draggable		: true,
 	closable		: true,
-	autoLoad		: 'copyright_notice.html',
+	autoLoad		: 'interface/login/copyright_notice.html',
 	autoScroll		: true
 });
 
