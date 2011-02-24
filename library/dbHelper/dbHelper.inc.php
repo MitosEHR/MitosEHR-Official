@@ -11,7 +11,7 @@
 //**********************************************************************
 // Connect to the database
 //**********************************************************************
-$conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
+$conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
 
 //**********************************************************************
 // Simple SQL Stament, with no Event LOG injection
