@@ -7,7 +7,7 @@
 //**********************************************************************
 // Database Init Configuration
 //**********************************************************************
-$_SESSION['site']['db']['type'] = 'localhost';
+$_SESSION['site']['db']['type'] = 'mysql';
 $_SESSION['site']['db']['host'] = 'localhost';
 $_SESSION['site']['db']['port'] = '3306';
 $_SESSION['site']['db']['username'] = 'openemr';

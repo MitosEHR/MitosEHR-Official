@@ -19,12 +19,9 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
-
-include_once("$srcdir/sql.inc.php");
-include_once("$srcdir/options.inc.php");
+include_once("library/dbHelper/dbHelper.inc.php");
+include_once("library/I18n/I18n.inc.php");
+require_once("repository/dataExchange/dataExchange.inc.php");
 
 // Count records variable
 $count = 0;

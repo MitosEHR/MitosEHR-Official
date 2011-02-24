@@ -28,7 +28,7 @@ if ($_REQUEST['auth'] == TRUE){
 	//----------------------------------------------------------------
 	include_once("library/I18n/I18n.inc.php");
 	include_once("library/phpAES/AES.class.php");
-	include_once("library/adoHelper/adoHelper.inc.php");
+	include_once("library/dbHelper/dbHelper.inc.php");
 	include_once("repository/dataExchange/dataExchange.inc.php");
 	$sql = "SELECT 
 				* 

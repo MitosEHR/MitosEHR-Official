@@ -53,8 +53,7 @@ $_SESSION['lang']['language'] = "English (Standard)";
 //**********************************************************************
 $_SESSION['dir']['ext'] = "ext-4.0-pr1";
 $_SESSION['dir']['AES'] = "phpAES";
-$_SESSION['dir']['ADOdb'] = "adodb";
-$_SESSION['dir']['adoHelper'] = "adoHelper";
+$_SESSION['dir']['adoHelper'] = "dbHelper";
 
 //**********************************************************************
 // Version related variables

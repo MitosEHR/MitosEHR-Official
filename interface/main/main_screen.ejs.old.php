@@ -4,7 +4,7 @@
 // v0.0.1
 // *************************************************************************************
 include_once ("../registry.php");
-include_once($_SESSION['site']['root']."/library/adoHelper/adoHelper.inc.php");
+include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 ?>

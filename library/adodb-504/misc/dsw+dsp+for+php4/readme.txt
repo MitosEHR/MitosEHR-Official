@@ -1,1 +1,0 @@
-In php4, the include paths are different, so use this set of dsp+dsw files instead.
