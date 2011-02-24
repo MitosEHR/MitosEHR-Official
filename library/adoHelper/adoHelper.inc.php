@@ -4,6 +4,7 @@
  * Description: A ADOdb helper for MitosEHR, containts custom function to manage the database
  * in MitosEHR, a re-write of the OpenEMR functions
  * Author: Gino Rivera Falu
+ * Ver: 0.0.1
  */
 
 //**********************************************************************
@@ -37,13 +38,14 @@ function sqlStatement($sql){
 // Simple SQL Stament, with Event LOG injection
 // return: Array of records + Inject the action on the event log
 // The Log Injection is automatic 
+// It tries to detect an insert, delete, alter and log the event
 //**********************************************************************
 function sqlStatementLog($sql){
 	// Get the global connection variable
 	global $conn;
 	
 	// Execute the SQL stament
-	$conn->Execute($sql);
+	$recordset = $conn->Execute($sql);
 	
 	// If the QUERY has INSERT, DELETE, ALTER then has to 
 	// insert the event to the database.
@@ -56,6 +58,28 @@ function sqlStatementLog($sql){
 				VALUES (NOW(), '" . $eventLog . "', '" . $sql . "', '" . $_SESSION['user']['name'] . "', '" . $_SESSION['patient']['id'] . "')";
 		$conn->Execute($eventSQL);
 	}
+	
+	// return the recordset 
+	return $recordset;
+}
+
+//**********************************************************************
+// Simple SQL Stament, with Event LOG injection
+// return: Array of records + Manually inject the action on the event log
+//**********************************************************************
+function sqlStatementEvent($eventLog, $sql){
+	// Get the global connection variable
+	global $conn;
+	
+	// Execute the SQL stament
+	$conn->Execute($sql);
+	
+	// If the QUERY has INSERT, DELETE, ALTER then has to 
+	// insert the event to the database.
+		$eventSQL = "INSERT INTO log 
+				(date, event, comments, user, patient_id) 
+				VALUES (NOW(), '" . $eventLog . "', '" . $sql . "', '" . $_SESSION['user']['name'] . "', '" . $_SESSION['patient']['id'] . "')";
+		$conn->Execute($eventSQL);
 	
 	// return the recordset 
 	return $recordset;
