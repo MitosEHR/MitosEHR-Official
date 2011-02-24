@@ -1,6 +1,4 @@
 <?php
-$user = 'openemr';
-$pass = 'pass';
 $conn = new PDO('mysql:host=localhost;dbname=openemr', 'openemr', 'pass');
 
 $sql = $conn->prepare("SELECT username, password, authorized FROM users");
