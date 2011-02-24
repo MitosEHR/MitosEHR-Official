@@ -34,6 +34,7 @@ while (false !== ($entry = $d->read())) {
 }
 $_SESSION['site']['self'] = $_SERVER['PHP_SELF'];
 $_SESSION['site']['sites'] = $sites;
+$_SESSION['site']['sitesCount'] = count($sites);
 $_SESSION['site']['default'] = $default;
 $_SESSION['site']['sites_conf'] = $confs;
 $_SESSION['site']['root'] = dirname(__FILE__);
@@ -62,6 +63,19 @@ $_SESSION['ver']['codeName']= "Vega";
 $_SESSION['ver']['major'] = '1';
 $_SESSION['ver']['rev'] = '0';
 $_SESSION['ver']['minor'] = '0 Development';
+
+//**********************************************************************
+// User Related Variables
+//**********************************************************************
+$_SESSION['user']['name'] = "";
+$_SESSION['user']['id'] = "";
+$_SESSION['user']['email'] = "";
+
+//**********************************************************************
+// Patient Related Variables
+//**********************************************************************
+$_SESSION['patient']['id'] = "";
+$_SESSION['patient']['name'] = "";
 
 //**********************************************************************
 // Database Init Configuration

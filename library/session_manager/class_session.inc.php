@@ -1,6 +1,4 @@
 <?php
-
-
  
  class Session{
  
@@ -101,7 +99,7 @@
 	
 	private function getNames($name){
 		if(is_string($name)){
-			if(strpos($name, "."))//S'il y a un "." dans le nom de la variable à stocker dans la session, c'est qu'on veut stocker un tableau
+			if(strpos($name, "."))//S'il y a un "." dans le nom de la variable ï¿½ stocker dans la session, c'est qu'on veut stocker un tableau
 				$names = explode(".", $name);
 			else
 				$names = array($name);
