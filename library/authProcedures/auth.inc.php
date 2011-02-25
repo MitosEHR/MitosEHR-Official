@@ -20,6 +20,33 @@ session_start();
 //-------------------------------------------
 include_once("../../library/phpAES/AES.class.php");
 include_once("../../repository/dataExchange/dataExchange.inc.php");
+
+//-------------------------------------------
+// Check that the username do not pass 
+// the maximum limit of the field.
+//
+// NOTE:
+// If this condition is met, the user did not
+// use the logon form. Possible hack.
+//-------------------------------------------
+if (strlen($_REQUEST['authUser']) >= 26){
+	echo "{ success: false, errors: { reason: 'Possible hack, please use the Logon Screen.' }}";
+ 	return;
+}
+
+//-------------------------------------------
+// Check that the username do not pass 
+// the maximum limit of the field.
+//
+// NOTE:
+// If this condition is met, the user did not
+// use the logon form. Possible hack.
+//-------------------------------------------
+if (strlen($_REQUEST['authPass']) >= 11){
+	echo "{ success: false, errors: { reason: 'Possible hack, please use the Logon Screen.' }}";
+ 	return;
+}
+
 //-------------------------------------------
 // Simple check username
 //-------------------------------------------
@@ -56,22 +83,6 @@ $aes = new AES($_SESSION['site']['AESkey']);
 $ret = $aes->encrypt($_REQUEST['authPass']);
 
 //-------------------------------------------
-// Duplicity Check
-//-------------------------------------------
-$sql = "SELECT 
-			COUNT(*) as rows
-		FROM 
-			users 
-		WHERE 
-			username='" . $_REQUEST['authUser'] . "' and 
-			password='" . $ret . "' and 
-			authorized='1'";
-if (sqlRowCount($sql) > 1) {
-	echo "{ success: false, errors: { reason: 'Duplicity check error, please contact support.'}}";
-	return;
-}
-
-//-------------------------------------------
 // Username & password match
 //-------------------------------------------
 $sql = "SELECT 
@@ -81,7 +92,8 @@ $sql = "SELECT
 		WHERE 
 			username='" . $_REQUEST['authUser'] . "' and 
 			password='" . $ret . "' and 
-			authorized='1'";
+			authorized='1'
+		LIMIT 1";
 $rec = sqlStatement($sql);
 if (!$rec['username']){
 	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.'}}";

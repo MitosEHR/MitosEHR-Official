@@ -90,7 +90,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
     items: [{ 
     	xtype: 'textfield',
         minLength: 3,
-		maxLength: 32, 
+		maxLength: 25, 
 		allowBlank: false, 
 		blankText:'Enter your username', 
 		ref: '../authUser', 
