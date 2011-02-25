@@ -10,18 +10,16 @@
  * 
  */
 
- //-------------------------------------------
+//-------------------------------------------
 // Start MitosEHR session 
 //-------------------------------------------
 session_name ( "MitosEHR" );
 session_start();
-
 //-------------------------------------------
 // Load all the necesary libraries
 //-------------------------------------------
 include_once("../../library/phpAES/AES.class.php");
 include_once("../../repository/dataExchange/dataExchange.inc.php");
-
 //-------------------------------------------
 // Simple check username
 //-------------------------------------------
@@ -29,7 +27,6 @@ if (!$_REQUEST['authUser']){
 	echo "{ success: false, errors: { reason: 'The username field can not be in blank. Try again.' }}";
  	return;
 }
-
 //-------------------------------------------
 // Simple check password
 //------------------------------------------- 
@@ -37,7 +34,6 @@ if (!$_REQUEST['authPass']){
 	echo "{ success: false, errors: { reason: 'The password field can not be in blank. Try again.' }}";
  	return;
 }
-
 //-------------------------------------------
 // Find the AES key in the selected site
 // And include the rest of the remaining 
@@ -53,7 +49,6 @@ if (file_exists($fileConf)){
 	echo "{ success: false, errors: { reason: 'No configuration file found on the selected site.<br>Please contact support.'}}";
  	return;
 }
-
 //-------------------------------------------
 // Convert the password to AES and validate
 //-------------------------------------------
@@ -95,7 +90,7 @@ if (!$rec['username']){
 	//-------------------------------------------
 	// Change some User related variables and go
 	//-------------------------------------------
-	$_SESSION['user']['name'] = $rec['fname'] . " " . $rec['mname'] . " " . $rec['lname'];
+	$_SESSION['user']['name'] = $rec['title'] . " " . $rec['lname'] . ", " . $rec['fname'] . " " . $rec['mname'];
 	$_SESSION['user']['id'] = $rec['id'];
 	$_SESSION['user']['email'] = $rec['email'];
 	$_SESSION['user']['auth'] = true;
@@ -103,6 +98,3 @@ if (!$rec['username']){
 	return;	
 }
 ?>
-
-
-

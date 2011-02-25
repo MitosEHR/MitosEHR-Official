@@ -11,8 +11,7 @@
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<TITLE>MitosEHR</TITLE>
-
+<title>MitosEHR</title>
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
