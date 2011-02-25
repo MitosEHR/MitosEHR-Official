@@ -1,4 +1,5 @@
 <?php 
+define('_MitosEXEC', 1);
 include_once("registry.php"); 
 ?>
 <head>
