@@ -134,15 +134,14 @@ var Header = Ext.create('Ext.Panel', {
 	border		: false,
 	bodyStyle	: 'background: transparent',
 	margins		: '0 0 0 0',
-	html		: 'header north',
 	items: [{ 
-		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png"style="float:left"></a>', 
+		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" style="float:left"></a>', 
 		style:'float:left', 
 		bodyStyle:'background: transparent', 
 		border: false 
 	},{ 
 		xtype: 'button',
-		text: '[ Patient Name ]<br>[ Patient Info ]',
+		text: '<img src="ui_app/missing_photo.png" height="35" width="35" style="float:left">[ Patient Name ]<br>[ Patient Info ]',
 		scale: 'large',
         style	: 'float:left',
         margin: '0 0 0 75px',
