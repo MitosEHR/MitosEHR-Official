@@ -1,4 +1,5 @@
 <?php
+if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* The Setup Wizard
  * 
  * Description: This script will navigate the user throgh the correct

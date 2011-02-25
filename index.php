@@ -19,11 +19,11 @@
 //---------------------------------------------------------------- 
 session_name ( "MitosEHR" );
 session_start();
-
 //----------------------------------------------------------------
 // Startup the registry
 // This containts SESSION Variables to use in the application
 //----------------------------------------------------------------
+define('_MitosEXEC', 1);
 include_once("registry.php");
 
 //----------------------------------------------------------------

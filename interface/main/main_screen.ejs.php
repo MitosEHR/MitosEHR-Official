@@ -1,4 +1,5 @@
 <?php
+if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* Main Screen Application
  * 
  * Description: This is the main application, with all the panels
@@ -140,7 +141,7 @@ var Header = Ext.create('Ext.Panel', {
 		text: '[ Patient Name ]<br>[ Patient Info ]',
 		scale: 'large',
         style	: 'float:left',
-        margin: '0 0 0 75',
+        margin: '0 0 0 75px',
         minWidth: 150,
         menu: [{
         	text:'New Encounter'

@@ -1,4 +1,5 @@
 <?php
+if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* Logon Screen Window
  * 
  * version 0.0.3
