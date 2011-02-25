@@ -19,6 +19,7 @@ include_once("registry.php");
 // Make the auth process
 if ($_SESSION['user']['auth'] == TRUE){
 	//----------------------------------------------------------------
+	// Load the i18n Library
 	// Load the main screen
 	//----------------------------------------------------------------
 	include_once("library/I18n/I18n.inc.php");
