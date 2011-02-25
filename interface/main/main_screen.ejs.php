@@ -2,13 +2,13 @@
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
 
 /* Main Screen Application
- * 
- * Description: This is the main application, with all the panels
- *  
- * version 0.0.3
- * revision: N/A
- * author: Gino Rivera Falú
- */
+*
+* Description: This is the main application, with all the panels
+*
+* version 0.0.3
+* revision: N/A
+* author: Gino Rivera Falú
+*/
 
 ?>
 <head>
@@ -24,36 +24,37 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 Ext.require([
 	'Ext.form.*',
 	'Ext.button.*',
-    'Ext.window.*',
-    'Ext.data.*',
-    'Ext.Loader',
-    'Ext.tip.QuickTips'
+	'Ext.window.*',
+	'Ext.data.*',
+	'Ext.Loader',
+	'Ext.tip.QuickTips'
 ]);
+
 Ext.onReady(function() {
 
 //****************************************************************
 // Navigation Panel
 //****************************************************************
 //var Navigation = Ext.create('Ext.tree.TreePanel', {
-//	region: 'west',
-//	collapsible: true,
-//	floatable: true,
-//	useArrows: true,
-//	autoScroll: true,
-//	rootVisible: false,
-//	lines: false,
-//  animate: true,
-//  enableDD: true,
-//  containerScroll: true,
-//	dataUrl: 'interface/navigation/default_leftnav.ejs.php',
-//	title: '<?php i18n('Navigation'); ?>',
-//	split: true,
-//	width: 200,
-//	root: {
-//		nodeType: 'async',
-//		draggable: false,
-//		id: 'source'
-//	}
+// region: 'west',
+// collapsible: true,
+// floatable: true,
+// useArrows: true,
+// autoScroll: true,
+// rootVisible: false,
+// lines: false,
+// animate: true,
+// enableDD: true,
+// containerScroll: true,
+// dataUrl: 'interface/navigation/default_leftnav.ejs.php',
+// title: '<?php i18n('Navigation'); ?>',
+// split: true,
+// width: 200,
+// root: {
+// nodeType: 'async',
+// draggable: false,
+// id: 'source'
+// }
 //});
 
 //****************************************************************
@@ -64,19 +65,19 @@ var Navigation = Ext.create('Ext.Panel', {
 	collapsible: true,
 	floatable: true,
 	useArrows: true,
-    autoScroll: true,
-    rootVisible: false,
-    lines: false,
-    animate: true,
-    enableDD: true,
-    containerScroll: true,
+	autoScroll: true,
+	rootVisible: false,
+	lines: false,
+	animate: true,
+	enableDD: true,
+	containerScroll: true,
 	title: '<?php i18n('Navigation'); ?>',
 	split: true,
 	width: 200,
 });
 
 //****************************************************************
-// Main Panel 
+// Main Panel
 //****************************************************************
 var MainApp = Ext.create('Ext.Panel', {
 	region: 'center',
@@ -121,55 +122,67 @@ var BottomPanel = Ext.create('Ext.Panel', {
 	margins: '0 0 0 0',
 	html: 'center south'
 });
+
 //****************************************************************
 // header Panel
 //****************************************************************
 var Header = Ext.create('Ext.Panel', {
-	region		: 'north',
-	height		: 40,
-	height		: 44,
-	split		: false,
-	collapsible	: false,
-	frame		: false,
-	border		: false,
-	bodyStyle	: 'background: transparent',
-	margins		: '0 0 0 0',
-	items: [{ 
-		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" style="float:left"></a>', 
-		style:'float:left', 
-		bodyStyle:'background: transparent', 
-		border: false 
-	},{ 
+	region : 'north',
+	height : 40,
+	height : 44,
+	split : false,
+	collapsible : false,
+	frame : false,
+	border : false,
+	bodyStyle : 'background: transparent',
+	margins : '0 0 0 0',
+	items: [{
+		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" style="float:left"></a>',
+		style:'float:left',
+		bodyStyle:'background: transparent',
+		border: false
+	},{
 		xtype: 'button',
 		text: '<img src="ui_app/missing_photo.png" height="35" width="35" style="float:left">[ Patient Name ]<br>[ Patient Info ]',
 		scale: 'large',
-        style	: 'float:left',
-        margin: '0 0 0 75px',
-        minWidth: 150,
-        menu: [{
-        	text:'New Encounter'
-        },{
-             text:'Appointments'
-        },{
-             text:'Patient Notes'
-        }]
-	},{ 
+		style : 'float:left',
+		margin: '0 0 0 75px',
+		minWidth: 150,
+		menu: [{
+			text:'<?php i18n("New Encounter"); ?>'
+		},{
+			text:'<?php i18n("Appointments"); ?>'
+		},{
+			text:'<?php i18n("Patient Notes"); ?>'
+		}]
+	},{
 		xtype: 'button',
 		text: '<?php echo $_SESSION['user']['name'] ?>',
 		iconCls: 'add',
-        iconAlign: 'left',
-        style	: 'float:right',
-        margin: '7 0 0 5',
-        menu: [{
-        	text:'My account'
-        },{
-             text:'My settings'
-        },{
-             text:'Logout',
-             handler: function(){window.location = "logout.php"}
-        }]
+		iconAlign: 'left',
+		style : 'float:right',
+		margin: '7 0 0 5',
+		menu: [{
+			text:'<?php i18n("My account"); ?>'
+		},{
+			text:'<?php i18n("My settings"); ?>'
+		},{
+			text:'<?php i18n("Logout"); ?>',
+			handler: function(){
+				Ext.Msg.show({
+					title: '<?php i18n("Please confirm..."); ?>', 
+					icon: Ext.MessageBox.QUESTION,
+					msg:'<?php i18n("Are you sure to quit MitosEHR?"); ?>',
+					buttons: Ext.Msg.YESNO,
+					fn:function(btn,msgGrid){
+						if(btn=='yes'){ window.location = "library/authProcedures/unauth.inc.php"; }
+					}
+				});
+			}
+		}]
 	}]
 });
+
 //****************************************************************
 // The main ViewPort
 //****************************************************************
@@ -188,7 +201,6 @@ Ext.create('Ext.Viewport', {
 	}]
 });
 
-
-}); // End App 
+}); // End App
 
 </script>

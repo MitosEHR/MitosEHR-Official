@@ -28,6 +28,7 @@ $_SESSION['site']['sites'] = $sites;
 $_SESSION['site']['sitesCount'] = count($sites);
 $_SESSION['site']['sites_conf'] = $confs;
 $_SESSION['site']['root'] = dirname(__FILE__);
+$_SESSION['site']['url'] = "http://" . $_SERVER['HTTP_HOST'] . str_replace("/index.php", "", $_SERVER['PHP_SELF']);
 
 //**********************************************************************
 // Default Language Related variables
