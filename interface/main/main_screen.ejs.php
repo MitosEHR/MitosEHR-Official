@@ -1,5 +1,6 @@
 <?php
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
+
 /* Main Screen Application
  * 
  * Description: This is the main application, with all the panels
@@ -107,6 +108,7 @@ var MainApp = Ext.create('Ext.Panel', {
 		}]
 	}]
 });
+
 //****************************************************************
 // Bottom Panel
 //****************************************************************
@@ -124,6 +126,7 @@ var BottomPanel = Ext.create('Ext.Panel', {
 //****************************************************************
 var Header = Ext.create('Ext.Panel', {
 	region		: 'north',
+	height		: 40,
 	height		: 44,
 	split		: false,
 	collapsible	: false,
@@ -131,6 +134,7 @@ var Header = Ext.create('Ext.Panel', {
 	border		: false,
 	bodyStyle	: 'background: transparent',
 	margins		: '0 0 0 0',
+	html		: 'header north',
 	items: [{ 
 		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png"style="float:left"></a>', 
 		style:'float:left', 
@@ -138,7 +142,7 @@ var Header = Ext.create('Ext.Panel', {
 		border: false 
 	},{ 
 		xtype: 'button',
-		text: '<img src="ui_app/missing_photo.png" height="35" width="35" style="float:left" >[ Patient Name ]<br>[ Patient Info ]',
+		text: '[ Patient Name ]<br>[ Patient Info ]',
 		scale: 'large',
         style	: 'float:left',
         margin: '0 0 0 75px',
