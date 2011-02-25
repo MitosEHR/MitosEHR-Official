@@ -1,4 +1,6 @@
-<?php include_once("registry.php"); ?>
+<?php 
+include_once("registry.php"); 
+?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>MitosEHR Logout Screen</title>
@@ -32,7 +34,7 @@ var winCopyright = Ext.create('widget.window', {
 // *************************************************************************************
 // Logout alert Window
 // *************************************************************************************
-Ext.Msg.alert('Status', 'Changes saved successfully.', function(btn){
+Ext.Msg.alert('Logout', 'You have successfully logout.', function(btn){
     if (btn == 'ok'){
 		window.location = "index.php"
     }
