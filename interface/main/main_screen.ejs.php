@@ -21,6 +21,7 @@
 <script type="text/javascript">
 Ext.require([
 	'Ext.form.*',
+	'Ext.button.*',
     'Ext.window.*',
     'Ext.data.*',
     'Ext.Loader',
@@ -105,7 +106,6 @@ var MainApp = Ext.create('Ext.Panel', {
 		}]
 	}]
 });
-
 //****************************************************************
 // Bottom Panel
 //****************************************************************
@@ -123,14 +123,48 @@ var BottomPanel = Ext.create('Ext.Panel', {
 //****************************************************************
 var Header = Ext.create('Ext.Panel', {
 	region		: 'north',
-	height		: 40,
+	height		: 44,
 	split		: false,
 	collapsible	: false,
 	frame		: false,
 	border		: false,
 	bodyStyle	: 'background: transparent',
 	margins		: '0 0 0 0',
-	html		: 'header north'
+	items: [{ 
+		html: '<a href="http://www.mitosehr.org/"><img src="ui_app/app_logo.png"></a>', 
+		style:'float:left', 
+		bodyStyle:'background: transparent', 
+		border: false 
+	},{ 
+		xtype: 'button',
+		text: '[ Patient Name ]<br>[ Patient Info ]',
+		scale: 'large',
+        style	: 'float:left',
+        margin: '0 0 0 75',
+        minWidth: 150,
+        menu: [{
+        	text:'New Encounter'
+        },{
+             text:'Appointments'
+        },{
+             text:'Patient Notes'
+        }]
+	},{ 
+		xtype: 'button',
+		text: '<?php echo $_SESSION['user']['name'] ?>',
+		iconCls: 'add',
+        iconAlign: 'left',
+        style	: 'float:right',
+        margin: '7 0 0 5',
+        menu: [{
+        	text:'My account'
+        },{
+             text:'My settings'
+        },{
+             text:'Logout',
+             handler: function(){window.location = "logout.php"}
+        }]
+	}]
 });
 //****************************************************************
 // The main ViewPort
