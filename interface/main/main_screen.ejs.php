@@ -41,9 +41,9 @@ Ext.onReady(function() {
 //	autoScroll: true,
 //	rootVisible: false,
 //	lines: false,
-//    animate: true,
-//    enableDD: true,
-//    containerScroll: true,
+//  animate: true,
+//  enableDD: true,
+//  containerScroll: true,
 //	dataUrl: 'interface/navigation/default_leftnav.ejs.php',
 //	title: '<?php i18n('Navigation'); ?>',
 //	split: true,
@@ -132,7 +132,7 @@ var Header = Ext.create('Ext.Panel', {
 	bodyStyle	: 'background: transparent',
 	margins		: '0 0 0 0',
 	items: [{ 
-		html: '<a href="http://www.mitosehr.org/"><img src="ui_app/app_logo.png"></a>', 
+		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png"style="float:left"></a>', 
 		style:'float:left', 
 		bodyStyle:'background: transparent', 
 		border: false 
