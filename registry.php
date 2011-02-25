@@ -26,7 +26,6 @@ while (false !== ($entry = $d->read())) {
 $_SESSION['site']['self'] = $_SERVER['PHP_SELF'];
 $_SESSION['site']['sites'] = $sites;
 $_SESSION['site']['sitesCount'] = count($sites);
-$_SESSION['site']['default'] = $default;
 $_SESSION['site']['sites_conf'] = $confs;
 $_SESSION['site']['root'] = dirname(__FILE__);
 

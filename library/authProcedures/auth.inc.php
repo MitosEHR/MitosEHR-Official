@@ -48,7 +48,7 @@ $fileConf = "../../sites/" . $_SESSION['site']['site'] . "/conf.php";
 if (file_exists($fileConf)){
 	include_once("../../sites/" . $_SESSION['site']['site'] . "/conf.php");
 	include_once("../../library/dbHelper/dbHelper.inc.php");
-	// Do not stop here!, continue with rest of the code.
+	// Do not stop here!, continue with the rest of the code.
 } else {
 	echo "{ success: false, errors: { reason: 'No configuration file found on the select site, contact support.' }}";
  	return;
@@ -69,7 +69,7 @@ $sql = "SELECT
 			authorized='1'";
 $rec = sqlStatement($sql);
 if (!$rec['username']){
-	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid." . $rec['username'] . "' }}";
+	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.}}";
 	return;
 } else {
 	//-------------------------------------------
