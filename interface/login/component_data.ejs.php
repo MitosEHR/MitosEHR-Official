@@ -25,7 +25,7 @@ switch ($_GET['task']) {
 	// *************************************************************************************
 	case "sites":
 		foreach ($_SESSION['site']['sites'] as $urow) {
-			$buff .= " { site_id: '" . $count . "', site: '" . $urow . "' },". chr(13);
+			$buff .= " { site_id: '" . $urow . "', site: '" . $urow . "' },". chr(13);
 			$count++;
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.

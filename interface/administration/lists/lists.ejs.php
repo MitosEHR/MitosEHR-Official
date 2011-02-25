@@ -10,9 +10,6 @@
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 
-session_name ( "MitosEHR" );
-session_start();
-
 ?>
 <script type="text/javascript">
 Ext.onReady(function(){

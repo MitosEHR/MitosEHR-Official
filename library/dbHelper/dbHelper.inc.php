@@ -28,9 +28,7 @@
 //**********************************************************************
 // Connect to the database
 //**********************************************************************
-$conn = new PDO('mysql:host=localhost;dbname=openemr', 'openemr', 'pass');
-
-//$conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
+$conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
 
 //**********************************************************************
 // Simple SQL Stament, with no Event LOG injection
@@ -60,19 +58,24 @@ function sqlStatementLog($sql){
 	
 	// Execute the SQL stament
 	$recordset = $conn->query($sql);
+	$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	
 	// If the QUERY has INSERT, DELETE, ALTER then has to 
 	// insert the event to the database.
 	if (strpos($sql, "INSERT") && strpos($sql, "DELETE") && strpos($sql, "ALTER")){
 		if (strpos($sql, "INSERT")) $eventLog = "Record insertion";
 		if (strpos($sql, "DELETE")) $eventLog = "Record deletion";
-		if (strpos($sql, "ALTER")) $eventLog = "Table alteration"; 
-		$eventSQL = "INSERT INTO log 
-				(date, event, comments, user, patient_id) 
-				VALUES (NOW(), '" . $eventLog . "', '" . $sql . "', '" . $_SESSION['user']['name'] . "', '" . $_SESSION['patient']['id'] . "')";
-		$conn->query($eventSQL);
+		if (strpos($sql, "ALTER")) $eventLog = "Table alteration";
+		// Prepare the SQL stament first, and then execute.
+		$stmt = $conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
+		$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
+		$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
+		$stmt->bindParam(':comments', $sql, PDO::PARAM_STR);
+		$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
+		$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
+		$stmt->execute();
 	}
-	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	
 	// return the recordset 
 	return $result;
 }
@@ -87,16 +90,19 @@ function sqlStatementEvent($eventLog, $sql){
 	
 	// Execute the SQL stament
 	$conn->query($sql);
-		
-	// If the QUERY has INSERT, DELETE, ALTER then has to 
-	// insert the event to the database.
-	$eventSQL = "INSERT INTO log 
-			(date, event, comments, user, patient_id) 
-			VALUES (NOW(), '" . $eventLog . "', '" . $sql . "', '" . $_SESSION['user']['name'] . "', '" . $_SESSION['patient']['id'] . "')";
-	$conn->query($eventSQL);
+	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	
+	// Prepare the SQL stament first, and then execute.
+	$stmt = $conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
+	$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
+	$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
+	$stmt->bindParam(':comments', $sql, PDO::PARAM_STR);
+	$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
+	$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
+	$stmt->execute();
 	
 	// return the recordset 
-	return $recordset;
+	return $result;
 }
 
 //**********************************************************************
@@ -106,21 +112,25 @@ function sqlEventLog($eventLog, $comments, $userNotes=NULL){
 	// Get the global connection variable
 	global $conn;
 	
-	// Generate the SQL stament for Event Log injection
-	$eventSQL = "INSERT INTO log 
-					(date, event, comments, user, patient_id, user_notes) 
-				VALUES (NOW(), '" . $eventLog . "', '" . $comments . "', '" . $_SESSION['user']['name'] . "', '" . $_SESSION['patient']['id'] . "', '" . $userNotes . "')";
+	// Prepare the SQL stament first, and then execute.
+	$stmt = $conn->prepare("INSERT INTO log (date, event, comments, user_notes) VALUES (:dtime, :event, :comments, :user_notes)");
+	$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
+	$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
+	$stmt->bindParam(':comments', $comments, PDO::PARAM_STR);
+	$stmt->bindParam(':user_notes', $userNotes, PDO::PARAM_STR);
+	$stmt->execute();
 	
-	// Execute the stament
-	$conn->query($eventSQL);
 }
 
-//**********************************************************************
-// Return the number of records
-//**********************************************************************
-function sqlTotalCount($resource){
-	if (!$resource) { return; }
-	return $resource->RecordCount();
+function sqlRowCount($sql){
+	// Get the global variable
+	global $conn;
+	
+	// Get all the records & count it.
+	$recordset = $conn->query($sql);
+	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	return $result['rows'];
+
 }
 
 ?>

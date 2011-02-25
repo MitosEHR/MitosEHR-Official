@@ -46,11 +46,11 @@ if (!$_REQUEST['authPass']){
 $_SESSION['site']['site'] = $_REQUEST['choiseSite'];
 $fileConf = "../../sites/" . $_SESSION['site']['site'] . "/conf.php";
 if (file_exists($fileConf)){
-	include_once("../../sites/" . $_SESSION['site']['site'] . "/conf.php");
+	include_once($fileConf);
 	include_once("../../library/dbHelper/dbHelper.inc.php");
 	// Do not stop here!, continue with the rest of the code.
 } else {
-	echo "{ success: false, errors: { reason: 'No configuration file found on the select site, contact support.' }}";
+	echo "{ success: false, errors: { reason: 'No configuration file found on the selected site.<br>Please contact support.'}}";
  	return;
 }
 
@@ -59,8 +59,28 @@ if (file_exists($fileConf)){
 //-------------------------------------------
 $aes = new AES($_SESSION['site']['AESkey']);
 $ret = $aes->encrypt($_REQUEST['authPass']);
+
+//-------------------------------------------
+// Duplicity Check
+//-------------------------------------------
 $sql = "SELECT 
-			* 
+			COUNT(*) as rows
+		FROM 
+			users 
+		WHERE 
+			username='" . $_REQUEST['authUser'] . "' and 
+			password='" . $ret . "' and 
+			authorized='1'";
+if (sqlRowCount($sql) > 1) {
+	echo "{ success: false, errors: { reason: 'Duplicity check error, please contact support.'}}";
+	return;
+}
+
+//-------------------------------------------
+// Username & password match
+//-------------------------------------------
+$sql = "SELECT 
+			*
 		FROM 
 			users 
 		WHERE 
@@ -69,7 +89,7 @@ $sql = "SELECT
 			authorized='1'";
 $rec = sqlStatement($sql);
 if (!$rec['username']){
-	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.}}";
+	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.'}}";
 	return;
 } else {
 	//-------------------------------------------

@@ -13,8 +13,7 @@
 
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext.css">
-<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext4.css">
+<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 
@@ -115,12 +114,11 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
     	xtype: 'combobox', 
     	id: 'choiseSite', 
     	name: 'choiseSite', 
+    	forceSelect: true,
     	store: storeSites,
-    	emptyText: 'default',
     	fieldLabel: 'Site', 
     	editable: false, 
     	triggerAction: 'all', 
-    	valueField: 'site_id', 
     	displayField: 'site',
     	queryMode: 'local'
     }],

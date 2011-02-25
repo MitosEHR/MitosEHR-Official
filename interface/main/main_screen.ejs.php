@@ -8,10 +8,6 @@
  * author: Gino Rivera Falú
  */
 
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -19,8 +15,7 @@ echo "</pre>";
 
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext.css">
-<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext4.css">
+<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 
@@ -29,7 +24,6 @@ Ext.require([
 	'Ext.form.*',
     'Ext.window.*',
     'Ext.data.*',
-    'Ext.tree.TreePanel',
     'Ext.Loader',
     'Ext.tip.QuickTips'
 ]);

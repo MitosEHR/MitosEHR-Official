@@ -14,8 +14,6 @@
 <script type="text/javascript">
 Ext.onReady(function(){
 
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
-
 //******************************************************************************
 // Sanitizing Objects
 // Destroy them, if already exists in the browser memory.
