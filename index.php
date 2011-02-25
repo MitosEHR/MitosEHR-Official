@@ -12,11 +12,23 @@
  * 
  */
 
+//----------------------------------------------------------------
+// Startup the SESSION
+// This will change in the future. 
+// Maybe implement a SESSION Manager against the database.
+//---------------------------------------------------------------- 
 session_name ( "MitosEHR" );
 session_start();
+
+//----------------------------------------------------------------
+// Startup the registry
+// This containts SESSION Variables to use in the application
+//----------------------------------------------------------------
 include_once("registry.php");
 
+//----------------------------------------------------------------
 // Make the auth process
+//----------------------------------------------------------------
 if ($_SESSION['user']['auth'] == TRUE){
 	//----------------------------------------------------------------
 	// Load the i18n Library
@@ -24,6 +36,10 @@ if ($_SESSION['user']['auth'] == TRUE){
 	//----------------------------------------------------------------
 	include_once("library/I18n/I18n.inc.php");
 	include_once("interface/main/main_screen.ejs.php");
+	
+//----------------------------------------------------------------
+// Make the logon process or Setup process
+//----------------------------------------------------------------
 } else {
 	//----------------------------------------------------------------
 	// Browse the site dir first
