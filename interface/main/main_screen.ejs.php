@@ -143,7 +143,7 @@ var Header = Ext.create('Ext.Panel', {
 		border: false
 	},{
 		xtype: 'button',
-		text: '<img src="ui_app/missing_photo.png" height="35" width="35" style="float:left">[ Patient Name ]<br>[ Patient Info ]',
+		text: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">[ Patient Name ]<br>[ Patient Info ]',
 		scale: 'large',
 		style : 'float:left',
 		margin: '0 0 0 75px',
