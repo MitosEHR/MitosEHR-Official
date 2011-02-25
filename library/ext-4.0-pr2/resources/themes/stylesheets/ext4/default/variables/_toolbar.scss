@@ -1,0 +1,12 @@
+$toolbar-background-color: #D3E1F1 !default;
+$toolbar-border-inner-width: 1px 0px 0px !default;
+$toolbar-border-inner-color: lighten($toolbar-background-color, 5%) !default;
+
+//margins
+$toolbar-margin: 1px 3px 3px;
+
+//border
+$toolbar-border-color: $panel-body-border-color !default;
+
+//spacer
+$toolbar-spacer-width: 2px;

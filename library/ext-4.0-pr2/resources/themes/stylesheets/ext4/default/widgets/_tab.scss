@@ -1,0 +1,213 @@
+/**
+  * @class Ext.Tab
+  * 
+  */
+@mixin extjs-tab {
+    @include x-frame(
+        $cls: 'tab',
+        $ui: 'default',
+        $border-radius: $tab-border-radius,
+        $border-width: $tab-border-width,
+        $background-color: $tab-base-color,
+        $background-gradient: $tab-background-gradient,
+        $table: true
+    );
+    
+    .#{$prefix}-tab {
+        z-index: 1;
+        margin: 2px 0 0 2px;
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+        white-space: nowrap;
+        padding: 5px 9px 6px;
+        height: $tab-height;
+        border-color: $tab-border-color;
+        cursor: pointer;
+        
+        @include inner-border(
+            $width: $tab-inner-border-width,
+            $color: $tab-inner-border-color
+        );
+
+        button {
+            background-color: transparent;
+            background-position: 0 -1px;
+            background-repeat: no-repeat;
+            border: 0px none;
+            height: 14px;
+            margin: -1px 0 0;
+            display: block;
+            padding: 0;
+            -webkit-appearance: none;
+            font-size: $tab-font-size;
+            @if $tab-font-weight {
+                font-weight: $tab-font-weight;
+            }
+            @if $tab-font-family {
+                $font-family: $tab-font-family;
+            }
+            
+            color: $tab-color;
+            cursor: pointer;
+            overflow: visible;
+            outline: 0 none;
+            &::-moz-focus-inner {
+                border: 0;
+                padding: 0;
+            }
+        }
+        
+        img {
+            display: none;
+        }
+    }
+    
+    .#{$prefix}-tab-default-disabled {
+        @include opacity(.7);
+        
+        button {
+            color: desaturate($tab-color, 40) !important;
+        }
+    }
+    
+    .#{$prefix}-tab-text-icon-left {
+        button {
+            padding-left: 20px;
+        }
+    }
+    
+    * html .#{$prefix}-ie, .#{$prefix}-ie7 {
+        .#{$prefix}-tab button {
+            white-space: nowrap;
+            zoom: 1;
+            width: 16px;
+            line-height: 13px;
+            height: 14px;
+        }
+    }
+    
+    .#{$prefix}-ie .#{$prefix}-tab .#{$prefix}-frame-mc {
+        padding: 2px 6px 5px;
+    }
+
+    * html .#{$prefix}-ie8 .#{$prefix}-tab .#{$prefix}-frame-mc {
+        padding: 2px 6px 4px;
+    }
+    
+    .#{$prefix}-opera .#{$prefix}-tab .#{$prefix}-frame-mc {
+        padding: 2px 6px 6px;
+    }
+    
+    .#{$prefix}-gecko .#{$prefix}-tab {
+        padding-bottom: 4px;
+        button {
+            margin: -2px -3px 0;
+        }
+    }
+
+    .#{$prefix}-tab-over {
+        @if $tab-border-color-over != $tab-border-color {
+            border-color: $tab-border-color-over;
+        }
+        @if $tab-background-gradient-over != $tab-background-gradient {
+            @include background-gradient($tab-base-color-over, $tab-background-gradient-over);
+        }
+        @else if $tab-base-color-over != $tab-background-over {
+            background-color: $tab-base-color-over;
+        }
+                        
+        button {
+            @if $tab-color-over != $tab-color {
+                color: $tab-color-over;
+            }
+            @if $tab-font-weight-over != $tab-font-weight {
+                font-weight: $tab-font-weight-over;
+            }
+            @if $tab-font-size-over != $tab-font-size {
+                font-size: $tab-font-size-over;
+            }
+            @if $tab-font-family-over != $tab-font-family {
+                font-family: $tab-font-family-over;
+            } 
+        }
+    }
+    
+    .#{$prefix}-tab-active {
+        z-index: 3;
+        @if $tab-border-color-active != $tab-border-color {
+            border-color: $tab-border-color-active;
+        }
+        @if $tab-background-gradient-active != $tab-background-gradient {
+            @include background-gradient($tab-base-color-active, $tab-background-gradient-active);
+        }
+        @else if $tab-base-color-active != $tab-background-active {
+            background-color: $tab-base-color-active;
+        }
+
+        button {
+            @if $tab-color-active != $tab-color {
+                color: $tab-color-active;
+            }
+            @if $tab-font-weight-active != $tab-font-weight {
+                font-weight: $tab-font-weight-active;
+            }
+            @if $tab-font-size-active != $tab-font-size {
+                font-size: $tab-font-size-active;
+            }
+            @if $tab-font-family-active != $tab-font-family {
+                font-family: $tab-font-family-active;
+            } 
+        }
+    }
+
+    .#{$prefix}-tab-closable {
+        padding-right: 5px;
+    }
+
+    .#{$prefix}-tab-closable em {
+        display: block;
+        background: theme-image($theme-name, 'tab/tab-default-close.gif') transparent no-repeat right top;
+        padding-right: 14px;
+    }
+
+    .#{$prefix}-nbr {
+        .#{$prefix}-tab-over {
+            .#{$prefix}-frame-tl,
+            .#{$prefix}-frame-bl,
+            .#{$prefix}-frame-tr,
+            .#{$prefix}-frame-br,
+            .#{$prefix}-frame-tc,
+            .#{$prefix}-frame-bc {
+                background-image: theme-image($theme-name, 'tab/tab-default-over-corners.png');
+            }
+            .#{$prefix}-frame-ml,
+            .#{$prefix}-frame-mr {
+                background-image: theme-image($theme-name, 'tab/tab-default-over-sides.png');
+            }
+            .#{$prefix}-frame-mc {
+                background-repeat: repeat-x;
+                background-image: theme-image($theme-name, 'tab/tab-default-over-bg.png');
+            }
+        }
+
+        .#{$prefix}-tab-active {
+            .#{$prefix}-frame-tl,
+            .#{$prefix}-frame-bl,
+            .#{$prefix}-frame-tr,
+            .#{$prefix}-frame-br,
+            .#{$prefix}-frame-tc,
+            .#{$prefix}-frame-bc {
+                background-image: theme-image($theme-name, 'tab/tab-default-active-corners.png');
+            }
+            .#{$prefix}-frame-ml,
+            .#{$prefix}-frame-mr {
+                background-image: theme-image($theme-name, 'tab/tab-default-active-sides.png');
+            }
+            .#{$prefix}-frame-mc {
+                background-repeat: repeat-x;
+                background-image: theme-image($theme-name, 'tab/tab-default-active-bg.png');
+            }
+        }
+    }
+}

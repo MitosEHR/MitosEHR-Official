@@ -1,0 +1,45 @@
+$tabbar-plain-size: 4px !default;
+
+//color
+$tabbar-base-color: adjust-color($panel-base-color, $hue: -1.522deg, $saturation: -3.156%, $lightness: -5.294%) !default;
+$tabbar-background-gradient: 'tabbar' !default;
+
+//background
+$tab-base-color: adjust-color(#DFE8F6, $hue: -3.619deg, $saturation: 32.474%, $lightness: 1.176%) !default; //#deecfd
+$tab-base-color-over: adjust-color($tab-base-color, $hue: -4.208deg, $saturation: 11.429%, $lightness: 2.353%) !default;
+$tab-base-color-active: $tab-base-color !default;
+
+$tab-color: adjust-color($tab-base-color, $hue: 1.995deg, $saturation: -45.589%, $lightness: -48.431%) !default;
+$tab-color-over: $tab-color !default;
+$tab-color-active: adjust-color($tab-color, $hue: 2.221deg, $saturation: 30.768%, $lightness: -13.333%) !default;
+
+$tab-font-size: 11px !default;
+$tab-font-size-over: $tab-font-size !default;
+$tab-font-size-active: $tab-font-size !default;
+
+$tab-font-family: $font-family;
+$tab-font-family-over: $tab-font-family;
+$tab-font-family-active: $tab-font-family;
+
+$tab-font-weight: normal !default;
+$tab-font-weight-over: normal !default;
+$tab-font-weight-active: bold !default;
+
+$tab-background-gradient: 'tab' !default;
+$tab-background-gradient-over: 'tab-over' !default;
+$tab-background-gradient-active: 'tab-active' !default;
+
+//border
+$tab-border-radius: 4px 4px 0 0 !default;
+$tab-border-width: 1px 1px 0 1px !default;
+
+$tab-border-color: adjust-color($tab-base-color, $hue: 1.283deg, $saturation: -28.008%, $lightness: -20.98%) !default;
+$tab-border-color-over: $tab-border-color;
+$tab-border-color-active: $tab-border-color;
+
+$tab-inner-border-color: adjust-color($tab-base-color, $hue: 0.847deg, $saturation: -8.571%, $lightness: 8.941%) !default;
+$tab-inner-border-width: 1px 1px 0 !default;
+
+//size
+$tabbar-body-height: 29px;
+$tab-height: 24px;

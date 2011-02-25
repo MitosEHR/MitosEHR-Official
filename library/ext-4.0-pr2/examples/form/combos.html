@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Combo Boxes</title>
+
+    <!-- ExtJS -->
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../bootstrap.js"></script>
+
+    <!-- Shared -->
+    <link rel="stylesheet" type="text/css" href="../shared/example.css" />
+
+    <!-- Example -->
+    <script type="text/javascript" src="combos.js"></script>
+    <style type="text/css">
+        .example {
+            width: 600px;
+            border: 1px solid #CCC;
+            padding: 0 10px;
+            margin: 0 0 10px;
+        }
+
+        .x-fieldset {
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>Combo Boxes</h1>
+<p>The js is not minified so it is readable. See <a href="combos.js">combos.js</a>.</p>
+
+<div class="example">
+    <h2>Data Sources</h2>
+    <p>The combo box can use any type of Ext.data.Store as its data source.
+    This means your data can be XML, JSON, arrays or any other supported format. It can be loaded using
+    Ajax, via script tags or locally. This combo uses local data from a JS array:</p>
+
+    <div id="simpleCombo"></div>
+
+    <pre class="code" id="simpleComboCode">// Define the model for a State
+Ext.regModel('State', {
+    fields: [
+        {type: 'string', name: 'abbr'},
+        {type: 'string', name: 'name'},
+        {type: 'string', name: 'slogan'}
+    ]
+});
+
+// The data store holding the states
+var store = new Ext.data.Store({
+    model: 'State',
+    data: states
+});
+
+// Simple ComboBox using the data store
+var simpleCombo = new Ext.form.ComboBox({
+    fieldLabel: 'Select a single state',
+    renderTo: 'simpleCombo',
+    displayField: 'name',
+    width: 500,
+    labelWidth: 130,
+    store: store,
+    queryMode: 'local',
+    typeAhead: true
+});</pre>
+</div>
+
+<div class="example">
+    <h2>Custom Item Templates</h2>
+    <p>The combo below uses the same data, but also illustrates how to use an optional
+    custom template to create custom UI renditions for list items by overriding the getInnerTpl method. In this case
+    each item shows the state's abbreviation, and has a QuickTip which displays the state's nickname when hovered over.</p>
+
+    <div id="customTplCombo"></div>
+
+    <pre class="code" id="customTplComboCode">// Define the model for a State
+Ext.regModel('State', {
+    fields: [
+        {type: 'string', name: 'abbr'},
+        {type: 'string', name: 'name'},
+        {type: 'string', name: 'slogan'}
+    ]
+});
+
+// The data store holding the states
+var store = new Ext.data.Store({
+    model: 'State',
+    data: states
+});
+
+// ComboBox with a custom item template
+var customTplCombo = new Ext.form.ComboBox({
+    fieldLabel: 'Select a single state',
+    renderTo: 'customTplCombo',
+    displayField: 'name',
+    width: 500,
+    labelWidth: 130,
+    store: store,
+    queryMode: 'local',
+    getInnerTpl: function() {
+        return '&lt;div ext:qtip="{name}. {slogan}">{name} ({abbr})&lt;/div>';
+    }
+});</pre>
+</div>
+
+<div class="example">
+    <h2>Multiple Selection</h2>
+    <p>The combo below uses the same data once again, but allows selecting multiple values.</p>
+
+    <div id="multiSelectCombo"></div>
+
+    <pre class="code" id="multiSelectComboCode">// Define the model for a State
+Ext.regModel('State', {
+    fields: [
+        {type: 'string', name: 'abbr'},
+        {type: 'string', name: 'name'},
+        {type: 'string', name: 'slogan'}
+    ]
+});
+
+// The data store holding the states
+var store = new Ext.data.Store({
+    model: 'State',
+    data: states
+});
+
+// ComboBox with multiple selection enabled
+var multiCombo = new Ext.form.ComboBox({
+    fieldLabel: 'Select multiple states',
+    renderTo: 'multiSelectCombo',
+    multiSelect: true,
+    displayField: 'name',
+    width: 500,
+    labelWidth: 130,
+    store: store,
+    queryMode: 'local'
+});</pre>
+</div>
+
+</body>
+</html>

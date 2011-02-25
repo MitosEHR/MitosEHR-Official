@@ -1,0 +1,189 @@
+/**
+  * @class Ext.Header
+  * Used to create the base structure of an Ext.Header component which is used in framed 
+  * Ext.Panel's and Ext.Windows
+  */
+
+/*$frame-header-actual-padding: nth($frame-header-padding, 1);
+@if $frame-header-actual-padding < nth($frame-border-radius, 1) {
+    $frame-header-actual-padding: nth($frame-border-radius, 1);
+}
+
+@mixin extjs-frame {
+    .#{$prefix}-window-frame,
+    .#{$prefix}-panel-frame {
+        @include border-radius($frame-border-radius);
+    }
+    
+    .#{$prefix}-window-frame,
+    .#{$prefix}-panel-frame {
+        .#{$prefix}-toolbar {
+            border-color: $frame-body-border-color !important;
+        }
+    }
+    
+    .#{$prefix}-window-header-frame,
+    .#{$prefix}-panel-header-frame {
+        border-width: $frame-border-width;
+        border-style: $frame-border-style;
+        @include border-radius($frame-border-radius);
+        
+        border-color: darken($frame-base-color, 10);
+    
+        @include background-gradient($frame-base-color);
+
+        .#{$prefix}-box-layout-ct {
+            padding: $frame-header-actual-padding;
+            
+            border-width: $frame-header-inner-border-width;
+            border-style: $frame-header-inner-border-style;
+            @include border-radius($frame-border-radius);
+            
+            border-top-color: $frame-header-inner-border-color;
+            
+            .#{$prefix}-window-header-text,
+            .#{$prefix}-panel-header-text {
+                @include no-select;
+                
+                display: block;
+
+                color: $frame-header-color;
+                font-size: $frame-header-font-size;
+                font-weight: $frame-header-font-weight;
+                text-shadow: $frame-header-text-shadow;
+            }
+        }
+    }
+    
+    .#{$prefix}-window-body-frame,
+    .#{$prefix}-panel-body-frame {
+        border-top-width: 0;
+        
+        border-color: $frame-body-border-color;
+    }
+    
+    @if $include-no-border-radius {
+        .#{$prefix}-no-border-radius {
+            .#{$prefix}-window-frame,
+            .#{$prefix}-panel-frame {
+                @if nth($frame-border-radius, 1) == 0 {
+                    .#{$prefix}-panel-header-frame {
+                        border-width: 1px 1px 0 1px;
+                    }
+                }
+                
+                @include border-radius(0);
+            }
+            
+            .#{$prefix}-window-header-frame,
+            .#{$prefix}-panel-header-frame {
+                border-width: 0;
+                @include border-radius(0);
+                
+                .#{$prefix}-box-layout-ct {
+                    border-width: 0;
+                    @include border-radius(0);
+                    
+                    padding: 0;
+                }
+                
+                .#{$prefix}-box-item {
+                    padding: 0;
+                }
+                
+                .#{$prefix}-window-header-tl, .#{$prefix}-window-header-tc, .#{$prefix}-window-header-tr, .#{$prefix}-window-header-ml, .#{$prefix}-window-header-mc, .#{$prefix}-window-header-mr, .#{$prefix}-window-header-bl, .#{$prefix}-window-header-bc, .#{$prefix}-window-header-br,
+                .#{$prefix}-panel-header-tl, .#{$prefix}-panel-header-tc, .#{$prefix}-panel-header-tr, .#{$prefix}-panel-header-ml, .#{$prefix}-panel-header-mc, .#{$prefix}-panel-header-mr, .#{$prefix}-panel-header-bl, .#{$prefix}-panel-header-bc, .#{$prefix}-panel-header-br {
+                    background-image: theme-image($theme-name, 'panel/panel-frame.gif');
+                }
+                
+                $panel-tl-height: image-height($theme-name, 'panel-frame-tl.gif');
+                $panel-ml-height: image-height($theme-name, 'panel-frame-ml.gif');
+                $offset: 0;
+                
+                background-position: 0 background-position($offset, $panel-tl-height, 0);
+                
+                .#{$prefix}-window-header-tl,
+                .#{$prefix}-panel-header-tl {
+                    padding-left: $frame-header-actual-padding;
+                    
+                    background-position: 0 background-position($offset, $panel-tl-height, 0);
+                }
+                
+                .#{$prefix}-window-header-tr,
+                .#{$prefix}-panel-header-tr {
+                    padding-right: $frame-header-actual-padding;
+                    
+                    background-position: 100% background-position($offset, $panel-tl-height, 1);
+                }
+                
+                .#{$prefix}-window-header-ml,
+                .#{$prefix}-panel-header-ml {
+                    padding-left: $frame-header-actual-padding;
+                    
+                    background-position: 0 background-position($offset, $panel-tl-height, 2);
+                }
+                $offset: $offset + $panel-ml-height;
+                
+                .#{$prefix}-window-header-mr,
+                .#{$prefix}-panel-header-mr {
+                    padding-right: $frame-header-actual-padding;
+                    
+                    background-position: 100% background-position($offset, $panel-tl-height, 2);
+                }
+                $offset: $offset + $panel-ml-height;
+                
+                .#{$prefix}-window-header-bl,
+                .#{$prefix}-panel-header-bl {
+                    padding-left: $frame-header-actual-padding;
+                    
+                    background-position: 0 background-position($offset, $panel-tl-height, 2);
+                }
+
+                .#{$prefix}-window-header-br,
+                .#{$prefix}-panel-header-br {
+                    padding-right: $frame-header-actual-padding;
+                    
+                    background-position: 100% background-position($offset, $panel-tl-height, 3);
+                }
+                
+                .#{$prefix}-window-header-tc,
+                .#{$prefix}-panel-header-tc {
+                    padding-top: $frame-header-actual-padding;
+                    
+                    background-position: 0 background-position($offset, $panel-tl-height, 4);
+                }
+                $offset: $offset + $panel-tl-height;
+                
+                .#{$prefix}-window-header-mc,
+                .#{$prefix}-panel-header-mc {
+                    background-position: 0 background-position($offset, $panel-tl-height, 4);
+                }
+                
+                .#{$prefix}-window-header-bc,
+                .#{$prefix}-panel-header-bc {
+                    padding-top: $frame-header-actual-padding;
+                    
+                    background-position: bottom left;
+                }
+                
+                @if nth($panel-border-radius, 1) == 0 {
+                    .#{$prefix}-panel-header-tl, .#{$prefix}-panel-header-tc, .#{$prefix}-panel-header-tr, .#{$prefix}-panel-header-ml, .#{$prefix}-panel-header-mc, .#{$prefix}-panel-header-mr, .#{$prefix}-panel-header-bl, .#{$prefix}-panel-header-bc, .#{$prefix}-panel-header-br {
+                        background-image: none;
+                        background: transparent;
+                    }
+                    
+                    background-image: theme-image($theme-name, 'panel/panel-frame-bg.gif');
+                }
+            }
+            
+            .#{$prefix}-window-header-frame,
+            .#{$prefix}-panel-header-frame {
+                background: transparent;
+                
+                .#{$prefix}-box-layout-ct {
+                    border-color: transparent;
+                }
+            }
+        }
+    }
+}*/

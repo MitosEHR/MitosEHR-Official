@@ -1,0 +1,64 @@
+/**
+  * @class Ext.TabBar
+  * 
+  */
+@mixin extjs-tabbar {
+    .#{$prefix}-tab-bar-body {
+        border-width: 1px 1px 0;
+        border-style: solid;
+        height: $tabbar-body-height;
+        border-color: $panel-header-border-color;
+        background-color: transparent;
+        @include background-gradient($tabbar-base-color, $tabbar-background-gradient);
+        position: relative;
+        .#{$prefix}-box-item {
+            margin-bottom: 2px;
+        }
+    }
+    
+    .#{$prefix}-nlg .#{$prefix}-tab-bar-body {
+        background-image: theme-image($theme-name, 'tab-bar/tab-bar-bg.png');
+    }
+    
+    .#{$prefix}-tab-bar-plain {
+        .#{$prefix}-tab-bar-body {
+            background: transparent none;
+            border-color: #fff;
+        }  
+    }
+
+    .#{$prefix}-tab-bar-strip {
+        height: 3px;
+        border-width: 1px 1px 0;
+        position: absolute;
+        bottom: 0px;
+        left: -1px;
+        z-index: 2;
+        border-style: solid;
+        overflow: hidden;
+        border-color: $panel-header-border-color;
+        background-color: $tab-base-color;
+    }
+    
+    
+    @if $include-ie OR $compile-all {
+        .#{$prefix}-strict .#{$prefix}-tab-bar-strip {
+            height: 2px;
+        }
+        
+        .#{$prefix}-ie7 .#{$prefix}-tab-bar-body {
+            height: $tabbar-body-height - 2;
+        }
+        
+        .#{$prefix}-ie6 .#{$prefix}-tab-bar-body,
+        .#{$prefix}-ie8 .#{$prefix}-tab-bar-body {
+            height: $tabbar-body-height - 1;
+        }
+    }
+    
+/*  .#{$prefix}-tab-bar-strip,
+    .#{$prefix}-tab-bar-body,
+    .#{$prefix}-tab-bar-body .#{$prefix}-box-inner {
+        z-index: 1;
+    }*/
+}

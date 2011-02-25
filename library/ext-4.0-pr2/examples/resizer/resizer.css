@@ -1,0 +1,10 @@
+.box {
+    width: 100px;
+    height: 100px;
+    background-color: green;
+    margin: 20px;
+}
+
+#panel1 {
+    margin: 10px;
+}
