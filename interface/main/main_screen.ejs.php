@@ -118,7 +118,20 @@ var BottomPanel = Ext.create('Ext.Panel', {
 	margins: '0 0 0 0',
 	html: 'center south'
 });
-
+//****************************************************************
+// header Panel
+//****************************************************************
+var Header = Ext.create('Ext.Panel', {
+	region		: 'north',
+	height		: 40,
+	split		: false,
+	collapsible	: false,
+	frame		: false,
+	border		: false,
+	bodyStyle	: 'background: transparent',
+	margins		: '0 0 0 0',
+	html		: 'header north'
+});
 //****************************************************************
 // The main ViewPort
 //****************************************************************
@@ -128,7 +141,7 @@ Ext.create('Ext.Viewport', {
 		padding: 5
 	},
 	defaults: { split: true },
-	items: [Navigation,{
+	items: [ Header, Navigation,{
 		region: 'center',
 		title: 'Center',
 		layout: 'border',
