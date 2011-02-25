@@ -26,12 +26,12 @@ if ($_SESSION['user']['auth'] == TRUE){
 	include_once("interface/main/main_screen.ejs.php");
 } else {
 	//----------------------------------------------------------------
-	// Browse the site dir
+	// Browse the site dir first
 	//----------------------------------------------------------------
 	$d = dir("sites/");
 	while (false !== ($entry = $d->read())) { if ( $entry != "." && $entry != ".."){ $count++; } }
 	//----------------------------------------------------------------
-	// If no directory is found inside sites dir run the setup wizard
+	// If no directory is found inside sites dir run the setup wizard,
 	// if a directory is found inside sites dir run the logon screen
 	//----------------------------------------------------------------
 	if( $count <= 0){
