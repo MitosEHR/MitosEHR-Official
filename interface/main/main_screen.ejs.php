@@ -91,6 +91,7 @@ var Navigation = Ext.create('Ext.Panel', {
 	title: '<?php i18n('Navigation'); ?>',
 	split: true,
 	width: 200,
+	html: '<a href="#" id="link1">ACL panel</a><br><a href="#" id="link2">Link2</a><br><a href="#" id="link3">Link3</a><br><a href="#" id="link4">Link4</a><br>'
 });
 
 //****************************************************************
