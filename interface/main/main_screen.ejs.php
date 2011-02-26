@@ -33,6 +33,23 @@ Ext.require([
 Ext.onReady(function() {
 
 //****************************************************************
+// Task Scheduler 
+// This will run certain task in determined time.
+//****************************************************************
+var checkSession = function(){
+	Ext.Ajax.request({
+    	url: 'library/authProcedures/chkAuth.inc.php',
+	    success: function(response, opts){
+	    	if(response.responseText == 'exit'){ window.location="index.php"; }
+    	}
+	});
+} 
+Ext.TaskMgr.start({
+    run: checkSession,
+    interval: 10000
+});
+
+//****************************************************************
 // Navigation Panel
 //****************************************************************
 //var Navigation = Ext.create('Ext.tree.TreePanel', {
