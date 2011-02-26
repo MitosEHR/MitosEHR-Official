@@ -40,7 +40,7 @@ var checkSession = function(){
 	Ext.Ajax.request({
     	url: 'library/authProcedures/chkAuth.inc.php',
 	    success: function(response, opts){
-	    	if(response.responseText == 'exit'){ window.location="index.php"; }
+	    	if(response.responseText == 'exit'){ window.location="library/authProcedures/unauth.inc.php"; }
     	}
 	});
 } 
@@ -91,16 +91,23 @@ var Navigation = Ext.create('Ext.Panel', {
 	title: '<?php i18n('Navigation'); ?>',
 	split: true,
 	width: 200,
-	html: '<a href="#" id="link1">ACL panel</a><br><a href="#" id="link2">Link2</a><br><a href="#" id="link3">Link3</a><br><a href="#" id="link4">Link4</a><br>'
+	bodyPadding: 5,
+	loader:{
+		autoLoad: true,
+		url: 'interface/main/menu_links.inc.php'
+	}
 });
 
 //****************************************************************
 // Main Panel
 //****************************************************************
 var MainApp = Ext.create('Ext.Panel', {
-	region: 'center',
-	html: 'center center',
-	items: [cw = Ext.create('Ext.Window', {
+	region	: 'center',
+	id		: 'TopPannel', 
+	loader:{
+		autoLoad: false
+	},
+	items	: [cw = Ext.create('Ext.Window', {
 		xtype: 'window',
 		closable: false,
 		minimizable: true,
@@ -133,12 +140,12 @@ var MainApp = Ext.create('Ext.Panel', {
 //****************************************************************
 var BottomPanel = Ext.create('Ext.Panel', {
 	region: 'south',
+	id		: 'BottomPannel',
 	height: 100,
 	split: true,
 	collapsible: true,
 	title: '...',
-	margins: '0 0 0 0',
-	html: 'center south'
+	margins: '0 0 0 0'
 });
 
 //****************************************************************
