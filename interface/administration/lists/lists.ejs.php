@@ -125,17 +125,17 @@ var frmLists = new Ext.FormPanel({
 	defaults	: { labelWidth: 50 },
 	items: 
 	[
-		{ xtype: 'textfield', width: 200, id: 'list_name', name: 'list_name', fieldLabel: '<?php echo htmlspecialchars( xl('List Name'), ENT_NOQUOTES); ?>' }
+		{ xtype: 'textfield', width: 200, id: 'list_name', name: 'list_name', fieldLabel: '<?php i18n('List Name'); ?>' }
     ],
 	
 	// Window Bottom Bar
 	bbar:[{
-		text		:'<?php echo htmlspecialchars( xl('Save'), ENT_NOQUOTES); ?>',
+		text		:'<?php i18n('Save'); ?>',
 		ref			: '../save',
 		iconCls		: 'save',
 		handler: function() { winLists.hide(); }
 	},{
-		text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
+		text:'<?php i18n('Close'); ?>',
 		iconCls: 'delete',
 		handler: function(){ winLists.hide(); }
 	}]
@@ -151,7 +151,7 @@ var winLists = new Ext.Window({
 	modal		: true,
 	resizable	: false,
 	autoScroll	: false,
-	title		: '<?php echo htmlspecialchars( xl('Create List'), ENT_NOQUOTES); ?>',
+	title		: '<?php i18n('Create List'); ?>',
 	closeAction	: 'hide',
 	renderTo	: document.body,
 	items: [ frmLists ]
@@ -171,8 +171,6 @@ var editor = new Ext.ux.grid.RowEditor({
 		}
 	}
 });
-
-var grid
 
 // *************************************************************************************
 // Create the GridPanel
@@ -199,7 +197,7 @@ var listGrid = new Ext.grid.GridPanel({
 		},
 		{ 
 			width: 150, 
-			header: '<?php echo htmlspecialchars( xl('Title'), ENT_NOQUOTES); ?>', 
+			header: '<?php i18n('Title'); ?>', 
 			sortable: true, 
 			dataIndex: 'title',
             editor: {
@@ -208,7 +206,7 @@ var listGrid = new Ext.grid.GridPanel({
             }
 		},
 		{ 
-			header: '<?php echo htmlspecialchars( xl('Order'), ENT_NOQUOTES); ?>', 
+			header: '<?php i18n('Order'); ?>', 
 			sortable: true, 
 			dataIndex: 'seq',
 			editor: {
@@ -217,7 +215,7 @@ var listGrid = new Ext.grid.GridPanel({
             }
 		},
 		{ 
-			header: '<?php echo htmlspecialchars( xl('Default'), ENT_NOQUOTES); ?>', 
+			header: '<?php i18n('Default'); ?>', 
 			sortable: true, 
 			dataIndex: 'is_default',
             editor: {
@@ -226,7 +224,7 @@ var listGrid = new Ext.grid.GridPanel({
             } 
 		},
 		{ 
-			header: '<?php echo htmlspecialchars( xl('Notes'), ENT_NOQUOTES); ?>', 
+			header: '<?php i18n('Notes'); ?>', 
 			sortable: true, 
 			dataIndex: 'notes',
             editor: {
@@ -246,7 +244,7 @@ var listGrid = new Ext.grid.GridPanel({
 	tbar: [{
 		xtype	:'button',
 		id		: 'addList',
-		text	: '<?php xl("Create a list", 'e'); ?>',
+		text	: '<?php i18n('Create a list'); ?>',
 		iconCls	: 'icoListOptions',
 		handler: function(){
 			Ext.getCmp('frmLists').getForm().reset(); // Clear the form
@@ -256,9 +254,9 @@ var listGrid = new Ext.grid.GridPanel({
 		xtype		  :'button',
 		id			  : 'delList',
 		ref			  : '../delList',
-		text		  : '<?php xl("Delete list", 'e'); ?>',
+		text		  : '<?php i18n('Delete list'); ?>',
 		iconCls		: 'delete',
-	},'-','<?php xl("Select list", 'e'); ?>: ',{
+	},'-','<?php i18n('Select list'); ?>: ',{
 		name			: 'cmbList', 
 		width			: 250,
 		xtype			: 'combo',
@@ -286,7 +284,7 @@ var listGrid = new Ext.grid.GridPanel({
 	// -----------------------------------------
 	bbar:[{
 		// Add a new record.
-		text		:'<?php echo htmlspecialchars( xl('Add record'), ENT_NOQUOTES); ?>',
+		text		:'<?php i18n('Add record'); ?>',
 		ref			: '../add',
 		iconCls		: 'icoAddRecord',
 		handler: function() {
@@ -298,13 +296,13 @@ var listGrid = new Ext.grid.GridPanel({
 		}
 	},'-',{
 		// Delete the selected record.
-		text:'<?php echo htmlspecialchars( xl('Delete record'), ENT_NOQUOTES); ?>',
+		text:'<?php i18n('Delete record'); ?>',
 		iconCls: 'delete',
 		handler: function(){ 
 			Ext.Msg.show({
-				title: '<?php xl("Please confirm...", 'e'); ?>', 
+				title: '<?php i18n('Please confirm...'); ?>', 
 				icon: Ext.MessageBox.QUESTION,
-				msg:'<?php xl("Are you sure to delete this record?<br>From: ", 'e'); ?>',
+				msg:'<?php i18n('Are you sure to delete this record?<br>From: '); ?>',
 				buttons: Ext.Msg.YESNO,
 				fn:function(btn,msgGrid){
 					if(btn=='yes'){
@@ -335,8 +333,8 @@ var listGrid = new Ext.grid.GridPanel({
 // Render Panel
 // This panel is mandatory for all layouts.
 //******************************************************************************
-var RenderPanel = new Ext.Panel({
-  title: '<?php xl('List Options', 'e'); ?>',
+var topRenderPanel = new Ext.Panel({
+  title: '<?php i18n('List Options'); ?>',
   border  : false,
   stateful: true,
   monitorResize: true,
@@ -353,12 +351,6 @@ var RenderPanel = new Ext.Panel({
 	}
   }
 });
-
-//******************************************************************************
-// Get the actual height of the TopPanel and apply it to this panel
-// This is mandatory statement.
-//******************************************************************************
-Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 
 }); // End ExtJS
 

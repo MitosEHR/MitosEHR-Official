@@ -380,7 +380,7 @@ storePatient.load();
 ////////////TOP BASIC INFO FORM/////////////////////////
 ////////////////////////////////////////////////////////
 var patientBasicForm = {
-    title		: '<?php xl('Patient Basic Information', 'e'); ?>',
+    title		: '<?php i18n('Patient Basic Information'); ?>',
     layout		:'column',
     name		: 'frm_PBF',
     border		:false,
@@ -396,10 +396,10 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('First name', 'e'); ?>', name: 'fname'},
-            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'sex', width: 80, emptyText: 'Unassigned', tabIndex : 3, editable: false },
-            { xtype:'textfield', fieldLabel: '<?php xl('External ID', 'e'); ?>', name: 'pexternalid' },
-            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeMarital, fieldLabel : '<?php xl('Marital Status', 'e'); ?>', name : 'storeMarital', width : 130, emptyText: 'Unassigned', tabIndex : 3, editable: false },
+            { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php i18n('First name'); ?>', name: 'fname'},
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php i18n('Sex'); ?>', name : 'sex', width: 80, emptyText: 'Unassigned', tabIndex : 3, editable: false },
+            { xtype:'textfield', fieldLabel: '<?php i18n('External ID'); ?>', name: 'pexternalid' },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeMarital, fieldLabel : '<?php i18n('Marital Status'); ?>', name : 'storeMarital', width : 130, emptyText: 'Unassigned', tabIndex : 3, editable: false },
           ]
         },{
           layout: 'form',
@@ -407,9 +407,9 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', maxLength: 25, width: 50, fieldLabel: '<?php xl('Middle name', 'e'); ?>', name: 'pmname' },
-            { xtype:'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel: '<?php xl('Date of birth', 'e'); ?>', name: 'pdob' },
-            { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined1' }
+            { xtype:'textfield', maxLength: 25, width: 50, fieldLabel: '<?php i18n('Middle name'); ?>', name: 'pmname' },
+            { xtype:'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel: '<?php i18n('Date of birth'); ?>', name: 'pdob' },
+            { xtype:'textfield', fieldLabel: '<?php i18n('User Defined'); ?>', name: 'puserdefiined1' }
           ]
         },{
           layout: 'form',
@@ -417,9 +417,9 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php xl('Last name', 'e'); ?>', name: 'plname' },
-            { xtype:'textfield', maxLength: 11, vtype: 'SSN', fieldLabel: '<?php xl('S.S.', 'e'); ?>', name: 'pss' },
-            { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'puserdefiined2' }
+            { xtype:'textfield', maxLength: 25, width: 170, vtype: 'empty_3chr', fieldLabel: '<?php i18n('Last name'); ?>', name: 'plname' },
+            { xtype:'textfield', maxLength: 11, vtype: 'SSN', fieldLabel: '<?php i18n('S.S.'); ?>', name: 'pss' },
+            { xtype:'textfield', fieldLabel: '<?php i18n('User Defined'); ?>', name: 'puserdefiined2' }
           ]
         },{
           layout: 'form',
@@ -427,9 +427,9 @@ var patientBasicForm = {
           bodyStyle:'padding: 0 5px',
           items:
           [
-            { xtype:'textfield', maxLength: 25, fieldLabel: '<?php xl('Mother mainden name', 'e'); ?>', name: 'pmmname' },
-            { xtype:'textfield', maxLength: 10, fieldLabel: '<?php xl('License/ID', 'e'); ?>', name: 'plicence' },
-            { xtype:'textfield', fieldLabel: '<?php xl('User Defined', 'e'); ?>', name: 'userdefiined3' }
+            { xtype:'textfield', maxLength: 25, fieldLabel: '<?php i18n('Mother mainden name'); ?>', name: 'pmmname' },
+            { xtype:'textfield', maxLength: 10, fieldLabel: '<?php i18n('License/ID'); ?>', name: 'plicence' },
+            { xtype:'textfield', fieldLabel: '<?php i18n('User Defined'); ?>', name: 'userdefiined3' }
           ]
         }
       ]
@@ -439,7 +439,7 @@ var patientBasicForm = {
 ////////////CONTACT PANEL///////////////////////////////
 ////////////////////////////////////////////////////////
 var contactPanel = {
-  title:'<?php xl('Contact Information', 'e'); ?>',
+  title:'<?php i18n('Contact Information'); ?>',
   border:false,
   name  : 'frm_C',
   defaults: {labelAlign: 'top'},
@@ -450,11 +450,11 @@ var contactPanel = {
     bodyStyle : 'padding: 0 5px',
     items :
     [
-      { width : 200, xtype : 'textfield', fieldLabel : '<?php xl('Address', 'e'); ?>', name : 'address', tabIndex : 3 },
-      { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'city', tabIndex : 3 },
-      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'storeState', width : 80, emptyText : 'Unassigned', tabIndex : 3, editable: false },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Postal Code', 'e'); ?>', name : 'postal_code', tabIndex : 3 },
-      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'country', width : 130, emptyText : 'Unassigned', tabIndex : 3, editable: true },
+      { width : 200, xtype : 'textfield', fieldLabel : '<?php i18n('Address'); ?>', name : 'address', tabIndex : 3 },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('City'); ?>', name : 'city', tabIndex : 3 },
+      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php i18n('State'); ?>', name : 'storeState', width : 80, emptyText : 'Unassigned', tabIndex : 3, editable: false },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Postal Code'); ?>', name : 'postal_code', tabIndex : 3 },
+      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php i18n('Country'); ?>', name : 'country', width : 130, emptyText : 'Unassigned', tabIndex : 3, editable: true },
     ]
     },{
       layout : 'form',
@@ -463,11 +463,11 @@ var contactPanel = {
       defaults : { width : 200 },
       items :
       [
-        { xtype : 'textfield', fieldLabel : '<?php xl('Guardians Name', 'e'); ?>', name : 'guardians_name', tabIndex : 3 },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Mothers Name', 'e'); ?>', name : 'mothers_name', tabIndex : 3 },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Home Phone', 'e'); ?>', name : 'home_phone', tabIndex : 3 },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Work Phone', 'e'); ?>', name : 'work_phone', tabIndex : 3 },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Email', 'e'); ?>', name : 'email', vtype : 'checkEmail', tabIndex : 3 }
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Guardians Name'); ?>', name : 'guardians_name', tabIndex : 3 },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Mothers Name'); ?>', name : 'mothers_name', tabIndex : 3 },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Home Phone'); ?>', name : 'home_phone', tabIndex : 3 },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Work Phone'); ?>', name : 'work_phone', tabIndex : 3 },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Email'); ?>', name : 'email', vtype : 'checkEmail', tabIndex : 3 }
       ]
       },{
         layout : 'form',
@@ -485,9 +485,9 @@ var contactPanel = {
           defaults : { width : 200 },
           items :
           [
-            { xtype : 'textfield', fieldLabel : '<?php xl('Full Name', 'e'); ?>', name : 'emer_fullname', tabIndex : 5 },
-            { xtype : 'textfield', fieldLabel : '<?php xl('Home Phone', 'e'); ?>', name : 'emer_home_phone', tabIndex : 6 },
-            { xtype : 'textfield', fieldLabel : '<?php xl('Cel. Phone', 'e'); ?>', name : 'emer_cel_phone', tabIndex : 6 }
+            { xtype : 'textfield', fieldLabel : '<?php i18n('Full Name'); ?>', name : 'emer_fullname', tabIndex : 5 },
+            { xtype : 'textfield', fieldLabel : '<?php i18n('Home Phone'); ?>', name : 'emer_home_phone', tabIndex : 6 },
+            { xtype : 'textfield', fieldLabel : '<?php i18n('Cel. Phone'); ?>', name : 'emer_cel_phone', tabIndex : 6 }
           ]
         }
         ]
@@ -498,7 +498,7 @@ var contactPanel = {
 ////////////CHOICES PANEL///////////////////////////////
 ////////////////////////////////////////////////////////
 var choicesPanel = {
-    title:'<?php xl('Choices', 'e'); ?>',
+    title:'<?php i18n('Choices'); ?>',
     border: false,
     name  : 'frm_Choice',
     autoScroll: true, 
@@ -510,10 +510,10 @@ var choicesPanel = {
       defaults : { width : 200 },
       items :
       [
-        { xtype : 'combo', hiddenName: 'assigned_to', displayField: 'full_name', valueField: 'user', mode: 'local', triggerAction: 'all', store: storeProvider, fieldLabel : '<?php xl('Provider', 'e'); ?>', name : 'storeProvider', emptyText : 'Unassigned', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Parmacy', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('HIPAA notice Received', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Leave Message With', 'e'); ?>', name : 'none' }
+        { xtype : 'combo', hiddenName: 'assigned_to', displayField: 'full_name', valueField: 'user', mode: 'local', triggerAction: 'all', store: storeProvider, fieldLabel : '<?php i18n('Provider'); ?>', name : 'storeProvider', emptyText : 'Unassigned', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Parmacy'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('HIPAA notice Received'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Leave Message With'); ?>', name : 'none' }
       ]
       },{
         layout : 'form',
@@ -522,10 +522,10 @@ var choicesPanel = {
         defaults : { width : 200 },
         items :
         [
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow SMS', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Immunization Registry Use', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Health Information Exchange', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Voice Message', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false }
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Allow SMS'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Allow Immunization Registry Use'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Allow Health Information Exchange'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Allow Voice Message'); ?>', name : 'none', emptyText : 'Unassigned', editable: false }
         ]
         },{
           layout : 'form',
@@ -535,10 +535,10 @@ var choicesPanel = {
           defaults : { width : 200 },
           items :
           [
-            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Voice Message', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
-            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Mail Message', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
-            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Email', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
-            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php xl('Allow Immunization Info Sharing', 'e'); ?>', name : 'none', emptyText : 'Unassigned', editable: false }
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Allow Voice Message'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Allow Mail Message'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Allow Email'); ?>', name : 'none', emptyText : 'Unassigned', editable: false },
+            { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeYesNo, fieldLabel : '<?php i18n('Allow Immunization Info Sharing'); ?>', name : 'none', emptyText : 'Unassigned', editable: false }
           ]
     }]
 };
@@ -547,7 +547,7 @@ var choicesPanel = {
 ////////////EMPLOYER PANEL//////////////////////////////
 ////////////////////////////////////////////////////////
 var employerPanel = {
-    title:'<?php xl('Employer', 'e'); ?>',
+    title:'<?php i18n('Employer'); ?>',
     border: false,
     autoScroll: true, 
     defaults: {layout:'form',labelAlign: 'top'},
@@ -558,10 +558,10 @@ var employerPanel = {
       defaults : { width : 200 },
       items :
       [
-        { xtype : 'textfield', fieldLabel : '<?php xl('Occupation', 'e'); ?>', name : 'employer_company' },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Employer Address', 'e'); ?>', name : 'employer_address' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'employer_state', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'employer_country', width : 130, emptyText : 'Unassigned', editable: false }
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Occupation'); ?>', name : 'employer_company' },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Employer Address'); ?>', name : 'employer_address' },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php i18n('State'); ?>', name : 'employer_state', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php i18n('Country'); ?>', name : 'employer_country', width : 130, emptyText : 'Unassigned', editable: false }
 
       ]
     },{
@@ -571,9 +571,9 @@ var employerPanel = {
       defaults : { width : 200 },
       items :
       [
-        { xtype : 'textfield', fieldLabel : '<?php xl('Employer Name', 'e'); ?>', name : 'employer_name' },
-        { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'employer_city' },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Postal Code', 'e'); ?>', name : 'employer_postalcode' }
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Employer Name'); ?>', name : 'employer_name' },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('City'); ?>', name : 'employer_city' },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Postal Code'); ?>', name : 'employer_postalcode' }
       ]
     }]
 };
@@ -582,7 +582,7 @@ var employerPanel = {
 ////////////STATS PANEL/////////////////////////////////
 ////////////////////////////////////////////////////////
 var statsPanel = {
-  title:'<?php xl('Stats', 'e'); ?>',
+  title:'<?php i18n('Stats'); ?>',
   autoScroll: true,
   border: false,
   defaults: {layout:'form',labelAlign: 'top'},
@@ -593,11 +593,11 @@ var statsPanel = {
     defaults : { width : 200 },
     items :
     [
-      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeLanguage, fieldLabel : '<?php xl('Language', 'e'); ?>', name : 'slanguage', width : 130, emptyText : 'Unassigned', editable: false },
-      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRace, fieldLabel : '<?php xl('Race', 'e'); ?>', name : 'srace', width : 250, emptyText : 'Unassigned', editable: false },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Family Size', 'e'); ?>', name : 'sfamily_size' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Homeless, etc.', 'e'); ?>', name : 'shomeless' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Migrant/Seasonal', 'e'); ?>', name : 'smigrant' }
+      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeLanguage, fieldLabel : '<?php i18n('Language'); ?>', name : 'slanguage', width : 130, emptyText : 'Unassigned', editable: false },
+      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRace, fieldLabel : '<?php i18n('Race'); ?>', name : 'srace', width : 250, emptyText : 'Unassigned', editable: false },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Family Size'); ?>', name : 'sfamily_size' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Homeless, etc.'); ?>', name : 'shomeless' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Migrant/Seasonal'); ?>', name : 'smigrant' }
     ]
     },{
     layout : 'form',
@@ -606,11 +606,11 @@ var statsPanel = {
     defaults : { width : 200 },
     items :
     [
-      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeEthnicity, fieldLabel : '<?php xl('Ethnicity', 'e'); ?>', name : 'pvfc', width : 130, emptyText : 'Unassigned', editable: false },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Financial Review Date', 'e'); ?>', name : 'email' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Monthly Income', 'e'); ?>', name : 'email' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Interpreter', 'e'); ?>', name : 'email', vtype : 'checkEmail' },
-      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeReferral, fieldLabel : '<?php xl('Referral Source', 'e'); ?>', name : 'pvfc', width : 130, emptyText : 'Unassigned', editable: false }
+      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeEthnicity, fieldLabel : '<?php i18n('Ethnicity'); ?>', name : 'pvfc', width : 130, emptyText : 'Unassigned', editable: false },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Financial Review Date'); ?>', name : 'email' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Monthly Income'); ?>', name : 'email' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Interpreter'); ?>', name : 'email', vtype : 'checkEmail' },
+      { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeReferral, fieldLabel : '<?php i18n('Referral Source'); ?>', name : 'pvfc', width : 130, emptyText : 'Unassigned', editable: false }
     ]
     },{
     layout : 'form',
@@ -619,7 +619,7 @@ var statsPanel = {
     width : 200,
     items :
     [
-      { xtype : 'combo', fieldLabel : '<?php xl('VFC', 'e'); ?>', name : 'pvfc', width : 130, emptyText : 'Select', editable: false }
+      { xtype : 'combo', fieldLabel : '<?php i18n('VFC'); ?>', name : 'pvfc', width : 130, emptyText : 'Select', editable: false }
     ]
   }]
 };
@@ -628,7 +628,7 @@ var statsPanel = {
 ////////////PRIMARY INSURANCE PANEL/////////////////////
 ////////////////////////////////////////////////////////
 var primaryInsurancePanel = {
-  title:'<?php xl('Primary Insurance', 'e'); ?>',
+  title:'<?php i18n('Primary Insurance'); ?>',
   autoScroll: true,
   border: false,
   defaults: {layout:'form', width : 200,labelAlign: 'top'},
@@ -640,15 +640,15 @@ var primaryInsurancePanel = {
     defaults : { width : 180 },
     items :
     [
-      { xtype : 'combo', fieldLabel : '<?php xl('Provider', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Plan Name', 'e'); ?>', name : 'company' },
-      { xtype : 'datefield', fieldLabel : '<?php xl('Effective Date', 'e'); ?>', name : 'company' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Policy Number', 'e'); ?>', name : 'company' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Group Number', 'e'); ?>', name : 'company' }
+      { xtype : 'combo', fieldLabel : '<?php i18n('Provider'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Plan Name'); ?>', name : 'company' },
+      { xtype : 'datefield', fieldLabel : '<?php i18n('Effective Date'); ?>', name : 'company' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Policy Number'); ?>', name : 'company' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Group Number'); ?>', name : 'company' }
     ]
     },{
     xtype : 'fieldset',
-    title: '<?php xl('Subscriber Info', 'e'); ?>',
+    title: '<?php i18n('Subscriber Info'); ?>',
     layout : 'column',
     autoHeight : true,
     width : 370,
@@ -660,11 +660,11 @@ var primaryInsurancePanel = {
       defaults : { width : 160 },
       items:
       [
-        { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-        { xtype : 'datefield', vtype: 'dateVal', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'subs_dob', width : 130},
-        { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
+        { xtype: 'textfield', fieldLabel: '<?php i18n('Full Name'); ?>', name : 'company' },
+        { xtype : 'datefield', vtype: 'dateVal', fieldLabel : '<?php i18n('Date of Birth'); ?>', name : 'subs_dob', width : 130},
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Subscriber Address'); ?>', name : 'company' },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php i18n('State'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Zip Code'); ?>', name : 'company' }
       ]
       },{
       layout: 'form',
@@ -672,27 +672,27 @@ var primaryInsurancePanel = {
       defaults : { width : 160 },
       items:
       [
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php i18n('Relationship'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php i18n('Sex'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('City'); ?>', name : 'company' },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php i18n('Country'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php i18n('S.S.'); ?>', name : 'company' }
       ]
       }]
       },{
       xtype : 'fieldset',
-      title: '<?php xl('Subscriber Employer (SE) Info', 'e'); ?>',
+      title: '<?php i18n('Subscriber Employer (SE) Info'); ?>',
       layout : 'form',
       autoHeight : true,
       style : 'padding: 5px 10px',
       defaults : { width : 160 },
       items :
       [
-        { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Employer', 'e'); ?>', name : 'company' },
-        { xtype : 'textfield', fieldLabel : '<?php xl('SE Address', 'e'); ?>', name : 'company' },
-        { xtype : 'textfield', fieldLabel : '<?php xl('SE City', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false }
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Subscriber Employer'); ?>', name : 'company' },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('SE Address'); ?>', name : 'company' },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('SE City'); ?>', name : 'company' },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php i18n('State'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php i18n('SE Country'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false }
       ]
     }]
 };
@@ -701,7 +701,7 @@ var primaryInsurancePanel = {
 ////////////SECONDARY INSURANCE PANEL///////////////////
 ////////////////////////////////////////////////////////
 var secondaryInsurancePanel = {
-  title:'<?php xl('Secondary Insurance', 'e'); ?>',
+  title:'<?php i18n('Secondary Insurance'); ?>',
   autoScroll: true, 
   border: false,
   defaults: {layout:'form', width : 200,labelAlign: 'top'},
@@ -713,15 +713,15 @@ var secondaryInsurancePanel = {
     defaults : { width : 180 },
     items :
     [
-      { xtype : 'combo', fieldLabel : '<?php xl('Provider', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned',  editable: false },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Plan Name', 'e'); ?>', name : 'company' },
-      { xtype : 'datefield', fieldLabel : '<?php xl('Effective Date', 'e'); ?>', name : 'company' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Policy Number', 'e'); ?>', name : 'company' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Group Number', 'e'); ?>', name : 'company' }
+      { xtype : 'combo', fieldLabel : '<?php i18n('Provider'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned',  editable: false },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Plan Name'); ?>', name : 'company' },
+      { xtype : 'datefield', fieldLabel : '<?php i18n('Effective Date'); ?>', name : 'company' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Policy Number'); ?>', name : 'company' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Group Number'); ?>', name : 'company' }
     ]
     },{
     xtype : 'fieldset',
-    title: '<?php xl('Subscriber Info', 'e'); ?>',
+    title: '<?php i18n('Subscriber Info'); ?>',
     layout : 'column',
     autoHeight : true,
     width : 370,
@@ -733,11 +733,11 @@ var secondaryInsurancePanel = {
       defaults : { width : 160 },
       items:
       [
-        { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-        { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'secondaryInsuranceDate', width : 130 },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'si_zipcode' }
+        { xtype: 'textfield', fieldLabel: '<?php i18n('Full Name'); ?>', name : 'company' },
+        { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php i18n('Date of Birth'); ?>', name : 'secondaryInsuranceDate', width : 130 },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Subscriber Address'); ?>', name : 'company' },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php i18n('State'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Zip Code'); ?>', name : 'si_zipcode' }
       ]
     },{
       layout: 'form',
@@ -745,16 +745,16 @@ var secondaryInsurancePanel = {
       defaults : { width : 160 },
       items:
       [
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php i18n('Relationship'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php i18n('Sex'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('City'); ?>', name : 'company' },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php i18n('Country'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php i18n('S.S.'); ?>', name : 'company' }
       ]
     }]
   },{
   xtype : 'fieldset',
-  title: '<?php xl('Subscriber Employer (SE) Info', 'e'); ?>',
+  title: '<?php i18n('Subscriber Employer (SE) Info'); ?>',
   layout : 'form',
   name  : 'frm_se',
   autoHeight : true,
@@ -762,11 +762,11 @@ var secondaryInsurancePanel = {
   defaults : { width : 160 },
   items :
   [
-    { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Employer', 'e'); ?>', name : 'company' },
-    { xtype : 'textfield', fieldLabel : '<?php xl('SE Address', 'e'); ?>', name : 'company' },
-    { xtype : 'textfield', fieldLabel : '<?php xl('SE City', 'e'); ?>', name : 'company' },
-    { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-    { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false }
+    { xtype : 'textfield', fieldLabel : '<?php i18n('Subscriber Employer'); ?>', name : 'company' },
+    { xtype : 'textfield', fieldLabel : '<?php i18n('SE Address'); ?>', name : 'company' },
+    { xtype : 'textfield', fieldLabel : '<?php i18n('SE City'); ?>', name : 'company' },
+    { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php i18n('State'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+    { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php i18n('SE Country'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false }
   ]
   }]
 };
@@ -775,7 +775,7 @@ var secondaryInsurancePanel = {
 ////////////TERITARY INSURANCE PANEL////////////////////
 ////////////////////////////////////////////////////////
 var teritaryInsurancePanel = {
-  title:'<?php xl('Teritary Insurance', 'e'); ?>',
+  title:'<?php i18n('Teritary Insurance'); ?>',
   autoScroll: true, 
   border: false,
   labelAlign: 'top',
@@ -787,15 +787,15 @@ var teritaryInsurancePanel = {
     defaults : { width : 180 },
     items :
     [
-      { xtype : 'combo', fieldLabel : '<?php xl('Provider', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Plan Name', 'e'); ?>', name : 'company' },
-      { xtype : 'datefield', fieldLabel : '<?php xl('Effective Date', 'e'); ?>', name : 'company' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Policy Number', 'e'); ?>', name : 'company' },
-      { xtype : 'textfield', fieldLabel : '<?php xl('Group Number', 'e'); ?>', name : 'company' }
+      { xtype : 'combo', fieldLabel : '<?php i18n('Provider'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Plan Name'); ?>', name : 'company' },
+      { xtype : 'datefield', fieldLabel : '<?php i18n('Effective Date'); ?>', name : 'company' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Policy Number'); ?>', name : 'company' },
+      { xtype : 'textfield', fieldLabel : '<?php i18n('Group Number'); ?>', name : 'company' }
     ]
     },{
       xtype : 'fieldset',
-      title: '<?php xl('Subscriber Info', 'e'); ?>',
+      title: '<?php i18n('Subscriber Info'); ?>',
       layout : 'column',
       autoHeight : true,
       width : 370,
@@ -807,11 +807,11 @@ var teritaryInsurancePanel = {
         defaults : { width : 160 },
         items:
         [
-          { xtype: 'textfield', fieldLabel: '<?php xl('Full Name', 'e'); ?>', name : 'company' },
-          { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php xl('Date of Birth', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
-          { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Address', 'e'); ?>', name : 'company' },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-          { xtype : 'textfield', fieldLabel : '<?php xl('Zip Code', 'e'); ?>', name : 'company' }
+          { xtype: 'textfield', fieldLabel: '<?php i18n('Full Name'); ?>', name : 'company' },
+          { xtype : 'datefield', vtype: 'dateVal', format: 'Y-m-d', fieldLabel : '<?php i18n('Date of Birth'); ?>', name : 'suffix', width : 130, emptyText : 'Select', editable: false },
+          { xtype : 'textfield', fieldLabel : '<?php i18n('Subscriber Address'); ?>', name : 'company' },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php i18n('State'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+          { xtype : 'textfield', fieldLabel : '<?php i18n('Zip Code'); ?>', name : 'company' }
         ]
       },{
         layout: 'form',
@@ -819,27 +819,27 @@ var teritaryInsurancePanel = {
         defaults : { width : 160 },
         items:
         [
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php xl('Relationship', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php xl('Sex', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-          { xtype : 'textfield', fieldLabel : '<?php xl('City', 'e'); ?>', name : 'company' },
-          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-          { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php xl('S.S.', 'e'); ?>', name : 'company' }
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeRelationship, fieldLabel : '<?php i18n('Relationship'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeSex, fieldLabel : '<?php i18n('Sex'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+          { xtype : 'textfield', fieldLabel : '<?php i18n('City'); ?>', name : 'company' },
+          { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php i18n('Country'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+          { xtype : 'textfield', vtype: 'SSN', fieldLabel : '<?php i18n('S.S.'); ?>', name : 'company' }
         ]
       }]
       },{
       xtype : 'fieldset',
-      title: '<?php xl('Subscriber Employer (SE) Info', 'e'); ?>',
+      title: '<?php i18n('Subscriber Employer (SE) Info'); ?>',
       layout : 'form',
       autoHeight : true,
       style : 'padding: 5px 10px',
       defaults : { width : 160 },
       items :
       [
-        { xtype : 'textfield', fieldLabel : '<?php xl('Subscriber Employer', 'e'); ?>', name : 'company' },
-        { xtype : 'textfield', fieldLabel : '<?php xl('SE Address', 'e'); ?>', name : 'company' },
-        { xtype : 'textfield', fieldLabel : '<?php xl('SE City', 'e'); ?>', name : 'company' },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php xl('State', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
-        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php xl('SE Country', 'e'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false }
+        { xtype : 'textfield', fieldLabel : '<?php i18n('Subscriber Employer'); ?>', name : 'company' },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('SE Address'); ?>', name : 'company' },
+        { xtype : 'textfield', fieldLabel : '<?php i18n('SE City'); ?>', name : 'company' },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeState, fieldLabel : '<?php i18n('State'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false },
+        { xtype : 'combo', displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storeCountry, fieldLabel : '<?php i18n('SE Country'); ?>', name : 'suffix', width : 130, emptyText : 'Unassigned', editable: false }
       ]
   }]
 };
@@ -849,7 +849,7 @@ var teritaryInsurancePanel = {
 ////////////////////////////////////////////////////////
 //New patient Form Panel
 var RenderPanel = new Ext.TabPanel({
-  title: '<?php xl('Patient Search or Add Patient', 'e'); ?>',
+  title: '<?php i18n('Patient Search or Add Patient'); ?>',
   border  : false,
   stateful: true,
   monitorResize: true,                    
@@ -872,13 +872,13 @@ var RenderPanel = new Ext.TabPanel({
   ],
   
   bbar:[{
-    text :'<?php echo htmlspecialchars( xl('Save'), ENT_NOQUOTES); ?>',
+    text :'<?php i18n('Save'); ?>',
     iconCls : 'save',
     ref : '../paSave',
     formBind : true,
     disabled : true
     },'-',{
-        text :'<?php echo htmlspecialchars( xl('Search Patient'), ENT_NOQUOTES); ?>
+        text :'<?php i18n('Search Patient'); ?>
         ',
         iconCls : 'searchUsers',
         ref : '../paSave',
@@ -886,13 +886,6 @@ var RenderPanel = new Ext.TabPanel({
         disabled : false
     }]
 });
-
-  //*********************************************************************************************************
-  // Make sure that the RenderPanel height has the same height of the TopPanel
-  // at first run.
-  // This is mandatory.
-  //*********************************************************************************************************
-  Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 
 }); // END EXTJS
 

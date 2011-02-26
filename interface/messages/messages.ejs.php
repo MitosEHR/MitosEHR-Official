@@ -2,47 +2,19 @@
 
 //--------------------------------------------------------------------------------------------------------------------------
 // messages.ejs.php 
-// v0.0.3 -> Integrated AJAX
+// v0.0.4
 // Under GPLv3 License
 // 
-// Integration Sencha ExtJS Framework
-//
 // Integrated by: GI Technologies & MitosEHR.org in 2011
 // 
-//******************************************************
-//MitosEHR (Electronic Health Records)
-//******************************************************
-//MitosEHR is a Open source Web-Based Software for:
-//* Practice management
-//* Electronic Medical Records
-//* Prescription writing and medical billing application
-//
-//And it can be installed on the following systems:
-//* Unix-like systems (Linux, UNIX, and BSD systems)
-//* Microsoft systems
-//* Mac OS X
-//* And other platforms that can run Apache Web server, MySQL
-//
-//Setup documentation can be found in the INSTALL file,
-//and extensive documentation can be found on the
-//MitosEHR web site at:
-//http://www.mitosehr.org/
-//
-// Sencha ExtJS
-// Ext JS is a cross-browser JavaScript library for building rich internet applications. Build rich,
-// sustainable web applications faster than ever. It includes:
-// * High performance, customizable UI widgets
-// * Well designed and extensible Component model
-// * An intuitive, easy to use API
-// * Commercial and Open Source licenses available
 //--------------------------------------------------------------------------------------------------------------------------
 
 session_name ( "MitosEHR" );
 session_start();
 
-include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
+include_once("library/dbHelper/dbHelper.inc.php");
+include_once("library/I18n/I18n.inc.php");
+require_once("repository/dataExchange/dataExchange.inc.php");
 ?>
 
 <script type="text/javascript">
@@ -73,7 +45,7 @@ var body_content;
 // *************************************************************************************
 Ext.getCmp('BottomPanel').setTitle("Messages");
 
-body_content = '<?php echo htmlspecialchars( xl('Nothing posted yet...'), ENT_NOQUOTES); ?>';
+body_content = '<?php i18n('Nothing posted yet...'); ?>';
 
 // *************************************************************************************
 // Structure of the message record
@@ -141,7 +113,7 @@ storeMsgs.load();
 // *************************************************************************************
 var storePat = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: '../messages/component_data.ejs.php?task=patients'
+		url: 'interface/messages/component_data.ejs.php?task=patients'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'id',
@@ -164,7 +136,7 @@ storePat.load();
 // *************************************************************************************
 var toData = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: '../messages/component_data.ejs.php?task=users'
+		url: 'interface/messages/component_data.ejs.php?task=users'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'user',
@@ -183,7 +155,7 @@ toData.load();
 // *************************************************************************************
 var typeData = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: '../messages/component_data.ejs.php?task=types'
+		url: 'interface/messages/component_data.ejs.php?task=types'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'option_id',
@@ -202,7 +174,7 @@ typeData.load();
 // *************************************************************************************
 var statusData = new Ext.data.Store({
 	proxy: new Ext.data.ScriptTagProxy({
-		url: '../messages/component_data.ejs.php?task=status'
+		url: 'interface/messages/component_data.ejs.php?task=status'
 	}),
 	reader: new Ext.data.JsonReader({
 		idProperty: 'option_id',
@@ -224,7 +196,7 @@ var winPatients = new  Ext.Window({
 	modal		    : true,
 	resizable	  : true,
 	autoScroll	: true,
-	title		    :	'<?php echo htmlspecialchars( xl('Patients'), ENT_NOQUOTES); ?>',
+	title		    :	'<?php i18n('Patients'); ?>',
 	closeAction	: 'hide',
 	renderTo	  : document.body,
 	items: [{
@@ -251,11 +223,11 @@ var winPatients = new  Ext.Window({
 			},
 			columns: [
 				{header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-				{ header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'name' },
-				{ header: '<?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'phone'},
-				{ header: '<?php echo htmlspecialchars( xl('SS'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'ss' },
-				{ header: '<?php echo htmlspecialchars( xl('DOB'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'dob' },
-				{ header: '<?php echo htmlspecialchars( xl('PID'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'pid' }
+				{ header: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'name' },
+				{ header: '<?php i18n('Phone'); ?>', sortable: true, dataIndex: 'phone'},
+				{ header: '<?php i18n('SS'); ?>', sortable: true, dataIndex: 'ss' },
+				{ header: '<?php i18n('DOB'); ?>', sortable: true, dataIndex: 'dob' },
+				{ header: '<?php i18n('PID'); ?>', sortable: true, dataIndex: 'pid' }
 			],
 			tbar:[],
 			plugins: [new Ext.ux.grid.Search({
@@ -273,7 +245,7 @@ var winPatients = new  Ext.Window({
 
 	// Window Bottom Bar
 	bbar:[{
-		text		:'<?php echo htmlspecialchars( xl('Select'), ENT_NOQUOTES); ?>',
+		text		:'<?php i18n('Select'); ?>',
 		iconCls		: 'select',
 		ref			  : '../patSelect',
 		formBind	: true,
@@ -285,7 +257,7 @@ var winPatients = new  Ext.Window({
 			winPatients.hide();
 		}
 	},{
-		text		  : '<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
+		text		  : '<?php i18n('Close'); ?>',
 		iconCls		: 'delete',
 		ref			  : '../patClose',
 		formBind	: true,
@@ -298,7 +270,7 @@ var winPatients = new  Ext.Window({
 // Previuos Messages Panel
 // *************************************************************************************
 var prvMsg = new Ext.Panel({
-	title			: '<?php xl('Reply History', 'e'); ?>',
+	title			: '<?php i18n('Reply History'); ?>',
 	labelWidth		: 100,
 	minSize			  : 300,
 	height			  : 200,
@@ -327,7 +299,7 @@ var winMessage = new  Ext.Window({
 	resizable	: false,
 	autoScroll	: true,
 	id			: 'winMessage',
-	title		: '<?php echo htmlspecialchars( xl('Compose Message'), ENT_NOQUOTES); ?>',
+	title		: '<?php i18n('Compose Message'); ?>',
 	closeAction	: 'hide',
 	renderTo	: document.body,
 	items: [{
@@ -345,8 +317,8 @@ var winMessage = new  Ext.Window({
 			{ xtype: 'button', 
 				ref: '../patient_name',
 				id: 'patient_name',
-				text: '<?php echo htmlspecialchars( xl('Click to select patient...'), ENT_NOQUOTES); ?>',
-				fieldLabel: '<?php echo htmlspecialchars( xl('Patient'), ENT_NOQUOTES); ?>',
+				text: '<?php i18n('Click to select patient...'); ?>',
+				fieldLabel: '<?php i18n('Patient'); ?>',
 				name: 'patient_name',
 				editable: false,
 				handler: function(){ winPatients.show(); }
@@ -355,7 +327,7 @@ var winMessage = new  Ext.Window({
 				ref: '../cmb_assigned_to',
 				id: 'cmb_assigned_to',
 				name: 'cmb_assigned_to',
-				fieldLabel: '<?php echo htmlspecialchars( xl('To'), ENT_NOQUOTES); ?>',
+				fieldLabel: '<?php i18n('To'); ?>',
 				editable: false,
 				triggerAction: 'all',
 				mode: 'local',
@@ -369,7 +341,7 @@ var winMessage = new  Ext.Window({
 				value: 'Unassigned',
 				id: 'cmb_form_note_type',
 				name: 'form_note_type',
-				fieldLabel: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>',
+				fieldLabel: '<?php i18n('Type'); ?>',
 				editable: false,
 				triggerAction: 'all',
 				mode: 'local',
@@ -383,7 +355,7 @@ var winMessage = new  Ext.Window({
 				value: 'New',
 				id: 'cmb_form_message_status',
 				name: 'form_message_status',
-				fieldLabel: '<?php echo htmlspecialchars( xl('Status'), ENT_NOQUOTES); ?>',
+				fieldLabel: '<?php i18n('Status'); ?>',
 				editable: false,
 				triggerAction: 'all',
 				mode: 'local',
@@ -394,14 +366,14 @@ var winMessage = new  Ext.Window({
 			},
 			{ xtype: 'textfield', 
 			  ref: '../subject',
-			  fieldLabel: '<?php echo htmlspecialchars( xl('Subject'), ENT_NOQUOTES); ?>',
+			  fieldLabel: '<?php i18n('Subject'); ?>',
         id: 'subject',
         name: 'subject',
         width: 520
       },
 			{ xtype: 'htmleditor', 
 				ref: '../note',
-				fieldLabel: '<?php echo htmlspecialchars( xl('Message'), ENT_NOQUOTES); ?>',
+				fieldLabel: '<?php i18n('Message'); ?>',
 				id: 'note',
 				name: 'note',
 				labelWidth  : 0,
@@ -432,7 +404,7 @@ var winMessage = new  Ext.Window({
 	}, prvMsg ],
 	// Window Bottom Bar
 	bbar:[{
-		text		:'<?php echo htmlspecialchars( xl('Send'), ENT_NOQUOTES); ?>',
+		text		:'<?php i18n('Send'); ?>',
 		ref			: '../send',
 		iconCls		: 'save',
 		disabled	: true,
@@ -562,12 +534,12 @@ var msgGrid = new Ext.grid.GridPanel({
 			{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
 			{ header: 'user', sortable: false, dataIndex: 'user', hidden: true},
 			{ header: 'body', sortable: true, dataIndex: 'body', hidden: true },
-			{ header: '<?php echo htmlspecialchars( xl('Subject'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'subject', id: 'subject' },
-			{ width: 200, header: '<?php echo htmlspecialchars( xl('From'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'from' },
-			{ header: '<?php echo htmlspecialchars( xl('Patient'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'patient' },
-			{ header: '<?php echo htmlspecialchars( xl('Type'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'type' },
-			{ header: '<?php echo htmlspecialchars( xl('Date'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'date' }, 
-			{ header: '<?php echo htmlspecialchars( xl('Status'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'status' },
+			{ header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject', id: 'subject' },
+			{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'from' },
+			{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
+			{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'type' },
+			{ header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' }, 
+			{ header: '<?php i18n('Status'); ?>', sortable: true, dataIndex: 'status' },
 		],
 		view: new Ext.grid.GroupingView({
       	forceFit:true,
@@ -589,7 +561,7 @@ var msgGrid = new Ext.grid.GridPanel({
 			
 				// Copy the BODY Message into the form
 				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>';
-				winMessage.patient_name.setText('<?php echo htmlspecialchars( xl('Click to select patient...'), ENT_NOQUOTES); ?>');
+				winMessage.patient_name.setText('<?php i18n('Click to select patient'); ?>');
 				winMessage.noteid.setValue(null);
 				winMessage.cmb_assigned_to.readOnly = false;
 				winMessage.cmb_assigned_to.setValue(null);
@@ -607,7 +579,7 @@ var msgGrid = new Ext.grid.GridPanel({
 			xtype	   :'button',
 			id		   : 'editMsg',
 			ref		   : '../editMsg',
-			text	   : '<?php xl("Reply message", 'e'); ?>',
+			text	   : '<?php i18n('Reply message'); ?>',
 			iconCls	 : 'edit',
 			disabled : true,
 			handler  : function(){ 
@@ -636,14 +608,14 @@ var msgGrid = new Ext.grid.GridPanel({
 			xtype		  :'button',
 			id			  : 'delMsg',
 			ref			  : '../delMsg',
-			text		  : '<?php xl("Delete message", 'e'); ?>',
+			text		  : '<?php i18n('Delete message'); ?>',
 			iconCls		: 'delete',
 			disabled	: true,
 			handler: function(msgGrid){
 				Ext.Msg.show({
 					title: '<?php xl("Please confirm...", 'e'); ?>', 
 					icon: Ext.MessageBox.QUESTION,
-					msg:'<?php xl("Are you sure to delete this message?<br>From: ", 'e'); ?>' + rowContent.get('from'),
+					msg:'<?php i18n('Are you sure to delete this message?<br>From: '); ?>' + rowContent.get('from'),
 					buttons: Ext.Msg.YESNO,
 					fn:function(btn,msgGrid){
 				        if(btn=='yes'){

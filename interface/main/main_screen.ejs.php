@@ -10,6 +10,9 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 * author: Gino Rivera Falú
 */
 
+// Reset session count
+$_SESSION['site']['flops'] = 0;
+
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -103,9 +106,10 @@ var Navigation = Ext.create('Ext.Panel', {
 //****************************************************************
 var MainApp = Ext.create('Ext.Panel', {
 	region	: 'center',
-	id		: 'TopPannel', 
+	id		: 'TopPanel', 
 	loader:{
-		autoLoad: false
+		autoLoad: true,
+		url: 'interface/administration/facilities/facilities.ejs.php'
 	},
 	items	: [cw = Ext.create('Ext.Window', {
 		xtype: 'window',

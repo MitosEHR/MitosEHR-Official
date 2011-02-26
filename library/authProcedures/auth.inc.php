@@ -85,12 +85,13 @@ $ret = $aes->encrypt($_REQUEST['authPass']);
 //-------------------------------------------
 // Username & password match
 //-------------------------------------------
+$user = mysqli_real_escape_string( $_REQUEST['authUser'] );
 $sql = "SELECT 
 			*
 		FROM 
 			users 
 		WHERE 
-			username='" . $_REQUEST['authUser'] . "' and 
+			username='" . $user . "' and 
 			password='" . $ret . "' and 
 			authorized='1'
 		LIMIT 1";

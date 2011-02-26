@@ -5,7 +5,8 @@
  * Description: This littler dude will check the integrity of the 
  * session and if the session is expired logoff and show the 
  * logon screen, or if something is missing logoff and show the
- * logon screen
+ * logon screen. Also is in charge of giving the command to
+ * logoff.
  * 
  * Author: Gino Rivera Falú
  * Modified: N/A
@@ -16,7 +17,7 @@
 session_name ( "MitosEHR" );
 session_start();
 
-$c = $_SESSION['site']['flops']++;
+$_SESSION['site']['flops']++;
 
 //****************************************************************
 // If the session has passed 60 flops, with out any activity exit
@@ -26,7 +27,7 @@ $c = $_SESSION['site']['flops']++;
 //
 // return an exit code
 //****************************************************************
-if($_SESSION['site']['flops'] >= 60) {
+if($_SESSION['site']['flops'] >= 180) {
 	echo "exit";
 	return;
 }

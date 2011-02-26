@@ -213,16 +213,16 @@ var frmUsers = new Ext.FormPanel({
         { xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
             { width: 100, xtype: 'textfield', id: 'username', name: 'username' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Password'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
             { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
           ] 
         },{ xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('First, Middle, Last'), ENT_NOQUOTES); ?>: '},
-            { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
+            { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: '<?php i18n('title'); ?>', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
             { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
             { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
             { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
@@ -231,58 +231,58 @@ var frmUsers = new Ext.FormPanel({
           xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Active?'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Active?'); ?>: '},
             { width: 100, xtype: 'checkbox', id: 'active', name: 'active' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorized?'); ?>: '},
             { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
           ]  
         },{ 
           xtype: 'compositefield',
           msgTarget : 'side', 
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Default Facility'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
             { width: 100, xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Authorizations'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
             { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Access Control'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
             { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Taxonomy'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
             { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Federal Tax ID'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Federal Tax ID'); ?>: '},
             { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Fed Drug ID'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('Fed Drug ID'); ?>: '},
             { width: 105, xtype: 'textfield', id: 'federaldrugid', name: 'federaldrugid' }
  
           ] 
         },{ 
           xtype: 'compositefield',
           items: [
-           	{ width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('UPIN'), ENT_NOQUOTES); ?>: '},
+           	{ width: 100, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
             { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
-            { width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('NPI'), ENT_NOQUOTES); ?>: '},
+            { width: 100, xtype: 'displayfield', value: '<?php i18n('NPI'); ?>: '},
             { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
           ]
                 },{ 
           xtype: 'compositefield',
           items: [
-           	{ width: 100, xtype: 'displayfield', value: '<?php echo htmlspecialchars( xl('Job Description'), ENT_NOQUOTES); ?>: '},
+           	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
             { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
           ]  
-        },{html: '<hr style="margin:5px 0"><p><?php echo htmlspecialchars( xl('Additional Info'), ENT_NOQUOTES); ?>:</p>', border:false},
+        },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
         { width: 420, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
       ]
   }], 
   // Window Bottom Bar
   bbar:[{
-    text      :'<?php echo htmlspecialchars( xl('Save'), ENT_NOQUOTES); ?>',
+    text      :'<?php i18n('Save'); ?>',
     ref       : '../save',
     iconCls   : 'save',
     handler: function() {
@@ -318,7 +318,7 @@ var frmUsers = new Ext.FormPanel({
       
     }
   },{
-    text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
+    text:'<?php i18n('Close'); ?>',
     iconCls: 'delete',
     handler: function(){ winUsers.hide(); }
   }]
@@ -334,7 +334,7 @@ var winUsers = new Ext.Window({
   modal       : true,
   resizable   : false,
   autoScroll  : true,
-  title       : '<?php echo htmlspecialchars( xl('Add or Edit User'), ENT_NOQUOTES); ?>',
+  title       : '<?php i18n('Add or Edit User'); ?>',
   closeAction : 'hide',
   renderTo    : document.body,
   items: [ frmUsers ],
@@ -381,11 +381,11 @@ var addressbookGrid = new Ext.grid.GridPanel({
     // Hidden cells
     {header: 'id', sortable: false, dataIndex: 'id', hidden: true},
     // Viewable cells
-    { width: 100,  header: '<?php echo htmlspecialchars( xl('Username'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'username' },
-    { width: 150, header: '<?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'fullname' },
-    { width: 200,  header: '<?php echo htmlspecialchars( xl('Aditional info'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'info' },
-    { header: '<?php echo htmlspecialchars( xl('Active?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'actived' },
-    { header: '<?php echo htmlspecialchars( xl('Authorized?'), ENT_NOQUOTES); ?>', sortable: true, dataIndex: 'authorizedd' }
+    { width: 100,  header: '<?php i18n('Username'); ?>', sortable: true, dataIndex: 'username' },
+    { width: 150, header: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'fullname' },
+    { width: 200,  header: '<?php i18n('Aditional info'); ?>', sortable: true, dataIndex: 'info' },
+    { header: '<?php i18n('Active?'); ?>', sortable: true, dataIndex: 'actived' },
+    { header: '<?php i18n('Authorized?'); ?>', sortable: true, dataIndex: 'authorizedd' }
   ],
   // *************************************************************************************
   // Grid Menu
@@ -393,7 +393,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
   tbar: [{
     xtype     :'button',
     id        : 'addAddressbook',
-    text      : '<?php xl("Add User", 'e'); ?>',
+    text      : '<?php i18n('Add User'); ?>',
     iconCls   : 'icoAddressBook',
     handler   : function(){
       Ext.getCmp('frmUsers').getForm().reset(); // Clear the form
@@ -403,7 +403,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     xtype     :'button',
     id        : 'editAddressbook',
     ref       : '../editAddressbook',
-    text      : '<?php xl("Edit User", 'e'); ?>',
+    text      : '<?php i18n('Edit User'); ?>',
     iconCls   : 'edit',
     disabled  : true,
     handler: function(){ 
@@ -426,8 +426,8 @@ var addressbookGrid = new Ext.grid.GridPanel({
 // Render Panel
 // This panel is mandatory for all layouts.
 //******************************************************************************
-var RenderPanel = new Ext.Panel({
-  title: '<?php xl('List of Users', 'e'); ?>',
+var topRenderPanel = new Ext.Panel({
+  title: '<?php i18n('List of Users'); ?>',
   border        : false,
   stateful      : true,
   monitorResize : true,
@@ -447,12 +447,6 @@ var RenderPanel = new Ext.Panel({
     emptyMsg: "No contacts to display"
   })]
 });
-
-//******************************************************************************
-// Get the actual height of the TopPanel and apply it to this panel
-// This is mandatory statement.
-//******************************************************************************
-Ext.getCmp('RenderPanel').setHeight( Ext.getCmp('TopPanel').getHeight() );
 
 }); // End ExtJS
 </script>
