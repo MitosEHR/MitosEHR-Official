@@ -1,7 +1,7 @@
 <?php
 /* Auth Procedure
  * 
- * Description: This library intends to be simple it will not have any function
+ * Description: This library intends to be simple it will not have any functions.
  * it's purpose is to validate the user and return a JSON formated data back 
  * to the logon window on success or failed.
  * 
@@ -85,13 +85,12 @@ $ret = $aes->encrypt($_REQUEST['authPass']);
 //-------------------------------------------
 // Username & password match
 //-------------------------------------------
-$user = mysqli_real_escape_string( $_REQUEST['authUser'] );
 $sql = "SELECT 
 			*
 		FROM 
 			users 
 		WHERE 
-			username='" . $user . "' and 
+			username='" . $_REQUEST['authUser'] . "' and 
 			password='" . $ret . "' and 
 			authorized='1'
 		LIMIT 1";

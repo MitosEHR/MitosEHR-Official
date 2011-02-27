@@ -10,6 +10,8 @@
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 
+include_once("library/I18n/I18n.inc.php");
+
 ?>
 <script type="text/javascript">
 Ext.onReady(function(){
@@ -168,7 +170,6 @@ storePOSCode.on('load',function(ds,records,o){ // Select the first item on the c
 	cmbPOSCode = records[0].data.title;
 });
 
-
 // *************************************************************************************
 // Facility Form
 // Add or Edit purpose
@@ -185,14 +186,14 @@ var frmFacility = new Ext.FormPanel({
 		defaults: { labelWidth: 50 },
         items: 
 		[
-			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'name', name: 'name', fieldLabel: '<?php i18n('Name'); ?>' },
-			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'street', name: 'street', fieldLabel: '<?php i18n('Address'); ?>' },
-			{ xtype: 'textfield', minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'city', name: 'city', fieldLabel: '<?php i18n('City'); ?>' },
-			{ xtype: 'textfield', maxLength:50, minLengthText: 'Must contain at least 2 characters.', minLength: 2, id: 'state', name: 'state', fieldLabel: '<?php i18n('State'); ?>' },
+			{ xtype: 'textfield', minLengthText: '<?php i18n('Must contain at least 3 characters.'); ?>, minLength: 3, id: 'name', name: 'name', fieldLabel: '<?php i18n('Name'); ?>' },
+			{ xtype: 'textfield', minLengthText: '<?php i18n('Must contain at least 3 characters.'); ?>, minLength: 3, id: 'street', name: 'street', fieldLabel: '<?php i18n('Address'); ?>' },
+			{ xtype: 'textfield', minLengthText: '<?php i18n('Must contain at least 3 characters.'); ?>, minLength: 3, id: 'city', name: 'city', fieldLabel: '<?php i18n('City'); ?>' },
+			{ xtype: 'textfield', maxLength:50, minLengthText: 'Must contain at least 2 characters.'); ?>, minLength: 2, id: 'state', name: 'state', fieldLabel: '<?php i18n('State'); ?>' },
 			{ xtype: 'textfield', maxLength: 10, id: 'country_code', name: 'country_code', fieldLabel: '<?php i18n('Country'); ?>' },
-			{ xtype: 'textfield', maxLength: 30, minLengthText: 'Must contain at least 7 characters.', minLength: 7, id: 'phone', name: 'phone', fieldLabel: '<?php i18n('Phone'); ?>' },
-			{ xtype: 'textfield', maxLength: 30, minLengthText: 'Must contain at least 7 characters.', minLength: 7, id: 'fax', name: 'fax', fieldLabel: '<?php i18n('Fax'); ?>' },
-			{ xtype: 'textfield', maxLength: 11, minLengthText: 'Must contain at least 3 characters.', minLength: 3, id: 'postal_code', name: 'postal_code', fieldLabel: '<?php i18n('Zip Code'); ?>' },
+			{ xtype: 'textfield', maxLength: 30, minLengthText: '<?php i18n('Must contain at least 7 characters.'); ?>, minLength: 7, id: 'phone', name: 'phone', fieldLabel: '<?php i18n('Phone'); ?>' },
+			{ xtype: 'textfield', maxLength: 30, minLengthText: '<?php i18n('Must contain at least 7 characters.'); ?>, minLength: 7, id: 'fax', name: 'fax', fieldLabel: '<?php i18n('Fax'); ?>' },
+			{ xtype: 'textfield', maxLength: 11, minLengthText: '<?php i18n('Must contain at least 3 characters.'); ?>, minLength: 3, id: 'postal_code', name: 'postal_code', fieldLabel: '<?php i18n('Zip Code'); ?>' },
 			// Hidden fields
 			{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'}
         ]},{
