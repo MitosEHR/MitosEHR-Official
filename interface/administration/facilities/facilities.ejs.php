@@ -12,6 +12,11 @@
 
 include_once("library/I18n/I18n.inc.php");
 
+//******************************************************************************
+// Reset session count 10 secs = 1 Flop
+//******************************************************************************
+$_SESSION['site']['flops'] = 0;
+
 ?>
 <script type="text/javascript">
 Ext.onReady(function(){
@@ -79,6 +84,7 @@ var storeFacilities = new Ext.data.Store({
 	}),
 	autoLoad: true
 });
+// Temp 
 var storeFacilities = new Ext.data.Store({
 	autoSave	: false,
 
