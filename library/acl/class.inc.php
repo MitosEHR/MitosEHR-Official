@@ -20,7 +20,7 @@ class ACL
 	}
 
 	function getUserRoles() {
-		$strSQL = "SELECT * FROM `user_roles` WHERE `userID` = " . floatval($this->userID) . " ORDER BY `addDate` ASC";  
+		$strSQL = "SELECT * FROM `acl_user_roles` WHERE `userID` = " . floatval($this->userID) . " ORDER BY `addDate` ASC";  
 		$data = mysql_query($strSQL);  
 		$resp = array();  
 		while($row = mysql_fetch_array($data)) {
@@ -31,7 +31,7 @@ class ACL
 
 	function getAllRoles($format='ids') {
 		$format = strtolower($format);  
-		$strSQL = "SELECT * FROM `roles` ORDER BY `roleName` ASC";  
+		$strSQL = "SELECT * FROM `acl_roles` ORDER BY `roleName` ASC";  
 		$data = mysql_query($strSQL);  
 		$resp = array();  
 		while($row = mysql_fetch_array($data)){
@@ -55,21 +55,21 @@ class ACL
 	}
   
 	function getPermKeyFromID($permID){
-		$strSQL = "SELECT `permKey` FROM `permissions` WHERE `ID` = " . floatval($permID) . " LIMIT 1";  
+		$strSQL = "SELECT `permKey` FROM `acl_permissions` WHERE `ID` = " . floatval($permID) . " LIMIT 1";  
 		$data = mysql_query($strSQL);  
 		$row = mysql_fetch_array($data);  
 		return $row[0];  
 	}
 
 	function getPermNameFromID($permID){
-		$strSQL = "SELECT `permName` FROM `permissions` WHERE `ID` = " . floatval($permID) . " LIMIT 1";  
+		$strSQL = "SELECT `permName` FROM `acl_permissions` WHERE `ID` = " . floatval($permID) . " LIMIT 1";  
 		$data = mysql_query($strSQL);  
 		$row = mysql_fetch_array($data);  
 		return $row[0];  
 	}
 	
 	function getRoleNameFromID($roleID)  {
-		$strSQL = "SELECT `roleName` FROM `roles` WHERE `ID` = " . floatval($roleID) . " LIMIT 1";  
+		$strSQL = "SELECT `roleName` FROM `acl_roles` WHERE `ID` = " . floatval($roleID) . " LIMIT 1";  
 		$data = mysql_query($strSQL);  
 		$row = mysql_fetch_array($data);  
 		return $row[0];  
@@ -84,9 +84,9 @@ class ACL
 	
 	function getRolePerms($role){
 		if (is_array($role)){
-			$roleSQL = "SELECT * FROM `role_perms` WHERE `roleID` IN (" . implode(",",$role) . ") ORDER BY `ID` ASC";  
+			$roleSQL = "SELECT * FROM `acl_role_perms` WHERE `roleID` IN (" . implode(",",$role) . ") ORDER BY `ID` ASC";  
 		} else {
-			$roleSQL = "SELECT * FROM `role_perms` WHERE `roleID` = " . floatval($role) . " ORDER BY `ID` ASC";  
+			$roleSQL = "SELECT * FROM `acl_role_perms` WHERE `roleID` = " . floatval($role) . " ORDER BY `ID` ASC";  
 		}  
 		$data = mysql_query($roleSQL);  
 		$perms = array();  
@@ -104,7 +104,7 @@ class ACL
 	}  
 
 	function getUserPerms($userID){
-		$strSQL = "SELECT * FROM `user_perms` WHERE `userID` = " . floatval($userID) . " ORDER BY `addDate` ASC";  
+		$strSQL = "SELECT * FROM `acl_user_perms` WHERE `userID` = " . floatval($userID) . " ORDER BY `addDate` ASC";  
 		$data = mysql_query($strSQL);  
 		$perms = array();  
 		while($row = mysql_fetch_assoc($data)){
@@ -122,7 +122,7 @@ class ACL
 	
 	function getAllPerms($format='ids'){
 		$format = strtolower($format);  
-		$strSQL = "SELECT * FROM `permissions` ORDER BY `permName` ASC";  
+		$strSQL = "SELECT * FROM `acl_permissions` ORDER BY `permName` ASC";  
 		$data = mysql_query($strSQL);  
 		$resp = array();  
 		while($row = mysql_fetch_assoc($data)){
