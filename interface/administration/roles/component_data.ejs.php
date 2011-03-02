@@ -31,7 +31,7 @@ switch ($_GET['task']) {
 		$roles = $myACL->getAllRoles('full'); 
 		
 		foreach ($roles as $k => $v) {  
-			$buff .= " { id: '" . dataDecode( $v['id'] ) . "', name: '" . dataDecode( $v['Name'] ) . "' },". chr(13);
+			$buff .= " { id: '" . $v['id'] . "', name: '" . $v['Name'] . "' },". chr(13);
 			$count++;
     	}
 		
@@ -42,7 +42,5 @@ switch ($_GET['task']) {
 		echo $buff;
 		echo "]})" . chr(13);
 	break;
-	
 }
-
 ?>
