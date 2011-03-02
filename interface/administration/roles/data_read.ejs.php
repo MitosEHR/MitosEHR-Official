@@ -40,16 +40,16 @@ $sql = "SELECT acl_permissions.id,
 		$count++;
 		$buff .= "{";
 		$buff .= " id: '" . $urow['id'] . "',";
-		$buff .= " perm_key: '" . dataEncode( $urow['perm_key'] ) . "',";
+		$buff .= " perm_key: '" . $urow['perm_key'] . "',";
 		$buff .= " perm_name: '" . dataEncode( $urow['perm_name'] ) . "',";
-		$buff .= " role_id: '" . dataEncode( $urow['role_id'] ) . "',";
-		$buff .= " perm_id: '" . dataEncode( $urow['perm_id'] ) . "',";
-		$buff .= " value: '" . dataEncode( $urow['value'] ) . "'}," . chr(13);
+		$buff .= " role_id: '" . $urow['role_id'] . "',";
+		$buff .= " perm_id: '" . $urow['perm_id'] . "',";
+		$buff .= " value: '" . $urow['value'] . "'}," . chr(13);
 	}
 
 	$buff = substr($buff, 0, -2); // Delete the last comma.
 	echo $_GET['callback'] . '({';
-	echo "results: " . $count . ", " . chr(13);
+	echo "totalCount: " . $count . ", " . chr(13);
 	echo "row: [" . chr(13);
 	echo $buff;
 	echo "]})" . chr(13);

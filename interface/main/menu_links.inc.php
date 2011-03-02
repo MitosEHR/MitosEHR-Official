@@ -9,3 +9,9 @@ Ext.onReady(function() {
 	onClick="Ext.getCmp('TopPanel').load('interface/administration/facilities/facilities.ejs.php');">
 	Facilicies
 </a>
+<br />
+<a 
+	href="javascript:void()" 
+	onClick="Ext.getCmp('TopPanel').load('interface/administration/roles/roles.ejs.php');">
+	roles and permissions
+</a>

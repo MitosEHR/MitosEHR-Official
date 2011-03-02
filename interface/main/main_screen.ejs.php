@@ -166,7 +166,7 @@ var Header = Ext.create('Ext.Panel', {
 	bodyStyle : 'background: transparent',
 	margins : '0 0 0 0',
 	items: [{
-		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" style="float:left"></a>',
+		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="34" width="130"  style="float:left"></a>',
 		style:'float:left',
 		bodyStyle:'background: transparent',
 		border: false
