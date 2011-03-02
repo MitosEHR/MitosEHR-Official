@@ -151,8 +151,9 @@ class ACL {
 			}
 		} else {
 			return false;  
-	}
-	// function to ck if user has permission to ***** VIEW and WRITE *****
+		}
+	} 
+	// function to ck if user has permition to ***** VIEW and EDIT *****
 	function hasPermissionWrite($perm_key){
 		$perm_key = strtolower($perm_key);  
 		if (array_key_exists($perm_key,$this->perms)){
@@ -163,8 +164,7 @@ class ACL {
 			}
 		} else {
 			return false;  
-	}
-
-	} // End of CLASS  
+		}
+	} 
 }  
 ?>  
