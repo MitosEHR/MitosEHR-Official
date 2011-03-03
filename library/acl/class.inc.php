@@ -30,12 +30,12 @@ class ACL {
 
 	function getAllRoles($format='ids') {
 		$format = strtolower($format);  
-		$strSQL = "SELECT * FROM `acl_roles` ORDER BY `roleName` ASC";  
+		$strSQL = "SELECT * FROM `acl_roles` ORDER BY `role_name` ASC";  
 		$data = mysql_query($strSQL);  
 		$resp = array();  
 		while($row = mysql_fetch_array($data)){
 			if ($format == 'full'){
-				$resp[] = array("id" => $row['id'],"Name" => $row['roleName']);  
+				$resp[] = array("id" => $row['id'],"Name" => $row['role_name']);  
 			} else {  
 				$resp[] = $row['id'];  
 			}
@@ -68,7 +68,7 @@ class ACL {
 	}
 	
 	function getRoleNameFromid($role_id)  {
-		$strSQL = "SELECT `roleName` FROM `acl_roles` WHERE `id` = " . floatval($role_id) . " LIMIT 1";  
+		$strSQL = "SELECT `role_name` FROM `acl_roles` WHERE `id` = " . floatval($role_id) . " LIMIT 1";  
 		$data = mysql_query($strSQL);  
 		$row = mysql_fetch_array($data);  
 		return $row[0];  

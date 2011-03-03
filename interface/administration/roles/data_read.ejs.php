@@ -12,9 +12,8 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once("library/dbHelper/dbHelper.inc.php");
-include_once("library/I18n/I18n.inc.php");
-require_once("repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
 // Count records variable
 $count = 0;
@@ -23,7 +22,8 @@ $count = 0;
 // and execute the apropriate SQL statement
 // query all permissions and left join with currRole values
 // *************************************************************************************
-$currRole = $_REQUEST['role_id'];
+$currRole = ($_REQUEST["start"] == null) ? 5 : $_REQUEST["role_id"];
+
 $sql = "SELECT acl_permissions.id,
 			   acl_permissions.perm_key,
 			   acl_permissions.perm_name,
