@@ -33,7 +33,7 @@ $sql = "SELECT acl_permissions.id,
 		  FROM acl_permissions
   	 LEFT JOIN acl_role_perms
 	 	    ON acl_permissions.id = acl_role_perms.perm_id
-	 	 WHERE role_id = '$currRole' 
+	 	 WHERE role_id = '5' 
   		 ORDER BY perm_name";
 	$buff = "";
 	foreach (sqlStatement($sql) as $urow) {

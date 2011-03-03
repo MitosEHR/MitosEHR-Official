@@ -40,10 +40,10 @@ function sqlStatement($sql){
 	
 	// Get all the records
 	$recordset = $conn->query($sql);
-	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	//$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	
 	// return the recordset 
-	return $result;
+	return $recordset;
 }
 
 //**********************************************************************
@@ -58,7 +58,7 @@ function sqlStatementLog($sql){
 	
 	// Execute the SQL stament
 	$recordset = $conn->query($sql);
-	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	//$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	
 	// If the QUERY has INSERT, DELETE, ALTER then has to 
 	// insert the event to the database.
@@ -90,7 +90,7 @@ function sqlStatementEvent($eventLog, $sql){
 	
 	// Execute the SQL stament
 	$conn->query($sql);
-	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	//$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	
 	// Prepare the SQL stament first, and then execute.
 	$stmt = $conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
@@ -128,7 +128,7 @@ function sqlRowCount($sql){
 	
 	// Get all the records & count it.
 	$recordset = $conn->query($sql);
-	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	//$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	return $result['rows'];
 
 }
