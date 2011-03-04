@@ -53,21 +53,25 @@ switch ($_GET['task']) {
 	// *************************************************************************************
 	// Create code used to create permisions
 	// *************************************************************************************
-	case "create_perm":
+	case "create_permission":
 	// *************************************************************************************
 	// Validate and pass the POST variables to an array
 	// This is the moment to validate the entered values from the user
 	// although Sencha EXTJS make good validation, we could check again 
 	// just in case 
 	// *************************************************************************************
-	$row['placeholder'] = dataEncode($data[0]->placeholder);
+	$row['perm_key'] = dataEncode($data[0]->perm_key);
+	$row['perm_name'] = dataEncode($data[0]->perm_name);
 	// *************************************************************************************
 	// Finally that validated POST variables is inserted to the database
 	// This one make the JOB of two, if it has an ID key run the UPDATE statement
 	// if not run the INSERT stament
 	// *************************************************************************************
-	sqlStatement();
-	
+	sqlStatement("INSERT INTO 
+					acl_permissions 
+				SET
+					perm_key = '" . $row['role_name'] . "', " . "
+					perm_name = '" . $row['notes'] . "'");
 	break;
 
 }
