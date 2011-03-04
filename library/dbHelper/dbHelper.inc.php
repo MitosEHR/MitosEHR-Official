@@ -40,10 +40,25 @@ function sqlStatement($sql){
 	
 	// Get all the records
 	$recordset = $conn->query($sql);
-	//$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	
 	// return the recordset 
 	return $recordset;
+}
+
+//**********************************************************************
+// Simple SQL Stament, with no Event LOG injection
+// return: One record array
+//**********************************************************************
+function sqlFetch($sql){
+	// Get the global variable
+	global $conn;
+	
+	// Get all the records
+	$recordset = $conn->query($sql);
+	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	
+	// return the recordset 
+	return $result;
 }
 
 //**********************************************************************

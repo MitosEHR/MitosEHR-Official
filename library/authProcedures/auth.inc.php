@@ -94,8 +94,8 @@ $sql = "SELECT
 			password='" . $ret . "' and 
 			authorized='1'
 		LIMIT 1";
-$rec = sqlStatement($sql);
-if (!$rec['username']){
+$rec = sqlFetch($sql);
+if ($rec['username'] == ""){
 	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.'}}";
 	return;
 } else {
