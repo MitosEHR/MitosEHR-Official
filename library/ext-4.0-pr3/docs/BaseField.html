@@ -1,0 +1,495 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.form.BaseField"></div>/**
+ * @class Ext.form.BaseField
+ * @extends Ext.Component
+ * Base class for form fields that provides default event handling, rendering, and other common functionality
+ * needed by all form field types. Utilizes the {@link Ext.form.Field} mixin for value handling and validation,
+ * and the {@link Ext.form.Labelable} mixin to provide label and error message display.
+ * @constructor
+ * Creates a new Field
+ * @param {Object} config Configuration options
+ * @xtype field
+ */
+Ext.define('Ext.form.BaseField', {
+    extend: 'Ext.Component',
+    mixins: {
+        labelable: 'Ext.form.Labelable',
+        field: 'Ext.form.Field'
+    },
+    alias: 'widget.field',
+    requires: ['Ext.util.DelayedTask', 'Ext.XTemplate', 'Ext.layout.component.form.Field'],
+
+    <div id="cfg-Ext.form.BaseField-inputType"></div>/**
+     * @cfg {String} inputType
+     * <p>The type attribute for input fields -- e.g. radio, text, password, file (defaults to <tt>'text'</tt>).
+     * The extended types supported by HTML5 inputs (url, email, etc.) may also be used, though using them
+     * will cause older browsers to fall back to 'text'.</p>
+     * <p>The types 'file' and 'password' must be used to render those field types currently -- there are
+     * no separate Ext components for those.</p>
+     */
+    inputType: 'text',
+
+    <div id="cfg-Ext.form.BaseField-tabIndex"></div>/**
+     * @cfg {Number} tabIndex The tabIndex for this field. Note this only applies to fields that are rendered,
+     * not those which are built via applyTo (defaults to undefined).
+     */
+
+    <div id="cfg-Ext.form.BaseField-invalidText"></div>/**
+     * @cfg {String} invalidText The error text to use when marking a field invalid and no message is provided
+     * (defaults to 'The value in this field is invalid')
+     */
+    invalidText : 'The value in this field is invalid',
+
+    <div id="cfg-Ext.form.BaseField-fieldCls"></div>/**
+     * @cfg {String} fieldCls The default CSS class for the field input (defaults to 'x-form-field')
+     */
+    fieldCls : Ext.baseCSSPrefix + 'form-field',
+
+    <div id="cfg-Ext.form.BaseField-focusCls"></div>/**
+     * @cfg {String} focusCls The CSS class to use when the field receives focus (defaults to 'x-form-focus')
+     */
+    focusCls : Ext.baseCSSPrefix + 'form-focus',
+
+    <div id="cfg-Ext.form.BaseField-checkChangeEvents"></div>/**
+     * @cfg {Array} checkChangeEvents
+     * <p>A list of event names that will be listened for on the field's {@link #inputEl input element}, which
+     * will cause the field's value to be checked for changes. If a change is detected, the
+     * {@link #change change event} will be fired, followed by validation if the {@link #validateOnChange}
+     * option is enabled.</p>
+     * <p>Defaults to <tt>['change', 'propertychange']</tt> in Internet Explorer, and <tt>['change', 'input',
+     * 'textInput', 'keyup', 'dragdrop']</tt> in other browsers. This catches all the ways that field values
+     * can be changed in most supported browsers; the only known exceptions at the time of writing are:</p>
+     * <ul>
+     * <li>Safari 3.2 and older: cut/paste in textareas via the context menu, and dragging text into textareas</li>
+     * <li>Opera 10 and 11: dragging text into text fields and textareas, and cut via the context menu in text
+     * fields and textareas</li>
+     * <li>Opera 9: Same as Opera 10 and 11, plus paste from context menu in text fields and textareas</li>
+     * </ul>
+     * <p>If you need to guarantee on-the-fly change notifications including these edge cases, you can call the
+     * {@link #checkChange} method on a repeating interval, e.g. using {@link Ext.TaskMgr}, or if the field is
+     * within a {@link Ext.form.FormPanel}, you can use the FormPanel's {@link Ext.form.FormPanel#pollForChanges}
+     * configuration to set up such a task automatically.</p>
+     */
+    checkChangeEvents: Ext.isIE ? ['change', 'propertychange'] :
+                                  ['change', 'input', 'textInput', 'keyup', 'dragdrop'],
+
+    <div id="cfg-Ext.form.BaseField-checkChangeBuffer"></div>/**
+     * @cfg {Number} checkChangeBuffer
+     * Defines a timeout in milliseconds for buffering {@link #checkChangeEvents} that fire in rapid succession.
+     * Defaults to 50 milliseconds.
+     */
+    checkChangeBuffer: 50,
+
+    componentLayout: 'field',
+
+    <div id="cfg-Ext.form.BaseField-readOnly"></div>/**
+     * @cfg {Boolean} readOnly <tt>true</tt> to mark the field as readOnly in HTML
+     * (defaults to <tt>false</tt>).
+     * <br><p><b>Note</b>: this only sets the element's readOnly DOM attribute.
+     * Setting <code>readOnly=true</code>, for example, will not disable triggering a
+     * ComboBox or Date; it gives you the option of forcing the user to choose
+     * via the trigger without typing in the text box. To hide the trigger use
+     * <code>{@link Ext.form.Trigger#hideTrigger hideTrigger}</code>.</p>
+     */
+    readOnly : false,
+
+    <div id="cfg-Ext.form.BaseField-inputId"></div>/**
+     * @cfg {String} inputId
+     * The id that will be given to the generated input DOM element. Defaults to an automatically generated id.
+     * If you configure this manually, you must make sure it is unique in the document.
+     */
+
+    // private
+    hasFocus : false,
+
+    // private
+    initComponent : function() {
+        var me = this;
+
+        me.callParent();
+
+        me.subTplData = me.subTplData || {};
+
+        me.addEvents(
+            <div id="event-Ext.form.BaseField-focus"></div>/**
+             * @event focus
+             * Fires when this field receives input focus.
+             * @param {Ext.form.BaseField} this
+             */
+            'focus',
+            <div id="event-Ext.form.BaseField-blur"></div>/**
+             * @event blur
+             * Fires when this field loses input focus.
+             * @param {Ext.form.BaseField} this
+             */
+            'blur',
+            <div id="event-Ext.form.BaseField-specialkey"></div>/**
+             * @event specialkey
+             * Fires when any key related to navigation (arrows, tab, enter, esc, etc.) is pressed.
+             * To handle other keys see {@link Ext.panel.Panel#keys} or {@link Ext.KeyMap}.
+             * You can check {@link Ext.EventObject#getKey} to determine which key was pressed.
+             * For example: <pre><code>
+var form = new Ext.form.FormPanel({
+    ...
+    items: [{
+            fieldLabel: 'Field 1',
+            name: 'field1',
+            allowBlank: false
+        },{
+            fieldLabel: 'Field 2',
+            name: 'field2',
+            listeners: {
+                specialkey: function(field, e){
+                    // e.HOME, e.END, e.PAGE_UP, e.PAGE_DOWN,
+                    // e.TAB, e.ESC, arrow keys: e.LEFT, e.RIGHT, e.UP, e.DOWN
+                    if (e.{@link Ext.EventObject#getKey getKey()} == e.ENTER) {
+                        var form = field.ownerCt.getForm();
+                        form.submit();
+                    }
+                }
+            }
+        }
+    ],
+    ...
+});
+             * </code></pre>
+             * @param {Ext.form.BaseField} this
+             * @param {Ext.EventObject} e The event object
+             */
+            'specialkey'
+        );
+
+        // Init mixins
+        me.initLabelable();
+        me.initField();
+    },
+
+    <div id="method-Ext.form.BaseField-getInputId"></div>/**
+     * Returns the input id for this field. If none was specified via the {@link #inputId} config,
+     * then an id will be automatically generated.
+     */
+    getInputId: function() {
+        return this.inputId || (this.inputId = Ext.id());
+    },
+
+    getSubTplData: function() {
+        var me = this,
+            type = me.inputType,
+            inputId = me.getInputId();
+
+        return Ext.applyIf(me.subTplData, {
+            id: inputId,
+            name: me.name || inputId,
+            type: type,
+            size: me.size || 20,
+            cls: me.cls,
+            fieldCls: me.fieldCls,
+            tabIdx: me.tabIndex,
+            typeCls: Ext.baseCSSPrefix + 'form-' + (type === 'password' ? 'text' : type)
+        });
+    },
+
+    <div id="method-Ext.form.BaseField-getSubTplMarkup"></div>/**
+     * @protected
+     * Gets the markup to be inserted into the outer template's bodyEl. For fields this is the
+     * actual input element.
+     */
+    getSubTplMarkup: function() {
+        return this.fieldSubTpl.apply(this.getSubTplData());
+    },
+    
+    initRenderTpl: function() {
+        var me = this;
+        if (!me.hasOwnProperty('renderTpl')) {
+            me.renderTpl = me.labelableRenderTpl;
+        }
+        return me.callParent();
+    },
+
+    initRenderData: function() {
+        return Ext.applyIf(this.callParent(), this.getLabelableRenderData());
+    },
+
+    // private
+    onRender : function() {
+        var me = this,
+            renderSelectors = me.renderSelectors;
+
+        Ext.applyIf(renderSelectors, me.getLabelableSelectors());
+
+        Ext.applyIf(renderSelectors, {
+            <div id="prop-Ext.form.BaseField-inputEl"></div>/**
+             * @property inputEl
+             * @type Ext.core.Element
+             * The input Element for this Field. Only available after the field has been rendered.
+             */
+            inputEl: '.' + me.fieldCls
+        });
+
+        me.callParent(arguments);
+
+        // Make the stored rawValue get set as the input element's value
+        me.setRawValue(me.rawValue);
+
+        if (me.readOnly) {
+            me.setReadOnly(true);
+        }
+        if (me.disabled) {
+            me.disable();
+        }
+
+        me.renderActiveError();
+    },
+
+    initAria: function() {
+        var me = this;
+        me.callParent();
+
+        // Associate the field to the error message element
+        me.getActionEl().dom.setAttribute('aria-describedby', Ext.id(me.errorEl));
+    },
+
+    getFocusEl: function() {
+        return this.inputEl;
+    },
+
+    getSubmitValue: function() {
+        var me = this;
+        return (me.inputType === 'file') ? null : me.mixins.field.getSubmitValue.call(me);
+    },
+
+    getRawValue: function() {
+        var me = this,
+            v = (me.inputEl ? me.inputEl.getValue() : Ext.value(me.rawValue, ''));
+        me.rawValue = v;
+        return v;
+    },
+
+    setRawValue: function(value) {
+        var me = this;
+        value = Ext.value(value, '');
+        me.rawValue = value;
+
+        // Some Field subclasses may not render an inputEl
+        if (me.inputEl) {
+            me.inputEl.dom.value = value;
+        }
+        return value;
+    },
+
+
+
+    //private
+    onDisable: function() {
+        var me = this,
+            inputEl = me.inputEl;
+        me.callParent();
+        if (inputEl) {
+            inputEl.dom.disabled = true;
+        }
+    },
+
+    //private
+    onEnable: function() {
+        var me = this,
+            inputEl = me.inputEl;
+        me.callParent();
+        if (inputEl) {
+            inputEl.dom.disabled = false;
+        }
+    },
+
+    <div id="method-Ext.form.BaseField-setReadOnly"></div>/**
+     * Sets the read only state of this field.
+     * @param {Boolean} readOnly Whether the field should be read only.
+     */
+    setReadOnly: function(readOnly) {
+        if (this.inputEl) {
+            this.inputEl.dom.readOnly = readOnly;
+        }
+        this.readOnly = readOnly;
+    },
+
+    // private
+    fireKey : function(e){
+        if(e.isSpecialKey()){
+            this.fireEvent('specialkey', this, e);
+        }
+    },
+
+    // private
+    initEvents : function(){
+        var me = this,
+            inputEl = me.inputEl,
+            onChangeTask,
+            onChangeEvent;
+        if (inputEl) {
+            me.mon(inputEl, Ext.EventManager.getKeyEvent(), me.fireKey,  me);
+            me.mon(inputEl, 'focus', me.onFocus, me);
+
+            // standardise buffer across all browsers + OS-es for consistent event order.
+            // (the 10ms buffer for Editors fixes a weird FF/Win editor issue when changing OS window focus)
+            me.mon(inputEl, 'blur', me.onBlur, me, me.inEditor ? {buffer:10} : null);
+
+            // listen for immediate value changes
+            onChangeTask = new Ext.util.DelayedTask(me.checkChange, me);
+            onChangeEvent = function() {
+                onChangeTask.delay(me.checkChangeBuffer);
+            };
+            Ext.each(me.checkChangeEvents, function(eventName) {
+                me.mon(inputEl, eventName, onChangeEvent);
+            }, me);
+        }
+    },
+
+    // private
+    preFocus: Ext.emptyFn,
+
+    // private
+    onFocus: function() {
+        var me = this,
+            focusCls = me.focusCls,
+            inputEl = me.inputEl;
+        me.preFocus();
+        if (focusCls && inputEl) {
+            inputEl.addCls(focusCls);
+        }
+        if (!me.hasFocus) {
+            me.hasFocus = true;
+            me.fireEvent('focus', me);
+        }
+    },
+
+    // private
+    beforeBlur : Ext.emptyFn,
+
+    // private
+    onBlur : function(){
+        var me = this,
+            focusCls = me.focusCls,
+            inputEl = me.inputEl;
+        me.beforeBlur();
+        if (focusCls && inputEl) {
+            inputEl.removeCls(focusCls);
+        }
+        me.hasFocus = false;
+        me.fireEvent('blur', me);
+        me.postBlur();
+    },
+
+    // private
+    postBlur : Ext.emptyFn,
+
+
+    <div id="method-Ext.form.BaseField-isValid"></div>/**
+     * Returns whether or not the field value is currently valid by
+     * {@link #getErrors validating} the {@link #processRawValue processed raw value}
+     * of the field. <b>Note</b>: {@link #disabled} fields are always treated as valid.
+     * @return {Boolean} True if the value is valid, else false
+     */
+    isValid : function() {
+        var me = this;
+        return me.disabled || me.validateValue(me.processRawValue(me.getRawValue()), true);
+    },
+
+    <div id="method-Ext.form.BaseField-validate"></div>/**
+     * Validates the field value
+     * @return {Boolean} True if the value is valid, else false
+     */
+    validate : function() {
+        var me = this;
+        return me.disabled || me.validateValue(me.processRawValue(me.getRawValue()));
+    },
+
+
+    <div id="method-Ext.form.BaseField-validateValue"></div>/**
+     * <p>Uses {@link #getErrors} to build an array of validation errors. If any errors are found, {@link #markInvalid}
+     * is called with the first and false is returned, otherwise true is returned.</p>
+     * <p>Previously, subclasses were invited to provide an implementation of this to process validations - from 3.2
+     * onwards {@link #getErrors} should be overridden instead.</p>
+     * @param {Mixed} value The value to validate
+     * @param {Boolean} preventMark true to prevent marking the field invalid
+     * @return {Boolean} True if all validations passed, false if one or more failed
+     */
+    validateValue: function(value, preventMark) {
+        var me = this,
+            error = me.getErrors(value)[0], //currently we only show 1 error at a time for a field, so just use the first one
+            undef,
+            isValid = error === undef;
+
+        if (!preventMark) {
+            if (isValid) {
+                me.clearInvalid();
+            } else {
+                me.markInvalid(error);
+            }
+        }
+
+        return isValid;
+    },
+
+    <div id="method-Ext.form.BaseField-markInvalid"></div>/**
+     * <p>Display an error message associated with this field, using {@link #msgTarget} to determine how to
+     * display the message and applying {@link #invalidCls} to the field's UI element.</p>
+     * <p><b>Note</b>: this method does not cause the Field's {@link #validate} method to return <code>false</code>
+     * if the value does <i>pass</i> validation. So simply marking a Field as invalid will not prevent
+     * submission of forms submitted with the {@link Ext.form.action.Action.Submit#clientValidation} option set.</p>
+     * {@link #isValid invalid}.
+     * @param {String} msg (optional) The validation message (defaults to {@link #invalidText})
+     */
+    markInvalid : function(msg) {
+        var me = this,
+            hadError = me.hasActiveError();
+
+        // Save the message and fire the 'invalid' event
+        me.setActiveError(msg);
+
+        // If it was a change, update the error rendering and layout
+        if (!hadError) {
+            me.doComponentLayout();
+        }
+    },
+
+    <div id="method-Ext.form.BaseField-clearInvalid"></div>/**
+     * Clear any invalid styles/messages for this field
+     */
+    clearInvalid : function() {
+        var me = this,
+            hadError = me.getActiveError();
+
+        // Clear the message and fire the 'valid' event
+        me.unsetActiveError();
+
+        // If it was a change, update the error rendering and layout
+        if (hadError) {
+            me.doComponentLayout();
+        }
+    },
+
+    getActionEl: function() {
+        return this.inputEl || this.el;
+    }
+
+}, function() {
+    this.prototype.fieldSubTpl = new Ext.XTemplate(
+        '<input id="{id}" type="{type}" ',
+            '<tpl if="name">name="{name}" </tpl>',
+            '<tpl if="size">size="{size}" </tpl>',
+            '<tpl if="tabIdx">tabIndex="{tabIdx}" </tpl>',
+            'class="{fieldCls} {typeCls}" autocomplete="off" />',
+        {
+            compiled: true,
+            disableFormats: true
+        }
+    );
+});
+</pre>    
+</body>
+</html>

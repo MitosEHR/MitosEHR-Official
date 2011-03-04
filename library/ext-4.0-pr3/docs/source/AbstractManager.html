@@ -1,0 +1,141 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.AbstractManager"></a>/**
+ * @class Ext.AbstractManager
+ * @extends Object
+ * @ignore
+ * Base Manager class - extended by ComponentMgr and PluginMgr
+ */
+
+Ext.define(&#39;Ext.AbstractManager&#39;, {
+
+    /* Begin Definitions */
+
+    requires: [&#39;Ext.util.HashMap&#39;],
+
+    /* End Definitions */
+
+    typeName: &#39;type&#39;,
+
+    constructor: function(config) {
+        Ext.apply(this, config || {});
+
+        <a name="prop-Ext.AbstractManager-all"></a>/**
+         * Contains all of the items currently managed
+         * @property all
+         * @type Ext.util.MixedCollection
+         */
+        this.all = new Ext.util.HashMap();
+
+        this.types = {};
+    },
+
+    <a name="method-Ext.AbstractManager-get"></a>/**
+     * Returns a component by {@link Ext.Component#id id}.
+     * For additional details see {@link Ext.util.MixedCollection#get}.
+     * @param {String} id The component {@link Ext.Component#id id}
+     * @return Ext.Component The Component, &lt;code&gt;undefined&lt;/code&gt; if not found, or &lt;code&gt;null&lt;/code&gt; if a
+     * Class was found.
+     */
+    get : function(id) {
+        return this.all.get(id);
+    },
+
+    <a name="method-Ext.AbstractManager-register"></a>/**
+     * Registers an item to be managed
+     * @param {Mixed} item The item to register
+     */
+    register: function(item) {
+        this.all.add(item);
+    },
+
+    <a name="method-Ext.AbstractManager-unregister"></a>/**
+     * Unregisters a component by removing it from this manager
+     * @param {Mixed} item The item to unregister
+     */
+    unregister: function(item) {
+        this.all.remove(item);
+    },
+
+    <a name="method-Ext.AbstractManager-registerType"></a>/**
+     * &lt;p&gt;Registers a new Component constructor, keyed by a new
+     * {@link Ext.Component#xtype}.&lt;/p&gt;
+     * &lt;p&gt;Use this method (or its alias {@link Ext#reg Ext.reg}) to register new
+     * subclasses of {@link Ext.Component} so that lazy instantiation may be used when specifying
+     * child Components.
+     * see {@link Ext.container.Container#items}&lt;/p&gt;
+     * @param {String} xtype The mnemonic string by which the Component class may be looked up.
+     * @param {Constructor} cls The new Component class.
+     */
+    registerType : function(type, cls) {
+        this.types[type] = cls;
+        cls[this.typeName] = type;
+    },
+
+    <a name="method-Ext.AbstractManager-isRegistered"></a>/**
+     * Checks if a Component type is registered.
+     * @param {Ext.Component} xtype The mnemonic string by which the Component class may be looked up
+     * @return {Boolean} Whether the type is registered.
+     */
+    isRegistered : function(type){
+        return this.types[type] !== undefined;
+    },
+
+    <a name="method-Ext.AbstractManager-create"></a>/**
+     * Creates and returns an instance of whatever this manager manages, based on the supplied type and config object
+     * @param {Object} config The config object
+     * @param {String} defaultType If no type is discovered in the config object, we fall back to this type
+     * @return {Mixed} The instance of whatever this manager is managing
+     */
+    create: function(config, defaultType) {
+        var type        = config[this.typeName] || config.type || defaultType,
+            Constructor = this.types[type];
+
+        if (Constructor == undefined) {
+            throw new Error(Ext.String.format(&quot;The &#39;{0}&#39; type has not been registered with this manager&quot;, type));
+        }
+
+        return new Constructor(config);
+    },
+
+    <a name="method-Ext.AbstractManager-onAvailable"></a>/**
+     * Registers a function that will be called when a Component with the specified id is added to the manager. This will happen on instantiation.
+     * @param {String} id The component {@link Ext.Component#id id}
+     * @param {Function} fn The callback function
+     * @param {Object} scope The scope (&lt;code&gt;this&lt;/code&gt; reference) in which the callback is executed. Defaults to the Component.
+     */
+    onAvailable : function(id, fn, scope){
+        var all = this.all;
+
+        all.on(&quot;add&quot;, function(index, o){
+            if (o.id == id) {
+                fn.call(scope || o, o);
+                all.un(&quot;add&quot;, fn, scope);
+            }
+        });
+    },
+    
+    <a name="method-Ext.AbstractManager-each"></a>/**
+     * Executes the specified function once for each item in the collection.
+     * Returning false from the function will cease iteration.
+     * 
+     * The paramaters passed to the function are:
+     * &lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+     * &lt;li&gt;&lt;b&gt;key&lt;/b&gt; : String&lt;p class=&quot;sub-desc&quot;&gt;The key of the item&lt;/p&gt;&lt;/li&gt;
+     * &lt;li&gt;&lt;b&gt;value&lt;/b&gt; : Number&lt;p class=&quot;sub-desc&quot;&gt;The value of the item&lt;/p&gt;&lt;/li&gt;
+     * &lt;li&gt;&lt;b&gt;length&lt;/b&gt; : Number&lt;p class=&quot;sub-desc&quot;&gt;The total number of items in the collection&lt;/p&gt;&lt;/li&gt;
+     * &lt;/ul&gt;&lt;/div&gt;
+     * @param {Object} fn The function to execute.
+     * @param {Object} scope The scope to execute in. Defaults to &lt;tt&gt;this&lt;/tt&gt;.
+     */
+    each: function(fn, scope){
+        this.all.each(fn, scope || this);    
+    },
+    
+    <a name="method-Ext.AbstractManager-getCount"></a>/**
+     * Gets the number of items in the collection.
+     * @return {Number} The number of items in the collection.
+     */
+    getCount: function(){
+        return this.all.getCount();
+    }
+});
+￿</pre></pre></body></html>

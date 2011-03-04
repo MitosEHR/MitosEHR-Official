@@ -1,0 +1,160 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.chart.axis.Numeric"></a>/**
+ * @class Ext.chart.axis.Numeric
+ * @extends Ext.chart.axis.Axis
+ *
+ * An axis to handle numeric values. This axis is used for quantitative data as
+ * opposed to the category axis. You can set mininum and maximum values to the
+ * axis so that the values are bound to that. If no values are set, then the
+ * scale will auto-adjust to the values.
+ *
+ * For example:
+ 
+    <br><span style="display: none">**/</span>    axes: [{
+        type: &#39;Numeric&#39;,
+        minimum: 0,
+        position: &#39;left&#39;,
+        fields: [&#39;data1&#39;, &#39;data2&#39;, &#39;data3&#39;],
+        title: &#39;Number of Hits&#39;,
+        grid: {
+            odd: {
+                opacity: 1,
+                fill: &#39;#ddd&#39;,
+                stroke: &#39;#bbb&#39;,
+                &#39;stroke-width&#39;: 0.5
+            }
+        }
+    }]
+    <br><span style="display: none">/**</span> 
+ *
+ * In this example we create an axis of Numeric type. We set a minimum value so that
+ * even if all series have values greater than zero, the grid starts at zero. We bind
+ * the axis onto the left part of the surface by setting &lt;em&gt;position&lt;/em&gt; to &lt;em&gt;left&lt;/em&gt;. 
+ * We bind three different store fields to this axis by setting &lt;em&gt;fields&lt;/em&gt; to an array.
+ * We set the title of the axis to &lt;em&gt;Number of Hits&lt;/em&gt; by using the &lt;em&gt;title&lt;/em&gt; property.
+ * We use a &lt;em&gt;grid&lt;/em&gt; configuration to set odd background rows to a certain style and even rows
+ * to be transparent/ignored.
+ *
+ *
+ * @constructor
+ */
+Ext.define(&#39;Ext.chart.axis.Numeric&#39;, {
+
+    /* Begin Definitions */
+
+    extend: &#39;Ext.chart.axis.Axis&#39;,
+
+    /* End Definitions */
+
+    type: &quot;numeric&quot;,
+
+    <a name="prop-Ext.chart.axis.Numeric-minimum"></a>/**
+     * The minimum value drawn by the axis. If not set explicitly, the axis
+     * minimum will be calculated automatically.
+     *
+     * @property minimum
+     * @type Number
+     */
+    minimum: NaN,
+
+    <a name="prop-Ext.chart.axis.Numeric-maximum"></a>/**
+     * The maximum value drawn by the axis. If not set explicitly, the axis
+     * maximum will be calculated automatically.
+     *
+     * @property maximum
+     * @type Number
+     */
+    maximum: NaN,
+
+    <a name="prop-Ext.chart.axis.Numeric-majorUnit"></a>/**
+     * The spacing between major intervals on this axis.
+     *
+     * @property majorUnit
+     * @type Number
+     */
+    majorUnit: NaN,
+
+    <a name="prop-Ext.chart.axis.Numeric-minorUnit"></a>/**
+     * The spacing between minor intervals on this axis.
+     *
+     * @property minorUnit
+     * @type Number
+     */
+    minorUnit: NaN,
+
+    <a name="prop-Ext.chart.axis.Numeric-snapToUnits"></a>/**
+     * If true, the labels, ticks, gridlines, and other objects will snap to the
+     * nearest major or minor unit. If false, their position will be based on
+     * the minimum value.
+     *
+     * @property snapToUnits
+     * @type Boolean
+     */
+    snapToUnits: true,
+
+    <a name="prop-Ext.chart.axis.Numeric-alwaysShowZero"></a>/**
+     * If true, and the bounds are calculated automatically, either the minimum
+     * or maximum will be set to zero.
+     *
+     * @property alwaysShowZero
+     * @type Boolean
+     */
+    alwaysShowZero: true,
+
+    <a name="prop-Ext.chart.axis.Numeric-scale"></a>/**
+     * The scaling algorithm to use on this axis. May be &quot;linear&quot; or
+     * &quot;logarithmic&quot;.
+     *
+     * @property scale
+     * @type String
+     */
+    scale: &quot;linear&quot;,
+
+    <a name="prop-Ext.chart.axis.Numeric-roundMajorUnit"></a>/**
+     * Indicates whether to round the major unit.
+     *
+     * @property roundMajorUnit
+     * @type Boolean
+     */
+    roundMajorUnit: true,
+
+    <a name="prop-Ext.chart.axis.Numeric-calculateByLabelSize"></a>/**
+     * Indicates whether to factor in the size of the labels when calculating a
+     * major unit.
+     *
+     * @property calculateByLabelSize
+     * @type Boolean
+     */
+    calculateByLabelSize: true,
+
+    <a name="prop-Ext.chart.axis.Numeric-position"></a>/**
+     * Indicates the position of the axis relative to the chart
+     *
+     * @property position
+     * @type String
+     */
+    position: &#39;left&#39;,
+
+    <a name="prop-Ext.chart.axis.Numeric-adjustMaximumByMajorUnit"></a>/**
+     * Indicates whether to extend maximum beyond data&#39;s maximum to the nearest
+     * majorUnit.
+     *
+     * @property adjustMaximumByMajorUnit
+     * @type Boolean
+     */
+    adjustMaximumByMajorUnit: false,
+
+    <a name="prop-Ext.chart.axis.Numeric-adjustMinimumByMajorUnit"></a>/**
+     * Indicates whether to extend the minimum beyond data&#39;s minimum to the
+     * nearest majorUnit.
+     *
+     * @property adjustMinimumByMajorUnit
+     * @type Boolean
+     */
+    adjustMinimumByMajorUnit: false,
+
+    // @private apply data.
+    applyData: function() {
+        Ext.chart.axis.Numeric.superclass.applyData.call(this);
+        return this.calcEnds();
+    }
+});￿</pre></pre></body></html>

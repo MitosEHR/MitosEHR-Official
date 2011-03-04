@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.direct.JsonProvider"></a>/**
+ * @class Ext.direct.JsonProvider
+ * @extends Ext.direct.Provider
+ */
+Ext.define(&#39;Ext.direct.JsonProvider&#39;, {
+    extend: &#39;Ext.direct.Provider&#39;,
+    alias: &#39;directprovider.json&#39;,
+    
+    parseResponse: function(xhr){
+        if(!Ext.isEmpty(xhr.responseText)){
+            if(typeof xhr.responseText == &#39;object&#39;){
+                return xhr.responseText;
+            }
+            return Ext.decode(xhr.responseText);
+        }
+        return null;
+    },
+
+    getEvents: function(xhr){
+        var data   = null,
+            events = [];
+        try {
+            data = this.parseResponse(xhr);
+        } catch(e) {
+            var event = new Ext.direct.ExceptionEvent({
+                data: e,
+                xhr: xhr,
+                code: Ext.Direct.exceptions.PARSE,
+                message: &#39;Error parsing json response: \n\n &#39; + data
+            });
+            return [event];
+        }
+
+        if (Ext.isArray(data)) {
+            for(var i = 0, len = data.length; i &lt; len; i++){
+                events.push(Ext.direct.Direct.createEvent(data[i]));
+            }
+        } else {
+            events.push(Ext.direct.Direct.createEvent(data));
+        }
+        return events;
+    }
+});￿</pre></pre></body></html>

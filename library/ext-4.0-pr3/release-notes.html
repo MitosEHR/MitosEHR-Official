@@ -1,0 +1,335 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="UTF-8" /> 
+        <title>Ext JS Release Notes</title> 
+        <link rel="stylesheet" type="text/css" href="welcome/release-notes.css" media="all" /> 
+    </head> 
+    <body> 
+ 
+        <a href="http://www.sencha.com/" id="logo">Sencha Touch - JavaScript Framework</a> 
+ 
+        <div class="release"> 
+            <h1>Release Notes for Ext JS 4 PR3</h1>
+            <p class="notes">Release Notes: March 3, 2011<br /> 
+             Version Number: 4.0.0pr3</p> 
+
+            <h2>New In This Release</h2> 
+            <ul>
+                <li>
+                    General Bug Fixes
+                    <ul>
+                        <li>Across the board documentation updates and fixes</li>
+                        <li>Fix and implement CycleButton</li>
+                        <li>Detect that getAttributeNS is only available in IE9 when it is in IE9 standards mode</li>
+                        <li>Fix type in formatContainsHourInfo</li>
+                        <li>Fix shrinking problem on the y axis with line charts</li>
+                        <li>Fixed sandboxing for EventManager createListenerWrap, reported from</li>
+                        <li>Replaced all "new Function(...)" with Ext.functionFactory(...), which solves the sandboxing issues</li>
+                        <li>Fix reload of legends and hiding of pie slices shadows when changing the number of pie slices</li>
+                        <li>Fix bug in stateful where changes were not being tracked</li>
+                        <li>Fixed up slideIn and slideOut animation</li>
+                        <li>The code to get viewport width had been changed incorrectly while looking at another layout issue. It's been reverted to how it was before</li>
+                        <li>Various fixes for synchronous dynamic loading</li>
+                        <li>For data validations, fix inclusion and exclusion method by replacing array indexOf method that is not supported in IE by Ext.Array.indexOf</li>
+                        <li>Fix that allow to run Dispatcher spec without context, more precisely without Ext.History object</li>
+                        <li>IE fix for Ext.data.store, use Ext.Array.indexOf instead of indexOf native Array method which is not supported by IE</li>
+                        <li>IE fix for Ext.Number.toFixed</li>
+                        <li>Fix mouseenter and mouseleave events for SVG</li>
+                        <li>Specialized IE removeNode now specific to IE6 and IE7</li>
+                        <li>Fixed the zero gap issue for barchart as well as a anti-aliasing in the legend</li>
+                        <li>Fix framing for components with no bottom or top corners</li>
+                        <li>Improved Ext.extend backwards compatibility</li>
+                        <li>Fix XHR bug with timeout requests</li>
+                        <li>Fix a bug that only allows string values to be used with the {.} operator</li>
+                        <li>Fixed a bug with onAvailable in AbstractManager</li>
+                        <li>Fixed a bug in HashMap detecting an existing key when adding a new item</li>
+                        <li>Ext.Array.merge now properly acts like a true union set operation</li>
+                        <li>Fix padding on toolbar-text</li>
+                        <li>Fix css issues with tabs</li>
+                        <li>Fix css issues with grid</li>
+                        <li>Fix accordion header styling to match 3.x</li>
+                        <li>Fix portal example to use recently implemented accordion layout</li>
+                        <li>Set the collapsed flag before re-layouting the fieldset, so it can be used in isVisible calculations</li>
+                        <li>Fix date picker when using dynamic loading</li>
+                        <li>Fix welcome html files</li>
+                        <li>Fix border styling for DatePicker</li>
+                        <li>Fix class definition to set prototype properties when the Ext.Date class has been loaded in DatePicker</li>
+                        <li>Fix tag error in the RotateText example</li>
+                        <li>Fix styling of MenuItems' icons, checked/unchecked style rules target the *icon*, not the element</li>
+                        <li>Fix defaultFocus config when a number</li>
+                        <li>Fix incorrect expand icon in header of collapsed Panel in Accordion layout</li>
+                        <li>Fix bug in Time field's parsing</li>
+                        <li>Fix ComponentQuery member expression feature (e.g. '{isHidden()}' ) so it works as expected</li>
+                        <li>Fix framed panels header when collapsed</li>
+                        <li>Fix bottom tabsplit height with IE browsers</li>
+                        <li>Fix button padding when the icon is to the right</li>
+                        <li>Fix the width of grid  sort indicators so they don't wrap as easily</li>
+                        <li>Fix arrow bottom buttons</li>
+                        <li>Fix form and triggerfield styling</li>
+                        <li>Fix styling issues with form/checkboxgroup</li>
+                        <li>Fix a bug with button, now using neutral color and not base</li>
+                        <li>Fix differently scaled buttons in a toolbar</li>
+                        <li>Fix cross browser issues with paging toolbar</li>
+                        <li>Fix for IE Ext.Array.toArray</li>
+                        <li>Fix Component.animate to ensure the component is returned and optimize when not animating height or width</li>
+                        <li>Fix styling for bottom tabs</li>
+                        <li>Fix tips so they no longer focus themselves when shown.  In IE, it was taking focus from form fields</li>
+                    </ul>
+                </li>
+                <li>
+                    General Enhancements
+                    <ul>
+                        <li>A plethora of updates to the backward compatibility legacy files and guide</li>
+                        <li>Implemented combineErrors and combineLabels features in FieldContainer</li>
+                        <li>Added server-side usage support for Ext4: hammerJS and nodeJS tested</li>
+                        <li>Selection Model will now maintain last focused element in the View</li>
+                        <li>Add the ability to be able to load a single record with data reader</li>
+                        <li>Change shortcut easing functions to match CSS ones and added easeInOut. Benchmarked to be 300% faster at a minimum</li>
+                        <li>Add setItemSize method for Containers as a central method for all child item sizing</li>
+                        <li>Implement framing using background-position instead of background-image. This resolves the issue with the browser making a request to a 404 page for each framed component that doesn't have any generated framing css</li>
+                        <li>Preliminary support for onClick added for charts</li>
+                        <li>Implement Chart Mask mixin. Allows for selection of an area of a chart.  This will be mixed into Axes as well for the next release.</li>
+                        <li>Add a new parseStyles method to transform a css string to an object with a bunch of properties. Use this new method in applyStyles in DomHelper and also in AbstractComponent</li>
+                        <li>Add new function to check if the format contains date/day info (ie. not time) - used in TimeField</li>
+                        <li>Add withinBox method to Draw</li>
+                        <li>Ext.Array.intersect method added</li>
+                        <li>Ext.Array.difference method added</li>
+                        <li>Ext.Array.union shortcut method for merge</li>
+                        <li>Begin clip-rect support in SVG and VML (incomplete)</li>
+                        <li>Change HashMap to no longer throw error when adding an existing key.  Warn instead</li>
+                        <li>Added a cls into the rowexpander header cell and row cell for the first cell</li>
+                        <li>Added x-hidden cls for backward compatibility</li>
+                        <li>Update css for grids so it now uses css3 throughout</li>
+                        <li>Added images for special cells in grid</li>
+                        <li>All tabs have a font-weight of bold</li>
+                        <li>Move caching logic out of Anchor layout's anchorSpec functions to the base layout engine</li>
+                        <li>Add floor argument for example-data generator</li>
+                        <li>Removed deprecated layouts</li>
+                        <li>Accordion layout only animates during expand/collapse of child Panels</li>
+                        <li>Button layout caches measured styles for efficiency</li>
+                        <li>Feed Viewer uses CycleButton to cycle through the preview pane options</li>
+                        <li>Bringing a floating Component (such as a Window) to the front of its ZIndex stack now focuses it on a 10ms delay. Focusing several Windows in succession results in only the last Window actually receiving focus</li>
+                        <li>Refactor Border layout to use new Element effects methods to slide regions in and out</li>
+                        <li>TabBar now overrides the layout align option set by the Header superclass</li>
+                        <li>Changed tabs to use the base-color and not hard coded colors</li>
+                        <li>Changed button to no longer use hardcoded variables</li>
+                        <li>Make TabPanel dock the TabBar according to the tabPosition config</li>
+                        <li>SVG text is now unselectable</li>
+                        <li>A new 'errorchange' event has been added to Ext.form.Labelable, fired whenever set/unsetActiveError is called. This is similar to the 'validitychange' event on Ext.form.Field but is fired by Labelable components which are not Fields, such as FieldContainer. It also fires when the validity is staying invalid but the message changes, which is more useful in some cases</li>
+                        <li> BaseField now adds a .x-form-field-invalid class to the inputEl, and this is used in the CSS rather than using the outer .x-form-invalid and a descendant selector; this allows proper styling of child fields of a FieldContainer when the container has an error message displayed</li>
+                        <li>ComboBox clearValue method added back in</li>
+                        <li>Toolbar now uses the base-color</li>
+                        <li>Add extra checks to figure out whether we need to do DST parsing or not for Date function</li>
+                        <li>Add triggerNCls-over and triggerNCls-click classes to individual trigger buttons, so each one can be given interaction styling independently rather than requiring compound class selectors. Fixes spinner button states in IE</li>
+                        <li>FeedViewer example: Button icon CSS rules should only override the background image. Otherwise Ext-specific styling rules will not apply</li>
+                        <li>Group class attached to the icon element for style targeting in CheckItem</li>
+                        <li>ComponentQuery can now accept back-to-back pseudo-class selectors, like :not():not():custom</li>
+                        <li>Move back to setInterval instead of setTimer as a base for animation timing.</li>
+                        <li>Allow for binding of multiple axes to a series via an array</li>
+                    </ul>
+                </li>
+                <li>
+                    API Changes
+                    <ul>
+                        <li>AbstractLayout removed, Layout remains the base class now all AbstractLayout dependencies to Layout</li>
+                        <li>AbstractDataView has new getter method getItemSelector</li>
+                        <li>afteranimate event now fired as the last operation of the Anim.end method (instead of the beginning of the end)</li>
+                        <li>layoutItem moved to ContainerLayout from Layout</li>
+                        <li>Move resizeHandles config out of Window to Component</li>
+                        <li>Box will no longer use CSS margins. It reads CSS margins and adds them to the configured margins, and clears CSS margins. This allows for more accurate positioning</li>
+                        <li>Ext.form.CompositeField has been deprecated, as FieldContainer is now at feature parity. Alias has been added to compat file</li>
+                        <li>Ext.form.Field#checkValidityChange has been removed, its logic has been moved into the validate method so it gets run when validate is called directly</li>
+                        <li>Chart zoom functionality being changed to zoom the appropriate portions of the chart instead of everything</li>
+                    </ul>
+                </li>
+                <li>
+                    Known Issues
+                    <ul>
+                        <li></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="releases">
+            <div class="release"> 
+                <h1>Release Notes for Ext JS 4 PR2</h1>
+                <p class="notes">Release Notes: February 23, 2011<br /> 
+                 Version Number: 4.0.0pr2</p> 
+                
+                <h2>New In This Release</h2> 
+                <ul> 
+                    <li> 
+                        General Bug Fixes
+                        <ul>
+                            <li>Across the board documentation updates and fixes</li>
+                            <li>Fixed a bug that caused an error when hovering over a SplitButton</li>
+                            <li>Fixed a bug with setting Proxies on Models</li>
+                            <li>Slider movement no longer lags behind the mouse</li>
+                            <li>Search now works on the generated documentation</li>
+                            <li>Fixed issues regarding date formatting</li>
+                            <li>Fixed chart destroy code</li>
+                            <li>Fixed an issue when entering a value into the PagingToolbar field</li>
+                            <li>Fixed positioning of the editor in the editor sample</li>
+                            <li>Change the order and ActiveX Objects that we use. This fixes XML Parsing via DomQuery in IE</li>
+                            <li>The last frame of an animation will account for any rounding issues</li>
+                            <li>Fix various Slider Tip issues</li>
+                            <li>Fix various Slider Field issues</li>
+                            <li>Border layout now calls setCalculatedSize when sliding in a hidden Component so that the Component's size does not get fixed and the "other" dimension that is not being set is not to auto by the ComponentLayout</li>
+                            <li>Fix preserving ratio to ensure that the largest minSize is honored.</li>
+                            <li>Fixed dependency issue with DatePicker</li>
+                            <li>Fix removing of current active tab</li>
+                            <li>Fix Ext.tab.TabBar css sizing issue when the TabPanel has no items</li>
+                            <li>Ensure that there is at least one active tab if the tabpanel has items</li>
+                            <li>Fix issue with maintaining the constrain parameters in stretch and stretchmax</li>
+                            <li>Fix Firefox Ext.tab.TabBar css sizing issue</li>
+                            <li>Remove tab focus outline on tabpanel tabs</li>
+                            <li>Fix icon rendering issue of TabPanel items</li>
+                            <li>Corrected styling of toolbar spacers</li>
+                            <li>Correct vertical alignment of text on most browsers</li>
+                            <li>Fix bug when entering a number into the PagingToolbar</li>
+                            <li>Fix MessageBoxWindow's initial laying out problem on FF</li>
+                            <li>Ensure RowSelectionModel fires select/deselect events.</li>
+                            <li>Fix issue where the parentMenu isn't set correctly if you pass an xtype</li>
+                            <li>Fix styling in resizer example</li>
+                            <li>Fix up the expand/collapse tool on FieldSet, it wasn't being toggled.</li>
+                            <li>Fix initially collapsed Panels in a border layout</li>
+                            <li>Border correctly hides hidden floated Panel after it's moved out of view</li>
+                            <li>Sandbox chart example now scopes all it's css, no more broken menus</li>
+                            <li>Set the background position correctly for progress bar background image</li>
+                            <li>Fix text alignment issue in progressbar.</li>
+                            <li>Fix element size issue for ie6 and ie7 in strict mode</li>
+                            <li>Resolved fighting of drag and drop resizing vs reordering</li>
+                            <li>Fixed an issue when submitting combo values</li>
+                            <li>Remove default minimum width on BoundList</li>
+                            <li>fix IE 7 icon separator zindex issue for Menu</li>
+                            <li>Fix problem where grids would incorrectly calculate the width of columns when they were not currently visible due to a layout. Like when they were in a TabPanel</li>
+                        </ul>
+                    </li> 
+                    <li> 
+                        General Enhancements
+                        <ul>
+                            <li>All animations now support <a href="http://webstuff.nfshost.com/anim-timing/Overview.html">WC3 Timing control for script-based animations.</a> When available, else fall back to standard javascript timers.</li>
+                            <li>Implement optional scoping for border box CSS rules</li>
+                            <li>Implement optional scoping for reset CSS</li>
+                            <li>Tabs are now closable</li>
+                            <li>Basic form's getValues now handle fields whose getSubmitValue method returns an array of multiple values</li>
+                            <li>Several animation examples updated</li>
+                            <li>Fixed links on the welcome page</li>
+                            <li>Several updates to class documentation</li>
+                            <li>Menus now have full keyboard navigation support</li>
+                            <li>Menus now extend Panel to support docked items</li>
+                            <li>Menu SCSS improved by moving hardcoded theme variables to the variables SCSS file</li>
+                            <li>Ext.util.KeyNav can accept space key input</li>
+                            <li>HashMap.add may now take a single argument similar to MixedCollection.add</li>
+                            <li>Fx queue methods are now handled in the Fx.Queue mixin.</li>
+                            <li>fxStack removed from Element.cache, this is now maintained within Fx.Manager.</li>
+                            <li>Animate methods (animate, stopFx, syncFx, sequenceFx, and hasActiveFx) now applied via a mixin to Element/CompositeElement/Component/Sprite/SpriteGroup</li>
+                            <li>Chart Series.js changed to use animate API.  Rest of charts to follow</li>
+                            <li>Element translatePoints method refactored to handle undefined passed sizes gracefully</li>
+                            <li>EventManager preventDefault fix for IE <a href="http://support.microsoft.com/kb/934364/en-us">Link</a></li>
+                            <li>Fix observable so it normalizes the event name in hasListener</li>
+                            <li>Ensure component cls and style properties are maintained on framed components</li>
+                            <li>Animator (keyframes) now fully support the iterations property</li>
+                            <li>Animator now properly supports stopping if beforeanimate returns false</li>
+                            <li>Normalize API differences between Element's addCls and removeCls.  Both now allow space separated strings</li>
+                            <li>Implement endDrag method in DragTracker</li>
+                            <li>Handle mouse entering and leaving the arrow area of the Button</li>
+                            <li>Button now has a overMenuTrigger flag</li>
+                            <li>Split Button now uses the menuTriggerOver flag</li>
+                            <li>BorderLayout destroys its embedded Container upon destroy</li>
+                            <li>Allow setPagePosition to be passed one or other coordinates as undefined</li>
+                            <li>Border layout now implements parameter indices for setting size arguments in VBox and HBox</li>
+                            <li>Changing an error message will now be accounted for when errors are re-displayed</li>
+                            <li>Improved Grid CSS3 usage when available</li>
+                            <li>Component.setPosition method now uses component.animate</li>
+                            <li>Cleanup setPagePosition logic and account for NaN issues</li>
+                            <li>Rename string vars in Box to be more descriptive</li>
+                            <li>Add Toggle buttons to the chart examples</li>
+                            <li>Percentage width/height now supported in Border layout</li>
+                            <li>ZIndexManager now tracks browser resizes when the modal mask visible</li>
+                            <li>Border layout uses Component's animate method</li>
+                            <li>Border layout now correctly syncs size of hidden Components before sliding them into view</li>
+                            <li>Increase minWidth/minHeight of Resizer to 20</li>
+                            <li>Remove charts.swf as it is not needed anymore for the new Charts</li>
+                            <li>Added ResizeTracker: A multi-corner, constraining, aspect ratio preserving resize algorithm</li>
+                            <li>DragTracker will now process mouseout events correctly: Defer until mouseup if they happen during a drag</li>
+                            <li>Ensure RowSelectionModel select/deselect events are fired</li>
+                            <li>Fix bug where the parent menu wasn't getting assigned properly when specifying an xtype</li>
+                            <li>Adjust grid scrolling speed to be more consistent with the browser scroll speed</li>
+                            <li>Fix an issue with using initially collapsed regions in a border layout</li>
+                            <li>The Ext.JSON.encode method will now gracefully handle object types that it does not recognize by returning undefined as the value of unknown properties</li>
+                            <li>Sprite methods will all return the sprite upon completion</li>
+                            <li>Added backwards compatible Ext.extend that delegates to Ext.Class</li>
+                            <li>Keyframed animation's (Animator.js) start method is now controlled by fx.Manager</li>
+                            <li>Keyframed animations can now be properly queued and integrated with the Animate mixin</li>
+                            <li>Adjust the scroll delay algorithm to make the scrollbar more like the normal browser scrollbar</li>
+                            <li>Menu now extends Panel to support docking</li>
+                            <li>Grid now supports expand to fit</li>
+                            <li>Eliminate need for grid reorderer and resizer to be order dependent</li>
+                            <li>Added a submitFormat option for Date Field</li>
+                            <li>Cleaned up some undefined variables</li>
+                            <li>Charts now check for empty stores properly</li>
+                            <li>Element.addCls now more intelligent about adding a preceding space</li>
+                            <li>CheckboxGroup and RadioGroup implemented</li>
+                            <li>Add 'widget.grid' as a second alias</li>
+                            <li>Added private CheckboxManager class for managing checkboxes grouped by name, just like RadioManager</li>
+                            <li>BoxLayout now uses component.animate instead of Anim directly</li>
+                            <li>Add dirtyCls (defined in BaseField) to a field's outer element when it has a dirty value.  CSS to display a marker not yet implemented</li>
+                        </ul>
+                    </li>
+                </ul>
+        
+                <h2>API Changes</h3>
+                <ul>
+                    <li>All top level CSS classes are now prefixed with 'x-' by default instead of 'ext-' and can now be scoped.  This is now consistent with all other Ext CSS classes.</li>
+                    <li>HashMap.add may now take a single argument similar to MixedCollection.add</li>
+                    <li>Animate methods (animate, stopFx, syncFx, sequenceFx, and hasActiveFx) now applied via a mixin to Element/CompositeElement/Component/Sprite/SpriteGroup</li>
+                    <li>Keyframed animations (Animator.js) now fully support the iterations property</li>
+                    <li>Normalized API differences between Element's addCls and removeCls.  Both now allow space separated strings</li>
+                    <li>Implement endDrag method in DragTracker</li>
+                    <li>Button now has a overMenuTrigger flag</li>
+                    <li>Rename pressClass to pressedCls and add check before cls removal in ClickRepeater</li>
+                    <li>Remove unecessary onDisable/onEnable override in menu.Item and Button</li>
+                    <li>Rename disabledClass to disableCls in Component</li>
+                    <li>Removed the positionAnimation property since it is no longer necessary with the Component.animate API</li>
+                    <li>Removed reverse parameter from keyframed animations</li>
+                    <li>The pause and running flags now maintained within keyframed animations (Animator.js)</li>
+                    <li>Update the RowSelectionModel constructor so we can add more useful contextual information to the event</li>
+                    <li>Menu now extends Panel to support docking</li>
+                    <li>Add isOnLeftEdge and isOnRightEdge for Grid Header events</li>
+                    <li>Grid HeaderContainer dragging property now defaults to false</li>
+                    <li>Animate's hasActiveFx will now return the current fx.Anim object if there is one or return false if none are active</li>
+                    <li>Renamed tab reorderer plugin to TabReorderer</li>
+                    <li>Renamed MenuMgr to MenuManager</li>
+                    <li>Remove Ext.isForcedBorderBox property</li>
+                    <li>Remove the experimental enableForcedBoxModel property</li>
+                    <li>Ext.isBorderBox logic now reflects the use of css box model</li>
+                    <li>CheckboxGroup/RadioGroup setValue method has been simplified; it now only accepts a single format of an object of name-value mappings. The old additional formats will be added to the legacy compatibility layer as an override</li>
+                    <li>CheckboxGroup/RadioGroup getValue method has been changed to return an object of similar format to what is accepted by setValue for internal consistency. The old behavior has been moved to a new getChecked() method</li>
+                    <li>The methods setRawValue, getRawValue, valueToRaw, and rawToValue have been moved out of Field and into BaseField; this is to make the main Field interface simpler and more easily implemented on components which do not have the concept of an underlying "raw value" like CheckboxGroup</li>
+                    <li>Field now has a areValuesEqual method which compares values returned from getValue() for logical equality, and is used anywhere a comparison is necessary such as checkChanges() and isDirty(). The base implementation is a simple string comparison, but can be overridden by fields with more complex values</li>
+                    <li>Field now has a resetOriginalValue method which is called by the form when trackResetOnLoad=true instead of setting originalValue directly, this allows the behavior to be overridden by field subclasses</li>
+                    <li>Field's getSubmitValue method has been changed to a more powerful getSubmitData method, which returns a mapping object of name-value pairs; this allows single fields to return multiple values under different names rather than being limited to a single name per field. The getSubmitValue method has been retained as a helper but moved down to BaseField</li>
+                    <li>Introduced a batchChanges method on field as a utility for preventing excessive firing of change events in fields such as CheckboxGroup that have many sub-fields who may be updated as a batch</li>
+                    <li>Basic's isValid method has been changed back to its old behavior where it iterates through all fields in the form and triggers error markings. A new hasInvalidField method has been added to retain the more efficient short-circuited validity checking and preventing error markings</li>
+                </ul>
+                <h2>Known Issues</h2>
+                <ul>
+                    <li>Tab heights not consistent across all browsers</li>
+                </ul>
+        	</div>
+	
+        	<div class="release"> 
+                <h1>Release Notes for Ext JS 4 PR1</h1>
+        
+                <p class="notes">Release Notes: February 16, 2011<br /> 
+                 Version Number: 4.0.0pr1</p> 
+                
+                <h2>New In This Release</h2> 
+                <p>This is the first public release of Ext JS 4 (preview). We've prepared a full <a href="overview/index.html">release overview guide</a> to explore all of the changes made so far.</p>
+        	</div>
+        </div> 
+    </body> 
+</html>

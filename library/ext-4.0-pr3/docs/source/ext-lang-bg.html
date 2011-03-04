@@ -1,0 +1,274 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="prop-Ext.String-indicatorText"></a>/**
+ * Bulgarian Translation
+ *
+ * By Георги Костадинов, Калгари, Канада
+ * 10 October 2007
+ * By Nedko Penev 
+ * 26 October 2007
+ *
+ * (utf-8 encoding)
+ */
+
+Ext.UpdateManager.defaults.indicatorText = &#39;&lt;div class=&quot;loading-indicator&quot;&gt;Зареждане...&lt;/div&gt;&#39;;
+
+if(Ext.View){
+  Ext.View.prototype.emptyText = &quot;&quot;;
+}
+
+if(Ext.grid.GridPanel){
+  Ext.grid.GridPanel.prototype.ddText = &quot;{0} избрани колони&quot;;
+}
+
+if(Ext.TabPanelItem){
+  Ext.TabPanelItem.prototype.closeText = &quot;Затвори таб&quot;;
+}
+
+if(Ext.form.BaseField){
+  Ext.form.BaseField.prototype.invalidText = &quot;Невалидна стойност на полето&quot;;
+}
+
+if(Ext.LoadMask){
+  Ext.LoadMask.prototype.msg = &quot;Зареждане...&quot;;
+}
+
+Ext.Date.monthNames = [
+  &quot;Януари&quot;,
+  &quot;Февруари&quot;,
+  &quot;Март&quot;,
+  &quot;Април&quot;,
+  &quot;Май&quot;,
+  &quot;Юни&quot;,
+  &quot;Юли&quot;,
+  &quot;Август&quot;,
+  &quot;Септември&quot;,
+  &quot;Октомври&quot;,
+  &quot;Ноември&quot;,
+  &quot;Декември&quot;
+];
+
+Ext.Date.monthNumbers = {
+  Jan : 0,
+  Feb : 1,
+  Mar : 2,
+  Apr : 3,
+  May : 4,
+  Jun : 5,
+  Jul : 6,
+  Aug : 7,
+  Sep : 8,
+  Oct : 9,
+  Nov : 10,
+  Dec : 11
+};
+
+Ext.Date.dayNames = [
+  &quot;Неделя&quot;,
+  &quot;Понеделник&quot;,
+  &quot;Вторник&quot;,
+  &quot;Сряда&quot;,
+  &quot;Четвъртък&quot;,
+  &quot;Петък&quot;,
+  &quot;Събота&quot;
+];
+
+if(Ext.MessageBox){
+  Ext.MessageBox.buttonText = {
+    ok     : &quot;OK&quot;,
+    cancel : &quot;Отмени&quot;,
+    yes    : &quot;Да&quot;,
+    no     : &quot;Не&quot;
+  };
+}
+
+if(Ext.util.Format){
+    Ext.apply(Ext.util.Format, {
+        thousandSeparator: &#39;.&#39;,
+        decimalSeparator: &#39;,&#39;,
+        currencySign: &#39;\u043b\u0432&#39;,  // Bulgarian Leva
+        dateFormat: &#39;d.m.Y&#39;
+    });
+}
+
+if(Ext.picker.Date){
+  Ext.apply(Ext.DatePicker.prototype, {
+    todayText         : &quot;Днес&quot;,
+    minText           : &quot;Тази дата е преди минималната&quot;,
+    maxText           : &quot;Тази дата е след максималната&quot;,
+    disabledDaysText  : &quot;&quot;,
+    disabledDatesText : &quot;&quot;,
+    monthNames        : Ext.Date.monthNames,
+    dayNames          : Ext.Date.dayNames,
+    nextText          : &#39;Следващ месец (Control+Right)&#39;,
+    prevText          : &#39;Предишен месец (Control+Left)&#39;,
+    monthYearText     : &#39;Избери месец (Control+Up/Down за преместване по години)&#39;,
+    todayTip          : &quot;{0} (Spacebar)&quot;,
+    format            : &quot;d.m.y&quot;,
+    okText            : &quot;&amp;#160;OK&amp;#160;&quot;,
+    cancelText        : &quot;Отмени&quot;,
+    startDay          : 1
+  });
+}
+
+if(Ext.toolbar.PagingToolbar){
+  Ext.apply(Ext.PagingToolbar.prototype, {
+    beforePageText : &quot;Страница&quot;,
+    afterPageText  : &quot;от {0}&quot;,
+    firstText      : &quot;Първа страница&quot;,
+    prevText       : &quot;Предишна страница&quot;,
+    nextText       : &quot;Следваща страница&quot;,
+    lastText       : &quot;Последна страница&quot;,
+    refreshText    : &quot;Презареди&quot;,
+    displayMsg     : &quot;Показвайки {0} - {1} от {2}&quot;,
+    emptyMsg       : &#39;Няма данни за показване&#39;
+  });
+}
+
+if(Ext.form.Text){
+  Ext.apply(Ext.form.Text.prototype, {
+    minLengthText : &quot;Минималната дължина на това поле е {0}&quot;,
+    maxLengthText : &quot;Максималната дължина на това поле е {0}&quot;,
+    blankText     : &quot;Това поле е задължително&quot;,
+    regexText     : &quot;&quot;,
+    emptyText     : null
+  });
+}
+
+if(Ext.form.Number){
+  Ext.apply(Ext.form.Number.prototype, {
+    minText : &quot;Минималната стойност за това поле е {0}&quot;,
+    maxText : &quot;Максималната стойност за това поле е {0}&quot;,
+    nanText : &quot;{0} не е валидно число&quot;
+  });
+}
+
+if(Ext.form.Date){
+  Ext.apply(Ext.form.Date.prototype, {
+    disabledDaysText  : &quot;Недостъпен&quot;,
+    disabledDatesText : &quot;Недостъпен&quot;,
+    minText           : &quot;Датата в това поле трябва да е след {0}&quot;,
+    maxText           : &quot;Датата в това поле трябва да е преди {0}&quot;,
+    invalidText       : &quot;{0} не е валидна дата - трябва да бъде във формат {1}&quot;,
+    format            : &quot;d.m.y&quot;,
+    altFormats        : &quot;d.m.y|d/m/Y|d-m-y|d-m-Y|d/m|d-m|dm|dmy|dmY|d|Y-m-d&quot;
+  });
+}
+
+if(Ext.form.ComboBox){
+  Ext.apply(Ext.form.ComboBox.prototype, {
+    loadingText       : &quot;Зареждане...&quot;,
+    valueNotFoundText : undefined
+  });
+}
+
+if(Ext.form.VTypes){
+  Ext.apply(Ext.form.VTypes, {
+    emailText    : &#39;Това поле трябва да бъде емейл във формат &quot;user@example.com&quot;&#39;,
+    urlText      : &#39;Това поле трябва да бъде URL във формат &quot;http:/&#39;+&#39;/www.example.com&quot;&#39;,
+    alphaText    : &#39;Това поле трябва да съдържа само букви и _&#39;,
+    alphanumText : &#39;Това поле трябва да съдържа само букви, цифри и _&#39;
+  });
+}
+
+if(Ext.form.HtmlEditor){
+  Ext.apply(Ext.form.HtmlEditor.prototype, {
+    createLinkText : &#39;Моля, въведете URL за връзката:&#39;,
+    buttonTips : {
+      bold : {
+        title: &#39;Bold (Ctrl+B)&#39;,
+        text: &#39;Удебелява избрания текст.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      italic : {
+        title: &#39;Italic (Ctrl+I)&#39;,
+        text: &#39;Прави избрания текст курсив.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      underline : {
+        title: &#39;Underline (Ctrl+U)&#39;,
+        text: &#39;Подчертава избрания текст.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      increasefontsize : {
+        title: &#39;Уголеми текста&#39;,
+        text: &#39;Уголемява размера на шрифта.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      decreasefontsize : {
+        title: &#39;Намали текста&#39;,
+        text: &#39;Намалява размера на шрифта.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      backcolor : {
+        title: &#39;Цвят на маркирания текст&#39;,
+        text: &#39;Променя фоновия цвят на избрания текст.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      forecolor : {
+        title: &#39;Цвят на шрифта&#39;,
+        text: &#39;Променя цвета на избрания текст.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifyleft : {
+        title: &#39;Ляво подравняване&#39;,
+        text: &#39;Подравнява текста на ляво.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifycenter : {
+        title: &#39;Центриране&#39;,
+        text: &#39;Центрира текста.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifyright : {
+        title: &#39;Дясно подравняване&#39;,
+        text: &#39;Подравнява текста на дясно.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      insertunorderedlist : {
+        title: &#39;Неномериран списък&#39;,
+        text: &#39;Започва неномериран списък.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      insertorderedlist : {
+        title: &#39;Номериран списък&#39;,
+        text: &#39;Започва номериран списък.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      createlink : {
+        title: &#39;Хипервръзка&#39;,
+        text: &#39;Превръща избрания текст в хипервръзка.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      sourceedit : {
+        title: &#39;Редактиране на кода&#39;,
+        text: &#39;Преминаване в режим на редактиране на кода.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      }
+    }
+  });
+}
+
+if(Ext.grid.GridView){
+  Ext.apply(Ext.grid.GridView.prototype, {
+    sortAscText  : &quot;Подреди в нарастващ ред&quot;,
+    sortDescText : &quot;Подреди в намаляващ ред&quot;,
+    lockText     : &quot;Заключи колона&quot;,
+    unlockText   : &quot;Отключи колона&quot;,
+    columnsText  : &quot;Колони&quot;
+  });
+}
+
+if(Ext.grid.PropertyColumnModel){
+  Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
+    nameText   : &quot;Име&quot;,
+    valueText  : &quot;Стойност&quot;,
+    dateFormat : &quot;d.m.Y&quot;
+  });
+}
+
+if(Ext.layout.BorderLayout &amp;&amp; Ext.layout.BorderLayout.SplitRegion){
+  Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
+    splitTip            : &quot;Влачете с мишката за да промените размера.&quot;,
+    collapsibleSplitTip : &quot;Влачете с мишката за да промените размера. Чукнете два пъти за да скриете.&quot;
+  });
+}
+￿</pre></pre></body></html>

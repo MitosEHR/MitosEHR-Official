@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.ColumnLayout"></a>/**
+ * @class Ext.grid.ColumnLayout
+ * @extends Ext.layout.container.HBox
+ */
+Ext.define(&#39;Ext.grid.ColumnLayout&#39;, {
+    extend: &#39;Ext.layout.container.HBox&#39;,
+    alias: &#39;layout.gridcolumn&#39;,
+    clearInnerCtOnLayout: false,
+    constructor: function() {
+        Ext.grid.ColumnLayout.superclass.constructor.apply(this, arguments);
+        this.availableSpaceOffset = Ext.getScrollBarWidth() - 2;
+    },
+    // FIX: when flexing we actually don&#39;t have enough space as we would
+    // typically because of the scrollOffset on the GridView, must reserve this
+    updateInnerCtSize: function(tSize, calcs) {
+        if (calcs.meta.tooNarrow) {
+            var width   = calcs.meta.desiredSize,
+                height  = tSize.height,
+                offset  = this.availableSpaceOffset;
+
+            // if ColumnModel has been placed in a container.
+            //if (this.owner.ownerCt) {
+            //    offset = this.owner.ownerCt.view.getScrollOffset();
+            //}
+            //offset = Ext.getScrollBarWidth() - 2;
+
+            this.innerCt.setSize(width + offset, height);
+        } else {
+            return Ext.grid.ColumnLayout.superclass.updateInnerCtSize.apply(this, arguments);
+        }
+    }
+});
+￿</pre></pre></body></html>

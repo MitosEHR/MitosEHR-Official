@@ -1,0 +1,189 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.Batch"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.Batch
+ * 
+ * &lt;p&gt;Provides a mechanism to run one or more {@link Ext.data.Operation operations} in a given order. Fires the &#39;operationcomplete&#39; event
+ * after the completion of each Operation, and the &#39;complete&#39; event when all Operations have been successfully executed. Fires an &#39;exception&#39;
+ * event if any of the Operations encounter an exception.&lt;/p&gt;
+ * 
+ * &lt;p&gt;Usually these are only used internally by {@link Ext.data.Proxy} classes&lt;/p&gt;
+ * 
+ * @constructor
+ * @param {Object} config Optional config object
+ */
+Ext.define(&#39;Ext.data.Batch&#39;, {
+    mixins: {
+        observable: &#39;Ext.util.Observable&#39;
+    },
+    
+    <a name="prop-Ext.data.Batch-autoStart"></a>/**
+     * True to immediately start processing the batch as soon as it is constructed (defaults to false)
+     * @property autoStart
+     * @type Boolean
+     */
+    autoStart: false,
+    
+    <a name="prop-Ext.data.Batch-current"></a>/**
+     * The index of the current operation being executed
+     * @property current
+     * @type Number
+     */
+    current: -1,
+    
+    <a name="prop-Ext.data.Batch-total"></a>/**
+     * The total number of operations in this batch. Read only
+     * @property total
+     * @type Number
+     */
+    total: 0,
+    
+    <a name="prop-Ext.data.Batch-isRunning"></a>/**
+     * True if the batch is currently running
+     * @property isRunning
+     * @type Boolean
+     */
+    isRunning: false,
+    
+    <a name="prop-Ext.data.Batch-isComplete"></a>/**
+     * True if this batch has been executed completely
+     * @property isComplete
+     * @type Boolean
+     */
+    isComplete: false,
+    
+    <a name="prop-Ext.data.Batch-hasException"></a>/**
+     * True if this batch has encountered an exception. This is cleared at the start of each operation
+     * @property hasException
+     * @type Boolean
+     */
+    hasException: false,
+    
+    <a name="prop-Ext.data.Batch-pauseOnException"></a>/**
+     * True to automatically pause the execution of the batch if any operation encounters an exception (defaults to true)
+     * @property pauseOnException
+     * @type Boolean
+     */
+    pauseOnException: true,
+    
+    constructor: function(config) {                
+        this.addEvents(
+          <a name="event-Ext.data.Batch-complete"></a>/**
+           * @event complete
+           * Fired when all operations of this batch have been completed
+           * @param {Ext.data.Batch} batch The batch object
+           * @param {Object} operation The last operation that was executed
+           */
+          &#39;complete&#39;,
+          
+          <a name="event-Ext.data.Batch-exception"></a>/**
+           * @event exception
+           * Fired when a operation encountered an exception
+           * @param {Ext.data.Batch} batch The batch object
+           * @param {Object} operation The operation that encountered the exception
+           */
+          &#39;exception&#39;,
+          
+          <a name="event-Ext.data.Batch-operationcomplete"></a>/**
+           * @event operationcomplete
+           * Fired when each operation of the batch completes
+           * @param {Ext.data.Batch} batch The batch object
+           * @param {Object} operation The operation that just completed
+           */
+          &#39;operationcomplete&#39;,
+          
+          //TODO: Remove this once we deprecate this function in 1.0. See below for further details
+          &#39;operation-complete&#39;
+        );
+        
+        this.mixins.observable.constructor.call(this, config);
+        
+        <a name="prop-Ext.data.Batch-operations"></a>/**
+         * Ordered array of operations that will be executed by this batch
+         * @property operations
+         * @type Array
+         */
+        this.operations = [];
+    },
+    
+    <a name="method-Ext.data.Batch-add"></a>/**
+     * Adds a new operation to this batch
+     * @param {Object} operation The {@link Ext.data.Operation Operation} object
+     */
+    add: function(operation) {
+        this.total++;
+        
+        operation.setBatch(this);
+        
+        this.operations.push(operation);
+    },
+    
+    <a name="method-Ext.data.Batch-start"></a>/**
+     * Kicks off the execution of the batch, continuing from the next operation if the previous
+     * operation encountered an exception, or if execution was paused
+     */
+    start: function() {
+        this.hasException = false;
+        this.isRunning = true;
+        
+        this.runNextOperation();
+    },
+    
+    /**
+     * @private
+     * Runs the next operation, relative to this.current.
+     */
+    runNextOperation: function() {
+        this.runOperation(this.current + 1);
+    },
+    
+    <a name="method-Ext.data.Batch-pause"></a>/**
+     * Pauses execution of the batch, but does not cancel the current operation
+     */
+    pause: function() {
+        this.isRunning = false;
+    },
+    
+    <a name="method-Ext.data.Batch-runOperation"></a>/**
+     * Executes a operation by its numeric index
+     * @param {Number} index The operation index to run
+     */
+    runOperation: function(index) {
+        var operations = this.operations,
+            operation  = operations[index];
+        
+        if (operation === undefined) {
+            this.isRunning  = false;
+            this.isComplete = true;
+            this.fireEvent(&#39;complete&#39;, this, operations[operations.length - 1]);
+        } else {
+            this.current = index;
+            
+            var onProxyReturn = function(operation) {
+                var hasException = operation.hasException();
+                
+                if (hasException) {
+                    this.hasException = true;
+                    this.fireEvent(&#39;exception&#39;, this, operation);
+                } else {
+                    //TODO: deprecate the dashed version of this event name &#39;operation-complete&#39; as it breaks convention
+                    //to be removed in 1.0
+                    this.fireEvent(&#39;operation-complete&#39;, this, operation);
+                    
+                    this.fireEvent(&#39;operationcomplete&#39;, this, operation);
+                }
+
+                if (hasException &amp;&amp; this.pauseOnException) {
+                    this.pause();
+                } else {
+                    operation.setCompleted();
+                    
+                    this.runNextOperation();
+                }
+            };
+            
+            operation.setStarted();
+            
+            this.proxy[operation.action](operation, onProxyReturn, this);
+        }
+    }
+});￿</pre></pre></body></html>

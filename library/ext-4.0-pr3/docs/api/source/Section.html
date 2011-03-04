@@ -1,0 +1,268 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.grid.Section"></div>/**
+ * @class Ext.grid.Section
+ * @extends Ext.panel.Panel
+ *
+ * Section of a Grid. Headers are docked in this area and this class
+ * synchronizes the viewable area and headers.
+ *
+ * Locked Sections
+ * - cannot flex headers.
+ * - must have a fixed width
+ *
+ * Virtualized (non locked) or Scrollable Sections must be synchronized vertically.
+ *
+ * Sections can resize based off of header size/visibility changes.
+ *
+ * Templates can become dirty based off of visibility changes.
+ */
+
+Ext.define('Ext.grid.Section', {
+    extend: 'Ext.panel.Panel',
+    requires: [
+        'Ext.grid.View',
+        'Ext.grid.HeaderContainer'
+    ],
+    alias: 'widget.gridsection',
+
+    layout: 'fit',
+    cls: Ext.baseCSSPrefix + 'grid-section',
+    isGridSection: true,
+    scroll: true,
+    border: false,
+    
+    verticalScrollDock: 'right',
+    extraBodyCls: Ext.baseCSSPrefix + 'grid-body',
+    
+    scrollDelta: 40,
+    
+    
+    <div id="prop-Ext.grid.Section-hasGridView"></div>/**
+     * Boolean to indicate that GridView has been injected into this Grid Section.
+     * @property hasGridView
+     */
+    hasGridView: false,
+    
+    // TODO: Rename headers -> columns
+    
+    initComponent: function() {
+        // TODO: Remove in the future.
+        if (!this.locked) {
+            this.flex = 1;
+        }
+        
+        this.bodyCls = this.bodyCls || '';
+        this.bodyCls += (' ' + this.extraBodyCls);
+
+        this.dockedItems = this.dockedItems || [];
+        var scroll     = this.scroll,
+            vertical   = false,
+            horizontal = false;
+            
+        // turn both on.
+        if (scroll === true || scroll === 'both') {
+            vertical = horizontal = true;
+        } else if (scroll === 'horizontal') {
+            horizontal = true;
+        } else if (scroll === 'vertical') {
+            vertical = true;
+        }
+        // All other values become 'none' or false.
+        
+        
+        if (vertical) {
+            this.verticalScroller = Ext.ComponentMgr.create({
+                dock: this.verticalScrollDock,
+                xtype: 'gridscroller'
+            });
+        }
+        
+        if (horizontal) {
+            this.horizontalScroller = Ext.ComponentMgr.create({
+                xtype: 'gridscroller',
+                section: this,
+                dock: 'bottom'
+            });
+        }
+        
+        <div id="prop-Ext.grid.Section-headerCt"></div>/**
+         * @property headerCt -> colModel?
+         */
+        this.headerCt = new Ext.grid.HeaderContainer({
+            items: this.headers
+        });
+        this.headerCt.on('headerresize', this.onHeaderResize, this);
+        
+        this.features = this.features || [];
+        this.dockedItems = this.dockedItems || [];
+        this.dockedItems.unshift(this.headerCt);
+       
+        Ext.grid.Section.superclass.initComponent.call(this);
+    },
+    
+    determineScrollbars: function() {
+        if (!this.dtScrollTask) {
+            this.dtScrollTask = new Ext.util.DelayedTask(this.doDetermineScrollbars, this);
+        }
+        this.dtScrollTask.delay(30);
+    },
+    
+    doDetermineScrollbars: function() {
+        if (this.view) {
+            var viewElDom             = this.view.el.dom,
+                centerScrollWidth = viewElDom.scrollWidth,
+                // clientWidth often returns 0 in IE resulting in an
+                // infinity result, here we use offsetWidth bc there are
+                // no possible scrollbars and we dont care about margins
+                centerClientWidth = viewElDom.offsetWidth,
+                scrollHeight = viewElDom.scrollHeight,
+                clientHeight = viewElDom.clientHeight;
+                
+            if (scrollHeight > clientHeight) {
+                this.showVerticalScroller();
+            } else {
+                this.hideVerticalScroller();
+            }
+            
+    
+            if (centerScrollWidth > (centerClientWidth + Ext.getScrollBarWidth() - 2)) {
+                this.showHorizontalScroller();
+            } else {
+                this.hideHorizontalScroller();
+            }
+        }
+    },
+    
+    onHeaderResize: function() {
+        if (this.view) {
+            this.determineScrollbars();
+            this.up('gridpanel').invalidateScroller();
+        }
+    },
+    
+    afterLayout: function() {
+        Ext.grid.Section.superclass.afterLayout.call(this);
+        if (!this.hasGridView) {
+            this.hasGridView = true;
+            this.viewConfig = this.viewConfig || {};
+            Ext.applyIf(this.viewConfig, {
+                xtype: 'gridview',
+                store: this.store,
+                headerCt: this.headerCt,
+                selModel: this.selModel,
+                features: this.features,
+                listeners: {
+                    bodyscroll: this.onGridViewScroll,
+                    scope: this
+                }                
+            });
+            this.view = this.add(this.viewConfig);
+            this.headerCt.view = this.view;
+            Ext.Function.defer(this.determineScrollbars, 50, this);
+            Ext.getBody().on('mousewheel', this.onMouseWheel, this);
+        }
+    },
+        
+    hideHorizontalScroller: function() {
+        if (this.horizontalScroller.ownerCt === this) {
+            this.verticalScroller.offsets.bottom = 0;
+            this.removeDocked(this.horizontalScroller, false);    
+        }
+        
+    },
+    
+    showHorizontalScroller: function() {
+        this.verticalScroller.offsets.bottom = Ext.getScrollBarWidth() - 2;
+        if (this.horizontalScroller.ownerCt !== this) {
+            this.addDocked(this.horizontalScroller);
+        }
+        
+    },
+    
+    hideVerticalScroller: function() {
+        if (this.verticalScroller.ownerCt === this) {
+            this.removeDocked(this.verticalScroller, false);
+        }
+    },
+    
+    showVerticalScroller: function() {
+        if (this.verticalScroller.ownerCt !== this) {
+            this.addDocked(this.verticalScroller);
+        }
+    },
+    
+    invalidateScroller: function() {
+        this.up('gridpanel').invalidateScroller();
+    },
+    
+    onGridViewScroll: function(e, t) {
+        this.headerCt.el.dom.scrollLeft = t.scrollLeft;
+    },
+
+    onHeaderMove: function(headerCt, header, fromIdx, toIdx) {
+        this.view.refresh();
+        //this.up('gridpanel').invalidateScroller();
+    },
+    
+    // Section onHeaderHide is invoked after view.
+    onHeaderHide: function(headerCt, header, idx) {
+        this.invalidateScroller();
+    },
+    
+    onHeaderShow: function(headerCt, header, idx) {
+        this.invalidateScroller();
+    },
+    
+    getLhsMarker: function() {
+        if (!this.lhsMarker) {
+            this.lhsMarker = Ext.core.DomHelper.append(this.el, {
+                cls: Ext.baseCSSPrefix + 'grid-resize-marker'
+            }, true);
+        }
+        return this.lhsMarker;
+    },
+    
+    getRhsMarker: function() {
+        if (!this.rhsMarker) {
+            this.rhsMarker = Ext.core.DomHelper.append(this.el, {
+                cls: Ext.baseCSSPrefix + 'grid-resize-marker'
+            }, true);
+        }
+        return this.rhsMarker;
+    },
+    
+    onMouseWheel: function(e) {
+        var dock  = this.dock,
+            browserEvent = e.browserEvent,
+            vertDock = this.verticalScrollDock;
+
+        if (e.within(this.el)) {
+            e.stopEvent();
+            
+            // Webkit Horizontal Axis
+            if (browserEvent.wheelDeltaX || browserEvent.wheelDeltaY) {
+                this.horizontalScroller.scrollByDeltaX(-browserEvent.wheelDeltaX / 120 * this.scrollDelta / 6);
+                this.verticalScroller.scrollByDeltaY(-browserEvent.wheelDeltaY / 120 * this.scrollDelta / 6);
+            } else {
+                // Gecko Horizontal Axis
+                if (browserEvent.axis && browserEvent.axis === 1) {
+                    this.horizontalScroller.scrollByDeltaX(-(this.scrollDelta * e.getWheelDelta()) / 6);
+                } else {
+                    this.verticalScroller.scrollByDeltaY(-(this.scrollDelta * e.getWheelDelta() / 6));
+                }
+            }
+            
+        }
+    }
+
+});
+</pre>    
+</body>
+</html>

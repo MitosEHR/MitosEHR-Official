@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.toolbar.Fill"></a>/**
+ * @class Ext.toolbar.Fill
+ * @extends Ext.Component
+ * A non-rendering placeholder item which instructs the Toolbar&#39;s Layout to begin using
+ * the right-justified button container.
+ * <br><span style="display: none">**/</span>new Ext.panel.Panel({
+    tbar : [
+        &#39;Item 1&#39;,
+        {xtype: &#39;tbfill&#39;}, // or &#39;-&gt;&#39;
+        &#39;Item 2&#39;
+    ]
+});
+<br><span style="display: none">/**</span> * @constructor
+ * Creates a new Fill
+ * @xtype tbfill
+ */
+Ext.define(&#39;Ext.toolbar.Fill&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    alias: &#39;widget.tbfill&#39;,
+    isFill : true,
+    flex: 1
+});￿</pre></pre></body></html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="prop-Ext.String-indicatorText"></a>/**
+ * Czech Translations
+ * Translated by Tomáš Korčák (72)
+ * 2008/02/08 18:02, Ext-2.0.1
+ */
+
+Ext.UpdateManager.defaults.indicatorText = &#39;&lt;div class=&quot;loading-indicator&quot;&gt;Prosím čekejte...&lt;/div&gt;&#39;;
+
+if(Ext.View){
+   Ext.View.prototype.emptyText = &quot;&quot;;
+}
+
+if(Ext.grid.GridPanel){
+   Ext.grid.GridPanel.prototype.ddText = &quot;{0} vybraných řádků&quot;;
+}
+
+if(Ext.TabPanelItem){
+   Ext.TabPanelItem.prototype.closeText = &quot;Zavřít záložku&quot;;
+}
+
+if(Ext.form.BaseField){
+   Ext.form.BaseField.prototype.invalidText = &quot;Hodnota v tomto poli je neplatná&quot;;
+}
+
+if(Ext.LoadMask){
+    Ext.LoadMask.prototype.msg = &quot;Prosím čekejte...&quot;;
+}
+
+Ext.Date.monthNames = [
+   &quot;Leden&quot;,
+   &quot;Únor&quot;,
+   &quot;Březen&quot;,
+   &quot;Duben&quot;,
+   &quot;Květen&quot;,
+   &quot;Červen&quot;,
+   &quot;Červenec&quot;,
+   &quot;Srpen&quot;,
+   &quot;Září&quot;,
+   &quot;Říjen&quot;,
+   &quot;Listopad&quot;,
+   &quot;Prosinec&quot;
+];
+
+Ext.Date.shortMonthNames = {
+    &quot;Leden&quot;     : &quot;Led&quot;,
+    &quot;Únor&quot;      : &quot;Úno&quot;,
+    &quot;Březen&quot;    : &quot;Bře&quot;,
+    &quot;Duben&quot;     : &quot;Dub&quot;,
+    &quot;Květen&quot;    : &quot;Kvě&quot;,
+    &quot;Červen&quot;    : &quot;Čer&quot;,
+    &quot;Červenec&quot;  : &quot;Čvc&quot;,
+    &quot;Srpen&quot;     : &quot;Srp&quot;,
+    &quot;Září&quot;      : &quot;Zář&quot;,
+    &quot;Říjen&quot;     : &quot;Říj&quot;,
+    &quot;Listopad&quot;  : &quot;Lis&quot;,
+    &quot;Prosinec&quot;  : &quot;Pro&quot;
+};
+
+
+Ext.Date.getShortMonthName = function(month) {
+  return Ext.Date.shortMonthNames[Ext.Date.monthNames[month]];
+};
+
+Ext.Date.monthNumbers = {
+   &quot;Leden&quot;      : 0,
+   &quot;Únor&quot;       : 1,
+   &quot;Březen&quot;     : 2,
+   &quot;Duben&quot;      : 3,
+   &quot;Květen&quot;     : 4,
+   &quot;Červen&quot;     : 5,
+   &quot;Červenec&quot;   : 6,
+   &quot;Srpen&quot;      : 7,
+   &quot;Září&quot;       : 8,
+   &quot;Říjen&quot;      : 9,
+   &quot;Listopad&quot;   : 10,
+   &quot;Prosinec&quot;   : 11
+};
+
+
+Ext.Date.getMonthNumber = function(name) {
+  return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase()];
+};
+
+Ext.Date.dayNames = [
+   &quot;Neděle&quot;,
+   &quot;Pondělí&quot;,
+   &quot;Úterý&quot;,
+   &quot;Středa&quot;,
+   &quot;Čtvrtek&quot;,
+   &quot;Pátek&quot;,
+   &quot;Sobota&quot;
+];
+
+Ext.Date.getShortDayName = function(day) {
+  return Ext.Date.dayNames[day].substring(0, 3);
+};
+
+if(Ext.MessageBox){
+   Ext.MessageBox.buttonText = {
+      ok     : &quot;OK&quot;,
+      cancel : &quot;Storno&quot;,
+      yes    : &quot;Ano&quot;,
+      no     : &quot;Ne&quot;
+   };
+}
+
+if(Ext.util.Format){
+    Ext.apply(Ext.util.Format, {
+        thousandSeparator: &#39;.&#39;,
+        decimalSeparator: &#39;,&#39;,
+        currencySign: &#39;\u004b\u010d&#39;, // Czech Koruny
+        dateFormat: &#39;d.m.Y&#39;
+    });
+}
+
+if(Ext.picker.Date){
+   Ext.apply(Ext.DatePicker.prototype, {
+      todayText         : &quot;Dnes&quot;,
+      minText           : &quot;Datum nesmí být starší než je minimální&quot;,
+      maxText           : &quot;Datum nesmí být dřívější než je maximální&quot;,
+      disabledDaysText  : &quot;&quot;,
+      disabledDatesText : &quot;&quot;,
+      monthNames	: Ext.Date.monthNames,
+      dayNames		: Ext.Date.dayNames,
+      nextText          : &#39;Následující měsíc (Control+Right)&#39;,
+      prevText          : &#39;Předcházející měsíc (Control+Left)&#39;,
+      monthYearText     : &#39;Zvolte měsíc (ke změně let použijte Control+Up/Down)&#39;,
+      todayTip          : &quot;{0} (Spacebar)&quot;,
+      format            : &quot;d.m.Y&quot;,
+      okText            : &quot;&amp;#160;OK&amp;#160;&quot;,
+      cancelText        : &quot;Storno&quot;,
+      startDay          : 1
+   });
+}
+
+if(Ext.toolbar.PagingToolbar){
+   Ext.apply(Ext.PagingToolbar.prototype, {
+      beforePageText : &quot;Strana&quot;,
+      afterPageText  : &quot;z {0}&quot;,
+      firstText      : &quot;První strana&quot;,
+      prevText       : &quot;Přecházející strana&quot;,
+      nextText       : &quot;Následující strana&quot;,
+      lastText       : &quot;Poslední strana&quot;,
+      refreshText    : &quot;Aktualizovat&quot;,
+      displayMsg     : &quot;Zobrazeno {0} - {1} z celkových {2}&quot;,
+      emptyMsg       : &#39;Žádné záznamy nebyly nalezeny&#39;
+   });
+}
+
+if(Ext.form.Text){
+   Ext.apply(Ext.form.Text.prototype, {
+      minLengthText : &quot;Pole nesmí mít méně {0} znaků&quot;,
+      maxLengthText : &quot;Pole nesmí být delší než {0} znaků&quot;,
+      blankText     : &quot;This field is required&quot;,
+      regexText     : &quot;&quot;,
+      emptyText     : null
+   });
+}
+
+if(Ext.form.Number){
+   Ext.apply(Ext.form.Number.prototype, {
+      minText : &quot;Hodnota v tomto poli nesmí být menší než {0}&quot;,
+      maxText : &quot;Hodnota v tomto poli nesmí být větší než {0}&quot;,
+      nanText : &quot;{0} není platné číslo&quot;
+   });
+}
+
+if(Ext.form.Date){
+   Ext.apply(Ext.form.Date.prototype, {
+      disabledDaysText  : &quot;Neaktivní&quot;,
+      disabledDatesText : &quot;Neaktivní&quot;,
+      minText           : &quot;Datum v tomto poli nesmí být starší než {0}&quot;,
+      maxText           : &quot;Datum v tomto poli nesmí být novější než {0}&quot;,
+      invalidText       : &quot;{0} není platným datem - zkontrolujte zda-li je ve formátu {1}&quot;,
+      format            : &quot;d.m.Y&quot;,
+      altFormats        : &quot;d/m/Y|d-m-y|d-m-Y|d/m|d-m|dm|dmy|dmY|d|Y-m-d&quot;
+   });
+}
+
+if(Ext.form.ComboBox){
+   Ext.apply(Ext.form.ComboBox.prototype, {
+      loadingText       : &quot;Prosím čekejte...&quot;,
+      valueNotFoundText : undefined
+   });
+}
+
+if(Ext.form.VTypes){
+   Ext.apply(Ext.form.VTypes, {
+      emailText    : &#39;V tomto poli může být vyplněna pouze emailová adresa ve formátu &quot;uživatel@doména.cz&quot;&#39;,
+      urlText      : &#39;V tomto poli může být vyplněna pouze URL (adresa internetové stránky) ve formátu &quot;http:/&#39;+&#39;/www.doména.cz&quot;&#39;,
+      alphaText    : &#39;Toto pole může obsahovat pouze písmena abecedy a znak _&#39;,
+      alphanumText : &#39;Toto pole může obsahovat pouze písmena abecedy, čísla a znak _&#39;
+   });
+}
+
+if(Ext.form.HtmlEditor){
+  Ext.apply(Ext.form.HtmlEditor.prototype, {
+    createLinkText : &#39;Zadejte URL adresu odkazu:&#39;,
+    buttonTips : {
+      bold : {
+        title: &#39;Tučné (Ctrl+B)&#39;,
+        text: &#39;Označí vybraný text tučně.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      italic : {
+        title: &#39;Kurzíva (Ctrl+I)&#39;,
+        text: &#39;Označí vybraný text kurzívou.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      underline : {
+        title: &#39;Podtržení (Ctrl+U)&#39;,
+        text: &#39;Podtrhne vybraný text.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      increasefontsize : {
+        title: &#39;Zvětšit písmo&#39;,
+        text: &#39;Zvětší velikost písma.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      decreasefontsize : {
+        title: &#39;Zúžit písmo&#39;,
+        text: &#39;Zmenší velikost písma.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      backcolor : {
+        title: &#39;Barva zvýraznění textu&#39;,
+        text: &#39;Označí vybraný text tak, aby vypadal jako označený zvýrazňovačem.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      forecolor : {
+        title: &#39;Barva písma&#39;,
+        text: &#39;Změní barvu textu.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifyleft : {
+        title: &#39;Zarovnat text vlevo&#39;,
+        text: &#39;Zarovná text doleva.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifycenter : {
+        title: &#39;Zarovnat na střed&#39;,
+        text: &#39;Zarovná text na střed.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifyright : {
+        title: &#39;Zarovnat text vpravo&#39;,
+        text: &#39;Zarovná text doprava.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      insertunorderedlist : {
+        title: &#39;Odrážky&#39;,
+        text: &#39;Začne seznam s odrážkami.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      insertorderedlist : {
+        title: &#39;Číslování&#39;,
+        text: &#39;Začne číslovaný seznam.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      createlink : {
+        title: &#39;Internetový odkaz&#39;,
+        text: &#39;Z vybraného textu vytvoří internetový odkaz.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      sourceedit : {
+        title: &#39;Zdrojový kód&#39;,
+        text: &#39;Přepne do módu úpravy zdrojového kódu.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      }
+    }
+  });
+}
+
+if(Ext.grid.GridView){
+   Ext.apply(Ext.grid.GridView.prototype, {
+      sortAscText  : &quot;Řadit vzestupně&quot;,
+      sortDescText : &quot;Řadit sestupně&quot;,
+      lockText     : &quot;Ukotvit sloupec&quot;,
+      unlockText   : &quot;Uvolnit sloupec&quot;,
+      columnsText  : &quot;Sloupce&quot;
+   });
+}
+
+if(Ext.grid.GroupingView){
+  Ext.apply(Ext.grid.GroupingView.prototype, {
+    emptyGroupText : &#39;(Žádná data)&#39;,
+    groupByText    : &#39;Seskupit dle tohoto pole&#39;,
+    showGroupsText : &#39;Zobrazit ve skupině&#39;
+  });
+}
+
+if(Ext.grid.PropertyColumnModel){
+   Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
+      nameText   : &quot;Název&quot;,
+      valueText  : &quot;Hodnota&quot;,
+      dateFormat : &quot;j.m.Y&quot;
+   });
+}
+
+if(Ext.layout.BorderLayout &amp;&amp; Ext.layout.BorderLayout.SplitRegion){
+   Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
+      splitTip            : &quot;Tahem změnit velikost.&quot;,
+      collapsibleSplitTip : &quot;Tahem změnit velikost. Dvojklikem skrýt.&quot;
+   });
+}
+￿</pre></pre></body></html>

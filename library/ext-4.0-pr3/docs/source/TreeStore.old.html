@@ -1,0 +1,391 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre>/**
+ * @class Ext.data.TreeStore
+ * @extends Ext.data.Store
+ *
+ * &lt;p&gt;Specialized Store for dealing with hierarchical data. These Stores are useful when powering tree-
+ * like components such as {@link Ext.tree.TreePanel} and {@link Ext.tree.TreeGrid}. Because most databases
+ * store data in a flat structure, TreeStore accepts data in this format and creates a tree internally.&lt;/p&gt;
+ *
+ * &lt;p&gt;TreeStore uses the nested set model of creating hierarchical structure from flat data (the concept is
+ * explained in &lt;a href=&quot;http://threebit.net/tutorials/nestedset/tutorial1.html&quot;&gt;this tutorial&lt;/a&gt;), relying
+ * on three pointer fields to be present in the {@link Ext.data.Model Model} - parent, left and right. This
+ * format is well suited to popular databases like MySQL where rows are stored in a flat format.&lt;/p&gt;
+ *
+ * &lt;p&gt;&lt;u&gt;Example usage&lt;/u&gt;&lt;/p&gt;
+ * &lt;p&gt;We&#39;ll set up a Store that consumes data a little like this (in this case we have some User data):&lt;/p&gt;
+ *
+ * <br><span style="display: none">**/</span>[
+    {id: 1, first: &#39;Ed&#39;,    last: &#39;Spencer&#39;,  lft: 1,  rgt: 16},
+    {id: 2, first: &#39;Abe&#39;,   last: &#39;Elias&#39;,    lft: 2,  rgt: 11, parentId: 1},
+    {id: 3, first: &#39;Tommy&#39;, last: &#39;Maintz&#39;,   lft: 12, rgt: 15, parentId: 1},
+    {id: 4, first: &#39;Aaron&#39;, last: &#39;Conran&#39;,   lft: 3,  rgt: 4,  parentId: 2},
+    {id: 5, first: &#39;Dave&#39;,  last: &#39;Kaneda&#39;,   lft: 5,  rgt: 6,  parentId: 2},
+    {id: 6, first: &#39;Jamie&#39;, last: &#39;Avins&#39;,    lft: 13, rgt: 14, parentId: 3},
+    {id: 7, first: &#39;Jay&#39;,   last: &#39;Robinson&#39;, lft: 7,  rgt: 10, parentId: 5},
+    {id: 8, first: &#39;Arne&#39;,  last: &#39;Bech&#39;,     lft: 8,  rgt: 9,  parentId: 7}
+]
+ * <br><span style="display: none">/**</span> *
+ * &lt;p&gt;This structure requires a little explanation. The &lt;i&gt;id&lt;/i&gt;, &lt;i&gt;first&lt;/i&gt; and &lt;i&gt;last&lt;/i&gt; fields are from
+ * a fictional user model. The &lt;i&gt;lft&lt;/i&gt;, &lt;i&gt;rgt&lt;/i&gt; and &lt;i&gt;parentId&lt;/i&gt; fields are required by TreeStore to
+ * transform this flat data set into a tree structure. For an explanation of how these fields are used consult
+ * the &lt;a href=&quot;http://threebit.net/tutorials/nestedset/tutorial1.html&quot;&gt;tutorial link above&lt;/a&gt; and see the
+ * {@link #leftField}, {@link #rightField} and {@link #parentField} configurations. Now let&#39;s set up a TreeStore
+ * to load the data above from a url:&lt;/p&gt;
+ *
+ * <br><span style="display: none">**/</span>Ext.regModel(&#39;User&#39;, {
+    fields: [
+        {name: &#39;id&#39;,        type: &#39;int&#39;},
+        {name: &#39;parent_id&#39;, type: &#39;int&#39;},
+        {name: &#39;lft&#39;,       type: &#39;int&#39;},
+        {name: &#39;rgt&#39;,       type: &#39;int&#39;},
+        {name: &#39;first&#39;,     type: &#39;string&#39;},
+        {name: &#39;last&#39;,      type: &#39;string&#39;}
+    ]
+});
+
+var store = new Ext.data.TreeStore({
+    model: &#39;User&#39;,
+    proxy: {
+        type: &#39;ajax&#39;,
+        url : &#39;myTreeData.json&#39;
+    }
+});
+ * <br><span style="display: none">/**</span> *
+ * &lt;p&gt;Above we create a simple model with all the fields outlined above, and a TreeStore that uses an
+ * {@link Ext.data.AjaxProxy AjaxProxy} to load data from a url (AjaxProxy creates a {@link Ext.data.JsonReader})
+ * by default to read the data). Internally, TreeStore recognises the tree structure data contained in the fields,
+ * allowing us to query it:&lt;/p&gt;
+ * <br><span style="display: none">**/</span>//ed is a root node, aaron is a leaf
+var ed    = store.getAt(store.find(&#39;first&#39;, &#39;Ed&#39;)),
+    aaron = store.getAt(store.find(&#39;first&#39;, &#39;Aaron&#39;));
+
+store.{@link #getChildren}(ed); //returns all immediate child nodes for Ed Spencer
+store.{@link #getParent}(aaron); //returns the immediate parent for Aaron Conran
+store.{@link #getAncestors}(aaron); //returns all ancestors for Aaron Conran
+ * <br><span style="display: none">/**</span> * &lt;p&gt;All components that utilize tree-structured data automatically use these methods to retrieve their nodes, so
+ * no additional configuration is required.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.data.TreeStore&#39;, {
+    extend: &#39;Ext.data.Store&#39;,
+
+    <a name="cfg-Ext.data.TreeStore-leftField"></a>/**
+     * @cfg {String} leftField The name of the Model&#39;s field to use as the &#39;left&#39; property. Defaults
+     * to &#39;lft&#39;
+     */
+    leftField: &#39;lft&#39;,
+
+    <a name="cfg-Ext.data.TreeStore-rightField"></a>/**
+     * @cfg {String} rightField The name of the Model&#39;s field to use as the &#39;right&#39; property. Defaults
+     * to &#39;rgt&#39;
+     */
+    rightField: &#39;rgt&#39;,
+
+    <a name="cfg-Ext.data.TreeStore-parentField"></a>/**
+     * @cfg {String} parentField The name of the Model&#39;s field to use as the &#39;parent&#39; property. Defaults
+     * to &#39;parent_id&#39;
+     */
+    parentField: &#39;parentId&#39;,
+
+    <a name="method-Ext.data.TreeStore-getChildren"></a>/**
+     * Returns an array of all child Records for a given root. Can optionally perform a deep search,
+     * which returns all children at any level under the instance (e.g. not just direct children). If
+     * the deep option is used, all child nodes are returned as a flat array. To preserve the tree
+     * structure use {@link #getSubTree} instead.
+     * @param {Ext.data.Model} parent The model instance
+     * @param {Boolean} deep True to return all children at any level. Defaults to false
+     * @return {Array} The record&#39;s children
+     */
+    getChildren: function(parent, deep) {
+        var records    = this.data.items,
+            length     = records.length,
+            leftField  = this.leftField,
+            rightField = this.rightField,
+            rootLeft   = parent.data[leftField],
+            rootRight  = parent.data[rightField],
+            children   = [],
+            recData, isChild, isDirectChild, i;
+
+        for (i = 0; i &lt; length; i++) {
+            recData = records[i].data;
+            isChild = recData[leftField] &gt; rootLeft &amp;&amp; recData[rightField] &lt; rootRight;
+            isDirectChild = isChild &amp;&amp; recData[this.parentField] == parent.getId();
+
+            if (isChild &amp;&amp; (isDirectChild || deep === true)) {
+                children.push(records[i]);
+            }
+        }
+
+        return children;
+    },
+
+    <a name="method-Ext.data.TreeStore-getAncestors"></a>/**
+     * Returns an ordered array of ancestors to the given model instance, starting with the parent
+     * and ending with the model&#39;s root node
+     * @param {Ext.data.Model} record The child model instance
+     * @return {Array} The set of ancestors (could be an empty array)
+     */
+    getAncestors: function(record) {
+        var records    = this.data.items,
+            length     = records.length,
+            leftField  = this.leftField,
+            rightField = this.rightField,
+            rootLeft   = record.data[leftField],
+            rootRight  = record.data[rightField],
+            ancestors  = [],
+            isAncestor, recData, i;
+
+        for (i = 0; i &lt; length; i++) {
+            recData    = records[i].data;
+            isAncestor = recData[leftField] &lt; rootLeft &amp;&amp; recData[rightField] &gt; rootRight;
+
+            if (isAncestor) {
+                ancestors.push(records[i]);
+            }
+        }
+
+        return ancestors.sort(function(a, b) {
+            return a.get(leftField) &lt; b.get(leftField);
+        });
+    },
+
+    <a name="method-Ext.data.TreeStore-move"></a>/**
+     * Moves a given node Model instance to a new position in the tree
+     * @param {Ext.data.Model} node The node to move
+     * @param {Ext.data.Model} parent The new node parent
+     * @param {Number} index The child index within the new parent. If not set, the node will be inserted as
+     * the last child of the parent
+     */
+    move: function(node, parent, index) {
+        /*
+         * In this case I couldn&#39;t find a good explanation of an efficient algorithm on the internets so I
+         * made one up. Moving is like removing and inserting rolled into one, but in this case we want to
+         * avoid the repercussions of actually moving and inserting, as well as keeping good performance.
+         *
+         * To move a node and its children we find its width and its new lft position in the tree, and therefore
+         * its new rgt position. We then update all nodes where lft and/or rgt is greater than or equal to the
+         * new lft position, adding the calculated node width to each of those matches.
+         *
+         * Finally, we update the lft and rgt positions of each of the nodes we just moved by subtracting the
+         * difference between the node&#39;s old lft and its new lft.
+         */
+
+        var records     = this.data.items,
+            length      = records.length,
+            leftField   = this.leftField,
+            rightField  = this.rightField,
+
+            nodeLeft    = node.get(leftField),
+            nodeRight   = node.get(rightField),
+            nodeWidth   = nodeRight - nodeLeft + 1,
+
+            parentWidth = parent.get(rightField) - parent.get(leftField) + 1,
+            noChildren  = parentWidth == 2,
+
+            previousLeft, deltaLeft, newLeft, children, leftChild,
+            isNodeChild, record, recData, recLeft, recRight, i;
+
+        //noChildren means the parent doesn&#39;t currently have any children - this affects which previousLeft we need
+        if (noChildren) {
+            previousLeft = parent.get(leftField);
+        } else {
+            children = this.getChildren(parent);
+            leftChild = children[index] || children[children.length - 1];
+
+            previousLeft = leftChild.get(rightField);
+        }
+
+        //this is where we&#39;re about to move the node
+        newLeft = previousLeft + 1;
+        deltaLeft = nodeLeft - newLeft;
+
+        for (i = 0; i &lt; length; i++) {
+            record   = records[i];
+            recData  = record.data;
+            recLeft  = recData[leftField];
+            recRight = recData[rightField];
+
+            if (recLeft &gt;= nodeLeft &amp;&amp; recRight &lt;= nodeRight) {
+                //this node is a child of the node we are moving
+                record.set(leftField, recLeft - deltaLeft);
+                record.set(rightField, recRight - deltaLeft);
+
+            } else {
+                if (recLeft &gt; previousLeft) {
+                    record.set(leftField, recLeft + nodeWidth);
+                }
+
+                if (recRight &gt; previousLeft) {
+                    record.set(rightField, recRight + nodeWidth);
+                }
+            }
+        }
+    },
+
+    <a name="method-Ext.data.TreeStore-remove"></a>/**
+     * Removes a node from the tree. This will remove all of the node&#39;s children (and grandchildren etc),
+     * so if you need to keep those move them first
+     * @param {Ext.data.Model} node The node to remove
+     */
+    remove: function(node) {
+        //updates all of the node references as if they have been removed from the tree
+        var removed = this.removeNodes(node);
+
+        //removes the actual node instances using a normal Store remove
+        Ext.data.TreeStore.superclass.remove.call(this, removed);
+    },
+
+    /**
+     * @private
+     * Updates the lft and rgt values of each node as if the given node has been removed. Does not
+     * actually remove the node though. This is a utility method used by {@link #remove} and {@link #move}
+     * as we need the same logic in both places.
+     * @param {Ext.data.Model} node The node to remove
+     * @return {Array} The nodes that were &#39;removed&#39; from the tree
+     */
+    removeNodes: function(node) {
+        //This follows a fairly simple algorithm explained at
+        //http://dev.mysql.com/tech-resources/articles/hierarchical-data.html
+
+        var records    = this.data.items,
+            length     = records.length,
+            leftField  = this.leftField,
+            rightField = this.rightField,
+            nodeLeft   = node.get(leftField),
+            nodeRight  = node.get(rightField),
+            nodeWidth  = nodeRight - nodeLeft + 1,
+            removed    = [node],
+            record, recData, recLeft, recRight, i;
+
+        for (i = 0; i &lt; length; i++) {
+            record   = records[i];
+            recData  = record.data;
+            recLeft  = recData[leftField];
+            recRight = recData[rightField];
+
+            if (recLeft &gt; nodeLeft &amp;&amp; recRight &lt; nodeRight) {
+                //this is a child node so remove it too
+                removed.push(record);
+            }
+
+            if (recLeft &gt; nodeRight) {
+                record.set(leftField, recLeft - nodeWidth);
+            }
+
+            if (recRight &gt; nodeRight) {
+                record.set(rightField, recRight - nodeWidth);
+            }
+        }
+
+        return removed;
+    },
+
+    <a name="method-Ext.data.TreeStore-insert"></a>/**
+     * Inserts a given node relative to another
+     * @param {Ext.data.Model} node The node to insert
+     * @param {Ext.data.Model} parent The node to insert under
+     * @param {Number} index The zero-based index to insert the node at
+     */
+    insert: function(node, parent, index) {
+        //This follows a fairly simple algorithm explained at
+        //http://dev.mysql.com/tech-resources/articles/hierarchical-data.html
+
+        var records     = this.data.items,
+            length      = records.length,
+            leftField   = this.leftField,
+            rightField  = this.rightField,
+
+            parentWidth = parent.get(rightField) - parent.get(leftField) + 1,
+            noChildren  = parentWidth == 2,
+
+            previousLeft, children, leftChild, record, recData, recLeft, recRight, i;
+
+        //noChildren means the parent doesn&#39;t currently have any children - this affects which previousLeft we need
+        if (noChildren) {
+            previousLeft = parent.get(leftField);
+        } else {
+            children = this.getChildren(parent);
+            leftChild = children[index] || children[children.length - 1];
+
+            previousLeft = leftChild.get(rightField);
+        }
+
+        node.set(leftField, previousLeft + 1);
+        node.set(rightField, previousLeft + 2);
+        node.set(this.parentField, parent.getId());
+
+        for (i = 0; i &lt; length; i++) {
+            record   = records[i];
+            recData  = record.data;
+            recLeft  = recData[leftField];
+            recRight = recData[rightField];
+
+            if (recLeft &gt; previousLeft) {
+                record.set(leftField, recLeft + 2);
+            }
+
+            if (recRight &gt; previousLeft) {
+                record.set(rightField, recRight + 2);
+            }
+        }
+
+        Ext.data.TreeStore.superclass.insert.call(this, 0, [node]);
+    },
+
+    <a name="method-Ext.data.TreeStore-isLeaf"></a>/**
+     * Returns true if the given Model instance is a leaf (e.g. has no children)
+     * @param {Ext.data.Model} record The model instance
+     * @return {Boolean} True if the record has no children
+     */
+    isLeaf: function(record) {
+        return this.getChildren(record).length === 0;
+    },
+
+    <a name="method-Ext.data.TreeStore-getParent"></a>/**
+     * Returns the immediate parent node of a given Model instance, or undefined if the instance
+     * is a root node
+     * @param {Ext.data.Model} record The child model instance
+     * @return {Ext.data.Model/undefined} The parent record, if one exists
+     */
+    getParent: function(record) {
+        return this.getAncestors(record)[0];
+    },
+
+    <a name="method-Ext.data.TreeStore-isRoot"></a>/**
+     * Returns true if the given model instance is a root node (e.g. has no parent)
+     * @param {Ext.data.Model} record The model instance
+     * @return {Boolean} True if a root node
+     */
+    isRoot: function(record) {
+        return !this.getParent(record);
+    },
+
+    getRootNode: function() {
+        var records = this.getRange(),
+            ln = records.length,
+            i = 0;
+        for (; i &lt; ln; i++) {
+            if (this.isRoot(records[i]) === true) {
+                return records[i];
+            }
+        }
+        throw &quot;Root node not found.&quot;;
+    },
+
+    getSubStore: function(node) {
+        if (!node.subStore) {
+            node.subStore = Ext.create(&#39;Ext.data.Store&#39;, {
+                model: this.model
+            });
+            var children = this.getChildren(node),
+                i, ln;
+                
+            // hack to calculate leaf when parent is initially loaded.
+            for (i = 0, ln = children.length; i &lt; ln; i++) {
+                children[i].leaf = !this.getChildren(children[i]).length;
+            }
+            node.subStore.add.apply(node.subStore, children);
+
+        }
+        return node.subStore;
+    }
+});￿</pre></pre></body></html>

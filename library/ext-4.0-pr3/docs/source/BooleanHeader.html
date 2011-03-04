@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.BooleanHeader"></a>/**
+ * @class Ext.grid.BooleanHeader
+ * @extends Ext.grid.Header
+ * &lt;p&gt;A Column definition class which renders boolean data fields.  See the {@link Ext.grid.Header#xtype xtype}
+ * config option of {@link Ext.grid.Header} for more details.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.grid.BooleanHeader&#39;, {
+    extend: &#39;Ext.grid.Header&#39;,
+    alias: [&#39;widget.booleanheader&#39;],
+    <a name="cfg-Ext.grid.BooleanHeader-trueText"></a>/**
+     * @cfg {String} trueText
+     * The string returned by the renderer when the column value is not falsey (defaults to &lt;tt&gt;&#39;true&#39;&lt;/tt&gt;).
+     */
+    trueText: &#39;true&#39;,
+    
+    <a name="cfg-Ext.grid.BooleanHeader-falseText"></a>/**
+     * @cfg {String} falseText
+     * The string returned by the renderer when the column value is falsey (but not undefined) (defaults to
+     * &lt;tt&gt;&#39;false&#39;&lt;/tt&gt;).
+     */
+    falseText: &#39;false&#39;,
+    
+    <a name="cfg-Ext.grid.BooleanHeader-undefinedText"></a>/**
+     * @cfg {String} undefinedText
+     * The string returned by the renderer when the column value is undefined (defaults to &lt;tt&gt;&#39;&amp;#160;&#39;&lt;/tt&gt;).
+     */
+    undefinedText: &#39;&amp;#160;&#39;,
+
+    constructor: function(cfg){
+        Ext.grid.BooleanHeader.superclass.constructor.call(this, cfg);
+        var trueText      = this.trueText,
+            falseText     = this.falseText,
+            undefinedText = this.undefinedText;
+            
+        this.renderer = function(value){
+            if(value === undefined){
+                return undefinedText;
+            }
+            if(!value || value === &#39;false&#39;){
+                return falseText;
+            }
+            return trueText;
+        };
+    }
+});￿</pre></pre></body></html>

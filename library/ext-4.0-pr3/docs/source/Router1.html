@@ -1,0 +1,160 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.util.Router"></a>/**
+ * @author Ed Spencer
+ * @class Ext.util.Router
+ * 
+ * &lt;p&gt;See {@link Ext.Router}.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.util.Router&#39;, {
+    requires: [&#39;Ext.util.Route&#39;, &#39;Ext.util.Inflector&#39;, &#39;Ext.util.MixedCollection&#39;],
+    mixins: {
+        observable: &#39;Ext.util.Observable&#39;
+    },
+    
+    constructor: function(config) {
+        config = config || {};
+
+        Ext.apply(this, config, {
+            defaults: {
+                action: &#39;index&#39;
+            }
+        });
+        
+        this.routes = Ext.create(&#39;Ext.util.MixedCollection&#39;);
+
+        this.mixins.observable.constructor.call(this, config);
+    },
+    
+    <a name="method-Ext.util.Router-connect"></a>/**
+     * Connects a url-based route to a controller/action pair plus additional params
+     * @param {String} url The url to recognize
+     */
+    connect: function(url, params) {
+        params = Ext.apply({url: url}, params || {}, this.defaults);
+        var route = Ext.create(&#39;Ext.util.Route&#39;, params);
+        
+        this.routes.add(route);
+        
+        return route;
+    },
+    
+    <a name="method-Ext.util.Router-name"></a>/**
+     * Creates a named {@link Ext.util.Route Route}. See intro docs for usage
+     * @param {String} name The name of the route to connection
+     * @return {Ext.util.Route} The newly-created {@link Ext.util.Route Route} object
+     */
+    name: function(name, url, params) {
+        params = Ext.apply({id: name, url: url}, params || {}, this.defaults);
+        
+        var route = Ext.create(&#39;Ext.util.Route&#39;, params);
+        
+        this.routes.add(route);
+        
+        return route;
+    },
+    
+    <a name="method-Ext.util.Router-generate"></a>/**
+     * Generates a url for a given route name
+     * @param {String} name The name of the route to generate for
+     * @param {Object} params Parameters for the url
+     * @return {String} The generated url
+     */
+    generate: function(name, params) {
+        var route = this.routes.get(name);
+        
+        if (route) {
+            return route.urlFor(params);
+        }
+    },
+    
+    <a name="method-Ext.util.Router-resources"></a>/**
+     * Creates a set of REST-like local resource urls for a given {@link Ext.data.Model Model}
+     * @param {String} model The name of the model to create the REST-like urls for
+     * @param {Object} params Optional params object which is copied onto each Route
+     */
+    resources: function(model, params) {
+        params = params || {};
+        
+        var Inflector = Ext.util.Inflector,
+            format    = Ext.String.format,
+            singular  = Inflector.singularize(model.toLowerCase()),
+            plural    = Inflector.pluralize(singular),
+            actions   = params.actions,
+            config;
+        
+        Ext.applyIf(params, {
+            controller: plural
+        });
+        
+        if (!actions || actions.list) {
+            config = Ext.apply({}, params, {
+                action: &#39;list&#39;
+            });
+            
+            this.name(plural, plural, config);
+        }
+        
+        if (!actions || actions.show) {
+            config = Ext.apply({}, params, {
+                action: &#39;show&#39;
+            });
+            
+            this.name(singular, format(&quot;{0}/:id&quot;, plural), config);
+        }
+        
+        if (!actions || actions.edit) {
+            config = Ext.apply({}, params, {
+                action: &#39;edit&#39;
+            });
+            
+            this.name(format(&#39;edit_{0}&#39;, singular), format(&quot;{0}/:id/edit&quot;, plural), config);
+        }
+        
+        if (!actions || actions.build) {
+            config = Ext.apply({}, params, {
+                action: &#39;build&#39;
+            });
+            
+            this.name(format(&#39;build_{0}&#39;, singular), format(&quot;{0}/new&quot;, plural), config);
+        }
+    },
+    
+    <a name="method-Ext.util.Router-recognize"></a>/**
+     * Recognizes a url string connected to the Router, return the controller/action pair plus any additional
+     * config associated with it
+     * @param {String} url The url to recognize
+     * @return {Object/undefined} If the url was recognized, the controller and action to call, else undefined
+     */
+    recognize: function(url) {
+        var routes = this.routes.items,
+            length = routes.length,
+            i, result;
+        
+        for (i = 0; i &lt; length; i++) {
+            result = routes[i].recognize(url);
+            
+            if (result != undefined) {
+                return result;
+            }
+        }
+        return undefined;
+    },
+    
+    <a name="method-Ext.util.Router-clear"></a>/**
+     * Removes all defined Routes
+     */
+    clear: function() {
+        this.routes.clear();
+    },
+    
+    <a name="method-Ext.util.Router-draw"></a>/**
+     * Convenience method which just calls the supplied function with the Router instance. Example usage:
+<br><span style="display: none">**/</span>Ext.Router.draw(function(map) {
+    map.connect(&#39;activate/:token&#39;, {controller: &#39;users&#39;, action: &#39;activate&#39;});
+    map.connect(&#39;home&#39;,            {controller: &#39;index&#39;, action: &#39;home&#39;});
+});
+<br><span style="display: none">/**</span>     * @param {Function} fn The fn to call
+     */
+    draw: function(fn) {
+        fn.call(this, this);
+    }
+});￿</pre></pre></body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.MemoryProxy"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.MemoryProxy
+ * @extends Ext.data.ClientProxy
+ * 
+ * &lt;p&gt;In-memory proxy. This proxy simply uses a local variable for data storage/retrieval, so its contents are lost on
+ * every page refresh.&lt;/p&gt;
+ * 
+ * &lt;p&gt;Usually this Proxy isn&#39;t used directly, serving instead as a helper to a {@link Ext.data.Store Store} where a 
+ * reader is required to load data. For example, say we have a Store for a User model and have some inline data we want
+ * to load, but this data isn&#39;t in quite the right format: we can use a MemoryProxy with a JsonReader to read it into 
+ * our Store:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>//this is the model we will be using in the store
+Ext.regModel(&#39;User&#39;, {
+    fields: [
+        {name: &#39;id&#39;,    type: &#39;int&#39;},
+        {name: &#39;name&#39;,  type: &#39;string&#39;},
+        {name: &#39;phone&#39;, type: &#39;string&#39;, mapping: &#39;phoneNumber&#39;}
+    ]
+});
+
+//this data does not line up to our model fields - the phone field is called phoneNumber
+var data = {
+    users: [
+        {
+            id: 1,
+            name: &#39;Ed Spencer&#39;,
+            phoneNumber: &#39;555 1234&#39;
+        },
+        {
+            id: 2,
+            name: &#39;Abe Elias&#39;,
+            phoneNumber: &#39;666 1234&#39;
+        }
+    ]
+};
+
+//note how we set the &#39;root&#39; in the reader to match the data structure above
+var store = new Ext.data.Store({
+    autoLoad: true,
+    model: &#39;User&#39;,
+    data : data,
+    proxy: {
+        type: &#39;memory&#39;,
+        reader: {
+            type: &#39;json&#39;,
+            root: &#39;users&#39;
+        }
+    }
+});
+<br><span style="display: none">/**</span> */
+Ext.define(&#39;Ext.data.MemoryProxy&#39;, {
+    extend: &#39;Ext.data.ClientProxy&#39;,
+    alias: &#39;proxy.memory&#39;,
+    
+    <a name="cfg-Ext.data.MemoryProxy-data"></a>/**
+     * @cfg {Array} data Optional array of Records to load into the Proxy
+     */
+    
+    constructor: function(config) {
+        Ext.data.MemoryProxy.superclass.constructor.call(this, config);
+        
+        //ensures that the reader has been instantiated properly
+        this.setReader(this.reader);
+    },
+    
+    <a name="method-Ext.data.MemoryProxy-read"></a>/**
+     * Reads data from the configured {@link #data} object. Uses the Proxy&#39;s {@link #reader}, if present
+     * @param {Ext.data.Operation} operation The read Operation
+     * @param {Function} callback The callback to call when reading has completed
+     * @param {Object} scope The scope to call the callback function in
+     */
+    read: function(operation, callback, scope) {
+        var me     = this,
+            reader = me.getReader(),
+            result = reader.read(me.data);
+
+        Ext.apply(operation, {
+            resultSet: result
+        });
+        
+        operation.setCompleted();
+        operation.setSuccessful();
+        Ext.callback(callback, scope || me, [operation]);
+    },
+    
+    clear: Ext.emptyFn
+});
+￿</pre></pre></body></html>

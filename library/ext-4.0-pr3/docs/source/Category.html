@@ -1,0 +1,78 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.chart.axis.Category"></a>/**
+ * @class Ext.chart.axis.Category
+ * @extends Ext.chart.axis.Axis
+ * 
+ * A type of axis that displays items in categories. This axis is generally used to
+ * display categorical information like names of items, month names, quarters, etc.
+ * but no quantitative values. For that other type of information &lt;em&gt;Number&lt;/em&gt;
+ * axis are more suitable.
+ *
+ * As with other axis you can set the position of the axis and its title. For example:
+ *
+    <br><span style="display: none">**/</span>    {
+        type: &#39;Category&#39;,
+        position: &#39;bottom&#39;,
+        fields: [&#39;name&#39;],
+        title: &#39;Month of the Year&#39;
+    }    
+    <br><span style="display: none">/**</span>    
+    In this example with set the category axis to the bottom of the surface, bound the axis to
+    the &lt;em&gt;name&lt;/em&gt; property and set as title &lt;em&gt;Month of the Year&lt;/em&gt;.
+ */
+
+Ext.define(&#39;Ext.chart.axis.Category&#39;, {
+
+    /* Begin Definitions */
+
+    extend: &#39;Ext.chart.axis.Axis&#39;,
+
+    /* End Definitions */
+
+    <a name="prop-Ext.chart.axis.Category-categoryNames"></a>/**
+     * A list of category names to display along this axis.
+     *
+     * @property categoryNames
+     * @type Array
+     */
+    categoryNames: null,
+
+    <a name="prop-Ext.chart.axis.Category-calculateCategoryCount"></a>/**
+     * Indicates whether or not to calculate the number of categories (ticks and
+     * labels) when there is not enough room to display all labels on the axis.
+     * If set to true, the axis will determine the number of categories to plot.
+     * If not, all categories will be plotted.
+     *
+     * @property calculateCategoryCount
+     * @type Boolean
+     */
+    calculateCategoryCount: false,
+
+    // @private creates an array of labels to be used when rendering.
+    setLabels: function() {
+        var store = this.chart.store,
+            fields = this.fields,
+            ln = fields.length,
+            i;
+
+        this.labels = [];
+        store.each(function(record) {
+            for (i = 0; i &lt; ln; i++) {
+                this.labels.push(record.get(fields[i]));
+            }
+        }, this);
+    },
+
+    // @private calculates labels positions and marker positions for rendering.
+    applyData: function() {
+        Ext.chart.axis.Category.superclass.applyData.call(this);
+        this.setLabels();
+        var count = this.chart.store.getCount();
+        return {
+            from: 0,
+            to: count,
+            power: 1,
+            step: 1,
+            steps: count - 1
+        };
+    }
+});￿</pre></pre></body></html>

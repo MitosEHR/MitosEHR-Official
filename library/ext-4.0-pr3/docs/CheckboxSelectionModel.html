@@ -1,0 +1,152 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.grid.CheckboxSelectionModel"></div>/**
+ * @class Ext.grid.CheckboxSelectionModel
+ * @extends Ext.grid.RowSelectionModel
+ *
+ * Should be able to autocalculate section to add the header and unshift onto
+ */
+
+Ext.define('Ext.grid.CheckboxSelectionModel', {
+    extend: 'Ext.grid.RowSelectionModel',
+    
+    mode: 'MULTI',
+    
+    <div id="cfg-Ext.grid.CheckboxSelectionModel-injectCheckbox"></div>/**
+     * @cfg {Mixed} injectCheckbox
+     * Instructs the SelectionModel whether or not to inject the checkbox header
+     * automatically or not. (Note: By not placing the checkbox in manually, the
+     * grid view will need to be rendered 2x on initial render.)
+     * Supported values are a Number index, false and the strings 'first' and 'last'.
+     * Default is 0.
+     */
+    injectCheckbox: 0,
+
+    <div id="cfg-Ext.grid.CheckboxSelectionModel-checkOnly"></div>/**
+     * @cfg {Boolean} checkOnly <tt>true</tt> if rows can only be selected by clicking on the
+     * checkbox column (defaults to <tt>false</tt>).
+     */
+    checkOnly: false,
+    
+    // private
+    checkerOnCls: Ext.baseCSSPrefix + 'grid-hd-checker-on',
+
+    bindComponent: function() {
+        Ext.grid.CheckboxSelectionModel.superclass.bindComponent.apply(this, arguments);
+        
+        var view     = this.views[0],
+            headerCt = view.headerCt;
+            
+        if (this.injectCheckbox !== false) {
+            if (this.injectCheckbox == 'first') {
+                this.injectCheckbox = 0;
+            } else if (this.injectCheckbox == 'last') {
+                this.injectCheckbox = headerCt.getCount();
+            }
+            headerCt.add(this.injectCheckbox,  this.getHeaderConfig());
+        }
+        headerCt.on('headerclick', this.onHeaderClick, this);
+    },
+
+    /**
+     * Toggle the ui header between checked and unchecked state.
+     * @param {Boolean} isChecked
+     * @private
+     */
+    toggleUiHeader: function(isChecked) {
+        var view     = this.views[0],
+            headerCt = view.headerCt,
+            checkHd  = headerCt.child('gridheader[isCheckerHd]');
+
+        if (checkHd) {
+            if (isChecked) {
+                checkHd.el.addCls(this.checkerOnCls);
+            } else {
+                checkHd.el.removeCls(this.checkerOnCls);
+            }
+        }
+    },
+
+    <div id="method-Ext.grid.CheckboxSelectionModel-onHeaderClick"></div>/**
+     * Toggle between selecting all and deselecting all when clicking on
+     * a checkbox header.
+     */
+    onHeaderClick: function(headerCt, header, e) {
+        if (header.isCheckerHd) {
+            e.stopEvent();
+            var isChecked = header.el.hasCls(Ext.baseCSSPrefix + 'grid-hd-checker-on');
+            if (isChecked) {
+                this.deselectAll(true);
+            } else {
+                this.selectAll(true);
+            }
+        }
+    },
+
+    <div id="method-Ext.grid.CheckboxSelectionModel-getHeaderConfig"></div>/**
+     * Retrieve a configuration to be used in a HeaderContainer.
+     * This should be used when injectCheckbox is set to false.
+     */
+    getHeaderConfig: function() {
+        return {
+            isCheckerHd: true,
+            text : '<div class="' + Ext.baseCSSPrefix + 'grid-hd-checker">&#160;</div>',
+            width: 30,
+            sortable: false,
+            fixed: true,
+            hideable: false,
+            draggable: false,
+            menuDisabled: true,
+            dataIndex: '',
+            cls: Ext.baseCSSPrefix + 'column-header-checkbox',
+            renderer : function(v, p, record){
+                return '<div class="' + Ext.baseCSSPrefix + 'grid-row-checker">&#160;</div>';
+            }
+        };
+    },
+
+    // override
+    onRowMouseDown: function(view, rowIdx, td, e) {
+        view.el.focus();
+        var record  = view.getStore().getAt(rowIdx),
+            checker = e.getTarget('.' + Ext.baseCSSPrefix + 'grid-row-checker');
+        
+        // checkOnly set, but we didnt click on a checker.
+        if (this.checkOnly && !checker) {
+            return;
+        }
+        
+        if (checker) {
+            var mode = this.getSelectionMode();
+            // dont change the mode if its single otherwise
+            // we would get multiple selection
+            if (mode !== 'SINGLE') {
+                this.setSelectionMode('SIMPLE');
+            }
+            this.selectWithEvent(record, e);
+            this.setSelectionMode(mode);
+        } else {
+            this.selectWithEvent(record, e);
+        }
+    },
+
+    /**
+     * Synchronize header checker value as selection changes.
+     * @private
+     */
+    onSelectChange: function(record, isSelected) {
+        Ext.grid.CheckboxSelectionModel.superclass.onSelectChange.call(this, record, isSelected);
+        // check to see if all records are selected
+        var hdSelectStatus = this.selected.getCount() === this.store.getCount();
+        this.toggleUiHeader(hdSelectStatus);
+    }
+});
+</pre>    
+</body>
+</html>

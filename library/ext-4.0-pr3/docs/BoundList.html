@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.layout.component.BoundList"></div>/**
+ * Component layout for {@link Ext.view.BoundList}. Handles constraining the height to the configured maxHeight.
+ * @class Ext.layout.component.BoundList
+ * @extends Ext.layout.Component
+ */
+Ext.define('Ext.layout.component.BoundList', {
+    extend: 'Ext.layout.Component',
+    alias: 'layout.boundlist',
+
+    type: 'component',
+
+    onLayout : function(width, height) {
+        var me = this,
+            owner = me.owner,
+            el = owner.el,
+            maxHeight = owner.maxHeight,
+            undef;
+
+        Ext.layout.component.BoundList.superclass.onLayout.call(this, width, height);
+
+        me.setElementSize(el, width, height);
+
+        // Handle maxHeight config
+        if (maxHeight && !Ext.isNumber(height)) {
+            el.setStyle('height', 'auto');
+            if (el.getHeight() > maxHeight) {
+                me.setElementSize(el, undef, maxHeight);
+            }
+        }
+    }
+});
+</pre>    
+</body>
+</html>

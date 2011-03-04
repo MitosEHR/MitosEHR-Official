@@ -1,0 +1,216 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.panel.Header"></div>/**
+ * @class Ext.panel.Header
+ * @extends Ext.container.Container
+ * Simple header class which is used for on {@link Ext.panel.Panel} and {@link Ext.Window}
+ * @xtype button
+ */
+Ext.define('Ext.panel.Header', {
+    extend: 'Ext.container.Container',
+    uses: ['Ext.panel.Tool', 'Ext.draw.Component', 'Ext.util.CSS'],
+    alias: 'widget.header',
+
+    isHeader       : true,
+    defaultType    : 'tool',
+    indicateDrag   : false,
+
+    renderTpl: ['<div class="{baseCls}-body<tpl if="ui"> {baseCls}-body-{ui}</tpl>"<tpl if="bodyStyle"> style="{bodyStyle}"</tpl>></div>'],
+
+    initComponent: function() {
+        var me = this,
+            textConfig,
+            rule,
+            style,
+            titleTextEl;
+
+        me.indicateDragCls = me.baseCls + '-draggable';
+        me.title = me.title || '&#160;';
+        me.tools = me.tools || [];
+        me.items = me.items || [];
+        me.orientation = me.orientation||'horizontal';
+        me.addCls(me.baseCls + '-' + me.orientation);
+        me.addCls(me.baseCls + '-' + me.dock);
+
+        Ext.applyIf(me.renderSelectors, {
+            body: '.' + me.baseCls + '-body'
+        });
+
+        if (me.frame) {
+            me.ui = 'framed';
+        }
+        
+        // Add Icon
+        if (!Ext.isEmpty(me.iconCls)) {
+            me.initIconCmp();
+            me.items.push(me.iconCmp);
+        }
+
+        // Add Title
+        if (me.orientation == 'vertical') {
+            // Hack for IE6/7's inability to display an inline-block
+            if (Ext.isIE6||Ext.isIE7) {
+                me.width = me.width||22;
+            }
+            me.layout = {
+                type : 'vbox',
+                align: 'center',
+                clearInnerCtOnLayout: true,
+                bindToOwnerCtContainer: false
+            };
+            textConfig = {
+                cls: me.baseCls + '-text',
+                type: 'text',
+                text: me.title,
+                rotate: {
+                    degrees: 90
+                }
+            };
+            rule = Ext.util.CSS.getRule('.' + me.baseCls + '-text');
+            rule && (style = rule.style);
+            if (style) {
+                Ext.apply(textConfig, {
+                    'font-family': style.fontFamily,
+                    'font-weight': style.fontWeight,
+                    'font-size': style.fontSize,
+                    fill: style.color
+                });
+            }
+            me.titleCmp = new Ext.draw.Component({
+                ariaRole  : 'heading',
+                viewBox: false,
+                autoSize: true,
+                margins: '5 0 0 0',
+                items: [ textConfig ],
+                renderSelectors: {
+                    textEl: '.' + me.baseCls + '-text'
+                }
+            });
+        } else {
+            me.layout = {
+                type : 'hbox',
+                align: 'middle',
+                clearInnerCtOnLayout: true,
+                bindToOwnerCtContainer: false
+            };
+            me.titleCmp = new Ext.Component({
+                xtype     : 'component',
+                ariaRole  : 'heading',
+                renderTpl : ['<span class="{cls}-text">{title}</span>'],
+                renderData: {
+                    title: me.title,
+                    cls  : me.baseCls
+                },
+                renderSelectors: {
+                    textEl: '.' + me.baseCls + '-text'
+                }
+            });
+        }
+        me.items.push(me.titleCmp);
+
+        // Spacer ->
+        me.items.push({
+            xtype: 'component',
+            html : '&nbsp;',
+            flex : 1
+        });
+
+        // Add Tools
+        me.items = me.items.concat(me.tools);
+        Ext.panel.Header.superclass.initComponent.call(me);
+    },
+
+    initIconCmp: function() {
+        this.iconCmp = new Ext.Component({
+            renderTpl : ['<img alt="" src="http://localhost:3000/source/{blank}" class="{cls}-icon {iconCls}"/>'],
+            renderData: {
+                blank  : Ext.BLANK_IMAGE_URL,
+                cls    : this.baseCls,
+                iconCls: this.iconCls,
+                orientation: this.orientation
+            },
+            renderSelectors: {
+                iconEl: '.' + this.baseCls + '-icon'
+            },
+            iconCls: this.iconCls
+        });
+    },
+
+    afterRender: function() {
+        this.el.unselectable();
+        if (this.indicateDrag) {
+            this.el.addCls(this.indicateDragCls);
+        }
+        Ext.panel.Header.superclass.afterRender.call(this);
+    },
+
+    getTargetEl: function() {
+        return this.body || this.frameBody || this.el;
+    },
+
+    <div id="method-Ext.panel.Header-setTitle"></div>/**
+     * Sets the title of the header.
+     * @param {String} title The title to be set
+     */
+    setTitle: function(title) {
+        this.title = title || '';
+        this.titleCmp.textEl.update(this.title);
+    },
+
+    <div id="method-Ext.panel.Header-setIconClass"></div>/**
+     * Sets the CSS class that provides the icon image for this panel.  This method will replace any existing
+     * icon class if one has already been set and fire the {@link #iconchange} event after completion.
+     * @param {String} cls The new CSS class name
+     */
+    setIconClass: function(cls) {
+        this.iconCls = cls;
+        if (!this.iconCmp) {
+            this.initIconCmp();
+            this.insert(0, this.iconCmp);
+        }
+        else {
+            if (!cls || !cls.length) {
+                this.iconCmp.destroy();
+            }
+            else {
+                var iconCmp = this.iconCmp,
+                    el      = iconCmp.iconEl;
+
+                el.removeCls(iconCmp.iconCls);
+                el.addCls(cls);
+                iconCmp.iconCls = cls;
+            }
+        }
+    },
+
+    <div id="method-Ext.panel.Header-addTool"></div>/**
+     * Add a tool to the header
+     * @param {Object} tool
+     */
+    addTool: function(tool) {
+        this.tools.push(this.add(tool));
+    },
+
+    /**
+     * @private
+     * Set up the tools.&lt;tool type> link in the owning Panel.
+     * Bind the tool to its owning Panel.
+     * @param component
+     * @param index
+     */
+    onAdd: function(component, index) {
+        this.callParent([arguments]);
+        if (component instanceof Ext.panel.Tool) {
+            component.bindTo(this.ownerCt);
+            this.tools[component.type] = component;
+        }
+    }
+});</pre>    
+</body>
+</html>

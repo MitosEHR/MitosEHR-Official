@@ -1,0 +1,115 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.fx.target.Component"></div>/**
+ * @class Ext.fx.target.Component
+ * @extends Object
+ */
+
+Ext.define('Ext.fx.target.Component', {
+
+    /* Begin Definitions */
+
+    /* End Definitions */
+
+    isAnimTarget: true,
+
+    constructor: function(target) {
+        this.target = target;
+        Ext.fx.target.Component.superclass.constructor.call(this, target);
+    },
+
+    compMethod: {
+        top: 'setPosition',
+        left: 'setPosition',
+        x: 'setPagePosition',
+        y: 'setPagePosition',
+        height: 'setSize',
+        width: 'setSize',
+        opacity: 'setOpacity'
+    },
+
+    getPropMethod: {
+        top: 'getPosition',
+        left: 'getPosition',
+        x: 'getPagePosition',
+        y: 'getPagePosition',
+        height: 'getSize',
+        width: 'getSize',
+        opacity: 'getOpacity'
+    },
+
+    compProperty: {
+        top: 'y',
+        left: 'x',
+        x: 'x',
+        y: 'y',
+        height: 'height',
+        width: 'width',
+        opacity: 'value'
+    },
+
+    type: 'component',
+
+    getId: function() {
+        return this.target.id;
+    },
+
+    // Read the named attribute from the target Component. Use the defined getter for the attribute
+    getAttr: function(attr, val) {
+        return [[this.target, val != undefined ? val : this.target[this.getPropMethod[attr]]()]];
+    },
+
+    setAttr: function(targetData) {
+        var target = this.target,
+            ln = targetData.length,
+            attrs,
+            attr,
+            o,
+            i,
+            j,
+            meth,
+            ln2;
+        for (i = 0; i < ln; i++) {
+            attrs = targetData[i].attrs;
+            for (attr in attrs) {
+                ln2 = attrs[attr].length;
+                meth = {
+                    setPosition: {},
+                    setPagePosition: {},
+                    setSize: {},
+                    setOpacity: {}
+                };
+                for (j = 0; j < ln2; j++) {
+                    o = attrs[attr][j];
+                    // We REALLY want a single function call, so push these down to merge them
+                    meth[this.compMethod[attr]][this.compProperty[attr]] = o[1];
+                    meth[this.compMethod[attr]].target = o[0];
+                }
+                if (meth.setPosition.target) {
+                    o = meth.setPosition;
+                    o.target.setPosition(o.x, o.y);
+                }
+                if (meth.setPagePosition.target) {
+                    o = meth.setPagePosition;
+                    o.target.setPagePosition(o.x, o.y);
+                }
+                if (meth.setSize.target) {
+                    o = meth.setSize;
+                    o.target.setSize(o.width, o.height);
+                }
+                if (meth.setOpacity.target) {
+                    o = meth.setOpacity;
+                    o.target.el.setStyle('opacity', o.value);
+                }
+            }
+        }
+    }
+});</pre>    
+</body>
+</html>

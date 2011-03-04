@@ -1,0 +1,204 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.chart.LegendItem"></a>/**
+ * @class Ext.chart.LegendItem
+ * @extends Ext.draw.SpriteGroup
+ * A single item of a legend (marker plus label)
+ * @constructor
+ */
+Ext.define(&#39;Ext.chart.LegendItem&#39;, {
+
+    /* Begin Definitions */
+
+    extend: &#39;Ext.draw.SpriteGroup&#39;,
+
+    requires: [&#39;Ext.chart.Shapes&#39;],
+
+    /* End Definitions */
+
+    // Position of the item, relative to the upper-left corner of the legend box
+    x: 0,
+    y: 0,
+    zIndex: 500,
+
+    constructor: function(config) {
+        this.callParent(arguments);
+        this.createSprites(config);
+    },
+
+    <a name="method-Ext.chart.LegendItem-createSprites"></a>/**
+     * Creates all the individual sprites for this legend item
+     */
+    createSprites: function(config) {
+        var me = this,
+            index = config.yFieldIndex,
+            series = me.series,
+            seriesType = series.type,
+            idx = me.yFieldIndex,
+            legend = me.legend,
+            surface = me.surface,
+            refX = legend.x + me.x,
+            refY = legend.y + me.y,
+            bbox, z = me.zIndex,
+            markerCfg, label, mask,
+            radius, toggle = false,
+            seriesStyle = Ext.apply(series.seriesStyle, series.style);
+
+        function getSeriesProp(name) {
+            var val = series[name];
+            return (Ext.isArray(val) ? val[idx] : val);
+        }
+        
+        label = me.add(&#39;label&#39;, surface.add({
+            type: &#39;text&#39;,
+            x: 20,
+            y: 0,
+            zIndex: z || 0,
+            font: legend.labelFont,
+            text: getSeriesProp(&#39;title&#39;) || getSeriesProp(&#39;yField&#39;)
+        }));
+
+        // Line series - display as short line with optional marker in the middle
+        if (seriesType === &#39;line&#39; || seriesType === &#39;scatter&#39;) {
+            if(seriesType === &#39;line&#39;) {
+                me.add(&#39;line&#39;, surface.add({
+                    type: &#39;path&#39;,
+                    path: &#39;M0.5,0.5L16.5,0.5&#39;,
+                    zIndex: z,
+                    &quot;stroke-width&quot;: series.lineWidth,
+                    &quot;stroke-linejoin&quot;: &quot;round&quot;,
+                    &quot;stroke-dasharray&quot;: series.dash,
+                    stroke: seriesStyle.stroke || &#39;#000&#39;,
+                    style: {
+                        cursor: &#39;pointer&#39;
+                    }
+                }));
+            }
+            if (series.showMarkers || seriesType === &#39;scatter&#39;) {
+                markerCfg = Ext.apply(series.markerStyle, series.markerCfg || {});
+                me.add(&#39;marker&#39;, Ext.chart.Shapes[markerCfg.type](surface, {
+                    fill: markerCfg.fill,
+                    x: 8.5,
+                    y: 0.5,
+                    zIndex: z,
+                    radius: markerCfg.radius || markerCfg.size,
+                    style: {
+                        cursor: &#39;pointer&#39;
+                    }
+                }));
+            }
+        }
+        // All other series types - display as filled box
+        else {
+            me.add(&#39;box&#39;, surface.add({
+                type: &#39;rect&#39;,
+                zIndex: z,
+                x: 0,
+                y: 0,
+                width: 12,
+                height: 12,
+                fill: series.getLegendColor(index),
+                style: {
+                    cursor: &#39;pointer&#39;
+                }
+            }));
+        }
+        
+        me.setAttributes({
+            hidden: false
+        }, true);
+        
+        bbox = me.getBBox();
+        
+        mask = me.add(&#39;mask&#39;, surface.add({
+            type: &#39;rect&#39;,
+            x: bbox.x,
+            y: bbox.y,
+            width: bbox.width || 20,
+            height: bbox.height || 20,
+            zIndex: (z || 0) + 1000,
+            fill: &#39;#f00&#39;,
+            opacity: 0,
+            style: {
+                &#39;cursor&#39;: &#39;pointer&#39;
+            }
+        }));
+
+        //add toggle listener
+        me.on(&#39;mouseover&#39;, function() {
+            label.setStyle({
+                &#39;font-weight&#39;: &#39;bold&#39;
+            });
+            mask.setStyle({
+                &#39;cursor&#39;: &#39;pointer&#39;
+            });
+            series._index = index;
+            series.highlightItem();
+        }, me);
+
+        me.on(&#39;mouseout&#39;, function() {
+            label.setStyle({
+                &#39;font-weight&#39;: &#39;normal&#39;
+            });
+            series._index = index;
+            series.unHighlightItem();
+        }, me);
+
+        me.on(&#39;mousedown&#39;, function() {
+            if (!toggle) {
+                series.hideAll();
+                label.setAttributes({
+                    opacity: 0.5
+                }, true);
+            } else {
+                series.showAll();
+                label.setAttributes({
+                    opacity: 1
+                }, true);
+            }
+            toggle = !toggle;
+        }, me);
+        me.updatePosition({x:0, y:0}); //Relative to 0,0 at first so that the bbox is calculated correctly
+    },
+
+    <a name="method-Ext.chart.LegendItem-updatePosition"></a>/**
+     * Update the positions of all this item&#39;s sprites to match the root position
+     * of the legend box.
+     * @param {Object} relativeTo (optional) If specified, this object&#39;s &#39;x&#39; and &#39;y&#39; values will be used
+     *                 as the reference point for the relative positioning. Defaults to the Legend.
+     */
+    updatePosition: function(relativeTo) {
+        var me = this,
+            items = me.items,
+            ln = items.length,
+            i = 0,
+            item;
+        if (!relativeTo) {
+            relativeTo = me.legend;
+        }
+        for (; i &lt; ln; i++) {
+            item = items[i];
+            switch (item.type) {
+                case &#39;text&#39;:
+                    item.setAttributes({
+                        x: 20 + relativeTo.x + me.x,
+                        y: relativeTo.y + me.y
+                    }, true);
+                    break;
+                case &#39;rect&#39;:
+                    item.setAttributes({
+                        translate: {
+                            x: relativeTo.x + me.x,
+                            y: relativeTo.y + me.y - 6
+                        }
+                    }, true);
+                    break;
+                default:
+                    item.setAttributes({
+                        translate: {
+                            x: relativeTo.x + me.x,
+                            y: relativeTo.y + me.y
+                        }
+                    }, true);
+            }
+        }
+    }
+});￿</pre></pre></body></html>

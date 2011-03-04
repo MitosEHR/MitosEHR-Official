@@ -1,0 +1,51 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.chart.series.Cartesian"></div>/**
+ * @class Ext.chart.series.Cartesian
+ * @extends Ext.chart.series.Series
+ * Common base class for series implementations which plot values using x/y coordinates.
+ * @constructor
+ */
+Ext.define('Ext.chart.series.Cartesian', {
+
+    /* Begin Definitions */
+
+    extend: 'Ext.chart.series.Series',
+
+    /* End Definitions */
+
+    <div id="prop-Ext.chart.series.Cartesian-xField"></div>/**
+     * The field used to access the x axis value from the items from the data
+     * source.
+     *
+     * @property xField
+     * @type String
+     */
+    xField: null,
+
+    <div id="prop-Ext.chart.series.Cartesian-yField"></div>/**
+     * The field used to access the y-axis value from the items from the data
+     * source.
+     *
+     * @property yField
+     * @type String
+     */
+    yField: null,
+
+    <div id="prop-Ext.chart.series.Cartesian-axis"></div>/**
+     * Indicates which axis the series will bind to
+     *
+     * @property axis
+     * @type String
+     */
+    axis: 'left'
+});
+</pre>    
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.is"></a>/**
+ * @class Ext.is
+ * 
+ * Determines information about the current platform the application is running on.
+ * 
+ * @singleton
+ */
+Ext.is = {
+    init : function(navigator) {
+        var platforms = this.platforms,
+            ln = platforms.length,
+            i, platform;
+
+        navigator = navigator || window.navigator;
+
+        for (i = 0; i &lt; ln; i++) {
+            platform = platforms[i];
+            this[platform.identity] = platform.regex.test(navigator[platform.property]);
+        }
+
+        <a name="prop-Ext.is-Desktop"></a>/**
+         * @property Desktop True if the browser is running on a desktop machine
+         * @type {Boolean}
+         */
+        this.Desktop = this.Mac || this.Windows || (this.Linux &amp;&amp; !this.Android);
+        <a name="prop-Ext.is-Tablet"></a>/**
+         * @property Tablet True if the browser is running on a tablet (iPad)
+         */
+        this.Tablet = this.iPad;
+        <a name="prop-Ext.is-Phone"></a>/**
+         * @property Phone True if the browser is running on a phone.
+         * @type {Boolean}
+         */
+        this.Phone = !this.Desktop &amp;&amp; !this.Tablet;
+        <a name="prop-Ext.is-iOS"></a>/**
+         * @property iOS True if the browser is running on iOS
+         * @type {Boolean}
+         */
+        this.iOS = this.iPhone || this.iPad || this.iPod;
+        
+        <a name="prop-Ext.is-Standalone"></a>/**
+         * @property Standalone Detects when application has been saved to homescreen.
+         * @type {Boolean}
+         */
+        this.Standalone = !!window.navigator.standalone;
+    },
+    
+    <a name="prop-Ext.is-iPhone"></a>/**
+     * @property iPhone True when the browser is running on a iPhone
+     * @type {Boolean}
+     */
+    platforms: [{
+        property: &#39;platform&#39;,
+        regex: /iPhone/i,
+        identity: &#39;iPhone&#39;
+    },
+    
+    <a name="prop-Ext.is-iPod"></a>/**
+     * @property iPod True when the browser is running on a iPod
+     * @type {Boolean}
+     */
+    {
+        property: &#39;platform&#39;,
+        regex: /iPod/i,
+        identity: &#39;iPod&#39;
+    },
+    
+    <a name="prop-Ext.is-iPad"></a>/**
+     * @property iPad True when the browser is running on a iPad
+     * @type {Boolean}
+     */
+    {
+        property: &#39;userAgent&#39;,
+        regex: /iPad/i,
+        identity: &#39;iPad&#39;
+    },
+    
+    <a name="prop-Ext.is-Blackberry"></a>/**
+     * @property Blackberry True when the browser is running on a Blackberry
+     * @type {Boolean}
+     */
+    {
+        property: &#39;userAgent&#39;,
+        regex: /Blackberry/i,
+        identity: &#39;Blackberry&#39;
+    },
+    
+    <a name="prop-Ext.is-Android"></a>/**
+     * @property Android True when the browser is running on an Android device
+     * @type {Boolean}
+     */
+    {
+        property: &#39;userAgent&#39;,
+        regex: /Android/i,
+        identity: &#39;Android&#39;
+    },
+    
+    <a name="prop-Ext.is-Mac"></a>/**
+     * @property Mac True when the browser is running on a Mac
+     * @type {Boolean}
+     */
+    {
+        property: &#39;platform&#39;,
+        regex: /Mac/i,
+        identity: &#39;Mac&#39;
+    },
+    
+    <a name="prop-Ext.is-Windows"></a>/**
+     * @property Windows True when the browser is running on Windows
+     * @type {Boolean}
+     */
+    {
+        property: &#39;platform&#39;,
+        regex: /Win/i,
+        identity: &#39;Windows&#39;
+    },
+    
+    <a name="prop-Ext.is-Linux"></a>/**
+     * @property Linux True when the browser is running on Linux
+     * @type {Boolean}
+     */
+    {
+        property: &#39;platform&#39;,
+        regex: /Linux/i,
+        identity: &#39;Linux&#39;
+    }]
+};
+
+Ext.is.init();
+
+<a name="cls-Ext.supports"></a>/**
+ * @class Ext.supports
+ *
+ * Determines information about features are supported in the current environment
+ * 
+ * @singleton
+ */
+Ext.supports = {
+    init : function() {
+        var doc = document,
+            div = doc.createElement(&#39;div&#39;),
+            tests = this.tests,
+            ln = tests.length,
+            i, test;
+
+        div.innerHTML = [
+            &#39;&lt;div style=&quot;height:30px;width:50px;&quot;&gt;&#39;,
+                &#39;&lt;div style=&quot;height:20px;width:20px;&quot;&gt;&lt;/div&gt;&#39;,
+            &#39;&lt;/div&gt;&#39;,
+            &#39;&lt;div style=&quot;float:left; background-color:transparent;&quot;&gt;&lt;/div&gt;&#39;
+        ].join(&#39;&#39;);
+
+        doc.body.appendChild(div);
+
+        for (i = 0; i &lt; ln; i++) {
+            test = tests[i];
+            this[test.identity] = test.fn.call(this, doc, div);
+        }
+
+        doc.body.removeChild(div);
+    },
+
+    <a name="prop-Ext.supports-ClassList"></a>/**
+     * @property ClassList True if document environment supports the HTML5 classList API.
+     * @type {Boolean}
+     */
+    ClassList: !!document.documentElement.classList,
+
+    <a name="prop-Ext.supports-OrientationChange"></a>/**
+     * @property OrientationChange True if the device supports orientation change
+     * @type {Boolean}
+     */
+    OrientationChange: ((typeof window.orientation != &#39;undefined&#39;) &amp;&amp; (&#39;onorientationchange&#39; in window)),
+    
+    <a name="prop-Ext.supports-DeviceMotion"></a>/**
+     * @property DeviceMotion True if the device supports device motion (acceleration and rotation rate)
+     * @type {Boolean}
+     */
+    DeviceMotion: (&#39;ondevicemotion&#39; in window),
+    
+    <a name="prop-Ext.supports-Touch"></a>/**
+     * @property Touch True if the device supports touch
+     * @type {Boolean}
+     */
+    // is.Desktop is needed due to the bug in Chrome 5.0.375, Safari 3.1.2
+    // and Safari 4.0 (they all have &#39;ontouchstart&#39; in the window object).
+    Touch: (&#39;ontouchstart&#39; in window) &amp;&amp; (!Ext.is.Desktop),
+
+    tests: [
+        <a name="prop-Ext.supports-Transitions"></a>/**
+         * @property Transitions True if the device supports CSS3 Transitions
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;Transitions&#39;,
+            fn: function(doc, div) {
+                var prefix = [
+                        &#39;webkit&#39;,
+                        &#39;Moz&#39;,
+                        &#39;o&#39;,
+                        &#39;ms&#39;,
+                        &#39;khtml&#39;
+                    ],
+                    TE = &#39;TransitionEnd&#39;,
+                    transitionEndName = [
+                        prefix[0] + TE,
+                        &#39;transitionend&#39;, //Moz bucks the prefixing convention
+                        prefix[2] + TE,
+                        prefix[3] + TE,
+                        prefix[4] + TE
+                    ],
+                    ln = prefix.length,
+                    i = 0,
+                    out = false;
+                div = Ext.get(div);
+                for (; i &lt; ln; i++) {
+                    if (div.getStyle(prefix[i] + &quot;TransitionProperty&quot;)) {
+                        Ext.supports.CSS3Prefix = prefix[i];
+                        Ext.supports.CSS3TransitionEnd = transitionEndName[i];
+                        out = true;
+                        break;
+                    }
+                }
+                return out;
+            }
+        },
+        
+        <a name="prop-Ext.supports-RightMargin"></a>/**
+         * @property RightMargin True if the device supports right margin.
+         * See https://bugs.webkit.org/show_bug.cgi?id=13343 for why this is needed.
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;RightMargin&#39;,
+            fn: function(doc, div, view) {
+                view = doc.defaultView;
+                return !(view &amp;&amp; view.getComputedStyle(div.firstChild.firstChild, null).marginRight != &#39;0px&#39;);
+            }
+        },
+        
+        <a name="prop-Ext.supports-TransparentColor"></a>/**
+         * @property TransparentColor True if the device supports transparent color
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;TransparentColor&#39;,
+            fn: function(doc, div, view) {
+                view = doc.defaultView;
+                return !(view &amp;&amp; view.getComputedStyle(div.lastChild, null).backgroundColor != &#39;transparent&#39;);
+            }
+        },
+
+        <a name="prop-Ext.supports-ComputedStyle"></a>/**
+         * @property ComputedStyle True if the browser supports document.defaultView.getComputedStyle()
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;ComputedStyle&#39;,
+            fn: function(doc, div, view) {
+                view = doc.defaultView;
+                return view &amp;&amp; view.getComputedStyle;
+            }
+        },
+        
+        <a name="prop-Ext.supports-SVG"></a>/**
+         * @property SVG True if the device supports SVG
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;SVG&#39;,
+            fn: function(doc) {
+                return !!doc.createElementNS &amp;&amp; !!doc.createElementNS( &quot;http:/&quot; + &quot;/www.w3.org/2000/svg&quot;, &quot;svg&quot;).createSVGRect;
+            }
+        },
+    
+        <a name="prop-Ext.supports-Canvas"></a>/**
+         * @property Canvas True if the device supports Canvas
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;Canvas&#39;,
+            fn: function(doc) {
+                return !!doc.createElement(&#39;canvas&#39;).getContext;
+            }
+        },
+        
+        <a name="prop-Ext.supports-VML"></a>/**
+         * @property VML True if the device supports VML
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;VML&#39;,
+            fn: function(doc) {
+                var d = doc.createElement(&quot;div&quot;);
+                d.innerHTML = &quot;&lt;!--[if vml]&gt;&lt;br&gt;&lt;br&gt;&lt;![endif]--&gt;&quot;;
+                return (d.childNodes.length == 2);
+            }
+        },
+        
+        <a name="prop-Ext.supports-Float"></a>/**
+         * @property Float True if the device supports CSS float
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;Float&#39;,
+            fn: function(doc, div) {
+                return !!div.lastChild.style.cssFloat;
+            }
+        },
+        
+        <a name="prop-Ext.supports-AudioTag"></a>/**
+         * @property AudioTag True if the device supports the HTML5 audio tag
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;AudioTag&#39;,
+            fn: function(doc) {
+                return !!doc.createElement(&#39;audio&#39;).canPlayType;
+            }
+        },
+        
+        <a name="prop-Ext.supports-History"></a>/**
+         * @property History True if the device supports HTML5 history
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;History&#39;,
+            fn: function() {
+                return !!(window.history &amp;&amp; history.pushState);
+            }
+        },
+        
+        <a name="prop-Ext.supports-CSS3DTransform"></a>/**
+         * @property CSS3DTransform True if the device supports CSS3DTransform
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;CSS3DTransform&#39;,
+            fn: function() {
+                return (typeof WebKitCSSMatrix != &#39;undefined&#39; &amp;&amp; new WebKitCSSMatrix().hasOwnProperty(&#39;m41&#39;));
+            }
+        },
+
+		<a name="prop-Ext.supports-CSS3LinearGradient"></a>/**
+         * @property CSS3LinearGradient True if the device supports CSS3 linear gradients
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;CSS3LinearGradient&#39;,
+            fn: function(doc, div) {
+                var property = &#39;background-image:&#39;,
+                    webkit   = &#39;-webkit-gradient(linear, left top, right bottom, from(black), to(white))&#39;,
+                    w3c      = &#39;linear-gradient(left top, black, white)&#39;,
+                    moz      = &#39;-moz-&#39; + w3c,
+                    options  = [property + webkit, property + w3c, property + moz];
+                
+                div.style.cssText = options.join(&#39;;&#39;);
+                
+                return (&quot;&quot; + div.style.backgroundImage).indexOf(&#39;gradient&#39;) !== -1;
+            }
+        },
+        
+        <a name="prop-Ext.supports-CSS3BorderRadius"></a>/**
+         * @property CSS3BorderRadius True if the device supports CSS3 border radius
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;CSS3BorderRadius&#39;,
+            fn: function(doc, div) {
+                var domPrefixes = [&#39;borderRadius&#39;, &#39;BorderRadius&#39;, &#39;MozBorderRadius&#39;, &#39;WebkitBorderRadius&#39;, &#39;OBorderRadius&#39;, &#39;KhtmlBorderRadius&#39;],
+                    pass = false,
+                    i;
+                
+                for (i = 0; i &lt; domPrefixes.length; i++) {
+                    if (document.body.style[domPrefixes[i]] !== undefined) {
+                        return true;
+                    }
+                }
+                
+                return pass;
+            }
+        },
+        
+        <a name="prop-Ext.supports-GeoLocation"></a>/**
+         * @property GeoLocation True if the device supports GeoLocation
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;GeoLocation&#39;,
+            fn: function() {
+                return (typeof navigator != &#39;undefined&#39; &amp;&amp; typeof navigator.geolocation != &#39;undefined&#39;) || (typeof google != &#39;undefined&#39; &amp;&amp; typeof google.gears != &#39;undefined&#39;);
+            }
+        },
+        <a name="prop-Ext.supports-MouseEnterLeave"></a>/**
+         * @property MouseEnterLeave True if the browser supports mouseenter and mouseleave events
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;MouseEnterLeave&#39;,
+            fn: function(doc, div){
+                return (&#39;onmouseenter&#39; in div &amp;&amp; &#39;onmouseleave&#39; in div);
+            }
+        },
+        <a name="prop-Ext.supports-MouseWheel"></a>/**
+         * @property MouseWheel True if the browser supports the mousewheel event
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;MouseWheel&#39;,
+            fn: function(doc, div) {
+                return (&#39;onmousewheel&#39; in div);
+            }
+        },
+        <a name="prop-Ext.supports-Opacity"></a>/**
+         * @property Opacity True if the browser supports normal css opacity
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;Opacity&#39;,
+            fn: function(doc, div){
+                // Not a strict equal comparison in case opacity can be converted to a number.
+                if (Ext.isIE6 || Ext.isIE7 || Ext.isIE8) {
+                    return false;
+                }
+                div.firstChild.style.cssText = &#39;opacity:0.73&#39;;
+                return div.firstChild.style.opacity == &#39;0.73&#39;;
+            }
+        },
+        <a name="prop-Ext.supports-Placeholder"></a>/**
+         * @property Placeholder True if the browser supports the HTML5 placeholder attribute on inputs
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;Placeholder&#39;,
+            fn: function(doc) {
+                return &#39;placeholder&#39; in doc.createElement(&#39;input&#39;);
+            }
+        },
+        <a name="prop-Ext.supports-BoundingClientRect"></a>/**
+         * @property BoundingClientRect True if the browser supports the getBoundingClientRect method on elements
+         * @type {Boolean}
+         */
+        {
+            identity: &#39;BoundingClientRect&#39;,
+            fn: function(doc, div) {
+                return Ext.isFunction(div.getBoundingClientRect);
+            }
+        }
+    ]
+};
+￿</pre></pre></body></html>

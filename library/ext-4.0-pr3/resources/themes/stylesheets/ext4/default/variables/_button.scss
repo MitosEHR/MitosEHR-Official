@@ -1,0 +1,98 @@
+$button-arrow-size: 15px !default;
+$button-split-size: 18px !default;
+$button-icon-spacing: 4px !default;
+
+$button-small-border-radius: 3px !default;
+$button-small-border-width: 1px !default;
+$button-small-padding: 2px !default;
+$button-small-font-size: 11px !default;
+$button-small-font-size-over: 11px !default;
+$button-small-font-size-pressed: 11px !default;
+$button-small-font-size-disabled: 11px !default;
+$button-small-font-weight: normal !default;
+$button-small-font-weight-over: normal !default;
+$button-small-font-weight-pressed: normal !default;
+$button-small-font-weight-disabled: normal !default;
+$button-small-font-family: Tahoma, Arial, Verdana, sans-serif !default;
+$button-small-font-family-over: Tahoma, Arial, Verdana, sans-serif !default;
+$button-small-font-family-pressed: Tahoma, Arial, Verdana, sans-serif !default;
+$button-small-font-family-disabled: Tahoma, Arial, Verdana, sans-serif !default;
+$button-small-icon-size: 16px !default;
+
+$button-medium-border-radius: 3px !default;
+$button-medium-border-width: 1px !default;
+$button-medium-padding: 3px !default;
+$button-medium-font-size: 11px !default;
+$button-medium-font-size-over: 11px !default;
+$button-medium-font-size-pressed: 11px !default;
+$button-medium-font-size-disabled: 11px !default;
+$button-medium-font-weight: normal !default;
+$button-medium-font-weight-over: normal !default;
+$button-medium-font-weight-pressed: normal !default;
+$button-medium-font-weight-disabled: normal !default;
+$button-medium-font-family: Tahoma, Arial, Verdana, sans-serif !default;
+$button-medium-font-family-over: Tahoma, Arial, Verdana, sans-serif !default;
+$button-medium-font-family-pressed: Tahoma, Arial, Verdana, sans-serif !default;
+$button-medium-font-family-disabled: Tahoma, Arial, Verdana, sans-serif !default;
+$button-medium-icon-size: 24px !default;
+
+$button-large-border-radius: 3px !default;
+$button-large-border-width: 1px !default;
+$button-large-padding: 3px !default;
+$button-large-font-size: 11px !default;
+$button-large-font-size-over: 11px !default;
+$button-large-font-size-pressed: 11px !default;
+$button-large-font-size-disabled: 11px !default;
+$button-large-font-weight: normal !default;
+$button-large-font-weight-over: normal !default;
+$button-large-font-weight-pressed: normal !default;
+$button-large-font-weight-disabled: normal !default;
+$button-large-font-family: Tahoma, Arial, Verdana, sans-serif !default;
+$button-large-font-family-over: Tahoma, Arial, Verdana, sans-serif !default;
+$button-large-font-family-pressed: Tahoma, Arial, Verdana, sans-serif !default;
+$button-large-font-family-disabled: Tahoma, Arial, Verdana, sans-serif !default;
+$button-large-icon-size: 32px !default;
+
+//base colors for the default button
+$button-default-base-color: adjust-color($neutral-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
+$button-default-base-color-over: adjust-color($base-color, $hue: -6.863deg, $saturation: 44.444%, $lightness: 9.216%) !default; //DDF0FF
+$button-default-base-color-pressed: adjust-color($base-color, $hue: -0.725deg, $saturation: -9.556%, $lightness: -3.725%) !default; //B6CBE4
+$button-default-base-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
+
+$button-default-border-color: adjust-color($button-default-base-color, $hue: 0deg, $saturation: 0%, $lightness: -18.039%) !default;
+$button-default-border-color-over: adjust-color($button-default-base-color-over, $hue: 8.177deg, $saturation: -28.283%, $lightness: -12.745%) !default;
+$button-default-border-color-pressed: adjust-color($button-default-base-color-pressed, $hue: 2.317deg, $saturation: 6.756%, $lightness: -5.294%) !default;
+$button-default-border-color-disabled: adjust-color($button-default-base-color-disabled, $hue: 0deg, $saturation: 0%, $lightness: -8.627%) !default;
+
+$button-default-background-color: $button-default-base-color !default;
+$button-default-background-color-over: $button-default-base-color-over !default;
+$button-default-background-color-pressed: $button-default-base-color-pressed !default;
+$button-default-background-color-disabled: $button-default-base-color-disabled !default;
+
+$button-default-background-gradient: 'glossy-button' !default;
+$button-default-background-gradient-over: 'glossy-button-over' !default;
+$button-default-background-gradient-pressed: 'glossy-button-pressed' !default;
+$button-default-background-gradient-disabled: 'glossy-button-disabled' !default;
+
+$button-default-color: #333 !default;
+$button-default-color-over: #333 !default;
+$button-default-color-pressed: #333 !default;
+$button-default-color-disabled: gray !default;
+
+$button-toolbar-base-color: adjust-color($base-color, $hue: -213.333deg, $saturation: -55.556%, $lightness: 3.333%) !default;
+$button-toolbar-border-color: transparent !default;
+$button-toolbar-border-color-over: adjust-color($base-color, $hue: 0.084deg, $saturation: -9.891%, $lightness: -18.039%) !default;
+$button-toolbar-border-color-pressed: adjust-color($base-color, $hue: 0.721deg, $saturation: -17.014%, $lightness: -21.765%) !default;
+$button-toolbar-border-color-disabled: adjust-color($base-color, $hue: 0.721deg, $saturation: -17.014%, $lightness: -21.765%) !default;
+$button-toolbar-background-color: transparent !default;
+$button-toolbar-background-color-over: adjust-color($base-color, $hue: -5deg, $saturation: 44.444%, $lightness: 8.824%) !default;
+$button-toolbar-background-color-pressed: adjust-color($base-color, $hue: -1.138deg, $saturation: -11.47%, $lightness: -2.353%) !default;
+$button-toolbar-background-color-disabled: adjust-color($base-color, $hue: -1.138deg, $saturation: -11.47%, $lightness: -2.353%) !default;
+$button-toolbar-background-gradient: null !default;
+$button-toolbar-background-gradient-over: 'glossy-button-over' !default;
+$button-toolbar-background-gradient-pressed: 'glossy-button-pressed' !default;
+$button-toolbar-background-gradient-disabled: 'glossy-button-pressed' !default;
+$button-toolbar-color: #333 !default;
+$button-toolbar-color-over: #333 !default;
+$button-toolbar-color-pressed: #333 !default;
+$button-toolbar-color-disabled: #333 !default;

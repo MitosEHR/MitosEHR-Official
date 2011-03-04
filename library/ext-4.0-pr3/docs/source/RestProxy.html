@@ -1,0 +1,171 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.RestProxy"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.RestProxy
+ * @extends Ext.data.AjaxProxy
+ * 
+ * &lt;p&gt;RestProxy is a specialization of the {@link Ext.data.AjaxProxy AjaxProxy} which simply maps the four actions 
+ * (create, read, update and destroy) to RESTful HTTP verbs. For example, let&#39;s set up a {@link Ext.data.Model Model}
+ * with an inline RestProxy&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>Ext.regModel(&#39;User&#39;, {
+    fields: [&#39;id&#39;, &#39;name&#39;, &#39;email&#39;],
+
+    proxy: {
+        type: &#39;rest&#39;,
+        url : &#39;/users&#39;
+    }
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Now we can create a new User instance and save it via the RestProxy. Doing this will cause the Proxy to send a
+ * POST request to &#39;/users&#39;:
+ * 
+<br><span style="display: none">**/</span>var user = Ext.ModelMgr.create({name: &#39;Ed Spencer&#39;, email: &#39;ed@sencha.com&#39;}, &#39;User&#39;);
+
+user.save(); //POST /users
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Let&#39;s expand this a little and provide a callback for the {@link Ext.data.Model#save} call to update the Model
+ * once it has been created. We&#39;ll assume the creation went successfully and that the server gave this user an ID of 
+ * 123:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>user.save({
+    success: function(user) {
+        user.set(&#39;name&#39;, &#39;Khan Noonien Singh&#39;);
+
+        user.save(); //PUT /users/123
+    }
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Now that we&#39;re no longer creating a new Model instance, the request method is changed to an HTTP PUT, targeting
+ * the relevant url for that user. Now let&#39;s delete this user, which will use the DELETE method:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>    user.destroy(); //DELETE /users/123
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Finally, when we perform a load of a Model or Store, RestProxy will use the GET method:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>//1. Load via Store
+
+//the Store automatically picks up the Proxy from the User model
+var store = new Ext.data.Store({
+    model: &#39;User&#39;
+});
+
+store.load(); //GET /users
+
+//2. Load directly from the Model
+
+//GET /users/123
+Ext.ModelMgr.getModel(&#39;User&#39;).load(123, {
+    success: function(user) {
+        console.log(user.getId()); //outputs 123
+    }
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;&lt;u&gt;Url generation&lt;/u&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;RestProxy is able to automatically generate the urls above based on two configuration options - {@link #appendId}
+ * and {@link #format}. If appendId is true (it is by default) then RestProxy will automatically append the ID of the 
+ * Model instance in question to the configured url, resulting in the &#39;/users/123&#39; that we saw above.&lt;/p&gt;
+ * 
+ * &lt;p&gt;If the request is not for a specific Model instance (e.g. loading a Store), the url is not appended with an id. 
+ * RestProxy will automatically insert a &#39;/&#39; before the ID if one is not already present.&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>new Ext.data.RestProxy({
+    url: &#39;/users&#39;,
+    appendId: true //default
+});
+
+// Collection url: /users
+// Instance url  : /users/123
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;RestProxy can also optionally append a format string to the end of any generated url:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>new Ext.data.RestProxy({
+    url: &#39;/users&#39;,
+    format: &#39;json&#39;
+});
+
+// Collection url: /users.json
+// Instance url  : /users/123.json
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;If further customization is needed, simply implement the {@link #buildUrl} method and add your custom generated
+ * url onto the {@link Ext.data.Request Request} object that is passed to buildUrl. See 
+ * &lt;a href=&quot;source/RestProxy.html#method-Ext.data.RestProxy-buildUrl&quot;&gt;RestProxy&#39;s implementation&lt;/a&gt; for an example of
+ * how to achieve this.&lt;/p&gt;
+ * 
+ * &lt;p&gt;Note that RestProxy inherits from {@link Ext.data.AjaxProxy AjaxProxy}, which already injects all of the sorter,
+ * filter, group and paging options into the generated url. See the {@link Ext.data.AjaxProxy AjaxProxy docs} for more
+ * details.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.data.RestProxy&#39;, {
+    extend: &#39;Ext.data.AjaxProxy&#39;,
+    alias : &#39;proxy.rest&#39;,
+    
+    <a name="cfg-Ext.data.RestProxy-appendId"></a>/**
+     * @cfg {Boolean} appendId True to automatically append the ID of a Model instance when performing a request based
+     * on that single instance. See RestProxy intro docs for more details. Defaults to true.
+     */
+    appendId: true,
+    
+    <a name="cfg-Ext.data.RestProxy-format"></a>/**
+     * @cfg {String} format Optional data format to send to the server when making any request (e.g. &#39;json&#39;). See the
+     * RestProxy intro docs for full details. Defaults to undefined.
+     */
+    
+    api: {
+        create : &#39;create&#39;,
+        read   : &#39;read&#39;,
+        update : &#39;update&#39;,
+        destroy: &#39;destroy&#39;
+    },
+    
+    <a name="method-Ext.data.RestProxy-buildUrl"></a>/**
+     * Specialized version of buildUrl that incorporates the {@link #appendId} and {@link #format} options into the
+     * generated url. Override this to provide further customizations, but remember to call the superclass buildUrl
+     * so that additional parameters like the cache buster string are appended
+     */
+    buildUrl: function(request) {
+        var operation = request.operation,
+            records   = operation.records || [],
+            record    = records[0],
+            format    = this.format,
+            url       = request.url || this.url,
+            id        = record ? record.getId() : operation.id;
+        
+        if (this.appendId &amp;&amp; id) {
+            if (!url.match(/\/$/)) {
+                url += &#39;/&#39;;
+            }
+            
+            url += id;
+        }
+        
+        if (format) {
+            if (!url.match(/\.$/)) {
+                url += &#39;.&#39;;
+            }
+            
+            url += format;
+        }
+        
+        request.url = url;
+        
+        return Ext.data.RestProxy.superclass.buildUrl.apply(this, arguments);
+    }
+}, function() {
+    Ext.apply(this.prototype, {
+        <a name="prop-Ext.data.RestProxy-actionMethods"></a>/**
+         * Mapping of action name to HTTP request method. These default to RESTful conventions for the &#39;create&#39;, &#39;read&#39;,
+         * &#39;update&#39; and &#39;destroy&#39; actions (which map to &#39;POST&#39;, &#39;GET&#39;, &#39;PUT&#39; and &#39;DELETE&#39; respectively). This object should
+         * not be changed except globally via {@link Ext.override} - the {@link #getMethod} function can be overridden instead.
+         * @property actionMethods
+         * @type Object
+         */
+        actionMethods: {
+            create : &#39;POST&#39;,
+            read   : &#39;GET&#39;,
+            update : &#39;PUT&#39;,
+            destroy: &#39;DELETE&#39;
+        }
+    });
+});
+￿</pre></pre></body></html>

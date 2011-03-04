@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.DateHeader"></a>/**
+ * @class Ext.grid.DateHeader
+ * @extends Ext.grid.Header
+ * &lt;p&gt;A Column definition class which renders a passed date according to the default locale, or a configured
+ * {@link #format}. See the {@link Ext.grid.Header#xtype xtype} config option of {@link Ext.grid.Header}
+ * for more details.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.grid.DateHeader&#39;, {
+    extend: &#39;Ext.grid.Header&#39;,
+    alias: [&#39;widget.dateheader&#39;],
+    requires: [&#39;Ext.util.Format&#39;],
+    
+    <a name="cfg-Ext.grid.DateHeader-format"></a>/**
+     * @cfg {String} format
+     * A formatting string as used by {@link Date#format} to format a Date for this Column
+     * (defaults to &lt;tt&gt;&#39;m/d/Y&#39;&lt;/tt&gt;).
+     */
+    format : &#39;m/d/Y&#39;,
+    constructor: function(cfg){
+        Ext.grid.DateHeader.superclass.constructor.call(this, cfg);
+        this.renderer = Ext.util.Format.dateRenderer(this.format);
+    }
+});￿</pre></pre></body></html>

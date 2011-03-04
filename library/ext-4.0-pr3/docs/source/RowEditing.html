@@ -1,0 +1,242 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.RowEditing"></a>/**
+ * @class Ext.grid.RowEditing
+ * @extends Ext.grid.Editing
+ */
+Ext.define(&#39;Ext.grid.RowEditing&#39;, {
+    extend: &#39;Ext.grid.Editing&#39;,
+    alias: &#39;editing.rowediting&#39;,
+    editStyle: &#39;row&#39;,
+
+    init: function(grid) {
+        Ext.grid.RowEditing.superclass.init.call(this, grid);
+
+        // setup event handlers to mirror the columnmodel
+        //var cm = grid.getColumnModel();
+        //cm.on({
+        //    add: this.onColAdd,
+        //    remove: this.onColRemove,
+        //    widthchange: this.onColWidthChange,
+        //    hiddenchange: this.onColHiddenChange,
+        //    scope: this
+        //});
+    },
+
+    getEditor: function() {
+        var ed = Ext.grid.RowEditing.superclass.getEditor.apply(this, arguments);
+        // if no editor was created, create a default
+        if (!ed) {
+            ed = Ext.ComponentMgr.create({
+                //html: arguments[0],
+                name: arguments[0]
+            }, &#39;displayfield&#39;);
+            this.editors.add(ed);
+        }
+        return ed;
+    },
+
+
+    onColAdd: function(ct, column) {
+        if (this.rowEditor) {
+            var rowEditor = this.rowEditor,
+                colIdx = ct.items.indexOf(column),
+                grid = this.grid,
+                editor = this.getEditor(column.dataIndex);
+
+            rowEditor.add(colIdx, editor);
+        }
+
+    },
+
+    onColRemove: function(ct, column, colIdx, autoDestroy) {
+        if (this.rowEditor) {
+            var rowEditor = this.rowEditor,
+                grid = this.grid,
+                ed = this.getEditor(column.dataIndex);
+
+            rowEditor.remove(ed, autoDestroy);
+        }
+    },
+
+    onColWidthChange: function(cm, colIdx, newWidth) {
+        var col = cm.getColumnAt(colIdx),
+            ed = this.getEditor(col.dataIndex);
+
+        if (ed &amp;&amp; this.rowEditor) {
+            if (newWidth) {
+                delete ed.width;
+                ed.setWidth(newWidth);
+            } else {
+                ed.hide();
+            }
+            this.rowEditor.setWidth(cm.getTotalWidth());
+        }
+    },
+
+    onColHiddenChange: function(cm, colIdx, hidden) {
+        var col = cm.getColumnAt(colIdx),
+            ed = this.getEditor(col.dataIndex),
+            width;
+
+        if (ed &amp;&amp; this.rowEditor) {
+            ed[hidden ? &#39;hide&#39; : &#39;show&#39;]();
+            width = cm.getColumnWidth(colIdx);
+            if (width) {
+                ed.setWidth(width);
+            } else {
+                ed.hide();
+            }
+            this.rowEditor.setWidth(cm.getTotalWidth());
+            // layout if already visible, otherwise
+            // always laid out when shown due to event handler.
+            //if (this.rowEditor.isVisible()) {
+                this.rowEditor.doLayout();
+            //}
+        }
+    },
+
+    initEditTrigger: function() {
+        var view = this.grid.down(&#39;gridview&#39;);
+        this.view = view;
+        if (this.clicksToEdit === 1) {
+            view.on(&quot;cellclick&quot;, this.onRowDblClick, this);
+        } else {
+            view.on(&#39;celldblclick&#39;, this.onRowDblClick, this);
+        }
+    },
+
+    // Implementation of calculateLocation for RowEditing
+    // Retrieves the row that a particular record represents
+    calculateLocation: function(record, dataIndex) {
+        var grid   = this.grid,
+            view   = this.view,
+            rowIdx = grid.getStore().indexOf(record);
+
+        return view.getRow(rowIdx);
+    },
+
+    // private
+    onRowDblClick : function(view, cell, rowIdx, colIdx, e) {
+        var store    = view.store,
+            record   = store.getAt(rowIdx),
+            grid     = view.up(&#39;gridsection&#39;),
+            headerCt = grid.headerCt,
+            header   = headerCt.items.getAt(colIdx),
+            //colIdx = view.findCellIndex(e.getTarget()),
+            // manually calculate location to ensure its the correct column
+            location = view.getNode(rowIdx),
+            dataIdx;
+
+        // when user clicks on borders, colIdx will not be found
+        if (colIdx === false) {
+            return;
+        } else {
+            dataIdx = header.dataIndex;
+            //dataIdx = grid.getColumnModel().getDataIndex(colIdx);
+        }
+
+        this.startEditing(record, dataIdx, location);
+    },
+
+
+    performEdit: function(record, dataIndex, location, e) {
+        var rowEd  = this.getRowEditor(),
+            values = {},
+            data   = record.data,
+            key;
+
+        if (!rowEd) {
+            return;
+        }
+
+        for (key in data) {
+            values[key] = this.preEditValue(record, key);
+        }
+
+        // why pass record.data instead of record
+        // then we wouldnt have to track currRecord?
+        rowEd.startEdit(location, values, dataIndex);
+    },
+
+    <a name="method-Ext.grid.RowEditing-stopEditing"></a>/**
+     * Stops any active editing
+     * @param {Boolean} cancel (optional) True to cancel any changes
+     */
+    stopEditing : function(cancel) {
+        if (this.editing) {
+            var rowEditor = this.getRowEditor();
+            rowEditor[cancel ? &#39;cancelEdit&#39; : &#39;completeEdit&#39;]();
+            this.editing = false;
+        }
+    },
+    
+    isDirty: function() {
+        var dirty;
+        if (!this.currRecord) {
+            return;
+        }
+        this.editors.each(function(f){
+            if(f.getValue &amp;&amp; String(this.currRecord.get(f.name)) !== String(f.getValue())){
+                dirty = true;
+                return false;
+            }
+        }, this);
+        return dirty;
+    },
+    
+    beforeEdit: function(record) {
+        return !(this.getRowEditor().isVisible() &amp;&amp; this.isDirty(record));
+    },
+
+    getRowEditor: function() {
+        if (!this.rowEditor) {
+            var items = [],
+                grid = this.grid,
+                view = this.view,
+                section = grid.down(&#39;gridsection&#39;),
+                headerCt = section.headerCt,
+                //view = grid.view,
+                //cm = this.grid.getColumnModel(),
+                ln = headerCt.getCount(),
+                i = 0,
+                width,
+                column,
+                ed;
+
+            for (;i &lt; ln; i++) {
+                column = headerCt.items.getAt(i);
+                ed = this.getEditor(column.dataIndex);
+
+                if (i === 0) {
+                    ed.margins = &#39;0 1 2 1&#39;;
+                } else if (i === ln - 1) {
+                    ed.margins = &#39;0 0 2 1&#39;;
+                } else {
+                    if (Ext.isIE) {
+                        ed.margins = &#39;0 0 2 0&#39;;
+                    }
+                    else {
+                        ed.margins = &#39;0 1 2 0&#39;;
+                    }
+                }
+                width = column.getDesiredWidth();
+                if (width) {
+                    ed.setWidth(width);
+                } else {
+                    ed.hide();
+                }
+
+                items.push(ed);
+            }
+
+            this.rowEditor = new Ext.grid.RowEditor({
+                items: items,
+                floating: true,
+                width: headerCt.getFullWidth(),
+                // keep a reference..
+                editingPlugin: this,
+                renderTo: view.getEl()
+            });
+        }
+        return this.rowEditor;
+    }
+});￿</pre></pre></body></html>

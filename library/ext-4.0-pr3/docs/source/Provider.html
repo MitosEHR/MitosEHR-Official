@@ -1,0 +1,102 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.direct.Provider"></a>/**
+ * @class Ext.direct.Provider
+ * @extends Ext.util.Observable
+ * &lt;p&gt;Ext.direct.Provider is an abstract class meant to be extended.&lt;/p&gt;
+ * 
+ * &lt;p&gt;For example ExtJs implements the following subclasses:&lt;/p&gt;
+ * <br><span style="display: none">**/</span>Provider
+|
++---{@link Ext.direct.JsonProvider JsonProvider} 
+    |
+    +---{@link Ext.direct.PollingProvider PollingProvider}   
+    |
+    +---{@link Ext.direct.RemotingProvider RemotingProvider}   
+ * <br><span style="display: none">/**</span> * @abstract
+ */
+Ext.define(&#39;Ext.direct.Provider&#39;, {
+    extend: &#39;Ext.util.Observable&#39;,
+    <a name="cfg-Ext.direct.Provider-id"></a>/**
+     * @cfg {String} id
+     * The unique id of the provider (defaults to an {@link Ext#id auto-assigned id}).
+     * You should assign an id if you need to be able to access the provider later and you do
+     * not have an object reference available, for example:
+     * <br><span style="display: none">**/</span>Ext.Direct.addProvider(
+    {
+        type: &#39;polling&#39;,
+        url:  &#39;php/poll.php&#39;,
+        id:   &#39;poll-provider&#39;
+    }
+);
+     
+var p = {@link Ext.direct.Direct Ext.direct.Direct}.{@link Ext.direct.Direct#getProvider getProvider}(&#39;poll-provider&#39;);
+p.disconnect();
+     * <br><span style="display: none">/**</span>     */
+        
+    <a name="cfg-Ext.direct.Provider-priority"></a>/**
+     * @cfg {Number} priority
+     * Priority of the request. Lower is higher priority, &lt;tt&gt;0&lt;/tt&gt; means &quot;duplex&quot; (always on).
+     * All Providers default to &lt;tt&gt;1&lt;/tt&gt; except for PollingProvider which defaults to &lt;tt&gt;3&lt;/tt&gt;.
+     */    
+    priority: 1,
+
+    <a name="cfg-Ext.direct.Provider-type"></a>/**
+     * @cfg {String} type
+     * &lt;b&gt;Required&lt;/b&gt;, &lt;tt&gt;undefined&lt;/tt&gt; by default.  The &lt;tt&gt;type&lt;/tt&gt; of provider specified
+     * to {@link Ext.direct.Direct Ext.direct.Direct}.{@link Ext.direct.Direct#addProvider addProvider} to create a
+     * new Provider. Acceptable values by default are:&lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+     * &lt;li&gt;&lt;b&gt;&lt;tt&gt;polling&lt;/tt&gt;&lt;/b&gt; : {@link Ext.direct.PollingProvider PollingProvider}&lt;/li&gt;
+     * &lt;li&gt;&lt;b&gt;&lt;tt&gt;remoting&lt;/tt&gt;&lt;/b&gt; : {@link Ext.direct.RemotingProvider RemotingProvider}&lt;/li&gt;
+     * &lt;/ul&gt;&lt;/div&gt;
+     */    
+ 
+    // private
+    constructor : function(config){
+        Ext.apply(this, config);
+        this.addEvents(
+            <a name="event-Ext.direct.Provider-connect"></a>/**
+             * @event connect
+             * Fires when the Provider connects to the server-side
+             * @param {Ext.direct.Provider} provider The {@link Ext.direct.Provider Provider}.
+             */            
+            &#39;connect&#39;,
+            <a name="event-Ext.direct.Provider-disconnect"></a>/**
+             * @event disconnect
+             * Fires when the Provider disconnects from the server-side
+             * @param {Ext.direct.Provider} provider The {@link Ext.direct.Provider Provider}.
+             */            
+            &#39;disconnect&#39;,
+            <a name="event-Ext.direct.Provider-data"></a>/**
+             * @event data
+             * Fires when the Provider receives data from the server-side
+             * @param {Ext.direct.Provider} provider The {@link Ext.direct.Provider Provider}.
+             * @param {event} e The {@link Ext.direct.Direct#eventTypes Ext.Direct.Event type} that occurred.
+             */            
+            &#39;data&#39;,
+            <a name="event-Ext.direct.Provider-exception"></a>/**
+             * @event exception
+             * Fires when the Provider receives an exception from the server-side
+             */                        
+            &#39;exception&#39;
+        );
+        Ext.direct.Provider.superclass.constructor.call(this, config);
+    },
+
+    <a name="method-Ext.direct.Provider-isConnected"></a>/**
+     * Returns whether or not the server-side is currently connected.
+     * Abstract method for subclasses to implement.
+     */
+    isConnected: function(){
+        return false;
+    },
+
+    <a name="prop-Ext.direct.Provider-connect"></a>/**
+     * Abstract methods for subclasses to implement.
+     */
+    connect: Ext.emptyFn,
+    
+    <a name="prop-Ext.direct.Provider-disconnect"></a>/**
+     * Abstract methods for subclasses to implement.
+     */
+    disconnect: Ext.emptyFn
+});
+￿</pre></pre></body></html>

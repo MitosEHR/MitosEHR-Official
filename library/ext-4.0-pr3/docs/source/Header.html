@@ -1,0 +1,284 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.Header"></a>/**
+ * @class Ext.grid.Header
+ * @extends Ext.Component
+ *
+ * Clicking on a header will toggle sort by the bound dataIndex.
+ *
+ * Opening a menu will allow you to turn on/off Headers found in a particular
+ * section.
+ *
+ * Allows a user to freeze columns
+ * @xtype gridheader
+ */
+Ext.define(&#39;Ext.grid.Header&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    alias: &#39;widget.gridheader&#39;,
+    
+    headerCls: Ext.baseCSSPrefix + &#39;column-header &#39; + Ext.baseCSSPrefix + &#39;unselectable&#39;,
+    overCls: Ext.baseCSSPrefix + &#39;column-header-over&#39;,
+    height: 23,
+    handleWidth: 5,
+
+
+    sortState: null,
+    possibleSortStates: [&#39;ASC&#39;, &#39;DESC&#39;],
+    
+    renderTpl: [
+        &#39;&lt;span class=&quot;&#39; + Ext.baseCSSPrefix + &#39;column-header-inner&quot;&gt;{text}&lt;/span&gt;&#39;,
+        &#39;&lt;img src=&quot;{[Ext.BLANK_IMAGE_URL]}&quot; class=&quot;&#39; + Ext.baseCSSPrefix + &#39;sort-indicator&quot; border=&quot;0&quot;/&gt;&#39;,
+        // TODO: Use an additional CSS class because
+        // this does not allow a user to dynamically re-enable a menu.
+        &#39;&lt;tpl if=&quot;!values.menuDisabled&quot;&gt;&lt;div class=&quot;&#39; + Ext.baseCSSPrefix + &#39;column-header-trigger&quot;&gt;&lt;/div&gt;&lt;/tpl&gt;&#39;
+    ],
+    
+    <a name="cfg-Ext.grid.Header-dataIndex"></a>/**
+     * @cfg {String} dataIndex &lt;p&gt;&lt;b&gt;Required&lt;/b&gt;. The name of the field in the
+     * grid&#39;s {@link Ext.data.Store}&#39;s {@link Ext.data.Model} definition from
+     * which to draw the column&#39;s value.&lt;/p&gt;
+     */
+    dataIndex: null,
+
+    
+    <a name="cfg-Ext.grid.Header-text"></a>/**
+     * @cfg {String} text Optional. The header text to be used as innerHTML
+     * (html tags are accepted) to display in the Grid.  &lt;b&gt;Note&lt;/b&gt;: to
+     * have a clickable header with no text displayed you can use the
+     * default of &lt;tt&gt;&#39;&amp;#160;&#39;&lt;/tt&gt;.
+     */
+    text: &#39;&amp;#160&#39;,
+    
+    <a name="cfg-Ext.grid.Header-sortable"></a>/**
+     * @cfg {Boolean} sortable Optional. &lt;tt&gt;true&lt;/tt&gt; if sorting is to be allowed on this column.
+     * Whether local/remote sorting is used is specified in &lt;code&gt;{@link Ext.data.Store#remoteSort}&lt;/code&gt;.
+     */
+    sortable: true,
+    
+    <a name="cfg-Ext.grid.Header-hideable"></a>/**
+     * @cfg {Boolean} hideable Optional. Specify as &lt;tt&gt;false&lt;/tt&gt; to prevent the user from hiding this column
+     * (defaults to true).
+     */
+    hideable: true,
+    
+    <a name="cfg-Ext.grid.Header-menuDisabled"></a>/**
+     * @cfg {Boolean} menuDisabled
+     * Defaults to false.
+     */
+    menuDisabled: false,
+    
+    <a name="cfg-Ext.grid.Header-renderer"></a>/**
+     * @cfg {Function} renderer
+     * Defaults to false.
+     */
+    renderer: false,
+    
+    <a name="cfg-Ext.grid.Header-align"></a>/**
+     * @cfg {String} align Sets the alignment of the header and renderered columns.
+     * Defaults to &#39;left&#39;.
+     */
+    align: &#39;left&#39;,
+    
+    <a name="cfg-Ext.grid.Header-draggable"></a>/**
+     * @cfg {Boolean} draggable Indicates whether or not the header can be drag and drop re-ordered.
+     * Defaults to true.
+     */
+    draggable: true,
+    
+    // Header does not use the typical ComponentDraggable class and therefore we
+    // override this with an emptyFn. It is controlled at the HeaderDragZone.
+    initDraggable: Ext.emptyFn,
+    
+    <a name="prop-Ext.grid.Header-{Ext.core.Element}"></a>/**
+     * @property {Ext.core.Element} triggerEl
+     */
+    
+    <a name="prop-Ext.grid.Header-{Ext.core.Element}"></a>/**
+     * @property {Ext.core.Element} textEl
+     */
+    
+    initComponent: function() {
+        this.cls = this.headerCls + &#39; &#39; + (this.cls ? this.cls : &#39;&#39;);
+        if (Ext.isDefined(this.header)) {
+            console.warn(&quot;Header is now using text instead of header.&quot;);
+            this.text = this.header;
+            delete this.header;
+        }
+        
+        if (!this.triStateSort) {
+            this.possibleSortStates.length = 2;
+        }
+    
+        
+        Ext.applyIf(this.renderSelectors, {
+            triggerEl: &#39;.&#39; + Ext.baseCSSPrefix + &#39;column-header-trigger&#39;,
+            textEl: &#39;span&#39;
+        });
+        Ext.grid.Header.superclass.initComponent.call(this);
+    },
+    
+    initRenderData: function() {
+        Ext.applyIf(this.renderData, {
+            text: this.text,
+            menuDisabled: this.menuDisabled
+        });
+        return Ext.grid.Header.superclass.initRenderData.call(this);
+    },
+    
+    // note that this should invalidate the menu cache
+    setText: function(text) {
+        this.text = text;
+        if (this.rendered) {
+            this.textEl.update(text);
+        } 
+    },
+    
+    afterRender: function() {
+        Ext.grid.Header.superclass.afterRender.call(this);
+        var el = this.el;
+        el.addCls(Ext.baseCSSPrefix + &#39;column-header-align-&#39; + this.align);
+        el.addClsOnOver(this.overCls);
+        el.on(&#39;click&#39;, this.onElClick, this);
+        el.on(&#39;dblclick&#39;, this.onElDblClick, this);
+    },
+    
+    onElDblClick: function(e, t) {
+        var ownerCt = this.ownerCt;
+        if (ownerCt &amp;&amp; ownerCt.items.indexOf(this) !== 0 &amp;&amp; this.isOnLeftEdge(e) ) {
+            ownerCt.expandToFit(this.previousSibling(&#39;gridheader&#39;));
+        }
+    },
+    
+    onElClick: function(e, t) {
+        var ownerCt = this.ownerCt;
+        
+        if (ownerCt &amp;&amp; !ownerCt.locked) {
+            // Firefox doesn&#39;t check the current target in a within check.
+            // Therefore we check the target directly and then within (ancestors)
+            if (this.triggerEl &amp;&amp; (e.target === this.triggerEl.dom || e.within(this.triggerEl))) {
+                ownerCt.onHeaderTriggerClick(this, e, t);
+            // if its not on the left hand edge, sort
+            } else if (!this.isOnLeftEdge(e) &amp;&amp; !this.isOnRightEdge(e)) {
+                this.toggleSortState();
+                ownerCt.onHeaderClick(this, e, t);
+            }
+        }
+    },
+    
+    toggleSortState: function() {
+        if (this.sortable) {
+            var idx = Ext.Array.indexOf(this.possibleSortStates, this.sortState),
+                nextIdx;
+
+            nextIdx = (idx + 1) % this.possibleSortStates.length;
+            this.setSortState(this.possibleSortStates[nextIdx]);
+        }
+    },
+
+    //setSortState: function(state, updateUI) {
+    //setSortState: function(state, doSort) {
+    setSortState: function(state, skipClear) {
+        var colSortClsPrefix = Ext.baseCSSPrefix + &#39;column-header-sort-&#39;,
+            ascCls = colSortClsPrefix + &#39;ASC&#39;,
+            descCls = colSortClsPrefix + &#39;DESC&#39;,
+            nullCls = colSortClsPrefix + &#39;null&#39;,
+            ds = this.up(&#39;gridpanel&#39;).store;
+
+        this.addCls(colSortClsPrefix + state);
+        
+        if (state) {
+            ds.sort(this.dataIndex, state);
+        }
+        
+        switch (state) {
+            case &#39;DESC&#39;:
+                this.removeCls(ascCls, nullCls);
+                break;
+            case &#39;ASC&#39;:
+                this.removeCls(descCls, nullCls);
+                break;
+            case null:
+                this.removeCls(ascCls, descCls);
+                break;
+        }
+        
+        
+        if (!this.triStateSort &amp;&amp; !skipClear) {
+            this.ownerCt.clearOtherSortStates(this);
+        }
+        this.sortState = state;
+    },
+    
+    hide: function() {
+        this.oldWidth = this.getWidth();
+        Ext.grid.Header.superclass.hide.apply(this, arguments);
+
+        var ownerCt = this.ownerCt;
+        // Notify owning HeaderContainer
+        if (ownerCt) {
+            ownerCt.onHeaderHide(this);
+        }
+    },
+    
+    show: function() {
+        Ext.grid.Header.superclass.show.apply(this, arguments);
+        var ownerCt = this.ownerCt;
+        // Notify owning HeaderContainer
+        if (ownerCt) {
+            ownerCt.onHeaderShow(this);
+        }
+    },
+    
+    onResize: function() {
+
+    },
+    
+    setSize: function(w, h) {
+        Ext.grid.Header.superclass.setSize.call(this, w, h);
+        var ownerCt = this.ownerCt;
+        if (ownerCt) {
+            ownerCt.onHeaderResize(this, w);
+        }
+    },
+    
+    // invoked when dynamically calculating a flex&#39;d value
+    setCalculatedSize: function(w, h) {
+        Ext.grid.Header.superclass.setCalculatedSize.call(this, w, h);
+        //this.width = w;
+        //delete this.flex;
+        var ownerCt = this.ownerCt;
+        if (ownerCt) {
+            ownerCt.onHeaderResize(this, w);
+        }
+    },
+    
+    
+    
+    getDesiredWidth: function() {
+        if (this.rendered) {
+            // headers always have either a width or a flex
+            // because HeaderContainer sets a defaults width
+            // therefore we can ignore the natural width
+            // we use the componentLayout&#39;s tracked width so that
+            // we can calculate the desired width when renderered
+            // but not visible because its being obscured by a layout
+            return this.componentLayout.lastComponentSize.width;
+        } else {
+            return this.width;
+        }
+    },
+    
+    getCellSelector: function() {
+        return &#39;.&#39; + Ext.baseCSSPrefix + &#39;grid-cell-&#39; + this.id;
+    },
+    
+    getCellInnerSelector: function() {
+        return this.getCellSelector() + &#39; .&#39; + Ext.baseCSSPrefix + &#39;grid-cell-inner&#39;;
+    },
+    
+    isOnLeftEdge: function(e) {
+        return (e.getXY()[0] - this.el.getLeft() &lt;= this.handleWidth);
+    },
+    
+    isOnRightEdge: function(e) {
+        return (this.el.getRight() - e.getXY()[0] &lt;= this.handleWidth);
+    }
+});￿</pre></pre></body></html>

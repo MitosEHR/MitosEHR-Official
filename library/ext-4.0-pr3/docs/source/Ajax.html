@@ -1,0 +1,112 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.Ajax"></a>/**
+ * @class Ext.Ajax
+ * @singleton
+ * @markdown
+ * @extends Ext.data.Connection
+
+A singleton instance of an {@link Ext.data.Connection}. This class
+is used to communicate with your server side code. It can be used as follows:
+
+    Ext.Ajax.request({
+        url: &#39;page.php&#39;,
+        params: {
+            id: 1
+        },
+        success: function(response){
+            var text = response.responseText;
+            // process server response here
+        }
+    });
+
+Default options for all requests can be set be changing a property on the Ext.Ajax class:
+
+    Ext.Ajax.timeout = 60000; // 60 seconds
+
+Any options specified in the request method for the Ajax request will override any
+defaults set on the Ext.Ajax class. In the code sample below, the timeout for the
+request will be 60 seconds.
+
+    Ext.Ajax.timeout = 120000; // 120 seconds
+    Ext.Ajax.request({
+        url: &#39;page.aspx&#39;,
+        timeout: 60000
+    });
+
+In general, this class will be used for all Ajax requests in your application.
+The main reason for creating a separate {@link Ext.data.Connection} is for a
+series of requests that share common settings that are different to all other
+requests in the application.
+
+ */
+Ext.define(&#39;Ext.Ajax&#39;, {
+    extend: &#39;Ext.data.Connection&#39;,
+    singleton: true,
+
+    <a name="cfg-Ext.Ajax-url"></a>/**
+     * @cfg {String} url @hide
+     */
+    <a name="cfg-Ext.Ajax-extraParams"></a>/**
+     * @cfg {Object} extraParams @hide
+     */
+    <a name="cfg-Ext.Ajax-defaultHeaders"></a>/**
+     * @cfg {Object} defaultHeaders @hide
+     */
+    <a name="cfg-Ext.Ajax-method"></a>/**
+     * @cfg {String} method (Optional) @hide
+     */
+    <a name="cfg-Ext.Ajax-timeout"></a>/**
+     * @cfg {Number} timeout (Optional) @hide
+     */
+    <a name="cfg-Ext.Ajax-autoAbort"></a>/**
+     * @cfg {Boolean} autoAbort (Optional) @hide
+     */
+
+    <a name="cfg-Ext.Ajax-disableCaching"></a>/**
+     * @cfg {Boolean} disableCaching (Optional) @hide
+     */
+
+    <a name="prop-Ext.Ajax-disableCaching"></a>/**
+     * @property  disableCaching
+     * True to add a unique cache-buster param to GET requests. (defaults to true)
+     * @type Boolean
+     */
+    <a name="prop-Ext.Ajax-url"></a>/**
+     * @property  url
+     * The default URL to be used for requests to the server. (defaults to undefined)
+     * If the server receives all requests through one URL, setting this once is easier than
+     * entering it on every request.
+     * @type String
+     */
+    <a name="prop-Ext.Ajax-extraParams"></a>/**
+     * @property  extraParams
+     * An object containing properties which are used as extra parameters to each request made
+     * by this object (defaults to undefined). Session information and other data that you need
+     * to pass with each request are commonly put here.
+     * @type Object
+     */
+    <a name="prop-Ext.Ajax-defaultHeaders"></a>/**
+     * @property  defaultHeaders
+     * An object containing request headers which are added to each request made by this object
+     * (defaults to undefined).
+     * @type Object
+     */
+    <a name="prop-Ext.Ajax-method"></a>/**
+     * @property  method
+     * The default HTTP method to be used for requests. Note that this is case-sensitive and
+     * should be all caps (defaults to undefined; if not set but params are present will use
+     * &lt;tt&gt;&quot;POST&quot;&lt;/tt&gt;, otherwise will use &lt;tt&gt;&quot;GET&quot;&lt;/tt&gt;.)
+     * @type String
+     */
+    <a name="prop-Ext.Ajax-timeout"></a>/**
+     * @property  timeout
+     * The timeout in milliseconds to be used for requests. (defaults to 30000)
+     * @type Number
+     */
+
+    <a name="prop-Ext.Ajax-autoAbort"></a>/**
+     * @property  autoAbort
+     * Whether a new request should abort any pending requests. (defaults to false)
+     * @type Boolean
+     */
+    autoAbort : false
+});￿</pre></pre></body></html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.layout.container.Fit"></a>/**
+ * @class Ext.layout.container.Fit
+ * @extends Ext.layout.container.AbstractFit
+ * &lt;p&gt;This is a base class for layouts that contain &lt;b&gt;a single item&lt;/b&gt; that automatically expands to fill the layout&#39;s
+ * container.  This class is intended to be extended or created via the &lt;tt&gt;layout:&#39;fit&#39;&lt;/tt&gt; {@link Ext.container.Container#layout}
+ * config, and should generally not need to be created directly via the new keyword.&lt;/p&gt;
+ * &lt;p&gt;FitLayout does not have any direct config options (other than inherited ones).  To fit a panel to a container
+ * using FitLayout, simply set layout:&#39;fit&#39; on the container and add a single panel to it.  If the container has
+ * multiple panels, only the first one will be displayed.  Example usage:&lt;/p&gt;
+ * <br><span style="display: none">**/</span>var p = new Ext.panel.Panel({
+    title: &#39;Fit Layout&#39;,
+    layout:&#39;fit&#39;,
+    items: {
+        title: &#39;Inner Panel&#39;,
+        html: &#39;&amp;lt;p&amp;gt;This is the inner panel content&amp;lt;/p&amp;gt;&#39;,
+        border: false
+    }
+});
+<br><span style="display: none">/**</span> */
+Ext.define(&#39;Ext.layout.container.Fit&#39;, {
+
+    /* Begin Definitions */
+
+    extend: &#39;Ext.layout.container.AbstractFit&#39;,
+
+    alias: &#39;layout.fit&#39;,
+
+    /* End Definitions */
+    // @private
+    onLayout : function() {
+        var me = this;
+        Ext.layout.container.Fit.superclass.onLayout.call(me);
+
+        if (me.owner.items.length) {
+            me.setItemBox(me.owner.items.get(0), me.getLayoutTargetSize());
+        }
+    },
+
+    getTargetBox : function() {
+        return this.getLayoutTargetSize();
+    },
+
+    setItemBox : function(item, box) {
+        var me = this;
+        if (item &amp;&amp; box.height &gt; 0) {
+            if (me.isManaged(&#39;width&#39;) === true) {
+               box.width = undefined;
+            }
+            if (me.isManaged(&#39;height&#39;) === true) {
+               box.height = undefined;
+            }
+            me.setItemSize(item, box.width, box.height);
+        }
+    }
+});￿</pre></pre></body></html>

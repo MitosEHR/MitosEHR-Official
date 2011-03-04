@@ -1,0 +1,162 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.picker.Time"></a>/**
+ * @class Ext.picker.Time
+ * @extends Ext.view.BoundList
+ * &lt;p&gt;A time picker which provides a list of times from which to choose. This is used by the
+ * {@link Ext.form.Time} class to allow browsing and selection of valid times, but could also be used
+ * with other components.&lt;/p&gt;
+ * &lt;p&gt;By default, all times starting at midnight and incrementing every 15 minutes will be presented.
+ * This list of available times can be controlled using the {@link #minValue}, {@link #maxValue}, and
+ * {@link #increment} configuration properties. The format of the times presented in the list can be
+ * customized with the {@link #format} config.&lt;/p&gt;
+ * &lt;p&gt;To handle when the user selects a time from the list, you can subscribe to the {@link #selectionchange}
+ * event.&lt;/p&gt;
+ *
+ * @constructor
+ * Create a new TimePicker
+ * @param {Object} config The config object
+ *
+ * @xtype timepicker
+ */
+Ext.define(&#39;Ext.picker.Time&#39;, {
+    extend: &#39;Ext.view.BoundList&#39;,
+    alias: &#39;widget.timepicker&#39;,
+    requires: [&#39;Ext.data.Store&#39;, &#39;Ext.util.Date&#39;],
+
+    <a name="cfg-Ext.picker.Time-minValue"></a>/**
+     * @cfg {Date} minValue
+     * The minimum time to be shown in the list of times. This must be a Date object (only the time fields
+     * will be used); no parsing of String values will be done. Defaults to undefined.
+     */
+
+    <a name="cfg-Ext.picker.Time-maxValue"></a>/**
+     * @cfg {Date} maxValue
+     * The maximum time to be shown in the list of times. This must be a Date object (only the time fields
+     * will be used); no parsing of String values will be done. Defaults to undefined.
+     */
+
+    <a name="cfg-Ext.picker.Time-increment"></a>/**
+     * @cfg {Number} increment
+     * The number of minutes between each time value in the list (defaults to 15).
+     */
+    increment: 15,
+
+    <a name="cfg-Ext.picker.Time-format"></a>/**
+     * @cfg {String} format
+     * The default time format string which can be overriden for localization support. The format must be
+     * valid according to {@link Date#parseDate} (defaults to &#39;g:i A&#39;, e.g., &#39;3:15 PM&#39;). For 24-hour time
+     * format try &#39;H:i&#39; instead.
+     */
+    format : &quot;g:i A&quot;,
+
+    <a name="prop-Ext.picker.Time-displayField"></a>/**
+     * @hide
+     * The field in the implicitly-generated Model objects that gets displayed in the list. This is
+     * an internal field name only and is not useful to change via config.
+     */
+    displayField: &#39;disp&#39;,
+
+    /**
+     * @private
+     * Year, month, and day that all times will be normalized into internally.
+     */
+    initDate: [2008,1,1],
+
+    componentCls: Ext.baseCSSPrefix + &#39;timepicker&#39;,
+
+    <a name="prop-Ext.picker.Time-loadingText"></a>/**
+     * @hide
+     */
+    loadingText: &#39;&#39;,
+
+    initComponent: function() {
+        var me = this,
+            dateUtil = Ext.Date,
+            clearTime = dateUtil.clearTime,
+            initDate = me.initDate.join(&#39;/&#39;);
+
+        // Set up absolute min and max for the entire day
+        me.absMin = clearTime(new Date(initDate));
+        me.absMax = dateUtil.add(clearTime(new Date(initDate)), &#39;mi&#39;, (24 * 60) - 1);
+
+        me.store = me.createStore();
+        me.updateList();
+
+        Ext.picker.Time.superclass.initComponent.call(me);
+    },
+
+    <a name="method-Ext.picker.Time-setMinValue"></a>/**
+     * Set the {@link #minValue} and update the list of available times. This must be a Date
+     * object (only the time fields will be used); no parsing of String values will be done.
+     * @param {Date} value
+     */
+    setMinValue: function(value) {
+        this.minValue = value;
+        this.updateList();
+    },
+
+    <a name="method-Ext.picker.Time-setMaxValue"></a>/**
+     * Set the {@link #maxValue} and update the list of available times. This must be a Date
+     * object (only the time fields will be used); no parsing of String values will be done.
+     * @param {Date} value
+     */
+    setMaxValue: function(value) {
+        this.maxValue = value;
+        this.updateList();
+    },
+
+    /**
+     * @private
+     * Sets the year/month/day of the given Date object to the {@link #initDate}, so that only
+     * the time fields are significant. This makes values suitable for time comparison.
+     * @param {Date} date
+     */
+    normalizeDate: function(date) {
+        var initDate = this.initDate;
+        date.setFullYear(initDate[0], initDate[1] - 1, initDate[2]);
+        return date;
+    },
+
+    <a name="method-Ext.picker.Time-updateList"></a>/**
+     * Update the list of available times in the list to be constrained within the
+     * {@link #minValue} and {@link #maxValue}.
+     */
+    updateList: function() {
+        var me = this,
+            min = me.normalizeDate(me.minValue || me.absMin),
+            max = me.normalizeDate(me.maxValue || me.absMax);
+
+        me.store.filterBy(function(record) {
+            var date = record.get(&#39;date&#39;);
+            return date &gt;= min &amp;&amp; date &lt;= max;
+        });
+    },
+
+    /**
+     * @private
+     * Creates the internal {@link Ext.data.Store} that contains the available times. The store
+     * is loaded with all possible times, and it is later filtered to hide those times outside
+     * the minValue/maxValue.
+     */
+    createStore: function() {
+        var me = this,
+            utilDate = Ext.Date,
+            times = [],
+            min = me.absMin,
+            max = me.absMax;
+
+        while(min &lt;= max){
+            times.push({
+                disp: utilDate.dateFormat(min, me.format),
+                date: min
+            });
+            min = utilDate.add(min, &#39;mi&#39;, me.increment);
+        }
+
+        return new Ext.data.Store({
+            fields: [&#39;disp&#39;, &#39;date&#39;],
+            data: times
+        });
+    }
+
+});
+￿</pre></pre></body></html>

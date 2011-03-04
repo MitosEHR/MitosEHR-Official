@@ -1,0 +1,1055 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext"></a>/**
+ * @class Ext
+ * Ext core utilities and functions.
+ * @singleton
+ */
+
+Ext.apply(Ext, {
+    userAgent: navigator.userAgent.toLowerCase(),
+    cache: {},
+    idSeed: 1000,
+    BLANK_IMAGE_URL : &#39;data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&#39;,
+    isStrict: document.compatMode == &quot;CSS1Compat&quot;,
+    windowId: &#39;ext-window&#39;,
+    documentId: &#39;ext-document&#39;,
+
+    <a name="prop-Ext-isReady"></a>/**
+     * True when the document is fully initialized and ready for action
+     * @type Boolean
+     */
+    isReady: false,
+
+    <a name="prop-Ext-enableGarbageCollector"></a>/**
+     * True to automatically uncache orphaned Ext.core.Elements periodically (defaults to true)
+     * @type Boolean
+     */
+    enableGarbageCollector: true,
+
+    <a name="prop-Ext-enableListenerCollection"></a>/**
+     * True to automatically purge event listeners during garbageCollection (defaults to true).
+     * @type Boolean
+     */
+    enableListenerCollection: true,
+
+    <a name="method-Ext-id"></a>/**
+     * Generates unique ids. If the element already has an id, it is unchanged
+     * @param {Mixed} el (optional) The element to generate an id for
+     * @param {String} prefix (optional) Id prefix (defaults &quot;ext-gen&quot;)
+     * @return {String} The generated Id.
+     */
+    id: function(el, prefix) {
+        el = Ext.getDom(el) || {};
+        if (el === document) {
+            el.id = this.documentId;
+        }
+        else if (el === window) {
+            el.id = this.windowId;
+        }
+        el.id = el.id || ((prefix || &#39;ext-gen&#39;) + (++Ext.idSeed));
+        return el.id;
+    },
+
+    <a name="method-Ext-getBody"></a>/**
+     * Returns the current document body as an {@link Ext.core.Element}.
+     * @return Ext.core.Element The document body
+     */
+    getBody: function() {
+        return Ext.get(document.body || false);
+    },
+
+    <a name="method-Ext-getHead"></a>/**
+     * Returns the current document head as an {@link Ext.core.Element}.
+     * @return Ext.core.Element The document head
+     */
+    getHead: function() {
+        var head;
+
+        return function() {
+            if (head == undefined) {
+                head = Ext.get(document.getElementsByTagName(&quot;head&quot;)[0]);
+            }
+
+            return head;
+        };
+    }(),
+
+    <a name="method-Ext-getDoc"></a>/**
+     * Returns the current HTML document object as an {@link Ext.core.Element}.
+     * @return Ext.core.Element The document
+     */
+    getDoc: function() {
+        return Ext.get(document);
+    },
+
+    <a name="method-Ext-getCmp"></a>/**
+     * This is shorthand reference to {@link Ext.ComponentMgr#get}.
+     * Looks up an existing {@link Ext.Component Component} by {@link Ext.Component#id id}
+     * @param {String} id The component {@link Ext.Component#id id}
+     * @return Ext.Component The Component, &lt;tt&gt;undefined&lt;/tt&gt; if not found, or &lt;tt&gt;null&lt;/tt&gt; if a
+     * Class was found.
+    */
+    getCmp: function(id) {
+        return Ext.ComponentMgr.get(id);
+    },
+
+    <a name="method-Ext-getOrientation"></a>/**
+     * Returns the current orientation of the mobile device
+     * @return {String} Either &#39;portrait&#39; or &#39;landscape&#39;
+     */
+    getOrientation: function() {
+        return window.innerHeight &gt; window.innerWidth ? &#39;portrait&#39; : &#39;landscape&#39;;
+    },
+
+    <a name="method-Ext-destroy"></a>/**
+     * Attempts to destroy any objects passed to it by removing all event listeners, removing them from the
+     * DOM (if applicable) and calling their destroy functions (if available).  This method is primarily
+     * intended for arguments of type {@link Ext.core.Element} and {@link Ext.Component}, but any subclass of
+     * {@link Ext.util.Observable} can be passed in.  Any number of elements and/or components can be
+     * passed into this function in a single call as separate arguments.
+     * @param {Mixed} arg1 An {@link Ext.core.Element}, {@link Ext.Component}, or an Array of either of these to destroy
+     * @param {Mixed} arg2 (optional)
+     * @param {Mixed} etc... (optional)
+     */
+    destroy: function() {
+        var ln = arguments.length,
+        i, arg;
+
+        for (i = 0; i &lt; ln; i++) {
+            arg = arguments[i];
+            if (arg) {
+                if (Ext.isArray(arg)) {
+                    this.destroy.apply(this, arg);
+                }
+                else if (Ext.isFunction(arg.destroy)) {
+                    arg.destroy();
+                }
+                else if (arg.dom) {
+                    arg.remove();
+                }
+            }
+        }
+    },
+
+    <a name="method-Ext-callback"></a>/**
+     * Execute a callback function in a particular scope. If no function is passed the call is ignored.
+     * @param {Function} callback The callback to execute
+     * @param {Object} scope (optional) The scope to execute in
+     * @param {Array} args (optional) The arguments to pass to the function
+     * @param {Number} delay (optional) Pass a number to delay the call by a number of milliseconds.
+     */
+    callback: function(callback, scope, args, delay){
+        if(Ext.isFunction(callback)){
+            args = args || [];
+            scope = scope || window;
+            if (delay) {
+                Ext.defer(callback, delay, scope, args);
+            } else {
+                callback.apply(scope, args);
+            }
+        }
+    },
+
+
+    <a name="method-Ext-urlEncode"></a>/**
+     * Takes an object and converts it to an encoded URL. e.g. Ext.urlEncode({foo: 1, bar: 2}); would return &quot;foo=1&amp;bar=2&quot;.  Optionally,
+     * property values can be arrays, instead of keys and the resulting string that&#39;s returned will contain a name/value pair for each array value.
+     * @param {Object} o The object to encode
+     * @param {String} pre (optional) A prefix to add to the url encoded string
+     * @return {String}
+     */
+    urlEncode : function(o, pre) {
+        var empty,
+            buf = [],
+            e = encodeURIComponent;
+
+        Ext.iterate(o, function(key, item){
+            empty = Ext.isEmpty(item);
+            Ext.each(empty ? key : item, function(val){
+                buf.push(&#39;&amp;&#39;, e(key), &#39;=&#39;, (!Ext.isEmpty(val) &amp;&amp; (val != key || !empty)) ? (Ext.isDate(val) ? Ext.encode(val).replace(/&quot;/g, &#39;&#39;) : e(val)) : &#39;&#39;);
+            });
+        });
+
+        if(!pre){
+            buf.shift();
+            pre = &#39;&#39;;
+        }
+
+        return pre + buf.join(&#39;&#39;);
+    },
+
+    <a name="method-Ext-urlDecode"></a>/**
+     * Takes an encoded URL and and converts it to an object. Example:
+     * <br><span style="display: none">**/</span>Ext.urlDecode(&quot;foo=1&amp;bar=2&quot;); // returns {foo: &quot;1&quot;, bar: &quot;2&quot;}
+Ext.urlDecode(&quot;foo=1&amp;bar=2&amp;bar=3&amp;bar=4&quot;, false); // returns {foo: &quot;1&quot;, bar: [&quot;2&quot;, &quot;3&quot;, &quot;4&quot;]}
+       <br><span style="display: none">/**</span>     * @param {String} string
+     * @param {Boolean} overwrite (optional) Items of the same name will overwrite previous values instead of creating an an array (Defaults to false).
+     * @return {Object} A literal with members
+     */
+    urlDecode : function(string, overwrite) {
+        if (Ext.isEmpty(string)) {
+            return {};
+        }
+
+        var obj = {},
+            pairs = string.split(&#39;&amp;&#39;),
+            d = decodeURIComponent,
+            name,
+            value;
+
+        Ext.each(pairs, function(pair) {
+            pair = pair.split(&#39;=&#39;);
+            name = d(pair[0]);
+            value = d(pair[1]);
+            obj[name] = overwrite || !obj[name] ? value : [].concat(obj[name]).concat(value);
+        });
+
+        return obj;
+    },
+
+    <a name="method-Ext-htmlEncode"></a>/**
+     * Convert certain characters (&amp;, &lt;, &gt;, and &#39;) to their HTML character equivalents for literal display in web pages.
+     * @param {String} value The string to encode
+     * @return {String} The encoded text
+     */
+    htmlEncode : function(value) {
+        return Ext.String.htmlEncode(value);
+    },
+
+    <a name="method-Ext-htmlDecode"></a>/**
+     * Convert certain characters (&amp;, &lt;, &gt;, and &#39;) from their HTML character equivalents.
+     * @param {String} value The string to decode
+     * @return {String} The decoded text
+     */
+    htmlDecode : function(value) {
+         return Ext.String.htmlDecode(value);
+    },
+
+    <a name="method-Ext-urlAppend"></a>/**
+     * Appends content to the query string of a URL, handling logic for whether to place
+     * a question mark or ampersand.
+     * @param {String} url The URL to append to.
+     * @param {String} s The content to append to the URL.
+     * @return (String) The resulting URL
+     */
+    urlAppend : function(url, s) {
+        if (!Ext.isEmpty(s)) {
+            return url + (url.indexOf(&#39;?&#39;) === -1 ? &#39;?&#39; : &#39;&amp;&#39;) + s;
+        }
+        return url;
+    },
+
+     <a name="method-Ext-each"></a>/**
+      * Iterates an array calling the supplied function.
+      * @param {Array/NodeList/Mixed} array The array to be iterated. If this
+      * argument is not really an array, the supplied function is called once.
+      * @param {Function} fn The function to be called with each item. If the
+      * supplied function returns false, iteration stops and this method returns
+      * the current &lt;code&gt;index&lt;/code&gt;. This function is called with
+      * the following arguments:
+      * &lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+      * &lt;li&gt;&lt;code&gt;item&lt;/code&gt; : &lt;i&gt;Mixed&lt;/i&gt;
+      * &lt;div class=&quot;sub-desc&quot;&gt;The item at the current &lt;code&gt;index&lt;/code&gt;
+      * in the passed &lt;code&gt;array&lt;/code&gt;&lt;/div&gt;&lt;/li&gt;
+      * &lt;li&gt;&lt;code&gt;index&lt;/code&gt; : &lt;i&gt;Number&lt;/i&gt;
+      * &lt;div class=&quot;sub-desc&quot;&gt;The current index within the array&lt;/div&gt;&lt;/li&gt;
+      * &lt;li&gt;&lt;code&gt;allItems&lt;/code&gt; : &lt;i&gt;Array&lt;/i&gt;
+      * &lt;div class=&quot;sub-desc&quot;&gt;The &lt;code&gt;array&lt;/code&gt; passed as the first
+      * argument to &lt;code&gt;Ext.each&lt;/code&gt;.&lt;/div&gt;&lt;/li&gt;
+      * &lt;/ul&gt;&lt;/div&gt;
+      * @param {Object} scope The scope (&lt;code&gt;this&lt;/code&gt; reference) in which the specified function is executed.
+      * Defaults to the &lt;code&gt;item&lt;/code&gt; at the current &lt;code&gt;index&lt;/code&gt;util
+      * within the passed &lt;code&gt;array&lt;/code&gt;.
+      * @return See description for the fn parameter.
+      */
+     each : function(array, fn, scope) {
+         if (Ext.isEmpty(array, true)) {
+             return 0;
+         }
+         if (!Ext.isIterable(array) || Ext.isPrimitive(array)) {
+             array = [array];
+         }
+         for (var i = 0, len = array.length; i &lt; len; i++) {
+             if (fn.call(scope || array[i], array[i], i, array) === false) {
+                 return i;
+             }
+         }
+         return true;
+     },
+
+     <a name="method-Ext-iterate"></a>/**
+      * Iterates either the elements in an array, or each of the properties in an object.
+      * &lt;b&gt;Note&lt;/b&gt;: If you are only iterating arrays, it is better to call {@link #each}.
+      * @param {Object/Array} object The object or array to be iterated
+      * @param {Function} fn The function to be called for each iteration.
+      * The iteration will stop if the supplied function returns false, or
+      * all array elements / object properties have been covered. The signature
+      * varies depending on the type of object being interated:
+      * &lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+      * &lt;li&gt;Arrays : &lt;tt&gt;(Object item, Number index, Array allItems)&lt;/tt&gt;
+      * &lt;div class=&quot;sub-desc&quot;&gt;
+      * When iterating an array, the supplied function is called with each item.&lt;/div&gt;&lt;/li&gt;
+      * &lt;li&gt;Objects : &lt;tt&gt;(String key, Object value, Object)&lt;/tt&gt;
+      * &lt;div class=&quot;sub-desc&quot;&gt;
+      * When iterating an object, the supplied function is called with each key-value pair in
+      * the object, and the iterated object&lt;/div&gt;&lt;/li&gt;
+      * &lt;/ul&gt;&lt;/divutil&gt;
+      * @param {Object} scope The scope (&lt;code&gt;this&lt;/code&gt; reference) in which the specified function is executed. Defaults to
+      * the &lt;code&gt;object&lt;/code&gt; being iterated.
+      */
+     iterate : function(obj, fn, scope) {
+         if (Ext.isEmpty(obj)) {
+             return;
+         }
+         if (Ext.isIterable(obj)) {
+             Ext.each(obj, fn, scope);
+             return;
+         }
+         else if (Ext.isObject(obj)) {
+             for (var prop in obj) {
+                 if (obj.hasOwnProperty(prop)) {
+                     if (fn.call(scope || obj, prop, obj[prop], obj) === false) {
+                         return;
+                     }
+                 }
+             }
+         }
+     }
+});
+
+
+Ext.ns = Ext.namespace;
+
+Ext.ns(
+    &#39;Ext.util&#39;,
+    &#39;Ext.data&#39;,
+    &#39;Ext.list&#39;,
+    &#39;Ext.form&#39;,
+    &#39;Ext.menu&#39;,
+    &#39;Ext.state&#39;,
+    &#39;Ext.layout&#39;,
+    &#39;Ext.app&#39;,
+    &#39;Ext.ux&#39;,
+    &#39;Ext.plugins&#39;,
+    &#39;Ext.direct&#39;,
+    &#39;Ext.lib&#39;,
+    &#39;Ext.gesture&#39;,
+    &#39;Ext.core&#39;
+);
+
+
+// for old browsers
+window.undefined = window.undefined;
+Ext.ns(&quot;Ext.grid&quot;, &quot;Ext.list&quot;, &quot;Ext.dd&quot;, &quot;Ext.tree&quot;, &quot;Ext.form&quot;, &quot;Ext.menu&quot;,
+       &quot;Ext.state&quot;, &quot;Ext.layout&quot;, &quot;Ext.app&quot;, &quot;Ext.ux&quot;, &quot;Ext.chart&quot;, &quot;Ext.direct&quot;);
+/**
+ * @class Ext
+ * Ext core utilities and functions.
+ * @singleton
+ */
+(function(){
+    var check = function(regex){
+            return regex.test(Ext.userAgent);
+        },
+        docMode = document.documentMode,
+        isOpera = check(/opera/),
+        isChrome = check(/\bchrome\b/),
+        isWebKit = check(/webkit/),
+        isSafari = !isChrome &amp;&amp; check(/safari/),
+        isSafari2 = isSafari &amp;&amp; check(/applewebkit\/4/), // unique to Safari 2
+        isSafari3 = isSafari &amp;&amp; check(/version\/3/),
+        isSafari4 = isSafari &amp;&amp; check(/version\/4/),
+        isIE = !isOpera &amp;&amp; check(/msie/),
+        isIE7 = isIE &amp;&amp; (check(/msie 7/) || docMode == 7),
+        isIE8 = isIE &amp;&amp; (check(/msie 8/) &amp;&amp; docMode != 7 &amp;&amp; docMode != 9 || docMode == 8),
+        isIE9 = isIE &amp;&amp; (check(/msie 9/) &amp;&amp; docMode != 7 &amp;&amp; docMode != 8 || docMode == 9),
+        isIE6 = isIE &amp;&amp; !isIE7 &amp;&amp; !isIE8 &amp;&amp; !isIE9,
+        isGecko = !isWebKit &amp;&amp; check(/gecko/),
+        isGecko3 = isGecko &amp;&amp; check(/rv:1\.9/),
+        isGecko4 = isGecko &amp;&amp; check(/rv:2\.0/),
+        isWindows = check(/windows|win32/),
+        isMac = check(/macintosh|mac os x/),
+        isAir = check(/adobeair/),
+        isLinux = check(/linux/),
+        scrollWidth = null;
+
+    // remove css image flicker
+    try {
+        document.execCommand(&quot;BackgroundImageCache&quot;, false, true);
+    } catch(e) {}
+
+    Ext.setVersion(&#39;extjs&#39;, &#39;4.0.0dev&#39;);
+    Ext.apply(Ext, {
+        <a name="prop-Ext-SSL_SECURE_URL"></a>/**
+         * URL to a blank file used by Ext when in secure mode for iframe src and onReady src to prevent
+         * the IE insecure content warning (&lt;tt&gt;&#39;about:blank&#39;&lt;/tt&gt;, except for IE in secure mode, which is &lt;tt&gt;&#39;javascript:&quot;&quot;&#39;&lt;/tt&gt;).
+         * @type String
+         */
+        SSL_SECURE_URL : Ext.isSecure &amp;&amp; isIE ? &#39;javascript:&quot;&quot;&#39; : &#39;about:blank&#39;,
+
+        <a name="prop-Ext-enableFx"></a>/**
+         * True if the {@link Ext.fx.Anim} Class is available
+         * @type Boolean
+         * @property enableFx
+         */
+
+        <a name="prop-Ext-scopeResetCSS"></a>/**
+         * True to scope the reset CSS to be just applied to Ext components. Note that this wraps root containers
+         * with an additional element. Also remember that when you turn on this option, you have to use ext-all-scoped {
+         * unless you use the bootstrap.js to load your javascript, in which case it will be handled for you.
+         * @type Boolean
+         */
+        scopeResetCSS : Ext.buildSettings.scopeResetCSS,
+
+        <a name="prop-Ext-enableNestedListenerRemoval"></a>/**
+         * EXPERIMENTAL - True to cascade listener removal to child elements when an element is removed.
+         * Currently not optimized for performance.
+         * @type Boolean
+         */
+        enableNestedListenerRemoval : false,
+
+        <a name="prop-Ext-USE_NATIVE_JSON"></a>/**
+         * Indicates whether to use native browser parsing for JSON methods.
+         * This option is ignored if the browser does not support native JSON methods.
+         * &lt;b&gt;Note: Native JSON methods will not work with objects that have functions.
+         * Also, property names must be quoted, otherwise the data will not parse.&lt;/b&gt; (Defaults to false)
+         * @type Boolean
+         */
+        USE_NATIVE_JSON : false,
+
+        <a name="method-Ext-toArray"></a>/**
+         * Converts any iterable (numeric indices and a length property) into a true array
+         * Don&#39;t use this on strings. IE doesn&#39;t support &quot;abc&quot;[0] which this implementation depends on.
+         * For strings, use this instead: &quot;abc&quot;.match(/./g) =&gt; [a,b,c];
+         * @param {Iterable} the iterable object to be turned into a true Array.
+         * @return (Array) array
+         */
+        toArray : function() {
+            return Ext.Array.toArray = isIE ?
+                function(a, i, j, res) {
+                    res = [];
+                    for (var x = 0, len = a.length; x &lt; len; x++) {
+                        res.push(a[x]);
+                    }
+                    return res.slice(i || 0, j || res.length);
+                } :
+                function(a, i, j) {
+                    return Array.prototype.slice.call(a, i || 0, j || a.length);
+                };
+        }(),
+
+        <a name="method-Ext-getDom"></a>/**
+         * Return the dom node for the passed String (id), dom node, or Ext.core.Element.
+         * Optional &#39;strict&#39; flag is needed for IE since it can return &#39;name&#39; and
+         * &#39;id&#39; elements by using getElementById.
+         * Here are some examples:
+         * <br><span style="display: none">**/</span>// gets dom node based on id
+var elDom = Ext.getDom(&#39;elId&#39;);
+// gets dom node based on the dom node
+var elDom1 = Ext.getDom(elDom);
+
+// If we don&amp;#39;t know if we are working with an
+// Ext.core.Element or a dom node use Ext.getDom
+function(el){
+    var dom = Ext.getDom(el);
+    // do something with the dom node
+}
+         * <br><span style="display: none">/**</span>         * &lt;b&gt;Note&lt;/b&gt;: the dom node to be found actually needs to exist (be rendered, etc)
+         * when this method is called to be successful.
+         * @param {Mixed} el
+         * @return HTMLElement
+         */
+        getDom : function(el, strict) {
+            if (!el || !document) {
+                return null;
+            }
+            if (el.dom) {
+                return el.dom;
+            } else {
+                if (typeof el == &#39;string&#39;) {
+                    var e = document.getElementById(el);
+                    // IE returns elements with the &#39;name&#39; and &#39;id&#39; attribute.
+                    // we do a strict check to return the element with only the id attribute
+                    if (e &amp;&amp; strict) {
+                        return;
+                        if (el == e.getAttribute(&#39;id&#39;)) {
+                            return e;
+                        } else {
+                            return null;
+                        }
+                    }
+                    return e;
+                } else {
+                    return el;
+                }
+            }
+        },
+
+        <a name="method-Ext-removeNode"></a>/**
+         * Removes a DOM node from the document.
+         * &lt;p&gt;Removes this element from the document, removes all DOM event listeners, and deletes the cache reference.
+         * All DOM event listeners are removed from this element. If {@link Ext#enableNestedListenerRemoval} is
+         * &lt;code&gt;true&lt;/code&gt;, then DOM event listeners are also removed from all child nodes. The body node
+         * will be ignored if passed in.&lt;/p&gt;
+         * @param {HTMLElement} node The node to remove
+         */
+        removeNode : isIE6 || isIE7 ? function() {
+            var d;
+            return function(n){
+                if(n &amp;&amp; n.tagName != &#39;BODY&#39;){
+                    (Ext.enableNestedListenerRemoval) ? Ext.EventManager.purgeElement(n) : Ext.EventManager.removeAll(n);
+                    d = d || document.createElement(&#39;div&#39;);
+                    d.appendChild(n);
+                    d.innerHTML = &#39;&#39;;
+                    delete Ext.cache[n.id];
+                }
+            };
+        }() : function(n) {
+            if (n &amp;&amp; n.parentNode &amp;&amp; n.tagName != &#39;BODY&#39;) {
+                (Ext.enableNestedListenerRemoval) ? Ext.EventManager.purgeElement(n) : Ext.EventManager.removeAll(n);
+                n.parentNode.removeChild(n);
+                delete Ext.cache[n.id];
+            }
+        },
+
+        <a name="prop-Ext-isOpera"></a>/**
+         * True if the detected browser is Opera.
+         * @type Boolean
+         */
+        isOpera : isOpera,
+
+        <a name="prop-Ext-isWebKit"></a>/**
+         * True if the detected browser uses WebKit.
+         * @type Boolean
+         */
+        isWebKit : isWebKit,
+
+        <a name="prop-Ext-isChrome"></a>/**
+         * True if the detected browser is Chrome.
+         * @type Boolean
+         */
+        isChrome : isChrome,
+
+        <a name="prop-Ext-isSafari"></a>/**
+         * True if the detected browser is Safari.
+         * @type Boolean
+         */
+        isSafari : isSafari,
+
+        <a name="prop-Ext-isSafari3"></a>/**
+         * True if the detected browser is Safari 3.x.
+         * @type Boolean
+         */
+        isSafari3 : isSafari3,
+
+        <a name="prop-Ext-isSafari4"></a>/**
+         * True if the detected browser is Safari 4.x.
+         * @type Boolean
+         */
+        isSafari4 : isSafari4,
+
+        <a name="prop-Ext-isSafari2"></a>/**
+         * True if the detected browser is Safari 2.x.
+         * @type Boolean
+         */
+        isSafari2 : isSafari2,
+
+        <a name="prop-Ext-isIE"></a>/**
+         * True if the detected browser is Internet Explorer.
+         * @type Boolean
+         */
+        isIE : isIE,
+
+        <a name="prop-Ext-isIE6"></a>/**
+         * True if the detected browser is Internet Explorer 6.x.
+         * @type Boolean
+         */
+        isIE6 : isIE6,
+
+        <a name="prop-Ext-isIE7"></a>/**
+         * True if the detected browser is Internet Explorer 7.x.
+         * @type Boolean
+         */
+        isIE7 : isIE7,
+
+        <a name="prop-Ext-isIE8"></a>/**
+         * True if the detected browser is Internet Explorer 8.x.
+         * @type Boolean
+         */
+        isIE8 : isIE8,
+
+        <a name="prop-Ext-isIE9"></a>/**
+         * True if the detected browser is Internet Explorer 9.x.
+         * @type Boolean
+         */
+        isIE9 : isIE9,
+
+        <a name="prop-Ext-isGecko"></a>/**
+         * True if the detected browser uses the Gecko layout engine (e.g. Mozilla, Firefox).
+         * @type Boolean
+         */
+        isGecko : isGecko,
+
+        <a name="prop-Ext-isGecko3"></a>/**
+         * True if the detected browser uses a Gecko 1.9+ layout engine (e.g. Firefox 3.x).
+         * @type Boolean
+         */
+        isGecko3 : isGecko3,
+
+        <a name="prop-Ext-isGecko4"></a>/**
+         * True if the detected browser uses a Gecko 2.0+ layout engine (e.g. Firefox 4.x).
+         * @type Boolean
+         */
+        isGecko4 : isGecko4,
+
+        <a name="prop-Ext-isLinux"></a>/**
+         * True if the detected platform is Linux.
+         * @type Boolean
+         */
+        isLinux : isLinux,
+
+        <a name="prop-Ext-isWindows"></a>/**
+         * True if the detected platform is Windows.
+         * @type Boolean
+         */
+        isWindows : isWindows,
+
+        <a name="prop-Ext-isMac"></a>/**
+         * True if the detected platform is Mac OS.
+         * @type Boolean
+         */
+        isMac : isMac,
+
+        <a name="prop-Ext-isAir"></a>/**
+         * True if the detected platform is Adobe Air.
+         * @type Boolean
+         */
+        isAir : isAir,
+
+        <a name="prop-Ext-BLANK_IMAGE_URL"></a>/**
+         * URL to a 1x1 transparent gif image used by Ext to create inline icons with CSS background images.
+         * In older versions of IE, this defaults to &quot;http://extjs.com/s.gif&quot; and you should change this to a URL on your server.
+         * For other browsers it uses an inline data URL.
+         * @type String
+         */
+        BLANK_IMAGE_URL : (isIE6 || isIE7 || isAir) ? &#39;http:/&#39; + &#39;/www.extjs.com/s.gif&#39; : &#39;data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&#39;,
+
+        <a name="method-Ext-value"></a>/**
+         * &lt;p&gt;Utility method for returning a default value if the passed value is empty.&lt;/p&gt;
+         * &lt;p&gt;The value is deemed to be empty if it is&lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+         * &lt;li&gt;null&lt;/li&gt;
+         * &lt;li&gt;undefined&lt;/li&gt;
+         * &lt;li&gt;an empty array&lt;/li&gt;
+         * &lt;li&gt;a zero length string (Unless the &lt;tt&gt;allowBlank&lt;/tt&gt; parameter is &lt;tt&gt;true&lt;/tt&gt;)&lt;/li&gt;
+         * &lt;/ul&gt;&lt;/div&gt;
+         * @param {Mixed} value The value to test
+         * @param {Mixed} defaultValue The value to return if the original value is empty
+         * @param {Boolean} allowBlank (optional) true to allow zero length strings to qualify as non-empty (defaults to false)
+         * @return {Mixed} value, if non-empty, else defaultValue
+         */
+        value : function(v, defaultValue, allowBlank){
+            return Ext.isEmpty(v, allowBlank) ? defaultValue : v;
+        },
+
+        <a name="method-Ext-escapeRe"></a>/**
+         * Escapes the passed string for use in a regular expression
+         * @param {String} str
+         * @return {String}
+         */
+        escapeRe : function(s) {
+            return s.replace(/([-.*+?^${}()|[\]\/\\])/g, &quot;\\$1&quot;);
+        },
+
+        <a name="method-Ext-addBehaviors"></a>/**
+         * Applies event listeners to elements by selectors when the document is ready.
+         * The event name is specified with an &lt;tt&gt;&amp;#64;&lt;/tt&gt; suffix.
+         * <br><span style="display: none">**/</span>Ext.addBehaviors({
+    // add a listener for click on all anchors in element with id foo
+    &#39;#foo a&amp;#64;click&#39; : function(e, t){
+        // do something
+    },
+
+    // add the same listener to multiple selectors (separated by comma BEFORE the &amp;#64;)
+    &#39;#foo a, #bar span.some-class&amp;#64;mouseover&#39; : function(){
+        // do something
+    }
+});
+         * <br><span style="display: none">/**</span>         * @param {Object} obj The list of behaviors to apply
+         */
+        addBehaviors : function(o){
+            if(!Ext.isReady){
+                Ext.onReady(function(){
+                    Ext.addBehaviors(o);
+                });
+            } else {
+                var cache = {}, // simple cache for applying multiple behaviors to same selector does query multiple times
+                    parts,
+                    b,
+                    s;
+                for (b in o) {
+                    if ((parts = b.split(&#39;@&#39;))[1]) { // for Object prototype breakers
+                        s = parts[0];
+                        if(!cache[s]){
+                            cache[s] = Ext.select(s);
+                        }
+                        cache[s].on(parts[1], o[b]);
+                    }
+                }
+                cache = null;
+            }
+        },
+
+        <a name="method-Ext-getScrollBarWidth"></a>/**
+         * Utility method for getting the width of the browser scrollbar. This can differ depending on
+         * operating system settings, such as the theme or font size.
+         * @param {Boolean} force (optional) true to force a recalculation of the value.
+         * @return {Number} The width of the scrollbar.
+         */
+        getScrollBarWidth: function(force){
+            if(!Ext.isReady){
+                return 0;
+            }
+
+            if(force === true || scrollWidth === null){
+                    // Append our div, do our calculation and then remove it
+                var div = Ext.getBody().createChild(&#39;&lt;div class=&quot;&#39; + Ext.baseCSSPrefix + &#39;hide-offsets&quot; style=&quot;width:100px;height:50px;overflow:hidden;&quot;&gt;&lt;div style=&quot;height:200px;&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#39;),
+                    child = div.child(&#39;div&#39;, true);
+                var w1 = child.offsetWidth;
+                div.setStyle(&#39;overflow&#39;, (Ext.isWebKit || Ext.isGecko) ? &#39;auto&#39; : &#39;scroll&#39;);
+                var w2 = child.offsetWidth;
+                div.remove();
+                // Need to add 2 to ensure we leave enough space
+                scrollWidth = w1 - w2 + 2;
+            }
+            return scrollWidth;
+        },
+
+        <a name="method-Ext-copyTo"></a>/**
+         * Copies a set of named properties fom the source object to the destination object.
+         * &lt;p&gt;example:<br><span style="display: none">**/</span>ImageComponent = Ext.extend(Ext.Component, {
+    initComponent: function() {
+        this.autoEl = { tag: &#39;img&#39; };
+        MyComponent.superclass.initComponent.apply(this, arguments);
+        this.initialBox = Ext.copyTo({}, this.initialConfig, &#39;x,y,width,height&#39;);
+    }
+});
+         * <br><span style="display: none">/**</span>         * @param {Object} dest The destination object.
+         * @param {Object} source The source object.
+         * @param {Array/String} names Either an Array of property names, or a comma-delimited list
+         * of property names to copy.
+         * @param {Boolean} usePrototypeKeys (Optional) Defaults to false. Pass true to copy keys off of the prototype as well as the instance.
+         * @return {Object} The modified object.
+        */
+        copyTo : function(dest, source, names, usePrototypeKeys){
+            if(typeof names == &#39;string&#39;){
+                names = names.split(/[,;\s]/);
+            }
+            Ext.each(names, function(name){
+                if(usePrototypeKeys || source.hasOwnProperty(name)){
+                    dest[name] = source[name];
+                }
+            }, this);
+            return dest;
+        },
+
+        <a name="method-Ext-destroyMembers"></a>/**
+         * Attempts to destroy and then remove a set of named properties of the passed object.
+         * @param {Object} o The object (most likely a Component) who&#39;s properties you wish to destroy.
+         * @param {Mixed} arg1 The name of the property to destroy and remove from the object.
+         * @param {Mixed} etc... More property names to destroy and remove.
+         */
+        destroyMembers : function(o, arg1, arg2, etc){
+            for (var i = 1, a = arguments, len = a.length; i &lt; len; i++) {
+                Ext.destroy(o[a[i]]);
+                delete o[a[i]];
+            }
+        },
+
+        <a name="method-Ext-clean"></a>/**
+         * Creates a copy of the passed Array with falsy values removed.
+         * @param {Array/NodeList} arr The Array from which to remove falsy values.
+         * @return {Array} The new, compressed Array.
+         */
+        clean : function(arr){
+            var ret = [];
+            Ext.each(arr, function(v){
+                if(!!v){
+                    ret.push(v);
+                }
+            });
+            return ret;
+        },
+
+        <a name="method-Ext-unique"></a>/**
+         * Creates a copy of the passed Array, filtered to contain only unique values.
+         * @param {Array} arr The Array to filter
+         * @return {Array} The new Array containing unique values.
+         */
+        unique : function(arr){
+            var ret = [],
+                collect = {};
+
+            Ext.each(arr, function(v) {
+                if(!collect[v]){
+                    ret.push(v);
+                }
+                collect[v] = true;
+            });
+            return ret;
+        },
+
+        <a name="method-Ext-flatten"></a>/**
+         * Recursively flattens into 1-d Array. Injects Arrays inline.
+         * @param {Array} arr The array to flatten
+         * @return {Array} The new, flattened array.
+         */
+        flatten : function(arr){
+            var worker = [];
+            function rFlatten(a) {
+                Ext.each(a, function(v) {
+                    if(Ext.isArray(v)){
+                        rFlatten(v);
+                    }else{
+                        worker.push(v);
+                    }
+                });
+                return worker;
+            }
+            return rFlatten(arr);
+        },
+
+        <a name="method-Ext-min"></a>/**
+         * Returns the minimum value in the Array.
+         * @param {Array|NodeList} arr The Array from which to select the minimum value.
+         * @param {Function} comp (optional) a function to perform the comparision which determines minimization.
+         *                   If omitted the &quot;&lt;&quot; operator will be used. Note: gt = 1; eq = 0; lt = -1
+         * @return {Object} The minimum value in the Array.
+         */
+        min : function(arr, comp){
+            var ret = arr[0];
+            comp = comp || function(a,b){ return a &lt; b ? -1 : 1; };
+            Ext.each(arr, function(v) {
+                ret = comp(ret, v) == -1 ? ret : v;
+            });
+            return ret;
+        },
+
+        <a name="method-Ext-max"></a>/**
+         * Returns the maximum value in the Array
+         * @param {Array|NodeList} arr The Array from which to select the maximum value.
+         * @param {Function} comp (optional) a function to perform the comparision which determines maximization.
+         *                   If omitted the &quot;&gt;&quot; operator will be used. Note: gt = 1; eq = 0; lt = -1
+         * @return {Object} The maximum value in the Array.
+         */
+        max : function(arr, comp){
+            var ret = arr[0];
+            comp = comp || function(a,b){ return a &gt; b ? 1 : -1; };
+            Ext.each(arr, function(v) {
+                ret = comp(ret, v) == 1 ? ret : v;
+            });
+            return ret;
+        },
+
+        <a name="method-Ext-mean"></a>/**
+         * Calculates the mean of the Array
+         * @param {Array} arr The Array to calculate the mean value of.
+         * @return {Number} The mean.
+         */
+        mean : function(arr){
+           return arr.length &gt; 0 ? Ext.sum(arr) / arr.length : undefined;
+        },
+
+        <a name="method-Ext-sum"></a>/**
+         * Calculates the sum of the Array
+         * @param {Array} arr The Array to calculate the sum value of.
+         * @return {Number} The sum.
+         */
+        sum : function(arr){
+           var ret = 0;
+           Ext.each(arr, function(v) {
+               ret += v;
+           });
+           return ret;
+        },
+
+        <a name="method-Ext-partition"></a>/**
+         * Partitions the set into two sets: a true set and a false set.
+         * Example:
+         * Example2:
+         * <br><span style="display: none">**/</span>// Example 1:
+Ext.partition([true, false, true, true, false]); // [[true, true, true], [false, false]]
+
+// Example 2:
+Ext.partition(
+    Ext.query(&quot;p&quot;),
+    function(val){
+        return val.className == &quot;class1&quot;
+    }
+);
+// true are those paragraph elements with a className of &quot;class1&quot;,
+// false set are those that do not have that className.
+         * <br><span style="display: none">/**</span>         * @param {Array|NodeList} arr The array to partition
+         * @param {Function} truth (optional) a function to determine truth.  If this is omitted the element
+         *                   itself must be able to be evaluated for its truthfulness.
+         * @return {Array} [true&lt;Array&gt;,false&lt;Array&gt;]
+         */
+        partition : function(arr, truth){
+            var ret = [[],[]];
+            Ext.each(arr, function(v, i, a) {
+                ret[ (truth &amp;&amp; truth(v, i, a)) || (!truth &amp;&amp; v) ? 0 : 1].push(v);
+            });
+            return ret;
+        },
+
+        <a name="method-Ext-invoke"></a>/**
+         * Invokes a method on each item in an Array.
+         * <br><span style="display: none">**/</span>// Example:
+Ext.invoke(Ext.query(&quot;p&quot;), &quot;getAttribute&quot;, &quot;id&quot;);
+// [el1.getAttribute(&quot;id&quot;), el2.getAttribute(&quot;id&quot;), ..., elN.getAttribute(&quot;id&quot;)]
+         * <br><span style="display: none">/**</span>         * @param {Array|NodeList} arr The Array of items to invoke the method on.
+         * @param {String} methodName The method name to invoke.
+         * @param {...*} args Arguments to send into the method invocation.
+         * @return {Array} The results of invoking the method on each item in the array.
+         */
+        invoke : function(arr, methodName){
+            var ret = [],
+                args = Array.prototype.slice.call(arguments, 2);
+            Ext.each(arr, function(v,i) {
+                if (v &amp;&amp; typeof v[methodName] == &#39;function&#39;) {
+                    ret.push(v[methodName].apply(v, args));
+                } else {
+                    ret.push(undefined);
+                }
+            });
+            return ret;
+        },
+
+        <a name="method-Ext-pluck"></a>/**
+         * Plucks the value of a property from each item in the Array
+         * <br><span style="display: none">**/</span>// Example:
+Ext.pluck(Ext.query(&quot;p&quot;), &quot;className&quot;); // [el1.className, el2.className, ..., elN.className]
+         * <br><span style="display: none">/**</span>         * @param {Array|NodeList} arr The Array of items to pluck the value from.
+         * @param {String} prop The property name to pluck from each element.
+         * @return {Array} The value from each item in the Array.
+         */
+        pluck : function(arr, prop){
+            var ret = [];
+            Ext.each(arr, function(v) {
+                ret.push( v[prop] );
+            });
+            return ret;
+        },
+
+        <a name="method-Ext-zip"></a>/**
+         * &lt;p&gt;Zips N sets together.&lt;/p&gt;
+         * <br><span style="display: none">**/</span>// Example 1:
+Ext.zip([1,2,3],[4,5,6]); // [[1,4],[2,5],[3,6]]
+// Example 2:
+Ext.zip(
+    [ &quot;+&quot;, &quot;-&quot;, &quot;+&quot;],
+    [  12,  10,  22],
+    [  43,  15,  96],
+    function(a, b, c){
+        return &quot;$&quot; + a + &quot;&quot; + b + &quot;.&quot; + c
+    }
+); // [&quot;$+12.43&quot;, &quot;$-10.15&quot;, &quot;$+22.96&quot;]
+         * <br><span style="display: none">/**</span>         * @param {Arrays|NodeLists} arr This argument may be repeated. Array(s) to contribute values.
+         * @param {Function} zipper (optional) The last item in the argument list. This will drive how the items are zipped together.
+         * @return {Array} The zipped set.
+         */
+        zip : function(){
+            var parts = Ext.partition(arguments, function( val ){ return typeof val != &#39;function&#39;; }),
+                arrs = parts[0],
+                fn = parts[1][0],
+                len = Ext.max(Ext.pluck(arrs, &quot;length&quot;)),
+                ret = [];
+
+            for (var i = 0; i &lt; len; i++) {
+                ret[i] = [];
+                if(fn){
+                    ret[i] = fn.apply(fn, Ext.pluck(arrs, i));
+                }else{
+                    for (var j = 0, aLen = arrs.length; j &lt; aLen; j++){
+                        ret[i].push( arrs[j][i] );
+                    }
+                }
+            }
+            return ret;
+        },
+
+        <a name="method-Ext-toSentence"></a>/**
+         * Turns an array into a sentence, joined by a specified connector - e.g.:
+         * Ext.toSentence([&#39;Adama&#39;, &#39;Tigh&#39;, &#39;Roslin&#39;]); //&#39;Adama, Tigh and Roslin&#39;
+         * Ext.toSentence([&#39;Adama&#39;, &#39;Tigh&#39;, &#39;Roslin&#39;], &#39;or&#39;); //&#39;Adama, Tigh or Roslin&#39;
+         * @param {Array} items The array to create a sentence from
+         * @param {String} connector The string to use to connect the last two words. Usually &#39;and&#39; or &#39;or&#39; - defaults to &#39;and&#39;.
+         * @return {String} The sentence string
+         */
+        toSentence: function(items, connector) {
+            var length = items.length;
+
+            if (length &lt;= 1) {
+                return items[0];
+            } else {
+                var head = items.slice(0, length - 1),
+                    tail = items[length - 1];
+
+                return Ext.util.Format.format(&quot;{0} {1} {2}&quot;, head.join(&quot;, &quot;), connector || &#39;and&#39;, tail);
+            }
+        },
+
+        <a name="prop-Ext-useShims"></a>/**
+         * By default, Ext intelligently decides whether floating elements should be shimmed. If you are using flash,
+         * you may want to set this to true.
+         * @type Boolean
+         */
+        useShims: Ext.isIE6,
+
+        // inspired by a similar function in mootools library
+        <a name="method-Ext-type"></a>/**
+         * Returns the type of object that is passed in. If the object passed in is null or undefined it
+         * return false otherwise it returns one of the following values:&lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+         * &lt;li&gt;&lt;b&gt;string&lt;/b&gt;: If the object passed is a string&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;number&lt;/b&gt;: If the object passed is a number&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;boolean&lt;/b&gt;: If the object passed is a boolean value&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;date&lt;/b&gt;: If the object passed is a Date object&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;function&lt;/b&gt;: If the object passed is a function reference&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;object&lt;/b&gt;: If the object passed is an object&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;array&lt;/b&gt;: If the object passed is an array&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;regexp&lt;/b&gt;: If the object passed is a regular expression&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;element&lt;/b&gt;: If the object passed is a DOM Element&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;nodelist&lt;/b&gt;: If the object passed is a DOM NodeList&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;textnode&lt;/b&gt;: If the object passed is a DOM text node and contains something other than whitespace&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;whitespace&lt;/b&gt;: If the object passed is a DOM text node and contains only whitespace&lt;/li&gt;
+         * &lt;/ul&gt;&lt;/div&gt;
+         * @param {Mixed} object
+         * @return {String}
+         */
+        type : function(o){
+            if(o === undefined || o === null){
+                return false;
+            }
+            if(o.htmlElement){
+                return &#39;element&#39;;
+            }
+            var t = typeof o;
+            if(t == &#39;object&#39; &amp;&amp; o.nodeName) {
+                switch(o.nodeType) {
+                    case 1: return &#39;element&#39;;
+                    case 3: return (/\S/).test(o.nodeValue) ? &#39;textnode&#39; : &#39;whitespace&#39;;
+                }
+            }
+            if(t == &#39;object&#39; || t == &#39;function&#39;) {
+                switch(o.constructor) {
+                    case Array: return &#39;array&#39;;
+                    case RegExp: return &#39;regexp&#39;;
+                    case Date: return &#39;date&#39;;
+                }
+                if(typeof o.length == &#39;number&#39; &amp;&amp; typeof o.item == &#39;function&#39;) {
+                    return &#39;nodelist&#39;;
+                }
+            }
+            return t;
+        }
+    });
+})();
+￿</pre></pre></body></html>

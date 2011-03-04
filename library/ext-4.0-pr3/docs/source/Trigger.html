@@ -1,0 +1,383 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.form.Trigger"></a>/**
+ * @class Ext.form.Trigger
+ * @extends Ext.form.Text
+ * &lt;p&gt;Provides a convenient wrapper for TextFields that adds a clickable trigger button (looks like a combobox by default).
+ * The trigger has no default action, so you must assign a function to implement the trigger click handler by
+ * overriding {@link #onTriggerClick}. You can create a Trigger field directly, as it renders exactly like a combobox
+ * for which you can provide a custom implementation. For example:&lt;/p&gt;
+ * <br><span style="display: none">**/</span>var trigger = new Ext.form.Trigger();
+trigger.onTriggerClick = myTriggerFn;
+trigger.applyToMarkup(&#39;my-field&#39;);
+<br><span style="display: none">/**</span> *
+ * &lt;p&gt;However, in general you will most likely want to use Trigger as the base class for a reusable component.
+ * {@link Ext.form.Date} and {@link Ext.form.ComboBox} are perfect examples of this.&lt;/p&gt;
+ *
+ * @constructor
+ * Create a new Trigger field.
+ * @param {Object} config Configuration options (valid {@Ext.form.Text} config options will also be applied
+ * to the base Text field)
+ * @xtype triggerfield
+ */
+Ext.define(&#39;Ext.form.Trigger&#39;, {
+    extend:&#39;Ext.form.Text&#39;,
+    alias: [&#39;widget.triggerfield&#39;, &#39;widget.trigger&#39;],
+    requires: [&#39;Ext.core.DomHelper&#39;, &#39;Ext.util.ClickRepeater&#39;, &#39;Ext.layout.component.form.Trigger&#39;],
+    alternateClassName: [&#39;Ext.form.TriggerField&#39;, &#39;Ext.form.TwinTriggerField&#39;],
+
+    <a name="cfg-Ext.form.Trigger-triggerCls"></a>/**
+     * @cfg {String} triggerCls
+     * An additional CSS class used to style the trigger button.  The trigger will always get the
+     * {@link #triggerBaseCls} by default and &lt;tt&gt;triggerCls&lt;/tt&gt; will be &lt;b&gt;appended&lt;/b&gt; if specified.
+     * Defaults to undefined.
+     */
+
+    <a name="cfg-Ext.form.Trigger-triggerBaseCls"></a>/**
+     * @cfg {String} triggerBaseCls
+     * The base CSS class that is always added to the trigger button. The {@link #triggerCls} will be
+     * appended in addition to this class.
+     */
+    triggerBaseCls: Ext.baseCSSPrefix + &#39;form-trigger&#39;,
+
+    <a name="cfg-Ext.form.Trigger-triggerWrapCls"></a>/**
+     * @cfg {String} triggerWrapCls
+     * The CSS class that is added to the div wrapping the trigger button(s).
+     */
+    triggerWrapCls: Ext.baseCSSPrefix + &#39;form-trigger-wrap&#39;,
+
+    <a name="cfg-Ext.form.Trigger-wrapFocusClass"></a>/**
+     * @cfg {String} wrapFocusClass The class added to the to the element wrapping the field and trigger, when the
+     * field has focus. Defaults to &lt;tt&gt;x-form-trigger-wrap-focus&lt;/tt&gt;.
+     */
+
+    <a name="cfg-Ext.form.Trigger-hideTrigger"></a>/**
+     * @cfg {Boolean} hideTrigger &lt;tt&gt;true&lt;/tt&gt; to hide the trigger element and display only the base
+     * text field (defaults to &lt;tt&gt;false&lt;/tt&gt;)
+     */
+    hideTrigger: false,
+    <a name="cfg-Ext.form.Trigger-editable"></a>/**
+     * @cfg {Boolean} editable &lt;tt&gt;false&lt;/tt&gt; to prevent the user from typing text directly into the field,
+     * the field will only respond to a click on the trigger to set the value. (defaults to &lt;tt&gt;true&lt;/tt&gt;).
+     */
+    editable: true,
+    <a name="cfg-Ext.form.Trigger-readOnly"></a>/**
+     * @cfg {Boolean} readOnly &lt;tt&gt;true&lt;/tt&gt; to prevent the user from changing the field, and
+     * hides the trigger.  Supercedes the editable and hideTrigger options if the value is true.
+     * (defaults to &lt;tt&gt;false&lt;/tt&gt;)
+     */
+    readOnly: false,
+
+    <a name="cfg-Ext.form.Trigger-selectOnFocus"></a>/**
+     * @cfg {Boolean} selectOnFocus &lt;tt&gt;true&lt;/tt&gt; to select any existing text in the field immediately on focus.
+     * Only applies when &lt;tt&gt;{@link #editable editable} = true&lt;/tt&gt; (defaults to &lt;tt&gt;false&lt;/tt&gt;).
+     */
+
+    <a name="cfg-Ext.form.Trigger-repeatTriggerClick"></a>/**
+     * @cfg {Boolean} repeatTriggerClick &lt;tt&gt;true&lt;/tt&gt; to attach a {@link Ext.util.ClickRepeater click repeater}
+     * to the trigger. Defaults to &lt;tt&gt;false&lt;/tt&gt;.
+     */
+    repeatTriggerClick: false,
+
+
+    <a name="method-Ext.form.Trigger-autoSize"></a>/**
+     * @hide
+     * @method autoSize
+     */
+    autoSize: Ext.emptyFn,
+    // private
+    monitorTab: true,
+    // private
+    deferHeight: true,
+    // private
+    mimicing: false,
+    // private
+    triggerIndexRe: /trigger-index-(\d+)/,
+
+    componentLayout: &#39;triggerfield&#39;,
+
+    initComponent: function() {
+        this.wrapFocusCls = this.triggerWrapCls + &#39;-focus&#39;;
+        this.callParent(arguments);
+    },
+
+    // private
+    onRender: function(ct, position) {
+        var me = this,
+            triggerCls,
+            triggerBaseCls = me.triggerBaseCls,
+            triggerWrapCls = me.triggerWrapCls,
+            triggerConfigs = [],
+            i;
+
+        // triggerCls is a synonym for trigger1Cls, so copy it.
+        // TODO this trigger&lt;n&gt;Cls API design doesn&#39;t feel clean, especially where it butts up against the
+        // single triggerCls config. Should rethink this, perhaps something more structured like a list of
+        // trigger config objects that hold cls, handler, etc.
+        if (!me.trigger1Cls) {
+            me.trigger1Cls = me.triggerCls;
+        }
+
+        // Create as many trigger elements as we have trigger&lt;n&gt;Cls configs, but always at least one
+        for (i = 0; (triggerCls = me[&#39;trigger&#39; + (i + 1) + &#39;Cls&#39;]) || i &lt; 1; i++) {
+            triggerConfigs.push({
+                cls: [Ext.baseCSSPrefix + &#39;trigger-index-&#39; + i, triggerBaseCls, triggerCls].join(&#39; &#39;),
+                role: &#39;button&#39;
+            });
+        }
+        triggerConfigs[i - 1].cls += &#39; &#39; + triggerBaseCls + &#39;-last&#39;;
+
+        Ext.applyIf(me.renderSelectors, {
+            <a name="prop-Ext.form.Trigger-triggerWrap"></a>/**
+             * @property triggerWrap
+             * @type Ext.core.Element
+             * A reference to the div element wrapping the trigger button(s). Only set after the field has been rendered.
+             */
+            triggerWrap: &#39;.&#39; + triggerWrapCls
+        });
+        Ext.applyIf(me.subTplData, {
+            size: 16,
+            triggerWrapCls: triggerWrapCls,
+            triggerEl: Ext.core.DomHelper.markup(triggerConfigs)
+        });
+
+        me.callParent(arguments);
+
+        <a name="prop-Ext.form.Trigger-triggerEl"></a>/**
+         * @property triggerEl
+         * @type Ext.CompositeElement
+         * A composite of all the trigger button elements. Only set after the field has been rendered.
+         */
+        me.triggerEl = Ext.select(&#39;.&#39; + triggerBaseCls, true, me.triggerWrap.dom);
+
+        me.doc = Ext.isIE ? Ext.getBody() : Ext.getDoc();
+        me.initTrigger();
+    },
+
+    afterRender: function() {
+        Ext.form.Trigger.superclass.afterRender.call(this);
+        this.updateEditState();
+    },
+
+    updateEditState: function() {
+        var me = this,
+            inputEl = me.inputEl,
+            triggerWrap = me.triggerWrap,
+            noeditCls = Ext.baseCSSPrefix + &#39;trigger-noedit&#39;,
+            displayed,
+            readOnly;
+
+        if (me.rendered) {
+            if (me.readOnly) {
+                inputEl.addCls(noeditCls);
+                readOnly = true;
+                displayed = false;
+            } else {
+                if (me.editable) {
+                    inputEl.removeCls(noeditCls);
+                    readOnly = false;
+                } else {
+                    inputEl.addCls(noeditCls);
+                    readOnly = true;
+                }
+                displayed = !me.hideTrigger;
+            }
+            
+            triggerWrap.setDisplayed(displayed);
+            inputEl.dom.readOnly = readOnly;
+            me.doComponentLayout();
+        }
+    },
+
+    <a name="method-Ext.form.Trigger-getTriggerWidth"></a>/**
+     * Get the total width of the trigger button area. Only useful after the field has been rendered.
+     * @return {Number} The trigger width
+     */
+    getTriggerWidth: function() {
+        var me = this,
+            triggerWrap = me.triggerWrap,
+            totalTriggerWidth = 0;
+        if (triggerWrap &amp;&amp; !me.hideTrigger) {
+            me.triggerEl.each(function(trigger) {
+                totalTriggerWidth += trigger.getWidth();
+            });
+            totalTriggerWidth += me.triggerWrap.getFrameWidth(&#39;lr&#39;);
+        }
+        return totalTriggerWidth;
+    },
+
+    setHideTrigger: function(hideTrigger) {
+        if (hideTrigger != this.hideTrigger) {
+            this.hideTrigger = hideTrigger;
+            this.updateEditState();
+        }
+    },
+
+    <a name="method-Ext.form.Trigger-setEditable"></a>/**
+     * @param {Boolean} editable True to allow the user to directly edit the field text
+     * Allow or prevent the user from directly editing the field text.  If false is passed,
+     * the user will only be able to modify the field using the trigger.  Will also add
+     * a click event to the text field which will call the trigger. This method
+     * is the runtime equivalent of setting the &#39;editable&#39; config option at config time.
+     */
+    setEditable: function(editable) {
+        if (editable != this.editable) {
+            this.editable = editable;
+            this.updateEditState();
+        }
+    },
+
+    <a name="method-Ext.form.Trigger-setReadOnly"></a>/**
+     * @param {Boolean} readOnly True to prevent the user changing the field and explicitly
+     * hide the trigger.
+     * Setting this to true will superceed settings editable and hideTrigger.
+     * Setting this to false will defer back to editable and hideTrigger. This method
+     * is the runtime equivalent of setting the &#39;readOnly&#39; config option at config time.
+     */
+    setReadOnly: function(readOnly) {
+        if (readOnly != this.readOnly) {
+            this.readOnly = readOnly;
+            this.updateEditState();
+        }
+    },
+
+    // private
+    initTrigger: function() {
+        var me = this,
+            triggerWrap = me.triggerWrap,
+            triggerEl = me.triggerEl;
+
+        if (me.repeatTriggerClick) {
+            me.triggerRepeater = new Ext.util.ClickRepeater(triggerWrap, {
+                preventDefault: true,
+                handler: function(cr, e) {
+                    me.onTriggerWrapClick(e);
+                }
+            });
+        } else {
+            me.mon(me.triggerWrap, &#39;click&#39;, me.onTriggerWrapClick, me);
+        }
+
+        triggerEl.addClsOnOver(me.triggerBaseCls + &#39;-over&#39;);
+        triggerEl.each(function(el, c, i) {
+            el.addClsOnOver(me[&#39;trigger&#39; + (i + 1) + &#39;Cls&#39;] + &#39;-over&#39;);
+        });
+        triggerEl.addClsOnClick(me.triggerBaseCls + &#39;-click&#39;);
+        triggerEl.each(function(el, c, i) {
+            el.addClsOnClick(me[&#39;trigger&#39; + (i + 1) + &#39;Cls&#39;] + &#39;-click&#39;);
+        });
+    },
+
+    // private
+    onDestroy: function() {
+        var me = this;
+        Ext.destroyMembers(me, &#39;triggerRepeater&#39;, &#39;triggerWrap&#39;, &#39;triggerEl&#39;);
+        delete me.doc;
+        me.callParent();
+    },
+
+    // private
+    onFocus: function() {
+        var me = this;
+        Ext.form.Trigger.superclass.onFocus.call(me);
+        if (!me.mimicing) {
+            me.bodyEl.addCls(me.wrapFocusCls);
+            me.mimicing = true;
+            me.mon(me.doc, &#39;mousedown&#39;, me.mimicBlur, me, {
+                delay: 10
+            });
+            if (me.monitorTab) {
+                me.on(&#39;specialkey&#39;, me.checkTab, me);
+            }
+        }
+    },
+
+    // private
+    checkTab: function(me, e) {
+        if (e.getKey() == e.TAB) {
+            this.triggerBlur();
+        }
+    },
+
+    // private
+    onBlur: Ext.emptyFn,
+
+    // private
+    mimicBlur: function(e) {
+        if (!this.isDestroyed &amp;&amp; !this.bodyEl.contains(e.target) &amp;&amp; this.validateBlur(e)) {
+            this.triggerBlur();
+        }
+    },
+
+    // private
+    triggerBlur: function() {
+        var me = this;
+        me.mimicing = false;
+        me.mun(me.doc, &#39;mousedown&#39;, me.mimicBlur, me);
+        if (me.monitorTab &amp;&amp; me.inputEl) {
+            me.un(&#39;specialkey&#39;, me.checkTab, me);
+        }
+        Ext.form.Trigger.superclass.onBlur.call(me);
+        if (me.bodyEl) {
+            me.bodyEl.removeCls(me.wrapFocusCls);
+        }
+    },
+
+    beforeBlur: Ext.emptyFn,
+
+    // private
+    // This should be overridden by any subclass that needs to check whether or not the field can be blurred.
+    validateBlur: function(e) {
+        return true;
+    },
+
+    // private
+    // process clicks upon triggers.
+    // determine which trigger index, and dispatch to the appropriate click handler
+    onTriggerWrapClick: function(e) {
+        var me = this,
+            t = e &amp;&amp; e.getTarget(&#39;.&#39; + Ext.baseCSSPrefix + &#39;form-trigger&#39;, null),
+            match = t &amp;&amp; t.className.match(me.triggerIndexRe),
+            idx,
+            triggerClickMethod;
+
+        if (match &amp;&amp; !me.readOnly) {
+            idx = parseInt(match[1], 10);
+            triggerClickMethod = me[&#39;onTrigger&#39; + (idx + 1) + &#39;Click&#39;] || me.onTriggerClick;
+            if (triggerClickMethod) {
+                triggerClickMethod.call(me, e);
+            }
+        }
+    },
+
+    <a name="method-Ext.form.Trigger-onTriggerClick"></a>/**
+     * The function that should handle the trigger&#39;s click event.  This method does nothing by default
+     * until overridden by an implementing function.  See Ext.form.ComboBox and Ext.form.Date for
+     * sample implementations.
+     * @method
+     * @param {Ext.EventObject} e
+     */
+    onTriggerClick: Ext.emptyFn
+
+    <a name="cfg-Ext.form.Trigger-grow"></a>/**
+     * @cfg {Boolean} grow @hide
+     */
+    <a name="cfg-Ext.form.Trigger-growMin"></a>/**
+     * @cfg {Number} growMin @hide
+     */
+    <a name="cfg-Ext.form.Trigger-growMax"></a>/**
+     * @cfg {Number} growMax @hide
+     */
+}, function() {
+    this.prototype.fieldSubTpl = new Ext.XTemplate(
+        &#39;&lt;input id=&quot;{id}&quot; type=&quot;{type}&quot; &#39;,
+            &#39;&lt;tpl if=&quot;name&quot;&gt;name=&quot;{name}&quot; &lt;/tpl&gt;&#39;,
+            &#39;&lt;tpl if=&quot;size&quot;&gt;size=&quot;{size}&quot; &lt;/tpl&gt;&#39;,
+            &#39;&lt;tpl if=&quot;tabIdx&quot;&gt;tabIndex=&quot;{tabIdx}&quot; &lt;/tpl&gt;&#39;,
+            &#39;class=&quot;{fieldCls} {typeCls}&quot; autocomplete=&quot;off&quot; /&gt;&#39;,
+        &#39;&lt;div class=&quot;{triggerWrapCls}&quot; role=&quot;presentation&quot;&gt;{triggerEl}&lt;/div&gt;&#39;,
+        {
+            compiled: true,
+            disableFormats: true
+        }
+    );
+});
+￿</pre></pre></body></html>

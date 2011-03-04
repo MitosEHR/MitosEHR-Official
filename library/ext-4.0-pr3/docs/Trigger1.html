@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.layout.component.form.Trigger"></div>/**
+ * @class Ext.layout.component.form.Trigger
+ * @extends Ext.layout.component.form.Field
+ */
+
+Ext.define('Ext.layout.component.form.Trigger', {
+
+    /* Begin Definitions */
+
+    alias: ['layout.triggerfield'],
+
+    extend: 'Ext.layout.component.form.Field',
+
+    /* End Definitions */
+
+    type: 'triggerfield',
+
+    sizeBodyContents: function(width, height) {
+        var me = this,
+            owner = me.owner,
+            inputEl = owner.inputEl,
+            triggerWrap = owner.triggerWrap,
+            triggerWidth = owner.getTriggerWidth();
+
+        // Decrease the field's width by the width of the triggers. Both the field and the triggerWrap
+        // are floated left in CSS so they'll stack up side by side.
+        me.setElementSize(inputEl, width - triggerWidth, height);
+
+        // Explicitly set the triggerWrap's width, to prevent wrapping
+        triggerWrap.setWidth(triggerWidth);
+    }
+});</pre>    
+</body>
+</html>

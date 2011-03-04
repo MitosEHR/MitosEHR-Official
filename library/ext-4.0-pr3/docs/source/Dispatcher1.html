@@ -1,0 +1,126 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.util.Dispatcher"></a>/**
+ * @author Ed Spencer
+ * @class Ext.util.Dispatcher
+ * 
+ * &lt;p&gt;The Dispatcher class is used to send requests through to a controller action. Usually, only a single Dispatcher
+ * is required on the page, and by default a single instance is already created - {@link Ext.Dispatcher}. See the
+ * {@link Ext.Dispatcher Dispatcher docs} for details on how this works.&lt;/p&gt;
+ * 
+ * @constructor
+ */
+Ext.define(&#39;Ext.util.Dispatcher&#39;, {
+    mixins: {
+        observable: &#39;Ext.util.Observable&#39;
+    },
+    
+    constructor: function(config) {
+        this.addEvents(
+            <a name="event-Ext.util.Dispatcher-before-dispatch"></a>/**
+             * @event before-dispatch
+             * Fires before an interaction is dispatched. Return false from any listen to cancel the dispatch
+             * @param {Ext.Interaction} interaction The Interaction about to be dispatched
+             */
+            &#39;before-dispatch&#39;,
+            
+            <a name="event-Ext.util.Dispatcher-dispatch"></a>/**
+             * @event dispatch
+             * Fired once an Interaction has been dispatched
+             * @param {Ext.Interaction} interaction The Interaction that was just dispatched
+             */
+            &#39;dispatch&#39;
+        );
+        
+        this.mixins.observable.constructor.call(this, config);
+    },
+    
+    <a name="method-Ext.util.Dispatcher-dispatch"></a>/**
+     * Dispatches a single interaction to a controller/action pair
+     * @param {Object} options Options representing at least the controller and action to dispatch to
+     */
+    dispatch: function(options) {
+        var interaction = Ext.create(&#39;Ext.Interaction&#39;, options),
+            controller  = interaction.controller,
+            action      = interaction.action,
+            History     = Ext.util.History;
+        
+        if (this.fireEvent(&#39;before-dispatch&#39;, interaction) !== false) {
+            if (History &amp;&amp; options.historyUrl) {
+                History.suspendEvents(false);
+                History.add(options.historyUrl);
+                Ext.defer(History.resumeEvents, 100, History);
+            }
+            
+            if (controller &amp;&amp; action) {
+                controller[action].call(controller, interaction);
+                interaction.dispatched = true;
+            }
+            
+            this.fireEvent(&#39;dispatch&#39;, interaction);
+        }
+    },
+    
+    <a name="method-Ext.util.Dispatcher-redirect"></a>/**
+     * Dispatches to a controller/action pair, adding a new url to the History stack
+     */
+    redirect: function(place, params) {
+        var route, routeData, url;
+        
+        //enables us to send redirect(videoInstance) as a convenience for redirect(&quot;video&quot;, videoInstance)
+        if (place instanceof Ext.data.Model) {
+            params = place;
+            place = place.constructor.modelName.toLowerCase();
+        }
+        
+        if (typeof place == &#39;string&#39;) {
+            route  = Ext.Router.routes.get(place);
+            params = params || {};
+            
+            if (route) {
+                if (params instanceof Ext.data.Model) {
+                    routeData = params.data;
+                    params = {
+                        instance: params
+                    };
+                } else {
+                    routeData = params || {};
+                }
+                
+                url = route.urlFor(routeData);
+                
+                Ext.applyIf(params, {
+                    controller: route.controller,
+                    action    : route.action,
+                    url       : url,
+                    historyUrl: url
+                });
+                
+                return this.dispatch(params);
+            } else {
+                route = Ext.Router.recognize(place);
+
+                if (route) {
+                    return this.dispatch(route);
+                }
+            }
+        }
+        
+        return null;
+    },
+    
+    <a name="method-Ext.util.Dispatcher-createRedirect"></a>/**
+     * Convenience method which returns a function that calls Ext.Dispatcher.redirect. Useful when setting
+     * up several listeners that should redirect, e.g.:
+<br><span style="display: none">**/</span>myComponent.on({
+    homeTap : Ext.Dispatcher.createRedirect(&#39;home&#39;),
+    inboxTap: Ext.Dispatcher.createRedirect(&#39;inbox&#39;),
+});
+<br><span style="display: none">/**</span>     * @param {String/Object} url The url to create the redirect function for
+     * @return {Function} The redirect function
+     */
+    createRedirect: function(url) {
+        return function() {
+            Ext.Dispatcher.redirect(url);
+        };
+    }
+});
+￿</pre></pre></body></html>

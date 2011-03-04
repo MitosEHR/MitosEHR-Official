@@ -1,0 +1,47 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre>/**
+ * @ignore
+ */
+Ext.override(Ext.form.FormPanel, {
+
+    <a name="cfg-Ext.form.FieldSet-monitorValid"></a>/**
+     * @cfg {Boolean} monitorValid If &lt;tt&gt;true&lt;/tt&gt;, the form monitors its valid state &lt;b&gt;client-side&lt;/b&gt; and
+     * regularly fires the {@link #clientvalidation} event passing that state.&lt;br&gt;
+     * &lt;p&gt;When monitoring valid state, the FormPanel enables/disables any of its configured
+     * {@link #buttons} which have been configured with &lt;code&gt;formBind: true&lt;/code&gt; depending
+     * on whether the {@link Ext.form.Basic#isValid form is valid} or not. Defaults to &lt;tt&gt;false&lt;/tt&gt;&lt;/p&gt;
+     * @deprecated Use the {@link Ext.form.Field#validateOnChange} and {@link Ext.form.FormPanel#pollForChanges} options instead.
+     */
+    monitorValid: false,
+
+    <a name="cfg-Ext.form.FieldSet-monitorPoll"></a>/**
+     * @cfg {Number} monitorPoll The milliseconds to poll valid state, ignored if monitorValid is not true (defaults to 200)
+     * @deprecated Use the {@link Ext.form.Field#validateOnChange} and {@link Ext.form.FormPanel#pollInterval} options instead.
+     */
+    monitorPoll: 200,
+
+    <a name="method-Ext.form.FieldSet-startMonitoring"></a>/**
+     * Starts monitoring of the valid state of this form. Usually this is done by passing the config
+     * option &quot;monitorValid&quot;
+     * @deprecated Use {@link Ext.form.FormPanel#startPolling} instead.
+     */
+    startMonitoring: function() {
+        //&lt;debug&gt;
+        console.log(&#39;Ext.form.FormPanel.startMonitoring is deprecated. Use the startPolling method instead.&#39;);
+        //&lt;/debug&gt;
+
+        this.startPolling(this.monitorPoll);
+    },
+
+    <a name="method-Ext.form.FieldSet-stopMonitoring"></a>/**
+     * Stops monitoring of the valid state of this form
+     * @deprecated Use {@link Ext.form.FormPanel#stopPolling} instead.
+     */
+    stopMonitoring: function() {
+        //&lt;debug&gt;
+        console.log(&#39;Ext.form.FormPanel.stopMonitoring is deprecated. Use the stopPolling method instead.&#39;);
+        //&lt;/debug&gt;
+
+        this.stopPolling();
+    }
+
+});￿</pre></pre></body></html>

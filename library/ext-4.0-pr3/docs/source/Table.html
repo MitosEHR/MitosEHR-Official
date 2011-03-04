@@ -1,0 +1,245 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.layout.container.Table"></a>/**
+ * @class Ext.layout.container.Table
+ * @extends Ext.layout.container.Auto
+ * &lt;p&gt;This layout allows you to easily render content into an HTML table.  The total number of columns can be
+ * specified, and rowspan and colspan can be used to create complex layouts within the table.
+ * This class is intended to be extended or created via the &lt;code&gt;layout: {type: &#39;table&#39;}&lt;/code&gt;
+ * {@link Ext.container.Container#layout} config, and should generally not need to be created directly via the new keyword.&lt;/p&gt;
+ * &lt;p&gt;Note that when creating a layout via config, the layout-specific config properties must be passed in via
+ * the {@link Ext.container.Container#layout} object which will then be applied internally to the layout.  In the
+ * case of TableLayout, the only valid layout config properties are {@link #columns} and {@link #tableAttrs}.
+ * However, the items added to a TableLayout can supply the following table-specific config properties:&lt;/p&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;b&gt;rowspan&lt;/b&gt; Applied to the table cell containing the item.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;colspan&lt;/b&gt; Applied to the table cell containing the item.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;cellId&lt;/b&gt; An id applied to the table cell containing the item.&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;cellCls&lt;/b&gt; A CSS class name added to the table cell containing the item.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;p&gt;The basic concept of building up a TableLayout is conceptually very similar to building up a standard
+ * HTML table.  You simply add each panel (or &quot;cell&quot;) that you want to include along with any span attributes
+ * specified as the special config properties of rowspan and colspan which work exactly like their HTML counterparts.
+ * Rather than explicitly creating and nesting rows and columns as you would in HTML, you simply specify the
+ * total column count in the layoutConfig and start adding panels in their natural order from left to right,
+ * top to bottom.  The layout will automatically figure out, based on the column count, rowspans and colspans,
+ * how to position each panel within the table.  Just like with HTML tables, your rowspans and colspans must add
+ * up correctly in your overall layout or you&#39;ll end up with missing and/or extra cells!  Example usage:&lt;/p&gt;
+ * <br><span style="display: none">**/</span>// This code will generate a layout table that is 3 columns by 2 rows
+// with some spanning included.  The basic layout will be:
+// +--------+-----------------+
+// |   A    |   B             |
+// |        |--------+--------|
+// |        |   C    |   D    |
+// +--------+--------+--------+
+var table = new Ext.panel.Panel({
+    title: &#39;Table Layout&#39;,
+    layout: {
+        type: &#39;table&#39;,
+        // The total column count must be specified here
+        columns: 3
+    },
+    defaults: {
+        // applied to each contained panel
+        bodyStyle:&#39;padding:20px&#39;
+    },
+    items: [{
+        html: &#39;&amp;lt;p&amp;gt;Cell A content&amp;lt;/p&amp;gt;&#39;,
+        rowspan: 2
+    },{
+        html: &#39;&amp;lt;p&amp;gt;Cell B content&amp;lt;/p&amp;gt;&#39;,
+        colspan: 2
+    },{
+        html: &#39;&amp;lt;p&amp;gt;Cell C content&amp;lt;/p&amp;gt;&#39;,
+        cellCls: &#39;highlight&#39;
+    },{
+        html: &#39;&amp;lt;p&amp;gt;Cell D content&amp;lt;/p&amp;gt;&#39;
+    }]
+});
+<br><span style="display: none">/**</span> */
+
+Ext.define(&#39;Ext.layout.container.Table&#39;, {
+
+    /* Begin Definitions */
+
+    alias: [&#39;layout.table&#39;],
+
+    extend: &#39;Ext.layout.container.Auto&#39;,
+
+    /* End Definitions */
+
+    <a name="cfg-Ext.layout.container.Table-columns"></a>/**
+     * @cfg {Number} columns
+     * The total number of columns to create in the table for this layout.  If not specified, all Components added to
+     * this layout will be rendered into a single row using one column per Component.
+     */
+
+    // private
+    monitorResize:false,
+
+    type: &#39;table&#39;,
+
+    targetCls: Ext.baseCSSPrefix + &#39;table-layout-ct&#39;,
+    tableCls: Ext.baseCSSPrefix + &#39;table-layout&#39;,
+    cellCls: Ext.baseCSSPrefix + &#39;table-layout-cell&#39;,
+
+    <a name="cfg-Ext.layout.container.Table-tableAttrs"></a>/**
+     * @cfg {Object} tableAttrs
+     * &lt;p&gt;An object containing properties which are added to the {@link Ext.core.DomHelper DomHelper} specification
+     * used to create the layout&#39;s &lt;tt&gt;&amp;lt;table&amp;gt;&lt;/tt&gt; element. Example:&lt;/p&gt;<br><span style="display: none">**/</span>{
+    xtype: &#39;panel&#39;,
+    layout: {
+        type: &#39;table&#39;,
+        columns: 3,
+        tableAttrs: {
+            style: {
+                width: &#39;100%&#39;
+            }
+        }
+    }
+}<br><span style="display: none">/**</span>     */
+    tableAttrs:null,
+
+    /**
+     * @private
+     * Iterates over all passed items, ensuring they are rendered in a cell in the proper
+     * location in the table structure.
+     */
+    renderItems: function(items) {
+        var tbody = this.getTable().tBodies[0],
+            rows = tbody.rows,tdEl,
+            i = 0,
+            len = items.length,
+            cells, curCell, rowIdx, cellIdx, item, trEl;
+
+        // Calculate the correct cell structure for the current items
+        cells = this.calculateCells(items);
+
+        // Loop over each cell and compare to the current cells in the table, inserting/
+        // removing/moving cells as needed, and making sure each item is rendered into
+        // the correct cell.
+        for (; i &lt; len; i++) {
+            curCell = cells[i];
+            rowIdx = curCell.rowIdx;
+            cellIdx = curCell.cellIdx;
+            item = items[i];
+
+            // If no row present, create and insert one
+            trEl = rows[rowIdx];
+            if (!trEl) {
+                trEl = tbody.insertRow(rowIdx);
+            }
+
+            // If no cell present, create and insert one
+            tdEl = trEl.cells[cellIdx];
+            if (!tdEl) {
+                tdEl = trEl.insertCell(cellIdx);
+            }
+            tdEl = Ext.get(tdEl);
+
+            // Render or move the component into the cell
+            if (!item.rendered) {
+                this.renderItem(item, tdEl, 0);
+            }
+            else if (!this.isValidParent(item, tdEl, 0)) {
+                this.moveItem(item, tdEl, 0);
+            }
+
+            // Set the cell properties
+            tdEl.set({
+                colSpan: item.colspan || 1,
+                rowSpan: item.rowspan || 1,
+                id: item.cellId || &#39;&#39;,
+                cls: this.cellCls + &#39; &#39; + (item.cellCls || &#39;&#39;)
+            });
+
+            // If at the end of a row, remove any extra cells
+            if (!cells[i + 1] || cells[i + 1].rowIdx !== rowIdx) {
+                cellIdx++;
+                while (trEl.cells[cellIdx]) {
+                    trEl.deleteCell(cellIdx);
+                }
+            }
+        }
+
+        // Delete any extra rows
+        rowIdx++;
+        while (tbody.rows[rowIdx]) {
+            tbody.deleteRow(rowIdx);
+        }
+    },
+
+    /**
+     * @private
+     * Determine the row and cell indexes for each component, taking into consideration
+     * the number of columns and each item&#39;s configured colspan/rowspan values.
+     * @param {Array} items The layout components
+     * @return {Array} List of row and cell indexes for each of the components
+     */
+    calculateCells: function(items) {
+        var cells = [],
+            rowIdx = 0,
+            colIdx = 0,
+            cellIdx = 0,
+            totalCols = this.columns || Infinity,
+            rowspans = [], //rolling list of active rowspans for each column
+            i = 0, j,
+            len = items.length,
+            item;
+
+        for (; i &lt; len; i++) {
+            item = items[i];
+
+            // Find the first available row/col slot not taken up by a spanning cell
+            while (colIdx &gt;= totalCols || rowspans[colIdx] &gt; 0) {
+                if (colIdx &gt;= totalCols) {
+                    // move down to next row
+                    colIdx = 0;
+                    cellIdx = 0;
+                    rowIdx++;
+
+                    // decrement all rowspans
+                    for (j = 0; j &lt; totalCols; j++) {
+                        if (rowspans[j] &gt; 0) {
+                            rowspans[j]--;
+                        }
+                    }
+                } else {
+                    colIdx++;
+                }
+            }
+
+            // Add the cell info to the list
+            cells.push({
+                rowIdx: rowIdx,
+                cellIdx: cellIdx
+            });
+
+            // Increment
+            rowspans[colIdx] = item.rowspan || 1;
+            colIdx += item.colspan || 1;
+            cellIdx++;
+        }
+
+        return cells;
+    },
+
+    /**
+     * @private
+     * Return the layout&#39;s table element, creating it if necessary.
+     */
+    getTable: function() {
+        var table = this.table;
+        if (!table) {
+            table = this.table = this.getTarget().createChild(
+                Ext.apply({
+                    tag: &#39;table&#39;,
+                    role: &#39;presentation&#39;,
+                    cls: this.tableCls,
+                    cellspacing: 0, //TODO should this be specified or should CSS handle it?
+                    cn: {tag: &#39;tbody&#39;}
+                }, this.tableAttrs),
+                null, true
+            );
+        }
+        return table;
+    }
+});￿</pre></pre></body></html>

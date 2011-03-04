@@ -1,0 +1,37 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.Request"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.Request
+ * @extends Object
+ * 
+ * &lt;p&gt;Simple class that represents a Request that will be made by any {@link Ext.data.ServerProxy} subclass.
+ * All this class does is standardize the representation of a Request as used by any ServerProxy subclass,
+ * it does not contain any actual logic or perform the request itself.&lt;/p&gt;
+ * 
+ * @constructor
+ * @param {Object} config Optional config object
+ */
+Ext.define(&#39;Ext.data.Request&#39;, {
+    <a name="cfg-Ext.data.Request-action"></a>/**
+     * @cfg {String} action The name of the action this Request represents. Usually one of &#39;create&#39;, &#39;read&#39;, &#39;update&#39; or &#39;destroy&#39;
+     */
+    action: undefined,
+    
+    <a name="cfg-Ext.data.Request-params"></a>/**
+     * @cfg {Object} params HTTP request params. The Proxy and its Writer have access to and can modify this object.
+     */
+    params: undefined,
+    
+    <a name="cfg-Ext.data.Request-method"></a>/**
+     * @cfg {String} method The HTTP method to use on this Request (defaults to &#39;GET&#39;). Should be one of &#39;GET&#39;, &#39;POST&#39;, &#39;PUT&#39; or &#39;DELETE&#39;
+     */
+    method: &#39;GET&#39;,
+    
+    <a name="cfg-Ext.data.Request-url"></a>/**
+     * @cfg {String} url The url to access on this Request
+     */
+    url: undefined,
+
+    constructor: function(config) {
+        Ext.apply(this, config);
+    }
+});￿</pre></pre></body></html>

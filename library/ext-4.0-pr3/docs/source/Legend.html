@@ -1,0 +1,298 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.chart.Legend"></a>/**
+ * @class Ext.chart.Legend
+ *
+ * Defines a legend for a chart&#39;s series.
+ * The &#39;chart&#39; member must be set prior to rendering.
+ * The legend class displays a list of legend items each of them related with a
+ * series being rendered. In order to render the legend item of the proper series
+ * the series configuration object must have &lt;code&gt;showInSeries&lt;/code&gt; set to
+ * true.
+ *
+ * The legend configuration object accepts a &lt;code&gt;position&lt;/code&gt; as parameter.
+ * The &lt;code&gt;position&lt;/code&gt; parameter can be &lt;code&gt;left&lt;/code&gt;, &lt;code&gt;right&lt;/code&gt;
+ * &lt;code&gt;top&lt;/code&gt; or &lt;code&gt;bottom&lt;/code&gt;. For example:
+ *
+   <br><span style="display: none">**/</span>        legend: {
+            position: &#39;right&#39;
+        },
+    <br><span style="display: none">/**</span> *
+ * @constructor
+ */
+Ext.define(&#39;Ext.chart.Legend&#39;, {
+
+    /* Begin Definitions */
+
+    requires: [&#39;Ext.chart.LegendItem&#39;],
+
+    /* End Definitions */
+
+    <a name="cfg-Ext.chart.Legend-visible"></a>/**
+     * @cfg {Boolean} visible
+     * Whether or not the legend should be displayed.
+     */
+    visible: true,
+
+    <a name="cfg-Ext.chart.Legend-position"></a>/**
+     * @cfg {String} position
+     * The position of the legend in relation to the chart. One of: &quot;top&quot;,
+     * &quot;bottom&quot;, &quot;left&quot;, &quot;right&quot;, or &quot;float&quot;. If set to &quot;float&quot;, then the legend
+     * box will be positioned at the point denoted by the x and y parameters.
+     */
+    position: &#39;bottom&#39;,
+
+    <a name="cfg-Ext.chart.Legend-x"></a>/**
+     * @cfg {Number} x
+     * X-position of the legend box. Used directly if position is set to &quot;float&quot;, otherwise 
+     * it will be calculated dynamically.
+     */
+    x: 0,
+
+    <a name="cfg-Ext.chart.Legend-y"></a>/**
+     * @cfg {Number} y
+     * Y-position of the legend box. Used directly if position is set to &quot;float&quot;, otherwise
+     * it will be calculated dynamically.
+     */
+    y: 0,
+
+    <a name="cfg-Ext.chart.Legend-labelFont"></a>/**
+     * @cfg {String} labelFont
+     * Font to be used for the legend labels.
+     */
+    labelFont: &#39;12px Helvetica, sans-serif&#39;,
+
+    <a name="cfg-Ext.chart.Legend-boxStroke"></a>/**
+     * @cfg {String} boxStroke
+     * Style of the stroke for the legend box
+     */
+    boxStroke: &#39;#000&#39;,
+
+    <a name="cfg-Ext.chart.Legend-boxStrokeWidth"></a>/**
+     * @cfg {String} boxStrokeWidth
+     * Width of the stroke for the legend box
+     */
+    boxStrokeWidth: 1,
+
+    <a name="cfg-Ext.chart.Legend-boxFill"></a>/**
+     * @cfg {String} boxFill
+     * Fill style for the legend box
+     */
+    boxFill: &#39;#FFF&#39;,
+
+    <a name="cfg-Ext.chart.Legend-itemSpacing"></a>/**
+     * @cfg {Number} itemSpacing
+     * Amount of space between legend items
+     */
+    itemSpacing: 10,
+
+    <a name="cfg-Ext.chart.Legend-padding"></a>/**
+     * @cfg {Number} padding
+     * Amount of padding between the legend box&#39;s border and its items
+     */
+    padding: 5,
+
+    // @private
+    width: 0,
+    // @private
+    height: 0,
+
+    <a name="cfg-Ext.chart.Legend-boxZIndex"></a>/**
+     * @cfg {Number} boxZIndex
+     * Sets the z-index for the legend. Defaults to 100.
+     */
+    boxZIndex: 100,
+
+    constructor: function(config) {
+        var me = this;
+        if (config) {
+            Ext.apply(me, config);
+        }
+        me.items = [];
+        <a name="prop-Ext.chart.Legend-isVertical"></a>/**
+         * Whether the legend box is oriented vertically, i.e. if it is on the left or right side or floating.
+         * @type {Boolean}
+         */
+        me.isVertical = (&quot;left|right|float&quot;.indexOf(me.position) !== -1);
+    },
+
+    /**
+     * @private Create all the sprites for the legend
+     */
+    create: function() {
+        var me = this;
+        me.createItems();
+        if (!me.created &amp;&amp; me.isDisplayed()) {
+            me.createBox();
+            me.created = true;
+        }
+    },
+
+    /**
+     * @private Determine whether the legend should be displayed. Looks at the legend&#39;s &#39;visible&#39; config,
+     * and also the &#39;showInLegend&#39; config for each of the series.
+     */
+    isDisplayed: function() {
+        return this.visible &amp;&amp; this.chart.series.findIndex(&#39;showInLegend&#39;, true) !== -1;
+    },
+
+    /**
+     * @private Create the series markers and labels
+     */
+    createItems: function() {
+        var me = this,
+            chart = me.chart,
+            surface = chart.surface,
+            items = me.items,
+            padding = me.padding,
+            itemSpacing = me.itemSpacing,
+            maxWidth = 0,
+            maxHeight = 0,
+            totalWidth = 0,
+            totalHeight = 0,
+            vertical = me.isVertical,
+            math = Math,
+            mfloor = math.floor,
+            mmax = math.max,
+            index = 0, i, j, l, lelem,
+            x, y, spacing, item, bbox, height, width;
+
+        //remove all legend items
+        if (items &amp;&amp; items.length) {
+            for (i = 0, l = items.length; i &lt; l; i++) {
+                item = items[i];
+                item.setAttributes({
+                    hidden: true
+                }, true);
+                
+                for (j = 0, lelem = item.items.length; j &lt; lelem; j++) {
+                    surface.remove(item.items[j]);
+                }
+            }
+        }
+        //empty array
+        items.length = 0;
+        // Create all the item labels, collecting their dimensions and positioning each one
+        // properly in relation to the previous item
+        chart.series.each(function(series, i) {
+            if (series.showInLegend) {
+                Ext.each([].concat(series.yField), function(field, j) {
+                    item = new Ext.chart.LegendItem({
+                        legend: this,
+                        series: series,
+                        surface: chart.surface,
+                        yFieldIndex: j
+                    });
+                    bbox = item.getBBox();
+
+                    //always measure from x=0, since not all markers go all the way to the left
+                    width = bbox.width; 
+                    height = bbox.height;
+
+                    if (i + j === 0) {
+                        spacing = vertical ? padding + height / 2 : padding;
+                    }
+                    else {
+                        spacing = itemSpacing / (vertical ? 2 : 1);
+                    }
+                    // Set the item&#39;s position relative to the legend box
+                    item.x = mfloor(vertical ? padding : totalWidth + spacing);
+                    item.y = mfloor(vertical ? totalHeight + spacing : padding + height / 2);
+
+                    // Collect cumulative dimensions
+                    totalWidth += width + spacing;
+                    totalHeight += height + spacing;
+                    maxWidth = mmax(maxWidth, width);
+                    maxHeight = mmax(maxHeight, height);
+
+                    items.push(item);
+                }, this);
+            }
+        }, me);
+
+        // Store the collected dimensions for later
+        me.width = mfloor((vertical ? maxWidth : totalWidth) + padding * 2);
+        me.height = mfloor((vertical ? totalHeight - 2 * spacing : maxHeight) + (padding * 2));
+        me.itemHeight = maxHeight;
+    },
+
+    /**
+     * @private Get the bounds for the legend&#39;s outer box
+     */
+    getBBox: function() {
+        var me = this;
+        return {
+            x: Math.round(me.x) - me.boxStrokeWidth / 2,
+            y: Math.round(me.y) - me.boxStrokeWidth / 2,
+            width: me.width,
+            height: me.height
+        };
+    },
+
+    /**
+     * @private Create the box around the legend items
+     */
+    createBox: function() {
+        var me = this,
+            box = me.boxSprite = me.chart.surface.add(Ext.apply({
+                type: &#39;rect&#39;,
+                stroke: me.boxStroke,
+                &quot;stroke-width&quot;: me.boxStrokeWidth,
+                fill: me.boxFill,
+                zIndex: me.boxZIndex
+            }, me.getBBox()));
+        box.redraw();
+    },
+
+    /**
+     * @private Update the position of all the legend&#39;s sprites to match its current x/y values
+     */
+    updatePosition: function() {
+        var me = this,
+            x, y,
+            legendWidth = me.width,
+            legendHeight = me.height,
+            padding = me.padding,
+            chart = me.chart,
+            chartBBox = chart.chartBBox,
+            insets = chart.insetPadding,
+            chartWidth = chartBBox.width - (insets * 2),
+            chartHeight = chartBBox.height - (insets * 2),
+            chartX = chartBBox.x + insets,
+            chartY = chartBBox.y + insets,
+            surface = chart.surface,
+            mfloor = Math.floor;
+        
+        if (me.isDisplayed()) {
+            // Find the position based on the dimensions
+            switch(me.position) {
+                case &quot;left&quot;:
+                    x = insets;
+                    y = mfloor(chartY + chartHeight / 2 - legendHeight / 2);
+                    break;
+                case &quot;right&quot;:
+                    x = mfloor(surface.width - legendWidth) - insets;
+                    y = mfloor(chartY + chartHeight / 2 - legendHeight / 2);
+                    break;
+                case &quot;top&quot;:
+                    x = mfloor(chartX + chartWidth / 2 - legendWidth / 2);
+                    y = insets;
+                    break;
+                case &quot;bottom&quot;:
+                    x = mfloor(chartX + chartWidth / 2 - legendWidth / 2);
+                    y = mfloor(surface.height - legendHeight) - insets;
+                    break;
+                default:
+                    x = mfloor(me.x) + insets;
+                    y = mfloor(me.y) + insets;
+            }
+            me.x = x;
+            me.y = y;
+
+            // Update the position of each item
+            Ext.each(me.items, function(item) {
+                item.updatePosition();
+            });
+            // Update the position of the outer box
+            me.boxSprite.setAttributes(me.getBBox(), true);
+        }
+    }
+});￿</pre></pre></body></html>

@@ -1,0 +1,41 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.Date"></div>/**
+ * @class Ext.Date
+ *
+ * A set of useful static methods to deal with date
+ * @singleton
+ */
+
+/*
+ * Note that if Ext.util.Date is required and loaded, it will copy all methods / properties to
+ * this object, for convenience
+ */
+Ext.Date = {
+    <div id="method-Ext.Date-now"></div>/**
+     * Returns the current timestamp
+     * @return {Date} The current timestamp
+     */
+    now: Date.now || function() {
+        return +new Date();
+    },
+
+    <div id="method-Ext.Date-getElapsed"></div>/**
+     * Returns the number of milliseconds between two dates
+     * @param {Date} dateA
+     * @param {Date} dateB (optional) Defaults to now
+     * @return {Number} The diff in milliseconds
+     */
+    getElapsed: function(dateA, dateB) {
+        return Math.abs(dateA - (dateB || new Date()));
+    }
+};
+</pre>    
+</body>
+</html>
