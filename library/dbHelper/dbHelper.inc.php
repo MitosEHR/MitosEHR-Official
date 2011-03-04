@@ -47,7 +47,7 @@ function sqlStatement($sql){
 
 //**********************************************************************
 // Simple SQL Stament, with no Event LOG injection
-// return: One record array
+// return: Only one record array
 //**********************************************************************
 function sqlFetch($sql){
 	// Get the global variable
