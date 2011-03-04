@@ -23,18 +23,16 @@ $count = 0;
 // query all permissions and left join with currRole values
 // *************************************************************************************
 $currRole = ($_REQUEST["start"] == null) ? 5 : $_REQUEST["role_id"];
-
-$sql = "SELECT acl_permissions.id,
-			   acl_permissions.perm_key,
-			   acl_permissions.perm_name,
-			   acl_role_perms.role_id,
-			   acl_role_perms.perm_id,
-			   acl_role_perms.value
-		  FROM acl_permissions
-  	 LEFT JOIN acl_role_perms
-	 	    ON acl_permissions.id = acl_role_perms.perm_id
-	 	 LIKE role_id = '$currRole' 
-  		 ORDER BY perm_name";
+	$sql = "SELECT acl_permissions.id,
+					acl_permissions.perm_key,
+					acl_permissions.perm_name,
+					acl_role_perms.role_id,
+					acl_role_perms.perm_id,
+					acl_role_perms.value
+			FROM (acl_role_perms
+			LEFT JOIN acl_roles ON acl_role_perms.role_id = acl_roles.id)
+			RIGHT JOIN acl_permissions ON acl_role_perms.perm_id = acl_permissions.id
+			ORDER BY perm_name";
 	$buff = "";
 	foreach (sqlStatement($sql) as $urow) {
 		$count++;
