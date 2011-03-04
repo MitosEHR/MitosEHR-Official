@@ -56,25 +56,25 @@ Ext.TaskMgr.start({
 // Navigation Panel
 //****************************************************************
 //var Navigation = Ext.create('Ext.tree.TreePanel', {
-// region: 'west',
-// collapsible: true,
-// floatable: true,
-// useArrows: true,
-// autoScroll: true,
-// rootVisible: false,
-// lines: false,
-// animate: true,
-// enableDD: true,
-// containerScroll: true,
-// dataUrl: 'interface/navigation/default_leftnav.ejs.php',
-// title: '<?php i18n('Navigation'); ?>',
-// split: true,
-// width: 200,
-// root: {
-// nodeType: 'async',
-// draggable: false,
-// id: 'source'
-// }
+//	region: 'west',
+//	collapsible: true,
+//	floatable: true,
+//	useArrows: true,
+//	autoScroll: true,
+//	rootVisible: false,
+//	lines: false,
+//	animate: true,
+//	enableDD: true,
+//	containerScroll: true,
+//	dataUrl: 'interface/navigation/default_leftnav.ejs.php',
+//	title: '<?php i18n('Navigation'); ?>',
+//	split: true,
+//	width: 200,
+//	root: {
+//		nodeType: 'async',
+//		draggable: false,
+//		id: 'source'
+//	}
 //});
 
 //****************************************************************
