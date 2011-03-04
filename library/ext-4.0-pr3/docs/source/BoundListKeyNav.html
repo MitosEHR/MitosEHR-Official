@@ -1,0 +1,112 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.view.BoundListKeyNav"></a>/**
+ * @class Ext.view.BoundListKeyNav
+ * @extends Ext.util.KeyNav
+ * A specialized {@link Ext.util.KeyNav} implementation for navigating a {@link Ext.view.BoundList} using
+ * the keyboard. The up, down, pageup, pagedown, home, and end keys move the active highlight
+ * through the list. The enter key (and optionally the tab key) invokes the selection model&#39;s
+ * select action using the highlighted item.
+ */
+Ext.define(&#39;Ext.view.BoundListKeyNav&#39;, {
+    extend: &#39;Ext.util.KeyNav&#39;,
+    requires: &#39;Ext.view.BoundList&#39;,
+
+    <a name="cfg-Ext.view.BoundListKeyNav-boundList"></a>/**
+     * @cfg {Ext.view.BoundList} boundList
+     * @required
+     * The {@link Ext.view.BoundList} instance for which key navigation will be managed. This is required.
+     */
+
+    <a name="cfg-Ext.view.BoundListKeyNav-selectOnTab"></a>/**
+     * @cfg {Boolean} selectOnTab
+     * Whether the Tab key should select the currently highlighted item. Defaults to &lt;tt&gt;true&lt;/tt&gt;.
+     */
+    selectOnTab: true,
+
+    constructor: function(el, config) {
+        var me = this;
+        Ext.copyTo(me, config, &#39;boundList,selectOnTab&#39;);
+        config = Ext.apply({}, config, me.defaultHandlers);
+        me.callParent([el, config]);
+    },
+
+    defaultHandlers: {
+        up: function() {
+            var me = this,
+                boundList = me.boundList,
+                allItems = boundList.all,
+                oldItem = boundList.highlightedItem,
+                oldItemIdx = oldItem ? boundList.indexOf(oldItem) : -1,
+                newItemIdx = oldItemIdx &gt; 0 ? oldItemIdx - 1 : allItems.getCount() - 1; //wraps around
+            me.highlightAt(newItemIdx);
+        },
+
+        down: function() {
+            var me = this,
+                boundList = me.boundList,
+                allItems = boundList.all,
+                oldItem = boundList.highlightedItem,
+                oldItemIdx = oldItem ? boundList.indexOf(oldItem) : -1,
+                newItemIdx = oldItemIdx &lt; allItems.getCount() - 1 ? oldItemIdx + 1 : 0; //wraps around
+            me.highlightAt(newItemIdx);
+        },
+
+        pageup: function() {
+            //TODO
+        },
+
+        pagedown: function() {
+            //TODO
+        },
+
+        home: function() {
+            this.highlightAt(0);
+        },
+
+        end: function() {
+            var me = this;
+            me.highlightAt(me.boundList.all.getCount() - 1);
+        },
+
+        enter: function(e) {
+            this.selectHighlighted(e);
+        },
+
+        tab: function(e) {
+            var me = this;
+            if (me.selectOnTab) {
+                me.selectHighlighted(e);
+            }
+            // Tab key event is allowed to propagate to field
+            return true;
+        }
+    },
+
+    <a name="method-Ext.view.BoundListKeyNav-highlightAt"></a>/**
+     * Highlights the item at the given index.
+     * @param {Number} index
+     */
+    highlightAt: function(index) {
+        var boundList = this.boundList,
+            item = boundList.all.item(index);
+        if (item) {
+            item = item.dom;
+            boundList.highlightItem(item);
+            boundList.el.scrollChildIntoView(item, false);
+        }
+    },
+
+    <a name="method-Ext.view.BoundListKeyNav-selectHighlighted"></a>/**
+     * Triggers selection of the currently highlighted item according to the behavior of
+     * the configured SelectionModel.
+     */
+    selectHighlighted: function(e) {
+        var me = this,
+            boundList = me.boundList,
+            highlighted = boundList.highlightedItem,
+            selModel = boundList.getSelectionModel();
+        if (highlighted) {
+            selModel.selectWithEvent(boundList.getRecord(highlighted), e);
+        }
+    }
+
+});￿</pre></pre></body></html>

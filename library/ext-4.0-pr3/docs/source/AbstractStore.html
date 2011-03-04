@@ -1,0 +1,804 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.AbstractStore"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.AbstractStore
+ *
+ * &lt;p&gt;AbstractStore is a superclass of {@link Ext.data.Store} and {@link Ext.data.TreeStore}. It&#39;s never used directly,
+ * but offers a set of methods used by both of those subclasses.&lt;/p&gt;
+ * 
+ * &lt;p&gt;We&#39;ve left it here in the docs for reference purposes, but unless you need to make a whole new type of Store, what
+ * you&#39;re probably looking for is {@link Ext.data.Store}. If you&#39;re still interested, here&#39;s a brief description of what 
+ * AbstractStore is and is not.&lt;/p&gt;
+ * 
+ * &lt;p&gt;AbstractStore provides the basic configuration for anything that can be considered a Store. It expects to be 
+ * given a {@link Ext.data.Model Model} that represents the type of data in the Store. It also expects to be given a 
+ * {@link Ext.data.Proxy Proxy} that handles the loading of data into the Store.&lt;/p&gt;
+ * 
+ * &lt;p&gt;AbstractStore provides a few helpful methods such as {@link #load} and {@link #sync}, which load and save data
+ * respectively, passing the requests through the configured {@link #proxy}. Both built-in Store subclasses add extra
+ * behavior to each of these functions. Note also that each AbstractStore subclass has its own way of storing data - 
+ * in {@link Ext.data.Store} the data is saved as a flat {@link Ext.util.MixedCollection MixedCollection}, whereas in
+ * {@link Ext.data.TreeStore TreeStore} we use a {@link Ext.data.Tree} to maintain the data&#39;s hierarchy.&lt;/p&gt;
+ * 
+ * &lt;p&gt;Finally, AbstractStore provides an API for sorting and filtering data via its {@link #sorters} and {@link #filters}
+ * {@link Ext.util.MixedCollection MixedCollections}. Although this functionality is provided by AbstractStore, there&#39;s a
+ * good description of how to use it in the introduction of {@link Ext.data.Store}.
+ * 
+ */
+Ext.define(&#39;Ext.data.AbstractStore&#39;, {
+    requires: [&#39;Ext.util.MixedCollection&#39;, &#39;Ext.data.Operation&#39;, &#39;Ext.util.Sorter&#39;, &#39;Ext.util.Filter&#39;, &#39;Ext.util.Grouper&#39;],
+    
+    mixins: {
+        observable: &#39;Ext.util.Observable&#39;
+    },
+    
+    remoteSort  : false,
+    remoteFilter: false,
+
+    <a name="cfg-Ext.data.AbstractStore-proxy"></a>/**
+     * @cfg {String/Ext.data.Proxy/Object} proxy The Proxy to use for this Store. This can be either a string, a config
+     * object or a Proxy instance - see {@link #setProxy} for details.
+     */
+
+    <a name="cfg-Ext.data.AbstractStore-autoLoad"></a>/**
+     * @cfg {Boolean/Object} autoLoad If data is not specified, and if autoLoad is true or an Object, this store&#39;s load method
+     * is automatically called after creation. If the value of autoLoad is an Object, this Object will be passed to the store&#39;s
+     * load method. Defaults to false.
+     */
+    autoLoad: false,
+
+    <a name="cfg-Ext.data.AbstractStore-autoSave"></a>/**
+     * @cfg {Boolean} autoSave True to automatically sync the Store with its Proxy after every edit to one of its Records.
+     * Defaults to false.
+     */
+    autoSave: false,
+
+    <a name="prop-Ext.data.AbstractStore-batchUpdateMode"></a>/**
+     * Sets the updating behavior based on batch synchronization. &#39;operation&#39; (the default) will update the Store&#39;s
+     * internal representation of the data after each operation of the batch has completed, &#39;complete&#39; will wait until
+     * the entire batch has been completed before updating the Store&#39;s data. &#39;complete&#39; is a good choice for local
+     * storage proxies, &#39;operation&#39; is better for remote proxies, where there is a comparatively high latency.
+     * @property batchUpdateMode
+     * @type String
+     */
+    batchUpdateMode: &#39;operation&#39;,
+
+    <a name="prop-Ext.data.AbstractStore-filterOnLoad"></a>/**
+     * If true, any filters attached to this Store will be run after loading data, before the datachanged event is fired.
+     * Defaults to true, ignored if {@link #remoteFilter} is true
+     * @property filterOnLoad
+     * @type Boolean
+     */
+    filterOnLoad: true,
+
+    <a name="prop-Ext.data.AbstractStore-sortOnLoad"></a>/**
+     * If true, any sorters attached to this Store will be run after loading data, before the datachanged event is fired.
+     * Defaults to true, igored if {@link #remoteSort} is true
+     * @property sortOnLoad
+     * @type Boolean
+     */
+    sortOnLoad: true,
+
+    <a name="prop-Ext.data.AbstractStore-defaultSortDirection"></a>/**
+     * The default sort direction to use if one is not specified (defaults to &quot;ASC&quot;)
+     * @property defaultSortDirection
+     * @type String
+     */
+    defaultSortDirection: &quot;ASC&quot;,
+
+    /**
+     * True if a model was created implicitly for this Store. This happens if a fields array is passed to the Store&#39;s constructor
+     * instead of a model constructor or name.
+     * @property implicitModel
+     * @type Boolean
+     * @private
+     */
+    implicitModel: false,
+
+    <a name="prop-Ext.data.AbstractStore-defaultProxyType"></a>/**
+     * The string type of the Proxy to create if none is specified. This defaults to creating a {@link Ext.data.MemoryProxy memory proxy}.
+     * @property defaultProxyType
+     * @type String
+     */
+    defaultProxyType: &#39;memory&#39;,
+
+    <a name="prop-Ext.data.AbstractStore-isDestroyed"></a>/**
+     * True if the Store has already been destroyed via {@link #destroyStore}. If this is true, the reference to Store should be deleted
+     * as it will not function correctly any more.
+     * @property isDestroyed
+     * @type Boolean
+     */
+    isDestroyed: false,
+
+    isStore: true,
+
+    <a name="cfg-Ext.data.AbstractStore-storeId"></a>/**
+     * @cfg {String} storeId Optional unique identifier for this store. If present, this Store will be registered with 
+     * the {@link Ext.data.StoreMgr}, making it easy to reuse elsewhere. Defaults to undefined.
+     */
+
+    //documented above
+    constructor: function(config) {
+        this.addEvents(
+            <a name="event-Ext.data.AbstractStore-add"></a>/**
+             * @event add
+             * Fired when a Model instance has been added to this Store
+             * @param {Ext.data.Store} store The store
+             * @param {Array} records The Model instances that were added
+             * @param {Number} index The index at which the instances were inserted
+             */
+            &#39;add&#39;,
+
+            <a name="event-Ext.data.AbstractStore-remove"></a>/**
+             * @event remove
+             * Fired when a Model instance has been removed from this Store
+             * @param {Ext.data.Store} store The Store object
+             * @param {Ext.data.Model} record The record that was removed
+             * @param {Number} index The index of the record that was removed
+             */
+            &#39;remove&#39;,
+            
+            <a name="event-Ext.data.AbstractStore-update"></a>/**
+             * @event update
+             * Fires when a Record has been updated
+             * @param {Store} this
+             * @param {Ext.data.Model} record The Model instance that was updated
+             * @param {String} operation The update operation being performed. Value may be one of:
+             * <br><span style="display: none">**/</span>               Ext.data.Model.EDIT
+               Ext.data.Model.REJECT
+               Ext.data.Model.COMMIT
+             * <br><span style="display: none">/**</span>             */
+            &#39;update&#39;,
+
+            <a name="event-Ext.data.AbstractStore-datachanged"></a>/**
+             * @event datachanged
+             * Fires whenever the records in the Store have changed in some way - this could include adding or removing records,
+             * or updating the data in existing records
+             * @param {Ext.data.Store} this The data store
+             */
+            &#39;datachanged&#39;,
+
+            <a name="event-Ext.data.AbstractStore-beforeload"></a>/**
+             * @event beforeload
+             * Event description
+             * @param {Ext.data.Store} store This Store
+             * @param {Ext.data.Operation} operation The Ext.data.Operation object that will be passed to the Proxy to load the Store
+             */
+            &#39;beforeload&#39;,
+
+            <a name="event-Ext.data.AbstractStore-load"></a>/**
+             * @event load
+             * Fires whenever the store reads data from a remote data source.
+             * @param {Ext.data.store} this
+             * @param {Array} records An array of records
+             * @param {Boolean} successful True if the operation was successful.
+             */
+            &#39;load&#39;,
+
+            <a name="event-Ext.data.AbstractStore-beforesync"></a>/**
+             * @event beforesync
+             * Called before a call to {@link #sync} is executed. Return false from any listener to cancel the synv
+             * @param {Object} options Hash of all records to be synchronized, broken down into create, update and destroy
+             */
+            &#39;beforesync&#39;
+        );
+        
+        Ext.apply(this, config);
+
+        /**
+         * Temporary cache in which removed model instances are kept until successfully synchronised with a Proxy,
+         * at which point this is cleared.
+         * @private
+         * @property removed
+         * @type Array
+         */
+        this.removed = [];
+
+        <a name="prop-Ext.data.AbstractStore-sortToggle"></a>/**
+         * Stores the current sort direction (&#39;ASC&#39; or &#39;DESC&#39;) for each field. Used internally to manage the toggling
+         * of sort direction per field. Read only
+         * @property sortToggle
+         * @type Object
+         */
+        this.sortToggle = {};
+
+        this.mixins.observable.constructor.apply(this, arguments);
+
+        this.model = Ext.ModelMgr.getModel(config.model);
+        
+        /**
+         * @property modelDefaults
+         * @type Object
+         * @private
+         * A set of default values to be applied to every model instance added via {@link #insert} or created via {@link #create}.
+         * This is used internally by associations to set foreign keys and other fields. See the Association classes source code
+         * for examples. This should not need to be used by application developers.
+         */
+        Ext.applyIf(this, {
+            modelDefaults: {}
+        });
+
+        //Supports the 3.x style of simply passing an array of fields to the store, implicitly creating a model
+        if (!this.model &amp;&amp; config.fields) {
+            this.model = Ext.regModel(&#39;Ext.data.Store.ImplicitModel-&#39; + this.storeId || Ext.id(), {
+                fields: config.fields
+            });
+
+            delete this.fields;
+
+            this.implicitModel = true;
+        }
+
+        //ensures that the Proxy is instantiated correctly
+        this.setProxy(config.proxy || this.model.getProxy());
+
+        if (this.id &amp;&amp; !this.storeId) {
+            this.storeId = this.id;
+            delete this.id;
+        }
+
+        if (this.storeId) {
+            Ext.data.StoreMgr.register(this);
+        }
+        
+        if (!config.groupers &amp;&amp; config.groupField) {
+            config.groupers = [
+                {
+                    property : config.groupField,
+                    direction: config.groupDir
+                }
+            ];
+        }
+        
+        <a name="prop-Ext.data.AbstractStore-groupers"></a>/**
+         * The collection of {@link Ext.util.Grouper Groupers} currently applied to this Store
+         * @property groupers
+         * @type Ext.util.MixedCollection
+         */
+        this.groupers = Ext.create(&#39;Ext.util.MixedCollection&#39;);
+        this.groupers.addAll(this.decodeGroupers(config.groupers));
+        
+        <a name="prop-Ext.data.AbstractStore-sorters"></a>/**
+         * The collection of {@link Ext.util.Sorter Sorters} currently applied to this Store
+         * @property sorters
+         * @type Ext.util.MixedCollection
+         */
+        this.sorters = Ext.create(&#39;Ext.util.MixedCollection&#39;);
+        this.sorters.addAll(this.groupers.items);
+        this.sorters.addAll(this.decodeSorters(config.sorters));
+        
+        <a name="prop-Ext.data.AbstractStore-filters"></a>/**
+         * The collection of {@link Ext.util.Filter Filters} currently applied to this Store
+         * @property filters
+         * @type Ext.util.MixedCollection
+         */
+        this.filters = Ext.create(&#39;Ext.util.MixedCollection&#39;);
+        this.filters.addAll(this.decodeFilters(config.filters));
+    },
+
+
+    <a name="method-Ext.data.AbstractStore-setProxy"></a>/**
+     * Sets the Store&#39;s Proxy by string, config object or Proxy instance
+     * @param {String|Object|Ext.data.Proxy} proxy The new Proxy, which can be either a type string, a configuration object
+     * or an Ext.data.Proxy instance
+     * @return {Ext.data.Proxy} The attached Proxy object
+     */
+    setProxy: function(proxy) {
+        if (proxy instanceof Ext.data.Proxy) {
+            proxy.setModel(this.model);
+        } else {
+            Ext.applyIf(proxy, {
+                model: this.model
+            });
+            
+            proxy = Ext.createByAlias(&#39;proxy.&#39; + proxy.type, proxy);
+        }
+        
+        this.proxy = proxy;
+        
+        return this.proxy;
+    },
+
+    <a name="method-Ext.data.AbstractStore-getProxy"></a>/**
+     * Returns the proxy currently attached to this proxy instance
+     * @return {Ext.data.Proxy} The Proxy instance
+     */
+    getProxy: function() {
+        return this.proxy;
+    },
+
+    //saves any phantom records
+    create: function(data, options) {
+        var instance = Ext.ModelMgr.create(Ext.applyIf(data, this.modelDefaults), this.model.modelName),
+            operation;
+        
+        options = options || {};
+
+        Ext.applyIf(options, {
+            action : &#39;create&#39;,
+            records: [instance]
+        });
+
+        operation = Ext.create(&#39;Ext.data.Operation&#39;, options);
+
+        this.proxy.create(operation, this.onProxyWrite, this);
+        
+        return instance;
+    },
+
+    read: function() {
+        return this.load.apply(this, arguments);
+    },
+
+    onProxyRead: Ext.emptyFn,
+
+    update: function(options) {
+        options = options || {};
+
+        Ext.applyIf(options, {
+            action : &#39;update&#39;,
+            records: this.getUpdatedRecords()
+        });
+
+        var operation = Ext.create(&#39;Ext.data.Operation&#39;, options);
+
+        return this.proxy.update(operation, this.onProxyWrite, this);
+    },
+
+    onProxyWrite: Ext.emptyFn,
+
+
+    //tells the attached proxy to destroy the given records
+    destroy: function(options) {
+        options = options || {};
+
+        Ext.applyIf(options, {
+            action : &#39;destroy&#39;,
+            records: this.getRemovedRecords()
+        });
+
+        var operation = Ext.create(&#39;Ext.data.Operation&#39;, options);
+
+        return this.proxy.destroy(operation, this.onProxyWrite, this);
+    },
+
+    /**
+     * @private
+     * Attached as the &#39;operationcomplete&#39; event listener to a proxy&#39;s Batch object. By default just calls through
+     * to onProxyWrite.
+     */
+    onBatchOperationComplete: function(batch, operation) {
+        return this.onProxyWrite(operation);
+    },
+
+    /**
+     * @private
+     * Attached as the &#39;complete&#39; event listener to a proxy&#39;s Batch object. Iterates over the batch operations
+     * and updates the Store&#39;s internal data MixedCollection.
+     */
+    onBatchComplete: function(batch, operation) {
+        var operations = batch.operations,
+            length = operations.length,
+            i;
+
+        this.suspendEvents();
+
+        for (i = 0; i &lt; length; i++) {
+            this.onProxyWrite(operations[i]);
+        }
+
+        this.resumeEvents();
+
+        this.fireEvent(&#39;datachanged&#39;, this);
+    },
+
+    onBatchException: function(batch, operation) {
+        // //decide what to do... could continue with the next operation
+        // batch.start();
+        //
+        // //or retry the last operation
+        // batch.retry();
+    },
+
+    /**
+     * @private
+     * Filter function for new records.
+     */
+    filterNew: function(item) {
+        return item.phantom === true || item.needsAdd === true;
+    },
+
+    <a name="method-Ext.data.AbstractStore-getNewRecords"></a>/**
+     * Returns all Model instances that are either currently a phantom (e.g. have no id), or have an ID but have not
+     * yet been saved on this Store (this happens when adding a non-phantom record from another Store into this one)
+     * @return {Array} The Model instances
+     */
+    getNewRecords: function() {
+        return [];
+    },
+
+    <a name="method-Ext.data.AbstractStore-getUpdatedRecords"></a>/**
+     * Returns all Model instances that have been updated in the Store but not yet synchronized with the Proxy
+     * @return {Array} The updated Model instances
+     */
+    getUpdatedRecords: function() {
+        return [];
+    },
+
+    /**
+     * @private
+     * Filter function for dirty records.
+     */
+    filterDirty: function(item) {
+        return item.dirty === true;
+    },
+
+    //returns any records that have been removed from the store but not yet destroyed on the proxy
+    getRemovedRecords: function() {
+        return this.removed;
+    },
+
+
+    sort: function(sorters, direction) {
+
+    },
+
+    /**
+     * @private
+     * Normalizes an array of sorter objects, ensuring that they are all Ext.util.Sorter instances
+     * @param {Array} sorters The sorters array
+     * @return {Array} Array of Ext.util.Sorter objects
+     */
+    decodeSorters: function(sorters) {
+        if (!Ext.isArray(sorters)) {
+            if (sorters === undefined) {
+                sorters = [];
+            } else {
+                sorters = [sorters];
+            }
+        }
+
+        var length = sorters.length,
+            Sorter = Ext.util.Sorter,
+            config, i;
+
+        for (i = 0; i &lt; length; i++) {
+            config = sorters[i];
+
+            if (!(config instanceof Sorter)) {
+                if (Ext.isString(config)) {
+                    config = {
+                        property: config
+                    };
+                }
+                
+                Ext.applyIf(config, {
+                    root     : &#39;data&#39;,
+                    direction: &quot;ASC&quot;
+                });
+
+                //support for 3.x style sorters where a function can be defined as &#39;fn&#39;
+                if (config.fn) {
+                    config.sorterFn = config.fn;
+                }
+
+                //support a function to be passed as a sorter definition
+                if (typeof config == &#39;function&#39;) {
+                    config = {
+                        sorterFn: config
+                    };
+                }
+
+                sorters[i] = new Sorter(config);
+            }
+        }
+
+        return sorters;
+    },
+
+    filter: function(filters, value) {
+
+    },
+
+    /**
+     * @private
+     * Creates and returns a function which sorts an array by the given field and direction
+     * @param {String} field The field to create the sorter for
+     * @param {String} direction The direction to sort by (defaults to &quot;ASC&quot;)
+     * @return {Function} A function which sorts by the field/direction combination provided
+     */
+    createSortFunction: function(field, direction) {
+        direction = direction || &quot;ASC&quot;;
+        var directionModifier = direction.toUpperCase() == &quot;DESC&quot; ? -1 : 1;
+
+        var fields   = this.model.prototype.fields,
+            sortType = fields.get(field).sortType;
+
+        //create a comparison function. Takes 2 records, returns 1 if record 1 is greater,
+        //-1 if record 2 is greater or 0 if they are equal
+        return function(r1, r2) {
+            var v1 = sortType(r1.data[field]),
+                v2 = sortType(r2.data[field]);
+
+            return directionModifier * (v1 &gt; v2 ? 1 : (v1 &lt; v2 ? -1 : 0));
+        };
+    },
+
+    /**
+     * @private
+     * Normalizes an array of filter objects, ensuring that they are all Ext.util.Filter instances
+     * @param {Array} filters The filters array
+     * @return {Array} Array of Ext.util.Filter objects
+     */
+    decodeFilters: function(filters) {
+        if (!Ext.isArray(filters)) {
+            if (filters === undefined) {
+                filters = [];
+            } else {
+                filters = [filters];
+            }
+        }
+
+        var length = filters.length,
+            Filter = Ext.util.Filter,
+            config, i;
+
+        for (i = 0; i &lt; length; i++) {
+            config = filters[i];
+
+            if (!(config instanceof Filter)) {
+                Ext.apply(config, {
+                    root: &#39;data&#39;
+                });
+
+                //support for 3.x style filters where a function can be defined as &#39;fn&#39;
+                if (config.fn) {
+                    config.filterFn = config.fn;
+                }
+
+                //support a function to be passed as a filter definition
+                if (typeof config == &#39;function&#39;) {
+                    config = {
+                        filterFn: config
+                    };
+                }
+
+                filters[i] = new Filter(config);
+            }
+        }
+
+        return filters;
+    },
+
+    clearFilter: function(supressEvent) {
+
+    },
+
+    isFiltered: function() {
+
+    },
+
+    filterBy: function(fn, scope) {
+
+    },
+    
+    
+    /**
+     * @private
+     * Normalizes an array of grouper objects, ensuring that they are all Ext.util.Grouper instances
+     * @param {Array} groupers The groupers array
+     * @return {Array} Array of Ext.util.Grouper objects
+     */
+    decodeGroupers: function(groupers) {
+        if (!Ext.isArray(groupers)) {
+            if (groupers === undefined) {
+                groupers = [];
+            } else {
+                groupers = [groupers];
+            }
+        }
+
+        var length  = groupers.length,
+            Grouper = Ext.util.Grouper,
+            config, i;
+
+        for (i = 0; i &lt; length; i++) {
+            config = groupers[i];
+
+            if (!(config instanceof Grouper)) {
+                if (Ext.isString(config)) {
+                    config = {
+                        property: config
+                    };
+                }
+                
+                Ext.applyIf(config, {
+                    root     : &#39;data&#39;,
+                    direction: &quot;ASC&quot;
+                });
+
+                //support for 3.x style sorters where a function can be defined as &#39;fn&#39;
+                if (config.fn) {
+                    config.sorterFn = config.fn;
+                }
+
+                //support a function to be passed as a sorter definition
+                if (typeof config == &#39;function&#39;) {
+                    config = {
+                        sorterFn: config
+                    };
+                }
+
+                groupers[i] = new Grouper(config);
+            }
+        }
+
+        return groupers;
+    },
+
+
+    <a name="method-Ext.data.AbstractStore-sync"></a>/**
+     * Synchronizes the Store with its Proxy. This asks the Proxy to batch together any new, updated
+     * and deleted records in the store, updating the Store&#39;s internal representation of the records
+     * as each operation completes.
+     */
+    sync: function() {
+        var me        = this,
+            options   = {},
+            toCreate  = me.getNewRecords(),
+            toUpdate  = me.getUpdatedRecords(),
+            toDestroy = me.getRemovedRecords(),
+            needsSync = false;
+
+        if (toCreate.length &gt; 0) {
+            options.create = toCreate;
+            needsSync = true;
+        }
+
+        if (toUpdate.length &gt; 0) {
+            options.update = toUpdate;
+            needsSync = true;
+        }
+
+        if (toDestroy.length &gt; 0) {
+            options.destroy = toDestroy;
+            needsSync = true;
+        }
+
+        if (needsSync &amp;&amp; me.fireEvent(&#39;beforesync&#39;, options) !== false) {
+            me.proxy.batch(options, me.getBatchListeners());
+        }
+    },
+
+
+    /**
+     * @private
+     * Returns an object which is passed in as the listeners argument to proxy.batch inside this.sync.
+     * This is broken out into a separate function to allow for customisation of the listeners
+     * @return {Object} The listeners object
+     */
+    getBatchListeners: function() {
+        var listeners = {
+            scope: this,
+            exception: this.onBatchException
+        };
+
+        if (this.batchUpdateMode == &#39;operation&#39;) {
+            listeners[&#39;operationcomplete&#39;] = this.onBatchOperationComplete;
+        } else {
+            listeners[&#39;complete&#39;] = this.onBatchComplete;
+        }
+
+        return listeners;
+    },
+
+    //deprecated, will be removed in 5.0
+    save: function() {
+        return this.sync.apply(this, arguments);
+    },
+
+    <a name="method-Ext.data.AbstractStore-load"></a>/**
+     * Loads the Store using its configured {@link #proxy}.
+     * @param {Object} options Optional config object. This is passed into the {@link Ext.data.Operation Operation}
+     * object that is created and then sent to the proxy&#39;s {@link Ext.data.Proxy#read} function
+     */
+    load: function(options) {
+        var me = this,
+            operation;
+
+        options = options || {};
+
+        Ext.applyIf(options, {
+            action : &#39;read&#39;,
+            filters: me.filters.items,
+            sorters: me.sorters.items
+        });
+
+        operation = Ext.create(&#39;Ext.data.Operation&#39;, options);
+
+        if (me.fireEvent(&#39;beforeload&#39;, me, operation) !== false) {
+            me.loading = true;
+            me.proxy.read(operation, me.onProxyLoad, me);
+        }
+        
+        return me;
+    },
+
+    /**
+     * @private
+     * A model instance should call this method on the Store it has been {@link Ext.data.Model#join joined} to.
+     * @param {Ext.data.Model} record The model instance that was edited
+     */
+    afterEdit : function(record) {
+        this.fireEvent(&#39;update&#39;, this, record, Ext.data.Model.EDIT);
+    },
+
+    /**
+     * @private
+     * A model instance should call this method on the Store it has been {@link Ext.data.Model#join joined} to..
+     * @param {Ext.data.Model} record The model instance that was edited
+     */
+    afterReject : function(record) {
+        this.fireEvent(&#39;update&#39;, this, record, Ext.data.Model.REJECT);
+    },
+
+    /**
+     * @private
+     * A model instance should call this method on the Store it has been {@link Ext.data.Model#join joined} to.
+     * @param {Ext.data.Model} record The model instance that was edited
+     */
+    afterCommit : function(record) {
+        if (this.autoSave) {
+            this.sync();
+        }
+
+        this.fireEvent(&#39;update&#39;, this, record, Ext.data.Model.COMMIT);
+    },
+
+    clearData: Ext.emptyFn,
+
+    destroyStore: function() {
+        if (!this.isDestroyed) {
+            if (this.storeId) {
+                Ext.data.StoreMgr.unregister(this);
+            }
+            this.clearData();
+            this.data = null;
+            this.tree = null;
+            // Ext.destroy(this.proxy);
+            this.reader = this.writer = null;
+            this.clearListeners();
+            this.isDestroyed = true;
+
+            if (this.implicitModel) {
+                Ext.destroy(this.model);
+            }
+        }
+    },
+
+    <a name="method-Ext.data.AbstractStore-getSortState"></a>/**
+     * Returns an object describing the current sort state of this Store.
+     * @return {Object} The sort state of the Store. An object with two properties:&lt;ul&gt;
+     * &lt;li&gt;&lt;b&gt;field : String&lt;p class=&quot;sub-desc&quot;&gt;The name of the field by which the Records are sorted.&lt;/p&gt;&lt;/li&gt;
+     * &lt;li&gt;&lt;b&gt;direction : String&lt;p class=&quot;sub-desc&quot;&gt;The sort order, &#39;ASC&#39; or &#39;DESC&#39; (case-sensitive).&lt;/p&gt;&lt;/li&gt;
+     * &lt;/ul&gt;
+     * See &lt;tt&gt;{@link #sortInfo}&lt;/tt&gt; for additional details.
+     */
+    getSortState : function() {
+        return this.sortInfo;
+    },
+
+    getCount: function() {
+
+    },
+
+    getById: function(id) {
+
+    },
+
+    // individual substores should implement a &quot;fast&quot; remove
+    // and fire a clear event afterwards
+    removeAll: function() {
+
+    }
+});
+￿</pre></pre></body></html>

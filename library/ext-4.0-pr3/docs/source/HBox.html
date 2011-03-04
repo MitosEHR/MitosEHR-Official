@@ -1,0 +1,59 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.layout.container.HBox"></a>/**
+ * @class Ext.layout.container.HBox
+ * @extends Ext.layout.container.Box
+ * &lt;p&gt;A layout that arranges items horizontally across a Container. This layout optionally divides available horizontal
+ * space between child items containing a numeric &lt;code&gt;flex&lt;/code&gt; configuration.&lt;/p&gt;
+ * This layout may also be used to set the heights of child items by configuring it with the {@link #align} option.
+ */
+Ext.define(&#39;Ext.layout.container.HBox&#39;, {
+
+    /* Begin Definitions */
+
+    alias: [&#39;layout.hbox&#39;],
+
+    extend: &#39;Ext.layout.container.Box&#39;,
+
+    /* End Definitions */
+
+    <a name="cfg-Ext.layout.container.HBox-align"></a>/**
+     * @cfg {String} align
+     * Controls how the child items of the container are aligned. Acceptable configuration values for this
+     * property are:
+     * &lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+     * &lt;li&gt;&lt;b&gt;&lt;tt&gt;top&lt;/tt&gt;&lt;/b&gt; : &lt;b&gt;Default&lt;/b&gt;&lt;div class=&quot;sub-desc&quot;&gt;child items are aligned vertically
+     * at the &lt;b&gt;top&lt;/b&gt; of the container&lt;/div&gt;&lt;/li&gt;
+     * &lt;li&gt;&lt;b&gt;&lt;tt&gt;middle&lt;/tt&gt;&lt;/b&gt; : &lt;div class=&quot;sub-desc&quot;&gt;child items are aligned vertically in the
+     * &lt;b&gt;middle&lt;/b&gt; of the container&lt;/div&gt;&lt;/li&gt;
+     * &lt;li&gt;&lt;b&gt;&lt;tt&gt;stretch&lt;/tt&gt;&lt;/b&gt; : &lt;div class=&quot;sub-desc&quot;&gt;child items are stretched vertically to fill
+     * the height of the container&lt;/div&gt;&lt;/li&gt;
+     * &lt;li&gt;&lt;b&gt;&lt;tt&gt;stretchmax&lt;/tt&gt;&lt;/b&gt; : &lt;div class=&quot;sub-desc&quot;&gt;child items are stretched vertically to
+     * the height of the largest item.&lt;/div&gt;&lt;/li&gt;
+     * &lt;/ul&gt;&lt;/div&gt;
+     */
+    align: &#39;top&#39;, // top, middle, stretch, strechmax
+
+    //@private
+    alignCenteringString: &#39;middle&#39;,
+
+    type : &#39;hbox&#39;,
+
+    direction: &#39;horizontal&#39;,
+
+    // When creating an argument list to setSize, use this order
+    parallelSizeIndex: 0,
+    perpendicularSizeIndex: 1,
+
+    parallelPrefix: &#39;width&#39;,
+    parallelPrefixCap: &#39;Width&#39;,
+    parallelLT: &#39;l&#39;,
+    parallelRB: &#39;r&#39;,
+    parallelBefore: &#39;left&#39;,
+    parallelAfter: &#39;right&#39;,
+
+    perpendicularPrefix: &#39;height&#39;,
+    perpendicularPrefixCap: &#39;Height&#39;,
+    perpendicularLT: &#39;t&#39;,
+    perpendicularRB: &#39;b&#39;,
+    perpendicularLeftTop: &#39;top&#39;,
+    perpendicularRightBottom: &#39;bottom&#39;
+});￿</pre></pre></body></html>

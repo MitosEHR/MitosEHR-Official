@@ -1,0 +1,489 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.grid.HeaderContainer"></div>/**
+ * @class Ext.grid.HeaderContainer
+ * @extends Ext.container.Container
+ *
+ * Docked in a Grid Section.
+ *
+ * UI changes (resizing/moving) will trigger changes within the View.
+ */
+Ext.define('Ext.grid.HeaderContainer', {
+    extend: 'Ext.container.Container',
+    requires: [
+        'Ext.grid.ColumnLayout',
+        'Ext.grid.Header',
+        'Ext.menu.Menu',
+        'Ext.menu.CheckItem',
+        'Ext.menu.Separator',
+        'Ext.grid.HeaderResizer',
+        'Ext.grid.HeaderReorderer'
+    ],
+    
+    alias: 'widget.headercontainer',
+
+    cls: Ext.baseCSSPrefix + 'grid-header-ct',
+    dock: 'top',
+    height: 24,
+    defaultType: 'gridheader',
+    <div id="cfg-Ext.grid.HeaderContainer-defaultWidth"></div>/**
+     * @cfg {Number} defaultWidth
+     * Width of the header if no width or flex is specified. Defaults to 100.
+     */
+    defaultWidth: 100,
+    
+    
+    sortAscText: 'Sort Ascending',
+    sortDescText: 'Sort Descending',
+    sortClearText: 'Clear Sort',
+    columnsText: 'Columns',
+    
+    lastHeaderCls: Ext.baseCSSPrefix + 'column-header-last',
+    firstHeaderCls: Ext.baseCSSPrefix + 'column-header-first',
+    headerOpenCls: Ext.baseCSSPrefix + 'column-header-open',
+    
+    lastCellCls: Ext.baseCSSPrefix + 'grid-cell-last',
+    firstCellCls: Ext.baseCSSPrefix + 'grid-cell-first',
+    
+    triStateSort: true,
+    
+    locked: false,
+    
+    initComponent: function() {
+        this.plugins  = this.plugins || [];
+        // TODO: Pass in configurations to turn on/off dynamic
+        //       resizing and disable resizing all together
+        var resizer   = new Ext.grid.HeaderResizer({
+
+            }),
+            reorderer = new Ext.grid.HeaderReorderer()
+            
+        // Order is important here in IE, as the Reorderer and Resizer fight
+        // for drag and drop events
+        if (Ext.isIE) {
+            this.plugins.push(reorderer, resizer);
+        } else {
+            this.plugins.push(resizer, reorderer);
+        }
+        
+        
+        this.layout = {
+            type: 'gridcolumn',
+            align: 'stretchmax'
+        };
+        this.defaults = this.defaults || {};
+        Ext.applyIf(this.defaults, {
+            width: this.defaultWidth,
+            triStateSort: this.triStateSort
+        });
+        Ext.grid.HeaderContainer.superclass.initComponent.call(this);
+        this.addEvents(
+            <div id="event-Ext.grid.HeaderContainer-headerresize"></div>/**
+             * @event headerresize
+             * @param {Ext.HeaderContainer} ct
+             * @param {Ext.Header} header
+             * @param {Number} width
+             */
+            'headerresize',
+            
+            <div id="event-Ext.grid.HeaderContainer-headerclick"></div>/**
+             * @event headerclick
+             * @param {Ext.HeaderContainer} ct
+             * @param {Ext.Header} header
+             * @param {Ext.EventObject} e
+             * @param {HTMLElement} t
+             */
+            'headerclick',
+            
+            <div id="event-Ext.grid.HeaderContainer-headerclick"></div>/**
+             * @event headerclick
+             * @param {Ext.HeaderContainer} ct
+             * @param {Ext.Header} header
+             * @param {Ext.EventObject} e
+             * @param {HTMLElement} t
+             */
+            'headertriggerclick',
+            
+            <div id="event-Ext.grid.HeaderContainer-headermove"></div>/**
+             * @event headermove
+             * @param {Ext.HeaderContainer} ct
+             * @param {Ext.Header} header
+             * @param {Number} fromIdx
+             * @param {Number} toIdx
+             */
+            'headermove'
+        );
+    },
+    
+    
+    afterRender: function() {
+        Ext.grid.HeaderContainer.superclass.afterRender.apply(this, arguments);
+        var store = this.up('gridpanel').store,
+            sorters = store.sorters,
+            first = sorters.first();
+            
+        if (first) {
+            var hd = this.down('gridheader[dataIndex=' + first.property  +']');
+            hd.setSortState(first.direction);
+        }
+    },
+    
+    afterLayout: function() {
+        Ext.grid.HeaderContainer.superclass.afterLayout.apply(this, arguments);
+        var headers = this.query('gridheader:not(gridheader[hidden])');
+        headers[0].el.radioCls(this.firstHeaderCls);
+        headers[headers.length - 1].el.radioCls(this.lastHeaderCls);
+        
+        // Maintain First and Last cell cls
+        if (this.view) {
+            var viewEl = this.view.el;
+            viewEl.select('.'+this.firstCellCls).removeCls(this.firstCellCls);
+            viewEl.select('.'+this.lastCellCls).removeCls(this.lastCellCls);
+            viewEl.select(headers[0].getCellSelector()).addCls(this.firstCellCls);
+            viewEl.select(headers[headers.length - 1].getCellSelector()).addCls(this.lastCellCls);
+        }
+        
+        
+    },
+    
+    onHeaderShow: function(header) {
+        // Pass up to the GridSection
+        var gridSection = this.ownerCt,
+            // explicitly reference .menu and NOT getMenu()
+            // to avoid unnecessary creation
+            menu = this.menu,
+            checkItems,
+            colCheckItem;
+
+        if (menu) {
+            colCheckItem = menu.query('menucheckitem[headerId=' + header.id + ']');
+            // TODO: verify that componentquery is finding menu items
+            if (colCheckItem[0]) {
+                colCheckItem[0].setChecked(true, true);
+            }
+            
+            if (this.disabledHeaderItem) {
+                checkItems = menu.query('#columnItem menucheckitem[checked]');
+                if (checkItems.length > 1) {
+                    this.disabledHeaderItem.enable();
+                    delete this.disabledHeaderItem;
+                }
+            }
+            
+        }
+        
+        if (this.view) {
+            this.view.onHeaderShow(this, header, idx);
+        }
+        if (gridSection) {
+            var idx = this.items.indexOf(header);
+            gridSection.onHeaderShow(this, header, idx);
+        }
+    },
+    
+    onHeaderHide: function(header) {
+        // Pass up to the GridSection
+        var gridSection = this.ownerCt,
+            // explicitly reference .menu and NOT getMenu()
+            // to avoid unnecessary creation
+            menu = this.menu,
+            colCheckItem,
+            checkItems;
+
+        if (menu) {
+            colCheckItem = menu.query('menucheckitem[headerId=' + header.id + ']');
+            if (colCheckItem[0]) {
+                colCheckItem[0].setChecked(false, true);
+            }
+            
+            checkItems = menu.query('#columnItem menucheckitem[checked]');
+            if (checkItems.length === 1) {
+                checkItems[0].disable();
+                this.disabledHeaderItem = checkItems[0];
+            }
+            
+            
+        }
+        
+        
+        if (this.view) {
+            this.view.onHeaderHide(this, header, idx);
+        }
+        if (gridSection) {
+            var idx = this.items.indexOf(header);
+            this.ownerCt.onHeaderHide(this, header, idx);
+        }
+    },
+    
+    tempLock: function() {
+        this.locked = true;
+        Ext.Function.defer(function() {
+            this.locked = false;
+        }, 200, this);
+    },
+    
+    onHeaderResize: function(header, w) {
+        this.tempLock();
+        if (this.view) {
+            this.view.onHeaderResize(header, w);
+        }
+        this.fireEvent('headerresize', this, header, w);
+    },
+    
+    onHeaderClick: function(header, e, t) {
+        this.fireEvent("headerclick", this, header, e, t);
+    },
+    
+    onHeaderTriggerClick: function(header, e, t) {
+        // generate and cache menu, provide ability to cancel/etc
+        // TODO: allow individual header to add additional menu items
+        // provide way to invalidate cache.
+        this.showMenuBy(t, header);
+        this.fireEvent("headertriggerclick", this, header, e, t);
+    },
+    
+    showMenuBy: function(t, header) {
+        var menu = this.getMenu();
+        menu.activeHeader = header;
+        header.addCls(this.headerOpenCls);
+        //menu.down('#columnItem')[this.getVisibleCount() === 1 ? 'disable' : 'enable']();
+        menu.showBy(t);
+    },
+    
+    onMenuHide: function() {
+        var menu = this.getMenu();
+        menu.activeHeader.removeCls(this.headerOpenCls);
+    },
+    
+    
+    moveHeader: function(fromIdx, toIdx) {
+        this.tempLock();
+        var gridSection = this.ownerCt,
+            header = this.move(fromIdx, toIdx);
+        if (gridSection) {
+            gridSection.onHeaderMove(this, header, fromIdx, toIdx);
+        }
+        this.fireEvent("headermove", this, header, fromIdx, toIdx);
+    },
+    
+    getMenu: function() {
+        if (!this.menu) {
+            this.menu = new Ext.menu.Menu({
+                items: this.getMenuItems()
+            });
+            this.menu.on('hide', this.onMenuHide, this);
+        }
+        return this.menu;
+    },
+    
+
+    getMenuItems: function() {
+        return [{
+            text: this.sortAscText,
+            handler: this.onSortAscClick,
+            scope: this
+        },{
+            text: this.sortDescText,
+            handler: this.onSortDescClick,
+            scope: this
+        },'-',{
+            itemId: 'columnItem',
+            text: this.columnsText,
+            menu: this.getColumnsMenu()
+        }];
+    },
+    
+    onSortAscClick: function() {
+        var menu = this.getMenu(),
+            activeHeader = menu.activeHeader;
+            
+        activeHeader.setSortState('ASC');
+    },
+    
+    onSortDescClick: function() {
+        var menu = this.getMenu(),
+            activeHeader = menu.activeHeader;
+            
+        activeHeader.setSortState('DESC');
+    },
+    
+    getColumnsMenu: function() {
+        var menuItems = [],
+            i = 0,
+            item,
+            items = this.query('gridheader[hideable]'),
+            itemsLn = items.length;
+            
+        for (; i < itemsLn; i++) {
+            item = items[i];
+            menuItems.push({
+                text: item.text,
+                checked: !item.hidden,
+                hideOnClick: false,
+                headerId: item.id,
+                checkHandler: this.onColumnCheckChange,
+                scope: this
+            });
+        }
+        return menuItems;
+    },
+    
+    onColumnCheckChange: function(checkItem, checked) {
+        var header = Ext.getCmp(checkItem.headerId);
+        header[checked ? 'show' : 'hide']();
+    },
+    
+    // get the columns used for generating a template via TableChunker.
+    // returns an array of all columns and their
+    // - dataIndex
+    // - align
+    // - width
+    // - id
+    getColumnsForTpl: function() {
+        var cols    = [],
+            items   = this.query('gridheader'),
+            itemsLn = items.length,
+            i       = 0,
+            item;
+
+            
+        for (; i < itemsLn; i++) {
+            item = items[i];
+            cols.push({
+                dataIndex: item.dataIndex,
+                align: item.align,
+                width: item.hidden ? 0 : item.getDesiredWidth(),
+                id: item.id
+            });
+        }
+        return cols;
+    },
+    
+    getCount: function() {
+        return this.query('gridheader').length;
+    },
+    
+    getVisibleCount: function() {
+        // CQ approach
+        return this.query('gridheader:not(gridheader[hidden])').length;
+        //var hiddenHeaders = this.query('gridheader[hidden]'),
+        //    headers       = this.query('gridheader');
+        //
+        //return headers.length - hiddenHeaders.length;
+        //
+        //// Desired CQ Approach, evan suggested :not operator.
+        //var visibleHeaders = this.query('header[!hidden]');
+        //return visibleHeaders.length;
+        //
+        //// looping approach
+        //var count   = 0,
+        //    items   = this.items.items,
+        //    itemsLn = items.length,
+        //    i       = 0;
+        //
+        //for (; i < itemsLn; i++) {
+        //    if (!items[i].hidden) {
+        //        count++;
+        //    }
+        //}
+        //return count;
+    },
+    
+    <div id="method-Ext.grid.HeaderContainer-getFullWidth"></div>/**
+     * Gets the full width of all columns that are visible.
+     */
+    getFullWidth: function() {
+        var fullWidth = 0,
+            items     = this.items.items,
+            itemsLn   = items.length,
+            i         = 0;
+
+        for (; i < itemsLn; i++) {
+            if (!isNaN(items[i].width) && !items[i].hidden) {
+                // use headers getDesiredWidth if its there
+                if (items[i].getDesiredWidth) {
+                    fullWidth += items[i].getDesiredWidth();
+                // if injected a diff cmp use getWidth
+                } else {
+                    fullWidth += items[i].getWidth();
+                }
+                
+            }
+        }
+        return fullWidth;
+    },
+    
+    // invoked internally by a header when not using triStateSorting
+    clearOtherSortStates: function(activeHeader) {
+        var items     = this.items.items,
+            itemsLn   = items.length,
+            i         = 0;
+
+        for (; i < itemsLn; i++) {
+            if (items[i] !== activeHeader) {
+                items[i].setSortState(null);
+            }
+        }
+        return fullWidth;
+    },
+    
+    <div id="method-Ext.grid.HeaderContainer-prepareData"></div>/**
+     * Maps the record data to base it on the header id's.
+     * This correlates to the markup/template generated by
+     * TableChunker.
+     */
+    prepareData: function(data, rowIdx, record) {
+        var obj     = {},
+            items   = this.items.items,
+            itemsLn = items.length,
+            colIdx  = 0,
+            item, value,
+            metaData = {
+                tdCls: '',
+                style: ''
+            },
+            store = this.up('gridpanel').store;
+            
+        for (; colIdx < itemsLn; colIdx++) {
+            item = items[colIdx];
+            value = data[item.dataIndex];
+            if (Ext.isString(item.renderer)) {
+                item.renderer = Ext.util.Format[item.renderer];
+            }
+            if (Ext.isFunction(item.renderer)) {
+                value = item.renderer.call(
+                    item.scope || this.ownerCt,
+                    value,
+                    // metadata per cell
+                    metaData,
+                    record,
+                    rowIdx,
+                    colIdx,
+                    store
+                );
+            }
+            
+            // <debug>
+            if (metaData.css) {
+                console.warn("Header renderer: metadata css has been replaced by tdCls.");
+                metaData.tdCls = metaData.css;
+                delete metaData.css;
+            }
+            // </debug>
+            obj[item.id+'-modified'] = record.isModified(item.dataIndex) ? Ext.baseCSSPrefix + 'grid-dirty-cell' : Ext.baseCSSPrefix + 'grid-clean-cell';
+            obj[item.id+'-tdCls'] = metaData.tdCls;
+            obj[item.id+'-tdAttr'] = metaData.tdAttr;
+            obj[item.id+'-style'] = metaData.style;
+            obj[item.id] = value;
+        }
+        return obj;
+    }
+});</pre>    
+</body>
+</html>

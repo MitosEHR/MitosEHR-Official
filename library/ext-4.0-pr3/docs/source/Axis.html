@@ -1,0 +1,618 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.chart.axis.Axis"></a>/**
+ * @class Ext.chart.axis.Axis
+ * @extends Ext.chart.axis.Abstract
+ * 
+ * Defines axis for charts. The axis position, type, style can be configured.
+ * The axes are defined in an axes array of configuration objects where the type, 
+ * field, grid and other configuration options can be set. To know more about how 
+ * to create a Chart please check the Chart class documentation. Here&#39;s an example for the axes part:
+ * An example of axis for a series (in this case for an area chart that has multiple layers of yFields) could be:
+ * 
+  <br><span style="display: none">**/</span>    axes: [{
+        type: &#39;Numeric&#39;,
+        grid: true,
+        position: &#39;left&#39;,
+        fields: [&#39;data1&#39;, &#39;data2&#39;, &#39;data3&#39;],
+        title: &#39;Number of Hits&#39;,
+        grid: {
+            odd: {
+                opacity: 1,
+                fill: &#39;#ddd&#39;,
+                stroke: &#39;#bbb&#39;,
+                &#39;stroke-width&#39;: 1
+            }
+        },
+        minimum: 0,
+        adjustMinimumByMajorUnit: 0
+    }, {
+        type: &#39;Category&#39;,
+        position: &#39;bottom&#39;,
+        fields: [&#39;name&#39;],
+        title: &#39;Month of the Year&#39;,
+        grid: true,
+        label: {
+            rotate: {
+                degrees: 315
+            }
+        }
+    }]
+   <br><span style="display: none">/**</span> * 
+ * In this case we use a `Numeric` axis for displaying the values of the Area series and a `Category` axis for displaying the names of
+ * the store elements. The numeric axis is placed on the left of the screen, while the category axis is placed at the bottom of the chart. 
+ * Both the category and numeric axes have `grid` set, which means that horizontal and vertical lines will cover the chart background. In the 
+ * category axis the labels will be rotated so they can fit the space better.
+ * 
+ */
+Ext.define(&#39;Ext.chart.axis.Axis&#39;, {
+
+    /* Begin Definitions */
+
+    extend: &#39;Ext.chart.axis.Abstract&#39;,
+
+    requires: [&#39;Ext.draw.Draw&#39;],
+
+    /* End Definitions */
+
+    <a name="cfg-Ext.chart.axis.Axis-dashSize"></a>/**
+     * @cfg {Number} dashSize 
+     * The size of the dash marker. Default&#39;s 3.
+     */
+    dashSize: 3,
+    
+    <a name="cfg-Ext.chart.axis.Axis-position"></a>/**
+     * @cfg {String} position
+     * Where to set the axis. Available options are `left`, `bottom`, `right`, `top`. Default&#39;s `bottom`.
+     */
+    position: &#39;bottom&#39;,
+    
+    // @private
+    skipFirst: false,
+    
+    <a name="cfg-Ext.chart.axis.Axis-length"></a>/**
+     * @cfg {Number} length
+     * Offset axis position. Default&#39;s 0.
+     */
+    length: 0,
+    
+    <a name="cfg-Ext.chart.axis.Axis-width"></a>/**
+     * @cfg {Number} width
+     * Offset axis width. Default&#39;s 0.
+     */
+    width: 0,
+
+    // @private
+    applyData: Ext.emptyFn,
+
+    // @private creates a structure with start, end and step points.
+    calcEnds: function() {
+        var me = this,
+            math = Math,
+            mmax = math.max,
+            mmin = math.min,
+            store = me.chart.store,
+            series = me.chart.series.items,
+            fields = me.fields,
+            ln = fields.length,
+            min = isNaN(me.minimum) ? Infinity : me.minimum,
+            max = isNaN(me.maximum) ? -Infinity : me.maximum,
+            prevMin = me.prevMin,
+            prevMax = me.prevMax,
+            aggregate = false,
+            total = 0,
+            excludes = [],
+            i, l, value, out;
+
+        //if one series is stacked I have to aggregate the values
+        //for the scale.
+        for (i = 0, l = series.length; !aggregate &amp;&amp; i &lt; l; i++) {
+            aggregate = aggregate || series[i].stacked;
+            excludes = series[i].__excludes || excludes;
+        }
+        store.each(function(record) {
+            if (aggregate) {
+                if (!isFinite(min)) {
+                    min = 0;
+                }
+                for (value = 0, i = 0; i &lt; ln; i++) {
+                   if (excludes[i]) {
+                       continue;
+                   }
+                   value += record.get(fields[i]);
+                }               
+                max = mmax(max, value);
+                min = mmin(min, value);
+            }
+            else {
+                for (i = 0; i &lt; ln; i++) {
+                    if (excludes[i]) {
+                        continue;
+                    }
+                    value = record.get(fields[i]);
+                    max = mmax(max, value);
+                    min = mmin(min, value);
+                }
+            }
+        });
+        if (!isFinite(max)) {
+            max = me.prevMax || 0;
+        }
+        if (!isFinite(min)) {
+            min = me.prevMin || 0;
+        }
+        out = Ext.draw.Draw.snapEnds(min, max &gt;&gt; 0, me.steps);
+        if (!isNaN(me.maximum)) {
+            out.to = mmax(out.to, me.maximum);
+        }
+        if (!isNaN(me.minimum)) {
+            out.from = mmin(out.from, me.minimum);
+        }
+        if (me.adjustMaximumByMajorUnit) {
+            out.to += out.step;
+        }
+        if (me.adjustMinimumByMajorUnit) {
+            out.from -= out.step;
+        }
+        me.prevMin = min;
+        me.prevMax = max;
+        return out;
+    },
+
+    <a name="method-Ext.chart.axis.Axis-drawAxis"></a>/**
+     * Renders the axis into the screen and updates it&#39;s position.
+     */
+    drawAxis: function (init) {
+        var me = this,
+            x = me.x,
+            y = me.y,
+            gutterX = me.chart.maxGutter[0],
+            gutterY = me.chart.maxGutter[1],
+            dashSize = me.dashSize,
+            length = me.length,
+            position = me.position,
+            inflections = [],
+            calcLabels = false,
+            stepCalcs = me.applyData(),
+            step = stepCalcs.step,
+            steps = stepCalcs.steps,
+            from = stepCalcs.from,
+            to = stepCalcs.to,
+            trueLength,
+            currentX,
+            currentY,
+            path,
+            prev,
+            delta;
+        
+        //If no steps are specified
+        //then don&#39;t draw the axis. This generally happens
+        //when an empty store.
+        if (isNaN(step) || (from == to)) {
+            return;
+        }
+        
+        me.from = stepCalcs.from;
+        me.to = stepCalcs.to;
+        if (position == &#39;left&#39; || position == &#39;right&#39;) {
+            currentX = Math.floor(x) + 0.5;
+            path = [&quot;M&quot;, currentX, y, &quot;l&quot;, 0, -length];
+            trueLength = length - (gutterY * 2);
+        }
+        else {
+            currentY = Math.floor(y) + 0.5;
+            path = [&quot;M&quot;, x, currentY, &quot;l&quot;, length, 0];
+            trueLength = length - (gutterX * 2);
+        }
+        
+        delta = trueLength / (steps || 1);
+        if (me.type == &#39;Numeric&#39;) {
+            calcLabels = true;
+            me.labels = [stepCalcs.from];
+        }
+        if (position == &#39;right&#39; || position == &#39;left&#39;) {
+            currentY = y - gutterY;
+            currentX = x - ((position == &#39;left&#39;) * dashSize * 2);
+            while (currentY &gt;= y - gutterY - trueLength) {
+                path = path.concat([&quot;M&quot;, currentX, Math.floor(currentY) + 0.5, &quot;l&quot;, dashSize * 2 + 1, 0]);
+                inflections.push([ Math.floor(x), Math.floor(currentY) ]);
+                currentY -= delta;
+                if (calcLabels) {
+                    me.labels.push(me.labels[me.labels.length -1] + step);
+                }
+            }
+            if (Math.round(currentY + delta - (y - gutterY - trueLength))) {
+                path = path.concat([&quot;M&quot;, currentX, Math.floor(y - length + gutterY) + 0.5, &quot;l&quot;, dashSize * 2 + 1, 0]);
+                inflections.push([ Math.floor(x), Math.floor(currentY) ]);
+                if (calcLabels) {
+                    me.labels.push(me.labels[me.labels.length -1] + step);
+                }
+            }
+        } else {
+            currentX = x + gutterX;
+            currentY = y - (!!(position == &#39;top&#39;) * dashSize * 2);
+            while (currentX &lt;= x + gutterX + trueLength) {
+                path = path.concat([&quot;M&quot;, Math.floor(currentX) + 0.5, currentY, &quot;l&quot;, 0, dashSize * 2 + 1]);
+                inflections.push([ Math.floor(currentX), Math.floor(y) ]);
+                currentX += delta;
+                if (calcLabels) {
+                    me.labels.push(me.labels[me.labels.length -1] + step);
+                }
+            }
+            if (Math.round(currentX - delta - (x + gutterX + trueLength))) {
+                path = path.concat([&quot;M&quot;, Math.floor(x + length - gutterX) + 0.5, currentY, &quot;l&quot;, 0, dashSize * 2 + 1]);
+                inflections.push([ Math.floor(currentX), Math.floor(y) ]);
+                if (calcLabels) {
+                    me.labels.push(me.labels[me.labels.length -1] + step);
+                }
+            }
+        }
+        if (!me.axis) {
+            me.axis = me.chart.surface.add(Ext.apply({
+                type: &#39;path&#39;,
+                path: path
+            }, me.axisStyle));
+        }
+        me.axis.setAttributes({
+            path: path
+        }, true);
+        me.inflections = inflections;
+        if (!init &amp;&amp; me.grid) {
+            me.drawGrid();
+        }
+        me.axisBBox = me.axis.getBBox();
+        me.drawLabels();
+    },
+
+    <a name="method-Ext.chart.axis.Axis-drawGrid"></a>/**
+     * Renders an horizontal and/or vertical grid into the Surface.
+     */
+    drawGrid: function() {
+        var me = this,
+            surface = me.chart.surface, 
+            grid = me.grid,
+            odd = grid.odd,
+            even = grid.even,
+            inflections = me.inflections,
+            ln = inflections.length - ((odd || even)? 0 : 1),
+            position = me.position,
+            gutter = me.chart.maxGutter,
+            width = me.width - 2,
+            vert = false,
+            point, prevPoint,
+            i = 1,
+            path = [], styles, lineWidth, dlineWidth,
+            oddPath = [], evenPath = [];
+        
+        if ((gutter[1] !== 0 &amp;&amp; (position == &#39;left&#39; || position == &#39;right&#39;)) ||
+            (gutter[0] !== 0 &amp;&amp; (position == &#39;top&#39; || position == &#39;bottom&#39;))) {
+            i = 0;
+            ln++;
+        }
+        for (; i &lt; ln; i++) {
+            point = inflections[i];
+            prevPoint = inflections[i - 1];
+            if (odd || even) {
+                path = (i % 2)? oddPath : evenPath;
+                styles = ((i % 2)? odd : even) || {};
+                lineWidth = (styles.lineWidth || styles[&#39;stroke-width&#39;] || 0) / 2;
+                dlineWidth = 2 * lineWidth;
+                if (position == &#39;left&#39;) {
+                    path.push(&quot;M&quot;, prevPoint[0] + 1 + lineWidth, prevPoint[1] + 0.5 - lineWidth, 
+                              &quot;L&quot;, prevPoint[0] + 1 + width - lineWidth, prevPoint[1] + 0.5 - lineWidth,
+                              &quot;L&quot;, point[0] + 1 + width - lineWidth, point[1] + 0.5 + lineWidth,
+                              &quot;L&quot;, point[0] + 1 + lineWidth, point[1] + 0.5 + lineWidth, &quot;Z&quot;);
+                }
+                else if (position == &#39;right&#39;) {
+                    path.push(&quot;M&quot;, prevPoint[0] - lineWidth, prevPoint[1] + 0.5 - lineWidth, 
+                              &quot;L&quot;, prevPoint[0] - width + lineWidth, prevPoint[1] + 0.5 - lineWidth,
+                              &quot;L&quot;, point[0] - width + lineWidth, point[1] + 0.5 + lineWidth,
+                              &quot;L&quot;, point[0] - lineWidth, point[1] + 0.5 + lineWidth, &quot;Z&quot;);
+                }
+                else if (position == &#39;top&#39;) {
+                    path.push(&quot;M&quot;, prevPoint[0] + 0.5 + lineWidth, prevPoint[1] + 1 + lineWidth, 
+                              &quot;L&quot;, prevPoint[0] + 0.5 + lineWidth, prevPoint[1] + 1 + width - lineWidth,
+                              &quot;L&quot;, point[0] + 0.5 - lineWidth, point[1] + 1 + width - lineWidth,
+                              &quot;L&quot;, point[0] + 0.5 - lineWidth, point[1] + 1 + lineWidth, &quot;Z&quot;);
+                }
+                else {
+                    path.push(&quot;M&quot;, prevPoint[0] + 0.5 + lineWidth, prevPoint[1] - lineWidth, 
+                            &quot;L&quot;, prevPoint[0] + 0.5 + lineWidth, prevPoint[1] - width + lineWidth,
+                            &quot;L&quot;, point[0] + 0.5 - lineWidth, point[1] - width + lineWidth,
+                            &quot;L&quot;, point[0] + 0.5 - lineWidth, point[1] - lineWidth, &quot;Z&quot;);
+                }
+            } else {
+                if (position == &#39;left&#39;) {
+                    path = path.concat([&quot;M&quot;, point[0] + 0.5, point[1] + 0.5, &quot;l&quot;, width, 0]);
+                }
+                else if (position == &#39;right&#39;) {
+                    path = path.concat([&quot;M&quot;, point[0] - 0.5, point[1] + 0.5, &quot;l&quot;, -width, 0]);
+                }
+                else if (position == &#39;top&#39;) {
+                    path = path.concat([&quot;M&quot;, point[0] + 0.5, point[1] + 0.5, &quot;l&quot;, 0, width]);
+                }
+                else {
+                    path = path.concat([&quot;M&quot;, point[0] + 0.5, point[1] - 0.5, &quot;l&quot;, 0, -width]);
+                }
+            }
+        }
+        if (odd || even) {
+            if (oddPath.length) {
+                if (!me.gridOdd &amp;&amp; oddPath.length) {
+                    me.gridOdd = surface.add({
+                        type: &#39;path&#39;,
+                        path: oddPath
+                    });
+                }
+                me.gridOdd.setAttributes(Ext.apply({
+                    path: oddPath,
+                    hidden: false
+                }, odd || {}), true);
+            }
+            if (evenPath.length) {
+                if (!me.gridEven) {
+                    me.gridEven = surface.add({
+                        type: &#39;path&#39;,
+                        path: evenPath
+                    });
+                } 
+                me.gridEven.setAttributes(Ext.apply({
+                    path: evenPath,
+                    hidden: false
+                }, even || {}), true);
+            }
+        }
+        else {
+            if (path.length) {
+                if (!me.gridLines) {
+                    me.gridLines = me.chart.surface.add({
+                        type: &#39;path&#39;,
+                        path: path,
+                        &quot;stroke-width&quot;: me.lineWidth || 1,
+                        stroke: me.gridColor || &#39;#ccc&#39;
+                    });
+                }
+                me.gridLines.setAttributes({
+                    hidden: false,
+                    path: path
+                }, true);
+            }
+            else if (me.gridLines) {
+                me.gridLines.hide(true);
+            }
+        }
+    },
+
+    <a name="method-Ext.chart.axis.Axis-drawLabels"></a>/**
+     * Renders the labels in the axes.
+     */
+    drawLabels: function() {
+        var me = this,
+            inflections = me.inflections,
+            ln = inflections.length,
+            chart = me.chart,
+            position = me.position,
+            labels = me.labels,
+            surface = chart.surface,
+            labelGroup = me.labelGroup,
+            maxWidth = 0,
+            maxHeight = 0,
+            gutterY = me.chart.maxGutter[1],
+            bbox, point, prevX, prevY, prevLabel, textLabel, labelAttr, textRight, text, label, last, x, y, i;
+
+        if (position == &#39;left&#39; || position == &#39;right&#39;) {
+            last = ln;
+            for (i = 0; i &lt; last; i++) {
+                point = inflections[i];
+                text = me.label.renderer(labels[i]);
+                // Re-use existing textLabel or create a new one
+                textLabel = labelGroup.getAt(i);
+                if (textLabel) {
+                    if (text != textLabel.attr.text) {
+                        textLabel.setAttributes(Ext.apply({
+                            text: text
+                        }, me.label), true);
+                        textLabel._bbox = textLabel.getBBox();
+                    }
+                }
+                else {
+                    textLabel = surface.add(Ext.apply({
+                        group: labelGroup,
+                        type: &#39;text&#39;,
+                        x: 0,
+                        y: 0,
+                        text: text
+                    }, me.label));
+                    surface.renderItem(textLabel);
+                    textLabel._bbox = textLabel.getBBox();
+                }
+                labelAttr = textLabel.attr;
+                bbox = textLabel._bbox;
+                maxWidth = Math.max(maxWidth, bbox.width + me.dashSize + me.label.padding);
+
+                y = point[1];
+                if (gutterY &lt; bbox.height / 2) {
+                    if (i == last - 1 &amp;&amp; chart.axes.findIndex(&#39;position&#39;, &#39;top&#39;) == -1) {
+                        y = me.y - me.length + Math.ceil(bbox.height / 2);
+                    }
+                    else if (i == 0 &amp;&amp; chart.axes.findIndex(&#39;position&#39;, &#39;bottom&#39;) == -1) {
+                        y = me.y - Math.floor(bbox.height / 2);
+                    }
+                }
+
+                if (position == &#39;left&#39;) {
+                    x = point[0] - bbox.width - me.dashSize - me.label.padding - 2;
+                }
+                else {
+                    x = point[0] + me.dashSize + me.label.padding + 2;
+                }    
+                if (x != labelAttr.x || y != labelAttr.y || labelAttr.hidden) {
+                    textLabel.setAttributes(Ext.apply({
+                        hidden: false,
+                        x: x,
+                        y: y
+                    }, me.label), true);
+                }
+            }
+        }
+        else {
+            last = ln - 1;
+            for (i = last; i &gt;= 0; i--) {
+                point = inflections[i];
+                text = me.label.renderer(labels[i]);
+                // Re-use existing textLabel or create a new one
+                textLabel = labelGroup.getAt(last - i);
+                if (textLabel) {
+                    if (text != textLabel.attr.text) {
+                        textLabel.setAttributes({
+                            text: text
+                        }, true);
+                        textLabel._bbox = textLabel.getBBox();
+                    }
+                }
+                else {
+                    textLabel = surface.add(Ext.apply({
+                        group: labelGroup,
+                        type: &#39;text&#39;,
+                        x: 0,
+                        y: 0,
+                        text: text
+                    }, me.label));
+                    
+                    surface.renderItem(textLabel);
+                    textLabel._bbox = textLabel.getBBox();
+                }
+                labelAttr = textLabel.attr;
+                bbox = textLabel._bbox;
+
+                maxHeight = Math.max(maxHeight, bbox.height + me.dashSize + me.label.padding);
+                x = Math.floor(point[0] - (bbox.width / 2) - bbox.x * Math.abs(Math.sin(((labelAttr.rotation &amp;&amp; labelAttr.rotation.degrees || 0) * Math.PI / 180) || 0)));
+                if (me.chart.maxGutter[0] == 0) {
+                    if (i == 0 &amp;&amp; chart.axes.findIndex(&#39;position&#39;, &#39;left&#39;) == -1) {
+                        x = point[0];
+                    }
+                    else if (i == last &amp;&amp; chart.axes.findIndex(&#39;position&#39;, &#39;right&#39;) == -1) {
+                        x = point[0] - bbox.width;
+                    }
+                }
+                textRight = x + bbox.width + me.label.padding;
+                // Skip label if there isn&#39;t available minimum space
+                if (i != 0 &amp;&amp; (i != last) &amp;&amp; textRight &gt; prevX &amp;&amp; !(labelAttr.rotation &amp;&amp; labelAttr.rotation.degrees)) {
+                    if (!me.elipsis(textLabel, text, prevX - x, 35, point[0])) {
+                        textLabel.hide(true);
+                        continue;
+                    }
+                }
+                if (i == 0 &amp;&amp; prevX &lt; textRight) {
+                    if (labelGroup.getCount() &gt; 2) {
+                        prevLabel = labelGroup.getAt((last - i) - 1);
+                        me.elipsis(prevLabel, prevLabel.attr.text, labelGroup.getAt((last - i) - 2).getBBox().x - textRight, 35, inflections[i + 1][0]);
+                    }
+                }
+                prevX = x;
+                if (position == &#39;top&#39;) {
+                    y = point[1] - (me.dashSize * 2) - me.label.padding - (bbox.height / 2);
+                }
+                else {
+                    y = point[1] + (me.dashSize * 2) + me.label.padding + (bbox.height / 2);
+                }
+                textLabel.setAttributes({
+                    hidden: false,
+                    x: x,
+                    y: y
+                }, true);
+            }
+        }
+
+        // Hide unused bars
+        ln = labelGroup.getCount();
+        i = inflections.length;
+        for (; i &lt; ln; i++) {
+            labelGroup.getAt(i).hide(true);
+        }
+
+        me.bbox = {};
+        Ext.apply(me.bbox, me.axisBBox);
+        me.bbox.height = maxHeight;
+        me.bbox.width = maxWidth;
+        if (Ext.isString(me.title)) {
+            me.drawTitle(maxWidth, maxHeight);
+        }
+    },
+
+    // @private creates the elipsis for the text.
+    elipsis: function(sprite, text, desiredWidth, minWidth, center) {
+        var bbox,
+            x;
+
+        if (desiredWidth &lt; minWidth) {
+            sprite.hide(true);
+            return false;
+        }
+        while (text.length &gt; 4) {
+            text = text.substr(0, text.length - 4) + &quot;...&quot;;
+            sprite.setAttributes({
+                text: text
+            }, true);
+            bbox = sprite.getBBox();
+            if (bbox.width &lt; desiredWidth) {
+                if (typeof center == &#39;number&#39;) {
+                    sprite.setAttributes({
+                        x: Math.floor(center - (bbox.width / 2))
+                    }, true);
+                }
+                break;
+            }
+        }
+        return true;
+    },
+
+    // @private draws the title for the axis.
+    drawTitle: function(maxWidth, maxHeight) {
+        var me = this,
+            position = me.position,
+            surface = me.chart.surface,
+            rotate = (position == &#39;left&#39; || position == &#39;right&#39;),
+            x = me.x,
+            y = me.y,
+            base, bbox, pad;
+
+        if (!me.displaySprite) {
+            base = {
+                type: &#39;text&#39;,
+                x: 0,
+                y: 0,
+                text: me.title
+            };
+            me.displaySprite = surface.add(Ext.apply(base, me.axisTitleStyle, me.labelTitle));
+            surface.renderItem(me.displaySprite);
+        }
+        bbox = me.displaySprite.getBBox();
+        pad = me.dashSize + me.label.padding;
+
+        if (rotate) {
+            y -= ((me.length / 2) - (bbox.height / 2));
+            if (position == &#39;left&#39;) {
+                x -= (maxWidth + pad + (bbox.width / 2));
+            }
+            else {
+                x += (maxWidth + pad + bbox.width - (bbox.width / 2));
+            }
+            me.bbox.width += bbox.width + 10;
+        }
+        else {
+            x += (me.length / 2) - (bbox.width * 0.5);
+            if (position == &#39;top&#39;) {
+                y -= (maxHeight + pad + (bbox.height * 0.3));
+            }
+            else {
+                y += (maxHeight + pad + (bbox.height * 0.8));
+            }
+            me.bbox.height += bbox.height + 10;
+        }
+        me.displaySprite.setAttributes({
+            translate: {
+                x: x,
+                y: y
+            }
+        }, true);
+    }
+});￿</pre></pre></body></html>

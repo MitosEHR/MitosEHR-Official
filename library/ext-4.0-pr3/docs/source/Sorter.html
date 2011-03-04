@@ -1,0 +1,74 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.util.Sorter"></a>/**
+ * @class Ext.util.Sorter
+ * @extends Object
+ * Represents a single sorter that can be applied to a Store
+ */
+Ext.define(&#39;Ext.util.Sorter&#39;, {
+
+    <a name="cfg-Ext.util.Sorter-property"></a>/**
+     * @cfg {String} property The property to sort by. Required unless {@link #sorter} is provided
+     */
+    
+    <a name="cfg-Ext.util.Sorter-sorterFn"></a>/**
+     * @cfg {Function} sorterFn A specific sorter function to execute. Can be passed instead of {@link #property}
+     */
+    
+    <a name="cfg-Ext.util.Sorter-root"></a>/**
+     * @cfg {String} root Optional root property. This is mostly useful when sorting a Store, in which case we set the
+     * root to &#39;data&#39; to make the filter pull the {@link #property} out of the data object of each item
+     */
+    
+    <a name="cfg-Ext.util.Sorter-direction"></a>/**
+     * @cfg {String} direction The direction to sort by. Defaults to ASC
+     */
+    direction: &quot;ASC&quot;,
+    
+    constructor: function(config) {
+        Ext.apply(this, config);
+        
+        if (this.property == undefined &amp;&amp; this.sorterFn == undefined) {
+            throw &quot;A Sorter requires either a property or a sorter function&quot;;
+        }
+        
+        this.sort = this.createSortFunction(this.sorterFn || this.defaultSorterFn);
+    },
+    
+    /**
+     * @private
+     * Creates and returns a function which sorts an array by the given property and direction
+     * @return {Function} A function which sorts by the property/direction combination provided
+     */
+    createSortFunction: function(sorterFn) {
+        var me        = this,
+            property  = me.property,
+            direction = me.direction || &quot;ASC&quot;,
+            modifier  = direction.toUpperCase() == &quot;DESC&quot; ? -1 : 1;
+        
+        //create a comparison function. Takes 2 objects, returns 1 if object 1 is greater,
+        //-1 if object 2 is greater or 0 if they are equal
+        return function(o1, o2) {
+            return modifier * sorterFn.call(me, o1, o2);
+        };
+    },
+    
+    /**
+     * @private
+     * Basic default sorter function that just compares the defined property of each object
+     */
+    defaultSorterFn: function(o1, o2) {
+        var v1 = this.getRoot(o1)[this.property],
+            v2 = this.getRoot(o2)[this.property];
+
+        return v1 &gt; v2 ? 1 : (v1 &lt; v2 ? -1 : 0);
+    },
+    
+    /**
+     * @private
+     * Returns the root property of the given item, based on the configured {@link #root} property
+     * @param {Object} item The item
+     * @return {Object} The root property of the object
+     */
+    getRoot: function(item) {
+        return this.root == undefined ? item : item[this.root];
+    }
+});￿</pre></pre></body></html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.TemplateHeader"></a>/**
+ * @class Ext.grid.TemplateHeader
+ * @extends Ext.grid.Header
+ * &lt;p&gt;A Column definition class which renders a value by processing a {@link Ext.data.Model Model}&#39;s
+ * {@link Ext.data.Model#data data} using a {@link #tpl configured} {@link Ext.XTemplate XTemplate}.
+ * See the {@link Ext.grid.Header#xtype xtype} config option of {@link Ext.grid.Header} for more
+ * details.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.grid.TemplateHeader&#39;, {
+    extend: &#39;Ext.grid.Header&#39;,
+    alias: [&#39;widget.templateheader&#39;],
+    requires: [&#39;Ext.XTemplate&#39;],
+    
+    <a name="cfg-Ext.grid.TemplateHeader-tpl"></a>/**
+     * @cfg {String/XTemplate} tpl
+     * An {@link Ext.XTemplate XTemplate}, or an XTemplate &lt;i&gt;definition string&lt;/i&gt; to use to process a
+     * {@link Ext.data.Model Model}&#39;s {@link Ext.data.Record#data data} to produce a column&#39;s rendered value.
+     */
+    constructor: function(cfg){
+        Ext.grid.TemplateHeader.superclass.constructor.call(this, cfg);
+        var tpl = (!Ext.isPrimitive(this.tpl) &amp;&amp; this.tpl.compile) ? this.tpl : new Ext.XTemplate(this.tpl);
+        this.renderer = function(value, p, r){
+            return tpl.apply(r.data);
+        };
+        this.tpl = tpl;
+    }
+});￿</pre></pre></body></html>

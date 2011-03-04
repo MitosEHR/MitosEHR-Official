@@ -1,0 +1,61 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.grid.RowBodyFeature"></div>/**
+ * @class Ext.grid.RowBodyFeature
+ * @extends Ext.grid.Feature
+ *
+ * @ftype rowbody
+ */
+Ext.define('Ext.grid.RowBodyFeature', {
+    extend: 'Ext.grid.Feature',
+    alias: 'feature.rowbody',
+
+    eventPrefix: 'rowbody',
+    eventSelector: '.' + Ext.baseCSSPrefix + 'grid-rowbody-tr',
+    
+    // parent ref will be inaccurate in recursion. this.master.values or something...
+    getRowBody: function(values) {
+        return [
+            // values reference in tpl is a rowTpl (specific to a row)
+            //'<tpl if="values.enableRowBody === true">',
+                '<tr class="' + Ext.baseCSSPrefix + 'grid-rowbody-tr {rowBodyCls}">',
+                // values reference in columns is a metaRowTpl (specific to tpl)
+                '<td class="' + Ext.baseCSSPrefix + 'grid-cell-rowbody" colspan="{rowBodyColspan}">',
+                    '<div class="' + Ext.baseCSSPrefix + 'grid-rowbody">{rowBody}</div>',
+                '</td>',
+                '</tr>'
+            //'</tpl>'
+        ].join('');        
+    },
+    
+    // injects getRowBody into the metaRowTpl.
+    getMetaRowTplFragments: function() {
+        return {
+            getRowBody: this.getRowBody
+        };
+    },
+    
+    mutateMetaRowTpl: function(metaRowTpl) {
+        metaRowTpl.push('{[this.getRowBody(values)]}');
+    },
+    
+    // Adds in additional data for the row.
+    getAdditionalData: function(data, idx, record, orig) {
+        var headerCt = this.view.headerCt,
+            colspan  = headerCt.getCount();
+        return {
+            rowBody: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            rowBodyCls: Ext.baseCSSPrefix + 'grid-row-body-hidden',
+            rowBodyColspan: colspan
+        };
+    }
+});
+</pre>    
+</body>
+</html>

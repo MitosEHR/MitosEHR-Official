@@ -1,0 +1,340 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.AjaxProxy"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.AjaxProxy
+ * @extends Ext.data.ServerProxy
+ * 
+ * &lt;p&gt;AjaxProxy is one of the most widely-used ways of getting data into your application. It uses AJAX requests to 
+ * load data from the server, usually to be placed into a {@link Ext.data.Store Store}. Let&#39;s take a look at a typical
+ * setup. Here we&#39;re going to set up a Store that has an AjaxProxy. To prepare, we&#39;ll also set up a 
+ * {@link Ext.data.Model Model}:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>Ext.regModel(&#39;User&#39;, {
+    fields: [&#39;id&#39;, &#39;name&#39;, &#39;email&#39;]
+});
+
+//The Store contains the AjaxProxy as an inline configuration
+var store = new Ext.data.Store({
+    model: &#39;User&#39;,
+    proxy: {
+        type: &#39;ajax&#39;,
+        url : &#39;users.json&#39;
+    }
+});
+
+store.load();
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Our example is going to load user data into a Store, so we start off by defining a {@link Ext.data.Model Model}
+ * with the fields that we expect the server to return. Next we set up the Store itself, along with a {@link #proxy}
+ * configuration. This configuration was automatically turned into an Ext.data.AjaxProxy instance, with the url we
+ * specified being passed into AjaxProxy&#39;s constructor. It&#39;s as if we&#39;d done this:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>new Ext.data.AjaxProxy({
+    url: &#39;users.json&#39;,
+    model: &#39;User&#39;,
+    reader: &#39;json&#39;
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;A couple of extra configurations appeared here - {@link #model} and {@link #reader}. These are set by default 
+ * when we create the proxy via the Store - the Store already knows about the Model, and Proxy&#39;s default 
+ * {@link Ext.data.Reader Reader} is {@link Ext.data.JsonReader JsonReader}.&lt;/p&gt;
+ * 
+ * &lt;p&gt;Now when we call store.load(), the AjaxProxy springs into action, making a request to the url we configured
+ * (&#39;users.json&#39; in this case). As we&#39;re performing a read, it sends a GET request to that url (see {@link #actionMethods}
+ * to customize this - by default any kind of read will be sent as a GET request and any kind of write will be sent as a
+ * POST request).&lt;/p&gt;
+ * 
+ * &lt;p&gt;&lt;u&gt;Limitations&lt;/u&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;AjaxProxy cannot be used to retrieve data from other domains. If your application is running on http://domainA.com
+ * it cannot load data from http://domainB.com because browsers have a built-in security policy that prohibits domains
+ * talking to each other via AJAX.&lt;/p&gt;
+ * 
+ * &lt;p&gt;If you need to read data from another domain and can&#39;t set up a proxy server (some software that runs on your own
+ * domain&#39;s web server and transparently forwards requests to http://domainB.com, making it look like they actually came
+ * from http://domainA.com), you can use {@link Ext.data.ScriptTagProxy} and a technique known as JSON-P (JSON with 
+ * Padding), which can help you get around the problem so long as the server on http://domainB.com is set up to support
+ * JSON-P responses. See {@link Ext.data.ScriptTagProxy ScriptTagProxy}&#39;s introduction docs for more details.&lt;/p&gt;
+ * 
+ * &lt;p&gt;&lt;u&gt;Readers and Writers&lt;/u&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;AjaxProxy can be configured to use any type of {@link Ext.data.Reader Reader} to decode the server&#39;s response. If
+ * no Reader is supplied, AjaxProxy will default to using a {@link Ext.data.JsonReader JsonReader}. Reader configuration
+ * can be passed in as a simple object, which the Proxy automatically turns into a {@link Ext.data.Reader Reader}
+ * instance:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var proxy = new Ext.data.AjaxProxy({
+    model: &#39;User&#39;,
+    reader: {
+        type: &#39;xml&#39;,
+        root: &#39;users&#39;
+    }
+});
+
+proxy.getReader(); //returns an {@link Ext.data.XmlReader XmlReader} instance based on the config we supplied
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;&lt;u&gt;Url generation&lt;/u&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;AjaxProxy automatically inserts any sorting, filtering, paging and grouping options into the url it generates for
+ * each request. These are controlled with the following configuration options:&lt;/p&gt;
+ * 
+ * &lt;ul style=&quot;list-style-type: disc; padding-left: 20px;&quot;&gt;
+ *     &lt;li&gt;{@link #pageParam} - controls how the page number is sent to the server 
+ *     (see also {@link #startParam} and {@link #limitParam})&lt;/li&gt;
+ *     &lt;li&gt;{@link #sortParam} - controls how sort information is sent to the server&lt;/li&gt;
+ *     &lt;li&gt;{@link #groupParam} - controls how grouping information is sent to the server&lt;/li&gt;
+ *     &lt;li&gt;{@link #filterParam} - controls how filter information is sent to the server&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * &lt;p&gt;Each request sent by AjaxProxy is described by an {@link Ext.data.Operation Operation}. To see how we can 
+ * customize the generated urls, let&#39;s say we&#39;re loading the Proxy with the following Operation:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var operation = new Ext.data.Operation({
+    action: &#39;read&#39;,
+    page  : 2
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Now we&#39;ll issue the request for this Operation by calling {@link #read}:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var proxy = new Ext.data.AjaxProxy({
+    url: &#39;/users&#39;
+});
+
+proxy.read(operation); //GET /users?page=2
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Easy enough - the Proxy just copied the page property from the Operation. We can customize how this page data is
+ * sent to the server:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var proxy = new Ext.data.AjaxProxy({
+    url: &#39;/users&#39;,
+    pagePage: &#39;pageNumber&#39;
+});
+
+proxy.read(operation); //GET /users?pageNumber=2
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Alternatively, our Operation could have been configured to send start and limit parameters instead of page:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var operation = new Ext.data.Operation({
+    action: &#39;read&#39;,
+    start : 50,
+    limit : 25
+});
+
+var proxy = new Ext.data.AjaxProxy({
+    url: &#39;/users&#39;
+});
+
+proxy.read(operation); //GET /users?start=50&amp;limit=25
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Again we can customize this url:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var proxy = new Ext.data.AjaxProxy({
+    url: &#39;/users&#39;,
+    startParam: &#39;startIndex&#39;,
+    limitParam: &#39;limitIndex&#39;
+});
+
+proxy.read(operation); //GET /users?startIndex=50&amp;limitIndex=25
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;AjaxProxy will also send sort and filter information to the server. Let&#39;s take a look at how this looks with a
+ * more expressive Operation object:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var operation = new Ext.data.Operation({
+    action: &#39;read&#39;,
+    sorters: [
+        new Ext.util.Sorter({
+            property : &#39;name&#39;,
+            direction: &#39;ASC&#39;
+        }),
+        new Ext.util.Sorter({
+            property : &#39;age&#39;,
+            direction: &#39;DESC&#39;
+        })
+    ],
+    filters: [
+        new Ext.util.Filter({
+            property: &#39;eyeColor&#39;,
+            value   : &#39;brown&#39;
+        })
+    ]
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;This is the type of object that is generated internally when loading a {@link Ext.data.Store Store} with sorters
+ * and filters defined. By default the AjaxProxy will JSON encode the sorters and filters, resulting in something like
+ * this (note that the url is escaped before sending the request, but is left unescaped here for clarity):&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var proxy = new Ext.data.AjaxProxy({
+    url: &#39;/users&#39;
+});
+
+proxy.read(operation); //GET /users?sort=[{&quot;property&quot;:&quot;name&quot;,&quot;direction&quot;:&quot;ASC&quot;},{&quot;property&quot;:&quot;age&quot;,&quot;direction&quot;:&quot;DESC&quot;}]&amp;filter=[{&quot;property&quot;:&quot;eyeColor&quot;,&quot;value&quot;:&quot;brown&quot;}]
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;We can again customize how this is created by supplying a few configuration options. Let&#39;s say our server is set 
+ * up to receive sorting information is a format like &quot;sortBy=name#ASC,age#DESC&quot;. We can configure AjaxProxy to provide
+ * that format like this:&lt;/p&gt;
+ * 
+ <br><span style="display: none">**/</span> var proxy = new Ext.data.AjaxProxy({
+     url: &#39;/users&#39;,
+     sortParam: &#39;sortBy&#39;,
+     filterParam: &#39;filterBy&#39;,
+
+     //our custom implementation of sorter encoding - turns our sorters into &quot;name#ASC,age#DESC&quot;
+     encodeSorters: function(sorters) {
+         var length   = sorters.length,
+             sortStrs = [],
+             sorter, i;
+
+         for (i = 0; i &lt; length; i++) {
+             sorter = sorters[i];
+
+             sortStrs[i] = sorter.property + &#39;#&#39; + sorter.direction
+         }
+
+         return sortStrs.join(&quot;,&quot;);
+     }
+ });
+
+ proxy.read(operation); //GET /users?sortBy=name#ASC,age#DESC&amp;filterBy=[{&quot;property&quot;:&quot;eyeColor&quot;,&quot;value&quot;:&quot;brown&quot;}]
+ <br><span style="display: none">/**</span> * 
+ * &lt;p&gt;We can also provide a custom {@link #encodeFilters} function to encode our filters.&lt;/p&gt;
+ * 
+ * @constructor
+ * 
+ * &lt;p&gt;Note that if this HttpProxy is being used by a {@link Ext.data.Store Store}, then the
+ * Store&#39;s call to {@link #load} will override any specified &lt;tt&gt;callback&lt;/tt&gt; and &lt;tt&gt;params&lt;/tt&gt;
+ * options. In this case, use the Store&#39;s {@link Ext.data.Store#events events} to modify parameters,
+ * or react to loading events. The Store&#39;s {@link Ext.data.Store#baseParams baseParams} may also be
+ * used to pass parameters known at instantiation time.&lt;/p&gt;
+ * 
+ * &lt;p&gt;If an options parameter is passed, the singleton {@link Ext.Ajax} object will be used to make
+ * the request.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.data.AjaxProxy&#39;, {
+    requires: [&#39;Ext.util.MixedCollection&#39;, &#39;Ext.Ajax&#39;],
+    extend: &#39;Ext.data.ServerProxy&#39;,
+    alias: &#39;proxy.ajax&#39;,
+    
+    <a name="prop-Ext.data.AjaxProxy-actionMethods"></a>/**
+     * @property actionMethods
+     * Mapping of action name to HTTP request method. In the basic AjaxProxy these are set to &#39;GET&#39; for &#39;read&#39; actions and &#39;POST&#39; 
+     * for &#39;create&#39;, &#39;update&#39; and &#39;destroy&#39; actions. The {@link Ext.data.RestProxy} maps these to the correct RESTful methods.
+     */
+    actionMethods: {
+        create : &#39;POST&#39;,
+        read   : &#39;GET&#39;,
+        update : &#39;POST&#39;,
+        destroy: &#39;POST&#39;
+    },
+    
+    <a name="cfg-Ext.data.AjaxProxy-headers"></a>/**
+     * @cfg {Object} headers Any headers to add to the Ajax request. Defaults to &lt;tt&gt;undefined&lt;/tt&gt;.
+     */
+    
+    constructor: function() {
+        this.addEvents(
+            <a name="event-Ext.data.AjaxProxy-exception"></a>/**
+             * @event exception
+             * Fires when the server returns an exception
+             * @param {Ext.data.Proxy} this
+             * @param {Object} response The response from the AJAX request
+             * @param {Ext.data.Operation} operation The operation that triggered request
+             */
+            &#39;exception&#39;
+        );
+        
+        Ext.data.AjaxProxy.superclass.constructor.apply(this, arguments);    
+    },
+    
+    /**
+     * @ignore
+     */
+    doRequest: function(operation, callback, scope) {
+        var writer  = this.getWriter(),
+            request = this.buildRequest(operation, callback, scope);
+            
+        if (operation.allowWrite()) {
+            request = writer.write(request);
+        }
+        
+        Ext.apply(request, {
+            headers       : this.headers,
+            timeout       : this.timeout,
+            scope         : this,
+            callback      : this.createRequestCallback(request, operation, callback, scope),
+            method        : this.getMethod(request),
+            disableCaching: false // explicitly set it to false, ServerProxy handles caching
+        });
+        
+        Ext.Ajax.request(request);
+        
+        return request;
+    },
+    
+    <a name="method-Ext.data.AjaxProxy-getMethod"></a>/**
+     * Returns the HTTP method name for a given request. By default this returns based on a lookup on {@link #actionMethods}.
+     * @param {Ext.data.Request} request The request object
+     * @return {String} The HTTP method to use (should be one of &#39;GET&#39;, &#39;POST&#39;, &#39;PUT&#39; or &#39;DELETE&#39;)
+     */
+    getMethod: function(request) {
+        return this.actionMethods[request.action];
+    },
+    
+    /**
+     * @private
+     * TODO: This is currently identical to the ScriptTagProxy version except for the return function&#39;s signature. There is a lot
+     * of code duplication inside the returned function so we need to find a way to DRY this up.
+     * @param {Ext.data.Request} request The Request object
+     * @param {Ext.data.Operation} operation The Operation being executed
+     * @param {Function} callback The callback function to be called when the request completes. This is usually the callback
+     * passed to doRequest
+     * @param {Object} scope The scope in which to execute the callback function
+     * @return {Function} The callback function
+     */
+    createRequestCallback: function(request, operation, callback, scope) {
+        var me = this;
+        
+        return function(options, success, response) {
+            if (success === true) {
+                var reader  = me.getReader(),
+                    result  = reader.read(response),
+                    records = result.records,
+                    length  = records.length,
+                    mc      = Ext.create(&#39;Ext.util.MixedCollection&#39;, true, function(r) {return r.getId();}),
+                    record, i;
+                
+                mc.addAll(operation.records);
+                for (i = 0; i &lt; length; i++) {
+                    record = mc.get(records[i].getId());
+                    
+                    if (record) {
+                        record.set(record.data);
+                    }
+                }
+
+                //see comment in buildRequest for why we include the response object here
+                Ext.apply(operation, {
+                    response : response,
+                    resultSet: result
+                });
+                
+                operation.setCompleted();
+                operation.setSuccessful();
+            } else {
+                me.fireEvent(&#39;exception&#39;, this, response, operation);
+                
+                //TODO: extract error message from reader
+                operation.setException();                
+            }
+            
+            //this callback is the one that was passed to the &#39;read&#39; or &#39;write&#39; function above
+            if (typeof callback == &#39;function&#39;) {
+                callback.call(scope || me, operation);
+            }
+            
+            me.afterRequest(request, true);
+        };
+    }
+}, function() {
+    //backwards compatibility, remove in Ext JS 5.0
+    Ext.data.HttpProxy = this;
+});
+￿</pre></pre></body></html>

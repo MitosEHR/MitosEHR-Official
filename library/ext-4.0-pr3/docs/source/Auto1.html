@@ -1,0 +1,37 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.layout.container.Auto"></a>/**
+ * @class Ext.layout.container.Auto
+ * @extends Ext.layout.Container
+ *
+ * &lt;p&gt;The AutoLayout is the default layout manager delegated by {@link Ext.container.Container} to
+ * render any child Components when no &lt;tt&gt;{@link Ext.container.Container#layout layout}&lt;/tt&gt; is configured into
+ * a &lt;tt&gt;{@link Ext.container.Container Container}.&lt;/tt&gt;.  AutoLayout provides only a passthrough of any layout calls
+ * to any child containers.&lt;/p&gt;
+ */
+
+Ext.define(&#39;Ext.layout.container.Auto&#39;, {
+
+    /* Begin Definitions */
+
+    alias: [&#39;layout.auto&#39;, &#39;layout.autocontainer&#39;],
+
+    extend: &#39;Ext.layout.Container&#39;,
+
+    /* End Definitions */
+
+    type: &#39;autocontainer&#39;,
+
+    fixedLayout: false,
+
+    bindToOwnerCtComponent: true,
+
+    // @private
+    onLayout : function(owner, target) {
+        var items = this.getLayoutItems(),
+            ln = items.length,
+            i, item;
+        for (i = 0; i &lt; ln; i++) {
+            item = items[i];
+            this.setItemSize(item);
+        }
+    }
+});￿</pre></pre></body></html>

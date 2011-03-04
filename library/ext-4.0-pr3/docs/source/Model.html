@@ -1,0 +1,554 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.Model"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.Model
+ * @extends Ext.util.Stateful
+ * 
+ * &lt;p&gt;A Model represents some object that your application manages. For example, one might define a Model for Users, Products,
+ * Cars, or any other real-world object that we want to model in the system. Models are registered via the {@link Ext.ModelMgr model manager},
+ * and are used by {@link Ext.data.Store stores}, which are in turn used by many of the data-bound components in Ext.&lt;/p&gt;
+ * 
+ * &lt;p&gt;Models are defined as a set of fields and any arbitrary methods and properties relevant to the model. For example:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>Ext.regModel(&#39;User&#39;, {
+    fields: [
+        {name: &#39;name&#39;,  type: &#39;string&#39;},
+        {name: &#39;age&#39;,   type: &#39;int&#39;},
+        {name: &#39;phone&#39;, type: &#39;string&#39;},
+        {name: &#39;alive&#39;, type: &#39;boolean&#39;, defaultValue: true}
+    ],
+
+    changeName: function() {
+        var oldName = this.get(&#39;name&#39;),
+            newName = oldName + &quot; The Barbarian&quot;;
+
+        this.set(&#39;name&#39;, newName);
+    }
+});
+<br><span style="display: none">/**</span>* 
+* &lt;p&gt;The fields array is turned into a {@link Ext.util.MixedCollection MixedCollection} automatically by the {@link Ext.ModelMgr ModelMgr}, and all
+* other functions and properties are copied to the new Model&#39;s prototype.&lt;/p&gt;
+* 
+* &lt;p&gt;Now we can create instances of our User model and call any model logic we defined:&lt;/p&gt;
+* 
+<br><span style="display: none">**/</span>var user = Ext.ModelMgr.create({
+    name : &#39;Conan&#39;,
+    age  : 24,
+    phone: &#39;555-555-5555&#39;
+}, &#39;User&#39;);
+
+user.changeName();
+user.get(&#39;name&#39;); //returns &quot;Conan The Barbarian&quot;
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;&lt;u&gt;Validations&lt;/u&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;Models have built-in support for validations, which are executed against the validator functions in 
+ * {@link Ext.data.validations} ({@link Ext.data.validations see all validation functions}). Validations are easy to add to models:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>Ext.regModel(&#39;User&#39;, {
+    fields: [
+        {name: &#39;name&#39;,     type: &#39;string&#39;},
+        {name: &#39;age&#39;,      type: &#39;int&#39;},
+        {name: &#39;phone&#39;,    type: &#39;string&#39;},
+        {name: &#39;gender&#39;,   type: &#39;string&#39;},
+        {name: &#39;username&#39;, type: &#39;string&#39;},
+        {name: &#39;alive&#39;,    type: &#39;boolean&#39;, defaultValue: true}
+    ],
+
+    validations: [
+        {type: &#39;presence&#39;,  field: &#39;age&#39;},
+        {type: &#39;length&#39;,    field: &#39;name&#39;,     min: 2},
+        {type: &#39;inclusion&#39;, field: &#39;gender&#39;,   list: [&#39;Male&#39;, &#39;Female&#39;]},
+        {type: &#39;exclusion&#39;, field: &#39;username&#39;, list: [&#39;Admin&#39;, &#39;Operator&#39;]},
+        {type: &#39;format&#39;,    field: &#39;username&#39;, matcher: /([a-z]+)[0-9]{2,3}/}
+    ]
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;The validations can be run by simply calling the {@link #validate} function, which returns a {@link Ext.data.Errors}
+ * object:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var instance = Ext.ModelMgr.create({
+    name: &#39;Ed&#39;,
+    gender: &#39;Male&#39;,
+    username: &#39;edspencer&#39;
+}, &#39;User&#39;);
+
+var errors = instance.validate();
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;&lt;u&gt;Associations&lt;/u&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;Models can have associations with other Models via {@link Ext.data.BelongsToAssociation belongsTo} and 
+ * {@link Ext.data.HasManyAssociation hasMany} associations. For example, let&#39;s say we&#39;re writing a blog administration
+ * application which deals with Users, Posts and Comments. We can express the relationships between these models like this:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>Ext.regModel(&#39;Post&#39;, {
+    fields: [&#39;id&#39;, &#39;user_id&#39;],
+
+    belongsTo: &#39;User&#39;,
+    hasMany  : {model: &#39;Comment&#39;, name: &#39;comments&#39;}
+});
+
+Ext.regModel(&#39;Comment&#39;, {
+    fields: [&#39;id&#39;, &#39;user_id&#39;, &#39;post_id&#39;],
+
+    belongsTo: &#39;Post&#39;
+});
+
+Ext.regModel(&#39;User&#39;, {
+    fields: [&#39;id&#39;],
+
+    hasMany: [
+        &#39;Post&#39;,
+        {model: &#39;Comment&#39;, name: &#39;comments&#39;}
+    ]
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;See the docs for {@link Ext.data.BelongsToAssociation} and {@link Ext.data.HasManyAssociation} for details on the usage
+ * and configuration of associations. Note that associations can also be specified like this:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>Ext.regModel(&#39;User&#39;, {
+    fields: [&#39;id&#39;],
+
+    associations: [
+        {type: &#39;hasMany&#39;, model: &#39;Post&#39;,    name: &#39;posts&#39;},
+        {type: &#39;hasMany&#39;, model: &#39;Comment&#39;, name: &#39;comments&#39;}
+    ]
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;&lt;u&gt;Using a Proxy&lt;/u&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;Models are great for representing types of data and relationships, but sooner or later we&#39;re going to want to 
+ * load or save that data somewhere. All loading and saving of data is handled via a {@link Ext.data.Proxy Proxy}, 
+ * which can be set directly on the Model:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>Ext.regModel(&#39;User&#39;, {
+    fields: [&#39;id&#39;, &#39;name&#39;, &#39;email&#39;],
+
+    proxy: {
+        type: &#39;rest&#39;,
+        url : &#39;/users&#39;
+    }
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Here we&#39;ve set up a {@link Ext.data.RestProxy Rest Proxy}, which knows how to load and save data to and from a 
+ * RESTful backend. Let&#39;s see how this works:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var user = Ext.ModelMgr.create({name: &#39;Ed Spencer&#39;, email: &#39;ed@sencha.com&#39;}, &#39;User&#39;);
+
+user.save(); //POST /users
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Calling {@link #save} on the new Model instance tells the configured RestProxy that we wish to persist this 
+ * Model&#39;s data onto our server. RestProxy figures out that this Model hasn&#39;t been saved before because it doesn&#39;t
+ * have an id, and performs the appropriate action - in this case issuing a POST request to the url we configured
+ * (/users). We configure any Proxy on any Model and always follow this API - see {@link Ext.data.Proxy} for a full
+ * list.&lt;/p&gt;
+ * 
+ * &lt;p&gt;Loading data via the Proxy is equally easy:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>//get a reference to the User model class
+var User = Ext.ModelMgr.getModel(&#39;User&#39;);
+
+//Uses the configured RestProxy to make a GET request to /users/123
+User.load(123, {
+    success: function(user) {
+        console.log(user.getId()); //logs 123
+    }
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;Models can also be updated and destroyed easily:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>//the user Model we loaded in the last snippet:
+user.set(&#39;name&#39;, &#39;Edward Spencer&#39;);
+
+//tells the Proxy to save the Model. In this case it will perform a PUT request to /users/123 as this Model already has an id
+user.save({
+    success: function() {
+        console.log(&#39;The User was updated&#39;);
+    }
+});
+
+//tells the Proxy to destroy the Model. Performs a DELETE request to /users/123
+user.destroy({
+    success: function() {
+        console.log(&#39;The User was destroyed!&#39;);
+    }
+});
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;&lt;u&gt;Usage in Stores&lt;/u&gt;&lt;/p&gt;
+ * 
+ * &lt;p&gt;It is very common to want to load a set of Model instances to be displayed and manipulated in the UI. We do this 
+ * by creating a {@link Ext.data.Store Store}:&lt;/p&gt;
+ * 
+<br><span style="display: none">**/</span>var store = new Ext.data.Store({
+    model: &#39;User&#39;
+});
+
+//uses the Proxy we set up on Model to load the Store data
+store.load();
+<br><span style="display: none">/**</span> * 
+ * &lt;p&gt;A Store is just a collection of Model instances - usually loaded from a server somewhere. Store can also maintain
+ * a set of added, updated and removed Model instances to be synchronized with the server via the Proxy. See the
+ * {@link Ext.data.Store Store docs} for more information on Stores.&lt;/p&gt;
+ * 
+ * @constructor
+ * @param {Object} data An object containing keys corresponding to this model&#39;s fields, and their associated values
+ * @param {Number} id Optional unique ID to assign to this model instance
+ */
+Ext.define(&#39;Ext.data.Model&#39;, {
+    extend: &#39;Ext.util.Stateful&#39;,
+    requires: [&#39;Ext.data.Errors&#39;, &#39;Ext.data.Operation&#39;, &#39;Ext.data.Proxy&#39;, &#39;Ext.data.validations&#39;],
+    
+    statics: {
+        PREFIX : &#39;ext-record&#39;,
+        AUTO_ID: 1,
+        EDIT   : &#39;edit&#39;,
+        REJECT : &#39;reject&#39;,
+        COMMIT : &#39;commit&#39;,
+        
+        <a name="method-Ext.data.Model-Ext.data.Model.id"></a>/**
+         * Generates a sequential id. This method is typically called when a record is {@link #create}d
+         * and {@link #Record no id has been specified}. The returned id takes the form:
+         * &lt;tt&gt;&amp;#123;PREFIX}-&amp;#123;AUTO_ID}&lt;/tt&gt;.&lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+         * &lt;li&gt;&lt;b&gt;&lt;tt&gt;PREFIX&lt;/tt&gt;&lt;/b&gt; : String&lt;p class=&quot;sub-desc&quot;&gt;&lt;tt&gt;Ext.data.Model.PREFIX&lt;/tt&gt;
+         * (defaults to &lt;tt&gt;&#39;ext-record&#39;&lt;/tt&gt;)&lt;/p&gt;&lt;/li&gt;
+         * &lt;li&gt;&lt;b&gt;&lt;tt&gt;AUTO_ID&lt;/tt&gt;&lt;/b&gt; : String&lt;p class=&quot;sub-desc&quot;&gt;&lt;tt&gt;Ext.data.Model.AUTO_ID&lt;/tt&gt;
+         * (defaults to &lt;tt&gt;1&lt;/tt&gt; initially)&lt;/p&gt;&lt;/li&gt;
+         * &lt;/ul&gt;&lt;/div&gt;
+         * @param {Record} rec The record being created.  The record does not exist, it&#39;s a {@link #phantom}.
+         * @return {String} auto-generated string id, &lt;tt&gt;&quot;ext-record-i++&#39;&lt;/tt&gt;;
+         * @static
+         */
+        id: function(rec) {
+            rec.phantom = true;
+            return [Ext.data.Model.PREFIX, &#39;-&#39;, Ext.data.Model.AUTO_ID++].join(&#39;&#39;);
+        },
+        
+        <a name="method-Ext.data.Model-Ext.data.Model.setProxy"></a>/**
+         * Sets the Proxy to use for this model. Accepts any options that can be accepted by {@link Ext#createByAlias}
+         * @param {String/Object/Ext.data.Proxy} proxy The proxy
+         * @static
+         */
+        setProxy: function(proxy) {
+            //make sure we have an Ext.data.Proxy object
+            if (typeof proxy == &quot;string&quot;) {
+                proxy = {
+                    type: proxy
+                };
+            }
+            
+            proxy = Ext.createByAlias(&quot;proxy.&quot; + proxy.type, proxy);
+            proxy.setModel(this);
+            this.proxy = this.prototype.proxy = proxy;
+
+            return proxy;
+        },
+
+        <a name="method-Ext.data.Model-Ext.data.Model.load"></a>/**
+         * &lt;b&gt;Static&lt;/b&gt;. Asynchronously loads a model instance by id. Sample usage:
+    <br><span style="display: none">**/</span>    MyApp.User = Ext.regModel(&#39;User&#39;, {
+        fields: [
+            {name: &#39;id&#39;, type: &#39;int&#39;},
+            {name: &#39;name&#39;, type: &#39;string&#39;}
+        ]
+    });
+
+    MyApp.User.load(10, {
+        scope: this,
+        failure: function(record, operation) {
+            //do something if the load failed
+        },
+        success: function(record, operation) {
+            //do something if the load succeeded
+        },
+        callback: function(record, operation) {
+            //do something whether the load succeeded or failed
+        }
+    });
+    <br><span style="display: none">/**</span>         * @param {Number} id The id of the model to load
+         * @param {Object} config Optional config object containing success, failure and callback functions, plus optional scope
+         * @member Ext.data.Model
+         * @method load
+         * @static
+         */
+        load: function(id, config) {
+            config = Ext.applyIf(config || {}, {
+                action: &#39;read&#39;,
+                id    : id
+            });
+
+            var operation  = Ext.create(&#39;Ext.data.Operation&#39;, config),
+                callbackFn = config.callback,
+                successFn  = config.success,
+                failureFn  = config.failure,
+                scope      = config.scope,
+                record, callback;
+
+            callback = function(operation) {
+                record = operation.getRecords()[0];
+
+                if (operation.wasSuccessful()) {
+                    if (typeof successFn == &#39;function&#39;) {
+                        successFn.call(scope, record, operation);
+                    }
+                } else {
+                    if (typeof failureFn == &#39;function&#39;) {
+                        failureFn.call(scope, record, operation);
+                    }
+                }
+
+                if (typeof callbackFn == &#39;function&#39;) {
+                    callbackFn.call(scope, record, operation);
+                }
+            };
+
+            this.proxy.read(operation, callback, this);
+        }
+    },
+    
+    evented: false,
+    isModel: true,
+    
+    <a name="prop-Ext.data.Model-phantom"></a>/**
+     * &lt;tt&gt;true&lt;/tt&gt; when the record does not yet exist in a server-side database (see
+     * {@link #setDirty}).  Any record which has a real database pk set as its id property
+     * is NOT a phantom -- it&#39;s real.
+     * @property phantom
+     * @type {Boolean}
+     */
+    phantom : false,
+    
+    <a name="cfg-Ext.data.Model-idProperty"></a>/**
+     * @cfg {String} idProperty The name of the field treated as this Model&#39;s unique id (defaults to &#39;id&#39;).
+     */
+    idProperty: &#39;id&#39;,
+    
+    constructor: function(data, id) {
+        data = data || {};
+        
+        /**
+         * An internal unique ID for each Model instance, used to identify Models that don&#39;t have an ID yet
+         * @property internalId
+         * @type String
+         * @private
+         */
+        this.internalId = (id || id === 0) ? id : Ext.data.Model.id(this);
+        
+        Ext.data.Model.superclass.constructor.apply(this);
+        
+        //add default field values if present
+        var fields = this.fields.items,
+            length = fields.length,
+            field, name, i;
+        
+        for (i = 0; i &lt; length; i++) {
+            field = fields[i];
+            name  = field.name;
+            
+            if (data[name] === undefined) {
+                data[name] = field.defaultValue;
+            }
+        }
+        
+        this.set(data);
+        this.dirty = false;
+        
+        if (this.getId()) {
+            this.phantom = false;
+        }
+        
+        if (typeof this.init == &#39;function&#39;) {
+            this.init();
+        }
+    },
+    
+    <a name="method-Ext.data.Model-validate"></a>/**
+     * Validates the current data against all of its configured {@link #validations} and returns an 
+     * {@link Ext.data.Errors Errors} object
+     * @return {Ext.data.Errors} The errors object
+     */
+    validate: function() {
+        var errors      = Ext.create(&#39;Ext.data.Errors&#39;),
+            validations = this.validations,
+            validators  = Ext.data.validations,
+            length, validation, field, valid, type, i;
+
+        if (validations) {
+            length = validations.length;
+            
+            for (i = 0; i &lt; length; i++) {
+                validation = validations[i];
+                field = validation.field || validation.name;
+                type  = validation.type;
+                valid = validators[type](validation, this.get(field));
+                
+                if (!valid) {
+                    errors.add({
+                        field  : field,
+                        message: validation.message || validators[type + &#39;Message&#39;]
+                    });
+                }
+            }
+        }
+        
+        return errors;
+    },
+    
+    <a name="method-Ext.data.Model-getProxy"></a>/**
+     * Returns the configured Proxy for this Model
+     * @return {Ext.data.Proxy} The proxy
+     */
+    getProxy: function() {
+        return this.proxy || this.prototype.proxy;
+    },
+    
+    <a name="method-Ext.data.Model-save"></a>/**
+     * Saves the model instance using the configured proxy
+     * @param {Object} options Options to pass to the proxy
+     * @return {Ext.data.Model} The Model instance
+     */
+    save: function(options) {
+        var me     = this,
+            action = me.phantom ? &#39;create&#39; : &#39;update&#39;;
+        
+        options = options || {};
+        
+        Ext.apply(options, {
+            records: [me],
+            action : action
+        });
+        
+        var operation  = Ext.create(&#39;Ext.data.Operation&#39;, options),
+            successFn  = options.success,
+            failureFn  = options.failure,
+            callbackFn = options.callback,
+            scope      = options.scope,
+            record;
+        
+        var callback = function(operation) {
+            record = operation.getRecords()[0];
+            
+            if (operation.wasSuccessful()) {
+                //we need to make sure we&#39;ve set the updated data here. Ideally this will be redundant once the
+                //ModelCache is in place
+                me.set(record.data);
+                record.dirty = false;
+
+                if (typeof successFn == &#39;function&#39;) {
+                    successFn.call(scope, record, operation);
+                }
+            } else {
+                if (typeof failureFn == &#39;function&#39;) {
+                    failureFn.call(scope, record, operation);
+                }
+            }
+            
+            if (typeof callbackFn == &#39;function&#39;) {
+                callbackFn.call(scope, record, operation);
+            }
+        };
+        
+        me.getProxy()[action](operation, callback, me);
+        
+        return me;
+    },
+    
+    <a name="method-Ext.data.Model-getId"></a>/**
+     * Returns the unique ID allocated to this model instance as defined by {@link #idProperty}
+     * @return {Number} The id
+     */
+    getId: function() {
+        return this.get(this.idProperty);
+    },
+    
+    <a name="method-Ext.data.Model-setId"></a>/**
+     * Sets the model instance&#39;s id field to the given id
+     * @param {Number} id The new id
+     */
+    setId: function(id) {
+        this.set(this.idProperty, id);
+    },
+    
+    <a name="method-Ext.data.Model-join"></a>/**
+     * Tells this model instance that it has been added to a store
+     * @param {Ext.data.Store} store The store that the model has been added to
+     */
+    join : function(store) {
+        <a name="prop-Ext.data.Model-store"></a>/**
+         * The {@link Ext.data.Store} to which this Record belongs.
+         * @property store
+         * @type {Ext.data.Store}
+         */
+        this.store = store;
+    },
+    
+    <a name="method-Ext.data.Model-unjoin"></a>/**
+     * Tells this model instance that it has been removed from the store
+     * @param {Ext.data.Store} store The store to unjoin
+     */
+    unjoin: function(store) {
+        delete this.store;
+    },
+    
+    /**
+     * @private
+     * If this Model instance has been {@link #join joined} to a {@link Ext.data.Store store}, the store&#39;s
+     * afterEdit method is called
+     */
+    afterEdit : function() {
+        this.callStore(&#39;afterEdit&#39;);
+    },
+    
+    /**
+     * @private
+     * If this Model instance has been {@link #join joined} to a {@link Ext.data.Store store}, the store&#39;s
+     * afterReject method is called
+     */
+    afterReject : function() {
+        this.callStore(&quot;afterReject&quot;);
+    },
+    
+    /**
+     * @private
+     * If this Model instance has been {@link #join joined} to a {@link Ext.data.Store store}, the store&#39;s
+     * afterCommit method is called
+     */
+    afterCommit: function() {
+        this.callStore(&#39;afterCommit&#39;);
+    },
+    
+    /**
+     * @private
+     * Helper function used by afterEdit, afterReject and afterCommit. Calls the given method on the 
+     * {@link Ext.data.Store store} that this instance has {@link #join joined}, if any. The store function
+     * will always be called with the model instance as its single argument.
+     * @param {String} fn The function to call on the store
+     */
+    callStore: function(fn) {
+        var store = this.store;
+        
+        if (store !== undefined &amp;&amp; typeof store[fn] == &quot;function&quot;) {
+            store[fn](this);
+        }
+    }
+}, function() {
+    // TODO
+    return;
+    // alert(this.setProxy);
+    // 
+    // var me = Ext.data.Model;
+    // setTimeout(function() {
+    //     alert(Ext.data.Model.setProxy);
+    // }, 100);
+    // 
+    // setTimeout(function() {
+    //     alert(Ext.data.Model.setProxy);
+    // }, 1000);
+});
+ 
+
+//[deprecated 5.0]
+Ext.ns(&#39;Ext.data.Record&#39;);
+
+//Backwards compat
+// Ext.data.Record.id = Ext.data.Model.id;
+//[end]
+￿</pre></pre></body></html>

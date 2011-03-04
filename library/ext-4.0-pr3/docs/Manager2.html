@@ -1,0 +1,39 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.layout.Manager"></div>/**
+ * @class Ext.layout.Manager
+ * @extends Ext.AbstractManager
+ */
+Ext.define('Ext.layout.Manager', {
+    extend: 'Ext.AbstractManager',
+    requires: ['Ext.layout.AbstractLayout'],
+
+    singleton: true,
+
+    typeName: 'type',
+
+    create: function(layout, defaultType) {
+        var type;
+        if (layout instanceof Ext.layout.AbstractLayout) {
+            return Ext.createByAlias('layout.' + layout);
+        } else {
+            if (Ext.isObject(layout)) {
+                type = layout.type;
+            }
+            else {
+                type = layout || defaultType;
+                layout = {};
+            }
+            return Ext.createByAlias('layout.' + type, layout || {});
+        }
+    }
+});
+</pre>    
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.toolbar.Separator"></a>/**
+ * @class Ext.toolbar.Separator
+ * @extends Ext.toolbar.Item
+ * A simple class that adds a vertical separator bar between toolbar items
+ * (css class:&lt;tt&gt;&#39;x-toolbar-separator&#39;&lt;/tt&gt;). Example usage:
+ * <br><span style="display: none">**/</span>new Ext.panel.Panel({
+    tbar : [
+        &#39;Item 1&#39;,
+        {xtype: &#39;tbseparator&#39;}, // or &#39;-&#39;
+        &#39;Item 2&#39;
+    ]
+});
+<br><span style="display: none">/**</span> * @constructor
+ * Creates a new Separator
+ * @xtype tbseparator
+ */
+Ext.define(&#39;Ext.toolbar.Separator&#39;, {
+    extend: &#39;Ext.toolbar.Item&#39;,
+    alias: &#39;widget.tbseparator&#39;,
+    cls: Ext.baseCSSPrefix + &#39;toolbar-separator&#39;
+});￿</pre></pre></body></html>

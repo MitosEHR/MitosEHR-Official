@@ -1,0 +1,41 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.AbstractPlugin"></a>/**
+ * @class Ext.AbstractPlugin
+ * @extends Object
+ *
+ * Plugins are injected 
+ */
+Ext.define(&#39;Ext.AbstractPlugin&#39;, {
+    disabled: false,
+    
+    constructor: function(config) {
+        if (!config.cmp) {
+            console.warn(&quot;Attempted to attach a plugin &quot;);
+        }
+        Ext.apply(this, config);
+    },
+    
+    getCmp: function() {
+        return this.cmp;
+    },
+
+    <a name="prop-Ext.AbstractPlugin-init"></a>/**
+     * The init method is invoked after initComponent has been run for the
+     * component which we are injecting the plugin into.
+     */
+    init: Ext.emptyFn,
+
+    <a name="method-Ext.AbstractPlugin-enable"></a>/**
+     * Enable the plugin and set the disabled flag to false.
+     */
+    enable: function() {
+        this.disabled = false;
+    },
+
+    <a name="method-Ext.AbstractPlugin-disable"></a>/**
+     * Disable the plugin and set the disabled flag to true.
+     */
+    disable: function() {
+        this.disabled = true;
+    }
+});
+￿</pre></pre></body></html>

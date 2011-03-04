@@ -1,0 +1,465 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.Editor"></a>/**
+ * @class Ext.Editor
+ * @extends Ext.Component
+ * 
+ * &lt;p&gt;
+ * The Editor class is used to provide inline editing for elements on the page. The editor
+ * is backed by a {@link Ext.form.Field} that will be displayed to edit the underlying content.
+ * The editor is a floating Component, when the editor is shown it is automatically aligned to 
+ * display over the top of the bound element it is editing. The Editor contains several options 
+ * for how to handle key presses:
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link #completeOnEnter}&lt;/li&gt;
+ * &lt;li&gt;{@link #cancelOnEsc}&lt;/li&gt;
+ * &lt;li&gt;{@link #swallowKeys}&lt;/li&gt;
+ * &lt;/ul&gt;
+ * It also has options for how to use the value once the editor has been activated:
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link #revertInvalid}&lt;/li&gt;
+ * &lt;li&gt;{@link #ignoreNoChange}&lt;/li&gt;
+ * &lt;li&gt;{@link #updateEl}&lt;/li&gt;
+ * &lt;/ul&gt;
+ * Sample usage:
+ * &lt;/p&gt;
+ * <br><span style="display: none">**/</span>var editor = new Ext.Editor({
+    updateEl: true, // update the innerHTML of the bound element when editing completes
+    field: {
+        xtype: &#39;textfield&#39;
+    }
+});
+var el = Ext.get(&#39;my-text&#39;); // The element to &#39;edit&#39;
+editor.startEdit(el); // The value of the field will be taken as the innerHTML of the element.
+ * <br><span style="display: none">/**</span> * 
+ * @constructor
+ * Create a new Editor
+ * @param {Object} config The config object
+ * @xtype editor
+ */
+Ext.define(&#39;Ext.Editor&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    alias: &#39;widget.editor&#39;,
+
+    <a name="cfg-Ext.Editor-field"></a>/**
+    * @cfg {Ext.form.Field} field
+    * The Field object (or descendant) or config object for field
+    */
+
+    <a name="cfg-Ext.Editor-allowBlur"></a>/**
+     * @cfg {Boolean} allowBlur
+     * True to {@link #completeEdit complete the editing process} if in edit mode when the
+     * field is blurred. Defaults to &lt;tt&gt;true&lt;/tt&gt;.
+     */
+    allowBlur: true,
+    
+    <a name="cfg-Ext.Editor-autoSize"></a>/**
+     * @cfg {Boolean/String} autoSize
+     * True for the editor to automatically adopt the size of the underlying field, &quot;width&quot; to adopt the width only,
+     * or &quot;height&quot; to adopt the height only, &quot;none&quot; to always use the field dimensions. (defaults to false)
+     */
+    
+    <a name="cfg-Ext.Editor-revertInvalid"></a>/**
+     * @cfg {Boolean} revertInvalid
+     * True to automatically revert the field value and cancel the edit when the user completes an edit and the field
+     * validation fails (defaults to true)
+     */
+    
+    <a name="cfg-Ext.Editor-ignoreNoChange"></a>/**
+     * @cfg {Boolean} ignoreNoChange
+     * True to skip the edit completion process (no save, no events fired) if the user completes an edit and
+     * the value has not changed (defaults to false).  Applies only to string values - edits for other data types
+     * will never be ignored.
+     */
+    
+    <a name="cfg-Ext.Editor-hideEl"></a>/**
+     * @cfg {Boolean} hideEl
+     * False to keep the bound element visible while the editor is displayed (defaults to true)
+     */
+    
+    <a name="cfg-Ext.Editor-value"></a>/**
+     * @cfg {Mixed} value
+     * The data value of the underlying field (defaults to &quot;&quot;)
+     */
+    value : &#39;&#39;,
+    
+    <a name="cfg-Ext.Editor-alignment"></a>/**
+     * @cfg {String} alignment
+     * The position to align to (see {@link Ext.core.Element#alignTo} for more details, defaults to &quot;c-c?&quot;).
+     */
+    alignment: &#39;c-c?&#39;,
+    
+    <a name="cfg-Ext.Editor-offsets"></a>/**
+     * @cfg {Array} offsets
+     * The offsets to use when aligning (see {@link Ext.core.Element#alignTo} for more details. Defaults to &lt;tt&gt;[0, 0]&lt;/tt&gt;.
+     */
+    offsets: [0, 0],
+    
+    <a name="cfg-Ext.Editor-shadow"></a>/**
+     * @cfg {Boolean/String} shadow &quot;sides&quot; for sides/bottom only, &quot;frame&quot; for 4-way shadow, and &quot;drop&quot;
+     * for bottom-right shadow (defaults to &quot;frame&quot;)
+     */
+    shadow : &#39;frame&#39;,
+    
+    <a name="cfg-Ext.Editor-constrain"></a>/**
+     * @cfg {Boolean} constrain True to constrain the editor to the viewport
+     */
+    constrain : false,
+    
+    <a name="cfg-Ext.Editor-swallowKeys"></a>/**
+     * @cfg {Boolean} swallowKeys Handle the keydown/keypress events so they don&#39;t propagate (defaults to true)
+     */
+    swallowKeys : true,
+    
+    <a name="cfg-Ext.Editor-completeOnEnter"></a>/**
+     * @cfg {Boolean} completeOnEnter True to complete the edit when the enter key is pressed. Defaults to &lt;tt&gt;true&lt;/tt&gt;.
+     */
+    completeOnEnter : true,
+    
+    <a name="cfg-Ext.Editor-cancelOnEsc"></a>/**
+     * @cfg {Boolean} cancelOnEsc True to cancel the edit when the escape key is pressed. Defaults to &lt;tt&gt;true&lt;/tt&gt;.
+     */
+    cancelOnEsc : true,
+    
+    <a name="cfg-Ext.Editor-updateEl"></a>/**
+     * @cfg {Boolean} updateEl True to update the innerHTML of the bound element when the update completes (defaults to false)
+     */
+    updateEl : false,
+    
+    <a name="cfg-Ext.Editor-parentEl"></a>/**
+     * @cfg {Mixed} parentEl An element to render to. Defaults to the &lt;tt&gt;document.body&lt;/tt&gt;.
+     */
+
+    // private overrides
+    hidden: true,
+    baseCls: Ext.baseCSSPrefix + &#39;editor&#39;,
+
+    initComponent : function() {
+        var me = this,
+            field = me.field = Ext.ComponentMgr.create(me.field, &#39;textfield&#39;);
+
+        Ext.apply(field, {
+            inEditor: true,
+            hideLabel: true,
+            msgTarget: field.msgTarget == &#39;title&#39; ? &#39;title&#39; :  &#39;qtip&#39;
+        });
+        me.mon(field, {
+            scope: me,
+            blur: me.onBlur,
+            specialkey: me.onSpecialKey
+        });
+        if (field.grow) {
+            me.mon(field, &#39;autosize&#39;, me.doAutoSize,  me, {delay: 1});
+        }
+        me.floating = {
+            constrain: me.constrain
+        };
+        
+        me.callParent(arguments);
+        
+        me.addEvents(
+            <a name="event-Ext.Editor-beforestartedit"></a>/**
+             * @event beforestartedit
+             * Fires when editing is initiated, but before the value changes.  Editing can be canceled by returning
+             * false from the handler of this event.
+             * @param {Ext.Editor} this
+             * @param {Ext.core.Element} boundEl The underlying element bound to this editor
+             * @param {Mixed} value The field value being set
+             */
+            &#39;beforestartedit&#39;,
+            <a name="event-Ext.Editor-startedit"></a>/**
+             * @event startedit
+             * Fires when this editor is displayed
+             * @param {Ext.Editor} this
+             * @param {Ext.core.Element} boundEl The underlying element bound to this editor
+             * @param {Mixed} value The starting field value
+             */
+            &#39;startedit&#39;,
+            <a name="event-Ext.Editor-beforecomplete"></a>/**
+             * @event beforecomplete
+             * Fires after a change has been made to the field, but before the change is reflected in the underlying
+             * field.  Saving the change to the field can be canceled by returning false from the handler of this event.
+             * Note that if the value has not changed and ignoreNoChange = true, the editing will still end but this
+             * event will not fire since no edit actually occurred.
+             * @param {Editor} this
+             * @param {Mixed} value The current field value
+             * @param {Mixed} startValue The original field value
+             */
+            &#39;beforecomplete&#39;,
+            <a name="event-Ext.Editor-complete"></a>/**
+             * @event complete
+             * Fires after editing is complete and any changed value has been written to the underlying field.
+             * @param {Ext.Editor} this
+             * @param {Mixed} value The current field value
+             * @param {Mixed} startValue The original field value
+             */
+            &#39;complete&#39;,
+            <a name="event-Ext.Editor-canceledit"></a>/**
+             * @event canceledit
+             * Fires after editing has been canceled and the editor&#39;s value has been reset.
+             * @param {Ext.Editor} this
+             * @param {Mixed} value The user-entered field value that was discarded
+             * @param {Mixed} startValue The original field value that was set back into the editor after cancel
+             */
+            &#39;canceledit&#39;,
+            <a name="event-Ext.Editor-specialkey"></a>/**
+             * @event specialkey
+             * Fires when any key related to navigation (arrows, tab, enter, esc, etc.) is pressed.  You can check
+             * {@link Ext.EventObject#getKey} to determine which key was pressed.
+             * @param {Ext.Editor} this
+             * @param {Ext.form.Field} The field attached to this editor
+             * @param {Ext.EventObject} event The event object
+             */
+            &#39;specialkey&#39;
+        );
+    },
+
+    // private
+    onRender : function(ct, position) {
+        var me = this,
+            field = me.field;
+
+        me.callParent(arguments);
+
+        field.render(me.el);
+        // Ensure the field doesn&#39;t get submitted as part of any form
+        field.inputEl.dom.name = &#39;&#39;;
+        field.el.setWidth(&#39;auto&#39;);
+        if (me.swallowKeys) {
+            field.inputEl.swallowEvent([
+                &#39;keypress&#39;, // *** Opera
+                &#39;keydown&#39;   // *** all other browsers
+            ]);
+        }
+    },
+
+    // private
+    onSpecialKey : function(field, event) {
+        var me = this,
+            key = event.getKey(),
+            complete = me.completeOnEnter &amp;&amp; key == event.ENTER,
+            cancel = me.cancelOnEsc &amp;&amp; key == event.ESC;
+
+        if (complete || cancel) {
+            event.stopEvent();
+            if (complete) {
+                me.completeEdit();
+            } else {
+                me.cancelEdit();
+            }
+            if (field.triggerBlur) {
+                field.triggerBlur();
+            }
+        }
+        me.fireEvent(&#39;specialkey&#39;, me, field, event);
+    },
+
+    <a name="method-Ext.Editor-startEdit"></a>/**
+     * Starts the editing process and shows the editor.
+     * @param {Mixed} el The element to edit
+     * @param {String} value (optional) A value to initialize the editor with. If a value is not provided, it defaults
+      * to the innerHTML of el.
+     */
+    startEdit : function(el, value) {
+        var me = this,
+            field = me.field;
+            
+        me.completeEdit();
+        me.boundEl = Ext.get(el);
+        value = Ext.isDefined(value) ? value : me.boundEl.dom.innerHTML;
+        
+        if (!me.rendered) {
+            me.render(me.parentEl || document.body);
+        }
+        
+        if (me.fireEvent(&#39;beforestartedit&#39;, me, me.boundEl, value) !== false) {
+            me.startValue = value;
+            field.reset();
+            field.setValue(value);
+            me.show();
+            me.realign(true);
+            field.autoSize();
+            me.editing = true;
+        }
+    },
+
+    // private
+    doAutoSize : function() {
+        var me = this,
+            autoSize = me.autoSize,
+            inputEl, boundSize, fieldSizeWidth, fieldSizeHeight;
+            
+        if (autoSize) {
+            boundSize = me.boundEl.getSize();
+            inputEl = me.field.inputEl;
+            fieldSizeWidth = inputEl.getWidth() + inputEl.getBorderWidth(&#39;lr&#39;);
+            fieldSizeHeight = inputEl.getHeight() + inputEl.getBorderWidth(&#39;tb&#39;);
+            
+            switch (autoSize) {
+                case &#39;width&#39;:
+                    me.setSize(boundSize.width, fieldSizeHeight);
+                    break;
+                case &#39;height&#39;:
+                    me.setSize(fieldSizeWidth, boundSize.height);
+                    break;
+                case &#39;none&#39;:
+                    me.setSize(fieldSizeWidth, fieldSizeHeight);
+                    break;
+                default:
+                    me.setSize(boundSize.width, boundSize.height);
+            }
+        }
+    },
+
+    <a name="method-Ext.Editor-realign"></a>/**
+     * Realigns the editor to the bound field based on the current alignment config value.
+     * @param {Boolean} autoSize (optional) True to size the field to the dimensions of the bound element.
+     */
+    realign : function(autoSize) {
+        var me = this;
+        if (autoSize === true) {
+            me.doAutoSize();
+        }
+        me.el.alignTo(me.boundEl, me.alignment, me.offsets);
+    },
+
+    <a name="method-Ext.Editor-completeEdit"></a>/**
+     * Ends the editing process, persists the changed value to the underlying field, and hides the editor.
+     * @param {Boolean} remainVisible Override the default behavior and keep the editor visible after edit (defaults to false)
+     */
+    completeEdit : function(remainVisible) {
+        var me = this,
+            field = me.field,
+            value;
+            
+        if (!me.editing) {
+            return;
+        }
+
+        // Assert combo values first
+        if (field.assertValue) {
+            field.assertValue();
+        }
+
+        value = me.getValue();
+        if (!field.isValid()) {
+            if (me.revertInvalid !== false) {
+                me.cancelEdit(remainVisible);
+            }
+            return;
+        }
+
+        if (String(value) === String(me.startValue) &amp;&amp; me.ignoreNoChange) {
+            me.hideEdit(remainVisible);
+            return;
+        }
+
+        if (me.fireEvent(&#39;beforecomplete&#39;, me, value, me.startValue) !== false) {
+            // Grab the value again, may have changed in beforecomplete
+            value = me.getValue();
+            if (me.updateEl &amp;&amp; me.boundEl) {
+                me.boundEl.update(value);
+            }
+            me.hideEdit(remainVisible);
+            me.fireEvent(&#39;complete&#39;, me, value, me.startValue);
+        }
+    },
+
+    // private
+    onShow : function() {
+        var me = this;
+        
+        me.callParent(arguments);
+        if (me.hideEl !== false) {
+            me.boundEl.hide();
+        }
+
+        // Floating Components get a toFront method from the Floating mixin
+        me.toFront();
+
+        me.field.show().focus(false, true);
+        me.fireEvent(&quot;startedit&quot;, me.boundEl, me.startValue);
+    },
+
+    <a name="method-Ext.Editor-cancelEdit"></a>/**
+     * Cancels the editing process and hides the editor without persisting any changes.  The field value will be
+     * reverted to the original starting value.
+     * @param {Boolean} remainVisible Override the default behavior and keep the editor visible after
+     * cancel (defaults to false)
+     */
+    cancelEdit : function(remainVisible) {
+        var me = this,
+            startValue = me.startValue,
+            value;
+            
+        if (me.editing) {
+            value = me.getValue();
+            me.setValue(startValue);
+            me.hideEdit(remainVisible);
+            me.fireEvent(&#39;canceledit&#39;, me, value, startValue);
+        }
+    },
+
+    // private
+    hideEdit: function(remainVisible) {
+        if (remainVisible !== true) {
+            this.editing = false;
+            this.hide();
+        }
+    },
+
+    // private
+    onBlur : function() {
+        var me = this;
+
+        // selectSameEditor flag allows the same editor to be started without onBlur firing on itself
+        if(me.allowBlur === true &amp;&amp; me.editing &amp;&amp; me.selectSameEditor !== true) {
+            me.completeEdit();
+        }
+    },
+
+    // private
+    onHide : function() {
+        var me = this,
+            field = me.field;
+        
+        if (me.editing) {
+            me.completeEdit();
+            return;
+        }
+        field.blur();
+        if (field.collapse) {
+            field.collapse();
+        }
+        
+        me.el.hide();
+        if (me.hideEl !== false) {
+            me.boundEl.show();
+        }
+    },
+
+    <a name="method-Ext.Editor-setValue"></a>/**
+     * Sets the data value of the editor
+     * @param {Mixed} value Any valid value supported by the underlying field
+     */
+    setValue : function(value) {
+        this.field.setValue(value);
+    },
+
+    <a name="method-Ext.Editor-getValue"></a>/**
+     * Gets the data value of the editor
+     * @return {Mixed} The data value
+     */
+    getValue : function() {
+        return this.field.getValue();
+    },
+
+    beforeDestroy : function() {
+        var me = this;
+        
+        Ext.destroy(me.field);
+        delete me.field;
+        delete me.parentEl;
+        delete me.boundEl;
+        
+        me.callParent(arguments);
+    }
+});￿</pre></pre></body></html>

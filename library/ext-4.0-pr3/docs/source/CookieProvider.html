@@ -1,0 +1,103 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.state.CookieProvider"></a>/**
+ * @class Ext.state.CookieProvider
+ * @extends Ext.state.Provider
+ * A Provider implementation which saves and retrieves state via cookies.
+ * The CookieProvider supports the usual cookie options, such as:
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link #path}&lt;/li&gt;
+ * &lt;li&gt;{@link #expires}&lt;/li&gt;
+ * &lt;li&gt;{@link #domain}&lt;/li&gt;
+ * &lt;li&gt;{@link #secure}&lt;/li&gt;
+ * &lt;/ul&gt;
+ <br><span style="display: none">**/</span>   var cp = new Ext.state.CookieProvider({
+       path: &quot;/cgi-bin/&quot;,
+       expires: new Date(new Date().getTime()+(1000*60*60*24*30)), //30 days
+       domain: &quot;extjs.com&quot;
+   });
+   Ext.state.Manager.setProvider(cp);
+ <br><span style="display: none">/**</span> 
+ 
+ * @cfg {String} path The path for which the cookie is active (defaults to root &#39;/&#39; which makes it active for all pages in the site)
+ * @cfg {Date} expires The cookie expiration date (defaults to 7 days from now)
+ * @cfg {String} domain The domain to save the cookie for.  Note that you cannot specify a different domain than
+ * your page is on, but you can specify a sub-domain, or simply the domain itself like &#39;extjs.com&#39; to include
+ * all sub-domains if you need to access cookies across different sub-domains (defaults to null which uses the same
+ * domain the page is running on including the &#39;www&#39; like &#39;www.extjs.com&#39;)
+ * @cfg {Boolean} secure True if the site is using SSL (defaults to false)
+ * @constructor
+ * Create a new CookieProvider
+ * @param {Object} config The configuration object
+ */
+Ext.define(&#39;Ext.state.CookieProvider&#39;, {
+    extend: &#39;Ext.state.Provider&#39;,
+    
+    constructor : function(config){
+        var me = this;
+        
+        Ext.state.CookieProvider.superclass.constructor.call(me);
+        me.path = &quot;/&quot;;
+        me.expires = new Date(new Date().getTime()+(1000*60*60*24*7)); //7 days
+        me.domain = null;
+        me.secure = false;
+        Ext.apply(me, config);
+        me.state = me.readCookies();
+    },
+    
+    // private
+    set : function(name, value){
+        var me = this;
+        
+        if(typeof value == &quot;undefined&quot; || value === null){
+            me.clear(name);
+            return;
+        }
+        me.setCookie(name, value);
+        Ext.state.CookieProvider.superclass.set.call(me, name, value);
+    },
+
+    // private
+    clear : function(name){
+        this.clearCookie(name);
+        Ext.state.CookieProvider.superclass.clear.call(this, name);
+    },
+
+    // private
+    readCookies : function(){
+        var cookies = {},
+            c = document.cookie + &quot;;&quot;,
+            re = /\s?(.*?)=(.*?);/g,
+            matches,
+            name,
+            value;
+            
+        while((matches = re.exec(c)) != null){
+            name = matches[1];
+            value = matches[2];
+            if(name &amp;&amp; name.substring(0,3) == &quot;ys-&quot;){
+                cookies[name.substr(3)] = this.decodeValue(value);
+            }
+        }
+        return cookies;
+    },
+
+    // private
+    setCookie : function(name, value){
+        var me = this;
+        
+        document.cookie = &quot;ys-&quot;+ name + &quot;=&quot; + me.encodeValue(value) +
+           ((me.expires == null) ? &quot;&quot; : (&quot;; expires=&quot; + me.expires.toGMTString())) +
+           ((me.path == null) ? &quot;&quot; : (&quot;; path=&quot; + me.path)) +
+           ((me.domain == null) ? &quot;&quot; : (&quot;; domain=&quot; + me.domain)) +
+           ((me.secure == true) ? &quot;; secure&quot; : &quot;&quot;);
+    },
+
+    // private
+    clearCookie : function(name){
+        var me = this;
+        
+        document.cookie = &quot;ys-&quot; + name + &quot;=null; expires=Thu, 01-Jan-70 00:00:01 GMT&quot; +
+           ((me.path == null) ? &quot;&quot; : (&quot;; path=&quot; + me.path)) +
+           ((me.domain == null) ? &quot;&quot; : (&quot;; domain=&quot; + me.domain)) +
+           ((me.secure == true) ? &quot;; secure&quot; : &quot;&quot;);
+    }
+});￿</pre></pre></body></html>

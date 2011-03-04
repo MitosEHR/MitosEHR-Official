@@ -1,0 +1,280 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.ProgressBar"></a>/**
+ * @class Ext.ProgressBar
+ * @extends Ext.Component
+ * &lt;p&gt;An updateable progress bar component.  The progress bar supports two different modes: manual and automatic.&lt;/p&gt;
+ * &lt;p&gt;In manual mode, you are responsible for showing, updating (via {@link #updateProgress}) and clearing the
+ * progress bar as needed from your own code.  This method is most appropriate when you want to show progress
+ * throughout an operation that has predictable points of interest at which you can update the control.&lt;/p&gt;
+ * &lt;p&gt;In automatic mode, you simply call {@link #wait} and let the progress bar run indefinitely, only clearing it
+ * once the operation is complete.  You can optionally have the progress bar wait for a specific amount of time
+ * and then clear itself.  Automatic mode is most appropriate for timed operations or asynchronous operations in
+ * which you have no need for indicating intermediate progress.&lt;/p&gt;
+ * @cfg {Float} value A floating point value between 0 and 1 (e.g., .5, defaults to 0)
+ * @cfg {String} text The progress bar text (defaults to &#39;&#39;)
+ * @cfg {Mixed} textEl The element to render the progress text to (defaults to the progress
+ * bar&#39;s internal text element)
+ * @cfg {String} id The progress bar element&#39;s id (defaults to an auto-generated id)
+ * @xtype progressbar
+ */
+Ext.define(&#39;Ext.ProgressBar&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    alias: &#39;widget.progressbar&#39;,
+    
+    requires: [
+        &#39;Ext.Template&#39;,
+        &#39;Ext.CompositeElement&#39;,
+        &#39;Ext.TaskMgr&#39;,
+        &#39;Ext.layout.component.ProgressBar&#39;
+    ],
+    
+    uses: [&#39;Ext.fx.Anim&#39;],
+   /**
+    * @cfg {String} baseCls
+    * The base CSS class to apply to the progress bar&#39;s wrapper element (defaults to &#39;x-progress&#39;)
+    */
+    baseCls: Ext.baseCSSPrefix + &#39;progress&#39;,
+    
+    config: {
+        /**
+        * @cfg {Boolean} animate
+        * True to animate the progress bar during transitions (defaults to false)
+        */
+        animate: false,
+        
+        /**
+         * @cfg {String} text The text shown in the progress bar (defaults to &#39;&#39;)
+         */
+        text: &#39;&#39;
+    },
+
+    // private
+    waitTimer: null,
+
+    renderTpl: [
+        &#39;&lt;div class=&quot;{baseCls}-text {baseCls}-text-back&quot;&gt;&#39;,
+            &#39;&lt;div&gt;&amp;#160;&lt;/div&gt;&#39;,
+        &#39;&lt;/div&gt;&#39;,
+        &#39;&lt;div class=&quot;{baseCls}-bar&quot;&gt;&#39;,
+            &#39;&lt;div class=&quot;{baseCls}-text&quot;&gt;&#39;,
+                &#39;&lt;div&gt;&amp;#160;&lt;/div&gt;&#39;,
+            &#39;&lt;/div&gt;&#39;,
+        &#39;&lt;/div&gt;&#39;
+    ],
+    
+    componentLayout: &#39;progressbar&#39;,
+    
+    // private
+    initComponent: function() {
+        Ext.ProgressBar.superclass.initComponent.call(this);
+        
+        this.renderSelectors = Ext.apply(this.renderSelectors || {}, {
+            textTopEl: &#39;.&#39; + this.baseCls + &#39;-text&#39;,
+            textBackEl: &#39;.&#39; + this.baseCls + &#39;-text-back&#39;,
+            bar: &#39;.&#39; + this.baseCls + &#39;-bar&#39;
+        });
+        
+        this.addEvents(
+            /**
+             * @event update
+             * Fires after each update interval
+             * @param {Ext.ProgressBar} this
+             * @param {Number} The current progress value
+             * @param {String} The current progress text
+             */
+            &quot;update&quot;
+        );
+    },
+    
+    afterRender : function() {
+        var me = this;
+        
+        me.textEl = me.textEl ? Ext.get(me.textEl) : me.el.select(&#39;.&#39; + me.baseCls + &#39;-text&#39;);
+
+        Ext.ProgressBar.superclass.afterRender.apply(me, arguments);
+                
+        if (me.value) {
+            me.updateProgress(me.value, me.text);
+        }
+        else {
+            me.updateText(me.text);
+        }
+    },
+    
+    /**
+     * Updates the progress bar value, and optionally its text.  If the text argument is not specified,
+     * any existing text value will be unchanged.  To blank out existing text, pass &#39;&#39;.  Note that even
+     * if the progress bar value exceeds 1, it will never automatically reset -- you are responsible for
+     * determining when the progress is complete and calling {@link #reset} to clear and/or hide the control.
+     * @param {Float} value (optional) A floating point value between 0 and 1 (e.g., .5, defaults to 0)
+     * @param {String} text (optional) The string to display in the progress text element (defaults to &#39;&#39;)
+     * @param {Boolean} animate (optional) Whether to animate the transition of the progress bar. If this value is
+     * not specified, the default for the class is used (default to false)
+     * @return {Ext.ProgressBar} this
+     */
+    updateProgress: function(value, text, animate) {
+        var newWidth;
+        this.value = value || 0;
+        if (text) {
+            this.updateText(text);
+        }
+        if (this.rendered &amp;&amp; !this.isDestroyed) {
+            newWidth = Math.floor(this.value * this.el.getWidth(true));
+            if (Ext.isForcedBorderBox) {
+                newWidth += this.bar.getBorderWidth(&quot;lr&quot;);
+            }
+            if (animate === true || (animate !== false &amp;&amp; this.animate)) {
+                this.bar.stopFx();
+                this.bar.animate(Ext.apply({
+                    to: {
+                        width: newWidth + &#39;px&#39;
+                    }
+                }, this.animate));
+            } else {
+                this.bar.setWidth(newWidth);
+            }
+        }
+        this.fireEvent(&#39;update&#39;, this, this.value, text);
+        return this;
+    },
+    
+    /**
+     * Updates the progress bar text.  If specified, textEl will be updated, otherwise the progress
+     * bar itself will display the updated text.
+     * @param {String} text (optional) The string to display in the progress text element (defaults to &#39;&#39;)
+     * @return {Ext.ProgressBar} this
+     */
+    updateText: function(text) {
+        this.text = text;
+        if (this.rendered) {
+            this.textEl.update(this.text);
+        }
+        return this;
+    },
+    
+    applyText : function(text) {
+        this.updateText(text);
+    },
+    
+    /**
+         * Initiates an auto-updating progress bar.  A duration can be specified, in which case the progress
+         * bar will automatically reset after a fixed amount of time and optionally call a callback function
+         * if specified.  If no duration is passed in, then the progress bar will run indefinitely and must
+         * be manually cleared by calling {@link #reset}.  The wait method accepts a config object with
+         * the following properties:
+         * &lt;pre&gt;
+    Property   Type          Description
+    ---------- ------------  ----------------------------------------------------------------------
+    duration   Number        The length of time in milliseconds that the progress bar should
+                             run before resetting itself (defaults to undefined, in which case it
+                             will run indefinitely until reset is called)
+    interval   Number        The length of time in milliseconds between each progress update
+                             (defaults to 1000 ms)
+    animate    Boolean       Whether to animate the transition of the progress bar. If this value is
+                             not specified, the default for the class is used.                                                   
+    increment  Number        The number of progress update segments to display within the progress
+                             bar (defaults to 10).  If the bar reaches the end and is still
+                             updating, it will automatically wrap back to the beginning.
+    text       String        Optional text to display in the progress bar element (defaults to &#39;&#39;).
+    fn         Function      A callback function to execute after the progress bar finishes auto-
+                             updating.  The function will be called with no arguments.  This function
+                             will be ignored if duration is not specified since in that case the
+                             progress bar can only be stopped programmatically, so any required function
+                             should be called by the same code after it resets the progress bar.
+    scope      Object        The scope that is passed to the callback function (only applies when
+                             duration and fn are both passed).
+    &lt;/pre&gt;
+             *
+             * Example usage:
+             * <br><span style="display: none">**/</span>    var p = new Ext.ProgressBar({
+       renderTo: &#39;my-el&#39;
+    });
+    
+    //Wait for 5 seconds, then update the status el (progress bar will auto-reset)
+    p.wait({
+       interval: 100, //bar will move fast!
+       duration: 5000,
+       increment: 15,
+       text: &#39;Updating...&#39;,
+       scope: this,
+       fn: function(){
+          Ext.fly(&#39;status&#39;).update(&#39;Done!&#39;);
+       }
+    });
+    
+    //Or update indefinitely until some async action completes, then reset manually
+    p.wait();
+    myAction.on(&#39;complete&#39;, function(){
+        p.reset();
+        Ext.fly(&#39;status&#39;).update(&#39;Done!&#39;);
+    });
+    <br><span style="display: none">/**</span>         * @param {Object} config (optional) Configuration options
+         * @return {Ext.ProgressBar} this
+         */
+    wait: function(o) {
+        if (!this.waitTimer) {
+            var scope = this;
+            o = o || {};
+            this.updateText(o.text);
+            this.waitTimer = Ext.TaskMgr.start({
+                run: function(i){
+                    var inc = o.increment || 10;
+                    i -= 1;
+                    this.updateProgress(((((i+inc)%inc)+1)*(100/inc))*0.01, null, o.animate);
+                },
+                interval: o.interval || 1000,
+                duration: o.duration,
+                onStop: function(){
+                    if (o.fn) {
+                        o.fn.apply(o.scope || this);
+                    }
+                    this.reset();
+                },
+                scope: scope
+            });
+        }
+        return this;
+    },
+
+    /**
+     * Returns true if the progress bar is currently in a {@link #wait} operation
+     * @return {Boolean} True if waiting, else false
+     */
+    isWaiting: function(){
+        return this.waitTimer !== null;
+    },
+
+    /**
+     * Resets the progress bar value to 0 and text to empty string.  If hide = true, the progress
+     * bar will also be hidden (using the {@link #hideMode} property internally).
+     * @param {Boolean} hide (optional) True to hide the progress bar (defaults to false)
+     * @return {Ext.ProgressBar} this
+     */
+    reset: function(hide){
+        this.updateProgress(0);
+        this.clearTimer();
+        if (hide === true) {
+            this.hide();
+        }
+        return this;
+    },
+    
+    // private
+    clearTimer: function(){
+        if (this.waitTimer) {
+            this.waitTimer.onStop = null; //prevent recursion
+            Ext.TaskMgr.stop(this.waitTimer);
+            this.waitTimer = null;
+        }
+    },
+    
+    onDestroy: function(){
+        this.clearTimer();
+        if (this.rendered) {
+            if (this.textEl.isComposite) {
+                this.textEl.clear();
+            }
+            Ext.destroyMembers(this, &#39;textEl&#39;, &#39;progressBar&#39;, &#39;textTopEl&#39;);
+        }
+        Ext.ProgressBar.superclass.onDestroy.call(this);
+    }
+});￿</pre></pre></body></html>

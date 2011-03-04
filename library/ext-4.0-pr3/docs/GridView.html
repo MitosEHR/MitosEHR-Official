@@ -1,0 +1,609 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.grid.GridView"></div>/**
+ * @class Ext.grid.GridView
+ * @extends Ext.misc.AbstractGridView
+ * <p>This class encapsulates the user interface of an {@link Ext.grid.GridPanel}.
+ * Methods of this class may be used to access user interface elements to enable
+ * special display effects. Do not change the DOM structure of the user interface.</p>
+ * <p>This class does not provide ways to manipulate the underlying data. The data
+ * model of a Grid is held in an {@link Ext.data.Store}.</p>
+ * @constructor
+ * @param {Object} config
+ */
+Ext.grid.GridView = Ext.extend(Ext.misc.AbstractGridView, {
+    <div id="method-Ext.grid.GridView-getRowClass"></div>/**
+     * Override this function to apply custom CSS classes to rows during rendering.  You can also supply custom
+     * parameters to the row template for the current row to customize how it is rendered using the <b>rowParams</b>
+     * parameter.  This function should return the CSS class name (or empty string '' for none) that will be added
+     * to the row's wrapping div.  To apply multiple class names, simply return them space-delimited within the string
+     * (e.g., 'my-class another-class'). Example usage:
+    <pre><code>
+viewConfig: {
+    forceFit: true,
+    showPreview: true, // custom property
+    enableRowBody: true, // required to create a second, full-width row to show expanded Record data
+    getRowClass: function(record, rowIndex, rp, ds){ // rp = rowParams
+        if(this.showPreview){
+            rp.body = '&lt;p>'+record.data.excerpt+'&lt;/p>';
+            return 'x-grid3-row-expanded';
+        }
+        return 'x-grid3-row-collapsed';
+    }
+},
+    </code></pre>
+     * @param {Record} record The {@link Ext.data.Record} corresponding to the current row.
+     * @param {Number} index The row index.
+     * @param {Object} rowParams A config object that is passed to the row template during rendering that allows
+     * customization of various aspects of a grid row.
+     * <p>If {@link #enableRowBody} is configured <b><tt></tt>true</b>, then the following properties may be set
+     * by this function, and will be used to render a full-width expansion row below each grid row:</p>
+     * <ul>
+     * <li><code>body</code> : String <div class="sub-desc">An HTML fragment to be used as the expansion row's body content (defaults to '').</div></li>
+     * <li><code>bodyStyle</code> : String <div class="sub-desc">A CSS style specification that will be applied to the expansion row's &lt;tr> element. (defaults to '').</div></li>
+     * </ul>
+     * The following property will be passed in, and may be appended to:
+     * <ul>
+     * <li><code>tstyle</code> : String <div class="sub-desc">A CSS style specification that willl be applied to the &lt;table> element which encapsulates
+     * both the standard grid row, and any expansion row.</div></li>
+     * </ul>
+     * @param {Store} store The {@link Ext.data.Store} this grid is bound to
+     * @method getRowClass
+     * @return {String} a CSS class name to add to the row.
+     */
+
+    <div id="cfg-Ext.grid.GridView-enableRowBody"></div>/**
+     * @cfg {Boolean} enableRowBody True to add a second TR element per row that can be used to provide a row body
+     * that spans beneath the data row.  Use the {@link #getRowClass} method's rowParams config to customize the row body.
+     */
+
+    cellCls: 'x-grid3-cell',
+    firstCellCls: 'x-grid3-cell-first',
+    lastCellCls: 'x-grid3-cell-last',
+    dirtyCellCls: 'x-grid3-dirty-cell',
+    selectedCellCls: 'x-grid3-cell-selected',
+    focusedCellCls: 'x-grid3-cell-focus',
+
+    rowCls: 'x-grid3-row',
+    firstRowCls: 'x-grid3-row-first',
+    lastRowCls: 'x-grid3-row-last',
+    dirtyRowCls: 'x-grid3-dirty-row',
+    altRowCls: 'x-grid3-row-alt',
+    rowOverCls: 'x-grid3-row-over',
+    selectedRowCls: 'x-grid3-row-selected',
+    focusedRowCls: 'x-grid3-row-focus',
+
+    rowBodyCls: 'x-grid3-row-body',
+
+    // private
+    rowClsRe: /(?:^|\s+)x-grid3-row-(first|last|alt)(?:\s+|$)/g,
+
+
+    <div id="cfg-Ext.grid.GridView-rowBodySelector"></div>/**
+     * @cfg {String} rowBodySelector The selector used to find row bodies internally (defaults to <tt>'div.x-grid3-row'</tt>)
+     */
+    rowBodySelectorDepth: 10,
+
+    buildSelectors: function() {
+        Ext.grid.GridView.superclass.buildSelectors.call(this);
+        this.rowBodySelector = '.' + this.rowBodyCls;
+    },
+
+
+    /* -------------------------------- UI Specific ----------------------------- */
+
+    <div id="prop-Ext.grid.GridView-bodyTpl"></div>/**
+     * The template to use when rendering the body. Has a default template
+     * @property bodyTpl
+     * @type Ext.Template
+     */
+    bodyTpl: new Ext.Template('{rows}'),
+
+    <div id="prop-Ext.grid.GridView-cellTpl"></div>/**
+     * The template to use to render each cell. Has a default template
+     * @property cellTpl
+     * @type Ext.Template
+     */
+    cellTpl: new Ext.Template(
+        '<td class="x-grid3-col x-grid3-cell x-grid3-td-{id} {css}" style="{style}" tabIndex="0" {cellAttr}>',
+            '<div class="x-grid3-cell-inner x-grid3-col-{id}" unselectable="on" {attr}>{value}</div>',
+        '</td>'
+    ),
+
+    /**
+     * @private
+     * Provides default templates if they are not given for this particular instance. Most of the templates are defined on
+     * the prototype, the ones defined inside this function are done so because they are based on Grid or GridView configuration
+     */
+    initTemplates : function() {
+        var templates = this.templates || {},
+            template, name,
+
+            rowBodyText = [
+                '<tr class="x-grid3-row-body-tr" style="{bodyStyle}">',
+                    '<td colspan="{cols}" class="x-grid3-body-cell" tabIndex="0" hidefocus="on">',
+                        '<div class="x-grid3-row-body">{body}</div>',
+                    '</td>',
+                '</tr>'
+            ].join(""),
+
+            innerText = [
+                '<table class="x-grid3-row-table" border="0" cellspacing="0" cellpadding="0" style="{tstyle}">',
+                     '<tbody>',
+                        '<tr>{cells}</tr>',
+                        this.enableRowBody ? rowBodyText : '',
+                     '</tbody>',
+                '</table>'
+            ].join("");
+        
+        if (!templates.master) {
+            templates.master = new Ext.Template(
+                '<div class="x-grid3" hidefocus="true">',
+                    '<div class="x-grid3-viewport">',
+                        '<div class="x-grid3-header"><div class="x-grid3-header-inner"><div class="x-grid3-header-offset" style="{ostyle}">{header}</div></div><div class="x-clear"></div></div>',
+                        '<div class="x-grid3-scroller"><div class="x-grid3-body" style="{bstyle}">{body}</div><a href="GridView.html#" class="x-grid3-focus" tabIndex="-1"></a></div>',
+                    '</div>',
+                    '<div class="x-grid3-resize-marker">&#160;</div>',
+                    '<div class="x-grid3-resize-proxy">&#160;</div>',
+                '</div>'
+            );
+        }
+
+        Ext.applyIf(templates, {
+            cell    : this.cellTpl,
+            body    : this.bodyTpl,
+            row     : new Ext.Template('<div class="x-grid3-row {alt}" style="{tstyle}">' + innerText + '</div>'),
+            rowInner: new Ext.Template(innerText)
+        });
+
+        for (name in templates) {
+            template = templates[name];
+
+            if (template && Ext.isFunction(template.compile) && !template.compiled) {
+                template.disableFormats = true;
+                template.compile();
+            }
+        }
+
+        this.templates = templates;
+        // Provides a matching group to lookup the column of a particular
+        // cell in the Grid.
+        this.colRe = new RegExp('x-grid3-td-([^\\s]+)', '');
+    },
+
+
+    // Get the columnIndex within an element
+    getCellIndex : function(el) {
+        if (el) {
+            var match = el.className.match(this.colRe);
+
+            if (match && match[1]) {
+                return this.grid.colModel.getIndexById(match[1]);
+            }
+        }
+        return false;
+    },
+
+    <div id="method-Ext.grid.GridView-findRowBody"></div>/**
+     * Return the HtmlElement representing the grid row body which contains the passed element.
+     * @param {HTMLElement} el The target HTMLElement
+     * @return {HTMLElement} The row body element, or null if the target element is not within a row body of this GridView.
+     */
+    findRowBody : function(el) {
+        if (!el) {
+            return false;
+        }
+
+        return this.fly(el).findParent(this.rowBodySelector, this.rowBodySelectorDepth);
+    },
+
+    // getter methods for fetching elements dynamically in the grid
+
+    /**
+     * @private
+     * Called after a column's width has been updated, this resizes all of the cells for that column in each row
+     * @param {Number} column The column index
+     */
+    updateColumnWidth : function(column, width) {
+        var columnWidth = this.getColumnWidth(column),
+            totalWidth  = this.getTotalWidth(),
+            nodes       = this.getRows(),
+            nodeCount   = nodes.length,
+            row,
+            i = 0,
+            firstChild;
+
+        this.updateHeaderWidth();
+
+        for (; i < nodeCount; i++) {
+            row = nodes[i];
+            firstChild = row.firstChild;
+
+            row.style.width = totalWidth;
+            if (firstChild) {
+                firstChild.style.width = totalWidth;
+                firstChild.rows[0].childNodes[column].style.width = columnWidth;
+            }
+        }
+
+        this.onColumnWidthUpdated(column, columnWidth, totalWidth);
+    },
+
+    /**
+     * @private
+     * Sets the hidden status of a given column.
+     * @param {Number} col The column index
+     * @param {Boolean} hidden True to make the column hidden
+     */
+    updateColumnHidden : function(col, hidden) {
+        var totalWidth = this.getTotalWidth(),
+            display    = hidden ? 'none' : '',
+            rows       = this.getRows(),
+            rowLength  = rows.length,
+            row,
+            rowFirstChild,
+            i = 0;
+
+        for (; i < rowLength; i++) {
+            row = rows[i];
+            row.style.width = totalWidth;
+            rowFirstChild = row.firstChild;
+
+            if (rowFirstChild) {
+                rowFirstChild.style.width = totalWidth;
+                rowFirstChild.rows[0].childNodes[col].style.display = display;
+            }
+        }
+
+        this.onColumnHiddenUpdated(col, hidden, totalWidth);
+    },
+
+    /**
+     * @private
+     * Renders all of the rows to a string buffer and returns the string. This is called internally
+     * by renderRows and performs the actual string building for the rows - it does not inject HTML into the DOM.
+     * @param {Array} columns The column data acquired from getColumnData.
+     * @param {Array} records The array of records to render
+     * @param {Ext.data.Store} store The store to render the rows from
+     * @param {Number} startRow The index of the first row being rendered. Sometimes we only render a subset of
+     * the rows so this is used to maintain logic for striping etc
+     * @param {Number} colCount The total number of columns in the column model
+     * @param {Boolean} stripe True to stripe the rows
+     * @return {String} A string containing the HTML for the rendered rows
+     */
+    doRender : function(columns, records, store, startRow, colCount, stripe) {
+        var templates = this.templates,
+            cellTemplate = templates.cell,
+            rowTemplate = templates.row,
+            last = colCount - 1,
+            tstyle = 'width:' + this.getTotalWidth() + ';',
+            // buffers
+            rowBuffer = [],
+            colBuffer = [],
+            rowParams = {tstyle: tstyle},
+            meta = {},
+            len  = records.length,
+            alt,
+            column,
+            record,
+            i, j, rowIndex;
+
+        //build up each row's HTML
+        for (j = 0; j < len; j++) {
+            record    = records[j];
+            colBuffer = [];
+
+            rowIndex = j + startRow;
+
+            //build up each column's HTML
+            for (i = 0; i < colCount; i++) {
+                column = columns[i];
+
+                meta.id    = column.id;
+                meta.css   = i === 0 ? (this.firstCellCls + ' ') : (i === last ? (this.lastCellCls + ' ') : '');
+                meta.attr  = meta.cellAttr = '';
+                meta.style = column.style;
+                meta.value = column.renderer.call(column.scope, record.data[column.name], meta, record, rowIndex, i, store);
+
+                if (Ext.isEmpty(meta.value)) {
+                    meta.value = '&#160;';
+                }
+
+                if (this.markDirty && record.dirty && typeof record.modified[column.name] !== 'undefined') {
+                    meta.css += ' ' + this.dirtyCellCls;
+                }
+
+                colBuffer[colBuffer.length] = cellTemplate.apply(meta);
+            }
+
+            alt = [];
+            //set up row striping and row dirtiness CSS classes
+            if (stripe && ((rowIndex + 1) % 2 === 0)) {
+                alt[0] = this.altRowCls;
+            }
+
+            if (record.dirty) {
+                alt[1] = ' ' + this.dirtyRowCls;
+            }
+
+            rowParams.cols = colCount;
+
+            if (this.getRowClass) {
+                alt[2] = this.getRowClass(record, rowIndex, rowParams, store);
+            }
+
+            rowParams.alt   = alt.join(' ');
+            rowParams.cells = colBuffer.join('');
+
+            rowBuffer[rowBuffer.length] = rowTemplate.apply(rowParams);
+        }
+
+        return rowBuffer.join('');
+    },
+
+    // private
+    processEvent : function(name, e) {
+        var target = e.getTarget(),
+            grid   = this.grid,
+            //header = this.findHeaderIndex(target),
+            row, cell, col, body;
+
+        grid.fireEvent(name, e);
+
+        //if (header !== false) {
+            //grid.fireEvent('header' + name, grid, header, e);
+        //} else {
+            row = this.findRowIndex(target);
+
+//          Grid's value-added events must bubble correctly to allow cancelling via returning false: cell->column->row
+//          We must allow a return of false at any of these levels to cancel the event processing.
+//          Particularly allowing rowmousedown to be cancellable by prior handlers which need to prevent selection.
+            if (row !== false) {
+                cell = this.findCellIndex(target);
+                if (cell !== false) {
+                    col = grid.colModel.getColumnAt(cell);
+                    if (grid.fireEvent('cell' + name, grid, row, cell, e) !== false) {
+                        if (!col || (col.processEvent && (col.processEvent(name, e, grid, row, cell) !== false))) {
+                            grid.fireEvent('row' + name, grid, row, e);
+                        }
+                    }
+                } else {
+                    if (grid.fireEvent('row' + name, grid, row, e) !== false) {
+                        (body = this.findRowBody(target)) && grid.fireEvent('rowbody' + name, grid, row, e);
+                    }
+                }
+            } else {
+                grid.fireEvent('container' + name, grid, e);
+            }
+        //}
+    },
+
+    // private
+    insertRows : function(dm, firstRow, lastRow, isUpdate) {
+        var last = dm.getCount() - 1;
+        if (!isUpdate && firstRow === 0 && lastRow >= last) {
+            this.fireEvent('beforerowsinserted', this, firstRow, lastRow);
+            this.refresh();
+            this.fireEvent('rowsinserted', this, firstRow, lastRow);
+        } else {
+            if (!isUpdate) {
+                this.fireEvent('beforerowsinserted', this, firstRow, lastRow);
+            }
+            var html   = this.renderRows(firstRow, lastRow),
+                before = this.getRow(firstRow);
+
+            if (before) {
+                if (firstRow === 0) {
+                    this.fly(this.getRow(0)).removeClass(this.firstRowCls);
+                }
+                Ext.core.DomHelper.insertHtml('beforeBegin', before, html);
+            } else {
+                var r = this.getRow(last - 1);
+                if (r) {
+                    this.fly(r).removeClass(this.lastRowCls);
+                }
+                Ext.core.DomHelper.insertHtml('beforeEnd', this.mainBody.dom, html);
+            }
+
+            if (!isUpdate) {
+                this.fireEvent('rowsinserted', this, firstRow, lastRow);
+                this.processRows(firstRow);
+            } else if (firstRow === 0 || firstRow >= last) {
+                //ensure first/last row is kept after an update.
+                this.fly(this.getRow(firstRow)).addClass(firstRow === 0 ? this.firstRowCls : this.lastRowCls);
+            }
+        }
+        this.syncFocusEl(firstRow);
+    },
+
+    /**
+     * @private
+     * Refreshes a row by re-rendering it. Fires the rowupdated event when done
+     */
+    refreshRow: function(record) {
+        var store     = this.ds,
+            colCount  = this.grid.colModel.getColumnCount(),
+            columns   = this.getColumnData(),
+            last      = colCount - 1,
+            cls       = [this.rowCls],
+            rowParams = {
+                tstyle: String.format("width: {0};", this.getTotalWidth())
+            },
+            colBuffer = [],
+            cellTpl   = this.templates.cell,
+            rowIndex, row, column, meta, css, i;
+
+        if (Ext.isNumber(record)) {
+            rowIndex = record;
+            record   = store.getAt(rowIndex);
+        } else {
+            rowIndex = store.indexOf(record);
+        }
+
+        //the record could not be found
+        if (!record || rowIndex < 0) {
+            return;
+        }
+
+        //builds each column in this row
+        for (i = 0; i < colCount; i++) {
+            column = columns[i];
+
+            if (i === 0) {
+                css = this.firstCellCls;
+            } else {
+                css = (i === last) ? (this.lastCellCls + ' ') : '';
+            }
+
+            meta = {
+                id      : column.id,
+                style   : column.style,
+                css     : css,
+                attr    : "",
+                cellAttr: ""
+            };
+            // Need to set this after, because we pass meta to the renderer
+            meta.value = column.renderer.call(column.scope, record.data[column.name], meta, record, rowIndex, i, store);
+
+            if (Ext.isEmpty(meta.value)) {
+                meta.value = '&#160;';
+            }
+
+            if (this.markDirty && record.dirty && typeof record.modified[column.name] !== 'undefined') {
+                meta.css += ' ' + this.dirtyCellCls;
+            }
+
+            colBuffer[i] = cellTpl.apply(meta);
+        }
+
+        row = this.getRow(rowIndex);
+        row.className = '';
+
+        if (this.grid.stripeRows && ((rowIndex + 1) % 2 === 0)) {
+            cls.push(this.altRowCls);
+        }
+
+        if (this.getRowClass) {
+            rowParams.cols = colCount;
+            cls.push(this.getRowClass(record, rowIndex, rowParams, store));
+        }
+
+        this.fly(row).addClass(cls).setStyle(rowParams.tstyle);
+        rowParams.cells = colBuffer.join("");
+        row.innerHTML = this.templates.rowInner.apply(rowParams);
+
+        this.fireEvent('rowupdated', this, rowIndex, record);
+    }
+});
+
+
+// private
+// This is a support class used internally by the Grid components
+Ext.grid.GridView.SplitDragZone = Ext.extend(Ext.dd.DDProxy, {
+
+    constructor: function(grid) {
+        this.grid = grid;
+        this.view = grid.getView();
+        this.marker = this.view.resizeMarker;
+        this.proxy = this.view.resizeProxy;
+        Ext.grid.GridView.SplitDragZone.superclass.constructor.call(this,
+            grid.getColumnModel().getEl(),
+            'gridSplitters' + this.grid.getViewEl().id,
+            {
+                dragElId: Ext.id(this.proxy.dom),
+                resizeFrame: false
+            }
+        );
+        this.scroll = false;
+        this.hw = this.view.splitHandleWidth || 5;
+    },
+
+    b4StartDrag : function(x, y) {
+        this.dragHeadersDisabled = this.view.headersDisabled;
+        this.view.headersDisabled = true;
+
+        var h = this.view.mainWrap.getHeight();
+        this.marker.setHeight(h);
+        this.marker.show();
+        this.marker.alignTo(this.view.getHeaderCell(this.cellIndex), 'tl-tl', [-2, 0]);
+        this.proxy.setHeight(h);
+        var w = this.grid.colModel.getColumnWidth(this.cellIndex),
+            minw = Math.max(w - this.grid.minColumnWidth, 0);
+        this.resetConstraints();
+        this.setXConstraint(minw, 1000);
+        this.setYConstraint(0, 0);
+        this.minX = x - minw;
+        this.maxX = x + 1000;
+        this.startPos = x;
+        Ext.dd.DDProxy.prototype.b4StartDrag.call(this, x, y);
+    },
+
+    allowHeaderDrag : function(e) {
+        return true;
+    },
+
+    handleMouseDown : function(e) {
+        var t = this.view.findHeaderCell(e.getTarget());
+        if (t && this.allowHeaderDrag(e)) {
+            var xy = this.view.fly(t).getXY(),
+                x = xy[0],
+                exy = e.getXY(),
+                ex = exy[0],
+                w = t.offsetWidth,
+                adjust = false;
+
+            if ((ex - x) <= this.hw) {
+                adjust = -1;
+            } else if ((x + w) - ex <= this.hw) {
+                adjust = 0;
+            }
+            if (adjust !== false) {
+                this.cm = this.grid.colModel;
+                var ci = this.view.getCellIndex(t);
+                if (adjust === -1) {
+                    if (ci + adjust < 0) {
+                        return;
+                    }
+                    while (this.cm.isHidden(ci + adjust)) {
+                        --adjust;
+                        if (ci + adjust < 0) {
+                            return;
+                        }
+                    }
+                }
+                this.cellIndex = ci + adjust;
+                this.split = t.dom;
+                if (this.cm.isResizable(this.cellIndex) && !this.cm.isFixed(this.cellIndex)) {
+                    Ext.grid.GridView.SplitDragZone.superclass.handleMouseDown.apply(this, arguments);
+                }
+            } else if (this.view.columnDrag) {
+                this.view.columnDrag.callHandleMouseDown(e);
+            }
+        }
+    },
+
+    endDrag : function(e) {
+        this.marker.hide();
+        var v = this.view,
+            endX = Math.max(this.minX, e.getPageX()),
+            diff = endX - this.startPos,
+            disabled = this.dragHeadersDisabled;
+
+        v.onColumnSplitterMoved(this.cellIndex, this.cm.getColumnWidth(this.cellIndex) + diff);
+        setTimeout(function() {
+            v.headersDisabled = disabled;
+        }, 50);
+    },
+
+    autoOffset : function() {
+        this.setDelta(0, 0);
+    }
+});</pre>    
+</body>
+</html>

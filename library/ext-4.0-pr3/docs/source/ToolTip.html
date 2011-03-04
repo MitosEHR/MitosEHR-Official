@@ -1,0 +1,593 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.tip.ToolTip"></a>/**
+ * @class Ext.tip.ToolTip
+ * @extends Ext.tip.Tip
+ * A standard tooltip implementation for providing additional information when hovering over a target element.
+ * @constructor
+ * Create a new Tooltip
+ * @param {Object} config The configuration options
+ * @xtype tooltip
+ */
+Ext.define(&#39;Ext.tip.ToolTip&#39;, {
+    extend: &#39;Ext.tip.Tip&#39;,
+    alias: &#39;widget.tooltip&#39;,
+    alternateClassName: &#39;Ext.ToolTip&#39;,
+    <a name="prop-Ext.tip.ToolTip-triggerElement"></a>/**
+     * When a Tooltip is configured with the &lt;code&gt;{@link #delegate}&lt;/code&gt;
+     * option to cause selected child elements of the &lt;code&gt;{@link #target}&lt;/code&gt;
+     * Element to each trigger a seperate show event, this property is set to
+     * the DOM element which triggered the show.
+     * @type DOMElement
+     * @property triggerElement
+     */
+    <a name="cfg-Ext.tip.ToolTip-target"></a>/**
+     * @cfg {Mixed} target The target HTMLElement, Ext.core.Element or id to monitor
+     * for mouseover events to trigger showing this ToolTip.
+     */
+    <a name="cfg-Ext.tip.ToolTip-autoHide"></a>/**
+     * @cfg {Boolean} autoHide True to automatically hide the tooltip after the
+     * mouse exits the target element or after the &lt;code&gt;{@link #dismissDelay}&lt;/code&gt;
+     * has expired if set (defaults to true).  If &lt;code&gt;{@link closable} = true&lt;/code&gt;
+     * a close tool button will be rendered into the tooltip header.
+     */
+    <a name="cfg-Ext.tip.ToolTip-showDelay"></a>/**
+     * @cfg {Number} showDelay Delay in milliseconds before the tooltip displays
+     * after the mouse enters the target element (defaults to 500)
+     */
+    showDelay: 500,
+    <a name="cfg-Ext.tip.ToolTip-hideDelay"></a>/**
+     * @cfg {Number} hideDelay Delay in milliseconds after the mouse exits the
+     * target element but before the tooltip actually hides (defaults to 200).
+     * Set to 0 for the tooltip to hide immediately.
+     */
+    hideDelay: 200,
+    <a name="cfg-Ext.tip.ToolTip-dismissDelay"></a>/**
+     * @cfg {Number} dismissDelay Delay in milliseconds before the tooltip
+     * automatically hides (defaults to 5000). To disable automatic hiding, set
+     * dismissDelay = 0.
+     */
+    dismissDelay: 5000,
+    <a name="cfg-Ext.tip.ToolTip-mouseOffset"></a>/**
+     * @cfg {Array} mouseOffset An XY offset from the mouse position where the
+     * tooltip should be shown (defaults to [15,18]).
+     */
+    <a name="cfg-Ext.tip.ToolTip-trackMouse"></a>/**
+     * @cfg {Boolean} trackMouse True to have the tooltip follow the mouse as it
+     * moves over the target element (defaults to false).
+     */
+    trackMouse: false,
+    <a name="cfg-Ext.tip.ToolTip-anchor"></a>/**
+     * @cfg {String} anchor If specified, indicates that the tip should be anchored to a
+     * particular side of the target element or mouse pointer (&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;,
+     * or &quot;left&quot;), with an arrow pointing back at the target or mouse pointer. If
+     * {@link #constrainPosition} is enabled, this will be used as a preferred value
+     * only and may be flipped as needed.
+     */
+    <a name="cfg-Ext.tip.ToolTip-anchorToTarget"></a>/**
+     * @cfg {Boolean} anchorToTarget True to anchor the tooltip to the target
+     * element, false to anchor it relative to the mouse coordinates (defaults
+     * to true).  When &lt;code&gt;anchorToTarget&lt;/code&gt; is true, use
+     * &lt;code&gt;{@link #defaultAlign}&lt;/code&gt; to control tooltip alignment to the
+     * target element.  When &lt;code&gt;anchorToTarget&lt;/code&gt; is false, use
+     * &lt;code&gt;{@link #anchorPosition}&lt;/code&gt; instead to control alignment.
+     */
+    anchorToTarget: true,
+    <a name="cfg-Ext.tip.ToolTip-anchorOffset"></a>/**
+     * @cfg {Number} anchorOffset A numeric pixel value used to offset the
+     * default position of the anchor arrow (defaults to 0).  When the anchor
+     * position is on the top or bottom of the tooltip, &lt;code&gt;anchorOffset&lt;/code&gt;
+     * will be used as a horizontal offset.  Likewise, when the anchor position
+     * is on the left or right side, &lt;code&gt;anchorOffset&lt;/code&gt; will be used as
+     * a vertical offset.
+     */
+    anchorOffset: 0,
+    <a name="cfg-Ext.tip.ToolTip-delegate"></a>/**
+     * @cfg {String} delegate &lt;p&gt;Optional. A {@link Ext.DomQuery DomQuery}
+     * selector which allows selection of individual elements within the
+     * &lt;code&gt;{@link #target}&lt;/code&gt; element to trigger showing and hiding the
+     * ToolTip as the mouse moves within the target.&lt;/p&gt;
+     * &lt;p&gt;When specified, the child element of the target which caused a show
+     * event is placed into the &lt;code&gt;{@link #triggerElement}&lt;/code&gt; property
+     * before the ToolTip is shown.&lt;/p&gt;
+     * &lt;p&gt;This may be useful when a Component has regular, repeating elements
+     * in it, each of which need a Tooltip which contains information specific
+     * to that element. For example:&lt;/p&gt;<br><span style="display: none">**/</span>var myGrid = new Ext.grid.gridPanel(gridConfig);
+myGrid.on(&#39;render&#39;, function(grid) {
+    var store = grid.getStore();  // Capture the Store.
+    var view = grid.getView();    // Capture the GridView.
+    myGrid.tip = new Ext.tip.ToolTip({
+        target: view.mainBody,    // The overall target element.
+        delegate: &#39;.x-grid3-row&#39;, // Each grid row causes its own seperate show and hide.
+        trackMouse: true,         // Moving within the row should not hide the tip.
+        renderTo: document.body,  // Render immediately so that tip.body can be
+                                  //  referenced prior to the first show.
+        listeners: {              // Change content dynamically depending on which element
+                                  //  triggered the show.
+            beforeshow: function updateTipBody(tip) {
+                var rowIndex = view.findRowIndex(tip.triggerElement);
+                tip.body.dom.innerHTML = &#39;Over Record ID &#39; + store.getAt(rowIndex).id;
+            }
+        }
+    });
+});
+     *<br><span style="display: none">/**</span>     */
+
+    // private
+    targetCounter: 0,
+    quickShowInterval: 250,
+
+    // private
+    initComponent: function() {
+        var me = this;
+        me.callParent();
+        me.lastActive = new Date();
+        me.initTarget(me.target);
+        me.origAnchor = me.anchor;
+    },
+
+    // private
+    onRender: function(ct, position) {
+        var me = this;
+        me.callParent(arguments);
+        me.anchorCls = Ext.baseCSSPrefix + &#39;tip-anchor-&#39; + me.getAnchorPosition();
+        me.anchorEl = me.el.createChild({
+            cls: Ext.baseCSSPrefix + &#39;tip-anchor &#39; + me.anchorCls
+        });
+    },
+
+    // private
+    afterRender: function() {
+        var me = this,
+            zIndex;
+            
+        me.callParent();
+        zIndex = parseInt(me.el.getZIndex(), 10) || 0;
+        me.anchorEl.setStyle(&#39;z-index&#39;, zIndex + 1).setVisibilityMode(Ext.core.Element.DISPLAY);
+    },
+
+    <a name="method-Ext.tip.ToolTip-initTarget"></a>/**
+     * Binds this ToolTip to the specified element. The tooltip will be displayed when the mouse moves over the element.
+     * @param {Mixed} t The Element, HtmlElement, or ID of an element to bind to
+     */
+    initTarget: function(target) {
+        var me = this,
+            t = Ext.get(target),
+            tg;
+
+        if (t) {
+            if (me.target) {
+                tg = Ext.get(me.target);
+                me.mun(tg, &#39;mouseover&#39;, me.onTargetOver, me);
+                me.mun(tg, &#39;mouseout&#39;, me.onTargetOut, me);
+                me.mun(tg, &#39;mousemove&#39;, me.onMouseMove, me);
+            }
+            me.mon(t, {
+                mouseover: me.onTargetOver,
+                mouseout: me.onTargetOut,
+                mousemove: me.onMouseMove,
+                scope: me
+            });
+            me.target = t;
+        }
+        if (me.anchor) {
+            me.anchorTarget = me.target;
+        }
+    },
+
+    // private
+    onMouseMove: function(e) {
+        var me = this,
+            t = me.delegate ? e.getTarget(me.delegate) : me.triggerElement = true,
+            xy;
+        if (t) {
+            me.targetXY = e.getXY();
+            if (t === me.triggerElement) {
+                if (!me.hidden &amp;&amp; me.trackMouse) {
+                    xy = me.getTargetXY();
+                    if (me.constrainPosition) {
+                        xy = me.el.adjustForConstraints(xy, me.el.dom.parentNode);
+                    }
+                    me.setPagePosition(xy);
+                }
+            }
+            else {
+                me.hide();
+                me.lastActive = new Date(0);
+                me.onTargetOver(e);
+            }
+        }
+        else if (!me.closable &amp;&amp; me.isVisible()) {
+            me.hide();
+        }
+    },
+
+    // private
+    getTargetXY: function() {
+        var me = this,
+            mouseOffset;
+        if (me.delegate) {
+            me.anchorTarget = me.triggerElement;
+        }
+        if (me.anchor) {
+            me.targetCounter++;
+                var offsets = me.getOffsets(),
+                    xy = (me.anchorToTarget &amp;&amp; !me.trackMouse) ? me.el.getAlignToXY(me.anchorTarget, me.getAnchorAlign()) : me.targetXY,
+                    dw = Ext.core.Element.getViewWidth() - 5,
+                    dh = Ext.core.Element.getViewHeight() - 5,
+                    de = document.documentElement,
+                    bd = document.body,
+                    scrollX = (de.scrollLeft || bd.scrollLeft || 0) + 5,
+                    scrollY = (de.scrollTop || bd.scrollTop || 0) + 5,
+                    axy = [xy[0] + offsets[0], xy[1] + offsets[1]],
+                    sz = me.getSize(),
+                    constrainPosition = me.constrainPosition;
+
+            me.anchorEl.removeCls(me.anchorCls);
+
+            if (me.targetCounter &lt; 2 &amp;&amp; constrainPosition) {
+                if (axy[0] &lt; scrollX) {
+                    if (me.anchorToTarget) {
+                        me.defaultAlign = &#39;l-r&#39;;
+                        if (me.mouseOffset) {
+                            me.mouseOffset[0] *= -1;
+                        }
+                    }
+                    me.anchor = &#39;left&#39;;
+                    return me.getTargetXY();
+                }
+                if (axy[0] + sz.width &gt; dw) {
+                    if (me.anchorToTarget) {
+                        me.defaultAlign = &#39;r-l&#39;;
+                        if (me.mouseOffset) {
+                            me.mouseOffset[0] *= -1;
+                        }
+                    }
+                    me.anchor = &#39;right&#39;;
+                    return me.getTargetXY();
+                }
+                if (axy[1] &lt; scrollY) {
+                    if (me.anchorToTarget) {
+                        me.defaultAlign = &#39;t-b&#39;;
+                        if (me.mouseOffset) {
+                            me.mouseOffset[1] *= -1;
+                        }
+                    }
+                    me.anchor = &#39;top&#39;;
+                    return me.getTargetXY();
+                }
+                if (axy[1] + sz.height &gt; dh) {
+                    if (me.anchorToTarget) {
+                        me.defaultAlign = &#39;b-t&#39;;
+                        if (me.mouseOffset) {
+                            me.mouseOffset[1] *= -1;
+                        }
+                    }
+                    me.anchor = &#39;bottom&#39;;
+                    return me.getTargetXY();
+                }
+            }
+
+            me.anchorCls = Ext.baseCSSPrefix + &#39;tip-anchor-&#39; + me.getAnchorPosition();
+            me.anchorEl.addCls(me.anchorCls);
+            me.targetCounter = 0;
+            return axy;
+        } else {
+            mouseOffset = me.getMouseOffset();
+            return (me.targetXY) ? [me.targetXY[0] + mouseOffset[0], me.targetXY[1] + mouseOffset[1]] : mouseOffset;
+        }
+    },
+
+    getMouseOffset: function() {
+        var me = this,
+        offset = me.anchor ? [0, 0] : [15, 18];
+        if (me.mouseOffset) {
+            offset[0] += me.mouseOffset[0];
+            offset[1] += me.mouseOffset[1];
+        }
+        return offset;
+    },
+
+    // private
+    getAnchorPosition: function() {
+        var me = this,
+            m;
+        if (me.anchor) {
+            me.tipAnchor = me.anchor.charAt(0);
+        } else {
+            m = me.defaultAlign.match(/^([a-z]+)-([a-z]+)(\?)?$/);
+            if (!m) {
+                throw &#39;AnchorTip.defaultAlign is invalid&#39;;
+            }
+            me.tipAnchor = m[1].charAt(0);
+        }
+
+        switch (me.tipAnchor) {
+        case &#39;t&#39;:
+            return &#39;top&#39;;
+        case &#39;b&#39;:
+            return &#39;bottom&#39;;
+        case &#39;r&#39;:
+            return &#39;right&#39;;
+        }
+        return &#39;left&#39;;
+    },
+
+    // private
+    getAnchorAlign: function() {
+        switch (this.anchor) {
+        case &#39;top&#39;:
+            return &#39;tl-bl&#39;;
+        case &#39;left&#39;:
+            return &#39;tl-tr&#39;;
+        case &#39;right&#39;:
+            return &#39;tr-tl&#39;;
+        default:
+            return &#39;bl-tl&#39;;
+        }
+    },
+
+    // private
+    getOffsets: function() {
+        var me = this,
+            mouseOffset,
+            offsets,
+            ap = me.getAnchorPosition().charAt(0);
+        if (me.anchorToTarget &amp;&amp; !me.trackMouse) {
+            switch (ap) {
+            case &#39;t&#39;:
+                offsets = [0, 9];
+                break;
+            case &#39;b&#39;:
+                offsets = [0, -13];
+                break;
+            case &#39;r&#39;:
+                offsets = [ - 13, 0];
+                break;
+            default:
+                offsets = [9, 0];
+                break;
+            }
+        } else {
+            switch (ap) {
+            case &#39;t&#39;:
+                offsets = [ - 15 - me.anchorOffset, 30];
+                break;
+            case &#39;b&#39;:
+                offsets = [ - 19 - me.anchorOffset, -13 - me.el.dom.offsetHeight];
+                break;
+            case &#39;r&#39;:
+                offsets = [ - 15 - me.el.dom.offsetWidth, -13 - me.anchorOffset];
+                break;
+            default:
+                offsets = [25, -13 - me.anchorOffset];
+                break;
+            }
+        }
+        mouseOffset = me.getMouseOffset();
+        offsets[0] += mouseOffset[0];
+        offsets[1] += mouseOffset[1];
+
+        return offsets;
+    },
+
+    // private
+    onTargetOver: function(e) {
+        var me = this,
+            t;
+        if (me.disabled || e.within(me.target.dom, true)) {
+            return;
+        }
+        t = e.getTarget(me.delegate);
+        if (t) {
+            me.triggerElement = t;
+            me.clearTimer(&#39;hide&#39;);
+            me.targetXY = e.getXY();
+            me.delayShow();
+        }
+    },
+
+    // private
+    delayShow: function() {
+        var me = this;
+        if (me.hidden &amp;&amp; !me.showTimer) {
+            if (Ext.Date.getElapsed(me.lastActive) &lt; me.quickShowInterval) {
+                me.show();
+            } else {
+                me.showTimer = Ext.defer(me.show, me.showDelay, me);
+            }
+        }
+        else if (!me.hidden &amp;&amp; me.autoHide !== me) {
+            me.show();
+        }
+    },
+
+    // private
+    onTargetOut: function(e) {
+        var me = this;
+        if (me.disabled || e.within(me.target.dom, true)) {
+            return;
+        }
+        me.clearTimer(&#39;show&#39;);
+        if (me.autoHide !== false) {
+            me.delayHide();
+        }
+    },
+
+    // private
+    delayHide: function() {
+        var me = this;
+        if (!me.hidden &amp;&amp; !me.hideTimer) {
+            me.hideTimer = Ext.defer(me.hide, me.hideDelay, me);
+        }
+    },
+
+    <a name="method-Ext.tip.ToolTip-hide"></a>/**
+     * Hides this tooltip if visible.
+     */
+    hide: function() {
+        var me = this;
+        me.clearTimer(&#39;dismiss&#39;);
+        me.lastActive = new Date();
+        if (me.anchorEl) {
+            me.anchorEl.hide();
+        }
+        me.callParent();
+        delete me.triggerElement;
+    },
+
+    <a name="method-Ext.tip.ToolTip-show"></a>/**
+     * Shows this tooltip at the current event target XY position.
+     */
+    show: function() {
+        var me = this;
+        if (me.anchor) {
+            // pre-show it off screen so that the el will have dimensions
+            // for positioning calcs when getting xy next
+            me.showAt([ -1000, -1000]);
+            me.anchor = me.origAnchor;
+        }
+
+        me.showAt(me.getTargetXY());
+
+        if (me.anchor) {
+            me.syncAnchor();
+            me.anchorEl.show();
+        } else {
+            me.anchorEl.hide();
+        }
+    },
+
+    // inherit docs
+    showAt: function(xy) {
+        var me = this;
+        me.lastActive = new Date();
+        me.clearTimers();
+
+        Ext.tip.Tip.superclass.show.call(me);
+
+        // Show may have been vetoed.
+        if (me.isVisible()) {
+            me.setPagePosition(xy[0], xy[1]);
+            me.toFront();
+        }
+
+        if (me.dismissDelay &amp;&amp; me.autoHide !== false) {
+            me.dismissTimer = Ext.defer(me.hide, me.dismissDelay, me);
+        }
+        if (me.anchor) {
+            me.syncAnchor();
+            if (!me.anchorEl.isVisible()) {
+                me.anchorEl.show();
+            }
+        } else {
+            me.anchorEl.hide();
+        }
+    },
+
+    // private
+    syncAnchor: function() {
+        var me = this,
+            anchorPos,
+            targetPos,
+            offset;
+        switch (me.tipAnchor.charAt(0)) {
+        case &#39;t&#39;:
+            anchorPos = &#39;b&#39;;
+            targetPos = &#39;tl&#39;;
+            offset = [20 + me.anchorOffset, 1];
+            break;
+        case &#39;r&#39;:
+            anchorPos = &#39;l&#39;;
+            targetPos = &#39;tr&#39;;
+            offset = [ - 1, 12 + me.anchorOffset];
+            break;
+        case &#39;b&#39;:
+            anchorPos = &#39;t&#39;;
+            targetPos = &#39;bl&#39;;
+            offset = [20 + me.anchorOffset, -1];
+            break;
+        default:
+            anchorPos = &#39;r&#39;;
+            targetPos = &#39;tl&#39;;
+            offset = [1, 12 + me.anchorOffset];
+            break;
+        }
+        me.anchorEl.alignTo(me.el, anchorPos + &#39;-&#39; + targetPos, offset);
+    },
+
+    // private
+    setPagePosition: function(x, y) {
+        var me = this;
+        me.callParent(arguments);
+        if (me.anchor) {
+            me.syncAnchor();
+        }
+    },
+
+    // private
+    clearTimer: function(name) {
+        name = name + &#39;Timer&#39;;
+        clearTimeout(this[name]);
+        delete this[name];
+    },
+
+    // private
+    clearTimers: function() {
+        var me = this;
+        me.clearTimer(&#39;show&#39;);
+        me.clearTimer(&#39;dismiss&#39;);
+        me.clearTimer(&#39;hide&#39;);
+    },
+
+    // private
+    onShow: function() {
+        var me = this;
+        me.callParent();
+        me.mon(Ext.getDoc(), &#39;mousedown&#39;, me.onDocMouseDown, me);
+    },
+
+    // private
+    onHide: function() {
+        var me = this;
+        me.callParent();
+        me.mun(Ext.getDoc(), &#39;mousedown&#39;, me.onDocMouseDown, me);
+    },
+
+    // private
+    onDocMouseDown: function(e) {
+        var me = this;
+        if (me.autoHide !== true &amp;&amp; !me.closable &amp;&amp; !e.within(me.el.dom)) {
+            me.disable();
+            Ext.defer(me.doEnable, 100, me);
+        }
+    },
+
+    // private
+    doEnable: function() {
+        if (!this.isDestroyed) {
+            this.enable();
+        }
+    },
+
+    // private
+    onDisable: function() {
+        this.clearTimers();
+        this.hide();
+    },
+
+    beforeDestroy: function() {
+        var me = this;
+        me.clearTimers();
+        Ext.destroy(me.anchorEl);
+        delete me.anchorEl;
+        delete me.target;
+        delete me.anchorTarget;
+        delete me.triggerElement;
+        me.callParent();
+    },
+
+    // private
+    onDestroy: function() {
+        Ext.getDoc().un(&#39;mousedown&#39;, this.onDocMouseDown, this);
+        this.callParent();
+    }
+});￿</pre></pre></body></html>

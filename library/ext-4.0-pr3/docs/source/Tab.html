@@ -1,0 +1,192 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.tab.Tab"></a>/**
+ * @author Ed Spencer
+ * @class Ext.tab.Tab
+ * @extends Ext.button.Button
+ * 
+ * &lt;p&gt;Represents a single Tab in a TabPanel. A Tab is simply a slightly customized {@link Ext.button.Button Button}, 
+ * styled to look like a tab. Tabs are optionally closable, and can also be disabled. 99% of the time you will not
+ * need to create Tabs manually as the framework does so automatically when you use a {@link Ext.tab.TabPanel TabPanel}&lt;/p&gt;
+ *
+ * @xtype tab
+ */
+Ext.define(&#39;Ext.tab.Tab&#39;, {
+    extend: &#39;Ext.button.Button&#39;,
+    alias: &#39;widget.tab&#39;,
+
+    isTab: true,
+
+    baseCls: Ext.baseCSSPrefix + &#39;tab&#39;,
+
+    <a name="cfg-Ext.tab.Tab-pressedCls"></a>/**
+     * @cfg {String} pressedCls
+     * The CSS class to be applied to a Tab when it is pressed. Defaults to &#39;x-tab-pressed&#39;.
+     * Providing your own CSS for this class enables you to customize the pressed state.
+     */
+    pressedCls: Ext.baseCSSPrefix + &#39;tab-pressed&#39;,
+
+    <a name="cfg-Ext.tab.Tab-activeCls"></a>/**
+     * @cfg {String} activeCls
+     * The CSS class to be applied to a Tab when it is active. Defaults to &#39;x-tab-active&#39;.
+     * Providing your own CSS for this class enables you to customize the active state.
+     */
+    activeCls: Ext.baseCSSPrefix + &#39;tab-active&#39;,
+    
+    <a name="cfg-Ext.tab.Tab-disabledCls"></a>/**
+     * @cfg {String} disabledCls
+     * The CSS class to be applied to a Tab when it is disabled. Defaults to &#39;x-tab-disabled&#39;.
+     */
+    disabledCls: Ext.baseCSSPrefix + &#39;tab-disabled&#39;,
+
+    <a name="cfg-Ext.tab.Tab-closableCls"></a>/**
+     * @cfg {String} closableCls
+     * The CSS class which is added to the tab when it is closable
+     */
+    closableCls: Ext.baseCSSPrefix + &#39;tab-closable&#39;,
+
+    <a name="cfg-Ext.tab.Tab-closable"></a>/**
+     * @cfg {Boolean} closable True to make the Tab start closable (the close icon will be visible). Defaults to true
+     */
+    closable: true,
+
+    <a name="prop-Ext.tab.Tab-Boolean"></a>/**
+     * @property Boolean
+     * Read-only property indicating that this tab is currently active. This is NOT a public configuration.
+     */
+    active: false,
+
+    <a name="prop-Ext.tab.Tab-closable"></a>/**
+     * @property closable
+     * @type Boolean
+     * True if the tab is currently closable
+     */
+
+    scale: false,
+
+    position: &#39;top&#39;,
+    
+    initComponent: function() {
+        var me = this;
+
+        me.addEvents(
+            <a name="event-Ext.tab.Tab-activate"></a>/**
+             * @event activate
+             * @param {Ext.tab.Tab} this
+             */
+            &#39;activate&#39;,
+
+            <a name="event-Ext.tab.Tab-deactivate"></a>/**
+             * @event deactivate
+             * @param {Ext.tab.Tab} this
+             */
+            &#39;deactivate&#39;,
+
+            <a name="event-Ext.tab.Tab-beforeclose"></a>/**
+             * @event beforeclose
+             * Fires if the user clicks on the Tab&#39;s close button, but before the {@link #close} event is fired. Return
+             * false from any listener to stop the close event being fired
+             * @param {Ext.tab.Tab} tab The Tab object
+             */
+            &#39;beforeclose&#39;,
+
+            <a name="event-Ext.tab.Tab-beforeclose"></a>/**
+             * @event beforeclose
+             * Fires to indicate that the tab is to be closed, usually because the user has clicked the close button.
+             * @param {Ext.tab.Tab} tab The Tab object
+             */
+            &#39;close&#39;
+        );
+        
+        me.callParent(arguments);
+        me.setClosable(me.closable);
+
+        if (me.card) {
+            me.setCard(me.card);
+        }
+    },
+
+    /**
+     * @ignore
+     */
+    onRender: function() {
+        var me = this;
+        me.ui = me.position;
+        if (me.active) {
+            me.activate(true);
+        }
+        me.callParent(arguments);
+    },
+
+    <a name="method-Ext.tab.Tab-setClosable"></a>/**
+     * Sets the tab as either closable or not
+     * @param {Boolean} closable Pass false to make the tab not closable. Otherwise the tab will be made closable (eg a
+     * close button will appear on the tab)
+     */
+    setClosable: function(closable) {
+        var me  = this,
+            cls = me.closableCls;
+
+        // Closable must be true if no args
+        closable = !arguments.length || !!closable;
+        me.closable = closable;
+
+        if (closable) {
+            me.addCls(cls);
+        } else {
+            me.removeCls(cls);
+        }
+ 
+        // Tab will change width to accommodate close icon
+        me.ownerCt &amp;&amp; me.ownerCt.doLayout();
+    },
+
+    <a name="method-Ext.tab.Tab-setCard"></a>/**
+     * Sets this tab&#39;s attached card. Usually this is handled automatically by the {@link Ext.tab.TabPanel} that this Tab
+     * belongs to and would not need to be done by the developer
+     * @param {Ext.Component} card The card to set
+     */
+    setCard: function(card) {
+        var me = this;
+
+        me.card = card;
+        me.setText(me.title || card.title);
+        me.setIconClass(me.iconCls || card.iconCls);
+    },
+
+    /**
+     * @private
+     * Listener attached to click events on the Tab&#39;s close button
+     */
+    onCloseClick: function() {
+        var me = this;
+
+        if (me.fireEvent(&#39;beforeclose&#39;, me) !== false) {
+            if (me.tabBar) {
+                me.tabBar.closeTab(me);
+            }
+
+            me.fireEvent(&#39;close&#39;, me);
+        }
+    },
+
+    // @private
+    activate : function(supressEvent) {
+        var me = this;
+
+        me.active = true;
+        me.addCls(me.activeCls, me.baseCls + &#39;-&#39; + me.ui + &#39;-active&#39;);
+        if (supressEvent !== true) {
+            me.fireEvent(&#39;activate&#39;, me);
+        }
+    },
+
+    // @private
+    deactivate : function(supressEvent) {
+        var me = this;
+
+        me.active = false;
+        me.removeCls(me.activeCls, me.baseCls + &#39;-&#39; + me.ui + &#39;-active&#39;);
+        if (supressEvent !== true) {
+            me.fireEvent(&#39;deactivate&#39;, me);
+        }
+    }
+});￿</pre></pre></body></html>

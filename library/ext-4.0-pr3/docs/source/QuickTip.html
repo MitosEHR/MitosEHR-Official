@@ -1,0 +1,249 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.tip.QuickTip"></a>/**
+ * @class Ext.tip.QuickTip
+ * @extends Ext.tip.ToolTip
+ * A specialized tooltip class for tooltips that can be specified in markup and automatically managed by the global
+ * {@link Ext.tip.QuickTips} instance.  See the QuickTips class header for additional usage details and examples.
+ * @constructor
+ * Create a new Tip
+ * @param {Object} config The configuration options
+ * @xtype quicktip
+ */
+Ext.define(&#39;Ext.tip.QuickTip&#39;, {
+    extend: &#39;Ext.tip.ToolTip&#39;,
+    alias: &#39;widget.quicktip&#39;,
+    alternateClassName: &#39;Ext.QuickTip&#39;,
+    <a name="cfg-Ext.tip.QuickTip-target"></a>/**
+     * @cfg {Mixed} target The target HTMLElement, Ext.core.Element or id to associate with this Quicktip (defaults to the document).
+     */
+    <a name="cfg-Ext.tip.QuickTip-interceptTitles"></a>/**
+     * @cfg {Boolean} interceptTitles True to automatically use the element&#39;s DOM title value if available (defaults to false).
+     */
+    interceptTitles : false,
+
+    // Force creation of header Component
+    title: &#39;&amp;#160;&#39;,
+
+    // private
+    tagConfig : {
+        namespace : &quot;ext&quot;,
+        attribute : &quot;qtip&quot;,
+        width : &quot;qwidth&quot;,
+        target : &quot;target&quot;,
+        title : &quot;qtitle&quot;,
+        hide : &quot;hide&quot;,
+        cls : &quot;qclass&quot;,
+        align : &quot;qalign&quot;,
+        anchor : &quot;anchor&quot;
+    },
+
+    // private
+    initComponent : function(){
+        var me = this;
+        
+        me.target = me.target || Ext.getDoc();
+        me.targets = me.targets || {};
+        me.callParent();
+    },
+
+    <a name="method-Ext.tip.QuickTip-register"></a>/**
+     * Configures a new quick tip instance and assigns it to a target element.  The following config values are
+     * supported (for example usage, see the {@link Ext.tip.QuickTips} class header):
+     * &lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+     * &lt;li&gt;autoHide&lt;/li&gt;
+     * &lt;li&gt;cls&lt;/li&gt;
+     * &lt;li&gt;dismissDelay (overrides the singleton value)&lt;/li&gt;
+     * &lt;li&gt;target (required)&lt;/li&gt;
+     * &lt;li&gt;text (required)&lt;/li&gt;
+     * &lt;li&gt;title&lt;/li&gt;
+     * &lt;li&gt;width&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+     * @param {Object} config The config object
+     */
+    register : function(config){
+        var configs = Ext.isArray(config) ? config : arguments,
+            i = 0,
+            len = configs.length,
+            target, j, targetLen;
+            
+        for (; i &lt; len; i++) {
+            config = configs[i];
+            target = config.target;
+            if (target) {
+                if (Ext.isArray(target)) {
+                    for (j = 0, targetLen = target.length; j &lt; targetLen; j++) {
+                        this.targets[Ext.id(target[j])] = config;
+                    }
+                } else{
+                    this.targets[Ext.id(target)] = config;
+                }
+            }
+        }
+    },
+
+    <a name="method-Ext.tip.QuickTip-unregister"></a>/**
+     * Removes this quick tip from its element and destroys it.
+     * @param {String/HTMLElement/Element} el The element from which the quick tip is to be removed.
+     */
+    unregister : function(el){
+        delete this.targets[Ext.id(el)];
+    },
+    
+    <a name="method-Ext.tip.QuickTip-cancelShow"></a>/**
+     * Hides a visible tip or cancels an impending show for a particular element.
+     * @param {String/HTMLElement/Element} el The element that is the target of the tip.
+     */
+    cancelShow: function(el){
+        var me = this,
+            activeTarget = me.activeTarget;
+            
+        el = Ext.get(el).dom;
+        if (me.isVisible()) {
+            if (activeTarget &amp;&amp; activeTarget.el == el) {
+                me.hide();
+            }
+        } else if (activeTarget &amp;&amp; activeTarget.el == el) {
+            me.clearTimer(&#39;show&#39;);
+        }
+    },
+    
+    getTipCfg: function(e) {
+        var t = e.getTarget(), 
+            ttp, 
+            cfg;
+            
+        if(this.interceptTitles &amp;&amp; t.title &amp;&amp; Ext.isString(t.title)){
+            ttp = t.title;
+            t.qtip = ttp;
+            t.removeAttribute(&quot;title&quot;);
+            e.preventDefault();
+        }else{
+            cfg = this.tagConfig;
+            ttp = t.qtip || Ext.fly(t).getAttribute(cfg.attribute, cfg.namespace);
+        }
+        return ttp;
+    },
+
+    // private
+    onTargetOver : function(e){
+        var me = this,
+            target = e.getTarget(),
+            elTarget,
+            cfg,
+            ns,
+            ttp,
+            autoHide;
+            
+        if (me.disabled) {
+            return;
+        }
+        
+        me.targetXY = e.getXY();
+        if(!target || target.nodeType !== 1 || target == document || target == document.body){
+            return;
+        }
+        
+        if (me.activeTarget &amp;&amp; ((target == me.activeTarget.el) || Ext.fly(me.activeTarget.el).contains(target))) {
+            me.clearTimer(&#39;hide&#39;);
+            me.show();
+            return;
+        }
+
+        if (target &amp;&amp; me.targets[target.id]) {
+            me.activeTarget = me.targets[target.id];
+            me.activeTarget.el = target;
+            me.anchor = me.activeTarget.anchor;
+            if (me.anchor) {
+                me.anchorTarget = target;
+            }
+            me.delayShow();
+            return;
+        }
+        elTarget = Ext.fly(target); 
+        cfg = me.tagConfig;
+        ns = cfg.namespace; 
+        ttp = me.getTipCfg(e);
+        
+        if (ttp) {
+            autoHide = elTarget.getAttribute(cfg.hide, ns);
+                 
+            me.activeTarget = {
+                el: target,
+                text: ttp,
+                width: +elTarget.getAttribute(cfg.width, ns) || null,
+                autoHide: autoHide != &quot;user&quot; &amp;&amp; autoHide !== &#39;false&#39;,
+                title: elTarget.getAttribute(cfg.title, ns),
+                cls: elTarget.getAttribute(cfg.cls, ns),
+                align: elTarget.getAttribute(cfg.align, ns)
+                
+            };
+            me.anchor = elTarget.getAttribute(cfg.anchor, ns);
+            if (me.anchor) {
+                me.anchorTarget = target;
+            }
+            me.delayShow();
+        }
+    },
+
+    // private
+    onTargetOut : function(e){
+        var me = this;
+        
+        // If moving within the current target, and it does not have a new tip, ignore the mouseout
+        if (me.activeTarget &amp;&amp; e.within(me.activeTarget.el) &amp;&amp; !me.getTipCfg(e)) {
+            return;
+        }
+
+        me.clearTimer(&#39;show&#39;);
+        if (me.autoHide !== false) {
+            me.delayHide();
+        }
+    },
+
+    // inherit docs
+    showAt : function(xy){
+        var me = this,
+            target = me.activeTarget;
+        
+        if (target) {
+            if (!me.rendered) {
+                me.render(Ext.getBody());
+                me.activeTarget = target;
+            }
+            if (target.title) {
+                me.setTitle(target.title || &#39;&#39;);
+                me.header.show();
+            } else {
+                me.header.hide();
+            }
+            me.body.update(target.text);
+            me.autoHide = target.autoHide;
+            me.dismissDelay = target.dismissDelay || me.dismissDelay;
+            if (me.lastCls) {
+                me.el.removeCls(me.lastCls);
+                delete me.lastCls;
+            }
+            if (target.cls) {
+                me.el.addCls(target.cls);
+                me.lastCls = target.cls;
+            }
+
+            me.setWidth(target.width);
+            
+            if (me.anchor) {
+                me.constrainPosition = false;
+            } else if (target.align) { // TODO: this doesn&#39;t seem to work consistently
+                xy = me.el.getAlignToXY(target.el, target.align);
+                me.constrainPosition = false;
+            }else{
+                me.constrainPosition = true;
+            }
+        }
+        me.callParent([xy]);
+    },
+
+    // inherit docs
+    hide: function(){
+        delete this.activeTarget;
+        this.callParent();
+    }
+});
+￿</pre></pre></body></html>

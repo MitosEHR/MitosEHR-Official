@@ -22,6 +22,7 @@ $count = 0;
 // and execute the apropriate SQL statement
 // query all permissions and left join with currRole values
 // *************************************************************************************
+
 $currRole = ($_REQUEST["start"] == null) ? 6 : $_REQUEST["role_id"];
 
 $sql = "SELECT acl_roles.role_name,
@@ -36,6 +37,7 @@ $sql = "SELECT acl_roles.role_name,
   	 RIGHT JOIN acl_permissions ON acl_role_perms.perm_id = acl_permissions.id
 
   		 ORDER BY role_name DESC";
+
 	$buff = "";
 	foreach (sqlStatement($sql) as $urow) {
 		$count++;

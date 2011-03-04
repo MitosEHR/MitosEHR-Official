@@ -1,0 +1,128 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.panel.Tool"></a>/**
+ * @class Ext.panel.Tool
+ * @extends Ext.Component
+ * @xtype tool
+ */
+Ext.define(&#39;Ext.panel.Tool&#39;, {
+    extend: &#39;Ext.Component&#39;,
+    requires: [&#39;Ext.tip.QuickTips&#39;],
+    alias: &#39;widget.tool&#39;,
+
+    baseCls: Ext.baseCSSPrefix + &#39;tool&#39;,
+    disableCls: Ext.baseCSSPrefix + &#39;tool-disabled&#39;,
+    toolPressedCls: Ext.baseCSSPrefix + &#39;tool-pressed&#39;,
+    toolOverCls: Ext.baseCSSPrefix + &#39;tool-over&#39;,
+    ariaRole: &#39;button&#39;,
+    renderTpl: [&#39;&lt;img src=&quot;{blank}&quot; class=&quot;{baseCls}-{type}&quot; role=&quot;presentation&quot;/&gt;&#39;],
+    disabled: false,
+
+    initComponent: function() {
+        var me = this;
+        me.addEvents(&#39;click&#39;);
+        me.type = me.type || me.id;
+
+        Ext.applyIf(me.renderData, {
+            baseCls: me.baseCls,
+            blank: Ext.BLANK_IMAGE_URL,
+            type: me.type
+        });
+        me.renderSelectors.toolEl = &#39;.&#39; + me.baseCls + &#39;-&#39; + me.type;
+        me.callParent();
+    },
+
+    afterRender: function() {
+        var me = this;
+        me.callParent(arguments);
+        if (me.qtip) {
+            if (Ext.isObject(me.qtip)) {
+                Ext.tip.QuickTips.register(Ext.apply({
+                    target: me.id
+                }, me.qtip));
+            }
+            else {
+                me.toolEl.dom.qtip = me.qtip;
+            }
+        }
+
+        me.mon(me.toolEl, {
+            click: me.onClick,
+            mousedown: me.onMouseDown,
+            mouseover: me.onMouseOver,
+            mouseout: me.onMouseOut,
+            scope: me
+        });
+    },
+
+    setType: function(type) {
+        this.type = type;
+        if (this.rendered) {
+            this.toolEl.dom.className = this.baseCls + &#39;-&#39; + type;
+        }
+    },
+
+    enable: function() {
+        this.toolEl.removeCls(this.disbledCls);
+        this.disabled = false;
+    },
+
+    disable: function() {
+        this.toolEl.addCls(this.disbledCls);
+        this.disabled = true;
+    },
+
+    bindTo: function(component) {
+        this.owner = component;
+    },
+
+    onClick: function(e, target) {
+        if (this.disabled) {
+            return false;
+        }
+
+        var me    = this,
+            owner = me.owner || me.ownerCt;
+
+        //remove the pressed + over class
+        me.el.removeCls(me.toolPressedCls);
+        me.el.removeCls(me.toolOverCls);
+
+        if (me.stopEvent !== false) {
+            e.stopEvent();
+        }
+
+        if (me.handler) {
+            me.handler.call(me.scope || me, e, target, owner, me);
+        }
+
+        this.fireEvent(&#39;click&#39;, me, e, target, owner, me);
+        return true;
+    },
+
+    <a name="method-Ext.panel.Tool-onMouseDown"></a>/**
+     * Called then the user pressing their mouse button down on a tool
+     * Adds the press class ({@link #toolPressedCls})
+     */
+    onMouseDown: function() {
+        if (this.disabled) {
+            return false;
+        }
+
+        this.el.addCls(this.toolPressedCls);
+    },
+
+    <a name="method-Ext.panel.Tool-onMouseOver"></a>/**
+     * Called when the user rolls over a tool
+     * Adds the over class ({@link #toolOverCls})
+     */
+    onMouseOver: function() {
+        this.el.addCls(this.toolOverCls);
+    },
+
+    <a name="method-Ext.panel.Tool-onMouseOut"></a>/**
+     * Called when the user rolls out from a tool.
+     * Removes the over class ({@link #toolOverCls})
+     */
+    onMouseOut: function() {
+        this.el.removeCls(this.toolOverCls);
+    }
+});￿</pre></pre></body></html>

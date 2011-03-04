@@ -1,0 +1,55 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.grid.BooleanHeader"></div>/**
+ * @class Ext.grid.BooleanHeader
+ * @extends Ext.grid.Header
+ * <p>A Column definition class which renders boolean data fields.  See the {@link Ext.grid.Column#xtype xtype}
+ * config option of {@link Ext.grid.Column} for more details.</p>
+ */
+Ext.define('Ext.grid.BooleanHeader', {
+    extend: 'Ext.grid.Header',
+    alias: ['widget.booleanheader'],
+    <div id="cfg-Ext.grid.BooleanHeader-trueText"></div>/**
+     * @cfg {String} trueText
+     * The string returned by the renderer when the column value is not falsey (defaults to <tt>'true'</tt>).
+     */
+    trueText: 'true',
+    
+    <div id="cfg-Ext.grid.BooleanHeader-falseText"></div>/**
+     * @cfg {String} falseText
+     * The string returned by the renderer when the column value is falsey (but not undefined) (defaults to
+     * <tt>'false'</tt>).
+     */
+    falseText: 'false',
+    
+    <div id="cfg-Ext.grid.BooleanHeader-undefinedText"></div>/**
+     * @cfg {String} undefinedText
+     * The string returned by the renderer when the column value is undefined (defaults to <tt>'&#160;'</tt>).
+     */
+    undefinedText: '&#160;',
+
+    constructor: function(cfg){
+        Ext.grid.BooleanHeader.superclass.constructor.call(this, cfg);
+        var trueText      = this.trueText,
+            falseText     = this.falseText,
+            undefinedText = this.undefinedText;
+            
+        this.renderer = function(value){
+            if(value === undefined){
+                return undefinedText;
+            }
+            if(!value || value === 'false'){
+                return falseText;
+            }
+            return trueText;
+        };
+    }
+});</pre>    
+</body>
+</html>

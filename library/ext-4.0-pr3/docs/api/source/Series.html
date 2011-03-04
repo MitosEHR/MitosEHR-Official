@@ -1,0 +1,237 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.chart.series.Series"></div>/**
+ * @class Ext.chart.series.Series
+ * 
+ * Series is the abstract class containing the common logic to all chart series. Series includes 
+ * methods from Labels, Highlights, Tips and Callouts mixins. This class implements the logic of handling 
+ * mouse events, animating, hiding, showing all elements and returning the color of the series to be used as a legend item.
+ */
+Ext.define('Ext.chart.series.Series', {
+
+    /* Begin Definitions */
+
+    requires: [ 'Ext.fx.Anim' ],
+
+    mixins: {
+        labels: 'Ext.chart.Labels',
+        highlights: 'Ext.chart.Highlights',
+        tips: 'Ext.chart.Tips',
+        callouts: 'Ext.chart.Callouts'
+    },
+
+    /* End Definitions */
+
+    <div id="cfg-Ext.chart.series.Series-type"></div>/**
+     * @cfg {String} type
+     * The type of series. Set in subclasses.
+     */
+    type: null,
+
+    <div id="cfg-Ext.chart.series.Series-title"></div>/**
+     * @cfg {String} title
+     * The human-readable name of the series.
+     */
+    title: null,
+
+    <div id="cfg-Ext.chart.series.Series-showInLegend"></div>/**
+     * @cfg {Boolean} showInLegend
+     * Whether to show this series in the legend.
+     */
+    showInLegend: true,
+
+    <div id="cfg-Ext.chart.series.Series-renderer"></div>/**
+     * @cfg {Function} renderer
+     * A function that can be overridden to set custom styling properties to each rendered element.
+     * Passes in (sprite, record, attributes, index, store) to the function.
+     */
+    renderer: function(sprite, record, attributes, index, store) {
+        return attributes;
+    },
+
+    <div id="cfg-Ext.chart.series.Series-shadowAttributes"></div>/**
+     * @cfg {Array} shadowAttributes
+     * An array with shadow attributes
+     */
+    shadowAttributes: null,
+
+    <div id="cfg-Ext.chart.series.Series-listeners"></div>/**
+     * @cfg {Object} listeners  
+     * An (optional) object with event callbacks. All event callbacks get the target *item* as first parameter. The callback functions are:
+     *  
+     *  <ul>
+     *      <li>itemmouseover</li>
+     *      <li>itemmouseout</li>
+     *      <li>itemmousedown</li>
+     *      <li>itemmouseup</li>
+     *  </ul>
+     */
+    
+    constructor: function(config) {
+        var me = this;
+        if (config) {
+            Ext.apply(me, config);
+        }
+        
+        me.listeners = Ext.applyIf(config.listeners || {}, {
+            itemmouseover: Ext.emptyFn,
+            itemmouseout: Ext.emptyFn,
+            itemmousedown: Ext.emptyFn,
+            itemmouseup: Ext.emptyFn
+        });
+        
+        me.shadowGroups = [];
+
+        me.mixins.labels.constructor.call(me, config);
+        me.mixins.highlights.constructor.call(me, config);
+        me.mixins.tips.constructor.call(me, config);
+        me.mixins.callouts.constructor.call(me, config);
+
+        me.chart.on({
+            scope: me,
+            itemmouseover: me.onItemMouseOver,
+            itemmouseout: me.onItemMouseOut,
+            itemmousedown: me.onItemMouseDown,
+            itemmouseup: me.onItemMouseUp,
+            mouseleave: me.onMouseLeave
+        });
+    },
+
+    // @private set the animation for the sprite
+    onAnimate: function(sprite, attr) {
+        var animCfg = Ext.apply({}, this.chart.animate);
+        return new Ext.fx.Anim(Ext.apply(animCfg, {
+            target: sprite
+        }, attr));
+    },
+
+    // @private return the gutter.
+    getGutters: function() {
+        return [0, 0];
+    },
+
+    // @private wrapper for the itemmouseup event.
+    onItemMouseUp: function(item) {
+        this.listeners.itemmouseup(item);
+    },
+    // @private wrapper for the itemmousedown event.
+    onItemMouseDown: function(item) {
+        this.listeners.itemmousedown(item);
+    },
+
+    // @private wrapper for the itemmouseover event.
+    onItemMouseOver: function(item) { 
+        var me = this;
+        if (item.series === me) {
+            if (me.highlight) {
+                me.highlightItem(item);
+            }
+            if (me.tooltip) {
+                me.showTip(item);
+            }
+        }
+        me.listeners.itemmouseover(item);
+    },
+
+    // @private wrapper for the itemmouseout event.
+    onItemMouseOut: function(item) {
+        var me = this;
+        if (item.series === me) {
+            me.unHighlightItem();
+            if (me.tooltip) {
+                me.hideTip(item);
+            }
+        }
+        me.listeners.itemmouseout(item);
+    },
+
+    // @private wrapper for the mouseleave event.
+    onMouseLeave: function() {
+        var me = this;
+        me.unHighlightItem();
+        if (me.tooltip) {
+            me.hideTip();
+        }
+    },
+
+    <div id="method-Ext.chart.series.Series-getItemForPoint"></div>/**
+     * For a given x/y point relative to the Surface, find a corresponding item from this
+     * series, if any.
+     * @param {Number} x
+     * @param {Number} y
+     * @return {Object} An object describing the item, or null if there is no matching item. The exact contents of
+     *                  this object will vary by series type, but should always contain at least the following:
+     *                  <ul>
+     *                    <li>{Ext.chart.series.Series} series - the Series object to which the item belongs</li>
+     *                    <li>{Object} value - the value(s) of the item's data point</li>
+     *                    <li>{Array} point - the x/y coordinates relative to the chart box of a single point
+     *                        for this data item, which can be used as e.g. a tooltip anchor point.</li>
+     *                    <li>{Ext.draw.Sprite} sprite - the item's rendering Sprite.
+     *                  </ul>
+     */
+    getItemForPoint: function(x, y) {
+        return null;
+    },
+
+    <div id="method-Ext.chart.series.Series-hideAll"></div>/**
+     * Hides all the elements in the series.
+     */
+    hideAll: function() {
+        var me = this,
+            items = me.items,
+            item, len, i, sprite;
+
+        me._prevShowMarkers = me.showMarkers;
+
+        me.showMarkers = false;
+        //hide all labels
+        me.hideLabels(0);
+        //hide all sprites
+        for (i = 0, len = items.length; i < len; i++) {
+            item = items[i];
+            sprite = item.sprite;
+            if (sprite) {
+                sprite.setAttributes({
+                    hidden: true
+                }, true);
+            }
+        }
+    },
+
+    <div id="method-Ext.chart.series.Series-showAll"></div>/**
+     * Shows all the elements in the series.
+     */
+    showAll: function() {
+        var me = this,
+            prevAnimate = me.chart.animate;
+        me.chart.animate = false;
+        me.showMarkers = me._prevShowMarkers;
+        me.drawSeries();
+        me.chart.animate = prevAnimate;
+    },
+    
+    <div id="method-Ext.chart.series.Series-getLegendColor"></div>/**
+     * Returns a string with the color to be used for the series legend item. 
+     */
+    getLegendColor: function(index) {
+        var me = this, fill, stroke;
+        if (me.seriesStyle) {
+            fill = me.seriesStyle.fill;
+            stroke = me.seriesStyle.stroke;
+            if (fill && fill != 'none') {
+                return fill;
+            }
+            return stroke;
+        }
+        return '#000';
+    }
+});
+</pre>    
+</body>
+</html>

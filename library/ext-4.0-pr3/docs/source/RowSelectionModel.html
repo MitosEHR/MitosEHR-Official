@@ -1,0 +1,380 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.RowSelectionModel"></a>/**
+ * @class Ext.grid.RowSelectionModel
+ * @extends Ext.AbstractStoreSelectionModel
+ * 
+ * Implement row based navigation via keyboard.
+ *
+ * Must synchronize across grid sections
+ */
+Ext.define(&#39;Ext.grid.RowSelectionModel&#39;, {
+    extend: &#39;Ext.selection.Model&#39;,
+    alias: &#39;selection.rowselectionmodel&#39;,
+    requires: [&#39;Ext.util.KeyNav&#39;],
+    
+    /**
+     * @private
+     * Number of pixels to scroll to the left/right when pressing
+     * left/right keys.
+     */
+    deltaScroll: 5,
+    
+    <a name="cfg-Ext.grid.RowSelectionModel-enableKeyNav"></a>/**
+     * @cfg {Boolean} enableKeyNav
+     * Turns on/off keyboard navigation within the grid. Defaults to true.
+     */
+    enableKeyNav: true,
+    
+    constructor: function(){
+        this.addEvents(
+            <a name="event-Ext.grid.RowSelectionModel-deselect"></a>/**
+             * @event deselect
+             * Fired after a record is deselected
+             * @param {Ext.selection.RowSelectionModel} this
+             * @param {Ext.data.Model} record The deselected record
+             * @param {Number} index The row index deselected
+             */
+            &#39;deselect&#39;,
+            
+            <a name="event-Ext.grid.RowSelectionModel-select"></a>/**
+             * @event select
+             * Fired after a record is selected
+             * @param {Ext.selection.RowSelectionModel} this
+             * @param {Ext.data.Model} record The selected record
+             * @param {Number} index The row index selected
+             */
+            &#39;select&#39;
+        );
+        this.callParent(arguments);    
+    },
+
+    bindComponent: function(view) {
+        var me = this;
+        
+        me.views = me.views || [];
+        me.views.push(view);
+        me.bind(view.getStore(), true);
+
+        view.on({
+            click: this.onRowMouseDown,
+            scope: this
+        });
+
+        if (me.enableKeyNav) {
+            me.initKeyNav(view);
+        }
+    },
+
+    initKeyNav: function(view) {
+        var me = this;
+        
+        if (!view.rendered) {
+            view.on(&#39;render&#39;, Ext.Function.bind(me.initKeyNav, me, [view], 0), me, {single: true});
+            return;
+        }
+
+        view.el.set({
+            tabIndex: -1
+        });
+
+        // view.el has tabIndex -1 to allow for
+        // keyboard events to be passed to it.
+        me.keyNav = new Ext.util.KeyNav(view.el, {
+            &quot;up&quot;: me.onKeyUp,
+            &quot;down&quot;: me.onKeyDown,
+            &quot;right&quot;: me.onKeyRight,
+            &quot;left&quot;: me.onKeyLeft,
+            &quot;pageDown&quot;: me.onKeyPageDown,
+            &quot;pageUp&quot;: me.onKeyPageUp,
+            &quot;home&quot;: me.onKeyHome,
+            &quot;end&quot;: me.onKeyEnd,
+            scope: me
+        });
+        view.el.on(Ext.EventManager.getKeyEvent(), me.onKeyPress, me);
+    },
+
+    // Returns the number of rows currently visible on the screen or
+    // false if there were no rows. This assumes that all rows are
+    // of the same height and the first view is accurate.
+    getRowsVisible: function() {
+        var rowsVisible = false,
+            view = this.views[0],
+            row = view.getNode(0),
+            rowHeight, gridViewHeight;
+
+        if (row) {
+            rowHeight = Ext.fly(row).getHeight();
+            gridViewHeight = view.el.getHeight();
+            rowsVisible = Math.floor(gridViewHeight/rowHeight);
+        }
+
+        return rowsVisible;
+    },
+
+    // go to last visible record in grid.
+    onKeyEnd: function(e, t) {
+        var me = this,
+            last = me.store.getAt(me.store.getCount() - 1);
+            
+        if (last) {
+            if (e.shiftKey) {
+                me.selectRange(last, me.lastFocused || 0);
+                me.setLastFocused(last);
+            } else if (e.ctrlKey) {
+                me.setLastFocused(last);
+            } else {
+                me.doSelect(last);
+            }
+        }
+    },
+
+    // go to first visible record in grid.
+    onKeyHome: function(e, t) {
+        var me = this,
+            first = me.store.getAt(0);
+            
+        if (first) {
+            if (e.shiftKey) {
+                me.selectRange(first, me.lastFocused || 0);
+                me.setLastFocused(first);
+            } else if (e.ctrlKey) {
+                me.setLastFocused(first);
+            } else {
+                me.doSelect(first, false);
+            }
+        }
+    },
+
+    // Go one page up from the lastFocused record in the grid.
+    onKeyPageUp: function(e, t) {
+        var me = this,
+            rowsVisible = me.getRowsVisible(),
+            selIdx,
+            prevIdx,
+            prevRecord,
+            currRec;
+            
+        if (rowsVisible) {
+            selIdx = me.lastFocused ? me.store.indexOf(me.lastFocused) : 0;
+            prevIdx = selIdx - rowsVisible;
+            if (prevIdx &lt; 0) {
+                prevIdx = 0;
+            }
+            prevRecord = me.store.getAt(prevIdx);
+            if (e.shiftKey) {
+                currRec = me.store.getAt(selIdx);
+                me.selectRange(prevRecord, currRec, e.ctrlKey, &#39;up&#39;);
+                me.setLastFocused(prevRecord);
+            } else if (e.ctrlKey) {
+                e.preventDefault();
+                me.setLastFocused(prevRecord);
+            } else {
+                me.doSelect(prevRecord);
+            }
+
+        }
+    },
+
+    // Go one page down from the lastFocused record in the grid.
+    onKeyPageDown: function(e, t) {
+        var me = this,
+            rowsVisible = me.getRowsVisible(),
+            selIdx,
+            nextIdx,
+            nextRecord,
+            currRec;
+            
+        if (rowsVisible) {
+            selIdx = me.lastFocused ? me.store.indexOf(me.lastFocused) : 0;
+            nextIdx = selIdx + rowsVisible;
+            if (nextIdx &gt;= me.store.getCount()) {
+                nextIdx = me.store.getCount() - 1;
+            }
+            nextRecord = me.store.getAt(nextIdx);
+            if (e.shiftKey) {
+                currRec = me.store.getAt(selIdx);
+                me.selectRange(nextRecord, currRec, e.ctrlKey, &#39;down&#39;);
+                me.setLastFocused(nextRecord);
+            } else if (e.ctrlKey) {
+                // some browsers, this means go thru browser tabs
+                // attempt to stop.
+                e.preventDefault();
+                me.setLastFocused(nextRecord);
+            } else {
+                me.doSelect(nextRecord);
+            }
+        }
+    },
+
+    // Select/Deselect based on pressing Spacebar.
+    // Assumes a SIMPLE selectionmode style
+    onKeyPress: function(e, t) {
+        if (e.getKey() === e.SPACE) {
+            e.stopEvent();
+            var me = this,
+                record = me.lastFocused;
+                
+            if (record) {
+                if (me.isSelected(record)) {
+                    me.doDeselect(record, false);
+                } else {
+                    me.doSelect(record, true);
+                }
+            }
+        }
+    },
+
+    // Navigate one record up. This could be a selection or
+    // could be simply focusing a record for discontiguous
+    // selection. Provides bounds checking.
+    onKeyUp: function(e, t) {
+        var me = this,
+            view = me.views[0],
+            idx  = me.store.indexOf(me.lastFocused),
+            record;
+            
+        if (idx &gt; 0) {
+            // needs to be the filtered count as thats what
+            // will be visible.
+            record = me.store.getAt(idx - 1);
+            if (e.shiftKey &amp;&amp; me.lastFocused) {
+                if (me.isSelected(me.lastFocused) &amp;&amp; me.isSelected(record)) {
+                    me.doDeselect(me.lastFocused, true);
+                    me.setLastFocused(record);
+                } else if (!me.isSelected(me.lastFocused)) {
+                    me.doSelect(me.lastFocused, true);
+                    me.doSelect(record, true);
+                } else {
+                    me.doSelect(record, true);
+                }
+            } else if (e.ctrlKey) {
+                me.setLastFocused(record);
+            } else {
+                me.doSelect(record);
+                //view.focusRow(idx - 1);
+            }
+        } else if (me.selected.getCount() == 0) {
+            me.doSelect(record);
+            //view.focusRow(idx - 1);
+        }
+        // There was no lastFocused record, and the user has pressed up
+        // Ignore??
+        //else if (this.selected.getCount() == 0) {
+        //    
+        //    this.doSelect(record);
+        //    //view.focusRow(idx - 1);
+        //}
+    },
+
+    // Navigate one record down. This could be a selection or
+    // could be simply focusing a record for discontiguous
+    // selection. Provides bounds checking.
+    onKeyDown: function(e, t) {
+        var me = this,
+            view = this.views[0],
+            idx  = this.store.indexOf(this.lastFocused),
+            record;
+            
+        // needs to be the filtered count as thats what
+        // will be visible.
+        if (idx + 1 &lt; me.store.getCount()) {
+            record = me.store.getAt(idx + 1);
+            if (me.selected.getCount() == 0) {
+                me.doSelect(record);
+                //view.focusRow(idx + 1);
+            } else if (e.shiftKey &amp;&amp; me.lastFocused) {
+                if (me.isSelected(me.lastFocused) &amp;&amp; me.isSelected(record)) {
+                    me.doDeselect(me.lastFocused, true);
+                    me.setLastFocused(record);
+                } else if (!me.isSelected(me.lastFocused)) {
+                    me.doSelect(me.lastFocused, true);
+                    me.doSelect(record, true);
+                } else {
+                    me.doSelect(record, true);
+                }
+            } else if (e.ctrlKey) {
+                me.setLastFocused(record);
+            } else {
+                me.doSelect(record);
+                //view.focusRow(idx + 1);
+            }
+        }
+    },
+    
+    scrollByDeltaX: function(delta) {
+        var view    = this.views[0],
+            section = view.up(&#39;gridsection&#39;),
+            hScroll = section.horizontalScroller;
+            
+        if (hScroll) {
+            hScroll.scrollByDeltaX(delta);
+        }
+    },
+    
+    onKeyLeft: function(e, t) {
+        this.scrollByDeltaX(-this.deltaScroll);
+    },
+    
+    onKeyRight: function(e, t) {
+        this.scrollByDeltaX(this.deltaScroll);
+    },
+
+    // Select the record with the event included so that
+    // we can take into account ctrlKey, shiftKey, etc
+    onRowMouseDown: function(view, rowIdx, node, e) {
+        view.el.focus();
+        var record = view.getStore().getAt(rowIdx);
+        this.selectWithEvent(record, e);
+    },
+
+    // Allow the GridView to update the UI by
+    // adding/removing a CSS class from the row.
+    onSelectChange: function(record, isSelected, suppressEvent) {
+        var me      = this,
+            views   = me.views,
+            viewsLn = views.length,
+            store   = me.store,
+            rowIdx  = store.indexOf(record),
+            i = 0;
+            
+        for (; i &lt; viewsLn; i++) {
+            if (isSelected) {
+                views[i].onRowSelect(rowIdx);
+                if (!suppressEvent) {
+                    me.fireEvent(&#39;select&#39;, me, record, rowIdx);
+                }
+            } else {
+                views[i].onRowDeselect(rowIdx);
+                if (!suppressEvent) {
+                    me.fireEvent(&#39;deselect&#39;, me, record, rowIdx);
+                }
+            }
+        }
+    },
+
+    // Provide indication of what row was last focused via
+    // the gridview.
+    onLastFocusChanged: function(oldFocused, newFocused) {
+        var views   = this.views,
+            viewsLn = views.length,
+            store   = this.store,
+            rowIdx,
+            i = 0;
+            
+        if (oldFocused) {
+            rowIdx = store.indexOf(oldFocused);
+            if (rowIdx != -1) {
+                for (; i &lt; viewsLn; i++) {
+                    views[i].onRowFocus(rowIdx, false);
+                }
+            }
+        }
+
+
+        rowIdx = store.indexOf(newFocused);
+        if (rowIdx != -1) {
+            for (i = 0; i &lt; viewsLn; i++) {
+                views[i].onRowFocus(rowIdx, true);
+            }
+        }
+    }
+});￿</pre></pre></body></html>

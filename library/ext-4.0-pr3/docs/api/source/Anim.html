@@ -1,0 +1,379 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.fx.Anim"></div>/**
+ * @class Ext.fx.Anim
+ * Animation instance...
+ */
+
+Ext.define('Ext.fx.Anim', {
+
+    /* Begin Definitions */
+
+    mixins: {
+        observable: 'Ext.util.Observable'
+    },
+
+    requires: ['Ext.fx.Manager', 'Ext.fx.Animator', 'Ext.fx.PseudoEasing', 'Ext.fx.Easing', 'Ext.fx.CubicBezier', 'Ext.fx.PropHandler'],
+
+    /* End Definitions */
+
+    isAnimation: true,
+    <div id="cfg-Ext.fx.Anim-duration"></div>/**
+     * @cfg {Number} duration
+     * Time in milliseconds for the animation to last. Defaults to 250.
+     */
+    duration: 250,
+
+    <div id="cfg-Ext.fx.Anim-delay"></div>/**
+     * @cfg {Number} delay
+     * Time to delay before starting the animation. Defaults to 0.
+     */
+    delay: 0,
+
+    /* private used to track a delayed starting time */
+    delayStart: 0,
+
+    <div id="cfg-Ext.fx.Anim-easing"></div>/**
+     * @cfg {String} easing
+     * <p>A valid Ext.fx.Easing or Ext.fx.EasingPseudo value for the effect.
+     * Easing is now calculated exclusively with the use of cubic-bezier curves and follows the
+     * <a href="http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag">CSS3
+     * specification for 'transition-timing-function'</a>. Defaults to ease</p>
+     * <h2>Standard CSS3 Easing Values:</h2>
+     * <div class="mdetail-params"><ul>
+     * <li><b><tt>ease</tt></b>: The ease function is equivalent to cubic-bezier(0.25, 0.1, 0.25, 1.0).</li>
+     * <li><b><tt>linear</tt></b>: The linear function is equivalent to cubic-bezier(0.0, 0.0, 1.0, 1.0).</li>
+     * <li><b><tt>ease-in</tt></b>: The ease-in function is equivalent to cubic-bezier(0.42, 0, 1.0, 1.0).</li>
+     * <li><b><tt>ease-out</tt></b>: The ease-out function is equivalent to cubic-bezier(0, 0, 0.58, 1.0).</li>
+     * <li><b><tt>ease-in-out</tt></b>: The ease-in-out function is equivalent to cubic-bezier(0.42, 0, 0.58, 1.0)</li>
+     * <li><b><tt>cubic-bezier</tt></b>: Specifies a cubic-bezier curve. The four values specify points P1 and P2 of
+     * the curve as (x1, y1, x2, y2). All values must be in the range [0, 1] or the definition is invalid.</li>
+     * </ul></div>
+     * PseudoEasing combines multiple cubic-bezier curves and creates an Ext.fx.Animation to achieve more complex effects.
+     * <h2>Extended Pseudo Easing Values:</h2>
+     * <div class="mdetail-params"><ul>
+     * <li><b><tt>back-in</tt></b></li>
+     * <li><b><tt>back-out</tt></b></li>
+     * <li><b><tt>bounce-in</tt></b></li>
+     * <li><b><tt>bounce-out</tt></b></li>
+     * <li><b><tt>elastic-in</tt></b></li>
+     * <li><b><tt>elastic-out</tt></b></li>
+     * </ul></div>
+     */
+    easing: 'ease',
+
+    /**
+     * @private
+     */
+    damper: 1,
+
+    /**
+     * @private
+     */
+    bezierRE: /^(?:cubic-)?bezier\(([^,]+),([^,]+),([^,]+),([^\)]+)\)/,
+
+    <div id="cfg-Ext.fx.Anim-reverse"></div>/**
+     * @cfg {Boolean} reverse
+     * Run the animation from the end to the beginning
+     * Defaults to false.
+     */
+    reverse: false,
+
+    <div id="prop-Ext.fx.Anim-running"></div>/**
+     * Flag to determine if the animation has started
+     * @property running
+     * @type boolean
+     */
+    running: false,
+
+    <div id="prop-Ext.fx.Anim-paused"></div>/**
+     * Flag to determine if the animation is paused. Only set this to true if you need to
+     * keep the Anim instance around to be unpaused later; otherwise call {@link #end}.
+     * @property paused
+     * @type boolean
+     */
+    paused: false,
+
+    <div id="cfg-Ext.fx.Anim-iterations"></div>/**
+     * @cfg {int} iterations
+     * Number of times to execute the animation. Defaults to 1.
+     */
+    iterations: 1,
+
+    alternate: false,
+
+    <div id="prop-Ext.fx.Anim-currentIteration"></div>/**
+     * Current iteration the animation is running.
+     * @property currentIteration
+     * @type int
+     */
+    currentIteration: 0,
+
+    <div id="prop-Ext.fx.Anim-startTime"></div>/**
+     * Starting time of the animation.
+     * @property startTime
+     * @type Date
+     */
+    startTime: 0,
+
+    <div id="prop-Ext.fx.Anim-elapsedTime"></div>/**
+     * Elapsed time of the animation.
+     * @property elapsedTime
+     * @type Date
+     */
+    elapsedTime: 0,
+    
+    <div id="prop-Ext.fx.Anim-propHandlers"></div>/**
+     * Contains a cache of the interpolators to be used.
+     * @property propHandlers
+     * @type Object
+     */
+    propHandlers: {},
+
+    <div id="cfg-Ext.fx.Anim-target"></div>/**
+     * @cfg {string/object} target
+     * The Ext.fx.target to apply the animation to.
+     */
+
+    <div id="cfg-Ext.fx.Anim-from"></div>/**
+     * @cfg {Object} from
+     * An object containing property/value pairs for the beginning of the animation.  If not specified, the current state of the
+     * Ext.fx.target will be used. For example:
+<pre><code>
+from : {
+    opactiy: 0,       // Transparent
+    color: '#ffffff', // White
+    left: 0
+}
+</code></pre>
+     */
+
+    <div id="cfg-Ext.fx.Anim-to"></div>/**
+     * @cfg {Object} to
+     * An object containing property/value pairs for the end of the animation. For example:
+ <pre><code>
+ to : {
+     opactiy: 1,       // Opaque
+     color: '#00ff00', // Green
+     left: 500
+ }
+ </code></pre>
+     */
+
+    // @private
+    constructor: function(config) {
+        var me = this;
+        // If keyframes are passed, they really want an Animator instead.
+        if (config.keyframes) {
+            return new Ext.fx.Animator(config);
+        }
+        // Create a PseudoEasing Animation if the easing property matches
+        if (Ext.fx.PseudoEasing[config.easing]) {
+            // OOgly, clean me up.
+            return new Ext.fx.Animator(Ext.apply(config, {
+                keyframes: Ext.decode(Ext.encode(Ext.fx.PseudoEasing[config.easing]))
+            }));
+        }
+        config = Ext.apply(me, config);
+        if (me.from == undefined) {
+            me.from = {};
+        }
+        me.config = config;
+        me.target = Ext.fx.Manager.createTarget(me.target);
+        me.easingFn = Ext.fx.Easing[me.easing];
+
+        // If not a pre-defined curve, try a cubic-bezier
+        if (!me.easingFn) {
+            me.easingFn = String(v.easing).match(me.bezierRE);
+            if (me.easingFn && me.easingFn.length == 5) {
+                var curve = me.easingFn;
+                me.easingFn = Ext.fx.cubicBezier(+curve[1], +curve[2], +curve[3], +curve[4]);
+            }
+        }
+        me.id = Ext.id(null, 'ext-anim-');
+        Ext.fx.Manager.addAnim(me);
+        me.addEvents(
+            <div id="event-Ext.fx.Anim-beforeanimate"></div>/**
+             * @event beforeanimate
+             * Fires before the animation starts. A handler can return false to cancel the animation.
+             * @param {Ext.fx.Anim} this
+             */
+            'beforeanimate',
+             <div id="event-Ext.fx.Anim-afteranimate"></div>/**
+              * @event afteranimate
+              * Fires when the animation is complete.
+              * @param {Ext.fx.Anim} this
+              * @param {Date} startTime
+              * @param {Date} ellapsedTime
+              */
+            'afteranimate'
+        );
+        me.mixins.observable.constructor.call(me, config);
+        if (config.callback) {
+            me.on('afteranimate', config.callback, config.scope);
+        }
+        return me;
+    },
+
+    /**
+     * @private
+     * Helper to the target
+     */
+    setAttr: function(attr, value) {
+        return Ext.fx.Manager.items.get(this.id).setAttr(this.target, attr, value);
+    },
+
+    /*
+     * @private
+     * Set up the initial currentAttrs hash.
+     */
+    initAttrs: function() {
+        var me = this,
+            from = me.from,
+            to = me.to,
+            initialFrom = me.initialFrom || {},
+            out = {},
+            start, end, propHandler, attr;
+
+        for (attr in to) {
+            if (to.hasOwnProperty(attr)) {
+                start = me.target.getAttr(attr, from[attr]);
+                end = to[attr];
+                // Use default (numeric) property handler
+                if (!Ext.fx.PropHandler[attr]) {
+                    if (Ext.isObject(end)) {
+                        propHandler = me.propHandlers[attr] = Ext.fx.PropHandler.object;
+                    } else {
+                        propHandler = me.propHandlers[attr] = Ext.fx.PropHandler.defaultHandler;
+                    }
+                }
+                // Use custom handler
+                else {
+                    propHandler = me.propHandlers[attr] = Ext.fx.PropHandler[attr];
+                }
+                out[attr] = propHandler.get(start, end, me.damper, initialFrom[attr]);
+            }
+        }
+        me.currentAttrs = out;
+    },
+
+    /*
+     * @private
+     * Fires beforeanimate and sets the running flag.
+     */
+    start: function(startTime) {
+        var me = this,
+            delay = me.delay,
+            delayStart = me.delayStart,
+            delayDelta;
+        if (delay) {
+            if (!delayStart) {
+                me.delayStart = startTime;
+                return;
+            }
+            else {
+                delayDelta = startTime - delayStart;
+                if (delayDelta < delay) {
+                    return;
+                }
+                else {
+                    // Compensate for frame delay;
+                    startTime = new Date(delayStart.getTime() + delay);
+                }
+            }
+        }
+        if (me.fireEvent('beforeanimate', me) !== false) {
+            me.startTime = startTime - me.elapsedTime;
+            if (!me.paused && !me.currentAttrs) {
+                me.initAttrs();
+            }
+            me.running = true;
+        }
+    },
+
+    /*
+     * @private
+     * Calculate attribute value at the passed timestamp.
+     * @returns a hash of the new attributes.
+     */
+    runAnim: function(timestamp) {
+        var me = this,
+            attrs = me.currentAttrs,
+            duration = me.duration,
+            easingFn = me.easingFn,
+            propHandlers = me.propHandlers,
+            ret = {},
+            easing,
+            values,
+            attr;
+
+        if (timestamp >= duration) {
+            timestamp = duration;
+        }
+        if (me.reverse) {
+            timestamp = duration - timestamp;
+        }
+
+        for (attr in attrs) {
+            if (attrs.hasOwnProperty(attr)) {
+                values = attrs[attr];
+                easing = easingFn(timestamp / duration);
+                ret[attr] = propHandlers[attr].set(values, easing);
+            }
+        }
+        return ret;
+    },
+
+    /*
+     * @private
+     * Perform lastFrame cleanup and handle iterations
+     * @returns a hash of the new attributes.
+     */
+    lastFrame: function() {
+        var me = this,
+            iter = me.iterations,
+            iterCount = me.currentIteration;
+
+        iterCount++;
+        if (iterCount < iter) {
+            if (me.alternate) {
+                me.reverse = !me.reverse;
+            }
+        }
+        else {
+            iterCount = 0;
+            me.end();
+        }
+
+        me.startTime = new Date();
+        me.currentIteration = iterCount;
+        // Turn off paused for CSS3 Transitions
+        me.paused = false;
+    },
+
+    /*
+     * Fire afteranimate event and end the animation. Usually called automatically when the
+     * animation reaches its final frame, but can also be called manually to pre-emptively
+     * stop and destroy the running animation.
+     */
+    end: function() {
+        var me = this;
+        me.fireEvent('afteranimate', me, me.startTime, me.elapsedTime);
+        me.startTime = 0;
+        me.elapsedTime = 0;
+        me.paused = false;
+        me.running = false;
+        Ext.fx.Manager.removeAnim(me);
+    }
+});
+// Set flag to indicate that Fx is available. Class might not be available immediately.
+Ext.enableFx = true;
+</pre>    
+</body>
+</html>

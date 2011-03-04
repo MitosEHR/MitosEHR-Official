@@ -33,6 +33,7 @@ $conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_
 //**********************************************************************
 // Simple SQL Stament, with no Event LOG injection
 // return: Array of records
+// foreach (sqlStatement($sql) as $urow) {
 //**********************************************************************
 function sqlStatement($sql){
 	// Get the global variable
@@ -47,7 +48,9 @@ function sqlStatement($sql){
 
 //**********************************************************************
 // Simple SQL Stament, with no Event LOG injection
-// return: One record array
+// return: Only one record array
+// $rec = sqlFetch($sql);
+// if ($rec['username'] == ""){
 //**********************************************************************
 function sqlFetch($sql){
 	// Get the global variable

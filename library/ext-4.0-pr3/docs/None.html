@@ -1,0 +1,33 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.layout.container.boxOverflow.None"></div>/**
+ * @class Ext.layout.container.boxOverflow.None
+ * @extends Object
+ * Base class for Box Layout overflow handlers. These specialized classes are invoked when a Box Layout
+ * (either an HBox or a VBox) has child items that are either too wide (for HBox) or too tall (for VBox)
+ * for its container.
+ */
+Ext.define('Ext.layout.container.boxOverflow.None', {
+
+    /* Begin Definitions */
+
+    /* End Definitions */
+
+    constructor: function(layout, config) {
+        this.layout = layout;
+
+        Ext.apply(this, config || {});
+    },
+
+    handleOverflow: Ext.emptyFn,
+
+    clearOverflow: Ext.emptyFn
+});</pre>    
+</body>
+</html>

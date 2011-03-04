@@ -1,0 +1,300 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.AbstractPanel"></a>/**
+ * @class Ext.AbstractPanel
+ * @extends Ext.container.Container
+ * Please refer to sub classes documentation
+ * @constructor
+ * @param {Object} config The config object
+ */
+Ext.define(&#39;Ext.AbstractPanel&#39;, {
+
+    /* Begin Definitions */
+
+    extend: &#39;Ext.container.Container&#39;,
+
+    requires: [&#39;Ext.util.MixedCollection&#39;, &#39;Ext.core.Element&#39;, &#39;Ext.toolbar.Toolbar&#39;],
+
+    /* End Definitions */
+
+    <a name="cfg-Ext.AbstractPanel-baseCls"></a>/**
+     * @cfg {String} baseCls
+     * The base CSS class to apply to this panel&#39;s element (defaults to &lt;code&gt;&#39;x-panel&#39;&lt;/code&gt;).
+     */
+    baseCls : Ext.baseCSSPrefix + &#39;panel&#39;,
+
+    <a name="cfg-Ext.AbstractPanel-bodyPadding"></a>/**
+     * @cfg {Number/String} bodyPadding
+     * A shortcut for setting a padding style on the body element. The value can either be
+     * a number to be applied to all sides, or a normal css string describing padding.
+     * Defaults to &lt;tt&gt;undefined&lt;/tt&gt;.
+     */
+
+    <a name="cfg-Ext.AbstractPanel-bodyMargin"></a>/**
+     * @cfg {Number/String} bodyMargin
+     * A shortcut for setting a margin style on the body element. The value can either be
+     * a number to be applied to all sides, or a normal css string describing margins.
+     * Defaults to &lt;tt&gt;undefined&lt;/tt&gt;.
+     */
+
+    <a name="cfg-Ext.AbstractPanel-bodyBorder"></a>/**
+     * @cfg {Number/String} bodyBorder
+     * A shortcut for setting a border style on the body element. The value can either be
+     * a number to be applied to all sides, or a normal css string describing borders.
+     * Defaults to &lt;tt&gt;undefined&lt;/tt&gt;.
+     */
+
+    isPanel: true,
+
+    componentLayout: &#39;dock&#39;,
+
+    renderTpl: [&#39;&lt;div class=&quot;{baseCls}-body&lt;tpl if=&quot;bodyCls&quot;&gt; {bodyCls}&lt;/tpl&gt;&quot;&lt;tpl if=&quot;bodyStyle&quot;&gt; style=&quot;{bodyStyle}&quot;&lt;/tpl&gt;&gt;&lt;/div&gt;&#39;],
+
+    <a name="cfg-Ext.AbstractPanel-dockedItems"></a>/**
+     * @cfg {Object/Array} dockedItems
+     * A component or series of components to be added as docked items to this panel.
+     * The docked items can be docked to either the top, right, left or bottom of a panel.
+     * This is typically used for things like toolbars or tab bars:
+     * <br><span style="display: none">**/</span>var panel = new Ext.panel.Panel({
+    fullscreen: true,
+    dockedItems: [{
+        xtype: &#39;toolbar&#39;,
+        dock: &#39;top&#39;,
+        items: [{
+            text: &#39;Docked to the bottom&#39;
+        }]
+    }]
+});&lt;/pre&gt;&lt;/code&gt;
+     */
+
+    initComponent : function() {
+        var me = this;
+        
+        me.addEvents(
+            <a name="event-Ext.AbstractPanel-bodyresize"></a>/**
+             * @event bodyresize
+             * Fires after the Panel has been resized.
+             * @param {Ext.panel.Panel} p the Panel which has been resized.
+             * @param {Number} width The Panel body&#39;s new width.
+             * @param {Number} height The Panel body&#39;s new height.
+             */
+            &#39;bodyresize&#39;
+            // // inherited
+            // &#39;activate&#39;,
+            // // inherited
+            // &#39;deactivate&#39;
+        );
+
+        Ext.applyIf(me.renderSelectors, {
+            body: &#39;.&#39; + me.baseCls + &#39;-body&#39;
+        });
+        me.callParent();
+    },
+
+    // @private
+    initItems : function() {
+        var me = this,
+            items = me.dockedItems;
+            
+        me.callParent();
+        me.dockedItems = new Ext.util.MixedCollection(false, me.getComponentId);
+        if (items) {
+            me.addDocked(items);
+        }
+    },
+
+    <a name="method-Ext.AbstractPanel-getDockedComponent"></a>/**
+     * Finds a docked component by id, itemId or position
+     * @param {String/Number} comp The id, itemId or position of the docked component (see {@link #getComponent} for details)
+     * @return {Ext.Component} The docked component (if found)
+     */
+    getDockedComponent: function(comp) {
+        if (Ext.isObject(comp)) {
+            comp = comp.getItemId();
+        }
+        return this.dockedItems.get(comp);
+    },
+
+    <a name="method-Ext.AbstractPanel-getComponent"></a>/**
+     * Attempts a default component lookup (see {@link Ext.container.Container#getComponent}). If the component is not found in the normal
+     * items, the dockedItems are searched and the matched component (if any) returned (see {@loink #getDockedComponent}). Note that docked
+     * items will only be matched by component id or itemId -- if you pass a numeric index only non-docked child components will be searched.
+     * @param {String/Number} comp The component id, itemId or position to find
+     * @return {Ext.Component} The component (if found)
+     */
+    getComponent: function(comp) {
+        var component = this.callParent(arguments);
+        if (component == undefined &amp;&amp; !Ext.isNumber(comp)) {
+            // If the arg is a numeric index skip docked items
+            component = this.getDockedComponent(comp);
+        }
+        return component;
+    },
+
+    /**
+     * Function description
+     * @return {String} A CSS style string with style, padding, margin and border.
+     * @private
+     */
+    initBodyStyles: function() {
+        var me = this,
+            bodyStyle = Ext.isString(me.bodyStyle) ? me.bodyStyle.split(&#39;;&#39;) : [],
+            Element = Ext.core.Element;
+
+        if (me.bodyPadding != undefined) {
+            bodyStyle.push(&#39;padding: &#39; + Element.unitizeBox((me.bodyPadding === true) ? 5 : me.bodyPadding));
+        }
+        if (me.bodyMargin != undefined) {
+            bodyStyle.push(&#39;margin: &#39; + Element.unitizeBox((me.bodyMargin === true) ? 5 : me.bodyMargin));
+        }
+        if (me.bodyBorder != undefined) {
+            bodyStyle.push(&#39;border-width: &#39; + Element.unitizeBox((me.bodyBorder === true) ? 1 : me.bodyBorder));
+        }
+        delete me.bodyStyle;
+        return bodyStyle.length ? bodyStyle.join(&#39;;&#39;) : undefined;
+    },
+
+    /**
+     * Initialized the renderData to be used when rendering the renderTpl.
+     * @return {Object} Object with keys and values that are going to be applied to the renderTpl
+     * @private
+     */
+    initRenderData: function() {
+        return Ext.applyIf(this.callParent(), {
+            bodyStyle: this.initBodyStyles(),
+            bodyCls: this.bodyCls
+        });
+    },
+
+    <a name="method-Ext.AbstractPanel-addDocked"></a>/**
+     * Adds docked item(s) to the panel.
+     * @param {Object/Array} component. The Component or array of components to add. The components
+     * must include a &#39;dock&#39; parameter on each component to indicate where it should be docked (&#39;top&#39;, &#39;right&#39;,
+     * &#39;bottom&#39;, &#39;left&#39;).
+     * @param {Number} pos (optional) The index at which the Component will be added
+     */
+    addDocked : function(items, pos) {
+        var me = this, item, i, ln;
+        items = me.prepareItems(items);
+
+        for (i = 0, ln = items.length; i &lt; ln; i++) {
+            item = items[i];
+            item.dock = item.dock || &#39;top&#39;;
+
+            // Allow older browsers to target docked items to style without borders
+            if (me.border === false) {
+                item.cls = item.cls || &#39;&#39; + &#39; &#39; + me.baseCls + &#39;-noborder-docked-&#39; + item.dock;
+            }
+
+            if (pos !== undefined) {
+                me.dockedItems.insert(pos + i, item);
+            }
+            else {
+                me.dockedItems.add(item);
+            }
+            item.onAdded(me, i);
+            me.onDockedAdd(item);
+        }
+        if (me.rendered) {
+            me.doComponentLayout();
+        }
+        return items;
+    },
+
+    // Placeholder empty functions
+    onDockedAdd : Ext.emptyFn,
+    onDockedRemove : Ext.emptyFn,
+
+    <a name="method-Ext.AbstractPanel-insertDocked"></a>/**
+     * Inserts docked item(s) to the panel at the indicated position.
+     * @param {Number} pos The index at which the Component will be inserted
+     * @param {Object/Array} component. The Component or array of components to add. The components
+     * must include a &#39;dock&#39; paramater on each component to indicate where it should be docked (&#39;top&#39;, &#39;right&#39;,
+     * &#39;bottom&#39;, &#39;left&#39;).
+     */
+    insertDocked : function(pos, items) {
+        this.addDocked(items, pos);
+    },
+
+    <a name="method-Ext.AbstractPanel-removeDocked"></a>/**
+     * Removes the docked item from the panel.
+     * @param {Ext.Component} item. The Component to remove.
+     * @param {Boolean} autoDestroy (optional) Destroy the component after removal.
+     */
+    removeDocked : function(item, autoDestroy) {
+        if (!this.dockedItems.contains(item)) {
+            return item;
+        }
+
+        var layout = this.componentLayout,
+            hasLayout = layout &amp;&amp; this.rendered;
+
+        if (hasLayout) {
+            layout.onRemove(item);
+        }
+
+        this.dockedItems.remove(item);
+        item.onRemoved();
+        this.onDockedRemove(item);
+
+        if (autoDestroy === true || (autoDestroy !== false &amp;&amp; this.autoDestroy)) {
+            item.destroy();
+        }
+
+        if (hasLayout &amp;&amp; !autoDestroy) {
+            layout.afterRemove(item);
+        }
+        this.doComponentLayout();
+
+        return item;
+    },
+
+    <a name="method-Ext.AbstractPanel-getDockedItems"></a>/**
+     * Retrieve an array of all currently docked components.
+     * @return {Array} An array of components.
+     */
+    getDockedItems : function() {
+        if (this.dockedItems &amp;&amp; this.dockedItems.items.length) {
+            return this.dockedItems.items.slice();
+        }
+        return [];
+    },
+
+    // @private
+    getTargetEl : function() {
+        return this.body;
+    },
+
+
+    getRefItems: function(deep) {
+        var refItems    = this.callParent(arguments),
+            // deep does not account for dockedItems within dockedItems.
+            dockedItems = this.getDockedItems(),
+            ln          = dockedItems.length,
+            i           = 0,
+            item;
+
+        refItems = refItems.concat(dockedItems);
+
+        if (deep) {
+            for (; i &lt; ln; i++) {
+                item = dockedItems[i];
+                if (item.getRefItems) {
+                    refItems = refItems.concat(item.getRefItems(true));
+                }
+            }
+        }
+
+        return refItems;
+    },
+    
+    beforeDestroy: function(){
+        var docked = this.dockedItems,
+            c;
+            
+        if (docked) {
+            while ((c = docked.first())) {
+                this.removeDocked(c, true);
+            }
+        }
+        this.callParent();
+    }
+});￿</pre></pre></body></html>

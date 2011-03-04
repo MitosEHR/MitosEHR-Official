@@ -1,0 +1,155 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre>/**
+ * @class Ext.core.Element
+ */
+Ext.core.Element.addMethods(
+    function() {
+        var VISIBILITY      = &quot;visibility&quot;,
+            DISPLAY         = &quot;display&quot;,
+            HIDDEN          = &quot;hidden&quot;,
+            NONE            = &quot;none&quot;,
+            XMASKED         = Ext.baseCSSPrefix + &quot;masked&quot;,
+            XMASKEDRELATIVE = Ext.baseCSSPrefix + &quot;masked-relative&quot;,
+            data            = Ext.core.Element.data;
+
+        return {
+            <a name="method-Ext.core.Element-isVisible"></a>/**
+             * Checks whether the element is currently visible using both visibility and display properties.
+             * @param {Boolean} deep (optional) True to walk the dom and see if parent elements are hidden (defaults to false)
+             * @return {Boolean} True if the element is currently visible, else false
+             */
+            isVisible : function(deep) {
+                var vis = !this.isStyle(VISIBILITY, HIDDEN) &amp;&amp; !this.isStyle(DISPLAY, NONE),
+                    p   = this.dom.parentNode;
+                
+                if (deep !== true || !vis) {
+                    return vis;
+                }
+                
+                while (p &amp;&amp; !(/^body/i.test(p.tagName))) {
+                    if (!Ext.fly(p, &#39;_isVisible&#39;).isVisible()) {
+                        return false;
+                    }
+                    p = p.parentNode;
+                }
+                return true;
+            },
+
+            <a name="method-Ext.core.Element-isDisplayed"></a>/**
+             * Returns true if display is not &quot;none&quot;
+             * @return {Boolean}
+             */
+            isDisplayed : function() {
+                return !this.isStyle(DISPLAY, NONE);
+            },
+
+            <a name="method-Ext.core.Element-enableDisplayMode"></a>/**
+             * Convenience method for setVisibilityMode(Element.DISPLAY)
+             * @param {String} display (optional) What to set display to when visible
+             * @return {Ext.core.Element} this
+             */
+            enableDisplayMode : function(display) {
+                this.setVisibilityMode(Ext.core.Element.DISPLAY);
+                
+                if (!Ext.isEmpty(display)) {
+                    data(this.dom, &#39;originalDisplay&#39;, display);
+                }
+                
+                return this;
+            },
+
+            <a name="method-Ext.core.Element-mask"></a>/**
+             * Puts a mask over this element to disable user interaction. Requires core.css.
+             * This method can only be applied to elements which accept child nodes.
+             * @param {String} msg (optional) A message to display in the mask
+             * @param {String} msgCls (optional) A css class to apply to the msg element
+             * @return {Element} The mask element
+             */
+            mask : function(msg, msgCls) {
+                var me  = this,
+                    dom = me.dom,
+                    dh  = Ext.core.DomHelper,
+                    EXTELMASKMSG = Ext.baseCSSPrefix + &quot;mask-msg&quot;,
+                    el,
+                    mask;
+
+                if (!(/^body/i.test(dom.tagName) &amp;&amp; me.getStyle(&#39;position&#39;) == &#39;static&#39;)) {
+                    me.addCls(XMASKEDRELATIVE);
+                }
+                if (el = data(dom, &#39;maskMsg&#39;)) {
+                    el.remove();
+                }
+                if (el = data(dom, &#39;mask&#39;)) {
+                    el.remove();
+                }
+
+                mask = dh.append(dom, {cls : Ext.baseCSSPrefix + &quot;mask&quot;}, true);
+                data(dom, &#39;mask&#39;, mask);
+
+                me.addCls(XMASKED);
+                mask.setDisplayed(true);
+                
+                if (typeof msg == &#39;string&#39;) {
+                    var mm = dh.append(dom, {cls : EXTELMASKMSG, cn:{tag:&#39;div&#39;}}, true);
+                    data(dom, &#39;maskMsg&#39;, mm);
+                    mm.dom.className = msgCls ? EXTELMASKMSG + &quot; &quot; + msgCls : EXTELMASKMSG;
+                    mm.dom.firstChild.innerHTML = msg;
+                    mm.setDisplayed(true);
+                    mm.center(me);
+                }
+                
+                // ie will not expand full height automatically
+                if (Ext.isIE &amp;&amp; !(Ext.isIE7 &amp;&amp; Ext.isStrict) &amp;&amp; me.getStyle(&#39;height&#39;) == &#39;auto&#39;) {
+                    mask.setSize(undefined, me.getHeight());
+                }
+                
+                return mask;
+            },
+
+            <a name="method-Ext.core.Element-unmask"></a>/**
+             * Removes a previously applied mask.
+             */
+            unmask : function() {
+                var me      = this,
+                    dom     = me.dom,
+                    mask    = data(dom, &#39;mask&#39;),
+                    maskMsg = data(dom, &#39;maskMsg&#39;);
+
+                if (mask) {
+                    if (maskMsg) {
+                        maskMsg.remove();
+                        data(dom, &#39;maskMsg&#39;, undefined);
+                    }
+                    
+                    mask.remove();
+                    data(dom, &#39;mask&#39;, undefined);
+                    me.removeCls([XMASKED, XMASKEDRELATIVE]);
+                }
+            },
+            <a name="method-Ext.core.Element-isMasked"></a>/**
+             * Returns true if this element is masked
+             * @return {Boolean}
+             */
+            isMasked : function() {
+                var m = data(this.dom, &#39;mask&#39;);
+                return m &amp;&amp; m.isVisible();
+            },
+
+            <a name="method-Ext.core.Element-createShim"></a>/**
+             * Creates an iframe shim for this element to keep selects and other windowed objects from
+             * showing through.
+             * @return {Ext.core.Element} The new shim element
+             */
+            createShim : function() {
+                var el = document.createElement(&#39;iframe&#39;),
+                    shim;
+                
+                el.frameBorder = &#39;0&#39;;
+                el.className = &#39;ext-shim&#39;;
+                el.src = Ext.SSL_SECURE_URL;
+                shim = Ext.get(this.dom.parentNode.insertBefore(el, this.dom));
+                shim.autoBoxAdjust = false;
+                return shim;
+            }
+        };
+    }()
+);￿</pre></pre></body></html>

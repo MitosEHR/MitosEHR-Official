@@ -1,0 +1,166 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.tab.TabBar"></a>/**
+ * @author Ed Spencer
+ * @class Ext.tab.TabBar
+ * @extends Ext.panel.Header
+ * &lt;p&gt;TabBar is used internally by a {@link Ext.tab.TabPanel TabPanel} and wouldn&#39;t usually need to be created manually.&lt;/p&gt;
+ *
+ * @xtype tabbar
+ */
+Ext.define(&#39;Ext.tab.TabBar&#39;, {
+    extend: &#39;Ext.panel.Header&#39;,
+    alias: &#39;widget.tabbar&#39;,
+    baseCls: Ext.baseCSSPrefix + &#39;tab-bar&#39;,
+
+    requires: [&#39;Ext.tab.Tab&#39;],
+
+    // @private
+    defaultType: &#39;tab&#39;,
+
+    <a name="cfg-Ext.tab.TabBar-plain"></a>/**
+     * @cfg Boolean plain
+     * True to not show the full background on the tabbar
+     */
+    plain: false,
+
+    // @private
+    renderTpl: [
+        &#39;&lt;div class=&quot;{baseCls}-body&lt;tpl if=&quot;ui&quot;&gt; {baseCls}-body-{ui}&lt;/tpl&gt;&quot;&lt;tpl if=&quot;bodyStyle&quot;&gt; style=&quot;{bodyStyle}&quot;&lt;/tpl&gt;&gt;&lt;/div&gt;&#39;,
+        &#39;&lt;div class=&quot;{baseCls}-strip&quot;&gt;&lt;/div&gt;&#39;
+    ],
+
+    <a name="cfg-Ext.tab.TabBar-minTabWidth"></a>/**
+     * @cfg {Number} minTabWidth The minimum width for each tab. Defaults to &lt;tt&gt;30&lt;/tt&gt;.
+     */
+    minTabWidth: 30,
+
+    <a name="cfg-Ext.tab.TabBar-maxTabWidth"></a>/**
+     * @cfg {Number} maxTabWidth The maximum width for each tab. Defaults to &lt;tt&gt;undefined&lt;/tt&gt;.
+     */
+    maxTabWidth: undefined,
+
+    // @private
+    initComponent: function() {
+        var me = this;
+
+        if (me.plain) {
+            me.ui = &#39;plain&#39;;
+        }
+
+        me.addEvents(
+            <a name="event-Ext.tab.TabBar-change"></a>/**
+             * @event change
+             * Fired when the currently-active tab has changed
+             * @param {Ext.tab.TabBar} tabBar The TabBar
+             * @param {Ext.Tab} tab The new Tab
+             * @param {Ext.Component} card The card that was just shown in the TabPanel
+             */
+            &#39;change&#39;
+        );
+
+        Ext.applyIf(this.renderSelectors, {
+            strip: &#39;.&#39; + this.baseCls + &#39;-strip&#39;
+        });
+        me.callParent(arguments);
+
+        // TabBar must override the Header&#39;s align setting.
+        me.layout.align = (me.orientation == &#39;vertical&#39;) ? &#39;left&#39; : &#39;top&#39;;
+    },
+
+    // @private
+    onAdd: function(tab) {
+        var me = this,
+            tabPanel = me.tabPanel,
+            hasOwner = !!tabPanel;
+            
+        me.callParent(arguments);
+        
+        tab.position = me.dock;
+        tab.minWidth = me.minTabWidth || (hasOwner ? tabPanel.minTabWidth : undefined);
+        tab.maxWidth = me.maxTabWidth || (hasOwner ? tabPanel.maxTabWidth : undefined);
+    },
+
+    // @private
+    afterRender: function() {
+        var me = this;
+        
+        me.mon(me.el, {
+            scope: me,
+            click: me.onClick,
+            delegate: &#39;.&#39; + Ext.baseCSSPrefix + &#39;tab&#39;
+        });
+        
+        me.callParent(arguments);
+    },
+
+    afterComponentLayout : function() {
+        var me = this;
+        
+        me.callParent(arguments);
+        me.strip.appendTo(me.layout.getRenderTarget());
+        me.strip.setWidth(me.el.getWidth());
+    },
+
+    // @private
+    onClick: function(e, target) {
+        // target is a valid tab el since the click event is filtered in the event handler
+        var tab = Ext.getCmp(target.id),
+            tabPanel = this.tabPanel;
+
+        if (!tab.isDisabled()) {
+            if (tab.overMenuTrigger) {
+                tab.onCloseClick();
+            } else {
+                this.setActiveTab(tab);
+                if (tabPanel) {
+                    tabPanel.setActiveTab(tab.card);
+                }
+            }
+        }
+    },
+
+    /**
+     * @private
+     * Closes the given tab by removing it from the TabBar and removing the corresponding card from the TabPanel
+     * @param {Ext.Tab} tab The tab to close
+     */
+    closeTab: function(tab) {
+        var card    = tab.card,
+            tabPanel = this.tabPanel,
+            nextTab;
+
+        if (tab.active &amp;&amp; this.items.getCount() &gt; 1) {
+            nextTab = tab.next(&#39;tab&#39;) || this.items.items[0];
+            this.setActiveTab(nextTab);
+            if (tabPanel) {
+                tabPanel.setActiveTab(nextTab.card);
+            }
+        }
+        this.remove(tab);
+
+        if (tabPanel &amp;&amp; card) {
+            tabPanel.remove(card);
+        }
+    },
+
+    /**
+     * @private
+     * Marks the given tab as active
+     * @param {Ext.Tab} tab The tab to mark active
+     */
+    setActiveTab: function(tab) {
+        if (tab.disabled) {
+            return;
+        }
+        var me = this;
+
+        if (me.rendered) {
+            if (me.activeTab) {
+                me.activeTab.deactivate();
+            }
+            tab.activate();
+            me.doLayout();
+        }
+        me.activeTab = tab;
+        me.fireEvent(&#39;change&#39;, me, tab, tab.card);
+    }
+});￿</pre></pre></body></html>

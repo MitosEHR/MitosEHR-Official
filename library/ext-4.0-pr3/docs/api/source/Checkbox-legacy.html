@@ -1,0 +1,50 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/new/ext-js/4-0/api/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="prop-Ext.form.Basic-function"></div>/**
+ * Overrides for maintaining back-compat with pre-Ext4 legacy Checkbox API
+ */
+(function() {
+
+    var Checkbox = Ext.form.Checkbox,
+        proto = Checkbox.prototype,
+        _initComponent = proto.initComponent,
+        _onChange = proto.onChange;
+
+    Ext.override(Checkbox, {
+
+        initComponent: function() {
+            _initComponent.call(this);
+            this.addEvents(
+                <div id="event-Ext.form.Basic-check"></div>/**
+                 * @event check
+                 * Fires when the checkbox is checked or unchecked.
+                 * @deprecated Use the 'change' event instead.
+                 * @param {Ext.form.Checkbox} this This checkbox
+                 * @param {Boolean} checked The new checked value
+                 */
+                'check'
+            );
+        },
+
+        <div id="method-Ext.form.Basic-onChange"></div>/**
+         * Fires the legacy 'check' event when the checkbox's checked state changes. This event has
+         * been replaced by the 'change' event in Ext4, which behaves exactly the same.
+         */
+        onChange: function(newVal, oldVal) {
+            var result = _onChange.call(this, newVal, oldVal);
+            this.fireEvent('check', this, this.checked);
+            return result;
+        }
+
+    });
+
+})();
+</pre>    
+</body>
+</html>

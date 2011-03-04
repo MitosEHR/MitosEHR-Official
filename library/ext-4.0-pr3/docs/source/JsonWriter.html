@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.JsonWriter"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.JsonWriter
+ * @extends Ext.data.Writer
+ * 
+ * &lt;p&gt;Writer that outputs model data in JSON format&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.data.JsonWriter&#39;, {
+    extend: &#39;Ext.data.Writer&#39;,
+    alias: &#39;writer.json&#39;,
+    
+    <a name="cfg-Ext.data.JsonWriter-root"></a>/**
+     * @cfg {String} root The key under which the records in this Writer will be placed. Defaults to &#39;records&#39;.
+     * Example generated request:
+<br><span style="display: none">**/</span>{&#39;records&#39;: [{name: &#39;my record&#39;}, {name: &#39;another record&#39;}]}
+<br><span style="display: none">/**</span>     */
+    root: &#39;records&#39;,
+    
+    <a name="cfg-Ext.data.JsonWriter-encode"></a>/**
+     * @cfg {Boolean} encode True to use Ext.encode() on the data before sending. Defaults to &lt;tt&gt;false&lt;/tt&gt;.
+     */
+    encode: false,
+    
+    //inherit docs
+    writeRecords: function(request, data) {
+        if (this.encode === true) {
+            data = Ext.encode(data);
+        }
+        
+        request.jsonData = request.jsonData || {};
+        request.jsonData[this.root] = data;
+        
+        return request;
+    }
+});
+￿</pre></pre></body></html>

@@ -1,0 +1,219 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="http://localhost:3000/resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="http://localhost:3000/resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js"><div id="cls-Ext.tab.TabPanel"></div>/**
+ * @author Ed Spencer
+ * @class Ext.tab.TabPanel
+ * @extends Ext.panel.Panel
+ * <p></p>
+ */
+Ext.define('Ext.tab.TabPanel', {
+    //baseCls: Ext.baseCSSPrefix + 'tab-panel',
+    extend: 'Ext.panel.Panel',
+    alias: 'widget.tabpanel',
+    alternateClassName: ['Ext.TabPanel'],
+    
+    <div id="cfg-Ext.tab.TabPanel-tabBar"></div>/**
+     * @cfg {Object} tabBar Optional configuration object for the internal {@link Ext.TabBar}. If present, this is 
+     * passed straight through to the TabBar's constructor
+     */
+    
+    <div id="cfg-Ext.tab.TabPanel-layout"></div>/**
+     * @cfg {Object} layout Optional configuration object for the internal {@link Ext.layout.CardLayout card layout}.
+     * If present, this is passed straight through to the layout's constructor
+     */
+    
+    <div id="cfg-Ext.tab.TabPanel-removePanelHeader"></div>/**
+     * @cfg {Boolean} removePanelHeader True to instruct each Panel added to the TabContainer to not render its header 
+     * element. This is to ensure that the title of the panel does not appear twice. Defaults to true.
+     */
+    removePanelHeader: true,
+    
+    <div id="cfg-Ext.tab.TabPanel-plain"></div>/**
+     * @cfg Boolean plain
+     * True to not show the full background on the TabBar
+     */
+    plain: false,
+
+    <div id="cfg-Ext.tab.TabPanel-itemCls"></div>/**
+     * @cfg {String} itemCls The class added to each child item of this TabPanel. Defaults to 'x-tabpanel-child'.
+     */
+    itemCls: 'x-tabpanel-child',
+        
+    //inherit docs
+    initComponent: function() {
+        var me          = this,
+            dockedItems = me.dockedItems || [],
+            activeTab   = me.activeTab || 0;
+        
+        me.layout = Ext.create('Ext.layout.container.Card', Ext.applyIf({owner: me, itemCls: me.itemCls}, me.layout));
+        
+        <div id="prop-Ext.tab.TabPanel-tabBar"></div>/**
+         * @property tabBar
+         * @type Ext.TabBar
+         * Internal reference to the docked TabBar
+         */
+        me.tabBar = Ext.create('Ext.tab.TabBar', Ext.apply({}, me.tabBar, {
+            dock: 'top',
+            plain: me.plain,
+            cardLayout: me.layout
+        }));
+        
+        if (dockedItems && !Ext.isArray(dockedItems)) {
+            dockedItems = [dockedItems];
+        }
+        
+        dockedItems.push(me.tabBar);
+        me.dockedItems = dockedItems;
+        
+        me.addEvents(
+            <div id="event-Ext.tab.TabPanel-beforetabchange"></div>/**
+             * @event beforetabchange
+             * Fires before a tab change (activated by {@link #setActiveTab}). Return false in any listener to cancel
+             * the tabchange
+             * @param {Ext.tab.TabPanel} tabPanel The TabPanel
+             * @param {Ext.Component} newCard The card that is about to be activated
+             * @param {Ext.Component} oldCard The card that is currently active
+             */
+            'beforetabchange',
+            
+            <div id="event-Ext.tab.TabPanel-tabchange"></div>/**
+             * @event tabchange
+             * Fires when a new tab has been activated (activated by {@link #setActiveTab}).
+             * @param {Ext.tab.TabPanel} tabPanel The TabPanel
+             * @param {Ext.Component} newCard The newly activated item
+             * @param {Ext.Component} oldCard The previously active item
+             */
+            'tabchange'
+        );
+        me.callParent(arguments);
+
+        //set the active tab
+        me.setActiveTab(activeTab);
+        //set the active tab after initial layout
+        me.on('afterlayout', me.afterInitialLayout, me, {single: true});
+    },
+    
+    /**
+     * @private
+     * We have to wait until after the initial layout to visually activate the activeTab (if set).
+     * The active tab has different margins than normal tabs, so if the initial layout happens with
+     * a tab active, its layout will be offset improperly due to the active margin style. Waiting
+     * until after the initial layout avoids this issue.
+     */
+    afterInitialLayout: function() {
+        this.setActiveTab(this.activeTab);
+    },
+        
+    <div id="method-Ext.tab.TabPanel-setActiveTab"></div>/**
+     * Makes the given card active (makes it the visible card in the TabPanel's CardLayout and highlights the Tab)
+     * @param {Ext.Component} card The card to make active
+     */
+    setActiveTab: function(card) {
+        var me = this,
+            previous;
+            
+        card = me.getComponent(card);
+        if (card) {
+            previous = me.getActiveTab();
+            if (me.fireEvent('beforetabchange', me, card, previous) !== false) {
+                me.tabBar.setActiveTab(card.tab);
+                me.activeTab = card;
+                if (me.rendered) {
+                    me.layout.setActiveItem(card);
+                }
+                me.fireEvent('tabchange', me, card, previous);
+            }
+        }
+    },
+    
+    <div id="method-Ext.tab.TabPanel-getActiveTab"></div>/**
+     * Returns the item that is currently active inside this TabPanel. Note that before the TabPanel first activates a
+     * child component this will return whatever was configured in the {@link #activeTab} config option 
+     * @return {Ext.Component/Integer} The currently active item
+     */
+    getActiveTab: function() {
+        return this.activeTab;
+    },
+    
+    <div id="method-Ext.tab.TabPanel-getTabBar"></div>/**
+     * Returns the {@link Ext.TabBar} currently used in this TabPanel
+     * @return {Ext.TabBar} The TabBar
+     */
+    getTabBar: function() {
+        return this.tabBar;
+    },
+    
+    /**
+     * @ignore
+     * Makes sure we have a Tab for each item added to the TabPanel
+     */
+    onAdd: function(item, index) {
+        item.tab = this.tabBar.insert(index, {
+            xtype: 'tab',
+            card: item,
+            disabled: item.disabled,
+            tabBar: this.tabBar
+        });
+        
+        if (item.isPanel) {
+            if (this.removePanelHeader) {
+                item.preventHeader = true;
+                if (item.rendered) {
+                    item.updateHeader();
+                }                
+            }
+            if (item.border !== true) {
+                item.hideBorders();
+            }
+        }
+    },
+    
+    /**
+     * @ignore
+     * If we're removing the currently active tab, activate the nearest one. The item is removed when we call super,
+     * so we can do preprocessing before then to find the card's index
+     */
+    doRemove: function(item, autoDestroy) {
+        var me = this,
+            items = me.items,
+            index;
+        if (!me.destroying) {
+            if (item === me.activeTab) {
+                index = items.indexOf(item);
+                if (index > 0) {
+                    // activate the previous card
+                    item = items.getAt(index - 1);
+                    me.setActiveTab(item);
+                } else if (me.items.getCount() > 1) {
+                    // removing card 0, activate the next card
+                    me.setActiveTab(items.getAt(1));
+                } else {
+                    // removing card 0 and no more cards left
+                    me.activeTab = null;
+                }
+            }
+        } else if (items.getCount() === 0) {
+            me.activeTab = null;
+        }
+        me.callParent(arguments);
+    },
+    
+    /**
+     * @ignore
+     * Makes sure we remove the corresponding Tab when an item is removed
+     */
+    onRemove: function(item, autoDestroy) {
+        if (!this.destroying) {
+            this.tabBar.remove(item.tab);
+        }
+    }
+});
+</pre>    
+</body>
+</html>

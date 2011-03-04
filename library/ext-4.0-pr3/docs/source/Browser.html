@@ -1,0 +1,169 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.env.Browser"></a>/**
+ * @class Ext.env.Browser
+ * @extends Ext.Base
+ * Provide useful information about the current browser.
+ * Should not be manually instantiated unless for unit-testing; access the global instance stored in Ext.browser instead. Example:
+ * <br><span style="display: none">**/</span> * if (Ext.browser.is.IE) {
+ *      // IE specific code here
+ * }
+ *
+ * if (Ext.browser.is.WebKit) {
+ *      // WebKit specific code here
+ * }
+ *
+ * console.log(&quot;Version &quot; + Ext.browser.version);
+ * <br><span style="display: none">/**</span> *
+ * For a full list of supported values, refer to: {@link Ext.env.Browser#is}
+ *
+ * @borrows Ext.Base.extend
+ */
+Ext.define(&#39;Ext.env.Browser&#39;, {
+    statics: {
+        browserNames: {
+            ie: &#39;IE&#39;,
+            firefox: &#39;Firefox&#39;,
+            safari: &#39;Safari&#39;,
+            chrome: &#39;Chrome&#39;,
+            opera: &#39;Opera&#39;,
+            other: &#39;Other&#39;
+        },
+        engineNames: {
+            webkit: &#39;WebKit&#39;,
+            gecko: &#39;Gecko&#39;,
+            presto: &#39;Presto&#39;,
+            trident: &#39;Trident&#39;,
+            other: &#39;Other&#39;
+        },
+        enginePrefixes: {
+            webkit: &#39;AppleWebKit/&#39;,
+            gecko: &#39;Gecko/&#39;,
+            presto: &#39;Presto/&#39;,
+            trident: &#39;Trident/&#39;
+        },
+        browserPrefixes: {
+            ie: &#39;MSIE &#39;,
+            firefox: &#39;Firefox/&#39;,
+            chrome: &#39;Chrome/&#39;,
+            safari: &#39;Version/&#39;,
+            opera: &#39;Opera/&#39;
+        }
+    },
+    <a name="prop-Ext.env.Browser-"></a>/** @scope Ext.env.Browser.prototype */
+
+    <a name="prop-Ext.env.Browser-isSecure"></a>/**
+     * True if the page is running over SSL
+     * @type Boolean
+     */
+    isSecure: false,
+
+    <a name="prop-Ext.env.Browser-isStrict"></a>/**
+     * True if the document is in strict mode
+     * @type Boolean
+     */
+    isStrict: false,
+
+    <a name="method-Ext.env.Browser-is"></a>/**
+     * A &quot;hybrid&quot; property, can be either accessed as a method call, i.e:
+     * <br><span style="display: none">**/</span>     * if (Ext.browser.is(&#39;IE&#39;)) { ... }
+     * <br><span style="display: none">/**</span>     *
+     * or as an object with boolean properties, i.e:
+     * <br><span style="display: none">**/</span>     * if (Ext.browser.is.IE) { ... }
+     * <br><span style="display: none">/**</span>     *
+     * Versions can be conveniently checked as well. For example:
+     * <br><span style="display: none">**/</span>     * if (Ext.browser.is.IE6) { ... } // Equivalent to (Ext.browser.is.IE &amp;&amp; Ext.browser.version.equals(6))
+     * <br><span style="display: none">/**</span>     *
+     * Note that only {@link Ext.Version#getMajor major component}  and {@link Ext.Version#getSimplified simplified}
+     * value of the version are available via direct property checking.
+     *
+     * Supported values are: IE, Firefox, Safari, Chrome, Opera, WebKit, Gecko, Presto, Trident and Other
+     *
+     * @param {String} value The OS name to check
+     * @return {Boolean}
+     */
+    is: Ext.emptyFn,
+
+    <a name="prop-Ext.env.Browser-name"></a>/**
+     * Read-only - the full name of the current browser
+     * Possible values are: IE, Firefox, Safari, Chrome, Opera and Other
+     * @type String
+     */
+    name: null,
+
+    <a name="prop-Ext.env.Browser-version"></a>/**
+     * Read-only, refer to {@link Ext.Version}
+     * @type Ext.Version
+     */
+    version: null,
+
+    <a name="prop-Ext.env.Browser-engineName"></a>/**
+     * Read-only - the full name of the current browser&#39;s engine
+     * Possible values are: WebKit, Gecko, Presto, Trident and Other
+     * @type String
+     */
+    engineName: null,
+
+    <a name="prop-Ext.env.Browser-engineVersion"></a>/**
+     * Read-only, refer to {@link Ext.Version}
+     * @type Ext.Version
+     */
+    engineVersion: null,
+
+    constructor: function() {
+        var userAgent = this.userAgent = Ext.global.navigator.userAgent,
+            selfClass = this.statics(),
+            browserMatch = userAgent.match(new RegExp(&#39;((?:&#39; + Ext.Object.getValues(selfClass.browserPrefixes).join(&#39;)|(?:&#39;) + &#39;))([\\d\\._]+)&#39;)),
+            engineMatch = userAgent.match(new RegExp(&#39;((?:&#39; + Ext.Object.getValues(selfClass.enginePrefixes).join(&#39;)|(?:&#39;) + &#39;))([\\d\\._]+)&#39;)),
+            browserName = selfClass.browserNames.other,
+            browserVersion = &#39;&#39;,
+            engineName = selfClass.engineNames.other,
+            engineVersion = &#39;&#39;;
+
+        this.is = function(name) {
+            return this.is[name] === true;
+        };
+
+        if (browserMatch) {
+            browserName = selfClass.browserNames[Ext.Object.keyOf(selfClass.browserPrefixes, browserMatch[1])];
+            browserVersion = browserMatch[2];
+        }
+
+        if (engineMatch) {
+            engineName = selfClass.engineNames[Ext.Object.keyOf(selfClass.enginePrefixes, engineMatch[1])];
+            engineVersion = engineMatch[2];
+        }
+
+        Ext.apply(this, {
+            engineName: engineName,
+            engineVersion: new Ext.Version(engineVersion),
+            name: browserName,
+            version: new Ext.Version(browserVersion)
+        });
+
+        this.is[this.name] = true;
+        this.is[this.name + (this.version.getMajor() || &#39;&#39;)] = true;
+        this.is[this.name + this.version.getSimplified()] = true;
+        Ext.Object.each(selfClass.browserNames, function(key, name) {
+            this.is[name] = (this.name === name);
+        }, this);
+
+        this.is[this.name] = true;
+        this.is[this.engineName + (this.engineVersion.getMajor() || &#39;&#39;)] = true;
+        this.is[this.engineName + this.engineVersion.getSimplified()] = true;
+        Ext.Object.each(selfClass.engineNames, function(key, name) {
+            this.is[name] = (this.engineName === name);
+        }, this);
+
+
+        this.isSecure = /^https/i.test(Ext.global.location.protocol);
+
+        this.isStrict = Ext.global.document.compatMode === &quot;CSS1Compat&quot;;
+
+        return this;
+    }
+
+}, function() {
+
+    Ext.browser = new Ext.env.Browser();
+
+});
+￿</pre></pre></body></html>

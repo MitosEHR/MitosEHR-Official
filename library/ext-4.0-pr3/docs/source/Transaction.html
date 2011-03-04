@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="http://localhost:3000/new/css/prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.direct.Transaction"></a>/**
+ * @class Ext.direct.Transaction
+ * @extends Object
+ * &lt;p&gt;Supporting Class for Ext.direct.Direct (not intended to be used directly).&lt;/p&gt;
+ * @constructor
+ * @param {Object} config
+ */
+Ext.define(&#39;Ext.direct.Transaction&#39;, {
+    constructor: function(config){
+        Ext.apply(this, config);
+        this.tid = ++Ext.direct.Direct.TID;
+        this.retryCount = 0;
+    },
+    send: function(){
+        this.provider.queueTransaction(this);
+    },
+
+    retry: function(){
+        this.retryCount++;
+        this.send();
+    },
+
+    getProvider: function(){
+        return this.provider;
+    }
+});
+￿</pre></pre></body></html>
