@@ -97,7 +97,8 @@ var Navigation = Ext.create('Ext.Panel', {
 	bodyPadding: 5,
 	loader:{
 		autoLoad: true,
-		url: 'interface/main/menu_links.inc.php'
+		contentType: 'html',
+		url: 'interface/main/menu_links.inc.php',
 	}
 });
 

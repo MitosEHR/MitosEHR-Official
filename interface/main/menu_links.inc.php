@@ -1,17 +1,25 @@
-<script type="text/javascript">
-Ext.onReady(function() {
-	//var topLoader = Ext.getCmp('TopPannel').getLoader;
-	alert(Ext.getCmp('TopPanel'));
-});
-</script>
+<?php
+/* Main Screen Application
+*
+* Description: This is the main application, with all the panels
+*
+* version 0.0.3
+* revision: N/A
+* author: Gino Rivera Falú
+*/
+
+// Reset session count
+$_SESSION['site']['flops'] = 0;
+
+?>
 <a 
 	href="javascript:void()" 
-	onClick="Ext.getCmp('TopPanel').load('interface/administration/facilities/facilities.ejs.php');">
+	onClick="MainApp.load('interface/administration/roles/roles.ejs.php');">
 	Facilicies
 </a>
 <br />
 <a 
 	href="javascript:void()" 
-	onClick="Ext.getCmp('TopPanel').load('interface/administration/roles/roles.ejs.php');">
+	onClick="MainApp.load('interface/administration/roles/roles.ejs.php');">
 	roles and permissions
 </a>
