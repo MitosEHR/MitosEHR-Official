@@ -81,26 +81,41 @@ Ext.TaskMgr.start({
 // DUMMY Navigation Panel
 //****************************************************************
 var Navigation = Ext.create('Ext.Panel', {
-	region: 'west',
-	collapsible: true,
-	floatable: true,
-	useArrows: true,
-	autoScroll: true,
-	rootVisible: false,
-	lines: false,
-	animate: true,
-	enableDD: true,
-	containerScroll: true,
-	title: '<?php i18n('Navigation'); ?>',
-	split: true,
-	width: 200,
-	bodyPadding: 5,
+	region			: 'west',
+	collapsible		: true,
+	floatable		: true,
+	useArrows		: true,
+	autoScroll		: true,
+	rootVisible		: false,
+	lines			: false,
+	animate			: true,
+	enableDD		: true,
+	containerScroll	: true,
+	title			: '<?php i18n('Navigation'); ?>',
+	split			: true,
+	width			: 200,
+	bodyPadding		: 5,
 	loader:{
 		autoLoad: true,
-		contentType: 'html',
+		contentType: 'component',
 		url: 'interface/main/menu_links.inc.php',
 	}
 }); // End Navigation
+
+//****************************************************************
+// Bottom Panel
+//
+// tag: ExtJS v4 Ready
+//****************************************************************
+var BottomPanel = Ext.create('Ext.Panel', {
+	region		: 'south',
+	id			: 'BottomPannel',
+	height		: 200,
+	split		: true,
+	collapsible	: true,
+	title		: '...',
+	margins		: '0 0 0 0'
+}); // End Bottom Panel
 
 //****************************************************************
 // Main Panel
@@ -109,55 +124,35 @@ var Navigation = Ext.create('Ext.Panel', {
 //****************************************************************
 var MainApp = Ext.create('Ext.Panel', {
 	region	: 'center',
-	id		: 'TopPanel', 
+	id		: 'MainApp', 
+	title	: 'Center',
+	border	: true,
+	margins		: '0 0 0 0',
+	
+	// Initial screen load
 	loader:{
 		autoLoad: true,
 		contentType: 'html',
-		target: 'TopPanel',
-		url: 'interface/administration/facilities/facilities.ejs.php'
+		target: 'MainApp',
+		url: 'interface/administration/facilities/facilities.ejs.php',
+        renderer: function(loader, response, options) {
+            var text = response.responseText;
+            loader.getTarget().update(text);
+            return true;
+        }
 	},
-	items	: [cw = Ext.create('Ext.Window', {
-		xtype: 'window',
-		closable: false,
-		minimizable: true,
-		title: 'Constrained Window',
-		height: 200,
-		width: 400,
-		constrain: true,
-		html: 'I am in a Container',
-		itemId: 'center-window',
-		minimize: function() {
-			this.floatParent.down('button#toggleCw').toggle();
-		}
-	})],
+	
+	// Top Panel's Bottom Menu System
 	dockedItems: [{
 		xtype: 'toolbar',
 		dock: 'bottom',
 		items: [{
 			itemId: 'toggleCw',
-			text: 'Constrained Window',
+			text: 'Menu',
 			enableToggle: true,
-			toggleHandler: function() {
-				cw.setVisible(!cw.isVisible());
-			}
 		}]
 	}]
 }); // End MainApp
-
-//****************************************************************
-// Bottom Panel
-//
-// tag: ExtJS v4 Ready
-//****************************************************************
-var BottomPanel = Ext.create('Ext.Panel', {
-	region: 'south',
-	id		: 'BottomPannel',
-	height: 100,
-	split: true,
-	collapsible: true,
-	title: '...',
-	margins: '0 0 0 0'
-}); // End Bottom Panel
 
 //****************************************************************
 // header Panel
@@ -165,17 +160,16 @@ var BottomPanel = Ext.create('Ext.Panel', {
 // tag: ExtJS v4 Ready
 //****************************************************************
 var Header = Ext.create('Ext.Panel', {
-	region : 'north',
-	height : 40,
-	height : 44,
-	split : false,
+	region		: 'north',
+	height		: 44,
+	split		: false,
 	collapsible : false,
-	frame : false,
-	border : false,
-	bodyStyle : 'background: transparent',
-	margins : '0 0 0 0',
-	items: [{
-		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="34" width="130"  style="float:left"></a>',
+	frame		: false,
+	border		: false,
+	bodyStyle	: 'background: transparent',
+	margins		: '0 0 0 0',
+	items		: [{
+		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" style="float:left"></a>',
 		style:'float:left',
 		bodyStyle:'background: transparent',
 		border: false
@@ -184,7 +178,7 @@ var Header = Ext.create('Ext.Panel', {
 		text: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">[ Patient Name ]<br>[ Patient Info ]',
 		scale: 'large',
 		style : 'float:left',
-		margin: '0 0 0 75px',
+		margin: '0 0 0 5px',
 		minWidth: 150,
 		menu: [{
 			text:'<?php i18n("New Encounter"); ?>'
@@ -221,6 +215,7 @@ var Header = Ext.create('Ext.Panel', {
 	}]
 }); // End Header
 
+
 //****************************************************************
 // TopPanel
 // Description: It will show up the main layouts
@@ -229,8 +224,7 @@ var Header = Ext.create('Ext.Panel', {
 //****************************************************************
 var TopPanel = Ext.create('Ext.Panel', {
 	region: 'center',
-	title: 'Center',
-	id: 'topPanel',
+	id: 'TopPanel',
 	layout: 'border',
 	border: false,
 	items: [ MainApp, BottomPanel ]
@@ -249,7 +243,7 @@ Ext.create('Ext.Viewport', {
 		padding: 5
 	},
 	defaults: { split: true },
-	items: [ Header, Navigation, TopPanel]
+	items: [ Header, Navigation, TopPanel ]
 }); // End ViewPort
 
 }); // End App
