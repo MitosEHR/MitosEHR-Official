@@ -42,7 +42,7 @@ switch ($_GET['task']) {
 	$sql = "SELECT id FROM acl_permissions";
 	foreach (sqlStatement($sql) as $perms_row) {
 		sqlStatement("INSERT INTO acl_role_perms 
-				  		  	  SET role_id = '" . $last_id . "', " . "
+				  		  	  SET role_id = '" . $last_insert_id . "', " . "
 				  	          	  perm_id = '" . $perms_row['id'] . "', " . "
 				  			  	  value = '0'");
 	}

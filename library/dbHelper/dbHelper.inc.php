@@ -79,7 +79,7 @@ function sqlStatementLog($sql){
 	
 	if (strpos($sql, "INSERT")) {
 	// $last_id holds last inserterted id
-	$last_id = $recordset->lastInsertId();
+	$last_insert_id = $recordset->lastInsertId();
 	}
 	// If the QUERY has INSERT, DELETE, ALTER then has to 
 	// insert the event to the database.
