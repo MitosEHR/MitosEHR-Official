@@ -105,7 +105,7 @@ var Navigation = Ext.create('Ext.Panel', {
 //****************************************************************
 // Main Panel
 //
-// ExtJS v4 Ready
+// tag: ExtJS v4 Ready
 //****************************************************************
 var MainApp = Ext.create('Ext.Panel', {
 	region	: 'center',
@@ -113,7 +113,7 @@ var MainApp = Ext.create('Ext.Panel', {
 	loader:{
 		autoLoad: true,
 		contentType: 'html',
-		target: 'topPanel',
+		target: 'TopPanel',
 		url: 'interface/administration/facilities/facilities.ejs.php'
 	},
 	items	: [cw = Ext.create('Ext.Window', {
@@ -147,7 +147,7 @@ var MainApp = Ext.create('Ext.Panel', {
 //****************************************************************
 // Bottom Panel
 //
-// ExtJS v4 Ready
+// tag: ExtJS v4 Ready
 //****************************************************************
 var BottomPanel = Ext.create('Ext.Panel', {
 	region: 'south',
@@ -162,7 +162,7 @@ var BottomPanel = Ext.create('Ext.Panel', {
 //****************************************************************
 // header Panel
 //
-// ExtJS v4 Ready
+// tag: ExtJS v4 Ready
 //****************************************************************
 var Header = Ext.create('Ext.Panel', {
 	region : 'north',
@@ -225,7 +225,7 @@ var Header = Ext.create('Ext.Panel', {
 // TopPanel
 // Description: It will show up the main layouts
 //
-// ExtJS v4 Ready
+// tag: ExtJS v4 Ready
 //****************************************************************
 var TopPanel = Ext.create('Ext.Panel', {
 	region: 'center',
@@ -241,7 +241,7 @@ var TopPanel = Ext.create('Ext.Panel', {
 // Description: It will display all the previuosly declared
 // panels above.
 //
-// ExtJS v4 Ready 
+// tag: ExtJS v4 Ready 
 //****************************************************************
 Ext.create('Ext.Viewport', {
 	layout: {
