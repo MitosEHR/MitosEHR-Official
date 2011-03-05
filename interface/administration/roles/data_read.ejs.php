@@ -25,7 +25,7 @@ $count = 0;
 
 $currRole = ($_REQUEST["start"] == null) ? 5 : $_REQUEST["role_id"];
 
-$sql = "SELECT acl_roles.id,
+$sql = "SELECT acl_roles.id AS roleID,
 			   acl_roles.role_name,
 			   acl_permissions.id AS permID,
 			   acl_permissions.perm_key,
@@ -43,8 +43,9 @@ $sql = "SELECT acl_roles.id,
 	foreach (sqlStatement($sql) as $urow) {
 		$count++;
 		$buff .= "{";
-		$buff .= " id: '" . $urow['id'] . "',";
+		$buff .= " roleID: '" . $urow['roleID'] . "',";
 		$buff .= " role_name: '" . dataEncode( $urow['role_name'] ) . "',";
+		$buff .= " permID: '" . dataEncode( $urow['permID'] ) . "',";
 		$buff .= " perm_key: '" . $urow['perm_key'] . "',";
 		$buff .= " perm_name: '" . dataEncode( $urow['perm_name'] ) . "',";
 		$buff .= " role_id: '" . $urow['role_id'] . "',";
