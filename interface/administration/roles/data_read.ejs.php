@@ -23,6 +23,7 @@ $sql = "SELECT acl_roles.id AS roleID,
 			   acl_permissions.id AS permID,
 			   acl_permissions.perm_key,
 			   acl_permissions.perm_name,
+			   acl_role_perms.id AS rolePermID,
 			   acl_role_perms.role_id,
 			   acl_role_perms.perm_id,
 			   acl_role_perms.value
@@ -40,6 +41,7 @@ $sql = "SELECT acl_roles.id AS roleID,
 		$buff .= " permID: '" . dataEncode( $urow['permID'] ) . "',";
 		$buff .= " perm_key: '" . $urow['perm_key'] . "',";
 		$buff .= " perm_name: '" . dataEncode( $urow['perm_name'] ) . "',";
+		$buff .= " rolePermID: '" . $urow['rolePermID'] . "',";
 		$buff .= " role_id: '" . $urow['role_id'] . "',";
 		$buff .= " perm_id: '" . $urow['perm_id'] . "',";
 		$buff .= " value: '" . $urow['value'] . "'}," . chr(13);

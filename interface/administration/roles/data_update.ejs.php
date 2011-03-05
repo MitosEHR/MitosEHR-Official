@@ -26,7 +26,7 @@ switch ($_GET['task']) {
 	// although Sencha EXTJS make good validation, we could check again 
 	// just in case 
 	// *************************************************************************************
-	$row['id'] = dataEncode($data[0]->id);
+	$row['roleID'] = dataEncode($data[0]->roleID);
 	$row['role_name'] = dataEncode($data[0]->role_name);
 	// *************************************************************************************
 	// Finally that validated POST variables is inserted to the database
@@ -35,7 +35,7 @@ switch ($_GET['task']) {
 	// *************************************************************************************
 	sqlStatement("UPDATE acl_roles 
 					 SET role_name = '" . $row['role_name'] . "' " . "
-				   WHERE id= '" . $row['role_name'] . "'");
+				   WHERE id= '" . $row['roleID'] . "'");
 	break;
 	// *************************************************************************************
 	// Code used to update permisions
@@ -47,7 +47,7 @@ switch ($_GET['task']) {
 	// although Sencha EXTJS make good validation, we could check again 
 	// just in case 
 	// *************************************************************************************
-	$row['id'] = dataEncode($data[0]->id);
+	$row['permID'] = dataEncode($data[0]->permID);
 	$row['perm_key'] = dataEncode($data[0]->perm_key);
 	$row['perm_name'] = dataEncode($data[0]->perm_name);
 	// *************************************************************************************
@@ -58,7 +58,7 @@ switch ($_GET['task']) {
 	sqlStatement("UPDATE acl_permissions 
 					 SET perm_key = '" . $row['role_name'] . "', " . "
 						 perm_name = '" . $row['perm_name'] . "' " . " 
-				   WHERE id = '" . $row['id'] . "'");
+				   WHERE id = '" . $row['permID'] . "'");
 	break;
 	// *************************************************************************************
 	// Code used to update role_perms
@@ -70,7 +70,7 @@ switch ($_GET['task']) {
 	// although Sencha EXTJS make good validation, we could check again 
 	// just in case 
 	// *************************************************************************************
-	$row['id'] = dataEncode($data[0]->id);
+	$row['rolePermID'] = dataEncode($data[0]->rolePermID);
 	$row['value'] = dataEncode($data[0]->value);
 	// *************************************************************************************
 	// Finally that validated POST variables is inserted to the database
@@ -79,7 +79,7 @@ switch ($_GET['task']) {
 	// *************************************************************************************
 	sqlStatement("UPDATE acl_role_perms 
 					 SET value = '" . $row['value'] . "', " . "
-				   WHERE id = '" . $row['id'] . "'");
+				   WHERE id = '" . $row['rolePermID'] . "'");
 	break;
 }
 ?>
