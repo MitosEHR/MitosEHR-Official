@@ -152,7 +152,7 @@ function sqlRowCount($sql){
 //**********************************************************************
 // Get last id from table
 //**********************************************************************
-function sqlRowId($table, $id_col){
+function sqlLastRowId($table, $id_col){
 	// Get the global variable
 	global $conn;
 	
