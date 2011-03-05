@@ -125,21 +125,13 @@ var BottomPanel = Ext.create('Ext.Panel', {
 var MainApp = Ext.create('Ext.Panel', {
 	region	: 'center',
 	id		: 'MainApp', 
-	title	: 'Center',
 	border	: true,
-	margins		: '0 0 0 0',
 	
 	// Initial screen load
-	loader:{
-		autoLoad: true,
-		contentType: 'html',
-		target: 'MainApp',
-		url: 'interface/administration/facilities/facilities.ejs.php',
-        renderer: function(loader, response, options) {
-            var text = response.responseText;
-            loader.getTarget().update(text);
-            return true;
-        }
+	autoLoad : {
+		url: 'interface/administration/facilities/facilities.ejs.php', 
+		scripts: true,
+		text: "Loading..."
 	},
 	
 	// Top Panel's Bottom Menu System
