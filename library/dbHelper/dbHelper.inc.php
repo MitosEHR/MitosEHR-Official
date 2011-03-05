@@ -80,7 +80,7 @@ function sqlStatementLog($sql){
 	// If the QUERY has INSERT, DELETE, ALTER then has to 
 	// insert the event to the database.
 	if (strpos($sql, "INSERT") && strpos($sql, "DELETE") && strpos($sql, "ALTER")){
-		if (strpos($sql, "INSERT")) { $eventLog = "Record insertion"; $last_insert_id = $recordset->lastInsertId(); }
+		if (strpos($sql, "INSERT")) { $eventLog = "Record insertion"; $last_insert_id = $conn->lastInsertId(); }
 		if (strpos($sql, "DELETE")) $eventLog = "Record deletion";
 		if (strpos($sql, "ALTER")) $eventLog = "Table alteration";
 		// Prepare the SQL stament first, and then execute.
