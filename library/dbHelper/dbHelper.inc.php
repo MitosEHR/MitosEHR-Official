@@ -149,7 +149,19 @@ function sqlRowCount($sql){
 	return $result['rows'];
 
 }
+//**********************************************************************
+// Get last id from table
+//**********************************************************************
+function sqlRowId($table, $id_col){
+	// Get the global variable
+	global $conn;
+	
+	// Get all the records & count it.
+	$recordset = $conn->query("SELECT " . $id_col . " FROM " . $table . "  ORDER BY " . $id_col . " DESC");
+	$result = $recordset->fetch(PDO::FETCH_ASSOC);
+	return $result;
 
+}
 ?>
 
 
