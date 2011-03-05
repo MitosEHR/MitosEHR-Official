@@ -76,8 +76,11 @@ function sqlStatementLog($sql){
 	
 	// Execute the SQL stament
 	$recordset = $conn->query($sql);
-	//$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	
+	if (strpos($sql, "INSERT")) {
+	// $last_id holds last inserterted id
+	$last_insert_id = $recordset->lastInsertId();
+	}
 	// If the QUERY has INSERT, DELETE, ALTER then has to 
 	// insert the event to the database.
 	if (strpos($sql, "INSERT") && strpos($sql, "DELETE") && strpos($sql, "ALTER")){
