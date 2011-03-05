@@ -42,6 +42,7 @@ if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
 //
 // This should be the structure of the database table
 // 
+// tag: ExtJS v4 Ready
 // *************************************************************************************
 var FacilityRecord = Ext.regModel('FacilityRecord', {
 	fields: [
@@ -75,6 +76,12 @@ var storeFacilities = new Ext.data.Store({
 	model: 'FacilityRecord',
 	proxy: new Ext.data.AjaxProxy({
 		url: 'interface/administration/facilities/component_data.ejs.php?task=sites',
+		actionMethods: {
+			create : 'POST',
+			read   : 'POST',
+			update : 'POST',
+			destroy: 'POST'
+		}
 		reader: {
 			type: 'json',
 			idProperty: 'site_id',
@@ -84,41 +91,6 @@ var storeFacilities = new Ext.data.Store({
 	}),
 	autoLoad: true
 });
-// Temp 
-var storeFacilities = new Ext.data.Store({
-	autoSave	: false,
-
-	// HttpProxy will only allow requests on the same domain.
-	proxy : new Ext.data.HttpProxy({
-		method		: 'POST',
-		api: {
-			read	: '../administration/facilities/data_read.ejs.php',
-			create	: '../administration/facilities/data_create.ejs.php',
-			update	: '../administration/facilities/data_update.ejs.php',
-			
-			// ON the facility screen, we can't allow user to delete the facility
-			// HIPPA compliant
-			//destroy : '../administration/facilities/data_destroy.ejs.php'
-		}
-	}),
-
-	// JSON Writer options
-	writer: new Ext.data.JsonWriter({
-		encodeDelete	: true,
-		returnJson		: true,
-		writeAllFields	: true,
-		listful			: true
-	}, FacilityRecord ),
-
-	// JSON Reader options
-	reader: new Ext.data.JsonReader({
-		idProperty: 'id',
-		totalProperty: 'results',
-		root: 'row'
-	}, FacilityRecord )
-	
-});
-storeFacilities.load();
 
 // *************************************************************************************
 // Structure, data for storeTaxID
@@ -377,15 +349,11 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 // This panel is mandatory for all layouts.
 //******************************************************************************
 var topRenderPanel = new Ext.Panel({
-  title: '<?php i18n('Facilities'); ?>',
-  border  : false,
-  stateful: true,
-  monitorResize: true,
-  autoWidth: true,
-  id: 'RenderPanel',
-  renderTo: Ext.getCmp('TopPanel').body,
-  viewConfig:{forceFit:true},
-  items: [ facilitiesGrid ]
+	title: '<?php i18n('Facilities'); ?>',
+  	frame : false,
+	border : false,
+	id: 'topRenderPanel',
+	items: [ facilitiesGrid ]
 });
 
 }); // End ExtJS

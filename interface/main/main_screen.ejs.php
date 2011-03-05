@@ -37,7 +37,7 @@ Ext.onReady(function() {
 
 //****************************************************************
 // Task Scheduler 
-// This will run certain task in determined time.
+// This will run certain task at determined time.
 //****************************************************************
 var checkSession = function(){
 	Ext.Ajax.request({
@@ -100,16 +100,20 @@ var Navigation = Ext.create('Ext.Panel', {
 		contentType: 'html',
 		url: 'interface/main/menu_links.inc.php',
 	}
-});
+}); // End Navigation
 
 //****************************************************************
 // Main Panel
+//
+// ExtJS v4 Ready
 //****************************************************************
 var MainApp = Ext.create('Ext.Panel', {
 	region	: 'center',
 	id		: 'TopPanel', 
 	loader:{
 		autoLoad: true,
+		contentType: 'html',
+		target: 'topPanel',
 		url: 'interface/administration/facilities/facilities.ejs.php'
 	},
 	items	: [cw = Ext.create('Ext.Window', {
@@ -138,10 +142,12 @@ var MainApp = Ext.create('Ext.Panel', {
 			}
 		}]
 	}]
-});
+}); // End MainApp
 
 //****************************************************************
 // Bottom Panel
+//
+// ExtJS v4 Ready
 //****************************************************************
 var BottomPanel = Ext.create('Ext.Panel', {
 	region: 'south',
@@ -151,10 +157,12 @@ var BottomPanel = Ext.create('Ext.Panel', {
 	collapsible: true,
 	title: '...',
 	margins: '0 0 0 0'
-});
+}); // End Bottom Panel
 
 //****************************************************************
 // header Panel
+//
+// ExtJS v4 Ready
 //****************************************************************
 var Header = Ext.create('Ext.Panel', {
 	region : 'north',
@@ -211,10 +219,29 @@ var Header = Ext.create('Ext.Panel', {
 			}
 		}]
 	}]
-});
+}); // End Header
+
+//****************************************************************
+// TopPanel
+// Description: It will show up the main layouts
+//
+// ExtJS v4 Ready
+//****************************************************************
+var TopPanel = Ext.create('Ext.Panel', {
+	region: 'center',
+	title: 'Center',
+	id: 'topPanel',
+	layout: 'border',
+	border: false,
+	items: [ MainApp, BottomPanel ]
+}); // End TopPanel
 
 //****************************************************************
 // The main ViewPort
+// Description: It will display all the previuosly declared
+// panels above.
+//
+// ExtJS v4 Ready 
 //****************************************************************
 Ext.create('Ext.Viewport', {
 	layout: {
@@ -222,14 +249,8 @@ Ext.create('Ext.Viewport', {
 		padding: 5
 	},
 	defaults: { split: true },
-	items: [ Header, Navigation,{
-		region: 'center',
-		title: 'Center',
-		layout: 'border',
-		border: false,
-		items: [ MainApp, BottomPanel ]
-	}]
-});
+	items: [ Header, Navigation, TopPanel]
+}); // End ViewPort
 
 }); // End App
 
