@@ -34,6 +34,8 @@ $conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_
 // Simple SQL Stament, with no Event LOG injection
 // return: Array of records
 // foreach (sqlStatement($sql) as $urow) {
+//
+// Author: Gino Rivera
 //**********************************************************************
 function sqlStatement($sql){
 	// Get the global variable
@@ -51,6 +53,8 @@ function sqlStatement($sql){
 // return: Only one record array
 // $rec = sqlFetch($sql);
 // if ($rec['username'] == ""){
+//
+// Author: Gino Rivera
 //**********************************************************************
 function sqlFetch($sql){
 	// Get the global variable
@@ -69,6 +73,8 @@ function sqlFetch($sql){
 // return: Array of records + Inject the action on the event log
 // The Log Injection is automatic 
 // It tries to detect an insert, delete, alter and log the event
+//
+// Author: Gino Rivera
 //**********************************************************************
 function sqlStatementLog($sql){
 	// Get the global connection variable
@@ -100,6 +106,8 @@ function sqlStatementLog($sql){
 //**********************************************************************
 // Simple SQL Stament, with Event LOG injection
 // return: Array of records + Manually inject the action on the event log
+//
+// Author: Gino Rivera
 //**********************************************************************
 function sqlStatementEvent($eventLog, $sql){
 	// Get the global connection variable
@@ -124,6 +132,8 @@ function sqlStatementEvent($eventLog, $sql){
 
 //**********************************************************************
 // Manually insert a event log to the database
+//
+// Author: Gino Rivera
 //**********************************************************************
 function sqlEventLog($eventLog, $comments, $userNotes=NULL){
 	// Get the global connection variable
@@ -151,6 +161,9 @@ function sqlRowCount($sql){
 }
 //**********************************************************************
 // Get last id from table
+// Usage: sqlLastRowId('','')
+//
+// Author: Ernesto Rodriguez
 //**********************************************************************
 function sqlLastRowId($table, $id_col){
 	// Get the global variable
