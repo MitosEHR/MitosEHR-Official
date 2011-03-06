@@ -3,18 +3,13 @@
 // data_read.ejs.php / Permissions List with values for role
 // v0.0.1
 // Under GPLv3 License
-//
 // Integrated by: Ernesto Rodriguez
-//
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
-
 session_name ( "MitosEHR" );
 session_start();
-
-include_once("../../../library/dbHelper/dbHelper.inc.php");
-require_once("../../../repository/dataExchange/dataExchange.inc.php");
-
+include_once("library/dbHelper/dbHelper.inc.php");
+require_once("repository/dataExchange/dataExchange.inc.php");
 // Count records variable
 $count = 0;
 // *************************************************************************************
@@ -22,14 +17,13 @@ $count = 0;
 // and execute the apropriate SQL statement
 // query all permissions and left join with currRole values
 // *************************************************************************************
-
 $currRole = ($_REQUEST["start"] == null) ? 5 : $_REQUEST["role_id"];
-
 $sql = "SELECT acl_roles.id AS roleID,
 			   acl_roles.role_name,
 			   acl_permissions.id AS permID,
 			   acl_permissions.perm_key,
 			   acl_permissions.perm_name,
+			   acl_role_perms.id AS rolePermID,
 			   acl_role_perms.role_id,
 			   acl_role_perms.perm_id,
 			   acl_role_perms.value
@@ -38,7 +32,6 @@ $sql = "SELECT acl_roles.id AS roleID,
   	RIGHT JOIN acl_permissions ON acl_role_perms.perm_id = acl_permissions.id
   		 WHERE acl_roles.id = '$currRole'
   		 ORDER BY role_name DESC";
-
 	$buff = "";
 	foreach (sqlStatement($sql) as $urow) {
 		$count++;
@@ -48,11 +41,11 @@ $sql = "SELECT acl_roles.id AS roleID,
 		$buff .= " permID: '" . dataEncode( $urow['permID'] ) . "',";
 		$buff .= " perm_key: '" . $urow['perm_key'] . "',";
 		$buff .= " perm_name: '" . dataEncode( $urow['perm_name'] ) . "',";
+		$buff .= " rolePermID: '" . $urow['rolePermID'] . "',";
 		$buff .= " role_id: '" . $urow['role_id'] . "',";
 		$buff .= " perm_id: '" . $urow['perm_id'] . "',";
 		$buff .= " value: '" . $urow['value'] . "'}," . chr(13);
 	}
-
 	$buff = substr($buff, 0, -2); // Delete the last comma.
 	echo $_GET['callback'] . '({';
 	echo "totalCount: " . $count . ", " . chr(13);
