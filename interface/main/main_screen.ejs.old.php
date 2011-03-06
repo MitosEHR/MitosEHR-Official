@@ -20,9 +20,6 @@ include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 <!-- ******************************************************************* -->
 <!-- Call for mandatory repository objects, that we need on the MitosEHR -->
 <!-- ******************************************************************* -->
-<!-- <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.Search.js"></script> -->
-<!-- <script type="text/javascript" src="../../repository/gridsearch/js/Ext.ux.grid.RowActions.js"></script> -->
-<!-- <script type="text/javascript" src="../../repository/calendar/extensible-all.js"></script> -->
 <script type="text/javascript" src="../../repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="../../library/<?php echo $_SESSION['dir']['ext']; ?>/src/grid/RowEditor.js"></script>
 
