@@ -22,7 +22,7 @@
  * run with earlier versions of PHP.
  * 
  * Author: Gino Rivera Falu
- * Ver: 0.0.1
+ * Ver: 0.0.2
  */
 
 //**********************************************************************
@@ -115,7 +115,6 @@ function sqlStatementEvent($eventLog, $sql){
 	
 	// Execute the SQL stament
 	$conn->query($sql);
-	//$result = $recordset->fetch(PDO::FETCH_ASSOC);
 	
 	// Prepare the SQL stament first, and then execute.
 	$stmt = $conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
@@ -155,7 +154,7 @@ function sqlRowCount($sql){
 	
 	// Get all the records & count it.
 	$recordset = $conn->query($sql);
-	//$result = $recordset->fetch(PDO::FETCH_ASSOC);
+
 	return $result['rows'];
 
 }
