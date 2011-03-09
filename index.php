@@ -52,7 +52,7 @@ if ($_SESSION['user']['auth'] == TRUE){
 	// if a directory is found inside sites dir run the logon screen
 	//----------------------------------------------------------------
 	if( $count <= 0){
-		include_once("interface/setup/setup.ejs.php");
+		include_once("install/install.ejs.php");
 	} else {
 		include_once("interface/login/login.ejs.php");
 	}	
