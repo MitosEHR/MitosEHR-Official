@@ -33,7 +33,10 @@ switch ($_GET['task']) {
 	// if not run the INSERT stament
 	// *************************************************************************************
 	sqlStatement("INSERT INTO acl_roles SET role_name = '" . $row['role_name'] . "'");
-	// insert a relationship for every permission
+	// *************************************************************************************
+	// when a new role is added a relationship need to be added 
+	// for every role at acl_role_perm table using the id from new role
+	// *************************************************************************************
 	$sql = "SELECT id FROM acl_permissions";
 	foreach (sqlStatement($sql) as $perms_row) {
 		sqlStatement("INSERT INTO acl_role_perms 
@@ -59,13 +62,13 @@ switch ($_GET['task']) {
 	// This one make the JOB of two, if it has an ID key run the UPDATE statement
 	// if not run the INSERT stament
 	// *************************************************************************************
-	
-	// when a new permission is added a relationship need to be added 
-	// for every role at acl_role_perm table 
-	
 	sqlStatement("INSERT INTO acl_permissions 
 						  SET perm_key = '" . $row['role_name'] . "', " . "
 							  perm_name = '" . $row['notes'] . "'");
+	//**************************************************************************************
+	// when a new permission is added a relationship need to be added 
+	// for every role at acl_role_perm table 
+	//**************************************************************************************
 	$sql = "SELECT id FROM acl_roles";
 	foreach (sqlStatement($sql) as $roles_row) {
 		sqlStatement("INSERT INTO acl_role_perms 
