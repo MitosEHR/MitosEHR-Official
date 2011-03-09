@@ -25,12 +25,7 @@ $_SESSION['site']['flops'] = 0;
 
 <script type="text/javascript">
 Ext.require([
-	'Ext.form.*',
-	'Ext.button.*',
-	'Ext.window.*',
-	'Ext.data.*',
-	'Ext.Loader',
-	'Ext.tip.QuickTips'
+    '*'
 ]);
 
 Ext.onReady(function() {
@@ -95,11 +90,7 @@ var Navigation = Ext.create('Ext.Panel', {
 	split			: true,
 	width			: 200,
 	bodyPadding		: 5,
-	loader:{
-		autoLoad: true,
-		contentType: 'component',
-		url: 'interface/main/menu_links.inc.php',
-	}
+	id				: 'Navigation',
 }); // End Navigation
 
 //****************************************************************
@@ -129,18 +120,7 @@ var MainApp = Ext.create('Ext.Panel', {
 	border		: true,
 	margins		: '0 0 0 0',
 	bodyPadding	: 0,
-	
-	//------------------------------------
-	// Initial screen load
-	//------------------------------------
-	autoLoad : {
-		url: 'interface/administration/facilities/facilities.ejs.php', 
-		scripts: true,
-		contentType: 'html',
-		target: 'MainApp',
-		text: "Loading..."
-	},
-	
+
 	//------------------------------------
 	// Top Panel's Bottom Menu System
 	//------------------------------------
@@ -249,6 +229,25 @@ Ext.create('Ext.Viewport', {
 	defaults: { split: true },
 	items: [ Header, Navigation, TopPanel ]
 }); // End ViewPort
+
+//****************************************************************
+// Finally Load the content to the respective panels.
+//
+// tag: ExtJS v4 Ready
+//
+// Error in PR3 - me.refresh.bind is not a function
+//****************************************************************
+Ext.get('Navigation').load({
+	url: 'interface/main/menu_links.inc.php',
+	scripts: true,
+	text: 'Loading Navigation panel...'
+});
+
+Ext.get('MainApp').load({
+	url: 'interface/administration/facilities/facilities.ejs.php',
+	scripts: true,
+	text: 'Loading Facilities Application...'
+});
 
 }); // End App
 
