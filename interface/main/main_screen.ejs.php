@@ -114,7 +114,8 @@ var BottomPanel = Ext.create('Ext.Panel', {
 	split		: true,
 	collapsible	: true,
 	title		: '...',
-	margins		: '0 0 0 0'
+	margins		: '0 0 0 0',
+	bodyPadding	: 0,
 }); // End Bottom Panel
 
 //****************************************************************
@@ -123,18 +124,26 @@ var BottomPanel = Ext.create('Ext.Panel', {
 // tag: ExtJS v4 Ready
 //****************************************************************
 var MainApp = Ext.create('Ext.Panel', {
-	region	: 'center',
-	id		: 'MainApp', 
-	border	: true,
+	region		: 'center',
+	id			: 'MainApp', 
+	border		: true,
+	margins		: '0 0 0 0',
+	bodyPadding	: 0,
 	
+	//------------------------------------
 	// Initial screen load
+	//------------------------------------
 	autoLoad : {
 		url: 'interface/administration/facilities/facilities.ejs.php', 
 		scripts: true,
+		contentType: 'html',
+		target: 'MainApp',
 		text: "Loading..."
 	},
 	
+	//------------------------------------
 	// Top Panel's Bottom Menu System
+	//------------------------------------
 	dockedItems: [{
 		xtype: 'toolbar',
 		dock: 'bottom',
@@ -215,11 +224,14 @@ var Header = Ext.create('Ext.Panel', {
 // tag: ExtJS v4 Ready
 //****************************************************************
 var TopPanel = Ext.create('Ext.Panel', {
-	region: 'center',
-	id: 'TopPanel',
-	layout: 'border',
-	border: false,
-	items: [ MainApp, BottomPanel ]
+	region		: 'center',
+	id			: 'TopPanel',
+	layout		: 'border',
+	border		: false,
+	margins		: '0 0 0 0',
+	padding		: 0,
+	bodyPadding	: 0,
+	items		: [ MainApp, BottomPanel ]
 }); // End TopPanel
 
 //****************************************************************
@@ -232,7 +244,7 @@ var TopPanel = Ext.create('Ext.Panel', {
 Ext.create('Ext.Viewport', {
 	layout: {
 		type: 'border',
-		padding: 5
+		padding: 2
 	},
 	defaults: { split: true },
 	items: [ Header, Navigation, TopPanel ]
