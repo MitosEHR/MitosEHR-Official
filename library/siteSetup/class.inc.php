@@ -11,20 +11,32 @@ class SiteSetup {
 	var $siteDbPrefix;
 	var $siteDbUser;
 	var $siteDbPass;
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> origin/master
 	//*************************************************************************************
 	// ckeck cmod 777
 	//*************************************************************************************
 	function check_perms($path){
 	    clearstatcache();
+<<<<<<< HEAD
     	$configmod = substr(sprintf('%o', fileperms($path)), -4); 
 	}
 	 
+=======
+    	$configmod = substr(sprintf('%o', fileperms($path)), -4);
+		return true; 
+	}
+
+>>>>>>> origin/master
 	//*************************************************************************************
 	// create site name folder inside /sites/
 	//*************************************************************************************
 	function createFolders($siteName) {
 		mkdir("sites/" . $siteName, 0777);
+<<<<<<< HEAD
 	}
 	
 	//*************************************************************************************
@@ -34,11 +46,37 @@ class SiteSetup {
 		$conn->errorInfo();
 		$errorCode = $error[1];
 		$errorMsg =  $error[2];
+=======
+		return true;
+	}
+
+	//*************************************************************************************
+	// Database connection and error handeler
+	//*************************************************************************************
+	function databaseConn($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
+		//---------------------------------------------------------------------------------
+		// connection to mysql w/o database
+		//---------------------------------------------------------------------------------
+		$conn = new PDO("mysql:host=".$db_server.";port=".$db_port,$db_rootUser,$db_rootPass);
+		//---------------------------------------------------------------------------------
+		// send error callback if conn can't be stablish
+		//---------------------------------------------------------------------------------
+		if (!$conn){
+			$conn->errorInfo();
+			$errorCode = $error[1];
+			$errorMsg =  $error[2];
+			echo "{ success: false, errors: { reason: 'Error: ".$errorCode." - ".$errorMsg." }}";
+	 		return;
+		} else {
+			return $conn;
+		}
+>>>>>>> origin/master
 	}
 	
 	//*************************************************************************************
 	// create database
 	//*************************************************************************************
+<<<<<<< HEAD
 	function createDataBase($db_server,$db_port,$db_name,$db_root,$db_rootPass) {
 		//-------------------------------------------------
 		// connection to mysql w/o database
@@ -60,6 +98,29 @@ class SiteSetup {
 
 	}
 
+=======
+	function createDataBase($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
+		//---------------------------------------------------------------------------------
+		// connection to mysql w/o database
+		//---------------------------------------------------------------------------------
+		databaseConn($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass);
+		//---------------------------------------------------------------------------------
+		// if connection exist Create Databse and dump sql data
+		//---------------------------------------------------------------------------------
+		if ($conn){
+			$conn->exec("CREATE DATABASE ".$db_name."");
+			$sqlDump = fopen("sitesetup.sql", "r");
+			$conn->exec($sqlDump);
+			fopen($sqlDump);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+
+>>>>>>> origin/master
 } // end class siteSetup
 
 ?>
