@@ -1,0 +1,36 @@
+@import 'ext4/default/all';
+
+// You may remove any of the following modules that you
+// do not use in order to create a smaller css file.
+
+/*structure*/
+@include extjs-structure-boundlist;
+@include extjs-structure-button;
+@include extjs-structure-menu;
+@include extjs-structure-form;
+    @include extjs-structure-form-field;
+    @include extjs-structure-form-triggerfield;
+@include extjs-structure-panel;
+@include extjs-structure-qtip;
+@include extjs-structure-toolbar;
+@include extjs-structure-window;
+
+@include extjs-structure-resizable;
+@include extjs-structure-splitter;
+
+@include extjs-structure-layout;
+
+/*theming*/
+@include extjs-theme-boundlist;
+@include extjs-theme-button;
+@include extjs-theme-menu;
+@include extjs-theme-form;
+    @include extjs-theme-form-field;
+    @include extjs-theme-form-triggerfield;
+    @include extjs-theme-form-date;
+@include extjs-theme-panel;
+@include extjs-theme-qtip;
+@include extjs-theme-toolbar;
+@include extjs-theme-window;
+
+@include extjs-theme-splitter;

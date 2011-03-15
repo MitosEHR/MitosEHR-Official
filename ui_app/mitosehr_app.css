@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* CSS Document */
+
+body#login{
+	background-image:url(login_bg.png) !important;
+	background-position: bottom;
+	background-attachment:fixed;
+	background-repeat:repeat-x !important;
+	background-color: #FFF;
+	margin: 0px;
+}
+
+#copyright{
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 10px;
+	color: #333;;
+	position: fixed;
+	bottom: 5px;
+	right: 10px;
+}
+
+#copyright a{
+	color: #333;;
+}

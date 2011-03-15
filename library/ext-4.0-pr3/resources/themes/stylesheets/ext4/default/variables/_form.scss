@@ -1,0 +1,14 @@
+//border
+$form-field-border-radius: 0 !default;
+$form-field-border-color: #B5B8C8 !default;
+$form-field-focus-border-color: darken($form-field-border-color, 5) !default;
+
+//background
+$form-trigger-field-background-color: #ccc !default;
+$form-trigger-field-over-background-color: lighten($form-trigger-field-background-color, 3) !default;
+$form-trigger-field-click-background-color: darken($form-trigger-field-background-color, 3) !default;
+
+//border
+$form-trigger-border-radius: $form-field-border-radius !default;
+$form-trigger-field-border-color: $form-field-border-color !default;
+$form-trigger-field-focus-border-color: $form-field-focus-border-color !default;
