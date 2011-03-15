@@ -1,7 +1,7 @@
 <?php
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* Main Screen Application
-* Description: Installation screen
+* Description: Installation screen procedure
 * version 0.0.1
 * revision: N/A
 * author: Ernesto J Rodriguez - MitosEHR
