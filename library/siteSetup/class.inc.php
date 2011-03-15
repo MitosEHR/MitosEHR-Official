@@ -36,7 +36,7 @@ class SiteSetup {
 		$conn->errorInfo();
 		$errorCode = $error[1];
 		$errorMsg =  $error[2];
-		echo "{ success: false, errors: { reason: 'Error: ".$errorCode." - ".$errorMsg." }}";
+		echo "{ success: false, errors: { reason: 'Error: ".$errorCode." - ".$errorMsg."' }}";
 	 	return;
 	}
 	
