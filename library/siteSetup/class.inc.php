@@ -7,6 +7,7 @@
 class SiteSetup {
 	
 	// Globals inside he Class
+	// Miraaa me hizo caso...
 	var $siteName;
 	var $siteDbPrefix;
 	var $siteDbUser;
