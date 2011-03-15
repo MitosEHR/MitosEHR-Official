@@ -101,13 +101,33 @@ class SiteSetup {
 						//---------------------------------------------------------------------
 						if (file_exists("sitesetup.sql")) {
 							//-----------------------------------------------------------------
-							// if sitesetup.sql found, open it, executed, and close it
+							// if sitesetup.sql found, open it
 							//-----------------------------------------------------------------
-							$sqlDump = fopen("sitesetup.sql", "r");
-							$conn->exec($sqlDump);
-							fclose($sqlDump);
-							if ($conn->errorInfo()) {
-								connError($conn);
+							if ($sqlDump = fopen("sitesetup.sql", "r")) {
+								//-------------------------------------------------------------
+								// if was able to open, lets executed
+								//-------------------------------------------------------------
+								$conn->exec($sqlDump);
+								//-------------------------------------------------------------
+								// then close it
+								//-------------------------------------------------------------
+								fclose($sqlDump);
+								//-------------------------------------------------------------
+								// and check for errors
+								//-------------------------------------------------------------
+								if ($conn->errorInfo()) {
+									connError($conn);
+								} else {
+									//---------------------------------------------------------
+									// Grats! we made it! Database created
+									//---------------------------------------------------------
+									return true;
+								}
+							} else {
+								//-------------------------------------------------------------
+								// error if unable to open sitesetup.sql
+								//-------------------------------------------------------------
+								die("{success:false,errors:{reason:'Error: Unable to open sitesetup.sql'}}");
 							}
 						} else {
 							//-----------------------------------------------------------------
