@@ -11,32 +11,21 @@ class SiteSetup {
 	var $siteDbPrefix;
 	var $siteDbUser;
 	var $siteDbPass;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> origin/master
 	//*************************************************************************************
 	// ckeck cmod 777
 	//*************************************************************************************
 	function check_perms($path){
 	    clearstatcache();
-<<<<<<< HEAD
-    	$configmod = substr(sprintf('%o', fileperms($path)), -4); 
-	}
-	 
-=======
     	$configmod = substr(sprintf('%o', fileperms($path)), -4);
 		return true; 
 	}
 
->>>>>>> origin/master
 	//*************************************************************************************
 	// create site name folder inside /sites/
 	//*************************************************************************************
 	function createFolders($siteName) {
 		mkdir("sites/" . $siteName, 0777);
-<<<<<<< HEAD
 	}
 	
 	//*************************************************************************************
@@ -46,7 +35,6 @@ class SiteSetup {
 		$conn->errorInfo();
 		$errorCode = $error[1];
 		$errorMsg =  $error[2];
-=======
 		return true;
 	}
 
@@ -70,13 +58,11 @@ class SiteSetup {
 		} else {
 			return $conn;
 		}
->>>>>>> origin/master
 	}
 	
 	//*************************************************************************************
 	// create database
 	//*************************************************************************************
-<<<<<<< HEAD
 	function createDataBase($db_server,$db_port,$db_name,$db_root,$db_rootPass) {
 		//-------------------------------------------------
 		// connection to mysql w/o database
@@ -98,7 +84,6 @@ class SiteSetup {
 
 	}
 
-=======
 	function createDataBase($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
 		//---------------------------------------------------------------------------------
 		// connection to mysql w/o database
@@ -118,9 +103,6 @@ class SiteSetup {
 		}
 	}
 
-
-
->>>>>>> origin/master
 } // end class siteSetup
 
 ?>
