@@ -1,0 +1,31 @@
+.x-tablet .x-list, .x-desktop .x-list {
+  border-right: 1px solid #000;
+}
+
+.video {
+    padding: 10px;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+}
+
+.video h2 {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.video.x-view-over {
+    background-color: #e6e6FD;
+}
+
+.x-video-tags {
+    padding: 5px 0;
+}
+
+.x-video-tags li {
+    padding: 2px 7px;
+}
+
+.x-video-tags li.x-item-selected {
+    background-color: #e6e6FD;
+}

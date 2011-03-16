@@ -1,0 +1,290 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="prop-Ext.String-indicatorText"></a>/**
+ * Romanian translations for ExtJS 2.1
+ * First released by Lucian Lature on 2007-04-24
+ * Changed locale for Romania (date formats) as suggested by keypoint
+ * on ExtJS forums: http://www.extjs.com/forum/showthread.php?p=129524#post129524
+ * Removed some useless parts
+ * Changed by: Emil Cazamir, 2008-04-24
+ * Fixed some errors left behind
+ * Changed by: Emil Cazamir, 2008-09-01
+ */
+
+Ext.UpdateManager.defaults.indicatorText = &#39;&lt;div class=&quot;loading-indicator&quot;&gt;Încărcare...&lt;/div&gt;&#39;;
+
+if(Ext.grid.GridPanel){
+   Ext.grid.GridPanel.prototype.ddText = &quot;{0} rând(uri) selectate&quot;;
+}
+
+if(Ext.TabPanelItem){
+   Ext.TabPanelItem.prototype.closeText = &quot;Închide acest tab&quot;;
+}
+
+if(Ext.form.BaseField){
+   Ext.form.BaseField.prototype.invalidText = &quot;Valoarea acestui câmp este invalidă&quot;;
+}
+
+if(Ext.LoadMask){
+    Ext.LoadMask.prototype.msg = &quot;Încărcare...&quot;;
+}
+
+Ext.Date.monthNames = [
+   &quot;Ianuarie&quot;,
+   &quot;Februarie&quot;,
+   &quot;Martie&quot;,
+   &quot;Aprilie&quot;,
+   &quot;Mai&quot;,
+   &quot;Iunie&quot;,
+   &quot;Iulie&quot;,
+   &quot;August&quot;,
+   &quot;Septembrie&quot;,
+   &quot;Octombrie&quot;,
+   &quot;Noiembrie&quot;,
+   &quot;Decembrie&quot;
+];
+
+Ext.Date.getShortMonthName = function(month) {
+  return Ext.Date.monthNames[month].substring(0, 3);
+};
+
+Ext.Date.monthNumbers = {
+  Ian : 0,
+  Feb : 1,
+  Mar : 2,
+  Apr : 3,
+  Mai : 4,
+  Iun : 5,
+  Iul : 6,
+  Aug : 7,
+  Sep : 8,
+  Oct : 9,
+  Noi : 10,
+  Dec : 11
+};
+
+Ext.Date.getMonthNumber = function(name) {
+  return Ext.Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
+};
+
+Ext.Date.dayNames = [
+   &quot;Duminică&quot;,
+   &quot;Luni&quot;,
+   &quot;Marţi&quot;,
+   &quot;Miercuri&quot;,
+   &quot;Joi&quot;,
+   &quot;Vineri&quot;,
+   &quot;Sâmbătă&quot;
+];
+
+Ext.Date.getShortDayName = function(day) {
+  return Ext.Date.dayNames[day].substring(0, 3);
+};
+
+if(Ext.MessageBox){
+   Ext.MessageBox.buttonText = {
+      ok     : &quot;OK&quot;,
+      cancel : &quot;Renunţă&quot;,
+      yes    : &quot;Da&quot;,
+      no     : &quot;Nu&quot;
+   };
+}
+
+if(Ext.util.Format){
+    Ext.apply(Ext.util.Format, {
+        thousandSeparator: &#39;.&#39;,
+        decimalSeparator: &#39;,&#39;,
+        currencySign: &#39;Lei&#39;,  // Romanian Lei
+        dateFormat: &#39;d.m.Y&#39;
+    });
+}
+
+if(Ext.picker.Date){
+  Ext.apply(Ext.DatePicker.prototype, {
+    todayText         : &quot;Astăzi&quot;,
+    minText           : &quot;Această dată este anterioară datei minime&quot;,
+    maxText           : &quot;Această dată este ulterioară datei maxime&quot;,
+    disabledDaysText  : &quot;&quot;,
+    disabledDatesText : &quot;&quot;,
+    monthNames        : Ext.Date.monthNames,
+    dayNames          : Ext.Date.dayNames,
+    nextText          : &#39;Luna următoare (Control+Dreapta)&#39;,
+    prevText          : &#39;Luna precedentă (Control+Stânga)&#39;,
+    monthYearText     : &#39;Alege o lună (Control+Sus/Jos pentru a parcurge anii)&#39;,
+    todayTip          : &quot;{0} (Bara spațiu)&quot;,
+    format            : &quot;d.m.Y&quot;,
+    okText            : &quot;&amp;#160;OK&amp;#160;&quot;,
+    cancelText        : &quot;Renunță&quot;,
+    startDay          : 0
+  });
+}
+
+if(Ext.toolbar.PagingToolbar){
+  Ext.apply(Ext.PagingToolbar.prototype, {
+    beforePageText : &quot;Pagina&quot;,
+    afterPageText  : &quot;din {0}&quot;,
+    firstText      : &quot;Prima pagină&quot;,
+    prevText       : &quot;Pagina anterioară&quot;,
+    nextText       : &quot;Pagina următoare&quot;,
+    lastText       : &quot;Ultima pagină&quot;,
+    refreshText    : &quot;Împrospătează&quot;,
+    displayMsg     : &quot;Afișare înregistrările {0} - {1} din {2}&quot;,
+    emptyMsg       : &#39;Nu sunt date de afișat&#39;
+  });
+}
+
+if(Ext.form.Text){
+   Ext.apply(Ext.form.Text.prototype, {
+      minLengthText : &quot;Lungimea minimă pentru acest câmp este de {0}&quot;,
+      maxLengthText : &quot;Lungimea maximă pentru acest câmp este {0}&quot;,
+      blankText     : &quot;Acest câmp este obligatoriu&quot;,
+      regexText     : &quot;&quot;,
+      emptyText     : null
+   });
+}
+
+if(Ext.form.Number){
+   Ext.apply(Ext.form.Number.prototype, {
+      minText : &quot;Valoarea minimă permisă a acestui câmp este {0}&quot;,
+      maxText : &quot;Valaorea maximă permisă a acestui câmp este {0}&quot;,
+      nanText : &quot;{0} nu este un număr valid&quot;
+   });
+}
+
+if(Ext.form.Date){
+  Ext.apply(Ext.form.Date.prototype, {
+    disabledDaysText  : &quot;Indisponibil&quot;,
+    disabledDatesText : &quot;Indisponibil&quot;,
+    minText           : &quot;Data din această casetă trebuie să fie după {0}&quot;,
+    maxText           : &quot;Data din această casetă trebuie să fie inainte de {0}&quot;,
+    invalidText       : &quot;{0} nu este o dată validă, trebuie să fie în formatul {1}&quot;,
+    format            : &quot;d.m.Y&quot;,
+    altFormats        : &quot;d-m-Y|d.m.y|d-m-y|d.m|d-m|dm|d|Y-m-d&quot;
+  });
+}
+
+if(Ext.form.ComboBox){
+  Ext.apply(Ext.form.ComboBox.prototype, {
+    loadingText       : &quot;Încărcare...&quot;,
+    valueNotFoundText : undefined
+  });
+}
+
+if(Ext.form.VTypes){
+   Ext.apply(Ext.form.VTypes, {
+      emailText    : &#39;Acest câmp trebuie să conţină o adresă de e-mail în formatul &quot;user@domeniu.com&quot;&#39;,
+      urlText      : &#39;Acest câmp trebuie să conţină o adresă URL în formatul &quot;http:/&#39;+&#39;/www.domeniu.com&quot;&#39;,
+      alphaText    : &#39;Acest câmp trebuie să conţină doar litere şi _&#39;,
+      alphanumText : &#39;Acest câmp trebuie să conţină doar litere, cifre şi _&#39;
+   });
+}
+
+if(Ext.form.HtmlEditor){
+  Ext.apply(Ext.form.HtmlEditor.prototype, {
+    createLinkText : &#39;Vă rugăm introduceti un URL pentru această legătură web:&#39;,
+    buttonTips : {
+      bold : {
+        title: &#39;Îngroşat (Ctrl+B)&#39;,
+        text: &#39;Îngroşati caracterele textului selectat.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      italic : {
+        title: &#39;Înclinat (Ctrl+I)&#39;,
+        text: &#39;Înclinaţi caracterele textului selectat.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      underline : {
+        title: &#39;Subliniat (Ctrl+U)&#39;,
+        text: &#39;Subliniaţi caracterele textului selectat.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      increasefontsize : {
+        title: &#39;Mărit&#39;,
+        text: &#39;Măreşte dimensiunea fontului.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      decreasefontsize : {
+        title: &#39;Micşorat&#39;,
+        text: &#39;Micşorează dimensiunea textului.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      backcolor : {
+        title: &#39;Culoarea fundalului&#39;,
+        text: &#39;Schimbă culoarea fundalului pentru textul selectat.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      forecolor : {
+        title: &#39;Culoarea textului&#39;,
+        text: &#39;Schimbă culoarea textului selectat.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifyleft : {
+        title: &#39;Aliniat la stânga&#39;,
+        text: &#39;Aliniază textul la stânga.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifycenter : {
+        title: &#39;Centrat&#39;,
+        text: &#39;Centrează textul în editor.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifyright : {
+        title: &#39;Aliniat la dreapta&#39;,
+        text: &#39;Aliniază textul la dreapta.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      insertunorderedlist : {
+        title: &#39;Listă cu puncte&#39;,
+        text: &#39;Inserează listă cu puncte.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      insertorderedlist : {
+        title: &#39;Listă numerotată&#39;,
+        text: &#39;Inserează o listă numerotată.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      createlink : {
+        title: &#39;Legătură web&#39;,
+        text: &#39;Transformă textul selectat în legătură web.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      sourceedit : {
+        title: &#39;Editare sursă&#39;,
+        text: &#39;Schimbă pe modul de editare al codului HTML.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      }
+    }
+  });
+}
+
+
+if(Ext.grid.GridView){
+   Ext.apply(Ext.grid.GridView.prototype, {
+      sortAscText  : &quot;Sortare ascendentă&quot;,
+      sortDescText : &quot;Sortare descendentă&quot;,
+      lockText     : &quot;Blochează coloana&quot;,
+      unlockText   : &quot;Deblochează coloana&quot;,
+      columnsText  : &quot;Coloane&quot;
+   });
+}
+
+if(Ext.grid.GroupingView){
+  Ext.apply(Ext.grid.GroupingView.prototype, {
+    emptyGroupText : &#39;(Fără)&#39;,
+    groupByText    : &#39;Grupează după această coloană&#39;,
+    showGroupsText : &#39;Afișează grupat&#39;
+  });
+}
+
+if(Ext.grid.PropertyColumnModel){
+  Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
+    nameText   : &quot;Nume&quot;,
+    valueText  : &quot;Valoare&quot;,
+    dateFormat : &quot;d.m.Y&quot;
+  });
+}
+
+if(Ext.layout.BorderLayout &amp;&amp; Ext.layout.BorderLayout.SplitRegion){
+   Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
+      splitTip            : &quot;Trage pentru redimensionare.&quot;,
+      collapsibleSplitTip : &quot;Trage pentru redimensionare. Dublu-click pentru ascundere.&quot;
+   });
+}￿</pre></pre></body></html>

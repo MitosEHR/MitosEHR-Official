@@ -1,0 +1,10 @@
+/* buttons icons */
+.x-btn-large .add {
+    background-image: url(../button/images/add.gif) !important;
+}
+.x-btn-small .add {
+    background-image: url(../button/images/add16.gif) !important;
+}
+.x-btn-medium .add {
+    background-image: url(../button/images/add24.gif) !important;
+}

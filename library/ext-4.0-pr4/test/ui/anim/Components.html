@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Test Sample</title>
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css">
+    <script type="text/javascript" src="../../../bootstrap.js"></script>
+    <script type="text/javascript">
+        Ext.require('Ext.toolbar.*');
+        Ext.require('Ext.fx.*');
+        Ext.require('Ext.panel.Panel');
+        
+        Ext.onReady(function() {
+            var test = {
+            };
+            
+            var p1 = Ext.createWidget('panel', {
+                width: 150,
+                height: 150,
+                html: 'Bounce - out',
+                tbar: Ext.createWidget('toolbar', {
+                    items: [{
+                        xtype: 'tbtext',
+                        text: 'Top Toolbar'
+                    }]
+                }),
+                fbar: Ext.createWidget('toolbar', {
+                    items: [{
+                        xtype: 'tbtext',
+                        text: 'Bottom Toolbar'
+                    }]
+                }),
+                cls: 'floater',
+                renderTo: Ext.getBody()
+            });
+
+            var p4 = Ext.createWidget('panel', {
+                width: 150,
+                height: 150,
+                x: 500,
+                html: 'ease - out',
+                tbar: Ext.createWidget('toolbar', {
+                    items: [{
+                        xtype: 'tbtext',
+                        text: 'Top Toolbar'
+                    }]
+                }),
+                fbar: Ext.createWidget('toolbar', {
+                    items: [{
+                        xtype: 'tbtext',
+                        text: 'Bottom Toolbar'
+                    }]
+                }),
+                cls: 'floater',
+                renderTo: Ext.getBody()
+            });
+
+            // Animate via chaining
+            p1.animate({
+                duration: 1000,
+                to: {
+                    x: 500
+                }
+            }).animate({
+                duration: 1000,
+                to: {
+                    y: 150
+                }
+            }).animate({
+                duration: 1000,
+                to: {
+                    x: 0
+                }
+            }).animate({
+                duration: 1000,
+                to: {
+                    y: 0
+                }
+            });
+
+            // Animate via keyframes
+            p4.animate({
+                to: {
+                    opacity: 0.3
+                },
+                duration: 1000
+            }).animate({
+                easing: 'backIn',
+                iterations: 2,
+                duration: 4000,
+                keyframes: {
+                    25: {
+                        x: 0
+                    },
+                    50: {
+                        y: 0
+                    },
+                    75: {
+                        x: 500
+                    },
+                    100: {
+                        y: 150
+                    }
+                }
+            }).animate({
+                to: {
+                    opacity: 1
+                },
+                duration: 1000
+            });
+        });
+    </script>
+</head>
+<body id="docbody">
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Sencha Videos</title>
+    
+    <link rel="stylesheet" href="../../../resources/css/ext-all.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/application.css" type="text/css">
+</head>
+<body>
+    <!--
+        This is your development file. This should load the debug versions of third party library, and load
+        your application file by file (the Sencha Command generators help automate this). See deploy/index.html
+        for the production version of this file
+     -->
+    <script type="text/javascript" src="../../../bootstrap.js"></script>
+    
+    <div id="sencha-app">
+        <script type="text/javascript" src="app/app.js"></script>
+        
+        <!-- Place your view files here -->
+        <div id="sencha-views">
+            <script type="text/javascript" src="app/views/Viewport.js"></script>
+            <script type="text/javascript" src="app/views/List.js"></script>
+            <script type="text/javascript" src="app/views/Show.js"></script>
+            <script type="text/javascript" src="app/views/Tags.js"></script>
+            <script type="text/javascript" src="app/views/VideoInfo.js"></script>
+            
+        </div>
+        
+        <!-- Place your model files here -->
+        <div id="sencha-models">
+            <script type="text/javascript" src="app/models/Tag.js"></script>
+            <script type="text/javascript" src="app/models/Video.js"></script>
+            
+        </div>
+        
+        <!-- Place your store files here -->
+        <div id="sencha-stores">
+            <script type="text/javascript" src="app/stores/Videos.js"></script>
+            <script type="text/javascript" src="app/stores/Tags.js"></script>
+            
+        </div>
+        
+        <!-- Place your controller files here -->
+        <div id="sencha-controllers">
+            <script type="text/javascript" src="app/controllers/videos.js"></script>
+            
+        </div>
+        
+        <script type="text/javascript" src="app/routes.js"></script>
+    </div>
+</body>
+</html>

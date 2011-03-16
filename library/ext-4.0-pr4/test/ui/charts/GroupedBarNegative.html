@@ -1,0 +1,77 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Grouped Negative Bar Chart</title>
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../../bootstrap.js"></script>
+    <script type="text/javascript" src="../example-data.js"></script>
+<script>
+Ext.require('Ext.chart.*');
+
+Ext.onReady(function () {
+    storeNegatives.loadData(generateDataNegative());
+
+    var win = Ext.create('Ext.Window', {
+        width: 800,
+        height: 600,
+        hidden: false,
+        shadow: false,
+        maximizable: true,
+        style: 'overflow: hidden;',
+        title: 'Grouped Negative Bar Chart',
+        renderTo: Ext.getBody(),
+        layout: 'fit',
+        autoScroll: true,
+        tbar: [{
+            text: 'Reload Data',
+            handler: function() {
+                storeNegatives.loadData(generateDataNegative());
+            }
+        }, {
+            text: 'Toggle Animation',
+            handler: function() {
+                var chart = Ext.getCmp('chartCmp');
+                chart.animate = !chart.animate;
+            }
+        }],
+        items: {
+            id: 'chartCmp',
+            xtype: 'chart',
+            animate: true,
+            shadow: true,
+            store: storeNegatives,
+            legend: {
+              position: 'right'  
+            },
+            axes: [{
+                type: 'Numeric',
+                position: 'bottom',
+                fields: ['data1', 'data2', 'data3'],
+                label: {
+                    renderer: Ext.util.Format.numberRenderer('0,0')
+                },
+                grid: true,
+                title: 'Number of Hits'
+            }, {
+                type: 'Category',
+                position: 'left',
+                fields: ['name'],
+                title: 'Month of the Year'
+            }],
+            series: [{
+                type: 'bar',
+                highlight: true,
+                axis: 'bottom',
+                xField: 'name',
+                yField: ['data1', 'data2', 'data3']
+            }]
+        }
+    });
+});
+
+</script>
+
+</head>
+    <body id="docbody">
+    </body>
+</html>

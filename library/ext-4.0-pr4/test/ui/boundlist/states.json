@@ -1,0 +1,37 @@
+{
+    "states": [{
+        "abbr": "AL",
+        "state": "Alabama"
+    },{
+        "abbr": "AK",
+        "state": "Alaska"
+    },{
+        "abbr": "AZ",
+        "state": "Arizona"
+    },{
+        "abbr": "AR",
+        "state": "Arkansas"
+    },{
+        "abbr": "CA",
+        "state": "California"
+    },{
+        "abbr": "CO",
+        "state": "Colorado"
+    },{
+        "abbr": "CT",
+        "state": "Connecticut"
+    },{
+        "abbr": "DE",
+        "state": "Delaware"
+    },{
+        "abbr": "DC",
+        "state": "District of Columbia"
+    },{
+        "abbr": "FL",
+        "state": "Florida"
+    }]
+}
+
+
+
+

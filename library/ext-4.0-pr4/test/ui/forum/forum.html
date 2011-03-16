@@ -1,0 +1,38 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Sencha Forum Browser</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="forum.css" />
+    <script type="text/javascript" src="../../bootstrap.js"></script>
+    <script type="text/javascript" src="classes/ForumRenderers.js"></script>
+    <!--script type="text/javascript" src="classes/ForumSearchView.js"></script-->
+    <script type="text/javascript" src="classes/ForumTopicStore.js"></script>
+    <script type="text/javascript" src="classes/ForumTopicGrid.js"></script>
+    <script type="text/javascript" src="classes/ForumTreeStore.js"></script>
+    <script type="text/javascript" src="classes/ForumBrowser.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.setConfig({enabled: true});
+        Ext.Loader.setPath('Ext.ux', '../ux/');
+        Ext.require([
+            'Ext.grid.*',
+            'Ext.tree.*',
+            'Ext.data.*',
+            'Ext.toolbar.*',
+            'Ext.tab.TabPanel',
+            'Ext.layout.container.Border',
+            'Ext.ux.PreviewPlugin'
+        ]);
+        Ext.onReady(function(){
+            Ext.QuickTips.init();
+            new Forum.App();
+        });
+    </script>
+</head>
+<body>
+    <div id="header">
+        <!-- Search field -->
+        <div style="float:right;margin:5px;" id="search"></div>
+    </div>
+</body>
+</html>

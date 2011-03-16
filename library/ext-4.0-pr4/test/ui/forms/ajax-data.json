@@ -1,0 +1,9 @@
+{
+    "success": true,
+    "data": {
+        "first": "Jason",
+        "last": "Johnston",
+        "company": "Sencha Inc.",
+        "email": "jason@sencha.com"
+    }
+}

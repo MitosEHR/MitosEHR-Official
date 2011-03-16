@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Test Sample</title>
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../../bootstrap.js"></script>
+    <style>
+        .box {
+            background-color: #fff;
+            border: 1px solid black;
+            position: absolute;
+            height: 100px;
+            width: 100px;
+            top: 100px;
+            left: 100px;
+        }
+        #box2 {
+            top: 200px;
+        }
+    </style>
+<script>
+Ext.onReady(function () {
+
+    new Ext.fx.Anim({
+        target: 'box1',
+        duration: 2000,
+        keyframes: {
+            "25%": {
+                left: 200,
+                backgroundColor: '#f00'
+            },
+            "50%": {
+                left: 300,
+                backgroundColor: '#0f0'
+            },
+            "75%": {
+                left: 400,
+                backgroundColor: '#00f'
+            },
+            "100%": {
+                left: 500,
+                backgroundColor: '#000'
+            }
+        }
+    });
+
+    new Ext.fx.Anim({
+        target: 'box2',
+        duration: 2000,
+        reverse: true,
+        keyframes: {
+            "25%": {
+                left: 200,
+                backgroundColor: '#f00'
+            },
+            "50%": {
+                left: 300,
+                backgroundColor: '#0f0'
+            },
+            "75%": {
+                left: 400,
+                backgroundColor: '#00f'
+            },
+            "100%": {
+                left: 500,
+                backgroundColor: '#000'
+            }
+        }
+    });
+
+});
+
+</script>
+
+</head>
+    <body id="docbody">
+        <div class="box" id="box1"></div>
+        <div class="box" id="box2"></div>
+    </body>
+</html>

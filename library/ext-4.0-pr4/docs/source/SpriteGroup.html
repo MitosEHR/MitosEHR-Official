@@ -1,0 +1,246 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.draw.SpriteGroup"></a>/**
+ * @class Ext.draw.SpriteGroup
+ * @extends Ext.util.MixedCollection
+ */
+Ext.define(&#39;Ext.draw.SpriteGroup&#39;, {
+
+    /* Begin Definitions */
+
+    extend: &#39;Ext.util.MixedCollection&#39;,
+    mixins: {
+        animate: &#39;Ext.util.Animate&#39;
+    },
+
+    /* End Definitions */
+    isSpriteGroup: true,
+    constructor: function(config) {
+        var me = this;
+        
+        config = config || {};
+        Ext.apply(me, config);
+
+        me.addEvents(
+            &#39;mousedown&#39;,
+            &#39;mouseup&#39;,
+            &#39;mouseover&#39;,
+            &#39;mouseout&#39;,
+            &#39;click&#39;
+        );
+        me.id = Ext.id(null, &#39;ext-sprite-group-&#39;);
+        me.callParent();
+    },
+
+    // private
+    onClick: function(e) {
+        this.fireEvent(&#39;click&#39;, e);
+    },
+
+    // private
+    onMouseUp: function(e) {
+        this.fireEvent(&#39;mouseup&#39;, e);
+    },
+
+    // private
+    onMouseDown: function(e) {
+        this.fireEvent(&#39;mousedown&#39;, e);
+    },
+
+    // private
+    onMouseOver: function(e) {
+        this.fireEvent(&#39;mouseover&#39;, e);
+    },
+
+    // private
+    onMouseOut: function(e) {
+        this.fireEvent(&#39;mouseout&#39;, e);
+    },
+
+    attachEvents: function(o) {
+        var me = this;
+        
+        o.on({
+            scope: me,
+            mousedown: me.onMouseDown,
+            mouseup: me.onMouseUp,
+            mouseover: me.onMouseOver,
+            mouseout: me.onMouseOut,
+            click: me.onClick
+        });
+    },
+
+    add: function(key, o) {
+        var result = this.callParent(arguments);
+        this.attachEvents(result);
+        return result;
+    },
+
+    insert: function(index, key, o) {
+        return this.callParent(arguments);
+    },
+
+    remove: function(o) {
+        var me = this;
+        
+        o.un({
+            scope: me,
+            mousedown: me.onMouseDown,
+            mouseup: me.onMouseUp,
+            mouseover: me.onMouseOver,
+            mouseout: me.onMouseOut,
+            click: me.onClick
+        });
+        me.callParent(arguments);
+    },
+    // Returns the group bounding box.
+    getBBox: function() {
+        var i = 0,
+            sprite,
+            bb,
+            items = this.items,
+            len = this.length,
+            infinity = Infinity,
+            minX = infinity,
+            maxHeight = -infinity,
+            minY = infinity,
+            maxWidth = -infinity,
+            maxWidthBBox, maxHeightBBox;
+        
+        for (; i &lt; len; i++) {
+            sprite = items[i];
+            if (sprite.el) {
+                bb = sprite.getBBox();
+                minX = Math.min(minX, bb.x);
+                minY = Math.min(minY, bb.y);
+                maxHeight = Math.max(maxHeight, bb.height + bb.y);
+                maxWidth = Math.max(maxWidth, bb.width + bb.x);
+            }
+        }
+        
+        return {
+            x: minX,
+            y: minY,
+            height: maxHeight - minY,
+            width: maxWidth - minX
+        };
+    },
+
+    setAttributes: function(attrs, redraw) {
+        var i = 0,
+            items = this.items,
+            len = this.length;
+            
+        for (; i &lt; len; i++) {
+            items[i].setAttributes(attrs, redraw);
+        }
+        return this;
+    },
+
+    hide: function(attrs) {
+        var i = 0,
+            items = this.items,
+            len = this.length;
+            
+        for (; i &lt; len; i++) {
+            items[i].hide();
+        }
+        return this;
+    },
+
+    show: function(attrs) {
+        var i = 0,
+            items = this.items,
+            len = this.length;
+            
+        for (; i &lt; len; i++) {
+            items[i].show();
+        }
+        return this;
+    },
+
+    redraw: function() {
+        var me = this,
+            i = 0,
+            items = me.items,
+            surface = me.getSurface(),
+            len = me.length;
+        
+        if (surface) {
+            for (; i &lt; len; i++) {
+                surface.renderItem(items[i]);
+            }
+        }
+        return me;
+    },
+
+    setStyle: function(obj) {
+        var i = 0,
+            items = this.items,
+            len = this.length,
+            item;
+            
+        for (; i &lt; len; i++) {
+            item = items[i];
+            if (item.el) {
+                el.setStyle(obj);
+            }
+        }
+    },
+
+    addCls: function(obj) {
+        var i = 0,
+            items = this.items,
+            surface = this.getSurface(),
+            len = this.length;
+        
+        if (surface) {
+            for (; i &lt; len; i++) {
+                surface.addCls(items[i], obj);
+            }
+        }
+    },
+
+    removeCls: function(obj) {
+        var i = 0,
+            items = this.items,
+            surface = this.getSurface(),
+            len = this.length;
+        
+        if (surface) {
+            for (; i &lt; len; i++) {
+                surface.removeCls(items[i], obj);
+            }
+        }
+    },
+    
+    /**
+     * Grab the surface from the items
+     * @private
+     * @return {Ext.draw.Surface} The surface, null if not found
+     */
+    getSurface: function(){
+        var first = this.first();
+        if (first) {
+            return first.surface;
+        }
+        return null;
+    },
+    
+    <a name="method-Ext.draw.SpriteGroup-destroy"></a>/**
+     * Destroys the SpriteGroup
+     */
+    destroy: function(){
+        var me = this,
+            surface = me.getSurface(),
+            item;
+            
+        if (surface) {
+            while (me.getCount() &gt; 0) {
+                item = me.first();
+                me.remove(item);
+                surface.remove(item);
+            }
+        }
+        me.clearListeners();
+    }
+});
+￿</pre></pre></body></html>

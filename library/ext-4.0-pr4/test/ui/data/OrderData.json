@@ -1,0 +1,43 @@
+{
+    users: [
+        {
+            id: 1,
+            name: 'Ed Spencer',
+            orders: [
+                {
+                    id: 123,
+                    user_id: 1,
+                    status: 'Shipped',
+                    orderitems: [
+                        {
+                            id: 10,
+                            order_id: 123,
+                            product_id: 1,
+                            quantity: 2,
+                            price: 329,
+                            product: {
+                                id: 1,
+                                name: 'Ext JS 4',
+                                price: 329,
+                                description: "Best framework evar!"
+                            }
+                        },
+                        {
+                            id: 11,
+                            order_id: 123,
+                            product_id: 2,
+                            quantity: 1,
+                            price: 99,
+                            product: {
+                                id: 2,
+                                name: 'Sencha Touch',
+                                price: 99,
+                                description: "Best Touch framework evar!"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

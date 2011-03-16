@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Field Layout With Labels and Errors</title>
+
+    <!-- ExtJS -->
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />
+    <script type="text/javascript" src="../../../bootstrap.js"></script>
+
+    <!-- Shared -->
+    <link rel="stylesheet" type="text/css" href="../shared/example.css" />
+
+    <!-- Example -->
+    <script type="text/javascript" src="field-layout.js"></script>
+    <style type="text/css">
+        body {
+            padding-right: 20em;
+        }
+
+        /* Styling for the external error messages defined with msgTarget:[element id] */
+        #externalErrors {
+            position: absolute;
+            top: 2em;
+            right: 2em;
+            font-size: 10px;
+            color: #999;
+            border: 1px solid #EEE;
+            padding: 1em;
+            width: 20em;
+        }
+        #externalErrors h4 {
+            font-size: 1em;
+            margin: 0 0 .5em;
+        }
+        #externalErrors .msg {
+            color: #C00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Field Layout With Labels and Errors</h1>
+    
+    <p>This example demonstrates the layout of form fields in conjunction with the various supported label alignments
+       and error message display schemes.</p>
+    <p>The js is not minified so it is readable. See <a href="field-layout.js">field-layout.js</a>.</p>
+
+
+    <div id="externalErrors">
+        <h4>Error messages for fields with <code>msgTarget:[element id]</code></h4>
+    </div>
+
+</body>
+</html>

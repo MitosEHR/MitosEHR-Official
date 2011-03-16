@@ -1,0 +1,171 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="prop-Ext.String-indicatorText"></a>/**
+ * Latvian Translations
+ * By salix 17 April 2007
+ */
+
+Ext.UpdateManager.defaults.indicatorText = &#39;&lt;div class=&quot;loading-indicator&quot;&gt;Notiek ielāde...&lt;/div&gt;&#39;;
+
+if(Ext.View){
+   Ext.View.prototype.emptyText = &quot;&quot;;
+}
+
+if(Ext.grid.GridPanel){
+   Ext.grid.GridPanel.prototype.ddText = &quot;{0} iezīmētu rindu&quot;;
+}
+
+if(Ext.TabPanelItem){
+   Ext.TabPanelItem.prototype.closeText = &quot;Aizver šo zīmni&quot;;
+}
+
+if(Ext.form.BaseField){
+   Ext.form.BaseField.prototype.invalidText = &quot;Vērtība šajā laukā nav pareiza&quot;;
+}
+
+if(Ext.LoadMask){
+    Ext.LoadMask.prototype.msg = &quot;Ielādē...&quot;;
+}
+
+Ext.Date.monthNames = [
+   &quot;Janvāris&quot;,
+   &quot;Februāris&quot;,
+   &quot;Marts&quot;,
+   &quot;Aprīlis&quot;,
+   &quot;Maijs&quot;,
+   &quot;Jūnijs&quot;,
+   &quot;Jūlijs&quot;,
+   &quot;Augusts&quot;,
+   &quot;Septembris&quot;,
+   &quot;Oktobris&quot;,
+   &quot;Novembris&quot;,
+   &quot;Decembris&quot;
+];
+
+Ext.Date.dayNames = [
+   &quot;Svētdiena&quot;,
+   &quot;Pirmdiena&quot;,
+   &quot;Otrdiena&quot;,
+   &quot;Trešdiena&quot;,
+   &quot;Ceturtdiena&quot;,
+   &quot;Piektdiena&quot;,
+   &quot;Sestdiena&quot;
+];
+
+if(Ext.MessageBox){
+   Ext.MessageBox.buttonText = {
+      ok     : &quot;Labi&quot;,
+      cancel : &quot;Atcelt&quot;,
+      yes    : &quot;Jā&quot;,
+      no     : &quot;Nē&quot;
+   };
+}
+
+if(Ext.util.Format){
+    Ext.apply(Ext.util.Format, {
+        thousandSeparator: &#39;.&#39;,
+        decimalSeparator: &#39;,&#39;,
+        currencySign: &#39;Ls&#39;,  // Latvian Lati
+        dateFormat: &#39;d.m.Y&#39;
+    });
+}
+
+if(Ext.picker.Date){
+   Ext.apply(Ext.DatePicker.prototype, {
+      todayText         : &quot;Šodiena&quot;,
+      minText           : &quot;Norādītais datums ir mazāks par minimālo datumu&quot;,
+      maxText           : &quot;Norādītais datums ir lielāks par maksimālo datumu&quot;,
+      disabledDaysText  : &quot;&quot;,
+      disabledDatesText : &quot;&quot;,
+      monthNames	: Ext.Date.monthNames,
+      dayNames		: Ext.Date.dayNames,
+      nextText          : &#39;Nākamais mēnesis (Control+pa labi)&#39;,
+      prevText          : &#39;Iepriekšējais mēnesis (Control+pa kreisi)&#39;,
+      monthYearText     : &#39;Mēneša izvēle (Control+uz augšu/uz leju lai pārslēgtu gadus)&#39;,
+      todayTip          : &quot;{0} (Tukšumzīme)&quot;,
+      format            : &quot;d.m.Y&quot;,
+      startDay          : 1
+   });
+}
+
+if(Ext.toolbar.PagingToolbar){
+   Ext.apply(Ext.PagingToolbar.prototype, {
+      beforePageText : &quot;Lapa&quot;,
+      afterPageText  : &quot;no {0}&quot;,
+      firstText      : &quot;Pirmā lapa&quot;,
+      prevText       : &quot;iepriekšējā lapa&quot;,
+      nextText       : &quot;Nākamā lapa&quot;,
+      lastText       : &quot;Pēdējā lapa&quot;,
+      refreshText    : &quot;Atsvaidzināt&quot;,
+      displayMsg     : &quot;Rāda no {0} līdz {1} ierakstiem, kopā {2}&quot;,
+      emptyMsg       : &#39;Nav datu, ko parādīt&#39;
+   });
+}
+
+if(Ext.form.Text){
+   Ext.apply(Ext.form.Text.prototype, {
+      minLengthText : &quot;Minimālais garums šim laukam ir {0}&quot;,
+      maxLengthText : &quot;Maksimālais garums šim laukam ir {0}&quot;,
+      blankText     : &quot;Šis ir obligāts lauks&quot;,
+      regexText     : &quot;&quot;,
+      emptyText     : null
+   });
+}
+
+if(Ext.form.Number){
+   Ext.apply(Ext.form.Number.prototype, {
+      minText : &quot;Minimālais garums šim laukam ir  {0}&quot;,
+      maxText : &quot;Maksimālais garums šim laukam ir  {0}&quot;,
+      nanText : &quot;{0} nav pareizs skaitlis&quot;
+   });
+}
+
+if(Ext.form.Date){
+   Ext.apply(Ext.form.Date.prototype, {
+      disabledDaysText  : &quot;Atspējots&quot;,
+      disabledDatesText : &quot;Atspējots&quot;,
+      minText           : &quot;Datumam šajā laukā jābūt lielākam kā {0}&quot;,
+      maxText           : &quot;Datumam šajā laukā jābūt mazākam kā {0}&quot;,
+      invalidText       : &quot;{0} nav pareizs datums - tam jābūt šādā formātā: {1}&quot;,
+      format            : &quot;d.m.Y&quot;
+   });
+}
+
+if(Ext.form.ComboBox){
+   Ext.apply(Ext.form.ComboBox.prototype, {
+      loadingText       : &quot;Ielādē...&quot;,
+      valueNotFoundText : undefined
+   });
+}
+
+if(Ext.form.VTypes){
+   Ext.apply(Ext.form.VTypes, {
+      emailText    : &#39;Šajā laukā jāieraksta e-pasta adrese formātā &quot;lietotās@domēns.lv&quot;&#39;,
+      urlText      : &#39;Šajā laukā jāieraksta URL formātā &quot;http:/&#39;+&#39;/www.domēns.lv&quot;&#39;,
+      alphaText    : &#39;Šis lauks drīkst saturēt tikai burtus un _ zīmi&#39;,
+      alphanumText : &#39;Šis lauks drīkst saturēt tikai burtus, ciparus un _ zīmi&#39;
+   });
+}
+
+if(Ext.grid.GridView){
+   Ext.apply(Ext.grid.GridView.prototype, {
+      sortAscText  : &quot;Kārtot pieaugošā secībā&quot;,
+      sortDescText : &quot;Kārtot dilstošā secībā&quot;,
+      lockText     : &quot;Noslēgt kolonnu&quot;,
+      unlockText   : &quot;Atslēgt kolonnu&quot;,
+      columnsText  : &quot;Kolonnas&quot;
+   });
+}
+
+if(Ext.grid.PropertyColumnModel){
+   Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
+      nameText   : &quot;Nosaukums&quot;,
+      valueText  : &quot;Vērtība&quot;,
+      dateFormat : &quot;j.m.Y&quot;
+   });
+}
+
+if(Ext.layout.BorderLayout &amp;&amp; Ext.layout.BorderLayout.SplitRegion){
+   Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
+      splitTip            : &quot;Velc, lai mainītu izmēru.&quot;,
+      collapsibleSplitTip : &quot;Velc, lai mainītu izmēru. Dubultklikšķis noslēpj apgabalu.&quot;
+   });
+}￿</pre></pre></body></html>

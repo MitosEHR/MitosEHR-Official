@@ -1,0 +1,171 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="prop-Ext.String-indicatorText"></a>/**
+ * Slovenian translation by Matjaž (UTF-8 encoding)
+ * 25 April 2007
+ */
+
+Ext.UpdateManager.defaults.indicatorText = &#39;&lt;div class=&quot;loading-indicator&quot;&gt;Nalagam...&lt;/div&gt;&#39;;
+
+if(Ext.View){
+   Ext.View.prototype.emptyText = &quot;&quot;;
+}
+
+if(Ext.grid.GridPanel){
+   Ext.grid.GridPanel.prototype.ddText = &quot;{0} izbranih vrstic&quot;;
+}
+
+if(Ext.TabPanelItem){
+   Ext.TabPanelItem.prototype.closeText = &quot;Zapri zavihek&quot;;
+}
+
+if(Ext.form.BaseField){
+   Ext.form.BaseField.prototype.invalidText = &quot;Neveljavna vrednost&quot;;
+}
+
+if(Ext.LoadMask){
+    Ext.LoadMask.prototype.msg = &quot;Nalagam...&quot;;
+}
+
+Ext.Date.monthNames = [
+   &quot;Januar&quot;,
+   &quot;Februar&quot;,
+   &quot;Marec&quot;,
+   &quot;April&quot;,
+   &quot;Maj&quot;,
+   &quot;Junij&quot;,
+   &quot;Julij&quot;,
+   &quot;Avgust&quot;,
+   &quot;September&quot;,
+   &quot;Oktober&quot;,
+   &quot;November&quot;,
+   &quot;December&quot;
+];
+
+Ext.Date.dayNames = [
+   &quot;Nedelja&quot;,
+   &quot;Ponedeljek&quot;,
+   &quot;Torek&quot;,
+   &quot;Sreda&quot;,
+   &quot;Četrtek&quot;,
+   &quot;Petek&quot;,
+   &quot;Sobota&quot;
+];
+
+if(Ext.MessageBox){
+   Ext.MessageBox.buttonText = {
+      ok     : &quot;V redu&quot;,
+      cancel : &quot;Prekliči&quot;,
+      yes    : &quot;Da&quot;,
+      no     : &quot;Ne&quot;
+   };
+}
+
+if(Ext.util.Format){
+    Ext.apply(Ext.util.Format, {
+        thousandSeparator: &#39;.&#39;,
+        decimalSeparator: &#39;,&#39;,
+        currencySign: &#39;\u20ac&#39;,  // Slovenian Euro
+        dateFormat: &#39;d.m.Y&#39;
+    });
+}
+
+if(Ext.picker.Date){
+   Ext.apply(Ext.DatePicker.prototype, {
+      todayText         : &quot;Danes&quot;,
+      minText           : &quot;Navedeni datum je pred spodnjim datumom&quot;,
+      maxText           : &quot;Navedeni datum je za zgornjim datumom&quot;,
+      disabledDaysText  : &quot;&quot;,
+      disabledDatesText : &quot;&quot;,
+      monthNames	: Ext.Date.monthNames,
+      dayNames		: Ext.Date.dayNames,
+      nextText          : &#39;Naslednji mesec (Control+Desno)&#39;,
+      prevText          : &#39;Prejšnji mesec (Control+Levo)&#39;,
+      monthYearText     : &#39;Izberite mesec (Control+Gor/Dol za premik let)&#39;,
+      todayTip          : &quot;{0} (Preslednica)&quot;,
+      format            : &quot;d.m.y&quot;,
+      startDay          : 1
+   });
+}
+
+if(Ext.toolbar.PagingToolbar){
+   Ext.apply(Ext.PagingToolbar.prototype, {
+      beforePageText : &quot;Stran&quot;,
+      afterPageText  : &quot;od {0}&quot;,
+      firstText      : &quot;Prva stran&quot;,
+      prevText       : &quot;Prejšnja stran&quot;,
+      nextText       : &quot;Naslednja stran&quot;,
+      lastText       : &quot;Zadnja stran&quot;,
+      refreshText    : &quot;Osveži&quot;,
+      displayMsg     : &quot;Prikazujem {0} - {1} od {2}&quot;,
+      emptyMsg       : &#39;Ni podatkov za prikaz&#39;
+   });
+}
+
+if(Ext.form.Text){
+   Ext.apply(Ext.form.Text.prototype, {
+      minLengthText : &quot;Minimalna dolžina tega polja je {0}&quot;,
+      maxLengthText : &quot;Maksimalna dolžina tega polja je {0}&quot;,
+      blankText     : &quot;To polje je obvezno&quot;,
+      regexText     : &quot;&quot;,
+      emptyText     : null
+   });
+}
+
+if(Ext.form.Number){
+   Ext.apply(Ext.form.Number.prototype, {
+      minText : &quot;Minimalna vrednost tega polja je {0}&quot;,
+      maxText : &quot;Maksimalna vrednost tega polja je {0}&quot;,
+      nanText : &quot;{0} ni veljavna številka&quot;
+   });
+}
+
+if(Ext.form.Date){
+   Ext.apply(Ext.form.Date.prototype, {
+      disabledDaysText  : &quot;Onemogočen&quot;,
+      disabledDatesText : &quot;Onemogočen&quot;,
+      minText           : &quot;Datum mora biti po {0}&quot;,
+      maxText           : &quot;Datum mora biti pred {0}&quot;,
+      invalidText       : &quot;{0} ni veljaven datum - mora biti v tem formatu {1}&quot;,
+      format            : &quot;d.m.y&quot;
+   });
+}
+
+if(Ext.form.ComboBox){
+   Ext.apply(Ext.form.ComboBox.prototype, {
+      loadingText       : &quot;Nalagam...&quot;,
+      valueNotFoundText : undefined
+   });
+}
+
+if(Ext.form.VTypes){
+   Ext.apply(Ext.form.VTypes, {
+      emailText    : &#39;To polje je e-mail naslov formata &quot;ime@domena.si&quot;&#39;,
+      urlText      : &#39;To polje je URL naslov formata &quot;http:/&#39;+&#39;/www.domena.si&quot;&#39;,
+      alphaText    : &#39;To polje lahko vsebuje samo črke in _&#39;,
+      alphanumText : &#39;To polje lahko vsebuje samo črke, številke in _&#39;
+   });
+}
+
+if(Ext.grid.GridView){
+   Ext.apply(Ext.grid.GridView.prototype, {
+      sortAscText  : &quot;Sortiraj naraščajoče&quot;,
+      sortDescText : &quot;Sortiraj padajoče&quot;,
+      lockText     : &quot;Zakleni stolpec&quot;,
+      unlockText   : &quot;Odkleni stolpec&quot;,
+      columnsText  : &quot;Stolpci&quot;
+   });
+}
+
+if(Ext.grid.PropertyColumnModel){
+   Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
+      nameText   : &quot;Ime&quot;,
+      valueText  : &quot;Vrednost&quot;,
+      dateFormat : &quot;j.m.Y&quot;
+   });
+}
+
+if(Ext.layout.BorderLayout &amp;&amp; Ext.layout.BorderLayout.SplitRegion){
+   Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
+      splitTip            : &quot;Potegni za razširitev.&quot;,
+      collapsibleSplitTip : &quot;Potegni za razširitev. Dvojni klik, če želite skriti.&quot;
+   });
+}￿</pre></pre></body></html>

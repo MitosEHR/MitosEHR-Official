@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../../../resources/css/ext-all.css" />    
+    <script type="text/javascript" src="../../../bootstrap.js"></script>
+<script type="text/javascript" src="../ux/BoxReorderer.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+    window.h = Ext.create('Ext.container.Container', {
+        plugins: Ext.create('Ext.ux.BoxReorderer', {
+            listeners: {
+                StartDrag: function() {
+                    console.log('StartDrag');
+                },
+                Drop: function(r, ct, cmp, st, idx) {
+                    console.log(cmp.el.dom, ' dragged from ', st, ' to ', idx);
+                }
+            }
+        }),
+        renderTo: document.body,
+        height: 40,
+        layout: {
+            type: 'hbox',
+            align: 'stretch',
+            padding: '5 0 5 5'
+        },
+        defaults: {
+            cls: 'dd-test-cmp',
+            margins: '0 5 0 0',
+            flex: 1
+        },
+        defaultType: 'component',
+        items: [{
+            html: 'Box 1'
+        }, {
+            html: 'Box 2',
+            flex: 1.5
+        }, {
+            html: 'Box 3'
+        }, {
+            html: 'Box 4',
+            flex: 2
+        }, {
+            html: 'Box 5'
+        }, {
+            html: 'Box 6',
+            flex: 2.5
+        }, {
+            html: 'Box 7'
+        }]
+    });
+    window.v = Ext.create('Ext.container.Container', {
+        plugins: Ext.create('Ext.ux.BoxReorderer', {
+            listeners: {
+                StartDrag: function() {
+                    console.log('StartDrag');
+                },
+                Drop: function(r, ct, cmp, st, idx) {
+                    console.log(cmp.el.dom, ' dragged from ', st, ' to ', idx);
+                }
+            }
+        }),
+        renderTo: document.body,
+        width: 100,
+        height: 350,
+        layout: {
+            type: 'vbox',
+            align: 'stretch',
+            padding: '5 5 0 5'
+        },
+        defaults: {
+            cls: 'dd-test-cmp',
+            margins: '0 0 5 0',
+            flex: 1
+        },
+        defaultType: 'component',
+        items: [{
+            html: 'Box 1'
+        }, {
+            html: 'Box 2',
+            flex: 1.5
+        }, {
+            html: 'Box 3'
+        }, {
+            html: 'Box 4',
+            flex: 2
+        }, {
+            html: 'Box 5'
+        }, {
+            html: 'Box 6',
+            flex: 2.5
+        }, {
+            html: 'Box 7'
+        }]
+    });
+});
+</script>
+<style>
+.dd-test-cmp {
+    border: solid 1px black;
+    border-radius: 1em;
+    -moz-border-radius: 1em;
+    padding: 0.5em;
+}
+</style>
+</head>
+<body>
+</body>
+</html>

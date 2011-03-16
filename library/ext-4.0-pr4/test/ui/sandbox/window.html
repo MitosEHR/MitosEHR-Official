@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Hello World Window Example - Sandboxed</title>
+        <link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/dev/resources/css/ext-all.css">
+
+        <script type="text/javascript" src="../../ext-core-sandbox-debug.js"></script>
+        <script type="text/javascript" src="../../ext-all-sandbox-debug.js"></script>
+
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/dev/adapter/ext/ext-base.js"></script>
+        <script type="text/javascript" src="http://dev.sencha.com/deploy/dev/ext-all.js"></script>
+        <script type="text/javascript" src="window.js"></script>
+    </head>
+    <body>
+
+        <h1>Hello World Window</h1>
+        <p>This example shows how to create a very simple Window with "autoTabs" from existing markup.</p>
+        <input type="button" id="show-btn" value="Hello World" /><br /><br />
+        <p>Note that the js is not minified so it is readable. See <a href="hello.js">hello.js</a> for the full source code.</p>
+
+        <div id="hello-win" class="x-hidden">
+            <div class="x-window-header">Hello Dialog</div>
+            <div id="hello-tabs">
+                <!-- Auto create tab 1 -->
+                <div class="x-tab" title="Hello World 1">
+                    <p>Hello...</p>
+                </div>
+                <!-- Auto create tab 2 -->
+                <div class="x-tab" title="Hello World 2">
+                    <p>... World!</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

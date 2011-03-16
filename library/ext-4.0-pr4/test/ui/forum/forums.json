@@ -1,0 +1,49 @@
+{"text":"Sencha Forums","forums": [
+    [ { "children" : [  ],
+        "cls" : "forum-ct",
+        "expanded" : true,
+        "iconCls" : "forum-parent",
+        "id" : "67",
+        "text" : "Sencha Staff"
+      },
+      { "children" : [ { "cls" : "forum",
+              "iconCls" : "icon-forum",
+              "id" : "68",
+              "leaf" : true,
+              "text" : "Community Discussion",
+              "threads" : "24",
+              "totalPosts" : 317
+            },
+            { "cls" : "forum",
+              "iconCls" : "icon-forum",
+              "id" : "6",
+              "leaf" : true,
+              "text" : "Ext: Open Discussion",
+              "threads" : "4072",
+              "totalPosts" : 35554
+            },
+            { "cls" : "forum",
+              "iconCls" : "icon-forum",
+              "id" : "7",
+              "leaf" : true,
+              "text" : "Ext: Examples and Extras",
+              "threads" : "1314",
+              "totalPosts" : 16028
+            },
+            { "cls" : "forum",
+              "iconCls" : "icon-forum",
+              "id" : "33",
+              "leaf" : true,
+              "text" : "Gxt: Open Discussion",
+              "threads" : "882",
+              "totalPosts" : 4837
+            }
+          ],
+        "cls" : "forum-ct",
+        "expanded" : true,
+        "iconCls" : "forum-parent",
+        "id" : "22",
+        "text" : "Sencha General Forums"
+      }
+    ]
+}

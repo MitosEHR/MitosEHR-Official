@@ -1,0 +1,58 @@
+/**
+ * This can optionally be uncommented to easily modify how much of the Sencha Touch CSS is included
+ * in your app. By default, new applications are set up to include the Sencha Touch CSS file from
+ * lib/touch/resources/css/ext-touch.css.
+ * 
+ * If you want to build a stripped-down version of the Sencha Touch CSS, remove that include from your
+ * index.html file and uncomment the code below. This will then build the required elements of Sencha 
+ * Touch's CSS along with your own SCSS code below into a single file.
+ * 
+ * This line must remain
+ * @import 'sencha-touch/default/all';
+ * 
+ * Any of these lines can be removed/commented to remove those CSS rules from the generated file
+ * @include sencha-panel;
+ * @include sencha-buttons;
+ * @include sencha-sheet;
+ * @include sencha-picker;
+ * @include sencha-tabs;
+ * @include sencha-toolbar;
+ * @include sencha-toolbar-forms;
+ * @include sencha-carousel;
+ * @include sencha-indexbar;
+ * @include sencha-list;
+ * @include sencha-layout;
+ * @include sencha-form;
+ * @include sencha-msgbox;
+ */
+
+
+/**
+ * Your application's SCSS goes here:
+ */
+
+// This is purely for the generated application, and can be removed
+.x-tablet .x-list, .x-desktop .x-list {
+  border-right: 1px solid #000;
+}
+
+/**
+ * Using the supplied Sencha SCSS functions:
+ * 
+ * 1) Change the base color for your entire app (requires building Sencha Touch CSS yourself - see top of file)
+ *     $base_color: #f58942;
+ * 
+ * This sets the whole theme to be based on an orange color
+ * 
+ * 2) Including more icons:
+ * 
+ *     @include sencha-toolbar-icon('nonDefaultIcon');
+ *     @include sencha-toolbar-icon('someOtherIcon');
+ * 
+ * 3) To create a new Toolbar ui style:
+ * 
+ *     @include sencha-toolbar-ui('orange', #f58942, 'glossy');
+ * 
+ *     In your code:
+ *     new Ext.Toolbar({ui: 'orange'});
+ */
