@@ -28,7 +28,7 @@ class SiteSetup {
 		mkdir("sites/" . $siteName, 0777);
 		return true;
 	}
-	
+
 	//*****************************************************************************************
 	// Connection error handeler
 	//*****************************************************************************************
@@ -164,25 +164,30 @@ class SiteSetup {
 	//*****************************************************************************************
 	// set Default Language
 	//*****************************************************************************************
-	function setLanguage($langauge) {
-	 	
+	function defaultLanguage($langauge) {
+	 	//-------------------------------------------------------------------------------------
+	 	// ask Gino how we wanna do this!
+	 	//-------------------------------------------------------------------------------------
 		$recordset = $conn->query("");
-		
-	}
-	 
-	//*****************************************************************************************
-	// set set admin user
-	//*****************************************************************************************
-	function adminUser($adminUser, $adminPass, $adminEmail) {
-		
 		
 	}
 	
 	//*****************************************************************************************
 	// create site files
 	//*****************************************************************************************
-	function siteFiles() {
-		
+	function createSiteConf() {
+		// create site conf.php inside current site folder
+		$siteConf = tempnam("sites/".$siteName."conf.php");
+		// change permission to 777
+		chmod($siteConf, 0777);
+		// open new site conf.php
+		$handle = fopen($siteConf, "w");
+		// write con.php with site configuration
+		fwrite($handle, "writing to conf.php");
+		// close file pointer
+		fclose($handle);
+		// change pernission back to 644
+		chmod($siteConf, 0644);
 		
 	}
 	
