@@ -67,8 +67,9 @@ Ext.onReady(function() {
 var reqGrid = new Ext.grid.GridPanel({
 	id : 'reqGrid',
     store: store,
-    columnLines: true,
-    title: 'Array Grid',
+    //columnLines: true,
+    frame: false,
+    border: false,
     viewConfig: {stripeRows: true},
     headers: [{
         text     : 'Requirement',
@@ -77,7 +78,7 @@ var reqGrid = new Ext.grid.GridPanel({
         dataIndex: 'company'
     },{
         text     : 'Status', 
-        width    : 75, 
+        width    : 150, 
         sortable : true, 
         renderer : 'usMoney', 
         dataIndex: 'price'
@@ -144,7 +145,22 @@ var winSiteSetup = new Ext.create('widget.window', {
 	draggable	: false,
 	closable	: false,
     bodyStyle	: 'padding: 5px;',
-    items		: [ reqGrid ]
+    items		: [ reqGrid ],
+    dockedItems: [{
+		xtype: 'form',
+		dock: 'bottom',
+		frame: false,
+		border: false,
+		buttons: [{
+	        text: 'Next',
+	        id: 'btn_agree',
+	        padding: '0 10',
+			name: 'btn_reset',
+			handler: function() {
+	            
+	        }
+		}]
+	}]
 });
 
 }); // End of Ext.onReady function
