@@ -29,45 +29,35 @@ Ext.require([
 Ext.onReady(function() {
 ////////////////////////////////////////////////////////////////////////////////////////
 
-    Ext.QuickTips.init();
-        
-    // sample static data for the store
-    var myData = [
-        ['3m Co',                               71.72],
-        ['Alcoa Inc',                           29.01],
-        ['Altria Group Inc',                    83.81],
-        ['American Express Company',            52.55],
-        ['American International Group, Inc.',  64.13],
-        ['AT&T Inc.',                           31.61],
-        ['Boeing Co.',                          75.43],
-        ['Caterpillar Inc.',                    67.27],
-        ['Citigroup, Inc.',                     49.37],
-        ['E.I. du Pont de Nemours and Company', 40.48],
-        ['Exxon Mobil Corp',                    68.15],
-        ['General Electric Company',            34.14]
-    ];
-    
 
-    // create the data store
-    var store = new Ext.data.ArrayStore({
-        fields: [
-           {name: 'company'},
-           {name: 'price',      type: 'float'}
-        ],
-        data: myData
-    });
-    
-    store.loadData(myData);
 
 ////////////////////////////////////////////////////////////////////////////////////////
+
+// *************************************************************************************
+// Structure, data for storeReq
+// AJAX -> requirements.ejs.php
+// *************************************************************************************
+Ext.regModel('Requirements', { fields: ['msg', 'status']
+});
+var storeSites = new Ext.data.Store({
+	model: 'Requirements',
+	proxy: new Ext.data.AjaxProxy({
+		url: 'install/requirements.ejs.php',
+		reader: {
+			type: 'json'
+		}
+	}),
+	autoLoad: true
+});
+
+
 
 // *************************************************************************************
 // grid to show all the requirements status
 // *************************************************************************************
 var reqGrid = new Ext.grid.GridPanel({
 	id : 'reqGrid',
-    store: store,
-    //columnLines: true,
+    store: storeSites,
     frame: false,
     border: false,
     viewConfig: {stripeRows: true},
@@ -75,13 +65,12 @@ var reqGrid = new Ext.grid.GridPanel({
         text     : 'Requirement',
         flex     : 1,
         sortable : false, 
-        dataIndex: 'company'
+        dataIndex: 'msg'
     },{
         text     : 'Status', 
         width    : 150, 
         sortable : true, 
-        renderer : 'usMoney', 
-        dataIndex: 'price'
+        dataIndex: 'status'
     }]
 });
 // *************************************************************************************
@@ -113,7 +102,6 @@ var winCopyright = Ext.create('widget.window', {
 			handler: function() {
 	            winCopyright.hide();
 	            winSiteSetup.show();
-	            
 	        }
 		}, '-',{
 			text: 'Do Not Agree',
@@ -157,7 +145,6 @@ var winSiteSetup = new Ext.create('widget.window', {
 	        padding: '0 10',
 			name: 'btn_reset',
 			handler: function() {
-	            
 	        }
 		}]
 	}]
