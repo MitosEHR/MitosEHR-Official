@@ -27,7 +27,7 @@ Ext.require([
 	'Ext.tip.QuickTips'
 ]);
 Ext.onReady(function() {
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// TEST AREA //////////////////////////////////////////////
 
 
 
@@ -37,8 +37,20 @@ Ext.onReady(function() {
 // Structure, data for storeReq
 // AJAX -> requirements.ejs.php
 // *************************************************************************************
-Ext.regModel('Requirements', { fields: ['msg', 'status']
+Ext.regModel('Requirements', { 
+	fields: [
+		{name: 'msg',     type: 'string'},
+        {name: 'status',  type: 'string'}
+	]
 });
+function status(val) {
+    if (val == 'Ok') {
+        return '<span style="color:green;">' + val + '</span>';
+    } else {
+        return '<span style="color:red;">' + val + '</span>';
+    }
+    return val;
+}
 var storeSites = new Ext.data.Store({
 	model: 'Requirements',
 	proxy: new Ext.data.AjaxProxy({
@@ -51,7 +63,6 @@ var storeSites = new Ext.data.Store({
 });
 
 
-
 // *************************************************************************************
 // grid to show all the requirements status
 // *************************************************************************************
@@ -62,7 +73,7 @@ var reqGrid = new Ext.grid.GridPanel({
     border: false,
     viewConfig: {stripeRows: true},
     headers: [{
-        text     : 'Requirement',
+        text     : 'Requirements',
         flex     : 1,
         sortable : false, 
         dataIndex: 'msg'
