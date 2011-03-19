@@ -50,48 +50,62 @@ Ext.TaskMgr.start({
 //****************************************************************
 // Navigation Panel
 //****************************************************************
-//var Navigation = Ext.create('Ext.tree.TreePanel', {
-//	region: 'west',
-//	collapsible: true,
-//	floatable: true,
-//	useArrows: true,
-//	autoScroll: true,
-//	rootVisible: false,
-//	lines: false,
-//	animate: true,
-//	enableDD: true,
-//	containerScroll: true,
-//	dataUrl: 'interface/navigation/default_leftnav.ejs.php',
-//	title: '<?php i18n('Navigation'); ?>',
-//	split: true,
-//	width: 200,
-//	root: {
-//		nodeType: 'async',
-//		draggable: false,
-//		id: 'source'
-//	}
-//});
+var storeTree = new Ext.data.TreeStore({
+	proxy: {
+		type: 'ajax',
+		url: 'interface/navigation/default_leftnav.ejs.php'
+	},
+	root: {
+		text: 'Navigation',
+		id: 'src',
+		expanded: true
+	}
+});
+    
+var Navigation = new Ext.tree.TreePanel({
+	region: 'west',
+	animate: true,
+	viewConfig: {plugins: [{ptype: 'treeviewdd'}]},
+	collapsible: true,
+	floatable: true,
+	useArrows: true,
+	autoScroll: true,
+	rootVisible: false,
+	lines: false,
+	animate: true,
+	enableDD: true,
+	containerScroll: true,
+	store: storeTree,
+	title: '<?php i18n('Navigation'); ?>',
+	split: true,
+	width: 200,
+	root: {
+		nodeType: 'async',
+		draggable: false,
+		id: 'source'
+	}
+});
 
 //****************************************************************
 // DUMMY Navigation Panel
 //****************************************************************
-var Navigation = Ext.create('Ext.Panel', {
-	region			: 'west',
-	collapsible		: true,
-	floatable		: true,
-	useArrows		: true,
-	autoScroll		: true,
-	rootVisible		: false,
-	lines			: false,
-	animate			: true,
-	enableDD		: true,
-	containerScroll	: true,
-	title			: '<?php i18n('Navigation'); ?>',
-	split			: true,
-	width			: 200,
-	bodyPadding		: 5,
-	id				: 'Navigation',
-}); // End Navigation
+//var Navigation = Ext.create('Ext.Panel', {
+//	region			: 'west',
+//	collapsible		: true,
+//	floatable		: true,
+//	useArrows		: true,
+//	autoScroll		: true,
+//	rootVisible		: false,
+//	lines			: false,
+//	animate			: true,
+//	enableDD		: true,
+//	containerScroll	: true,
+//	title			: '<?php i18n('Navigation'); ?>',
+//	split			: true,
+//	width			: 200,
+//	bodyPadding		: 5,
+//	id				: 'Navigation',
+//}); // End Navigation
 
 //****************************************************************
 // Bottom Panel
@@ -237,17 +251,11 @@ Ext.create('Ext.Viewport', {
 //
 // Error in PR3 - me.refresh.bind is not a function
 //****************************************************************
-Ext.get('Navigation').load({
-	url: 'interface/main/menu_links.inc.php',
-	scripts: true,
-	text: 'Loading Navigation panel...'
-});
-
-Ext.get('MainApp').load({
-	url: 'interface/administration/facilities/facilities.ejs.php',
-	scripts: true,
-	text: 'Loading Facilities Application...'
-});
+//Ext.get('MainApp').load({
+//	url: 'interface/administration/facilities/facilities.ejs.php',
+//	scripts: true,
+//	text: 'Loading Facilities Application...'
+//});
 
 }); // End App
 
