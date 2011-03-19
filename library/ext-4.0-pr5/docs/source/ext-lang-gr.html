@@ -1,0 +1,171 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="prop-Ext.String-indicatorText"></a>/**
+ * Greek (Old Version) Translations by Vagelis
+ * 03-June-2007
+ */
+
+Ext.Updater.defaults.indicatorText = &#39;&lt;div class=&quot;loading-indicator&quot;&gt;Öüñôùóç...&lt;/div&gt;&#39;;
+
+if(Ext.View){
+   Ext.View.prototype.emptyText = &quot;&quot;;
+}
+
+if(Ext.grid.GridPanel){
+   Ext.grid.GridPanel.prototype.ddText = &quot;{0} åðéëåãìÝíç(åò) ãñáììÞ(Ýò)&quot;;
+}
+
+if(Ext.TabPanelItem){
+   Ext.TabPanelItem.prototype.closeText = &quot;Êëåßóôå áõôÞ ôçí êáñôÝëá&quot;;
+}
+
+if(Ext.form.BaseField){
+   Ext.form.BaseField.prototype.invalidText = &quot;Ç ôéìÞ óôï ðåäßï äåí åßíáé Ýãêõñç&quot;;
+}
+
+if(Ext.LoadMask){
+    Ext.LoadMask.prototype.msg = &quot;Öüñôùóç...&quot;;
+}
+
+Ext.Date.monthNames = [
+   &quot;ÉáíïõÜñéïò&quot;,
+   &quot;ÖåâñïõÜñéïò&quot;,
+   &quot;ÌÜñôéïò&quot;,
+   &quot;Áðñßëéïò&quot;,
+   &quot;ÌÜéïò&quot;,
+   &quot;Éïýíéïò&quot;,
+   &quot;Éïýëéïò&quot;,
+   &quot;Áýãïõóôïò&quot;,
+   &quot;ÓåðôÝìâñéïò&quot;,
+   &quot;Ïêôþâñéïò&quot;,
+   &quot;ÍïÝìâñéïò&quot;,
+   &quot;ÄåêÝìâñéïò&quot;
+];
+
+Ext.Date.dayNames = [
+   &quot;ÊõñéáêÞ&quot;,
+   &quot;ÄåõôÝñá&quot;,
+   &quot;Ôñßôç&quot;,
+   &quot;ÔåôÜñôç&quot;,
+   &quot;ÐÝìðôç&quot;,
+   &quot;ÐáñáóêåõÞ&quot;,
+   &quot;ÓÜââáôï&quot;
+];
+
+if(Ext.MessageBox){
+   Ext.MessageBox.buttonText = {
+      ok     : &quot;ÅíôÜîåé&quot;,
+      cancel : &quot;Áêýñùóç&quot;,
+      yes    : &quot;Íáé&quot;,
+      no     : &quot;¼÷é&quot;
+   };
+}
+
+if(Ext.util.Format){
+    Ext.apply(Ext.util.Format, {
+        thousandSeparator: &#39;.&#39;,
+        decimalSeparator: &#39;,&#39;,
+        currencySign: &#39;\u20ac&#39;,  // Greek Euro
+        dateFormat: &#39;ì/ç/Å&#39;
+    });
+}
+
+if(Ext.picker.Date){
+   Ext.apply(Ext.picker.Date.prototype, {
+      todayText         : &quot;ÓÞìåñá&quot;,
+      minText           : &quot;Ç çìåñïìçíßá áõôÞ åßíáé ðñéí ôçí ìéêñüôåñç çìåñïìçíßá&quot;,
+      maxText           : &quot;Ç çìåñïìçíßá áõôÞ åßíáé ìåôÜ ôçí ìåãáëýôåñç çìåñïìçíßá&quot;,
+      disabledDaysText  : &quot;&quot;,
+      disabledDatesText : &quot;&quot;,
+      monthNames	: Ext.Date.monthNames,
+      dayNames		: Ext.Date.dayNames,
+      nextText          : &#39;Åðüìåíïò ÌÞíáò (Control+Right)&#39;,
+      prevText          : &#39;Ðñïçãïýìåíïò ÌÞíáò (Control+Left)&#39;,
+      monthYearText     : &#39;ÅðéëÝîôå ÌÞíá (Control+Up/Down ãéá ìåôáêßíçóç óôá Ýôç)&#39;,
+      todayTip          : &quot;{0} (Spacebar)&quot;,
+      format            : &quot;ì/ç/Å&quot;
+   });
+}
+
+if(Ext.toolbar.PagingToolbar){
+   Ext.apply(Ext.PagingToolbar.prototype, {
+      beforePageText : &quot;Óåëßäá&quot;,
+      afterPageText  : &quot;áðü {0}&quot;,
+      firstText      : &quot;Ðñþôç óåëßäá&quot;,
+      prevText       : &quot;Ðñïçãïýìåíç óåëßäá&quot;,
+      nextText       : &quot;Åðüìåíç óåëßäá&quot;,
+      lastText       : &quot;Ôåëåõôáßá óåëßäá&quot;,
+      refreshText    : &quot;ÁíáíÝùóç&quot;,
+      displayMsg     : &quot;ÅìöÜíéóç {0} - {1} áðü {2}&quot;,
+      emptyMsg       : &#39;Äåí âñÝèçêáí åããñáöÝò ãéá åìöÜíéóç&#39;
+   });
+}
+
+if(Ext.form.Text){
+   Ext.apply(Ext.form.Text.prototype, {
+      minLengthText : &quot;Ôï åëÜ÷éóôï ìÝãåèïò ãéá áõôü ôï ðåäßï åßíáé {0}&quot;,
+      maxLengthText : &quot;Ôï ìÝãéóôï ìÝãåèïò ãéá áõôü ôï ðåäßï åßíáé {0}&quot;,
+      blankText     : &quot;Ôï ðåäßï áõôü åßíáé õðï÷ñåùôïêü&quot;,
+      regexText     : &quot;&quot;,
+      emptyText     : null
+   });
+}
+
+if(Ext.form.Number){
+   Ext.apply(Ext.form.Number.prototype, {
+      minText : &quot;Ç åëÜ÷éóôç ôéìÞ ãéá áõôü ôï ðåäßï åßíáé {0}&quot;,
+      maxText : &quot;Ç ìÝãéóôç ôéìÞ ãéá áõôü ôï ðåäßï åßíáé {0}&quot;,
+      nanText : &quot;{0} äåí åßíáé Ýãêõñïò áñéèìüò&quot;
+   });
+}
+
+if(Ext.form.Date){
+   Ext.apply(Ext.form.Date.prototype, {
+      disabledDaysText  : &quot;ÁðåíåñãïðïéçìÝíï&quot;,
+      disabledDatesText : &quot;ÁðåíåñãïðïéçìÝíï&quot;,
+      minText           : &quot;Ç çìåñïìçíßá ó&#39; áõôü ôï ðåäßï ðñÝðåé íá åßíáé ìåôÜ áðü {0}&quot;,
+      maxText           : &quot;Ç çìåñïìçíßá ó&#39; áõôü ôï ðåäßï ðñÝðåé íá åßíáé ðñéí áðü {0}&quot;,
+      invalidText       : &quot;{0} äåí åßíáé Ýãêõñç çìåñïìçíßá - ðñÝðåé íá åßíáé ôçò ìïñöÞò {1}&quot;,
+      format            : &quot;ì/ç/Å&quot;
+   });
+}
+
+if(Ext.form.ComboBox){
+   Ext.apply(Ext.form.ComboBox.prototype, {
+      loadingText       : &quot;Öüñôùóç...&quot;,
+      valueNotFoundText : undefined
+   });
+}
+
+if(Ext.form.VTypes){
+   Ext.apply(Ext.form.VTypes, {
+      emailText    : &#39;Áõôü ôï ðåäßï ðñÝðåé íá åßíáé e-mail address ôçò ìïñöÞò &quot;user@example.com&quot;&#39;,
+      urlText      : &#39;Áõôü ôï ðåäßï ðñÝðåé íá åßíáé ìéá äéåýèõíóç URL ôçò ìïñöÞò &quot;http:/&#39;+&#39;/www.example.com&quot;&#39;,
+      alphaText    : &#39;Áõôü ôï ðåäßï ðñÝðåé íá ðåñéÝ÷åé ãñÜììáôá êáé _&#39;,
+      alphanumText : &#39;Áõôü ôï ðåäßï ðñÝðåé íá ðåñéÝ÷åé ãñÜììáôá, áñéèìïýò êáé _&#39;
+   });
+}
+
+if(Ext.grid.GridView){
+   Ext.apply(Ext.grid.GridView.prototype, {
+      sortAscText  : &quot;Áýîïõóá Ôáîéíüìçóç&quot;,
+      sortDescText : &quot;Öèßíïõóá Ôáîéíüìçóç&quot;,
+      lockText     : &quot;Êëåßäùìá óôÞëçò&quot;,
+      unlockText   : &quot;Îåêëåßäùìá óôÞëçò&quot;,
+      columnsText  : &quot;ÓôÞëåò&quot;
+   });
+}
+
+if(Ext.grid.PropertyColumnModel){
+   Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
+      nameText   : &quot;¼íïìá&quot;,
+      valueText  : &quot;ÔéìÞ&quot;,
+      dateFormat : &quot;ì/ç/Å&quot;
+   });
+}
+
+if(Ext.layout.BorderLayout &amp;&amp; Ext.layout.BorderLayout.SplitRegion){
+   Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
+      splitTip            : &quot;Óýñåôå ãéá áëëáãÞ ìåãÝèïõò.&quot;,
+      collapsibleSplitTip : &quot;Óýñåôå ãéá áëëáãÞ ìåãÝèïõò. Double click ãéá áðüêñõøç.&quot;
+   });
+}
+￿</pre></pre></body></html>

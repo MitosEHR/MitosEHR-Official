@@ -1,0 +1,128 @@
+@mixin extjs-form-field {
+    .#{$prefix}form-field,
+    .#{$prefix}form-display-field {
+        float: left;
+        
+        margin: 0 0 0 0;
+        
+        font: normal 12px tahoma, arial, helvetica, sans-serif;
+    }
+    
+    .#{$prefix}form-text,
+    textarea.#{$prefix}form-field {
+        padding: 1px 3px;
+        
+        background: repeat-x 0 0;
+        border: 1px solid;
+        
+        background-color: #fff;
+        background-image: theme-image($theme-name, 'form/text-bg.gif');
+        
+        border-color: adjust-color($neutral-color, $hue: 234.545deg, $saturation: -41.453%, $lightness: -14.706%);
+    }
+    
+    textarea.#{$prefix}form-field {
+        padding: 2px 3px;
+    }
+    
+    .#{$prefix}form-text {
+        height: 21px;
+        
+        line-height: 18px;
+        
+        vertical-align: middle;
+    }
+    
+    .#{$prefix}safari.#{$prefix}mac textarea.#{$prefix}form-field {
+        margin-bottom: -2px; // another bogus margin bug, safari/mac only
+    }
+    
+    textarea {
+        resize: none; //Disable browser resizable textarea
+    }
+    
+    .#{$prefix}form-focus,
+    textarea.#{$prefix}form-focus {
+  	  	border-color: adjust-color($base-color, $hue: -4.322deg, $saturation: -1.065%, $lightness: -16.863%);
+    }
+    
+    .#{$prefix}form-invalid-field,
+    textarea.#{$prefix}form-invalid-field {
+        background: #fff theme-image($theme-name, 'grid/invalid_line.gif') repeat-x bottom;
+        border-color: #c30;
+    }
+    
+    .#{$prefix}form-item {
+        font: normal 12px tahoma, arial, helvetica, sans-serif;
+    }
+
+    .#{$prefix}form-error-msg {
+		margin-left: 2px;
+		
+		background: transparent no-repeat 0 2px;
+    }
+
+    .#{$prefix}form-invalid-under {
+		margin-top: 2px;
+		padding: 2px;
+        padding-left: 18px;
+
+		color: #c0272b;
+        font: normal 11px tahoma, arial, helvetica, sans-serif;
+        line-height: 16px;
+        
+        background-image: theme-image($theme-name, 'form/exclamation.gif');
+	}
+
+	.#{$prefix}form-invalid-icon {
+        background-image: theme-image($theme-name, 'form/exclamation.gif');
+	}
+
+    .#{$prefix}form-empty-field {
+        color: gray;
+    }
+    
+    .#{$prefix}form-display-field {
+        padding-top: 2px;
+    }
+
+    @if $include-ff {
+        .#{$prefix}gecko .#{$prefix}form-display-field {
+            padding-top: 1px;
+        }
+    }
+    
+    @if $include-ie {
+        .#{$prefix}ie .#{$prefix}form-file {
+            height: 22px;
+            
+            line-height: 18px;
+            
+            vertical-align: middle;
+        }
+
+        .#{$prefix}strict .#{$prefix}ie6 .#{$prefix}form-text,
+        .#{$prefix}strict .#{$prefix}ie7 .#{$prefix}form-text {
+            height: 18px;
+            line-height: 16px !important;
+        }
+
+
+        .#{$prefix}ie6 .#{$prefix}form-composite .#{$prefix}form-text.#{$prefix}box-item,
+        .#{$prefix}ie7 .#{$prefix}form-composite .#{$prefix}form-text.#{$prefix}box-item {
+            margin: 0 !important; //clear ie bogus margin bug fix
+        }
+        
+        .#{$prefix}strict .#{$prefix}ie7 .#{$prefix}form-display-field {
+            padding-top: 1px;
+        }
+
+        .#{$prefix}ie .#{$prefix}form-display-field {
+            padding-top: 3px;
+        }
+
+        .#{$prefix}strict .#{$prefix}ie8 .#{$prefix}form-display-field {
+            padding-top: 0;
+        }
+    }
+}

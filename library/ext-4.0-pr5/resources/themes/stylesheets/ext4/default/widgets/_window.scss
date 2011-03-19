@@ -1,0 +1,101 @@
+@mixin extjs-window {
+    .#{$prefix}window {
+        outline: none;
+        border-color: $window-border-color;
+        @include inner-border($window-border-inner-width, $window-border-inner-color);
+        .#{$prefix}window-wrap {
+            position: relative;
+
+            .#{$prefix}window-body {
+                overflow: hidden;
+
+                border-style: $window-body-border-style;
+                border-width: $window-body-border-width;
+            }
+        }
+    }
+
+    @include x-frame('window', null, $window-border-radius, $window-border-width, null, $window-background-color);
+
+    .#{$prefix}window-body {
+        position: relative;
+        border-color: $window-body-border-color;
+        border-width: $window-body-border-width;
+        border-style: solid;
+        background: $window-body-background-color;
+    }
+
+    //maximized window
+    .#{$prefix}window-maximized {
+        .#{$prefix}window-wrap {
+            .#{$prefix}window-header {
+                @include important-no-border-radius;
+            }
+        }
+    }
+
+    .#{$prefix}window-header-horizontal {
+        height: $window-header-height;
+    }
+
+    .#{$prefix}window-header-vertical {
+        width: $window-header-height;
+    }
+
+    // collapsed window header styles
+    .#{$prefix}window-collapsed {
+        .#{$prefix}window-header-vertical {
+            width: $collapsed-window-header-height;
+            @include border-radius(5px);
+        }
+        .#{$prefix}window-header-horizontal {
+            height: $collapsed-window-header-height;
+            @include border-radius(5px);
+        }
+
+        // Padding changes apart from for top headers.
+        .#{$prefix}window-header-right {
+            padding: 5px 0px 5px 1px;
+        }
+        .#{$prefix}window-header-bottom {
+            padding: 5px 5px 0px 5px;
+        }
+        .#{$prefix}window-header-left {
+            padding: 5px 0px 5px 0px;
+        }
+}
+
+    .#{$prefix}window-header {
+        border-color: $window-border-color;
+        zoom:1;
+    }
+
+    @include x-frame('window-header-top', null, top($window-border-radius) right($window-border-radius) 0 0, $window-border-width, 5px 5px 0, $window-background-color);
+    @include x-frame('window-header-right', null, 0 right($window-border-radius) bottom($window-border-radius) 0, $window-border-width, 5px 5px 5px 0, $window-background-color);
+    @include x-frame('window-header-bottom', null, 0 0 bottom($window-border-radius) left($window-border-radius), $window-border-width, 0 5px 5px, $window-background-color);
+    @include x-frame('window-header-left', null, top($window-border-radius) 0 0 left($window-border-radius), $window-border-width, 5px 0px 5px 5px, $window-background-color);
+
+    .#{$prefix}window-header-top {
+        @include inner-border(1px 1px 0, $window-border-inner-color);
+    }
+
+    .#{$prefix}window-header-right {
+        @include inner-border(1px 1px 1px 0, $window-border-inner-color);
+    }
+
+    .#{$prefix}window-header-bottom {
+        @include inner-border(0px 1px 1px, $window-border-inner-color);
+    }
+
+    .#{$prefix}window-header-left {
+        @include inner-border(1px 0 1px 1px, $window-border-inner-color);
+    }
+
+    .#{$prefix}window-header-text {
+        font-size: $window-header-font-size;
+        line-height: $window-header-font-size;
+        color: $window-header-color;
+        font-weight: $window-header-font-weight;
+        overflow: hidden;
+    }
+}

@@ -1,0 +1,44 @@
+[
+    {
+        id: 1,
+        name: 'Learning Ext JS',
+        price: 38.03,
+        image: 'http://ecx.images-amazon.com/images/I/51c6pT9c8lL._SL160_PIsitb-sticker-arrow-dp,TopRight,12,-18_SH30_OU01_AA115_.jpg',
+        reviews: [
+            {
+                author: 'Ed Spencer',
+                rating: 4.8,
+                comment: "This is the best framework I've ever seen!"
+            },
+            {
+                author: 'Abe Elias',
+                rating: 5,
+                comment: "Magical and revolutionary and phenomenal and groundbreaking."
+            }
+        ]
+    },
+    {
+        id: 2,
+        name: 'Ext JS in Action',
+        author: 'Jay Garcia',
+        price: 30.81,
+        image: 'http://ecx.images-amazon.com/images/I/41balyr5cGL._SL160_PIsitb-sticker-arrow-dp,TopRight,12,-18_SH30_OU01_AA160_.jpg',
+        reviews: [
+            {
+                author: 'Dave Kaneda',
+                rating: 5,
+                comment: "The only way to write cross-platform mobile apps"
+            },
+            {
+                author: 'Steve',
+                rating: 4,
+                comment: "I'm rarely satisfied, but this is better than sliced bread."
+            },
+            {
+                author: 'Rob Dougan',
+                rating: 5,
+                comment: "Epic."
+            }
+        ]
+    }
+]

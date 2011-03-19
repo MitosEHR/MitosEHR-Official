@@ -1,0 +1,273 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.TreeStore"></a>/**
+ * @class Ext.data.TreeStore
+ * @extends Ext.data.AbstractStore
+ * Tree Store
+ */
+Ext.define(&#39;Ext.data.TreeStore&#39;, {
+    extend: &#39;Ext.data.AbstractStore&#39;,
+    alias: &#39;data.treestore&#39;,
+    requires: [&#39;Ext.data.Tree&#39;, &#39;Ext.data.NodeInterface&#39;, &#39;Ext.data.NodeStore&#39;],
+
+    <a name="cfg-Ext.data.TreeStore-clearOnLoad"></a>/**
+     * @cfg {Boolean} clearOnLoad (optional) Default to true. Remove previously existing
+     * child nodes before loading.
+     */
+    clearOnLoad : true,
+
+    <a name="cfg-Ext.data.TreeStore-nodeParam"></a>/**
+     * @cfg {String} nodeParam The name of the parameter sent to the server which contains
+     * the identifier of the node. Defaults to &lt;tt&gt;&#39;node&#39;&lt;/tt&gt;.
+     */
+    nodeParam: &#39;node&#39;,
+
+    <a name="cfg-Ext.data.TreeStore-defaultRootId"></a>/**
+     * @cfg {String} defaultRootId
+     * The default root id. Defaults to &#39;root&#39;
+     */
+    defaultRootId: &#39;root&#39;,
+        
+    constructor: function(config) {
+        var me = this, root;
+        config = config || {};
+        
+        if (!config.proxy) {
+            config.proxy = {type: &#39;memory&#39;};
+        }
+        
+        if (!config.proxy.isProxy) {
+            config.proxy.reader = Ext.applyIf(config.proxy.reader || {}, {
+                type: &#39;json&#39;,
+                root: &#39;children&#39;
+            });
+        }
+        
+        if (!config.model &amp;&amp; !config.fields) {
+            config.fields = [{name: &#39;text&#39;, type: &#39;string&#39;}];
+        }
+
+        me.callParent([config]);
+    
+        // We create our data tree.
+        me.tree = Ext.create(&#39;Ext.data.Tree&#39;);
+        
+        me.tree.on({
+            beforeexpand: this.onBeforeNodeExpand,
+            beforecollapse: this.onBeforeNodeCollapse,
+            scope: this
+        });
+        
+        root = me.root;
+        delete me.root;
+        me.setRootNode(root);
+        
+        //&lt;deprecated since=0.99&gt;
+        if (Ext.isDefined(me.nodeParameter)) {
+            throw &quot;Ext.data.TreeStore: nodeParameter has been renamed to nodeParam for consistency&quot;;
+        }
+        //&lt;/deprecated&gt;
+    },
+    
+    onBeforeNodeExpand: function(node, callback, scope) {
+        if (node.loaded) {
+            callback.call(scope || node, node.childNodes);
+        }
+        else {
+            this.read({
+                node: node,
+                callback: callback,
+                scope: scope || node
+            });
+        }
+    },
+    
+    onBeforeNodeCollapse: function(node, callback, scope) {
+        callback.call(scope || node, node.childNodes);
+    },
+
+    setRootNode: function(root) {
+        var me = this,
+            proxy = me.getProxy(),
+            reader = proxy.getReader(),
+            children, dataRoot;
+
+        root = root || {};        
+        if (!root.isNode) {
+            // create a default rootNode and create internal data struct.        
+            Ext.applyIf(root, {
+                id: me.defaultRootId,
+                text: &#39;Root&#39;
+            });
+            dataRoot = reader.getRoot(root);
+            root = Ext.ModelMgr.create(root, me.model);
+        }
+
+        // When we add the root to the tree, it will automaticaly get the NodeInterface
+        me.tree.setRootNode(root);
+
+        // Because the tree might have decorated the model with new fields,
+        // we need to build new extactor functions on the reader.
+        me.getProxy().getReader().buildExtractors(true);
+        
+        // We want to load any children descending the root node        
+        if (dataRoot) {
+            children = reader.extractData(dataRoot);
+            this.fillNode(root, children);
+        }
+
+        // If the user has set expanded: true on the root, we want to call the expand function
+        if (root.isExpanded()) {
+            root.set(&#39;expanded&#39;, false);
+            root.expand();
+        }
+    },
+    
+    <a name="method-Ext.data.TreeStore-getRootNode"></a>/**
+     * Returns the root node for this tree.
+     * @return {Ext.data.Record}
+     */
+    getRootNode: function() {
+        return this.tree.getRootNode();
+    },
+
+    <a name="method-Ext.data.TreeStore-getNodeById"></a>/**
+     * Returns the record node by id
+     * @return {Ext.data.Record}
+     */
+    getNodeById: function(id) {
+        return this.tree.getNodeById(id);
+    },
+
+
+    // new options are
+    // * node - a node within the tree
+    // * doPreload - private option used to preload existing childNodes
+    load: function(options) {
+        options = options || {};
+        options.params = options.params || {};
+        
+        var me = this,
+            node = options.node || me.tree.getRootNode(),
+            reader = this.proxy.reader,
+            root;
+        
+        if (me.clearOnLoad) {
+            node.removeAll();
+        }
+        
+        Ext.applyIf(options, {
+            node: node
+        });
+        options.params[me.nodeParam] = node ? node.get(&#39;id&#39;) : &#39;root&#39;;
+        return me.callParent([options]);
+    },
+        
+    // @private
+    // fills an Ext.data.RecordNode with records
+    fillNode: function(node, records) {
+        var ln = records.length,
+            reader = this.proxy.reader,        
+            recordNode,
+            record,
+            dataRoot,
+            preloadChildren,
+            i = 0,
+            raw;
+
+        node.loaded = true;
+        for (; i &lt; ln; i++) {
+            record = records[i];
+            
+            // While we are going to fill this record, set its state to not expanded
+            // expanded = false;
+            // if (record.isExpanded()) {
+            //     record.set(&#39;expanded&#39;, false);
+            //     expanded = true;
+            // }
+
+            node.appendChild(record);
+                        
+            // If the record contains any children then extract them and add them
+            if (record.raw) {
+                dataRoot = reader.getRoot(record.raw);
+                if (dataRoot) {
+                    preloadChildren = reader.extractData(dataRoot);
+                    this.fillNode(record, preloadChildren);    
+                }
+            }
+            
+            // If the data came back with expanded true on a child, then expand it
+            // if (expanded) {                
+            //     record.expand();
+            // }
+        }
+    },
+        
+    onProxyLoad: function(operation) {
+        var me = this,
+            successful = operation.wasSuccessful(),
+            records = operation.getRecords(),
+            node = operation.node,
+            sortCollection = this.sortCollection;
+
+        if (successful) {
+            if (me.sortOnLoad &amp;&amp; !this.remoteSort &amp;&amp; me.sorters &amp;&amp; me.sorters.items) {
+                if (!sortCollection) {
+                    sortCollection = this.sortCollection = Ext.create(&#39;Ext.util.MixedCollection&#39;);
+                }
+                sortCollection.clear();
+                sortCollection.addAll(records);
+                sortCollection.sort(me.sorters.items);
+                records = sortCollection.items;
+                node.sorters = me.sorters.items;
+            }
+            me.fillNode(node, records);
+        }
+
+        me.fireEvent(&#39;read&#39;, me, operation.node, records, successful);
+        //this is a callback that would have been passed to the &#39;read&#39; function and is optional
+        Ext.callback(operation.callback, operation.scope || me, [records, operation, successful]);
+    },
+    
+    removeAll: function() {
+        this.getRootNode().destroy();
+    }
+    
+    // 
+    // sort: function(sorters, direction) {
+    //     var me = this,
+    //         property,
+    //         sortToggle,
+    //         toggle;
+    //         
+    //     if (Ext.isString(sorters)) {
+    //         property = sorters;
+    //         sortToggle = me.sortToggle;
+    //         toggle = Ext.String.toggle;
+    // 
+    //         if (direction === undefined) {
+    //             sortToggle[property] = toggle(sortToggle[property] || &quot;&quot;, &quot;ASC&quot;, &quot;DESC&quot;);
+    //             direction = sortToggle[property];
+    //         }
+    // 
+    //         sorters = {
+    //             property : property,
+    //             direction: direction
+    //         };
+    //     }
+    //     
+    //     if (arguments.length !== 0) {
+    //         me.sorters.clear();
+    //     }
+    //     
+    //     me.sorters.addAll(me.decodeSorters(sorters));
+    //     // 
+    //     // if (me.remoteSort) {
+    //     //     //the load function will pick up the new sorters and request the sorted data from the proxy
+    //     //     me.load();
+    //     // } else {
+    //     // console.log(me.sorters.items);
+    //     // me.data.sort(me.sorters.items);
+    //     me.fireEvent(&#39;datachanged&#39;, me);
+    //     // }        
+    // }
+});￿</pre></pre></body></html>

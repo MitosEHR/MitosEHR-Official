@@ -1,0 +1,324 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="prop-Ext.String-indicatorText"></a>/**
+ * List compiled by mystix on the extjs.com forums.
+ * Thank you Mystix!
+ *
+ * Dutch Translations
+ * by Ido Sebastiaan Bas van Oostveen (12 Oct 2007)
+ * updated to 2.2 by Condor (8 Aug 2008)
+ */
+
+Ext.Updater.defaults.indicatorText = &#39;&lt;div class=&quot;loading-indicator&quot;&gt;Bezig met laden...&lt;/div&gt;&#39;;
+
+if(Ext.DataView){
+  Ext.DataView.prototype.emptyText = &#39;&#39;;
+}
+
+if(Ext.grid.GridPanel){
+  Ext.grid.GridPanel.prototype.ddText = &#39;{0} geselecteerde rij(en)&#39;;
+}
+
+if(Ext.LoadMask){
+  Ext.LoadMask.prototype.msg = &#39;Bezig met laden...&#39;;
+}
+
+Ext.Date.monthNames = [
+  &#39;januari&#39;,
+  &#39;februari&#39;,
+  &#39;maart&#39;,
+  &#39;april&#39;,
+  &#39;mei&#39;,
+  &#39;juni&#39;,
+  &#39;juli&#39;,
+  &#39;augustus&#39;,
+  &#39;september&#39;,
+  &#39;oktober&#39;,
+  &#39;november&#39;,
+  &#39;december&#39;
+];
+
+Ext.Date.getShortMonthName = function(month) {
+  if (month == 2) {
+    return &#39;mrt&#39;;
+  }
+  return Ext.Date.monthNames[month].substring(0, 3);
+};
+
+Ext.Date.monthNumbers = {
+  jan: 0,
+  feb: 1,
+  mrt: 2,
+  apr: 3,
+  mei: 4,
+  jun: 5,
+  jul: 6,
+  aug: 7,
+  sep: 8,
+  okt: 9,
+  nov: 10,
+  dec: 11
+};
+
+Ext.Date.getMonthNumber = function(name) {
+  var sname = name.substring(0, 3).toLowerCase();
+  if (sname == &#39;maa&#39;) {
+    return 2;
+  }
+  return Ext.Date.monthNumbers[sname];
+};
+
+Ext.Date.dayNames = [
+  &#39;zondag&#39;,
+  &#39;maandag&#39;,
+  &#39;dinsdag&#39;,
+  &#39;woensdag&#39;,
+  &#39;donderdag&#39;,
+  &#39;vrijdag&#39;,
+  &#39;zaterdag&#39;
+];
+
+Ext.Date.getShortDayName = function(day) {
+  return Ext.Date.dayNames[day].substring(0, 3);
+};
+
+Ext.Date.parseCodes.S.s = &quot;(?:ste|e)&quot;;
+
+if(Ext.MessageBox){
+  Ext.MessageBox.buttonText = {
+    ok: &#39;OK&#39;,
+    cancel: &#39;Annuleren&#39;,
+    yes: &#39;Ja&#39;,
+    no: &#39;Nee&#39;
+  };
+}
+
+if(Ext.util.Format){
+    Ext.apply(Ext.util.Format, {
+        thousandSeparator: &#39;.&#39;,
+        decimalSeparator: &#39;,&#39;,
+        currencySign: &#39;\u20ac&#39;,  // Dutch Euro
+        dateFormat: &#39;j-m-Y&#39;
+    });
+}
+
+if(Ext.picker.Date){
+  Ext.apply(Ext.picker.Date.prototype, {
+    todayText: &#39;Vandaag&#39;,
+    minText: &#39;Deze datum is eerder dan de minimale datum&#39;,
+    maxText: &#39;Deze datum is later dan de maximale datum&#39;,
+    disabledDaysText: &#39;&#39;,
+    disabledDatesText: &#39;&#39;,
+    monthNames: Ext.Date.monthNames,
+    dayNames: Ext.Date.dayNames,
+    nextText: &#39;Volgende maand (Ctrl+rechts)&#39;,
+    prevText: &#39;Vorige maand (Ctrl+links)&#39;,
+    monthYearText: &#39;Kies een maand (Ctrl+omhoog/omlaag volgend/vorig jaar)&#39;,
+    todayTip: &#39;{0} (spatie)&#39;,
+    format: &#39;j-m-y&#39;,
+    startDay: 1
+  });
+}
+
+if(Ext.picker.Month) {
+  Ext.apply(Ext.picker.Month.prototype, {
+      okText: &#39;&amp;#160;OK&amp;#160;&#39;,
+      cancelText: &#39;Annuleren&#39;
+  });
+}
+
+if(Ext.toolbar.PagingToolbar){
+  Ext.apply(Ext.PagingToolbar.prototype, {
+    beforePageText: &#39;Pagina&#39;,
+    afterPageText: &#39;van {0}&#39;,
+    firstText: &#39;Eerste pagina&#39;,
+    prevText: &#39;Vorige pagina&#39;,
+    nextText: &#39;Volgende pagina&#39;,
+    lastText: &#39;Laatste pagina&#39;,
+    refreshText: &#39;Ververs&#39;,
+    displayMsg: &#39;Getoond {0} - {1} van {2}&#39;,
+    emptyMsg: &#39;Geen gegevens om weer te geven&#39;
+  });
+}
+
+if(Ext.form.BaseField){
+  Ext.form.BaseField.prototype.invalidText = &#39;De waarde van dit veld is ongeldig&#39;;
+}
+
+if(Ext.form.Text){
+  Ext.apply(Ext.form.Text.prototype, {
+    minLengthText: &#39;De minimale lengte van dit veld is {0}&#39;,
+    maxLengthText: &#39;De maximale lengte van dit veld is {0}&#39;,
+    blankText: &#39;Dit veld is verplicht&#39;,
+    regexText: &#39;&#39;,
+    emptyText: null
+  });
+}
+
+if(Ext.form.Number){
+  Ext.apply(Ext.form.Number.prototype, {
+    decimalSeparator : &quot;,&quot;,
+    decimalPrecision : 2,
+    minText: &#39;De minimale waarde van dit veld is {0}&#39;,
+    maxText: &#39;De maximale waarde van dit veld is {0}&#39;,
+    nanText: &#39;{0} is geen geldig getal&#39;
+  });
+}
+
+if(Ext.form.Date){
+  Ext.apply(Ext.form.Date.prototype, {
+    disabledDaysText: &#39;Uitgeschakeld&#39;,
+    disabledDatesText: &#39;Uitgeschakeld&#39;,
+    minText: &#39;De datum in dit veld moet na {0} liggen&#39;,
+    maxText: &#39;De datum in dit veld moet voor {0} liggen&#39;,
+    invalidText: &#39;{0} is geen geldige datum - formaat voor datum is {1}&#39;,
+    format: &#39;j-m-y&#39;,
+    altFormats: &#39;d/m/Y|d-m-y|d-m-Y|d/m|d-m|dm|dmy|dmY|d|Y-m-d&#39;
+  });
+}
+
+if(Ext.form.ComboBox){
+  Ext.apply(Ext.form.ComboBox.prototype, {
+    loadingText: &#39;Bezig met laden...&#39;,
+    valueNotFoundText: undefined
+  });
+}
+
+if(Ext.form.VTypes){
+  Ext.apply(Ext.form.VTypes, {
+    emailText: &#39;Dit veld moet een e-mail adres bevatten in het formaat &quot;gebruiker@domein.nl&quot;&#39;,
+    urlText: &#39;Dit veld moet een URL bevatten in het formaat &quot;http:/&#39;+&#39;/www.domein.nl&quot;&#39;,
+    alphaText: &#39;Dit veld mag alleen letters en _ bevatten&#39;,
+    alphanumText: &#39;Dit veld mag alleen letters, cijfers en _ bevatten&#39;
+  });
+}
+
+if(Ext.form.HtmlEditor){
+  Ext.apply(Ext.form.HtmlEditor.prototype, {
+    createLinkText: &#39;Vul hier de URL voor de hyperlink in:&#39;,
+    buttonTips: {
+      bold: {
+        title: &#39;Vet (Ctrl+B)&#39;,
+        text: &#39;Maak de geselecteerde tekst vet.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      italic: {
+        title: &#39;Cursief (Ctrl+I)&#39;,
+        text: &#39;Maak de geselecteerde tekst cursief.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      underline: {
+        title: &#39;Onderstrepen (Ctrl+U)&#39;,
+        text: &#39;Onderstreep de geselecteerde tekst.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      increasefontsize: {
+        title: &#39;Tekst vergroten&#39;,
+        text: &#39;Vergroot het lettertype.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      decreasefontsize: {
+        title: &#39;Tekst verkleinen&#39;,
+        text: &#39;Verklein het lettertype.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      backcolor: {
+        title: &#39;Tekst achtergrondkleur&#39;,
+        text: &#39;Verander de achtergrondkleur van de geselecteerde tekst.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      forecolor: {
+        title: &#39;Tekst kleur&#39;,
+        text: &#39;Verander de kleur van de geselecteerde tekst.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifyleft: {
+        title: &#39;Tekst links uitlijnen&#39;,
+        text: &#39;Lijn de tekst links uit.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifycenter: {
+        title: &#39;Tekst centreren&#39;,
+        text: &#39;Centreer de tekst.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      justifyright: {
+        title: &#39;Tekst rechts uitlijnen&#39;,
+        text: &#39;Lijn de tekst rechts uit.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      insertunorderedlist: {
+        title: &#39;Opsommingstekens&#39;,
+        text: &#39;Begin een ongenummerde lijst.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      insertorderedlist: {
+        title: &#39;Genummerde lijst&#39;,
+        text: &#39;Begin een genummerde lijst.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      createlink: {
+        title: &#39;Hyperlink&#39;,
+        text: &#39;Maak van de geselecteerde tekst een hyperlink.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      },
+      sourceedit: {
+        title: &#39;Bron aanpassen&#39;,
+        text: &#39;Schakel modus over naar bron aanpassen.&#39;,
+        cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+      }
+    }
+  });
+}
+
+if(Ext.grid.GridView){
+  Ext.apply(Ext.grid.GridView.prototype, {
+    sortAscText: &#39;Sorteer oplopend&#39;,
+    sortDescText: &#39;Sorteer aflopend&#39;,
+    columnsText: &#39;Kolommen&#39;
+  });
+}
+
+if(Ext.grid.GroupingView){
+  Ext.apply(Ext.grid.GroupingView.prototype, {
+  emptyGroupText: &#39;(Geen)&#39;,
+  groupByText: &#39;Dit veld groeperen&#39;,
+  showGroupsText: &#39;Toon in groepen&#39;
+  });
+}
+
+if(Ext.grid.PropertyColumnModel){
+  Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
+    nameText: &#39;Naam&#39;,
+    valueText: &#39;Waarde&#39;,
+    dateFormat: &#39;j-m-Y&#39;
+  });
+}
+
+if(Ext.layout.BorderLayout &amp;&amp; Ext.layout.BorderLayout.SplitRegion){
+  Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
+    splitTip: &#39;Sleep om grootte aan te passen.&#39;,
+    collapsibleSplitTip: &#39;Sleep om grootte aan te passen. Dubbel klikken om te verbergen.&#39;
+  });
+}
+
+if(Ext.form.Time){
+  Ext.apply(Ext.form.Time.prototype, {
+    minText: &#39;De tijd in dit veld moet op of na {0} liggen&#39;,
+    maxText: &#39;De tijd in dit veld moet op of voor {0} liggen&#39;,
+    invalidText: &#39;{0} is geen geldig tijdstip&#39;,
+    format: &#39;G:i&#39;,
+    altFormats: &#39;g:ia|g:iA|g:i a|g:i A|h:i|g:i|H:i|ga|ha|gA|h a|g a|g A|gi|hi|gia|hia|g|H&#39;
+  });
+}
+
+if(Ext.form.CheckboxGroup){
+  Ext.apply(Ext.form.CheckboxGroup.prototype, {
+    blankText : &#39;Selecteer minimaal een element in deze groep&#39;
+  });
+}
+
+if(Ext.form.RadioGroup){
+  Ext.apply(Ext.form.RadioGroup.prototype, {
+    blankText : &#39;Selecteer een element in deze groep&#39;
+  });
+}
+￿</pre></pre></body></html>

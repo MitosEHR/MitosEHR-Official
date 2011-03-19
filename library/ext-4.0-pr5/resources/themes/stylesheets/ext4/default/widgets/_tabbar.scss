@@ -1,0 +1,93 @@
+/**
+  * @class Ext.TabBar
+  * 
+  */
+@mixin extjs-tabbar {
+    .#{$prefix}tab-bar {
+        position: relative;
+    }
+    
+    .#{$prefix}tab-bar-body {
+        border-style: solid;
+        height: $tabbar-body-height;
+        border-color: $panel-header-border-color;
+        background-color: transparent;
+        @include background-gradient($tabbar-base-color, $tabbar-background-gradient);
+        position: relative;
+/*        z-index: 2;*/
+        zoom: 1;
+    }
+
+    .#{$prefix}tab-bar-top {
+        .#{$prefix}tab-bar-body {
+            border-width: 1px 1px 0;
+/*            z-index: 2;*/
+            .#{$prefix}box-item {
+                margin-bottom: 2px;
+            }
+        }
+        .#{$prefix}tab-bar-strip {
+            bottom: 0;
+            zoom: 1;
+            border-width: 1px 1px 0 1px;
+        }
+    }
+
+    .#{$prefix}tab-bar-bottom {
+        .#{$prefix}tab-bar-body {
+            border-width: 0 1px 1px;
+            .#{$prefix}box-item {
+                margin-top: 2px;
+            }
+        }
+        .#{$prefix}tab-bar-strip {
+            top: 0;
+            zoom: 1;
+            border-width: 0 1px 1px 1px;
+        }
+    }
+
+    .#{$prefix}panel-noborder-docked-top .#{$prefix}tab-bar-body {
+        border-width: 0 0 1px;
+    }
+
+    .#{$prefix}panel-noborder-docked-bottom .#{$prefix}tab-bar-body {
+        border-width: 1px 0 0;
+    }
+
+    .#{$prefix}nlg .#{$prefix}tab-bar-body {
+        background-image: theme-image($theme-name, 'tab-bar/tab-bar-bg.png');
+    }
+
+    .#{$prefix}tab-bar-plain {
+        .#{$prefix}tab-bar-body {
+            background: transparent none;
+            border-color: #fff;
+        }
+    }
+
+    .#{$prefix}tab-bar-strip {
+        height: 3px;
+        position: absolute;
+        z-index: 2;
+        border-style: solid;
+        overflow: hidden;
+        border-color: $panel-header-border-color;
+        background-color: $tab-base-color;
+    }
+
+    @if $include-ie OR $compile-all {
+        .#{$prefix}strict .#{$prefix}tab-bar-strip {
+            height: 2px;
+        }
+
+        .#{$prefix}ie8 .#{$prefix}tab-bar-body {
+            height: $tabbar-body-height;
+        }
+
+        .#{$prefix}ie6 .#{$prefix}tab-bar-body,
+        .#{$prefix}ie7 .#{$prefix}tab-bar-body {
+            height: $tabbar-body-height - 1;
+        }
+    }
+}

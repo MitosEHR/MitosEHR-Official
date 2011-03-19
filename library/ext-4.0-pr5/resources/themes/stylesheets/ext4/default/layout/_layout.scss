@@ -1,0 +1,180 @@
+@mixin extjs-layout {
+
+    .#{$prefix}docked {
+        position: absolute;
+        z-index: 1;
+    }
+
+    .#{$prefix}box-inner {
+        overflow:hidden;
+
+        zoom:1;
+
+        position:relative;
+        left:0;
+        top:0;
+    }
+
+    .#{$prefix}box-item {
+        position:absolute !important;
+        left:0;
+        top:0;
+    }
+
+    .#{$prefix}box-layout-ct,
+    .#{$prefix}border-layout-ct {
+        overflow: hidden;
+        zoom: 1;
+    }
+    
+    .#{$prefix}overflow-hidden {
+        overflow:hidden !important;
+    }
+    
+    .#{$prefix}abs-layout-item {
+        position: absolute;
+    }
+    
+    .#{$prefix}border-layout-ct {
+        background-color: mix($base-color, #fff, 15);
+    }
+
+    .#{$prefix}border-region-slide-in {
+        z-index: 3;
+    }
+
+    .#{$prefix}region-collapsed-placeholder {
+        z-index: 4;
+    }
+
+    .#{$prefix}accordion-hd .#{$prefix}panel-header-text {
+        color: #222;
+        font-weight: normal;
+    }
+
+    .#{$prefix}accordion-hd {
+        .#{$prefix}tool-collapse-top,
+        .#{$prefix}tool-collapse-right,
+        .#{$prefix}tool-collapse-bottom,
+        .#{$prefix}tool-collapse-left {
+            background-position: 0 -255px;
+        }
+
+        .#{$prefix}tool-expand-top,
+        .#{$prefix}tool-expand-right,
+        .#{$prefix}tool-expand-bottom,
+        .#{$prefix}tool-expand-left {
+            background-position: 0 -240px;
+        }
+
+        .#{$prefix}tool-over {
+            .#{$prefix}tool-collapse-top,
+            .#{$prefix}tool-collapse-right,
+            .#{$prefix}tool-collapse-bottom,
+            .#{$prefix}tool-collapse-left {
+                background-position: -15px -255px;
+            }
+        }
+
+        .#{$prefix}tool-over {
+            .#{$prefix}tool-expand-top,
+            .#{$prefix}tool-expand-right,
+            .#{$prefix}tool-expand-bottom,
+            .#{$prefix}tool-expand-left {
+                background-position: -15px -240px;
+            }
+        }
+    }
+
+    .#{$prefix}frame-tl,
+    .#{$prefix}frame-tr,
+    .#{$prefix}frame-tc,
+    .#{$prefix}frame-bl,
+    .#{$prefix}frame-br,
+    .#{$prefix}frame-bc {
+        overflow: hidden;
+        background-repeat: no-repeat;
+    }
+    
+    .#{$prefix}frame-tc,
+    .#{$prefix}frame-bc {
+        background-repeat: repeat-x;
+    }
+    
+    .#{$prefix}frame-mc {
+        position: relative;
+        background-repeat: repeat-x;
+    }
+    
+    .#{$prefix}frame-mc {
+        overflow: hidden;
+    }
+
+    // Classes for horizontal Box layout scroller.
+    // Uses the *TAB* scroller image because it's all we have.
+    // This will not work well in other cases
+    .#{$prefix}box-scroller-left {
+        float: left;
+        height: 100%;
+
+        .#{$prefix}tabbar-scroll-left {
+            width: 18px;
+            position: relative;
+            top: 1px;
+            cursor: pointer;
+            height: 25px;
+            background: theme-image($theme-name, 'tab-bar/scroll-left.gif') transparent no-repeat -18px 0;
+        }
+        .#{$prefix}tabbar-scroll-left-hover {
+            background-position: 0 0;
+        }
+        .#{$prefix}tabbar-scroll-left-disabled {
+            background-position: -18px 0;
+            @include opacity(.5);
+        }
+    }
+
+    .#{$prefix}horizontal-box-scroller-body {
+        float: left;
+    }
+    .#{$prefix}box-scroller-right {
+        float: right;
+        height: 100%;
+
+        .#{$prefix}tabbar-scroll-right {
+            width: 18px;
+            position: relative;
+            top: 1px;
+            cursor: pointer;
+            height: 25px;
+            background: theme-image($theme-name, 'tab-bar/scroll-right.gif') transparent no-repeat 0 0;
+        }
+        .#{$prefix}tabbar-scroll-right-hover {
+            background-position: -18px 0;
+        }
+        .#{$prefix}tabbar-scroll-right-disabled {
+            background-position: 0 0;
+            @include opacity(.5);
+        }
+    }
+
+    // Classes for vertical Box layout scroller
+    .#{$prefix}box-scroller-top .#{$prefix}menu-scroll-top {
+        background: theme-image($theme-name, 'layout/mini-top.gif') transparent no-repeat center center;
+        height: 8px;
+        cursor: pointer;
+    }
+    .#{$prefix}box-scroller-bottom .#{$prefix}menu-scroll-bottom {
+        background: theme-image($theme-name, 'layout/mini-bottom.gif') transparent no-repeat center center;
+        height: 8px;
+        cursor: pointer;
+    }
+
+    .#{$prefix}box-menu-right {
+        float: right;
+    }
+
+    .#{$prefix}column {
+        float: left;
+    }
+}

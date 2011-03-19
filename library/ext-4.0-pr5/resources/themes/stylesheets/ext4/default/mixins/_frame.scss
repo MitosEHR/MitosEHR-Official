@@ -1,0 +1,171 @@
+@mixin x-frame(
+    $cls, 
+    $ui: null, 
+    $border-radius: 0px, 
+    $border-width: 0px, 
+    $padding: null, 
+    $background-color: null, 
+    $background-gradient: null,
+    $table: false,
+    $background-direction: top
+) {
+    $cls-ui: $cls;
+    @if $ui != null {
+        $cls-ui: $cls + '-' + $ui;
+    }
+
+    $frame-top: max(top($border-radius), right($border-radius));
+    $frame-right: max(right($border-radius), bottom($border-radius));
+    $frame-bottom: max(bottom($border-radius), left($border-radius));
+    $frame-left: max(left($border-radius), top($border-radius));
+
+    $padding-top: 0;
+    $padding-right: 0;
+    $padding-bottom: 0;
+    $padding-left: 0;
+    
+    @if $padding == null {
+        $padding-top: $frame-top - top($border-width);
+        $padding-right: $frame-right - right($border-width);
+        $padding-bottom: $frame-bottom - bottom($border-width);
+        $padding-left: $frame-left - left($border-width);
+    }
+    @else {
+        $padding-top: top($padding);
+        $padding-right: right($padding);
+        $padding-bottom: bottom($padding);
+        $padding-left: left($padding);    
+    }
+    
+    @if $padding-top < $frame-top {
+        $padding-top: $frame-top - top($border-width);
+    }
+    @if $padding-right < $frame-right {
+        $padding-right: $frame-right - right($border-width);
+    }
+    @if $padding-bottom < $frame-bottom {
+        $padding-bottom: $frame-bottom - bottom($border-width);
+    }
+    @if $padding-left < $frame-left {
+        $padding-left: $frame-left - left($border-width);
+    }
+      
+    .#{$prefix}#{$cls-ui} {
+        @if $supports-border-radius {
+            @if length($border-radius) == 2 {
+                @include border-top-left-radius(nth($border-radius, 1));
+                @include border-top-right-radius(nth($border-radius, 2));
+            } @else if length($border-radius) == 3 {
+                @include border-top-left-radius(nth($border-radius, 1));
+                @include border-top-right-radius(nth($border-radius, 2));
+                @include border-bottom-left-radius(nth($border-radius, 3));
+            } @else if length($border-radius) == 4 {
+                @include border-top-left-radius(nth($border-radius, 1));
+                @include border-top-right-radius(nth($border-radius, 2));
+                @include border-bottom-left-radius(nth($border-radius, 3));
+                @include border-bottom-right-radius(nth($border-radius, 4));
+            } @else {
+                @include border-radius($border-radius);
+            }
+        }
+        padding: $padding-top $padding-right $padding-bottom $padding-left;
+        border-width: $border-width;
+        border-style: solid;
+        @if $background-color != null {
+            @if $supports-gradients and $background-gradient != null {
+                @include background-gradient($background-color, $background-gradient, $background-direction);
+            }
+            @else {
+                background-color: $background-color;
+            }      
+        }
+    }
+    
+    @if not $supports-gradients or $compile-all {
+        .#{$prefix}nlg {
+            .#{$prefix}#{$cls-ui}-mc {
+                @if $background-gradient != null {
+                    background-image: theme-image($theme-name, '#{$cls}/#{$cls-ui}-bg.png');
+                }
+                @if $background-color != null {
+                    background-color: $background-color;
+                }
+            }
+        }        
+    }
+    
+    @if not $supports-border-radius or $compile-all {
+        .#{$prefix}nbr {
+            .#{$prefix}#{$cls-ui} {
+                padding: 0;
+                border-width: 0;
+                @include border-radius(0px);
+                @if $background-color != null {
+                    background-color: transparent;
+                }
+                @else {
+                    background: #fff;
+                }
+
+                @function pad($radius) {
+                    $radius: boxmax($radius);
+                    $radius: parseint($radius);
+                    @if $radius > 10 {
+                        @return $radius;
+                    }
+                    @else {
+                        @return "0" + $radius;
+                    }
+                }
+                
+                $type: '100';
+                @if $table == true {
+                    $type: '110';
+                }
+                $left: $type + pad(top($border-radius)) + pad(right($border-radius)) + 'px';
+                $top: $type + pad(bottom($border-radius)) + pad(left($border-radius)) + 'px';
+                background-position: unquote($left) unquote($top);
+            }
+
+            .#{$prefix}#{$cls-ui}-tl,
+            .#{$prefix}#{$cls-ui}-bl,
+            .#{$prefix}#{$cls-ui}-tr,
+            .#{$prefix}#{$cls-ui}-br,
+            .#{$prefix}#{$cls-ui}-tc,
+            .#{$prefix}#{$cls-ui}-bc {
+                background-image: theme-image($theme-name, '#{$cls}/#{$cls-ui}-corners.png');
+            }
+
+            .#{$prefix}#{$cls-ui}-ml,
+            .#{$prefix}#{$cls-ui}-mr {
+                background-image: theme-image($theme-name, '#{$cls}/#{$cls-ui}-sides.png');
+                background-position: 0 0;
+                @if $background-gradient == null {
+                    background-repeat: repeat-y;
+                }
+            }
+
+            $padding-top: $padding-top - $frame-top;
+            $padding-right: $padding-right - $frame-right;
+            $padding-bottom: $padding-bottom - $frame-bottom;
+            $padding-left: $padding-left - $frame-left;
+
+            @if $padding-top < 0 {
+                $padding-top: 0;
+            }
+            @if $padding-right < 0 {
+                $padding-right: 0;
+            }
+            @if $padding-bottom < 0 {
+                $padding-bottom: 0;
+            }
+            @if $padding-left < 0 {
+                $padding-left: 0;
+            }
+
+            .#{$prefix}#{$cls-ui}-mc {
+                padding: $padding-top $padding-right $padding-bottom $padding-left;
+            }    
+        }   
+    }
+}

@@ -1,0 +1,246 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.form.Radio"></a>/**
+ * @class Ext.form.Radio
+ * @extends Ext.form.Checkbox
+
+Single radio field. Same as Checkbox, but provided as a convenience for automatically setting the input type. 
+Radio grouping is handled automatically by the browser if you give each radio in a group the same name.
+
+__Labeling:__
+In addition to the {@link Ext.form.Labelable standard field labeling options}, radio buttons 
+may be given an optional {@link #boxLabel} which will be displayed immediately to the right of the input. Also 
+see {@link Ext.form.RadioGroup} for a convenient method of grouping related radio buttons.
+
+__Values:__
+The main value of a Radio field is a boolean, indicating whether or not the radio is checked.
+
+The following values will check the radio:
+* `true`
+* `&#39;true&#39;`
+* `&#39;1&#39;`
+* `&#39;on&#39;`
+
+Any other value will uncheck it.
+
+In addition to the main boolean value, you may also specify a separate {@link #inputValue}. This will be
+used as the `value` attribute of the radio input and will be submitted as the parameter value when the form
+is {@link Ext.form.Basic#submit submitted}. You will want to set this value if you have multiple radio buttons
+with the same {@link #name}, as is almost always the case.
+
+__Example usage:__
+
+    new Ext.form.FormPanel({
+        title      : &#39;Order Form&#39;,
+        width      : 300,
+        bodyPadding: 10,
+        renderTo   : Ext.getBody(),
+        items: [
+            {
+                xtype      : &#39;fieldcontainer&#39;,
+                fieldLabel : &#39;Size&#39;,
+                defaultType: &#39;radiofield&#39;,
+                defaults: {
+                    hideLabel: true,
+                    flex     : 1
+                },
+                layout: &#39;hbox&#39;,
+                items: [
+                    {
+                        boxLabel  : &#39;M&#39;,
+                        name      : &#39;size&#39;,
+                        inputValue: &#39;m&#39;,
+                        id        : &#39;radio1&#39;
+                    }, {
+                        boxLabel  : &#39;L&#39;,
+                        name      : &#39;size&#39;,
+                        inputValue: &#39;l&#39;,
+                        id        : &#39;radio2&#39;
+                    }, {
+                        boxLabel  : &#39;XL&#39;,
+                        name      : &#39;size&#39;,
+                        inputValue: &#39;xl&#39;,
+                        id        : &#39;radio3&#39;
+                    }
+                ]
+            },
+            {
+                xtype      : &#39;fieldcontainer&#39;,
+                fieldLabel : &#39;Color&#39;,
+                defaultType: &#39;radiofield&#39;,
+                defaults: {
+                    hideLabel: true,
+                    flex     : 1
+                },
+                layout: &#39;hbox&#39;,
+                items: [
+                    {
+                        boxLabel  : &#39;Blue&#39;,
+                        name      : &#39;color&#39;,
+                        inputValue: &#39;blue&#39;,
+                        id        : &#39;radio4&#39;
+                    }, {
+                        boxLabel  : &#39;Grey&#39;,
+                        name      : &#39;color&#39;,
+                        inputValue: &#39;grey&#39;,
+                        id        : &#39;radio5&#39;
+                    }, {
+                        boxLabel  : &#39;Black&#39;,
+                        name      : &#39;color&#39;,
+                        inputValue: &#39;black&#39;,
+                        id        : &#39;radio6&#39;
+                    }
+                ]
+            }
+        ],
+        bbar: [
+            {
+        		text: &#39;Smaller Size&#39;,
+        		handler: function() {
+        		    var radio1 = Ext.getCmp(&#39;radio1&#39;),
+        		        radio2 = Ext.getCmp(&#39;radio2&#39;),
+        		        radio3 = Ext.getCmp(&#39;radio3&#39;);
+
+        		    //if L is selected, change to M
+        		    if (radio2.getValue()) {
+        		        radio1.setValue(true);
+        		        return;
+        		    }
+
+        		    //if XL is selected, change to L
+        		    if (radio3.getValue()) {
+        		        radio2.setValue(true);
+        		        return;
+        		    }
+
+        		    //if nothing is set, set size to S
+        		    radio1.setValue(true);
+        		}
+        	},
+        	{
+        		text: &#39;Larger Size&#39;,
+        		handler: function() {
+        		    var radio1 = Ext.getCmp(&#39;radio1&#39;),
+        		        radio2 = Ext.getCmp(&#39;radio2&#39;),
+        		        radio3 = Ext.getCmp(&#39;radio3&#39;);
+
+        		    //if M is selected, change to L
+        		    if (radio1.getValue()) {
+        		        radio2.setValue(true);
+        		        return;
+        		    }
+
+        		    //if L is selected, change to XL
+        		    if (radio2.getValue()) {
+        		        radio3.setValue(true);
+        		        return;
+        		    }
+
+        		    //if nothing is set, set size to XL
+        		    radio3.setValue(true);
+        		}
+        	},
+        	&#39;-&#39;,
+        	{
+        	    text: &#39;Select color&#39;,
+        	    menu: {
+        	        indent: false,
+        	        items: [
+        	            {
+            	            text: &#39;Blue&#39;,
+            	            handler: function() {
+            	                var radio = Ext.getCmp(&#39;radio4&#39;);
+            	                radio.setValue(true);
+            	            }
+            	        },
+            	        {
+            	            text: &#39;Grey&#39;,
+            	            handler: function() {
+            	                var radio = Ext.getCmp(&#39;radio5&#39;);
+            	                radio.setValue(true);
+            	            }
+            	        },
+            	        {
+            	            text: &#39;Black&#39;,
+            	            handler: function() {
+            	                var radio = Ext.getCmp(&#39;radio6&#39;);
+            	                radio.setValue(true);
+            	            }
+            	        }
+        	        ]
+        	    }
+        	}
+        ]
+    });
+
+ * @constructor
+ * Creates a new Radio
+ * @param {Object} config Configuration options
+ * @xtype radio
+ * @docauthor Robert Dougan &lt;rob@sencha.com&gt;
+ * @markdown
+ */
+Ext.define(&#39;Ext.form.Radio&#39;, {
+    extend:&#39;Ext.form.Checkbox&#39;,
+    alias: [&#39;widget.radiofield&#39;, &#39;widget.radio&#39;],
+    requires: [&#39;Ext.form.RadioManager&#39;],
+    
+    isRadio: true,
+    
+    // private
+    inputType: &#39;radio&#39;,
+    
+    <a name="method-Ext.form.Radio-getGroupValue"></a>/**
+     * If this radio is part of a group, it will return the selected value
+     * @return {String}
+     */
+    getGroupValue: function() {
+        var selected = this.getManager().getChecked(this.name);
+        return selected ? selected.inputValue : null;
+    },
+
+    <a name="method-Ext.form.Radio-setRawValue"></a>/**
+     * Sets either the checked/unchecked status of this Radio, or, if a string value
+     * is passed, checks a sibling Radio of the same name whose value is the value specified.
+     * @param value {String/Boolean} Checked value, or the value of the sibling radio button to check.
+     * @return {Boolean} The value that was set
+     */
+    setRawValue: function(v) {
+        var me = this,
+            active;
+            
+        if (Ext.isBoolean(v)) {
+            Ext.form.Radio.superclass.setRawValue.call(me, v);
+        } else {
+            active = this.getManager().getWithValue(me.name, v).getAt(0);
+            if (active) {
+                active.setRawValue(true);
+            }
+        }
+        return me.checked;
+    },
+    
+    // inherit docs
+    onChange: function(newVal, oldVal) {
+        var me = this;
+        me.callParent(arguments);
+        
+        if (newVal) {
+            this.getManager().getByName(me.name).each(function(item){
+                if (item !== me) {
+                    item.setValue(false);
+                }
+            }, me);
+        }
+    },
+    
+    // inherit docs
+    beforeDestroy: function(){
+        Ext.form.Radio.superclass.beforeDestroy.call(this);
+        this.getManager().removeByKey(this.id);
+    },
+    
+    // inherit docs
+    getManager: function() {
+        return Ext.form.RadioManager;
+    }
+});
+￿</pre></pre></body></html>

@@ -1,0 +1,18 @@
+@mixin extjs-form-checkboxfield {
+    .#{$prefix}form-checkbox,
+    .#{$prefix}form-radio {
+        float: none;
+        margin-right: 5px;
+    }
+
+    @if $include-ie {
+        .#{$prefix}ie {
+            .#{$prefix}form-checkbox,
+            .#{$prefix}form-radio {
+                /* Removes extra margin around boxes to match other browsers */
+                width: 15px;
+                height: 15px;
+            }
+        }
+    }
+}

@@ -1,0 +1,338 @@
+@mixin extjs-datepicker {
+
+    .#{$prefix}datepicker {
+        border: $datepicker-border;
+        border-top: 0 none;
+        background-color: $datepicker-background-color;
+        position: relative;
+        
+        a {
+            -moz-outline: 0 none;
+            outline: 0 none;
+            color: #15428B;
+            text-decoration: none;
+            border-width: 0;
+        }
+    }
+    
+    .#{$prefix}datepicker-inner,
+    .#{$prefix}datepicker-inner td,
+    .#{$prefix}datepicker-inner th {
+        border-collapse: separate;
+    }
+        
+    .#{$prefix}datepicker-header {
+        position: relative;
+        background: repeat-x 0 -83px;
+        background-image: theme-image($theme-name, 'shared/hd-sprite.gif');
+        line-height: 19px;
+        height: 26px;
+    }
+    .#{$prefix}datepicker-next,
+    .#{$prefix}datepicker-prev,
+    .#{$prefix}datepicker-month {
+        position: relative;
+        @include inline-block;
+        vertical-align: middle;
+    }
+            
+    .#{$prefix}datepicker-prev,
+    .#{$prefix}datepicker-next {
+        width: 18px;
+        a {
+            display: block;
+            width: 16px;
+            height: 16px;
+            background-position: top;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            text-decoration: none !important;
+            &:hover {
+                @include opacity(1);
+            }
+        }
+    }
+            
+    .#{$prefix}datepicker-next a {
+        margin-right: 2px;
+        background-image: theme-image($theme-name, 'shared/right-btn.gif');
+    }
+
+    .#{$prefix}datepicker-prev a {
+        margin-left: 2px;
+        background-image: theme-image($theme-name, 'shared/left-btn.gif');
+    }      
+            
+    .#{$prefix}item-disabled .#{$prefix}datepicker-prev a:hover,
+    .#{$prefix}item-disabled .#{$prefix}datepicker-next a:hover {
+        @include opacity(.6);
+    }    
+                
+    .#{$prefix}datepicker-month {
+        .#{$prefix}btn,
+        button,
+        .#{$prefix}btn-tc,
+        .#{$prefix}btn-tl,
+        .#{$prefix}btn-tr,
+        .#{$prefix}btn-mc,
+        .#{$prefix}btn-ml,
+        .#{$prefix}btn-mr,
+        .#{$prefix}btn-bc,
+        .#{$prefix}btn-bl,
+        .#{$prefix}btn-br {
+            background: transparent !important;
+            border-width: 0 !important;
+        }
+        
+        .#{$prefix}btn-split-right {
+            background: theme-image($theme-name, 'button/s-arrow-light.gif') no-repeat right center !important;
+            padding-right: 12px;
+        }
+    }
+            
+    .#{$prefix}datepicker-next {
+        text-align: right;
+    }
+
+    .#{$prefix}datepicker-month {
+        width: 140px;
+        text-align: center;
+        
+        button {
+            color: $datepicker-background-color !important;
+        }
+    }
+        
+        
+    table.#{$prefix}datepicker-inner {
+        width: 100%;
+        table-layout: fixed;
+        
+        th {
+            width: 25px;
+            height: 19px;
+            background: repeat-x left top;
+            background-color: $datepicker-footer-color;
+            background-image: theme-image($theme-name, 'shared/glass-bg.gif');
+            font: normal 10px arial, helvetica,tahoma,sans-serif;
+            color: #233d6d;
+            text-align: right !important;
+            border-bottom: 1px solid #a3bad9;
+            cursor: default;
+            padding: 0;
+            border-collapse: separate;
+            
+            span {
+                display: block;
+                padding-right: 7px;
+            }
+        }
+        
+        tr {
+            height: 20px;
+        }
+        
+        td {
+            border: $datepicker-border-width $datepicker-border-style;
+            height: 17px;
+            border-color: $datepicker-background-color;
+            text-align: right;
+            padding: 0;
+        }
+        
+        a {
+            padding-right: 4px;
+            display: block;
+            text-decoration: none;
+            text-align: right;
+            zoom: 1;
+            font: normal 11px arial, helvetica,tahoma,sans-serif;
+            color: #000;
+        }
+        
+        .#{$prefix}datepicker-active {
+            cursor:pointer;
+            color:black;
+        }
+        
+        .#{$prefix}datepicker-selected {
+            a {
+                background: repeat-x left top;
+                background-color: $datepicker-footer-color;
+                background-image: theme-image($theme-name, 'shared/glass-bg.gif');
+                border: $datepicker-selected-item-border-color;
+            }
+            
+            span {
+                font-weight: bold;
+            }
+        }
+        
+        .#{$prefix}datepicker-today {
+            a {
+                border: $datepicker-border-width $datepicker-border-style;
+                border-color: darkred;
+            }
+        }
+        
+        .#{$prefix}datepicker-prevday,
+        .#{$prefix}datepicker-nextday {
+            a {
+                text-decoration: none !important;
+                color: #aaa;
+            }
+        }
+        
+        a:hover,
+        .#{$prefix}datepicker-disabled a:hover {
+            text-decoration: none !important;
+            color: #000;
+            background-color: #ddecfe;
+        }
+        
+        .#{$prefix}datepicker-disabled a {
+            cursor: default;
+            background-color: #eee;
+            color: #bbb;
+        }
+    }
+
+    .#{$prefix}datepicker-footer,
+    .#{$prefix}monthpicker-buttons {
+        position: relative;
+        border-top: $datepicker-border-width $datepicker-border-style;
+        border-top-color: #a3bad9;
+        background-color: $datepicker-footer-color;
+        height: 30px;
+        text-align: center;
+        background: repeat-x left top;
+        background-image: theme-image($theme-name, 'shared/glass-bg.gif');
+        
+        .#{$prefix}btn {
+            position: relative;
+            margin: 2px;
+        } 
+    }
+    
+    .#{$prefix}item-disabled .#{$prefix}datepicker-inner a:hover {
+        background: none;
+    }
+
+    // month picker
+    .#{$prefix}monthpicker {
+        position: absolute;
+        left: 0;
+        top: 0;
+        border: $datepicker-border;
+        background-color: $datepicker-background-color;
+    }
+
+    .#{$prefix}monthpicker-months,
+    .#{$prefix}monthpicker-years {
+        float: left;
+        height: 165px;
+        width: 88px;
+    }
+        
+    .#{$prefix}monthpicker-item {
+        @include inline-block;
+        margin: 4px 0 5px 0;
+        font: normal 11px arial, helvetica,tahoma,sans-serif;
+        height: 18px;
+        border: 0 none;
+        text-align: center;
+        vertical-align: middle;
+        width: 43px;
+        a {
+            display: block;
+            margin: 0 5px 0 5px;
+            border: $datepicker-border;
+            $height: 18px;
+            line-height: $height - 1;
+            &:hover {
+                background-color: #ddecfe;
+            }
+            
+            &.#{$prefix}monthpicker-selected {
+                background-color: $datepicker-footer-color;
+                background-image: theme-image($theme-name, 'shared/glass-bg.gif');
+                border: $datepicker-selected-item-border;
+            }
+        }
+    }
+        
+    .#{$prefix}monthpicker-months {
+        border-right: $datepicker-border;
+        width: 87px;
+    }
+        
+
+    .#{$prefix}monthpicker-years .#{$prefix}monthpicker-item {
+        width: 44px;
+    }
+            
+    .#{$prefix}monthpicker-yearnav {
+        height: 28px;
+        
+        button {
+            background-image: theme-image($theme-name, 'tools/tool-sprites.gif');
+            height: 15px;
+            width: 15px;
+            padding: 0;
+            margin: 6px 12px 5px 15px;
+            border: none;
+            outline: 0 none;
+            &::-moz-focus-inner {
+                border: 0;
+                padding: 0;
+            }
+        }
+    }
+    
+    .#{$prefix}monthpicker-yearnav-next {
+        background-position: 0 -120px;
+    }
+    
+    .#{$prefix}monthpicker-yearnav-next-over {
+        cursor: pointer;
+        cursor: hand;
+        background-position: -15px -120px;
+    }
+    
+    .#{$prefix}monthpicker-yearnav-prev {
+        background-position: 0 -105px;
+    }
+    
+    .#{$prefix}monthpicker-yearnav-prev-over {
+        cursor: pointer;
+        cursor: hand;
+        background-position: -15px -105px;
+    }
+
+        
+    @if $include-ie OR $compile-all {
+        .#{$prefix}ie8 .#{$prefix}datepicker-header {
+            line-height: 21px;
+            .#{$prefix}datepicker-month {
+                vertical-align: top;
+                line-height: 19px;
+            }
+        }  
+
+        .#{$prefix}strict {
+            .#{$prefix}datepicker-header {
+                line-height: 22px;
+            }
+            
+            .#{$prefix}monthpicker .#{$prefix}monthpicker-item a {
+                $height: 16px;
+                line-height: $height - 1;
+            }
+            
+            .#{$prefix}datepicker-footer,
+            .#{$prefix}monthpicker-buttons {
+                height: 29px;
+            }
+        }
+   }
+}

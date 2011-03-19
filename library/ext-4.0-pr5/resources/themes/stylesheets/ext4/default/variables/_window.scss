@@ -1,0 +1,18 @@
+$window-border-radius: 5px 5px !default;
+$window-border-width: 1px;
+$window-border-color: darken(desaturate($panel-border-color, 40%), 5%);
+$window-border-inner-width: 1px;
+$window-border-inner-color: lighten($panel-border-color, 20%);
+$window-background-color:  lighten(desaturate($base-color, 20%), 4%);
+
+$window-body-border-width: 1px !default;
+$window-body-border-style: solid !default;
+$window-body-border-color: darken($panel-base-color, 10%) !default;
+$window-body-background-color: #fff;
+
+$window-header-padding: 5px 5px 0 !default;
+$window-header-height: 22px !default;
+$collapsed-window-header-height: 27px !default;
+$window-header-font-size: 11px !default;
+$window-header-color: $panel-header-color !default;
+$window-header-font-weight: bold !default;

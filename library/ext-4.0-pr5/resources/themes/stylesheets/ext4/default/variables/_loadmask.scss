@@ -1,0 +1,10 @@
+$loadmask-opacity: 0.5 !default;
+$loadmask-backgorund: #ccc !default;
+
+$loadmask-msg-padding: 2px !default;
+$loadmask-msg-border-color: $panel-header-border-color !default;
+$loadmask-msg-background-color: $panel-base-color !default;
+$loadmask-msg-background-gradient: $button-default-background-gradient-over !default;
+
+$loadmask-msg-inner-padding: 5px 10px 5px 25px !default;
+$loadmask-msg-inner-icon: 'grid/loading.gif' !default;

@@ -1,0 +1,14 @@
+// color picker
+$colorpicker-item-border-color: #aca899;
+$colorpicker-over-border-color: #8bb8f3;
+$colorpicker-over-background-color: #deecfd;
+
+// date picker
+$datepicker-border-color: #718bb7;
+$datepicker-border-width: 1px;
+$datepicker-border-style: solid;
+$datepicker-border: $datepicker-border-width $datepicker-border-style $datepicker-border-color;
+$datepicker-background-color: #ffffff;
+$datepicker-selected-item-border-color: #8bd2e3;
+$datepicker-selected-item-border: $datepicker-border-width $datepicker-border-style $datepicker-selected-item-border-color;
+$datepicker-footer-color: #dfecfb;

@@ -1,0 +1,56 @@
+$tabbar-plain-size: 4px !default;
+
+//color
+$tabbar-base-color: adjust-color($panel-base-color, $hue: -1.522deg, $saturation: -3.156%, $lightness: -5.294%) !default;
+$tabbar-background-gradient: 'tabbar' !default;
+
+//background
+$tab-base-color: adjust-color($base-color, $hue: -0.43deg, $saturation: 33.016%, $lightness: 9.02%) !default; //#deecfd
+$tab-base-color-over: adjust-color($tab-base-color, $hue: -4.208deg, $saturation: 11.429%, $lightness: 2.353%) !default;
+$tab-base-color-active: $tab-base-color !default;
+$tab-base-color-disabled: adjust-color($base-color, $hue: 0.267deg, $saturation: 15.873%, $lightness: 9.02%) !default; //E1ECFA
+
+$tab-color: adjust-color($tab-base-color, $hue: 1.995deg, $saturation: -45.589%, $lightness: -48.431%) !default;
+$tab-color-over: $tab-color !default;
+$tab-color-active: adjust-color($tab-color, $hue: 2.221deg, $saturation: 30.768%, $lightness: -13.333%) !default;
+$tab-color-disabled: adjust-color($base-color, $hue: -3.333deg, $saturation: -54.085%, $lightness: -10.784%) !default;
+
+$tab-font-size: 11px !default;
+$tab-font-size-over: $tab-font-size !default;
+$tab-font-size-active: $tab-font-size !default;
+$tab-font-size-disabled: $tab-font-size !default;
+
+$tab-font-family: $font-family;
+$tab-font-family-over: $tab-font-family;
+$tab-font-family-active: $tab-font-family;
+$tab-font-family-disabled: $tab-font-family;
+
+$tab-font-weight: bold !default;
+$tab-font-weight-over: $tab-font-weight !default;
+$tab-font-weight-active: $tab-font-weight !default;
+$tab-font-weight-disabled: $tab-font-weight !default;
+
+$tab-background-gradient: 'tab' !default;
+$tab-background-gradient-over: 'tab-over' !default;
+$tab-background-gradient-active: 'tab-active' !default;
+$tab-background-gradient-disabled: 'tab-disabled' !default;
+
+//borders
+$tab-top-border-radius: 4px 4px 0 0 !default;
+$tab-top-border-width: 1px 1px 0 1px !default;
+$tab-top-inner-border-width: 1px 1px 0 !default;
+
+$tab-bottom-border-radius: 0 0 4px 4px !default;
+$tab-bottom-border-width: 0 1px 1px 1px !default;
+$tab-bottom-inner-border-width: 0 1px 1px 1px !default;
+
+$tab-border-color: adjust-color($tab-base-color, $hue: 1.283deg, $saturation: -28.008%, $lightness: -20.98%) !default;
+$tab-border-color-over: $tab-border-color;
+$tab-border-color-active: $tab-border-color;
+$tab-border-color-disabled: adjust-color($base-color, $hue: 1.282deg, $saturation: 6.349%, $lightness: -0.588%);
+
+$tab-inner-border-color: adjust-color($tab-base-color, $hue: 0.847deg, $saturation: -8.571%, $lightness: 8.941%) !default;
+
+//size
+$tabbar-body-height: 29px;
+$tab-height: 24px;

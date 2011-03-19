@@ -1,0 +1,308 @@
+@mixin x-btn(
+    $ui,  
+    
+    $border-radius: null,
+    
+    $border-width: null,
+            
+    $border-color: null,
+    $border-color-over: null,
+    $border-color-pressed: null,
+    $border-color-disabled: null,
+    
+    $padding: null,
+    
+    $background-color: null,
+    $background-color-over: null,
+    $background-color-pressed: null,
+    $background-color-disabled: null,
+    
+    $background-gradient: null,
+    $background-gradient-over: null,
+    $background-gradient-pressed: null,
+    $background-gradient-disabled: null,
+    
+    $color: null,
+    $color-over: null,
+    $color-pressed: null,
+    $color-disabled: null,
+    
+    $font-size: null,
+    $font-size-over: null,
+    $font-size-pressed: null,
+    $font-size-disabled: null,
+    
+    $font-weight: null,
+    $font-weight-over: null,
+    $font-weight-pressed: null,
+    $font-weight-disabled: null,
+    
+    $font-family: null,
+    $font-family-over: null,
+    $font-family-pressed: null,
+    $font-family-disabled: null,
+    
+    $icon-size: null
+) {
+    .#{$prefix}btn-#{$ui} {
+        border-color: $border-color;
+    }
+    
+    @include x-frame('btn', $ui, $border-radius, $border-width, $padding, $background-color, $background-gradient, true);
+    
+    .#{$prefix}btn-#{$ui} button {
+        font-size: $font-size;
+        font-weight: $font-weight;
+        font-family: $font-family;
+        color: $color;
+        background-repeat: no-repeat;
+    }
+    
+    .#{$prefix}btn-#{$ui}-icon button,
+    .#{$prefix}btn-#{$ui}-noicon button {
+        height: $icon-size;
+    }
+
+    //icons
+    .#{$prefix}btn-#{$ui}-icon {
+        button {
+            width: $icon-size !important;
+        }
+    }
+    
+    .#{$prefix}btn-#{$ui}-icon-text-left {
+        button {
+            height: $icon-size;
+            padding-left: $icon-size + 4px;
+        }
+    }
+
+    .#{$prefix}btn-#{$ui}-icon-text-right {
+        button {
+            height: $icon-size;
+            padding-right: $icon-size + 4px;
+        }
+    }
+    
+    .#{$prefix}btn-#{$ui}-icon-text-top {
+        button {
+            padding-top: $icon-size + 4px;
+        }
+    }
+    
+    .#{$prefix}btn-#{$ui}-icon-text-bottom {
+        button {
+            padding-bottom: $icon-size + 4px;
+        }
+    }
+    
+    .#{$prefix}btn-#{$ui}-over {
+        @if $border-color-over != $border-color {
+            border-color: $border-color-over;
+        }
+        @if $background-color-over != null {
+            @if $background-gradient-over != $background-gradient {
+                @include background-gradient($background-color-over, $background-gradient-over);
+            }
+            @else if $background-color-over != $background-color {
+                background-color: $background-color-over;
+            }
+        }
+
+        button {
+            @if $color-over != $color {
+                color: $color-over;
+            }
+            @if $font-weight-over != $font-weight {
+                font-weight: $font-weight-over;
+            }
+            @if $font-size-over != $font-size {
+                font-size: $font-size-over;
+            }
+            @if $font-family-over != $font-family {
+                font-family: $font-family-over;
+            } 
+        }
+    }
+
+    .#{$prefix}btn-#{$ui}-menu-active,
+    .#{$prefix}btn-#{$ui}-pressed {
+        @if $border-color-pressed != $border-color {
+            border-color: $border-color-pressed;
+        }
+        @if $background-color-pressed != null {
+            @if $background-gradient-pressed != $background-gradient {
+                @include background-gradient($background-color-pressed, $background-gradient-pressed);
+            }
+            @else if $background-color-pressed != $background-color {
+                background-color: $background-color-pressed;
+            }
+        }
+
+        button {
+            @if $color-pressed != $color {
+                color: $color-pressed;
+            }
+            @if $font-weight-pressed != $font-weight {
+                font-weight: $font-weight-pressed;
+            }
+            @if $font-size-pressed != $font-size {
+                font-size: $font-size-pressed;
+            }
+            @if $font-family-pressed != $font-family {
+                font-family: $font-family-pressed;
+            } 
+        }
+    }
+    
+    @if not $supports-border-radius or $compile-all {    
+        .#{$prefix}nbr { 
+            .#{$prefix}btn-#{$ui}-over {
+                .#{$prefix}frame-tl,
+                .#{$prefix}frame-bl,
+                .#{$prefix}frame-tr,
+                .#{$prefix}frame-br,
+                .#{$prefix}frame-tc,
+                .#{$prefix}frame-bc {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-over-corners.png');
+                }
+                .#{$prefix}frame-ml,
+                .#{$prefix}frame-mr {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-over-sides.png');
+                }
+                .#{$prefix}frame-mc {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-over-bg.png');
+                }
+            }
+            
+            .#{$prefix}btn-#{$ui}-menu-active,
+            .#{$prefix}btn-#{$ui}-pressed {
+                .#{$prefix}frame-tl,
+                .#{$prefix}frame-bl,
+                .#{$prefix}frame-tr,
+                .#{$prefix}frame-br,
+                .#{$prefix}frame-tc,
+                .#{$prefix}frame-bc {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-pressed-corners.png');
+                }
+                .#{$prefix}frame-ml,
+                .#{$prefix}frame-mr {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-pressed-sides.png');
+                }
+                .#{$prefix}frame-mc {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-pressed-bg.png');
+                }
+            }
+            
+            .#{$prefix}btn-#{$ui}-disabled {
+                .#{$prefix}frame-tl,
+                .#{$prefix}frame-bl,
+                .#{$prefix}frame-tr,
+                .#{$prefix}frame-br,
+                .#{$prefix}frame-tc,
+                .#{$prefix}frame-bc {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-disabled-corners.png');
+                }
+                .#{$prefix}frame-ml,
+                .#{$prefix}frame-mr {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-disabled-sides.png');
+                }
+                .#{$prefix}frame-mc {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-disabled-bg.png');
+                }  
+            }
+        }
+    }
+    
+    @if not $supports-gradients or $compile-all {
+        @if $background-gradient != null {
+            .#{$prefix}nlg { 
+                .#{$prefix}btn-#{$ui} {
+                    background-repeat: repeat-x;
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-bg.png');
+                }
+            }
+        }
+        
+        @if $background-gradient-over != null {
+            .#{$prefix}nlg { 
+                .#{$prefix}btn-#{$ui}-over {
+                    background-repeat: repeat-x;
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-over-bg.png');
+                }
+            }
+        }
+
+        @if $background-gradient-pressed != null {
+            .#{$prefix}nlg { 
+                .#{$prefix}btn-#{$ui}-menu-active,
+                .#{$prefix}btn-#{$ui}-pressed {
+                    background-repeat: repeat-x;
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-pressed-bg.png');
+                }
+            }
+        }
+    }
+    
+    .#{$prefix}btn-#{$ui}-disabled {
+        @if $border-color-disabled != $border-color {
+            border-color: $border-color-disabled;
+        }
+        @if $background-color-disabled != null {
+            @if $background-gradient-disabled != $background-gradient {
+                @include background-gradient($background-color-disabled, $background-gradient-disabled);
+            }
+            @else if $background-color-disabled != $background-color {
+                background-color: $background-color-disabled;
+            }
+        }
+        
+        button {
+            @if $color-disabled != $color {
+                color: $color-disabled;
+            }
+            @if $font-weight-disabled != $font-weight {
+                font-weight: $font-weight-disabled;
+            }
+            @if $font-size-disabled != $font-size {
+                font-size: $font-size-disabled;
+            }
+            @if $font-family-disabled != $font-family {
+                font-family: $font-family-disabled;
+            } 
+        }
+    }
+    
+    @if not $supports-border-radius or $compile-all {    
+        .#{$prefix}nbr {
+            .#{$prefix}btn-#{$ui}-disabled {
+                .#{$prefix}frame-tl,
+                .#{$prefix}frame-bl,
+                .#{$prefix}frame-tr,
+                .#{$prefix}frame-br,
+                .#{$prefix}frame-tc,
+                .#{$prefix}frame-bc {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-disabled-corners.png');
+                }
+                .#{$prefix}frame-ml,
+                .#{$prefix}frame-mr {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-disabled-sides.png');
+                }
+                .#{$prefix}frame-mc {
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-disabled-bg.png');
+                }  
+            }
+        }
+    }
+    
+    @if not $supports-gradients or $compile-all {
+        @if $background-gradient-disabled != null {
+            .#{$prefix}nlg { 
+                .#{$prefix}btn-#{$ui}-disabled {
+                    background-repeat: repeat-x;
+                    background-image: theme-image($theme-name, 'btn/btn-#{$ui}-disabled-bg.png');
+                }
+            }
+        }
+    }
+};

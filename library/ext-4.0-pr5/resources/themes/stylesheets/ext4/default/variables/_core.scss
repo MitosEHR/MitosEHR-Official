@@ -1,0 +1,23 @@
+$prefix: 'x-' !default;
+
+$theme-name: 'default' !default;
+
+$font-family: Tahoma, Arial, Verdana, sans-serif !default;
+$font-size  : 12px !default;
+
+$base-gradient: 'matte' !default;
+$base-color   : #C0D4ED !default;
+$neutral-color: #eeeeee !default;
+
+$include-ie              : true !default;
+$include-ff              : true !default;
+$include-chrome          : true !default;
+$include-safari          : true !default;
+$include-opera           : true !default;
+
+$supports-border-radius  : true !default;
+$supports-gradients      : true !default;
+
+$compile-all             : true !default;
+
+$scope-reset-css         : false !default;

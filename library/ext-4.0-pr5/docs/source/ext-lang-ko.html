@@ -1,0 +1,268 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="prop-Ext.String-indicatorText"></a>/**
+ * Korean Translations By nicetip
+ * 05 September 2007
+ * Modify by techbug / 25 February 2008
+ */
+
+Ext.Updater.defaults.indicatorText = &#39;&lt;div class=&quot;loading-indicator&quot;&gt;로딩중...&lt;/div&gt;&#39;;
+
+if(Ext.View){
+   Ext.View.prototype.emptyText = &quot;&quot;;
+}
+
+if(Ext.grid.GridPanel){
+   Ext.grid.GridPanel.prototype.ddText = &quot;{0} 개가 선택되었습니다.&quot;;
+}
+
+if(Ext.TabPanelItem){
+   Ext.TabPanelItem.prototype.closeText = &quot;닫기&quot;;
+}
+
+if(Ext.form.BaseField){
+   Ext.form.BaseField.prototype.invalidText = &quot;올바른 값이 아닙니다.&quot;;
+}
+
+if(Ext.LoadMask){
+    Ext.LoadMask.prototype.msg = &quot;로딩중...&quot;;
+}
+
+Ext.Date.monthNames = [
+   &quot;1월&quot;,
+   &quot;2월&quot;,
+   &quot;3월&quot;,
+   &quot;4월&quot;,
+   &quot;5월&quot;,
+   &quot;6월&quot;,
+   &quot;7월&quot;,
+   &quot;8월&quot;,
+   &quot;9월&quot;,
+   &quot;10월&quot;,
+   &quot;11월&quot;,
+   &quot;12월&quot;
+];
+
+Ext.Date.dayNames = [
+   &quot;일&quot;,
+   &quot;월&quot;,
+   &quot;화&quot;,
+   &quot;수&quot;,
+   &quot;목&quot;,
+   &quot;금&quot;,
+   &quot;토&quot;
+];
+
+if(Ext.MessageBox){
+   Ext.MessageBox.buttonText = {
+      ok     : &quot;확인&quot;,
+      cancel : &quot;취소&quot;,
+      yes    : &quot;예&quot;,
+      no     : &quot;아니오&quot;
+   };
+}
+
+if(Ext.util.Format){
+    Ext.apply(Ext.util.Format, {
+        thousandSeparator: &#39;,&#39;,
+        decimalSeparator: &#39;.&#39;,
+        currencySign: &#39;\u20a9&#39;,  // Korean Won
+        dateFormat: &#39;m/d/Y&#39;
+    });
+}
+
+if(Ext.picker.Date){
+   Ext.apply(Ext.picker.Date.prototype, {
+      todayText         : &quot;오늘&quot;,
+      minText           : &quot;최소 날짜범위를 넘었습니다.&quot;,
+      maxText           : &quot;최대 날짜범위를 넘었습니다.&quot;,
+      disabledDaysText  : &quot;&quot;,
+      disabledDatesText : &quot;&quot;,
+      monthNames        : Ext.Date.monthNames,
+      dayNames          : Ext.Date.dayNames,
+      nextText          : &#39;다음달(컨트롤키+오른쪽 화살표)&#39;,
+      prevText          : &#39;이전달 (컨트롤키+왼족 화살표)&#39;,
+      monthYearText     : &#39;월을 선택해주세요. (컨트롤키+위/아래 화살표)&#39;,
+      todayTip          : &quot;{0} (스페이스바)&quot;,
+      format            : &quot;m/d/y&quot;,
+      startDay          : 0
+   });
+}
+
+if(Ext.picker.Month) {
+  Ext.apply(Ext.picker.Month.prototype, {
+      okText            : &quot;확인&quot;,
+      cancelText        : &quot;취소&quot;
+  });
+}
+
+if(Ext.toolbar.PagingToolbar){
+   Ext.apply(Ext.PagingToolbar.prototype, {
+      beforePageText : &quot;페이지&quot;,
+      afterPageText  : &quot;/ {0}&quot;,
+      firstText      : &quot;첫 페이지&quot;,
+      prevText       : &quot;이전 페이지&quot;,
+      nextText       : &quot;다음 페이지&quot;,
+      lastText       : &quot;마지막 페이지&quot;,
+      refreshText    : &quot;새로고침&quot;,
+      displayMsg     : &quot;전체 {2} 중 {0} - {1}&quot;,
+      emptyMsg       : &#39;표시할 데이터가 없습니다.&#39;
+   });
+}
+
+if(Ext.form.Text){
+   Ext.apply(Ext.form.Text.prototype, {
+      minLengthText : &quot;최소길이는 {0}입니다.&quot;,
+      maxLengthText : &quot;최대길이는 {0}입니다.&quot;,
+      blankText     : &quot;값을 입력해주세요.&quot;,
+      regexText     : &quot;&quot;,
+      emptyText     : null
+   });
+}
+
+if(Ext.form.Number){
+   Ext.apply(Ext.form.Number.prototype, {
+      minText : &quot;최소값은 {0}입니다.&quot;,
+      maxText : &quot;최대값은 {0}입니다.&quot;,
+      nanText : &quot;{0}는 올바른 숫자가 아닙니다.&quot;
+   });
+}
+
+if(Ext.form.Date){
+   Ext.apply(Ext.form.Date.prototype, {
+      disabledDaysText  : &quot;비활성&quot;,
+      disabledDatesText : &quot;비활성&quot;,
+      minText           : &quot;{0}일 이후여야 합니다.&quot;,
+      maxText           : &quot;{0}일 이전이어야 합니다.&quot;,
+      invalidText       : &quot;{0}는 올바른 날짜형식이 아닙니다. - 다음과 같은 형식이어야 합니다. {1}&quot;,
+      format            : &quot;m/d/y&quot;
+   });
+}
+
+if(Ext.form.ComboBox){
+   Ext.apply(Ext.form.ComboBox.prototype, {
+      loadingText       : &quot;로딩중...&quot;,
+      valueNotFoundText : undefined
+   });
+}
+
+if(Ext.form.VTypes){
+   Ext.apply(Ext.form.VTypes, {
+      emailText    : &#39;이메일 주소 형식에 맞게 입력해야합니다. (예: &quot;user@example.com&quot;)&#39;,
+      urlText      : &#39;URL 형식에 맞게 입력해야합니다. (예: &quot;http:/&#39;+&#39;/www.example.com&quot;)&#39;,
+      alphaText    : &#39;영문, 밑줄(_)만 입력할 수 있습니다.&#39;,
+      alphanumText : &#39;영문, 숫자, 밑줄(_)만 입력할 수 있습니다.&#39;
+   });
+}
+
+if(Ext.form.HtmlEditor){
+   Ext.apply(Ext.form.HtmlEditor.prototype, {
+   createLinkText : &#39;URL을 입력해주세요:&#39;,
+   buttonTips : {
+            bold : {
+               title: &#39;굵게 (Ctrl+B)&#39;,
+               text: &#39;선택한 텍스트를 굵게 표시합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+            },
+            italic : {
+               title: &#39;기울임꼴 (Ctrl+I)&#39;,
+               text: &#39;선택한 텍스트를 기울임꼴로 표시합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+            },
+            underline : {
+               title: &#39;밑줄 (Ctrl+U)&#39;,
+               text: &#39;선택한 텍스트에 밑줄을 표시합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           increasefontsize : {
+               title: &#39;글꼴크기 늘림&#39;,
+               text: &#39;글꼴 크기를 크게 합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           decreasefontsize : {
+               title: &#39;글꼴크기 줄임&#39;,
+               text: &#39;글꼴 크기를 작게 합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           backcolor : {
+               title: &#39;텍스트 강조 색&#39;,
+               text: &#39;선택한 텍스트의 배경색을 변경합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           forecolor : {
+               title: &#39;글꼴색&#39;,
+               text: &#39;선택한 텍스트의 색을 변경합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           justifyleft : {
+               title: &#39;텍스트 왼쪽 맞춤&#39;,
+               text: &#39;왼쪽에 텍스트를 맞춥니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           justifycenter : {
+               title: &#39;가운데 맞춤&#39;,
+               text: &#39;가운데에 텍스트를 맞춥니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           justifyright : {
+               title: &#39;텍스트 오른쪽 맞춤&#39;,
+               text: &#39;오른쪽에 텍스트를 맞춥니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           insertunorderedlist : {
+               title: &#39;글머리 기호&#39;,
+               text: &#39;글머리 기호 목록을 시작합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           insertorderedlist : {
+               title: &#39;번호 매기기&#39;,
+               text: &#39;번호 매기기 목록을 시작합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           createlink : {
+               title: &#39;하이퍼링크&#39;,
+               text: &#39;선택한 텍스트에 하이퍼링크를 만듭니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           },
+           sourceedit : {
+               title: &#39;소스편집&#39;,
+               text: &#39;소스편집 모드로 변환합니다.&#39;,
+               cls: Ext.baseCSSPrefix + &#39;html-editor-tip&#39;
+           }
+        }
+   });
+}
+
+if(Ext.grid.GridView){
+   Ext.apply(Ext.grid.GridView.prototype, {
+      sortAscText  : &quot;오름차순 정렬&quot;,
+      sortDescText : &quot;내림차순 정렬&quot;,
+      lockText     : &quot;칼럼 잠금&quot;,
+      unlockText   : &quot;칼럼 잠금해제&quot;,
+      columnsText  : &quot;칼럼 목록&quot;
+   });
+}
+
+if(Ext.grid.GroupingView){
+  Ext.apply(Ext.grid.GroupingView.prototype, {
+    emptyGroupText : &#39;(None)&#39;,
+    groupByText    : &#39;현재 필드로 그룹핑합니다.&#39;,
+    showGroupsText : &#39;그룹으로 보여주기&#39;
+
+  });
+}
+
+if(Ext.grid.PropertyColumnModel){
+   Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
+      nameText   : &quot;항목&quot;,
+      valueText  : &quot;값&quot;,
+      dateFormat : &quot;m/j/Y&quot;
+   });
+}
+
+if(Ext.layout.BorderLayout &amp;&amp; Ext.layout.BorderLayout.SplitRegion){
+   Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
+      splitTip            : &quot;크기변경을 위해 드래그하세요.&quot;,
+      collapsibleSplitTip : &quot;크기변경을 위해 드래그, 숨기기 위해 더블클릭 하세요.&quot;
+   });
+}
+
+￿</pre></pre></body></html>

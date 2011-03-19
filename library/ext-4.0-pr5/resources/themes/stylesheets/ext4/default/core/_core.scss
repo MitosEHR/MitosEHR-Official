@@ -1,0 +1,40 @@
+body {
+    font-size: $font-size;
+    font-family: $font-family;
+}
+
+.#{$prefix}clear {
+    overflow: hidden;
+    clear: both;
+    height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+}
+
+.#{$prefix}layer {
+    position: absolute;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.#{$prefix}hide-display {
+    display: none !important;
+}
+
+.#{$prefix}hide-visibility {
+    visibility:hidden !important;
+}
+
+.#{$prefix}hidden,
+.#{$prefix}hide-offsets {
+    display: block !important;
+    position: absolute!important;
+    left: -10000px!important;
+    top: -10000px!important;
+}
+
+.#{$prefix}hide-nosize {
+    height: 0!important;
+    width: 0!important;
+}
