@@ -10,7 +10,7 @@
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 
-include_once("library/I18n/I18n.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -18,11 +18,14 @@ include_once("library/I18n/I18n.inc.php");
 $_SESSION['site']['flops'] = 0;
 
 ?>
-
 <script type="text/javascript">
-alert("Hi");
+Ext.require([
+    '*'
+]);
+
 Ext.onReady(function(){
 
+Ext.Msg.alert('Status', 'Changes saved successfully.');
 var topRenderPanel = Ext.create('Ext.Panel', {
 	title: '<?php i18n('Facilities'); ?>',
 	renderTo: Ext.getCmp('MainApp').body,
@@ -32,5 +35,4 @@ var topRenderPanel = Ext.create('Ext.Panel', {
 });
 
 }); // End ExtJS
-
 </script>

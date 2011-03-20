@@ -49,6 +49,7 @@ Ext.TaskMgr.start({
 
 //****************************************************************
 // Navigation Panel
+// Data 
 //****************************************************************
 var storeTree = new Ext.data.TreeStore({
 	proxy: {
@@ -61,7 +62,10 @@ var storeTree = new Ext.data.TreeStore({
 		expanded: true
 	}
 });
-    
+//****************************************************************
+// Navigation Panel
+// Panel
+//****************************************************************    
 var Navigation = new Ext.tree.TreePanel({
 	region: 'west',
 	animate: true,
@@ -85,27 +89,6 @@ var Navigation = new Ext.tree.TreePanel({
 		id: 'source'
 	}
 });
-
-//****************************************************************
-// DUMMY Navigation Panel
-//****************************************************************
-//var Navigation = Ext.create('Ext.Panel', {
-//	region			: 'west',
-//	collapsible		: true,
-//	floatable		: true,
-//	useArrows		: true,
-//	autoScroll		: true,
-//	rootVisible		: false,
-//	lines			: false,
-//	animate			: true,
-//	enableDD		: true,
-//	containerScroll	: true,
-//	title			: '<?php i18n('Navigation'); ?>',
-//	split			: true,
-//	width			: 200,
-//	bodyPadding		: 5,
-//	id				: 'Navigation',
-//}); // End Navigation
 
 //****************************************************************
 // Bottom Panel
@@ -134,19 +117,30 @@ var MainApp = Ext.create('Ext.Panel', {
 	border		: true,
 	margins		: '0 0 0 0',
 	bodyPadding	: 0,
+	//waitMsg: 'Loading...',
+	//autoLoad: {url:'interface/administration/facilities/facilities.ejs.php', scripts:true},
+	
+	//------------------------------------
+	// Manage Top Panel's Events
+	//------------------------------------
+	listeners:{
+		afterrender: function(panel){
+			//panel.Updater.updateElement('MainApp', 'interface/administration/facilities/facilities.ejs.php','',{scripts: true, indicatorText: "Loading data..."});
+		}
+	},
 
 	//------------------------------------
 	// Top Panel's Bottom Menu System
 	//------------------------------------
-	dockedItems: [{
-		xtype: 'toolbar',
-		dock: 'bottom',
-		items: [{
-			itemId: 'toggleCw',
-			text: 'Menu',
-			enableToggle: true,
-		}]
-	}]
+	//dockedItems: [{
+	//	xtype: 'toolbar',
+	//	dock: 'bottom',
+	//	items: [{
+	//		itemId: 'toggleCw',
+	//		text: 'Menu',
+	//		enableToggle: true,
+	//	}]
+	//}]
 }); // End MainApp
 
 //****************************************************************
@@ -165,7 +159,7 @@ var Header = Ext.create('Ext.Panel', {
 	margins		: '0 0 0 0',
 	items		: [{
 		xtype: 'container',
-		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/mitosehr_200x40.png" height="40" width="200" style="float:left"></a>',
+		html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
 		style:'float:left',
 		border: false
 	},{
@@ -243,19 +237,6 @@ Ext.create('Ext.Viewport', {
 	defaults: { split: true },
 	items: [ Header, Navigation, TopPanel ]
 }); // End ViewPort
-
-//****************************************************************
-// Finally Load the content to the respective panels.
-//
-// tag: ExtJS v4 Ready
-//
-// Error in PR3 - me.refresh.bind is not a function
-//****************************************************************
-//Ext.get('MainApp').load({
-//	url: 'interface/administration/facilities/facilities.ejs.php',
-//	scripts: true,
-//	text: 'Loading Facilities Application...'
-//});
 
 }); // End App
 
