@@ -18,6 +18,7 @@ require_once("repository/dataExchange/dataExchange.inc.php");
 
 // Count records variable
 $count = 0;
+$mitos_db = new dbHelper();
 
 // *************************************************************************************
 // Flag the message to delete
@@ -25,7 +26,6 @@ $count = 0;
 
 $data = json_decode ( $_POST['row'] );
 $delete_id = $data[0];
-deletePnote($delete_id);
-newEvent("delete", $_SESSION['authUser'], $_SESSION['authProvider'], 1, "pnotes: id ".$delete_id);
+$mitos_db->execEvent("delete", $_SESSION['authUser'], $_SESSION['authProvider']);
 
 ?>

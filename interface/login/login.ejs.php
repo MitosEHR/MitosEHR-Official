@@ -140,7 +140,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 			formLogin.getForm().submit({
 				method:'POST', 
 				waitTitle:'Connecting', 
-				waitMsg:'Sending data...',
+				waitMsg:'Sending credentials...',
 				// Logon Success
 				success:function(){ 
 					var redirect = 'index.php'; 

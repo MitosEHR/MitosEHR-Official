@@ -21,6 +21,8 @@ require_once("repository/dataExchange/dataExchange.inc.php");
 // *************************************************************************************
 $data = json_decode ( $_POST['row'] );
 
+$mitos_db = new dbHelper();
+
 // *************************************************************************************
 // Validate and pass the POST variables to an array
 // This is the moment to validate the entered values from the user
@@ -51,7 +53,7 @@ $row['facility_npi'] = dataEncode( $data[0]->facility_npi );
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-sqlStatement("INSERT INTO 
+$mitosdb->setSQL("INSERT INTO 
 				facility 
 			SET
 				name = " . $row['name'] . ", " . "
@@ -71,5 +73,6 @@ sqlStatement("INSERT INTO
 				attn = " . $row['attn'] . ", " . " 
 				tax_id_type = " . $row['tax_id_type'] . ", " . "
 				facility_npi = " . $row['facility_npi']);
-
+				
+$mitosdb->exec();
 ?>

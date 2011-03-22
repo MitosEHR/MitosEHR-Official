@@ -15,7 +15,6 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once("library/dbHelper/dbHelper.inc.php");
 include_once("library/I18n/I18n.inc.php");
 
 // Count records variable

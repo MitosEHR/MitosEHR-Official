@@ -1,6 +1,7 @@
 <?php
 
-/* db Helper v0.0.1
+/* db Helper v0.0.3 OOP
+ * 
  * Description: A PDO helper for MitosEHR, containts custom function to manage the database
  * in MitosEHR. PDO is new in PHP v5 
  * 
@@ -22,158 +23,140 @@
  * run with earlier versions of PHP.
  * 
  * Author: Gino Rivera Falu
- * Ver: 0.0.2
+ * Ver: 0.0.3
  */
 
-//**********************************************************************
-// Connect to the database
-//**********************************************************************
-$conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
+class dbHelper {
+		
+	private $sql_statement;
+	private $conn;
+	
+	//**********************************************************************
+	// Connect to the database
+	// $db = new $dbHelper();
+	//
+	// Author: Gino Rivera
+	//**********************************************************************
+	function __construct() {
+		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
+	}
 
-//**********************************************************************
-// Simple SQL Stament, with no Event LOG injection
-// return: Array of records
-// foreach (sqlStatement($sql) as $urow) {
-//
-// Author: Gino Rivera
-//**********************************************************************
-function sqlStatement($sql){
-	// Get the global variable
-	global $conn;
+	//**********************************************************************
+	// Set the SQL Statement
+	//
+	// Author: Gino Rivera
+	//**********************************************************************	
+	function setSQL($sql){
+		$this->sql_statement = $sql;
+	}
+		
+	//**********************************************************************
+	// Simple SQL Stament, with no Event LOG injection
+	// $dbHelper->execStatement();
+	// return: Array of records
+	// foreach (sqlStatement($sql) as $urow) {
+	//
+	// Author: Gino Rivera
+	//**********************************************************************
+	function exec(){
+		$recordset = $this->conn->query($this->sql_statement);
+		return $recordset;
+	}
 	
-	// Get all the records
-	$recordset = $conn->query($sql);
-	
-	// return the recordset 
-	return $recordset;
-}
+	//**********************************************************************
+	// Simple SQL Stament, with Event LOG injection
+	// $dbHelper->exeLog();
+	// return: Array of records + Inject the action on the event log
+	// The Log Injection is automatic 
+	// It tries to detect an insert, delete, alter and log the event
+	//
+	// Author: Gino Rivera
+	//**********************************************************************
+	function execLog(){
+		$recordset = $this->conn->query( $this->sql_statement );
 
-//**********************************************************************
-// Simple SQL Stament, with no Event LOG injection
-// return: Only one record array
-// $rec = sqlFetch($sql);
-// if ($rec['username'] == ""){
-//
-// Author: Gino Rivera
-//**********************************************************************
-function sqlFetch($sql){
-	// Get the global variable
-	global $conn;
-	
-	// Get all the records
-	$recordset = $conn->query($sql);
-	$result = $recordset->fetch(PDO::FETCH_ASSOC);
-	
-	// return the recordset 
-	return $result;
-}
+		// If the QUERY has INSERT, DELETE, ALTER then has to 
+		// insert the event to the database.
+		if (strpos($this->sql_statement, "INSERT") && strpos($this->sql_statement, "DELETE") && strpos($this->sql_statement, "ALTER")){
+			if (strpos($this->sql_statement, "INSERT")) { $eventLog = "Record insertion"; $last_insert_id = $this->conn->lastInsertId(); }
+			if (strpos($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
+			if (strpos($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
+			// Prepare the SQL stament first, and then execute.
+			$stmt = $this->conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
+			$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
+			$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
+			$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
+			$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
+			$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
+			$stmt->execute();
+		}
+		return $recordset;
+	}
 
-//**********************************************************************
-// Simple SQL Stament, with Event LOG injection
-// return: Array of records + Inject the action on the event log
-// The Log Injection is automatic 
-// It tries to detect an insert, delete, alter and log the event
-//
-// Author: Gino Rivera
-//**********************************************************************
-function sqlStatementLog($sql){
-	// Get the global connection variable
-	global $conn;
+	//**********************************************************************
+	// Inject directly to the LOG
+	// $dbHelper->execEvent("Need to be audited!");
+	// return: N/A
+	//
+	// Author: Gino Rivera
+	//**********************************************************************
+	function execEvent($eventLog){
 	
-	// Execute the SQL stament
-	$recordset = $conn->query($sql);
-	
-	// If the QUERY has INSERT, DELETE, ALTER then has to 
-	// insert the event to the database.
-	if (strpos($sql, "INSERT") && strpos($sql, "DELETE") && strpos($sql, "ALTER")){
-		if (strpos($sql, "INSERT")) { $eventLog = "Record insertion"; $last_insert_id = $conn->lastInsertId(); }
-		if (strpos($sql, "DELETE")) $eventLog = "Record deletion";
-		if (strpos($sql, "ALTER")) $eventLog = "Table alteration";
 		// Prepare the SQL stament first, and then execute.
-		$stmt = $conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
+		$stmt = $this->conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
 		$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
 		$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
-		$stmt->bindParam(':comments', $sql, PDO::PARAM_STR);
+		$stmt->bindParam(':comments', $this->$sql_statement, PDO::PARAM_STR);
 		$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
 		$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
 		$stmt->execute();
+
 	}
 	
-	// return the recordset 
-	return $result;
-}
-
-//**********************************************************************
-// Simple SQL Stament, with Event LOG injection
-// return: Array of records + Manually inject the action on the event log
-//
-// Author: Gino Rivera
-//**********************************************************************
-function sqlStatementEvent($eventLog, $sql){
-	// Get the global connection variable
-	global $conn;
+	//**********************************************************************
+	// Fetch a recordset
+	// return: Only one record array
+	// $rec = $dbHelper->fetch($sql);
+	// if ($rec['username'] == ""){
+	//
+	// Author: Gino Rivera
+	//**********************************************************************
+	function fetch(){
+		// Get all the records
+		$recordset = $this->conn->query( $this->sql_statement );
+		return $recordset->fetch(PDO::FETCH_ASSOC);
+	}
 	
-	// Execute the SQL stament
-	$conn->query($sql);
+	//**********************************************************************
+	// rowCount
+	// return: The number of rows in a table
+	// $rec = $dbHelper->rowCount();
+	// if ($rec['username'] == ""){
+	//
+	// Author: Ernesto Rodriguez
+	//**********************************************************************
+	function rowCount(){
 	
-	// Prepare the SQL stament first, and then execute.
-	$stmt = $conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
-	$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
-	$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
-	$stmt->bindParam(':comments', $sql, PDO::PARAM_STR);
-	$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
-	$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
-	$stmt->execute();
+		// Get all the records & count it.
+		$recordset = $this->conn->query( $this->sql_statement );
+		return $result['rows'];
+		
+	}
 	
-	// return the recordset 
-	return $result;
-}
-
-//**********************************************************************
-// Manually insert a event log to the database
-//
-// Author: Gino Rivera
-//**********************************************************************
-function sqlEventLog($eventLog, $comments, $userNotes=NULL){
-	// Get the global connection variable
-	global $conn;
-	
-	// Prepare the SQL stament first, and then execute.
-	$stmt = $conn->prepare("INSERT INTO log (date, event, comments, user_notes) VALUES (:dtime, :event, :comments, :user_notes)");
-	$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
-	$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
-	$stmt->bindParam(':comments', $comments, PDO::PARAM_STR);
-	$stmt->bindParam(':user_notes', $userNotes, PDO::PARAM_STR);
-	$stmt->execute();
+	//**********************************************************************
+	// Get last id from table
+	// Usage: $dbHelper->lastRowId('','')
+	//
+	// Author: Ernesto Rodriguez
+	//**********************************************************************
+	function lastRowId($table, $id_col){
+		// Get all the records & count it.
+		$recordset = $this->conn->query("SELECT " . $id_col . " FROM " . $table . "  ORDER BY " . $id_col . " DESC");
+		return $recordset->fetch(PDO::FETCH_ASSOC);
+	}
 	
 }
 
-function sqlRowCount($sql){
-	// Get the global variable
-	global $conn;
-	
-	// Get all the records & count it.
-	$recordset = $conn->query($sql);
-
-	return $result['rows'];
-
-}
-//**********************************************************************
-// Get last id from table
-// Usage: sqlLastRowId('','')
-//
-// Author: Ernesto Rodriguez
-//**********************************************************************
-function sqlLastRowId($table, $id_col){
-	// Get the global variable
-	global $conn;
-	
-	// Get all the records & count it.
-	$recordset = $conn->query("SELECT " . $id_col . " FROM " . $table . "  ORDER BY " . $id_col . " DESC");
-	$result = $recordset->fetch(PDO::FETCH_ASSOC);
-	return $result;
-
-}
 ?>
 
 

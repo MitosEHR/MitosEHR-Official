@@ -71,6 +71,7 @@ $fileConf = "../../sites/" . $_SESSION['site']['site'] . "/conf.php";
 if (file_exists($fileConf)){
 	include_once($fileConf);
 	include_once("../../library/dbHelper/dbHelper.inc.php");
+	$mitos_db = new dbHelper();
 	// Do not stop here!, continue with the rest of the code.
 } else {
 	echo "{ success: false, errors: { reason: 'No configuration file found on the selected site.<br>Please contact support.'}}";
@@ -94,7 +95,8 @@ $sql = "SELECT
 			password='" . $ret . "' and 
 			authorized='1'
 		LIMIT 1";
-$rec = sqlFetch($sql);
+$mitos_db->setSQL($sql);
+$rec = $mitos_db->fetch();
 if ($rec['username'] == ""){
 	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.'}}";
 	return;

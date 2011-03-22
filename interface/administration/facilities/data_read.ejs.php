@@ -18,6 +18,7 @@ require_once("repository/dataExchange/dataExchange.inc.php");
 
 // Count records variable
 $count = 0;
+$mitos_db = new dbHelper();
 
 // *************************************************************************************
 // Verify if a $_GET['id'] has passed to select a facility.
@@ -39,7 +40,8 @@ if ($_GET['id']){
 			ORDER BY 
 				name";
 }
-foreach (sqlStatement($sql) as $urow) {
+$mitosdb->setSQL($sql);
+foreach ($mitos_db->exec() as $urow) {
 	$count++;
 	
 	//----------------------------------------------------
