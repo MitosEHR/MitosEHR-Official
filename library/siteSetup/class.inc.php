@@ -7,10 +7,10 @@
 class SiteSetup {
 	
 	// Globals inside he Class
-	var $siteName;
-	var $siteDbPrefix;
-	var $siteDbUser;
-	var $siteDbPass;
+	private $siteName;
+	private $siteDbPrefix;
+	private $siteDbUser;
+	private $siteDbPass;
 
 	//*****************************************************************************************
 	// ckeck cmod 777
@@ -43,7 +43,7 @@ class SiteSetup {
 	//*****************************************************************************************
 	// Database connection and error handeler
 	//*****************************************************************************************
-	function databaseConn($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
+	function newDatabaseConn($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
 		//-------------------------------------------------------------------------------------
 		// connection to mysql w/o database
 		//-------------------------------------------------------------------------------------
@@ -51,41 +51,103 @@ class SiteSetup {
 		//-------------------------------------------------------------------------------------
 		// send error callback if conn can't be stablish
 		//-------------------------------------------------------------------------------------
-		if (!$conn){
-			connError($conn);
+		if (!$this->$conn){
+			connError($this->$conn);
 		} else {
 			return $conn;
 		}
 	}
 	
 	//*****************************************************************************************
-	// create database
+	// If database exist connect to it 
 	//*****************************************************************************************
-	function createDataBase($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
+	function oldDatabaseConn($db_server,$db_port,$db_name,$siteDbUser,$siteDbPass) {
+		//-------------------------------------------------------------------------------------
+		// connection to mysql with database and user
+		//-------------------------------------------------------------------------------------
+		$conn = new PDO("mysql:host=".$db_server.";
+							   port=".$db_port.";
+							 dbname=".$db_name,$siteDbUser,$siteDbPass);
+		if (!$this->$conn){
+			connError($this->$conn);
+		} else {
+			return $conn;
+		}
+	}
+	
+	//*****************************************************************************************
+	// lets dump all the new data in the database
+	//*****************************************************************************************
+	function sqldump($conn) {
+		//-------------------------------------------------------------------------------------
+		// lets look for sitesetup.qsl file
+		//-------------------------------------------------------------------------------------
+		if (file_exists("sitesetup.sql")) {
+			//---------------------------------------------------------------------------------
+			// if sitesetup.sql found, open it
+			//---------------------------------------------------------------------------------
+			if ($sqlDump = fopen("sitesetup.sql", "r")) {
+				//-----------------------------------------------------------------------------
+				// if was able to open, lets executed
+				//-----------------------------------------------------------------------------
+				$this->$conn->exec($sqlDump);
+				//-----------------------------------------------------------------------------
+				// then close it
+				//-----------------------------------------------------------------------------
+				fclose($sqlDump);
+				//-----------------------------------------------------------------------------
+				// and check for errors
+				//-----------------------------------------------------------------------------
+				if ($this->$conn->errorInfo()) {
+					connError($conn);
+				} else {
+					//-------------------------------------------------------------------------
+					// Grats! we made it! Database created
+					//-------------------------------------------------------------------------
+					return $this->$conn;
+				}
+			} else {
+				//-----------------------------------------------------------------------------
+				// error if unable to open sitesetup.sql
+				//-----------------------------------------------------------------------------
+				die("{success:false,errors:{reason:'Error: Unable to open sitesetup.sql'}}");
+			}
+		} else {
+			//---------------------------------------------------------------------------------
+			// error if sitesetup.sql not found
+			//---------------------------------------------------------------------------------
+			die("{success:false,errors:{reason:'Error: Unable to find sitesetup.sql'}}");
+		}
+	}
+	
+	//*****************************************************************************************
+	// create new database and dump data
+	//*****************************************************************************************
+	function createDatabase($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
 		//-------------------------------------------------------------------------------------
 		// connection to mysql w/o database
 		//-------------------------------------------------------------------------------------
-		databaseConn($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass);
+		$this->newDatabaseConn($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass);
 		//-------------------------------------------------------------------------------------
 		// if connection exist Create Databse and dump sql data
 		//-------------------------------------------------------------------------------------
-		if ($conn){
-			$conn->exec("CREATE DATABASE ".$db_name."");
+		if ($this->$conn){
+			$this->$conn->exec("CREATE DATABASE ".$db_name."");
 			//---------------------------------------------------------------------------------
 			// lets check for conn errors
 			//---------------------------------------------------------------------------------
-			if (!$conn->errorInfo()) {
+			if (!$this->$conn->errorInfo()) {
 				//-----------------------------------------------------------------------------
 				// if no errors found lets create the database user and give him all privileges
 				//-----------------------------------------------------------------------------
-				$conn->exec("GRANT ALL PRIVILEGES ON ".$db_name.".* 
-							 					  TO '".$siteDbUser."'@'localhost'
-	       					 		   IDENTIFIED BY '".$siteDbPass."' 
-	       					 	   WITH GRANT OPTION;");
+				$this->$conn->exec("GRANT ALL PRIVILEGES ON ".$db_name.".* 
+							 					  		 TO '".$siteDbUser."'@'localhost'
+	       					 		   		  IDENTIFIED BY '".$siteDbPass."' 
+	       					 	   		  WITH GRANT OPTION;");
 				//-----------------------------------------------------------------------------
 				// lets check for conn errors
 				//-----------------------------------------------------------------------------
-				if (!$conn->errorInfo()) {
+				if (!$this->$conn->errorInfo()) {
 					//-------------------------------------------------------------------------
 					// if no error found try to connect using new user 
 					//-------------------------------------------------------------------------
@@ -95,63 +157,28 @@ class SiteSetup {
 					//-------------------------------------------------------------------------
 					// lets check for conn errors
 					//-------------------------------------------------------------------------
-					if (!$conn->errorInfo()) {
+					if (!$this->$conn->errorInfo()) {
 						//---------------------------------------------------------------------
-						// if no error found look for sitesetup.qsl file
+						// if no error found call sqldump funtion
 						//---------------------------------------------------------------------
-						if (file_exists("sitesetup.sql")) {
-							//-----------------------------------------------------------------
-							// if sitesetup.sql found, open it
-							//-----------------------------------------------------------------
-							if ($sqlDump = fopen("sitesetup.sql", "r")) {
-								//-------------------------------------------------------------
-								// if was able to open, lets executed
-								//-------------------------------------------------------------
-								$conn->exec($sqlDump);
-								//-------------------------------------------------------------
-								// then close it
-								//-------------------------------------------------------------
-								fclose($sqlDump);
-								//-------------------------------------------------------------
-								// and check for errors
-								//-------------------------------------------------------------
-								if ($conn->errorInfo()) {
-									connError($conn);
-								} else {
-									//---------------------------------------------------------
-									// Grats! we made it! Database created
-									//---------------------------------------------------------
-									return $conn;
-								}
-							} else {
-								//-------------------------------------------------------------
-								// error if unable to open sitesetup.sql
-								//-------------------------------------------------------------
-								die("{success:false,errors:{reason:'Error: Unable to open sitesetup.sql'}}");
-							}
-						} else {
-							//-----------------------------------------------------------------
-							// error if sitesetup.sql not found
-							//-----------------------------------------------------------------
-							die("{success:false,errors:{reason:'Error: Unable to find sitesetup.sql'}}");
-						}
+						sqldump();
 					} else {
 						//---------------------------------------------------------------------
 						// if Can't stablish connection as user, send error
 						//---------------------------------------------------------------------
-						connError($conn);
+						connError($this->$conn);
 					}
 				} else {
 					//-------------------------------------------------------------------------
 					// if Can't create the user, send error
 					//-------------------------------------------------------------------------
-					connError($conn);
+					connError($this->$conn);
 				}
 			} else {
 				//-----------------------------------------------------------------------------
 				// if Can't create the user, send error
 				//-----------------------------------------------------------------------------
-				connError($conn);
+				connError($this->$conn);
 			}
 		} else {
 			//---------------------------------------------------------------------------------
@@ -162,13 +189,37 @@ class SiteSetup {
 	} // end function createDataBase
 	
 	//*****************************************************************************************
+	// use existing database and dump data
+	//*****************************************************************************************
+	function useDatabase($db_server,$db_port,$db_name,$siteDbUser,$siteDbPass) {
+		//-------------------------------------------------------------------------------------
+		// connection to mysql with database
+		//-------------------------------------------------------------------------------------
+		$this->oldDatabaseConn($db_server,$db_port,$db_name,$siteDbUser,$siteDbPass);
+		//-------------------------------------------------------------------------------------
+		// if connection exist Create Databse and dump sql data
+		//-------------------------------------------------------------------------------------
+		if ($this->$conn){
+			//---------------------------------------------------------------------------------
+			// if no conn error call sqldump function
+			//---------------------------------------------------------------------------------
+			sqldump($this->$conn);
+		} else {
+			//---------------------------------------------------------------------------------
+			// if no $conn just return false, error already haldled by oldDatabaseConn function
+			//---------------------------------------------------------------------------------
+			return false;
+		}
+	}
+	
+	//*****************************************************************************************
 	// set Default Language
 	//*****************************************************************************************
 	function defaultLanguage($langauge) {
 	 	//-------------------------------------------------------------------------------------
 	 	// ask Gino how we wanna do this!
 	 	//-------------------------------------------------------------------------------------
-		$recordset = $conn->query("");
+		$recordset = $this->$conn->query("");
 		
 	}
 	
