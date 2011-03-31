@@ -80,6 +80,7 @@ var winCopyright = Ext.create('widget.window', {
 // *************************************************************************************
 var formLogin = Ext.create('Ext.form.FormPanel', {
 	id				: 'formLogin',
+	waitMsgTarget	: true,
     url				: 'library/authProcedures/auth.inc.php',
     baseParams		: {auth: 'true'},
     bodyStyle		:'padding:5px 5px 0',
