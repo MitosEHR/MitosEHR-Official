@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.ColumnLayout"></a>/**
+ * @class Ext.grid.ColumnLayout
+ * @extends Ext.layout.container.HBox
+ */
+Ext.define(&#39;Ext.grid.ColumnLayout&#39;, {
+    extend: &#39;Ext.layout.container.HBox&#39;,
+    alias: &#39;layout.gridcolumn&#39;,
+
+    // Height-stretched innerCt must be able to revert back to unstretched height
+    clearInnerCtOnLayout: true,
+
+    constructor: function() {
+        var me = this;
+        me.callParent(arguments);
+        if (!Ext.isDefined(me.availableSpaceOffset)) {
+            me.availableSpaceOffset = (Ext.getScrollBarWidth() - 2);
+        }
+    },
+
+    beforeLayout: function() {
+        var me = this,
+            i = 0,
+            items = me.getLayoutItems(),
+            len = items.length,
+            item;
+        me.callParent(arguments);
+
+        me.innerCt.setHeight(23);
+
+        // Unstretch child items before the layout which stretches them.
+        if (me.align == &#39;stretchmax&#39;) {
+            for (; i &lt; len; i++) {
+                item = items[i];
+                item.el.setStyle({
+                    height: &#39;auto&#39;
+                });
+                item.titleContainer.setStyle({
+                    height: &#39;auto&#39;,
+                    paddingTop: &#39;0&#39;
+                });
+                if (item.componentLayout &amp;&amp; item.componentLayout.lastComponentSize) {
+                    item.componentLayout.lastComponentSize.height = item.el.dom.offsetHeight;
+                }
+            }
+        }
+    },
+
+    afterLayout: function() {
+        var me = this,
+            i = 0,
+            items = me.getLayoutItems(),
+            len = items.length;
+        me.callParent(arguments);
+
+        // Set up padding in items
+        if (me.align == &#39;stretchmax&#39;) {
+            for (; i &lt; len; i++) {
+                items[i].setPadding();
+            }
+        }
+    },
+
+    // FIX: when flexing we actually don&#39;t have enough space as we would
+    // typically because of the scrollOffset on the GridView, must reserve this
+    updateInnerCtSize: function(tSize, calcs) {
+        // Columns must not account for scroll offset
+        if (!this.isColumn &amp;&amp; calcs.meta.tooNarrow) {
+            tSize.width = calcs.meta.desiredSize + this.availableSpaceOffset;
+        }
+        return this.callParent(arguments);
+    }
+});￿</pre></pre></body></html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.chart.Mask"></a>/**
+ * @class Ext.chart.Mask
+ *
+ * Defines a mask for a chart&#39;s series.
+ * The &#39;chart&#39; member must be set prior to rendering.
+ *
+ * @constructor
+ */
+
+Ext.define(&#39;Ext.chart.Mask&#39;, {
+    constructor: function(config) {
+        var me = this;
+
+        me.addEvents(&#39;select&#39;);
+
+        if (config) {
+            Ext.apply(me, config);
+        }
+        if (me.mask) {
+            me.on(&#39;afterrender&#39;, function() {
+                //create a mask layer component
+                var comp = Ext.create(&#39;Ext.chart.MaskLayer&#39;, {
+                    renderTo: me.el
+                });
+                comp.el.on({
+                    &#39;mousemove&#39;: function(e) {
+                        me.onMouseMove(e);
+                    },
+                    &#39;mouseup&#39;: function(e) {
+                        me.resized(e);
+                    }
+                });
+                //create a resize handler for the component
+                var resizeHandler = Ext.create(&#39;Ext.resizer.Resizer&#39;, {
+                    el: comp.el,
+                    handles: &#39;all&#39;,
+                    pinned: true
+                });
+                resizeHandler.on({
+                    &#39;resize&#39;: function(e) {
+                        me.resized(e);    
+                    }    
+                });
+                comp.initDraggable();
+                
+                me.mask = comp;
+                me.maskSprite = me.surface.add({
+                    type: &#39;path&#39;,
+                    path: [&#39;M&#39;, 0, 0],
+                    zIndex: 1001,
+                    opacity: 0.7,
+                    hidden: true,
+                    stroke: &#39;#444&#39;
+                });
+            }, me, { single: true });
+        }
+    },
+    
+    resized: function(e) {
+        var me = this,
+            bbox = me.bbox || me.chartBBox,
+            x = bbox.x,
+            y = bbox.y,
+            width = bbox.width,
+            height = bbox.height,
+            box = me.mask.getBox(true),
+            max = Math.max,
+            min = Math.min,
+            staticX = box.x - x,
+            staticY = box.y - y;
+        
+        staticX = max(staticX, x);
+        staticY = max(staticY, y);
+        staticX = min(staticX, width);
+        staticY = min(staticY, height);
+        box.x = staticX;
+        box.y = staticY;
+        me.fireEvent(&#39;select&#39;, me, box);
+    },
+
+    onMouseUp: function(e) {
+        var me = this,
+            bbox = me.bbox || me.chartBBox,
+            sel = me.maskSelection;
+        me.maskMouseDown = false;
+        me.mouseDown = false;
+        if (me.mouseMoved) {
+            me.onMouseMove(e);
+            me.mouseMoved = false;
+            me.fireEvent(&#39;select&#39;, me, {
+                x: sel.x - bbox.x,
+                y: sel.y - bbox.y,
+                width: sel.width,
+                height: sel.height
+            });
+        }
+    },
+
+    onMouseDown: function(e) {
+        var me = this;
+        me.mouseDown = true;
+        me.mouseMoved = false;
+        me.maskMouseDown = {
+            x: e.getPageX() - me.el.getX(),
+            y: e.getPageY() - me.el.getY()
+        };
+    },
+
+    onMouseMove: function(e) {
+        var me = this,
+            mask = me.mask,
+            bbox = me.bbox || me.chartBBox,
+            x = bbox.x,
+            y = bbox.y,
+            math = Math,
+            floor = math.floor,
+            abs = math.abs,
+            min = math.min,
+            max = math.max,
+            height = floor(y + bbox.height),
+            width = floor(x + bbox.width),
+            posX = e.getPageX(),
+            posY = e.getPageY(),
+            staticX = posX - me.el.getX(),
+            staticY = posY - me.el.getY(),
+            maskMouseDown = me.maskMouseDown,
+            path;
+        
+        me.mouseMoved = me.mouseDown;
+        staticX = max(staticX, x);
+        staticY = max(staticY, y);
+        staticX = min(staticX, width);
+        staticY = min(staticY, height);
+        if (maskMouseDown &amp;&amp; me.mouseDown) {
+            if (mask == &#39;horizontal&#39;) {
+                staticY = y;
+                maskMouseDown.y = height;
+            }
+            else if (mask == &#39;vertical&#39;) {
+                staticX = x;
+                maskMouseDown.x = width;
+            }
+            width = maskMouseDown.x - staticX;
+            height = maskMouseDown.y - staticY;
+            path = [&#39;M&#39;, staticX, staticY, &#39;l&#39;, width, 0, 0, height, -width, 0, &#39;z&#39;];
+            me.maskSelection = {
+                x: width &gt; 0 ? staticX : staticX + width,
+                y: height &gt; 0 ? staticY : staticY + height,
+                width: abs(width),
+                height: abs(height)
+            };
+            me.mask.updateBox({
+                x: posX - abs(width),
+                y: posY - abs(height),
+                width: abs(width),
+                height: abs(height)
+            });
+            me.mask.show();
+            me.maskSprite.setAttributes({
+                hidden: true    
+            }, true);
+        }
+        else {
+            if (mask == &#39;horizontal&#39;) {
+                path = [&#39;M&#39;, staticX, y, &#39;L&#39;, staticX, height];
+            }
+            else if (mask == &#39;vertical&#39;) {
+                path = [&#39;M&#39;, x, staticY, &#39;L&#39;, width, staticY];
+            }
+            else {
+                path = [&#39;M&#39;, staticX, y, &#39;L&#39;, staticX, height, &#39;M&#39;, x, staticY, &#39;L&#39;, width, staticY];
+            }
+            me.maskSprite.setAttributes({
+                path: path,
+                fill: me.maskMouseDown ? me.maskSprite.stroke : false,
+                &#39;stroke-width&#39;: mask === true ? 1 : 3,
+                hidden: false
+            }, true);
+        }
+    },
+
+    onMouseLeave: function(e) {
+        var me = this;
+        me.mouseMoved = false;
+        me.mouseDown = false;
+        me.maskMouseDown = false;
+        me.mask.hide();
+        me.maskSprite.hide(true);
+    }
+});
+    ￿</pre></pre></body></html>

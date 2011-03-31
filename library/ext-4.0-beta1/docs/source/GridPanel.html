@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.GridPanel"></a>/**
+ * @class Ext.grid.GridPanel
+ * @extends Ext.panel.TablePanel
+ */
+Ext.define(&#39;Ext.grid.GridPanel&#39;, {
+    extend: &#39;Ext.panel.TablePanel&#39;,
+    requires: [&#39;Ext.grid.GridView&#39;],
+    alias: [&#39;widget.gridpanel&#39;, &#39;widget.grid&#39;],
+    alternateClassName: [&#39;Ext.list.ListView&#39;, &#39;Ext.ListView&#39;],
+    viewType: &#39;gridview&#39;,
+    
+    <a name="cfg-Ext.grid.GridPanel-columnLines"></a>/**
+     * @cfg {Boolean} columnLines Adds column line styling
+     */
+    
+    initComponent: function() {
+        var me = this;
+        if (me.columnLines) {
+            me.cls = (me.cls || &#39;&#39;) + &#39; &#39; + Ext.baseCSSPrefix + &#39;grid-with-col-lines&#39;;
+        }
+        me.callParent();
+    }
+});￿</pre></pre></body></html>

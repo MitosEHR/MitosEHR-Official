@@ -1,0 +1,83 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.Section"></a>/**
+ * @class Ext.grid.Section
+ * @extends Ext.panel.Panel
+ *
+ * Section of a Grid. Headers are docked in this area and this class
+ * synchronizes the viewable area and headers.
+ *
+ * Locked Sections
+ * - cannot flex headers.
+ * - must have a fixed width
+ *
+ * Virtualized (non locked) or Scrollable Sections must be synchronized vertically.
+ *
+ * Sections can resize based off of header size/visibility changes.
+ *
+ * Templates can become dirty based off of visibility changes.
+ * @xtype gridsection
+ */
+
+Ext.define(&#39;Ext.grid.Section&#39;, {
+    extend: &#39;Ext.panel.Panel&#39;,
+    requires: [
+        &#39;Ext.grid.GridView&#39;,
+        &#39;Ext.grid.HeaderContainer&#39;
+    ],
+    alias: &#39;widget.gridsection&#39;,
+
+    layout: &#39;fit&#39;,
+    cls: Ext.baseCSSPrefix + &#39;grid-section&#39;,
+    isGridSection: true,
+    scroll: true,
+    border: false,
+    
+
+    extraBodyCls: Ext.baseCSSPrefix + &#39;grid-body&#39;,
+    
+
+    
+    
+    <a name="prop-Ext.grid.Section-hasGridView"></a>/**
+     * Boolean to indicate that GridView has been injected into this Grid Section.
+     * @property hasGridView
+     */
+    hasGridView: false,
+    
+    // TODO: Rename headers -&gt; columns
+    
+    initComponent: function() {
+        var me         = this,
+            scroll     = me.scroll,
+            vertical   = false,
+            horizontal = false;
+            
+        // turn both on.
+        if (scroll === true || scroll === &#39;both&#39;) {
+            vertical = horizontal = true;
+        } else if (scroll === &#39;horizontal&#39;) {
+            horizontal = true;
+        } else if (scroll === &#39;vertical&#39;) {
+            vertical = true;
+        }
+        // All other values become &#39;none&#39; or false.
+        
+        
+        if (vertical) {
+            me.verticalScroller = Ext.ComponentMgr.create({
+                dock: me.verticalScrollDock,
+                xtype: &#39;gridscroller&#39;
+            });
+        }
+        
+        if (horizontal) {
+            me.horizontalScroller = Ext.ComponentMgr.create({
+                xtype: &#39;gridscroller&#39;,
+                section: me,
+                dock: &#39;bottom&#39;
+            });
+        }
+        
+        me.callParent();
+    }
+});
+￿</pre></pre></body></html>

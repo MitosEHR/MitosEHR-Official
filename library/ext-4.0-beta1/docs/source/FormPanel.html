@@ -1,0 +1,297 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.form.FormPanel"></a>/**
+ * @class Ext.form.FormPanel
+ * @extends Ext.panel.Panel
+
+FormPanel provides a standard container for forms. It is essentially a standard {@link Ext.panel.Panel} which
+automatically creates a {@link Ext.form.Basic BasicForm} for managing any {@link Ext.form.Field}
+objects that are added as descendants of the panel. It also includes conveniences for configuring and
+working with the BasicForm and the collection of Fields.
+
+__Layout__
+
+By default, FormPanel is configured with `{@link Ext.layout.container.Anchor layout:&#39;anchor&#39;}` for
+the layout of its immediate child items. This can be changed to any of the supported container layouts.
+The layout of sub-containers is configured in {@link Ext.container.Container#layout the standard way}.
+
+__BasicForm__
+
+Although **not listed** as configuration options of FormPanel, the FormPanel class accepts all
+of the config options supported by the {@link Ext.form.Basic} class, and will pass them along to
+the internal BasicForm when it is created.
+
+**Note**: If subclassing FormPanel, any configuration options for the BasicForm must be applied to
+the `initialConfig` property of the FormPanel. Applying {@link Ext.form.Basic BasicForm}
+configuration settings to `this` will *not* affect the BasicForm&#39;s configuration.
+
+The following events fired by the BasicForm will be re-fired by the FormPanel and can therefore be
+listened for on the FormPanel itself:
+
+- {@link Ext.form.Basic#beforeaction beforeaction}
+- {@link Ext.form.Basic#actionfailed actionfailed}
+- {@link Ext.form.Basic#actioncomplete actioncomplete}
+- {@link Ext.form.Basic#validitychange validitychange}
+- {@link Ext.form.Basic#dirtychange dirtychange}
+
+__Field Defaults__
+
+The {@link #fieldDefaults} config option conveniently allows centralized configuration of default values
+for all fields added as descendants of the FormPanel. Any config option recognized by implementations
+of {@link Ext.form.Labelable} may be included in this object. See the {@link #fieldDefaults} documentation
+for details of how the defaults are applied.
+
+__Form Validation__
+
+With the default configuration, form fields are validated on-the-fly while the user edits their values.
+This can be controlled on a per-field basis (or via the {@link #fieldDefaults} config) with the field
+config properties {@link Ext.form.Field#validateOnChange} and {@link Ext.form.BaseField#checkChangeEvents},
+and the FormPanel&#39;s config properties {@link #pollForChanges} and {@link #pollInterval}.
+
+Any component within the FormPanel can be configured with `formBind: true`. This will cause that
+component to be automatically disabled when the form is invalid, and enabled when it is valid. This is most
+commonly used for Button components to prevent submitting the form in an invalid state, but can be used on
+any component type.
+
+For more information on form validation see the following:
+
+- {@link Ext.form.Field#validateOnChange}
+- {@link #pollForChanges} and {@link #pollInterval}
+- {@link Ext.form.VTypes}
+- {@link Ext.form.Basic#doAction BasicForm.doAction clientValidation notes}
+
+__Form Submission__
+
+By default, Ext Forms are submitted through Ajax, using {@link Ext.form.action.Action}. See the documentation for
+{@link Ext.form.Basic} for deetails.
+
+__Example usage:__
+
+    Ext.create(&#39;Ext.form.FormPanel&#39;, {
+        title: &#39;Simple Form&#39;,
+        renderTo: Ext.getBody(),
+        bodyPadding: 5,
+        width: 350,
+
+        // The form will submit an AJAX request to this URL when submitted
+        url: &#39;save-form.php&#39;,
+
+        // Fields will be arranged vertically, stretched to full width
+        layout: &#39;anchor&#39;,
+        defaults: {
+            anchor: &#39;100%&#39;
+        },
+
+        // The fields
+        defaultType: &#39;textfield&#39;,
+        items: [{
+            fieldLabel: &#39;First Name&#39;,
+            name: &#39;first&#39;,
+            allowBlank: false
+        },{
+            fieldLabel: &#39;Last Name&#39;,
+            name: &#39;last&#39;,
+            allowBlank: false
+        }],
+
+        // Reset and Submit buttons
+        buttons: [{
+            text: &#39;Reset&#39;,
+            handler: function() {
+                this.up(&#39;form&#39;).getForm().reset();
+            }
+        }, {
+            text: &#39;Submit&#39;,
+            formBind: true, //only enabled once the form is valid
+            disabled: true,
+            handler: function() {
+                var form = this.up(&#39;form&#39;).getForm();
+                if (form.isValid()) {
+                    form.submit({
+                        success: function(form, action) {
+                           Ext.Msg.alert(&#39;Success&#39;, action.result.msg);
+                        },
+                        failure: function(form, action) {
+                            Ext.Msg.alert(&#39;Failed&#39;, action.result.msg);
+                        }
+                    });
+                }
+            }
+        }]
+    });
+
+ * @constructor
+ * @param {Object} config Configuration options
+ * @xtype form
+ *
+ * @markdown
+ * @docauthor Jason Johnston &lt;jason@sencha.com&gt;
+ */
+Ext.define(&#39;Ext.form.FormPanel&#39;, {
+    extend:&#39;Ext.panel.Panel&#39;,
+    mixins: {
+        fieldAncestor: &#39;Ext.form.FieldAncestor&#39;
+    },
+    alias: &#39;widget.form&#39;,
+    alternateClassName: &#39;Ext.FormPanel&#39;,
+    requires: [&#39;Ext.form.Basic&#39;, &#39;Ext.util.TaskRunner&#39;],
+
+    <a name="cfg-Ext.form.FormPanel-minButtonWidth"></a>/**
+     * @cfg {Number} minButtonWidth
+     * Minimum width of all footer toolbar buttons in pixels (defaults to &lt;tt&gt;75&lt;/tt&gt; for FormPanel). If set, this will
+     * be used as the default value for the &lt;tt&gt;{@link Ext.button.Button#minWidth}&lt;/tt&gt; config of
+     * each Button added to the &lt;b&gt;footer toolbar&lt;/b&gt;. Will be ignored for buttons that have this value configured some
+     * other way, e.g. in their own config object or via the {@link Ext.Container#config-defaults defaults} of
+     * their parent container.
+     */
+    minButtonWidth: 75,
+
+    <a name="cfg-Ext.form.FormPanel-pollForChanges"></a>/**
+     * @cfg {Boolean} pollForChanges
+     * If set to &lt;tt&gt;true&lt;/tt&gt;, sets up an interval task (using the {@link #pollInterval}) in which the 
+     * panel&#39;s fields are repeatedly checked for changes in their values. This is in addition to the normal detection
+     * each field does on its own input element, and is not needed in most cases. It does, however, provide a
+     * means to absolutely guarantee detection of all changes including some edge cases in some browsers which
+     * do not fire native events. Defaults to &lt;tt&gt;false&lt;/tt&gt;.
+     */
+
+    <a name="cfg-Ext.form.FormPanel-pollInterval"></a>/**
+     * @cfg {Number} pollInterval
+     * Interval in milliseconds at which the form&#39;s fields are checked for value changes. Only used if
+     * the {@link #pollForChanges} option is set to &lt;tt&gt;true&lt;/tt&gt;. Defaults to 500 milliseconds.
+     */
+
+    <a name="cfg-Ext.form.FormPanel-layout"></a>/**
+     * @cfg {String} layout The {@link Ext.container.Container#layout} for the form panel&#39;s immediate child items.
+     * Defaults to &lt;tt&gt;&#39;anchor&#39;&lt;/tt&gt;.
+     */
+    layout: &#39;anchor&#39;,
+
+    ariaRole: &#39;form&#39;,
+
+    initComponent: function() {
+        var me = this;
+
+        me.initFieldAncestor();
+        me.callParent();
+
+        me.relayEvents(me.form, [
+            &#39;beforeaction&#39;,
+            &#39;actionfailed&#39;,
+            &#39;actioncomplete&#39;,
+            &#39;validitychange&#39;,
+            &#39;dirtychange&#39;
+        ]);
+
+        // Start polling if configured
+        if (me.pollForChanges) {
+            me.startPolling(me.pollInterval || 500);
+        }
+    },
+
+    initItems: function() {
+        // Create the BasicForm
+        var me = this;
+        
+        me.form = me.createForm();
+        me.callParent();
+        me.form.initialize();
+    },
+
+    /**
+     * @private
+     */
+    createForm: function() {
+        return new Ext.form.Basic(this, Ext.applyIf({listeners: {}}, this.initialConfig));
+    },
+
+    <a name="method-Ext.form.FormPanel-getForm"></a>/**
+     * Provides access to the {@link Ext.form.Basic Form} which this Panel contains.
+     * @return {Ext.form.Basic} The {@link Ext.form.Basic Form} which this Panel contains.
+     */
+    getForm: function() {
+        return this.form;
+    },
+
+    beforeDestroy: function() {
+        this.stopPolling();
+        this.form.destroy();
+        this.callParent();
+    },
+
+    <a name="method-Ext.form.FormPanel-load"></a>/**
+     * This is a proxy for the underlying BasicForm&#39;s {@link Ext.form.Basic#load} call.
+     * @param {Object} options The options to pass to the action (see {@link Ext.form.Basic#load} and
+     * {@link Ext.form.Basic#doAction} for details)
+     */
+    load: function(options) {
+        this.form.load(options);
+    },
+
+    <a name="method-Ext.form.FormPanel-submit"></a>/**
+     * This is a proxy for the underlying BasicForm&#39;s {@link Ext.form.Basic#submit} call.
+     * @param {Object} options The options to pass to the action (see {@link Ext.form.Basic#submit} and
+     * {@link Ext.form.Basic#doAction} for details)
+     */
+    submit: function(options) {
+        this.form.submit(options);
+    },
+
+    /*
+     * Inherit docs, not using onDisable because it only gets fired
+     * when the component is rendered.
+     */
+    disable: function(silent) {
+        this.callParent(arguments);
+        this.form.getFields().each(function(field) {
+            field.disable();
+        });
+    },
+
+    /*
+     * Inherit docs, not using onEnable because it only gets fired
+     * when the component is rendered.
+     */
+    enable: function(silent) {
+        this.callParent(arguments);
+        this.form.getFields().each(function(field) {
+            field.enable();
+        });
+    },
+
+    <a name="method-Ext.form.FormPanel-startPolling"></a>/**
+     * Start an interval task to continuously poll all the fields in the form for changes in their
+     * values. This is normally started automatically by setting the {@link #pollForChanges} config.
+     * @param {Number} interval The interval in milliseconds at which the check should run.
+     */
+    startPolling: function(interval) {
+        this.stopPolling();
+        var task = new Ext.util.TaskRunner(interval);
+        task.start({
+            interval: 0,
+            run: this.checkChanges,
+            scope: this
+        });
+        this.pollTask = task;
+    },
+
+    <a name="method-Ext.form.FormPanel-stopPolling"></a>/**
+     * Stop a running interval task that was started by {@link #startPolling}.
+     */
+    stopPolling: function() {
+        var task = this.pollTask;
+        if (task) {
+            task.stopAll();
+            delete this.pollTask;
+        }
+    },
+
+    <a name="method-Ext.form.FormPanel-checkChanges"></a>/**
+     * Forces each field within the form panel to 
+     * {@link Ext.form.Field#checkChange check if its value has changed}.
+     */
+    checkChanges: function() {
+        this.form.getFields().each(function(field) {
+            field.checkChange();
+        });
+    }
+});
+￿</pre></pre></body></html>

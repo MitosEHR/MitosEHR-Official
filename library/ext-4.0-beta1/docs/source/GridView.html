@@ -1,0 +1,82 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.GridView"></a>/**
+ * @class Ext.grid.GridView
+ * @extends Ext.view.TableView
+ */
+Ext.define(&#39;Ext.grid.GridView&#39;, {
+    extend: &#39;Ext.view.TableView&#39;,
+    alias: &#39;widget.gridview&#39;,
+
+    <a name="cfg-Ext.grid.GridView-stripeRows"></a>/**
+     * @cfg {Boolean} stripeRows &lt;tt&gt;true&lt;/tt&gt; to stripe the rows. Default is &lt;tt&gt;false&lt;/tt&gt;.
+     * &lt;p&gt;This causes the CSS class &lt;tt&gt;&lt;b&gt;x-grid-row-alt&lt;/b&gt;&lt;/tt&gt; to be added to alternate rows of
+     * the grid. A default CSS rule is provided which sets a background colour, but you can override this
+     * with a rule which either overrides the &lt;b&gt;background-color&lt;/b&gt; style using the &#39;!important&#39;
+     * modifier, or which uses a CSS selector of higher specificity.&lt;/p&gt;
+     */
+    stripeRows: true,
+    
+    invalidateScrollerOnRefresh: true,
+    
+    /**
+     * Scroll the GridView to the top by scrolling the scroller.
+     * @private
+     */
+    scrollToTop : function(){
+        if (this.rendered) {
+            var section = this.ownerCt,
+                verticalScroller = section.verticalScroller;
+                
+            if (verticalScroller) {
+                verticalScroller.scrollToTop();
+            }
+        }
+    },
+
+    // after adding a row stripe rows from then on
+    onAdd: function(ds, records, index) {
+        this.callParent(arguments);
+        this.doStripeRows(index);
+    },
+    
+    // after removing a row stripe rows from then on
+    onRemove: function(ds, records, index) {
+        this.callParent(arguments);
+        this.doStripeRows(index);
+    },
+    
+    /**
+     * Stripe rows from a particular row index
+     * @param {Number} startRow
+     * @private
+     */
+    doStripeRows: function(startRow) {
+        // ensure stripeRows configuration is turned on
+        if (this.stripeRows) {
+            var rows   = this.getNodes(startRow),
+                rowsLn = rows.length,
+                i      = 0,
+                row;
+                
+            for (; i &lt; rowsLn; i++) {
+                row = rows[i];
+                // Remove prior applied row classes.
+                row.className = row.className.replace(this.rowClsRe, &#39; &#39;);
+                // Every odd row will get an additional cls
+                if (i % 2 === 1) {
+                    row.className += (&#39; &#39; + this.altRowCls);
+                }
+            }
+        }
+    },
+    
+    refresh: function(firstPass) {
+        this.callParent(arguments);
+        this.doStripeRows(0);
+        // TODO: Remove gridpanel dependency
+        var g = this.up(&#39;gridpanel&#39;);
+        if (g &amp;&amp; this.invalidateScrollerOnRefresh) {
+            g.invalidateScroller();
+        }
+    }
+});
+￿</pre></pre></body></html>

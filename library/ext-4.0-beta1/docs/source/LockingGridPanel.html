@@ -1,0 +1,262 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.LockingGridPanel"></a>/**
+ * @class Ext.grid.LockingGridPanel
+ * @extends Ext.grid.GridPanel
+ */
+Ext.define(&#39;Ext.grid.LockingGridPanel&#39;, {
+    extend: &#39;Ext.panel.Panel&#39;,
+    alias: [&#39;widget.lockinggridpanel&#39;],
+    defaultType: &#39;gridpanel&#39;,
+    
+    
+    selType: &#39;rowmodel&#39;,
+    scrollerOwner: true,
+    spacerHidden: true,
+    
+    <a name="cfg-Ext.grid.LockingGridPanel-columnLines"></a>/**
+     * @cfg {Boolean} columnLines Adds column line styling
+     */
+    
+    initComponent: function() {
+        var me = this,
+            lockedWidth = 0,
+            lockedHeaders = [],
+            normalHeaders = [],
+            lockedGrid = {},
+            normalGrid = {},
+            headers = me.headers,
+            ln = headers.length,
+            i = 0,
+            lockedHeaderCt,
+            normalHeaderCt;
+        
+        
+        for (; i &lt; ln; i++) {
+            if (headers[i].locked) {
+                lockedWidth += headers[i].width;
+                lockedHeaders.push(headers[i]);
+            } else {
+                normalHeaders.push(headers[i]);
+            }
+        }
+        var sm = this.getSelectionModel();
+        lockedGrid.xtype = &#39;gridpanel&#39;;
+        normalGrid.xtype = &#39;gridpanel&#39;;
+        lockedGrid.selModel = sm;
+        normalGrid.selModel = sm;
+        lockedGrid.scroll = false;
+        lockedGrid.width = lockedWidth;
+        lockedGrid.scrollerOwner = false;
+        normalGrid.scrollerOwner = false;
+        lockedGrid.headers = lockedHeaders;
+        normalGrid.headers = normalHeaders;
+        lockedGrid.store = me.store;
+        normalGrid.store = me.store;
+        normalGrid.flex = 1;
+        
+        lockedGrid.viewConfig = {
+            listeners: {
+                refresh: me.onLockedGridAfterRefresh,
+                scope: me
+            }
+        };
+        
+        
+        //Ext.apply(lockedGrid, me.initialConfig);
+        //Ext.apply(normalGrid, me.initialConfig);
+        
+        me.normalGrid = Ext.ComponentMgr.create(normalGrid);
+        me.lockedGrid = Ext.ComponentMgr.create(lockedGrid);
+        lockedHeaderCt = me.lockedGrid.headerCt;
+        normalHeaderCt = me.normalGrid.headerCt;
+        lockedHeaderCt.on(&#39;headershow&#39;, me.onLockedHeaderShow, me);
+        lockedHeaderCt.on(&#39;headerhide&#39;, me.onLockedHeaderHide, me);
+        lockedHeaderCt.on(&#39;headerresize&#39;, me.onLockedHeaderResize, me);
+        
+        lockedHeaderCt.on(&#39;sortchange&#39;, me.onLockedHeaderSortChange, me);
+        normalHeaderCt.on(&#39;sortchange&#39;, me.onNormalHeaderSortChange, me);
+        
+        me.normalGrid.on(&#39;scrollershow&#39;, me.onScrollerShow, me);
+        me.normalGrid.on(&#39;scrollerhide&#39;, me.onScrollerHide, me);
+        me.modifyHeaderCt();
+        me.items = [me.lockedGrid, me.normalGrid];
+        
+        
+        me.layout = {
+            type: &#39;hbox&#39;,
+            align: &#39;stretch&#39;
+        };
+        me.callParent(arguments);
+    },
+    onLockedGridAfterRefresh: function() {
+        var me = this,
+            w  = Ext.getScrollBarWidth() - 2,
+            el = me.lockedGrid.getView().el;
+            
+        me.spacerEl = Ext.core.DomHelper.append(el, {
+            cls: me.spacerHidden ? (Ext.baseCSSPrefix + &#39;hidden&#39;) : &#39;&#39;,
+            style: &#39;height: &#39; + w + &#39;px;&#39;
+        }, true);
+    },
+    onScrollerShow: function(scroller, direction) {
+        if (direction === &#39;horizontal&#39;) {
+            this.spacerHidden = false;
+            this.spacerEl.removeCls(Ext.baseCSSPrefix + &#39;hidden&#39;);
+        }
+    },
+    
+    onScrollerHide: function(scroller, direction) {
+        if (direction === &#39;horizontal&#39;) {
+            this.spacerHidden = true;
+            this.spacerEl.addCls(Ext.baseCSSPrefix + &#39;hidden&#39;);
+        }
+    },
+    <a name="method-Ext.grid.LockingGridPanel-getSelectionModel"></a>/**
+     * Returns the selection model being used and creates it via the configuration
+     * if it has not been created already.
+     * @return {Ext.selection.Model} selModel
+     */
+    getSelectionModel: function(){
+        if (!this.selModel) {
+            this.selModel = {};
+        }
+
+        var mode = &#39;SINGLE&#39;;
+        if (this.simpleSelect) {
+            mode = &#39;SIMPLE&#39;;
+        } else if (this.multiSelect) {
+            mode = &#39;MULTI&#39;;
+        }
+        
+        Ext.applyIf(this.selModel, {
+            allowDeselect: this.allowDeselect,
+            mode: mode
+        });        
+        
+        if (!this.selModel.events) {
+            this.selModel = Ext.create(&#39;selection.&#39; + this.selType, this.selModel);
+        }
+        
+        if (!this.selModel.hasRelaySetup) {
+            this.relayEvents(this.selModel, [&#39;selectionchange&#39;, &#39;select&#39;, &#39;deselect&#39;]);
+            this.selModel.hasRelaySetup = true;
+        }
+
+        // lock the selection model if user
+        // has disabled selection
+        if (this.disableSelection) {
+            this.selModel.locked = true;
+        }
+        
+        return this.selModel;
+    },
+    modifyHeaderCt: function() {
+        var me = this;
+        me.lockedGrid.headerCt.getMenuItems = me.getMenuItems(true);
+        me.normalGrid.headerCt.getMenuItems = me.getMenuItems(false);
+    },
+    
+    // runs in the scope of headerCt
+    getMenuItems: function(locked) {
+        var unlockText = &#39;Unlock&#39;,
+            lockText = &#39;Lock&#39;,
+            unlockHandler = Ext.Function.bind(this.unlock, this),
+            lockHandler = Ext.Function.bind(this.lock, this);
+        
+        return function() {
+            var o = Ext.grid.HeaderContainer.prototype.getMenuItems.call(this);
+            o.push(&#39;-&#39;,{
+                disabled: !locked,
+                text: unlockText,
+                handler: unlockHandler
+            });
+            o.push({
+                disabled: locked,
+                text: lockText,
+                handler: lockHandler
+            });
+            return o;
+        };
+    },
+    
+    // going from unlocked section to locked
+    lock: function() {
+        var me = this,
+            normalGrid = me.normalGrid,
+            lockedGrid = me.lockedGrid,
+            normalHCt  = normalGrid.headerCt,
+            lockedHCt  = lockedGrid.headerCt,
+            activeHd   = normalHCt.getMenu().activeHeader;
+            
+        normalHCt.remove(activeHd, false);
+        lockedHCt.add(activeHd);
+        me.syncLockedSection();
+    },
+    
+    syncLockedSection: function() {
+        var me = this;
+        me.syncLockedWidth();
+        me.lockedGrid.getView().refresh();
+        me.normalGrid.getView().refresh();
+    },
+    
+    purgeCache: function(grid) {
+        // Delete column cache - column order has changed.
+        delete grid.gridDataColumns;
+
+        // Menu changes when columns are moved. It will be recreated.
+        if (grid.headerCt.menu) {
+            grid.headerCt.menu.destroy();
+            delete grid.headerCt.menu;
+        }
+    },
+    
+    syncLockedWidth: function() {
+        var me = this,
+            width = me.lockedGrid.headerCt.getFullWidth(true);
+        me.lockedGrid.setWidth(width);
+    },
+    
+    onLockedHeaderResize: function() {
+        this.syncLockedWidth();
+    },
+    
+    onLockedHeaderHide: function() {
+        this.syncLockedWidth();
+    },
+    
+    onLockedHeaderShow: function() {
+        this.syncLockedWidth();
+    },
+    
+    onLockedHeaderSortChange: function(headerCt, header, sortState) {
+        if (sortState) {
+            // no real header, and silence the event so we dont get into an
+            // infinite loop
+            this.normalGrid.headerCt.clearOtherSortStates(null, true);
+        }
+    },
+    
+    onNormalHeaderSortChange: function(headerCt, header, sortState) {
+        if (sortState) {
+            // no real header, and silence the event so we dont get into an
+            // infinite loop
+            this.lockedGrid.headerCt.clearOtherSortStates(null, true);    
+        }
+        
+    },
+    
+    // going from locked section to unlocked
+    unlock: function() {
+        var me = this,
+            normalGrid = me.normalGrid,
+            lockedGrid = me.lockedGrid,
+            normalHCt  = normalGrid.headerCt,
+            lockedHCt  = lockedGrid.headerCt,
+            activeHd   = lockedHCt.getMenu().activeHeader;
+            
+        lockedHCt.remove(activeHd, false);
+        normalHCt.insert(0, activeHd);
+        me.syncLockedSection();
+    }
+});
+￿</pre></pre></body></html>

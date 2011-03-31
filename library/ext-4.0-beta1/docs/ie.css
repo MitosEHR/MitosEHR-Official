@@ -1,0 +1,8 @@
+.head-band { display: none; }
+.header { border: 0; top: 0; left: 0px; background: url(../images/header.gif) repeat-x; }
+.versions { font-size: 12px; }
+.tabbar .tabs a { background-color: #e1e1e1; }
+.tabbar .tabs a:hover { background-color: #efefef; }
+.tabbar .tabs a.sel { background-color: #696b6e; }
+.member-links { background-color: #e9e9e9; }
+.doc-tab .members .member a.more { background-color: #efefef; }
