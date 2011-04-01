@@ -10,8 +10,8 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>MitosEHR :: Installation</title>
-<script type="text/javascript" src="library/ext-4.0-pr4/bootstrap.js"></script>
-<link rel="stylesheet" type="text/css" href="library/ext-4.0-pr4/resources/css/ext-all.css">
+<script type="text/javascript" src="library/ext-4.0-beta1/bootstrap.js"></script>
+<link rel="stylesheet" type="text/css" href="library/ext-4.0-beta1/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 <script type="text/javascript">
