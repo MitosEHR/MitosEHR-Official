@@ -112,12 +112,13 @@ var BottomPanel = Ext.create('Ext.Panel', {
 // tag: ExtJS v4 Ready
 //****************************************************************
 var MainApp = Ext.create('Ext.Panel', {
-	region		: 'center',
-	id			: 'MainApp', 
-	border		: true,
-	margins		: '0 0 0 0',
-	bodyPadding	: 0,
-	//waitMsg: 'Loading...',
+	region			: 'center',
+	id				: 'MainApp', 
+	border			: true,
+	margins			: '0 0 0 0',
+	waitMsgTarget	: true,
+	bodyPadding		: 0,
+	waitMsg: 'Loading...',
 	//autoLoad: {url:'interface/administration/facilities/facilities.ejs.php', scripts:true},
 	
 	//------------------------------------
