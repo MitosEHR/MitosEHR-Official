@@ -55,7 +55,7 @@ var storeSites = new Ext.data.Store({
 		}
 	}),
 	autoLoad: true
-});
+}); // End storeLang
 
 // *************************************************************************************
 // The Copyright Notice Window
@@ -73,17 +73,17 @@ var winCopyright = Ext.create('widget.window', {
 	closable		: true,
 	autoLoad		: 'interface/login/copyright_notice.html',
 	autoScroll		: true
-});
+}); // End winCopyright
 
 // *************************************************************************************
 // Form Layout [Login]
 // *************************************************************************************
 var formLogin = Ext.create('Ext.form.FormPanel', {
 	id				: 'formLogin',
-	waitMsgTarget	: true,
     url				: 'library/authProcedures/auth.inc.php',
     baseParams		: {auth: 'true'},
     bodyStyle		:'padding:5px 5px 0',
+    waitMsgTarget	: true,
 	frame			: false,
 	border			: false,
     fieldDefaults	: { msgTarget: 'side', labelWidth: 300 },
@@ -189,26 +189,26 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 			Ext.getCmp('authUser').focus(true, 10);
 		}
 	}
-});
+}); // End formLogin
 
 // *************************************************************************************
 // The Logon Window
 // *************************************************************************************
 var winLogon = new Ext.create('widget.window', {
-    title		: 'MitosEHR Logon',
-    closable	: true,
-    width		: 499,
-	height		: 315,
-	bodyPadding	: 2,  		//new 4.0 
-	closeAction	: 'hide',
-    plain		: true,
-	modal		: false,
-	resizable	: false,
-	draggable	: false,
-	closable	: false,
-    bodyStyle	: 'padding: 5px;',
-    items		: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: 'ui_app/logon_header.png'}}, formLogin ]
-});
+    title			: 'MitosEHR Logon',
+    closable		: true,
+    width			: 499,
+	height			: 315,
+	bodyPadding		: 2,  		//new 4.0 
+	closeAction		: 'hide',
+    plain			: true,
+	modal			: false,
+	resizable		: false,
+	draggable		: false,
+	closable		: false,
+    bodyStyle		: 'padding: 5px;',
+    items			: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: 'ui_app/logon_header.png'}}, formLogin ]
+}); // End winLogon
 
 winLogon.show();
 

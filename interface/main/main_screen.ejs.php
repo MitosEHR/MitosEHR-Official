@@ -69,6 +69,7 @@ var storeTree = new Ext.data.TreeStore({
 var Navigation = new Ext.tree.TreePanel({
 	region: 'west',
 	hideHeaders: true,
+	useArrows: true,
 	//rootVisible: false,
 	viewConfig: { plugins: [{ ptype: 'treeviewdd' }] },
 	width: 200,
@@ -83,8 +84,6 @@ var Navigation = new Ext.tree.TreePanel({
 		id: 'source'
 	}
 });
-
-var cw;
 
 //****************************************************************
 // header Panel
@@ -174,19 +173,13 @@ var MainApp = Ext.create('Ext.Panel', {
 	border			: true,
 	margins			: '0 0 0 0',
 	bodyPadding		: 0,
-	waitTitle:'Connecting', 
-	waitMsg: 'Loading...',
-	//autoLoad: {url:'interface/administration/facilities/facilities.ejs.php', scripts:true},
-	
-	//------------------------------------
-	// Manage Top Panel's Events
-	//------------------------------------
-	listeners:{
-		afterrender: function(panel){
-			//panel.getUpdateManager().update({url: 'interface/administration/facilities/facilities.ejs.php', scripts: true});
-		}
-	},
-
+	waitTitle		:'Connecting', 
+	waitMsg			: '<?php i18n("Loading"); ?>',
+	waitMsgTarget	: true,
+	html			: 'In Progress...',
+	render			: function(){
+		this.update({url: 'interface/dashboard/dashboard.ejs.php', scripts: true});
+	}
 }); // End MainApp
 
 //****************************************************************
@@ -224,6 +217,6 @@ Ext.create('Ext.Viewport', {
 }); // End ViewPort
 
 
-});
+}); // End App
 
 </script>
