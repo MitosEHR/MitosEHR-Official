@@ -176,10 +176,7 @@ var MainApp = Ext.create('Ext.Panel', {
 	waitTitle		:'Connecting', 
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
-	html			: 'In Progress...',
-	render			: function(){
-		this.update({url: 'interface/dashboard/dashboard.ejs.php', scripts: true});
-	}
+	html			: 'In Progress...'
 }); // End MainApp
 
 //****************************************************************
@@ -216,6 +213,7 @@ Ext.create('Ext.Viewport', {
 	items: [ Header, Navigation, TopPanel ]
 }); // End ViewPort
 
+MainApp.update({url: 'interface/dashboard/dashboard.ejs.php', scripts: true});
 
 }); // End App
 
