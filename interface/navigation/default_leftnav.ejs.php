@@ -22,12 +22,12 @@ $buff .= '{ "text":"' . i18n('Dashboard', 'r') . '", "pos":"top", "leaf":true, "
 // -------------------------------------
 // Calendar Item (Non-Athletic Clinic)
 // -------------------------------------
-$buff .= '{ "text":"' . i18n('Calendar', 'r') . '", "pos":"top", "leaf":true, "cls":"file", "id":"calendar/calendar.ejs.php"},' . chr(13);
+//$buff .= '{ "text":"' . i18n('Calendar', 'r') . '", "pos":"top", "leaf":true, "cls":"file", "id":"calendar/calendar.ejs.php"},' . chr(13);
 
 // -------------------------------
 // Messages Item
 // -------------------------------
-$buff .= '{ "text":"' . i18n('Messages', 'r') . '", "pos":"bot", "leaf":true, "cls":"file", "id":"messages/messages.ejs.php"},' . chr(13);
+//$buff .= '{ "text":"' . i18n('Messages', 'r') . '", "pos":"bot", "leaf":true, "cls":"file", "id":"messages/messages.ejs.php"},' . chr(13);
 
 
 // *************************************************************************************
