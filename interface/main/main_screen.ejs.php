@@ -24,9 +24,8 @@ $_SESSION['site']['flops'] = 0;
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 
 <script type="text/javascript">
-Ext.require([
-    '*'
-]);
+
+Ext.require([ '*' ]);
 
 Ext.onReady(function() {
 
@@ -62,23 +61,18 @@ var storeTree = new Ext.data.TreeStore({
 		expanded: true
 	}
 });
+
 //****************************************************************
 // Navigation Panel
 // Panel
 //****************************************************************    
 var Navigation = new Ext.tree.TreePanel({
 	region: 'west',
-	animate: true,
-	viewConfig: {plugins: [{ptype: 'treeviewdd'}]},
+	hideHeaders: true,
+	//rootVisible: false,
+	viewConfig: { plugins: [{ ptype: 'treeviewdd' }] },
+	width: 200,
 	collapsible: true,
-	floatable: true,
-	useArrows: true,
-	autoScroll: true,
-	rootVisible: false,
-	lines: false,
-	animate: true,
-	enableDD: true,
-	containerScroll: true,
 	store: storeTree,
 	title: '<?php i18n('Navigation'); ?>',
 	split: true,
@@ -90,58 +84,7 @@ var Navigation = new Ext.tree.TreePanel({
 	}
 });
 
-//****************************************************************
-// Bottom Panel
-//
-// tag: ExtJS v4 Ready
-//****************************************************************
-var BottomPanel = Ext.create('Ext.Panel', {
-	region		: 'south',
-	id			: 'BottomPannel',
-	height		: 200,
-	split		: true,
-	collapsible	: true,
-	title		: '...',
-	margins		: '0 0 0 0',
-	bodyPadding	: 0,
-}); // End Bottom Panel
-
-//****************************************************************
-// Main Panel
-//
-// tag: ExtJS v4 Ready
-//****************************************************************
-var MainApp = Ext.create('Ext.Panel', {
-	region		: 'center',
-	id			: 'MainApp', 
-	border		: true,
-	margins		: '0 0 0 0',
-	bodyPadding	: 0,
-	//waitMsg: 'Loading...',
-	//autoLoad: {url:'interface/administration/facilities/facilities.ejs.php', scripts:true},
-	
-	//------------------------------------
-	// Manage Top Panel's Events
-	//------------------------------------
-	listeners:{
-		afterrender: function(panel){
-			//panel.Updater.updateElement('MainApp', 'interface/administration/facilities/facilities.ejs.php','',{scripts: true, indicatorText: "Loading data..."});
-		}
-	},
-
-	//------------------------------------
-	// Top Panel's Bottom Menu System
-	//------------------------------------
-	//dockedItems: [{
-	//	xtype: 'toolbar',
-	//	dock: 'bottom',
-	//	items: [{
-	//		itemId: 'toggleCw',
-	//		text: 'Menu',
-	//		enableToggle: true,
-	//	}]
-	//}]
-}); // End MainApp
+var cw;
 
 //****************************************************************
 // header Panel
@@ -204,6 +147,47 @@ var Header = Ext.create('Ext.Panel', {
 	}]
 }); // End Header
 
+//****************************************************************
+// Bottom Panel
+//
+// tag: ExtJS v4 Ready
+//****************************************************************
+var BottomPanel = Ext.create('Ext.Panel', {
+	region		: 'south',
+	id			: 'BottomPannel',
+	height		: 200,
+	split		: true,
+	collapsible	: true,
+	title		: '...',
+	margins		: '0 0 0 0',
+	bodyPadding	: 0,
+}); // End Bottom Panel
+
+//****************************************************************
+// Main Panel
+//
+// tag: ExtJS v4 Ready
+//****************************************************************
+var MainApp = Ext.create('Ext.Panel', {
+	region			: 'center',
+	id				: 'MainApp', 
+	border			: true,
+	margins			: '0 0 0 0',
+	bodyPadding		: 0,
+	waitTitle:'Connecting', 
+	waitMsg: 'Loading...',
+	//autoLoad: {url:'interface/administration/facilities/facilities.ejs.php', scripts:true},
+	
+	//------------------------------------
+	// Manage Top Panel's Events
+	//------------------------------------
+	listeners:{
+		afterrender: function(panel){
+			//panel.getUpdateManager().update({url: 'interface/administration/facilities/facilities.ejs.php', scripts: true});
+		}
+	},
+
+}); // End MainApp
 
 //****************************************************************
 // TopPanel
@@ -212,14 +196,15 @@ var Header = Ext.create('Ext.Panel', {
 // tag: ExtJS v4 Ready
 //****************************************************************
 var TopPanel = Ext.create('Ext.Panel', {
-	region		: 'center',
-	id			: 'TopPanel',
-	layout		: 'border',
-	border		: false,
-	margins		: '0 0 0 0',
-	padding		: 0,
-	bodyPadding	: 0,
-	items		: [ MainApp, BottomPanel ]
+	region			: 'center',
+	id				: 'TopPanel',
+	layout			: 'border',
+	waitMsgTarget	: true,
+	border			: false,
+	margins			: '0 0 0 0',
+	padding			: 0,
+	bodyPadding		: 0,
+	items			: [ MainApp, BottomPanel ]
 }); // End TopPanel
 
 //****************************************************************
@@ -238,6 +223,7 @@ Ext.create('Ext.Viewport', {
 	items: [ Header, Navigation, TopPanel ]
 }); // End ViewPort
 
-}); // End App
+
+});
 
 </script>
