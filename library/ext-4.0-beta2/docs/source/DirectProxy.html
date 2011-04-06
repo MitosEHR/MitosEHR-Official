@@ -1,0 +1,137 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.DirectProxy"></a>/**
+ * @class Ext.data.DirectProxy
+ * @extends Ext.data.ServerProxy
+ */
+Ext.define(&#39;Ext.data.DirectProxy&#39;, {
+    /* Begin Definitions */
+    
+    extend: &#39;Ext.data.ServerProxy&#39;,
+    
+    alias: &#39;proxy.direct&#39;,
+    
+    requires: [&#39;Ext.direct.Manager&#39;],
+    
+    /* End Definitions */
+   
+   <a name="cfg-Ext.data.DirectProxy-paramOrder"></a>/**
+     * @cfg {Array/String} paramOrder Defaults to &lt;tt&gt;undefined&lt;/tt&gt;. A list of params to be executed
+     * server side.  Specify the params in the order in which they must be executed on the server-side
+     * as either (1) an Array of String values, or (2) a String of params delimited by either whitespace,
+     * comma, or pipe. For example,
+     * any of the following would be acceptable:<br><span style="display: none">**/</span>paramOrder: [&#39;param1&#39;,&#39;param2&#39;,&#39;param3&#39;]
+paramOrder: &#39;param1 param2 param3&#39;
+paramOrder: &#39;param1,param2,param3&#39;
+paramOrder: &#39;param1|param2|param&#39;
+     <br><span style="display: none">/**</span>     */
+    paramOrder: undefined,
+
+    <a name="cfg-Ext.data.DirectProxy-paramsAsHash"></a>/**
+     * @cfg {Boolean} paramsAsHash
+     * Send parameters as a collection of named arguments (defaults to &lt;tt&gt;true&lt;/tt&gt;). Providing a
+     * &lt;tt&gt;{@link #paramOrder}&lt;/tt&gt; nullifies this configuration.
+     */
+    paramsAsHash: true,
+
+    <a name="cfg-Ext.data.DirectProxy-directFn"></a>/**
+     * @cfg {Function} directFn
+     * Function to call when executing a request.  directFn is a simple alternative to defining the api configuration-parameter
+     * for Store&#39;s which will not implement a full CRUD api.
+     */
+    directFn : undefined,
+    
+    <a name="cfg-Ext.data.DirectProxy-api"></a>/**
+     * @cfg {Object} api The same as {@link Ext.data.ServerProxy#api}, however instead of providing urls, you should provide a direct
+     * function call.
+     */
+    
+    constructor: function(config){
+        var me = this;
+        
+        Ext.apply(me, config);
+        if (Ext.isString(me.paramOrder)) {
+            me.paramOrder = me.paramOrder.split(/[\s,|]/);
+        }
+        me.callParent(arguments);
+    },
+    
+    doRequest: function(operation, callback, scope) {
+        var me = this,
+            writer = me.getWriter(),
+            request = me.buildRequest(operation, callback, scope),
+            fn = me.api[request.action]  || me.directFn,
+            args = [],
+            params = request.params,
+            paramOrder = me.paramOrder,
+            method,
+            i = 0,
+            len;
+            
+        if (!fn) {
+            throw &#39;No direct function specified for this proxy&#39;;
+        }
+            
+        if (operation.allowWrite()) {
+            request = writer.write(request);
+        }
+        
+        if (operation.action == &#39;read&#39;) {
+            // We need to pass params
+            method = fn.directCfg.method;
+            
+            if (method.ordered) {
+                if (method.len &gt; 0) {
+                    if (paramOrder) {
+                        for (len = paramOrder.length; i &lt; len; ++i) {
+                            args.push(params[paramOrder[i]]);
+                        }
+                    } else if (me.paramsAsHash) {
+                        args.push(params);
+                    }
+                }
+            } else {
+                args.push(params);
+            }
+        } else {
+            args.push(request.jsonData);
+        }
+        
+        Ext.apply(request, {
+            args: args,
+            directFn: fn
+        });
+        args.push(me.createRequestCallback(request, operation, callback, scope), me);
+        fn.apply(window, args);
+    },
+    
+    /*
+     * Inherit docs. We don&#39;t apply any encoding here because
+     * all of the direct requests go out as jsonData
+     */
+    applyEncoding: function(value){
+        return value;
+    },
+    
+    createRequestCallback: function(request, operation, callback, scope){
+        var me = this;
+        
+        return function(data, event){
+            me.processResponse(event.status, operation, request, event, callback, scope);
+        };
+    },
+    
+    // inherit docs
+    extractResponseData: function(response){
+        return Ext.isDefined(response.result) ? response.result : response.data;
+    },
+    
+    // inherit docs
+    setException: function(operation, response) {
+        operation.setException(response.message);
+    },
+    
+    // inherit docs
+    buildUrl: function(){
+        return &#39;&#39;;
+    }
+});
+￿</pre></pre></body></html>

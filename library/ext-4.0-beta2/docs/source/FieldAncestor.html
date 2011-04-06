@@ -1,0 +1,205 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.form.FieldAncestor"></a>/**
+ * @class Ext.form.FieldAncestor
+
+A mixin for {@link Ext.container.Container} components that are likely to have form fields in their
+items subtree. Adds the following capabilities:
+
+- Methods for handling the addition and removal of {@link Ext.form.Labelable} and {@link Ext.form.Field}
+  instances at any depth within the container.
+- Events ({@link #fieldvaliditychange} and {@link #fielderrorchange}) for handling changes to the state
+  of individual fields at the container level.
+- Automatic application of {@link #fieldDefaults} config properties to each field added within the
+  container, to facilitate uniform configuration of all fields.
+
+This mixin is primarily for internal use by {@link Ext.form.FormPanel} and {@link Ext.form.FieldContainer},
+and should not normally need to be used directly.
+
+ * @markdown
+ * @docauthor Jason Johnston &lt;jason@sencha.com&gt;
+ */
+Ext.define(&#39;Ext.form.FieldAncestor&#39;, {
+
+    <a name="cfg-Ext.form.FieldAncestor-fieldDefaults"></a>/**
+     * @cfg {Object} fieldDefaults
+     * &lt;p&gt;If specified, the properties in this object are used as default config values for each
+     * {@link Ext.form.Labelable} instance (e.g. {@link Ext.form.BaseField} or {@link Ext.form.FieldContainer})
+     * that is added as a descendant of this container. Corresponding values specified in an individual field&#39;s
+     * own configuration, or from the {@link Ext.container.Container#defaults defaults config} of its parent container,
+     * will take precedence. See the documentation for {@link Ext.form.Labelable} to see what config
+     * options may be specified in the &lt;tt&gt;fieldDefaults&lt;/tt&gt;.&lt;/p&gt;
+     * &lt;p&gt;Example:&lt;/p&gt;
+     * <br><span style="display: none">**/</span>new Ext.form.FormPanel({
+    fieldDefaults: {
+        labelAlign: &#39;left&#39;,
+        labelWidth: 100
+    },
+    items: [{
+        xtype: &#39;fieldset&#39;,
+        defaults: {
+            labelAlign: &#39;top&#39;
+        },
+        items: [{
+            name: &#39;field1&#39;
+        }, {
+            name: &#39;field2&#39;
+        }]
+    }, {
+        xtype: &#39;fieldset&#39;,
+        items: [{
+            name: &#39;field3&#39;,
+            labelWidth: 150
+        }, {
+            name: &#39;field4&#39;
+        }]
+    }]
+});<br><span style="display: none">/**</span>     * &lt;p&gt;In this example, field1 and field2 will get labelAlign:&#39;top&#39; (from the fieldset&#39;s &lt;tt&gt;defaults&lt;/tt&gt;)
+     * and labelWidth:100 (from &lt;tt&gt;fieldDefaults&lt;/tt&gt;), field3 and field4 will both get labelAlign:&#39;left&#39; (from
+     * &lt;tt&gt;fieldDefaults&lt;/tt&gt; and field3 will use the labelWidth:150 from its own config.&lt;/p&gt;
+     */
+
+
+    <a name="method-Ext.form.FieldAncestor-initFieldAncestor"></a>/**
+     * @protected Initializes the FieldAncestor&#39;s state; this must be called from the initComponent method
+     * of any components importing this mixin.
+     */
+    initFieldAncestor: function() {
+        var me = this,
+            onSubtreeChange = me.onFieldAncestorSubtreeChange;
+
+        me.addEvents(
+            <a name="event-Ext.form.FieldAncestor-fielderrorchange"></a>/**
+             * @event fielderrorchange
+             * Fires when the validity state of any one of the {@link Ext.form.Field} instances within this
+             * container changes.
+             * @param {Ext.form.FieldAncestor} this
+             * @param {Ext.form.Labelable} The Field instance whose validity changed
+             * @param {String} isValid The field&#39;s new validity state
+             */
+            &#39;fieldvaliditychange&#39;,
+
+            <a name="event-Ext.form.FieldAncestor-fielderrorchange"></a>/**
+             * @event fielderrorchange
+             * Fires when the active error message is changed for any one of the {@link Ext.form.Labelable}
+             * instances within this container.
+             * @param {Ext.form.FieldAncestor} this
+             * @param {Ext.form.Labelable} The Labelable instance whose active error was changed
+             * @param {String} error The active error message
+             */
+            &#39;fielderrorchange&#39;
+        );
+
+        // Catch addition and removal of descendant fields
+        me.on(&#39;add&#39;, onSubtreeChange, me);
+        me.on(&#39;remove&#39;, onSubtreeChange, me);
+
+        me.initFieldDefaults();
+    },
+
+    /**
+     * @private Initialize the {@link #fieldDefaults} object
+     */
+    initFieldDefaults: function() {
+        if (!this.fieldDefaults) {
+            this.fieldDefaults = {};
+        }
+    },
+
+    /**
+     * @private
+     * Handle the addition and removal of components in the FieldAncestor component&#39;s child tree.
+     */
+    onFieldAncestorSubtreeChange: function(parent, child) {
+        var me = this,
+            isAdding = !!child.ownerCt;
+
+        function handleCmp(cmp) {
+            var isLabelable = cmp.isFieldLabelable,
+                isField = cmp.isFormField;
+            if (isLabelable || isField) {
+                if (isLabelable) {
+                    me[&#39;onLabelable&#39; + (isAdding ? &#39;Added&#39; : &#39;Removed&#39;)](cmp);
+                }
+                if (isField) {
+                    me[&#39;onField&#39; + (isAdding ? &#39;Added&#39; : &#39;Removed&#39;)](cmp);
+                }
+            }
+            else if (cmp.isContainer) {
+                Ext.Array.forEach(cmp.getRefItems(), handleCmp);
+            }
+        }
+        handleCmp(child);
+    },
+
+    <a name="method-Ext.form.FieldAncestor-onLabelableAdded"></a>/**
+     * @protected Called when a {@link Ext.form.Labelable} instance is added to the container&#39;s subtree.
+     * @param {Ext.form.Labelable} labelable The instance that was added
+     */
+    onLabelableAdded: function(labelable) {
+        var me = this;
+
+        // buffer slightly to avoid excessive firing while sub-fields are changing en masse
+        me.mon(labelable, &#39;errorchange&#39;, me.handleFieldErrorChange, me, {buffer: 10});
+
+        labelable.applyFieldDefaults(me.fieldDefaults);
+    },
+
+    <a name="method-Ext.form.FieldAncestor-onFieldAdded"></a>/**
+     * @protected Called when a {@link Ext.form.Field} instance is added to the container&#39;s subtree.
+     * @param {Ext.form.Field} field The field which was added
+     */
+    onFieldAdded: function(field) {
+        var me = this;
+        me.mon(field, &#39;validitychange&#39;, me.handleFieldValidityChange, me);
+    },
+
+    <a name="method-Ext.form.FieldAncestor-onLabelableRemoved"></a>/**
+     * @protected Called when a {@link Ext.form.Labelable} instance is removed from the container&#39;s subtree.
+     * @param {Ext.form.Labelable} labelable The instance that was removed
+     */
+    onLabelableRemoved: function(labelable) {
+        var me = this;
+        me.mun(labelable, &#39;errorchange&#39;, me.handleFieldErrorChange, me);
+    },
+
+    <a name="method-Ext.form.FieldAncestor-onFieldRemoved"></a>/**
+     * @protected Called when a {@link Ext.form.Field} instance is removed from the container&#39;s subtree.
+     * @param {Ext.form.Field} field The field which was removed
+     */
+    onFieldRemoved: function(field) {
+        var me = this;
+        me.mun(field, &#39;validitychange&#39;, me.handleFieldValidityChange, me);
+    },
+
+    /**
+     * @private Handle validitychange events on sub-fields; invoke the aggregated event and method
+     */
+    handleFieldValidityChange: function(field, isValid) {
+        var me = this;
+        me.fireEvent(&#39;fieldvaliditychange&#39;, me, field, isValid);
+        me.onFieldValidityChange();
+    },
+
+    /**
+     * @private Handle errorchange events on sub-fields; invoke the aggregated event and method
+     */
+    handleFieldErrorChange: function(labelable, activeError) {
+        var me = this;
+        me.fireEvent(&#39;fielderrorchange&#39;, me, labelable, activeError);
+        me.onFieldErrorChange();
+    },
+
+    <a name="method-Ext.form.FieldAncestor-onFieldValidityChange"></a>/**
+     * @protected Fired when the validity of any field within the container changes.
+     * @param {Ext.form.Field} The sub-field whose validity changed
+     * @param {String} The new validity state
+     */
+    onFieldValidityChange: Ext.emptyFn,
+
+    <a name="method-Ext.form.FieldAncestor-onFieldErrorChange"></a>/**
+     * @protected Fired when the error message of any field within the container changes.
+     * @param {Ext.form.Labelable} The sub-field whose active error changed
+     * @param {String} The new active error message
+     */
+    onFieldErrorChange: Ext.emptyFn
+
+});￿</pre></pre></body></html>

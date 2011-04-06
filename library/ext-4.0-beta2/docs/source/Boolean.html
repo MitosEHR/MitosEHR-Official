@@ -1,0 +1,47 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.column.Boolean"></a>/**
+ * @class Ext.grid.column.Boolean
+ * @extends Ext.grid.column.Column
+ * &lt;p&gt;A Column definition class which renders boolean data fields.  See the {@link Ext.grid.column.Column#xtype xtype}
+ * config option of {@link Ext.grid.Column} for more details.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.grid.column.Boolean&#39;, {
+    extend: &#39;Ext.grid.column.Column&#39;,
+    alias: [&#39;widget.booleancolumn&#39;],
+    alternateClassName: &#39;Ext.grid.BooleanColumn&#39;,
+
+    <a name="cfg-Ext.grid.column.Boolean-trueText"></a>/**
+     * @cfg {String} trueText
+     * The string returned by the renderer when the column value is not falsey (defaults to &lt;tt&gt;&#39;true&#39;&lt;/tt&gt;).
+     */
+    trueText: &#39;true&#39;,
+
+    <a name="cfg-Ext.grid.column.Boolean-falseText"></a>/**
+     * @cfg {String} falseText
+     * The string returned by the renderer when the column value is falsey (but not undefined) (defaults to
+     * &lt;tt&gt;&#39;false&#39;&lt;/tt&gt;).
+     */
+    falseText: &#39;false&#39;,
+
+    <a name="cfg-Ext.grid.column.Boolean-undefinedText"></a>/**
+     * @cfg {String} undefinedText
+     * The string returned by the renderer when the column value is undefined (defaults to &lt;tt&gt;&#39;&amp;#160;&#39;&lt;/tt&gt;).
+     */
+    undefinedText: &#39;&amp;#160;&#39;,
+
+    constructor: function(cfg){
+        this.callParent(arguments);
+        var trueText      = this.trueText,
+            falseText     = this.falseText,
+            undefinedText = this.undefinedText;
+
+        this.renderer = function(value){
+            if(value === undefined){
+                return undefinedText;
+            }
+            if(!value || value === &#39;false&#39;){
+                return falseText;
+            }
+            return trueText;
+        };
+    }
+});￿</pre></pre></body></html>

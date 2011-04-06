@@ -1,0 +1,558 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.tree.TreePanel"></a>/**
+ * @class Ext.tree.TreePanel
+ * @extends Ext.panel.TablePanel
+
+The TreePanel provides tree-structured UI representation of tree-structured data.
+A TreePanel must be bound to a {@link Ext.data.TreeStore}. TreePanel&#39;s support
+multiple columns through the {@link columns} configuration. 
+
+An example of a tree rendered to the body of the document:
+
+    var tree = new Ext.tree.TreePanel({
+        renderTo: Ext.getBody(),
+        width: 400,
+        height: 400,
+        store: treeStore,
+        hideHeaders: true,
+        columns: [{
+            // specify you want indenting on this header
+            xtype: &#39;treecolumn&#39;,
+            flex: 1,
+            sortable: false,
+            // links back to field name in store
+            dataIndex: &#39;fileName&#39;
+        }]
+    });
+ * @xtype treepanel
+ * @markdown
+ */
+Ext.define(&#39;Ext.tree.TreePanel&#39;, {
+    extend: &#39;Ext.panel.TablePanel&#39;,
+    alias: &#39;widget.treepanel&#39;,
+    
+    viewType: &#39;treeview&#39;,
+    selType: &#39;treemodel&#39;,
+    
+    cls: &#39;x-tree-panel&#39;,
+    
+    <a name="cfg-Ext.tree.TreePanel-lines"></a>/**
+     * @cfg {Boolean} lines false to disable tree lines (defaults to true)
+     */
+    lines: true,
+    
+    <a name="cfg-Ext.tree.TreePanel-useArrows"></a>/**
+     * @cfg {Boolean} useArrows true to use Vista-style arrows in the tree (defaults to false)
+     */
+    useArrows: false,
+    
+    <a name="cfg-Ext.tree.TreePanel-singleExpand"></a>/**
+     * @cfg {Boolean} singleExpand &lt;tt&gt;true&lt;/tt&gt; if only 1 node per branch may be expanded
+     */
+    singleExpand: false,
+    
+    ddConfig: {
+        enableDrag: true,
+        enableDrop: true
+    },
+    
+    <a name="cfg-Ext.tree.TreePanel-animate"></a>/** 
+     * @cfg {Boolean} animate &lt;tt&gt;true&lt;/tt&gt; to enable animated expand/collapse (defaults to the value of {@link Ext#enableFx Ext.enableFx})
+     */
+            
+    <a name="cfg-Ext.tree.TreePanel-rootVisible"></a>/** 
+     * @cfg {Boolean} rootVisible &lt;tt&gt;false&lt;/tt&gt; to hide the root node (defaults to &lt;tt&gt;true&lt;/tt&gt;)
+     */
+    rootVisible: true,
+    
+    <a name="cfg-Ext.tree.TreePanel-displayField"></a>/** 
+     * @cfg {Boolean} displayField The field inside the model that will be used as the node&#39;s text. (defaults to &lt;tt&gt;text&lt;/tt&gt;)
+     */    
+    displayField: &#39;text&#39;,
+
+    <a name="cfg-Ext.tree.TreePanel-root"></a>/** 
+     * @cfg {Boolean} root Allows you to not specify a store on this TreePanel. This is useful for creating a simple
+     * tree with preloaded data without having to specify a TreeStore and Model. A store and model will be created and
+     * root will be passed to that store.
+     */
+    root: null,
+
+    constructor: function(config) {
+        config = config || {};
+        if (config.animate === undefined) {
+            config.animate = Ext.enableFx;
+        }
+        this.enableAnimations = config.animate;
+        delete config.animate;
+        
+        this.callParent([config]);
+    },
+    
+    initComponent: function() {
+        var me = this,
+            cls = [];
+
+        if (me.useArrows) {
+            cls.push(Ext.baseCSSPrefix + &#39;tree-arrows&#39;);
+            me.lines = false;
+        }
+        
+        if (me.lines) {
+            cls.push(Ext.baseCSSPrefix + &#39;tree-lines&#39;);
+        } else if (!me.useArrows) {
+            cls.push(Ext.baseCSSPrefix + &#39;tree-no-lines&#39;);
+        }
+
+        if (!me.store) {
+            me.store = Ext.create(&#39;Ext.data.TreeStore&#39;, {
+                root: me.root
+            });
+        }
+        else if (me.root) {
+            me.store = Ext.data.StoreMgr.lookup(me.store);
+            me.store.setRootNode(me.root);
+        }
+        
+        if (me.initialConfig.rootVisible === undefined &amp;&amp; !me.getRootNode()) {
+            me.rootVisible = false;
+        }
+                
+        me.viewConfig = Ext.applyIf(me.viewConfig || {}, {
+            rootVisible: me.rootVisible,
+            animate: me.enableAnimations,
+            singleExpand: me.singleExpand,
+            node: me.store.getRootNode()
+        });
+        
+        me.mon(me.store, {
+            rootchange: me.onRootChange,
+            scope: me
+        });
+    
+        me.relayEvents(me.store, [
+            <a name="event-Ext.tree.TreePanel-beforeload"></a>/**
+             * @event beforeload
+             * Event description
+             * @param {Ext.data.Store} store This Store
+             * @param {Ext.data.Operation} operation The Ext.data.Operation object that will be passed to the Proxy to load the Store
+             */
+            &#39;beforeload&#39;,
+
+            <a name="event-Ext.tree.TreePanel-load"></a>/**
+             * @event load
+             * Fires whenever the store reads data from a remote data source.
+             * @param {Ext.data.store} this
+             * @param {Array} records An array of records
+             * @param {Boolean} successful True if the operation was successful.
+             */
+            &#39;load&#39;   
+        ]);
+        
+        me.store.on({
+            <a name="event-Ext.tree.TreePanel-itemappend"></a>/**
+             * @event itemappend
+             * Fires when a new child node is appended to a node in the tree.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The newly appended node
+             * @param {Number} index The index of the newly appended node
+             */
+            append: me.createRelayer(&#39;itemappend&#39;),
+            
+            <a name="event-Ext.tree.TreePanel-itemremove"></a>/**
+             * @event itemremove
+             * Fires when a child node is removed from a node in the tree
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node removed
+             */
+            remove: me.createRelayer(&#39;itemremove&#39;),
+            
+            <a name="event-Ext.tree.TreePanel-itemmove"></a>/**
+             * @event itemmove
+             * Fires when a node is moved to a new location in the tree
+             * @param {Tree} tree The owner tree
+             * @param {Node} node The node moved
+             * @param {Node} oldParent The old parent of this node
+             * @param {Node} newParent The new parent of this node
+             * @param {Number} index The index it was moved to
+             */
+            move: me.createRelayer(&#39;itemmove&#39;),
+            
+            <a name="event-Ext.tree.TreePanel-iteminsert"></a>/**
+             * @event iteminsert
+             * Fires when a new child node is inserted in a node in tree
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node inserted
+             * @param {Node} refNode The child node the node was inserted before
+             */
+            insert: me.createRelayer(&#39;iteminsert&#39;),
+            
+            <a name="event-Ext.tree.TreePanel-beforeitemappend"></a>/**
+             * @event beforeitemappend
+             * Fires before a new child is appended to a node in this tree, return false to cancel the append.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node to be appended
+             */
+            beforeappend: me.createRelayer(&#39;beforeitemappend&#39;),
+            
+            <a name="event-Ext.tree.TreePanel-beforeitemremove"></a>/**
+             * @event beforeitemremove
+             * Fires before a child is removed from a node in this tree, return false to cancel the remove.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node to be removed
+             */
+            beforeremove: me.createRelayer(&#39;beforeitemremove&#39;),
+            
+            <a name="event-Ext.tree.TreePanel-beforeitemmove"></a>/**
+             * @event beforeitemmove
+             * Fires before a node is moved to a new location in the tree. Return false to cancel the move.
+             * @param {Tree} tree The owner tree
+             * @param {Node} node The node being moved
+             * @param {Node} oldParent The parent of the node
+             * @param {Node} newParent The new parent the node is moving to
+             * @param {Number} index The index it is being moved to
+             */
+            beforemove: me.createRelayer(&#39;beforeitemmove&#39;),
+            
+            <a name="event-Ext.tree.TreePanel-beforeiteminsert"></a>/**
+             * @event beforeiteminsert
+             * Fires before a new child is inserted in a node in this tree, return false to cancel the insert.
+             * @param {Tree} tree The owner tree
+             * @param {Node} parent The parent node
+             * @param {Node} node The child node to be inserted
+             * @param {Node} refNode The child node the node is being inserted before
+             */
+            beforeinsert: me.createRelayer(&#39;beforeiteminsert&#39;),
+             
+            <a name="event-Ext.tree.TreePanel-itemexpand"></a>/**
+             * @event itemexpand
+             * Fires when a node is expanded.
+             * @param {Node} this The expanding node
+             */
+            expand: me.createRelayer(&#39;itemexpand&#39;),
+             
+            <a name="event-Ext.tree.TreePanel-itemcollapse"></a>/**
+             * @event itemcollapse
+             * Fires when a node is collapsed.
+             * @param {Node} this The collapsing node
+             */
+            collapse: me.createRelayer(&#39;itemcollapse&#39;),
+             
+            <a name="event-Ext.tree.TreePanel-beforeitemexpand"></a>/**
+             * @event beforeitemexpand
+             * Fires before a node is expanded.
+             * @param {Node} this The expanding node
+             */
+            beforexpand: me.createRelayer(&#39;beforeitemexpand&#39;),
+             
+            <a name="event-Ext.tree.TreePanel-beforeitemcollapse"></a>/**
+             * @event beforeitemcollapse
+             * Fires before a node is collapsed.
+             * @param {Node} this The collapsing node
+             */
+            beforecollapse: me.createRelayer(&#39;beforeitemcollapse&#39;)
+        });
+        
+        // If the user specifies the headers collection manually then dont inject our own
+        if (!me.columns) {
+            if (me.initialConfig.hideHeaders === undefined) {
+                me.hideHeaders = true;
+            }
+            me.columns = [{
+                xtype    : &#39;treecolumn&#39;,
+                text     : &#39;Name&#39;,
+                flex     : 1,
+                dataIndex: me.displayField         
+            }];
+        }
+        
+        if (me.cls) {
+            cls.push(me.cls);
+        }
+        me.cls = cls.join(&#39; &#39;);
+        me.callParent();
+        
+        this.relayEvents(this.view, [
+            <a name="event-Ext.tree.TreePanel-beforeitemmousedown"></a>/**
+             * @event beforeitemmousedown
+             * Fires before the mousedown event on an item is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforeitemmousedown&#39;,
+            <a name="event-Ext.tree.TreePanel-beforeitemmouseup"></a>/**
+             * @event beforeitemmouseup
+             * Fires before the mouseup event on an item is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforeitemmouseup&#39;,
+            <a name="event-Ext.tree.TreePanel-beforeitemmouseenter"></a>/**
+             * @event beforeitemmouseenter
+             * Fires before the mouseenter event on an item is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforeitemmouseenter&#39;,
+            <a name="event-Ext.tree.TreePanel-beforeitemmouseleave"></a>/**
+             * @event beforeitemmouseleave
+             * Fires before the mouseleave event on an item is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforeitemmouseleave&#39;,
+            <a name="event-Ext.tree.TreePanel-beforeitemclick"></a>/**
+             * @event beforeitemclick
+             * Fires before the click event on an item is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforeitemclick&#39;,
+            <a name="event-Ext.tree.TreePanel-beforeitemdblclick"></a>/**
+             * @event beforeitemdblclick
+             * Fires before the dblclick event on an item is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforeitemdblclick&#39;,
+            <a name="event-Ext.tree.TreePanel-beforeitemcontextmenu"></a>/**
+             * @event beforeitemcontextmenu
+             * Fires before the contextmenu event on an item is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforeitemcontextmenu&#39;,            
+            <a name="event-Ext.tree.TreePanel-itemmousedown"></a>/**
+             * @event itemmousedown
+             * Fires when there is a mouse down on an item
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;itemmousedown&#39;,
+            <a name="event-Ext.tree.TreePanel-itemmouseup"></a>/**
+             * @event itemmouseup
+             * Fires when there is a mouse up on an item
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;itemmouseup&#39;,
+            <a name="event-Ext.tree.TreePanel-itemmouseenter"></a>/**
+             * @event itemmouseenter
+             * Fires when the mouse enters an item.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;itemmouseenter&#39;,
+            <a name="event-Ext.tree.TreePanel-itemmouseleave"></a>/**
+             * @event itemmouseleave
+             * Fires when the mouse leaves an item.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;itemmouseleave&#39;,
+            <a name="event-Ext.tree.TreePanel-itemclick"></a>/**
+             * @event itemclick
+             * Fires when an item is clicked.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;itemclick&#39;,
+            <a name="event-Ext.tree.TreePanel-itemdblclick"></a>/**
+             * @event itemdblclick
+             * Fires when an item is double clicked.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;itemdblclick&#39;,
+            <a name="event-Ext.tree.TreePanel-itemcontextmenu"></a>/**
+             * @event itemcontextmenu
+             * Fires when an item is right clicked.
+             * @param {Ext.DataView} this
+             * @param {Ext.data.Model} record The record that belongs to the item
+             * @param {HTMLElement} item The item&#39;s element
+             * @param {Number} index The item&#39;s index
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;itemcontextmenu&#39;,            
+            <a name="event-Ext.tree.TreePanel-beforecontainermousedown"></a>/**
+             * @event beforecontainermousedown
+             * Fires before the mousedown event on the container is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforecontainermousedown&#39;,
+            <a name="event-Ext.tree.TreePanel-beforecontainermouseup"></a>/**
+             * @event beforecontainermouseup
+             * Fires before the mouseup event on the container is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforecontainermouseup&#39;,
+            <a name="event-Ext.tree.TreePanel-beforecontainermouseover"></a>/**
+             * @event beforecontainermouseover
+             * Fires before the mouseover event on the container is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforecontainermouseover&#39;,
+            <a name="event-Ext.tree.TreePanel-beforecontainermouseout"></a>/**
+             * @event beforecontainermouseout
+             * Fires before the mouseout event on the container is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforecontainermouseout&#39;,
+            <a name="event-Ext.tree.TreePanel-beforecontainerclick"></a>/**
+             * @event beforecontainerclick
+             * Fires before the click event on the container is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforecontainerclick&#39;,
+            <a name="event-Ext.tree.TreePanel-beforecontainerdblclick"></a>/**
+             * @event beforecontainerdblclick
+             * Fires before the dblclick event on the container is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforecontainerdblclick&#39;,
+            <a name="event-Ext.tree.TreePanel-beforecontainercontextmenu"></a>/**
+             * @event beforecontainercontextmenu
+             * Fires before the contextmenu event on the container is processed. Returns false to cancel the default action.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;beforecontainercontextmenu&#39;,
+            <a name="event-Ext.tree.TreePanel-containermouseup"></a>/**
+             * @event containermouseup
+             * Fires when there is a mouse up on the container
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;containermouseup&#39;,
+            <a name="event-Ext.tree.TreePanel-containermouseover"></a>/**
+             * @event containermouseover
+             * Fires when you move the mouse over the container.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;containermouseover&#39;,
+            <a name="event-Ext.tree.TreePanel-containermouseout"></a>/**
+             * @event containermouseout
+             * Fires when you move the mouse out of the container.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;containermouseout&#39;,
+            <a name="event-Ext.tree.TreePanel-containerclick"></a>/**
+             * @event containerclick
+             * Fires when the container is clicked.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;containerclick&#39;,
+            <a name="event-Ext.tree.TreePanel-containerdblclick"></a>/**
+             * @event containerdblclick
+             * Fires when the container is double clicked.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;containerdblclick&#39;,
+            <a name="event-Ext.tree.TreePanel-containercontextmenu"></a>/**
+             * @event containercontextmenu
+             * Fires when the container is right clicked.
+             * @param {Ext.DataView} this
+             * @param {Ext.EventObject} e The raw event object
+             */
+            &#39;containercontextmenu&#39;,
+                      
+            <a name="event-Ext.tree.TreePanel-selectionchange"></a>/**
+             * @event selectionchange
+             * Fires when the selected nodes change. Relayed event from the underlying selection model.
+             * @param {Ext.DataView} this
+             * @param {Array} selections Array of the selected nodes
+             */
+            &#39;selectionchange&#39;,
+            <a name="event-Ext.tree.TreePanel-beforeselect"></a>/**
+             * @event beforeselect
+             * Fires before a selection is made. If any handlers return false, the selection is cancelled.
+             * @param {Ext.DataView} this
+             * @param {HTMLElement} node The node to be selected
+             * @param {Array} selections Array of currently selected nodes
+             */
+            &#39;beforeselect&#39;
+        ]);
+    },
+    
+    setRootNode: function() {
+        return this.store.setRootNode.apply(this.store, arguments);
+    },
+    
+    getRootNode: function() {
+        return this.store.getRootNode();
+    },
+    
+    onRootChange: function(store, root) {
+        this.view.setRootNode(root);
+    },
+    
+    <a name="method-Ext.tree.TreePanel-expandAll"></a>/**
+     * Expand all nodes
+     */
+    expandAll : function() {
+    },
+
+    <a name="method-Ext.tree.TreePanel-collapseAll"></a>/**
+     * Collapse all nodes
+     */
+    collapseAll : function() {
+    },
+
+    expandPath: function() {
+    },
+    
+    selectPath: function() {
+    }
+});￿</pre></pre></body></html>

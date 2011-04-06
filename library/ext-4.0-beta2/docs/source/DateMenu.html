@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.menu.DateMenu"></a>/**
+ * @class Ext.menu.DateMenu
+ * @extends Ext.menu.Menu
+ * &lt;p&gt;A menu containing an {@link Ext.picker.Date} Component.&lt;/p&gt;
+ * &lt;p&gt;Notes:&lt;/p&gt;&lt;div class=&quot;mdetail-params&quot;&gt;&lt;ul&gt;
+ * &lt;li&gt;Although not listed here, the &lt;b&gt;constructor&lt;/b&gt; for this class
+ * accepts all of the configuration options of &lt;b&gt;{@link Ext.picker.Date}&lt;/b&gt;.&lt;/li&gt;
+ * &lt;li&gt;If subclassing DateMenu, any configuration options for the DatePicker must be
+ * applied to the &lt;tt&gt;&lt;b&gt;initialConfig&lt;/b&gt;&lt;/tt&gt; property of the DateMenu.
+ * Applying {@link Ext.picker.Date DatePicker} configuration settings to
+ * &lt;b&gt;&lt;tt&gt;this&lt;/tt&gt;&lt;/b&gt; will &lt;b&gt;not&lt;/b&gt; affect the DatePicker&#39;s configuration.&lt;/li&gt;
+ * &lt;/ul&gt;&lt;/div&gt;
+ * @xtype datemenu
+ * @author Nicolas Ferrero
+ */
+ Ext.define(&#39;Ext.menu.DateMenu&#39;, {
+     extend: &#39;Ext.menu.Menu&#39;,
+     
+     alias: &#39;widget.datemenu&#39;,
+     
+     requires: [
+        &#39;Ext.picker.Date&#39;
+     ],
+     
+    <a name="cfg-Ext.menu.DateMenu-hideOnClick"></a>/** 
+     * @cfg {Boolean} hideOnClick
+     * False to continue showing the menu after a date is selected, defaults to true.
+     */
+    hideOnClick : true,
+    
+    <a name="cfg-Ext.menu.DateMenu-pickerId"></a>/** 
+     * @cfg {String} pickerId
+     * An id to assign to the underlying date picker. Defaults to &lt;tt&gt;null&lt;/tt&gt;.
+     */
+    pickerId : null,
+    
+    <a name="cfg-Ext.menu.DateMenu-maxHeight"></a>/** 
+     * @cfg {Number} maxHeight
+     * @hide 
+     */
+
+    <a name="prop-Ext.menu.DateMenu-picker"></a>/**
+     * The {@link Ext.picker.Date} instance for this DateMenu
+     * @property picker
+     * @type Ext.picker.Date
+     */
+    
+    <a name="event-Ext.menu.DateMenu-click"></a>/**
+     * @event click
+     * @hide
+     */
+    
+    <a name="event-Ext.menu.DateMenu-itemclick"></a>/**
+     * @event itemclick
+     * @hide
+     */
+
+    initComponent : function(){
+        var me = this;
+        
+        Ext.apply(me, {
+            showSeparator: false,
+            plain: true,
+            items: Ext.applyIf({
+                cls: Ext.baseCSSPrefix + &#39;menu-date-item&#39;,
+                id: me.pickerId,
+                xtype: &#39;datepicker&#39;
+            }, me.initialConfig)
+        });
+
+        me.callParent(arguments);
+        
+        me.picker = me.down(&#39;datepicker&#39;);
+        <a name="event-Ext.menu.DateMenu-select"></a>/**
+         * @event select
+         * Fires when a date is selected from the {@link #picker Ext.picker.Date}
+         * @param {Ext.picker.Date} picker The {@link #picker Ext.picker.Date}
+         * @param {Date} date The selected date
+         */
+        me.relayEvents(me.picker, [&#39;select&#39;]);
+        
+        if (me.hideOnClick) {
+            me.on(&#39;select&#39;, me.hidePickerOnSelect, me);
+        }
+    },
+    
+    hidePickerOnSelect: function() {
+        if (this.hideOnClick) {
+            this.hide();
+        }
+    }
+ });
+￿</pre></pre></body></html>

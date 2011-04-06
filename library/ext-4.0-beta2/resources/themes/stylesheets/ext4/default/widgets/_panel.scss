@@ -1,0 +1,284 @@
+/**
+  * @class Ext.Panel
+  * Used to create the base structure of an Ext.Panel
+  */
+@mixin extjs-panel {
+    .#{$prefix}panel {
+        overflow: hidden;
+        position: relative;
+        
+        border-color: $panel-border-color;
+    }
+    
+    @include x-frame(
+        $cls: 'panel',
+        $ui: 'framed',
+        
+        /* Radius, width, padding and background-color */
+        $border-radius: $panel-frame-border-radius, 
+        $border-width: $panel-frame-border-width, 
+        $padding: $panel-frame-padding, 
+        $background-color: $panel-frame-background-color
+    );
+
+    // Workaround for disappearing right edge in IE6
+     @if $include-ie {
+        .#{$prefix}ie6 {
+            .#{$prefix}panel-framed-mr,
+            .#{$prefix}panel-framed-br {
+                zoom: 1;
+            }
+        }
+    }
+    
+    .#{$prefix}panel-framed {
+        border-color: $panel-frame-border-color;
+        
+        @if $panel-header-inner-border {
+            @include inner-border(
+                $width: 1px, 
+                $color: $panel-header-inner-border-color
+            );
+        }
+    }
+            
+    //panel header
+    .#{$prefix}panel-header {
+        border-width: $panel-header-border-width;
+        border-style: $panel-header-border-style;
+        border-bottom-width: 0;
+        border-color: $panel-header-border-color;
+        padding: $panel-header-padding;
+
+        @if $supports-gradients or $compile-all {    
+            @include background-gradient($panel-header-background-color, $panel-header-background-gradient);
+            
+            @if $panel-header-inner-border {
+                @include inner-border(
+                    $width: $panel-header-inner-border-width, 
+                    $color: $panel-header-inner-border-color
+                );
+            }
+
+            .#{$prefix}box-layout-ct {
+                @include border-radius($panel-border-radius);
+            }
+        }
+    }
+    
+    @if not $supports-gradients or $compile-all {
+        .#{$prefix}nlg .#{$prefix}panel-header {
+            background-image: theme-image($theme-name, 'panel-header/panel-header-bg.gif');
+        }        
+    }
+    
+    .#{$prefix}panel-header-icon, .#{$prefix}window-header-icon {
+        width:16px;
+        height:16px;
+        background-repeat:no-repeat;
+        background-position:0 0;
+        vertical-align:middle;
+        margin-right:4px;
+        margin-top:-1px;
+        margin-bottom:-1px;
+    }
+
+    @include x-frame(
+        $cls: 'panel-header',
+        $ui: 'framed', 
+        $border-radius: top($panel-frame-border-radius) right($panel-frame-border-radius) 0 0, 
+        $border-width: $panel-frame-border-width,
+        $padding: $panel-header-padding,
+        $background-color: $panel-header-background-color, 
+        $background-gradient: $panel-header-background-gradient
+    );
+
+    .#{$prefix}panel-header.#{$prefix}panel-header-framed {
+        border-bottom-width: 1px !important;
+        
+        @if $panel-header-inner-border {
+            @include inner-border(
+                $width: 1px 1px 0, 
+                $color: $panel-header-inner-border-color
+            );
+        }
+    }
+
+    .#{$prefix}panel-header-draggable,
+    .#{$prefix}panel-header-draggable .#{$prefix}panel-header-text,
+    .#{$prefix}window-header-draggable,
+    .#{$prefix}window-header-draggable .#{$prefix}window-header-text{
+        cursor: move;
+    }
+
+    // A ghost is just a Panel. The only extra it needs is opacity.
+    .#{$prefix}panel-ghost, .#{$prefix}window-ghost {
+        @include opacity(0.65);
+        cursor: move;
+    }
+
+    .#{$prefix}webkit {
+        #{$prefix}panel-ghost > div.#{$prefix}panel-body, #{$prefix}panel-ghost > div.#{$prefix}window-body {
+            background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, from(white), color-stop(0.02, #E5ECF7), to(#B7CBE7));
+        }
+    }
+
+    @if $include-ff {
+        .#{$prefix}gecko {
+            .#{$prefix}panel-ghost > div.#{$prefix}panel-body, , #{$prefix}panel-ghost > div.#{$prefix}window-body {
+                background-image: -moz-linear-gradient(#FFFFFF, #E5ECF7 2%, #B7CBE7);
+            }
+        }
+    }
+
+    .#{$prefix}panel-header-horizontal, .#{$prefix}window-header-horizontal, .#{$prefix}btn-group-header-horizontal {
+        .#{$prefix}panel-header-body, .#{$prefix}window-header-body, .#{$prefix}btn-group-header-body {
+            width: 100%;
+        }
+    }
+
+    .#{$prefix}panel-header-vertical, .#{$prefix}window-header-vertical, .#{$prefix}btn-group-header-vertical {
+        .#{$prefix}panel-header-body, .#{$prefix}window-header-body, .#{$prefix}btn-group-header-body {
+            height: 100%;
+        }
+    }
+
+    // Vertical headers must be inline blocks so that they acquire width from the content 
+    .#{$prefix}panel-header-vertical, .#{$prefix}panel-header-vertical .#{$prefix}panel-header-body,
+    .#{$prefix}btn-group-header-vertical, .#{$prefix}btn-group-header-vertical .#{$prefix}btn-group-header-body,
+    .#{$prefix}window-header-vertical, .#{$prefix}window-header-vertical .#{$prefix}window-header-body {
+        display: -moz-inline-stack;
+        display: inline-block;
+    }
+
+    @if $include-ie {
+        // Hack to work round IE<8's inability to display inline-block.
+        // Panel and ButtonGroup vertical header widths are 22px.
+        .#{$prefix}ie6, .#{$prefix}ie7 {
+            .#{$prefix}panel-header-vertical, .#{$prefix}panel-header-vertical .#{$prefix}panel-header-body,
+            .#{$prefix}btn-group-header-vertical, .#{$prefix}btn-group-header-vertical .#{$prefix}btn-group-header-body {
+                width: 16px;
+                zoom: 1;
+            }
+        }
+    }
+
+    .#{$prefix}panel-header-text, .#{$prefix}window-header-text {
+        @include no-select;
+
+        white-space: nowrap;
+        color: $panel-header-color;
+        font-family: $panel-header-font-family;
+        font-size: $panel-header-font-size;
+        line-height: $panel-header-line-height;
+        font-weight: $panel-header-font-weight;
+    }
+
+    //panel body
+    .#{$prefix}panel-body {
+        overflow: hidden;
+        position: relative;
+        
+        background: $panel-body-background-color;
+        
+        border-color: $panel-body-border-color;
+        border-style: $panel-body-border-style;
+        border-width: $panel-body-border-width;
+        
+        color: $panel-body-color;
+    }
+
+    .#{$prefix}panel-body-framed {
+        background: $panel-frame-background-color;
+        border: none;
+    }
+
+    //panel with border:false specified
+    .#{$prefix}panel-noborder-docked-top,
+    .#{$prefix}panel-noborder-docked-bottom,
+    .#{$prefix}panel-noborder-docked-left,
+    .#{$prefix}panel-noborder-docked-right,
+    .#{$prefix}panel-noborder-body {
+        border-width: 0 !important;
+    }
+
+    /**
+      * Dock Layouts
+      * @todo move this somewhere else?
+      */
+    .#{$prefix}docked-top {
+        border-bottom-width: 0 !important;
+        
+        .#{$prefix}panel-wrap-child {
+            border-bottom-width: 0 !important;
+        }
+    }
+    
+    .#{$prefix}docked-bottom {
+        border-top-width: 0 !important;
+        
+        .#{$prefix}panel-wrap-child {
+            border-top-width: 0 !important;
+        }
+    }
+    
+    .#{$prefix}docked-left {
+        border-right-width: 0 !important;
+
+        .#{$prefix}panel-wrap-child {
+            border-right-width: 0 !important;
+        }
+    }
+    
+    .#{$prefix}docked-right {
+        border-left-width: 0 !important;
+
+        .#{$prefix}panel-wrap-child {
+            border-left-width: 0 !important;
+        }
+    }
+
+    // Needs important to win over the .#{$prefix}docked-left/right/top/bottom rules above.
+    .#{$prefix}panel-collapsed-placeholder {
+        border-width: 1px !important;
+    }
+
+    .#{$prefix}panel-collapsed {
+        .#{$prefix}window-header,
+        .#{$prefix}panel-header {
+            border-bottom: 1px solid;
+            border-color: $panel-body-border-color;
+        }
+        
+        .#{$prefix}panel-header-framed {
+            @include border-bottom-radius($panel-frame-border-radius);
+        }
+    }
+
+    .#{$prefix}panel-header-vertical {
+        @if $supports-gradients or $compile-all {
+            @include background-gradient($panel-base-color, 'matte', left);
+        }
+        border-color: $panel-body-border-color;
+        .#{$prefix}surface {
+            margin-top: 5px;
+        }
+    }
+    
+    .#{$prefix}panel-collapsed {
+        .#{$prefix}panel-header-top { border-bottom-width: 1px !important; }
+        .#{$prefix}panel-header-bottom { border-top-width: 1px !important; }
+        .#{$prefix}panel-header-left { border-right-width: 1px !important; }
+        .#{$prefix}panel-header-right { border-left-width: 1px !important; }
+    }
+
+    @if not $supports-gradients or $compile-all {
+        .#{$prefix}nlg .#{$prefix}panel-header-vertical {
+            background-image: theme-image($theme-name, 'panel-header/panel-header-vertical-bg.gif');
+        }    
+    }
+
+    .#{$prefix}region-collapsed-placeholder {
+        border-width: 1px;
+    }
+}
