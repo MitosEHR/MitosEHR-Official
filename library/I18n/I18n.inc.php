@@ -5,13 +5,10 @@
  * Author: Gino Rivera Falú
  */
 
-// Include the Database Helper, if is not loaded previuosly
-include_once('../dbHelper/dbHelper.inc.php');
-
 // The master function
 function i18n($word, $ret_mode="e"){
 	
-	$trans = new dbHelper();
+	//$trans = new dbHelper();
 	
 	if ($ret_mode == "e"){
 		echo $word;
