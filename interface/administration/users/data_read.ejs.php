@@ -12,13 +12,12 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once("library/dbHelper/dbHelper.inc.php");
-include_once("library/I18n/I18n.inc.php");
-require_once("repository/dataExchange/dataExchange.inc.php");
-
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
-$z = "abcdefghijuklmno0123456789012345"; // 256-bit key
-$aes = new AES($z);
+
+$mitos_db = new dbHelper();
 
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
@@ -27,10 +26,9 @@ $sql = "SELECT * FROM users WHERE users.authorized = 1 OR users.username != ''
         ORDER BY username LIMIT ".$start.",".$count;
 
 // Total of rows in database
-$total = mysql_query("SELECT COUNT(id) FROM users");
-$total = mysql_result($total, 0);
+$total = $mitos_db->rowCount("SELECT COUNT(id) FROM users");
 
-foreach (sqlStatement($sql) as $urow) {
+foreach ($mitos_db->setSQL($sql) as $urow) {
   // returns "Yes" or "NO" for main grid		
   $rec['authorizedd']= ($urow['authorized'] == '1' ? 'Yes' : 'No');
   $rec['actived'] 	 = ($urow['active'] 	== '1' ? 'Yes' : 'No');
