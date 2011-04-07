@@ -8,8 +8,11 @@
 //--------------------------------------------------------------------------------------------------------------------------
 session_name ( "MitosEHR" );
 session_start();
-include_once("library/dbHelper/dbHelper.inc.php");
-require_once("repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
+$mitos_db = new dbHelper();
+
 // Count records variable
 $count = 0;
 // *************************************************************************************
@@ -33,7 +36,7 @@ $sql = "SELECT acl_roles.id AS roleID,
   		 WHERE acl_roles.id = '$currRole'
   		 ORDER BY role_name DESC";
 	$buff = "";
-	foreach (sqlStatement($sql) as $urow) {
+	foreach ($mitos_db->setSQL($sql) as $urow) {
 		$count++;
 		$buff .= "{";
 		$buff .= " roleID: '" . $urow['roleID'] . "',";
