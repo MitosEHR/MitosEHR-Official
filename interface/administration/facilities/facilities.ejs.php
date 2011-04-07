@@ -25,7 +25,6 @@ Ext.require([
 
 Ext.onReady(function(){
 
-Ext.Msg.alert('Status', 'Changes saved successfully.');
 var topRenderPanel = Ext.create('Ext.Panel', {
 	title: '<?php i18n('Facilities'); ?>',
 	renderTo: Ext.getCmp('MainApp').body,
