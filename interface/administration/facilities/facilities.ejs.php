@@ -19,9 +19,7 @@ $_SESSION['site']['flops'] = 0;
 
 ?>
 <script type="text/javascript">
-Ext.require([
-    '*'
-]);
+Ext.require([ '*' ]);
 
 Ext.onReady(function(){
 

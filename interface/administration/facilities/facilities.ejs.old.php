@@ -36,8 +36,6 @@ var cmbPOSCode;
 //******************************************************************************
 if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
 
-sadsads
-
 // *************************************************************************************
 // Structure and load the data for Messages
 // AJAX -> data_*.ejs.php
