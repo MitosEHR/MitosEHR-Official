@@ -1,5 +1,5 @@
 <?php
-if(!defined('_MitosEXEC')) die('No direct access allowed.');
+//if(!defined('_MitosEXEC')) die('No direct access allowed.');
 
 /* Dashboard Application
 *
@@ -13,6 +13,8 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 
 // Reset session count
 $_SESSION['site']['flops'] = 0;
+
+include_once('../../library/I18n/I18n.inc.php');
 
 ?>
 

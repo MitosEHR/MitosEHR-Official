@@ -13,6 +13,8 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 // Reset session count
 $_SESSION['site']['flops'] = 0;
 
+include_once('library/compressor/compressor.inc.php');
+
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -71,7 +73,7 @@ var Navigation = new Ext.tree.TreePanel({
 	hideHeaders: true,
 	useArrows: true,
 	//rootVisible: false,
-	viewConfig: { plugins: [{ ptype: 'treeviewdd' }] },
+	//viewConfig: { plugins: [{ ptype: 'treeviewdd' }] },
 	width: 200,
 	collapsible: true,
 	store: storeTree,
@@ -83,6 +85,16 @@ var Navigation = new Ext.tree.TreePanel({
 		draggable: false,
 		id: 'source'
 	}
+});
+
+// *************************************************************************************
+// Assign the changeLayout function to be called on tree node click.
+// *************************************************************************************
+Navigation.on('itemclick', function(dv, record, item, index, n){
+	//----------------------------------------------------------------------
+	// Loads the screen on the top panel
+	//----------------------------------------------------------------------
+	MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.id, scripts: true});
 });
 
 //****************************************************************
@@ -176,7 +188,8 @@ var MainApp = Ext.create('Ext.Panel', {
 	waitTitle		:'Connecting', 
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
-	html			: 'In Progress...'
+	html			: 'In Progress...',
+	autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true}
 }); // End MainApp
 
 //****************************************************************
@@ -212,8 +225,6 @@ Ext.create('Ext.Viewport', {
 	defaults: { split: true },
 	items: [ Header, Navigation, TopPanel ]
 }); // End ViewPort
-
-MainApp.update({url: 'interface/dashboard/dashboard.ejs.php', scripts: true});
 
 }); // End App
 
