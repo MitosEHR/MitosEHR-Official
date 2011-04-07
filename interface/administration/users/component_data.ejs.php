@@ -12,9 +12,10 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once("library/dbHelper/dbHelper.inc.php");
-include_once("library/I18n/I18n.inc.php");
-require_once("repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
+$mitos_db = new dbHelper();
 
 // Count records variable
 $count = 0;
@@ -28,7 +29,7 @@ switch ($_GET['task']) {
 	case "titles":
 	    $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'titles' ";
 	  
-	  foreach (sqlStatement($sql) as $urow) {
+	  foreach ($mitos_db->setSQL($sql) as $urow) {
 	    $count++;
 	    $buff .= "{";
 	    $buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";
@@ -36,7 +37,7 @@ switch ($_GET['task']) {
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
 	  echo $_GET['callback'] . '({';
-	  echo "results: " . $count . ", " . chr(13);
+	  echo "totals: " . $count . ", " . chr(13);
 	  echo "row: [" . chr(13);
 	  echo $buff;
 	  echo "]})" . chr(13);   
@@ -47,7 +48,7 @@ switch ($_GET['task']) {
 	case "types":
 	  $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'abook_type' ";
 	  
-	  foreach (sqlStatement($sql) as $urow) {
+	  foreach ($mitos_db->setSQL($sql) as $urow) {
 	    $count++;
 	    $buff .= "{";
 	    $buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";
@@ -55,7 +56,7 @@ switch ($_GET['task']) {
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
 	  echo $_GET['callback'] . '({';
-	  echo "results: " . $count . ", " . chr(13);
+	  echo "totals: " . $count . ", " . chr(13);
 	  echo "row: [" . chr(13);
 	  echo $buff;
 	  echo "]})" . chr(13);   
@@ -66,7 +67,7 @@ switch ($_GET['task']) {
 	case "facilities":
 	  $sql = "SELECT * FROM facility WHERE service_location != 0 ORDER BY name";
 	  
-	  foreach (sqlStatement($sql) as $urow) {
+	  foreach ($mitos_db->setSQL($sql) as $urow) {
 	    $count++;
 	    $buff .= "{";
 	    $buff .= " id: '" . dataEncode( $urow['id'] ) . "',";
@@ -93,7 +94,7 @@ switch ($_GET['task']) {
 	case "accessControls":
 	  $sql = "SELECT id, value, name FROM gacl_aco_sections ORDER BY name";
 	  
-	  foreach (sqlStatement($sql) as $urow) {
+	  foreach ($mitos_db->setSQL($sql) as $urow) {
 	    $count++;
 	    $buff .= "{";
 	    $buff .= " id: '" . dataEncode( $urow['id'] ) . "',";

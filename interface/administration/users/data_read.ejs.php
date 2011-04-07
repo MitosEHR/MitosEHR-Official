@@ -16,7 +16,6 @@ include_once("../../../library/dbHelper/dbHelper.inc.php");
 include_once("../../../library/I18n/I18n.inc.php");
 require_once("../../../repository/dataExchange/dataExchange.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
-
 $mitos_db = new dbHelper();
 
 // Setting defults incase no request is sent by sencha
