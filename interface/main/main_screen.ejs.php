@@ -13,6 +13,8 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 // Reset session count
 $_SESSION['site']['flops'] = 0;
 
+include_once('library/compressor/compressor.inc.php');
+
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -92,7 +94,7 @@ Navigation.on('itemclick', function(dv, record, item, index, n){
 	//----------------------------------------------------------------------
 	// Loads the screen on the top panel
 	//----------------------------------------------------------------------
-	Ext.get('MainApp').load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.id, scripts: true});
+	MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.id, scripts: true});
 });
 
 //****************************************************************
