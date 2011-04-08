@@ -296,7 +296,7 @@ var prvMsg = new Ext.Panel({
 var winMessage = new  Ext.Window({
 	width		: 640,
 	autoHeight	: true,
-	modal		: true,
+	//modal		: true,
 	resizable	: false,
 	autoScroll	: true,
 	id			: 'winMessage',
@@ -487,49 +487,49 @@ var msgGrid = new Ext.grid.GridPanel({
 	loadMask    : true,
 	viewConfig 	: {forceFit: true, stripeRows : true},
 	//sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
-//		listeners: {
+		listeners: {
 	
 		// Single click to select the record, and copy the variables
-//			rowclick: function(msgGrid, rowIndex, e) {
+			rowclick: function(msgGrid, rowIndex, e) {
 		
 			//Copy the selected message ID into the variable
-//				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
+				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 			
 			// Copy the BODY Message into the form
 			// document.getElementById('msgGrid').innerHTML = rowContent.get('body');     << ------ REMOVED ASK GINO!!!!!!!
 				
 			// Enable buttons
-//				msgGrid.editMsg.enable();
-//				msgGrid.delMsg.enable();
-//			},
+				msgGrid.editMsg.enable();
+				msgGrid.delMsg.enable();
+			},
 
 		// Double click to select the record, and edit the record
-//			rowdblclick:  function(msgGrid, rowIndex, e) {
+			rowdblclick:  function(msgGrid, rowIndex, e) {
 				
 			//Copy the selected message ID into the variable
-//				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
+				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 				
 			// Copy the BODY Message into the form
-//				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
+				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
 				
 			// Copy all the fields into the form
-//				winMessage.patient_name.setText(rowContent.get('patient'));
-//				winMessage.cmb_assigned_to.setValue(rowContent.get('user'));
-//				winMessage.reply_to.setValue(rowContent.get('user'));
-//				winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
-//				winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
-//				winMessage.subject.setValue(rowContent.get('subject'));
-//				winMessage.noteid.setValue(rowContent.get('noteid'));
-//				winMessage.note.setValue("");
+				winMessage.patient_name.setText(rowContent.get('patient'));
+				winMessage.cmb_assigned_to.setValue(rowContent.get('user'));
+				winMessage.reply_to.setValue(rowContent.get('user'));
+				winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
+				winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
+				winMessage.subject.setValue(rowContent.get('subject'));
+				winMessage.noteid.setValue(rowContent.get('noteid'));
+				winMessage.note.setValue("");
 				
 			// Set the buttons state
-//				winMessage.cmb_assigned_to.readOnly = true;
-//				winMessage.patient_name.disable();
-//				winMessage.send.enable();
+				winMessage.cmb_assigned_to.readOnly = true;
+				winMessage.patient_name.disable();
+				winMessage.send.enable();
 				
-//				winMessage.show();
-//			}
-//		},
+				winMessage.show();
+			}
+		},
 	columns: [
 		{ header: 'noteid', sortable: false, dataIndex: 'noteid', hidden: true},
 		{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
@@ -558,17 +558,17 @@ var msgGrid = new Ext.grid.GridPanel({
 		
 			// Copy the BODY Message into the form
 			document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>';
-			winMessage.patient_name.setText('<?php i18n('Click to select patient'); ?>');
-			winMessage.noteid.setValue(null);
-			winMessage.cmb_assigned_to.readOnly = false;
-			winMessage.cmb_assigned_to.setValue(null);
-			winMessage.cmb_form_note_type.setValue('Unassigned');
-			winMessage.cmb_form_message_status.setValue('New');
-			winMessage.reply_id.setValue(null);
+			//winMessage.patient_name.setText('<?php i18n('Click to select patient'); ?>');
+			//winMessage.noteid.setValue(null);
+			//winMessage.cmb_assigned_to.readOnly = false;
+			//winMessage.cmb_assigned_to.setValue(null);
+			//winMessage.cmb_form_note_type.setValue('Unassigned');
+			//winMessage.cmb_form_message_status.setValue('New');
+			//winMessage.reply_id.setValue(null);
 
 			// Set the buttons state
-			winMessage.patient_name.enable();
-			winMessage.send.disable();
+			//winMessage.patient_name.enable();
+			//winMessage.send.disable();
 			
 			winMessage.show();
 		}
