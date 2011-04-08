@@ -12,9 +12,9 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once("../../library/dbHelper/dbHelper.inc.php");
-include_once("../../library/I18n/I18n.inc.php");
-require_once("../../repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
 ?>
 
@@ -24,7 +24,7 @@ require_once("../../repository/dataExchange/dataExchange.inc.php");
 // Start Sencha Framework
 // *************************************************************************************
 Ext.onReady(function() {
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/themes/images/default/tree/loading.gif';
+Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/images/default/s.gif';
 
 //******************************************************************************
 // Sanitizing Objects
@@ -55,8 +55,7 @@ body_content = '<?php i18n('Nothing posted yet...'); ?>';
 // This should be the structure of the database table
 // 
 // *************************************************************************************
-
-Ext.regModel('Messages', { fields: [
+var MessageRecord = Ext.data.Record.create([
 	{name: 'noteid',	type: 'int',	   mapping: 'noteid'},
 	{name: 'user',		type: 'string',  mapping: 'user'},
 	{name: 'subject',   type: 'string',  mapping: 'subject'},
@@ -68,122 +67,126 @@ Ext.regModel('Messages', { fields: [
 	{name: 'status',   	type: 'string',  mapping: 'status'},
 	{name: 'reply_id',  type: 'int',     mapping: 'reply_id'},
 	{name: 'reply_to',	type: 'int',	   mapping: 'reply_to'}
-]});
+]);
 
 // *************************************************************************************
 // Structure and load the data for Messages
 // AJAX -> data_*.ejs.php
 // *************************************************************************************
-var storeMsgs = new Ext.data.Store({
-    model		: 'Messages',
-    proxy		: new Ext.data.AjaxProxy({
-        type	: 'rest',
-        url 	: '../../../interface/messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
-        reader: {
-            type	: 'json',
-            idProperty: 'noteid',
-			totalProperty: 'results',
-			root: 'row'
-        }
-    }),
-    autoLoad: true
+var storeMsgs = new Ext.data.GroupingStore({
+	autoSave	: false,
+
+	// HttpProxy will only allow requests on the same domain.
+	proxy : new Ext.data.HttpProxy({
+		method		: 'POST',
+		api: {
+			read	: '../messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
+			create	: '../messages/data_create.ejs.php',
+			update	: '../messages/data_update.ejs.php',
+			destroy : '../messages/data_destroy.ejs.php'
+		}
+	}),
+
+	// JSON Writer options
+	writer: new Ext.data.JsonWriter({
+		returnJson		: true,
+		writeAllFields	: true,
+		listful			: true,
+		writeAllFields	: true
+	}, MessageRecord),
+
+	// JSON Reader options
+	reader: new Ext.data.JsonReader({
+		idProperty: 'noteid',
+		totalProperty: 'results',
+		root: 'row'
+	}, MessageRecord ),
+	
+	groupField:'subject'
+
+	
 });
+storeMsgs.load();
 
 // *************************************************************************************
 // Structure and load the data for cmb_toUsers
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Patients', { fields: [
-	{name: 'id',    type: 'int'},
-	{name: 'name',  type: 'string'},
-	{name: 'phone', type: 'string'},
-	{name: 'ss',    type: 'string'},
-	{name: 'dob',   type: 'string'},
-	{name: 'pid',   type: 'string'}
-]});
 var storePat = new Ext.data.Store({
-	model		: 'Patients',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=patients'
-		reader	: {
-			type			: 'json',
-			idProperty		: 'id',
-			totalProperty	: 'totals',
-			root			: 'row'
-		}
+	proxy: new Ext.data.ScriptTagProxy({
+		url: 'interface/messages/component_data.ejs.php?task=patients'
 	}),
-	autoLoad: true
-}); // End storePat
+	reader: new Ext.data.JsonReader({
+		idProperty: 'id',
+		totalProperty: 'results',
+		root: 'row'
+	},[
+		{name: 'id',    type: 'int',    mapping: 'id'},
+		{name: 'name',  type: 'string', mapping: 'name'},
+		{name: 'phone', type: 'string', mapping: 'phone'},
+		{name: 'ss',    type: 'string', mapping: 'ss'},
+		{name: 'dob',   type: 'string', mapping: 'dob'},
+		{name: 'pid',   type: 'string', mapping: 'pid'}
+	])
+});
+storePat.load();
 
 // *************************************************************************************
 // Structure and load the data for cmb_toUsers
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('User', { fields: [
-	{name: 'user',      type: 'string', mapping: 'user'},
-	{name: 'full_name', type: 'string', mapping: 'full_name'}
-]});
 var toData = new Ext.data.Store({
-	model		: 'User',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=users'
-		reader	: {
-			type			: 'json',
-			idProperty		: 'user',
-			totalProperty	: 'totals',
-			root			: 'row'
-		}
+	proxy: new Ext.data.ScriptTagProxy({
+		url: 'interface/messages/component_data.ejs.php?task=users'
 	}),
-	autoLoad: true
-}); // End toData
+	reader: new Ext.data.JsonReader({
+		idProperty: 'user',
+		totalProperty: 'results',
+		root: 'row'
+	},[
+		{name: 'user',      type: 'string', mapping: 'user'},
+		{name: 'full_name', type: 'string', mapping: 'full_name'}
+	])
+});
+toData.load();
 
 // *************************************************************************************
 // Structure, data for cmb_Type
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Types', { fields: [
-	{name: 'option_id', type: 'string', mapping: 'option_id'},
-	{name: 'title',     type: 'string', mapping: 'title'}
-]});
 var typeData = new Ext.data.Store({
-	model		: 'Types',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=types'
-		reader	: {
-			type			: 'json',
-			idProperty		: 'option_id',
-			totalProperty	: 'totals',
-			root			: 'row'
-		}
+	proxy: new Ext.data.ScriptTagProxy({
+		url: 'interface/messages/component_data.ejs.php?task=types'
 	}),
-	autoLoad: true
-}); // End typeData
+	reader: new Ext.data.JsonReader({
+		idProperty: 'option_id',
+		totalProperty: 'results',
+		root: 'row'
+	},[
+		{name: 'option_id', type: 'string', mapping: 'option_id'},
+		{name: 'title',     type: 'string', mapping: 'title'}
+	])
+});
+typeData.load();
 
 // *************************************************************************************
 // Structure, data for cmb_Status
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Status', { fields: [
-	{name: 'option_id', type: 'string', mapping: 'option_id'},
-	{name: 'title',     type: 'string', mapping: 'title'}
-]});
 var statusData = new Ext.data.Store({
-	model		: 'Status',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=status'
-		reader	: {
-			type			: 'json',
-			idProperty		: 'option_id',
-			totalProperty	: 'totals',
-			root			: 'row'
-		}
+	proxy: new Ext.data.ScriptTagProxy({
+		url: 'interface/messages/component_data.ejs.php?task=status'
 	}),
-	autoLoad: true
-}); // End statusData
-
-
-
-
+	reader: new Ext.data.JsonReader({
+		idProperty: 'option_id',
+		totalProperty: 'results',
+		root: 'row'
+	},[
+		{name: 'option_id', type: 'string', mapping: 'option_id'},
+		{name: 'title',     type: 'string', mapping: 'title'}
+	])
+});
+statusData.load();
 
 // *************************************************************************************
 // Patient Select Dialog
@@ -202,9 +205,9 @@ var winPatients = new  Ext.Window({
 			name		    : 'gridPatients',
 			autoHeight	: true,
 			store		    : storePat,
-			//stripeRows	: true,
+			stripeRows	: true,
 			frame		    : false,
-			viewConfig	: {forceFit: true, stripeRows: true,}, // force the grid to the width of the containing panel
+			viewConfig	: {forceFit: true}, // force the grid to the width of the containing panel
 			sm			    : new Ext.grid.RowSelectionModel({singleSelect:true}),
 			listeners: {
 				
@@ -483,7 +486,7 @@ var msgGrid = new Ext.grid.GridPanel({
  		border     : false,       
  		frame		   : false,
 		viewConfig : {forceFit: true}, // force the grid to the width of the containing panel
-		//sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
+		sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
 		listeners: {
 		
 			// Single click to select the record, and copy the variables
@@ -643,31 +646,19 @@ var msgGrid = new Ext.grid.GridPanel({
 		})]			
 	}); // END GRID
 
-//******************************************************************************
-// Render panel
-//******************************************************************************
-var botRenderPanel = Ext.create('Ext.Panel', {
-	title		: '<?php i18n('Messages'); ?>',
-	renderTo	: Ext.getCmp('BottomPannel').body,
-  	frame 		: false,
-	border 		: false,
-	id			: 'botRenderPanel',
-	loadMask    : true,
-	items		: [msgGrid]
-});
 
-//var RenderPanel = new Ext.Panel({
-//  border  : false,
-//  stateful: true,
-//  monitorResize: true,
-//  autoWidth: true,
-//  id: 'RenderPanel',
-//  renderTo: Ext.getCmp('BottomPanel').body,
-//  viewConfig:{forceFit:true},
-//  items: [ 
-//    msgGrid
-//  ]
-//});
+var RenderPanel = new Ext.Panel({
+  border  : false,
+  stateful: true,
+  monitorResize: true,
+  autoWidth: true,
+  id: 'RenderPanel',
+  renderTo: Ext.getCmp('BottomPanel').body,
+  viewConfig:{forceFit:true},
+  items: [ 
+    msgGrid
+  ]
+});
 
 }); // END EXTJS
 

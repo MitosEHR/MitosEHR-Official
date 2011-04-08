@@ -17,7 +17,7 @@ $buff = "[" . chr(13);
 // Dashboard
 // -------------------------------------
 $buff .= '{ "text":"' . i18n('Dashboard', 'r') . '", "leaf":true, "cls":"file", "id":"dashboard/dashboard.ejs.php"},' . chr(13);
-
+$buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "id":"messages/messages.ejs.php"},' . chr(13);
 // -------------------------------------
 // Administration
 // -------------------------------------

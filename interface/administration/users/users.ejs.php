@@ -22,6 +22,7 @@ $_SESSION['site']['flops'] = 0;
 Ext.require([ '*' ]);
 
 Ext.onReady(function(){
+Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/themes/images/default/tree/loading.gif';
 
 // *************************************************************************************
 // Users Model
@@ -73,18 +74,17 @@ Ext.regModel('users', { fields: [
 // User Store
 //******************************************************************************
 var storeUsers = new Ext.data.Store({
-    model: 'users',
-    proxy: {
-        type: 'rest',
-        url : '../../../interface/administration/users/data_read.ejs.php',
+    model		: 'users',
+    proxy		: new Ext.data.AjaxProxy({
+        type	: 'rest',
+        url 	: '../../../interface/administration/users/data_read.ejs.php',
         reader: {
-            type: 'json',
-            root: 'users'
+            type	: 'json',
+            root	: 'users'
         }
-    }
+    }),
+    autoLoad: true
 });
-
-storeUsers.load();
 
 // *************************************************************************************
 // Structure, data for Titles
@@ -95,14 +95,14 @@ Ext.regModel('Titles', { fields: [
     {name: 'title', type: 'string'}
 ]});
 var storeTitles = new Ext.data.Store({
-	model: 'Titles',
-	proxy: new Ext.data.AjaxProxy({
-		url: '../../../interface/administration/users/component_data.ejs.php?task=titles',
-		reader: {
-			type: 'json',
-			idProperty: 'option_id',
-			totalProperty: 'totals',
-			root: 'row'
+	model		: 'Titles',
+	proxy		: new Ext.data.AjaxProxy({
+		url		: '../../../interface/administration/users/component_data.ejs.php?task=titles',
+		reader	: {
+			type			: 'json',
+			idProperty		: 'option_id',
+			totalProperty	: 'totals',
+			root			: 'row'
 		}
 	}),
 	autoLoad: true
@@ -117,14 +117,14 @@ Ext.regModel('Types', { fields: [
     {name: 'title', type: 'string'}
 ]});
 var storeTypes = new Ext.data.Store({
-	model: 'Types',
-	proxy: new Ext.data.AjaxProxy({
-		url: '../../../interface/administration/users/component_data.ejs.php?task=types',
-		reader: {
-			type: 'json',
-			idProperty: 'option_id',
-			totalProperty: 'totals',
-			root: 'row'
+	model		: 'Types',
+	proxy		: new Ext.data.AjaxProxy({
+		url		: '../../../interface/administration/users/component_data.ejs.php?task=types',
+		reader	: {
+			type			: 'json',
+			idProperty		: 'option_id',
+			totalProperty	: 'totals',
+			root			: 'row'
 		}
 	}),
 	autoLoad: true
@@ -139,14 +139,14 @@ Ext.regModel('Facilities', { fields: [
     {name: 'names', type: 'string'}
 ]});
 var storeFacilities = new Ext.data.Store({
-	model: 'Facilities',
-	proxy: new Ext.data.AjaxProxy({
-		url: '../../../interface/administration/users/component_data.ejs.php?task=facilities',
-		reader: {
-			type: 'json',
-			idProperty: 'id',
-			totalProperty: 'totals',
-			root: 'row'
+	model		: 'Facilities',
+	proxy		: new Ext.data.AjaxProxy({
+		url		: '../../../interface/administration/users/component_data.ejs.php?task=facilities',
+		reader	: {
+			type			: 'json',
+			idProperty		: 'id',
+			totalProperty	: 'totals',
+			root			: 'row'
 		}
 	}),
 	autoLoad: true
@@ -161,14 +161,14 @@ Ext.regModel('AccessControls', { fields: [
     {name: 'names', type: 'string'}
 ]});
 var storeAccessControls = new Ext.data.Store({
-	model: 'AccessControls',
-	proxy: new Ext.data.AjaxProxy({
-		url: '../../../interface/administration/users/component_data.ejs.php?task=accessControls',
-		reader: {
-			type: 'json',
-			idProperty: 'id',
-			totalProperty: 'totals',
-			root: 'row'
+	model		: 'AccessControls',
+	proxy		: new Ext.data.AjaxProxy({
+		url		: '../../../interface/administration/users/component_data.ejs.php?task=accessControls',
+		reader	: {
+			type			: 'json',
+			idProperty		: 'id',
+			totalProperty	: 'totals',
+			root			: 'row'
 		}
 	}),
 	autoLoad: true
@@ -345,12 +345,10 @@ var addressbookGrid = new Ext.grid.GridPanel({
 
   id          : 'addressbookGrid',
   store       : storeUsers,
-  //stripeRows  : true,
   autoHeight  : true,
   border      : false,    
   frame       : false,
   loadMask    : true,
-  //autoScroll  : true,
   viewConfig  : {forceFit: true, stripeRows: true},
   //sm          : new Ext.grid.RowSelectionModel({singleSelect:true}),
     listeners: {
@@ -431,12 +429,13 @@ var addressbookGrid = new Ext.grid.GridPanel({
 // Render panel
 //******************************************************************************
 var topRenderPanel = Ext.create('Ext.Panel', {
-	title: '<?php i18n('Users'); ?>',
-	renderTo: Ext.getCmp('MainApp').body,
-  	frame : false,
-	border : false,
-	id: 'topRenderPanel',
-	items: [addressbookGrid]
+	title		: '<?php i18n('Users'); ?>',
+	renderTo	: Ext.getCmp('MainApp').body,
+  	frame 		: false,
+	border 		: false,
+	id			: 'topRenderPanel',
+	loadMask    : true,
+	items		: [addressbookGrid]
 });
 
 }); // End ExtJS

@@ -8,8 +8,8 @@
 //--------------------------------------------------------------------------------------------------------------------------
 session_name ( "MitosEHR" );
 session_start();
-include_once("library/dbHelper/dbHelper.inc.php");
-include_once("library/acl/class.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/acl/class.inc.php");
 // Count records variable
 $count = 0;
 // *************************************************************************************

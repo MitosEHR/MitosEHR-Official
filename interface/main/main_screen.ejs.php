@@ -166,12 +166,16 @@ var Header = Ext.create('Ext.Panel', {
 var BottomPanel = Ext.create('Ext.Panel', {
 	region		: 'south',
 	id			: 'BottomPannel',
-	height		: 200,
+	height		: 300,
 	split		: true,
 	collapsible	: true,
 	title		: '...',
 	margins		: '0 0 0 0',
 	bodyPadding	: 0,
+	waitMsg			: '<?php i18n("Loading"); ?>',
+	waitMsgTarget	: true,
+	html			: 'In Progress...',
+	autoLoad		: {url: 'interface/messages/messages.ejs.php', scripts: true}
 }); // End Bottom Panel
 
 //****************************************************************
