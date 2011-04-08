@@ -10,7 +10,7 @@
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 
-include_once("library/I18n/I18n.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -49,7 +49,7 @@ var storeFacilities = new Ext.data.Store({
 			read   : 'POST',
 			update : 'POST',
 			destroy: 'POST'
-		}
+		},
 		reader: {
 			type: 'json',
 			idProperty: 'site_id',
@@ -159,7 +159,7 @@ var frmFacility = new Ext.FormPanel({
 			{ xtype: 'textfield', maxLength: 65, minLengthText: '<?php i18n('Must contain at least 10 characters.'); ?>', minLength: 10, id: 'attn', name: 'attn', fieldLabel: '<?php i18n('Billing Attn'); ?>' },
 			{ xtype: 'textfield', maxLength: 60, minLengthText: '<?php i18n('Must contain at least 5 characters.'); ?>', minLength: 5, id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php i18n('CLIA Number'); ?>' }
 		]}
-	],
+	]},
 	
 	// Window Bottom Bar
 	bbar:[{
@@ -198,7 +198,7 @@ var frmFacility = new Ext.FormPanel({
 			winFacility.hide(); // Finally hide the dialog window
 		}
 	},{
-		text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
+		text:'<?php i18n('Close'); ?>',
 		iconCls: 'delete',
 		handler: function(){ winFacility.hide(); }
 	}]
@@ -279,7 +279,7 @@ var facilitiesGrid = new Ext.grid.GridPanel({
 	tbar: [{
 		xtype	:'button',
 		id		: 'addFacility',
-		text	: '<?php xl("Add facility", 'e'); ?>',
+		text	: '<?php i18n('Add facility'); ?>',
 		iconCls	: 'facilities',
 		handler: function(){
 			Ext.getCmp('frmFacility').getForm().reset(); // Clear the form

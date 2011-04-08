@@ -23,6 +23,15 @@ Ext.require([ '*' ]);
 
 Ext.onReady(function(){
 
+//******************************************************************************
+// Sanitizing Objects
+// Destroy them, if already exists in the browser memory.
+// This destructions must be called for all the objects that
+// are rendered on the document.body 
+//******************************************************************************
+if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
+
+
 var topRenderPanel = Ext.create('Ext.Panel', {
 	title: '<?php i18n('Facilities'); ?>',
 	renderTo: Ext.getCmp('MainApp').body,
