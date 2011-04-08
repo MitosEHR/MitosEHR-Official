@@ -31,23 +31,24 @@ session_start();
 include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
-
+$mitos_db = new dbHelper();
 // OpenEMR
-require_once("../../library/pnotes.inc.php");
-require_once("../../library/patient.inc.php");
-require_once("../../library/acl.inc.php");
-require_once("../../library/log.inc.php");
-require_once("../../library/options.inc.php");
-require_once("../../library/formdata.inc.php");
-require_once("../../library/classes/Document.class.php");
-require_once("../../library/gprelations.inc.php");
-require_once("../../library/formatting.inc.php");
+//require_once("../../library/pnotes.inc.php");
+//require_once("../../library/patient.inc.php");
+//require_once("../../library/acl.inc.php");
+//require_once("../../library/log.inc.php");
+//require_once("../../library/options.inc.php");
+//require_once("../../library/formdata.inc.php");
+//require_once("../../library/classes/Document.class.php");
+//require_once("../../library/gprelations.inc.php");
+//require_once("../../library/formatting.inc.php");
 
 
 
 // Count records variable
 $count = 0;
-
+$start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
+$count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 $sql = "SELECT
 			pnotes.id,
 			pnotes.user,
@@ -67,10 +68,14 @@ $sql = "SELECT
         WHERE
 			pnotes.message_status != 'Done' AND
 			pnotes.deleted != '1' AND
-			pnotes.assigned_to LIKE ?";
-$result = sqlStatement($sql, array($_GET['show']) );
+			pnotes.assigned_to LIKE ? 
+		LIMIT ".$start.",".$count;
+$total = $mitos_db->rowCount($sql);
 
-while ($myrow = sqlFetchArray($result)) {
+$result = $mitos_db->setSQL($sql, array($_GET['show']) );
+
+foreach ($mitos_db->setSQL($sql) as $myrow) {
+	
 	$count++;
 	$name = dataEncode( $myrow['user'] );
 	$name = dataEncode( $myrow['users_lname'] );
@@ -94,7 +99,7 @@ while ($myrow = sqlFetchArray($result)) {
 
 $buff = substr($buff, 0, -2); // Delete the last comma.
 echo $_GET['callback'] . '({';
-echo "results: " . $count . ", " . chr(13);
+echo "results: " . $total . ", " . chr(13);
 echo "row: [" . chr(13);
 echo $buff;
 echo "]})" . chr(13);

@@ -31,17 +31,17 @@ session_start();
 include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
-
+$mitos_db = new dbHelper();
 // OpenEMR
-require_once("../../library/pnotes.inc.php");
-require_once("../../library/patient.inc.php");
-require_once("../../library/acl.inc.php");
-require_once("../../library/log.inc.php");
-require_once("../../library/options.inc.php");
-require_once("../../library/formdata.inc.php");
-require_once("../../library/classes/Document.class.php");
-require_once("../../library/gprelations.inc.php");
-require_once("../../library/formatting.inc.php");
+//require_once("../../library/pnotes.inc.php");
+//require_once("../../library/patient.inc.php");
+//require_once("../../library/acl.inc.php");
+//require_once("../../library/log.inc.php");
+//require_once("../../library/options.inc.php");
+//require_once("../../library/formdata.inc.php");
+//require_once("../../library/classes/Document.class.php");
+//require_once("../../library/gprelations.inc.php");
+//require_once("../../library/formatting.inc.php");
 
 
 // Count records variable
@@ -56,7 +56,7 @@ switch ($_GET['task']) {
 	// Pull users from the database
 	// *************************************************************************************
 	case "users":
-		$sql = sqlStatement("SELECT
+		$sql = "SELECT
 							 	username,
 								fname,
 								lname
@@ -66,8 +66,8 @@ switch ($_GET['task']) {
 								username != '' AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' )
 							ORDER BY
 								lname,
-								fname");
-		foreach (sqlStatement($sql) as $urow) {
+								fname";
+		foreach ($mitos_db->setSQL($sql) as $urow) {
 			$count++;
 			// Merge firstname with lastname
 			if ($urow['fname']){
@@ -98,7 +98,7 @@ switch ($_GET['task']) {
 					list_id = 'note_type'
 				ORDER BY
 					seq, title";
-		foreach (sqlStatement($sql) as $urow) {
+		foreach ($mitos_db->setSQL($sql) as $urow) {
 			$count++;
 			$buff .= " { option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
 		}
@@ -123,7 +123,7 @@ switch ($_GET['task']) {
 					list_id = 'message_status'
 				ORDER BY
 					seq, title";
-		foreach (sqlStatement($sql) as $urow) {
+		foreach ($mitos_db->setSQL($sql) as $urow) {
 			$count++;
 			$buff .= "{ option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
 		}
@@ -146,7 +146,7 @@ switch ($_GET['task']) {
 					patient_data
 				ORDER BY
 					lname ASC, fname ASC";
-		foreach (sqlStatement($sql) as $urow) {
+		foreach ($mitos_db->setSQL($sql) as $urow) {
 			$count++;
 			$buff .= "{ id: '" . dataDecode( $urow['id'] ) . "',";
 			$buff .= " name: '" . dataDecode( $urow['fname'] ) . ", " . dataDecode( $urow['lname'] )  . "',";
