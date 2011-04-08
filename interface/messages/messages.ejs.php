@@ -9,22 +9,25 @@
 // 
 //--------------------------------------------------------------------------------------------------------------------------
 
-session_name ( "MitosEHR" );
-session_start();
+//session_name ( "MitosEHR" );
+//session_start();
 
-include_once("../../library/dbHelper/dbHelper.inc.php");
 include_once("../../library/I18n/I18n.inc.php");
-require_once("../../repository/dataExchange/dataExchange.inc.php");
 
+//******************************************************************************
+// Reset session count 10 secs = 1 Flop
+//******************************************************************************
+$_SESSION['site']['flops'] = 0;
 ?>
 
 <script type="text/javascript">
+Ext.require([ '*' ]);
 
 // *************************************************************************************
 // Start Sencha Framework
 // *************************************************************************************
 Ext.onReady(function() {
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/themes/images/default/tree/loading.gif';
+Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/themes/images/default/tree/.gif';
 
 //******************************************************************************
 // Sanitizing Objects
@@ -57,17 +60,17 @@ body_content = '<?php i18n('Nothing posted yet...'); ?>';
 // *************************************************************************************
 
 Ext.regModel('Messages', { fields: [
-	{name: 'noteid',	type: 'int',	   mapping: 'noteid'},
-	{name: 'user',		type: 'string',  mapping: 'user'},
-	{name: 'subject',   type: 'string',  mapping: 'subject'},
-	{name: 'body',		type: 'string',  mapping: 'body'},
-	{name: 'from',	  	type: 'string',  mapping: 'from'},
-	{name: 'patient',  	type: 'string',  mapping: 'patient'},
-	{name: 'type',	  	type: 'string',  mapping: 'type'},
-	{name: 'date',	  	type: 'string',  mapping: 'date'},
-	{name: 'status',   	type: 'string',  mapping: 'status'},
-	{name: 'reply_id',  type: 'int',     mapping: 'reply_id'},
-	{name: 'reply_to',	type: 'int',	   mapping: 'reply_to'}
+	{name: 'noteid',	type: 'int'},
+	{name: 'user',		type: 'string'},
+	{name: 'subject',   type: 'string'},
+	{name: 'body',		type: 'string'},
+	{name: 'from',	  	type: 'string'},
+	{name: 'patient',  	type: 'string'},
+	{name: 'type',	  	type: 'string'},
+	{name: 'date',	  	type: 'string'},
+	{name: 'status',   	type: 'string'},
+	{name: 'reply_id',  type: 'int'},
+	{name: 'reply_to',	type: 'int'}
 ]});
 
 // *************************************************************************************
@@ -78,7 +81,7 @@ var storeMsgs = new Ext.data.Store({
     model		: 'Messages',
     proxy		: new Ext.data.AjaxProxy({
         type	: 'rest',
-        url 	: '../../../interface/messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
+        url 	: '../../interface/messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
         reader: {
             type	: 'json',
             idProperty: 'noteid',
@@ -104,7 +107,7 @@ Ext.regModel('Patients', { fields: [
 var storePat = new Ext.data.Store({
 	model		: 'Patients',
 	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=patients'
+		url		: '../../interface/messages/component_data.ejs.php?task=patients',
 		reader	: {
 			type			: 'json',
 			idProperty		: 'id',
@@ -126,7 +129,7 @@ Ext.regModel('User', { fields: [
 var toData = new Ext.data.Store({
 	model		: 'User',
 	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=users'
+		url		: '../../interface/messages/component_data.ejs.php?task=users',
 		reader	: {
 			type			: 'json',
 			idProperty		: 'user',
@@ -148,7 +151,7 @@ Ext.regModel('Types', { fields: [
 var typeData = new Ext.data.Store({
 	model		: 'Types',
 	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=types'
+		url		: '../../interface/messages/component_data.ejs.php?task=types',
 		reader	: {
 			type			: 'json',
 			idProperty		: 'option_id',
@@ -170,7 +173,7 @@ Ext.regModel('Status', { fields: [
 var statusData = new Ext.data.Store({
 	model		: 'Status',
 	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=status'
+		url		: '../../interface/messages/component_data.ejs.php?task=status',
 		reader	: {
 			type			: 'json',
 			idProperty		: 'option_id',
@@ -205,7 +208,7 @@ var winPatients = new  Ext.Window({
 			//stripeRows	: true,
 			frame		    : false,
 			viewConfig	: {forceFit: true, stripeRows: true,}, // force the grid to the width of the containing panel
-			sm			    : new Ext.grid.RowSelectionModel({singleSelect:true}),
+			//sm			    : new Ext.grid.RowSelectionModel({singleSelect:true}),
 			listeners: {
 				
 				// Single click to select the record, and copy the variables
@@ -228,17 +231,17 @@ var winPatients = new  Ext.Window({
 				{ header: '<?php i18n('PID'); ?>', sortable: true, dataIndex: 'pid' }
 			],
 			tbar:[],
-			plugins: [new Ext.ux.grid.Search({
-				mode			      : 'local',
-				iconCls			    : false,
-				deferredRender	: false,
-				dateFormat		  : 'm/d/Y',
-				minLength		    : 4,
-				align			      : 'left',
-				width			      : 250,
-				disableIndexes	: ['id'],
-				position		    : 'top'
-			})]
+//			plugins: [new Ext.ux.grid.Search({
+//				mode			      : 'local',
+//				iconCls			    : false,
+//				deferredRender	: false,
+//				dateFormat		  : 'm/d/Y',
+//				minLength		    : 4,
+//				align			      : 'left',
+//				width			      : 250,
+//				disableIndexes	: ['id'],
+//				position		    : 'top'
+//			})]
 	}],
 
 	// Window Bottom Bar
@@ -301,14 +304,14 @@ var winMessage = new  Ext.Window({
 	closeAction	: 'hide',
 	renderTo	: document.body,
 	items: [{
-		xtype		    : 'form',
-		region		  :'center',
+		xtype		: 'form',
+		region		:'center',
 		labelWidth	: 75,
-		id			    : 'frmMessage',
-		frame		    : true,
-		bodyStyle	  : 'padding: 5px 5px 0 5px',
-		defaults	  : {width: 180},
-		formBind	  : true,
+		id			: 'frmMessage',
+		frame		: true,
+		bodyStyle	: 'padding: 5px 5px 0 5px',
+		defaults	: {width: 180},
+		formBind	: true,
 		buttonAlign	: 'left',
 		split		    : true,
 		items: [
@@ -466,7 +469,7 @@ var winMessage = new  Ext.Window({
 			winMessage.hide();
 		}
 	},{
-		text:'<?php echo htmlspecialchars( xl('Close'), ENT_NOQUOTES); ?>',
+		text:'<?php echo htmlspecialchars( i18n('Close'), ENT_NOQUOTES); ?>',
 		iconCls: 'delete',
 		handler: function(){ winMessage.hide(); }
 	}]
@@ -476,198 +479,180 @@ var winMessage = new  Ext.Window({
 // Create the GridPanel
 // *************************************************************************************
 var msgGrid = new Ext.grid.GridPanel({
-		id			   : 'msgGrid',
-		store		   : storeMsgs,
-		stripeRows : true,
-		autoHeight : true,    
- 		border     : false,       
- 		frame		   : false,
-		viewConfig : {forceFit: true}, // force the grid to the width of the containing panel
-		//sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
-		listeners: {
+	id			: 'msgGrid',
+	store		: storeMsgs,
+	autoHeight 	: true,
+	border     	: false,
+	frame		: false,
+	loadMask    : true,
+	viewConfig 	: {forceFit: true, stripeRows : true},
+	//sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
+//		listeners: {
+	
+		// Single click to select the record, and copy the variables
+//			rowclick: function(msgGrid, rowIndex, e) {
 		
-			// Single click to select the record, and copy the variables
-			rowclick: function(msgGrid, rowIndex, e) {
+			//Copy the selected message ID into the variable
+//				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 			
-				//Copy the selected message ID into the variable
-				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
+			// Copy the BODY Message into the form
+			// document.getElementById('msgGrid').innerHTML = rowContent.get('body');     << ------ REMOVED ASK GINO!!!!!!!
 				
-				// Copy the BODY Message into the form
-				// document.getElementById('msgGrid').innerHTML = rowContent.get('body');     << ------ REMOVED ASK GINO!!!!!!!
-					
-				// Enable buttons
-				msgGrid.editMsg.enable();
-				msgGrid.delMsg.enable();
-			},
+			// Enable buttons
+//				msgGrid.editMsg.enable();
+//				msgGrid.delMsg.enable();
+//			},
 
-			// Double click to select the record, and edit the record
-			rowdblclick:  function(msgGrid, rowIndex, e) {
-					
-				//Copy the selected message ID into the variable
-				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
-					
-				// Copy the BODY Message into the form
-				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
-					
-				// Copy all the fields into the form
-				winMessage.patient_name.setText(rowContent.get('patient'));
-				winMessage.cmb_assigned_to.setValue(rowContent.get('user'));
-				winMessage.reply_to.setValue(rowContent.get('user'));
-				winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
-				winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
-				winMessage.subject.setValue(rowContent.get('subject'));
-				winMessage.noteid.setValue(rowContent.get('noteid'));
-				winMessage.note.setValue("");
-					
-				// Set the buttons state
-				winMessage.cmb_assigned_to.readOnly = true;
-				winMessage.patient_name.disable();
-				winMessage.send.enable();
-					
-				winMessage.show();
-			}
-		},
-		columns: [
-			{ header: 'noteid', sortable: false, dataIndex: 'noteid', hidden: true},
-			{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
-			{ header: 'user', sortable: false, dataIndex: 'user', hidden: true},
-			{ header: 'body', sortable: true, dataIndex: 'body', hidden: true },
-			{ header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject', id: 'subject' },
-			{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'from' },
-			{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
-			{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'type' },
-			{ header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' }, 
-			{ header: '<?php i18n('Status'); ?>', sortable: true, dataIndex: 'status' },
-		],
-		view: new Ext.grid.GroupingView({
-      	forceFit:true,
-      	groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
-    }),
-
-		// *************************************************************************************
-		// Grid Menu
-		// *************************************************************************************
-		tbar: [{
-			xtype	:'button',
-			id		: 'sendMsg',
-			text	: '<?php xl("Send message", 'e'); ?>',
-			iconCls	: 'newMessage',
-			handler: function(){
+		// Double click to select the record, and edit the record
+//			rowdblclick:  function(msgGrid, rowIndex, e) {
 				
-				// Clear the rowContent variable
-				rowContent = null;
+			//Copy the selected message ID into the variable
+//				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
+				
+			// Copy the BODY Message into the form
+//				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
+				
+			// Copy all the fields into the form
+//				winMessage.patient_name.setText(rowContent.get('patient'));
+//				winMessage.cmb_assigned_to.setValue(rowContent.get('user'));
+//				winMessage.reply_to.setValue(rowContent.get('user'));
+//				winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
+//				winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
+//				winMessage.subject.setValue(rowContent.get('subject'));
+//				winMessage.noteid.setValue(rowContent.get('noteid'));
+//				winMessage.note.setValue("");
+				
+			// Set the buttons state
+//				winMessage.cmb_assigned_to.readOnly = true;
+//				winMessage.patient_name.disable();
+//				winMessage.send.enable();
+				
+//				winMessage.show();
+//			}
+//		},
+	columns: [
+		{ header: 'noteid', sortable: false, dataIndex: 'noteid', hidden: true},
+		{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
+		{ header: 'user', sortable: false, dataIndex: 'user', hidden: true},
+		{ header: 'body', sortable: true, dataIndex: 'body', hidden: true },
+		{ header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject', id: 'subject' },
+		{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'from' },
+		{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
+		{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'type' },
+		{ header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' }, 
+		{ header: '<?php i18n('Status'); ?>', sortable: true, dataIndex: 'status' },
+	],
+
+	// *************************************************************************************
+	// Grid Menu
+	// *************************************************************************************
+	tbar: [{
+		xtype	:'button',
+		id		: 'sendMsg',
+		text	: '<?php i18n("Send message", 'e'); ?>',
+		iconCls	: 'newMessage',
+		handler: function(){
 			
-				// Copy the BODY Message into the form
-				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>';
-				winMessage.patient_name.setText('<?php i18n('Click to select patient'); ?>');
-				winMessage.noteid.setValue(null);
-				winMessage.cmb_assigned_to.readOnly = false;
-				winMessage.cmb_assigned_to.setValue(null);
-				winMessage.cmb_form_note_type.setValue('Unassigned');
-				winMessage.cmb_form_message_status.setValue('New');
-				winMessage.reply_id.setValue(null);
+			// Clear the rowContent variable
+			rowContent = null;
+		
+			// Copy the BODY Message into the form
+			document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>';
+			winMessage.patient_name.setText('<?php i18n('Click to select patient'); ?>');
+			winMessage.noteid.setValue(null);
+			winMessage.cmb_assigned_to.readOnly = false;
+			winMessage.cmb_assigned_to.setValue(null);
+			winMessage.cmb_form_note_type.setValue('Unassigned');
+			winMessage.cmb_form_message_status.setValue('New');
+			winMessage.reply_id.setValue(null);
 
-				// Set the buttons state
-				winMessage.patient_name.enable();
-				winMessage.send.disable();
-				
-				winMessage.show();
-			}
-		},'-',{
-			xtype	   :'button',
-			id		   : 'editMsg',
-			ref		   : '../editMsg',
-			text	   : '<?php i18n('Reply message'); ?>',
-			iconCls	 : 'edit',
-			disabled : true,
-			handler  : function(){ 
+			// Set the buttons state
+			winMessage.patient_name.enable();
+			winMessage.send.disable();
 			
-				// Copy the BODY Message into the form
-				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
-				
-				// Copy all the fields into the form
-				winMessage.patient_name.setText(rowContent.get('patient'));
-				winMessage.cmb_assigned_to.setValue(rowContent.get('user'));
-				winMessage.reply_to.setValue(rowContent.get('user'));
-				winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
-				winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
-				winMessage.noteid.setValue(rowContent.get('noteid'));
-				winMessage.subject.setValue(rowContent.get('subject'));
-				winMessage.reply_id.setValue(rowContent.get('reply_id'));
-				
-				// Set the buttons state
-				winMessage.cmb_assigned_to.readOnly = true;
-				winMessage.patient_name.disable();
-				winMessage.send.enable();
-				
-				winMessage.show();
-			}
-		},'-',{
-			xtype		  :'button',
-			id			  : 'delMsg',
-			ref			  : '../delMsg',
-			text		  : '<?php i18n('Delete message'); ?>',
-			iconCls		: 'delete',
-			disabled	: true,
-			handler: function(msgGrid){
-				Ext.Msg.show({
-					title: '<?php xl("Please confirm...", 'e'); ?>', 
-					icon: Ext.MessageBox.QUESTION,
-					msg:'<?php i18n('Are you sure to delete this message?<br>From: '); ?>' + rowContent.get('from'),
-					buttons: Ext.Msg.YESNO,
-					fn:function(btn,msgGrid){
-				        if(btn=='yes'){
-							// The datastore object will save the data
-							// as soon changes is detected on the datastore
-							// It's a AJAX thing
-							var rows = Ext.getCmp('msgGrid').selModel.getSelections();
-							storeMsgs.remove(rows);
-							storeMsgs.save();
-							storeMsgs.commitChanges();
-							storeMsgs.reload();
-		    	    	}
-					}
-				});
-			}
-		}], // END GRID TOP MENU
-		plugins: [new Ext.ux.grid.Search({
-			mode			      : 'local',
-			iconCls			    : false,
-			deferredRender	: false,
-			dateFormat		  : 'm/d/Y',
-			minLength		    : 4,
-			align			      : 'left',
-			width			      : 250,
-			disableIndexes	: ['noteid', 'user', 'body'],
-			position		    : 'top'
-		})]			
-	}); // END GRID
+			winMessage.show();
+		}
+	},'-',{
+		xtype	   :'button',
+		id		   : 'editMsg',
+		ref		   : '../editMsg',
+		text	   : '<?php i18n('Reply message'); ?>',
+		iconCls	 : 'edit',
+		disabled : true,
+		handler  : function(){ 
+		
+			// Copy the BODY Message into the form
+			document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
+			
+			// Copy all the fields into the form
+			winMessage.patient_name.setText(rowContent.get('patient'));
+			winMessage.cmb_assigned_to.setValue(rowContent.get('user'));
+			winMessage.reply_to.setValue(rowContent.get('user'));
+			winMessage.cmb_form_note_type.setValue(rowContent.get('type'));
+			winMessage.cmb_form_message_status.setValue(rowContent.get('status'));
+			winMessage.noteid.setValue(rowContent.get('noteid'));
+			winMessage.subject.setValue(rowContent.get('subject'));
+			winMessage.reply_id.setValue(rowContent.get('reply_id'));
+			
+			// Set the buttons state
+			winMessage.cmb_assigned_to.readOnly = true;
+			winMessage.patient_name.disable();
+			winMessage.send.enable();
+			
+			winMessage.show();
+		}
+	},'-',{
+		xtype		  :'button',
+		id			  : 'delMsg',
+		ref			  : '../delMsg',
+		text		  : '<?php i18n('Delete message'); ?>',
+		iconCls		: 'delete',
+		disabled	: true,
+		handler: function(msgGrid){
+			Ext.Msg.show({
+				title: '<?php i18n("Please confirm...", 'e'); ?>', 
+				icon: Ext.MessageBox.QUESTION,
+			msg:'<?php i18n('Are you sure to delete this message?<br>From: '); ?>' + rowContent.get('from'),
+				buttons: Ext.Msg.YESNO,
+				fn:function(btn,msgGrid){
+			        if(btn=='yes'){
+						// The datastore object will save the data
+						// as soon changes is detected on the datastore
+						// It's a AJAX thing
+						var rows = Ext.getCmp('msgGrid').selModel.getSelections();
+						storeMsgs.remove(rows);
+						storeMsgs.save();
+						storeMsgs.commitChanges();
+						storeMsgs.reload();
+	    	    	}
+				}
+			});
+		}
+	}], // END GRID TOP MENU
+//	plugins: [new Ext.ux.grid.Search({
+//			mode			      : 'local',
+//			iconCls			    : false,
+//			deferredRender	: false,
+//			dateFormat		  : 'm/d/Y',
+//			minLength		    : 4,
+//			align			      : 'left',
+//			width			      : 250,
+//			disableIndexes	: ['noteid', 'user', 'body'],
+//			position		    : 'top'
+//	})]			
+}); // END GRID
 
 //******************************************************************************
 // Render panel
 //******************************************************************************
-var botRenderPanel = Ext.create('Ext.Panel', {
-	title		: '<?php i18n('Messages'); ?>',
-	renderTo	: Ext.getCmp('BottomPannel').body,
+var topRenderPanel = Ext.create('Ext.Panel', {
+	renderTo	: Ext.getCmp('BottomPanel').body,
   	frame 		: false,
 	border 		: false,
 	id			: 'botRenderPanel',
 	loadMask    : true,
 	items		: [msgGrid]
 });
-
-//var RenderPanel = new Ext.Panel({
-//  border  : false,
-//  stateful: true,
-//  monitorResize: true,
-//  autoWidth: true,
-//  id: 'RenderPanel',
-//  renderTo: Ext.getCmp('BottomPanel').body,
-//  viewConfig:{forceFit:true},
-//  items: [ 
-//    msgGrid
-//  ]
-//});
 
 }); // END EXTJS
 

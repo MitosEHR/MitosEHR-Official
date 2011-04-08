@@ -165,8 +165,8 @@ var Header = Ext.create('Ext.Panel', {
 //****************************************************************
 var BottomPanel = Ext.create('Ext.Panel', {
 	region		: 'south',
-	id			: 'BottomPannel',
-	height		: 300,
+	id			: 'BottomPanel',
+	height		: 230,
 	split		: true,
 	collapsible	: true,
 	title		: '...',
