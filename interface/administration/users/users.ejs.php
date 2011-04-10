@@ -198,20 +198,20 @@ var storeSeeAuthorizations = new Ext.data.ArrayStore({
 // Facility Form
 // Add or Edit purpose
 // *************************************************************************************
-var frmUsers = new Ext.FormPanel({
+var frmUsers = new Ext.form.FormPanel({
   id          : 'frmUsers',
   bodyStyle   : 'padding: 5px;',
-  items: [{
-      //layout          : 'form',
-      autoWidth       : true,
+        autoWidth       : true,
       border          : false,
       hideLabels      : true,
+  items: [{
+
       id              : 'formfileds',
       bodyStyle       : 'padding: 20px',
       items: 
       [ 
         { xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
-        { //xtype: 'compositefield',
+        { xtype: 'fieldcontainer',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
@@ -219,7 +219,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
             { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
           ] 
-        },{ //xtype: 'compositefield',
+        },{ xtype: 'fieldcontainer',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
@@ -228,7 +228,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
             { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
           ]
-        },{ //xtype: 'compositefield',
+        },{ xtype: 'fieldcontainer',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Active?'); ?>: '},
@@ -236,7 +236,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorized?'); ?>: '},
             { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
           ]  
-        },{ //xtype: 'compositefield',
+        },{ xtype: 'fieldcontainer',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
@@ -244,7 +244,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
             { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
           ] 
-        },{ //xtype: 'compositefield',
+        },{ xtype: 'fieldcontainer',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
             { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
@@ -252,7 +252,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
           ] 
         },{ 
-          //xtype: 'compositefield',
+          xtype: 'fieldcontainer',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Federal Tax ID'); ?>: '},
             { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
@@ -261,7 +261,7 @@ var frmUsers = new Ext.FormPanel({
  
           ] 
         },{ 
-          //xtype: 'compositefield',
+          xtype: 'fieldcontainer',
           items: [
            	{ width: 100, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
             { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
@@ -269,7 +269,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
           ]
         },{ 
-          //xtype: 'compositefield',
+          xtype: 'fieldcontainer',
           items: [
            	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
             { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
