@@ -27,7 +27,6 @@ Ext.require([ '*' ]);
 // Start Sencha Framework
 // *************************************************************************************
 Ext.onReady(function() {
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/themes/images/default/tree/.gif';
 
 //******************************************************************************
 // Sanitizing Objects
