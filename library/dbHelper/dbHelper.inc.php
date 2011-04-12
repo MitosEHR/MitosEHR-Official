@@ -58,9 +58,9 @@ class dbHelper {
 	//
 	// Author: Gino Rivera
 	//**********************************************************************
-	function exec(){
+	function execStatement(){
 		$recordset = $this->conn->query($this->sql_statement);
-		return $recordset;
+		return $recordset->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 	//**********************************************************************
@@ -139,7 +139,7 @@ class dbHelper {
 	
 		// Get all the records & count it.
 		$recordset = $this->conn->query( $this->sql_statement );
-		return $result['rows'];
+		return $recordset->rowCount();
 		
 	}
 	

@@ -16,6 +16,14 @@ include_once("../../../library/dbHelper/dbHelper.inc.php");
 include_once("../../../library/I18n/I18n.inc.php");
 require_once("../../../repository/dataExchange/dataExchange.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
+//-------------------------------------------
+// password to AES and validate
+//-------------------------------------------
+$aes = new AES($_SESSION['site']['AESkey']);
+$ret = $aes->encrypt($_REQUEST['authPass']);
+//------------------------------------------
+// Database class instance
+//------------------------------------------
 $mitos_db = new dbHelper();
 
 // Setting defults incase no request is sent by sencha
@@ -23,11 +31,11 @@ $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 $sql = "SELECT * FROM users WHERE users.authorized = 1 OR users.username != '' 
         ORDER BY username LIMIT ".$start.",".$count;
+		
+$mitos_db->setSQL($sql);
+$total = $mitos_db->rowCount();
 
-// Total of rows in database
-$total = $mitos_db->rowCount("SELECT COUNT(id) FROM users");
-
-foreach ($mitos_db->setSQL($sql) as $urow) {
+foreach ($mitos_db->execStatement() as $urow) {
   // returns "Yes" or "NO" for main grid		
   $rec['authorizedd']= ($urow['authorized'] == '1' ? 'Yes' : 'No');
   $rec['actived'] 	 = ($urow['active'] 	== '1' ? 'Yes' : 'No');
@@ -74,7 +82,7 @@ foreach ($mitos_db->setSQL($sql) as $urow) {
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.
-echo $_GET['callback'] . '({';
+echo "({";
 echo "totals: " . $total . ", " . chr(13);
 echo "row: [" . chr(13);
 echo $buff;
