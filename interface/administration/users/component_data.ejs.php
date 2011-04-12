@@ -19,6 +19,7 @@ $mitos_db = new dbHelper();
 
 // Count records variable
 $count = 0;
+$buff = "";
 // *************************************************************************************
 // Deside what to do with the $_GET['task']
 // *************************************************************************************
@@ -27,86 +28,85 @@ switch ($_GET['task']) {
 	// Data for for storeTitles
 	// *************************************************************************************
 	case "titles":
-	    $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'titles' ";
-	  
-	  foreach ($mitos_db->setSQL($sql) as $urow) {
+	  $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'titles' ";
+	  $mitos_db->setSQL($sql);
+	  foreach ($mitos_db->execStatement() as $urow) {
 	    $count++;
-	    $buff .= "{";
-	    $buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";
-	    $buff .= " title: '" . dataEncode( $urow['title'] ) . "'}," . chr(13);
+	    $buff .= '{';
+	    $buff .= ' "option_id": "' . dataEncode( $urow['option_id'] ) . '",';
+	    $buff .= ' "title": "' . dataEncode( $urow['title'] ) . '"},' . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
-	  echo $_GET['callback'] . '({';
-	  echo "totals: " . $count . ", " . chr(13);
-	  echo "row: [" . chr(13);
+	  echo '{';
+	  echo '"totals": "' . $count . '", ' . chr(13);
+	  echo '"row": [' . chr(13);
 	  echo $buff;
-	  echo "]})" . chr(13);   
+	  echo ']}' . chr(13);   
   	break;
 	// *************************************************************************************
 	// Data for for storeTypes
 	// *************************************************************************************
 	case "types":
 	  $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'abook_type' ";
-	  
-	  foreach ($mitos_db->setSQL($sql) as $urow) {
+	  $mitos_db->setSQL($sql);
+	  foreach ($mitos_db->execStatement() as $urow) {
 	    $count++;
-	    $buff .= "{";
-	    $buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";
-	    $buff .= " title: '" . dataEncode( $urow['title'] ) . "'}," . chr(13);
+	    $buff .= '{';
+	    $buff .= ' "option_id": "' . dataEncode( $urow['option_id'] ) . '",';
+	    $buff .= ' "title": "' . dataEncode( $urow['title'] ) . '"},' . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
-	  echo $_GET['callback'] . '({';
-	  echo "totals: " . $count . ", " . chr(13);
-	  echo "row: [" . chr(13);
+	  echo '{';
+	  echo '"totals": "' . $count . '", ' . chr(13);
+	  echo '"row": [' . chr(13);
 	  echo $buff;
-	  echo "]})" . chr(13);   
+	  echo ']}' . chr(13);   
 	break;
 	// *************************************************************************************
 	// Data for for Facilities
 	// *************************************************************************************
 	case "facilities":
 	  $sql = "SELECT * FROM facility WHERE service_location != 0 ORDER BY name";
-	  
-	  foreach ($mitos_db->setSQL($sql) as $urow) {
+	  $mitos_db->setSQL($sql);
+	  foreach ($mitos_db->execStatement() as $urow) {
 	    $count++;
-	    $buff .= "{";
-	    $buff .= " id: '" . dataEncode( $urow['id'] ) . "',";
-	    $buff .= " name: '" . dataEncode( $urow['name'] ) . "'}," . chr(13);
+	    $buff .= '{';
+	    $buff .= ' "id": "' . dataEncode( $urow['id'] ) . '",';
+	    $buff .= ' "name": "' . dataEncode( $urow['name'] ) . '"},' . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
-	  echo $_GET['callback'] . '({';
-	  echo "totals: " . $count . ", " . chr(13);
-	  echo "row: [" . chr(13);
+	  echo '{';
+	  echo '"totals": "' . $count . '", ' . chr(13);
+	  echo '"row": [' . chr(13);
 	  echo $buff;
-	  echo "]})" . chr(13);   
+	  echo ']}' . chr(13);    
 	break;
 	// *************************************************************************************
 	// Data for for See Authorizations
 	// *************************************************************************************
 	case "seeAuthorizations":
 
-	  echo "({totals: 3, row: [ { id: '1', name: 'None'}, { id: '2', name: 'Only Mine'}, { id: '3', name: 'All'}]})";
+	  echo '{"totals": "3", "row": [ { "id": "1", name: "None"}, { id: "2", "name": "Only Mine"}, { "id": "3", "name": "All"}]}';
    
 	break;
 		// *************************************************************************************
 	// Data for for AccessControl
 	// *************************************************************************************
 	case "accessControls":
-	  $sql = "SELECT id, value, name FROM gacl_aco_sections ORDER BY name";
-	  
-	  foreach ($mitos_db->setSQL($sql) as $urow) {
+	  $sql = "SELECT id, role_name FROM acl_roles ORDER BY role_name";
+	  $mitos_db->setSQL($sql);
+	  foreach ($mitos_db->execStatement() as $urow) {
 	    $count++;
-	    $buff .= "{";
-	    $buff .= " id: '" . dataEncode( $urow['id'] ) . "',";
-	    $buff .= " value: '" . dataEncode( $urow['value'] ) . "',";
-	    $buff .= " name: '" . dataEncode( $urow['name'] ) . "'}," . chr(13);
+	    $buff .= '{';
+	    $buff .= ' "id": "' . dataEncode( $urow['id'] ) . '",';
+	    $buff .= ' "role_name": "' . dataEncode( $urow['role_name'] ) . '"},' . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.
-	  echo $_GET['callback'] . '({';
-	  echo "totals: " . $count . ", " . chr(13);
-	  echo "row: [" . chr(13);
+	  echo '{';
+	  echo '"totals": "' . $count . '", ' . chr(13);
+	  echo '"row": [' . chr(13);
 	  echo $buff;
-	  echo "]})" . chr(13);   
+	  echo ']}' . chr(13);  
 	break;
 }
 ?>

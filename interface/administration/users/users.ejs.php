@@ -22,12 +22,11 @@ $_SESSION['site']['flops'] = 0;
 Ext.require([ '*' ]);
 
 Ext.onReady(function(){
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/themes/images/default/tree/loading.gif';
 
 // *************************************************************************************
 // Users Model
 // *************************************************************************************
-Ext.regModel('users', { fields: [
+Ext.regModel('Users', { fields: [
 	{name: 'id',                    type: 'int'},
 	{name: 'username',              type: 'string'},
 	{name: 'password',              type: 'auto'},
@@ -69,17 +68,15 @@ Ext.regModel('users', { fields: [
 	{name: 'default_warehouse',     type: 'string'},
 	{name: 'ab_name',               type: 'string'},
 	{name: 'ab_title',              type: 'string'}
-]});
-//******************************************************************************
-// User Store
-//******************************************************************************
+],
+	idProperty: 'id'
+});
 var storeUsers = new Ext.data.Store({
-    model		: 'users',
+    model		: 'Users',
     proxy		: new Ext.data.AjaxProxy({
         url 	: '../../../interface/administration/users/data_read.ejs.php',
         reader: {
             type			: 'json',
-            idProperty		: 'id',
             totalProperty	: 'totals',
             root			: 'row'
         }
@@ -94,14 +91,15 @@ var storeUsers = new Ext.data.Store({
 Ext.regModel('Titles', { fields: [
 	{name: 'option_id', type: 'string'},
     {name: 'title', type: 'string'}
-]});
+],
+	idProperty: 'option_id'
+});
 var storeTitles = new Ext.data.Store({
 	model		: 'Titles',
 	proxy		: new Ext.data.AjaxProxy({
 		url		: '../../../interface/administration/users/component_data.ejs.php?task=titles',
 		reader	: {
 			type			: 'json',
-			idProperty		: 'option_id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -116,14 +114,15 @@ var storeTitles = new Ext.data.Store({
 Ext.regModel('Types', { fields: [
 	{name: 'option_id', type: 'string'},
     {name: 'title', type: 'string'}
-]});
+],
+	idProperty: 'option_id'
+});
 var storeTypes = new Ext.data.Store({
 	model		: 'Types',
 	proxy		: new Ext.data.AjaxProxy({
 		url		: '../../../interface/administration/users/component_data.ejs.php?task=types',
 		reader	: {
 			type			: 'json',
-			idProperty		: 'option_id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -138,14 +137,15 @@ var storeTypes = new Ext.data.Store({
 Ext.regModel('Facilities', { fields: [
 	{name: 'id', type: 'string'},
     {name: 'names', type: 'string'}
-]});
+],
+	idProperty: 'id'
+});
 var storeFacilities = new Ext.data.Store({
 	model		: 'Facilities',
 	proxy		: new Ext.data.AjaxProxy({
 		url		: '../../../interface/administration/users/component_data.ejs.php?task=facilities',
 		reader	: {
 			type			: 'json',
-			idProperty		: 'id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -159,15 +159,16 @@ var storeFacilities = new Ext.data.Store({
 // *************************************************************************************
 Ext.regModel('AccessControls', { fields: [
 	{name: 'id', type: 'string'},
-    {name: 'names', type: 'string'}
-]});
+    {name: 'role_name', type: 'string'}
+],
+	idProperty: 'id'
+});
 var storeAccessControls = new Ext.data.Store({
 	model		: 'AccessControls',
 	proxy		: new Ext.data.AjaxProxy({
 		url		: '../../../interface/administration/users/component_data.ejs.php?task=accessControls',
 		reader	: {
 			type			: 'json',
-			idProperty		: 'id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -188,12 +189,8 @@ Ext.data.authorizations = [
 ];
 var storeSeeAuthorizations = new Ext.data.ArrayStore({
     fields: ['id', 'name'],
-    data : Ext.data.authorizations // from states.js
+    data : Ext.data.authorizations
 });
-
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
 // *************************************************************************************
 // Facility Form
@@ -202,13 +199,12 @@ var storeSeeAuthorizations = new Ext.data.ArrayStore({
 var frmUsers = new Ext.form.FormPanel({
   id          : 'frmUsers',
   bodyStyle   : 'padding: 5px;',
-  autoWidth       : true,
-  border          : false,
-  hideLabels      : true,
+  autoWidth   : true,
+  border      : false,
+  hideLabels  : true,
   items: [{
-
-      id              : 'formfileds',
-      bodyStyle       : 'padding: 20px',
+      id        : 'formfileds',
+      bodyStyle : 'padding: 20px',
       items: 
       [ 
         { xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
@@ -375,7 +371,6 @@ var addressbookGrid = new Ext.grid.GridPanel({
     }
   },
   columns: [
-    // Hidden cells
     { text: 'id', sortable: false, dataIndex: 'id', hidden: true},
     { width: 100,  text: '<?php i18n('Username'); ?>', sortable: true, dataIndex: 'username' },
     { width: 150,  text: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'fullname' },
@@ -418,12 +413,6 @@ var addressbookGrid = new Ext.grid.GridPanel({
   //  position        : 'top'
   //})]     
 }); // END GRID
-
-
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-
 
 //******************************************************************************
 // Render panel

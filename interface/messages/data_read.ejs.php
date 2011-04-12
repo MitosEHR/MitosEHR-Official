@@ -64,35 +64,35 @@ $total = $mitos_db->rowCount();
 foreach ($mitos_db->execStatement() as $myrow) {
 	$name = dataEncode( $myrow['user'] );
 	$name = dataEncode( $myrow['users_lname'] );
-	$p_body = str_replace(chr(10), "<br>", dataEncode( $myrow['body'] ));
+	$p_body = str_replace(chr(10), '<br>', dataEncode( $myrow['body'] ));
 	
 	if ($myrow['users_fname']) {
-		$name .= ", " . dataEncode( $myrow['users_fname'] ); 
+		$name .= ', ' . dataEncode( $myrow['users_fname'] ); 
 	}
 	
 	$patient = dataEncode( $myrow['pid'] );
 	$patient = dataEncode( $myrow['patient_data_lname'] );
 	if ($myrow['patient_data_fname']) {
-		$patient .= ", " . dataEncode( $myrow['patient_data_fname'] ); 
+		$patient .= ', ' . dataEncode( $myrow['patient_data_fname'] ); 
 	}
 	
 	// build the message
-	$buff .= "{";
-	$buff .= " noteid: '" . dataEncode( $myrow['id'] ) . "',";
-	$buff .= " user: '" . dataEncode( $myrow['user'] ) . "',";
-	$buff .= " subject: '" . dataEncode( $myrow['subject'] ) . "',";
-	$buff .= " body: '" . $p_body . "',";
-	$buff .= " from: '" . dataEncode( $name ) . "'," ;
-	$buff .= " patient: '" . dataEncode( $patient ) . "',";
-	$buff .= " date: '" . oeFormatShortDate(substr($myrow['date'], 0, strpos($myrow['date'], " "))) . "',";
-	$buff .= " reply_id: '" . dataEncode( $myrow['reply_id'] ) . "',";
-	$buff .= " status: '" . dataEncode( $myrow['message_status'] ) . "'}," . chr(13);
+	$buff .= '{';
+	$buff .= ' "noteid: "' . dataEncode( $myrow['id'] ) . '",';
+	$buff .= ' "user: "' . dataEncode( $myrow['user'] ) . '",';
+	$buff .= ' "subject: "' . dataEncode( $myrow['subject'] ) . '",';
+	$buff .= ' "body: "' . $p_body . '",';
+	$buff .= ' "from: "' . dataEncode( $name ) . '",' ;
+	$buff .= ' "patient: "' . dataEncode( $patient ) . '",';
+	$buff .= ' "date: "' . oeFormatShortDate(substr($myrow['date'], 0, strpos($myrow['date'], ' '))) . '",';
+	$buff .= ' "reply_id: "' . dataEncode( $myrow['reply_id'] ) . '",';
+	$buff .= ' "status: "' . dataEncode( $myrow['message_status'] ) . '"},' . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.
-echo "({";
-echo "totals: " . $total . ", " . chr(13);
-echo "row: [" . chr(13);
+echo '{';
+echo '"totals": ' . $total . ', ' . chr(13);
+echo '"row": [' . chr(13);
 echo $buff;
-echo "]})" . chr(13);
+echo ']}' . chr(13);
 ?>

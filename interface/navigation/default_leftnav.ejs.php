@@ -22,7 +22,7 @@ $buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "
 // Administration
 // -------------------------------------
 $buff .= '{"text":"' . i18n('Administration', 'r') . '", "cls":"folder", ' . chr(13);
-$buff .= 'children: [' . chr(13); // ^ Folder
+$buff .= '"children": [' . chr(13); // ^ Folder
 $buff .= '{"text":"' . i18n('Facilities', 'r') . '", "leaf":true, "cls":"file", "id":"administration/facilities/facilities.ejs.php"},' . chr(13);
 $buff .= '{"text":"' . i18n('Users', 'r') . '", "leaf":true, "cls":"file", "id":"administration/users/users.ejs.php"},' . chr(13);
 $buff .= '{"text":"' . i18n('Roles', 'r') . '", "leaf":true, "cls":"file", "id":"administration/roles/roles.ejs.php"}' . chr(13);
