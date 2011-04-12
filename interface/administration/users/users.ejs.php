@@ -28,47 +28,47 @@ Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resourc
 // Users Model
 // *************************************************************************************
 Ext.regModel('users', { fields: [
-	{name: 'id',                    type: 'int',              mapping: 'id'},
-	{name: 'username',              type: 'string',           mapping: 'username'},
-	{name: 'password',              type: 'auto',             mapping: 'password'},
-	{name: 'authorizedd',           type: 'string',           mapping: 'authorizedd'},
-	{name: 'authorized',            type: 'string',           mapping: 'authorized'},
-	{name: 'actived',            	type: 'string',           mapping: 'actived'},
-	{name: 'active',            	type: 'string',           mapping: 'active'},
-	{name: 'info',                  type: 'string',           mapping: 'info'},
-	{name: 'source',                type: 'int',              mapping: 'source'},
-	{name: 'fname',                 type: 'string',           mapping: 'fname'},
-	{name: 'mname',                 type: 'string',           mapping: 'mname'},
-	{name: 'lname',                 type: 'string',           mapping: 'lname'},
-	{name: 'fullname',              type: 'string',           mapping: 'fullname'},
-	{name: 'federaltaxid',          type: 'string',           mapping: 'federaltaxid'},
-	{name: 'federaldrugid',         type: 'string',           mapping: 'federaldrugid'},
-	{name: 'upin',                  type: 'string',           mapping: 'upin'},
-	{name: 'facility',              type: 'string',           mapping: 'facility'},
-	{name: 'facility_id',           type: 'int',              mapping: 'facility_id'},
-	{name: 'see_auth',              type: 'int',              mapping: 'see_auth'},
-	{name: 'active',                type: 'int',              mapping: 'active'},
-	{name: 'npi',                   type: 'string',           mapping: 'npi'},
-	{name: 'title',                 type: 'string',           mapping: 'title'},
-	{name: 'specialty',             type: 'string',           mapping: 'specialty'},
-	{name: 'billname',              type: 'string',           mapping: 'billname'},
-	{name: 'email',                 type: 'string',           mapping: 'email'},
-	{name: 'url',                   type: 'string',           mapping: 'url'},
-	{name: 'assistant',             type: 'string',           mapping: 'assistant'},
-	{name: 'organization',          type: 'string',           mapping: 'organization'},
-	{name: 'valedictory',           type: 'string',           mapping: 'valedictory'},
-	{name: 'fulladdress',           type: 'string',           mapping: 'fulladdress'},
-	{name: 'cal_ui',                type: 'string',           mapping: 'cal_ui'},
-	{name: 'taxonomy',              type: 'string',           mapping: 'taxonomy'},
-	{name: 'ssi_relayhealth',       type: 'string',           mapping: 'ssi_relayhealth'},
-	{name: 'calendar',              type: 'int',              mapping: 'calendar'},
-	{name: 'abook_type',            type: 'string',           mapping: 'abook_type'},
-	{name: 'pwd_expiration_date',   type: 'string',           mapping: 'pwd_expiration_date'},
-	{name: 'pwd_history1',          type: 'string',           mapping: 'pwd_history1'},
-	{name: 'pwd_history2',          type: 'string',           mapping: 'pwd_history2'},
-	{name: 'default_warehouse',     type: 'string',           mapping: 'default_warehouse'},
-	{name: 'ab_name',               type: 'string',           mapping: 'ab_name'},
-	{name: 'ab_title',              type: 'string',           mapping: 'ab_title'}
+	{name: 'id',                    type: 'int'},
+	{name: 'username',              type: 'string'},
+	{name: 'password',              type: 'auto'},
+	{name: 'authorizedd',           type: 'string'},
+	{name: 'authorized',            type: 'string'},
+	{name: 'actived',            	type: 'string'},
+	{name: 'active',            	type: 'string'},
+	{name: 'info',                  type: 'string'},
+	{name: 'source',                type: 'int'},
+	{name: 'fname',                 type: 'string'},
+	{name: 'mname',                 type: 'string'},
+	{name: 'lname',                 type: 'string'},
+	{name: 'fullname',              type: 'string'},
+	{name: 'federaltaxid',          type: 'string'},
+	{name: 'federaldrugid',         type: 'string'},
+	{name: 'upin',                  type: 'string'},
+	{name: 'facility',              type: 'string'},
+	{name: 'facility_id',           type: 'int'},
+	{name: 'see_auth',              type: 'int'},
+	{name: 'active',                type: 'int'},
+	{name: 'npi',                   type: 'string'},
+	{name: 'title',                 type: 'string'},
+	{name: 'specialty',             type: 'string'},
+	{name: 'billname',              type: 'string'},
+	{name: 'email',                 type: 'string'},
+	{name: 'url',                   type: 'string'},
+	{name: 'assistant',             type: 'string'},
+	{name: 'organization',          type: 'string'},
+	{name: 'valedictory',           type: 'string'},
+	{name: 'fulladdress',           type: 'string'},
+	{name: 'cal_ui',                type: 'string'},
+	{name: 'taxonomy',              type: 'string'},
+	{name: 'ssi_relayhealth',       type: 'string'},
+	{name: 'calendar',              type: 'int'},
+	{name: 'abook_type',            type: 'string'},
+	{name: 'pwd_expiration_date',   type: 'string'},
+	{name: 'pwd_history1',          type: 'string'},
+	{name: 'pwd_history2',          type: 'string'},
+	{name: 'default_warehouse',     type: 'string'},
+	{name: 'ab_name',               type: 'string'},
+	{name: 'ab_title',              type: 'string'}
 ]});
 //******************************************************************************
 // User Store
@@ -76,11 +76,12 @@ Ext.regModel('users', { fields: [
 var storeUsers = new Ext.data.Store({
     model		: 'users',
     proxy		: new Ext.data.AjaxProxy({
-        type	: 'rest',
         url 	: '../../../interface/administration/users/data_read.ejs.php',
         reader: {
-            type	: 'json',
-            root	: 'users'
+            type			: 'json',
+            idProperty		: 'id',
+            totalProperty	: 'totals',
+            root			: 'row'
         }
     }),
     autoLoad: true
@@ -201,9 +202,9 @@ var storeSeeAuthorizations = new Ext.data.ArrayStore({
 var frmUsers = new Ext.form.FormPanel({
   id          : 'frmUsers',
   bodyStyle   : 'padding: 5px;',
-        autoWidth       : true,
-      border          : false,
-      hideLabels      : true,
+  autoWidth       : true,
+  border          : false,
+  hideLabels      : true,
   items: [{
 
       id              : 'formfileds',
@@ -375,13 +376,12 @@ var addressbookGrid = new Ext.grid.GridPanel({
   },
   columns: [
     // Hidden cells
-    { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-    // Viewable cells
-    { width: 100,  header: '<?php i18n('Username'); ?>', sortable: true, dataIndex: 'username' },
-    { width: 150, header: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'fullname' },
-    { width: 200,  header: '<?php i18n('Aditional info'); ?>', sortable: true, dataIndex: 'info' },
-    { header: '<?php i18n('Active?'); ?>', sortable: true, dataIndex: 'actived' },
-    { header: '<?php i18n('Authorized?'); ?>', sortable: true, dataIndex: 'authorizedd' }
+    { text: 'id', sortable: false, dataIndex: 'id', hidden: true},
+    { width: 100,  text: '<?php i18n('Username'); ?>', sortable: true, dataIndex: 'username' },
+    { width: 150,  text: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'fullname' },
+    { width: 200,  text: '<?php i18n('Aditional info'); ?>', sortable: true, dataIndex: 'info' },
+    { text: '<?php i18n('Active?'); ?>', sortable: true, dataIndex: 'actived' },
+    { text: '<?php i18n('Authorized?'); ?>', sortable: true, dataIndex: 'authorizedd' }
   ],
   // *************************************************************************************
   // Grid Menu
