@@ -82,7 +82,8 @@ var storeUsers = new Ext.data.JsonStore({
             totalProperty	: 'totals',
             root			: 'row'
         }
-    }
+    },
+    autoLoad: true
 });
 
 // *************************************************************************************
@@ -435,6 +436,6 @@ var topRenderPanel = Ext.create('Ext.Panel', {
 	loadMask    : true,
 	items		: [addressbookGrid]
 });
-storeUsers.load();
+
 }); // End ExtJS
 </script>
