@@ -26,7 +26,7 @@ Ext.onReady(function(){
 // *************************************************************************************
 // Users Model
 // *************************************************************************************
-Ext.regModel('Users', { fields: [
+Ext.regModel('MUsers', { fields: [
 	{name: 'id',                    type: 'int'},
 	{name: 'username',              type: 'string'},
 	{name: 'password',              type: 'auto'},
@@ -71,37 +71,38 @@ Ext.regModel('Users', { fields: [
 ],
 	idProperty: 'id'
 });
-var storeUsers = new Ext.data.Store({
-    model		: 'Users',
+var storeUsers = new Ext.data.JsonStore({
+    model		: 'MUsers',
     proxy		: {
     	type	: 'ajax',
         url 	: 'interface/administration/users/data_read.ejs.php',
         reader: {
             type			: 'json',
+            idProperty		: 'id',
             totalProperty	: 'totals',
             root			: 'row'
         }
-    },
-    autoLoad: true
+    }
 });
 
 // *************************************************************************************
 // Structure, data for Titles
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Titles', { fields: [
+Ext.regModel('MTitles', { fields: [
 	{name: 'option_id', type: 'string'},
     {name: 'title', type: 'string'}
 ],
 	idProperty: 'option_id'
 });
-var storeTitles = new Ext.data.Store({
-	model		: 'Titles',
+var storeTitles = new Ext.data.JsonStore({
+	model		: 'MTitles',
 	proxy		: {
 		type	: 'ajax',
 		url		: 'interface/administration/users/component_data.ejs.php?task=titles',
 		reader	: {
 			type			: 'json',
+			idProperty		: 'option_id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -113,19 +114,20 @@ var storeTitles = new Ext.data.Store({
 // Structure, data for Types
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Types', { fields: [
+Ext.regModel('MTypes', { fields: [
 	{name: 'option_id', type: 'string'},
     {name: 'title', type: 'string'}
 ],
 	idProperty: 'option_id'
 });
-var storeTypes = new Ext.data.Store({
-	model		: 'Types',
+var storeTypes = new Ext.data.JsonStore({
+	model		: 'MTypes',
 	proxy		: {
 		type	: 'ajax',
 		url		: 'interface/administration/users/component_data.ejs.php?task=types',
 		reader	: {
 			type			: 'json',
+			idProperty		: 'option_id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -137,19 +139,20 @@ var storeTypes = new Ext.data.Store({
 // Structure, data for Facilities
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Facilities', { fields: [
+Ext.regModel('MFacilities', { fields: [
 	{name: 'id', type: 'string'},
     {name: 'names', type: 'string'}
 ],
 	idProperty: 'id'
 });
-var storeFacilities = new Ext.data.Store({
-	model		: 'Facilities',
+var storeFacilities = new Ext.data.JsonStore({
+	model		: 'MFacilities',
 	proxy		: {
 		type	: 'ajax',
 		url		: 'interface/administration/users/component_data.ejs.php?task=facilities',
 		reader	: {
 			type			: 'json',
+			idProperty		: 'id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -161,19 +164,20 @@ var storeFacilities = new Ext.data.Store({
 // Structure, data for AccessControls
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('AccessControls', { fields: [
+Ext.regModel('MAccessControls', { fields: [
 	{name: 'id', type: 'string'},
     {name: 'role_name', type: 'string'}
 ],
 	idProperty: 'id'
 });
-var storeAccessControls = new Ext.data.Store({
-	model		: 'AccessControls',
+var storeAccessControls = new Ext.data.JsonStore({
+	model		: 'MAccessControls',
 	proxy		: {
 		type	: 'ajax',
 		url		: 'interface/administration/users/component_data.ejs.php?task=accessControls',
 		reader	: {
 			type			: 'json',
+			idProperty		: 'id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -431,6 +435,6 @@ var topRenderPanel = Ext.create('Ext.Panel', {
 	loadMask    : true,
 	items		: [addressbookGrid]
 });
-
+storeUsers.load();
 }); // End ExtJS
 </script>
