@@ -73,14 +73,15 @@ Ext.regModel('Users', { fields: [
 });
 var storeUsers = new Ext.data.Store({
     model		: 'Users',
-    proxy		: new Ext.data.AjaxProxy({
-        url 	: '../../../interface/administration/users/data_read.ejs.php',
+    proxy		: {
+    	type	: 'ajax',
+        url 	: 'interface/administration/users/data_read.ejs.php',
         reader: {
             type			: 'json',
             totalProperty	: 'totals',
             root			: 'row'
         }
-    }),
+    },
     autoLoad: true
 });
 
@@ -96,14 +97,15 @@ Ext.regModel('Titles', { fields: [
 });
 var storeTitles = new Ext.data.Store({
 	model		: 'Titles',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../../interface/administration/users/component_data.ejs.php?task=titles',
+	proxy		: {
+		type	: 'ajax',
+		url		: 'interface/administration/users/component_data.ejs.php?task=titles',
 		reader	: {
 			type			: 'json',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
-	}),
+	},
 	autoLoad: true
 }); // End storeTitles
 
@@ -119,14 +121,15 @@ Ext.regModel('Types', { fields: [
 });
 var storeTypes = new Ext.data.Store({
 	model		: 'Types',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../../interface/administration/users/component_data.ejs.php?task=types',
+	proxy		: {
+		type	: 'ajax',
+		url		: 'interface/administration/users/component_data.ejs.php?task=types',
 		reader	: {
 			type			: 'json',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
-	}),
+	},
 	autoLoad: true
 }); // End storeTypes
 
@@ -142,14 +145,15 @@ Ext.regModel('Facilities', { fields: [
 });
 var storeFacilities = new Ext.data.Store({
 	model		: 'Facilities',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../../interface/administration/users/component_data.ejs.php?task=facilities',
+	proxy		: {
+		type	: 'ajax',
+		url		: 'interface/administration/users/component_data.ejs.php?task=facilities',
 		reader	: {
 			type			: 'json',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
-	}),
+	},
 	autoLoad: true
 }); // End storeFacilities
 
@@ -165,14 +169,15 @@ Ext.regModel('AccessControls', { fields: [
 });
 var storeAccessControls = new Ext.data.Store({
 	model		: 'AccessControls',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../../interface/administration/users/component_data.ejs.php?task=accessControls',
+	proxy		: {
+		type	: 'ajax',
+		url		: 'interface/administration/users/component_data.ejs.php?task=accessControls',
 		reader	: {
 			type			: 'json',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
-	}),
+	},
 	autoLoad: true
 }); // End storeFacilities
 
