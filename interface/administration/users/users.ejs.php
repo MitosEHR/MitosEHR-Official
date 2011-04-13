@@ -22,65 +22,63 @@ $_SESSION['site']['flops'] = 0;
 Ext.require([ '*' ]);
 
 Ext.onReady(function(){
-Ext.BLANK_IMAGE_URL = '../../library/<?php echo $GLOBALS['ext_path']; ?>/resources/themes/images/default/tree/loading.gif';
 
 // *************************************************************************************
 // Users Model
 // *************************************************************************************
-Ext.regModel('users', { fields: [
-	{name: 'id',                    type: 'int',              mapping: 'id'},
-	{name: 'username',              type: 'string',           mapping: 'username'},
-	{name: 'password',              type: 'auto',             mapping: 'password'},
-	{name: 'authorizedd',           type: 'string',           mapping: 'authorizedd'},
-	{name: 'authorized',            type: 'string',           mapping: 'authorized'},
-	{name: 'actived',            	type: 'string',           mapping: 'actived'},
-	{name: 'active',            	type: 'string',           mapping: 'active'},
-	{name: 'info',                  type: 'string',           mapping: 'info'},
-	{name: 'source',                type: 'int',              mapping: 'source'},
-	{name: 'fname',                 type: 'string',           mapping: 'fname'},
-	{name: 'mname',                 type: 'string',           mapping: 'mname'},
-	{name: 'lname',                 type: 'string',           mapping: 'lname'},
-	{name: 'fullname',              type: 'string',           mapping: 'fullname'},
-	{name: 'federaltaxid',          type: 'string',           mapping: 'federaltaxid'},
-	{name: 'federaldrugid',         type: 'string',           mapping: 'federaldrugid'},
-	{name: 'upin',                  type: 'string',           mapping: 'upin'},
-	{name: 'facility',              type: 'string',           mapping: 'facility'},
-	{name: 'facility_id',           type: 'int',              mapping: 'facility_id'},
-	{name: 'see_auth',              type: 'int',              mapping: 'see_auth'},
-	{name: 'active',                type: 'int',              mapping: 'active'},
-	{name: 'npi',                   type: 'string',           mapping: 'npi'},
-	{name: 'title',                 type: 'string',           mapping: 'title'},
-	{name: 'specialty',             type: 'string',           mapping: 'specialty'},
-	{name: 'billname',              type: 'string',           mapping: 'billname'},
-	{name: 'email',                 type: 'string',           mapping: 'email'},
-	{name: 'url',                   type: 'string',           mapping: 'url'},
-	{name: 'assistant',             type: 'string',           mapping: 'assistant'},
-	{name: 'organization',          type: 'string',           mapping: 'organization'},
-	{name: 'valedictory',           type: 'string',           mapping: 'valedictory'},
-	{name: 'fulladdress',           type: 'string',           mapping: 'fulladdress'},
-	{name: 'cal_ui',                type: 'string',           mapping: 'cal_ui'},
-	{name: 'taxonomy',              type: 'string',           mapping: 'taxonomy'},
-	{name: 'ssi_relayhealth',       type: 'string',           mapping: 'ssi_relayhealth'},
-	{name: 'calendar',              type: 'int',              mapping: 'calendar'},
-	{name: 'abook_type',            type: 'string',           mapping: 'abook_type'},
-	{name: 'pwd_expiration_date',   type: 'string',           mapping: 'pwd_expiration_date'},
-	{name: 'pwd_history1',          type: 'string',           mapping: 'pwd_history1'},
-	{name: 'pwd_history2',          type: 'string',           mapping: 'pwd_history2'},
-	{name: 'default_warehouse',     type: 'string',           mapping: 'default_warehouse'},
-	{name: 'ab_name',               type: 'string',           mapping: 'ab_name'},
-	{name: 'ab_title',              type: 'string',           mapping: 'ab_title'}
-]});
-//******************************************************************************
-// User Store
-//******************************************************************************
+Ext.regModel('Users', { fields: [
+	{name: 'id',                    type: 'int'},
+	{name: 'username',              type: 'string'},
+	{name: 'password',              type: 'auto'},
+	{name: 'authorizedd',           type: 'string'},
+	{name: 'authorized',            type: 'string'},
+	{name: 'actived',            	type: 'string'},
+	{name: 'active',            	type: 'string'},
+	{name: 'info',                  type: 'string'},
+	{name: 'source',                type: 'int'},
+	{name: 'fname',                 type: 'string'},
+	{name: 'mname',                 type: 'string'},
+	{name: 'lname',                 type: 'string'},
+	{name: 'fullname',              type: 'string'},
+	{name: 'federaltaxid',          type: 'string'},
+	{name: 'federaldrugid',         type: 'string'},
+	{name: 'upin',                  type: 'string'},
+	{name: 'facility',              type: 'string'},
+	{name: 'facility_id',           type: 'int'},
+	{name: 'see_auth',              type: 'int'},
+	{name: 'active',                type: 'int'},
+	{name: 'npi',                   type: 'string'},
+	{name: 'title',                 type: 'string'},
+	{name: 'specialty',             type: 'string'},
+	{name: 'billname',              type: 'string'},
+	{name: 'email',                 type: 'string'},
+	{name: 'url',                   type: 'string'},
+	{name: 'assistant',             type: 'string'},
+	{name: 'organization',          type: 'string'},
+	{name: 'valedictory',           type: 'string'},
+	{name: 'fulladdress',           type: 'string'},
+	{name: 'cal_ui',                type: 'string'},
+	{name: 'taxonomy',              type: 'string'},
+	{name: 'ssi_relayhealth',       type: 'string'},
+	{name: 'calendar',              type: 'int'},
+	{name: 'abook_type',            type: 'string'},
+	{name: 'pwd_expiration_date',   type: 'string'},
+	{name: 'pwd_history1',          type: 'string'},
+	{name: 'pwd_history2',          type: 'string'},
+	{name: 'default_warehouse',     type: 'string'},
+	{name: 'ab_name',               type: 'string'},
+	{name: 'ab_title',              type: 'string'}
+],
+	idProperty: 'id'
+});
 var storeUsers = new Ext.data.Store({
-    model		: 'users',
+    model		: 'Users',
     proxy		: new Ext.data.AjaxProxy({
-        type	: 'rest',
         url 	: '../../../interface/administration/users/data_read.ejs.php',
         reader: {
-            type	: 'json',
-            root	: 'users'
+            type			: 'json',
+            totalProperty	: 'totals',
+            root			: 'row'
         }
     }),
     autoLoad: true
@@ -93,14 +91,15 @@ var storeUsers = new Ext.data.Store({
 Ext.regModel('Titles', { fields: [
 	{name: 'option_id', type: 'string'},
     {name: 'title', type: 'string'}
-]});
+],
+	idProperty: 'option_id'
+});
 var storeTitles = new Ext.data.Store({
 	model		: 'Titles',
 	proxy		: new Ext.data.AjaxProxy({
 		url		: '../../../interface/administration/users/component_data.ejs.php?task=titles',
 		reader	: {
 			type			: 'json',
-			idProperty		: 'option_id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -115,14 +114,15 @@ var storeTitles = new Ext.data.Store({
 Ext.regModel('Types', { fields: [
 	{name: 'option_id', type: 'string'},
     {name: 'title', type: 'string'}
-]});
+],
+	idProperty: 'option_id'
+});
 var storeTypes = new Ext.data.Store({
 	model		: 'Types',
 	proxy		: new Ext.data.AjaxProxy({
 		url		: '../../../interface/administration/users/component_data.ejs.php?task=types',
 		reader	: {
 			type			: 'json',
-			idProperty		: 'option_id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -137,14 +137,15 @@ var storeTypes = new Ext.data.Store({
 Ext.regModel('Facilities', { fields: [
 	{name: 'id', type: 'string'},
     {name: 'names', type: 'string'}
-]});
+],
+	idProperty: 'id'
+});
 var storeFacilities = new Ext.data.Store({
 	model		: 'Facilities',
 	proxy		: new Ext.data.AjaxProxy({
 		url		: '../../../interface/administration/users/component_data.ejs.php?task=facilities',
 		reader	: {
 			type			: 'json',
-			idProperty		: 'id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -158,15 +159,16 @@ var storeFacilities = new Ext.data.Store({
 // *************************************************************************************
 Ext.regModel('AccessControls', { fields: [
 	{name: 'id', type: 'string'},
-    {name: 'names', type: 'string'}
-]});
+    {name: 'role_name', type: 'string'}
+],
+	idProperty: 'id'
+});
 var storeAccessControls = new Ext.data.Store({
 	model		: 'AccessControls',
 	proxy		: new Ext.data.AjaxProxy({
 		url		: '../../../interface/administration/users/component_data.ejs.php?task=accessControls',
 		reader	: {
 			type			: 'json',
-			idProperty		: 'id',
 			totalProperty	: 'totals',
 			root			: 'row'
 		}
@@ -187,31 +189,26 @@ Ext.data.authorizations = [
 ];
 var storeSeeAuthorizations = new Ext.data.ArrayStore({
     fields: ['id', 'name'],
-    data : Ext.data.authorizations // from states.js
+    data : Ext.data.authorizations
 });
-
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
 // *************************************************************************************
 // Facility Form
 // Add or Edit purpose
 // *************************************************************************************
-var frmUsers = new Ext.FormPanel({
+var frmUsers = new Ext.form.FormPanel({
   id          : 'frmUsers',
   bodyStyle   : 'padding: 5px;',
+  autoWidth   : true,
+  border      : false,
+  hideLabels  : true,
   items: [{
-      //layout          : 'form',
-      autoWidth       : true,
-      border          : false,
-      hideLabels      : true,
-      id              : 'formfileds',
-      bodyStyle       : 'padding: 20px',
+      id        : 'formfileds',
+      bodyStyle : 'padding: 20px',
       items: 
       [ 
         { xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
-        { //xtype: 'compositefield',
+        { xtype: 'fieldcontainer',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
@@ -219,7 +216,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
             { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
           ] 
-        },{ //xtype: 'compositefield',
+        },{ xtype: 'fieldcontainer',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
@@ -228,7 +225,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
             { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
           ]
-        },{ //xtype: 'compositefield',
+        },{ xtype: 'fieldcontainer',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Active?'); ?>: '},
@@ -236,7 +233,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorized?'); ?>: '},
             { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
           ]  
-        },{ //xtype: 'compositefield',
+        },{ xtype: 'fieldcontainer',
           msgTarget : 'side', 
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
@@ -244,7 +241,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
             { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
           ] 
-        },{ //xtype: 'compositefield',
+        },{ xtype: 'fieldcontainer',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
             { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
@@ -252,7 +249,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
           ] 
         },{ 
-          //xtype: 'compositefield',
+          xtype: 'fieldcontainer',
           items: [
             { width: 100, xtype: 'displayfield', value: '<?php i18n('Federal Tax ID'); ?>: '},
             { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
@@ -261,7 +258,7 @@ var frmUsers = new Ext.FormPanel({
  
           ] 
         },{ 
-          //xtype: 'compositefield',
+          xtype: 'fieldcontainer',
           items: [
            	{ width: 100, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
             { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
@@ -269,7 +266,7 @@ var frmUsers = new Ext.FormPanel({
             { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
           ]
         },{ 
-          //xtype: 'compositefield',
+          xtype: 'fieldcontainer',
           items: [
            	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
             { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
@@ -374,14 +371,12 @@ var addressbookGrid = new Ext.grid.GridPanel({
     }
   },
   columns: [
-    // Hidden cells
-    { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-    // Viewable cells
-    { width: 100,  header: '<?php i18n('Username'); ?>', sortable: true, dataIndex: 'username' },
-    { width: 150, header: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'fullname' },
-    { width: 200,  header: '<?php i18n('Aditional info'); ?>', sortable: true, dataIndex: 'info' },
-    { header: '<?php i18n('Active?'); ?>', sortable: true, dataIndex: 'actived' },
-    { header: '<?php i18n('Authorized?'); ?>', sortable: true, dataIndex: 'authorizedd' }
+    { text: 'id', sortable: false, dataIndex: 'id', hidden: true},
+    { width: 100,  text: '<?php i18n('Username'); ?>', sortable: true, dataIndex: 'username' },
+    { width: 150,  text: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'fullname' },
+    { width: 200,  text: '<?php i18n('Aditional info'); ?>', sortable: true, dataIndex: 'info' },
+    { text: '<?php i18n('Active?'); ?>', sortable: true, dataIndex: 'actived' },
+    { text: '<?php i18n('Authorized?'); ?>', sortable: true, dataIndex: 'authorizedd' }
   ],
   // *************************************************************************************
   // Grid Menu
@@ -418,12 +413,6 @@ var addressbookGrid = new Ext.grid.GridPanel({
   //  position        : 'top'
   //})]     
 }); // END GRID
-
-
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-
 
 //******************************************************************************
 // Render panel
