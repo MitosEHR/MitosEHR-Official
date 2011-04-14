@@ -1,0 +1,107 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.menu.Separator"></a>/**
+ * @class Ext.menu.Separator
+ * @extends Ext.menu.Item
+
+Adds a separator bar to a menu, used to divide logical groups of menu items. Generally you will
+add one of these by using "-" in your call to add() or in your items config rather than creating one directly.
+
+ * @xtype menuseparator
+ * @markdown
+ * @constructor
+ * @param {Object} config The config object
+ */
+Ext.define('Ext.menu.Separator', {
+    extend: 'Ext.menu.Item',
+    alias: 'widget.menuseparator',
+    
+    <a name="cfg-Ext.menu.Separator-activeCls"></a>/**
+     * @cfg {String} activeCls @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-canActivate"></a>/**
+     * @cfg {Boolean} canActivate @hide
+     */
+    canActivate: false,
+    
+    <a name="cfg-Ext.menu.Separator-clickHideDelay"></a>/**
+     * @cfg {Boolean} clickHideDelay @hide
+     */
+     
+    <a name="cfg-Ext.menu.Separator-destroyMenu"></a>/**
+     * @cfg {Boolean} destroyMenu @hide
+     */
+     
+    <a name="cfg-Ext.menu.Separator-disabledCls"></a>/**
+     * @cfg {Boolean} disabledCls @hide
+     */
+     
+    focusable: false,
+     
+    <a name="cfg-Ext.menu.Separator-href"></a>/**
+     * @cfg {String} href @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-hrefTarget"></a>/**
+     * @cfg {String} hrefTarget @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-hideOnClick"></a>/**
+     * @cfg {Boolean} hideOnClick @hide
+     */
+    hideOnClick: false,
+    
+    <a name="cfg-Ext.menu.Separator-icon"></a>/**
+     * @cfg {String} icon @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-iconCls"></a>/**
+     * @cfg {String} iconCls @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-menu"></a>/**
+     * @cfg {Mixed} menu @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-menuAlign"></a>/**
+     * @cfg {String} menuAlign @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-menuExpandDelay"></a>/**
+     * @cfg {Number} menuExpandDelay @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-menuHideDelay"></a>/**
+     * @cfg {Number} menuHideDelay @hide
+     */
+    
+    <a name="cfg-Ext.menu.Separator-plain"></a>/**
+     * @cfg {Boolean} plain @hide
+     */
+    plain: true,
+    
+    <a name="cfg-Ext.menu.Separator-separatorCls"></a>/**
+     * @cfg {String} separatorCls
+     * The CSS class used by the separator item to show the incised line.
+     * Defaults to `Ext.baseCSSPrefix + 'menu-item-separator'`.
+     * @markdown
+     */
+    separatorCls: Ext.baseCSSPrefix + 'menu-item-separator',
+    
+    <a name="cfg-Ext.menu.Separator-text"></a>/**
+     * @cfg {String} text @hide
+     */
+    text: '&#160;',
+    
+    onRender: function(ct, pos) {
+        var me = this,
+            sepCls = me.separatorCls;
+            
+        me.cls += ' ' + sepCls;
+        
+        Ext.applyIf(me.renderSelectors, {
+            itemSepEl: '.' + sepCls
+        });
+        
+        me.callParent(arguments);
+    }
+});￿</pre></pre></body></html>

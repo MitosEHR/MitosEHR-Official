@@ -1,0 +1,25 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.layout.component.Auto"></a>/**
+ * @class Ext.layout.component.Auto
+ * @extends Ext.layout.Component
+ * @private
+ *
+ * <p>The AutoLayout is the default layout manager delegated by {@link Ext.Component} to
+ * render any child Elements when no <tt>{@link Ext.Component#layout layout}</tt> is configured.</p>
+ */
+
+Ext.define('Ext.layout.component.Auto', {
+
+    /* Begin Definitions */
+
+    alias: 'layout.autocomponent',
+
+    extend: 'Ext.layout.Component',
+
+    /* End Definitions */
+
+    type: 'autocomponent',
+
+    onLayout : function(width, height) {
+        this.setTargetSize(width, height);
+    }
+});￿</pre></pre></body></html>

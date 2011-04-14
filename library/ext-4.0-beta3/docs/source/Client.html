@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.data.proxy.Client"></a>/**
+ * @author Ed Spencer
+ * @class Ext.data.proxy.Client
+ * @extends Ext.data.Proxy
+ * 
+ * <p>Base class for any client-side storage. Used as a superclass for {@link Ext.data.proxy.Memory Memory} and 
+ * {@link Ext.data.proxy.WebStorage Web Storage} proxies. Do not use directly, use one of the subclasses instead.</p>
+ */
+Ext.define('Ext.data.proxy.Client', {
+    extend: 'Ext.data.Proxy',
+    alternateClassName: 'Ext.data.ClientProxy',
+    
+    <a name="method-Ext.data.proxy.Client-clear"></a>/**
+     * Abstract function that must be implemented by each ClientProxy subclass. This should purge all record data
+     * from the client side storage, as well as removing any supporting data (such as lists of record IDs)
+     */
+    clear: function() {
+        //<debug>
+        Ext.Error.raise("The Ext.data.proxy.Client subclass that you are using has not defined a 'clear' function. See src/data/ClientProxy.js for details.");
+        //</debug>
+    }
+});￿</pre></pre></body></html>

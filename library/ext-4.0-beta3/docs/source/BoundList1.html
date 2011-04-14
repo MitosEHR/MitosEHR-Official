@@ -1,0 +1,134 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.view.BoundList"></a>/**
+ * @class Ext.view.BoundList
+ * @extends Ext.DataView
+ * An internal used DataView for ComboBox, MultiSelect and ItemSelector.
+ */
+Ext.define(&#39;Ext.view.BoundList&#39;, {
+    extend: &#39;Ext.DataView&#39;,
+    alias: &#39;widget.boundlist&#39;,
+    alternateClassName: &#39;Ext.BoundList&#39;,
+    requires: [&#39;Ext.layout.component.BoundList&#39;, &#39;Ext.toolbar.PagingToolbar&#39;],
+
+    <a name="cfg-Ext.view.BoundList-pageSize"></a>/**
+     * @cfg {Number} pageSize If greater than &lt;tt&gt;0&lt;/tt&gt;, a {@link Ext.toolbar.PagingToolbar} is displayed at the
+     * bottom of the list and store queries will execute with page start and
+     * {@link Ext.toolbar.PagingToolbar#pageSize limit} parameters.
+     */
+    pageSize: 0,
+
+    <a name="prop-Ext.view.BoundList-pagingToolbar"></a>/**
+     * @property pagingToolbar
+     * @type {Ext.toolbar.PagingToolbar}
+     * A reference to the PagingToolbar instance in this view. Only populated if {@link #pageSize} is greater
+     * than zero and the BoundList has been rendered.
+     */
+
+    // private overrides
+    autoScroll: true,
+    baseCls: Ext.baseCSSPrefix + &#39;boundlist&#39;,
+    listItemCls: &#39;&#39;,
+    shadow: false,
+    trackOver: true,
+    refreshed: 0,
+
+    ariaRole: &#39;listbox&#39;,
+
+    componentLayout: &#39;boundlist&#39;,
+
+    renderTpl: [&#39;&lt;div class=&quot;list-ct&quot;&gt;&lt;/div&gt;&#39;],
+
+    initComponent: function() {
+        var me = this,
+            baseCls = me.baseCls,
+            itemCls = baseCls + &#39;-item&#39;;
+        me.itemCls = itemCls;
+        me.selectedItemCls = baseCls + &#39;-selected&#39;;
+        me.overItemCls = baseCls + &#39;-item-over&#39;;
+        me.itemSelector = &quot;.&quot; + itemCls;
+
+        if (me.floating) {
+            me.addCls(baseCls + &#39;-floating&#39;);
+        }
+
+        // should be setting aria-posinset based on entire set of data
+        // not filtered set
+        me.tpl = new Ext.XTemplate(
+            &#39;&lt;ul&gt;&lt;tpl for=&quot;.&quot;&gt;&#39;,
+                &#39;&lt;li role=&quot;option&quot; class=&quot;&#39; + itemCls + &#39;&quot;&gt;&#39; + me.getInnerTpl(me.displayField) + &#39;&lt;/li&gt;&#39;,
+            &#39;&lt;/tpl&gt;&lt;/ul&gt;&#39;
+        );
+
+        if (me.pageSize) {
+            me.pagingToolbar = me.createPagingToolbar();
+        }
+
+        me.callParent();
+
+        Ext.applyIf(me.renderSelectors, {
+            listEl: &#39;.list-ct&#39;
+        });
+    },
+
+    createPagingToolbar: function() {
+        return Ext.widget(&#39;pagingtoolbar&#39;, {
+            pageSize: this.pageSize,
+            store: this.store,
+            border: false
+        });
+    },
+
+    onRender: function() {
+        var me = this,
+            toolbar = me.pagingToolbar;
+        me.callParent(arguments);
+        if (toolbar) {
+            toolbar.render(me.el);
+        }
+    },
+
+    bindStore : function(store, initial) {
+        var me = this,
+            toolbar = me.pagingToolbar;
+        me.callParent(arguments);
+        if (toolbar) {
+            toolbar.bindStore(store, initial);
+        }
+    },
+
+    getTargetEl: function() {
+        return this.listEl || this.el;
+    },
+
+    getInnerTpl: function(displayField) {
+        return &#39;{&#39; + displayField + &#39;}&#39;;
+    },
+
+    refresh: function() {
+        var me = this;
+        me.callParent();
+        if (me.isVisible()) {
+            me.refreshed++;
+            me.doComponentLayout();
+            me.refreshed--;
+        }
+    },
+    
+    initAria: function() {
+        this.callParent();
+        
+        var selModel = this.getSelectionModel(),
+            mode     = selModel.getSelectionMode(),
+            actionEl = this.getActionEl();
+        
+        // TODO: subscribe to mode changes or allow the selModel to manipulate this attribute.
+        if (mode !== &#39;SINGLE&#39;) {
+            actionEl.dom.setAttribute(&#39;aria-multiselectable&#39;, true);
+        }
+    },
+
+    onDestroy: function() {
+        Ext.destroyMembers(this, &#39;pagingToolbar&#39;, &#39;listEl&#39;);
+        this.callParent();
+    }
+});
+￿</pre></pre></body></html>

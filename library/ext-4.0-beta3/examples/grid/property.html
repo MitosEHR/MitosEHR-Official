@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Property Grid</title>
+<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="../shared/example.css" />
+<script type="text/javascript" src="../../bootstrap.js"></script>
+<script type="text/javascript">
+    Ext.require(['*']);
+
+    Ext.onReady(function() {
+        Ext.create('Ext.grid.property.Grid', {
+            title: 'Property Grid',
+            height: 400,
+            width: 600,
+            renderTo: document.body,
+            source: {
+                "(name)": "Properties Grid",
+                "grouping": false,
+                "autoFitColumns": true,
+                "productionQuality": false,
+                "created": Ext.Date.parse('10/15/2006', 'm/d/Y'),
+                "tested": false,
+                "version": 0.01,
+                "borderWidth": 1
+            }
+        });
+    });
+</script>
+</head>
+<body>
+    <h1>Property Grid Example</h1>
+    <p>This example shows how to create a property grid from an object.</p>
+    <p>Note that the js is not minified so it is readable. View the source of this page to see it.</p>
+</body>
+</html>

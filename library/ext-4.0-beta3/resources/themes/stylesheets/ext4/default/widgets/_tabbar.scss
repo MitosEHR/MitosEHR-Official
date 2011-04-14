@@ -1,0 +1,104 @@
+/**
+  * @class Ext.TabBar
+  * 
+  */
+@mixin extjs-tabbar {
+    .#{$prefix}tab-bar {
+        position: relative;
+        background-color: transparent;
+        @include background-gradient($tabbar-base-color, $tabbar-background-gradient);
+    }
+    
+    .#{$prefix}tab-bar-body {
+        border-style: solid;
+        height: $tabbar-body-height;
+        border-color: $tabbar-border-color;
+
+        position: relative;
+        z-index: 2;
+        zoom: 1;
+    }
+    
+    .#{$prefix}border-box {
+        .#{$prefix}tab-bar-body {
+             height: $tabbar-body-height + 1px;
+        }
+    }
+
+    .#{$prefix}tab-bar .#{$prefix}tab-bar-body-default-plain {
+        height: $tabbar-body-height;
+    }
+
+    .#{$prefix}tab-bar-top {
+        .#{$prefix}tab-bar-body {
+            border-width: 1px 1px 0;
+
+            .#{$prefix}box-item {
+                margin-bottom: 2px;
+            }
+        }
+        
+        .#{$prefix}tab-bar-strip {
+            top: $tabbar-body-height - 2px; /*from top rather than bottom to avoid off-by-one error in IE6*/
+            zoom: 1;
+            
+            border-width: 1px 1px 0 1px;
+        }
+        .#{$prefix}tab-bar-strip-default-plain {
+            top: $tabbar-body-height - 3px; /*from top rather than bottom to avoid off-by-one error in IE6*/
+        }
+    }
+
+    .#{$prefix}tab-bar-bottom {
+        .#{$prefix}tab-bar-body {
+            border-width: 0 1px 1px;
+            
+            .#{$prefix}box-item {
+                margin-top: 2px;
+            }
+        }
+        
+        .#{$prefix}tab-bar-strip {
+            top: 0;
+            zoom: 1;
+            
+            border-width: 0 1px 1px 1px;
+        }
+    }
+
+    .#{$prefix}panel-noborder-docked-top .#{$prefix}tab-bar-body {
+        border-width: 0 0 1px;
+    }
+
+    .#{$prefix}panel-noborder-docked-bottom .#{$prefix}tab-bar-body {
+        border-width: 1px 0 0;
+    }
+
+    .#{$prefix}nlg .#{$prefix}tab-bar {
+        background-image: theme-image($theme-name, 'tab-bar/tab-bar-bg.gif');
+    }
+
+    .#{$prefix}tab-bar-default-plain,
+    .#{$prefix}nlg .#{$prefix}tab-bar-default-plain {
+        background: transparent none;
+        .#{$prefix}tab-bar-body {
+            border-width: 0;
+        }
+    }
+
+    .#{$prefix}tab-bar-strip-default {
+        height: 2px;
+        font-size: 0;
+        line-height: 0;
+        position: absolute;
+        z-index: 1;
+        border-style: solid;
+        overflow: hidden;
+        border-color: $tab-bar-strip-border-color;
+        background-color: $tab-bar-strip-background-color;
+    }
+
+    .#{$prefix}border-box .#{$prefix}tab-bar-strip-default {
+        height: 3px;
+    }
+}

@@ -232,11 +232,13 @@ var winFacility = new Ext.Window({
 
 var topRenderPanel = Ext.create('Ext.Panel', {
 	title: '<?php i18n("Facilities"); ?>',
-	renderTo: Ext.getCmp('MainApp').body,
+	//renderTo: Ext.getCmp('MainApp').body,
   	frame : false,
 	border : false,
 	id: 'topRenderPanel',
 });
+
+toRenderPanel.show();
 
 }); // End ExtJS
 </script>

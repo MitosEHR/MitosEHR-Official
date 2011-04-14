@@ -1,0 +1,28 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.HeaderReorderer"></a>/**
+ * @class Ext.grid.HeaderReorderer
+ * @extends Ext.util.Observable
+ * @private
+ */
+Ext.define('Ext.grid.HeaderReorderer', {
+    extend: 'Ext.util.Observable',
+    requires: ['Ext.grid.HeaderDragZone', 'Ext.grid.HeaderDropZone'],
+    alias: 'plugin.gridheaderreorderer',
+
+    init: function(headerCt) {
+        this.headerCt = headerCt;
+        headerCt.on('render', this.onHeaderCtRender, this);
+    },
+
+    /**
+     * @private
+     * AbstractComponent calls destroy on all its plugins at destroy time.
+     */
+    destroy: function() {
+        Ext.destroy(this.dragZone, this.dropZone);
+    },
+
+    onHeaderCtRender: function() {
+        this.dragZone = Ext.create('Ext.grid.HeaderDragZone', this.headerCt);
+        this.dropZone = Ext.create('Ext.grid.HeaderDropZone', this.headerCt);
+    }
+});￿</pre></pre></body></html>

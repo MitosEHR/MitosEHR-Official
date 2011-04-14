@@ -1,0 +1,54 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.layout.component.Body"></a>/**
+ * Component layout for components which maintain an inner body element which must be resized to synchronize with the
+ * Component size.
+ * @class Ext.layout.component.Body
+ * @extends Ext.layout.Component
+ * @private
+ */
+
+Ext.define('Ext.layout.component.Body', {
+
+    /* Begin Definitions */
+
+    alias: ['layout.body'],
+
+    extend: 'Ext.layout.Component',
+
+    uses: ['Ext.layout.Container'],
+
+    /* End Definitions */
+
+    type: 'body',
+
+    onLayout: function(width, height) {
+        var me = this;
+
+        // Size the Component's encapsulating element according to the dimensions
+        me.setTargetSize(width, height);
+
+        // Size the Component's body element according to the content box of the encapsulating element
+        me.setBodySize.apply(me, arguments);
+
+        me.callParent(arguments);
+    },
+
+    /**
+     * @private
+     * <p>Sizes the Component's body element to fit exactly within the content box of the Component's encapsulating element.<p>
+     * <p>Uses Container layout's getLayoutTargetSize method to ascertain the content box</p>
+     */
+    setBodySize: function(width, height) {
+        var me = this,
+            isNumber = Ext.isNumber,
+            isDefined = Ext.isDefined,
+            bodySize, bodyWidth, bodyHeight;
+
+        if (isDefined(width) || isDefined(height)) {
+            bodySize = Ext.layout.Container.prototype.getLayoutTargetSize.call(me);
+            bodyWidth = isNumber(width) ? bodySize.width : width;
+            bodyHeight = isNumber(height) ? bodySize.height : height;
+        }
+
+        me.setElementSize(me.owner.body, bodyWidth, bodyHeight);
+    }
+});￿</pre></pre></body></html>

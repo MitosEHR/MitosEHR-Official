@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre>/**
+ * @private
+ * Private utility class for managing all {@link Ext.form.Checkbox} fields grouped by name.
+ */
+Ext.define('Ext.form.CheckboxManager', {
+    extend: 'Ext.util.MixedCollection',
+    singleton: true,
+
+    getByName: function(name) {
+        return this.filterBy(function(item) {
+            return item.name == name;
+        });
+    },
+
+    getWithValue: function(name, value) {
+        return this.filterBy(function(item) {
+            return item.name == name && item.inputValue == value;
+        });
+    },
+
+    getChecked: function(name) {
+        return this.filterBy(function(item) {
+            return item.name == name && item.checked;
+        });
+    }
+});
+￿</pre></pre></body></html>

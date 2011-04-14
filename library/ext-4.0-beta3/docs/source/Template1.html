@@ -1,0 +1,25 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.grid.column.Template"></a>/**
+ * @class Ext.grid.column.Template
+ * @extends Ext.grid.column.Column
+ * &lt;p&gt;A Column definition class which renders a value by processing a {@link Ext.data.Model Model}&#39;s
+ * {@link Ext.data.Model#data data} using a {@link #tpl configured} {@link Ext.XTemplate XTemplate}.&lt;/p&gt;
+ */
+Ext.define(&#39;Ext.grid.column.Template&#39;, {
+    extend: &#39;Ext.grid.column.Column&#39;,
+    alias: [&#39;widget.templatecolumn&#39;],
+    requires: [&#39;Ext.XTemplate&#39;],
+    alternateClassName: &#39;Ext.grid.TemplateColumn&#39;,
+
+    <a name="cfg-Ext.grid.column.Template-tpl"></a>/**
+     * @cfg {String/XTemplate} tpl
+     * An {@link Ext.XTemplate XTemplate}, or an XTemplate &lt;i&gt;definition string&lt;/i&gt; to use to process a
+     * {@link Ext.data.Model Model}&#39;s {@link Ext.data.Model#data data} to produce a column&#39;s rendered value.
+     */
+    constructor: function(cfg){
+        this.callParent(arguments);
+        var tpl = this.tpl = (!Ext.isPrimitive(this.tpl) &amp;&amp; this.tpl.compile) ? this.tpl : new Ext.XTemplate(this.tpl);
+        this.renderer = function(value, p, record) {
+            return tpl.apply(record.data);
+        };
+    }
+});￿</pre></pre></body></html>

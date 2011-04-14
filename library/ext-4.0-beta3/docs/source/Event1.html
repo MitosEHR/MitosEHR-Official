@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre><a name="cls-Ext.direct.Event"></a>/**
+ * @class Ext.direct.Event
+ * A base class for all Ext.direct events. An event is
+ * created after some kind of interaction with the server.
+ * @constructor
+ * @param {Object} config The config object
+ */
+Ext.define(&#39;Ext.direct.Event&#39;, {
+    
+    /* Begin Definitions */
+   
+    alias: &#39;direct.event&#39;,
+    
+    requires: [&#39;Ext.direct.Manager&#39;],
+    
+    /* End Definitions */
+   
+    status: true,
+    
+    constructor: function(config) {
+        Ext.apply(this, config);
+    },
+    
+    <a name="method-Ext.direct.Event-getData"></a>/**
+     * Return the raw data for this event.
+     * @return {Object} The data from the event
+     */
+    getData: function(){
+        return this.data;
+    }
+});
+￿</pre></pre></body></html>

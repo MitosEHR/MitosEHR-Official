@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><head><title>Sencha Documentation Project</title><link rel="stylesheet" href="../reset.css" type="text/css"><link rel="stylesheet" href="../prettify.css" type="text/css"><link rel="stylesheet" href="../prettify_sa.css" type="text/css"><script type="text/javascript" src="../prettify.js"></script></head><body onload="prettyPrint()"><pre class="prettyprint"><pre>Ext.define('Ext.grid.CellEditor', {
+    extend: 'Ext.Editor',
+    constructor: function(config) {
+        if (config.field) {
+            config.field.monitorTab = false;
+        }
+        config.autoSize = {
+            width: 'boundEl'
+        };
+        this.callParent(arguments);
+    },
+    alignment: "tl-tl",
+    hideEl : false,
+    cls: Ext.baseCSSPrefix + "small-editor " + Ext.baseCSSPrefix + "grid-editor",
+    shim: false,
+    shadow: false
+});￿</pre></pre></body></html>
