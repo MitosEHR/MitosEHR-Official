@@ -71,7 +71,7 @@ Ext.regModel('MUsers', { fields: [
 ],
 	idProperty: 'id'
 });
-var storeUsers = new Ext.data.JsonStore({
+var storeUsers = new Ext.data.Store({
     model		: 'MUsers',
     proxy		: {
     	type	: 'ajax',
@@ -96,7 +96,7 @@ Ext.regModel('MTitles', { fields: [
 ],
 	idProperty: 'option_id'
 });
-var storeTitles = new Ext.data.JsonStore({
+var storeTitles = new Ext.data.Store({
 	model		: 'MTitles',
 	proxy		: {
 		type	: 'ajax',
@@ -121,7 +121,7 @@ Ext.regModel('MTypes', { fields: [
 ],
 	idProperty: 'option_id'
 });
-var storeTypes = new Ext.data.JsonStore({
+var storeTypes = new Ext.data.Store({
 	model		: 'MTypes',
 	proxy		: {
 		type	: 'ajax',
@@ -146,7 +146,7 @@ Ext.regModel('MFacilities', { fields: [
 ],
 	idProperty: 'id'
 });
-var storeFacilities = new Ext.data.JsonStore({
+var storeFacilities = new Ext.data.Store({
 	model		: 'MFacilities',
 	proxy		: {
 		type	: 'ajax',
@@ -171,7 +171,7 @@ Ext.regModel('MAccessControls', { fields: [
 ],
 	idProperty: 'id'
 });
-var storeAccessControls = new Ext.data.JsonStore({
+var storeAccessControls = new Ext.data.Store({
 	model		: 'MAccessControls',
 	proxy		: {
 		type	: 'ajax',
