@@ -15,7 +15,7 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once("library/I18n/I18n.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
 
 // Count records variable
 $count = 0;
@@ -29,11 +29,11 @@ switch ($_GET['task']) {
 	// Data for for storeTaxID
 	// *************************************************************************************
 	case "taxid":
-		$buff .= " { option_id: 'EI', title: '" . xl('EIN','r') . "' },". chr(13);
+		$buff .= " { option_id: 'EI', title: '" . i18n('EIN','r') . "' },". chr(13);
 		$count++;
-		$buff .= " { option_id: 'SY', title: '" . xl('SSN','r') . "' },". chr(13);
+		$buff .= " { option_id: 'SY', title: '" . i18n('SSN','r') . "' },". chr(13);
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
+		echo '({';
 		echo "results: " . $count . ", " . chr(13);
 		echo "row: [" . chr(13);
 		echo $buff;
@@ -149,7 +149,7 @@ switch ($_GET['task']) {
 			$buff .= " { option_id: '" . $values["code"] . "', title: '" . $values["code"]  . ": " . $values["title"] . "' }," . chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
+		echo '({';
 		echo "results: " . $count . ", " . chr(13);
 		echo "row: [" . chr(13);
 		echo $buff;
