@@ -18,227 +18,110 @@ include_once("../../../library/I18n/I18n.inc.php");
 $_SESSION['site']['flops'] = 0;
 
 ?>
+
 <script type="text/javascript">
-Ext.require([ '*' ]);
 
-Ext.onReady(function(){
+Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.util.*',
+    'Ext.state.*'
+]);
 
-//******************************************************************************
-// Sanitizing Objects
-// Destroy them, if already exists in the browser memory.
-// This destructions must be called for all the objects that
-// are rendered on the document.body 
-//******************************************************************************
-if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
-
-// *************************************************************************************
-// Structure and load the data for Messages
-// AJAX -> data_*.ejs.php
-// *************************************************************************************
-var storeFacilities = new Ext.data.Store({
-	model: 'FacilityRecord',
-	proxy: new Ext.data.AjaxProxy({
-		url: 'interface/administration/facilities/component_data.ejs.php?task=sites',
-		actionMethods: {
-			create : 'POST',
-			read   : 'POST',
-			update : 'POST',
-			destroy: 'POST'
-		},
-		reader: {
-			type: 'json',
-			idProperty: 'site_id',
-			totalProperty: 'results',
-			root: 'row'
-		}
-	}),
-	autoLoad: true
-});
-
-// *************************************************************************************
-// Structure, data for storeTaxID
-// AJAX -> component_data.ejs.php
-// tag: ExtJS v4 Ready
-// *************************************************************************************
-var taxidRecord = Ext.regModel('FacilityRecord', {
-	fields: [
-	{name: 'option_id',	type: 'string'},
-	{name: 'title',		type: 'title'}
-	],
-});
-var storeTaxID = new Ext.data.Store({
-	model: 'taxidRecord',
-	proxy: new Ext.data.AjaxProxy({
-		url: 'interface/administration/facilities/component_data.ejs.php?task=taxid',
-		reader: {
-			type: 'json',
-			idProperty: 'option_id',
-			totalProperty: 'results',
-			root: 'row'
-		}
-	}),
-	autoLoad: true
-});
-storeTaxID.on('load',function(ds,records,o){ // Select the first item on the combobox
-	cmbTaxId = records[0].data.title;
-});
-
-// *************************************************************************************
-// Structure, data for storePOSCode
-// AJAX -> component_data.ejs.php
-// tag: ExtJS v4 Ready
-// *************************************************************************************
-var poscodeRecord = Ext.regModel('FacilityRecord', {
-	fields: [
-	{name: 'option_id',	type: 'string'},
-	{name: 'title',		type: 'title'}
-	],
-});
-var storePOSCode = new Ext.data.Store({
-	model: 'poscodeRecord',
-	proxy: new Ext.data.AjaxProxy({
-		url: 'interface/administration/facilities/component_data.ejs.php?task=poscodes',
-		reader: {
-			type: 'json',
-			idProperty: 'option_id',
-			totalProperty: 'results',
-			root: 'row'
-		}
-	}),
-	autoLoad: true
-});
-storePOSCode.on('load',function(ds,records,o){ // Select the first item on the combobox
-	cmbPOSCode = records[0].data.title;
-});
-
-// *************************************************************************************
-// Facility Form
-// Add or Edit purpose
-// *************************************************************************************
-var frmFacility = new Ext.FormPanel({
-	id			: 'frmFacility',
-	bodyStyle	: 'padding: 3px;',
-	layout: 'column',
-	items: [{
-		layout: 'form',
-		autoWidth: true,
-		border: false,
-		bodyStyle : 'padding: 0 5px',
-		defaults: { labelWidth: 50 },
-        items: 
-		[
-			{ xtype: 'textfield', minLengthText: '<?php i18n("Must contain at least 3 characters."); ?>', minLength: 3, id: 'name', name: 'name', fieldLabel: '<?php i18n("Name"); ?>' },
-			{ xtype: 'textfield', minLengthText: '<?php i18n("Must contain at least 3 characters."); ?>', minLength: 3, id: 'street', name: 'street', fieldLabel: '<?php i18n("Address"); ?>' },
-			{ xtype: 'textfield', minLengthText: '<?php i18n("Must contain at least 3 characters."); ?>', minLength: 3, id: 'city', name: 'city', fieldLabel: '<?php i18n("City"); ?>' },
-			{ xtype: 'textfield', maxLength:50, minLengthText: '<?php i18n("Must contain at least 2 characters."); ?>', minLength: 2, id: 'state', name: 'state', fieldLabel: '<?php i18n("State"); ?>' },
-			{ xtype: 'textfield', maxLength: 10, id: 'country_code', name: 'country_code', fieldLabel: '<?php i18n("Country"); ?>' },
-			{ xtype: 'textfield', maxLength: 30, minLengthText: '<?php i18n("Must contain at least 7 characters."); ?>', minLength: 7, id: 'phone', name: 'phone', fieldLabel: '<?php i18n("Phone"); ?>' },
-			{ xtype: 'textfield', maxLength: 30, minLengthText: '<?php i18n("Must contain at least 7 characters."); ?>', minLength: 7, id: 'fax', name: 'fax', fieldLabel: '<?php i18n("Fax"); ?>' },
-			{ xtype: 'textfield', maxLength: 11, minLengthText: '<?php i18n("Must contain at least 3 characters."); ?>', minLength: 3, id: 'postal_code', name: 'postal_code', fieldLabel: '<?php i18n("Zip Code"); ?>' },
-			// Hidden fields
-			{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'}
-        ]},{
-		layout : 'form',
-		border : false,
-		autoWidth: true,
-		bodyStyle : 'padding: 0 5px',
-		defaults: { labelWidth: 150 },
-        items: 
-		[
-			{ xtype: 'combo', width: 60, displayField: 'title', valueField: 'option_id', mode: 'local', triggerAction: 'all', hiddenName: 'tax_id_type', store: storeTaxID, id: 'tax_id_type', name: 'tax_id_type', fieldLabel: '<?php i18n("Tax ID"); ?>', editable: false },
-			{ xtype: 'textfield', maxLength: 15, minLengthText: 'Must contain at least 5 characters.', minLength: 5, id: 'facility_npi', name: 'facility_npi', fieldLabel: '<?php i18n("Facility NPI"); ?>' },
-			{ xtype: 'checkbox', id: 'billing_location', name: 'billing_location', fieldLabel: '<?php i18n("Billing Location"); ?>' },
-			{ xtype: 'checkbox', id: 'accepts_assignment', name: 'accepts_assignment', fieldLabel: '<?php i18n("Accepts Assignment"); ?>' },
-			{ xtype: 'checkbox', checked: true, id: 'service_location', name: 'service_location', fieldLabel: '<?php i18n("Service Location"); ?>' },
-			{ xtype: 'combo', width: 300, autoSelect: true, displayField: 'title', hiddenName: 'pos_code', valueField: 'option_id', mode: 'local', triggerAction: 'all', store: storePOSCode, id: 'pos_code', name: 'pos_code', fieldLabel: '<?php i18n("POS Code"); ?> ?>', editable: false },
-			{ xtype: 'textfield', maxLength: 65, minLengthText: '<?php i18n("Must contain at least 10 characters."); ?>', minLength: 10, id: 'attn', name: 'attn', fieldLabel: '<?php i18n("Billing Attn"); ?>' },
-			{ xtype: 'textfield', maxLength: 60, minLengthText: '<?php i18n("Must contain at least 5 characters."); ?>', minLength: 5, id: 'domain_identifier', name: 'domain_identifier', fieldLabel: '<?php i18n("CLIA Number"); ?>' }
-		]}
-	]},
+Ext.onReady(function() {
 	
-	// Window Bottom Bar
-	dockedItems: [{
-		xtype: 'toolbar',
-		dock: 'bottom',
-		items: [{
-			text		:	'<?php echo i18n("Save"); ?>',
-			ref			:	'../save',
-			iconCls		:	'save',
-			handler: function() {
-			
-				//----------------------------------------------------------------
-				// 1. Convert the form data into a JSON data Object
-				// 2. Re-format the Object to be a valid record (FacilityRecord)
-				//----------------------------------------------------------------
-				var obj = eval('(' + Ext.util.JSON.encode(frmFacility.getForm().getValues()) + ')');
-				var rec = new FacilityRecord(obj);
-			
-				//----------------------------------------------------------------
-				// Check if it has to add or update
-				// Update: 1. Get the record from store, 2. get the values from the form, 3. copy all the 
-				// values from the form and push it into the store record.
-				// Add: Push the re-formated record to the dataStore
-				//----------------------------------------------------------------
-				if (frmFacility.getForm().findField('id').getValue()){ // Update
-					var record = storeFacilities.getAt(rowPos);
-					var fieldValues = frmFacility.getForm().getValues();
-					for ( k=0; k <= storeFacilities.fields.getCount()-1; k++) {
-						i = storeFacilities.fields.get(k).name;
-						record.set( i, fieldValues[i] );
-					}
-				} else { // Add
-					storeFacilities.add( rec );
-				}
-
-				storeFacilities.save(); // Save the record to the dataStore
-				storeFacilities.commitChanges(); // Commit the changes
-				storeFacilities.reload(); // Reload the dataSore from the database
-				winFacility.hide(); // Finally hide the dialog window
-			}
-		},{
-			text:'<?php i18n("Close"); ?>',
-			iconCls: 'delete',
-			handler: function(){ winFacility.hide(); }
-		}]
-    }]
-
-}); // END Facility Form
-
-// *************************************************************************************
-// Message Window Dialog
-// *************************************************************************************
-var winFacility = new Ext.Window({
-	id			: 'winFacility',
-	width		: 700,
-	autoHeight	: true,
-	modal		: true,
-	resizable	: false,
-	autoScroll	: true,
-	title		: '...',
-	closeAction	: 'hide',
-	renderTo	: document.body,
-	items: [ frmFacility ],
-	listeners: {
-		show: function(){
-			if ( Ext.getCmp('id').getValue() ){
-				winFacility.setTitle('<?php i18n("Edit Facility"); ?>');
-			} else {
-				winFacility.setTitle('<?php i18n("Add Facility"); ?>');
+	Ext.QuickTips.init();
+	
+	// *************************************************************************************
+	// Facility Record Structure
+	// *************************************************************************************
+	Ext.regModel('FacilitiesRecord', { fields: [
+			{name: 'id',					type: 'int'},
+			{name: 'name',					type: 'string'},
+			{name: 'phone',					type: 'string'},
+			{name: 'fax',					type: 'string'},
+			{name: 'street',				type: 'string'},
+			{name: 'city',					type: 'string'},
+			{name: 'state',					type: 'string'},
+			{name: 'postal_code',			type: 'string'},
+			{name: 'country_code',			type: 'string'},
+			{name: 'federal_ein',			type: 'string'},
+			{name: 'service_location',		type: 'string'},
+			{name: 'billing_location',		type: 'string'},
+			{name: 'accepts_assignment',	type: 'string'},
+			{name: 'pos_code',				type: 'string'},
+			{name: 'x12_sender_id',			type: 'string'},
+			{name: 'attn',					type: 'string'},
+			{name: 'domain_identifier',		type: 'string'},
+			{name: 'facility_npi',			type: 'string'},
+			{name: 'tax_id_type',			type: 'string'}
+		]
+	});
+	var FacilityStore = new Ext.data.Store({
+		model: 'FacilitiesRecord',
+		proxy: {
+			type: 'ajax',
+			url 	: 'interface/administration/facilities/data_read.ejs.php',
+			reader: {
+				type			: 'json',
+				idProperty		: 'id',
+				totalProperty	: 'totals',
+				root			: 'row'
 			}
 		}
-	}
-}); // END WINDOW
+	});
+	FacilityStore.load();
 
 
-var topRenderPanel = Ext.create('Ext.Panel', {
-	title: '<?php i18n("Facilities"); ?>',
-	//renderTo: Ext.getCmp('MainApp').body,
-  	frame : false,
-	border : false,
-	id: 'topRenderPanel',
-});
+	// *************************************************************************************
+	// Facility Grid Panel
+	// *************************************************************************************
+	var FacilityGrid = Ext.create('Ext.grid.Panel', {
+		store: FacilityStore,
+        columnLines: true,
+        forceFit: true,
+        columns: [
+			{
+				text     : '<?php i18n("Name"); ?>',
+				flex     : 1,
+				sortable : true,
+				dataIndex: 'name'
+            },
+            {
+				text     : '<?php i18n("Phone"); ?>',
+				width    : 75,
+				sortable : true,
+				dataIndex: 'phone'
+            },
+            {
+				text     : '<?php i18n("Fax"); ?>',
+				width    : 75,
+				sortable : true,
+				dataIndex: 'fax'
+            },
+            {
+				text     : '<?php i18n("City"); ?>',
+				width    : 75,
+				sortable : true,
+				dataIndex: 'city'
+            }
+		],
+		viewConfig: { stripeRows: true }
+    }); // END Facility Grid
 
-toRenderPanel.show();
+	// *************************************************************************************
+	// Top Render Panel
+	// *************************************************************************************
+	var topRenderPanel = Ext.create('Ext.Panel', {
+		title		: '<?php i18n("Facilities"); ?>',
+		renderTo	: Ext.getCmp('MainApp').body,
+  		frame		: false,
+		border		: false,
+		bodyPadding	: 0,
+		id			: 'topRenderPanel',
+		items: [ FacilityGrid ]
+	}); // END TOP PANEL
 
 }); // End ExtJS
+
 </script>

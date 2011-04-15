@@ -28,7 +28,7 @@ include_once('library/compressor/compressor.inc.php');
 <script type="text/javascript">
 
 Ext.require([
-	'Ext.TaskMgr.*',
+	'Ext.TaskManager.*',
 ]);
 
 Ext.onReady(function() {
@@ -79,7 +79,7 @@ var Navigation = new Ext.tree.TreePanel({
 	width: 200,
 	collapsible: true,
 	store: storeTree,
-	title: '<?php i18n('Navigation'); ?>',
+	title: '<?php i18n("Navigation"); ?>',
 	split: true,
 	width: 200,
 	root: {

@@ -12,9 +12,9 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once("library/dbHelper/dbHelper.inc.php");
-include_once("library/I18n/I18n.inc.php");
-require_once("repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
 // Count records variable
 $count = 0;
@@ -40,8 +40,8 @@ if ($_GET['id']){
 			ORDER BY 
 				name";
 }
-$mitosdb->setSQL($sql);
-foreach ($mitos_db->exec() as $urow) {
+$mitos_db->setSQL($sql);
+foreach ($mitos_db->execStatement() as $urow) {
 	$count++;
 	
 	//----------------------------------------------------
