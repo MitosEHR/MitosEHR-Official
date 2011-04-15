@@ -9,6 +9,8 @@
 // 
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
+session_name ( "MitosEHR" );
+session_start();
 
 include_once("../../../library/I18n/I18n.inc.php");
 

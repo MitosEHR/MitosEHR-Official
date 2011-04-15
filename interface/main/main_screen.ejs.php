@@ -10,6 +10,9 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 * author: Gino Rivera Falú
 */
 
+session_name ( "MitosEHR" );
+session_start();
+
 // Reset session count
 $_SESSION['site']['flops'] = 0;
 
@@ -28,7 +31,7 @@ include_once('library/compressor/compressor.inc.php');
 <script type="text/javascript">
 
 Ext.require([
-	'Ext.TaskMgr.*',
+	'Ext.TaskManager.*',
 ]);
 
 Ext.onReady(function() {
@@ -74,12 +77,11 @@ var Navigation = new Ext.tree.TreePanel({
 	region: 'west',
 	hideHeaders: true,
 	useArrows: true,
-	//rootVisible: false,
-	//viewConfig: { plugins: [{ ptype: 'treeviewdd' }] },
+	rootVisible: false,
 	width: 200,
 	collapsible: true,
 	store: storeTree,
-	title: '<?php i18n('Navigation'); ?>',
+	title: '<?php i18n("Navigation"); ?>',
 	split: true,
 	width: 200,
 	root: {
@@ -166,17 +168,16 @@ var Header = Ext.create('Ext.Panel', {
 // tag: ExtJS v4 Ready
 //****************************************************************
 var BottomPanel = Ext.create('Ext.Panel', {
-	region		: 'south',
-	id			: 'BottomPanel',
-	height		: 230,
-	split		: true,
-	collapsible	: true,
-	title		: '...',
-	margins		: '0 0 0 0',
-	bodyPadding	: 0,
+	region			: 'south',
+	id				: 'BottomPanel',
+	height			: 230,
+	split			: true,
+	collapsible		: true,
+	title			: '...',
+	margins			: '0 0 0 0',
+	bodyPadding		: 0,
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
-	html			: 'In Progress...',
 	autoLoad		: {url: 'interface/messages/messages.ejs.php', scripts: true}
 }); // End Bottom Panel
 
@@ -191,11 +192,19 @@ var MainApp = Ext.create('Ext.Panel', {
 	border			: true,
 	margins			: '0 0 0 0',
 	bodyPadding		: 0,
-	waitTitle		:'Connecting', 
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
-	html			: 'In Progress...',
-	autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true}
+	autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true},
+	monitorResize	: true,
+
+	//----------------------------------------------------------------------
+	// Monitor and send the new height value to the panel
+	//----------------------------------------------------------------------
+	listeners : {
+		bodyresize : function(panel, width, height) {
+			if ( Ext.getCmp('topRenderPanel') ){ Ext.getCmp('topRenderPanel').setHeight(height); }
+		}
+	}
 }); // End MainApp
 
 //****************************************************************
