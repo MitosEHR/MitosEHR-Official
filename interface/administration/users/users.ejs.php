@@ -368,7 +368,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
 
   id          : 'addressbookGrid',
   store       : storeUsers,
-  autoHeight  : true,
+  height  : 400,
   border      : false,    
   frame       : false,
   loadMask    : true,
