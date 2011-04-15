@@ -79,7 +79,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 	id				: 'formLogin',
     url				: 'library/authProcedures/auth.inc.php',
     baseParams		: {auth: 'true'},
-    bodyStyle		:'padding:5px 5px 0',
+    bodyStyle		:'background: #ffffff; padding:5px 5px 0',
     waitMsgTarget	: true,
 	frame			: false,
 	border			: false,
@@ -194,7 +194,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 var winLogon = new Ext.create('widget.window', {
     title			: 'MitosEHR Logon',
     closable		: true,
-    width			: 499,
+    width			: 489,
 	height			: 315,
 	bodyPadding		: 2,  		//new 4.0 
 	closeAction		: 'hide',
@@ -203,7 +203,7 @@ var winLogon = new Ext.create('widget.window', {
 	resizable		: false,
 	draggable		: false,
 	closable		: false,
-    bodyStyle		: 'padding: 5px;',
+    bodyStyle		: 'background: #ffffff; padding: 5px;',
     items			: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: 'ui_app/logon_header.png'}}, formLogin ]
 }); // End winLogon
 
