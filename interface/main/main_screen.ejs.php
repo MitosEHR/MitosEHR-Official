@@ -10,6 +10,9 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 * author: Gino Rivera Falú
 */
 
+session_name ( "MitosEHR" );
+session_start();
+
 // Reset session count
 $_SESSION['site']['flops'] = 0;
 

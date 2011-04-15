@@ -10,6 +10,9 @@
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 
+session_name ( "MitosEHR" );
+session_start();
+
 include_once("../../../library/I18n/I18n.inc.php");
 
 //******************************************************************************
@@ -21,6 +24,10 @@ $_SESSION['site']['flops'] = 0;
 
 <script type="text/javascript">
 
+// *************************************************************************************
+// Sencha trying to be like a language
+// using requiered to load diferent components
+// *************************************************************************************
 Ext.require([
     'Ext.grid.*',
     'Ext.data.*',
