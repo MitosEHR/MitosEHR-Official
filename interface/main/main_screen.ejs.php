@@ -165,17 +165,16 @@ var Header = Ext.create('Ext.Panel', {
 // tag: ExtJS v4 Ready
 //****************************************************************
 var BottomPanel = Ext.create('Ext.Panel', {
-	region		: 'south',
-	id			: 'BottomPanel',
-	height		: 230,
-	split		: true,
-	collapsible	: true,
-	title		: '...',
-	margins		: '0 0 0 0',
-	bodyPadding	: 0,
+	region			: 'south',
+	id				: 'BottomPanel',
+	height			: 230,
+	split			: true,
+	collapsible		: true,
+	title			: '...',
+	margins			: '0 0 0 0',
+	bodyPadding		: 0,
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
-	html			: 'In Progress...',
 	autoLoad		: {url: 'interface/messages/messages.ejs.php', scripts: true}
 }); // End Bottom Panel
 
@@ -190,15 +189,17 @@ var MainApp = Ext.create('Ext.Panel', {
 	border			: true,
 	margins			: '0 0 0 0',
 	bodyPadding		: 0,
-	waitTitle		:'Connecting', 
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
-	html			: 'In Progress...',
 	autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true},
-	listeners:{ // FIXME
-		bodyresize: function( p, w, h){
-			alert('Hi');
-			Ext.getCmp('topRenderPanel').setHeight(h);
+	monitorResize	: true,
+
+	//----------------------------------------------------------------------
+	// Monitor and send the new height value to the panel
+	//----------------------------------------------------------------------
+	listeners : {
+		bodyresize : function(panel, width, height) {
+			if ( Ext.getCmp('topRenderPanel') ){ Ext.getCmp('topRenderPanel').setHeight(height); }
 		}
 	}
 }); // End MainApp
