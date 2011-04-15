@@ -176,6 +176,7 @@ var BottomPanel = Ext.create('Ext.Panel', {
 	title			: '...',
 	margins			: '0 0 0 0',
 	bodyPadding		: 0,
+	waitMsgTarget	: true,
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
 	autoLoad		: {url: 'interface/messages/messages.ejs.php', scripts: true}
@@ -195,7 +196,6 @@ var MainApp = Ext.create('Ext.Panel', {
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
 	autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true},
-	monitorResize	: true,
 
 	//----------------------------------------------------------------------
 	// Monitor and send the new height value to the panel

@@ -62,7 +62,7 @@ var winCopyright = Ext.create('widget.window', {
 	width			: 600,
 	height			: 500,
 	closeAction		: 'hide',
-	bodyStyle		: 'padding: 5px;',
+	bodyStyle		: 'background-color: #ffffff; padding: 5px;',
 	modal			: false,
 	resizable		: true,
 	title			: 'MitosEHR Copyright Notice',
