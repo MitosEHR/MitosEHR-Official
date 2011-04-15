@@ -27,7 +27,9 @@ include_once('library/compressor/compressor.inc.php');
 
 <script type="text/javascript">
 
-Ext.require([ '*' ]);
+Ext.require([
+	'Ext.TaskMgr.*',
+]);
 
 Ext.onReady(function() {
 
@@ -43,7 +45,7 @@ var checkSession = function(){
     	}
 	});
 } 
-Ext.TaskMgr.start({
+Ext.TaskManager.start({
     run: checkSession,
     interval: 10000
 });

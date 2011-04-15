@@ -26,12 +26,9 @@ Ext.require([
 	'Ext.JSON.*',
 	'Ext.form.*',
     'Ext.window.*',
-    'Ext.data.*',
-    'Ext.tip.QuickTips'
+    'Ext.data.*'
 ]);
 Ext.onReady(function(){
-
-Ext.tip.QuickTips.init();
 
 // *************************************************************************************
 // Structure, data for storeLang
