@@ -9,24 +9,20 @@
 // 
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
-
 include_once("../../../library/I18n/I18n.inc.php");
-
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
-
 ?>
 <script type="text/javascript">
-Ext.require([ 'Ext.grid.*', 'Ext.data.*' ]);
-
+Ext.require([ '*' ]);
 Ext.onReady(function(){
-
+Ext.QuickTips.init();
 // *************************************************************************************
 // Users Model
 // *************************************************************************************
-Ext.regModel('MUsers', { fields: [
+Ext.regModel('Users', { fields: [
 	{name: 'id',                    type: 'int'},
 	{name: 'username',              type: 'string'},
 	{name: 'password',              type: 'auto'},
@@ -72,7 +68,7 @@ Ext.regModel('MUsers', { fields: [
 	idProperty: 'id'
 });
 var storeUsers = new Ext.data.Store({
-    model		: 'MUsers',
+    model		: 'Users',
     proxy		: {
     	type	: 'ajax',
         url 	: 'interface/administration/users/data_read.ejs.php',
@@ -81,7 +77,8 @@ var storeUsers = new Ext.data.Store({
             idProperty		: 'id',
             totalProperty	: 'totals',
             root			: 'row'
-        },
+    	}
+    },
     autoLoad: true
 });
 
@@ -89,14 +86,14 @@ var storeUsers = new Ext.data.Store({
 // Structure, data for Titles
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('MTitles', { fields: [
+Ext.regModel('Titles', { fields: [
 	{name: 'option_id', type: 'string'},
     {name: 'title', type: 'string'}
 ],
 	idProperty: 'option_id'
 });
 var storeTitles = new Ext.data.Store({
-	model		: 'MTitles',
+	model		: 'Titles',
 	proxy		: {
 		type	: 'ajax',
 		url		: 'interface/administration/users/component_data.ejs.php?task=titles',
@@ -114,14 +111,14 @@ var storeTitles = new Ext.data.Store({
 // Structure, data for Types
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('MTypes', { fields: [
+Ext.regModel('Types', { fields: [
 	{name: 'option_id', type: 'string'},
     {name: 'title', type: 'string'}
 ],
 	idProperty: 'option_id'
 });
 var storeTypes = new Ext.data.Store({
-	model		: 'MTypes',
+	model		: 'Types',
 	proxy		: {
 		type	: 'ajax',
 		url		: 'interface/administration/users/component_data.ejs.php?task=types',
@@ -139,14 +136,14 @@ var storeTypes = new Ext.data.Store({
 // Structure, data for Facilities
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('MFacilities', { fields: [
+Ext.regModel('Facilities', { fields: [
 	{name: 'id', type: 'string'},
     {name: 'names', type: 'string'}
 ],
 	idProperty: 'id'
 });
 var storeFacilities = new Ext.data.Store({
-	model		: 'MFacilities',
+	model		: 'Facilities',
 	proxy		: {
 		type	: 'ajax',
 		url		: 'interface/administration/users/component_data.ejs.php?task=facilities',
@@ -164,14 +161,14 @@ var storeFacilities = new Ext.data.Store({
 // Structure, data for AccessControls
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('MAccessControls', { fields: [
+Ext.regModel('AccessControls', { fields: [
 	{name: 'id', type: 'string'},
     {name: 'role_name', type: 'string'}
 ],
 	idProperty: 'id'
 });
 var storeAccessControls = new Ext.data.Store({
-	model		: 'MAccessControls',
+	model		: 'AccessControls',
 	proxy		: {
 		type	: 'ajax',
 		url		: 'interface/administration/users/component_data.ejs.php?task=accessControls',
@@ -206,126 +203,99 @@ var storeSeeAuthorizations = new Ext.data.ArrayStore({
 // Add or Edit purpose
 // *************************************************************************************
 var frmUsers = new Ext.form.FormPanel({
-  id          : 'frmUsers',
-  bodyStyle   : 'padding: 5px;',
-  autoWidth   : true,
-  border      : false,
-  hideLabels  : true,
-  items: [{
-      id        : 'formfileds',
-      bodyStyle : 'padding: 20px',
-      items: 
-      [ 
-        { xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
-        { xtype: 'fieldcontainer',
-          msgTarget : 'side', 
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Username"); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'username', name: 'username' },
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Password"); ?>: '},
-            { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
-          ] 
-        },{ xtype: 'fieldcontainer',
-          msgTarget : 'side', 
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("First, Middle, Last"); ?>: '},
-            { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: '<?php i18n('title'); ?>', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
-            { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
-            { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
-            { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
-          ]
-        },{ xtype: 'fieldcontainer',
-          msgTarget : 'side', 
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Active?"); ?>: '},
-            { width: 100, xtype: 'checkbox', id: 'active', name: 'active' },
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Authorized?"); ?>: '},
-            { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
-          ]  
-        },{ xtype: 'fieldcontainer',
-          msgTarget : 'side', 
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Default Facility"); ?>: '},
-            { width: 100, xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Authorizations"); ?>: '},
-            { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
-          ] 
-        },{ xtype: 'fieldcontainer',
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Access Control"); ?>: '},
-            { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Taxonomy"); ?>: '},
-            { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
-          ] 
-        },{ 
-          xtype: 'fieldcontainer',
-          items: [
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Federal Tax ID"); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("Fed Drug ID"); ?>: '},
-            { width: 105, xtype: 'textfield', id: 'federaldrugid', name: 'federaldrugid' }
- 
-          ] 
-        },{ 
-          xtype: 'fieldcontainer',
-          items: [
-           	{ width: 100, xtype: 'displayfield', value: '<?php i18n("UPIN"); ?>: '},
-            { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
-            { width: 100, xtype: 'displayfield', value: '<?php i18n("NPI"); ?>: '},
-            { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
-          ]
-        },{ 
-          xtype: 'fieldcontainer',
-          items: [
-           	{ width: 100, xtype: 'displayfield', value: '<?php i18n("Job Description"); ?>: '},
-            { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
-          ]  
-        },{html: '<hr style="margin:5px 0"><p><?php i18n("Additional Info"); ?>:</p>', border:false},
-        { width: 420, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
-      ]
-  }], 
-  // Window Bottom Bar
-  bbar:[{
-    text      :'<?php i18n("Save"); ?>',
-    ref       : '../save',
-    iconCls   : 'save',
-    handler: function() {
-
-      //----------------------------------------------------------------
-      // 1. Convert the form data into a JSON data Object
-      // 2. Re-format the Object to be a valid record (FacilityRecord)
-      //----------------------------------------------------------------
-      var obj = eval('(' + Ext.util.JSON.encode(frmUsers.getForm().getValues()) + ')');
-      var rec = new usersRecord(obj);
-      
-      //----------------------------------------------------------------
-      // Check if it has to add or update
-      // Update: 1. Get the record from store, 2. get the values from the form, 3. copy all the 
-      // values from the form and push it into the store record.
-      // Add: The re-formated record to the dataStore
-      //----------------------------------------------------------------
-      if (frmUsers.getForm().findField('id').getValue()){ // Update
-      	  var record = storeUsers.getAt(rowPos);
-          var fieldValues = frmUsers.getForm().getValues();
-          for ( k=0; k <= storeUsers.fields.getCount()-1; k++) {
-			  i = storeUsers.fields.get(k).name;
-			  record.set( i, fieldValues[i] );
-		  }
-      } else { // Add
-        storeUsers.add( rec );
-      }
-
-      storeUsers.save();          // Save the record to the dataStore
-      storeUsers.commitChanges(); // Commit the changes
-      winUsers.hide();            // Finally hide the dialog window
-      storeUsers.reload();        // Reload the dataSore from the database
-      
-    }
-  },{
-    text:'<?php i18n("Close"); ?>',
-    iconCls: 'delete',
-    handler: function(){ winUsers.hide(); }
-  }]
+	id          : 'frmUsers',
+	bodyStyle   : 'padding: 5px;',
+	autoWidth   : true,
+	width	  	  : 495,
+	border      : false,
+	hideLabels  : true,
+	defaults: {
+		labelWidth: 89,
+	    anchor: '100%',
+	    layout: {
+	    	type: 'hbox',
+	        defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
+	    }
+	},
+	items: [
+		{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
+	    { xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      msgTarget : 'under', 
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
+	        { width: 100, xtype: 'textfield', id: 'username', name: 'username' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
+	        { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
+	      ] 
+	    },{
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      msgTarget : 'under', 
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
+	        { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: '<?php i18n('title'); ?>', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
+	        { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
+	        { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
+	        { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
+	      ]
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      msgTarget : 'under', 
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Active?'); ?>: '},
+	        { width: 100, xtype: 'checkbox', id: 'active', name: 'active' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorized?'); ?>: '},
+	        { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
+	      ]  
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      msgTarget : 'under', 
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
+	        { width: 100, xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
+	        { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
+	      ] 
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
+	        { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
+	        { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
+	      ]
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Federal Tax ID'); ?>: '},
+	        { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Fed Drug ID'); ?>: '},
+	        { width: 105, xtype: 'textfield', id: 'federaldrugid', name: 'federaldrugid' }
+	      ]
+	    },{
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      items: [
+	       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
+	        { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('NPI'); ?>: '},
+	        { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
+	      ]
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      items: [
+	       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
+	        { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
+	      ]  
+	    },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
+	    { width: 410, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
+	],
 });
 
 // *************************************************************************************
@@ -333,15 +303,62 @@ var frmUsers = new Ext.form.FormPanel({
 // *************************************************************************************
 var winUsers = new Ext.Window({
   id          : 'winUsers',
-  width       : 490,
+  width       : 525,
   autoHeight  : true,
-  modal       : true,
+  //modal       : true,
+  border	  : false,
   resizable   : false,
-  autoScroll  : true,
-  title       : '<?php i18n("Add or Edit User"); ?>',
+  //autoScroll  : true,
+  title       : '<?php i18n('Add or Edit User'); ?>',
   closeAction : 'hide',
   renderTo    : document.body,
-  items: [ frmUsers ],
+  items: [frmUsers],
+  dockedItems:[{ //  START WINDOW BOTTOM BAR
+  	xtype: 'toolbar',
+	dock: 'bottom',
+	items: [{
+	    text      :'<?php i18n('Save'); ?>',
+	    border	  : false,
+	    ref       : '../save',
+	    iconCls   : 'save',
+	    handler: function() {
+	
+	      //----------------------------------------------------------------
+	      // 1. Convert the form data into a JSON data Object
+	      // 2. Re-format the Object to be a valid record (FacilityRecord)
+	      //----------------------------------------------------------------
+	      var obj = eval('(' + Ext.util.JSON.encode(frmUsers.getForm().getValues()) + ')');
+	      var rec = new usersRecord(obj);
+	      
+	      //----------------------------------------------------------------
+	      // Check if it has to add or update
+	      // Update: 1. Get the record from store, 2. get the values from the form, 3. copy all the 
+	      // values from the form and push it into the store record.
+	      // Add: The re-formated record to the dataStore
+	      //----------------------------------------------------------------
+	      if (frmUsers.getForm().findField('id').getValue()){ // Update
+	      	  var record = storeUsers.getAt(rowPos);
+	          var fieldValues = frmUsers.getForm().getValues();
+	          for ( k=0; k <= storeUsers.fields.getCount()-1; k++) {
+				  i = storeUsers.fields.get(k).name;
+				  record.set( i, fieldValues[i] );
+			  }
+	      } else { // Add
+	        storeUsers.add( rec );
+	      }
+	
+	      storeUsers.save();          // Save the record to the dataStore
+	      storeUsers.commitChanges(); // Commit the changes
+	      winUsers.hide();            // Finally hide the dialog window
+	      storeUsers.reload();        // Reload the dataSore from the database
+	      
+	    }
+	  },{
+	    text:'<?php i18n('Close'); ?>',
+	    iconCls: 'delete',
+	    handler: function(){ winUsers.hide(); }
+    }]
+  }] // END WINDOW BOTTOM BAR
 }); // END WINDOW
 
 // *************************************************************************************
@@ -409,6 +426,15 @@ var addressbookGrid = new Ext.grid.GridPanel({
     handler: function(){ 
       winUsers.show();
     }
+  },'-',{
+    xtype     :'button',
+    id        : 'loadAddressbook',
+    ref       : '../loadAddressbook',
+    text      : '<?php i18n('Reload Grid - Debug'); ?>',
+    iconCls   : 'edit',
+    handler: function(){ 
+      storeUsers.load();
+    }
   }],
   //plugins: [new Ext.ux.grid.Search({
   //  mode            : 'local',
@@ -426,13 +452,13 @@ var addressbookGrid = new Ext.grid.GridPanel({
 //******************************************************************************
 // Render panel
 //******************************************************************************
-var topRenderPanel = Ext.create('Ext.Panel', {
-	title		: '<?php i18n("Users"); ?>',
+var topRenderPanel = Ext.create('Ext.panel.Panel', {
+	title		: '<?php i18n('Users'); ?>',
 	renderTo	: Ext.getCmp('MainApp').body,
   	frame 		: false,
 	border 		: false,
 	id			: 'topRenderPanel',
-	loadMask    : true,
+	//loadMask    : true,
 	items		: [addressbookGrid]
 });
 
