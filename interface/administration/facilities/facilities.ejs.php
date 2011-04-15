@@ -77,9 +77,12 @@ Ext.onReady(function() {
 	// Facility Grid Panel
 	// *************************************************************************************
 	var FacilityGrid = Ext.create('Ext.grid.Panel', {
-		store: FacilityStore,
-        columnLines: true,
-        forceFit: true,
+		store		: FacilityStore,
+        columnLines	: true,
+        frame		: false,
+        frameHeader	: false,
+        border		: false,
+        layout		: 'fit',
         columns: [
 			{
 				text     : '<?php i18n("Name"); ?>',
@@ -89,19 +92,19 @@ Ext.onReady(function() {
             },
             {
 				text     : '<?php i18n("Phone"); ?>',
-				width    : 75,
+				width    : 100,
 				sortable : true,
 				dataIndex: 'phone'
             },
             {
 				text     : '<?php i18n("Fax"); ?>',
-				width    : 75,
+				width    : 100,
 				sortable : true,
 				dataIndex: 'fax'
             },
             {
 				text     : '<?php i18n("City"); ?>',
-				width    : 75,
+				width    : 100,
 				sortable : true,
 				dataIndex: 'city'
             }
@@ -115,8 +118,10 @@ Ext.onReady(function() {
 	var topRenderPanel = Ext.create('Ext.Panel', {
 		title		: '<?php i18n("Facilities"); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
+		layout		: 'fit',
+		height		: Ext.getCmp('MainApp').getHeight(),
   		frame		: false,
-		border		: false,
+  		border		: false,
 		bodyPadding	: 0,
 		id			: 'topRenderPanel',
 		items: [ FacilityGrid ]

@@ -195,7 +195,13 @@ var MainApp = Ext.create('Ext.Panel', {
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
 	html			: 'In Progress...',
-	autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true}
+	autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true},
+	listeners:{ // FIXME
+		bodyresize: function( p, w, h){
+			alert('Hi');
+			Ext.getCmp('topRenderPanel').setHeight(h);
+		}
+	}
 }); // End MainApp
 
 //****************************************************************
