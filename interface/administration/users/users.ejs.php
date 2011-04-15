@@ -16,7 +16,7 @@ include_once("../../../library/I18n/I18n.inc.php");
 $_SESSION['site']['flops'] = 0;
 ?>
 <script type="text/javascript">
-//Ext.require([ '*' ]);
+Ext.require([ '*' ]);
 Ext.onReady(function(){
 Ext.QuickTips.init();
 // *************************************************************************************
@@ -77,7 +77,7 @@ var storeUsers = new Ext.data.Store({
             idProperty		: 'id',
             totalProperty	: 'totals',
             root			: 'row'
-        }
+    	}
     },
     autoLoad: true
 });
@@ -203,100 +203,99 @@ var storeSeeAuthorizations = new Ext.data.ArrayStore({
 // Add or Edit purpose
 // *************************************************************************************
 var frmUsers = new Ext.form.FormPanel({
-  id          : 'frmUsers',
-  bodyStyle   : 'padding: 5px;',
-  autoWidth   : true,
-  width	  	  : 495,
-  border      : false,
-  hideLabels  : true,
-  defaults: {
-  	labelWidth: 89,
-    anchor: '100%',
-    layout: {
-    	type: 'hbox',
-        defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
-    }
-  },
-  items: [
-    { xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
-    { xtype: 'fieldcontainer',
-      defaults: { hideLabel: true },
-      msgTarget : 'under', 
-      items: [
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
-        { width: 100, xtype: 'textfield', id: 'username', name: 'username' },
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
-        { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
-      ] 
-    },{ 
-      xtype: 'fieldcontainer',
-      defaults: { hideLabel: true },
-      msgTarget : 'under', 
-      items: [
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
-        { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: '<?php i18n('title'); ?>', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
-        { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
-        { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
-        { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
-      ]
-    },{ 
-      xtype: 'fieldcontainer',
-      defaults: { hideLabel: true },
-      msgTarget : 'under', 
-      items: [
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Active?'); ?>: '},
-        { width: 100, xtype: 'checkbox', id: 'active', name: 'active' },
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorized?'); ?>: '},
-        { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
-      ]  
-    },{ 
-      xtype: 'fieldcontainer',
-      defaults: { hideLabel: true },
-      msgTarget : 'under', 
-      items: [
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
-        { width: 100, xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
-        { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
-      ] 
-    },{ 
-      xtype: 'fieldcontainer',
-      defaults: { hideLabel: true },
-      items: [
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
-        { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
-        { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
-      ] 
-    },{ 
-      xtype: 'fieldcontainer',
-      defaults: { hideLabel: true },
-      items: [
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Federal Tax ID'); ?>: '},
-        { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('Fed Drug ID'); ?>: '},
-        { width: 105, xtype: 'textfield', id: 'federaldrugid', name: 'federaldrugid' }
- 
-          ] 
-        },{ 
-          xtype: 'fieldcontainer',
-      defaults: { hideLabel: true },
-      items: [
-       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
-        { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
-        { width: 100, xtype: 'displayfield', value: '<?php i18n('NPI'); ?>: '},
-        { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
-      ]
-    },{ 
-      xtype: 'fieldcontainer',
-      defaults: { hideLabel: true },
-      items: [
-       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
-        { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
-      ]  
-    },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
-    { width: 410, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
-  ], 
+	id          : 'frmUsers',
+	bodyStyle   : 'padding: 5px;',
+	autoWidth   : true,
+	width	  	  : 495,
+	border      : false,
+	hideLabels  : true,
+	defaults: {
+		labelWidth: 89,
+	    anchor: '100%',
+	    layout: {
+	    	type: 'hbox',
+	        defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
+	    }
+	},
+	items: [
+		{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
+	    { xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      msgTarget : 'under', 
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
+	        { width: 100, xtype: 'textfield', id: 'username', name: 'username' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
+	        { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
+	      ] 
+	    },{
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      msgTarget : 'under', 
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
+	        { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: '<?php i18n('title'); ?>', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
+	        { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
+	        { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
+	        { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
+	      ]
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      msgTarget : 'under', 
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Active?'); ?>: '},
+	        { width: 100, xtype: 'checkbox', id: 'active', name: 'active' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorized?'); ?>: '},
+	        { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
+	      ]  
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      msgTarget : 'under', 
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
+	        { width: 100, xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
+	        { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
+	      ] 
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
+	        { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
+	        { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
+	      ]
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      items: [
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Federal Tax ID'); ?>: '},
+	        { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('Fed Drug ID'); ?>: '},
+	        { width: 105, xtype: 'textfield', id: 'federaldrugid', name: 'federaldrugid' }
+	      ]
+	    },{
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      items: [
+	       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
+	        { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
+	        { width: 100, xtype: 'displayfield', value: '<?php i18n('NPI'); ?>: '},
+	        { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
+	      ]
+	    },{ 
+	      xtype: 'fieldcontainer',
+	      defaults: { hideLabel: true },
+	      items: [
+	       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
+	        { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
+	      ]  
+	    },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
+	    { width: 410, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
+	],
 });
 
 // *************************************************************************************
@@ -399,11 +398,11 @@ var addressbookGrid = new Ext.grid.GridPanel({
   },
   columns: [
     { text: 'id', sortable: false, dataIndex: 'id', hidden: true},
-    { width: 100,  text: '<?php i18n('Username'); ?>', sortable: true, dataIndex: 'username' },
-    { width: 150,  text: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'fullname' },
-    { width: 200,  text: '<?php i18n('Aditional info'); ?>', sortable: true, dataIndex: 'info' },
-    { text: '<?php i18n('Active?'); ?>', sortable: true, dataIndex: 'actived' },
-    { text: '<?php i18n('Authorized?'); ?>', sortable: true, dataIndex: 'authorizedd' }
+    { width: 100,  text: '<?php i18n("Username"); ?>', sortable: true, dataIndex: 'username' },
+    { width: 150,  text: '<?php i18n("Name"); ?>', sortable: true, dataIndex: 'fullname' },
+    { width: 200,  text: '<?php i18n("Aditional info"); ?>', sortable: true, dataIndex: 'info' },
+    { text: '<?php i18n("Active?"); ?>', sortable: true, dataIndex: 'actived' },
+    { text: '<?php i18n("Authorized?"); ?>', sortable: true, dataIndex: 'authorizedd' }
   ],
   // *************************************************************************************
   // Grid Menu
@@ -411,7 +410,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
   tbar: [{
     xtype     :'button',
     id        : 'addAddressbook',
-    text      : '<?php i18n('Add User'); ?>',
+    text      : '<?php i18n("Add User"); ?>',
     iconCls   : 'icoAddressBook',
     handler   : function(){
       Ext.getCmp('frmUsers').getForm().reset(); // Clear the form
@@ -421,7 +420,7 @@ var addressbookGrid = new Ext.grid.GridPanel({
     xtype     :'button',
     id        : 'editAddressbook',
     ref       : '../editAddressbook',
-    text      : '<?php i18n('Edit User'); ?>',
+    text      : '<?php i18n("Edit User"); ?>',
     iconCls   : 'edit',
     disabled  : true,
     handler: function(){ 

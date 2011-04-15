@@ -1,0 +1,107 @@
+@mixin extjs-toolbar {
+    .#{$prefix}toolbar {
+        font-size: $toolbar-font-size;
+
+        border: 1px solid transparent;
+
+        .#{$prefix}btn {
+            margin: $toolbar-margin;
+        }
+        
+        .#{$prefix}form-item-label{
+            font-size: $toolbar-font-size;
+            line-height: 15px;
+        }
+    }
+    
+    .#{$prefix}toolbar-footer {
+        background: transparent;
+        border: 0px none;
+        margin-top: 3px;
+        
+        padding: 3px;
+        
+        .#{$prefix}box-inner {
+            border-width: 0;
+        }
+        .#{$prefix}box-item {
+            margin-bottom: 0px;
+        }
+    }
+
+    .#{$prefix}toolbar-text {
+        margin-top: -1px;
+        padding: $toolbar-text-padding;
+        
+        white-space: nowrap;
+        color: $toolbar-text-color !important;
+        line-height: 22px;
+    }
+
+    .#{$prefix}ie6 .#{$prefix}toolbar-text,
+    .#{$prefix}ie7 .#{$prefix}toolbar-text {
+        position: relative;
+        top: -3px;
+    }
+
+    .#{$prefix}toolbar-spacer {
+        width: $toolbar-spacer-width;
+    }
+
+    .#{$prefix}toolbar-separator {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: theme-image($theme-name, 'grid/grid-blue-split.gif');
+        display: block;
+        font-size: 1px;
+        height: 16px;
+        width: 4px;
+        overflow: hidden;
+        cursor: default;
+        margin: 0 2px 0;
+        border: 0;
+    }
+
+    // Background for overflow button inserted by the Menu box overflow handler within a toolbar
+    .#{$prefix}toolbar-more-icon {
+        background-image: theme-image($theme-name, 'toolbar/more.gif') !important;
+        background-position: 2px center !important;
+        background-repeat: no-repeat;
+    }
+}
+
+/**
+ * @mixin ext-toolbar-ui
+ * @class Ext.toolbar.Toolbar
+ * @param {String} $ui The name of the UI
+ * @param {Color} $background-color The background color of the toolbar (defaults to transparent)
+ * @param {Gradient/color-stops} $background-gradient The background gradient of the toolbar (defaults to null)
+ * @param {Color} $border-color The border color of the toolbar (defaults to null)
+ */
+@mixin extjs-toolbar-ui(
+    $ui,
+    
+    $background-color: transparent,
+    $background-gradient: null,
+    
+    $border-color: null
+) {
+    .#{$prefix}toolbar-#{$ui} {
+        @if $border-color != null {
+            border-color: $border-color;
+        }
+        
+        @include background-gradient($background-color, $background-gradient);
+    }
+    
+    @if not $supports-gradients or $compile-all {
+        @if $background-gradient != null {
+            .#{$prefix}nlg {
+                .#{$prefix}toolbar-#{$ui} {
+                    background-image: theme-image($theme-name, 'toolbar/toolbar-bg.gif') !important;
+                    background-repeat: repeat-x;
+                }
+            }
+        }
+    }
+}

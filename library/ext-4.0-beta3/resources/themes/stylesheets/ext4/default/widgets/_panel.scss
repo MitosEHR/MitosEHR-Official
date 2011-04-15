@@ -1,0 +1,427 @@
+/**
+  * @class Ext.Panel
+  * Used to create the base structure of an Ext.Panel
+  */
+@mixin extjs-panel {
+    .#{$prefix}panel, .#{$prefix}plain {
+        overflow: hidden;
+        position: relative;
+    }
+
+    // Workaround for disappearing right edge in IE6
+     @if $include-ie {
+        .#{$prefix}ie6 {
+            .#{$prefix}panel-framed-mr,
+            .#{$prefix}panel-framed-br {
+                zoom: 1;
+            }
+        }
+    }
+            
+    //panel header
+    .#{$prefix}panel-header {
+        border-bottom-width: 0;
+        
+        padding: $panel-header-padding;
+    }
+    
+    .#{$prefix}panel-header-icon,
+    .#{$prefix}window-header-icon {
+        width:16px;
+        height:16px;
+        background-repeat:no-repeat;
+        background-position:0 0;
+        vertical-align:middle;
+        margin-right:4px;
+        margin-top:-1px;
+        margin-bottom:-1px;
+    }
+
+    .#{$prefix}panel-header.#{$prefix}panel-header-framed {
+        border-bottom-width: 1px !important;
+    }
+
+    .#{$prefix}panel-header-draggable,
+    .#{$prefix}panel-header-draggable .#{$prefix}panel-header-text,
+    .#{$prefix}window-header-draggable,
+    .#{$prefix}window-header-draggable .#{$prefix}window-header-text{
+        cursor: move;
+    }
+
+    // A ghost is just a Panel. The only extra it needs is opacity.
+    // TODO: Make opacity a variable
+    .#{$prefix}panel-ghost, .#{$prefix}window-ghost {
+        @include opacity(0.65);
+        cursor: move;
+    }
+
+    .#{$prefix}panel-header-horizontal, .#{$prefix}window-header-horizontal, .#{$prefix}btn-group-header-horizontal {
+        .#{$prefix}panel-header-body, .#{$prefix}window-header-body, .#{$prefix}btn-group-header-body {
+            width: 100%;
+        }
+    }
+
+    .#{$prefix}panel-header-vertical, .#{$prefix}window-header-vertical, .#{$prefix}btn-group-header-vertical {
+        .#{$prefix}panel-header-body, .#{$prefix}window-header-body, .#{$prefix}btn-group-header-body {
+            height: 100%;
+        }
+    }
+
+    // Vertical headers must be inline blocks so that they acquire width from the content 
+    .#{$prefix}panel-header-vertical, .#{$prefix}panel-header-vertical .#{$prefix}panel-header-body,
+    .#{$prefix}btn-group-header-vertical, .#{$prefix}btn-group-header-vertical .#{$prefix}btn-group-header-body,
+    .#{$prefix}window-header-vertical, .#{$prefix}window-header-vertical .#{$prefix}window-header-body {
+        display: -moz-inline-stack;
+        display: inline-block;
+    }
+
+    .#{$prefix}panel-header-text {
+        @include no-select;
+        white-space: nowrap;
+    }
+    
+    .#{$prefix}panel-header-left,
+    .#{$prefix}panel-header-right {
+        .#{$prefix}vml-base {
+            left: -3px !important;
+        }
+    }
+
+    //panel body
+    .#{$prefix}panel-body {
+        overflow: hidden;
+        position: relative;
+        border-style: $panel-body-border-style;
+        border-width: $panel-body-border-width;
+    }
+
+    //panel with border:false specified
+    .#{$prefix}panel-noborder-docked-top,
+    .#{$prefix}panel-noborder-docked-bottom,
+    .#{$prefix}panel-noborder-docked-left,
+    .#{$prefix}panel-noborder-docked-right,
+    .#{$prefix}panel-noborder-body {
+        border-width: 0 !important;
+    }
+
+    /**
+      * Dock Layouts
+      * @todo move this somewhere else?
+      */
+    .#{$prefix}docked-top {
+        border-bottom-width: 0 !important;
+        
+        .#{$prefix}panel-wrap-child {
+            border-bottom-width: 0 !important;
+        }
+    }
+    
+    .#{$prefix}docked-bottom {
+        border-top-width: 0 !important;
+        
+        .#{$prefix}panel-wrap-child {
+            border-top-width: 0 !important;
+        }
+    }
+    
+    .#{$prefix}docked-left {
+        border-right-width: 0 !important;
+
+        .#{$prefix}panel-wrap-child {
+            border-right-width: 0 !important;
+        }
+    }
+    
+    .#{$prefix}docked-right {
+        border-left-width: 0 !important;
+
+        .#{$prefix}panel-wrap-child {
+            border-left-width: 0 !important;
+        }
+    }
+
+    // Needs important to win over the .#{$prefix}docked-left/right/top/bottom rules above.
+    .#{$prefix}panel-collapsed-placeholder {
+        border-width: 1px !important;
+    }
+
+    .#{$prefix}panel-header-vertical {
+        .#{$prefix}surface {
+            margin-top: 5px;
+        }
+    }
+    
+    @if not $supports-gradients or $compile-all {
+        .#{$prefix}nlg .#{$prefix}panel-header-vertical {
+            .#{$prefix}frame-mc {
+                background-repeat: repeat-y;
+            }
+        }
+    }
+
+    .#{$prefix}region-collapsed-placeholder {
+        border-width: 1px;
+    }
+    
+    @if $include-panel-uis == true {
+        @include extjs-panel-ui(
+            'default',
+            
+            $ui-base-color: $panel-base-color,
+            $ui-border-color: $panel-border-color,
+            
+            $ui-frame-background-color: $panel-frame-background-color,
+            $ui-frame-border-radius: $panel-frame-border-radius,
+            $ui-frame-border-color: $panel-frame-border-color,
+
+            $ui-header-color: $panel-header-color,
+            $ui-header-font-size: $panel-header-font-size,
+            $ui-header-font-weight: $panel-header-font-weight,
+            $ui-header-border-color: $panel-header-border-color,
+/*            $ui-header-inner-border-color: $panel-header-inner-border-color,*/
+            $ui-header-background-color: $panel-header-background-color,
+            $ui-header-background-gradient: $panel-header-background-gradient,
+
+            $ui-body-color: $panel-body-color,
+            $ui-body-border-color: $panel-body-border-color,
+            $ui-body-background-color: $panel-body-background-color
+        );
+    }
+    
+    .x-panel-header-plain,
+    .x-panel-body-plain {
+        border: 0;
+        padding: 0;
+    }
+}
+
+/**
+  * @class Ext.Panel
+  * Used to create a visual theme for an Ext.Panel
+  */
+@mixin extjs-panel-ui(
+    $ui-label,
+    
+    $ui-base-color: null,
+    $ui-border-color: null,
+    
+    $ui-frame-background-color: null,
+    $ui-frame-border-radius: null,
+    $ui-frame-border-color: null,
+    
+    $ui-header-color: null,
+    $ui-header-font-family: $panel-header-font-family,
+    $ui-header-font-size: $panel-header-font-size,
+    $ui-header-font-weight: $panel-header-font-weight,
+    $ui-header-border-color: null,
+    $ui-header-background-color: null,
+    $ui-header-background-gradient: null,
+    $ui-header-inner-border-color: lighten($ui-header-background-color, 10),
+    
+    $ui-body-color: null,
+    $ui-body-border-color: null,
+    $ui-body-background-color: null
+){
+    .#{$prefix}panel-#{$ui-label} {
+        @if $ui-border-color != null { border-color: $ui-border-color; }
+    }
+    
+    .#{$prefix}panel-framed-#{$ui-label} {
+        @if $ui-frame-border-color != null {     border-color: $ui-frame-border-color; }
+        @if $ui-frame-background-color != null { background: $ui-frame-background-color; }
+        
+        @if $panel-header-inner-border and $ui-header-inner-border-color != null {
+            @include inner-border(
+                $width: 1px, 
+                $color: $ui-header-inner-border-color
+            );
+        }
+    }
+    
+    //panel header
+    .#{$prefix}panel-header-#{$ui-label} {
+        @if $ui-header-border-color != null {
+            border-color: $ui-header-border-color;
+            border-width: $panel-header-border-width;
+            border-style: $panel-header-border-style;
+        }
+
+        @if $supports-gradients or $compile-all {
+            @if $ui-header-background-color != null { @include background-gradient($ui-header-background-color, $ui-header-background-gradient); }
+            
+            @if $panel-header-inner-border and $ui-header-inner-border-color != null {
+                @include inner-border(
+                    $width: $panel-header-inner-border-width, 
+                    $color: $ui-header-inner-border-color
+                );
+            }
+        }
+        
+        .#{$prefix}panel-header-text-#{$prefix} {
+            @if $ui-header-font-weight != null { font-weight: $ui-header-font-weight; }
+            @if $ui-header-font-size != null { font-size: $ui-header-font-size; }
+            @if $ui-header-color != null { color: $ui-header-color; }
+        }
+    }
+    
+    @if $ui-header-background-color != null and $ui-header-background-gradient != null {
+        @if not $supports-gradients or $compile-all {
+            .#{$prefix}nlg .#{$prefix}panel-header-#{$ui-label}-top,
+            .#{$prefix}nlg .#{$prefix}panel-header-#{$ui-label}-bottom {
+                background-image: theme-image($theme-name, 'panel-header/panel-header-#{$ui-label}-top-bg.gif');
+            }
+            
+            .#{$prefix}nlg .#{$prefix}panel-header-#{$ui-label}-left {
+                background-image: theme-image($theme-name, 'panel-header/panel-header-#{$ui-label}-left-bg.gif');
+/*                background-position: top left !important;*/
+            }
+            
+            .#{$prefix}nlg .#{$prefix}panel-header-#{$ui-label}-right {
+                background-image: theme-image($theme-name, 'panel-header/panel-header-#{$ui-label}-right-bg.gif');
+/*                background-position: top right !important;*/
+            }
+        }
+    }
+
+    .#{$prefix}panel-header-#{$ui-label}-framed {
+        border-bottom-width: 1px !important;
+        
+        @if $panel-header-inner-border != null {
+            @include inner-border(
+                $width: 1px 1px 0, 
+                $color: $ui-header-inner-border-color
+            );
+        }
+    }
+
+    .#{$prefix}panel-header-text-#{$ui-label} {
+        @if $ui-header-color != null { color: $ui-header-color; }
+        
+        @if $ui-header-font-size != null {   font-size: $ui-header-font-size; }
+        @if $ui-header-font-weight != null { font-weight: $ui-header-font-weight; }
+        @if $ui-header-font-family != null { font-family: $ui-header-font-family; }
+        
+        line-height: $panel-header-line-height;
+    }
+
+    //panel body
+    .#{$prefix}panel-body-#{$ui-label} {
+        @if $ui-body-background-color != null { background: $ui-body-background-color; }
+        @if $ui-body-border-color != null {     border-color: $ui-body-border-color; }
+        @if $ui-body-color != null {            color: $ui-body-color; }
+    }
+
+    .#{$prefix}panel-body-#{$ui-label}-framed {
+        border-width: 0;
+        @if $ui-frame-background-color != null { background: $ui-frame-background-color; }
+    }
+    
+
+    .#{$prefix}panel-collapsed {
+        .#{$prefix}window-header-#{$ui-label},
+        .#{$prefix}panel-header-#{$ui-label} {
+            @if $ui-body-border-color != null { border-color: $ui-body-border-color; }
+        }
+    }
+
+    .#{$prefix}panel-header-#{$ui-label}-vetical {
+        @if $ui-body-border-color != null { border-color: $ui-body-border-color; }
+    }
+    
+    @if $ui-base-color != null {
+        @if $supports-gradients or $compile-all {
+            .#{$prefix}panel-header-#{$ui-label}-left,
+            .#{$prefix}panel-header-#{$ui-label}-right {
+                @include background-gradient($ui-header-background-color, $ui-header-background-gradient, right);
+            }
+        }
+    }
+
+    // TODO: Fix this genocide of Sass.
+    // and window stuff in here, wtf?
+    @if $include-webkit {
+        .#{$prefix}webkit {
+            #{$prefix}panel-ghost > div.#{$prefix}panel-body-#{$ui-label},
+            #{$prefix}panel-ghost > div.#{$prefix}window-body-#{$ui-label} {
+                background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, from(white), color-stop(0.02, #E5ECF7), to(#B7CBE7));
+            }
+        }
+    }
+
+    @if $include-ff {
+        .#{$prefix}gecko {
+            .#{$prefix}panel-ghost > div.#{$prefix}panel-body-#{$ui-label},
+            .#{$prefix}panel-ghost > div.#{$prefix}window-body-#{$ui-label} {
+                background-image: -moz-linear-gradient(#FFFFFF, #E5ECF7 2%, #B7CBE7);
+            }
+        }
+    }
+    
+    @if $ui-frame-border-radius != null {
+        @include x-frame(
+            'panel',
+            $ui: '#{$ui-label}-framed',
+        
+            /* Radius, width, padding and background-color */
+            $border-radius   : $ui-frame-border-radius, 
+            $border-width    : $panel-frame-border-width, 
+            $padding         : $panel-frame-padding, 
+            $background-color: $ui-frame-background-color
+        );
+        
+        @include x-frame('panel-header', '#{$ui-label}-framed-top', top($ui-frame-border-radius) right($ui-frame-border-radius) 0 0,    $panel-frame-border-width, 4px, $ui-header-background-color, $ui-header-background-gradient);
+        @include x-frame('panel-header', '#{$ui-label}-framed-right', 0 right($ui-frame-border-radius) bottom($ui-frame-border-radius) 0, $panel-frame-border-width, 4px, $ui-header-background-color, $ui-header-background-gradient, false, right);
+        @include x-frame('panel-header', '#{$ui-label}-framed-bottom', 0 0 bottom($ui-frame-border-radius) left($ui-frame-border-radius),  $panel-frame-border-width, 4px, $ui-header-background-color, $ui-header-background-gradient);
+        @include x-frame('panel-header', '#{$ui-label}-framed-left', top($ui-frame-border-radius) 0 0 left($ui-frame-border-radius),     $panel-frame-border-width, 4px, $ui-header-background-color, $ui-header-background-gradient, false, right);
+        
+        .#{$prefix}panel-collapsed {
+            .#{$prefix}panel-header-#{$ui-label}-framed-top {
+                @include border-bottom-radius($ui-frame-border-radius);
+            }
+
+            .#{$prefix}panel-header-#{$ui-label}-framed-right {
+                @include border-left-radius($ui-frame-border-radius);
+            }
+
+            .#{$prefix}panel-header-#{$ui-label}-framed-bottom {
+                @include border-top-radius($ui-frame-border-radius);
+            }
+
+            .#{$prefix}panel-header-#{$ui-label}-framed-left {
+                @include border-right-radius($ui-frame-border-radius);
+            }
+        }
+    }
+    
+    .#{$prefix}panel-header-#{$ui-label}-top {
+        @include inner-border(1px 1px 0 1px, $ui-header-inner-border-color);
+    }
+
+    .#{$prefix}panel-header-#{$ui-label}-right {
+        @include inner-border(1px 1px 1px 0, $ui-header-inner-border-color);
+    }
+    
+    .#{$prefix}panel-header-#{$ui-label}-framed-right-mc {
+        background-position: right 0;
+    }
+    
+    .#{$prefix}panel-header-#{$ui-label}-bottom {
+        @include inner-border(0px 1px 1px, $ui-header-inner-border-color);
+    }
+
+    .#{$prefix}panel-header-#{$ui-label}-framed-bottom-mc {
+        background-position: 0 bottom;
+    }
+    
+    .#{$prefix}panel-header-#{$ui-label}-left {
+        @include inner-border(1px 0 1px 1px, $ui-header-inner-border-color);
+    }
+    
+    .#{$prefix}panel-collapsed,
+    .#{$prefix}panel-#{$ui-label}-framed {
+        .#{$prefix}panel-header-top { border-bottom-width: 1px !important; }
+        .#{$prefix}panel-header-bottom { border-top-width: 1px !important; }
+        .#{$prefix}panel-header-left { border-right-width: 1px !important; }
+        .#{$prefix}panel-header-right { border-left-width: 1px !important; }
+    }
+}

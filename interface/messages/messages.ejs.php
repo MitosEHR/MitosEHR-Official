@@ -80,7 +80,7 @@ var storeMsgs = new Ext.data.Store({
     model		: 'Messages',
     proxy		: new Ext.data.AjaxProxy({
         type	: 'rest',
-        url 	: '../../interface/messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
+        url 	: 'interface/messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
         reader: {
             type	: 'json',
             idProperty: 'noteid',
@@ -106,7 +106,7 @@ Ext.regModel('Patients', { fields: [
 var storePat = new Ext.data.Store({
 	model		: 'Patients',
 	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=patients',
+		url		: 'interface/messages/component_data.ejs.php?task=patients',
 		reader	: {
 			type			: 'json',
 			idProperty		: 'id',
@@ -128,7 +128,7 @@ Ext.regModel('User', { fields: [
 var toData = new Ext.data.Store({
 	model		: 'User',
 	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=users',
+		url		: 'interface/messages/component_data.ejs.php?task=users',
 		reader	: {
 			type			: 'json',
 			idProperty		: 'user',
@@ -150,7 +150,7 @@ Ext.regModel('Types', { fields: [
 var typeData = new Ext.data.Store({
 	model		: 'Types',
 	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=types',
+		url		: 'interface/messages/component_data.ejs.php?task=types',
 		reader	: {
 			type			: 'json',
 			idProperty		: 'option_id',
@@ -172,7 +172,7 @@ Ext.regModel('Status', { fields: [
 var statusData = new Ext.data.Store({
 	model		: 'Status',
 	proxy		: new Ext.data.AjaxProxy({
-		url		: '../../interface/messages/component_data.ejs.php?task=status',
+		url		: 'interface/messages/component_data.ejs.php?task=status',
 		reader	: {
 			type			: 'json',
 			idProperty		: 'option_id',
