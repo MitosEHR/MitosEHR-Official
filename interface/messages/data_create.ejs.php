@@ -28,20 +28,20 @@
 session_name ( "MitosEHR" );
 session_start();
 
-include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
-include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
 // OpenEMR
-require_once("../../library/pnotes.inc.php");
-require_once("../../library/patient.inc.php");
-require_once("../../library/acl.inc.php");
-require_once("../../library/log.inc.php");
-require_once("../../library/options.inc.php");
-require_once("../../library/formdata.inc.php");
-require_once("../../library/classes/Document.class.php");
-require_once("../../library/gprelations.inc.php");
-require_once("../../library/formatting.inc.php");
+//require_once("../../library/pnotes.inc.php");
+//require_once("../../library/patient.inc.php");
+//require_once("../../library/acl.inc.php");
+//require_once("../../library/log.inc.php");
+//require_once("../../library/options.inc.php");
+//require_once("../../library/formdata.inc.php");
+//require_once("../../library/classes/Document.class.php");
+//require_once("../../library/gprelations.inc.php");
+//require_once("../../library/formatting.inc.php");
 
 
 // Current structure of the record ExtJS Mappings
