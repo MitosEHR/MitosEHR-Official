@@ -74,7 +74,12 @@ var storeUsers = new Ext.data.Store({
     model		: 'Users',
     proxy		: {
     	type	: 'ajax',
-        url 	: 'interface/administration/users/data_read.ejs.php',
+		api		: {
+			read	: 'interface/administration/users/data_read.ejs.php',
+			create	: 'interface/administration/users/data_create.ejs.php',
+			update	: 'interface/administration/users/data_update.ejs.php',
+			destroy : 'interface/administration/users/data_destroy.ejs.php'
+		},
         reader: {
             type			: 'json',
             idProperty		: 'id',
@@ -402,8 +407,8 @@ var addressbookGrid = new Ext.grid.GridPanel({
   columns: [
     { text: 'id', sortable: false, dataIndex: 'id', hidden: true},
     { width: 100,  text: '<?php i18n("Username"); ?>', sortable: true, dataIndex: 'username' },
-    { width: 150,  text: '<?php i18n("Name"); ?>', sortable: true, dataIndex: 'fullname' },
-    { width: 200,  text: '<?php i18n("Aditional info"); ?>', sortable: true, dataIndex: 'info' },
+    { width: 200,  text: '<?php i18n("Name"); ?>', sortable: true, dataIndex: 'fullname' },
+    { flex: 1,  text: '<?php i18n("Aditional info"); ?>', sortable: true, dataIndex: 'info' },
     { text: '<?php i18n("Active?"); ?>', sortable: true, dataIndex: 'actived' },
     { text: '<?php i18n("Authorized?"); ?>', sortable: true, dataIndex: 'authorizedd' }
   ],
