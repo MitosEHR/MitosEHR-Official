@@ -25,7 +25,7 @@ Ext.QuickTips.init();
 // *************************************************************************************
 // Users Model
 // *************************************************************************************
-Ext.regModel('Users', { fields: [
+var UserModel = Ext.regModel('Users', { fields: [
 	{name: 'id',                    type: 'int'},
 	{name: 'username',              type: 'string'},
 	{name: 'password',              type: 'auto'},
@@ -335,8 +335,8 @@ var winUsers = new Ext.Window({
 	      // 1. Convert the form data into a JSON data Object
 	      // 2. Re-format the Object to be a valid record (FacilityRecord)
 	      //----------------------------------------------------------------
-	      var obj = eval('(' + Ext.util.JSON.encode(frmUsers.getForm().getValues()) + ')');
-	      var rec = new usersRecord(obj);
+	      var obj = eval( '(' + Ext.JSON.encode(frmUsers.getForm().getValues()) + ')' );
+	      var rec = new UserModel(obj);
 	      
 	      //----------------------------------------------------------------
 	      // Check if it has to add or update
@@ -356,9 +356,9 @@ var winUsers = new Ext.Window({
 	      }
 	
 	      storeUsers.save();          // Save the record to the dataStore
-	      storeUsers.commitChanges(); // Commit the changes
+	      //storeUsers.commit(); // Commit the changes
 	      winUsers.hide();            // Finally hide the dialog window
-	      storeUsers.reload();        // Reload the dataSore from the database
+	      storeUsers.load();        // Reload the dataSore from the database
 	      
 	    }
 	  },{
