@@ -62,11 +62,6 @@ var storeTree = new Ext.data.TreeStore({
 		type: 'ajax',
 		url: 'interface/navigation/default_leftnav.ejs.php'
 	},
-	root: {
-		text: 'Navigation',
-		id: 'src',
-		expanded: true
-	}
 });
 
 //****************************************************************
