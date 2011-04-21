@@ -20,7 +20,7 @@ require_once("../../../library/phpAES/AES.class.php");
 // password to AES and validate
 //-------------------------------------------
 $aes = new AES($_SESSION['site']['AESkey']);
-$ret = $aes->encrypt($_REQUEST['authPass']);
+
 //------------------------------------------
 // Database class instance
 //------------------------------------------
@@ -41,7 +41,7 @@ foreach ($mitos_db->execStatement() as $urow) {
   $rec['actived'] 	 = ($urow['active'] 	== '1' ? 'Yes' : 'No');
   
   // returns "on" or "off" for checkboxes
-  $rec['active'] 	 = ($urow['active'] 	 == '1' ? 'on' : 'off');
+  $rec['active'] 	 = ($urow['active'] 	== '1' ? 'on' : 'off');
   $rec['authorized'] = ($urow['authorized'] == '1' ? 'on' : 'off');
   
   $buff .= '{';
