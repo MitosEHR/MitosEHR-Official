@@ -64,6 +64,16 @@ class dbHelper {
 	}
 	
 	//**********************************************************************
+	// Simple exec SQL Stament, with no Event LOG injection
+	// return: N/A
+	//
+	// Author: Gino Rivera
+	//**********************************************************************
+	function execOnly(){
+		$this->conn->query($this->sql_statement);
+	}
+	
+	//**********************************************************************
 	// Simple SQL Stament, with Event LOG injection
 	// $dbHelper->exeLog();
 	// return: Array of records + Inject the action on the event log
