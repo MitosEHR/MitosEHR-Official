@@ -383,33 +383,37 @@ var addressbookGrid = new Ext.grid.GridPanel({
 
   id          : 'addressbookGrid',
   store       : storeUsers,
-  height  : 400,
+  layout	  : 'fit',
   border      : false,    
   frame       : false,
   loadMask    : true,
-  viewConfig  : {forceFit: true, stripeRows: true},
-  //sm          : new Ext.grid.RowSelectionModel({singleSelect:true}),
-    listeners: {
-  
-    // -----------------------------------------
-    // Single click to select the record
-    // -----------------------------------------
-    rowclick: function(addressbookGrid, rowIndex, e) {
-      rowPos = rowIndex;
-      var rec = storeUsers.getAt(rowPos);
-      Ext.getCmp('frmUsers').getForm().loadRecord(rec);
-      addressbookGrid.editAddressbook.enable();
-    },
-    // -----------------------------------------
-    // Double click to select the record, and edit the record
-    // -----------------------------------------
-    rowdblclick:  function(addressbookGrid, rowIndex, e) {
-      rowPos = rowIndex;
-      var rec = storeUsers.getAt(rowPos); // get the record from the store
-      Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
-      addressbookGrid.editAddressbook.enable();
-      winUsers.show();
-    }
+  viewConfig  : {
+  	  stripeRows: true,
+	  listeners: {
+	   	  // -----------------------------------------
+	   	  // Single click to select the record
+	   	  // -----------------------------------------
+	   	  itemclick: {
+	   		  fn: function(dataview, index, item, rowIndex, e) {
+	   		  rowPos = rowIndex;
+	   		  var rec = storeUsers.getAt(rowPos);
+	   		  Ext.getCmp('frmUsers').getForm().loadRecord(rec);
+	  		  Ext.getCmp('editAddressbook').enable();
+	   		  }
+	   	  },
+	   	  // -----------------------------------------
+	   	  // Double click to select the record, and edit the record
+	   	  // -----------------------------------------
+	   	  itemdblclick: { 
+	   		  fn: function(dataview, index, item, rowIndex, e) {
+	   		  rowPos = rowIndex;
+	   		  var rec = storeUsers.getAt(rowPos); // get the record from the store
+	   		  Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
+	   		  Ext.getCmp('editAddressbook').enable();
+	   		  winUsers.show();
+	   		  }
+	  	  }
+	  }
   },
   columns: [
     { text: 'id', sortable: false, dataIndex: 'id', hidden: true},
@@ -422,34 +426,35 @@ var addressbookGrid = new Ext.grid.GridPanel({
   // *************************************************************************************
   // Grid Menu
   // *************************************************************************************
-  tbar: [{
-    xtype     :'button',
-    id        : 'addAddressbook',
-    text      : '<?php i18n("Add User"); ?>',
-    iconCls   : 'icoAddressBook',
-    handler   : function(){
-      Ext.getCmp('frmUsers').getForm().reset(); // Clear the form
-      winUsers.show();
-    }
-  },'-',{
-    xtype     :'button',
-    id        : 'editAddressbook',
-    ref       : '../editAddressbook',
-    text      : '<?php i18n("Edit User"); ?>',
-    iconCls   : 'edit',
-    disabled  : true,
-    handler: function(){ 
-      winUsers.show();
-    }
-  },'-',{
-    xtype     :'button',
-    id        : 'loadAddressbook',
-    ref       : '../loadAddressbook',
-    text      : '<?php i18n('Reload Grid - Debug'); ?>',
-    iconCls   : 'edit',
-    handler: function(){ 
-      storeUsers.load();
-    }
+  dockedItems: [{
+  	  xtype: 'toolbar',
+	  dock: 'top',
+	  items: [{
+		    id        : 'addAddressbook',
+		    text      : '<?php i18n("Add User"); ?>',
+		    iconCls   : 'icoAddressBook',
+		    handler   : function(){
+		      Ext.getCmp('frmUsers').getForm().reset(); // Clear the form
+		      winUsers.show();
+		    }
+		  },'-',{
+		    id        : 'editAddressbook',
+		    ref       : '../editAddressbook',
+		    text      : '<?php i18n("Edit User"); ?>',
+		    iconCls   : 'edit',
+		    disabled  : true,
+		    handler: function(){ 
+		      winUsers.show();
+		    }
+		  },'-',{
+		    id        : 'loadAddressbook',
+		    ref       : '../loadAddressbook',
+		    text      : '<?php i18n('Reload Grid - Debug'); ?>',
+		    iconCls   : 'edit',
+		    handler: function(){ 
+		      storeUsers.load();
+		    }
+	  }]					    
   }],
   //plugins: [new Ext.ux.grid.Search({
   //  mode            : 'local',
@@ -470,6 +475,8 @@ var addressbookGrid = new Ext.grid.GridPanel({
 var topRenderPanel = Ext.create('Ext.panel.Panel', {
 	title		: '<?php i18n('Users'); ?>',
 	renderTo	: Ext.getCmp('MainApp').body,
+	layout		: 'fit',
+	height		: Ext.getCmp('MainApp').getHeight(),
   	frame 		: false,
 	border 		: false,
 	id			: 'topRenderPanel',
