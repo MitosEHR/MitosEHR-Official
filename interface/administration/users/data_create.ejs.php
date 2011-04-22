@@ -38,26 +38,26 @@ $data = json_decode ($_POST['row'], true);
 // just in case 
 // *************************************************************************************
 // general info
-$row['username']     = dataEncode($data[username]);
-$row['password']     = $aes->encrypt($data[password]);
-$row['title']        = dataEncode($data[title]);
-$row['fname']        = dataEncode($data[fname]);
-$row['mname']        = dataEncode($data[mname]);
-$row['lname']        = dataEncode($data[lname]);
-$row['authorized']   = (trim($data[authorized]) == 'on' ? 1 : 0);
-$row['active']   	 = (trim($data[active]) == 'on' ? 1 : 0);
-$row['facility_id']  = dataEncode($data[facility_id]);
-$row['see_auth'] 	 = dataEncode($data[see_auth]);
-$row['taxonomy'] 	 = dataEncode($data[taxonomy]);
+$row['username']     = dataEncode($data['username']);
+$row['password']     = $aes->encrypt($data['password']);
+$row['title']        = dataEncode($data['title']);
+$row['fname']        = dataEncode($data['fname']);
+$row['mname']        = dataEncode($data['mname']);
+$row['lname']        = dataEncode($data['lname']);
+$row['authorized']   = (trim($data['authorized']) == 'on' ? 1 : 0);
+$row['active']   	 = (trim($data['active']) == 'on' ? 1 : 0);
+$row['facility_id']  = dataEncode($data['facility_id']);
+$row['see_auth'] 	 = dataEncode($data['see_auth']);
+$row['taxonomy'] 	 = dataEncode($data['taxonomy']);
 // access control placeholder...
 // $row['none'] 	 = dataEncode($data[0]->none);
-$row['federaltaxid'] = dataEncode($data[federaltaxid]);
-$row['federaldrugid']= dataEncode($data[federaldrugid]);
-$row['upin']         = dataEncode($data[upin]);
-$row['npi']          = dataEncode($data[npi]);
-$row['federaltaxid'] = dataEncode($data[federaltaxid]);
-$row['specialty']    = dataEncode($data[specialty]);
-$row['info']         = dataEncode($data[info]);
+$row['federaltaxid'] = dataEncode($data['federaltaxid']);
+$row['federaldrugid']= dataEncode($data['federaldrugid']);
+$row['upin']         = dataEncode($data['upin']);
+$row['npi']          = dataEncode($data['npi']);
+$row['federaltaxid'] = dataEncode($data['federaltaxid']);
+$row['specialty']    = dataEncode($data['specialty']);
+$row['info']         = dataEncode($data['info']);
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
@@ -86,5 +86,5 @@ $sql = "INSERT INTO
         info              = '" . $row['info'] . "'";
 $mitos_db->setSQL($sql);	
 $mitos_db->execLog();
-		
+echo "{ success: true }";	
 ?>
