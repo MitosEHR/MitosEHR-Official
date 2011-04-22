@@ -85,7 +85,14 @@ var storeUsers = new Ext.data.Store({
             idProperty		: 'id',
             totalProperty	: 'totals',
             root			: 'row'
-    	}
+    	},
+    	writer: {
+			type	 		: 'json',
+			writeAllFields	: true,
+			allowSingle	 	: true,
+			encode	 		: true,
+			root	 		: 'row'
+		}
     },
     autoLoad: true
 });
