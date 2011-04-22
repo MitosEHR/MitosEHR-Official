@@ -312,7 +312,7 @@ var listGrid = new Ext.grid.GridPanel({
 						storeListsOption.reload();
 		    	    }
 				}
-				});
+			});
 		}
 	}], // END GRID BOTTOM BAR
 	plugins: [editor, new Ext.ux.grid.Search({

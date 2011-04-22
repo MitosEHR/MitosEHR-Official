@@ -39,6 +39,14 @@ Ext.onReady(function() {
 	
 	Ext.QuickTips.init();
 	
+	var rowPos; // Stores the current Grid Row Position (int)
+	var currRec; // Store the current record (Object)
+	
+	// *************************************************************************************
+	// If a object called winUser exists destroy it, to create a new one.
+	// *************************************************************************************
+	if ( Ext.getCmp('winFacilities') ){ Ext.getCmp('winFacilities').destroy(); }
+	
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
@@ -66,19 +74,32 @@ Ext.onReady(function() {
 	});
 	var FacilityStore = new Ext.data.Store({
 		model: 'FacilitiesRecord',
-		proxy: {
-			type: 'ajax',
-			url 	: 'interface/administration/facilities/data_read.ejs.php',
-			reader: {
-				type			: 'json',
-				idProperty		: 'id',
-				totalProperty	: 'totals',
-				root			: 'row'
-			}
-		}
+    	noCache		: true,
+    	autoSync	: false,
+    	proxy		: {
+    		type	: 'ajax',
+			api		: {
+				read	: 'interface/administration/facilities/data_read.ejs.php',
+				create	: 'interface/administration/facilities/data_create.ejs.php',
+				update	: 'interface/administration/facilities/data_update.ejs.php',
+				destroy : 'interface/administration/facilities/data_destroy.ejs.php'
+			},
+        	reader: {
+	            type			: 'json',
+    	        idProperty		: 'idusers',
+        	    totalProperty	: 'totals',
+            	root			: 'row'
+    		},
+    		writer: {
+    			type			: 'json',
+    			writeAllFields	: true,
+    			allowSingle		: false,
+    			encode			: true,
+    			root			: 'row'
+    		}
+    	},
+    	autoLoad: true
 	});
-	FacilityStore.load();
-
 
 	// *************************************************************************************
 	// Facility Grid Panel
