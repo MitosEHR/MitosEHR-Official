@@ -15,6 +15,14 @@ Ext.apply(Ext.form.VTypes, {
 
   // --------------------------------------- 
   // Validate Empty fields, empty field not allowed
+  // Less than 7 characters will be no good
+  // --------------------------------------- 
+  empty_7chr : function(val, field) {
+    if(val.length <= 6){ return false; } else { return true; }
+  }, empty_7chrText: 'This field must have more than 7 characters and must be not empty.',
+
+  // --------------------------------------- 
+  // Validate Empty fields, empty field not allowed
   // --------------------------------------- 
   empty : function(val, field) {
     if(val.length <= 0){ return false; } else { return true; }
@@ -53,6 +61,14 @@ Ext.apply(Ext.form.VTypes, {
   checkEmail : function(val, field){
 	var rgx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/ 
  	if(!val.match(rgx)){ return false; } else { return true; }
-  }, checkEmailText: 'This field should be an email address in the format user@domain.com'
+  }, checkEmailText: 'This field should be an email address in the format user@domain.com',
+  
+  // ---------------------------------------
+  // Validate for an IP Address format
+  // ---------------------------------------
+  ipaddress: function( val, field){
+	var rgx = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/i;
+	if(!val.match(rgx)){ return false; } else { return true; }
+  }, ipaddressText: 'This field should be an IP address in the format 192.168.0.1'
   
 });
