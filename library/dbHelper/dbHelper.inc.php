@@ -53,24 +53,29 @@ class dbHelper {
 	//**********************************************************************
 	// Simple SQL Stament, with no Event LOG injection
 	// $dbHelper->execStatement();
-	// return: Array of records
+	// return: Array of records, if error ocurred return the error instead
 	// foreach (sqlStatement($sql) as $urow) {
 	//
 	// Author: Gino Rivera
 	//**********************************************************************
 	function execStatement(){
 		$recordset = $this->conn->query($this->sql_statement);
-		return $recordset->fetchAll(PDO::FETCH_ASSOC);
+		if($this->conn->errorInfo()){
+			return $recordset->fetchAll(PDO::FETCH_ASSOC);
+		} else {
+			return $this->conn->errorInfo();
+		}
 	}
 	
 	//**********************************************************************
 	// Simple exec SQL Stament, with no Event LOG injection
-	// return: N/A
+	// return: Array of errors, if any.
 	//
 	// Author: Gino Rivera
 	//**********************************************************************
 	function execOnly(){
 		$this->conn->query($this->sql_statement);
+		return $this->conn->errorInfo();
 	}
 	
 	//**********************************************************************
