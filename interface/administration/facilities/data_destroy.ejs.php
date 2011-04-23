@@ -11,10 +11,11 @@
 
 session_name ( "MitosEHR" );
 session_start();
+session_cache_limiter('private');
 
-include_once("library/dbHelper/dbHelper.inc.php");
-include_once("library/I18n/I18n.inc.php");
-require_once("repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
 // Count records variable
 $count = 0;
@@ -25,7 +26,20 @@ $mitos_db = new dbHelper();
 // *************************************************************************************
 
 $data = json_decode ( $_POST['row'] );
-$delete_id = $data[0];
-$mitos_db->execEvent("delete", $_SESSION['authUser'], $_SESSION['authProvider']);
+$delete_id = $data[0]->id;
+
+// *************************************************************************************
+// Finally build the Delete SQL Statement and inject it to the SQL Database
+// *************************************************************************************
+$sql = "DELETE FROM facility WHERE id='" . $delete_id . "'";
+
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execOnly();
+
+if ( $ret == "" ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+} else {
+	echo "{ success: true }";
+}
 
 ?>

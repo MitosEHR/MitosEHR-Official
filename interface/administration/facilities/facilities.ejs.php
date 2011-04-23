@@ -229,14 +229,12 @@ Ext.onReady(function() {
 			fieldLabel: '<?php i18n("POS Code"); ?>',
 			xtype: 'combo', 
 			id: 'cmbPOSCode', 
-			displayField: 'title', 
+			displayField: 'title',
+			valueField: 'option_id', 
 			editable: false, 
 			store: storePOSCode, 
 			queryMode: 'local',
             name: 'pos_code',
-        },{
-            fieldLabel: '<?php i18n("X12 Sender ID"); ?>',
-            name: 'x12_sender_id',
         },{
             fieldLabel: '<?php i18n("Billing Attn"); ?>',
             name: 'attn',
@@ -263,9 +261,9 @@ Ext.onReady(function() {
 				// values from the form and push it into the store record.
 				// Add: The re-formated record to the dataStore
 				//----------------------------------------------------------------
-				if (faciltyForm.getForm().findField('id').getValue()){ // Update
+				if (facilityForm.getForm().findField('id').getValue()){ // Update
 					var record = FacilityStore.getAt(rowPos);
-					var fieldValues = faciltyForm.getForm().getValues();
+					var fieldValues = facilityForm.getForm().getValues();
 					for ( k=0; k <= record.fields.getCount()-1; k++) {
 						i = record.fields.get(k).name;
 						record.set( i, fieldValues[i] );
@@ -276,7 +274,7 @@ Ext.onReady(function() {
 					// 2. Re-format the Object to be a valid record (UserRecord)
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
-					var obj = eval( '(' + Ext.JSON.encode(faciltyForm.getForm().getValues()) + ')' );
+					var obj = eval( '(' + Ext.JSON.encode(facilityForm.getForm().getValues()) + ')' );
 					var rec = new usersRecord(obj);
 					FacilityStore.add( rec );
 				}
