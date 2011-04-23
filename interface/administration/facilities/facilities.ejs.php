@@ -103,6 +103,31 @@ Ext.onReady(function() {
 	});
 
 	// *************************************************************************************
+	// POS Code Data Store
+	// *************************************************************************************
+	Ext.regModel('poscodeRecord', { fields: [
+			{name: 'option_id',		type: 'string'},
+			{name: 'title',			type: 'string'}
+		]
+	});
+	var storePOSCode = new Ext.data.Store({
+    	model		: 'poscodeRecord',
+    	proxy		: {
+	   		type	: 'ajax',
+			api		: {
+				read	: 'interface/administration/facilities/component_data.ejs.php?task=poscodes'
+			},
+    	   	reader: {
+        	    type			: 'json',
+   	        	idProperty		: 'id',
+	       	    totalProperty	: 'totals',
+    	       	root			: 'row'
+   			}
+   		},
+    	autoLoad: true
+	});
+
+	// *************************************************************************************
 	// User form
 	// *************************************************************************************
     var facilityForm = Ext.create('Ext.form.Panel', {
@@ -166,7 +191,13 @@ Ext.onReady(function() {
             fieldLabel: '<?php i18n("Accepts assignment"); ?>',
             name: 'accepts_assignment',
         },{
-            fieldLabel: '<?php i18n("POS Code"); ?>',
+			fieldLabel: '<?php i18n("POS Code"); ?>',
+			xtype: 'combo', 
+			id: 'cmbPOSCode', 
+			displayField: 'title', 
+			editable: false, 
+			store: storePOSCode, 
+			queryMode: 'local',
             name: 'pos_code',
             allowBlank: false,
         },{
