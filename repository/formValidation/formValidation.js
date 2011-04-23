@@ -66,9 +66,40 @@ Ext.apply(Ext.form.VTypes, {
   // ---------------------------------------
   // Validate for an IP Address format
   // ---------------------------------------
-  ipaddress: function( val, field){
+  ipaddress : function( val, field){
 	var rgx = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/i;
 	if(!val.match(rgx)){ return false; } else { return true; }
-  }, ipaddressText: 'This field should be an IP address in the format 192.168.0.1'
+  }, ipaddressText: 'This field should be an IP address in the format 192.168.0.1',
   
+  // ---------------------------------------
+  // Validate for an valid Phone Number
+  // ---------------------------------------
+  phoneNumber : function( val, field){
+	var rgx = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+	if(!val.match(rgx)){ return false; } else { return true; }
+  }, phoneNumberText: 'This field should be an valid PHONE number, in the format (000)-000-0000',
+
+  // ---------------------------------------
+  // Validate for an valid Canadian & US
+  // Postal Code
+  // ---------------------------------------
+  postalCode : function( val, field){
+	var regexObj = {
+		canada 		: /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]( )?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i , //i for case-insensitive
+		usa    		: /^\d{5}(-\d{4})?$/ 
+	}
+	// check for canada at first
+	if( !val.match(regexObj.canada) ) {
+		return true;
+	} else {
+		// now check for USA
+		regexp = null;
+		if(!val.match(regexObj.usa)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+  }, postalCodeText: 'This field should be an valid Postal Code number, it can by Canadian or US'
+    
 });
