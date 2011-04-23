@@ -9,28 +9,37 @@
 // 
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
+
 session_name ( "MitosEHR" );
 session_start();
+session_cache_limiter('private');
 
 include_once("../../../library/I18n/I18n.inc.php");
+
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 ?>
+
 <script type="text/javascript">
 
 Ext.onReady(function(){
 	
 	Ext.QuickTips.init();
+
+	var rowPos; // Stores the current Grid Row Position (int)
+	var currRec; // Store the current record (Object)
+
 	// *************************************************************************************
 	// If a object called winUser exists destroy it, to create a new one.
 	// *************************************************************************************
 	if ( Ext.getCmp('winUsers') ){ Ext.getCmp('winUsers').destroy(); }
+
 	// *************************************************************************************
 	// Users Model and Data store
 	// *************************************************************************************
-	var UserModel = Ext.regModel('Users', { fields: [
+	Ext.regModel('Users', { fields: [
 		{name: 'id',                    type: 'int'},
 		{name: 'username',              type: 'string'},
 		{name: 'password',              type: 'auto'},
@@ -77,6 +86,8 @@ Ext.onReady(function(){
 	});
 	var storeUsers = new Ext.data.Store({
 	    model		: 'Users',
+		noCache		: true,
+    	autoSync	: false,
 	    proxy		: {
 	    	type	: 'ajax',
 			api		: {
@@ -332,53 +343,45 @@ Ext.onReady(function(){
 	    closeAction : 'hide',
 	    renderTo    : document.body,
 	    items: [frmUsers],
-	    //------------------------------------------
-	    //  Start window bottom bar
-		//------------------------------------------
-		dockedItems:[{
-			xtype: 'toolbar',
-			dock: 'bottom',
-			items: [{
-			    text      :'<?php i18n('Save'); ?>',
-			    border	  : false,
-			    ref       : '../save',
-			    iconCls   : 'save',
-			    handler: function() {
-			    	//----------------------------------------------------------------
-			      	// 1. Convert the form data into a JSON data Object
-			      	// 2. Re-format the Object to be a valid record (FacilityRecord)
-			      	//----------------------------------------------------------------
-			      	var obj = eval( '(' + Ext.JSON.encode(frmUsers.getForm().getValues()) + ')' );
-			      	var rec = new UserModel(obj);
-			      
-			      	//----------------------------------------------------------------
-			      	// Check if it has to add or update
-			      	// Update: 1. Get the record from store, 2. get the values from the form, 3. copy all the 
-			      	// values from the form and push it into the store record.
-			      	// Add: The re-formated record to the dataStore
-			      	//----------------------------------------------------------------
-			      	if (frmUsers.getForm().findField('id').getValue()){ // Update
-			      		var record = storeUsers.getAt(rowPos);
-			          	var fieldValues = frmUsers.getForm().getValues();
-			          	for ( k=0; k <= storeUsers.fields.getCount()-1; k++) {
-							i = storeUsers.fields.get(k).name;
-						  	record.set( i, fieldValues[i] );
-					  	}
-					} else { // Add
-			      		storeUsers.add( rec );
-			      	}
-			
-			    	storeUsers.save();          // Save the record to the dataStore
-			      	winUsers.hide();            // Finally hide the dialog window
-					storeUsers.load();        // Reload the dataSore from the database
-			      
-			  	}
-			},{
-			    text:'<?php i18n('Close'); ?>',
-			    iconCls: 'delete',
-			    handler: function(){ winUsers.hide(); }
-		    }]
-	  	}] // END WINDOW BOTTOM BAR
+		buttons: [{
+            text: '<?php i18n('Save'); ?>',
+            handler: function(){
+				//----------------------------------------------------------------
+				// Check if it has to add or update
+				// Update: 
+				// 1. Get the record from store, 
+				// 2. get the values from the form, 
+				// 3. copy all the 
+				// values from the form and push it into the store record.
+				// Add: The re-formated record to the dataStore
+				//----------------------------------------------------------------
+				if (frmUsers.getForm().findField('id').getValue()){ // Update
+					var record = storeUsers.getAt(rowPos);
+					var fieldValues = frmUsers.getForm().getValues();
+					for ( k=0; k <= record.fields.getCount()-1; k++) {
+						i = record.fields.get(k).name;
+						record.set( i, fieldValues[i] );
+					}
+				} else { // Add
+					//----------------------------------------------------------------
+					// 1. Convert the form data into a JSON data Object
+					// 2. Re-format the Object to be a valid record (UserRecord)
+					// 3. Add the new record to the datastore
+					//----------------------------------------------------------------
+					var obj = eval( '(' + Ext.JSON.encode(frmUsers.getForm().getValues()) + ')' );
+					var rec = new UserModel(obj);
+					storeUsers.add( rec );
+				}
+				storeUsers.save();          // Save the record to the dataStore
+				winUsers.hide();			// Finally hide the dialog window
+				storeUsers.load();			// Reload the dataSore from the database
+			}
+        },{
+            text: 'Cancel',
+            handler: function(){
+            	winUsers.hide();
+            }
+        }]
 	}); // END WINDOW
 	
 	// *************************************************************************************
@@ -391,33 +394,31 @@ Ext.onReady(function(){
 	  	border      : false,    
 	  	frame       : false,
 	  	loadMask    : true,
-	  	viewConfig  : {
-	  		stripeRows: true,
-		  	listeners: {
-		   		// -----------------------------------------
-		   	  	// Single click to select the record
-		   	  	// -----------------------------------------
-		   	  	itemclick: {
-		   			fn: function(dataview, index, item, rowIndex, e) {
-		   		  	rowPos = rowIndex;
-		   		  	var rec = storeUsers.getAt(rowPos);
-		   		  	Ext.getCmp('frmUsers').getForm().loadRecord(rec);
-		  		  	Ext.getCmp('editAddressbook').enable();
-		   		  	}
-		   	  	},
-		   	  	// -----------------------------------------
-		   	  	// Double click to select the record, and edit the record
-		   	  	// -----------------------------------------
-		   	  	itemdblclick: { 
-		   			fn: function(dataview, index, item, rowIndex, e) {
-		   		  	rowPos = rowIndex;
-		   		  	var rec = storeUsers.getAt(rowPos); // get the record from the store
-		   		  	Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
-		   		  	Ext.getCmp('editAddressbook').enable();
-		   		  	winUsers.show();
-		   		  	}
-		  	  	}
-		  	}
+	  	viewConfig  : { stripeRows: true },
+	  	listeners: {
+	   		// -----------------------------------------
+	   	  	// Single click to select the record
+	   	  	// -----------------------------------------
+	   	  	itemclick: {
+	   			fn: function(dataview, index, item, rowIndex, e) {
+	   		  		rowPos = rowIndex;
+	   		  		var rec = storeUsers.getAt(rowPos);
+	   		  		Ext.getCmp('frmUsers').getForm().loadRecord(rec);
+	  		  		Ext.getCmp('editAddressbook').enable();
+	   		  	}
+	   	  	},
+	   	  	// -----------------------------------------
+	   	  	// Double click to select the record, and edit the record
+	   	  	// -----------------------------------------
+	   	  	itemdblclick: { 
+	   			fn: function(dataview, index, item, rowIndex, e) {
+	   		  		rowPos = rowIndex;
+	   		  		var rec = storeUsers.getAt(rowPos); // get the record from the store
+	   		  		Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
+	   		  		Ext.getCmp('editAddressbook').enable();
+	   		  	winUsers.show();
+	   		  	}
+	  	  	}
 	  	},
 		columns: [
 			{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},
