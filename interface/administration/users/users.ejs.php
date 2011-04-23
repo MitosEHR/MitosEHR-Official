@@ -369,7 +369,7 @@ Ext.onReady(function(){
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
 					var obj = eval( '(' + Ext.JSON.encode(frmUsers.getForm().getValues()) + ')' );
-					var rec = new UserModel(obj);
+					var rec = new usersRecord(obj);
 					storeUsers.add( rec );
 				}
 				storeUsers.save();          // Save the record to the dataStore
@@ -401,10 +401,12 @@ Ext.onReady(function(){
 	   	  	// -----------------------------------------
 	   	  	itemclick: {
 	   			fn: function(dataview, index, item, rowIndex, e) {
-	   		  		rowPos = rowIndex;
-	   		  		var rec = storeUsers.getAt(rowPos);
+					Ext.getCmp('frmUsers').getForm().reset();
+					Ext.getCmp('editAddressbook').enable();
+	   		  		var rec = storeUsers.getAt(rowIndex);
 	   		  		Ext.getCmp('frmUsers').getForm().loadRecord(rec);
-	  		  		Ext.getCmp('editAddressbook').enable();
+					currRec = rec;
+            		rowPos = rowIndex;
 	   		  	}
 	   	  	},
 	   	  	// -----------------------------------------
@@ -412,11 +414,14 @@ Ext.onReady(function(){
 	   	  	// -----------------------------------------
 	   	  	itemdblclick: { 
 	   			fn: function(dataview, index, item, rowIndex, e) {
-	   		  		rowPos = rowIndex;
-	   		  		var rec = storeUsers.getAt(rowPos); // get the record from the store
-	   		  		Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
-	   		  		Ext.getCmp('editAddressbook').enable();
-	   		  	winUsers.show();
+					Ext.getCmp('frmUsers').getForm().reset();
+					Ext.getCmp('editAddressbook').enable();
+					var rec = storeUsers.getAt(rowIndex); // get the record from the store
+					Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
+					currRec = rec;
+            		rowPos = rowIndex;
+					winUsers.setTitle('<?php i18n("Edit User"); ?>');
+	   		  		winUsers.show();
 	   		  	}
 	  	  	}
 	  	},
