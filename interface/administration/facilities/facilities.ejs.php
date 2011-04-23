@@ -202,9 +202,9 @@ Ext.onReady(function() {
 				// values from the form and push it into the store record.
 				// Add: The re-formated record to the dataStore
 				//----------------------------------------------------------------
-				if (userForm.getForm().findField('idusers').getValue()){ // Update
-					var record = storeUsers.getAt(rowPos);
-					var fieldValues = userForm.getForm().getValues();
+				if (faciltyForm.getForm().findField('id').getValue()){ // Update
+					var record = FacilityStore.getAt(rowPos);
+					var fieldValues = faciltyForm.getForm().getValues();
 					for ( k=0; k <= record.fields.getCount()-1; k++) {
 						i = record.fields.get(k).name;
 						record.set( i, fieldValues[i] );
@@ -215,18 +215,18 @@ Ext.onReady(function() {
 					// 2. Re-format the Object to be a valid record (UserRecord)
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
-					var obj = eval( '(' + Ext.JSON.encode(userForm.getForm().getValues()) + ')' );
+					var obj = eval( '(' + Ext.JSON.encode(faciltyForm.getForm().getValues()) + ')' );
 					var rec = new usersRecord(obj);
-					storeUsers.add( rec );
+					FacilityStore.add( rec );
 				}
-				storeUsers.save();          // Save the record to the dataStore
-				winUser.hide();				// Finally hide the dialog window
-				storeUsers.load();			// Reload the dataSore from the database
+				FacilityStore.save();          // Save the record to the dataStore
+				winFacility.hide();				// Finally hide the dialog window
+				FacilityStore.load();			// Reload the dataSore from the database
 			}
         },{
             text: 'Cancel',
             handler: function(){
-            	winUser.hide();
+            	winFacility.hide();
             }
         }]
     });
@@ -283,7 +283,33 @@ Ext.onReady(function() {
 				dataIndex: 'city'
             }
 		],
-		viewConfig: { stripeRows: true }
+		viewConfig: { stripeRows: true },
+		listeners: {
+			itemclick: {
+            	fn: function(DataView, record, item, rowIndex, e){ 
+            		Ext.getCmp('facilityForm').getForm().reset(); // Clear the form
+            		Ext.getCmp('cmdEdit').enable();
+            		Ext.getCmp('cmdDelete').enable();
+					var rec = FacilityStore.getAt(rowIndex);
+					Ext.getCmp('facilityForm').getForm().loadRecord(rec);
+            		currRec = rec;
+            		rowPos = rowIndex;
+            	}
+			},
+			itemdblclick: {
+            	fn: function(DataView, record, item, rowIndex, e){ 
+            		Ext.getCmp('facilityForm').getForm().reset(); // Clear the form
+            		Ext.getCmp('cmdEdit').enable();
+            		Ext.getCmp('cmdDelete').enable();
+					var rec = FacilityStore.getAt(rowIndex);
+					Ext.getCmp('facilityForm').getForm().loadRecord(rec);
+            		currRec = rec;
+            		rowPos = rowIndex;
+            		winFacility.setTitle('<?php i18n("Edit Facility"); ?>');
+            		winFacility.show();
+            	}
+			}
+		}
     }); // END Facility Grid
 
 	// *************************************************************************************
