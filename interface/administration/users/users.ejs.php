@@ -39,50 +39,50 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Users Model and Data store
 	// *************************************************************************************
-	Ext.regModel('Users', { fields: [
-		{name: 'id',                    type: 'int'},
-		{name: 'username',              type: 'string'},
-		{name: 'password',              type: 'auto'},
-		{name: 'authorizedd',           type: 'string'},
-		{name: 'authorized',            type: 'string'},
-		{name: 'actived',            	type: 'string'},
-		{name: 'active',            	type: 'string'},
-		{name: 'info',                  type: 'string'},
-		{name: 'source',                type: 'int'},
-		{name: 'fname',                 type: 'string'},
-		{name: 'mname',                 type: 'string'},
-		{name: 'lname',                 type: 'string'},
-		{name: 'fullname',              type: 'string'},
-		{name: 'federaltaxid',          type: 'string'},
-		{name: 'federaldrugid',         type: 'string'},
-		{name: 'upin',                  type: 'string'},
-		{name: 'facility',              type: 'string'},
-		{name: 'facility_id',           type: 'int'},
-		{name: 'see_auth',              type: 'int'},
-		{name: 'active',                type: 'int'},
-		{name: 'npi',                   type: 'string'},
-		{name: 'title',                 type: 'string'},
-		{name: 'specialty',             type: 'string'},
-		{name: 'billname',              type: 'string'},
-		{name: 'email',                 type: 'string'},
-		{name: 'url',                   type: 'string'},
-		{name: 'assistant',             type: 'string'},
-		{name: 'organization',          type: 'string'},
-		{name: 'valedictory',           type: 'string'},
-		{name: 'fulladdress',           type: 'string'},
-		{name: 'cal_ui',                type: 'string'},
-		{name: 'taxonomy',              type: 'string'},
-		{name: 'ssi_relayhealth',       type: 'string'},
-		{name: 'calendar',              type: 'int'},
-		{name: 'abook_type',            type: 'string'},
-		{name: 'pwd_expiration_date',   type: 'string'},
-		{name: 'pwd_history1',          type: 'string'},
-		{name: 'pwd_history2',          type: 'string'},
-		{name: 'default_warehouse',     type: 'string'},
-		{name: 'ab_name',               type: 'string'},
-		{name: 'ab_title',              type: 'string'}
-	],
-		idProperty: 'id'
+	var usersRecord = Ext.regModel('Users', { 
+		fields: [
+			{name: 'id',                    type: 'int'},
+			{name: 'username',              type: 'string'},
+			{name: 'password',              type: 'auto'},
+			{name: 'authorizedd',           type: 'string'},
+			{name: 'authorized',            type: 'string'},
+			{name: 'actived',            	type: 'string'},
+			{name: 'active',            	type: 'string'},
+			{name: 'info',                  type: 'string'},
+			{name: 'source',                type: 'int'},
+			{name: 'fname',                 type: 'string'},
+			{name: 'mname',                 type: 'string'},
+			{name: 'lname',                 type: 'string'},
+			{name: 'fullname',              type: 'string'},
+			{name: 'federaltaxid',          type: 'string'},
+			{name: 'federaldrugid',         type: 'string'},
+			{name: 'upin',                  type: 'string'},
+			{name: 'facility',              type: 'string'},
+			{name: 'facility_id',           type: 'auto'},
+			{name: 'see_auth',              type: 'auto'},
+			{name: 'active',                type: 'auto'},
+			{name: 'npi',                   type: 'string'},
+			{name: 'title',                 type: 'string'},
+			{name: 'specialty',             type: 'string'},
+			{name: 'billname',              type: 'string'},
+			{name: 'email',                 type: 'string'},
+			{name: 'url',                   type: 'string'},
+			{name: 'assistant',             type: 'string'},
+			{name: 'organization',          type: 'string'},
+			{name: 'valedictory',           type: 'string'},
+			{name: 'fulladdress',           type: 'string'},
+			{name: 'cal_ui',                type: 'string'},
+			{name: 'taxonomy',              type: 'string'},
+			{name: 'ssi_relayhealth',       type: 'string'},
+			{name: 'calendar',              type: 'int'},
+			{name: 'abook_type',            type: 'string'},
+			{name: 'pwd_expiration_date',   type: 'string'},
+			{name: 'pwd_history1',          type: 'string'},
+			{name: 'pwd_history2',          type: 'string'},
+			{name: 'default_warehouse',     type: 'string'},
+			{name: 'ab_name',               type: 'string'},
+			{name: 'ab_title',              type: 'string'}
+		],
 	});
 	var storeUsers = new Ext.data.Store({
 	    model		: 'Users',
@@ -265,7 +265,7 @@ Ext.onReady(function(){
 		      msgTarget : 'under', 
 		      items: [
 		        { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
-		        { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: '<?php i18n('title'); ?>', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
+		        { width: 50,  xtype: 'combo',     id: 'cb_title', name: 'title', editable: false, displayField: 'title', queryMode: 'local', store: storeTitles },
 		        { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
 		        { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
 		        { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
@@ -286,16 +286,16 @@ Ext.onReady(function(){
 		      msgTarget : 'under', 
 		      items: [
 		        { width: 100, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
-		        { width: 100, xtype: 'combo', id: 'facility_id', name: 'facility_id', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'facility_id', mode: 'local', triggerAction: 'all', store: storeFacilities, emptyText:'Select ' },
+		        { width: 100, xtype: 'combo', id: 'cb_facility_id', name: 'facility_id', editable: false, displayField: 'name', valueField: 'id', queryMode: 'local', store: storeFacilities, emptyText:'Select ' },
 		        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
-		        { width: 105, xtype: 'combo', id: 'see_auth', name: 'see_auth', autoSelect: true, displayField: 'name', valueField: 'id', hiddenName: 'see_auth', mode: 'local', triggerAction: 'all', store: storeSeeAuthorizations, emptyText:'Select ' }
+		        { width: 105, xtype: 'combo', id: 'cb_see_auth', name: 'see_auth', editable: false, displayField: 'name', valueField: 'id', queryMode: 'local', store: storeSeeAuthorizations, emptyText:'Select ' }
 		      ] 
 		    },{ 
 		      xtype: 'fieldcontainer',
 		      defaults: { hideLabel: true },
 		      items: [
 		        { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
-		        { width: 100, xtype: 'combo', id: 'none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', hiddenName: 'none', mode: 'local', triggerAction: 'all', store: storeAccessControls, emptyText:'Select ' },
+		        { width: 100, xtype: 'combo', id: 'cb_none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', queryMode: 'local', store: storeAccessControls, emptyText:'Select ' },
 		        { width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
 		        { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
 		      ]
@@ -327,22 +327,6 @@ Ext.onReady(function(){
 		    },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
 		    { width: 410, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
 		],
-	});
-	
-	// *************************************************************************************
-	// Message Window Dialog
-	// *************************************************************************************
-	var winUsers = new Ext.Window({
-		id          : 'winUsers',
-		width       : 525,
-	    autoHeight  : true,
-	    modal       : true,
-	    border	  	: false,
-	    resizable   : false,
-	    title       : '<?php i18n('Add or Edit User'); ?>',
-	    closeAction : 'hide',
-	    renderTo    : document.body,
-	    items: [frmUsers],
 		buttons: [{
             text: '<?php i18n('Save'); ?>',
             handler: function(){
@@ -377,11 +361,27 @@ Ext.onReady(function(){
 				storeUsers.load();			// Reload the dataSore from the database
 			}
         },{
-            text: 'Cancel',
+            text: '<?php i18n('Cancel'); ?>',
             handler: function(){
             	winUsers.hide();
             }
         }]
+	});
+	
+	// *************************************************************************************
+	// Message Window Dialog
+	// *************************************************************************************
+	var winUsers = new Ext.Window({
+		id          : 'winUsers',
+		width       : 520,
+	    autoHeight  : true,
+	    modal       : true,
+	    border	  	: false,
+	    resizable   : false,
+	    title       : '<?php i18n('Add or Edit User'); ?>',
+	    closeAction : 'hide',
+	    renderTo    : document.body,
+	    items: [frmUsers],
 	}); // END WINDOW
 	
 	// *************************************************************************************
@@ -400,9 +400,10 @@ Ext.onReady(function(){
 	   	  	// Single click to select the record
 	   	  	// -----------------------------------------
 	   	  	itemclick: {
-	   			fn: function(dataview, index, item, rowIndex, e) {
+	   			fn: function(DataView, record, item, rowIndex, e){ 
 					Ext.getCmp('frmUsers').getForm().reset();
 					Ext.getCmp('editAddressbook').enable();
+					Ext.getCmp('cmdDelete').enable();
 	   		  		var rec = storeUsers.getAt(rowIndex);
 	   		  		Ext.getCmp('frmUsers').getForm().loadRecord(rec);
 					currRec = rec;
@@ -413,9 +414,10 @@ Ext.onReady(function(){
 	   	  	// Double click to select the record, and edit the record
 	   	  	// -----------------------------------------
 	   	  	itemdblclick: { 
-	   			fn: function(dataview, index, item, rowIndex, e) {
+	   			fn: function(DataView, record, item, rowIndex, e){ 
 					Ext.getCmp('frmUsers').getForm().reset();
 					Ext.getCmp('editAddressbook').enable();
+					Ext.getCmp('cmdDelete').enable();
 					var rec = storeUsers.getAt(rowIndex); // get the record from the store
 					Ext.getCmp('frmUsers').getForm().loadRecord(rec); // load the record selected into the form
 					currRec = rec;
@@ -444,26 +446,39 @@ Ext.onReady(function(){
 			    text      : '<?php i18n("Add User"); ?>',
 			    iconCls   : 'icoAddressBook',
 			    handler   : function(){
-			      Ext.getCmp('frmUsers').getForm().reset(); // Clear the form
-			      winUsers.show();
+			    	Ext.getCmp('frmUsers').getForm().reset(); // Clear the form
+			      	winUsers.show();
+				  	winUsers.setTitle('<?php i18n("Add User"); ?>'); 
 			    }
 			},'-',{
 			    id        : 'editAddressbook',
-			    ref       : '../editAddressbook',
 			    text      : '<?php i18n("Edit User"); ?>',
 			    iconCls   : 'edit',
 			    disabled  : true,
 			    handler: function(){ 
-			      winUsers.show();
+					winUsers.setTitle('<?php i18n("Add User"); ?>'); 
+			    	winUsers.show();
 			    }
 			},'-',{
-			    id        : 'loadAddressbook',
-			    ref       : '../loadAddressbook',
-			    text      : '<?php i18n('Reload Grid - Debug'); ?>',
-			    iconCls   : 'edit',
-			    handler: function(){ 
-			      storeUsers.load();
-			    }
+				text: '<?php i18n("Delete Facility"); ?>',
+				iconCls: 'delete',
+				disabled: true,
+				id: 'cmdDelete',
+				handler: function(){
+					Ext.Msg.show({
+						title: '<?php i18n('Please confirm...'); ?>', 
+						icon: Ext.MessageBox.QUESTION,
+						msg:'<?php i18n('Are you sure to delete this User?'); ?>',
+						buttons: Ext.Msg.YESNO,
+						fn:function(btn,msgGrid){
+							if(btn=='yes'){
+								storeUsers.remove( currRec );
+								storeUsers.save();
+								storeUsers.load();
+			    		    }
+						}
+					});
+				}
 		  	}]					    
 	  	}], // END GRID MENNU BAR
 	  	//plugins: [new Ext.ux.grid.Search({
