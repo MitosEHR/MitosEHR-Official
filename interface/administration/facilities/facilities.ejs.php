@@ -46,7 +46,7 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// If a object called winUser exists destroy it, to create a new one.
 	// *************************************************************************************
-	if ( Ext.getCmp('winFacilities') ){ Ext.getCmp('winFacilities').destroy(); }
+	if ( Ext.getCmp('winFacility') ){ Ext.getCmp('winFacility').destroy(); }
 	
 	// *************************************************************************************
 	// Facility Record Structure
@@ -128,6 +128,31 @@ Ext.onReady(function() {
 	});
 
 	// *************************************************************************************
+	// Federal EIN - TaxID Data Store
+	// *************************************************************************************
+	Ext.regModel('taxidRecord', { fields: [
+			{name: 'option_id',		type: 'string'},
+			{name: 'title',			type: 'string'}
+		]
+	});
+	var storeTAXid = new Ext.data.Store({
+    	model		: 'taxidRecord',
+    	proxy		: {
+	   		type	: 'ajax',
+			api		: {
+				read	: 'interface/administration/facilities/component_data.ejs.php?task=taxid'
+			},
+    	   	reader: {
+        	    type			: 'json',
+   	        	idProperty		: 'id',
+	       	    totalProperty	: 'totals',
+    	       	root			: 'row'
+   			}
+   		},
+    	autoLoad: true
+	});
+
+	// *************************************************************************************
 	// User form
 	// *************************************************************************************
     var facilityForm = Ext.create('Ext.form.Panel', {
@@ -146,39 +171,49 @@ Ext.onReady(function() {
         items: [{
             fieldLabel: '<?php i18n("Name"); ?>',
             name: 'name',
+			allowBlank: false,
         },{
             fieldLabel: '<?php i18n("Phone"); ?>',
             name: 'phone',
-            allowBlank: false,
+			vtype: 'phoneNumber'
         },{
             fieldLabel: '<?php i18n("Fax"); ?>',
             name: 'fax',
-            allowBlank: false,
+			vtype: 'phoneNumber'
         },{
             fieldLabel: '<?php i18n("Street"); ?>',
             name: 'street',
-            allowBlank: false,
         },{
             fieldLabel: '<?php i18n("City"); ?>',
             name: 'city',
-            allowBlank: false,
         },{
             fieldLabel: '<?php i18n("State"); ?>',
             name: 'state',
-            allowBlank: false,
         },{
             fieldLabel: '<?php i18n("Postal Code"); ?>',
             name: 'postal_code',
-            allowBlank: false,
+			vtype: 'postalCode'
         },{
             fieldLabel: '<?php i18n("Country Code"); ?>',
             name: 'country_code',
-            allowBlank: false,
         },{
-            fieldLabel: '<?php i18n("Tax ID"); ?>',
-            name: 'federal_ein',
-            allowBlank: false,
-        },{
+			xtype: 'fieldcontainer',
+			fieldLabel: '<?php i18n("Tax ID"); ?>',
+			layout: 'hbox',
+			items: [{
+				xtype: 'combo', 
+				id: 'cmbTax_id_type', 
+				displayField: 'title', 
+				editable: false, 
+				store: storeTAXid, 
+				queryMode: 'local',
+	            name: 'tax_id_type',
+				width: 50
+			},{
+				xtype: 'textfield',
+				name: 'federal_ein'
+			}]
+		},{
         	xtype: 'checkboxfield',
             fieldLabel: '<?php i18n("Service Location"); ?>',
             name: 'service_location',
@@ -199,23 +234,18 @@ Ext.onReady(function() {
 			store: storePOSCode, 
 			queryMode: 'local',
             name: 'pos_code',
-            allowBlank: false,
         },{
             fieldLabel: '<?php i18n("X12 Sender ID"); ?>',
             name: 'x12_sender_id',
-            allowBlank: false,
         },{
-            fieldLabel: '<?php i18n("Attn"); ?>',
+            fieldLabel: '<?php i18n("Billing Attn"); ?>',
             name: 'attn',
-            allowBlank: false,
         },{
-            fieldLabel: '<?php i18n("Domain identifier"); ?>',
+            fieldLabel: '<?php i18n("CLIA Number"); ?>',
             name: 'domain_identifier',
-            allowBlank: false,
         },{
-            fieldLabel: '<?php i18n("NPI Number"); ?>',
+            fieldLabel: '<?php i18n("Facility NPI"); ?>',
             name: 'facility_npi',
-            allowBlank: false,
         },{
         	name: 'id',
         	hidden: true
