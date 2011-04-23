@@ -169,7 +169,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	Ext.regModel('Facilities', { fields: [
 		{name: 'id', type: 'string'},
-	    {name: 'names', type: 'string'}
+	    {name: 'name', type: 'string'}
 	],
 		idProperty: 'id'
 	});
