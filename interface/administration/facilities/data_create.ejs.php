@@ -29,24 +29,24 @@ $mitos_db = new dbHelper();
 // although Sencha EXTJS make good validation, we could check again 
 // just in case 
 // *************************************************************************************
-$row['name'] = dataEncode( $data[0]->name );
-$row['phone'] = dataEncode( $data[0]->phone );
-$row['fax'] = dataEncode( $data[0]->fax );
-$row['street'] = dataEncode( $data[0]->street );
-$row['city'] = dataEncode( $data[0]->city );
-$row['state'] = dataEncode( $data[0]->state );
-$row['postal_code'] = dataEncode( $data[0]->postal_code );
-$row['country_code'] = dataEncode( $data[0]->country_code );
-$row['federal_ein'] = dataEncode( $data[0]->federal_ein );
-$row['x12_sender_id'] = dataEncode( $data[0]->x12_sender_id );
-$row['service_location'] = ( isset($data[0]->service_location) ? 1 : 0);
-$row['accepts_assignment'] = ( isset($data[0]->accepts_assignment) ? 1 : 0);
-$row['billing_location'] = ( isset($data[0]->billing_location) ? 1 : 0);
-$row['pos_code'] = dataEncode( $data[0]->pos_code );
-$row['domain_identifier'] = dataEncode( $data[0]->domain_identifier );
-$row['attn'] = dataEncode( $data[0]->attn );
-$row['tax_id_type'] = dataEncode( $data[0]->tax_id_type );
-$row['facility_npi'] = dataEncode( $data[0]->facility_npi );
+$row['name'] 				= dataEncode( $data[0]->name );
+$row['phone'] 				= dataEncode( $data[0]->phone );
+$row['fax'] 				= dataEncode( $data[0]->fax );
+$row['street'] 				= dataEncode( $data[0]->street );
+$row['city'] 				= dataEncode( $data[0]->city );
+$row['state'] 				= dataEncode( $data[0]->state );
+$row['postal_code'] 		= dataEncode( $data[0]->postal_code );
+$row['country_code'] 		= dataEncode( $data[0]->country_code );
+$row['federal_ein'] 		= dataEncode( $data[0]->federal_ein );
+$row['x12_sender_id'] 		= dataEncode( $data[0]->x12_sender_id );
+$row['service_location'] 	= ( isset($data[0]->service_location) ? 1 : 0);
+$row['accepts_assignment'] 	= ( isset($data[0]->accepts_assignment) ? 1 : 0);
+$row['billing_location'] 	= ( isset($data[0]->billing_location) ? 1 : 0);
+$row['pos_code'] 			= dataEncode( $data[0]->pos_code );
+$row['domain_identifier'] 	= dataEncode( $data[0]->domain_identifier );
+$row['attn'] 				= dataEncode( $data[0]->attn );
+$row['tax_id_type'] 		= dataEncode( $data[0]->tax_id_type );
+$row['facility_npi'] 		= dataEncode( $data[0]->facility_npi );
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
@@ -56,23 +56,23 @@ $row['facility_npi'] = dataEncode( $data[0]->facility_npi );
 $mitosdb->setSQL("INSERT INTO 
 				facility 
 			SET
-				name = " . $row['name'] . ", " . "
-				phone = " . $row['phone'] . ", " . "
-				fax = " . $row['fax'] . ", " . "
-				street = " . $row['street'] . ", " . "
-				city = " . $row['city'] . ", " . "
-				state = " . $row['state'] . ", " . "
-				postal_code = " . $row['postal_code'] . ", " . "
-				country_code = " . $row['country_code'] . ", " . "
-				federal_ein = " . $row['federal_ein'] . ", " . "
-				service_location = " . $row['service_location'] . ", " . " 
-				billing_location = " . $row['billing_location'] . ", " . "
-				accepts_assignment = " . $row['accepts_assignment'] . ", " . "
-				pos_code = " . $row['pos_code'] . ", " . "
-				domain_identifier = " . $row['domain_identifier'] . ", " . "
-				attn = " . $row['attn'] . ", " . " 
-				tax_id_type = " . $row['tax_id_type'] . ", " . "
-				facility_npi = " . $row['facility_npi']);
+				name 				= " . $row['name'] . ", " . "
+				phone 				= " . $row['phone'] . ", " . "
+				fax 				= " . $row['fax'] . ", " . "
+				street 				= " . $row['street'] . ", " . "
+				city 				= " . $row['city'] . ", " . "
+				state 				= " . $row['state'] . ", " . "
+				postal_code 		= " . $row['postal_code'] . ", " . "
+				country_code 		= " . $row['country_code'] . ", " . "
+				federal_ein 		= " . $row['federal_ein'] . ", " . "
+				service_location 	= " . $row['service_location'] . ", " . " 
+				billing_location 	= " . $row['billing_location'] . ", " . "
+				accepts_assignment 	= " . $row['accepts_assignment'] . ", " . "
+				pos_code 			= " . $row['pos_code'] . ", " . "
+				domain_identifier 	= " . $row['domain_identifier'] . ", " . "
+				attn 				= " . $row['attn'] . ", " . " 
+				tax_id_type 		= " . $row['tax_id_type'] . ", " . "
+				facility_npi 		= " . $row['facility_npi']);
 				
 $mitosdb->exec();
 ?>
