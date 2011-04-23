@@ -23,6 +23,7 @@ include_once('library/compressor/compressor.inc.php');
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>MitosEHR</title>
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+<script type="text/javascript" src="repository/formValidation/formValidation.js"></script>
 
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
