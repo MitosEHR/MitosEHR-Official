@@ -29,10 +29,11 @@ $mitos_db = new dbHelper();
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
-$sql = "SELECT * FROM users WHERE users.authorized = 1 OR users.username != '' 
-        ORDER BY username LIMIT ".$start.",".$count;
-		
-$mitos_db->setSQL($sql);
+$mitos_db->setSQL("SELECT * 
+				   FROM users 
+				   WHERE users.authorized = 1 OR users.username != '' 
+        		   ORDER BY username 
+        		   LIMIT ".$start.",".$count);
 $total = $mitos_db->rowCount();
 
 foreach ($mitos_db->execStatement() as $urow) {

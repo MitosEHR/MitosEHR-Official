@@ -369,7 +369,6 @@ Ext.onReady(function(){
 			      	}
 			
 			    	storeUsers.save();          // Save the record to the dataStore
-			      	//storeUsers.commit(); // Commit the changes
 			      	winUsers.hide();            // Finally hide the dialog window
 					storeUsers.load();        // Reload the dataSore from the database
 			      
