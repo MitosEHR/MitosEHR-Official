@@ -15,6 +15,8 @@
 //-------------------------------------------
 session_name ( "MitosEHR" );
 session_start();
+session_cache_limiter('private');
+
 //-------------------------------------------
 // Load all the necesary libraries
 //-------------------------------------------

@@ -4,6 +4,8 @@
 //-----------------------------------------------------
 session_name ( "MitosEHR" );
 session_start();
+session_cache_limiter('private');
+
 //-----------------------------------------------------
 // Get the URL first, before the session gets deleted.
 //-----------------------------------------------------
