@@ -12,6 +12,7 @@
 
 session_name ( "MitosEHR" );
 session_start();
+session_cache_limiter('private');
 
 include_once("../../../library/I18n/I18n.inc.php");
 
@@ -102,6 +103,151 @@ Ext.onReady(function() {
 	});
 
 	// *************************************************************************************
+	// User form
+	// *************************************************************************************
+    var facilityForm = Ext.create('Ext.form.Panel', {
+    	frame: false,
+    	border: false,
+    	id: 'facilityForm',
+        bodyStyle:'padding:2px',
+        fieldDefaults: {
+            msgTarget: 'side',
+            labelWidth: 100
+        },
+        defaultType: 'textfield',
+        defaults: {
+            anchor: '100%'
+        },
+        items: [{
+            fieldLabel: '<?php i18n("Name"); ?>',
+            name: 'name',
+        },{
+            fieldLabel: '<?php i18n("Phone"); ?>',
+            name: 'phone',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("Fax"); ?>',
+            name: 'fax',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("Street"); ?>',
+            name: 'street',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("City"); ?>',
+            name: 'city',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("State"); ?>',
+            name: 'state',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("Postal Code"); ?>',
+            name: 'postal_code',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("Country Code"); ?>',
+            name: 'country_code',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("Tax ID"); ?>',
+            name: 'federal_ein',
+            allowBlank: false,
+        },{
+        	xtype: 'checkboxfield',
+            fieldLabel: '<?php i18n("Service Location"); ?>',
+            name: 'service_location',
+        },{
+        	xtype: 'checkboxfield',
+            fieldLabel: '<?php i18n("Billing Location"); ?>',
+            name: 'billing_location',
+        },{
+        	xtype: 'checkboxfield',
+            fieldLabel: '<?php i18n("Accepts assignment"); ?>',
+            name: 'accepts_assignment',
+        },{
+            fieldLabel: '<?php i18n("POS Code"); ?>',
+            name: 'pos_code',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("X12 Sender ID"); ?>',
+            name: 'x12_sender_id',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("Attn"); ?>',
+            name: 'attn',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("Domain identifier"); ?>',
+            name: 'domain_identifier',
+            allowBlank: false,
+        },{
+            fieldLabel: '<?php i18n("NPI Number"); ?>',
+            name: 'facility_npi',
+            allowBlank: false,
+        },{
+        	name: 'id',
+        	hidden: true
+        }],
+
+        buttons: [{
+            text: 'Save',
+            handler: function(){
+				//----------------------------------------------------------------
+				// Check if it has to add or update
+				// Update: 
+				// 1. Get the record from store, 
+				// 2. get the values from the form, 
+				// 3. copy all the 
+				// values from the form and push it into the store record.
+				// Add: The re-formated record to the dataStore
+				//----------------------------------------------------------------
+				if (userForm.getForm().findField('idusers').getValue()){ // Update
+					var record = storeUsers.getAt(rowPos);
+					var fieldValues = userForm.getForm().getValues();
+					for ( k=0; k <= record.fields.getCount()-1; k++) {
+						i = record.fields.get(k).name;
+						record.set( i, fieldValues[i] );
+					}
+				} else { // Add
+					//----------------------------------------------------------------
+					// 1. Convert the form data into a JSON data Object
+					// 2. Re-format the Object to be a valid record (UserRecord)
+					// 3. Add the new record to the datastore
+					//----------------------------------------------------------------
+					var obj = eval( '(' + Ext.JSON.encode(userForm.getForm().getValues()) + ')' );
+					var rec = new usersRecord(obj);
+					storeUsers.add( rec );
+				}
+				storeUsers.save();          // Save the record to the dataStore
+				winUser.hide();				// Finally hide the dialog window
+				storeUsers.load();			// Reload the dataSore from the database
+			}
+        },{
+            text: 'Cancel',
+            handler: function(){
+            	winUser.hide();
+            }
+        }]
+    });
+    
+	// *************************************************************************************
+	// Window User Form
+	// *************************************************************************************
+	var winFacility = Ext.create('widget.window', {
+		id			: 'winFacility',
+		closable	: true,
+		closeAction	: 'hide',
+		width		: 450,
+		height		: 530,
+		resizable	: false,
+		modal		: true,
+		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
+		items		: [ facilityForm ]
+	});
+	
+
+	// *************************************************************************************
 	// Facility Grid Panel
 	// *************************************************************************************
 	var FacilityGrid = Ext.create('Ext.grid.Panel', {
@@ -152,7 +298,49 @@ Ext.onReady(function() {
   		border		: false,
 		bodyPadding	: 0,
 		id			: 'topRenderPanel',
-		items: [ FacilityGrid ]
+		items: [ FacilityGrid ],
+		dockedItems: [{
+			xtype: 'toolbar',
+			dock: 'top',
+			items: [{
+				text: '<?php i18n("Add Facility"); ?>',
+				iconCls: 'icoAddRecord',
+				handler: function(){
+					Ext.getCmp('facilityForm').getForm().reset(); // Clear the form
+					winFacility.show();
+					winFacility.setTitle('<?php i18n("Add Facility"); ?>'); 
+				}
+			},'-',{
+				text: '<?php i18n("Edit Facility"); ?>',
+				iconCls: 'edit',
+				id: 'cmdEdit',
+				disabled: true,
+				handler: function(){
+      				winFacility.setTitle('<?php i18n("Edit Facility"); ?>');
+					winFacility.show(); 
+				}
+			},'-',{
+				text: '<?php i18n("Delete Facility"); ?>',
+				iconCls: 'delete',
+				disabled: true,
+				id: 'cmdDelete',
+				handler: function(){
+					Ext.Msg.show({
+						title: '<?php i18n('Please confirm...'); ?>', 
+						icon: Ext.MessageBox.QUESTION,
+						msg:'<?php i18n('Are you sure to delete this Facility?'); ?>',
+						buttons: Ext.Msg.YESNO,
+						fn:function(btn,msgGrid){
+							if(btn=='yes'){
+								storeUsers.remove( currRec );
+								storeUsers.save();
+								storeUsers.load();
+			    		    }
+						}
+					});
+				}
+			}]
+    	}]
 	}); // END TOP PANEL
 
 }); // End ExtJS
