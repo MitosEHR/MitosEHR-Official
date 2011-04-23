@@ -89,12 +89,12 @@ Ext.apply(Ext.form.VTypes, {
 		usa    		: /^\d{5}(-\d{4})?$/ 
 	}
 	// check for canada at first
-	if( !val.match(regexObj.canada) ) {
+	if( val.match(regexObj.canada) ) {
 		return true;
 	} else {
 		// now check for USA
 		regexp = null;
-		if(!val.match(regexObj.usa)) {
+		if(val.match(regexObj.usa)) {
 			return true;
 		} else {
 			return false;
