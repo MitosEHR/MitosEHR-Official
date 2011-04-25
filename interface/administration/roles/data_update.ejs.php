@@ -57,7 +57,7 @@ switch ($_GET['task']) {
 		// just in case 
 		// *************************************************************************************
 		$row['rolePermID'] = dataEncode($data['rolePermID']);
-		$row['value'] = dataEncode($data['value']);
+		$row['value'] = dataEncode($data['ac_perm']);
 		$row['permID'] = dataEncode($data['permID']);
 		$row['perm_key'] = dataEncode($data['perm_key']);
 		$row['perm_name'] = dataEncode($data['perm_name']);

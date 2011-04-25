@@ -42,16 +42,16 @@ Ext.onReady(function(){
 	// Roles model
 	//******************************************************************************
 	var permModel = Ext.regModel('PermissionList', { fields: [
-		{name: 'roleID', type: 'int'},
-		{name: 'role_name', type: 'string'},
-	    {name: 'permID', type: 'string'},
-	    {name: 'perm_key', type: 'string'},
-	    {name: 'perm_name', type: 'string'},
-		{name: 'rolePermID', type: 'int'},
-	    {name: 'role_id', type: 'int'},
-	    {name: 'perm_id', type: 'int'},
-	    {name: 'value', type: 'string'},
-		{name: 'ac_perm', type: 'string'}
+		{name: 'roleID', 		type: 'int'},
+		{name: 'role_name', 	type: 'string'},
+	    {name: 'permID', 		type: 'string'},
+	    {name: 'perm_key', 		type: 'string'},
+	    {name: 'perm_name', 	type: 'string'},
+		{name: 'rolePermID', 	type: 'int'},
+	    {name: 'role_id', 		type: 'int'},
+	    {name: 'perm_id', 		type: 'int'},
+	    {name: 'value', 		type: 'string'},
+		{name: 'ac_perm', 		type: 'string'}
 	]});
 
 	//******************************************************************************
@@ -298,7 +298,6 @@ Ext.onReady(function(){
 		listeners: {
 			afteredit: function () {
 				permStore.save();
-				permStore.commit();
 				permStore.load();
 			}
 		}
