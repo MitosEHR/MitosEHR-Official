@@ -460,7 +460,7 @@ Ext.onReady(function(){
 			    	winUsers.show();
 			    }
 			},'-',{
-				text: '<?php i18n("Delete Facility"); ?>',
+				text: '<?php i18n("Delete User"); ?>',
 				iconCls: 'delete',
 				disabled: true,
 				id: 'cmdDelete',

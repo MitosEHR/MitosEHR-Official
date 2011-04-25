@@ -29,7 +29,7 @@ Ext.onReady(function(){
 	var rowPos; // Stores the current Grid Row Position (int)
 	var currList; // Stores the current List Option (string)
 	var currRec; // Store the current record (Object)
-
+	var currRoleId; // Store the current role ID (int)
 	//******************************************************************************
 	// Sanitizing Objects!
 	// Destroy them, if already exists in the browser memory.
@@ -45,7 +45,7 @@ Ext.onReady(function(){
 		{name: 'roleID', type: 'int'},
 		{name: 'role_name', type: 'string'},
 	    {name: 'permID', type: 'string'},
-	    {name: 'perm_key', type: 'int'},
+	    {name: 'perm_key', type: 'string'},
 	    {name: 'perm_name', type: 'string'},
 		{name: 'rolePermID', type: 'int'},
 	    {name: 'role_id', type: 'int'},
@@ -58,19 +58,17 @@ Ext.onReady(function(){
 	//******************************************************************************
 	var permStore = new Ext.data.Store({
 	    model		: 'PermissionList',
-		noCache		: true,
-    	autoSync	: false,
 	    proxy		: {
 	    	type	: 'ajax',
 			api		: {
 				read	: 'interface/administration/roles/data_read.ejs.php',
-				create	: 'interface/administration/roles/data_create.ejs.php',
+				create	: 'interface/administration/roles/data_create.ejs.php?task=create_permission',
 				update	: 'interface/administration/roles/data_update.ejs.php',
 				destroy : 'interface/administration/roles/data_destroy.ejs.php'
 			},
 	        reader: {
 	            type			: 'json',
-	            idProperty		: 'id',
+	            idProperty		: 'permID',
 	            totalProperty	: 'totals',
 	            root			: 'row'
 	    	},
@@ -89,7 +87,7 @@ Ext.onReady(function(){
 	// Structure, data for Roles
 	// AJAX -> component_data.ejs.php
 	// ****************************************************************************
-	Ext.regModel('Roles', { fields: [
+	var roleModel = Ext.regModel('Roles', { fields: [
 		{name: 'id', type: 'int'},
 	    {name: 'role_name', type: 'string'}
 	],
@@ -99,12 +97,24 @@ Ext.onReady(function(){
 		model		: 'Roles',
 		proxy		: {
 			type	: 'ajax',
-			url		: 'interface/administration/roles/component_data.ejs.php?task=roles',
-			reader	: {
-				type			: 'json',
-				idProperty		: 'id',
-				totalProperty	: 'totals',
-				root			: 'row'
+			api		: {
+				read	: 'interface/administration/roles/component_data.ejs.php?task=roles',
+				create	: 'interface/administration/roles/data_create.ejs.php?task=create_role',
+				update	: 'interface/administration/roles/data_update.ejs.php',
+				destroy : 'interface/administration/roles/data_destroy.ejs.php'
+			},
+	        reader: {
+	            type			: 'json',
+	            idProperty		: 'id',
+	            totalProperty	: 'totals',
+	            root			: 'row'
+	    	},
+	    	writer: {
+				type	 		: 'json',
+				writeAllFields	: true,
+				allowSingle	 	: true,
+				encode	 		: true,
+				root	 		: 'row'
 			}
 		},
 		autoLoad: true
@@ -157,34 +167,17 @@ Ext.onReady(function(){
             text: 'Save',
             handler: function(){
 				//----------------------------------------------------------------
-				// Check if it has to add or update
-				// Update: 
-				// 1. Get the record from store, 
-				// 2. get the values from the form, 
-				// 3. copy all the 
-				// values from the form and push it into the store record.
-				// Add: The re-formated record to the dataStore
+				// 1. Convert the form data into a JSON data Object
+				// 2. Re-format the Object to be a valid record (UserRecord)
+				// 3. Add the new record to the datastore
 				//----------------------------------------------------------------
-				if (rolesForm.getForm().findField('id').getValue()){ // Update
-					var record = permModel.getAt(rowPos);
-					var fieldValues = rolesForm.getForm().getValues();
-					for ( k=0; k <= record.fields.getCount()-1; k++) {
-						i = record.fields.get(k).name;
-						record.set( i, fieldValues[i] );
-					}
-				} else { // Add
-					//----------------------------------------------------------------
-					// 1. Convert the form data into a JSON data Object
-					// 2. Re-format the Object to be a valid record (UserRecord)
-					// 3. Add the new record to the datastore
-					//----------------------------------------------------------------
-					var obj = eval( '(' + Ext.JSON.encode(rolesForm.getForm().getValues()) + ')' );
-					var rec = new pernModel(obj);
-					permStore.add( rec );
-				}
-				permStore.save();          // Save the record to the dataStore
+				var obj = eval( '(' + Ext.JSON.encode(rolesForm.getForm().getValues()) + ')' );
+				var rec = new roleModel(obj);
+				roleStore.add( rec );
+
+				roleStore.save();          // Save the record to the dataStore
 				winRoles.hide();				// Finally hide the dialog window
-				permStore.load();			// Reload the dataSore from the database
+				roleStore.load();			// Reload the dataSore from the database
 			}
         },{
             text: 'Cancel',
@@ -200,7 +193,7 @@ Ext.onReady(function(){
     	frame		: false,
     	border		: false,
     	id			: 'permsForm',
-        bodyStyle	:'padding:2px',
+        bodyStyle	: 'padding:2px',
         fieldDefaults: {
             msgTarget	: 'side',
             labelWidth	: 100
@@ -218,38 +211,20 @@ Ext.onReady(function(){
 			id			: 'perm_key', 
 			name		: 'perm_key'
 		}],
-
         buttons: [{
             text: 'Save',
             handler: function(){
 				//----------------------------------------------------------------
-				// Check if it has to add or update
-				// Update: 
-				// 1. Get the record from store, 
-				// 2. get the values from the form, 
-				// 3. copy all the 
-				// values from the form and push it into the store record.
-				// Add: The re-formated record to the dataStore
+				// 1. Convert the form data into a JSON data Object
+				// 2. Re-format the Object to be a valid record (UserRecord)
+				// 3. Add the new record to the datastore
 				//----------------------------------------------------------------
-				if (permsForm.getForm().findField('id').getValue()){ // Update
-					var record = permModel.getAt(rowPos);
-					var fieldValues = permsForm.getForm().getValues();
-					for ( k=0; k <= record.fields.getCount()-1; k++) {
-						i = record.fields.get(k).name;
-						record.set( i, fieldValues[i] );
-					}
-				} else { // Add
-					//----------------------------------------------------------------
-					// 1. Convert the form data into a JSON data Object
-					// 2. Re-format the Object to be a valid record (UserRecord)
-					// 3. Add the new record to the datastore
-					//----------------------------------------------------------------
-					var obj = eval( '(' + Ext.JSON.encode(permsForm.getForm().getValues()) + ')' );
-					var rec = new pernModel(obj);
-					permStore.add( rec );
-				}
+				var obj = eval( '(' + Ext.JSON.encode(permsForm.getForm().getValues()) + ')' );
+				var rec = new permModel(obj);
+				permStore.add( rec );
+
 				permStore.save();          // Save the record to the dataStore
-				winPerms.hide();				// Finally hide the dialog window
+				winPerms.hide();			// Finally hide the dialog window
 				permStore.load();			// Reload the dataSore from the database
 			}
         },{
@@ -312,57 +287,33 @@ Ext.onReady(function(){
         border		: false,
         layout		: 'fit',
 		plugins: [rowEditing],
-        columns: [
-			{
-				text     	: '<?php i18n("Secction Area"); ?>',
-				flex     	: 1,
-				sortable 	: true,
-				dataIndex	: 'perm_name'
-            },{
-				header		: '<?php i18n("Access Control / Permision"); ?>',
-	            dataIndex	: 'value',
-				flex     	: 1,
-	            field: {
-	                xtype			: 'combo',
-	                typeAhead		: true,
-	                triggerAction	: 'all',
-					store: [
-						['0','No Access'],
-	                    ['1','View / Read'],
-	                    ['2','View / Read / Edit']
-					],
-				},
-                lazyRender: true,
-                listClass: 'x-combo-list-small'
+        columns: [{
+			text     	: '<?php i18n("Secction Area"); ?>',
+			flex     	: 1,
+			sortable 	: true,
+			dataIndex	: 'perm_name',
+			field: {
+                xtype: 'textfield',
+                allowBlank: false
             }
-		],
-		viewConfig: { stripeRows: true },
-		listeners: {
-			itemclick: {
-            	fn: function(DataView, record, item, rowIndex, e){ 
-            		Ext.getCmp('rolesForm').getForm().reset(); // Clear the form
-            		Ext.getCmp('cmdEdit').enable();
-            		Ext.getCmp('cmdDelete').enable();
-					var rec = permModel.getAt(rowIndex);
-					Ext.getCmp('rolesForm').getForm().loadRecord(rec);
-            		currRec = rec;
-            		rowPos = rowIndex;
-            	}
+        },{
+			header		: '<?php i18n("Access Control / Permision"); ?>',
+            dataIndex	: 'value',
+			flex     	: 1,
+            field: {
+                xtype			: 'combo',
+                typeAhead		: true,
+                triggerAction	: 'all',
+				store: [
+					['0','No Access'],
+                    ['1','View / Read'],
+                    ['2','View / Read / Edit']
+				],
 			},
-			itemdblclick: {
-            	fn: function(DataView, record, item, rowIndex, e){ 
-            		Ext.getCmp('rolesForm').getForm().reset(); // Clear the form
-            		Ext.getCmp('cmdEdit').enable();
-            		Ext.getCmp('cmdDelete').enable();
-					var rec = permModel.getAt(rowIndex);
-					Ext.getCmp('rolesForm').getForm().loadRecord(rec);
-            		currRec = rec;
-            		rowPos = rowIndex;
-            		winFacility.setTitle('<?php i18n("Edit Role Permision"); ?>');
-            		winFacility.show();
-            	}
-			}
-		},
+            lazyRender: true,
+            listClass: 'x-combo-list-small'
+        }],
+		viewConfig: { stripeRows: true },
 		listeners:{
 			cellclick: function(DataView, record, item, rowIndex, columnIndex, e){
 				currRec = permStore.getAt(rowIndex); // Copy the record to the global variable
@@ -405,23 +356,23 @@ Ext.onReady(function(){
 				listeners: {
 					select: function(combo, record){
 						// Reload the data store to reflect the new selected list filter
+						var currRoleId = record[0].data.id;
 						permStore.load({params:{role_id: record[0].data.id }});
 					}
 				}
 						},'-',{
 				text		: '<?php i18n("Edit a Role"); ?>',
 				iconCls		: 'edit',
-				id			: 'cmdEdit',
-				disabled	: true,
-				handler		: function(){
-      				winRoles.setTitle('<?php i18n("Edit a Role"); ?>');
+				handler		: function(DataView, record, item, rowIndex, e){
+					Ext.getCmp('rolesForm').getForm().reset(); // Clear the form
+					var rec = permStore.getById(currRoleId); // get the record from the store
+					Ext.getCmp('rolesForm').getForm().loadRecord(rec);
+					winRoles.setTitle('<?php i18n("Edit a Role"); ?>');
 					winRoles.show(); 
 				}
 			},'-',{
 				text		: '<?php i18n("Delete Role"); ?>',
 				iconCls		: 'delete',
-				disabled	: true,
-				id			: 'cmdDelete',
 				handler: function(){
 					Ext.Msg.show({
 						title	: '<?php i18n('Please confirm...'); ?>', 
@@ -430,7 +381,8 @@ Ext.onReady(function(){
 						buttons	: Ext.Msg.YESNO,
 						fn		:function(btn,msgGrid){
 								if(btn=='yes'){
-								rolesStore.remove( currRec );
+								var rec = rolesStore.getById(currRoleId); // get the record from the store
+								rolesStore.remove(rec);
 								rolesStore.save();
 								rolesStore.load();
 			    		    }
