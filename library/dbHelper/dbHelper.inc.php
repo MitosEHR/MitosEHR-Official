@@ -170,6 +170,16 @@ class dbHelper {
 		return $recordset->fetch(PDO::FETCH_ASSOC);
 	}
 	
+	//**********************************************************************
+	// Get last inserted id
+	// Usage: $dbHelper->lastInsertedId();
+	//
+	// Author: Ernesto Rodriguez
+	//**********************************************************************
+	function lastInsertedId(){
+		return $this->conn->lastInsertId();
+	}
+	
 }
 
 ?>
