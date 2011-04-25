@@ -20,7 +20,7 @@ $mitos_db = new dbHelper();
 // *****************************************************************************************
 // Flag the list item to delete
 // *****************************************************************************************
-$data = json_decode ( $_POST['row'], true );
+$data = json_decode ( $_REQUEST['row'], true );
 switch ($_GET['task']) {
 		// *********************************************************************************
 		// Code to delete roles and related data from acl_role_perms
@@ -38,7 +38,7 @@ switch ($_GET['task']) {
 		// *********************************************************************************
 		// Code to delete permissions and related data from acl_role_perms
 		// *********************************************************************************
-		case "delete_permission";
+	case "delete_permission";
 		$delete_id = $data['id'];
 		$mitos_db->setSQL("DELETE FROM acl_permissions
 							WHERE id=".$delete_id);

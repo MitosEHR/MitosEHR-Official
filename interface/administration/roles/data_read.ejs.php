@@ -45,6 +45,17 @@ $total = $mitos_db->rowCount();
 	$buff = "";
 foreach ($mitos_db->execStatement() as $urow) {
 	$count++;
+	switch($urow['value']){
+		case '0':
+			$p = 'No Access';
+		break;
+		case '1':
+			$p = 'View / Read';
+		break;
+		case '2':
+			$p = 'View / read / Edit';
+		break;
+	}
 	$buff .= '{';
 	$buff .= ' "roleID": "' . $urow['roleID'] . '",';
 	$buff .= ' "role_name": "' . dataEncode( $urow['role_name'] ) . '",';
@@ -54,6 +65,7 @@ foreach ($mitos_db->execStatement() as $urow) {
 	$buff .= ' "rolePermID": "' . $urow['rolePermID'] . '",';
 	$buff .= ' "role_id": "' . $urow['role_id'] . '",';
 	$buff .= ' "perm_id": "' . $urow['perm_id'] . '",';
+	$buff .= ' "ac_perm": "' . $p . '",';
 	$buff .= ' "value": "' . $urow['value'] . '"},' . chr(13);
 }
 

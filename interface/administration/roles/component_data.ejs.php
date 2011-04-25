@@ -10,6 +10,7 @@ session_name ( "MitosEHR" );
 session_start();
 
 include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
 include_once("../../../library/acl/class.inc.php");
 $mitos_db = new dbHelper();
 
@@ -40,6 +41,23 @@ switch ($_GET['task']) {
 		echo '"row": [' . chr(13);
 		echo $buff;
 		echo ']}' . chr(13); 
+	break;
+	
+	// *****************************************************************************
+	// Permissions
+	// *****************************************************************************
+	case "perms":
+		$count++;
+		$buff .= " { value: '0', perm: '" . i18n('No Access','r') . "' },". chr(13);
+		$count++;
+		$buff .= " { value: '1', perm: '" . i18n('View / Read','r') . "' },". chr(13);
+		$count++;
+		$buff .= " { value: '2', perm: '" . i18n('View / read / Edit','r') . "' }";
+		echo '({';
+		echo "results: " . $count . ", " . chr(13);
+		echo "row: [" . chr(13);
+		echo $buff;
+		echo "]})" . chr(13);
 	break;
 }
 ?>

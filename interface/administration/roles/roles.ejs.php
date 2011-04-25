@@ -50,7 +50,8 @@ Ext.onReady(function(){
 		{name: 'rolePermID', type: 'int'},
 	    {name: 'role_id', type: 'int'},
 	    {name: 'perm_id', type: 'int'},
-	    {name: 'value', type: 'string'}
+	    {name: 'value', type: 'string'},
+		{name: 'ac_perm', type: 'string'}
 	]});
 
 	//******************************************************************************
@@ -129,18 +130,30 @@ Ext.onReady(function(){
 		currList = records[0].data.id; // Get first result for first grid data
 		permStore.load({params:{role_id: currList}}); // Filter the data store from the currList value
 	});
+
 	// *************************************************************************************
-	// Structure, combo permssions value
+	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
-	Ext.namespace('Ext.data');
-	Ext.data.permValues = [
-	    ['0', 'No Access'],
-	    ['1', 'View / Read'],
-	    ['2', 'View / read / Edit']
-	];
-	var cb_permVales = new Ext.data.ArrayStore({
-	    fields: ['cb_id', 'cb_value'],
-	    data : Ext.data.permValues
+	Ext.regModel('permRecord', { fields: [
+			{name: 'value',	type: 'string'},
+			{name: 'perm',	type: 'string'}
+		]
+	});
+	var storePerms = new Ext.data.Store({
+    	model		: 'permRecord',
+    	proxy		: {
+	   		type	: 'ajax',
+			api		: {
+				read	: 'interface/administration/roles/component_data.ejs.php?task=perms'
+			},
+    	   	reader: {
+        	    type			: 'json',
+   	        	idProperty		: 'value',
+	       	    totalProperty	: 'totals',
+    	       	root			: 'row'
+   			}
+   		},
+    	autoLoad: true
 	});
 
 	// ****************************************************************************
@@ -312,17 +325,16 @@ Ext.onReady(function(){
             }
         },{
 			header		: '<?php i18n("Access Control / Permision"); ?>',
-            dataIndex	: 'value',
+            dataIndex	: 'ac_perm',
 			flex     	: 1,
             field: {
                 xtype			: 'combo',
-                typeAhead		: true,
                 triggerAction	: 'all',
-				store: [
-					['0','No Access'],
-                    ['1','View / Read'],
-                    ['2','View / Read / Edit']
-				],
+				valueField		: 'value',
+				displayField	: 'perm',
+				editable		: false,
+				queryMode		: 'local', 
+				store			: storePerms,
 			},
             lazyRender: true,
             listClass: 'x-combo-list-small'

@@ -12,7 +12,7 @@ $_SESSION['site']['db']['host'] = 'localhost';
 $_SESSION['site']['db']['port'] = '3306';
 $_SESSION['site']['db']['username'] = 'openemr';
 $_SESSION['site']['db']['password'] = 'pass';
-$_SESSION['site']['db']['database'] = 'openemr';
+$_SESSION['site']['db']['database'] = 'mitosdb';
 
 //**********************************************************************
 // AES Key
