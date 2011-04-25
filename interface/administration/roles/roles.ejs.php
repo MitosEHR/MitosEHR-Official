@@ -29,7 +29,7 @@ Ext.onReady(function(){
 	var rowPos; // Stores the current Grid Row Position (int)
 	var currList; // Stores the current List Option (string)
 	var currRec; // Store the current record (Object)
-	var currRoleId; // Store the current role ID (int)
+	var currPerm; //store the current permission (object)
 	//******************************************************************************
 	// Sanitizing Objects!
 	// Destroy them, if already exists in the browser memory.
@@ -58,13 +58,14 @@ Ext.onReady(function(){
 	//******************************************************************************
 	var permStore = new Ext.data.Store({
 	    model		: 'PermissionList',
+		autoSync	: true,
 	    proxy		: {
 	    	type	: 'ajax',
 			api		: {
 				read	: 'interface/administration/roles/data_read.ejs.php',
 				create	: 'interface/administration/roles/data_create.ejs.php?task=create_permission',
-				update	: 'interface/administration/roles/data_update.ejs.php',
-				destroy : 'interface/administration/roles/data_destroy.ejs.php'
+				update	: 'interface/administration/roles/data_update.ejs.php?task=update_role_perms',
+				destroy : 'interface/administration/roles/data_destroy.ejs.php?task=delete_permission'
 			},
 	        reader: {
 	            type			: 'json',
@@ -100,8 +101,8 @@ Ext.onReady(function(){
 			api		: {
 				read	: 'interface/administration/roles/component_data.ejs.php?task=roles',
 				create	: 'interface/administration/roles/data_create.ejs.php?task=create_role',
-				update	: 'interface/administration/roles/data_update.ejs.php',
-				destroy : 'interface/administration/roles/data_destroy.ejs.php'
+				update	: 'interface/administration/roles/data_update.ejs.php?task=update_role',
+				destroy : 'interface/administration/roles/data_destroy.ejs.php?task=delete_role'
 			},
 	        reader: {
 	            type			: 'json',
@@ -157,6 +158,10 @@ Ext.onReady(function(){
         defaultType	: 'textfield',
         defaults	: { anchor: '100%' },
         items: [{
+			xtype: 'textfield', 
+			hidden: true, 
+			id: 'id', name: 'id'
+		},{
 			xtype		: 'textfield',
 			fieldLabel	: '<?php i18n("Role Name"); ?>',
 			id			: 'role_name', 
@@ -166,15 +171,23 @@ Ext.onReady(function(){
         buttons: [{
             text: 'Save',
             handler: function(){
-				//----------------------------------------------------------------
-				// 1. Convert the form data into a JSON data Object
-				// 2. Re-format the Object to be a valid record (UserRecord)
-				// 3. Add the new record to the datastore
-				//----------------------------------------------------------------
-				var obj = eval( '(' + Ext.JSON.encode(rolesForm.getForm().getValues()) + ')' );
-				var rec = new roleModel(obj);
-				roleStore.add( rec );
-
+				if (rolesForm.getForm().findField('id').getValue()){ // Update
+					var record = roleStore.getById(currList);
+					var fieldValues = rolesForm.getForm().getValues();
+					for ( k=0; k <= record.fields.getCount()-1; k++) {
+						i = record.fields.get(k).name;
+						record.set( i, fieldValues[i] );
+					}
+				} else { // Add
+					//----------------------------------------------------------------
+					// 1. Convert the form data into a JSON data Object
+					// 2. Re-format the Object to be a valid record (UserRecord)
+					// 3. Add the new record to the datastore
+					//----------------------------------------------------------------
+					var obj = eval( '(' + Ext.JSON.encode(rolesForm.getForm().getValues()) + ')' );
+					var rec = new roleModel(obj);
+					roleStore.add( rec );
+				}
 				roleStore.save();          // Save the record to the dataStore
 				winRoles.hide();				// Finally hide the dialog window
 				roleStore.load();			// Reload the dataSore from the database
@@ -266,13 +279,14 @@ Ext.onReady(function(){
 	// RowEditor Class
 	// *************************************************************************************
 	var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+		//clicksToEdit: 1,
 		saveText: 'Update',
 		errorSummary: false,
-		listeners:{
-			afteredit: function(roweditor, changes, record, rowIndex){
-				storeListsOption.save();
-				storeListsOption.commitChanges();
-				storeListsOption.reload();
+		listeners: {
+			afteredit: function () {
+				permStore.save();
+				permStore.commit();
+				permStore.load();
 			}
 		}
 	});
@@ -314,9 +328,12 @@ Ext.onReady(function(){
             listClass: 'x-combo-list-small'
         }],
 		viewConfig: { stripeRows: true },
-		listeners:{
-			cellclick: function(DataView, record, item, rowIndex, columnIndex, e){
-				currRec = permStore.getAt(rowIndex); // Copy the record to the global variable
+		listeners: {
+			itemclick: {
+	        	fn: function(DataView, record, item, rowIndex, e){ 
+	           		Ext.getCmp('cmdDeletePerm').enable();
+					currPerm = permStore.getAt(rowIndex);
+	            }
 			}
 		},
 		dockedItems: [{
@@ -356,16 +373,16 @@ Ext.onReady(function(){
 				listeners: {
 					select: function(combo, record){
 						// Reload the data store to reflect the new selected list filter
-						var currRoleId = record[0].data.id;
+						currList = record[0].data.id;
 						permStore.load({params:{role_id: record[0].data.id }});
 					}
 				}
-						},'-',{
+			},'-',{
 				text		: '<?php i18n("Edit a Role"); ?>',
 				iconCls		: 'edit',
 				handler		: function(DataView, record, item, rowIndex, e){
 					Ext.getCmp('rolesForm').getForm().reset(); // Clear the form
-					var rec = permStore.getById(currRoleId); // get the record from the store
+					var rec = roleStore.getById(currList); // get the record from the store
 					Ext.getCmp('rolesForm').getForm().loadRecord(rec);
 					winRoles.setTitle('<?php i18n("Edit a Role"); ?>');
 					winRoles.show(); 
@@ -381,10 +398,31 @@ Ext.onReady(function(){
 						buttons	: Ext.Msg.YESNO,
 						fn		:function(btn,msgGrid){
 								if(btn=='yes'){
-								var rec = rolesStore.getById(currRoleId); // get the record from the store
-								rolesStore.remove(rec);
-								rolesStore.save();
-								rolesStore.load();
+								var rec = roleStore.getById( currList ); // get the record from the store
+								roleStore.remove(rec);
+								roleStore.save();
+								roleStore.load();
+			    		    }
+						}
+					});
+				}
+			},'-',{
+				text		: '<?php i18n("Delete Permission"); ?>',
+				iconCls		: 'delete',
+				disabled  	: true,
+				id			: 'cmdDeletePerm',
+				handler: function(){
+					Ext.Msg.show({
+						title	: '<?php i18n('Please confirm...'); ?>', 
+						icon	: Ext.MessageBox.QUESTION,
+						msg		:'<?php i18n('Are you sure to delete this Permission? You will delete this permission in all Roles'); ?>',
+						buttons	: Ext.Msg.YESNO,
+						fn		:function(btn,msgGrid){
+								if(btn=='yes'){
+								var rec = permStore.getAt( currPerm ); // get the record from the store
+								permStore.remove(rec);
+								permStore.save();
+								permStore.load();
 			    		    }
 						}
 					});
