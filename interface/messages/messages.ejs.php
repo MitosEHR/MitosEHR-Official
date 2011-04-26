@@ -57,8 +57,7 @@ body_content = '<?php i18n('Nothing posted yet...'); ?>';
 // This should be the structure of the database table
 // 
 // *************************************************************************************
-
-Ext.regModel('Messages', { fields: [
+Ext.define("Messages", {extend: "Ext.data.Model", fields: [
 	{name: 'noteid',	type: 'int'},
 	{name: 'user',		type: 'string'},
 	{name: 'subject',   type: 'string'},
@@ -78,16 +77,28 @@ Ext.regModel('Messages', { fields: [
 // *************************************************************************************
 var storeMsgs = new Ext.data.Store({
     model		: 'Messages',
-    proxy		: new Ext.data.AjaxProxy({
-        type	: 'rest',
-        url 	: 'interface/messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
+    proxy		: {
+        type	: 'ajax',
+		api		: {
+        	read 	: 'interface/messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
+			//create	: 'interface/messages/data_read.ejs.php',
+			//update	: 'interface/messages/data_read.ejs.php',
+			//destroy 	: 'interface/messages/data_read.ejs.php'
+		},
         reader: {
-            type	: 'json',
-            idProperty: 'noteid',
-			totalProperty: 'results',
-			root: 'row'
-        }
-    }),
+	    	type			: 'json',
+	        idProperty		: 'noteid',
+	        totalProperty	: 'totals',
+	        root			: 'row'
+	    },
+	    writer: {
+			type	 		: 'json',
+			writeAllFields	: true,
+			allowSingle	 	: true,
+			encode	 		: true,
+			root	 		: 'row'
+		}
+	},
     autoLoad: true
 });
 
@@ -95,7 +106,7 @@ var storeMsgs = new Ext.data.Store({
 // Structure and load the data for cmb_toUsers
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Patients', { fields: [
+Ext.define("Patients", {extend: "Ext.data.Model", fields: [
 	{name: 'id',    type: 'int'},
 	{name: 'name',  type: 'string'},
 	{name: 'phone', type: 'string'},
@@ -121,7 +132,7 @@ var storePat = new Ext.data.Store({
 // Structure and load the data for cmb_toUsers
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('User', { fields: [
+Ext.define("User", {extend: "Ext.data.Model", fields: [
 	{name: 'user',      type: 'string', mapping: 'user'},
 	{name: 'full_name', type: 'string', mapping: 'full_name'}
 ]});
@@ -143,7 +154,7 @@ var toData = new Ext.data.Store({
 // Structure, data for cmb_Type
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Types', { fields: [
+Ext.define("Types", {extend: "Ext.data.Model", fields: [
 	{name: 'option_id', type: 'string', mapping: 'option_id'},
 	{name: 'title',     type: 'string', mapping: 'title'}
 ]});
@@ -165,7 +176,7 @@ var typeData = new Ext.data.Store({
 // Structure, data for cmb_Status
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Status', { fields: [
+Ext.define("Status", {extend: "Ext.data.Model", fields: [
 	{name: 'option_id', type: 'string', mapping: 'option_id'},
 	{name: 'title',     type: 'string', mapping: 'title'}
 ]});
