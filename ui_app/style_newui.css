@@ -5,10 +5,6 @@
  * New Styles
  * by Gino Rivera Falu
  *============================================================*/
-body {
-	background-image: url(../ui_icons/app_bg.png) !important;
-	background-repeat: repeat-x !important;
-}
 .topheader .x-panel-body {
 	background-color: transparent !important;
 	border: none !important; 
