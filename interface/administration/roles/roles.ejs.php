@@ -42,7 +42,6 @@ Ext.onReady(function(){
 	// Roles model
 	//******************************************************************************
 	var permModel = Ext.define("PermissionList", {extend: "Ext.data.Model", fields: [
-	//var permModel = Ext.regModel('PermissionList', { fields: [
 		{name: 'roleID', 		type: 'int'},
 		{name: 'role_name', 	type: 'string'},
 	    {name: 'permID', 		type: 'string'},
@@ -91,7 +90,6 @@ Ext.onReady(function(){
 	// AJAX -> component_data.ejs.php
 	// ****************************************************************************
 	var roleModel = Ext.define("Roles", {extend: "Ext.data.Model", fields: [
-	//var roleModel = Ext.regModel('Roles', { fields: [
 		{name: 'id', type: 'int'},
 	    {name: 'role_name', type: 'string'}
 	],
@@ -137,7 +135,6 @@ Ext.onReady(function(){
 	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
 	Ext.define("permRecord", {extend: "Ext.data.Model", fields: [
-	//Ext.regModel('permRecord', { fields: [
 			{name: 'value',	type: 'string'},
 			{name: 'perm',	type: 'string'}
 		]
