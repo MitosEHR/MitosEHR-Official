@@ -34,7 +34,7 @@ Ext.onReady(function(){
 // Structure, data for storeLang
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.regModel('Sites', { fields: 
+Ext.define("Sites", {extend: "Ext.data.Model", fields:
 	[
 	{ type: 'int', name: 'site_id'},
 	{ type: 'string', name: 'site'}

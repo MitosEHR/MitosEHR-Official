@@ -39,8 +39,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Users Model and Data store
 	// *************************************************************************************
-	var usersRecord = Ext.regModel('Users', { 
-		fields: [
+	var usersRecord = Ext.define("Users", {extend: "Ext.data.Model", fields: [
 			{name: 'id',                    type: 'int'},
 			{name: 'username',              type: 'string'},
 			{name: 'password',              type: 'auto'},
@@ -117,7 +116,7 @@ Ext.onReady(function(){
 	// Structure, data for Titles
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	Ext.regModel('Titles', { fields: [
+	Ext.define("Titles", {extend: "Ext.data.Model", fields: [
 		{name: 'option_id', type: 'string'},
 	    {name: 'title', type: 'string'}
 	],
@@ -142,7 +141,7 @@ Ext.onReady(function(){
 	// Structure, data for Types
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	Ext.regModel('Types', { fields: [
+	Ext.define("Types", {extend: "Ext.data.Model", fields: [
 		{name: 'option_id', type: 'string'},
 	    {name: 'title', type: 'string'}
 	],
@@ -167,7 +166,7 @@ Ext.onReady(function(){
 	// Structure, data for Facilities
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	Ext.regModel('Facilities', { fields: [
+	Ext.define("Facilities", {extend: "Ext.data.Model", fields: [
 		{name: 'id', type: 'string'},
 	    {name: 'name', type: 'string'}
 	],
@@ -192,7 +191,7 @@ Ext.onReady(function(){
 	// Structure, data for AccessControls
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	Ext.regModel('AccessControls', { fields: [
+	Ext.define("AccessControls", {extend: "Ext.data.Model", fields: [
 		{name: 'id', type: 'string'},
 	    {name: 'role_name', type: 'string'}
 	],
