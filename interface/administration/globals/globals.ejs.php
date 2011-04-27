@@ -28,21 +28,13 @@ Ext.onReady(function(){
 
 
 var globalFormPanel = Ext.create('Ext.form.Panel', {
-        bodyStyle:'padding:10px',
 		border: false,
 		layout: 'fit',
-        fieldDefaults: {
-            labelAlign: 'top',
-            msgTarget: 'side'
-        },
-        defaults: {
-            anchor: '100%'
-        },
+        fieldDefaults: { labelAlign: 'top', msgTarget: 'side' },
+        defaults: { anchor: '100%' },
         items: [{
             xtype:'tabpanel',
-            plain:true,
             activeTab: 0,
-            height:235,
             defaults:{bodyStyle:'padding:10px'},
             items:[{
                 title:'Appearance',
@@ -100,31 +92,27 @@ var globalFormPanel = Ext.create('Ext.form.Panel', {
                 items: [
 				
 				]
-            }]
-        }],
-		//-----------------------------------------------
-	    //  Start grid menu bar
-		//-----------------------------------------------
-	  	dockedItems: [{
-	  	  	xtype: 'toolbar',
-		  	dock: 'bottom',
-		  	items: [{
-				id        : 'addAddressbook',
-			    text      : '<?php i18n("Save Configuration"); ?>',
-			    iconCls   : 'icoAddressBook',
-			    handler   : function(){
-					//*** SAVE FUNCTION - TODO ***//
-			    }
-		  	}]
-		}]
-		
+            }],
+			dockedItems: [{
+		  	  	xtype: 'toolbar',
+			  	dock: 'bottom',
+			  	items: [{
+					id        : 'addAddressbook',
+				    text      : '<?php i18n("Save Configuration"); ?>',
+				    iconCls   : 'icoAddressBook',
+				    handler   : function(){
+						//*** SAVE FUNCTION - TODO ***//
+				    }
+			  	}]
+			}]
+        }]	
     });
 
 	//******************************************************************************
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('Globals'); ?>',
+		title		: '<?php i18n('MitosEHR Globals'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
 		layout		: 'fit',
 		height		: Ext.getCmp('MainApp').getHeight(),
