@@ -23,16 +23,16 @@ $buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "
 // -------------------------------------
 $buff .= '{"text":"' . i18n('Patient - TODO', 'r') . '", "cls":"folder", ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
-	$buff .= '{"text":"' . i18n('New Patient - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"administration/patient_file/new_patient.ejs.php"},' . chr(13);
-	$buff .= '{"text":"' . i18n('Search Patient - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"administration/patient_file/search_patient.ejs.php"},' . chr(13);
+	$buff .= '{"text":"' . i18n('New Patient - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"patient_file/new/new_patient.ejs.php"},' . chr(13);
+	$buff .= '{"text":"' . i18n('Patient File - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"patient_file/patient_file.ejs.php"},' . chr(13);
 	// -------------------------------------
 	// Patient
 	// -------------------------------------
 	$buff .= '{"text":"' . i18n('Visits - TODO', 'r') . '", "cls":"folder", ' . chr(13);
 		$buff .= '"children": [' . chr(13); // ^ Folder
-		$buff .= '{"text":"' . i18n('Create Visit - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"administration/patient_file/visits/create.ejs.php"},' . chr(13);
-		$buff .= '{"text":"' . i18n('Current Visit - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"administration/patient_file/visits/current.ejs.php"},' . chr(13);
-		$buff .= '{"text":"' . i18n('Visit History - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"administration/patient_file/visits/history.ejs.php"}' . chr(13);
+		$buff .= '{"text":"' . i18n('Create Visit - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"patient_file/visit/create.ejs.php"},' . chr(13);
+		$buff .= '{"text":"' . i18n('Current Visit - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"patient_file/visit/current.ejs.php"},' . chr(13);
+		$buff .= '{"text":"' . i18n('Visit History - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"patient_file/visit/history.ejs.php"}' . chr(13);
 	$buff .= ']}' . chr(13);
 $buff .= ']},' . chr(13);
 // -------------------------------------
