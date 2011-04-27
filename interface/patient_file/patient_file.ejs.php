@@ -1,7 +1,7 @@
 <?php 
 //******************************************************************************
 // facilities.ejs.php
-// Description: Facilities Screen
+// Description: Patient File ScreenS
 // v0.0.3
 // 
 // Author: Ernesto J Rodriguez
