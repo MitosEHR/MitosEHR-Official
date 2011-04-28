@@ -25,6 +25,160 @@ $_SESSION['site']['flops'] = 0;
 <script type="text/javascript">
 
 Ext.onReady(function(){
+	// *************************************************************************************
+	// Global Model and Data store
+	// *************************************************************************************
+	var usersRecord = Ext.define("Globals", {extend: "Ext.data.Model", fields: [
+			{ name: 'data_id',								type:'int' },
+			{ name: 'default_top_pane',						type:'auto', 	mapping: 'Appear1' },
+			{ name: 'concurrent_layout',					type:'auto', 	mapping: 'Appear2' },
+			{ name: 'css_header',							type:'auto', 	mapping: 'Appear3' },
+			{ name: 'gbl_nav_area_width',					type:'auto', 	mapping: 'Appear4' },
+			{ name: 'openemr_name',							type:'auto', 	mapping: 'Appear5' },
+			{ name: 'full_new_patient_form',				type:'auto', 	mapping: 'Appear6' },
+			{ name: 'patient_search_results_style',			type:'auto', 	mapping: 'Appear7' },
+			{ name: 'simplified_demographics',				type:'auto', 	mapping: 'Appear10' },
+			{ name: 'simplified_prescriptions',				type:'auto', 	mapping: 'Appear11' },
+			{ name: 'simplified_copay',						type:'auto', 	mapping: 'Appear12' },
+			{ name: 'use_charges_panel',					type:'auto', 	mapping: 'Appear13' },
+			{ name: 'online_support_link',					type:'auto', 	mapping: 'Appear14' },
+			{ name: 'language_default',						type:'auto', 	mapping: 'Loc1' },
+			{ name: 'language_menu_showall',				type:'auto', 	mapping: 'Loc2' },
+			{ name: 'translate_layout',						type:'auto', 	mapping: 'Loc5' },
+			{ name: 'translate_lists',						type:'auto', 	mapping: 'Loc6' },
+			{ name: 'translate_gacl_groups',				type:'auto', 	mapping: 'Loc7' },
+			{ name: 'translate_form_titles',				type:'auto', 	mapping: 'Loc8' },
+			{ name: 'translate_document_categories',		type:'auto', 	mapping: 'Loc9' },
+			{ name: 'translate_appt_categories',			type:'auto', 	mapping: 'Loc10' },
+			{ name: 'units_of_measurement',					type:'auto', 	mapping: 'Loc11' },
+			{ name: 'disable_deprecated_metrics_form',		type:'auto', 	mapping: 'Loc12' },
+			{ name: 'phone_country_code',					type:'auto', 	mapping: 'Loc13' },
+			{ name: 'date_display_format',					type:'auto', 	mapping: 'Loc14' },
+			{ name: 'currency_decimals',					type:'auto', 	mapping: 'Loc16' },
+			{ name: 'currency_dec_point',					type:'auto', 	mapping: 'Loc17' },
+			{ name: 'currency_thousands_sep',				type:'auto', 	mapping: 'Loc18' },
+			{ name: 'gbl_currency_symbol',					type:'auto', 	mapping: 'Loc19' },
+			{ name: 'specific_application',					type:'auto', 	mapping: 'Feat1' },
+			{ name: 'inhouse_pharmacy',						type:'auto', 	mapping: 'Feat2' },
+			{ name: 'disable_chart_tracker',				type:'auto', 	mapping: 'Feat3' },
+			{ name: 'disable_phpmyadmin_link',				type:'auto', 	mapping: 'sadfadsfdsafs' },
+			{ name: 'disable_immunizations',				type:'auto', 	mapping: 'Feat4' },
+			{ name: 'disable_prescriptions',				type:'auto', 	mapping: 'Feat5' },
+			{ name: 'omit_employers',						type:'auto', 	mapping: 'Feat5' },
+			{ name: 'select_multi_providers',				type:'auto', 	mapping: 'Feat7' },
+			{ name: 'disable_non_default_groups',			type:'auto', 	mapping: 'Feat8' },
+			{ name: 'ignore_pnotes_authorization',			type:'auto', 	mapping: 'Feat9' },
+			{ name: 'support_encounter_claims',				type:'auto', 	mapping: 'Feat10' },
+			{ name: 'advance_directives_warning',			type:'auto', 	mapping: 'Feat11' },
+			{ name: 'configuration_import_export',			type:'auto', 	mapping: 'Feat12' },
+			{ name: 'restrict_user_facility',				type:'auto', 	mapping: 'Feat13' },
+			{ name: 'set_facility_cookie',					type:'auto', 	mapping: 'Feat14' },
+			{ name: 'discount_by_money',					type:'auto', 	mapping: 'Feat15' },
+			{ name: 'gbl_visit_referral_source',			type:'auto', 	mapping: 'Feat16' },
+			{ name: 'gbl_mask_patient_id',					type:'auto', 	mapping: 'Feat17' },
+			{ name: 'gbl_mask_invoice_number',				type:'auto', 	mapping: 'Feat18' },
+			{ name: 'gbl_mask_product_id',					type:'auto', 	mapping: 'Feat19' },
+			{ name: 'force_billing_widget_open',			type:'auto', 	mapping: 'Feat20' },
+			{ name: 'activate_ccr_ccd_report',				type:'auto', 	mapping: 'Feat21' },
+			{ name: 'disable_calendar',						type:'auto', 	mapping: 'Cal1' },
+			{ name: 'schedule_start',						type:'auto', 	mapping: 'Cal2' },
+			{ name: 'schedule_end',							type:'auto', 	mapping: 'Cal3' },
+			{ name: 'calendar_interval',					type:'auto', 	mapping: 'Cal4' },
+			{ name: 'calendar_appt_style',					type:'auto', 	mapping: 'Cal5' },
+			{ name: 'docs_see_entire_calendar',				type:'auto', 	mapping: 'asfdADSADa' },
+			{ name: 'auto_create_new_encounters',			type:'auto', 	mapping: '' },
+			{ name: 'timeout',								type:'auto', 	mapping: 'Sec1' },
+			{ name: 'secure_password',						type:'auto', 	mapping: 'Sec2' },
+			{ name: 'password_history',						type:'auto', 	mapping: 'Sec3' },
+			{ name: 'password_expiration_days',				type:'auto', 	mapping: 'Sec4' },
+			{ name: 'password_grace_time',					type:'auto', 	mapping: 'Sec5' },
+			{ name: 'is_client_ssl_enabled',				type:'auto', 	mapping: 'Sec6' },
+			{ name: 'certificate_authority_crt',			type:'auto', 	mapping: 'Sec7' },
+			{ name: 'certificate_authority_key',			type:'auto', 	mapping: 'asdasadfghfgsd' },
+			{ name: 'client_certificate_valid_in_days',		type:'auto', 	mapping: 'fghfdfhggfhd' },
+			{ name: 'Emergency_Login_email_id',				type:'auto', 	mapping: 'Sec8' },
+			{ name: 'practice_return_email_path',			type:'auto', 	mapping: 'Noti1' },
+			{ name: 'EMAIL_METHOD',							type:'auto', 	mapping: 'Noti2' },
+			{ name: 'SMTP_HOST',							type:'auto', 	mapping: 'Noti3' },
+			{ name: 'SMTP_PORT',							type:'auto', 	mapping: 'Noti4' },
+			{ name: 'SMTP_USER',							type:'auto', 	mapping: 'Noti5' },
+			{ name: 'SMTP_PASS',							type:'auto', 	mapping: 'Noti6' },
+			{ name: 'EMAIL_NOTIFICATION_HOUR',				type:'auto', 	mapping: 'Noti7' },
+			{ name: 'SMS_NOTIFICATION_HOUR',				type:'auto', 	mapping: 'Noti8' },
+			{ name: 'SMS_GATEWAY_USENAME',					type:'auto', 	mapping: 'Noti9' },
+			{ name: 'SMS_GATEWAY_PASSWORD',					type:'auto', 	mapping: 'Noti10' },
+			{ name: 'SMS_GATEWAY_APIKEY',					type:'auto', 	mapping: 'Noti11' },
+			{ name: 'enable_auditlog',						type:'auto', 	mapping: 'Log1' },
+			{ name: 'audit_events_patient-record',			type:'auto', 	mapping: 'Log2' },
+			{ name: 'audit_events_scheduling',				type:'auto', 	mapping: 'Log3' },
+			{ name: 'audit_events_order',					type:'auto', 	mapping: 'Log4' },
+			{ name: 'audit_events_security-administration',	type:'auto', 	mapping: 'Log5' },
+			{ name: 'audit_events_backup',					type:'auto', 	mapping: 'Log6' },
+			{ name: 'audit_events_other',					type:'auto', 	mapping: 'Log7' },
+			{ name: 'audit_events_query',					type:'auto', 	mapping: 'Log8' },
+			{ name: 'enable_atna_audit',					type:'auto', 	mapping: 'Log9' },
+			{ name: 'atna_audit_host',						type:'auto', 	mapping: 'Log10' },
+			{ name: 'atna_audit_port',						type:'auto', 	mapping: 'Log11' },
+			{ name: 'atna_audit_localcert',					type:'auto', 	mapping: 'Log12' },
+			{ name: 'atna_audit_cacert',					type:'auto', 	mapping: 'Log13' },
+			{ name: 'mysql_bin_dir',						type:'auto', 	mapping: 'Misc1' },
+			{ name: 'perl_bin_dir',							type:'auto', 	mapping: 'Misc2' },
+			{ name: 'temporary_files_dir',					type:'auto', 	mapping: 'Misc3' },
+			{ name: 'backup_log_dir',						type:'auto', 	mapping: 'Misc4' },
+			{ name: 'state_data_type',						type:'auto', 	mapping: 'Misc5' },
+			{ name: 'state_list',							type:'auto', 	mapping: 'Misc6' },
+			{ name: 'state_custom_addlist_widget',			type:'auto', 	mapping: 'Misc7' },
+			{ name: 'country_data_type',					type:'auto', 	mapping: 'Misc8' },
+			{ name: 'country_list',							type:'auto', 	mapping: 'Misc9' },
+			{ name: 'print_command',						type:'auto', 	mapping: 'Misc10' },
+			{ name: 'default_chief_complaint',				type:'auto', 	mapping: 'Misc11' },
+			{ name: 'default_new_encounter_form',			type:'auto', 	mapping: 'Misc12' },
+			{ name: 'patient_id_category_name',				type:'auto', 	mapping: 'Misc13' },
+			{ name: 'patient_photo_category_name',			type:'auto', 	mapping: 'Misc14' },
+			{ name: 'MedicareReferrerIsRenderer',			type:'auto', 	mapping: 'Misc15' },
+			{ name: 'post_to_date_benchmark',				type:'auto', 	mapping: 'Misc16' },
+			{ name: 'enable_hylafax',						type:'auto', 	mapping: 'Misc17' },
+			{ name: 'hylafax_server',						type:'auto', 	mapping: 'Misc18' },
+			{ name: 'hylafax_basedir',						type:'auto', 	mapping: 'Misc19' },
+			{ name: 'hylafax_enscript',						type:'auto', 	mapping: 'Misc20' },
+			{ name: 'enable_scanner',						type:'auto', 	mapping: 'Misc21' },
+			{ name: 'scanner_output_directory',				type:'auto', 	mapping: 'Misc22' }
+		],
+		idProperty: 'data_id',
+	});
+	var globalStore = new Ext.data.Store({
+	    model		: 'Globals',
+	    proxy		: {
+	    	type	: 'ajax',
+			api		: {
+				read	: 'interface/administration/globals/data_read.ejs.php',
+				create	: 'interface/administration/globals/data_create.ejs.php',
+				update	: 'interface/administration/globals/data_update.ejs.php',
+				destroy : 'interface/administration/globals/data_destroy.ejs.php'
+			},
+	        reader: {
+	            type			: 'json',
+	            totalProperty	: 'totals',
+   	        	idProperty		: 'data_id',
+	            root			: 'row'
+	    	},
+	    	writer: {
+				type	 		: 'json',
+				writeAllFields	: true,
+				allowSingle	 	: true,
+				encode	 		: true,
+				root	 		: 'row'
+			}
+	    },
+	    autoLoad: true
+	});
+	//------------------------------------------------------------------------------
+	// When the data is loaded semd values to de form
+	//------------------------------------------------------------------------------
+	globalStore.on('load',function(DataView, records, o){
+		var rec = globalStore.getById(1); // get the record from the store
+		Ext.getCmp('globalFormPanel').getForm().loadRecord(rec);
+	});
 	//**************************************************************************
 	// Dummy Store
 	//**************************************************************************
@@ -42,26 +196,27 @@ Ext.onReady(function(){
 	    data : Ext.data.dummy
 	});
 	//**************************************************************************
-	// Dummy Store
+	// Global Form Panel
 	//**************************************************************************
 	var globalFormPanel = Ext.create('Ext.form.Panel', {
-		border: false,
-		layout: 'fit',
-		autoScroll:true,
-        fieldDefaults: { msgTarget: 'side', labelWidth: 220, width: 500 },
-        defaults: { anchor: '100%' },
+		id				: 'globalFormPanel',
+		border			: false,
+		layout			: 'fit',
+		autoScroll		: true,
+        fieldDefaults	: { msgTarget: 'side', labelWidth: 220, width: 500 },
+        defaults		: { anchor: '100%' },
         items: [{
-            xtype:'tabpanel',
-            activeTab: 0,
-            defaults:{bodyStyle:'padding:10px', autoScroll:true },
+            xtype		:'tabpanel',
+            activeTab	: 0,
+            defaults	:{bodyStyle:'padding:10px', autoScroll:true },
             items:[{
-                title:'Appearance',
-                defaults: {anchor: '100%'},
+                title		:'Appearance',
+                defaults	: {anchor: '100%'},
                 items: [{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Main Top Pane Screen'); ?>',
-					name		: 'mainPaneScreen',
-					id			: 'mainPaneScreen',
+					name		: 'Appear1',
+					id			: 'Appear1',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -69,8 +224,8 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Layout Style'); ?>',
-					name		: 'layoutStyle',
-					id			: 'layoutStyle',
+					name		: 'Appear2',
+					id			: 'Appear2',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -78,8 +233,8 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Theme'); ?>',
-					name		: 'theme',
-					id			: 'theme',
+					name		: 'Appear3',
+					id			: 'Appear3',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -87,18 +242,18 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Navigation Area Width'); ?>',
-					name		: 'navWidth',
-					id			: 'navWidth'
+					name		: 'Appear4',
+					id			: 'Appear4'
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Application Title'); ?>',
-					name		: 'appTitle',
-					id			: 'appTitle'
+					name		: 'Appear5',
+					id			: 'Appear5'
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('New Patient Form'); ?>',
-					name		: 'newPatientForm',
-					id			: 'newPatientForm', 
+					name		: 'Appear6',
+					id			: 'Appear6', 
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -106,8 +261,8 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Patient Search Resuls Style'); ?>',
-					name		: 'patientSearchStyle',
-					id			: 'patientSearchStyle',
+					name		: 'Appear7',
+					id			: 'Appear7',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -115,38 +270,38 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Tall Navigation Area'); ?>',
-					name		: 'tallNavArea',
-					id			: 'tallNavArea'
+					name		: 'Appear8',
+					id			: 'Appear8'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Navigation Area Visit Form'); ?>',
-					name		: 'navAreaVisitForm',
-					id			: 'navAreaVisitForm'
+					name		: 'Appear9',
+					id			: 'Appear9'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Simplified Demographics'); ?>',
-					name		: 'simpleDemo',
-					id			: 'simpleDemo'
+					name		: 'Appear10',
+					id			: 'Appear10'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Simplified Prescriptions'); ?>',
-					name		: 'simplePrescription',
-					id			: 'simplePrescription'
+					name		: 'Appear11',
+					id			: 'Appear11'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Simplified Co-Pay'); ?>',
-					name		: 'simpleCoPay',
-					id			: 'simpleCoPay'
+					name		: 'Appear12',
+					id			: 'Appear12'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('User Charges Panel'); ?>',
-					name		: 'userChargesPanel',
-					id			: 'userChargesPanel'
+					name		: 'Appear13',
+					id			: 'Appear13'
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Online Support Link'); ?>',
-					name		: 'supportLink',
-					id			: 'supportLink'
+					name		: 'Appear14',
+					id			: 'Appear14'
 				}]
             },{
                 title:'Locale',
@@ -155,8 +310,8 @@ Ext.onReady(function(){
                 items: [{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Default Language'); ?>',
-					name		: 'deflang',
-					id			: 'deflang',
+					name		: 'Loc1',
+					id			: 'Loc1',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -164,13 +319,13 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('All Language Allowed'); ?>',
-					name		: 'allLangAllowed',
-					id			: 'allLangAllowed'
+					name		: 'Loc2',
+					id			: 'Loc2'
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Allowed Languages'); ?>',
-					name		: 'allowedlang',
-					id			: 'allowedlang',
+					name		: 'Loc3',
+					id			: 'Loc3',
 					displayField: 'name',
 					valueField	: 'value',
 					multiSelect	: true,
@@ -179,43 +334,43 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Allow Debuging Language'); ?>',
-					name		: 'debugLang',
-					id			: 'debugLang'
+					name		: 'Loc4',
+					id			: 'Loc4'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Translate Layouts'); ?>',
-					name		: 'transLayout',
-					id			: 'transLayout'
+					name		: 'Loc5',
+					id			: 'Loc5'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Translate List'); ?>',
-					name		: 'transList',
-					id			: 'transList'
+					name		: 'Loc6',
+					id			: 'Loc6'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Translate Access Control Roles'); ?>',
-					name		: 'transACL',
-					id			: 'transACL'
+					name		: 'Loc7',
+					id			: 'Loc7'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Translate Patient Note Titles'); ?>',
-					name		: 'transPattientNotes',
-					id			: 'transPattientNotes'
+					name		: 'Loc8',
+					id			: 'Loc8'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Translate Documents Categoies'); ?>',
-					name		: 'transDocsCat',
-					id			: 'transDocsCat'
+					name		: 'Loc9',
+					id			: 'Loc9'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Translate Appointment Categories'); ?>',
-					name		: 'transAppCat',
-					id			: 'transAppCat'
+					name		: 'Loc10',
+					id			: 'Loc10'
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Units for Visits Forms'); ?>',
-					name		: 'unitVisitsForm',
-					id			: 'unitVisitsForm',
+					name		: 'Loc11',
+					id			: 'Loc11',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -223,18 +378,18 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Disable Old Metric Vitals Form'); ?>',
-					name		: 'disableMetrilVit',
-					id			: 'disableMetrilVit'
+					name		: 'Loc12',
+					id			: 'Loc12'
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Telephone Country Code'); ?>',
-					name		: 'telCode',
-					id			: 'telCode'
+					name		: 'Loc13',
+					id			: 'Loc13'
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Date Display Format'); ?>',
-					name		: 'dateFormat',
-					id			: 'dateFormat',
+					name		: 'Loc14',
+					id			: 'Loc14',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -242,17 +397,26 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Time Display Format'); ?>',
-					name		: 'timeFormat',
-					id			: 'timeFormat',
+					name		: 'Loc15',
+					id			: 'Loc15',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
 					store		: dummyStore
 				},{
 					xtype		: 'combo',
-					fieldLabel	: '<?php i18n('Currency Decimal Paoint Symbol'); ?>',
-					name		: 'currencyDecSym',
-					id			: 'currencyDecSym',
+					fieldLabel	: '<?php i18n('Currency Decimal Places'); ?>',
+					name		: 'Loc16',
+					id			: 'Loc16',
+					displayField: 'name',
+					valueField	: 'value',
+					editable	: false,
+					store		: dummyStore
+				},{
+					xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Currency Decimal Point Symbol'); ?>',
+					name		: 'Loc17',
+					id			: 'Loc17',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -260,8 +424,8 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Currency Thousands Separator'); ?>',
-					name		: 'currThousandsSep',
-					id			: 'currThousandsSep',
+					name		: 'Loc18',
+					id			: 'Loc18',
 					displayField: 'name',
 					valueField	: 'value',
 					editable	: false,
@@ -269,8 +433,8 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Currency Designator'); ?>',
-					name		: 'currdesig',
-					id			: 'currdesig'
+					name		: 'Loc19',
+					id			: 'Loc19'
 				}]
 			},{
                 title:'Features',
@@ -732,7 +896,7 @@ Ext.onReady(function(){
 				    text      : '<?php i18n("Save Configuration"); ?>',
 				    iconCls   : 'icoSave',
 				    handler   : function(){
-						//*** SAVE FUNCTION - TODO ***//
+						// TODO //
 				    }
 			  	}]
 			}]
