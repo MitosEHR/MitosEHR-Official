@@ -894,7 +894,7 @@ Ext.onReady(function(){
 			  	items: [{
 					id        : 'addAddressbook',
 				    text      : '<?php i18n("Save Configuration"); ?>',
-				    iconCls   : 'icoSave',
+				    iconCls   : 'save',
 				    handler   : function(){
 						// TODO //
 				    }
