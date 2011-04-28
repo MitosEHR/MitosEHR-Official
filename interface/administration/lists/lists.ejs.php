@@ -1,7 +1,7 @@
 <?php 
 //******************************************************************************
-// new.ejs.php
-// New Patient Entry Form
+// list.ejs.php
+// List Options Panel
 // v0.0.1
 // 
 // Author: Ernest Rodriguez
@@ -9,6 +9,10 @@
 // 
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
+
+session_name ( "MitosEHR" );
+session_start();
+session_cache_limiter('private');
 
 ?>
 <script type="text/javascript">

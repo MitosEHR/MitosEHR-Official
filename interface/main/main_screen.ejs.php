@@ -12,6 +12,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 
 session_name ( "MitosEHR" );
 session_start();
+session_cache_limiter('private');
 
 // Reset session count
 $_SESSION['site']['flops'] = 0;
