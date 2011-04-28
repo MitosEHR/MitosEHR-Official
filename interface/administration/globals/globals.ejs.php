@@ -33,7 +33,9 @@ Ext.onReady(function(){
 	    ['Option 1', 'Option 1'],
 	    ['Option 2', 'Option 2'],
 	    ['Option 3', 'Option 3'],
-	    ['Option 4', 'Option 4']
+	    ['Option 5', 'Option 5'],
+	    ['Option 6', 'Option 6'],
+	    ['Option 7', 'Option 7']
 	];
 	var dummyStore = new Ext.data.ArrayStore({
 	    fields: ['name', 'value'],
@@ -148,24 +150,141 @@ Ext.onReady(function(){
 				}]
             },{
                 title:'Locale',
-                defaults: {width: 230},
+                //defaults: {},
                 defaultType: 'textfield',
-                items: [
-				
-				]
+                items: [{
+					xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Default Language'); ?>',
+					name		: 'deflang',
+					id			: 'deflang',
+					displayField: 'name',
+					valueField	: 'value',
+					editable	: false,
+					store		: dummyStore
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('All Language Allowed'); ?>',
+					name		: 'allLangAllowed',
+					id			: 'allLangAllowed'
+				},{
+					xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Allowed Languages'); ?>',
+					name		: 'allowedlang',
+					id			: 'allowedlang',
+					displayField: 'name',
+					valueField	: 'value',
+					multiSelect	: true,
+					editable	: false,
+					store		: dummyStore
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('Allow Debuging Language'); ?>',
+					name		: 'debugLang',
+					id			: 'debugLang'
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('Translate Layouts'); ?>',
+					name		: 'transLayout',
+					id			: 'transLayout'
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('Translate List'); ?>',
+					name		: 'transList',
+					id			: 'transList'
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('Translate Access Control Roles'); ?>',
+					name		: 'transACL',
+					id			: 'transACL'
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('Translate Patient Note Titles'); ?>',
+					name		: 'transPattientNotes',
+					id			: 'transPattientNotes'
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('Translate Documents Categoies'); ?>',
+					name		: 'transDocsCat',
+					id			: 'transDocsCat'
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('Translate Appointment Categories'); ?>',
+					name		: 'transAppCat',
+					id			: 'transAppCat'
+				},{
+					xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Units for Visits Forms'); ?>',
+					name		: 'unitVisitsForm',
+					id			: 'unitVisitsForm',
+					displayField: 'name',
+					valueField	: 'value',
+					editable	: false,
+					store		: dummyStore
+				},{
+					xtype		: 'checkbox',
+					fieldLabel	: '<?php i18n('Disable Old Metric Vitals Form'); ?>',
+					name		: 'disableMetrilVit',
+					id			: 'disableMetrilVit'
+				},{
+					xtype		: 'textfield',
+					fieldLabel	: '<?php i18n('Telephone Country Code'); ?>',
+					name		: 'telCode',
+					id			: 'telCode'
+				},{
+					xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Date Display Format'); ?>',
+					name		: 'dateFormat',
+					id			: 'dateFormat',
+					displayField: 'name',
+					valueField	: 'value',
+					editable	: false,
+					store		: dummyStore
+				},{
+					xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Time Display Format'); ?>',
+					name		: 'timeFormat',
+					id			: 'timeFormat',
+					displayField: 'name',
+					valueField	: 'value',
+					editable	: false,
+					store		: dummyStore
+				},{
+					xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Currency Decimal Paoint Symbol'); ?>',
+					name		: 'currencyDecSym',
+					id			: 'currencyDecSym',
+					displayField: 'name',
+					valueField	: 'value',
+					editable	: false,
+					store		: dummyStore
+				},{
+					xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Currency Thousands Separator'); ?>',
+					name		: 'currThousandsSep',
+					id			: 'currThousandsSep',
+					displayField: 'name',
+					valueField	: 'value',
+					editable	: false,
+					store		: dummyStore
+				},{
+					xtype		: 'textfield',
+					fieldLabel	: '<?php i18n('Currency Designator'); ?>',
+					name		: 'currdesig',
+					id			: 'currdesig'
+				}]
 			},{
                 title:'Calendar',
                 defaults: {width: 230},
                 defaultType: 'textfield',
                 items: [
-				
+
 				]
 			},{
                 title:'Security',
                 defaults: {width: 230},
                 defaultType: 'textfield',
                 items: [
-				
+
 				]
 			},{
                 title:'Notifocations',
