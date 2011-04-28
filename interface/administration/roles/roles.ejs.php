@@ -1,6 +1,6 @@
 <?php 
 //******************************************************************************
-// facilities.ejs.php
+// roles.ejs.php
 // Description: Facilities Screen
 // v0.0.3
 // 
@@ -11,6 +11,7 @@
 //**********************************************************************************
 session_name ( "MitosEHR" );
 session_start();
+session_cache_limiter('private');
 
 include_once("../../../library/I18n/I18n.inc.php");
 
