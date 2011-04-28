@@ -33,8 +33,8 @@ Ext.onReady(function(){
 			{ name: 'default_top_pane',						type:'auto', 	mapping: 'Appear1' },
 			{ name: 'concurrent_layout',					type:'auto', 	mapping: 'Appear2' },
 			{ name: 'css_header',							type:'auto', 	mapping: 'Appear3' },
-			{ name: 'gbl_nav_area_width',					type:'auto', 	mapping: 'Appear4' },
-			{ name: 'openemr_name',							type:'auto', 	mapping: 'Appear5' },
+			{ name: 'gbl_nav_area_width',					type:'string' },
+			{ name: 'openemr_name',							type:'auto' },
 			{ name: 'full_new_patient_form',				type:'auto', 	mapping: 'Appear6' },
 			{ name: 'patient_search_results_style',			type:'auto', 	mapping: 'Appear7' },
 			{ name: 'simplified_demographics',				type:'auto', 	mapping: 'Appear10' },
@@ -57,7 +57,7 @@ Ext.onReady(function(){
 			{ name: 'currency_decimals',					type:'auto', 	mapping: 'Loc16' },
 			{ name: 'currency_dec_point',					type:'auto', 	mapping: 'Loc17' },
 			{ name: 'currency_thousands_sep',				type:'auto', 	mapping: 'Loc18' },
-			{ name: 'gbl_currency_symbol',					type:'auto', 	mapping: 'Loc19' },
+			{ name: 'gbl_currency_symbol',					type:'auto' },
 			{ name: 'specific_application',					type:'auto', 	mapping: 'Feat1' },
 			{ name: 'inhouse_pharmacy',						type:'auto', 	mapping: 'Feat2' },
 			{ name: 'disable_chart_tracker',				type:'auto', 	mapping: 'Feat3' },
@@ -242,13 +242,13 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Navigation Area Width'); ?>',
-					name		: 'Appear4',
-					id			: 'Appear4'
+					name		: 'gbl_nav_area_width',
+					id			: 'gbl_nav_area_width'
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Application Title'); ?>',
-					name		: 'Appear5',
-					id			: 'Appear5'
+					name		: 'openemr_name',
+					id			: 'openemr_name'
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('New Patient Form'); ?>',
@@ -300,8 +300,8 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Online Support Link'); ?>',
-					name		: 'Appear14',
-					id			: 'Appear14'
+					name		: 'online_support_link',
+					id			: 'online_support_link'
 				}]
             },{
                 title:'Locale',
@@ -433,8 +433,8 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Currency Designator'); ?>',
-					name		: 'Loc19',
-					id			: 'Loc19'
+					name		: 'gbl_currency_symbol',
+					id			: 'gbl_currency_symbol'
 				}]
 			},{
                 title:'Features',
