@@ -51,7 +51,9 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
-	Ext.regModel('FacilitiesRecord', { fields: [
+    Ext.define('FacilitiesRecord', {
+        extend: 'Ext.data.Model',
+        fields: [
 			{name: 'id',					type: 'int'},
 			{name: 'name',					type: 'string'},
 			{name: 'phone',					type: 'string'},
@@ -105,7 +107,9 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// POS Code Data Store
 	// *************************************************************************************
-	Ext.regModel('poscodeRecord', { fields: [
+    Ext.define('poscodeRecord', {
+        extend: 'Ext.data.Model',
+        fields: [
 			{name: 'option_id',		type: 'string'},
 			{name: 'title',			type: 'string'}
 		]
