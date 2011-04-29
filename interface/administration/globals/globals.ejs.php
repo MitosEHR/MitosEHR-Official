@@ -41,7 +41,7 @@ Ext.onReady(function(){
 			{ name: 'simplified_prescriptions',				type:'auto' },
 			{ name: 'simplified_copay',						type:'auto' },
 			{ name: 'use_charges_panel',					type:'auto' },
-			{ name: 'online_support_link',					type:'string' },
+			{ name: 'online_support_link',					type:'auto' },
 			{ name: 'language_default',						type:'auto' },
 			{ name: 'language_menu_showall',				type:'auto' },
 			{ name: 'translate_layout',						type:'auto' },
@@ -152,9 +152,7 @@ Ext.onReady(function(){
 	    	type	: 'ajax',
 			api		: {
 				read	: 'interface/administration/globals/data_read.ejs.php',
-				create	: 'interface/administration/globals/data_create.ejs.php',
 				update	: 'interface/administration/globals/data_update.ejs.php',
-				destroy : 'interface/administration/globals/data_destroy.ejs.php'
 			},
 	        reader: {
 	            type			: 'json',
@@ -227,6 +225,61 @@ Ext.onReady(function(){
    		},
     	autoLoad: true
 	});
+	// *************************************************************************************
+	// Data Model for Main Screen
+	// *************************************************************************************
+	var default_top_pane_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Calendar", "option_id":"main_info.php"},
+	        {"title":"Patient Search/Add Screen", "option_id":"../new/new.php"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for Layout Styles
+	// *************************************************************************************
+	var concurrent_layout_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Old style layout with no left menu", "option_id":"0"},
+	        {"title":"Navigation menu consists of pairs of radio buttons", "option_id":"1"},
+	        {"title":"Navigation menu is a tree view", "option_id":"2"},
+	        {"title":"Navigation uses a sliding menu", "option_id":"3"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for Themes
+	// *************************************************************************************
+	var css_header_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Grey (default)", "option_id":"style_default.css"},
+	        {"title":"Blue", "option_id":"style_blue.css"},
+	        {"title":"Green", "option_id":"style_green.css"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for Themes
+	// *************************************************************************************
+	var full_new_patient_form_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Old-style static form without search or duplication check", "option_id":"0"},
+	        {"title":"All demographics fields, with search and duplication check", "option_id":"1"},
+	        {"title":"Mandatory or specified fields only, search and dup check", "option_id":"2"},
+	        {"title":"Mandatory or specified fields only, dup check, no search", "option_id":"3"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for Themes
+	// *************************************************************************************
+	var patient_search_results_style_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Encounter statistics", "option_id":"0"},
+	        {"title":"Mandatory and specified fields", "option_id":"1"}
+	    ]
+	});
 	//**************************************************************************
 	// Dummy Store
 	//**************************************************************************
@@ -251,7 +304,7 @@ Ext.onReady(function(){
 		border			: false,
 		layout			: 'fit',
 		autoScroll		: true,
-        fieldDefaults	: { msgTarget: 'side', labelWidth: 220, width: 500 },
+        fieldDefaults	: { msgTarget: 'side', labelWidth: 220, width: 520 },
         defaults		: { anchor: '100%' },
         items: [{
             xtype		:'tabpanel',
@@ -268,7 +321,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: default_top_pane_store
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Layout Style'); ?>',
@@ -277,7 +330,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: concurrent_layout_store
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Theme'); ?>',
@@ -286,7 +339,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: css_header_store
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Navigation Area Width'); ?>',
@@ -305,7 +358,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: full_new_patient_form_store
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Patient Search Resuls Style'); ?>',
@@ -314,7 +367,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: patient_search_results_style_store
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Tall Navigation Area -??-'); ?>',
