@@ -1,21 +1,43 @@
-<?php
-//if(!defined('_MitosEXEC')) die('No direct access allowed.');
+<?php 
+//******************************************************************************
+// facilities.ejs.php
+// Description: New Patient Screen
+// v0.0.3
+// 
+// Author: Ernesto J Rodriguez
+// Modified: n/a
+// 
+// MitosEHR (Eletronic Health Records) 2011
+//**********************************************************************************
+session_name ( "MitosEHR" );
+session_start();
+session_cache_limiter('private');
 
-/* Dashboard Application
-*
-* Description: Dashboard, will give a brief reports and widgets on how
-* the clinic is performing, with news from MitosEHR.org
-*
-* version 0.0.1
-* revision: N/A
-* author: Gino Rivera Falú
-*/
+include_once("../../library/I18n/I18n.inc.php");
 
-// Reset session count
+//**********************************************************************************
+// Reset session count 10 secs = 1 Flop
+//**********************************************************************************
 $_SESSION['site']['flops'] = 0;
 
-include_once('../../library/I18n/I18n.inc.php');
-
 ?>
+<script type="text/javascript">
 
-<div class="dashboard_title"><?php i18n("Dashboard"); ?></div>
+Ext.onReady(function(){
+	
+	//******************************************************************************
+	// Render panel
+	//******************************************************************************
+	var topRenderPanel = Ext.create('Ext.panel.Panel', {
+		title		: '<?php i18n('Dashboard'); ?>',
+		renderTo	: Ext.getCmp('MainApp').body,
+		layout		: 'fit',
+		height		: Ext.getCmp('MainApp').getHeight(),
+	  	frame 		: false,
+		border 		: false,
+		id			: 'topRenderPanel',
+		html		: '<div class="dashboard_title"><?php i18n("Dashboard"); ?></div>'
+	});
+}); // End ExtJS
+</script>
+
