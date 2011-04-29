@@ -28,7 +28,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Global Model and Data store
 	// *************************************************************************************
-	var usersRecord = Ext.define("Globals", {extend: "Ext.data.Model", fields: [
+	Ext.define("Globals", {extend: "Ext.data.Model", fields: [
 			{ name: 'data_id',								type:'int' },
 			{ name: 'default_top_pane',						type:'auto' },
 			{ name: 'concurrent_layout',					type:'auto' },
@@ -41,7 +41,7 @@ Ext.onReady(function(){
 			{ name: 'simplified_prescriptions',				type:'auto' },
 			{ name: 'simplified_copay',						type:'auto' },
 			{ name: 'use_charges_panel',					type:'auto' },
-			{ name: 'online_support_link',					type:'auto' },
+			{ name: 'online_support_link',					type:'string' },
 			{ name: 'language_default',						type:'auto' },
 			{ name: 'language_menu_showall',				type:'auto' },
 			{ name: 'translate_layout',						type:'auto' },
@@ -179,6 +179,54 @@ Ext.onReady(function(){
 		var rec = globalStore.getById(1); // get the record from the store
 		Ext.getCmp('globalFormPanel').getForm().loadRecord(rec);
 	});
+	// *************************************************************************************
+	// Data Model for all selet lists
+	// *************************************************************************************
+	Ext.define("selectLists", {extend: "Ext.data.Model", fields: [
+			{ name: 'list_id',		type:'string' },
+			{ name: 'option_id',	type:'string' },
+			{ name: 'title',		type:'string' },
+			{ name: 'seq',			type:'int' },
+			{ name: 'is_default',	type:'int' }
+		],
+		idProperty: 'list_id',
+	});
+	selectListsStore = new Ext.data.Store({
+    	model		: 'selectLists',
+    	proxy		: {
+	   		type	: 'ajax',
+			url		: 'interface/administration/globals/component_data.ejs.php?task=selectLists',
+    	   	reader: {
+        	    type			: 'json',
+	       	    totalProperty	: 'totals',
+    	       	root			: 'row'
+   			}
+   		},
+    	autoLoad: true
+	});
+	// *************************************************************************************
+	// Data Model for Languages select list
+	// *************************************************************************************
+	Ext.define("Language", {extend: "Ext.data.Model", fields: [
+			{ name: 'lang_id',		type:'string' },
+			{ name: 'lang_code',	type:'string' },
+			{ name: 'lang_description',		type:'string' }
+		],
+		idProperty: 'lang_id',
+	});
+	language_defaultStore = new Ext.data.Store({
+    	model		: 'Language',
+    	proxy		: {
+	   		type	: 'ajax',
+			url		: 'interface/administration/globals/component_data.ejs.php?task=langs',
+    	   	reader: {
+        	    type			: 'json',
+	       	    totalProperty	: 'totals',
+    	       	root			: 'row'
+   			}
+   		},
+    	autoLoad: true
+	});
 	//**************************************************************************
 	// Dummy Store
 	//**************************************************************************
@@ -192,7 +240,7 @@ Ext.onReady(function(){
 	    ['Option 7', 'Option 7']
 	];
 	var dummyStore = new Ext.data.ArrayStore({
-	    fields: ['name', 'value'],
+	    fields: ['title', 'option_id'],
 	    data : Ext.data.dummy
 	});
 	//**************************************************************************
@@ -217,8 +265,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Main Top Pane Screen'); ?>',
 					name		: 'default_top_pane',
 					id			: 'default_top_pane',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -226,8 +274,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Layout Style'); ?>',
 					name		: 'concurrent_layout',
 					id			: 'concurrent_layout',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -235,8 +283,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Theme'); ?>',
 					name		: 'css_header',
 					id			: 'css_header',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -254,8 +302,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('New Patient Form'); ?>',
 					name		: 'full_new_patient_form',
 					id			: 'full_new_patient_form', 
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -263,18 +311,18 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Patient Search Resuls Style'); ?>',
 					name		: 'patient_search_results_style',
 					id			: 'patient_search_results_style',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
 					xtype		: 'checkbox',
-					fieldLabel	: '<?php i18n('Tall Navigation Area'); ?>',
+					fieldLabel	: '<?php i18n('Tall Navigation Area -??-'); ?>',
 					name		: 'Appear8',  // ??????????
 					id			: 'Appear8'   // ??????????
 				},{
 					xtype		: 'checkbox',
-					fieldLabel	: '<?php i18n('Navigation Area Visit Form'); ?>',
+					fieldLabel	: '<?php i18n('Navigation Area Visit Form -??-'); ?>',
 					name		: 'Appear9',   // ?????????
 					id			: 'Appear9'    // ?????????
 				},{
@@ -310,12 +358,12 @@ Ext.onReady(function(){
                 items: [{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Default Language'); ?>',
-					name		: 'online_support_link',
-					id			: 'online_support_link',
-					displayField: 'name',
-					valueField	: 'value',
+					name		: 'language_default',
+					id			: 'lang_description',
+					displayField: 'lang_description',
+					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: language_defaultStore
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('All Language Allowed'); ?>',
@@ -323,17 +371,17 @@ Ext.onReady(function(){
 					id			: 'language_menu_showall'
 				},{
 					xtype		: 'combo',
-					fieldLabel	: '<?php i18n('Allowed Languages'); ?>',
-					name		: 'Loc3',  // ???????
-					id			: 'Loc3',  // ???????
-					displayField: 'name',
-					valueField	: 'value',
+					fieldLabel	: '<?php i18n('Allowed Languages -??-'); ?>',
+					name		: 'lang_description2',  // ???????
+					id			: 'lang_description2',  // ???????
+					displayField: 'lang_description',
+					valueField	: 'lang_description',
 					multiSelect	: true,
 					editable	: false,
-					store		: dummyStore
+					store		: language_defaultStore
 				},{
 					xtype		: 'checkbox',
-					fieldLabel	: '<?php i18n('Allow Debuging Language'); ?>',
+					fieldLabel	: '<?php i18n('Allow Debuging Language -??-'); ?>',
 					name		: 'Loc4',  // ???????
 					id			: 'Loc4'   // ???????
 				},{
@@ -371,8 +419,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Units for Visits Forms'); ?>',
 					name		: 'units_of_measurement',
 					id			: 'units_of_measurement',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -390,17 +438,17 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Date Display Format'); ?>',
 					name		: 'date_display_format',
 					id			: 'date_display_format',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
 					xtype		: 'combo',
-					fieldLabel	: '<?php i18n('Time Display Format'); ?>',
+					fieldLabel	: '<?php i18n('Time Display Format -??-'); ?>',
 					name		: 'Loc15',   // ??????
 					id			: 'Loc15',   // ??????
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -408,8 +456,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Currency Decimal Places'); ?>',
 					name		: 'currency_decimals',
 					id			: 'currency_decimals',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -417,8 +465,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Currency Decimal Point Symbol'); ?>',
 					name		: 'currency_dec_point',
 					id			: 'currency_dec_point',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -426,8 +474,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Currency Thousands Separator'); ?>',
 					name		: 'currency_thousands_sep',
 					id			: 'currency_thousands_sep',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -444,8 +492,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Specific Application'); ?>',
 					name		: 'date_display_format',
 					id			: 'date_display_format',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -453,8 +501,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Drugs and Prodructs'); ?>',
 					name		: 'date_display_format',
 					id			: 'date_display_format',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -537,7 +585,7 @@ Ext.onReady(function(){
 					name		: 'activate_ccr_ccd_report',
 					id			: 'activate_ccr_ccd_report'
 				},{
-					fieldLabel	: '<?php i18n('Hide Encryption/Decryption Options in Document Managment'); ?>',
+					fieldLabel	: '<?php i18n('Hide Encryption/Decryption Options in Document Managment -??-'); ?>',
 					name		: 'Feat22',   // ?????
 					id			: 'Feat22'    // ?????
 				}]
@@ -553,32 +601,32 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Calendar Starting Hour'); ?>',
 					name		: 'Cal2',
 					id			: 'Cal2',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
 					fieldLabel	: '<?php i18n('Calendar Ending Hour'); ?>',
 					name		: 'Cal3',
 					id			: 'Cal3',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
 					fieldLabel	: '<?php i18n('Calendar Interval'); ?>',
 					name		: 'Cal4',
 					id			: 'Cal4',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
 					fieldLabel	: '<?php i18n('Appointment Display Style'); ?>',
 					name		: 'Cal5',
 					id			: 'Cal5',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -595,8 +643,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Appointment/Event Color'); ?>',
 					name		: 'Cal8',
 					id			: 'Cal8',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				}]
@@ -612,8 +660,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Require Strong Passwords'); ?>',
 					name		: 'secure_password',
 					id			: 'secure_password',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -663,8 +711,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Email Transport Method'); ?>',
 					name		: 'EMAIL_METHOD',
 					id			: 'EMAIL_METHOD',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
@@ -788,19 +836,14 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('State Data Type'); ?>',
 					name		: 'state_data_type',
 					id			: 'state_data_type',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
-					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('State Lsit'); ?>',
 					name		: 'state_list',
 					id			: 'state_list',
-					displayField: 'name',
-					valueField	: 'value',
-					editable	: false,
-					store		: dummyStore
 				},{
 					xtype 		: 'checkbox',
 					fieldLabel	: '<?php i18n('State List Widget Custom Fields'); ?>',
@@ -811,8 +854,8 @@ Ext.onReady(function(){
 					fieldLabel	: '<?php i18n('Country Data Type'); ?>',
 					name		: 'country_data_type',
 					id			: 'country_data_type',
-					displayField: 'name',
-					valueField	: 'value',
+					displayField: 'title',
+					valueField	: 'option_id',
 					editable	: false,
 					store		: dummyStore
 				},{
