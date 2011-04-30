@@ -259,7 +259,7 @@ Ext.onReady(function(){
 	    ]
 	});
 	// *************************************************************************************
-	// Data Model for Themes
+	// Data Model for new patient form
 	// *************************************************************************************
 	var full_new_patient_form_store = Ext.create('Ext.data.Store', {
 	    fields: ['title', 'option_id'],
@@ -271,7 +271,7 @@ Ext.onReady(function(){
 	    ]
 	});
 	// *************************************************************************************
-	// Data Model for Themes
+	// Data Model for Patient Search results styes
 	// *************************************************************************************
 	var patient_search_results_style_store = Ext.create('Ext.data.Store', {
 	    fields: ['title', 'option_id'],
@@ -279,6 +279,94 @@ Ext.onReady(function(){
 	        {"title":"Encounter statistics", "option_id":"0"},
 	        {"title":"Mandatory and specified fields", "option_id":"1"}
 	    ]
+	});
+	// *************************************************************************************
+	// Data Model for 
+	// *************************************************************************************
+	var units_of_measurement_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Show both US and metric (main unit is US)", "option_id":"1"},
+	        {"title":"Show both US and metric (main unit is metric)", "option_id":"2"},
+	        {"title":"Show US only", "option_id":"3"},
+	        {"title":"Show metric only", "option_id":"4"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for date display format
+	// *************************************************************************************
+	var date_display_format_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"YYYY-MM-DD", "option_id":"0"},
+	        {"title":"MM/DD/YYYY", "option_id":"1"},
+	        {"title":"DD/MM/YYYY", "option_id":"2"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for 
+	// *************************************************************************************
+	var time_display_format_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"24 hr", "option_id":"0"},
+	        {"title":"12 hr", "option_id":"1"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for currency decimals
+	// *************************************************************************************
+	var currency_decimals_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"0", "option_id":"0"},
+	        {"title":"1", "option_id":"1"},
+	        {"title":"2", "option_id":"2"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for currency decimal point
+	// *************************************************************************************
+	var currency_dec_point_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Comma", "option_id":","},
+	        {"title":"Period", "option_id":"."}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for thousands separator
+	// *************************************************************************************
+	var currency_thousands_sep_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Comma", "option_id":","},
+	        {"title":"Period", "option_id":"."},
+	        {"title":"Space", "option_id":" "},
+	        {"title":"None", "option_id":""}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for Email Method
+	// *************************************************************************************
+	var EMAIL_METHOD_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"PHPMAIL", "option_id":"PHPMAIL"},
+	        {"title":"SENDMAIL", "option_id":"SENDMAIL"},
+	        {"title":"SMTP", "option_id":"SMTP"}
+	    ]
+	});
+	// *************************************************************************************
+	// Data Model for State and Country types
+	// *************************************************************************************
+	var state_country_data_type_store = Ext.create('Ext.data.Store', {
+	    fields: ['title', 'option_id'],
+	    data : [
+	        {"title":"Text field", "option_id":"2"},
+	        {"title":"Single-selection list", "option_id":"1"},
+	        {"title":"Single-selection list with ability to add to the list", "option_id":"26"}
+		]
 	});
 	//**************************************************************************
 	// Dummy Store
@@ -475,7 +563,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: units_of_measurement_store
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Disable Old Metric Vitals Form'); ?>',
@@ -494,16 +582,16 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: date_display_format_store
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Time Display Format -??-'); ?>',
-					name		: 'Loc15',   // ??????
-					id			: 'Loc15',   // ??????
+					name		: 'date_display_format',   // ??????
+					id			: 'date_display_format',   // ??????
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: time_display_format_store
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Currency Decimal Places'); ?>',
@@ -512,7 +600,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: currency_decimals_store
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Currency Decimal Point Symbol'); ?>',
@@ -521,7 +609,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: currency_dec_point_store
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Currency Thousands Separator'); ?>',
@@ -530,7 +618,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: currency_thousands_sep_store
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Currency Designator'); ?>',
@@ -767,7 +855,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: EMAIL_METHOD_store
 				},{
 					fieldLabel	: '<?php i18n('SMPT Server Hostname'); ?>',
 					name		: 'SMTP_HOST',
@@ -892,7 +980,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: state_country_data_type_store
 				},{
 					fieldLabel	: '<?php i18n('State Lsit'); ?>',
 					name		: 'state_list',
@@ -910,7 +998,7 @@ Ext.onReady(function(){
 					displayField: 'title',
 					valueField	: 'option_id',
 					editable	: false,
-					store		: dummyStore
+					store		: state_country_data_type_store
 				},{
 					fieldLabel	: '<?php i18n('Country list'); ?>',
 					name		: 'country_list',
