@@ -264,11 +264,9 @@ Ext.onReady(function(){
 					winLists.show();
 				}
 			},'-',{
-				xtype		  :'button',
-				id			  : 'delList',
-				ref			  : '../delList',
-				text		  : '<?php i18n('Delete list'); ?>',
-				iconCls		: 'delete',
+				id			  	: 'delList',
+				text		  	: '<?php i18n('Delete list'); ?>',
+				iconCls			: 'delete',
 			},'-','<?php i18n('Select list'); ?>: ',{
 				name			: 'cmbList', 
 				width			: 250,
@@ -279,14 +277,13 @@ Ext.onReady(function(){
 				triggerAction	: 'all', 
 				hiddenName		: 'option_id',
 				valueField		: 'option_id',
-				ref				: '../cmbList',
 				iconCls			: 'icoListOptions',
 				editable		: false,
 				store			: storeEditList,
 				listeners: {
 					select: function(combo, record){
 						// Reload the data store to reflect the new selected list filter
-						storeListsOption.load({params:{list_id: rec.data.option_id }});
+						storeListsOption.load({params:{list_id: record[0].data.option_id }});
 					}
 				}
 			}]
@@ -296,7 +293,6 @@ Ext.onReady(function(){
 			items:[{
 				// Add a new record.
 				text		:'<?php i18n('Add record'); ?>',
-				ref			: '../add',
 				iconCls		: 'icoAddRecord',
 				handler: function() {
 					editor.stopEditing();
