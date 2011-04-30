@@ -110,7 +110,35 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 		name: 'authPass', 
 		validationEvent: false,
 		fieldLabel: 'Password',
-		minLengthText: 'Password must be at least 4 characters long.'
+		minLengthText: 'Password must be at least 4 characters long.',
+		listeners:{
+        	specialkey: function(field, e){
+				// e.HOME, e.END, e.PAGE_UP, e.PAGE_DOWN,
+				// e.TAB, e.ESC, arrow keys: e.LEFT, e.RIGHT, e.UP, e.DOWN
+				if (e.getKey() == e.ENTER) {
+					formLogin.getForm().submit({
+						method:'POST', 
+						waitTitle:'Connecting', 
+						waitMsg:'Sending data...',
+						// Logon Success
+						success:function(){ 
+							var redirect = 'index.php'; 
+							window.location = redirect;
+						},
+						// Failed to logon
+						failure:function(form, action){ 
+							if(action.failureType == 'server'){ 
+								obj = Ext.JSON.decode(action.response.responseText); 
+								Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+							}else{ 
+								Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+							}
+							formLogin.getForm().reset(); 
+						}
+					})
+				}
+			}
+		}
     },{ 
     	xtype: 'combobox', 
     	id: 'choiseSite', 
@@ -121,7 +149,35 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
     	editable: false, 
     	triggerAction: 'all', 
     	displayField: 'site',
-    	queryMode: 'local'
+    	queryMode: 'local',
+		listeners:{
+        	specialkey: function(field, e){
+				// e.HOME, e.END, e.PAGE_UP, e.PAGE_DOWN,
+				// e.TAB, e.ESC, arrow keys: e.LEFT, e.RIGHT, e.UP, e.DOWN
+				if (e.getKey() == e.ENTER) {
+					formLogin.getForm().submit({
+						method:'POST', 
+						waitTitle:'Connecting', 
+						waitMsg:'Sending data...',
+						// Logon Success
+						success:function(){ 
+							var redirect = 'index.php'; 
+							window.location = redirect;
+						},
+						// Failed to logon
+						failure:function(form, action){ 
+							if(action.failureType == 'server'){ 
+								obj = Ext.JSON.decode(action.response.responseText); 
+								Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+							}else{ 
+								Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+							}
+							formLogin.getForm().reset(); 
+						}
+					})
+				}
+			}
+		}
     }],
     buttons: [{
         text: 'Reset',
@@ -157,30 +213,6 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 			})
 		}
     }],
-    keys: [{
-		key: [Ext.EventObject.ENTER], handler: function() {
-			formLogin.getForm().submit({
-				method:'POST', 
-				waitTitle:'Connecting', 
-				waitMsg:'Sending data...',
-				// Logon Success
-				success:function(){ 
-					var redirect = 'index.php'; 
-					window.location = redirect;
-				},
-				// Failed to logon
-				failure:function(form, action){ 
-					if(action.failureType == 'server'){ 
-						obj = Ext.JSON.decode(action.response.responseText); 
-						Ext.Msg.alert('Login Failed!', obj.errors.reason); 
-					}else{ 
-						Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
-					}
-					formLogin.getForm().reset(); 
-				}
-			})
-		}
-	}],
 	listeners:{
 		render: function(){
 			Ext.getCmp('authUser').focus(true, 10);
