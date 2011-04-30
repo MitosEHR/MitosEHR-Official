@@ -13,26 +13,26 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("library/dbHelper/dbHelper.inc.php");
-include_once("library/I18n/I18n.inc.php");
-require_once("repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
-// Count records variable
-$count = 0;
+//------------------------------------------
+// Database class instance
+//------------------------------------------
+$mitos_db = new dbHelper();
 
 // *************************************************************************************
 // Deside what to do with the $_GET['task']
 // *************************************************************************************
 switch ($_GET['task']) {
-
 	// *************************************************************************************
 	// Data for for storeTaxID
 	// *************************************************************************************
 	case "editlist":
-		
 		$lang_id = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
 		if (($lang_id == '1' && !empty($GLOBALS['skip_english_translation'])) || !$GLOBALS['translate_lists']) {
-  			$sql = sqlStatement("SELECT 
+  			$mitos_db->setSQL("SELECT 
   									option_id, 
   									title 
   								FROM 
@@ -42,7 +42,7 @@ switch ($_GET['task']) {
   								ORDER BY title, seq");
 		} else {
 			// Use and sort by the translated list name.
-			$sql = sqlStatement("SELECT 
+			$mitos_db->setSQL("SELECT 
 									lo.option_id, 
 									IF(LENGTH(ld.definition),ld.definition,lo.title) AS title 
 								FROM list_options AS lo 
@@ -53,18 +53,16 @@ switch ($_GET['task']) {
 								ORDER BY 
 									IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
 		}
-		foreach (sqlStatement($sql) as $urow) {
+		foreach ($mitos_db->execStatement() as $urow) {
+			$total = $mitos_db->rowCount();
 			$buff .= " { option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
-			$count++;
 		}
-		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
-		echo "row: [" . chr(13);
+		$buff = substr($buff, 0, -2); // Delete the last comma.
+		echo '{';
+		echo '"totals": "' . $total . '", ' . chr(13);
+		echo '"row": [' . chr(13);
 		echo $buff;
-		echo "]})" . chr(13);
+		echo ']}' . chr(13);
 	break;
-	
 }
-
 ?>
