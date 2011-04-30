@@ -29,7 +29,7 @@ $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 // Get the $_GET['list_id'] 
 // and execute the apropriate SQL statement
 // *************************************************************************************
-$currList = ($_REQUEST["list_id"] == null) ? 5 : $_REQUEST["list_id"];
+$currList = $_REQUEST["list_id"];
 	
 $lang_id = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
 if (($lang_id == '1' && !empty($GLOBALS['skip_english_translation'])) || !$GLOBALS['translate_lists']) {
@@ -65,16 +65,16 @@ if (($lang_id == '1' && !empty($GLOBALS['skip_english_translation'])) || !$GLOBA
 $total = $mitos_db->rowCount();
 $buff = "";
 foreach ($mitos_db->execStatement() as $urow) {
-	$buff .= "{";
-	$buff .= " id: '" . $urow['id'] . "',";
-	$buff .= " list_id: '" . dataEncode( $urow['list_id'] ) . "',";
-	$buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";
-	$buff .= " title: '" . dataEncode( $urow['title'] ) . "',";
-	$buff .= " seq: '" . dataEncode( $urow['seq'] ) . "',";
-	$buff .= " is_default: '" . dataEncode( $urow['is_default'] ) . "'," ;
-	$buff .= " option_value: '" . dataEncode( $urow['option_value'] ) . "',";
-	$buff .= " mapping: '" . dataEncode( $urow['mapping'] ) . "',";
-	$buff .= " notes: '" . dataEncode( $urow['notes'] ) . "'}," . chr(13);
+	$buff .= '{';
+	$buff .= '"id":"' 			. $urow['id'].'",';
+	$buff .= '"list_id":"' 		. dataEncode($urow['list_id']).'",';
+	$buff .= '"option_id":"' 	. dataEncode($urow['option_id']).'",';
+	$buff .= '"title":"'		. dataEncode($urow['title']).'",';
+	$buff .= '"seq":"'			. dataEncode($urow['seq']).'",';
+	$buff .= '"is_default":"'	. dataEncode($urow['is_default']).'",';
+	$buff .= '"option_value":"' . dataEncode($urow['option_value']).'",';
+	$buff .= '"mapping":"' 		. dataEncode($urow['mapping']).'",';
+	$buff .= '"notes": "'		. dataEncode($urow['notes']).'"},' . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.

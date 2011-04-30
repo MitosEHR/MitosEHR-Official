@@ -53,9 +53,9 @@ switch ($_GET['task']) {
 								ORDER BY 
 									IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
 		}
+		$total = $mitos_db->rowCount();
 		foreach ($mitos_db->execStatement() as $urow) {
-			$total = $mitos_db->rowCount();
-			$buff .= " { option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
+			$buff .= '{"option_id":"'.dataDecode($urow['option_id']).'","title":"'.dataDecode($urow['title']).'"},'. chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma.
 		echo '{';

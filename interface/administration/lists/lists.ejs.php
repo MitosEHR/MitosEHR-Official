@@ -59,9 +59,11 @@ Ext.onReady(function(){
 		{name: 'option_value', 	type: 'string',		mapping: 'option_value'},
 		{name: 'mapping', 		type: 'string',		mapping: 'mapping'},
 		{name: 'notes', 		type: 'string',		mapping: 'notes'}
-	]});
+	],
+		idProperty: 'id',
+	});
 	var storeListsOption = new Ext.data.Store({
-		model		: 'Roles',
+		model		: 'ListRecord',
 		proxy 		: {
 			type	: 'ajax',
 			api		: {
@@ -84,20 +86,20 @@ Ext.onReady(function(){
 				root	 		: 'row'
 			}
 		},
-		autoLoad: true
+		autoLoad: false
 	});
 	// ****************************************************************************
 	// Structure, data for List Select list
 	// AJAX -> component_data.ejs.php
 	// ****************************************************************************
-	var listModel = Ext.define("listModel", {extend: "Ext.data.Model", fields: [
+	var editListModel = Ext.define("editListModel", {extend: "Ext.data.Model", fields: [
 		{name: 'option_id', type: 'string'},
 	    {name: 'title', type: 'string'}
 	],
-		idProperty: 'id'
+		idProperty: 'option_id',
 	});
 	var storeEditList = new Ext.data.Store({
-		model		: 'listModel',
+		model		: 'editListModel',
 		proxy		: {
 			type	: 'ajax',
 			api		: {
@@ -127,9 +129,9 @@ Ext.onReady(function(){
 	// Select the first record
 	//--------------------------
 	storeEditList.on('load',function(ds,records,o){
-		Ext.getCmp('cmbList').setValue(records[0].data.id);
-		currList = records[0].data.id; // Get first result for first grid data
-		storeListsOption.load({params:{role_id: currList}}); // Filter the data store from the currList value
+		Ext.getCmp('cmbList').setValue(records[0].data.option_id);
+		currList = records[0].data.option_id; // Get first result for first grid data
+		storeListsOption.load({params:{list_id: currList}}); // Filter the data store from the currList value
 	});
 	// *************************************************************************************
 	// List Create Form
