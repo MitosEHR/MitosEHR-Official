@@ -20,6 +20,26 @@ class x12parse_4010 {
 	private $chr_div;
 	private $posi;
 	private $totalClaims;
+	private $XMLdicc;
+
+	//-------------------------------------------------------
+	// Load Diccionary
+	//-------------------------------------------------------
+	function setDicc($xmlDicc){
+		$this->XMLdicc = $xmlDicc;
+	}	
+	
+	//-------------------------------------------------------
+	// getCodeDicc
+	// look for the passed code on the diccionary
+	// and return the meaning of the code.
+	//-------------------------------------------------------
+	private function getCodeDicc($code_array, $code){
+		foreach($code_array as $value){
+			if($value->tagName == strtolower($code)){ return $value->tagData; }
+		}
+		return FALSE;
+	}
 	
 	//-------------------------------------------------------
 	// Copy the x12 data to the temporary buffer.
@@ -101,11 +121,11 @@ class x12parse_4010 {
 		$arr = explode("*", $ret);
 		
 		// Parsing Results...
-		$info['GS_TRANSTYPE'] = $arr[1]; 		// Transfer Type
-		$info['GS_SENDER'] = $arr[2]; 			// Seder's Qualifier ID
-		$info['GS_RECEIVER'] = $arr[3]; 		// Receiver's Qualifier ID
-		$info['GS_DATE'] = $arr[4]; 			// Date fo the document
-		$info['GS_TIME'] = $arr[5]; 			// Time
+		$info['GS_TRANSTYPE'] = $arr[1]; 	// Transfer Type
+		$info['GS_SENDER'] = $arr[2]; 		// Seder's Qualifier ID
+		$info['GS_RECEIVER'] = $arr[3]; 	// Receiver's Qualifier ID
+		$info['GS_DATE'] = $arr[4]; 		// Date fo the document
+		$info['GS_TIME'] = $arr[5]; 		// Time
 		$info['GS_CONTROL'] = $arr[6]; 		// Control number
 		$info['GS_VERSION'] = $arr[8]; 		// Standard Version
 
@@ -136,7 +156,7 @@ class x12parse_4010 {
 		$arr = explode("*", $ret);
 		
 		// Parsing Results...
-		$info['REF87_REFIDQ'] = $arr[1]; 		// Reference Identification Qualifier
+		$info['REF87_REFIDQ'] = $arr[1]; 	// Reference Identification Qualifier
 		
 		// Reference Identification
 		if ( trim($arr[2]) == '004010X098A1' ){
@@ -157,15 +177,15 @@ class x12parse_4010 {
 		$ret = str_replace("~", NULL, $ret);
 		$arr = explode("*", $ret);
 
-		$info['NM141_ENTIDCODE'] 		= $arr[1]; 		// Entity Identifier Code
-		$info['NM141_ENTTYPE'] 		= $arr[2]; 		// Entity Type Qualifier
-		$info['NM141_SUBNAME'] 		= $arr[3]; 		// Submitter Name
-		$info['NM141_SUBFIRST'] 		= $arr[4]; 		// First Name
-		$info['NM141_SUBLASTNAME'] 	= $arr[5]; 		// Middle Name
-		$info['NM141_RESERVED1'] 		= $arr[6]; 		// 
-		$info['NM141_RESERVED2'] 		= $arr[7]; 		// 
-		$info['NM141_IDCODEQ'] 		= $arr[8]; 		// Identification Code Qualifier
-		$info['NM141_IDCODE'] 		= $arr[9]; 		// Identification Code
+		$info['NM141_ENTIDCODE'] 	= $arr[1]; 	// Entity Identifier Code
+		$info['NM141_ENTTYPE'] 		= $arr[2]; 	// Entity Type Qualifier
+		$info['NM141_SUBNAME'] 		= $arr[3]; 	// Submitter Name
+		$info['NM141_SUBFIRST'] 	= $arr[4]; 	// First Name
+		$info['NM141_SUBLASTNAME'] 	= $arr[5]; 	// Middle Name
+		$info['NM141_RESERVED1'] 	= $arr[6]; 	// 
+		$info['NM141_RESERVED2'] 	= $arr[7]; 	// 
+		$info['NM141_IDCODEQ'] 		= $arr[8]; 	// Identification Code Qualifier
+		$info['NM141_IDCODE'] 		= $arr[9]; 	// Identification Code
 		
 		return $info;
 	}
@@ -179,15 +199,15 @@ class x12parse_4010 {
 		$ret = str_replace("~", NULL, $ret);
 		$arr = explode("*", $ret);
 
-		$info['NM140_ENTIDCODE'] 		= $arr[1]; 		// Entity Identifier Code
-		$info['NM140_ENTTYPE'] 		= $arr[2]; 		// Entity Type Qualifier
-		$info['NM140_SUBNAME'] 		= $arr[3]; 		// Submitter Name
-		$info['NM140_SUBFIRST'] 		= $arr[4]; 		// First Name
-		$info['NM140_SUBLASTNAME'] 	= $arr[5]; 		// Middle Name
-		$info['NM140_RESERVED1'] 		= $arr[6]; 		// 
-		$info['NM140_RESERVED2'] 		= $arr[7]; 		// 
-		$info['NM140_IDCODEQ'] 		= $arr[8]; 		// Identification Code Qualifier
-		$info['NM140_IDCODE'] 		= $arr[9]; 		// Identification Code
+		$info['NM140_ENTIDCODE'] 	= $arr[1]; 	// Entity Identifier Code
+		$info['NM140_ENTTYPE'] 		= $arr[2]; 	// Entity Type Qualifier
+		$info['NM140_SUBNAME'] 		= $arr[3]; 	// Submitter Name
+		$info['NM140_SUBFIRST'] 	= $arr[4]; 	// First Name
+		$info['NM140_SUBLASTNAME'] 	= $arr[5]; 	// Middle Name
+		$info['NM140_RESERVED1'] 	= $arr[6]; 	// 
+		$info['NM140_RESERVED2'] 	= $arr[7]; 	// 
+		$info['NM140_IDCODEQ'] 		= $arr[8]; 	// Identification Code Qualifier
+		$info['NM140_IDCODE'] 		= $arr[9]; 	// Identification Code
 	
 		return $info;
 	}
@@ -203,9 +223,9 @@ class x12parse_4010 {
 		$ret = str_replace("~", NULL, $ret);
 		$arr = explode("*", $ret);
 		
-		$info['PRO_PRVCODE'] 	= $arr[1]; 		// Provider Code
-		$info['PRO_REFIDQ'] 	= $arr[2]; 		// Reference Identification Qualifier
-		$info['PRO_REFID']	 	= $arr[3]; 		// Reference Identification
+		$info['PRO_PRVCODE'] 	= $arr[1]; 	// Provider Code
+		$info['PRO_REFIDQ'] 	= $arr[2]; 	// Reference Identification Qualifier
+		$info['PRO_REFID']	 	= $arr[3]; 	// Reference Identification
 		
 		// Contact Information
 		preg_match("/PER\*IC.*?~/", $this->temp_buff, $matches);
@@ -213,10 +233,10 @@ class x12parse_4010 {
 		$ret = str_replace("~", NULL, $ret);
 		$arr = explode("*", $ret);
 		
-		$info['PER_ENTIDCODE'] 	= $arr[1]; 							// Entity Identifier Code
-		$info['PER_NAME'] 		= $arr[2]; 							// Name
-		$info['PER_COMMNUMQ'] 	= $x12['PER']['IC'][3][$arr[3]];	// Communication Number Qualifier
-		$info['PER_PHONE'] 		= $arr[4]; 							// Communication Number
+		$info['PER_ENTIDCODE'] 	= $arr[1]; 	// Entity Identifier Code
+		$info['PER_NAME'] 		= $arr[2]; 	// Name
+		$info['PER_COMMNUMQ'] 	= $this->getCodeDicc($this->XMLdicc->document->per03[0]->tagChildren, $arr[3]);	// Communication Number Qualifier
+		$info['PER_PHONE'] 		= $arr[4]; 	// Communication Number
 		
 		// Used to identify the billing provider for this hierarchical level
 		preg_match("/NM1\*85.*?~/", $this->temp_buff, $matches);
@@ -225,7 +245,7 @@ class x12parse_4010 {
 		$arr = explode("*", $ret);
 
 		$info['NM185_ENTID'] 	= $arr[1]; 	// Entity Identification Code
-		$info['NM185_ENTTYPE']	= $arr[2]; 	// Entity Type Qualifier
+		$info['NM185_ENTTYPE']	= $this->getCodeDicc($this->XMLdicc->document->nm18502[0]->tagChildren, "n".$arr[2]); 	// Entity Type Qualifier
 		$info['NM185_BILLPROV']	= $arr[3]; 	// Billing Provider Name
 		$info['NM185_NAME'] 	= $arr[4]; 	// Name First
 		$info['NM185_MIDNAME']	= $arr[5]; 	// Name Middle
@@ -285,39 +305,17 @@ class x12parse_4010 {
 		$m = preg_match("/SBR.*$/", $str, $matches);
 		$ret = str_replace("SBR", NULL, $matches[0]);
 		$arr = explode("*", $ret);
-		
-		// 	Payer Responsibility Sequence Number Code
-		switch($arr[1]){
-			case 'P':
-				$info['SBR_PAUERRESPONSABILITY'] = 'Primary';
-				break;
-			case 'N':
-				$info['SBR_PAUERRESPONSABILITY'] = 'Unconfirmed';
-				break;
-			case 'O':
-				$info['SBR_PAUERRESPONSABILITY'] = 'Noncapitated Agreement';
-				break;
-			case 'S':
-				$info['SBR_PAUERRESPONSABILITY'] = 'Secondary';
-				break;
-			case 'T':
-				$info['SBR_PAUERRESPONSABILITY'] = 'Tertiary';
-				break;
-			case 'U':
-				$info['SBR_PAUERRESPONSABILITY'] = 'Unknown';
-				break;
-			case '':
-				$info['SBR_PAUERRESPONSABILITY'] = 'None';
-				break;
-		}
-		$info['SBR_INDVRELAT'] 	= $arr[2]; // Individual Relationship Code
-		$info['SBR_REFID'] 		= $arr[3]; // Reference Identification
-		$info['SBR_NAME'] 		= $arr[4]; // Name
-		$info['SBR_INSUTYPE'] 	= $arr[5]; // Insurance Type Code
-		$info['SBR_NOTUSED1'] 	= $arr[6]; // Not Used
-		$info['SBR_NOTUSED2'] 	= $arr[7]; // Not Used
-		$info['SBR_NOTUSED3'] 	= $arr[8]; // Not Used
-		$info['SBR_CLAIMFILL'] 	= $arr[9]; // Claim Filing Indicator
+
+		$r = $this->getCodeDicc($this->XMLdicc->document->sbr01[0]->tagChildren, $arr[1]);
+		$info['SBR_PAUERRESPONSABILITY'."_".$r] = $r; // 	Payer Responsibility Sequence Number Code
+		$info['SBR_INDVRELAT'."_".$r] = $arr[2]; // Individual Relationship Code
+		$info['SBR_REFID'."_".$r] 	= $arr[3]; // Reference Identification
+		$info['SBR_NAME'."_".$r] 		= $arr[4]; // Name
+		$info['SBR_INSUTYPE'."_".$r] 	= $arr[5]; // Insurance Type Code
+		$info['SBR_NOTUSED1'."_".$r] 	= $arr[6]; // Not Used
+		$info['SBR_NOTUSED2'."_".$r] 	= $arr[7]; // Not Used
+		$info['SBR_NOTUSED3'."_".$r] 	= $arr[8]; // Not Used
+		$info['SBR_CLAIMFILL'."_".$r] = $arr[9]; // Claim Filing Indicator
 		
 		if (!$m){ return FALSE; } else { return $info; }
 	}
@@ -661,44 +659,38 @@ class x12parse_4010 {
 			if ( substr($value, 0, 4) == "HL*2" ){ break; } else { unset($temp_hl[$start]);	$start++; }
 		}
 
+		echo "<pre>";
+		print_r($temp_hl);
+		echo "</pre>";
+
 		// Extract all the claims
 		$rec = -1;
-		for ($c = 0; $c <= count($temp_hl); $c++) {
-			
-			if ($this->isHL($temp_hl[$c])){$rec++;} // Count the records
-			foreach ($this->extSBR($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extNM1IL($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extN3($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extN4($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extDMG($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extNM1PR($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extPAT($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extNM1QC($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extREFSY($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extCLM($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extAMTF5($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extREFEA($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extHI($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extNM182($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extPRV($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extREFG2($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extLX($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extSV1($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extDTP($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extREF6R($temp_hl[$c]) as $key => $value){ $info[$rec][$key] = $value; }
-
+		
+		foreach ($temp_hl as $key => $value){
+			if ($this->isHL($temp_hl[$key])){$rec++;} // Count the records
+			foreach ($this->extSBR($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extNM1IL($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extN3($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extN4($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extDMG($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extNM1PR($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extPAT($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extNM1QC($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extREFSY($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extCLM($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extAMTF5($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extREFEA($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extHI($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extNM182($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extPRV($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extREFG2($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extLX($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extSV1($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extDTP($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extREF6R($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
 		}
-
 		return $info;
 		
-	}
-
-	function x12compress(){
-		return bzcompress($this->temp_buff, 9);
-	}
-	
-	function x12decompress($bz){
-		return bzdecompress($bz);
 	}
 }
 

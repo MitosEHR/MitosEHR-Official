@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<diccionary version="1.0">
+	<DESC>ASC x12 for 4010</DESC>
+	<PER03>
+		<TE>Telephone</TE>
+		<FX>Facsimile</FX>
+		<EM>E-mail Address</EM>
+	</PER03>
+	<NM18502>
+		<N1>Person</N1>
+		<N2>Nonperson Entity</N2>
+	</NM18502>
+	<SBR01>
+		<P>Primary</P>
+		<S>Secondary</S>
+		<T>Tertiary</T>
+	</SBR01>
+	<SBR02>
+		<N18>Self</N18>
+	</SBR02>
+</diccionary>
