@@ -291,7 +291,7 @@ class x12valid_4010A {
 		// Subscriber Hierarchical Level
 		$line++;
 		$v = explode("*", $x12_array[$line]);
-		if( $v[0] == "HL" ){ $this->reason = "HL Subscriber Hierarchical Level - First bytes."; return FALSE; } // Subscriber Hierarchical Level
+		if( $v[0] != "HL" ){ $this->reason = "HL Subscriber Hierarchical Level - First bytes."; return FALSE; } // Subscriber Hierarchical Level
 		if( is_int($v[1]) ){ $this->reason = "HL Subscriber Hierarchical Level - Hierarchical ID Number"; return FALSE; } // Hierarchical ID Number
 		if( is_int($v[2]) ){ $this->reason = "HL Subscriber Hierarchical Level - Hierarchical Parent ID Number"; return FALSE; } // Hierarchical ID Number
 		if( is_int($v[3]) ){ $this->reason = "HL Subscriber Hierarchical Level - Hierarchical Level Code"; return FALSE; } // Hierarchical Level Code
