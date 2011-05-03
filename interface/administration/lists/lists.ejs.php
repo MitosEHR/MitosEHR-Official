@@ -193,14 +193,14 @@ Ext.onReady(function(){
 	var listGrid = new Ext.create('Ext.grid.Panel', {
 		id			: 'listGrid',
 		store		: storeListsOption,
-		stripeRows	: true,
-		border		: false,    
+		layout		: 'fit',
+        columnLines	: true,
+		border		: false, 
 		frame	  	: false,
 		plugins		: [editor],
-		viewConfig	: {forceFit: true},
 		columns: [{ 	
-			width: 50, 
-			header: 'ID', 
+			width: 100, 
+			text: 'ID', 
 			sortable: true, 
 			dataIndex: 'option_id',
             field: {
@@ -208,8 +208,8 @@ Ext.onReady(function(){
                 allowBlank: false
             }
 		},{ 
-			width: 150, 
-			header: '<?php i18n('Title'); ?>', 
+			width: 175, 
+			text: '<?php i18n('Title'); ?>', 
 			sortable: true, 
 			dataIndex: 'title',
             field: {
@@ -217,7 +217,7 @@ Ext.onReady(function(){
                 allowBlank: false
             }
 		},{ 
-			header: '<?php i18n('Order'); ?>', 
+			text: '<?php i18n('Order'); ?>', 
 			sortable: true, 
 			dataIndex: 'seq',
 			field: {
@@ -225,7 +225,7 @@ Ext.onReady(function(){
                 allowBlank: false
             }
 		},{ 
-			header: '<?php i18n('Default'); ?>', 
+			text: '<?php i18n('Default'); ?>', 
 			sortable: true, 
 			dataIndex: 'is_default',
             field: {
@@ -233,9 +233,10 @@ Ext.onReady(function(){
                 allowBlank: false
             } 
 		},{ 
-			header: '<?php i18n('Notes'); ?>', 
+			text: '<?php i18n('Notes'); ?>', 
 			sortable: true, 
 			dataIndex: 'notes',
+			flex: 1,
             field: {
                 xtype: 'textfield',
                 allowBlank: true
