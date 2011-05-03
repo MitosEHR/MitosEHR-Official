@@ -134,7 +134,9 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
-	Ext.regModel('taxidRecord', { fields: [
+	Ext.define('taxidRecord', {
+        extend: 'Ext.data.Model',
+		fields: [
 			{name: 'option_id',		type: 'string'},
 			{name: 'title',			type: 'string'}
 		]
