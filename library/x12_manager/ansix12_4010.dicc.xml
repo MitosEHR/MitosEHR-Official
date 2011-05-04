@@ -9,6 +9,8 @@
 	<NM18502>
 		<N1>Person</N1>
 		<N2>Nonperson Entity</N2>
+		<N3>Unknown</N3>
+		<N4>Corporation</N4>
 	</NM18502>
 	<SBR01>
 		<P>Primary</P>
@@ -18,4 +20,14 @@
 	<SBR02>
 		<N18>Self</N18>
 	</SBR02>
+	<PAT01>
+		<N01>Spouse</N01>
+		<N02>Son or Daughter</N02>
+		<N03>Father or Mother</N03>
+		<N04>Grandfather or Grandmother</N04>
+		<N05>Grandson or Granddaughter</N05>
+		<N06>Uncle or Aunt</N06>
+		<N07>Nephew or Niece</N07>
+		<N08>Cousin</N08>
+	</PAT01>
 </diccionary>

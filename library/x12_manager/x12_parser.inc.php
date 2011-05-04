@@ -134,7 +134,6 @@ class x12parse_4010 {
 	
 	//-------------------------------------------------------
 	// Beginning of Hierarchical Transaction
-	// 1
 	//-------------------------------------------------------
 	function docBHT(){
 		preg_match("/BHT.*?~/", $this->temp_buff, $matches);
@@ -306,16 +305,18 @@ class x12parse_4010 {
 		$ret = str_replace("SBR", NULL, $matches[0]);
 		$arr = explode("*", $ret);
 
-		$r = $this->getCodeDicc($this->XMLdicc->document->sbr01[0]->tagChildren, $arr[1]);
-		$info['SBR_PAUERRESPONSABILITY'."_".$r] = $r; // 	Payer Responsibility Sequence Number Code
-		$info['SBR_INDVRELAT'."_".$r] = $arr[2]; // Individual Relationship Code
-		$info['SBR_REFID'."_".$r] 	= $arr[3]; // Reference Identification
-		$info['SBR_NAME'."_".$r] 		= $arr[4]; // Name
-		$info['SBR_INSUTYPE'."_".$r] 	= $arr[5]; // Insurance Type Code
-		$info['SBR_NOTUSED1'."_".$r] 	= $arr[6]; // Not Used
-		$info['SBR_NOTUSED2'."_".$r] 	= $arr[7]; // Not Used
-		$info['SBR_NOTUSED3'."_".$r] 	= $arr[8]; // Not Used
-		$info['SBR_CLAIMFILL'."_".$r] = $arr[9]; // Claim Filing Indicator
+		$r = strtoupper($this->getCodeDicc($this->XMLdicc->document->sbr01[0]->tagChildren, $arr[1]));
+		$sbr['SBR_PAUERRESPONSABILITY'] = $r; // 	Payer Responsibility Sequence Number Code
+		$sbr['SBR_INDVRELAT']	= $arr[2]; // Individual Relationship Code
+		$sbr['SBR_REFID'] 		= $arr[3]; // Reference Identification
+		$sbr['SBR_NAME'] 		= $arr[4]; // Name
+		$sbr['SBR_INSUTYPE'] 	= $arr[5]; // Insurance Type Code
+		$sbr['SBR_NOTUSED1'] 	= $arr[6]; // Not Used
+		$sbr['SBR_NOTUSED2'] 	= $arr[7]; // Not Used
+		$sbr['SBR_NOTUSED3'] 	= $arr[8]; // Not Used
+		$sbr['SBR_CLAIMFILL'] 	= $arr[9]; // Claim Filing Indicator
+		$info['SBR_'.$r] = $sbr;
+		
 		
 		if (!$m){ return FALSE; } else { return $info; }
 	}
@@ -416,7 +417,8 @@ class x12parse_4010 {
 		$ret = str_replace("PAT", NULL, $matches[0]);
 		$arr = explode("*", $ret);
 		
-		$info['PAT_RELATIONSHIP_CODE']= $arr[1]; // Individual Relationship Code
+		$r = strtoupper($this->getCodeDicc($this->XMLdicc->document->pat01[0]->tagChildren, "n" . $arr[1]));
+		$info['PAT_RELATIONSHIP_CODE']= $r; // Individual Relationship Code
 		
 		if (!$m){ return FALSE; } else { return $info; }
 	}
@@ -581,8 +583,10 @@ class x12parse_4010 {
 		$m = preg_match("/LX.*$/", $str, $matches);
 		$ret = str_replace("LX", NULL, $matches[0]);
 		$arr = explode("*", $ret);			
-
+		
 		$info['LX_NUM_'.$arr[1]] = $arr[1]; // Assigned Number
+		
+		$info = $c['CLAIM_'.$arr[1]]; 
 
 		if (!$m){ return FALSE; } else { $this->posi = $arr[1]; return $info; }
 	}
@@ -594,14 +598,16 @@ class x12parse_4010 {
 		$m = preg_match("/SV1.*$/", $str, $matches);
 		$ret = str_replace("SV1", NULL, $matches[0]);
 		$arr = explode("*", $ret);			
-				
-		$info[$this->posi.'_SV1_NUM']			= $arr[1]; // Composite Medical Procedure Identifier
-		$info[$this->posi.'_SV1_AMOUNT']		= $arr[2]; // Monetary Amount
-		$info[$this->posi.'_SV1_UNIT']			= $arr[3]; // Unit or Basis for Measurement Code
-		$info[$this->posi.'_SV1_QTY']			= $arr[4]; // Quantity
-		$info[$this->posi.'_SV1_FACCODE']		= $arr[5]; // Facility Code Value
-		$info[$this->posi.'_SV1_SERVTYPE']		= $arr[6]; // Service Type Code
-		$info[$this->posi.'_SV1_COMPDIAGCODE']	= $arr[7]; // Composite Diagnosis Code Pointer
+		
+		$c['SV1_NUM']			= $arr[1]; // Composite Medical Procedure Identifier
+		$c['SV1_AMOUNT']		= $arr[2]; // Monetary Amount
+		$c['SV1_UNIT']			= $arr[3]; // Unit or Basis for Measurement Code
+		$c['SV1_QTY']			= $arr[4]; // Quantity
+		$c['SV1_FACCODE']		= $arr[5]; // Facility Code Value
+		$c['SV1_SERVTYPE']		= $arr[6]; // Service Type Code
+		$c['SV1_COMPDIAGCODE']	= $arr[7]; // Composite Diagnosis Code Pointer
+		
+		$info['CLAIM_'.$this->posi] = $c; 
 		
 		if (!$m){ return FALSE; } else { return $info; }
 	}
@@ -610,14 +616,15 @@ class x12parse_4010 {
 	// Profetional Service
 	//-------------------------------------------------------
 	private function extDTP($str){
-		
 		$m = preg_match("/DTP.*$/", $str, $matches);
 		$ret = str_replace("DTP", NULL, $matches[0]);
 		$arr = explode("*", $ret);			
 
-		$info[$this->posi.'_DTP_Q']		= $arr[1]; // Date/Time Qualifier
-		$info[$this->posi.'_DTP_FORMAT']	= $arr[2]; // Date/Time Period Format Qualifier
-		$info[$this->posi.'_DTP_PERIOD']	= $arr[3]; // Date/Time Period
+		$c['DTP_Q']		= $arr[1]; // Date/Time Qualifier
+		$c['DTP_FORMAT']= $arr[2]; // Date/Time Period Format Qualifier
+		$c['DTP_PERIOD']= $arr[3]; // Date/Time Period
+		
+		$info['CLAIM_'.$this->posi] = $c;
 		
 		if (!$m){ return FALSE; } else { return $info; }
 	}
@@ -629,19 +636,30 @@ class x12parse_4010 {
 		$m = preg_match("/REF\*6R.*$/", $str, $matches);
 		$ret = str_replace("REF", NULL, $matches[0]);
 		$arr = explode("*", $ret);			
-
-		$info[$this->posi.'_REF_CONNUM']			= $arr[2]; // Provider Control Number
+		
+		$c['REF_CONNUM']			= $arr[2]; // Provider Control Number
+		
+		$info['CLAIM_'.$this->posi] = $c;
 		
 		if (!$m){ return FALSE; } else { return $info; }
+	}
+	
+	//-------------------------------------------------------
+	// Unify two arrays on the same key
+	//-------------------------------------------------------
+	private function extUnify($main_arr, $add_arr){
+		foreach ($main_arr as $key => $value){ $t[$key] = $value; }
+		foreach ($add_arr as $key => $value){ $t[$key] = $value; }
+		return $t;
 	}
 	
 	//-------------------------------------------------------
 	// Compute the total claims in a x12
 	//-------------------------------------------------------
 	function getTotalClaims(){
-		preg_match_all('/HL.*?~/', $this->temp_buff, $matches, PREG_PATTERN_ORDER);
+		preg_match_all('/CLM.*?~/', $this->temp_buff, $matches, PREG_PATTERN_ORDER);
 		$matches = $matches[0];
-		return count($matches) - 1; // Minus 1: Removes the provider
+		return count($matches); // Minus 1: Removes the provider
 	}
 
 	//-------------------------------------------------------
@@ -658,10 +676,6 @@ class x12parse_4010 {
 		foreach ($temp_hl as &$value) { // Delete those unnecesary lines, we want to start at the claim records
 			if ( substr($value, 0, 4) == "HL*2" ){ break; } else { unset($temp_hl[$start]);	$start++; }
 		}
-
-		echo "<pre>";
-		print_r($temp_hl);
-		echo "</pre>";
 
 		// Extract all the claims
 		$rec = -1;
@@ -684,10 +698,10 @@ class x12parse_4010 {
 			foreach ($this->extNM182($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
 			foreach ($this->extPRV($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
 			foreach ($this->extREFG2($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extLX($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extSV1($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extDTP($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
-			foreach ($this->extREF6R($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $value; }
+			foreach ($this->extLX($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $this->extUnify($info[$rec][$key], $value); }
+			foreach ($this->extSV1($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $this->extUnify($info[$rec][$key], $value); }
+			foreach ($this->extDTP($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $this->extUnify($info[$rec][$key], $value); }
+			foreach ($this->extREF6R($temp_hl[$key]) as $key => $value){ $info[$rec][$key] = $this->extUnify($info[$rec][$key], $value); }
 		}
 		return $info;
 		
