@@ -32,7 +32,31 @@ Ext.onReady(function(){
         extend: 'Ext.data.Model',
         fields: [
 			{name: 'id',					type: 'int'},
-			{name: 'name',					type: 'string'}
+			{name: 'name',					type: 'string'},
+			{name: 'transmit_method',		type: 'string'},
+			{name: 'email',					type: 'string'},
+			{name: 'address_id',			type: 'string'},
+			{name: 'line1',					type: 'string'},
+			{name: 'line2',					type: 'string'},
+			{name: 'city',					type: 'string'},
+			{name: 'state',					type: 'string'},
+			{name: 'zip',					type: 'int'},
+			{name: 'plus_four',				type: 'int'},
+			{name: 'country',				type: 'string'},
+			{name: 'address_foreign_id',	type: 'string'},
+			{name: 'address_full',	type: 'string'},
+			{name: 'phone_country_code',	type: 'string'},
+			{name: 'phone_area_code',		type: 'string'},
+			{name: 'phone_prefix',			type: 'string'},
+			{name: 'phone_number',			type: 'string'},
+			{name: 'phone_foreign_id',		type: 'string'},
+			{name: 'phone_full',			type: 'string'},
+			{name: 'fax_country_code',		type: 'string'},
+			{name: 'fax_area_code',			type: 'string'},
+			{name: 'fax_prefix',			type: 'string'},
+			{name: 'fax_number',			type: 'string'},
+			{name: 'fax_foreign_id',		type: 'string'},
+			{name: 'fax_full',				type: 'string'}
 		]
 	});
 	var pharmacyStore = new Ext.data.Store({
@@ -42,10 +66,10 @@ Ext.onReady(function(){
     	proxy		: {
     		type	: 'ajax',
 			api		: {
-				read	: 'interface/administration/pactice/data_read.ejs.php',
-				create	: 'interface/administration/pactice/data_create.ejs.php',
-				update	: 'interface/administration/pactice/data_update.ejs.php',
-				destroy : 'interface/administration/pactice/data_destroy.ejs.php'
+				read	: 'interface/administration/practice/data_read.ejs.php?task=pharmacy',
+				create	: 'interface/administration/practice/data_read.ejs.php?task=',
+				update	: 'interface/administration/practice/data_read.ejs.php?task=',
+				destroy : 'interface/administration/practice/data_read.ejs.php?task='
 			},
         	reader: {
 	            type			: 'json',
@@ -192,33 +216,29 @@ Ext.onReady(function(){
         layout		: 'fit',
         columns: [{
 			text     : '<?php i18n("Pharmacy Name"); ?>',
-			flex     : 1,
+			width    : 150,
 			sortable : true,
 			dataIndex: 'name'
         },{
 			text     : '<?php i18n("Address"); ?>',
 			flex     : 1,
-			width    : 100,
 			sortable : true,
-			dataIndex: 'address'
+			dataIndex: 'address_full'
         },{
 			text     : '<?php i18n("Phone"); ?>',
-			flex     : 1,
-			width    : 100,
+			width    : 120,
 			sortable : true,
-			dataIndex: 'phone'
+			dataIndex: 'phone_full'
         },{
 			text     : '<?php i18n("Fax"); ?>',
-			flex     : 1,
-			width    : 100,
+			width    : 120,
 			sortable : true,
-			dataIndex: 'fax'
+			dataIndex: 'fax_full'
         },{
 			text     : '<?php i18n("Defaul Method"); ?>',
 			flex     : 1,
-			width    : 100,
 			sortable : true,
-			dataIndex: 'default'
+			dataIndex: 'transmit_method'
         }],
 		viewConfig: { stripeRows: true },
 		listeners: {
