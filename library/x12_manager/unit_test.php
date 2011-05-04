@@ -5,8 +5,8 @@ include("x12_validator.inc.php");
 include("../XMLParser/XMLParser.inc.php");
 
 $x12 = new x12parse_4010();
-$vx12 = new x12valid_4010A();
-$data = file_get_contents('x12files/AHMED1.TXT');
+$vx12 = new x12valid_837_4010();
+$data = file_get_contents('x12files/MC174.TXT');
 
 $x12->setX12($data);
 $vx12->setX12($data);
