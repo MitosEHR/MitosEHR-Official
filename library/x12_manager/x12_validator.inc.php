@@ -65,13 +65,13 @@ class x12valid_837_4010 {
 		$v = explode("*", $str);
 		if($v[0] == "GS"){
 			if( $v[1] <> "HC" ){ $this->reason = "GS - Functional Identifier Code"; return FALSE; } // Functional Identifier Code
-			if( strlen($v[2]) <= 1 && strlen($v[2]) >= 16 ){ $this->reason = "GS - Application Sender's Code"; return FALSE; } // Application Sender's Code
+			if( !$v[2] ){ $this->reason = "GS - Application Sender's Code"; return FALSE; } // Application Sender's Code
 			if( strlen($v[3]) <= 1 && strlen($v[3]) >= 16 ){ $this->reason = "GS - Application Receiver's Code"; return FALSE; } // Application Receiver's Code
 			if( strlen($v[4]) <= 7 && strlen($v[4]) >= 8 ){ $this->reason = "GS - Date"; return FALSE; } // Date
 			if( strlen($v[5]) <= 3 && strlen($v[5]) >= 9 ){ $this->reason = "GS - Time"; return FALSE; } // Time
 			if( is_int($v[6]) ){ $this->reason = "GS - Group Control Number"; return FALSE; } // Group Control Number
 			if( strlen($v[7]) <= 0 && strlen($v[7]) >= 3 ){ $this->reason = "GS - Responsible Agency Code"; return FALSE; } // Responsible Agency Code
-			if( $v[8] <> "004010X098A1" ){ $this->reason = "GS - Version/Release/Industry Identifier Code"; return FALSE; } // Version/Release/Industry Identifier Code
+			if( substr($v[8],0,7) <> "004010X" ){ $this->reason = "GS - Version/Release/Industry Identifier Code ".$v[8]; return FALSE; } // Version/Release/Industry Identifier Code
 		}
 		return TRUE;
 	}
@@ -175,8 +175,8 @@ class x12valid_837_4010 {
 		if($v[0] == "NM1" && $v[1] == "85"){
 			if( $v[2] == "1" && $v[2] == "2" ){ $this->reason = "NM1 85 Billing Provider Name - Entity Type Qualifier"; return FALSE; } // Entity Type Qualifier
 			if( strlen($v[3]) <= 3 ){ $this->reason = "NM1 85 Billing Provider Name - Name Last or Organization Name"; return FALSE; } // Name Last or Organization Name
-			if( $v[8] == "" ){ $this->reason = "NM1 85 Billing Provider Name - Identification Code Qualifier"; return FALSE; } // Identification Code Qualifier
-			if( $v[9] == "" ){ $this->reason = "NM1 85 Billing Provider Name - Identification Code"; return FALSE; } // Identification Code
+			if( !$v[8] ){ $this->reason = "NM1 85 Billing Provider Name - Identification Code Qualifier"; return FALSE; } // Identification Code Qualifier
+			if( !$v[9] ){ $this->reason = "NM1 85 Billing Provider Name - Identification Code"; return FALSE; } // Identification Code
 		}
 		return TRUE;
 	}
@@ -185,7 +185,7 @@ class x12valid_837_4010 {
 	private function chkN3($str){
 		$v = explode("*", $str);
 		if($v[0] == "N3" ){
-			if( strlen($v[1]) <= 5 ){ $this->reason = "N3 - Address Information 1"; return FALSE; } // Address Information 1
+			if( !$v[1] ){ $this->reason = "N3 - Address Information 1"; return FALSE; } // Address Information 1
 		}
 		return TRUE;
 	}
@@ -194,9 +194,9 @@ class x12valid_837_4010 {
 	private function chkN4($str){
 		$v = explode("*", $str);
 		if($v[0] == "N4" ){
-			if( strlen($v[1]) <= 4 ){ $this->reason = "N4 Billing Provider City/State/ZIP Code - City Name"; return FALSE; } // City Name
-			if( strlen($v[2]) <= 1 ){ $this->reason = "N4 Billing Provider City/State/ZIP Code - State or Province Code"; return FALSE; } // State or Province Code
-			if( strlen($v[3]) <= 3 ){ $this->reason = "N4 Billing Provider City/State/ZIP Code - Postal Code"; return FALSE; } // Postal Code
+			if( !$v[1] ){ $this->reason = "N4 City/State/ZIP Code - City Name"; return FALSE; } // City Name
+			if( !$v[2] ){ $this->reason = "N4 City/State/ZIP Code - State or Province Code"; return FALSE; } // State or Province Code
+			if( !$v[3] ){ $this->reason = "N4 City/State/ZIP Code - Postal Code"; return FALSE; } // Postal Code
 		}	
 		return TRUE;
 	}
@@ -207,9 +207,9 @@ class x12valid_837_4010 {
 		$v = explode("*", $str);
 		if($v[0] == "PER" ){
 			if( $v[1] == "" ){ $this->reason = "PER - Contact Function Code"; return FALSE; } // Contact Function Code
-			if( strlen($v[2]) <= 4 ){ $this->reason = "PER - Name"; return FALSE; } // Name
-			if( strlen($v[3]) <= 1 ){ $this->reason = "PER - Communication Number Qualifier"; return FALSE; } // Communication Number Qualifier
-			if( strlen($v[4]) <= 4 ){ $this->reason = "PER - Communication Number"; return FALSE; } // Communication Number
+			if( !$v[2] ){ $this->reason = "PER - Name"; return FALSE; } // Name
+			if( !$v[3] ){ $this->reason = "PER - Communication Number Qualifier"; return FALSE; } // Communication Number Qualifier
+			if( !$v[4] ){ $this->reason = "PER - Communication Number"; return FALSE; } // Communication Number
 		}		
 		return TRUE;
 	}
@@ -220,9 +220,9 @@ class x12valid_837_4010 {
 		$v = explode("*", $str);
 		if($v[0] == "NM1" && $v[1] == "87" ){
 			if( $v[2] <> "1" && $v[2] <> "2" ){ $this->reason = "NM187 - Entity Type Qualifier"; return FALSE; } // Entity Type Qualifier
-			if( strlen($v[3]) <= 4 ){ $this->reason = "NM187 - Name Last or Organization Name"; return FALSE; } // Name Last or Organization Name
-			if( strlen($v[8]) <= 1 ){ $this->reason = "NM187 - Identification Code Qualifier"; return FALSE; } // Identification Code Qualifier
-			if( strlen($v[9]) <= 4 ){ $this->reason = "NM187 - Identification Code"; return FALSE; } // Identification Code
+			if( !$v[3] ){ $this->reason = "NM187 - Name Last or Organization Name"; return FALSE; } // Name Last or Organization Name
+			if( !$v[8] ){ $this->reason = "NM187 - Identification Code Qualifier"; return FALSE; } // Identification Code Qualifier
+			if( !$v[9] ){ $this->reason = "NM187 - Identification Code"; return FALSE; } // Identification Code
 		}
 		return TRUE;
 	}
@@ -232,8 +232,8 @@ class x12valid_837_4010 {
 	private function chkREF($str){
 		$v = explode("*", $str);
 		if($v[0] == "REF" ){
-			if( strlen($v[1]) <= 1 ){ $this->reason = "REF - Reference Identification Qualifier"; return FALSE; }
-			if( strlen($v[2]) <= 3 ){ $this->reason = "REF - Reference Identification"; return FALSE; }
+			if( !$v[1] ){ $this->reason = "REF - Reference Identification Qualifier"; return FALSE; }
+			if( !$v[2] ){ $this->reason = "REF - Reference Identification"; return FALSE; }
 		}
 		return TRUE;
 	}
@@ -242,7 +242,7 @@ class x12valid_837_4010 {
 	private function chkSBR($str){
 		$v = explode("*", $str);
 		if($v[0] == "SBR" ){
-			if( $v[1] == "" ){ $this->reason = "SBR - Payer Responsibility Sequence Number Code"; return FALSE; }
+			if( !$v[1] ){ $this->reason = "SBR - Payer Responsibility Sequence Number Code"; return FALSE; }
 		}
 		return TRUE;
 	}
@@ -251,8 +251,8 @@ class x12valid_837_4010 {
 	private function chkNM1IL($str){
 		$v = explode("*", $str);
 		if($v[0] == "NM1" && $v[1] == "IL"){
-			if( $v[2] == "" ){ $this->reason = "NM1 IL - Entity Type Qualifier"; return FALSE; }
-			if( strlen($v[3]) <= 2 ){ $this->reason = "NM1 IL - Name Last or Organization Name "; return FALSE; }
+			if( !$v[2] ){ $this->reason = "NM1 IL - Entity Type Qualifier"; return FALSE; }
+			if( !$v[3] ){ $this->reason = "NM1 IL - Name Last or Organization Name "; return FALSE; }
 		}
 		return TRUE;
 	}
@@ -261,9 +261,9 @@ class x12valid_837_4010 {
 	private function chkDMG($str){
 		$v = explode("*", $str);
 		if($v[0] == "DMG"){
-			if( strlen($v[1]) <= 1 ){ $this->reason = "DMG - Date/Time Period Format Qualifier"; return FALSE; }
-			if( strlen($v[2]) <= 7 ){ $this->reason = "DMG - Date/Time Period"; return FALSE; }
-			if( $v[3] == "" ){ $this->reason = "DMG - Gender Code"; return FALSE; }
+			if( !$v[1] ){ $this->reason = "DMG - Date/Time Period Format Qualifier"; return FALSE; }
+			if( !$v[2] ){ $this->reason = "DMG - Date/Time Period"; return FALSE; }
+			if( !$v[3] ){ $this->reason = "DMG - Gender Code"; return FALSE; }
 		}
 		return TRUE;
 	}
@@ -284,9 +284,9 @@ class x12valid_837_4010 {
 	private function chkNM1QC($str){
 		$v = explode("*", $str);
 		if($v[0] == "NM1" && $v[1] == "QC"){
-			if( $v[2] == "" ){ $this->reason = "NM1 QC - Entity Type Qualifier"; return FALSE; }
-			if( strlen($v[3]) <= 2 ){ $this->reason = "NM1 QC - Patient Last Name"; return FALSE; }
-			if( strlen($v[4]) <= 2 ){ $this->reason = "NM1 QC - Patient First Name"; return FALSE; }
+			if( !$v[2] ){ $this->reason = "NM1 QC - Entity Type Qualifier"; return FALSE; }
+			if( !$v[3] ){ $this->reason = "NM1 QC - Patient Last Name"; return FALSE; }
+			if( !$v[4] ){ $this->reason = "NM1 QC - Patient First Name"; return FALSE; }
 		}
 		return TRUE;
 	}
