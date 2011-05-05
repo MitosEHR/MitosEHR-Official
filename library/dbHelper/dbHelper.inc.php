@@ -92,10 +92,14 @@ class dbHelper {
 
 		// If the QUERY has INSERT, DELETE, ALTER then has to 
 		// insert the event to the database.
-		if (strpos($this->sql_statement, "INSERT") && strpos($this->sql_statement, "DELETE") && strpos($this->sql_statement, "ALTER")){
-			if (strpos($this->sql_statement, "INSERT")) { $eventLog = "Record insertion"; $last_insert_id = $this->conn->lastInsertId(); }
-			if (strpos($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
-			if (strpos($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
+		if (stristr($this->sql_statement, "INSERT") || 
+			stristr($this->sql_statement, "DELETE") ||
+			stristr($this->sql_statement, "UPDATE") || 
+			stristr($this->sql_statement, "ALTER")){
+			if (stristr($this->sql_statement, "INSERT")) { $eventLog = "Record insertion"; }
+			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
+			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record update";
+			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
 			// Prepare the SQL stament first, and then execute.
 			$stmt = $this->conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
 			$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
