@@ -236,7 +236,7 @@ var winLogon = new Ext.create('widget.window', {
 	draggable		: false,
 	closable		: false,
     bodyStyle		: 'background: #ffffff; padding: 5px;',
-    items			: [{ xtype: 'box', width: 483, height: 135, autoEl: {tag: 'img', src: 'ui_app/logon_header.png'}}, formLogin ]
+    items			: [{ xtype: 'box', width: 483, height: 135, html: '<img src="ui_app/logon_header.png" />'}, formLogin ]
 }); // End winLogon
 
 winLogon.show();
