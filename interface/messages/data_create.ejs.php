@@ -29,6 +29,11 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
+//******************************************************************************
+// Reset session count 10 secs = 1 Flop
+//******************************************************************************
+$_SESSION['site']['flops'] = 0;
+
 include_once("../../../library/dbHelper/dbHelper.inc.php");
 include_once("../../../library/I18n/I18n.inc.php");
 require_once("../../../repository/dataExchange/dataExchange.inc.php");
