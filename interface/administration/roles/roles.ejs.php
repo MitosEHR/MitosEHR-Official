@@ -202,9 +202,9 @@ Ext.onReady(function(){
 					var rec = new roleModel(obj);
 					roleStore.add( rec );
 				}
-				roleStore.save();          // Save the record to the dataStore
-				winRoles.hide();				// Finally hide the dialog window
-				roleStore.load();			// Reload the dataSore from the database
+				winRoles.hide();	// Finally hide the dialog window
+				roleStore.sync();	// Save the record to the dataStore
+				roleStore.load();	// Reload the dataSore from the database
 			}
         },{
             text: 'Cancel',
@@ -249,10 +249,9 @@ Ext.onReady(function(){
 				var obj = eval( '(' + Ext.JSON.encode(permsForm.getForm().getValues()) + ')' );
 				var rec = new permModel(obj);
 				permStore.add( rec );
-
-				permStore.save();          // Save the record to the dataStore
-				winPerms.hide();			// Finally hide the dialog window
-				permStore.load();			// Reload the dataSore from the database
+				winPerms.hide();	// Finally hide the dialog window
+				permStore.sync();	// Save the record to the dataStore
+				permStore.load();	// Reload the dataSore from the database
 			}
         },{
             text: 'Cancel',
@@ -298,7 +297,7 @@ Ext.onReady(function(){
 		errorSummary: false,
 		listeners: {
 			afteredit: function () {
-				permStore.save();
+				permStore.sync();
 				permStore.load();
 			}
 		}
@@ -412,7 +411,7 @@ Ext.onReady(function(){
 								if(btn=='yes'){
 								var rec = roleStore.getById( currList ); // get the record from the store
 								roleStore.remove(rec);
-								roleStore.save();
+								roleStore.sync();
 								roleStore.load();
 			    		    }
 						}
@@ -433,7 +432,7 @@ Ext.onReady(function(){
 								if(btn=='yes'){
 								var rec = permStore.getAt( currPerm ); // get the record from the store
 								permStore.remove(rec);
-								permStore.save();
+								permStore.sync();
 								permStore.load();
 			    		    }
 						}

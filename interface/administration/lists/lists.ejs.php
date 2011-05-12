@@ -316,25 +316,14 @@ Ext.onReady(function(){
 							if(btn=='yes'){
 								editor.stopEditing();
 								storeListsOption.remove( currRec );
-								storeListsOption.save();
-								storeListsOption.reload();
+								storeListsOption.sync();
+								storeListsOption.load();
 				    	    }
 						}
 					});
 				}
 			}]
 		}], // END GRID TOP MENU
-//		plugins: [editor, new Ext.ux.grid.Search({
-//			mode			: 'local',
-//			iconCls			: false,
-//			deferredRender	: false,
-//			dateFormat		: 'm/d/Y',
-//			minLength		: 4,
-//			align			: 'left',
-//			width			: 250,
-//			disableIndexes	: ['id'],
-//			position		: 'top'
-//		})]			
 	}); // END GRID
 
 

@@ -355,9 +355,9 @@ Ext.onReady(function(){
 					var rec = new usersRecord(obj);
 					storeUsers.add( rec );
 				}
-				storeUsers.save();          // Save the record to the dataStore
-				winUsers.hide();			// Finally hide the dialog window
-				storeUsers.load();			// Reload the dataSore from the database
+				winUsers.hide();	// Finally hide the dialog window
+				storeUsers.sync();	// Save the record to the dataStore
+				storeUsers.load();	// Reload the dataSore from the database
 			}
         },{
             text: '<?php i18n('Cancel'); ?>',
@@ -472,25 +472,14 @@ Ext.onReady(function(){
 						fn:function(btn,msgGrid){
 							if(btn=='yes'){
 								storeUsers.remove( currRec );
-								storeUsers.save();
+								storeUsers.sync();
 								storeUsers.load();
 			    		    }
 						}
 					});
 				}
 		  	}]					    
-	  	}], // END GRID MENNU BAR
-	  	//plugins: [new Ext.ux.grid.Search({
-	  	//  mode            : 'local',
-	  	//  iconCls         : false,
-	  	//  deferredRender  : false,
-	  	//  dateFormat      : 'm/d/Y',
-	  	//  minLength       : 4,
-	  	//  align           : 'left',
-	  	//  width           : 250,
-	  	//  disableIndexes  : ['id'],
-	  	//  position        : 'top'
-	  	//})]     
+	  	}]
 	}); // END GRID
 	
 	//******************************************************************************

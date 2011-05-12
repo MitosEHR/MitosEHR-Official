@@ -284,9 +284,9 @@ Ext.onReady(function() {
 					var rec = new usersRecord(obj);
 					FacilityStore.add( rec );
 				}
-				FacilityStore.save();          // Save the record to the dataStore
-				winFacility.hide();				// Finally hide the dialog window
-				FacilityStore.load();			// Reload the dataSore from the database
+				winFacility.hide();		// Finally hide the dialog window
+				FacilityStore.sync();	// Save the record to the dataStore
+				FacilityStore.load();	// Reload the dataSore from the database
 			}
         },{
             text: 'Cancel',
