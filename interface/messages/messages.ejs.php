@@ -58,7 +58,9 @@ body_content = '<?php i18n('Nothing posted yet...'); ?>';
 // This should be the structure of the database table
 // 
 // *************************************************************************************
-Ext.define("Messages", {extend: "Ext.data.Model", fields: [
+Ext.define("Messages", {
+	extend: "Ext.data.Model", 
+	fields: [
 	{name: 'noteid',	type: 'int'},
 	{name: 'user',		type: 'string'},
 	{name: 'subject',   type: 'string'},
@@ -107,7 +109,9 @@ var storeMsgs = new Ext.data.Store({
 // Structure and load the data for cmb_toUsers
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.define("Patients", {extend: "Ext.data.Model", fields: [
+Ext.define("Patients", {
+	extend: "Ext.data.Model", 
+	fields: [
 	{name: 'id',    type: 'int'},
 	{name: 'name',  type: 'string'},
 	{name: 'phone', type: 'string'},
@@ -116,61 +120,74 @@ Ext.define("Patients", {extend: "Ext.data.Model", fields: [
 	{name: 'pid',   type: 'string'}
 ]});
 var storePat = new Ext.data.Store({
-	model		: 'Patients',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: 'interface/messages/component_data.ejs.php?task=patients',
-		reader	: {
-			type			: 'json',
-			idProperty		: 'id',
-			totalProperty	: 'totals',
-			root			: 'row'
+   	model		: 'Patients',
+   	proxy		: {
+   		type	: 'ajax',
+		api		: {
+			read	: 'interface/messages/component_data.ejs.php?task=patients'
+		},
+  	   	reader: {
+      	    type			: 'json',
+        	idProperty		: 'id',
+       	    totalProperty	: 'totals',
+  	       	root			: 'row'
 		}
-	}),
-	autoLoad: true
-}); // End storePat
+	},
+  	autoLoad: true
+});// End storePat
 
 // *************************************************************************************
 // Structure and load the data for cmb_toUsers
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.define("User", {extend: "Ext.data.Model", fields: [
-	{name: 'user',      type: 'string', mapping: 'user'},
-	{name: 'full_name', type: 'string', mapping: 'full_name'}
+Ext.define("User", {
+	extend: "Ext.data.Model", 
+	fields: [
+	{name: 'user',      type: 'string' },
+	{name: 'full_name', type: 'string' }
 ]});
 var toData = new Ext.data.Store({
-	model		: 'User',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: 'interface/messages/component_data.ejs.php?task=users',
-		reader	: {
-			type			: 'json',
-			idProperty		: 'user',
-			totalProperty	: 'totals',
-			root			: 'row'
+   	model		: 'User',
+   	proxy		: {
+   		type	: 'ajax',
+		api		: {
+			read	: 'interface/messages/component_data.ejs.php?task=users'
+		},
+  	   	reader: {
+      	    type			: 'json',
+        	idProperty		: 'id',
+       	    totalProperty	: 'totals',
+  	       	root			: 'row'
 		}
-	}),
-	autoLoad: true
+	},
+  	autoLoad: true
 }); // End toData
 
 // *************************************************************************************
 // Structure, data for cmb_Type
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.define("Types", {extend: "Ext.data.Model", fields: [
-	{name: 'option_id', type: 'string', mapping: 'option_id'},
-	{name: 'title',     type: 'string', mapping: 'title'}
+Ext.define("Types", {
+	extend: "Ext.data.Model", 
+	fields: [
+	{name: 'option_id', type: 'string' },
+	{name: 'title',     type: 'string' }
 ]});
 var typeData = new Ext.data.Store({
-	model		: 'Types',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: 'interface/messages/component_data.ejs.php?task=types',
-		reader	: {
-			type			: 'json',
-			idProperty		: 'option_id',
-			totalProperty	: 'totals',
-			root			: 'row'
+   	model		: 'Types',
+   	proxy		: {
+   		type	: 'ajax',
+		api		: {
+			read	: 'interface/messages/component_data.ejs.php?task=types'
+		},
+  	   	reader: {
+      	    type			: 'json',
+        	idProperty		: 'id',
+       	    totalProperty	: 'totals',
+  	       	root			: 'row'
 		}
-	}),
-	autoLoad: true
+	},
+  	autoLoad: true
 }); // End typeData
 
 // *************************************************************************************
@@ -178,39 +195,38 @@ var typeData = new Ext.data.Store({
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
 Ext.define("Status", {extend: "Ext.data.Model", fields: [
-	{name: 'option_id', type: 'string', mapping: 'option_id'},
-	{name: 'title',     type: 'string', mapping: 'title'}
+	{name: 'option_id', type: 'string' },
+	{name: 'title',     type: 'string' }
 ]});
 var statusData = new Ext.data.Store({
-	model		: 'Status',
-	proxy		: new Ext.data.AjaxProxy({
-		url		: 'interface/messages/component_data.ejs.php?task=status',
-		reader	: {
-			type			: 'json',
-			idProperty		: 'option_id',
-			totalProperty	: 'totals',
-			root			: 'row'
+   	model		: 'Status',
+   	proxy		: {
+   		type	: 'ajax',
+		api		: {
+			read	: 'interface/messages/component_data.ejs.php?task=status'
+		},
+  	   	reader: {
+      	    type			: 'json',
+        	idProperty		: 'id',
+       	    totalProperty	: 'totals',
+  	       	root			: 'row'
 		}
-	}),
-	autoLoad: true
+	},
+  	autoLoad: true
 }); // End statusData
-
-
-
-
 
 // *************************************************************************************
 // Patient Select Dialog
 // *************************************************************************************
 var winPatients = new  Ext.Window({
-	width		    : 900,
-	height		  : 400,
-	modal		    : true,
-	resizable	  : true,
-	autoScroll	: true,
+	width			: 900,
+	height			: 400,
+	modal			: true,
+	resizable		: true,
+	autoScroll		: true,
 	title		    :	'<?php i18n('Patients'); ?>',
-	closeAction	: 'hide',
-	renderTo	  : document.body,
+	closeAction		: 'hide',
+	renderTo		: document.body,
 	items: [{
 			xtype		    : 'grid',
 			name		    : 'gridPatients',
@@ -242,17 +258,6 @@ var winPatients = new  Ext.Window({
 				{ header: '<?php i18n('PID'); ?>', sortable: true, dataIndex: 'pid' }
 			],
 			tbar:[],
-//			plugins: [new Ext.ux.grid.Search({
-//				mode			      : 'local',
-//				iconCls			    : false,
-//				deferredRender	: false,
-//				dateFormat		  : 'm/d/Y',
-//				minLength		    : 4,
-//				align			      : 'left',
-//				width			      : 250,
-//				disableIndexes	: ['id'],
-//				position		    : 'top'
-//			})]
 	}],
 
 	// Window Bottom Bar
@@ -307,7 +312,7 @@ var prvMsg = new Ext.Panel({
 var winMessage = new  Ext.Window({
 	width		: 640,
 	autoHeight	: true,
-	//modal		: true,
+	modal		: true,
 	resizable	: false,
 	autoScroll	: true,
 	id			: 'winMessage',
@@ -457,23 +462,22 @@ var winMessage = new  Ext.Window({
 
 				// Copy the form fields into a new record
 				var Message = new MessageRecord({
-					noteid	  : Ext.getCmp("noteid").getValue(),
-					user	    : Ext.getCmp('cmb_assigned_to').getValue(),
-					subject   : Ext.getCmp('subject').getValue(),
+					noteid		: Ext.getCmp("noteid").getValue(),
+					user		: Ext.getCmp('cmb_assigned_to').getValue(),
+					subject		: Ext.getCmp('subject').getValue(),
 					body	    : Ext.getCmp('note').getValue(),
 					from	    : Ext.getCmp('cmb_assigned_to').getValue(),
-					patient	  : Ext.getCmp('patient_name').getText(),
-					reply_to  : Ext.getCmp('reply_to').getValue(),
+					patient		: Ext.getCmp('patient_name').getText(),
+					reply_to	: Ext.getCmp('reply_to').getValue(),
 					type	    : Ext.getCmp('cmb_form_note_type').getValue(),
-					status	  : Ext.getCmp('cmb_form_message_status').getValue(),
+					status		: Ext.getCmp('cmb_form_message_status').getValue(),
 					date	    : year + "-" + month + "-" + day + " " + hours + ":" + minutes
 				});
 
 				// Save the changes and fires the data_update.ejs.php
 				storeMsgs.add(Message);
-				storeMsgs.save();
-				storeMsgs.commitChanges();
-				storeMsgs.reload();
+				storeMsgs.sync();
+				storeMsgs.load();
 				
 			}
 			
@@ -500,16 +504,16 @@ var msgGrid = new Ext.grid.GridPanel({
 	//sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
 		listeners: {
 	
-		// Single click to select the record, and copy the variables
+			// Single click to select the record, and copy the variables
 			rowclick: function(msgGrid, rowIndex, e) {
 		
-			//Copy the selected message ID into the variable
+				//Copy the selected message ID into the variable
 				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 			
-			// Copy the BODY Message into the form
-			// document.getElementById('msgGrid').innerHTML = rowContent.get('body');     << ------ REMOVED ASK GINO!!!!!!!
+				// Copy the BODY Message into the form
+				// document.getElementById('msgGrid').innerHTML = rowContent.get('body');     << ------ REMOVED ASK GINO!!!!!!!
 				
-			// Enable buttons
+				// Enable buttons
 				msgGrid.editMsg.enable();
 				msgGrid.delMsg.enable();
 			},
@@ -517,13 +521,13 @@ var msgGrid = new Ext.grid.GridPanel({
 		// Double click to select the record, and edit the record
 			rowdblclick:  function(msgGrid, rowIndex, e) {
 				
-			//Copy the selected message ID into the variable
+				//Copy the selected message ID into the variable
 				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 				
-			// Copy the BODY Message into the form
+				// Copy the BODY Message into the form
 				document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + rowContent.get('body') + '</div>';
 				
-			// Copy all the fields into the form
+				// Copy all the fields into the form
 				winMessage.patient_name.setText(rowContent.get('patient'));
 				winMessage.cmb_assigned_to.setValue(rowContent.get('user'));
 				winMessage.reply_to.setValue(rowContent.get('user'));
@@ -533,7 +537,7 @@ var msgGrid = new Ext.grid.GridPanel({
 				winMessage.noteid.setValue(rowContent.get('noteid'));
 				winMessage.note.setValue("");
 				
-			// Set the buttons state
+				// Set the buttons state
 				winMessage.cmb_assigned_to.readOnly = true;
 				winMessage.patient_name.disable();
 				winMessage.send.enable();
@@ -640,17 +644,7 @@ var msgGrid = new Ext.grid.GridPanel({
 			});
 		}
 	}], // END GRID TOP MENU
-//	plugins: [new Ext.ux.grid.Search({
-//			mode			      : 'local',
-//			iconCls			    : false,
-//			deferredRender	: false,
-//			dateFormat		  : 'm/d/Y',
-//			minLength		    : 4,
-//			align			      : 'left',
-//			width			      : 250,
-//			disableIndexes	: ['noteid', 'user', 'body'],
-//			position		    : 'top'
-//	})]			
+
 }); // END GRID
 
 //******************************************************************************
