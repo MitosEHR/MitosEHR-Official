@@ -32,8 +32,20 @@ include_once('library/compressor/compressor.inc.php');
 
 <script type="text/javascript">
 
+// *************************************************************************************
+// Sencha trying to be like a language
+// using requiered to load diferent components
+// *************************************************************************************
+Ext.Loader.setConfig({enabled: true});
+Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ext']['ux']; ?>');
 Ext.require([
-	'Ext.TaskManager.*',
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.util.*',
+    'Ext.state.*',
+    'Ext.toolbar.Paging',
+    'Ext.TaskManager.*',
+    'Ext.ux.SlidingPager'
 ]);
 
 Ext.onReady(function() {

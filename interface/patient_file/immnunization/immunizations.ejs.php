@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------------------------------------------------------------------
 // immunization.ejs.php 
-// v0.0.1
+// v0.0.2
 // Under GPLv3 License
 //
 // Integration Sencha ExtJS Framework
@@ -21,8 +21,10 @@ include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 
-include_once("$srcdir/sql.inc.php");
-include_once("$srcdir/options.inc.php");
+//**********************************************************************************
+// Reset session count 10 secs = 1 Flop
+//**********************************************************************************
+$_SESSION['site']['flops'] = 0;
 
 if (isset($_POST['action'])) {
 	
@@ -136,19 +138,22 @@ if (isset($_POST['action'])) {
 // *************************************************************************************
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" />
-
-<head>
-<script type="text/javascript" src="../../../library/ext-3.3.0/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="../../../library/ext-3.3.0/ext-all.js"></script>
-
-<script type="text/javascript" src="../../../library/ext-3.3.0/plugins/gridsearch/js/Ext.ux.grid.Search.js"></script>
-<script type="text/javascript" src="../../../library/ext-3.3.0/plugins/gridsearch/js/Ext.ux.grid.RowActions.js"></script>
-
-<link rel="stylesheet" type="text/css" href="../../../library/ext-3.3.0/resources/css/xtheme-gray.css" />
-<link rel="stylesheet" type="text/css" href="../../../interface/themes/style_newui.css" />
 <script type="text/javascript">
+// *************************************************************************************
+// Sencha trying to be like a language
+// using requiered to load diferent components
+// *************************************************************************************
+Ext.Loader.setConfig({enabled: true});
+Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ext']['ux']; ?>');
+Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.util.*',
+    'Ext.state.*',
+    'Ext.toolbar.Paging',
+    'Ext.TaskManager.*',
+    'Ext.ux.SlidingPager'
+]);
 
 // *************************************************************************************
 // Define Global Variables
@@ -482,6 +487,4 @@ var viewport = new Ext.Viewport({
 
 }); // END EXTJS
 </script>
-</head>
-<body class="ext-gecko ext-gecko2 x-border-layout-ct">
-</body>
+
