@@ -23,7 +23,7 @@ $_SESSION['site']['flops'] = 0;
 
 <script type="text/javascript">
 Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ext']['ux']; ?>');
+Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ux']; ?>');
 Ext.require([
     'Ext.grid.*',
     'Ext.data.*',

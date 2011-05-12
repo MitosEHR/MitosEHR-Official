@@ -144,7 +144,7 @@ if (isset($_POST['action'])) {
 // using requiered to load diferent components
 // *************************************************************************************
 Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ext']['ux']; ?>');
+Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ux']; ?>');
 Ext.require([
     'Ext.grid.*',
     'Ext.data.*',
