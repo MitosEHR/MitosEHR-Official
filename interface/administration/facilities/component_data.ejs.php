@@ -18,6 +18,11 @@ session_cache_limiter('private');
 
 include_once("../../../library/I18n/I18n.inc.php");
 
+//******************************************************************************
+// Reset session count 10 secs = 1 Flop
+//******************************************************************************
+$_SESSION['site']['flops'] = 0;
+
 // Count records variable
 $count = 0;
 
