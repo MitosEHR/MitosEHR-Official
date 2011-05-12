@@ -1,6 +1,6 @@
 <?php
 //--------------------------------------------------------------------------------------------------------------------------
-// manage_messages.ejs.php
+// component_data.ejs.php -> Messages
 // v0.0.1
 // Under GPLv3 License
 //
@@ -38,20 +38,6 @@ include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 $mitos_db = new dbHelper();
-// OpenEMR
-//require_once("../../library/pnotes.inc.php");
-//require_once("../../library/patient.inc.php");
-//require_once("../../library/acl.inc.php");
-//require_once("../../library/log.inc.php");
-//require_once("../../library/options.inc.php");
-//require_once("../../library/formdata.inc.php");
-//require_once("../../library/classes/Document.class.php");
-//require_once("../../library/gprelations.inc.php");
-//require_once("../../library/formatting.inc.php");
-
-
-// Count records variable
-$count = 0;
 
 // *************************************************************************************
 // Deside what to do with the $_GET['task']
@@ -62,17 +48,23 @@ switch ($_GET['task']) {
 	// Pull users from the database
 	// *************************************************************************************
 	case "users":
+		// catch the total records
+		$sql = "SELECT count(*) as total FROM users WHERE username != '' AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' )";
+		$mitos_db->setSQL($sql);
+		$urow = $mitos_db->execStatement();
+		$total = $urow[0]['total'];
+		
 		$sql = "SELECT
-							 	username,
-								fname,
-								lname
-							FROM
-								users
-							WHERE
-								username != '' AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' )
-							ORDER BY
-								lname,
-								fname";
+				 	username,
+					fname,
+					lname
+				FROM
+					users
+				WHERE
+					username != '' AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' )
+				ORDER BY
+					lname,
+					fname";
 		foreach ($mitos_db->setSQL($sql) as $urow) {
 			$count++;
 			// Merge firstname with lastname
@@ -85,7 +77,7 @@ switch ($_GET['task']) {
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
+		echo "totals: " . $total . ", " . chr(13);
 		echo "row: [" . chr(13);
 		echo $buff;
 		echo "]})" . chr(13);
@@ -96,6 +88,12 @@ switch ($_GET['task']) {
 	// Data for for cmb_Type
 	// *************************************************************************************
 	case "types":
+		// catch the total records
+		$sql = "SELECT count(*) as total FROM list_options WHERE list_id = 'note_type'";
+		$mitos_db->setSQL($sql);
+		$urow = $mitos_db->execStatement();
+		$total = $urow[0]['total'];
+		
 		$sql = "SELECT
 					*
 				FROM
@@ -110,7 +108,7 @@ switch ($_GET['task']) {
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
+		echo "totals: " . $total . ", " . chr(13);
 		echo "row: [" . chr(13);
 		echo $buff;
 		echo "]})" . chr(13);
@@ -121,6 +119,12 @@ switch ($_GET['task']) {
 	// Pull Status from the database
 	// *************************************************************************************
 	case "status";
+		// catch the total records
+		$sql = "SELECT count(*) as total FROM list_options WHERE list_id = 'message_status'"; 
+		$mitos_db->setSQL($sql);
+		$urow = $mitos_db->execStatement();
+		$total = $urow[0]['total'];
+		
 		$sql = "SELECT
 					*
 				FROM
@@ -135,7 +139,7 @@ switch ($_GET['task']) {
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
+		echo "totals: " . $total . ", " . chr(13);
 		echo "row: [" . chr(13);
 		echo $buff;
 		echo "]})" . chr(13);
@@ -146,6 +150,12 @@ switch ($_GET['task']) {
 	// Pull the patients from the database
 	// *************************************************************************************
 	case "patients";
+		// catch the total records
+		$sql = "SELECT count(*) as total FROM patient_data"; 
+		$mitos_db->setSQL($sql);
+		$urow = $mitos_db->execStatement();
+		$total = $urow[0]['total'];
+	
 		$sql = "SELECT
 					*
 				FROM
@@ -163,7 +173,7 @@ switch ($_GET['task']) {
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
 		echo $_GET['callback'] . '({';
-		echo "results: " . $count . ", " . chr(13);
+		echo "totals: " . $total . ", " . chr(13);
 		echo "row: [" . chr(13);
 		echo $buff;
 		echo "]})" . chr(13);
