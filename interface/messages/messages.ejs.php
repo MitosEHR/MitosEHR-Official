@@ -22,7 +22,16 @@ $_SESSION['site']['flops'] = 0;
 ?>
 
 <script type="text/javascript">
-Ext.require([ '*' ]);
+Ext.Loader.setConfig({enabled: true});
+Ext.Loader.setPath('Ext.ux', 'library/ext-4.0.0/examples/ux');
+Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.util.*',
+    'Ext.state.*',
+    'Ext.toolbar.Paging',
+    'Ext.ux.SlidingPager'
+]);
 
 // *************************************************************************************
 // Start Sencha Framework
@@ -79,30 +88,32 @@ Ext.define("Messages", {
 // AJAX -> data_*.ejs.php
 // *************************************************************************************
 var storeMsgs = new Ext.data.Store({
-    model		: 'Messages',
-    proxy		: {
-        type	: 'ajax',
+	model: 'Messages',
+  	noCache		: true,
+   	autoSync	: false,
+   	proxy		: {
+   		type	: 'ajax',
 		api		: {
-        	read 	: 'interface/messages/data_read.ejs.php?show=<?php echo $show_all=='yes' ? $usrvar='_%' : $usrvar=$_SESSION['authUser']; ?>',
-			//create	: 'interface/messages/data_read.ejs.php',
-			//update	: 'interface/messages/data_read.ejs.php',
-			//destroy 	: 'interface/messages/data_read.ejs.php'
+			read	: 'interface/messages/data_read.ejs.php',
+			create	: 'interface/messages/data_create.ejs.php',
+			update	: 'interface/messages/data_update.ejs.php',
+			destroy : 'interface/messages/data_destroy.ejs.php'
 		},
-        reader: {
-	    	type			: 'json',
-	        idProperty		: 'noteid',
-	        totalProperty	: 'totals',
-	        root			: 'row'
-	    },
-	    writer: {
-			type	 		: 'json',
-			writeAllFields	: true,
-			allowSingle	 	: true,
-			encode	 		: true,
-			root	 		: 'row'
-		}
-	},
-    autoLoad: true
+       	reader: {
+            type			: 'json',
+   	        idProperty		: 'idusers',
+       	    totalProperty	: 'totals',
+           	root			: 'row'
+   		},
+   		writer: {
+   			type			: 'json',
+   			writeAllFields	: true,
+   			allowSingle		: false,
+   			encode			: true,
+   			root			: 'row'
+   		}
+   	},
+   	autoLoad: true
 });
 
 // *************************************************************************************
