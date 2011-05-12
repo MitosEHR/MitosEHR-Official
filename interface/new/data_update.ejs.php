@@ -27,6 +27,11 @@ require_once("$srcdir/classes/Document.class.php");
 require_once("$srcdir/gprelations.inc.php");
 require_once("$srcdir/formatting.inc.php");
 
+//******************************************************************************
+// Reset session count 10 secs = 1 Flop
+//******************************************************************************
+$_SESSION['site']['flops'] = 0;
+
 // Count records variable
 $count = 0;
 

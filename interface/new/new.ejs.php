@@ -14,6 +14,11 @@
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
+
+//******************************************************************************
+// Reset session count 10 secs = 1 Flop
+//******************************************************************************
+$_SESSION['site']['flops'] = 0;
 ?>
 
 <script type="text/javascript">
