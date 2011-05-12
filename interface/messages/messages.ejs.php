@@ -584,13 +584,6 @@ var msgGrid = new Ext.grid.GridPanel({
 		
 			// Copy the BODY Message into the form
 			document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>';
-			//winMessage.patient_name.setText('<?php i18n('Click to select patient'); ?>');
-			//winMessage.noteid.setValue(null);
-			//winMessage.cmb_assigned_to.readOnly = false;
-			//winMessage.cmb_assigned_to.setValue(null);
-			//winMessage.cmb_form_note_type.setValue('Unassigned');
-			//winMessage.cmb_form_message_status.setValue('New');
-			//winMessage.reply_id.setValue(null);
 
 			// Set the buttons state
 			//winMessage.patient_name.enable();
