@@ -29,11 +29,15 @@ $_SESSION['site']['flops'] = 0;
 // Sencha trying to be like a language
 // using requiered to load diferent components
 // *************************************************************************************
+Ext.Loader.setConfig({enabled: true});
+Ext.Loader.setPath('Ext.ux', 'library/ext-4.0.0/examples/ux');
 Ext.require([
     'Ext.grid.*',
     'Ext.data.*',
     'Ext.util.*',
-    'Ext.state.*'
+    'Ext.state.*',
+    'Ext.toolbar.Paging',
+    'Ext.ux.SlidingPager'
 ]);
 
 Ext.onReady(function() {
@@ -53,6 +57,7 @@ Ext.onReady(function() {
 	// *************************************************************************************
     Ext.define('FacilitiesRecord', {
         extend: 'Ext.data.Model',
+        pageSize: 30,
         fields: [
 			{name: 'id',					type: 'int'},
 			{name: 'name',					type: 'string'},
@@ -348,6 +353,12 @@ Ext.onReady(function() {
 				dataIndex: 'city'
             }
 		],
+        bbar: Ext.create('Ext.PagingToolbar', {
+            pageSize: 30,
+            store: FacilityStore,
+            displayInfo: true,
+            plugins: Ext.create('Ext.ux.SlidingPager', {})
+        }),
 		viewConfig: { stripeRows: true },
 		listeners: {
 			itemclick: {

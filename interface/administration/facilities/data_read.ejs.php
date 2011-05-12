@@ -23,8 +23,17 @@ require_once("../../../repository/dataExchange/dataExchange.inc.php");
 $_SESSION['site']['flops'] = 0;
 
 // Count records variable
-$count = 0;
 $mitos_db = new dbHelper();
+
+// catch the total records
+$sql = "SELECT count(*) as total FROM facility";
+$mitos_db->setSQL($sql);
+$urow = $mitos_db->execStatement();
+$total = $urow[0]['total'];
+
+// Setting defults incase no request is sent by sencha
+$start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
+$count = ($_REQUEST["limit"] == null)? 30 : $_REQUEST["limit"];
 
 // *************************************************************************************
 // Verify if a $_GET['id'] has passed to select a facility.
@@ -37,18 +46,19 @@ if ($_GET['id']){
 				facility
 			ORDER BY 
 				name
-			WHERE id=" . $_GET['id'];
+			WHERE id=" . $_GET['id'] . "
+			LIMIT " . $start . "," . $count;
 } else { // if not select all of them
 	$sql = "SELECT
 				* 
 			FROM
 				facility
 			ORDER BY 
-				name";
+				name
+			LIMIT " . $start . "," . $count;
 }
 $mitos_db->setSQL($sql);
 foreach ($mitos_db->execStatement() as $urow) {
-	$count++;
 	
 	//----------------------------------------------------
 	// Parse some data
@@ -85,7 +95,7 @@ foreach ($mitos_db->execStatement() as $urow) {
 
 $buff = substr($buff, 0, -2); // Delete the last comma.
 echo $_GET['callback'] . '({';
-echo "results: " . $count . ", " . chr(13);
+echo "totals: " . $total . ", " . chr(13);
 echo "row: [" . chr(13);
 echo $buff;
 echo "]})" . chr(13);
