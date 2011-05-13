@@ -60,10 +60,11 @@ class dbHelper {
 	//**********************************************************************
 	function execStatement(){
 		$recordset = $this->conn->query($this->sql_statement);
-		if($this->conn->errorInfo()){
+		$err = $this->conn->errorInfo();
+		if(!$err[2]){
 			return $recordset->fetchAll(PDO::FETCH_ASSOC);
 		} else {
-			return $this->conn->errorInfo();
+			return $err;
 		}
 	}
 	
