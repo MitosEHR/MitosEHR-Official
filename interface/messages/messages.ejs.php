@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------------------------------------------------------------------
 // messages.ejs.php 
-// v0.0.4
+// v0.0.5
 // Under GPLv3 License
 // 
 // Integrated by: GI Technologies & MitosEHR.org in 2011
@@ -322,12 +322,11 @@ var prvMsg = new Ext.create('Ext.panel.Panel', {
 // *************************************************************************************
 var formMessage = new Ext.create('Ext.form.Panel', {
 	id			: 'formMessage',
-	frame		: true,
+	frame		: false,
 	bodyStyle	: 'padding: 5px 5px 0 5px',
-	defaults	: {labelWidth: 75},
+	defaults	: {labelWidth: 75, anchor: '100%'},
 	items: [{ 
 		xtype: 'button', 
-		ref: '../patient_name',
 		id: 'patient_name',
 		text: '<?php i18n('Click to select patient...'); ?>',
 		fieldLabel: '<?php i18n('Patient'); ?>',
@@ -336,7 +335,6 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 		handler: function(){ winPatients.show(); }
 	},{ 
 		xtype: 'combo', 
-		ref: '../cmb_assigned_to',
 		id: 'cmb_assigned_to',
 		name: 'cmb_assigned_to',
 		fieldLabel: '<?php i18n('To'); ?>',
@@ -484,34 +482,33 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 	frame		: false,
 	loadMask    : true,
 	viewConfig 	: {forceFit: true, stripeRows : true},
-	//sm			   : new Ext.grid.RowSelectionModel({singleSelect:true}),
-		listeners: {
+	listeners: {
 	
-			// Single click to select the record, and copy the variables
-			rowclick: function(msgGrid, rowIndex, e) {
+		// Single click to select the record, and copy the variables
+		rowclick: function(msgGrid, rowIndex, e) {
 		
-				//Copy the selected message ID into the variable
-				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
+			//Copy the selected message ID into the variable
+			rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 				
-				// Enable buttons
-				msgGrid.editMsg.enable();
-				msgGrid.delMsg.enable();
-			},
+			// Enable buttons
+			msgGrid.editMsg.enable();
+			msgGrid.delMsg.enable();
+		},
 
 		// Double click to select the record, and edit the record
-			rowdblclick:  function(msgGrid, rowIndex, e) {
+		rowdblclick:  function(msgGrid, rowIndex, e) {
 				
-				//Copy the selected message ID into the variable
-				rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
+			//Copy the selected message ID into the variable
+			rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 				
-				// Set the buttons state
-				winMessage.cmb_assigned_to.readOnly = true;
-				winMessage.patient_name.disable();
-				winMessage.send.enable();
+			// Set the buttons state
+			winMessage.cmb_assigned_to.readOnly = true;
+			winMessage.patient_name.disable();
+			winMessage.send.enable();
 				
-				winMessage.show();
-			}
-		},
+			winMessage.show();
+		}
+	},
 	columns: [
 		{ header: 'noteid', sortable: false, dataIndex: 'noteid', hidden: true},
 		{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
@@ -537,14 +534,6 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 			
 			// Clear the rowContent variable
 			rowContent = null;
-		
-			// Copy the BODY Message into the form
-			document.getElementById('previousMsg').innerHTML = '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>';
-
-			// Set the buttons state
-			//winMessage.patient_name.enable();
-			//winMessage.send.disable();
-			
 			winMessage.show();
 		}
 	},'-',{
