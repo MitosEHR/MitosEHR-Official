@@ -47,14 +47,6 @@ $_SESSION['dir']['adoHelper'] = "dbHelper";
 $_SESSION['dir']['ux'] = "library/".$_SESSION['dir']['ext']."/examples/ux";
 
 //**********************************************************************
-// Version related variables
-//**********************************************************************
-$_SESSION['ver']['codeName']= "Vega";
-$_SESSION['ver']['major'] = '1';
-$_SESSION['ver']['rev'] = '0';
-$_SESSION['ver']['minor'] = '0 Development';
-
-//**********************************************************************
 // Patient Related Variables
 //**********************************************************************
 $_SESSION['patient']['id'] = "";
