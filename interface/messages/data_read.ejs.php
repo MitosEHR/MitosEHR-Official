@@ -8,7 +8,6 @@
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
-ini_set('display_errors', 'On'); // debug info
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
@@ -18,18 +17,28 @@ session_cache_limiter('private');
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 
-include_once("../../library/dbHelper/dbHelper.inc.php");
-include_once("../../library/I18n/I18n.inc.php");
-require_once("../../repository/dataExchange/dataExchange.inc.php");
+include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
+require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 
 //------------------------------------------
 // Database class instance
 //------------------------------------------
 $mitos_db = new dbHelper();
 
+// catch the total records
+$sql = "SELECT count(*) as total FROM
+			((pnotes JOIN users ON pnotes.user = users.username) JOIN patient_data ON pnotes.pid = patient_data.pid)
+        WHERE
+			pnotes.message_status != 'Done' AND
+			pnotes.deleted != '1'";
+$mitos_db->setSQL($sql);
+$urow = $mitos_db->execStatement();
+$total = $urow[0]['total'];
+
 // Setting defults incase no request is sent by sencha
-$start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
-$count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
+$start = (!$_REQUEST["start"])? 0 : $_REQUEST["start"];
+$count = (!$_REQUEST["limit"])? 10 : $_REQUEST["limit"];
 
 $sql = "SELECT
 			pnotes.id,
@@ -54,8 +63,6 @@ $sql = "SELECT
 		// AND pnotes.assigned_to LIKE ?  <-----   need to fix this
 		
 $mitos_db->setSQL($sql);
-$total = $mitos_db->rowCount();
-		
 foreach ($mitos_db->execStatement() as $myrow) {
 	$name = dataEncode( $myrow['user'] );
 	$name = dataEncode( $myrow['users_lname'] );
@@ -73,15 +80,15 @@ foreach ($mitos_db->execStatement() as $myrow) {
 	
 	// build the message
 	$buff .= '{';
-	$buff .= ' "noteid: "' . dataEncode( $myrow['id'] ) . '",';
-	$buff .= ' "user: "' . dataEncode( $myrow['user'] ) . '",';
-	$buff .= ' "subject: "' . dataEncode( $myrow['subject'] ) . '",';
-	$buff .= ' "body: "' . $p_body . '",';
-	$buff .= ' "from: "' . dataEncode( $name ) . '",' ;
-	$buff .= ' "patient: "' . dataEncode( $patient ) . '",';
-	$buff .= ' "date: "' . oeFormatShortDate(substr($myrow['date'], 0, strpos($myrow['date'], ' '))) . '",';
-	$buff .= ' "reply_id: "' . dataEncode( $myrow['reply_id'] ) . '",';
-	$buff .= ' "status: "' . dataEncode( $myrow['message_status'] ) . '"},' . chr(13);
+	$buff .= ' "noteid: "'		. dataEncode( $myrow['id'] ) . '",';
+	$buff .= ' "user: "'		. dataEncode( $myrow['user'] ) . '",';
+	$buff .= ' "subject: "'		. dataEncode( $myrow['subject'] ) . '",';
+	$buff .= ' "body: "'		. $p_body . '",';
+	$buff .= ' "from: "'		. dataEncode( $name ) . '",' ;
+	$buff .= ' "patient: "'		. dataEncode( $patient ) . '",';
+	$buff .= ' "date: "'		. $myrow['date'] . '",';
+	$buff .= ' "reply_id: "'	. dataEncode( $myrow['reply_id'] ) . '",';
+	$buff .= ' "status: "'		. dataEncode( $myrow['message_status'] ) . '"},' . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.
