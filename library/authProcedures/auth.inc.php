@@ -110,6 +110,24 @@ if ($rec['username'] == ""){
 	$_SESSION['user']['id'] = $rec['id'];
 	$_SESSION['user']['email'] = $rec['email'];
 	$_SESSION['user']['auth'] = true;
+	
+	//-------------------------------------------
+	// Also fetch the current version of the
+	// Application & Database
+	//-------------------------------------------
+	$sql = "SELECT 
+				*
+			FROM 
+				version 
+			LIMIT 1";
+	$mitos_db->setSQL($sql);
+	$rec = $mitos_db->fetch();
+	$_SESSION['ver']['codeName']= $rec['v_tag'];
+	$_SESSION['ver']['major'] = $rec['v_major'];
+	$_SESSION['ver']['rev'] = $rec['v_patch'];
+	$_SESSION['ver']['minor'] = $rec['v_minor'];
+	$_SESSION['ver']['database'] = $rec['v_database'];
+
 	echo "{ success: true }";
 	return;	
 }
