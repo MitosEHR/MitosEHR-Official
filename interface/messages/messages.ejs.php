@@ -586,11 +586,13 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 // Render panel
 //******************************************************************************
 var topRenderPanel = Ext.create('Ext.panel.Panel', {
-	renderTo	: Ext.getCmp('BottomPanel').body,
-  	frame 		: false,
-	border 		: false,
-	id			: 'botRenderPanel',
-	loadMask    : true,
+	renderTo	: Ext.getCmp('MainApp').body,
+	layout		: 'fit',
+	height		: Ext.getCmp('MainApp').getHeight(),
+  	frame		: false,
+  	border		: false,
+	bodyPadding	: 0,
+	id			: 'topRenderPanel',
 	items		: [msgGrid]
 });
 

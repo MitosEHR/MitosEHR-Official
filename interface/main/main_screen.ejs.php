@@ -176,26 +176,6 @@ var Header = Ext.create('Ext.Panel', {
 }); // End Header
 
 //****************************************************************
-// Bottom Panel
-//
-// tag: ExtJS v4 Ready
-//****************************************************************
-var BottomPanel = Ext.create('Ext.Panel', {
-	region			: 'south',
-	id				: 'BottomPanel',
-	height			: 230,
-	split			: true,
-	collapsible		: true,
-	title			: '...',
-	margins			: '0 0 0 0',
-	bodyPadding		: 0,
-	waitMsgTarget	: true,
-	waitMsg			: '<?php i18n("Loading"); ?>',
-	waitMsgTarget	: true,
-	autoLoad		: {url: 'interface/messages/messages.ejs.php', scripts: true}
-}); // End Bottom Panel
-
-//****************************************************************
 // Main Panel
 //
 // tag: ExtJS v4 Ready
@@ -235,7 +215,7 @@ var TopPanel = Ext.create('Ext.Panel', {
 	margins			: '0 0 0 0',
 	padding			: 0,
 	bodyPadding		: 0,
-	items			: [ MainApp, BottomPanel ]
+	items			: [ MainApp ]
 }); // End TopPanel
 
 //****************************************************************
