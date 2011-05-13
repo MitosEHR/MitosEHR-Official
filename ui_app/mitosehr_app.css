@@ -12,10 +12,12 @@
 	padding: 6px;
 	display: block;
 	width: 100%;
-	border-bottom-width: 1px;
+	border-bottom-width: 2px;
 	border-bottom-style: dotted;
 	border-bottom-color: #f3f3f3;
 	background-color: #ecffee;
+	background-image: url(dashboard_bg.png);
+	background-repeat: repeat-x;
 }
 
 body#login{
