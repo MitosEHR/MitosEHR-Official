@@ -65,7 +65,8 @@ switch ($_GET['task']) {
 				ORDER BY
 					lname,
 					fname";
-		foreach ($mitos_db->setSQL($sql) as $urow) {
+		$mitos_db->setSQL($sql);
+		foreach ($mitos_db->execStatement() as $urow) {
 			$count++;
 			// Merge firstname with lastname
 			if ($urow['fname']){
@@ -102,7 +103,8 @@ switch ($_GET['task']) {
 					list_id = 'note_type'
 				ORDER BY
 					seq, title";
-		foreach ($mitos_db->setSQL($sql) as $urow) {
+		$mitos_db->setSQL($sql);
+		foreach ($mitos_db->execStatement() as $urow) {
 			$count++;
 			$buff .= " { option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
 		}
@@ -133,7 +135,8 @@ switch ($_GET['task']) {
 					list_id = 'message_status'
 				ORDER BY
 					seq, title";
-		foreach ($mitos_db->setSQL($sql) as $urow) {
+		$mitos_db->setSQL($sql);
+		foreach ($mitos_db->execStatement() as $urow) {
 			$count++;
 			$buff .= "{ option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
 		}
@@ -162,7 +165,8 @@ switch ($_GET['task']) {
 					patient_data
 				ORDER BY
 					lname ASC, fname ASC";
-		foreach ($mitos_db->setSQL($sql) as $urow) {
+		$mitos_db->setSQL($sql);
+		foreach ($mitos_db->execStatement() as $urow) {
 			$count++;
 			$buff .= "{ id: '" . dataDecode( $urow['id'] ) . "',";
 			$buff .= " name: '" . dataDecode( $urow['fname'] ) . ", " . dataDecode( $urow['lname'] )  . "',";
