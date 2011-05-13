@@ -53,11 +53,6 @@ if ( Ext.getCmp('winMessage') ){ Ext.getCmp('winMessage').destroy(); }
 var rowContent;
 var body_content;
 
-// *************************************************************************************
-// Update the title on the panel
-// *************************************************************************************
-Ext.getCmp('BottomPanel').setTitle("Messages");
-
 body_content = '<?php i18n('Nothing posted yet...'); ?>';
 
 // *************************************************************************************
@@ -563,7 +558,7 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 			Ext.Msg.show({
 				title: '<?php i18n("Please confirm...", 'e'); ?>', 
 				icon: Ext.MessageBox.QUESTION,
-			msg:'<?php i18n('Are you sure to delete this message?<br>From: '); ?>' + rowContent.get('from'),
+				msg:'<?php i18n('Are you sure to delete this message?<br>From: '); ?>' + rowContent.get('from'),
 				buttons: Ext.Msg.YESNO,
 				fn:function(btn,msgGrid){
 			        if(btn=='yes'){
@@ -586,6 +581,7 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 // Render panel
 //******************************************************************************
 var topRenderPanel = Ext.create('Ext.panel.Panel', {
+	title		: '<?php i18n("Messages"); ?>',
 	renderTo	: Ext.getCmp('MainApp').body,
 	layout		: 'fit',
 	height		: Ext.getCmp('MainApp').getHeight(),
