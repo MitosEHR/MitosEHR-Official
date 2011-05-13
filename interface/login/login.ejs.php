@@ -246,6 +246,6 @@ winLogon.show();
 </script>
 </head>
 <body id="login">
-<div id="copyright">MitosEHR<?php echo $_SESSION['ver']['major'] . "." . $_SESSION['ver']['rev'] . "." . $_SESSION['ver']['minor'] . " " . $_SESSION['ver']['codeName']; ?> | <a href="javascript:void()" onClick="Ext.getCmp('winCopyright').show();" >Copyright Notice</a></div>
+<div id="copyright">MitosEHR | <a href="javascript:void()" onClick="Ext.getCmp('winCopyright').show();" >Copyright Notice</a></div>
 </body>
 </html>
