@@ -139,6 +139,7 @@ var Header = Ext.create('Ext.Panel', {
 		scale: 'large',
 		style : 'float:left',
 		margin: '0 0 0 5px',
+		width: 200,
 		minWidth: 150,
 		menu: [{
 			text:'<?php i18n("New Encounter"); ?>'

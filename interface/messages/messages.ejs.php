@@ -318,7 +318,7 @@ var prvMsg = new Ext.create('Ext.panel.Panel', {
 var formMessage = new Ext.create('Ext.form.Panel', {
 	id			: 'formMessage',
 	frame		: false,
-	bodyStyle	: 'padding: 5px 5px 0 5px',
+	bodyStyle	: 'padding: 5px',
 	defaults	: {labelWidth: 75, anchor: '100%'},
 	items: [{ 
 		xtype: 'button', 
@@ -327,6 +327,8 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 		fieldLabel: '<?php i18n('Patient'); ?>',
 		name: 'patient_name',
 		editable: false,
+		height: 30,
+		margin: '5px',
 		handler: function(){ winPatients.show(); }
 	},{ 
 		xtype: 'combo', 
@@ -373,16 +375,13 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 		ref: '../subject',
 		fieldLabel: '<?php i18n('Subject'); ?>',
         id: 'subject',
-        name: 'subject',
-        width: 520
+        name: 'subject'
 	},{ 
 		xtype: 'htmleditor', 
 		ref: '../note',
-		fieldLabel: '<?php i18n('Message'); ?>',
 		id: 'note',
 		name: 'note',
 		labelWidth  : 0,
-		width: 520,
 		height: 130
 	},{ 
 		xtype: 'textfield', 
