@@ -226,16 +226,15 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 var winLogon = new Ext.create('widget.window', {
     title			: 'MitosEHR Logon',
     closable		: true,
-    width			: 499,
-	height			: 315,
-	bodyPadding		: 2,  		//new 4.0 
+    width			: 495,
+	height			: 290,
 	closeAction		: 'hide',
     plain			: true,
 	modal			: false,
 	resizable		: false,
 	draggable		: false,
 	closable		: false,
-    bodyStyle		: 'background: #ffffff; padding: 5px;',
+    bodyStyle		: 'background: #ffffff;',
     items			: [{ xtype: 'box', width: 483, height: 135, html: '<img src="ui_app/logon_header.png" />'}, formLogin ]
 }); // End winLogon
 
