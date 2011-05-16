@@ -65,17 +65,18 @@ body_content = '<?php i18n('Nothing posted yet...'); ?>';
 Ext.define("Messages", {
 	extend: "Ext.data.Model", 
 	fields: [
-	{name: 'noteid',	type: 'int'},
-	{name: 'user',		type: 'string'},
-	{name: 'subject',   type: 'string'},
-	{name: 'body',		type: 'string'},
-	{name: 'from',	  	type: 'string'},
-	{name: 'patient',  	type: 'string'},
-	{name: 'type',	  	type: 'string'},
-	{name: 'date',	  	type: 'string'},
-	{name: 'status',   	type: 'string'},
-	{name: 'reply_id',  type: 'int'},
-	{name: 'reply_to',	type: 'int'}
+	{name: 'id',				type: 'int'},
+	{name: 'date',				type: 'string'},
+	{name: 'body',				type: 'string'},
+	{name: 'pid',				type: 'string'},
+	{name: 'user_id',			type: 'string'},
+	{name: 'facility_id',		type: 'string'},
+	{name: 'activity',			type: 'string'},
+	{name: 'authorized',	  	type: 'string'},
+	{name: 'assigned_to',   	type: 'string'},
+	{name: 'message_status',	type: 'string'},
+	{name: 'reply_id',  		type: 'string'},
+	{name: 'note_type',			type: 'string'}
 ]});
 
 // *************************************************************************************
@@ -479,8 +480,8 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 			rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
 				
 			// Set the buttons state
-			winMessage.cmb_assigned_to.readOnly = true;
-			winMessage.patient_name.disable();
+			winMessage.assigned_to.readOnly = true;
+			winMessage.pid.disable();
 			winMessage.send.enable();
 				
 			winMessage.show();
