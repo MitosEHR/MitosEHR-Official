@@ -322,18 +322,18 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 	defaults	: {labelWidth: 75, anchor: '100%'},
 	items: [{ 
 		xtype: 'button', 
-		id: 'patient_name',
+		id: 'pid',
 		text: '<?php i18n('Click to select patient...'); ?>',
 		fieldLabel: '<?php i18n('Patient'); ?>',
-		name: 'patient_name',
+		name: 'pid',
 		editable: false,
 		height: 30,
 		margin: '5px',
 		handler: function(){ winPatients.show(); }
 	},{ 
 		xtype: 'combo', 
-		id: 'cmb_assigned_to',
-		name: 'cmb_assigned_to',
+		id: 'assigned_to',
+		name: 'assigned_to',
 		fieldLabel: '<?php i18n('To'); ?>',
 		editable: false,
 		triggerAction: 'all',
@@ -344,61 +344,49 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 		store: toData
 	},{ 
 		xtype: 'combo', 
-		ref: '../cmb_form_note_type',
 		value: 'Unassigned',
-		id: 'cmb_form_note_type',
-		name: 'form_note_type',
+		id: 'note_type',
+		name: 'note_type',
 		fieldLabel: '<?php i18n('Type'); ?>',
 		editable: false,
 		triggerAction: 'all',
 		mode: 'local',
 		valueField: 'option_id',
-		hiddenName: 'form_note_type',
+		hiddenName: 'option_id',
 		displayField: 'title',
 		store: typeData
 	},{ 
 		xtype: 'combo', 
-		ref: '../cmb_form_message_status',
 		value: 'New',
-		id: 'cmb_form_message_status',
-		name: 'form_message_status',
+		id: 'message_status',
+		name: 'message_status',
 		fieldLabel: '<?php i18n('Status'); ?>',
 		editable: false,
 		triggerAction: 'all',
 		mode: 'local',
 		valueField: 'option_id',
-		hiddenName: 'form_message_status',
+		hiddenName: 'option_id',
 		displayField: 'title',
 		store: statusData
 	},{ 
 		xtype: 'textfield', 
-		ref: '../subject',
 		fieldLabel: '<?php i18n('Subject'); ?>',
         id: 'subject',
         name: 'subject'
 	},{ 
 		xtype: 'htmleditor', 
-		ref: '../note',
-		id: 'note',
-		name: 'note',
+		id: 'body',
+		name: 'body',
 		labelWidth  : 0,
 		height: 130
 	},{ 
 		xtype: 'textfield', 
-		ref: '../noteid',
-		id: 'noteid',
+		id: 'id',
 		hidden: true,
-		name: 'noteid',
+		name: 'id',
 		value: ''
 	},{ 
 		xtype: 'textfield',
-		ref: '../reply_to',
-		id: 'reply_to',
-		hidden: true,
-		name: 'reply_to'
-	},{ 
-		xtype: 'textfield',
-        ref: '../reply_id',
         id: 'reply_id',
         hidden: true,
         name: 'reply_id'
@@ -429,37 +417,32 @@ var winMessage = new Ext.create('Ext.window.Window', {
 		iconCls		: 'save',
 		disabled	: true,
 		handler: function() { 
-			var currentTime = new Date();
-			var month = currentTime.getMonth() + 1;
-			var day = currentTime.getDate();
-			var year = currentTime.getFullYear();
-			var hours = currentTime.getHours();
-			var minutes = currentTime.getMinutes();
-
 			// The datastore object will save the data
 			// as soon changes is detected on the datastore
 			// It's a AJAX thing
-			if(Ext.getCmp("noteid").getValue()){ // Update message
-
-
-				// Save the changes and`fires the data_update.ejs.php
-				storeMsgs.save();
-				storeMsgs.commitChanges();
-				storeMsgs.reload();
-
+			if(Ext.getCmp("id").getValue()){ // Update message
+				var record = storeMsgs.getAt(rowPos);
+				var fieldValues = formMessage.getForm().getValues();
+				for ( k=0; k <= record.fields.getCount()-1; k++) {
+					i = record.fields.get(k).name;
+					record.set( i, fieldValues[i] );
+				}
 			} else {							// New message
-
-				// Save the changes and fires the data_update.ejs.php
-				storeMsgs.add(Message);
-				storeMsgs.sync();
-				storeMsgs.load();
-				
+				//----------------------------------------------------------------
+				// 1. Convert the form data into a JSON data Object
+				// 2. Re-format the Object to be a valid record (UserRecord)
+				// 3. Add the new record to the datastore
+				//----------------------------------------------------------------
+				var obj = eval( '(' + Ext.JSON.encode(formMessage.getForm().getValues()) + ')' );
+				var rec = new usersRecord(obj);
+				storeMsgs.add( rec );
 			}
-			
-			winMessage.hide();
+			winMessage.hide();	// Finally hide the dialog window
+			storeMsgs.sync();	// Save the record to the dataStore
+			storeMsgs.load();	// Reload the dataSore from the database
 		}
 	},{
-		text:'<?php echo htmlspecialchars( i18n('Close'), ENT_NOQUOTES); ?>',
+		text:'<?php i18n('Close'); ?>',
 		iconCls: 'delete',
 		handler: function(){ winMessage.hide(); }
 	}]
