@@ -95,6 +95,7 @@ foreach ($mitos_db->execStatement() as $myrow) {
 	$buff .= ' patient: "'			. $patient . '",';
 	$buff .= ' user: "'				. $user . '",' ;
 	$buff .= ' facility_id: "'		. dataEncode( $myrow['facility_id'] ) . '",';
+	$buff .= ' subject: "'			. dataEncode( $myrow['subject'] ) . '",';
 	$buff .= ' activity: "'			. dataEncode( $myrow['activity'] ) . '",';
 	$buff .= ' authorized: "'		. dataEncode( $myrow['authorized'] ) . '",';
 	$buff .= ' message_status: "'	. dataEncode( $myrow['message_status'] ) . '",';
