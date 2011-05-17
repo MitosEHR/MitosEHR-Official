@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 16, 2011 at 02:18 PM
+-- Generation Time: May 16, 2011 at 06:54 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.2-1ubuntu4.9
 
@@ -25,7 +25,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `acl_permissions`
 --
 
-DROP TABLE IF EXISTS `acl_permissions`;
 CREATE TABLE IF NOT EXISTS `acl_permissions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `perm_key` varchar(30) CHARACTER SET latin1 NOT NULL,
@@ -52,7 +51,6 @@ INSERT INTO `acl_permissions` (`id`, `perm_key`, `perm_name`) VALUES
 -- Table structure for table `acl_roles`
 --
 
-DROP TABLE IF EXISTS `acl_roles`;
 CREATE TABLE IF NOT EXISTS `acl_roles` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(20) CHARACTER SET latin1 NOT NULL,
@@ -74,7 +72,6 @@ INSERT INTO `acl_roles` (`id`, `role_name`) VALUES
 -- Table structure for table `acl_role_perms`
 --
 
-DROP TABLE IF EXISTS `acl_role_perms`;
 CREATE TABLE IF NOT EXISTS `acl_role_perms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) NOT NULL,
@@ -111,7 +108,6 @@ INSERT INTO `acl_role_perms` (`id`, `role_id`, `perm_id`, `value`, `add_date`) V
 -- Table structure for table `acl_user_perms`
 --
 
-DROP TABLE IF EXISTS `acl_user_perms`;
 CREATE TABLE IF NOT EXISTS `acl_user_perms` (
   `id` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
@@ -133,7 +129,6 @@ CREATE TABLE IF NOT EXISTS `acl_user_perms` (
 -- Table structure for table `acl_user_roles`
 --
 
-DROP TABLE IF EXISTS `acl_user_roles`;
 CREATE TABLE IF NOT EXISTS `acl_user_roles` (
   `user_id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL,
@@ -152,7 +147,6 @@ CREATE TABLE IF NOT EXISTS `acl_user_roles` (
 -- Table structure for table `addresses`
 --
 
-DROP TABLE IF EXISTS `addresses`;
 CREATE TABLE IF NOT EXISTS `addresses` (
   `id` int(11) NOT NULL DEFAULT '0',
   `line1` varchar(255) DEFAULT NULL,
@@ -181,7 +175,6 @@ INSERT INTO `addresses` (`id`, `line1`, `line2`, `city`, `state`, `zip`, `plus_f
 -- Table structure for table `array`
 --
 
-DROP TABLE IF EXISTS `array`;
 CREATE TABLE IF NOT EXISTS `array` (
   `array_key` varchar(255) DEFAULT NULL,
   `array_value` longtext
@@ -198,7 +191,6 @@ CREATE TABLE IF NOT EXISTS `array` (
 -- Table structure for table `ar_activity`
 --
 
-DROP TABLE IF EXISTS `ar_activity`;
 CREATE TABLE IF NOT EXISTS `ar_activity` (
   `pid` int(11) NOT NULL,
   `encounter` int(11) NOT NULL,
@@ -231,7 +223,6 @@ CREATE TABLE IF NOT EXISTS `ar_activity` (
 -- Table structure for table `ar_session`
 --
 
-DROP TABLE IF EXISTS `ar_session`;
 CREATE TABLE IF NOT EXISTS `ar_session` (
   `session_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `payer_id` int(11) NOT NULL COMMENT '0=pt else references insurance_companies.id',
@@ -266,7 +257,6 @@ CREATE TABLE IF NOT EXISTS `ar_session` (
 -- Table structure for table `automatic_notification`
 --
 
-DROP TABLE IF EXISTS `automatic_notification`;
 CREATE TABLE IF NOT EXISTS `automatic_notification` (
   `notification_id` int(5) NOT NULL AUTO_INCREMENT,
   `sms_gateway_type` varchar(255) NOT NULL,
@@ -295,7 +285,6 @@ INSERT INTO `automatic_notification` (`notification_id`, `sms_gateway_type`, `ne
 -- Table structure for table `batchcom`
 --
 
-DROP TABLE IF EXISTS `batchcom`;
 CREATE TABLE IF NOT EXISTS `batchcom` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) NOT NULL DEFAULT '0',
@@ -318,7 +307,6 @@ CREATE TABLE IF NOT EXISTS `batchcom` (
 -- Table structure for table `billing`
 --
 
-DROP TABLE IF EXISTS `billing`;
 CREATE TABLE IF NOT EXISTS `billing` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -360,7 +348,6 @@ CREATE TABLE IF NOT EXISTS `billing` (
 -- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -395,7 +382,6 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`) VALUES
 -- Table structure for table `categories_seq`
 --
 
-DROP TABLE IF EXISTS `categories_seq`;
 CREATE TABLE IF NOT EXISTS `categories_seq` (
   `id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -414,7 +400,6 @@ INSERT INTO `categories_seq` (`id`) VALUES
 -- Table structure for table `categories_to_documents`
 --
 
-DROP TABLE IF EXISTS `categories_to_documents`;
 CREATE TABLE IF NOT EXISTS `categories_to_documents` (
   `category_id` int(11) NOT NULL DEFAULT '0',
   `document_id` int(11) NOT NULL DEFAULT '0',
@@ -432,7 +417,6 @@ CREATE TABLE IF NOT EXISTS `categories_to_documents` (
 -- Table structure for table `chart_tracker`
 --
 
-DROP TABLE IF EXISTS `chart_tracker`;
 CREATE TABLE IF NOT EXISTS `chart_tracker` (
   `ct_pid` int(11) NOT NULL,
   `ct_when` datetime NOT NULL,
@@ -452,7 +436,6 @@ CREATE TABLE IF NOT EXISTS `chart_tracker` (
 -- Table structure for table `claims`
 --
 
-DROP TABLE IF EXISTS `claims`;
 CREATE TABLE IF NOT EXISTS `claims` (
   `patient_id` int(11) NOT NULL,
   `encounter_id` int(11) NOT NULL,
@@ -480,7 +463,6 @@ CREATE TABLE IF NOT EXISTS `claims` (
 -- Table structure for table `codes`
 --
 
-DROP TABLE IF EXISTS `codes`;
 CREATE TABLE IF NOT EXISTS `codes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code_text` varchar(255) NOT NULL DEFAULT '',
@@ -511,7 +493,6 @@ CREATE TABLE IF NOT EXISTS `codes` (
 -- Table structure for table `code_types`
 --
 
-DROP TABLE IF EXISTS `code_types`;
 CREATE TABLE IF NOT EXISTS `code_types` (
   `ct_key` varchar(15) NOT NULL COMMENT 'short alphanumeric name',
   `ct_id` int(11) NOT NULL COMMENT 'numeric identifier',
@@ -542,7 +523,6 @@ INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_
 -- Table structure for table `config`
 --
 
-DROP TABLE IF EXISTS `config`;
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -566,7 +546,6 @@ CREATE TABLE IF NOT EXISTS `config` (
 -- Table structure for table `config_seq`
 --
 
-DROP TABLE IF EXISTS `config_seq`;
 CREATE TABLE IF NOT EXISTS `config_seq` (
   `id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -585,7 +564,6 @@ INSERT INTO `config_seq` (`id`) VALUES
 -- Table structure for table `documents`
 --
 
-DROP TABLE IF EXISTS `documents`;
 CREATE TABLE IF NOT EXISTS `documents` (
   `id` int(11) NOT NULL DEFAULT '0',
   `type` enum('file_url','blob','web_url') DEFAULT NULL,
@@ -616,7 +594,6 @@ CREATE TABLE IF NOT EXISTS `documents` (
 -- Table structure for table `drugs`
 --
 
-DROP TABLE IF EXISTS `drugs`;
 CREATE TABLE IF NOT EXISTS `drugs` (
   `drug_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -649,7 +626,6 @@ CREATE TABLE IF NOT EXISTS `drugs` (
 -- Table structure for table `drug_inventory`
 --
 
-DROP TABLE IF EXISTS `drug_inventory`;
 CREATE TABLE IF NOT EXISTS `drug_inventory` (
   `inventory_id` int(11) NOT NULL AUTO_INCREMENT,
   `drug_id` int(11) NOT NULL,
@@ -678,7 +654,6 @@ CREATE TABLE IF NOT EXISTS `drug_inventory` (
 -- Table structure for table `drug_sales`
 --
 
-DROP TABLE IF EXISTS `drug_sales`;
 CREATE TABLE IF NOT EXISTS `drug_sales` (
   `sale_id` int(11) NOT NULL AUTO_INCREMENT,
   `drug_id` int(11) NOT NULL,
@@ -708,7 +683,6 @@ CREATE TABLE IF NOT EXISTS `drug_sales` (
 -- Table structure for table `drug_templates`
 --
 
-DROP TABLE IF EXISTS `drug_templates`;
 CREATE TABLE IF NOT EXISTS `drug_templates` (
   `drug_id` int(11) NOT NULL,
   `selector` varchar(255) NOT NULL DEFAULT '',
@@ -731,7 +705,6 @@ CREATE TABLE IF NOT EXISTS `drug_templates` (
 -- Table structure for table `eligibility_response`
 --
 
-DROP TABLE IF EXISTS `eligibility_response`;
 CREATE TABLE IF NOT EXISTS `eligibility_response` (
   `response_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `response_description` varchar(255) DEFAULT NULL,
@@ -753,7 +726,6 @@ CREATE TABLE IF NOT EXISTS `eligibility_response` (
 -- Table structure for table `eligibility_verification`
 --
 
-DROP TABLE IF EXISTS `eligibility_verification`;
 CREATE TABLE IF NOT EXISTS `eligibility_verification` (
   `verification_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `response_id` bigint(20) DEFAULT NULL,
@@ -778,7 +750,6 @@ CREATE TABLE IF NOT EXISTS `eligibility_verification` (
 -- Table structure for table `employer_data`
 --
 
-DROP TABLE IF EXISTS `employer_data`;
 CREATE TABLE IF NOT EXISTS `employer_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -807,7 +778,6 @@ INSERT INTO `employer_data` (`id`, `name`, `street`, `postal_code`, `city`, `sta
 -- Table structure for table `extended_log`
 --
 
-DROP TABLE IF EXISTS `extended_log`;
 CREATE TABLE IF NOT EXISTS `extended_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -830,7 +800,6 @@ CREATE TABLE IF NOT EXISTS `extended_log` (
 -- Table structure for table `facility`
 --
 
-DROP TABLE IF EXISTS `facility`;
 CREATE TABLE IF NOT EXISTS `facility` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -867,7 +836,6 @@ INSERT INTO `facility` (`id`, `name`, `phone`, `fax`, `street`, `city`, `state`,
 -- Table structure for table `fee_sheet_options`
 --
 
-DROP TABLE IF EXISTS `fee_sheet_options`;
 CREATE TABLE IF NOT EXISTS `fee_sheet_options` (
   `fs_category` varchar(63) DEFAULT NULL,
   `fs_option` varchar(63) DEFAULT NULL,
@@ -896,7 +864,6 @@ INSERT INTO `fee_sheet_options` (`fs_category`, `fs_option`, `fs_codes`) VALUES
 -- Table structure for table `forms`
 --
 
-DROP TABLE IF EXISTS `forms`;
 CREATE TABLE IF NOT EXISTS `forms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -923,7 +890,6 @@ CREATE TABLE IF NOT EXISTS `forms` (
 -- Table structure for table `form_dictation`
 --
 
-DROP TABLE IF EXISTS `form_dictation`;
 CREATE TABLE IF NOT EXISTS `form_dictation` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -948,7 +914,6 @@ CREATE TABLE IF NOT EXISTS `form_dictation` (
 -- Table structure for table `form_encounter`
 --
 
-DROP TABLE IF EXISTS `form_encounter`;
 CREATE TABLE IF NOT EXISTS `form_encounter` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -984,7 +949,6 @@ CREATE TABLE IF NOT EXISTS `form_encounter` (
 -- Table structure for table `form_misc_billing_options`
 --
 
-DROP TABLE IF EXISTS `form_misc_billing_options`;
 CREATE TABLE IF NOT EXISTS `form_misc_billing_options` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -1024,7 +988,6 @@ CREATE TABLE IF NOT EXISTS `form_misc_billing_options` (
 -- Table structure for table `form_reviewofs`
 --
 
-DROP TABLE IF EXISTS `form_reviewofs`;
 CREATE TABLE IF NOT EXISTS `form_reviewofs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -1155,7 +1118,6 @@ CREATE TABLE IF NOT EXISTS `form_reviewofs` (
 -- Table structure for table `form_ros`
 --
 
-DROP TABLE IF EXISTS `form_ros`;
 CREATE TABLE IF NOT EXISTS `form_ros` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
@@ -1313,7 +1275,6 @@ CREATE TABLE IF NOT EXISTS `form_ros` (
 -- Table structure for table `form_soap`
 --
 
-DROP TABLE IF EXISTS `form_soap`;
 CREATE TABLE IF NOT EXISTS `form_soap` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -1340,7 +1301,6 @@ CREATE TABLE IF NOT EXISTS `form_soap` (
 -- Table structure for table `form_vitals`
 --
 
-DROP TABLE IF EXISTS `form_vitals`;
 CREATE TABLE IF NOT EXISTS `form_vitals` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -1377,7 +1337,6 @@ CREATE TABLE IF NOT EXISTS `form_vitals` (
 -- Table structure for table `geo_country_reference`
 --
 
-DROP TABLE IF EXISTS `geo_country_reference`;
 CREATE TABLE IF NOT EXISTS `geo_country_reference` (
   `countries_id` int(5) NOT NULL AUTO_INCREMENT,
   `countries_name` varchar(64) DEFAULT NULL,
@@ -1638,7 +1597,6 @@ INSERT INTO `geo_country_reference` (`countries_id`, `countries_name`, `countrie
 -- Table structure for table `geo_zone_reference`
 --
 
-DROP TABLE IF EXISTS `geo_zone_reference`;
 CREATE TABLE IF NOT EXISTS `geo_zone_reference` (
   `zone_id` int(5) NOT NULL AUTO_INCREMENT,
   `zone_country_id` int(5) NOT NULL DEFAULT '0',
@@ -1741,7 +1699,6 @@ INSERT INTO `geo_zone_reference` (`zone_id`, `zone_country_id`, `zone_code`, `zo
 -- Table structure for table `globals`
 --
 
-DROP TABLE IF EXISTS `globals`;
 CREATE TABLE IF NOT EXISTS `globals` (
   `gl_name` varchar(63) NOT NULL,
   `gl_index` int(11) NOT NULL DEFAULT '0',
@@ -1874,7 +1831,6 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 -- Table structure for table `gprelations`
 --
 
-DROP TABLE IF EXISTS `gprelations`;
 CREATE TABLE IF NOT EXISTS `gprelations` (
   `type1` int(2) NOT NULL,
   `id1` bigint(20) NOT NULL,
@@ -1895,7 +1851,6 @@ CREATE TABLE IF NOT EXISTS `gprelations` (
 -- Table structure for table `groups`
 --
 
-DROP TABLE IF EXISTS `groups`;
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` longtext,
@@ -1918,7 +1873,6 @@ INSERT INTO `groups` (`id`, `name`, `user`) VALUES
 -- Table structure for table `history_data`
 --
 
-DROP TABLE IF EXISTS `history_data`;
 CREATE TABLE IF NOT EXISTS `history_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `coffee` longtext,
@@ -2022,7 +1976,6 @@ INSERT INTO `history_data` (`id`, `coffee`, `tobacco`, `alcohol`, `sleep_pattern
 -- Table structure for table `immunizations`
 --
 
-DROP TABLE IF EXISTS `immunizations`;
 CREATE TABLE IF NOT EXISTS `immunizations` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) DEFAULT NULL,
@@ -2053,7 +2006,6 @@ CREATE TABLE IF NOT EXISTS `immunizations` (
 -- Table structure for table `insurance_companies`
 --
 
-DROP TABLE IF EXISTS `insurance_companies`;
 CREATE TABLE IF NOT EXISTS `insurance_companies` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -2079,7 +2031,6 @@ INSERT INTO `insurance_companies` (`id`, `name`, `attn`, `cms_id`, `freeb_type`,
 -- Table structure for table `insurance_data`
 --
 
-DROP TABLE IF EXISTS `insurance_data`;
 CREATE TABLE IF NOT EXISTS `insurance_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` enum('primary','secondary','tertiary') DEFAULT NULL,
@@ -2132,7 +2083,6 @@ INSERT INTO `insurance_data` (`id`, `type`, `provider`, `plan_name`, `policy_num
 -- Table structure for table `insurance_numbers`
 --
 
-DROP TABLE IF EXISTS `insurance_numbers`;
 CREATE TABLE IF NOT EXISTS `insurance_numbers` (
   `id` int(11) NOT NULL DEFAULT '0',
   `provider_id` int(11) NOT NULL DEFAULT '0',
@@ -2156,7 +2106,6 @@ CREATE TABLE IF NOT EXISTS `insurance_numbers` (
 -- Table structure for table `integration_mapping`
 --
 
-DROP TABLE IF EXISTS `integration_mapping`;
 CREATE TABLE IF NOT EXISTS `integration_mapping` (
   `id` int(11) NOT NULL DEFAULT '0',
   `foreign_id` int(11) NOT NULL DEFAULT '0',
@@ -2178,7 +2127,6 @@ CREATE TABLE IF NOT EXISTS `integration_mapping` (
 -- Table structure for table `issue_encounter`
 --
 
-DROP TABLE IF EXISTS `issue_encounter`;
 CREATE TABLE IF NOT EXISTS `issue_encounter` (
   `pid` int(11) NOT NULL,
   `list_id` int(11) NOT NULL,
@@ -2198,7 +2146,6 @@ CREATE TABLE IF NOT EXISTS `issue_encounter` (
 -- Table structure for table `lang_constants`
 --
 
-DROP TABLE IF EXISTS `lang_constants`;
 CREATE TABLE IF NOT EXISTS `lang_constants` (
   `cons_id` int(11) NOT NULL AUTO_INCREMENT,
   `constant_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
@@ -6588,7 +6535,6 @@ INSERT INTO `lang_constants` (`cons_id`, `constant_name`) VALUES
 -- Table structure for table `lang_custom`
 --
 
-DROP TABLE IF EXISTS `lang_custom`;
 CREATE TABLE IF NOT EXISTS `lang_custom` (
   `lang_description` varchar(100) NOT NULL DEFAULT '',
   `lang_code` char(2) NOT NULL DEFAULT '',
@@ -6607,7 +6553,6 @@ CREATE TABLE IF NOT EXISTS `lang_custom` (
 -- Table structure for table `lang_definitions`
 --
 
-DROP TABLE IF EXISTS `lang_definitions`;
 CREATE TABLE IF NOT EXISTS `lang_definitions` (
   `def_id` int(11) NOT NULL AUTO_INCREMENT,
   `cons_id` int(11) NOT NULL DEFAULT '0',
@@ -46827,7 +46772,6 @@ INSERT INTO `lang_definitions` (`def_id`, `cons_id`, `lang_id`, `definition`) VA
 -- Table structure for table `lang_languages`
 --
 
-DROP TABLE IF EXISTS `lang_languages`;
 CREATE TABLE IF NOT EXISTS `lang_languages` (
   `lang_id` int(11) NOT NULL AUTO_INCREMENT,
   `lang_code` char(2) NOT NULL DEFAULT '',
@@ -46869,7 +46813,6 @@ INSERT INTO `lang_languages` (`lang_id`, `lang_code`, `lang_description`) VALUES
 -- Table structure for table `layout_options`
 --
 
-DROP TABLE IF EXISTS `layout_options`;
 CREATE TABLE IF NOT EXISTS `layout_options` (
   `form_id` varchar(31) NOT NULL DEFAULT '',
   `field_id` varchar(31) NOT NULL DEFAULT '',
@@ -47026,7 +46969,6 @@ INSERT INTO `layout_options` (`form_id`, `field_id`, `group_name`, `title`, `seq
 -- Table structure for table `lbf_data`
 --
 
-DROP TABLE IF EXISTS `lbf_data`;
 CREATE TABLE IF NOT EXISTS `lbf_data` (
   `form_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'references forms.form_id',
   `field_id` varchar(31) NOT NULL COMMENT 'references layout_options.field_id',
@@ -47045,7 +46987,6 @@ CREATE TABLE IF NOT EXISTS `lbf_data` (
 -- Table structure for table `lists`
 --
 
-DROP TABLE IF EXISTS `lists`;
 CREATE TABLE IF NOT EXISTS `lists` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -47085,7 +47026,6 @@ CREATE TABLE IF NOT EXISTS `lists` (
 -- Table structure for table `list_options`
 --
 
-DROP TABLE IF EXISTS `list_options`;
 CREATE TABLE IF NOT EXISTS `list_options` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `list_id` varchar(31) NOT NULL DEFAULT '',
@@ -47651,13 +47591,12 @@ INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_de
 -- Table structure for table `log`
 --
 
-DROP TABLE IF EXISTS `log`;
 CREATE TABLE IF NOT EXISTS `log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
   `event` varchar(255) DEFAULT NULL,
   `user` varchar(255) DEFAULT NULL,
-  `groupname` varchar(255) DEFAULT NULL,
+  `facility` varchar(255) NOT NULL,
   `comments` longtext,
   `user_notes` longtext,
   `patient_id` bigint(20) DEFAULT NULL,
@@ -47671,18 +47610,6 @@ CREATE TABLE IF NOT EXISTS `log` (
 -- Dumping data for table `log`
 --
 
-INSERT INTO `log` (`id`, `date`, `event`, `user`, `groupname`, `comments`, `user_notes`, `patient_id`, `success`, `checksum`, `crt_user`) VALUES
-(198, '2011-02-20 20:13:39', 'login', NULL, NULL, 'insufficient data sent', NULL, NULL, 0, NULL, NULL),
-(199, '2011-02-20 20:13:40', 'login', NULL, NULL, 'insufficient data sent', NULL, NULL, 0, NULL, NULL),
-(200, '2011-02-20 20:13:40', 'login', NULL, NULL, 'insufficient data sent', NULL, NULL, 0, NULL, NULL),
-(201, '2011-02-20 22:51:21', 'login', 'admin', 'Default', 'success: 127.0.0.1', NULL, NULL, 1, NULL, NULL),
-(202, '2011-02-22 19:29:20', 'login', 'vela1606', 'Default', 'failure: ::1. user password mismatch (pass)', NULL, NULL, 0, NULL, NULL),
-(203, '2011-02-25 23:27:52', 'login', 'admin', 'Default', 'failure: ::1. user password mismatch (PASS)', NULL, NULL, 0, NULL, NULL),
-(197, '2011-02-20 20:13:38', 'login', 'admin', 'Default', 'success: 127.0.0.1', NULL, NULL, 1, NULL, NULL),
-(195, '2011-02-20 20:10:53', 'login', 'admin', 'Default', 'failure: 127.0.0.1. user not active or not found in users table', NULL, NULL, 0, NULL, NULL),
-(196, '2011-02-20 20:11:49', 'login', 'admin', 'Default', 'failure: 127.0.0.1. user not active or not found in users table', NULL, NULL, 0, NULL, NULL),
-(194, '2011-02-20 20:10:40', 'login', 'vela1606', 'Default', 'failure: 127.0.0.1. user not active or not found in users table', NULL, NULL, 0, NULL, NULL),
-(193, '2011-02-20 19:38:43', 'login', 'vela1606', 'Default', 'failure: 127.0.0.1. user not active or not found in users table', NULL, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -47690,7 +47617,6 @@ INSERT INTO `log` (`id`, `date`, `event`, `user`, `groupname`, `comments`, `user
 -- Table structure for table `notes`
 --
 
-DROP TABLE IF EXISTS `notes`;
 CREATE TABLE IF NOT EXISTS `notes` (
   `id` int(11) NOT NULL DEFAULT '0',
   `foreign_id` int(11) NOT NULL DEFAULT '0',
@@ -47715,7 +47641,6 @@ CREATE TABLE IF NOT EXISTS `notes` (
 -- Table structure for table `notification_log`
 --
 
-DROP TABLE IF EXISTS `notification_log`;
 CREATE TABLE IF NOT EXISTS `notification_log` (
   `iLogId` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(7) NOT NULL,
@@ -47746,7 +47671,6 @@ CREATE TABLE IF NOT EXISTS `notification_log` (
 -- Table structure for table `notification_settings`
 --
 
-DROP TABLE IF EXISTS `notification_settings`;
 CREATE TABLE IF NOT EXISTS `notification_settings` (
   `SettingsId` int(3) NOT NULL AUTO_INCREMENT,
   `Send_SMS_Before_Hours` int(3) NOT NULL,
@@ -47771,7 +47695,6 @@ INSERT INTO `notification_settings` (`SettingsId`, `Send_SMS_Before_Hours`, `Sen
 -- Table structure for table `onotes`
 --
 
-DROP TABLE IF EXISTS `onotes`;
 CREATE TABLE IF NOT EXISTS `onotes` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -47793,7 +47716,6 @@ CREATE TABLE IF NOT EXISTS `onotes` (
 -- Table structure for table `openemr_modules`
 --
 
-DROP TABLE IF EXISTS `openemr_modules`;
 CREATE TABLE IF NOT EXISTS `openemr_modules` (
   `pn_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pn_name` varchar(64) DEFAULT NULL,
@@ -47822,7 +47744,6 @@ INSERT INTO `openemr_modules` (`pn_id`, `pn_name`, `pn_type`, `pn_displayname`, 
 -- Table structure for table `openemr_module_vars`
 --
 
-DROP TABLE IF EXISTS `openemr_module_vars`;
 CREATE TABLE IF NOT EXISTS `openemr_module_vars` (
   `pn_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pn_modname` varchar(64) DEFAULT NULL,
@@ -47864,7 +47785,6 @@ INSERT INTO `openemr_module_vars` (`pn_id`, `pn_modname`, `pn_name`, `pn_value`)
 -- Table structure for table `openemr_postcalendar_categories`
 --
 
-DROP TABLE IF EXISTS `openemr_postcalendar_categories`;
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_categories` (
   `pc_catid` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pc_catname` varchar(100) DEFAULT NULL,
@@ -47905,7 +47825,6 @@ INSERT INTO `openemr_postcalendar_categories` (`pc_catid`, `pc_catname`, `pc_cat
 -- Table structure for table `openemr_postcalendar_events`
 --
 
-DROP TABLE IF EXISTS `openemr_postcalendar_events`;
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_events` (
   `pc_eid` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pc_catid` int(11) NOT NULL DEFAULT '0',
@@ -47961,7 +47880,6 @@ INSERT INTO `openemr_postcalendar_events` (`pc_eid`, `pc_catid`, `pc_multiple`, 
 -- Table structure for table `openemr_postcalendar_limits`
 --
 
-DROP TABLE IF EXISTS `openemr_postcalendar_limits`;
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_limits` (
   `pc_limitid` int(11) NOT NULL AUTO_INCREMENT,
   `pc_catid` int(11) NOT NULL DEFAULT '0',
@@ -47982,7 +47900,6 @@ CREATE TABLE IF NOT EXISTS `openemr_postcalendar_limits` (
 -- Table structure for table `openemr_postcalendar_topics`
 --
 
-DROP TABLE IF EXISTS `openemr_postcalendar_topics`;
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_topics` (
   `pc_catid` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pc_catname` varchar(100) DEFAULT NULL,
@@ -48003,7 +47920,6 @@ CREATE TABLE IF NOT EXISTS `openemr_postcalendar_topics` (
 -- Table structure for table `openemr_session_info`
 --
 
-DROP TABLE IF EXISTS `openemr_session_info`;
 CREATE TABLE IF NOT EXISTS `openemr_session_info` (
   `pn_sessid` varchar(32) NOT NULL DEFAULT '',
   `pn_ipaddr` varchar(20) DEFAULT NULL,
@@ -48036,7 +47952,6 @@ INSERT INTO `openemr_session_info` (`pn_sessid`, `pn_ipaddr`, `pn_firstused`, `p
 -- Table structure for table `patient_data`
 --
 
-DROP TABLE IF EXISTS `patient_data`;
 CREATE TABLE IF NOT EXISTS `patient_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
@@ -48135,7 +48050,6 @@ INSERT INTO `patient_data` (`id`, `title`, `language`, `financial`, `fname`, `ln
 -- Table structure for table `payments`
 --
 
-DROP TABLE IF EXISTS `payments`;
 CREATE TABLE IF NOT EXISTS `payments` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pid` bigint(20) NOT NULL DEFAULT '0',
@@ -48163,7 +48077,6 @@ CREATE TABLE IF NOT EXISTS `payments` (
 -- Table structure for table `pharmacies`
 --
 
-DROP TABLE IF EXISTS `pharmacies`;
 CREATE TABLE IF NOT EXISTS `pharmacies` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -48185,7 +48098,6 @@ INSERT INTO `pharmacies` (`id`, `name`, `transmit_method`, `email`) VALUES
 -- Table structure for table `phone_numbers`
 --
 
-DROP TABLE IF EXISTS `phone_numbers`;
 CREATE TABLE IF NOT EXISTS `phone_numbers` (
   `id` int(11) NOT NULL DEFAULT '0',
   `country_code` varchar(5) DEFAULT NULL,
@@ -48213,7 +48125,6 @@ INSERT INTO `phone_numbers` (`id`, `country_code`, `area_code`, `prefix`, `numbe
 -- Table structure for table `pma_bookmark`
 --
 
-DROP TABLE IF EXISTS `pma_bookmark`;
 CREATE TABLE IF NOT EXISTS `pma_bookmark` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dbase` varchar(255) DEFAULT NULL,
@@ -48239,7 +48150,6 @@ INSERT INTO `pma_bookmark` (`id`, `dbase`, `user`, `label`, `query`) VALUES
 -- Table structure for table `pma_column_info`
 --
 
-DROP TABLE IF EXISTS `pma_column_info`;
 CREATE TABLE IF NOT EXISTS `pma_column_info` (
   `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
   `db_name` varchar(64) DEFAULT NULL,
@@ -48264,7 +48174,6 @@ CREATE TABLE IF NOT EXISTS `pma_column_info` (
 -- Table structure for table `pma_history`
 --
 
-DROP TABLE IF EXISTS `pma_history`;
 CREATE TABLE IF NOT EXISTS `pma_history` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(64) DEFAULT NULL,
@@ -48287,7 +48196,6 @@ CREATE TABLE IF NOT EXISTS `pma_history` (
 -- Table structure for table `pma_pdf_pages`
 --
 
-DROP TABLE IF EXISTS `pma_pdf_pages`;
 CREATE TABLE IF NOT EXISTS `pma_pdf_pages` (
   `db_name` varchar(64) DEFAULT NULL,
   `page_nr` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -48307,7 +48215,6 @@ CREATE TABLE IF NOT EXISTS `pma_pdf_pages` (
 -- Table structure for table `pma_relation`
 --
 
-DROP TABLE IF EXISTS `pma_relation`;
 CREATE TABLE IF NOT EXISTS `pma_relation` (
   `master_db` varchar(64) NOT NULL DEFAULT '',
   `master_table` varchar(64) NOT NULL DEFAULT '',
@@ -48330,7 +48237,6 @@ CREATE TABLE IF NOT EXISTS `pma_relation` (
 -- Table structure for table `pma_table_coords`
 --
 
-DROP TABLE IF EXISTS `pma_table_coords`;
 CREATE TABLE IF NOT EXISTS `pma_table_coords` (
   `db_name` varchar(64) NOT NULL DEFAULT '',
   `table_name` varchar(64) NOT NULL DEFAULT '',
@@ -48351,7 +48257,6 @@ CREATE TABLE IF NOT EXISTS `pma_table_coords` (
 -- Table structure for table `pma_table_info`
 --
 
-DROP TABLE IF EXISTS `pma_table_info`;
 CREATE TABLE IF NOT EXISTS `pma_table_info` (
   `db_name` varchar(64) NOT NULL DEFAULT '',
   `table_name` varchar(64) NOT NULL DEFAULT '',
@@ -48370,7 +48275,6 @@ CREATE TABLE IF NOT EXISTS `pma_table_info` (
 -- Table structure for table `pnotes`
 --
 
-DROP TABLE IF EXISTS `pnotes`;
 CREATE TABLE IF NOT EXISTS `pnotes` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -48400,7 +48304,6 @@ CREATE TABLE IF NOT EXISTS `pnotes` (
 -- Table structure for table `prescriptions`
 --
 
-DROP TABLE IF EXISTS `prescriptions`;
 CREATE TABLE IF NOT EXISTS `prescriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) DEFAULT NULL,
@@ -48440,7 +48343,6 @@ CREATE TABLE IF NOT EXISTS `prescriptions` (
 -- Table structure for table `prices`
 --
 
-DROP TABLE IF EXISTS `prices`;
 CREATE TABLE IF NOT EXISTS `prices` (
   `pr_id` varchar(11) NOT NULL DEFAULT '',
   `pr_selector` varchar(255) NOT NULL DEFAULT '' COMMENT 'template selector for drugs, empty for codes',
@@ -48460,7 +48362,6 @@ CREATE TABLE IF NOT EXISTS `prices` (
 -- Table structure for table `procedure_order`
 --
 
-DROP TABLE IF EXISTS `procedure_order`;
 CREATE TABLE IF NOT EXISTS `procedure_order` (
   `procedure_order_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `procedure_type_id` bigint(20) NOT NULL COMMENT 'references procedure_type.procedure_type_id',
@@ -48489,7 +48390,6 @@ CREATE TABLE IF NOT EXISTS `procedure_order` (
 -- Table structure for table `procedure_report`
 --
 
-DROP TABLE IF EXISTS `procedure_report`;
 CREATE TABLE IF NOT EXISTS `procedure_report` (
   `procedure_report_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `procedure_order_id` bigint(20) DEFAULT NULL COMMENT 'references procedure_order.procedure_order_id',
@@ -48514,7 +48414,6 @@ CREATE TABLE IF NOT EXISTS `procedure_report` (
 -- Table structure for table `procedure_result`
 --
 
-DROP TABLE IF EXISTS `procedure_result`;
 CREATE TABLE IF NOT EXISTS `procedure_result` (
   `procedure_result_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `procedure_report_id` bigint(20) NOT NULL COMMENT 'references procedure_report.procedure_report_id',
@@ -48543,7 +48442,6 @@ CREATE TABLE IF NOT EXISTS `procedure_result` (
 -- Table structure for table `procedure_type`
 --
 
-DROP TABLE IF EXISTS `procedure_type`;
 CREATE TABLE IF NOT EXISTS `procedure_type` (
   `procedure_type_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `parent` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references procedure_type.procedure_type_id',
@@ -48576,7 +48474,6 @@ CREATE TABLE IF NOT EXISTS `procedure_type` (
 -- Table structure for table `registry`
 --
 
-DROP TABLE IF EXISTS `registry`;
 CREATE TABLE IF NOT EXISTS `registry` (
   `name` varchar(255) DEFAULT NULL,
   `state` tinyint(4) DEFAULT NULL,
@@ -48612,7 +48509,6 @@ INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackag
 -- Table structure for table `sequences`
 --
 
-DROP TABLE IF EXISTS `sequences`;
 CREATE TABLE IF NOT EXISTS `sequences` (
   `id` int(11) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -48630,7 +48526,6 @@ INSERT INTO `sequences` (`id`) VALUES
 -- Table structure for table `syndromic_surveillance`
 --
 
-DROP TABLE IF EXISTS `syndromic_surveillance`;
 CREATE TABLE IF NOT EXISTS `syndromic_surveillance` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `lists_id` bigint(20) NOT NULL,
@@ -48651,7 +48546,6 @@ CREATE TABLE IF NOT EXISTS `syndromic_surveillance` (
 -- Table structure for table `transactions`
 --
 
-DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -48694,7 +48588,6 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
@@ -48766,7 +48659,6 @@ INSERT INTO `users` (`id`, `username`, `password`, `authorized`, `info`, `source
 -- Table structure for table `users_facility`
 --
 
-DROP TABLE IF EXISTS `users_facility`;
 CREATE TABLE IF NOT EXISTS `users_facility` (
   `tablename` varchar(64) NOT NULL,
   `table_id` int(11) NOT NULL,
@@ -48785,7 +48677,6 @@ CREATE TABLE IF NOT EXISTS `users_facility` (
 -- Table structure for table `user_settings`
 --
 
-DROP TABLE IF EXISTS `user_settings`;
 CREATE TABLE IF NOT EXISTS `user_settings` (
   `setting_user` bigint(20) NOT NULL DEFAULT '0',
   `setting_label` varchar(63) NOT NULL,
@@ -48822,7 +48713,6 @@ INSERT INTO `user_settings` (`setting_user`, `setting_label`, `setting_value`) V
 -- Table structure for table `version`
 --
 
-DROP TABLE IF EXISTS `version`;
 CREATE TABLE IF NOT EXISTS `version` (
   `v_major` int(11) NOT NULL DEFAULT '0',
   `v_minor` int(11) NOT NULL DEFAULT '0',
@@ -48844,7 +48734,6 @@ INSERT INTO `version` (`v_major`, `v_minor`, `v_patch`, `v_tag`, `v_database`) V
 -- Table structure for table `x12_partners`
 --
 
-DROP TABLE IF EXISTS `x12_partners`;
 CREATE TABLE IF NOT EXISTS `x12_partners` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
