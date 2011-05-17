@@ -108,7 +108,7 @@ class dbHelper {
 			$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
 			$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
 			$stmt->bindParam(':checksum', crc32($this->sql_statement), PDO::PARAM_STR);
-			$stmt->bindParam(':facility', $_SESSION['site']['site'], PDO::PARAM_STR);
+			$stmt->bindParam(':facility', $_SESSION['site']['facility'], PDO::PARAM_STR);
 			$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
 			$stmt->execute();
 		}
