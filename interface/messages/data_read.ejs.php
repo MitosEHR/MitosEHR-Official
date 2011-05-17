@@ -27,11 +27,18 @@ require_once("../../repository/dataExchange/dataExchange.inc.php");
 $mitos_db = new dbHelper();
 
 // catch the total records
-$sql = "SELECT count(*) as total FROM
-			((pnotes JOIN users ON pnotes.user = users.username) JOIN patient_data ON pnotes.pid = patient_data.pid)
+$sql = "SELECT COUNT(*) as total FROM
+  			pnotes
+		LEFT OUTER JOIN 
+			patient_data
+		ON 
+			pnotes.pid = patient_data.id
+		LEFT OUTER JOIN 
+			users
+		ON 
+			pnotes.user_id = users.id
         WHERE
-			pnotes.message_status != 'Done' AND
-			pnotes.deleted != '1'";
+			pnotes.deleted = '0'";
 $mitos_db->setSQL($sql);
 $urow = $mitos_db->execStatement();
 $total = $urow[0]['total'];
@@ -40,14 +47,23 @@ $total = $urow[0]['total'];
 $start = (!$_REQUEST["start"])? 0 : $_REQUEST["start"];
 $count = (!$_REQUEST["limit"])? 10 : $_REQUEST["limit"];
 
-$sql = "SELECT
-			*
+$sql = "SELECT 
+			pnotes.*
+     		, users.fname AS username_fname
+     		, users.mname AS username_mname
+     		, users.lname AS username_lname
+     		, patient_data.fname AS patient_fname
+     		, patient_data.lname AS patient_lname
 		FROM
   			pnotes
 		LEFT OUTER JOIN 
 			patient_data
 		ON 
 			pnotes.pid = patient_data.id
+		LEFT OUTER JOIN 
+			users
+		ON 
+			pnotes.user_id = users.id
         WHERE
 			pnotes.deleted = '0'
 		ORDER BY
@@ -56,31 +72,35 @@ $sql = "SELECT
 
 $mitos_db->setSQL($sql);
 foreach ($mitos_db->execStatement() as $myrow) {
-	$name = dataEncode( $myrow['user'] );
-	$name = dataEncode( $myrow['users_lname'] );
 	$p_body = str_replace(chr(10), '<br>', dataEncode( $myrow['body'] ));
 	
 	if ($myrow['fname']) {
-		$patient = dataEncode( $myrow['fname'] ) . ', ' . dataEncode( $myrow['lname'] ); 
+		$patient = dataEncode( $myrow['patient_fname'] ) . ', ' . dataEncode( $myrow['patient_lname'] ); 
 	} else {
-		$patient = dataEncode( $myrow['fname'] );
+		$patient = dataEncode( $myrow['patient_fname'] );
+	}
+
+	if ($myrow['username_fname']) {
+		$user = dataEncode( $myrow['username_fname'] ) . ', ' . dataEncode( $myrow['username_lname'] ); 
+	} else {
+		$user = dataEncode( $myrow['username_lname'] );
 	}
 	
 	// build the message
 	$buff .= '{';
-	$buff .= ' "id: "'				. dataEncode( $myrow['id'] ) . '",';
-	$buff .= ' "date: "'			. dataEncode( $myrow['date'] ) . '",';
-	$buff .= ' "body: "'			. dataEncode( $myrow['body'] ) . '",';
-	$buff .= ' "pid: "'				. dataEncode( $myrow['pid'] ) . '",';
-	$buff .= ' "patient: "'			. $patient . '",';
-	$buff .= ' "user_id: "'			. dataEncode( $myrow['user_id'] ) . '",' ;
-	$buff .= ' "facility_id: "'		. dataEncode( $myrow['facility_id'] ) . '",';
-	$buff .= ' "activity: "'		. dataEncode( $myrow['activity'] ) . '",';
-	$buff .= ' "authorized: "'		. dataEncode( $myrow['authorized'] ) . '",';
-	$buff .= ' "message_status: "'	. dataEncode( $myrow['message_status'] ) . '",';
-	$buff .= ' "reply_id: "'		. dataEncode( $myrow['reply_id'] ) . '",';
-	$buff .= ' "note_type: "'		. dataEncode( $myrow['note_type'] ) . '",';
-	$buff .= ' "assigned_to: "'		. dataEncode( $myrow['assigned_to'] ) . '"},' . chr(13);
+	$buff .= ' id: "'				. dataEncode( $myrow['id'] ) . '",';
+	$buff .= ' date: "'				. dataEncode( $myrow['date'] ) . '",';
+	$buff .= ' body: "'				. dataEncode( $myrow['body'] ) . '",';
+	$buff .= ' pid: "'				. dataEncode( $myrow['pid'] ) . '",';
+	$buff .= ' patient: "'			. $patient . '",';
+	$buff .= ' user: "'				. $user . '",' ;
+	$buff .= ' facility_id: "'		. dataEncode( $myrow['facility_id'] ) . '",';
+	$buff .= ' activity: "'			. dataEncode( $myrow['activity'] ) . '",';
+	$buff .= ' authorized: "'		. dataEncode( $myrow['authorized'] ) . '",';
+	$buff .= ' message_status: "'	. dataEncode( $myrow['message_status'] ) . '",';
+	$buff .= ' reply_id: "'			. dataEncode( $myrow['reply_id'] ) . '",';
+	$buff .= ' note_type: "'		. dataEncode( $myrow['note_type'] ) . '",';
+	$buff .= ' assigned_to: "'		. dataEncode( $myrow['assigned_to'] ) . '"},' . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.

@@ -48,9 +48,9 @@ $data = json_decode ( $_POST['row'] );
 $sql = "INSERT INTO 
 			pnotes
 		SET
-			body = '" 			. dataEncode( $data[0]->body ) . "', " . "
-			pid = '"			. dataEncode( $data[0]->pid ) . "', " . "
-			user_id = '" 		. dataEncode( $data[0]->user_id ) . "', " . "
+			body = '" 			. $data[0]->body . "', " . "
+			pid = '"			. $_SESSION['patient']['id'] . "', " . "
+			user_id = '" 		. $_SESSION['user']['id'] . "', " . "
 			facility_id = '" 	. $_SESSION['site']['facility'] . "', " . "
 			activity = '" 		. dataEncode( $data[0]->activity) . "', " . "
 			authorized = '" 	. dataEncode( $data[0]->authorized) . "', " . "
@@ -61,7 +61,12 @@ $sql = "INSERT INTO
 			note_type = '" 		. dataEncode( $data[0]->note_type) . "'";
 
 $mitos_db->setSQL($sql);
-$mitos_db->execLog();
-echo "{ success: true }";
+$ret = $mitos_db->execLog();
+
+if ( $ret[2] ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+} else {
+	echo "{ success: true }";
+}
 
 ?>

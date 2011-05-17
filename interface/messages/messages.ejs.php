@@ -74,6 +74,8 @@ Ext.define("Messages", {
 	{name: 'pid',				type: 'string'},
 	{name: 'patient',			type: 'string'},
 	{name: 'user_id',			type: 'string'},
+	{name: 'user',				type: 'string'},
+	{name: 'subject',			type: 'string'},
 	{name: 'facility_id',		type: 'string'},
 	{name: 'activity',			type: 'string'},
 	{name: 'authorized',	  	type: 'string'},
@@ -376,7 +378,7 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 		id: 'id',
 		hidden: true,
 		name: 'id'
-	},{ 
+	},{
 		xtype: 'textfield', 
 		id: 'pid',
 		hidden: true,
@@ -484,8 +486,8 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 		{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
 		{ header: 'user', sortable: false, dataIndex: 'user', hidden: true},
 		{ header: 'body', sortable: true, dataIndex: 'body', hidden: true },
-		{ header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject' },
-		{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'from' },
+		{ flex: 1, header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject' },
+		{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'user' },
 		{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
 		{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'type' },
 		{ header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' }, 
