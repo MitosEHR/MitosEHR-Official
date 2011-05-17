@@ -102,8 +102,7 @@ class dbHelper {
 			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record update";
 			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
 			// Prepare the SQL stament first, and then execute.
-			$stmt = $this->conn->prepare("INSERT INTO log (date, facility, event, comments, user, patient_id, checksum) VALUES (:date, :facility, :event, :comments, :user, :patient_id, :checksum)");
-			$stmt->bindParam(':date', date(), PDO::PARAM_STR);
+			$stmt = $this->conn->prepare("INSERT INTO log (facility, event, comments, user, patient_id, checksum) VALUES (:facility, :event, :comments, :user, :patient_id, :checksum)");
 			$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
 			$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
 			$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
@@ -112,7 +111,7 @@ class dbHelper {
 			$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
 			$stmt->execute();
 		}
-		return $recordset;
+		return $this->conn->errorInfo();
 	}
 
 	//**********************************************************************
