@@ -46,11 +46,14 @@ Ext.onReady(function() {
 //******************************************************************************
 if ( Ext.getCmp('winPatients') ){ Ext.getCmp('winPatients').destroy(); }
 if ( Ext.getCmp('winMessage') ){ Ext.getCmp('winMessage').destroy(); }
+if ( Ext.getCmp('gridPatients') ){ Ext.getCmp('gridPatients').destroy(); }
 
 // *************************************************************************************
 // Global variables
 // *************************************************************************************
 var rowContent;
+var currRec;
+var rowPos;
 var body_content;
 
 body_content = '<?php i18n('Nothing posted yet...'); ?>';
@@ -69,6 +72,7 @@ Ext.define("Messages", {
 	{name: 'date',				type: 'string'},
 	{name: 'body',				type: 'string'},
 	{name: 'pid',				type: 'string'},
+	{name: 'patient',			type: 'string'},
 	{name: 'user_id',			type: 'string'},
 	{name: 'facility_id',		type: 'string'},
 	{name: 'activity',			type: 'string'},
@@ -231,60 +235,52 @@ var winPatients = new Ext.create('Ext.window.Window', {
 	modal			: true,
 	resizable		: true,
 	autoScroll		: true,
-	title		    :	'<?php i18n('Patients'); ?>',
+	title		    : '<?php i18n('Patients'); ?>',
 	closeAction		: 'hide',
 	renderTo		: document.body,
 	items: [{
-			xtype		    : 'grid',
-			name		    : 'gridPatients',
+			xtype		: 'grid',
+			name		: 'gridPatients',
+			id			: 'gridPatients',
 			autoHeight	: true,
-			store		    : storePat,
-			//stripeRows	: true,
-			frame		    : false,
-			viewConfig	: {forceFit: true, stripeRows: true,}, // force the grid to the width of the containing panel
-			//sm			    : new Ext.grid.RowSelectionModel({singleSelect:true}),
+			store		: storePat,
+			frame		: false,
+			viewConfig	: {forceFit: true, stripeRows: true}, // force the grid to the width of the containing panel
 			listeners: {
 				
 				// Single click to select the record, and copy the variables
-				rowclick: function(grid, rowIndex, e) {
-					
-					// Get the content from the data grid
-					rowContent = grid.getStore().getAt(rowIndex);
-					
-					// Enable the select button
-					winPatients.patSelect.enable();
+				itemclick: function(view, record, item, num, egrid, rowIndex, element) {
+					rowContent = record;
+					Ext.getCmp('patSelect').enable();
 				}
 
 			},
 			columns: [
 				{header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-				{ header: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'name' },
-				{ header: '<?php i18n('Phone'); ?>', sortable: true, dataIndex: 'phone'},
-				{ header: '<?php i18n('SS'); ?>', sortable: true, dataIndex: 'ss' },
-				{ header: '<?php i18n('DOB'); ?>', sortable: true, dataIndex: 'dob' },
-				{ header: '<?php i18n('PID'); ?>', sortable: true, dataIndex: 'pid' }
-			],
-			tbar:[],
+				{ header: '<?php i18n("Name"); ?>', flex: 1, sortable: true, dataIndex: 'name' },
+				{ header: '<?php i18n("Phone"); ?>', sortable: true, dataIndex: 'phone'},
+				{ header: '<?php i18n("SS"); ?>', sortable: true, dataIndex: 'ss' },
+				{ header: '<?php i18n("DOB"); ?>', sortable: true, dataIndex: 'dob' },
+				{ header: '<?php i18n("PID"); ?>', sortable: true, dataIndex: 'pid' }
+			]
 	}],
 
 	// Window Bottom Bar
 	bbar:[{
 		text		:'<?php i18n('Select'); ?>',
 		iconCls		: 'select',
-		ref			  : '../patSelect',
-		formBind	: true,
+		name		: 'patSelect',
+		id			: 'patSelect',
 		disabled	: true,
 		handler: function() {
-			winMessage.reply_to.setValue( rowContent.get('id') );
-			winMessage.patient_name.setText( rowContent.get('name') );
-			winMessage.send.enable();
+			Ext.getCmp('patient').setText( rowContent.get('name') );
+			Ext.getCmp('pid').setValue( rowContent.get('pid') );
+			Ext.getCmp('cmdSend').enable();
 			winPatients.hide();
 		}
 	},{
 		text		  : '<?php i18n('Close'); ?>',
 		iconCls		: 'delete',
-		ref			  : '../patClose',
-		formBind	: true,
 		handler		: function(){ winPatients.hide(); }
 	}]
 
@@ -306,11 +302,7 @@ var prvMsg = new Ext.create('Ext.panel.Panel', {
 	collapsible		: true,
 	titleCollapse	: true,
 	split			: true,
-	html			: '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>',
-	listeners: {
-		collapse: function() { winMessage.syncShadow(); },
-		expand: function(){ winMessage.syncShadow(); }
-	}
+	html			: '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>'
 });
 
 // *************************************************************************************
@@ -323,11 +315,10 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 	defaults	: {labelWidth: 75, anchor: '100%'},
 	items: [{ 
 		xtype: 'button', 
-		id: 'pid',
+		id: 'patient',
 		text: '<?php i18n('Click to select patient...'); ?>',
 		fieldLabel: '<?php i18n('Patient'); ?>',
-		name: 'pid',
-		editable: false,
+		name: 'patient',
 		height: 30,
 		margin: '5px',
 		handler: function(){ winPatients.show(); }
@@ -384,16 +375,18 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 		xtype: 'textfield', 
 		id: 'id',
 		hidden: true,
-		name: 'id',
-		value: ''
+		name: 'id'
+	},{ 
+		xtype: 'textfield', 
+		id: 'pid',
+		hidden: true,
+		name: 'pid'
 	},{ 
 		xtype: 'textfield',
         id: 'reply_id',
         hidden: true,
         name: 'reply_id'
-	},
-//		prvMsg // prvMsg Object 
-	]
+	}]
 });
 
 
@@ -414,7 +407,8 @@ var winMessage = new Ext.create('Ext.window.Window', {
 	// Window Bottom Bar
 	bbar:[{
 		text		:'<?php i18n('Send'); ?>',
-		ref			: '../send',
+		name		: 'cmdSend',
+		id			: 'cmdSend',
 		iconCls		: 'save',
 		disabled	: true,
 		handler: function() { 
@@ -428,7 +422,7 @@ var winMessage = new Ext.create('Ext.window.Window', {
 					i = record.fields.get(k).name;
 					record.set( i, fieldValues[i] );
 				}
-			} else {							// New message
+			} else {						// New message
 				//----------------------------------------------------------------
 				// 1. Convert the form data into a JSON data Object
 				// 2. Re-format the Object to be a valid record (UserRecord)
@@ -464,26 +458,24 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 	
 		// Single click to select the record, and copy the variables
 		rowclick: function(msgGrid, rowIndex, e) {
-		
-			//Copy the selected message ID into the variable
-			rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
-				
-			// Enable buttons
-			msgGrid.editMsg.enable();
-			msgGrid.delMsg.enable();
+       		Ext.getCmp('formMessage').getForm().reset(); // Clear the form
+       		Ext.getCmp('editMsg').enable();
+       		Ext.getCmp('delMsg').enable();
+			var rec = storeMsgs.getAt(rowIndex);
+			Ext.getCmp('formMessage').getForm().loadRecord(rec);
+      		currRec = rec;
+       		rowPos = rowIndex;
 		},
 
 		// Double click to select the record, and edit the record
 		rowdblclick:  function(msgGrid, rowIndex, e) {
-				
-			//Copy the selected message ID into the variable
-			rowContent = Ext.getCmp('msgGrid').getStore().getAt(rowIndex);
-				
-			// Set the buttons state
-			winMessage.assigned_to.readOnly = true;
-			winMessage.pid.disable();
-			winMessage.send.enable();
-				
+       		Ext.getCmp('formMessage').getForm().reset(); // Clear the form
+       		Ext.getCmp('editMsg').enable();
+       		Ext.getCmp('delMsg').enable();
+			var rec = storeMsgs.getAt(rowIndex);
+			Ext.getCmp('formMessage').getForm().loadRecord(rec);
+      		currRec = rec;
+       		rowPos = rowIndex;
 			winMessage.show();
 		}
 	},
@@ -492,7 +484,7 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 		{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
 		{ header: 'user', sortable: false, dataIndex: 'user', hidden: true},
 		{ header: 'body', sortable: true, dataIndex: 'body', hidden: true },
-		{ header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject', id: 'subject' },
+		{ header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject' },
 		{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'from' },
 		{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
 		{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'type' },
