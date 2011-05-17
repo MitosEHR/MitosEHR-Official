@@ -43,16 +43,24 @@ require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.in
 //------------------------------------------
 $mitos_db = new dbHelper();
 
-// Count records variable
-$count = 0;
-
 // *************************************************************************************
 // Flag the message to delete
 // *************************************************************************************
-
 $data = json_decode ( $_POST['row'] );
-$delete_id = $data[0];
-deletePnote($delete_id);
-newEvent("delete", $_SESSION['authUser'], $_SESSION['authProvider'], 1, "pnotes: id ".$delete_id);
+$sql = "UPDATE 
+			pnotes
+		SET
+			deleted = '1' " . "
+		WHERE
+			id='". $data[0]->id ."'";
+
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execLog();
+
+if ( $ret[2] ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+} else {
+	echo "{ success: true }";
+}
 
 ?>

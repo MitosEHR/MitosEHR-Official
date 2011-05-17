@@ -49,7 +49,7 @@ $sql = "INSERT INTO
 			pnotes
 		SET
 			body = '" 			. $data[0]->body . "', " . "
-			pid = '"			. $_SESSION['patient']['id'] . "', " . "
+			pid = '"			. $data[0]->pid . "', " . "
 			user_id = '" 		. $_SESSION['user']['id'] . "', " . "
 			facility_id = '" 	. $_SESSION['site']['facility'] . "', " . "
 			activity = '" 		. dataEncode( $data[0]->activity) . "', " . "

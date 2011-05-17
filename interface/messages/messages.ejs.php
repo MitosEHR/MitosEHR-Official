@@ -52,7 +52,6 @@ if ( Ext.getCmp('gridPatients') ){ Ext.getCmp('gridPatients').destroy(); }
 // Global variables
 // *************************************************************************************
 var rowContent;
-var currRec;
 var rowPos;
 var body_content;
 
@@ -234,6 +233,7 @@ var statusData = new Ext.data.Store({
 var winPatients = new Ext.create('Ext.window.Window', {
 	width			: 900,
 	height			: 400,
+	border			: false,
 	modal			: true,
 	resizable		: true,
 	autoScroll		: true,
@@ -259,11 +259,11 @@ var winPatients = new Ext.create('Ext.window.Window', {
 			},
 			columns: [
 				{header: 'id', sortable: false, dataIndex: 'id', hidden: true},
+				{ header: '<?php i18n("PID"); ?>', sortable: true, dataIndex: 'pid' },
 				{ header: '<?php i18n("Name"); ?>', flex: 1, sortable: true, dataIndex: 'name' },
 				{ header: '<?php i18n("Phone"); ?>', sortable: true, dataIndex: 'phone'},
 				{ header: '<?php i18n("SS"); ?>', sortable: true, dataIndex: 'ss' },
-				{ header: '<?php i18n("DOB"); ?>', sortable: true, dataIndex: 'dob' },
-				{ header: '<?php i18n("PID"); ?>', sortable: true, dataIndex: 'pid' }
+				{ header: '<?php i18n("DOB"); ?>', sortable: true, dataIndex: 'dob' }
 			]
 	}],
 
@@ -371,8 +371,7 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 		xtype: 'htmleditor', 
 		id: 'body',
 		name: 'body',
-		labelWidth  : 0,
-		height: 130
+		height: 200,
 	},{ 
 		xtype: 'textfield', 
 		id: 'id',
@@ -396,9 +395,10 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 // Message Window Dialog
 // *************************************************************************************
 var winMessage = new Ext.create('Ext.window.Window', {
-	width		: 640,
+	width		: 550,
 	autoHeight	: true,
 	modal		: true,
+	border		: false,
 	resizable	: false,
 	autoScroll	: true,
 	id			: 'winMessage',
@@ -459,25 +459,27 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 	listeners: {
 	
 		// Single click to select the record, and copy the variables
-		rowclick: function(msgGrid, rowIndex, e) {
+		itemclick: function(DataView, record, item, rowIndex, e) {
        		Ext.getCmp('formMessage').getForm().reset(); // Clear the form
        		Ext.getCmp('editMsg').enable();
        		Ext.getCmp('delMsg').enable();
-			var rec = storeMsgs.getAt(rowIndex);
-			Ext.getCmp('formMessage').getForm().loadRecord(rec);
-      		currRec = rec;
+			rowContent = storeMsgs.getAt(rowIndex);
+			Ext.getCmp('formMessage').getForm().loadRecord(rowContent);
        		rowPos = rowIndex;
 		},
 
 		// Double click to select the record, and edit the record
-		rowdblclick:  function(msgGrid, rowIndex, e) {
+		itemdblclick:  function(DataView, record, item, rowIndex, e) {
        		Ext.getCmp('formMessage').getForm().reset(); // Clear the form
        		Ext.getCmp('editMsg').enable();
        		Ext.getCmp('delMsg').enable();
-			var rec = storeMsgs.getAt(rowIndex);
-			Ext.getCmp('formMessage').getForm().loadRecord(rec);
-      		currRec = rec;
+			rowContent = storeMsgs.getAt(rowIndex);
+			Ext.getCmp('formMessage').getForm().loadRecord(rowContent);
        		rowPos = rowIndex;
+       		Ext.getCmp('patient').setText( rowContent.get('patient') );
+			Ext.getCmp('patient').disable();
+			Ext.getCmp('assigned_to').disable();
+			Ext.getCmp('cmdSend').enable();
 			winMessage.show();
 		}
 	},
@@ -505,29 +507,31 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 		handler: function(){
 			
 			// Clear the rowContent variable
-			rowContent = null;
+			Ext.getCmp('formMessage').getForm().reset(); // Clear the form
+			Ext.getCmp('patient').setText('<?php i18n("Click to select patient..."); ?>');
+			Ext.getCmp('patient').enable();
+			Ext.getCmp('assigned_to').enable();
+			Ext.getCmp('cmdSend').disable();
 			winMessage.show();
 		}
 	},'-',{
 		xtype	   :'button',
 		id		   : 'editMsg',
-		ref		   : '../editMsg',
 		text	   : '<?php i18n('Reply message'); ?>',
 		iconCls	 : 'edit',
 		disabled : true,
 		handler  : function(){ 
 		
 			// Set the buttons state
-			winMessage.cmb_assigned_to.readOnly = true;
-			winMessage.patient_name.disable();
-			winMessage.send.enable();
-			
+			Ext.getCmp('patient').setText( rowContent.get('patient') );
+			Ext.getCmp('patient').disable();
+			Ext.getCmp('assigned_to').disable();
+			Ext.getCmp('cmdSend').enable();
 			winMessage.show();
 		}
 	},'-',{
 		xtype		  :'button',
 		id			  : 'delMsg',
-		ref			  : '../delMsg',
 		text		  : '<?php i18n('Delete message'); ?>',
 		iconCls		: 'delete',
 		disabled	: true,
@@ -542,9 +546,8 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 						// The datastore object will save the data
 						// as soon changes is detected on the datastore
 						// It's a Sencha AJAX thing
-						var rows = Ext.getCmp('msgGrid').selModel.getSelections();
-						storeMsgs.remove(rows);
-						storeMsgs.sync();
+						storeMsgs.remove( rowContent );
+						storeMsgs.save();
 						storeMsgs.load();
 	    	    	}
 				}
