@@ -539,7 +539,7 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 			        if(btn=='yes'){
 						// The datastore object will save the data
 						// as soon changes is detected on the datastore
-						// It's a AJAX thing
+						// It's a Sencha AJAX thing
 						var rows = Ext.getCmp('msgGrid').selModel.getSelections();
 						storeMsgs.remove(rows);
 						storeMsgs.sync();

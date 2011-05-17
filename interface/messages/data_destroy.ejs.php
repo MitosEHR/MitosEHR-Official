@@ -38,17 +38,10 @@ include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 
-// OpenEMR
-require_once("../../library/pnotes.inc.php");
-require_once("../../library/patient.inc.php");
-require_once("../../library/acl.inc.php");
-require_once("../../library/log.inc.php");
-require_once("../../library/options.inc.php");
-require_once("../../library/formdata.inc.php");
-require_once("../../library/classes/Document.class.php");
-require_once("../../library/gprelations.inc.php");
-require_once("../../library/formatting.inc.php");
-
+//------------------------------------------
+// Database class instance
+//------------------------------------------
+$mitos_db = new dbHelper();
 
 // Count records variable
 $count = 0;
