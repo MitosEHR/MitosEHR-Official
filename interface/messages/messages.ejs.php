@@ -429,7 +429,7 @@ var winMessage = new Ext.create('Ext.window.Window', {
 				// 3. Add the new record to the datastore
 				//----------------------------------------------------------------
 				var obj = eval( '(' + Ext.JSON.encode(formMessage.getForm().getValues()) + ')' );
-				var rec = new usersRecord(obj);
+				var rec = new Messages(obj);
 				storeMsgs.add( rec );
 			}
 			winMessage.hide();	// Finally hide the dialog window

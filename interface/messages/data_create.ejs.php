@@ -43,17 +43,17 @@ $data = json_decode ( $_POST['row'] );
 $sql = "INSERT INTO 
 			pnotes
 		SET
-			body = '" . dataEncode( $data[0]->body ) . "', " . "
-			pid = '". dataEncode( $data[0]->pid ) . "', " . "
-			user_id = '" . dataEncode( $data[0]->user_id ) . "', " . "
-			facility_id = '" . dataEncode( $data[0]->facility_id) . "', " . "
-			activity = '" . dataEncode( $data[0]->activity) . "', " . "
-			authorized = '" . dataEncode( $data[0]->authorized) . "', " . "
-			assigned_to = '" . dataEncode( $data[0]->assigned_to) . "', " . "
+			body = '" 			. dataEncode( $data[0]->body ) . "', " . "
+			pid = '"			. dataEncode( $data[0]->pid ) . "', " . "
+			user_id = '" 		. dataEncode( $data[0]->user_id ) . "', " . "
+			facility_id = '" 	. dataEncode( $data[0]->facility_id) . "', " . "
+			activity = '" 		. dataEncode( $data[0]->activity) . "', " . "
+			authorized = '" 	. dataEncode( $data[0]->authorized) . "', " . "
+			assigned_to = '" 	. dataEncode( $data[0]->assigned_to) . "', " . "
 			message_status = '" . dataEncode( $data[0]->message_status) . "', " . "
-			subject = '" . dataEncode( $data[0]->subject) . "', " . "
-			reply_id = '" . dataEncode( $data[0]->reply_id) . "', " . "
-			note_type = '" . dataEncode( $data[0]->note_type) . "'";
+			subject = '" 		. dataEncode( $data[0]->subject) . "', " . "
+			reply_id = '" 		. dataEncode( $data[0]->reply_id) . "', " . "
+			note_type = '" 		. dataEncode( $data[0]->note_type) . "'";
 
 $mitos_db->setSQL($sql);
 $mitos_db->execLog();
