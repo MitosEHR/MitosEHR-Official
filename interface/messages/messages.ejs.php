@@ -359,7 +359,7 @@ var formMessage = new Ext.create('Ext.form.Panel', {
 		triggerAction: 'all',
 		mode: 'local',
 		valueField: 'option_id',
-		hiddenName: 'option_id',
+		hiddenName: 'title',
 		displayField: 'title',
 		store: statusData
 	},{ 
@@ -489,9 +489,9 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 		{ flex: 1, header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject' },
 		{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'user' },
 		{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
-		{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'type' },
-		{ header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' }, 
-		{ header: '<?php i18n('Status'); ?>', sortable: true, dataIndex: 'status' },
+		{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'note_type' },
+		{ width: 150, header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' }, 
+		{ header: '<?php i18n('Status'); ?>', sortable: true, dataIndex: 'message_status' },
 	],
 
 	// *************************************************************************************
