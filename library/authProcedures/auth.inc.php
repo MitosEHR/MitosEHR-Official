@@ -74,6 +74,11 @@ if (file_exists($fileConf)){
 	include_once($fileConf);
 	include_once("../../library/dbHelper/dbHelper.inc.php");
 	$mitos_db = new dbHelper();
+	$err = $mitos_db->getConError();
+	if ($err){
+		echo "{ success: false, errors: { reason: 'For some reason, I can\'t connect to the database.'}}";
+		return;
+	}
 	// Do not stop here!, continue with the rest of the code.
 } else {
 	echo "{ success: false, errors: { reason: 'No configuration file found on the selected site.<br>Please contact support.'}}";
@@ -99,6 +104,7 @@ $sql = "SELECT
 		LIMIT 1";
 $mitos_db->setSQL($sql);
 $rec = $mitos_db->fetch();
+
 if ($rec['username'] == ""){
 	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.'}}";
 	return;

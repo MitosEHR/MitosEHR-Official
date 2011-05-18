@@ -1,6 +1,6 @@
 <?php
 
-/* db Helper v0.0.3 OOP
+/* db Helper v0.0.4 OOP
  * 
  * Description: A PDO helper for MitosEHR, containts custom function to manage the database
  * in MitosEHR. PDO is new in PHP v5 
@@ -30,6 +30,7 @@ class dbHelper {
 		
 	private $sql_statement;
 	private $conn;
+	private $err;
 	
 	//**********************************************************************
 	// Connect to the database
@@ -38,7 +39,11 @@ class dbHelper {
 	// Author: Gino Rivera
 	//**********************************************************************
 	function __construct() {
-		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
+		try {
+    		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
+		} catch (PDOException $e) {
+    		$this->err = $e->getMessage();
+		}
 	}
 
 	//**********************************************************************
@@ -146,6 +151,21 @@ class dbHelper {
 		// Get all the records
 		$recordset = $this->conn->query( $this->sql_statement );
 		return $recordset->fetch(PDO::FETCH_ASSOC);
+	}
+	
+	//**********************************************************************
+	// Fetch the last error.
+	// getError - Get the error for a statement, if any.
+	// getConError - Get the connection error, if any.
+	// return: Only the error in a array
+	//
+	// Author: Gino Rivera
+	//**********************************************************************
+	function getError(){
+			return $this->conn->errorInfo();
+	}
+	function getConError(){
+		return $this->err;
 	}
 	
 	//**********************************************************************
