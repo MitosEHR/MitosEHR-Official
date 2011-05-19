@@ -102,6 +102,7 @@ Ext.onReady(function(){
 		},
 		autoLoad: false
 	});
+	
 	// ****************************************************************************
 	// Structure, data for List Select list
 	// AJAX -> component_data.ejs.php
@@ -157,7 +158,7 @@ Ext.onReady(function(){
 		autoWidth	: true,
 		border		: false,
 		bodyStyle	: 'padding: 5px',
-		defaults	: { labelWidth: 50 },
+		defaults	: { labelWidth: 50, anchor: '100%' },
 		items:[
 			{ 
 				xtype: 'textfield', 
@@ -166,16 +167,7 @@ Ext.onReady(function(){
 				name: 'list_name', 
 				fieldLabel: '<?php i18n('List Name'); ?>' 
 			}
-	    ],
-		buttons:[{
-			text		:'<?php i18n('Save'); ?>',
-			iconCls		: 'save',
-			handler: function() { winLists.hide(); }
-		},{
-			text:'<?php i18n('Close'); ?>',
-			iconCls: 'delete',
-			handler: function(){ winLists.hide(); }
-		}]
+	    ]
 	});
 	
 	// *************************************************************************************
@@ -191,7 +183,24 @@ Ext.onReady(function(){
 		title		: '<?php i18n('Create List'); ?>',
 		closeAction	: 'hide',
 		renderTo	: document.body,
-		items: [ frmLists ]
+		items: [ frmLists ],
+		// -----------------------------------------
+		// Window Bottom Bar
+		// -----------------------------------------
+		bbar:[{
+			text		:'<?php i18n('Save'); ?>',
+			name		: 'cmdSave',
+			id			: 'cmdSave',
+			iconCls		: 'save',
+			disabled	: true,
+			handler		: function() { winLists.hide(); } 
+		},'-',{
+			text		: '<?php i18n('Close'); ?>',
+			name		: 'cmdClose',
+			id			: 'cmdClose',
+			iconCls		: 'delete',
+			handler		: function(){ winLists.hide(); }
+		}]
 	}); // END WINDOW
 	
 	// *************************************************************************************
@@ -264,10 +273,8 @@ Ext.onReady(function(){
             } 
 		}],
 		listeners:{
-			itemclick: {
-			cellclick: function(grid, rowIndex, columnIndex, e){
-					currRec = storeListsOption.getAt(rowIndex); // Copy the record to the global variable
-				}
+			itemclick: function(DataView, record, item, rowIndex, e){ 
+				currRec = storeListsOption.getAt(rowIndex); // Copy the record to the global variable
 			}
 		},
 		// -----------------------------------------
@@ -282,6 +289,7 @@ Ext.onReady(function(){
 				text	: '<?php i18n('Create a list'); ?>',
 				iconCls	: 'icoListOptions',
 				handler: function(){
+					editor.cancelEdit();
 					Ext.getCmp('frmLists').getForm().reset(); // Clear the form
 					winLists.show();
 				}
@@ -289,6 +297,9 @@ Ext.onReady(function(){
 				id			  	: 'delList',
 				text		  	: '<?php i18n('Delete list'); ?>',
 				iconCls			: 'delete',
+				handler: function(){
+					editor.cancelEdit();
+				}
 			},'-','<?php i18n('Select list'); ?>: ',{
 				name			: 'cmbList', 
 				width			: 250,
@@ -302,6 +313,9 @@ Ext.onReady(function(){
 				iconCls			: 'icoListOptions',
 				editable		: false,
 				store			: storeEditList,
+				handler: function(){
+					editor.cancelEdit();
+				},
 				listeners: {
 					select: function(combo, record){
 						// Reload the data store to reflect the new selected list filter
@@ -317,7 +331,7 @@ Ext.onReady(function(){
 				text		:'<?php i18n('Add record'); ?>',
 				iconCls		: 'icoAddRecord',
 				handler: function() {
-					editor.stopEditing();
+					editor.cancelEdit();
 					var rec = new ListRecord();
 					rec.set('list_id', Ext.getCmp('cmbList').value);
 					storeListsOption.add( rec );
@@ -335,7 +349,7 @@ Ext.onReady(function(){
 						buttons: Ext.Msg.YESNO,
 						fn:function(btn,msgGrid){
 							if(btn=='yes'){
-								editor.stopEditing();
+								editor.cancelEdit();
 								storeListsOption.remove( currRec );
 								storeListsOption.sync();
 								storeListsOption.load();

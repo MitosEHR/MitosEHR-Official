@@ -426,7 +426,7 @@ var winMessage = new Ext.create('Ext.window.Window', {
 			storeMsgs.sync();	// Save the record to the dataStore
 			storeMsgs.load();	// Reload the dataSore from the database
 		}
-	},{
+	},'-',{
 		text:'<?php i18n('Close'); ?>',
 		iconCls: 'delete',
 		handler: function(){ winMessage.hide(); }
