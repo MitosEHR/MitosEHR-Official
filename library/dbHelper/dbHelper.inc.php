@@ -162,7 +162,7 @@ class dbHelper {
 	// Author: Gino Rivera
 	//**********************************************************************
 	function getError(){
-			return $this->conn->errorInfo();
+		return $this->conn->errorInfo();
 	}
 	function getConError(){
 		return $this->err;

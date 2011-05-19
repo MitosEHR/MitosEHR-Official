@@ -45,7 +45,7 @@ if (($lang_id == '1' && !empty($GLOBALS['skip_english_translation'])) || !$GLOBA
 			WHERE 
 				list_id = '$currList' 
 			ORDER BY 
-				title, seq");
+				seq");
 } else {
 	// Use and sort by the translated list name.
 	$mitos_db->setSQL("SELECT 

@@ -2,7 +2,7 @@
 //******************************************************************************
 // list.ejs.php
 // List Options Panel
-// v0.0.1
+// v0.0.2
 // 
 // Author: Ernest Rodriguez
 // Modified: Gino Rivera
@@ -158,7 +158,13 @@ Ext.onReady(function(){
 		bodyStyle	: 'padding: 5px',
 		defaults	: { labelWidth: 50 },
 		items:[
-			{ xtype: 'textfield', width: 200, id: 'list_name', name: 'list_name', fieldLabel: '<?php i18n('List Name'); ?>' }
+			{ 
+				xtype: 'textfield', 
+				width: 200, 
+				id: 'list_name', 
+				name: 'list_name', 
+				fieldLabel: '<?php i18n('List Name'); ?>' 
+			}
 	    ],
 		buttons:[{
 			text		:'<?php i18n('Save'); ?>',
