@@ -190,15 +190,6 @@ var MainApp = Ext.create('Ext.Panel', {
 	waitMsg			: '<?php i18n("Loading"); ?>',
 	waitMsgTarget	: true,
 	autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true},
-
-	//----------------------------------------------------------------------
-	// Monitor and send the new height value to the panel
-	//----------------------------------------------------------------------
-	listeners : {
-		bodyresize : function(panel, width, height) {
-			if ( Ext.getCmp('topRenderPanel') ){ Ext.getCmp('topRenderPanel').setHeight(height); }
-		}
-	}
 }); // End MainApp
 
 //****************************************************************
