@@ -57,7 +57,7 @@ $_SESSION['patient']['name'] = "";
 // Server related variables
 //**********************************************************************
 $_SESSION['server'] = $_SERVER;
-$_SESSION['server']['OS'] = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "win") ? "Windows" : "Linux"); 
+$_SESSION['server']['OS'] = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "win") ? "Windows" : "Linux");
 
 //**********************************************************************
 // Client related variables
