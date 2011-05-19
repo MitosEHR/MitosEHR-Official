@@ -15,7 +15,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <title>MitosEHR Logon Screen</title>
 
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
-
+<script type="text/javascript" src="repository/global_functions/global_functions.js"></script>
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
@@ -129,9 +129,9 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 						failure:function(form, action){ 
 							if(action.failureType == 'server'){ 
 								obj = Ext.JSON.decode(action.response.responseText); 
-								Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+								Ext.topAlert.msg('Login Failed!', obj.errors.reason); 
 							}else{ 
-								Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+								Ext.topAlert.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
 							}
 							formLogin.getForm().reset(); 
 						}
@@ -168,9 +168,9 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 						failure:function(form, action){ 
 							if(action.failureType == 'server'){ 
 								obj = Ext.JSON.decode(action.response.responseText); 
-								Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+								Ext.topAlert.msg('Login Failed!', obj.errors.reason); 
 							}else{ 
-								Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+								Ext.topAlert.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
 							}
 							formLogin.getForm().reset(); 
 						}
@@ -180,13 +180,6 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 		}
     }],
     buttons: [{
-        text: 'Reset',
-        id: 'btn_reset',
-		name: 'btn_reset',
-		handler: function() {
-            formLogin.getForm().reset();
-		}
-	},{
 		text: 'Login',
         id: 'btn_login',
 		name: 'btn_login',
@@ -204,13 +197,20 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 				failure:function(form, action){ 
 					if(action.failureType == 'server'){ 
 						obj = Ext.JSON.decode(action.response.responseText); 
-						Ext.Msg.alert('Login Failed!', obj.errors.reason); 
+						Ext.topAlert.msg('Login Failed!', obj.errors.reason); 
 					}else{ 
-						Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+						Ext.topAlert.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
 					}
 					formLogin.getForm().reset(); 
 				}
 			})
+		}
+	},{
+        text: 'Reset',
+        id: 'btn_reset',
+		name: 'btn_reset',
+		handler: function() {
+            formLogin.getForm().reset();
 		}
     }],
 	listeners:{

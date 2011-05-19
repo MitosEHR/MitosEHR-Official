@@ -35,10 +35,12 @@ Ext.require([
     'Ext.util.*',
     'Ext.state.*',
     'Ext.toolbar.Paging',
-    'Ext.ux.SlidingPager'
+    'Ext.ux.SlidingPager',
+    'Ext.tip.*'
 ]);
 
 Ext.onReady(function(){
+
 	// *************************************************************************************
 	// Global Model and Data store
 	// *************************************************************************************
@@ -161,8 +163,8 @@ Ext.onReady(function(){
 		idProperty: 'data_id',
 	});
 	var globalStore = new Ext.data.Store({
-	    model		: 'Globals',
-	    proxy		: {
+	    model	: 'Globals',
+	    proxy	: {
 	    	type	: 'ajax',
 			api		: {
 				read	: 'interface/administration/globals/data_read.ejs.php',
@@ -1109,9 +1111,10 @@ Ext.onReady(function(){
 							i = record.fields.get(k).name;
 							record.set( i, fieldValues[i] );
 						}
-
 						globalStore.sync();	// Save the record to the dataStore
 						globalStore.load();	// Reload the dataSore from the database
+						
+						Ext.topAlert.msg('New Global Configuration Saved', 'For some settings to take place you will have to logout and log back in.');
 				    }
 			  	}]
 			}]
