@@ -42,7 +42,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Global Model and Data store
 	// *************************************************************************************
-	Ext.define("Globals", {extend: "Ext.data.Model", fields: [
+	var globalModel = Ext.define("Globals", {extend: "Ext.data.Model", fields: [
 			{ name: 'data_id',								type:'int' },
 			{ name: 'default_top_pane',						type:'auto' },
 			{ name: 'concurrent_layout',					type:'auto' },
@@ -1103,7 +1103,15 @@ Ext.onReady(function(){
 				    text      : '<?php i18n("Save Configuration"); ?>',
 				    iconCls   : 'save',
 				    handler   : function(){
-						// TODO //
+						var record = globalStore.getAt('0');
+						var fieldValues = globalFormPanel.getForm().getValues();
+						for ( k=0; k <= record.fields.getCount()-1; k++) {
+							i = record.fields.get(k).name;
+							record.set( i, fieldValues[i] );
+						}
+
+						globalStore.sync();	// Save the record to the dataStore
+						globalStore.load();	// Reload the dataSore from the database
 				    }
 			  	}]
 			}]
