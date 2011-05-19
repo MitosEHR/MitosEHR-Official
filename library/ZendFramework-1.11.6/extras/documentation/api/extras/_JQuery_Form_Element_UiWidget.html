@@ -1,0 +1,463 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Zend Framework Extras API Documentation</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" href="css/black-tie/jquery-ui-1.8.2.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script><script type="text/javascript">
+            $(document).ready(function() {
+                $(".filetree").treeview({
+                    collapsed: true,
+                    persist: "cookie"
+                });
+
+                $("#accordion").accordion({
+                    collapsible: true,
+                    autoHeight:  false,
+                    fillSpace:   true
+                });
+
+                $(".tabs").tabs();
+            });
+        </script></head><body><div xmlns="" class="content">
+<div class="sub-page-main-header-api-documentation"><h2>API Documentation</h2></div>
+<div class="dotted-line"></div>
+</div>
+<div xmlns="" id="content">
+<script>
+      $(document).ready(function() {
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().css('cursor', 'pointer');
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().click(function() {
+          if ($(this).next().is(':hidden'))
+          {
+            $(this).children('img')[0].src = 'images/arrow_down.gif';
+          } else
+          {
+            $(this).children('img')[0].src = 'images/arrow_right.gif';
+          }
+          $(this).next().slideToggle();
+        });
+      $('dl.function-info, dl.constant-info, dl.property-info').hide();
+      $('dl.function-info img, dl.constant-info img, dl.property-info img').show();
+      });
+    </script><a name="top"></a><h1 class="file">JQuery/Form/Element/UiWidget.php</h1>
+<div class="file_menu">
+<a href="#includes">Includes</a> <a href="#classes">Classes</a> </div>
+<dl class="file-info">
+<dt>category</dt>
+<dd>ZendX</dd>
+<dt>copyright</dt>
+<dd>Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)</dd>
+<dt>license</dt>
+<dd>http://framework.zend.com/license/new-bsd     New BSD License</dd>
+<dt>package</dt>
+<dd>ZendX_JQuery</dd>
+<dt>subpackage</dt>
+<dd>View</dd>
+<dt>version</dt>
+<dd>$Id: UiWidget.php 20165 2010-01-09 18:57:56Z bkarwin $</dd>
+<dt>Classes</dt>
+<dd><a class="class" href="#ZendX_JQuery_Form_Element_UiWidget">ZendX_JQuery_Form_Element_UiWidget</a></dd>
+</dl>
+<h2>Description</h2>
+<p class="short-description">Zend Framework</p>
+<div class="long-description"><p>LICENSE</p>
+
+<p>This source file is subject to the new BSD license that is bundled
+with this package in the file LICENSE.txt.
+It is also available through the world-wide-web at this URL:
+http://framework.zend.com/license/new-bsd
+If you did not receive a copy of the license and are unable to
+obtain it through the world-wide-web, please send an email
+to license@zend.com so we can send you a copy immediately.</p>
+</div>
+<a name="classes"></a><a id="ZendX_JQuery_Form_Element_UiWidget"></a><h2 class="class">ZendX_JQuery_Form_Element_UiWidget<div class="to-top"><a href="#top">jump to top</a></div>
+</h2>
+<div class="class">
+<dl class="class-info">
+<dt>Extends from</dt>
+<dd>Zend_Form_Element</dd>
+<dt>copyright</dt>
+<dd>Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)</dd>
+<dt>license</dt>
+<dd>http://framework.zend.com/license/new-bsd     New BSD License</dd>
+<dt>package</dt>
+<dd>ZendX_JQuery</dd>
+<dt>subpackage</dt>
+<dd>Form</dd>
+<dt>Properties</dt>
+<dd><a class="property" href="#ZendX_JQuery_Form_Element_UiWidget::%24jQueryParams">$jQueryParams</a></dd>
+<dd><a class="property" href="#ZendX_JQuery_Form_Element_UiWidget::%24options">$options</a></dd>
+<dt>Methods</dt>
+<dd><a class="method" href="#ZendX_JQuery_Form_Element_UiWidget::__construct()">__construct</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_Form_Element_UiWidget::getJQueryParam()">getJQueryParam</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_Form_Element_UiWidget::getJQueryParams()">getJQueryParams</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_Form_Element_UiWidget::setJQueryParam()">setJQueryParam</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_Form_Element_UiWidget::setJQueryParams()">setJQueryParams</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_Form_Element_UiWidget::loadDefaultDecorators()">loadDefaultDecorators</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_Form_Element_UiWidget::setView()">setView</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_Form_Element_UiWidget::getDecorators()">getDecorators</a></dd>
+</dl>
+<h3>Description</h3>
+<p class="short-description">Base Form Element for jQuery View Helpers</p>
+<div class="long-description">
+</div>
+<h3>Properties</h3>
+<div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::$jQueryParams"></a><h4 class="property">$jQueryParams<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="property">
+<code>array <span class="highlight">$jQueryParams</span> = 'array'</code><p class="short-description">jQuery related parameters of this form element.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>$jQueryParams</dt>
+<dd>array<br><em></em>
+</dd>
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>default</dt>
+<dd>array</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::$options"></a><h4 class="property">$options<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="property">
+<code>array <span class="highlight">$options</span> = 'array'</code><p class="short-description">Just here to prevent errors.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>$options</dt>
+<dd>array<br><em></em>
+</dd>
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>default</dt>
+<dd>array</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<h3>Methods</h3>
+<div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::__construct()"></a><h4 class="method">__construct<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">__construct</span><span class="nb-faded-text">(
+          mixed $spec, mixed $options
+              =
+              null
+          )
+        </span>
+        :
+        void</code><p class="short-description">Constructor</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$spec</dt>
+<dd>mixed<br><em></em>
+</dd>
+<dt>$options</dt>
+<dd>mixed<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::getDecorators()"></a><h4 class="method">getDecorators<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getDecorators</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        array</code><p class="short-description">Retrieve all decorators</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>array</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+<dt>throws</dt>
+<dd></dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::getJQueryParam()"></a><h4 class="method">getJQueryParam<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getJQueryParam</span><span class="nb-faded-text">(
+          string $key
+          )
+        </span>
+        :
+        string</code><p class="short-description">Get jQuery related parameter of this form element</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$key</dt>
+<dd>string<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::getJQueryParams()"></a><h4 class="method">getJQueryParams<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getJQueryParams</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        array</code><p class="short-description">Get all currently known jQuery related parameters of this element</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>array</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::loadDefaultDecorators()"></a><h4 class="method">loadDefaultDecorators<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">loadDefaultDecorators</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        void</code><p class="short-description">Load default decorators</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::setJQueryParam()"></a><h4 class="method">setJQueryParam<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">setJQueryParam</span><span class="nb-faded-text">(
+          string $key, string $value
+          )
+        </span>
+        :
+        <a href="_JQuery_Form_Element_UiWidget.html#ZendX_JQuery_Form_Element_UiWidget">ZendX_JQuery_Form_Element_UiWidget</a></code><p class="short-description">Set a jQuery related parameter of this form element.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$key</dt>
+<dd>string<br><em></em>
+</dd>
+<dt>$value</dt>
+<dd>string<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt><a href="_JQuery_Form_Element_UiWidget.html#ZendX_JQuery_Form_Element_UiWidget">ZendX_JQuery_Form_Element_UiWidget</a></dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::setJQueryParams()"></a><h4 class="method">setJQueryParams<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">setJQueryParams</span><span class="nb-faded-text">(
+          Array $params
+          )
+        </span>
+        :
+        <a href="_JQuery_Form_Element_UiWidget.html#ZendX_JQuery_Form_Element_UiWidget">ZendX_JQuery_Form_Element_UiWidget</a></code><p class="short-description">Set an array of jQuery related options for this element (merging with old options).</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$params</dt>
+<dd>Array<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt><a href="_JQuery_Form_Element_UiWidget.html#ZendX_JQuery_Form_Element_UiWidget">ZendX_JQuery_Form_Element_UiWidget</a></dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_Form_Element_UiWidget::setView()"></a><h4 class="method">setView<div class="to-top"><a href="#ZendX_JQuery_Form_Element_UiWidget">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">setView</span><span class="nb-faded-text">(
+          Zend_View_Interface $view
+              =
+              null
+          )
+        </span>
+        :
+        <a href="_JQuery_Form_Element_UiWidget.html#ZendX_JQuery_Form_Element_UiWidget">ZendX_JQuery_Form_Element_UiWidget</a></code><p class="short-description">Set the view object</p>
+<div class="long-description"><p>Ensures that the view object has the jQuery view helper path set.</p>
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$view</dt>
+<dd>Zend_View_Interface<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt><a href="_JQuery_Form_Element_UiWidget.html#ZendX_JQuery_Form_Element_UiWidget">ZendX_JQuery_Form_Element_UiWidget</a></dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<small xmlns="" class="footer">Documentation was generated by <a href="http://docblox-project.org">DocBlox</a>.
+    </small></body></html>

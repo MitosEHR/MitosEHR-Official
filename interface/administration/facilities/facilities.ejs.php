@@ -259,10 +259,32 @@ Ext.onReady(function() {
         },{
         	name: 'id',
         	hidden: true
-        }],
-
-        buttons: [{
-            text: 'Save',
+        }]
+    });
+   	facilityForm.on('afterrender',function(){
+   		Ext.getCmp('tax_id_type').setValue( storeTAXid.getAt(0).data.option_id );
+   		Ext.getCmp('pos_code').setValue( storePOSCode.getAt(0).data.option_id );
+   	});
+    
+	// *************************************************************************************
+	// Window User Form
+	// *************************************************************************************
+	var winFacility = Ext.create('widget.window', {
+		id			: 'winFacility',
+		closable	: true,
+		closeAction	: 'hide',
+		width		: 450,
+		height		: 530,
+		resizable	: false,
+		modal		: true,
+		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
+		items		: [ facilityForm ],
+		// Window Bottom Bar
+		bbar:[{
+			text		:'<?php i18n('Save'); ?>',
+			name		: 'cmdSave',
+			id			: 'cmdSave',
+			iconCls		: 'save',
             handler: function(){
 				//----------------------------------------------------------------
 				// Check if it has to add or update
@@ -294,31 +316,13 @@ Ext.onReady(function() {
 				FacilityStore.sync();	// Save the record to the dataStore
 				FacilityStore.load();	// Reload the dataSore from the database
 			}
-        },{
-            text: 'Cancel',
+		},'-',{
+			text:'<?php i18n('Close'); ?>',
+			iconCls: 'delete',
             handler: function(){
             	winFacility.hide();
             }
-        }]
-    });
-   	facilityForm.on('afterrender',function(){
-   		Ext.getCmp('tax_id_type').setValue( storeTAXid.getAt(0).data.option_id );
-   		Ext.getCmp('pos_code').setValue( storePOSCode.getAt(0).data.option_id );
-   	});
-    
-	// *************************************************************************************
-	// Window User Form
-	// *************************************************************************************
-	var winFacility = Ext.create('widget.window', {
-		id			: 'winFacility',
-		closable	: true,
-		closeAction	: 'hide',
-		width		: 450,
-		height		: 530,
-		resizable	: false,
-		modal		: true,
-		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
-		items		: [ facilityForm ]
+		}]
 	});
 	
 
@@ -359,6 +363,7 @@ Ext.onReady(function() {
 				dataIndex: 'city'
             }
 		],
+		// Slider bar or Pagin
         bbar: Ext.create('Ext.PagingToolbar', {
             pageSize: 30,
             store: FacilityStore,

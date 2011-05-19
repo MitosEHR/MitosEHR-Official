@@ -41,7 +41,7 @@ $_SESSION['lang']['language'] = "English (Standard)";
 //**********************************************************************
 // Directory related variables
 //**********************************************************************
-$_SESSION['dir']['zend'] = "ZendFramework-1.11.4";
+$_SESSION['dir']['zend'] = "ZendFramework-1.11.6";
 $_SESSION['dir']['ext'] = "ext-4.0.1";
 $_SESSION['dir']['AES'] = "phpAES";
 $_SESSION['dir']['adoHelper'] = "dbHelper";
@@ -57,7 +57,7 @@ $_SESSION['patient']['name'] = "";
 // Server related variables
 //**********************************************************************
 $_SESSION['server'] = $_SERVER;
-$_SESSION['server']['OS'] = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "win") ? "Windows" : "Linux"); 
+$_SESSION['server']['OS'] = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "win") ? "Windows" : "Linux");
 
 //**********************************************************************
 // Client related variables
