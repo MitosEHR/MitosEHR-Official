@@ -70,6 +70,7 @@ Ext.define("Messages", {
 	{name: 'id',				type: 'int'},
 	{name: 'date',				type: 'string'},
 	{name: 'body',				type: 'string'},
+	{name: 'curr_msg',			type: 'string'},
 	{name: 'pid',				type: 'string'},
 	{name: 'patient',			type: 'string'},
 	{name: 'user_id',			type: 'string'},
@@ -289,25 +290,6 @@ var winPatients = new Ext.create('Ext.window.Window', {
 }); // END WINDOW
 
 // *************************************************************************************
-// Previuos Messages Panel
-// *************************************************************************************
-var prvMsg = new Ext.create('Ext.panel.Panel', {
-	title			: '<?php i18n('Reply History'); ?>',
-	labelWidth		: 100,
-	minSize			: 300,
-	height			: 200,
-	region			: 'north',
-	bodyStyle		: 'padding: 5px;',
-	autoScroll		: true,
-	border			: false,
-	animCollapse	: false,
-	collapsible		: true,
-	titleCollapse	: true,
-	split			: true,
-	html			: '<div id=\'previousMsg\' class="prvMsg">' + body_content + '</div>'
-});
-
-// *************************************************************************************
 // Message Form
 // *************************************************************************************
 var formMessage = new Ext.create('Ext.form.Panel', {
@@ -368,10 +350,16 @@ var formMessage = new Ext.create('Ext.form.Panel', {
         id: 'subject',
         name: 'subject'
 	},{ 
-		xtype: 'htmleditor', 
+		xtype: 'htmleditor',
+		readOnly: true,
 		id: 'body',
 		name: 'body',
-		height: 200,
+		height: 150
+	},{ 
+		xtype: 'htmleditor', 
+		id: 'curr_msg',
+		name: 'curr_msg',
+		height: 200
 	},{ 
 		xtype: 'textfield', 
 		id: 'id',
@@ -480,6 +468,7 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 			Ext.getCmp('patient').disable();
 			Ext.getCmp('assigned_to').disable();
 			Ext.getCmp('cmdSend').enable();
+			Ext.getCmp('body').setVisible(true);
 			winMessage.show();
 		}
 	},
@@ -487,7 +476,6 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 		{ header: 'noteid', sortable: false, dataIndex: 'noteid', hidden: true},
 		{ header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
 		{ header: 'user', sortable: false, dataIndex: 'user', hidden: true},
-		{ header: 'body', sortable: true, dataIndex: 'body', hidden: true },
 		{ flex: 1, header: '<?php i18n('Subject'); ?>', sortable: true, dataIndex: 'subject' },
 		{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'user' },
 		{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
@@ -512,6 +500,7 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 			Ext.getCmp('patient').enable();
 			Ext.getCmp('assigned_to').enable();
 			Ext.getCmp('cmdSend').disable();
+			Ext.getCmp('body').setVisible(false);
 			winMessage.show();
 		}
 	},'-',{
@@ -527,6 +516,7 @@ var msgGrid = new Ext.create('Ext.grid.Panel', {
 			Ext.getCmp('patient').disable();
 			Ext.getCmp('assigned_to').disable();
 			Ext.getCmp('cmdSend').enable();
+			Ext.getCmp('body').setVisible(true);
 			winMessage.show();
 		}
 	},'-',{
