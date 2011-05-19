@@ -1,0 +1,421 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Zend Framework Extras API Documentation</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" href="css/black-tie/jquery-ui-1.8.2.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script><script type="text/javascript">
+            $(document).ready(function() {
+                $(".filetree").treeview({
+                    collapsed: true,
+                    persist: "cookie"
+                });
+
+                $("#accordion").accordion({
+                    collapsible: true,
+                    autoHeight:  false,
+                    fillSpace:   true
+                });
+
+                $(".tabs").tabs();
+            });
+        </script></head><body><div xmlns="" class="content">
+<div class="sub-page-main-header-api-documentation"><h2>API Documentation</h2></div>
+<div class="dotted-line"></div>
+</div>
+<div xmlns="" id="content">
+<script>
+      $(document).ready(function() {
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().css('cursor', 'pointer');
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().click(function() {
+          if ($(this).next().is(':hidden'))
+          {
+            $(this).children('img')[0].src = 'images/arrow_down.gif';
+          } else
+          {
+            $(this).children('img')[0].src = 'images/arrow_right.gif';
+          }
+          $(this).next().slideToggle();
+        });
+      $('dl.function-info, dl.constant-info, dl.property-info').hide();
+      $('dl.function-info img, dl.constant-info img, dl.property-info img').show();
+      });
+    </script><a name="top"></a><h1 class="file">JQuery/View/Helper/JQuery.php</h1>
+<div class="file_menu">
+<a href="#includes">Includes</a> <a href="#classes">Classes</a> </div>
+<dl class="file-info">
+<dt>category</dt>
+<dd>ZendX</dd>
+<dt>copyright</dt>
+<dd>Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)</dd>
+<dt>license</dt>
+<dd>http://framework.zend.com/license/new-bsd     New BSD License</dd>
+<dt>package</dt>
+<dd>ZendX_JQuery</dd>
+<dt>subpackage</dt>
+<dd>View</dd>
+<dt>version</dt>
+<dd>$Id: JQuery.php 20184 2010-01-10 21:22:54Z freak $</dd>
+<dt>Classes</dt>
+<dd><a class="class" href="#ZendX_JQuery_View_Helper_JQuery">ZendX_JQuery_View_Helper_JQuery</a></dd>
+</dl>
+<h2>Description</h2>
+<p class="short-description">Zend Framework</p>
+<div class="long-description"><p>LICENSE</p>
+
+<p>This source file is subject to the new BSD license that is bundled
+with this package in the file LICENSE.txt.
+It is also available through the world-wide-web at this URL:
+http://framework.zend.com/license/new-bsd
+If you did not receive a copy of the license and are unable to
+obtain it through the world-wide-web, please send an email
+to license@zend.com so we can send you a copy immediately.</p>
+</div>
+<a name="classes"></a><a id="ZendX_JQuery_View_Helper_JQuery"></a><h2 class="class">ZendX_JQuery_View_Helper_JQuery<div class="to-top"><a href="#top">jump to top</a></div>
+</h2>
+<div class="class">
+<dl class="class-info">
+<dt>Extends from</dt>
+<dd>Zend_View_Helper_Abstract</dd>
+<dt>copyright</dt>
+<dd>Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)</dd>
+<dt>license</dt>
+<dd>http://framework.zend.com/license/new-bsd     New BSD License</dd>
+<dt>package</dt>
+<dd>ZendX_JQuery</dd>
+<dt>subpackage</dt>
+<dd>View</dd>
+<dt>uses</dt>
+<dd>Zend_Json</dd>
+<dt>Properties</dt>
+<dd><a class="property" href="#ZendX_JQuery_View_Helper_JQuery::%24view">$view</a></dd>
+<dd><a class="property" href="#ZendX_JQuery_View_Helper_JQuery::%24noConflictMode">$noConflictMode</a></dd>
+<dt>Methods</dt>
+<dd><a class="method" href="#ZendX_JQuery_View_Helper_JQuery::__construct()">__construct</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_View_Helper_JQuery::jQuery()">jQuery</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_View_Helper_JQuery::setView()">setView</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_View_Helper_JQuery::__call()">__call</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_View_Helper_JQuery::enableNoConflictMode()">enableNoConflictMode</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_View_Helper_JQuery::disableNoConflictMode()">disableNoConflictMode</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_View_Helper_JQuery::getNoConflictMode()">getNoConflictMode</a></dd>
+<dd><a class="method" href="#ZendX_JQuery_View_Helper_JQuery::getJQueryHandler()">getJQueryHandler</a></dd>
+</dl>
+<h3>Description</h3>
+<p class="short-description">jQuery Helper. Functions as a stack for code and loads all jQuery dependencies.</p>
+<div class="long-description">
+</div>
+<h3>Properties</h3>
+<div>
+<a id="ZendX_JQuery_View_Helper_JQuery::$noConflictMode"></a><h4 class="property">$noConflictMode<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="property">
+<code> <span class="highlight">$noConflictMode</span> = 'false'</code><p class="short-description">jQuery no Conflict Mode</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>visibility</dt>
+<dd>private</dd>
+<dt>default</dt>
+<dd>false</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+<dt>see</dt>
+<dd>http://docs.jquery.com/Using_jQuery_with_Other_Libraries</dd>
+<dt>staticvar</dt>
+<dd>Boolean Status of noConflict Mode</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_View_Helper_JQuery::$view"></a><h4 class="property">$view<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="property">
+<code>Zend_View_Interface <span class="highlight">$view</span> = ''</code><p class="short-description"></p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>$view</dt>
+<dd>Zend_View_Interface<br><em></em>
+</dd>
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>default</dt>
+<dd></dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<h3>Methods</h3>
+<div>
+<a id="ZendX_JQuery_View_Helper_JQuery::__call()"></a><h4 class="method">__call<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">__call</span><span class="nb-faded-text">(
+          string $method, array $args
+          )
+        </span>
+        :
+        mixed</code><p class="short-description">Proxy to container methods</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$method</dt>
+<dd>string<br><em></em>
+</dd>
+<dt>$args</dt>
+<dd>array<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>mixed</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+<dt>throws</dt>
+<dd>For invalid method calls</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_View_Helper_JQuery::__construct()"></a><h4 class="method">__construct<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">__construct</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        void</code><p class="short-description">Initialize helper</p>
+<div class="long-description"><p>Retrieve container from registry or create new container and store in
+registry.</p>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_View_Helper_JQuery::disableNoConflictMode()"></a><h4 class="method">disableNoConflictMode<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">disableNoConflictMode</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        void</code><p class="short-description">Disable noConflict Mode of jQuery if this was previously enabled.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_View_Helper_JQuery::enableNoConflictMode()"></a><h4 class="method">enableNoConflictMode<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">enableNoConflictMode</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        </code><p class="short-description">Enable the jQuery internal noConflict Mode to work with
+other Javascript libraries. Will setup jQuery in the variable
+$j instead of $ to overcome conflicts.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+<dt>link</dt>
+<dd>http://docs.jquery.com/Using_jQuery_with_Other_Libraries</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_View_Helper_JQuery::getJQueryHandler()"></a><h4 class="method">getJQueryHandler<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getJQueryHandler</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        String</code><p class="short-description">Return current jQuery handler based on noConflict mode settings.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>String</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_View_Helper_JQuery::getNoConflictMode()"></a><h4 class="method">getNoConflictMode<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getNoConflictMode</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        Boolean</code><p class="short-description">Return current status of the jQuery no Conflict Mode</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>Boolean</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_View_Helper_JQuery::jQuery()"></a><h4 class="method">jQuery<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">jQuery</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        <a href="_JQuery_View_Helper_JQuery_Container.html#ZendX_JQuery_View_Helper_JQuery_Container">ZendX_JQuery_View_Helper_JQuery_Container</a></code><p class="short-description">Return jQuery View Helper class, to execute jQuery library related functions.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt><a href="_JQuery_View_Helper_JQuery_Container.html#ZendX_JQuery_View_Helper_JQuery_Container">ZendX_JQuery_View_Helper_JQuery_Container</a></dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_JQuery_View_Helper_JQuery::setView()"></a><h4 class="method">setView<div class="to-top"><a href="#ZendX_JQuery_View_Helper_JQuery">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">setView</span><span class="nb-faded-text">(
+          Zend_View_Interface $view
+          )
+        </span>
+        :
+        void</code><p class="short-description">Set view object</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$view</dt>
+<dd>Zend_View_Interface<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<small xmlns="" class="footer">Documentation was generated by <a href="http://docblox-project.org">DocBlox</a>.
+    </small></body></html>

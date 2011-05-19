@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><meta http-equiv="Content-Language" content="en"></meta><title>Zend Framework: API Documentation</title><link rel="stylesheet" href="css/black-tie/jquery-ui-1.8.2.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script></head><body><table id="page"><tr><td colspan="2" height="51"><div id="top"><div class="top"><h1 class="logo"><a href="http://framework.zend.com/" title="ZF Zend Framework">ZF Zend Framework</a></h1><ul id="top-nav" class="top-nav"><li><a href="graph.html" target="content">Class diagram</a></li><li><a href="markers.html" target="content">Todo / Fixme</a></li></ul></div></div></td></tr><tr><td id="sidebar"><script xmlns="" type="text/javascript">
+        $(function() {
+            $("#search_box_icon, #search_box_clear").show();
+            $("#search_box").show().autocomplete({
+                source: "ajax_search.php",
+                minLength: 2,
+                select: function (event, ui) {
+                    if ((parent) && (parent.content)) {
+                        parent.content.document.location = '' + ui.item.id;
+                    } else {
+                        jQuery(document).location = '' + ui.item.id;
+                    }
+                }
+            });
+        });
+    </script><img xmlns="" src="images/search.gif" id="search_box_icon" border="0" onclick="$('#search_box').focus()"><input xmlns="" id="search_box"><img xmlns="" src="images/clear_left.png" id="search_box_clear" border="0" onclick="$('#search_box').val('')"><iframe name="nav" id="nav" src="nav.html" frameBorder="0"></iframe></td><td id="contents"><iframe name="content" id="content" src="content.html" frameBorder="0"></iframe></td></tr></table></body></html>

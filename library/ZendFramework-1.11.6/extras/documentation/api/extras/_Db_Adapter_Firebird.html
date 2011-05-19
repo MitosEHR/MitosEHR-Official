@@ -1,0 +1,976 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Zend Framework Extras API Documentation</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" href="css/black-tie/jquery-ui-1.8.2.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script><script type="text/javascript">
+            $(document).ready(function() {
+                $(".filetree").treeview({
+                    collapsed: true,
+                    persist: "cookie"
+                });
+
+                $("#accordion").accordion({
+                    collapsible: true,
+                    autoHeight:  false,
+                    fillSpace:   true
+                });
+
+                $(".tabs").tabs();
+            });
+        </script></head><body><div xmlns="" class="content">
+<div class="sub-page-main-header-api-documentation"><h2>API Documentation</h2></div>
+<div class="dotted-line"></div>
+</div>
+<div xmlns="" id="content">
+<script>
+      $(document).ready(function() {
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().css('cursor', 'pointer');
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().click(function() {
+          if ($(this).next().is(':hidden'))
+          {
+            $(this).children('img')[0].src = 'images/arrow_down.gif';
+          } else
+          {
+            $(this).children('img')[0].src = 'images/arrow_right.gif';
+          }
+          $(this).next().slideToggle();
+        });
+      $('dl.function-info, dl.constant-info, dl.property-info').hide();
+      $('dl.function-info img, dl.constant-info img, dl.property-info img').show();
+      });
+    </script><a name="top"></a><h1 class="file">Db/Adapter/Firebird.php</h1>
+<div class="file_menu">
+<a href="#includes">Includes</a> <a href="#classes">Classes</a> </div>
+<dl class="file-info">
+<dt>category</dt>
+<dd>ZendX</dd>
+<dt>copyright</dt>
+<dd>Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)</dd>
+<dt>license</dt>
+<dd>http://framework.zend.com/license/new-bsd     New BSD License</dd>
+<dt>package</dt>
+<dd>ZendX_Db</dd>
+<dt>subpackage</dt>
+<dd>Adapter</dd>
+<dt>version</dt>
+<dd>$Id: $</dd>
+<dt>Classes</dt>
+<dd><a class="class" href="#ZendX_Db_Adapter_Firebird">ZendX_Db_Adapter_Firebird</a></dd>
+</dl>
+<h2>Description</h2>
+<p class="short-description">Zend Framework</p>
+<div class="long-description"><p>LICENSE</p>
+
+<p>This source file is subject to the new BSD license that is bundled
+with this package in the file LICENSE.txt.
+It is also available through the world-wide-web at this URL:
+http://framework.zend.com/license/new-bsd
+If you did not receive a copy of the license and are unable to
+obtain it through the world-wide-web, please send an email
+to license@zend.com so we can send you a copy immediately.</p>
+</div>
+<a name="classes"></a><a id="ZendX_Db_Adapter_Firebird"></a><h2 class="class">ZendX_Db_Adapter_Firebird<div class="to-top"><a href="#top">jump to top</a></div>
+</h2>
+<div class="class">
+<dl class="class-info">
+<dt>Extends from</dt>
+<dd>Zend_Db_Adapter_Abstract</dd>
+<dt>category</dt>
+<dd>ZendX</dd>
+<dt>copyright</dt>
+<dd>Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)</dd>
+<dt>license</dt>
+<dd>http://framework.zend.com/license/new-bsd     New BSD License</dd>
+<dt>package</dt>
+<dd>ZendX_Db</dd>
+<dt>subpackage</dt>
+<dd>Adapter</dd>
+<dt>Properties</dt>
+<dd><a class="property" href="#ZendX_Db_Adapter_Firebird::%24_autoQuoteIdentifiers">$_autoQuoteIdentifiers</a></dd>
+<dd><a class="property" href="#ZendX_Db_Adapter_Firebird::%24_transResource">$_transResource</a></dd>
+<dd><a class="property" href="#ZendX_Db_Adapter_Firebird::%24_numericDataTypes">$_numericDataTypes</a></dd>
+<dt>Methods</dt>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::getTransaction()">getTransaction</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::_quote()">_quote</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::listTables()">listTables</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::describeTable()">describeTable</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::_formatDbConnString()">_formatDbConnString</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::_connect()">_connect</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::closeConnection()">closeConnection</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::prepare()">prepare</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::lastInsertId()">lastInsertId</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::_beginTransaction()">_beginTransaction</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::_commit()">_commit</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::_rollBack()">_rollBack</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::setFetchMode()">setFetchMode</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::limit()">limit</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::quoteTableAs()">quoteTableAs</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::lastSequenceId()">lastSequenceId</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::nextSequenceId()">nextSequenceId</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::supportsParameters()">supportsParameters</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::isConnected()">isConnected</a></dd>
+<dd><a class="method" href="#ZendX_Db_Adapter_Firebird::getServerVersion()">getServerVersion</a></dd>
+</dl>
+<h3>Description</h3>
+<p class="short-description"></p>
+<div class="long-description">
+</div>
+<h3>Properties</h3>
+<div>
+<a id="ZendX_Db_Adapter_Firebird::$_autoQuoteIdentifiers"></a><h4 class="property">$_autoQuoteIdentifiers<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="property">
+<code>bool <span class="highlight">$_autoQuoteIdentifiers</span> = 'true'</code><p class="short-description">Specifies whether the adapter automatically quotes identifiers.</p>
+<div class="long-description"><p>If true, most SQL generated by Zend_Db classes applies
+identifier quoting automatically.
+If false, developer must quote identifiers themselves
+by calling quoteIdentifier().</p>
+</div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>$_autoQuoteIdentifiers</dt>
+<dd>bool<br><em></em>
+</dd>
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>default</dt>
+<dd>true</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::$_numericDataTypes"></a><h4 class="property">$_numericDataTypes<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="property">
+<code>array <span class="highlight">$_numericDataTypes</span> = 'array'</code><p class="short-description">Keys are UPPERCASE SQL datatypes or the constants
+Zend_Db::INT_TYPE, Zend_Db::BIGINT_TYPE, or Zend_Db::FLOAT_TYPE.</p>
+<div class="long-description"><p>Values are:
+0 = 32-bit integer
+1 = 64-bit integer
+2 = float or decimal</p>
+</div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>$_numericDataTypes</dt>
+<dd>array<br><em>Associative array of datatypes to values 0, 1, or 2.</em>
+</dd>
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>default</dt>
+<dd>array</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::$_transResource"></a><h4 class="property">$_transResource<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="property">
+<code>transaction <span class="highlight">$_transResource</span> = 'null'</code><p class="short-description">The transaction resource.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>$_transResource</dt>
+<dd>transaction<br><em></em>
+</dd>
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>default</dt>
+<dd>null</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<h3>Methods</h3>
+<div>
+<a id="ZendX_Db_Adapter_Firebird::_beginTransaction()"></a><h4 class="method">_beginTransaction<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">_beginTransaction</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        void</code><p class="short-description">Begin a transaction.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::_commit()"></a><h4 class="method">_commit<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">_commit</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        void</code><p class="short-description">Commit a transaction.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::_connect()"></a><h4 class="method">_connect<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">_connect</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        void</code><p class="short-description">Creates a connection to the database.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+<dt>throws</dt>
+<dd></dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::_formatDbConnString()"></a><h4 class="method">_formatDbConnString<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">_formatDbConnString</span><span class="nb-faded-text">(
+           $host,  $port,  $dbname
+          )
+        </span>
+        :
+        void</code><p class="short-description">Format a connection string to connect to database</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$host</dt>
+<dd><em></em></dd>
+<dt>$port</dt>
+<dd><em></em></dd>
+<dt>$dbname</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::_quote()"></a><h4 class="method">_quote<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">_quote</span><span class="nb-faded-text">(
+          string $value
+          )
+        </span>
+        :
+        string</code><p class="short-description">Quote a raw string.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$value</dt>
+<dd>string<br><em>Raw string</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em>Quoted string</em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::_rollBack()"></a><h4 class="method">_rollBack<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">_rollBack</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        void</code><p class="short-description">Roll-back a transaction.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::closeConnection()"></a><h4 class="method">closeConnection<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">closeConnection</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        void</code><p class="short-description">Force the connection to close.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::describeTable()"></a><h4 class="method">describeTable<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">describeTable</span><span class="nb-faded-text">(
+          string $tableName, string $schemaName
+              =
+              null
+          )
+        </span>
+        :
+        array</code><p class="short-description">Returns the column descriptions for a table.</p>
+<div class="long-description"><p>The return value is an associative array keyed by the column name,
+as returned by the RDBMS.</p>
+
+<p>The value of each array element is an associative array
+with the following keys:</p>
+
+<p>SCHEMA_NAME      => string; name of database or schema
+TABLE_NAME       => string;
+COLUMN_NAME      => string; column name
+COLUMN_POSITION  => number; ordinal position of column in table
+DATA_TYPE        => string; SQL datatype name of column
+DEFAULT          => string; default expression of column, null if none
+NULLABLE         => boolean; true if column can have nulls
+LENGTH           => number; length of CHAR/VARCHAR
+SCALE            => number; scale of NUMERIC/DECIMAL
+PRECISION        => number; precision of NUMERIC/DECIMAL
+UNSIGNED         => boolean; unsigned property of an integer type
+PRIMARY          => boolean; true if column is part of the primary key
+PRIMARY_POSITION => integer; position of column in primary key
+IDENTITY         => integer; true if column is auto-generated with unique values</p>
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$tableName</dt>
+<dd>string<br><em></em>
+</dd>
+<dt>$schemaName</dt>
+<dd>string<br><em>OPTIONAL</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>array</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::getServerVersion()"></a><h4 class="method">getServerVersion<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getServerVersion</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        string</code><p class="short-description">Retrieve server version in PHP style</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::getTransaction()"></a><h4 class="method">getTransaction<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getTransaction</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        bool</code><p class="short-description">Return the status of current transaction.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>bool</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::isConnected()"></a><h4 class="method">isConnected<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">isConnected</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        boolean</code><p class="short-description">Test if a connection is active</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>boolean</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::lastInsertId()"></a><h4 class="method">lastInsertId<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">lastInsertId</span><span class="nb-faded-text">(
+          string $tableName
+              =
+              null, string $primaryKey
+              =
+              null
+          )
+        </span>
+        :
+        string</code><p class="short-description">Gets the last ID generated automatically by an IDENTITY/AUTOINCREMENT column.</p>
+<div class="long-description"><p>As a convention, on RDBMS brands that support sequences
+(e.g. Firebird, Oracle, PostgreSQL, DB2), this method forms the name of a sequence
+from the arguments and returns the last id generated by that sequence.
+On RDBMS brands that support IDENTITY/AUTOINCREMENT columns, this method
+returns the last value generated for such a column, and the table name
+argument is disregarded.</p>
+
+<p>Firebird does not support IDENTITY columns, so if the sequence is not
+specified, this method returns null.</p>
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$tableName</dt>
+<dd>string<br><em>OPTIONAL Name of table.</em>
+</dd>
+<dt>$primaryKey</dt>
+<dd>string<br><em>OPTIONAL Name of primary key column.</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+<dt>throws</dt>
+<dd></dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::lastSequenceId()"></a><h4 class="method">lastSequenceId<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">lastSequenceId</span><span class="nb-faded-text">(
+          string $sequenceName
+          )
+        </span>
+        :
+        string</code><p class="short-description">Return the most recent value from the specified sequence in the database.</p>
+<div class="long-description"><p>This is supported only on RDBMS brands that support sequences
+(e.g. Firebird, Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.</p>
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$sequenceName</dt>
+<dd>string<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::limit()"></a><h4 class="method">limit<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">limit</span><span class="nb-faded-text">(
+          string $sql, integer $count, integer $offset
+              =
+              0
+          )
+        </span>
+        :
+        string</code><p class="short-description">Adds an adapter-specific LIMIT clause to the SELECT statement.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$sql</dt>
+<dd>string<br><em></em>
+</dd>
+<dt>$count</dt>
+<dd>integer<br><em></em>
+</dd>
+<dt>$offset</dt>
+<dd>integer<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+<dt>throws</dt>
+<dd></dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::listTables()"></a><h4 class="method">listTables<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">listTables</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        array</code><p class="short-description">Returns a list of the tables in the database.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>array</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::nextSequenceId()"></a><h4 class="method">nextSequenceId<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">nextSequenceId</span><span class="nb-faded-text">(
+          string $sequenceName
+          )
+        </span>
+        :
+        integer</code><p class="short-description">Generate a new value from the specified sequence in the database, and return it.</p>
+<div class="long-description"><p>This is supported only on RDBMS brands that support sequences
+(e.g. Firebird, Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.</p>
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$sequenceName</dt>
+<dd>string<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>integer</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::prepare()"></a><h4 class="method">prepare<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">prepare</span><span class="nb-faded-text">(
+          string $sql
+          )
+        </span>
+        :
+        <a href="_Db_Statement_Firebird.html#ZendX_Db_Statement_Firebird">ZendX_Db_Statement_Firebird</a></code><p class="short-description">Prepare a statement and return a Statement resource.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$sql</dt>
+<dd>string<br><em>SQL query</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt><a href="_Db_Statement_Firebird.html#ZendX_Db_Statement_Firebird">ZendX_Db_Statement_Firebird</a></dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::quoteTableAs()"></a><h4 class="method">quoteTableAs<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">quoteTableAs</span><span class="nb-faded-text">(
+          string|array|Zend_Db_Expr $ident, string $alias
+              =
+              null, boolean $auto
+              =
+              false
+          )
+        </span>
+        :
+        string</code><p class="short-description">Quote a table identifier and alias.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$ident</dt>
+<dd>stringarrayZend_Db_Expr<br><em>The identifier or expression.</em>
+</dd>
+<dt>$alias</dt>
+<dd>string<br><em>An alias for the table.</em>
+</dd>
+<dt>$auto</dt>
+<dd>boolean<br><em>If true, heed the AUTO_QUOTE_IDENTIFIERS config option.</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em>The quoted identifier and alias.</em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::setFetchMode()"></a><h4 class="method">setFetchMode<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">setFetchMode</span><span class="nb-faded-text">(
+          int $mode
+          )
+        </span>
+        :
+        void</code><p class="short-description">Set the fetch mode.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$mode</dt>
+<dd>int<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="ZendX_Db_Adapter_Firebird::supportsParameters()"></a><h4 class="method">supportsParameters<div class="to-top"><a href="#ZendX_Db_Adapter_Firebird">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">supportsParameters</span><span class="nb-faded-text">(
+          string $type
+          )
+        </span>
+        :
+        bool</code><p class="short-description">Check if the adapter supports real SQL parameters.</p>
+<div class="long-description">
+</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$type</dt>
+<dd>string<br><em>&amp;#039;positional&amp;#039; or &amp;#039;named&amp;#039;</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>bool</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<small xmlns="" class="footer">Documentation was generated by <a href="http://docblox-project.org">DocBlox</a>.
+    </small></body></html>
