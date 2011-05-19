@@ -513,10 +513,15 @@ Ext.onReady(function(){
 	//**************************************************************************
 	var tabPanel = Ext.create('Ext.tab.Panel', {
         activeTab	: 0,
-        defaults	:{ bodyStyle:'padding:5px', autoScroll:true },
+        frame		: false,
+        border		: false,
+        height		: Ext.getCmp('MainApp').getHeight(),
+        defaults	:{ autoScroll:true },
         items:[{
-            title:'Pharmacies',
-            items: [ PharmacyGrid ],
+            title	:'<?php i18n("Pharmacies"); ?>',
+    	    frame	: false,
+	        border	: false,
+            items	: [ PharmacyGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
 			  	dock: 'bottom',
@@ -530,8 +535,10 @@ Ext.onReady(function(){
 			  	}]
 			}]
         },{
-            title:'Insurance Companies',
-            items: [ InsuranceGrid ],
+            title	:'<?php i18n("Insurance Companies"); ?>',
+    	    frame	: false,
+	        border	: false,
+            items	: [ InsuranceGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
 			  	dock: 'bottom',
@@ -545,11 +552,15 @@ Ext.onReady(function(){
 			  	}]
 			}]
 		},{
-            title:'Insurance Numbers',
-            items: [InsuranceNumbersGrid ]
+            title	:'<?php i18n("Insurance Numbers"); ?>',
+    	    frame	: false,
+	        border	: false,
+            items	: [InsuranceNumbersGrid ]
 		},{
-            title:'X12 Partners',
-            items: [ x12ParnersGrid ],
+            title	:'X12 Partners',
+    	    frame	: false,
+	        border	: false,
+            items	: [ x12ParnersGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
 			  	dock: 'bottom',
@@ -563,7 +574,9 @@ Ext.onReady(function(){
 			  	}]
 			}]
 		},{
-            title:'Documents',
+            title	:'<?php i18n("Documents"); ?>',
+    	    frame	: false,
+	        border	: false,
             items: [{
 
 			}],
@@ -587,8 +600,10 @@ Ext.onReady(function(){
 			  	}]
 			}]
 		},{
-            title:'HL7 Viewer',
-            items: [{
+            title	:'<?php i18n("HL7 Viewer"); ?>',
+    	    frame	: false,
+	        border	: false,
+            items	: [{
 
 			}],
 			dockedItems: [{
