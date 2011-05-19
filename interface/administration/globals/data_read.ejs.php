@@ -3,11 +3,16 @@
 // data_read.ejs.php / Global form values
 // v0.0.1
 // Under GPLv3 License
-// Integrated by: Ernesto Rodriguez
+//
+// Integrated by: Ernesto Rodriguez in 2011
+//
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //---------------------------------------------------------------------------------------
+
 session_name ( "MitosEHR" );
 session_start();
+session_cache_limiter('private');
+
 include_once("../../../library/dbHelper/dbHelper.inc.php");
 include_once("../../../library/I18n/I18n.inc.php");
 require_once("../../../repository/dataExchange/dataExchange.inc.php");
