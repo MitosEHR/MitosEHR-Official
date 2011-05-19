@@ -42,7 +42,7 @@ $_SESSION['lang']['language'] = "English (Standard)";
 // Directory related variables
 //**********************************************************************
 $_SESSION['dir']['zend'] = "ZendFramework-1.11.4";
-$_SESSION['dir']['ext'] = "ext-4.0.0";
+$_SESSION['dir']['ext'] = "ext-4.0.1";
 $_SESSION['dir']['AES'] = "phpAES";
 $_SESSION['dir']['adoHelper'] = "dbHelper";
 $_SESSION['dir']['ux'] = "library/".$_SESSION['dir']['ext']."/examples/ux";
