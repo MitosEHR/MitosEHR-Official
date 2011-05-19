@@ -147,6 +147,7 @@ Ext.onReady(function(){
 		currList = records[0].data.option_id; // Get first result for first grid data
 		storeListsOption.load({params:{list_id: currList}}); // Filter the data store from the currList value
 	});
+	
 	// *************************************************************************************
 	// List Create Form
 	// Create or Closse purpose

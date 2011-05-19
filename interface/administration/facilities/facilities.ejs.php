@@ -213,8 +213,9 @@ Ext.onReady(function() {
 			layout: 'hbox',
 			items: [{
 				xtype: 'combo', 
-				id: 'cmbTax_id_type', 
-				displayField: 'title', 
+				id: 'tax_id_type', 
+				displayField: 'title',
+				valueField: 'option_id', 
 				editable: false, 
 				store: storeTAXid, 
 				queryMode: 'local',
@@ -239,7 +240,7 @@ Ext.onReady(function() {
         },{
 			fieldLabel: '<?php i18n("POS Code"); ?>',
 			xtype: 'combo', 
-			id: 'cmbPOSCode', 
+			id: 'pos_code', 
 			displayField: 'title',
 			valueField: 'option_id', 
 			editable: false, 
@@ -300,6 +301,10 @@ Ext.onReady(function() {
             }
         }]
     });
+   	facilityForm.on('afterrender',function(){
+   		Ext.getCmp('tax_id_type').setValue( storeTAXid.getAt(0).data.option_id );
+   		Ext.getCmp('pos_code').setValue( storePOSCode.getAt(0).data.option_id );
+   	});
     
 	// *************************************************************************************
 	// Window User Form
@@ -327,6 +332,7 @@ Ext.onReady(function() {
         frameHeader	: false,
         border		: false,
         layout		: 'fit',
+        height		: Ext.getCmp('MainApp').getHeight(),
         columns: [
 			{
 				text     : '<?php i18n("Name"); ?>',
