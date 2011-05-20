@@ -87,7 +87,6 @@ Ext.onReady(function() {
 		hideHeaders: true,
 		useArrows: true,
 		rootVisible: false,
-		width: 200,
 		collapsible: true,
 		store: storeTree,
 		title: '<?php i18n("Navigation"); ?>',
@@ -113,7 +112,42 @@ Ext.onReady(function() {
 			MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.id, scripts: true});
 		}
 	});
-	
+	// *************************************************************************************
+	// Search for patient window
+	// *************************************************************************************
+	var winSearchPatient = new Ext.create('widget.window', {
+		id				: 'winSearchPatient',
+	    title			: 'Search for Patient',
+	    width			: 700,
+		height			: 400,
+		closeAction		: 'hide',
+	    plain			: true,
+		modal			: false,
+		resizable		: false,
+	    bodyStyle		: 'background: #ffffff;',
+	    items			: [],
+	    dockedItems: [{
+	  	  	xtype: 'toolbar',
+		  	dock: 'bottom',
+		  	items: [{
+				id        : 'selectPatient',
+			    text      : '<?php i18n("Select Patient"); ?>',
+			    iconCls   : 'icoPatient',
+			    handler   : function(){
+			    	Ext.getCmp('patientButton').setText('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">[Patient Name]<br>[Record Number]');
+			    	Ext.getCmp('patientButton').enable();
+					winSearchPatient.hide();
+			    }
+			},'-',{
+			    id        : 'closePatient',
+			    text      : '<?php i18n("Close"); ?>',
+			    iconCls   : 'close',
+			    handler: function(){ 
+					winSearchPatient.hide();
+			    }
+		  	}]					    
+	  	}]
+	}); // End winLogon
 	//****************************************************************
 	// header Panel
 	//
@@ -134,20 +168,33 @@ Ext.onReady(function() {
 			style:'float:left',
 			border: false
 		},{
-			xtype: 'button',
-			text: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">[ Patient Name ]<br>[ Patient Info ]',
-			scale: 'large',
-			style : 'float:left',
-			margin: '0 0 0 5px',
-			width: 200,
-			minWidth: 150,
-			menu: [{
-				text:'<?php i18n("New Encounter"); ?>'
-			},{
-				text:'<?php i18n("Appointments"); ?>'
-			},{
-				text:'<?php i18n("Patient Notes"); ?>'
-			}]
+			xtype	: 'button',
+			id		: 'patientButton',
+			text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No<br>Patient',
+			scale	: 'large',
+			style 	: 'float:left',
+			margin	: '0 0 0 5px',
+			disabled : true,
+			minWidth: 180,
+			menu 	: Ext.create('Ext.menu.Menu', {
+				items: [{
+					text:'<?php i18n("New Encounter"); ?>'
+				},{
+					text:'<?php i18n("Appointments"); ?>'
+				},{
+					text:'<?php i18n("Patient Notes"); ?>'
+				}]
+			})
+		},{
+			xtype	: 'button',
+			text	: 'Patient<br>Search',
+			scale	: 'large',
+			style 	: 'float:left',
+			margin	: '0 0 0 5px',
+			minWidth: 75,
+			handler	: function(){
+				winSearchPatient.show();
+			}
 		},{
 			xtype: 'button',
 			text: '<?php echo $_SESSION['user']['name'] ?>',
