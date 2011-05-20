@@ -119,9 +119,7 @@ Ext.onReady(function(){
 			type	: 'ajax',
 			api		: {
 				read	: 'interface/administration/lists/component_data.ejs.php?task=editlist',
-				create	: 'interface/administration/lists/component_data.ejs.php?task=editlist',
-				update	: 'interface/administration/lists/component_data.ejs.php?task=editlist',
-				destroy	: 'interface/administration/lists/component_data.ejs.php?task=editlist',
+				destroy	: 'interface/administration/lists/component_data.ejs.php?task=d_list',
 			},
 	        reader: {
 	            type			: 'json',
@@ -334,8 +332,44 @@ Ext.onReady(function(){
 				text		  	: '<?php i18n('Delete list'); ?>',
 				iconCls			: 'delete',
 				handler: function(){
-					editor.cancelEdit();
-					
+					Ext.Msg.show({
+						title: '<?php i18n('Please confirm...'); ?>', 
+						icon: Ext.MessageBox.QUESTION,
+						msg:'<?php i18n('Are you sure to delete this List?'); ?>',
+						buttons: Ext.Msg.YESNO,
+						fn:function(btn,msgGrid){
+							if(btn=='yes'){
+								editor.cancelEdit();
+								Ext.getCmp('option_id').setValue( Ext.getCmp('cmbList').getValue() );
+								Ext.getCmp('list_name').setValue( "DEL" ); // This has no purpose.
+				            	var form = Ext.getCmp('frmLists').getForm();
+            					if(form.isValid()){
+				                	form.submit({
+                				    	url: 'interface/administration/lists/component_data.ejs.php?task=d_list',
+				                    	timeout: 1800000, // 30 minutes to timeout.
+	            				        waitMsg: '<?php i18n("Deleting list..."); ?>',
+					                    waitTitle: '<?php i18n("Processing..."); ?>',
+										failure: function(form, action){
+											obj = Ext.JSON.decode(action.response.responseText); 
+        	    				            Ext.Msg.alert('<?php i18n("Failed"); ?>', obj.errors.reason);
+				        	                Ext.getCmp('frmLists').getForm().reset();
+										},
+				    	                success: function(form, action) {
+    	        				        	storeEditList.sync();
+				    	                	storeEditList.load();
+    	        				        	currList = Ext.getCmp('option_id').getValue();
+				    	                	Ext.getCmp('frmLists').getForm().reset();
+				    	                	
+				    	                	// FIXME: Need to select the first record of the combobox
+				    	                	// at the same time, refresh the list option grid below.
+				    	                	// every time you delete a list option header.
+				    	                	Ext.getCmp('cmbList').select(0);
+            					        }
+                					});
+            					}
+							}
+						}
+					});
 				}
 			},'-','<?php i18n('Select list'); ?>: ',{
 				name			: 'cmbList', 
@@ -361,6 +395,9 @@ Ext.onReady(function(){
 				}
 			}]
 		},{
+			// -----------------------------------------
+			// Grid Bottom Menu
+			// -----------------------------------------
 			xtype	: 'toolbar',
 			dock	: 'bottom',
 			items:[{

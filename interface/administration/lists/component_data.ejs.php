@@ -114,5 +114,25 @@ switch ($_GET['task']) {
 		}
 		return;
 	break;
+	
+	// *************************************************************************************
+	// Delete a existent list
+	// *************************************************************************************
+	case "d_list":
+		$mitos_db = new dbHelper();
+
+		$sql = "DELETE FROM list_options WHERE option_id='" . $_POST['option_id'] . "' AND list_id='lists'";
+		$mitos_db->setSQL($sql);
+		$ret = $mitos_db->execLog();
+		
+		// FIXME: When deleting, also delete the childs attached to this primary list.
+		// To keep the database healthy.
+		if ( $ret == "" ){
+			echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+		} else {
+			echo "{ success: true }";
+		}
+		return;
+	break;
 }
 ?>
