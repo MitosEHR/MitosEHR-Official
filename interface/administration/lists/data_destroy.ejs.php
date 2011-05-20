@@ -22,12 +22,25 @@ require_once("repository/dataExchange/dataExchange.inc.php");
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 
+//------------------------------------------
+// Database class instance
+//------------------------------------------
+$mitos_db = new dbHelper();
+
 // *************************************************************************************
 // Flag the list item to delete
 // *************************************************************************************
 $data = json_decode ( $_POST['row'] );
 $delete_id = $data[0]->id;
 
-sqlStatement("DELETE FROM list_options WHERE id='$delete_id'"); 
+$sql = "DELETE FROM list_options WHERE id='$delete_id'"; 
 
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execLog();
+
+if ( $ret == "" ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+} else {
+	echo "{ success: true }";
+}
 ?>

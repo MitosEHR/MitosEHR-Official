@@ -26,6 +26,7 @@ $_SESSION['site']['flops'] = 0;
 // Database class instance
 //------------------------------------------
 $mitos_db = new dbHelper();
+
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];

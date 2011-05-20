@@ -27,6 +27,11 @@ $_SESSION['site']['flops'] = 0;
 // *************************************************************************************
 $data = json_decode ( $_POST['row'] );
 
+//------------------------------------------
+// Database class instance
+//------------------------------------------
+$mitos_db = new dbHelper();
+
 // *************************************************************************************
 // Validate and pass the POST variables to an array
 // This is the moment to validate the entered values from the user
@@ -49,18 +54,26 @@ $row['notes'] = dataEncode($data[0]->notes);
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-sqlStatement("UPDATE 
-				list_options 
-			SET
-				id = '" . $row['id'] . "', " . "
-				list_id = '" . $row['list_id'] . "', " . "
-				option_id = '" . $row['option_id'] . "', " . "
-				title = '" . $row['title'] . "', " . "
-				seq = '" . $row['seq'] . "', " . "
-				is_default = '" . $row['is_default'] . "', " . "
-				option_value = '" . $row['option_value'] . "', " . "
-				mapping = '" . $row['mapping'] . "', " . "
-				notes = '" . $row['notes'] . "' " . " 
-			WHERE id ='" . $row['id'] . "'");
+$sql = "UPDATE 
+			list_options 
+		SET
+			id = '" . $row['id'] . "', " . "
+			list_id = '" . $row['list_id'] . "', " . "
+			option_id = '" . $row['option_id'] . "', " . "
+			title = '" . $row['title'] . "', " . "
+			seq = '" . $row['seq'] . "', " . "
+			is_default = '" . $row['is_default'] . "', " . "
+			option_value = '" . $row['option_value'] . "', " . "
+			mapping = '" . $row['mapping'] . "', " . "
+			notes = '" . $row['notes'] . "' " . " 
+		WHERE id ='" . $row['id'] . "'";
+			
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execLog();
 
+if ( $ret == "" ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+} else {
+	echo "{ success: true }";
+}
 ?>

@@ -31,12 +31,12 @@ $mitos_db = new dbHelper();
 // Deside what to do with the $_GET['task']
 // *************************************************************************************
 switch ($_GET['task']) {
+	
 	// *************************************************************************************
 	// Data for for storeTaxID
 	// *************************************************************************************
 	case "editlist":
-		$lang_id = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
-		if (($lang_id == '1' && !empty($GLOBALS['skip_english_translation'])) || !$GLOBALS['translate_lists']) {
+		if ($_SESSION['lang']['code'] == "en_US") {
   			$mitos_db->setSQL("SELECT 
   									option_id, 
   									title 
@@ -68,6 +68,51 @@ switch ($_GET['task']) {
 		echo '"row": [' . chr(13);
 		echo $buff;
 		echo ']}' . chr(13);
+	break;
+	
+	// *************************************************************************************
+	// Create a new list
+	// This data creation is special, we don't nee a data_create.ejs.php to do this.
+	// *************************************************************************************
+	case "c_list":
+		$mitos_db = new dbHelper();
+		
+		// check if this already exists
+		$sql="SELECT count(*) as howmany FROM list_options WHERE title= '".$_POST['list_name']."' OR option_id = '".strtolower($_POST['option_id'])."'";
+		$mitos_db->setSQL($sql);
+		$ret = $mitos_db->execStatement();
+		if ($ret[0]['howmany']){
+			echo '{ success: false, errors: { reason: "'. i18n('This record already exists', 'r') .'" }}';
+			return;
+		}			
+			
+		// Get last sequence of the list option
+		$sql="SELECT count(seq) as last_seq FROM list_options WHERE list_id = 'lists' ORDER BY title, seq";
+		$mitos_db->setSQL($sql);
+		$ret = $mitos_db->execStatement();
+		$c = $ret[0]['last_seq'] + 1;
+		
+		// Finally - Insert the list option
+		$sql = "INSERT INTO 
+					list_options 
+				SET 
+					list_id='lists',
+					option_id='" . strtolower($_POST['option_id']) . "',
+					title='" . $_POST['list_name'] . "',
+					seq='" . $c . "',
+					is_default='0',
+					option_value='0',
+					mapping='',
+					notes=''";
+		$mitos_db->setSQL($sql);
+		$ret = $mitos_db->execLog();
+
+		if ( $ret == "" ){
+			echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+		} else {
+			echo "{ success: true }";
+		}
+		return;
 	break;
 }
 ?>

@@ -112,6 +112,7 @@ Ext.onReady(function() {
 			MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.id, scripts: true});
 		}
 	});
+	
 	// *************************************************************************************
 	// Search for patient...
 	// *************************************************************************************
