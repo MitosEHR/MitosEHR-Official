@@ -39,7 +39,7 @@ $delete_id = $data[0]->id;
 $sql = "DELETE FROM facility WHERE id='" . $delete_id . "'";
 
 $mitos_db->setSQL($sql);
-$ret = $mitos_db->execOnly();
+$ret = $mitos_db->execLog();
 
 if ( $ret == "" ){
 	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';

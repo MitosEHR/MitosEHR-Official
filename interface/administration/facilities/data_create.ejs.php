@@ -80,7 +80,7 @@ $sql =		"INSERT INTO
 				facility_npi 		= " . $row['facility_npi'];
 				
 $mitos_db->setSQL($sql);
-$ret = $mitos_db->execOnly();
+$ret = $mitos_db->execLog();
 
 if ( $ret == "" ){
 	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
