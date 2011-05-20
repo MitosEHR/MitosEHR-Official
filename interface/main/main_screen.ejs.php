@@ -118,21 +118,21 @@ Ext.onReady(function() {
 	Ext.define("Post", {
         extend: 'Ext.data.Model',
         proxy: {
-            type: 'jsonp',
-            url : 'http://www.sencha.com/forum/topics-remote.php',
+            type: 'ajax',
+            url : 'library/patient/patient_search.inc.php',
             reader: {
                 type: 'json',
-                root: 'topics',
-                totalProperty: 'totalCount'
+                root: 'row',
+                totalProperty: 'totals'
             }
         },
         fields: [
-            {name: 'id', mapping: 'post_id'},
-            {name: 'title', mapping: 'topic_title'},
-            {name: 'topicId', mapping: 'topic_id'},
-            {name: 'author', mapping: 'author'},
-            {name: 'lastPost', mapping: 'post_time', type: 'date', dateFormat: 'timestamp'},
-            {name: 'excerpt', mapping: 'post_text'}
+            {name: 'id', 			type: 'int'},
+            {name: 'pid', 			type: 'int'},
+            {name: 'pubpid', 		type: 'int'},
+            {name: 'patient_name', 	type: 'string'},
+            {name: 'patient_dob', 	type: 'string'},
+            {name: 'patient_ss', 	type: 'string'}
         ]
     });
     var ds = Ext.create('Ext.data.Store', {
@@ -153,6 +153,7 @@ Ext.onReady(function() {
             typeAhead: false,
             hideLabel: true,
             hideTrigger:true,
+            minChars: 1,
             anchor: '100%',
             listConfig: {
                 loadingText: 'Searching...',
@@ -160,8 +161,8 @@ Ext.onReady(function() {
                 // Custom rendering template for each item
                 getInnerTpl: function() {
                     return '<div class="search-item">' +
-                        '<h3><span>{[Ext.Date.format(values.lastPost, "M j, Y")]}<br />by {author}</span>{title}</h3>' +
-                        '{excerpt}' +
+                        '<h3><span>{patient_name}</span>  ({pid})</h3>' +
+                        'DOB: {patient_dob} SS: {patient_ss}' +
                     '</div>';
                 }
             },
@@ -171,9 +172,9 @@ Ext.onReady(function() {
                 select: function(combo, selection) {
                     var post = selection[0];
                     if (post) {
-                            //Ext.String.format('http://www.sencha.com/forum/showthread.php?t={0}&p={1}', post.get('topicId'), post.get('id'));
-                            Ext.getCmp('patientButton').setText('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">[Patient Name]<br>[Record Number]');
-			    			Ext.getCmp('patientButton').enable();
+                    	var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">{0}<br>Record ({1})', post.get('patient_name'), post.get('pid'));
+                        Ext.getCmp('patientButton').setText( newPatientBtn );
+		    			Ext.getCmp('patientButton').enable();
                     }
                 }
             }
