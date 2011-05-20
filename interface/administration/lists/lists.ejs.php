@@ -144,9 +144,14 @@ Ext.onReady(function(){
 	// Select the first record
 	//--------------------------
 	storeEditList.on('load',function(ds,records,o){
-		Ext.getCmp('cmbList').setValue(records[0].data.option_id);
-		currList = records[0].data.option_id; // Get first result for first grid data
-		storeListsOption.load({params:{list_id: currList}}); // Filter the data store from the currList value
+		if (!currList){
+			Ext.getCmp('cmbList').setValue(records[0].data.option_id);
+			currList = records[0].data.option_id; 					// Get first result for first grid data
+			storeListsOption.load({params:{list_id: currList}}); 	// Filter the data store from the currList value
+		} else {
+			Ext.getCmp('cmbList').setValue( currList );
+			storeListsOption.load({params:{list_id: currList }});
+		}
 	});
 	
 	// *************************************************************************************
@@ -217,9 +222,8 @@ Ext.onReady(function(){
     	                success: function(form, action) {
     	                	storeEditList.sync();
     	                	storeEditList.load();
-    	                	// FIXME
+    	                	currList = Ext.getCmp('option_id').getValue();
     	                	Ext.getCmp('frmLists').getForm().reset();
-    	                	Ext.getCmp('cmbList').setValue( Ext.getCmp('option_id').getValue() );
             	        }
                 	});
             	}
@@ -331,6 +335,7 @@ Ext.onReady(function(){
 				iconCls			: 'delete',
 				handler: function(){
 					editor.cancelEdit();
+					
 				}
 			},'-','<?php i18n('Select list'); ?>: ',{
 				name			: 'cmbList', 
