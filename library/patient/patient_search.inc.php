@@ -38,9 +38,11 @@ $start 	= ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count 	= ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 $mitos_db->setSQL("SELECT id,pid,pubpid,fname,lname,mname,DOB,ss  
 					 FROM patient_data
-					WHERE fname LIKE '%".$search."%'
-					   OR lname LIKE '%".$search."%'
-					   OR mname LIKE '%".$search."%'
+					WHERE fname LIKE '".$search."%'
+					   OR lname LIKE '".$search."%'
+					   OR mname LIKE '".$search."%'
+					   OR pid 	LIKE '".$search."%'
+					   OR ss 	LIKE '".$search."%'
 					LIMIT ".$start.",".$count);
 $total = $mitos_db->rowCount();
 

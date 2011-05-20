@@ -173,7 +173,7 @@ Ext.onReady(function() {
                 select: function(combo, selection) {
                     var post = selection[0];
                     if (post) {
-                    	var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">{0}<br>Record ({1})', post.get('patient_name'), post.get('pid'));
+                    	var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><b>{0}</b><br>Record ({1})', post.get('patient_name'), post.get('pid'));
                         Ext.getCmp('patientButton').setText( newPatientBtn );
 		    			Ext.getCmp('patientButton').enable();
                     }
@@ -205,12 +205,12 @@ Ext.onReady(function() {
 		},{
 			xtype	: 'button',
 			id		: 'patientButton',
-			text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No<br>Patient',
+			text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
 			scale	: 'large',
 			style 	: 'float:left',
 			margin	: '0 0 0 5px',
 			disabled : true,
-			minWidth: 180,
+			minWidth: 190,
 			menu 	: Ext.create('Ext.menu.Menu', {
 				items: [{
 					text:'<?php i18n("New Encounter"); ?>'
