@@ -113,41 +113,74 @@ Ext.onReady(function() {
 		}
 	});
 	// *************************************************************************************
-	// Search for patient window
+	// Search for patient...
 	// *************************************************************************************
-	var winSearchPatient = new Ext.create('widget.window', {
-		id				: 'winSearchPatient',
-	    title			: 'Search for Patient',
-	    width			: 700,
-		height			: 400,
-		closeAction		: 'hide',
-	    plain			: true,
-		modal			: false,
-		resizable		: false,
-	    bodyStyle		: 'background: #ffffff;',
-	    items			: [],
-	    dockedItems: [{
-	  	  	xtype: 'toolbar',
-		  	dock: 'bottom',
-		  	items: [{
-				id        : 'selectPatient',
-			    text      : '<?php i18n("Select Patient"); ?>',
-			    iconCls   : 'icoPatient',
-			    handler   : function(){
-			    	Ext.getCmp('patientButton').setText('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">[Patient Name]<br>[Record Number]');
-			    	Ext.getCmp('patientButton').enable();
-					winSearchPatient.hide();
-			    }
-			},'-',{
-			    id        : 'closePatient',
-			    text      : '<?php i18n("Close"); ?>',
-			    iconCls   : 'close',
-			    handler: function(){ 
-					winSearchPatient.hide();
-			    }
-		  	}]					    
-	  	}]
-	}); // End winLogon
+	Ext.define("Post", {
+        extend: 'Ext.data.Model',
+        proxy: {
+            type: 'jsonp',
+            url : 'http://www.sencha.com/forum/topics-remote.php',
+            reader: {
+                type: 'json',
+                root: 'topics',
+                totalProperty: 'totalCount'
+            }
+        },
+        fields: [
+            {name: 'id', mapping: 'post_id'},
+            {name: 'title', mapping: 'topic_title'},
+            {name: 'topicId', mapping: 'topic_id'},
+            {name: 'author', mapping: 'author'},
+            {name: 'lastPost', mapping: 'post_time', type: 'date', dateFormat: 'timestamp'},
+            {name: 'excerpt', mapping: 'post_text'}
+        ]
+    });
+    var ds = Ext.create('Ext.data.Store', {
+        pageSize: 10,
+        model: 'Post'
+    });
+	var searchPanel = Ext.create('Ext.panel.Panel', {
+        width: 400,
+        bodyPadding: 6,
+        margin: '1 5',
+        style : 'float:left',
+      	layout: 'anchor',
+        items: [{
+            xtype: 'combo',
+            store: ds,
+            displayField: 'title',
+            emptyText: 'Live patient search...',
+            typeAhead: false,
+            hideLabel: true,
+            hideTrigger:true,
+            anchor: '100%',
+            listConfig: {
+                loadingText: 'Searching...',
+                emptyText: 'No matching posts found.',
+                // Custom rendering template for each item
+                getInnerTpl: function() {
+                    return '<div class="search-item">' +
+                        '<h3><span>{[Ext.Date.format(values.lastPost, "M j, Y")]}<br />by {author}</span>{title}</h3>' +
+                        '{excerpt}' +
+                    '</div>';
+                }
+            },
+            pageSize: 10,
+            // override default onSelect to do redirect
+            listeners: {
+                select: function(combo, selection) {
+                    var post = selection[0];
+                    if (post) {
+                            //Ext.String.format('http://www.sencha.com/forum/showthread.php?t={0}&p={1}', post.get('topicId'), post.get('id'));
+                            Ext.getCmp('patientButton').setText('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">[Patient Name]<br>[Record Number]');
+			    			Ext.getCmp('patientButton').enable();
+                    }
+                }
+            }
+        }]
+    });
+    
+
 	//****************************************************************
 	// header Panel
 	//
@@ -185,17 +218,7 @@ Ext.onReady(function() {
 					text:'<?php i18n("Patient Notes"); ?>'
 				}]
 			})
-		},{
-			xtype	: 'button',
-			text	: 'Patient<br>Search',
-			scale	: 'large',
-			style 	: 'float:left',
-			margin	: '0 0 0 5px',
-			minWidth: 75,
-			handler	: function(){
-				winSearchPatient.show();
-			}
-		},{
+		}, searchPanel, {
 			xtype: 'button',
 			text: '<?php echo $_SESSION['user']['name'] ?>',
 			iconCls: 'add',
