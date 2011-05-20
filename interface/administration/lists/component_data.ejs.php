@@ -36,7 +36,7 @@ switch ($_GET['task']) {
 	// Data for for storeTaxID
 	// *************************************************************************************
 	case "editlist":
-		if ($_SESSION['lang']['code'] == "en_US") {
+		if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is English, do not translate
   			$mitos_db->setSQL("SELECT 
   									option_id, 
   									title 
