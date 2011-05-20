@@ -26,6 +26,7 @@ $_SESSION['site']['flops'] = 0;
 // Database class instance
 //------------------------------------------
 $mitos_db = new dbHelper();
+
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
@@ -35,9 +36,8 @@ $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 // and execute the apropriate SQL statement
 // *************************************************************************************
 $currList = $_REQUEST["list_id"];
-	
-$lang_id = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
-if (($lang_id == '1' && !empty($GLOBALS['skip_english_translation'])) || !$GLOBALS['translate_lists']) {
+
+if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is English, do not translate
 	$mitos_db->setSQL("SELECT 
 				*
 			FROM 

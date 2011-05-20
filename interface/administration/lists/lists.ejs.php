@@ -158,13 +158,22 @@ Ext.onReady(function(){
 		autoWidth	: true,
 		border		: false,
 		bodyStyle	: 'padding: 5px',
-		defaults	: { labelWidth: 50, anchor: '100%' },
+		defaults	: { labelWidth: 100, anchor: '100%' },
 		items:[
 			{ 
 				xtype: 'textfield', 
 				width: 200, 
+				id: 'option_id', 
+				name: 'option_id', 
+				allowBlank: false,
+				fieldLabel: '<?php i18n('Unique name'); ?>' 
+			},
+			{ 
+				xtype: 'textfield', 
+				width: 200, 
 				id: 'list_name', 
-				name: 'list_name', 
+				name: 'list_name',
+				allowBlank: false, 
 				fieldLabel: '<?php i18n('List Name'); ?>' 
 			}
 	    ]
@@ -188,12 +197,34 @@ Ext.onReady(function(){
 		// Window Bottom Bar
 		// -----------------------------------------
 		bbar:[{
-			text		:'<?php i18n('Save'); ?>',
+			text		:'<?php i18n('Create'); ?>',
 			name		: 'cmdSave',
 			id			: 'cmdSave',
 			iconCls		: 'save',
-			disabled	: true,
-			handler		: function() { winLists.hide(); } 
+			handler		: function() { 
+            	var form = Ext.getCmp('frmLists').getForm();
+            	if(form.isValid()){
+                	form.submit({
+                    	url: 'interface/administration/lists/component_data.ejs.php?task=c_list',
+                    	timeout: 1800000, // 30 minutes to timeout.
+	                    waitMsg: '<?php i18n("Saving new list..."); ?>',
+	                    waitTitle: '<?php i18n("Processing..."); ?>',
+						failure: function(form, action){
+							obj = Ext.JSON.decode(action.response.responseText); 
+        	                Ext.Msg.alert('<?php i18n("Failed"); ?>', obj.errors.reason);
+        	                Ext.getCmp('frmLists').getForm().reset();
+						},
+    	                success: function(form, action) {
+    	                	storeEditList.sync();
+    	                	storeEditList.load();
+    	                	// FIXME
+    	                	Ext.getCmp('frmLists').getForm().reset();
+    	                	Ext.getCmp('cmbList').setValue( Ext.getCmp('option_id').getValue() );
+            	        }
+                	});
+            	}
+				winLists.hide(); 
+			} 
 		},'-',{
 			text		: '<?php i18n('Close'); ?>',
 			name		: 'cmdClose',
@@ -207,11 +238,11 @@ Ext.onReady(function(){
 	// RowEditor Class
 	// *************************************************************************************
 	var editor = Ext.create('Ext.grid.plugin.RowEditing', {
-		saveText: 'Update',
+		autoCancel: false,
 		errorSummary: false,
 		listeners:{
 			afteredit: function(){
-				storeListsOption.save();
+				storeListsOption.sync();
 				storeListsOption.load();
 			}
 		}
@@ -227,6 +258,7 @@ Ext.onReady(function(){
         columnLines	: true,
 		border		: false, 
 		frame	  	: false,
+		height		: Ext.getCmp('MainApp').getHeight(),
 		plugins		: [editor],
 		columns: [{ 	
 			width: 100, 

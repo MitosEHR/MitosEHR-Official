@@ -35,7 +35,7 @@ $_SESSION['site']['facility'] = 'default'; // THIS IS A TEMP VARIABLE
 //**********************************************************************
 // Default Language Related variables
 //**********************************************************************
-$_SESSION['lang']['code'] = "en";
+$_SESSION['lang']['code'] = "en_US";
 $_SESSION['lang']['language'] = "English (Standard)";
 
 //**********************************************************************
