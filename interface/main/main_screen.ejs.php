@@ -29,6 +29,7 @@ include_once('library/compressor/compressor.inc.php');
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
+<link rel="shortcut icon" href="favicon.ico" >
 
 <script type="text/javascript">
 
@@ -73,8 +74,8 @@ Ext.onReady(function() {
 	//****************************************************************
 	var storeTree = new Ext.data.TreeStore({
 		proxy: {
-			type: 'ajax',
-			url: 'interface/navigation/default_leftnav.ejs.php'
+			type	: 'ajax',
+			url		: 'interface/navigation/default_leftnav.ejs.php'
 		},
 	});
 	
@@ -83,19 +84,19 @@ Ext.onReady(function() {
 	// Panel
 	//****************************************************************    
 	var Navigation = new Ext.tree.TreePanel({
-		region: 'west',
-		hideHeaders: true,
-		useArrows: true,
-		rootVisible: false,
-		collapsible: true,
-		store: storeTree,
-		title: '<?php i18n("Navigation"); ?>',
-		split: true,
-		width: 200,
+		region		: 'west',
+		hideHeaders	: true,
+		useArrows	: true,
+		rootVisible	: false,
+		collapsible	: true,
+		store		: storeTree,
+		title		: '<?php i18n("Navigation"); ?>',
+		split		: true,
+		width		: 200,
 		root: {
-			nodeType: 'async',
-			draggable: false,
-			id: 'source'
+			nodeType	: 'async',
+			draggable	: false,
+			id			: 'source'
 		}
 	});
 	
@@ -119,12 +120,12 @@ Ext.onReady(function() {
 	Ext.define("Post", {
         extend: 'Ext.data.Model',
         proxy: {
-            type: 'ajax',
-            url : 'library/patient/patient_search.inc.php?task=search',
+            type	: 'ajax',
+            url 	: 'library/patient/patient_search.inc.php?task=search',
             reader: {
-                type: 'json',
-                root: 'row',
-                totalProperty: 'totals'
+                type			: 'json',
+                root			: 'row',
+                totalProperty	: 'totals'
             }
         },
         fields: [
@@ -137,29 +138,31 @@ Ext.onReady(function() {
         ]
     });
     var ds = Ext.create('Ext.data.Store', {
-        pageSize: 10,
-        model: 'Post'
+        pageSize	: 10,
+        model		: 'Post'
     });
 	var searchPanel = Ext.create('Ext.panel.Panel', {
-        width: 400,
-        bodyPadding: 6,
-        margin: '1 5',
-        style : 'float:left',
-      	layout: 'anchor',
+        width		: 400,
+        bodyPadding	: 6,
+        margin		: '1 5',
+        style 		: 'float:left',
+      	layout		: 'anchor',
         items: [{
-            xtype: 'combo',
-            store: ds,
+            xtype		: 'combo',
+            store		: ds,
             displayField: 'title',
-            emptyText: 'Live patient search...',
-            typeAhead: false,
-            hideLabel: true,
-            hideTrigger:true,
-            minChars: 1,
-            anchor: '100%',
+            emptyText	: 'Live patient search...',
+            typeAhead	: false,
+            hideLabel	: true,
+            hideTrigger	:true,
+            minChars	: 1,
+            anchor		: '100%',
             listConfig: {
-                loadingText: 'Searching...',
-                emptyText: 'No matching posts found.',
+                loadingText	: 'Searching...',
+                emptyText	: 'No matching posts found.',
+                //---------------------------------------------------------------------
                 // Custom rendering template for each item
+                //---------------------------------------------------------------------
                 getInnerTpl: function() {
                     return '<div class="search-item">' +
                         '<h3><span>{patient_name}</span>  ({pid})</h3>' +
@@ -168,7 +171,9 @@ Ext.onReady(function() {
                 }
             },
             pageSize: 10,
+            //--------------------------------------------------------------------------
             // override default onSelect to do redirect
+            //--------------------------------------------------------------------------
             listeners: {
                 select: function(combo, selection) {
                     var post = selection[0];
@@ -181,7 +186,6 @@ Ext.onReady(function() {
 				    			Ext.getCmp('patientButton').enable();
 					    	}
 						});
-                    	
 		    			Ext.data.Request()
                     }
                 }
@@ -189,10 +193,8 @@ Ext.onReady(function() {
         }]
     });
     
-
 	//****************************************************************
 	// header Panel
-	//
 	// tag: ExtJS v4 Ready
 	//****************************************************************
 	var Header = Ext.create('Ext.Panel', {
@@ -216,7 +218,7 @@ Ext.onReady(function() {
 			scale	: 'large',
 			style 	: 'float:left',
 			margin	: '0 0 0 5px',
-			disabled : true,
+			disabled: true,
 			minWidth: 190,
 			menu 	: Ext.create('Ext.menu.Menu', {
 				items: [{
@@ -228,12 +230,12 @@ Ext.onReady(function() {
 				}]
 			})
 		}, searchPanel, {
-			xtype: 'button',
-			text: '<?php echo $_SESSION['user']['name'] ?>',
-			iconCls: 'add',
-			iconAlign: 'left',
-			style : 'float:right',
-			margin: '7 0 0 5',
+			xtype		: 'button',
+			text		: '<?php echo $_SESSION['user']['name'] ?>',
+			iconCls		: 'add',
+			iconAlign	: 'left',
+			style 		: 'float:right',
+			margin		: '7 0 0 5',
 			menu: [{
 				text:'<?php i18n("My account"); ?>'
 			},{
@@ -298,11 +300,11 @@ Ext.onReady(function() {
 	//****************************************************************
 	Ext.create('Ext.Viewport', {
 		layout: {
-			type: 'border',
-			padding: 2
+			type	: 'border',
+			padding	: 2
 		},
-		defaults: { split: true },
-		items: [ Header, Navigation, TopPanel ]
+		defaults	: { split: true },
+		items		: [ Header, Navigation, TopPanel ]
 	}); // End ViewPort
 
 }); // End App

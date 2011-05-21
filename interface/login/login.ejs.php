@@ -19,7 +19,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
-
+<link rel="shortcut icon" href="favicon.ico" >
 <script type="text/javascript">
 Ext.require([
 	'Ext.Msg.*',
