@@ -120,7 +120,7 @@ Ext.onReady(function() {
         extend: 'Ext.data.Model',
         proxy: {
             type: 'ajax',
-            url : 'library/patient/patient_search.inc.php',
+            url : 'library/patient/patient_search.inc.php?task=search',
             reader: {
                 type: 'json',
                 root: 'row',
@@ -173,9 +173,16 @@ Ext.onReady(function() {
                 select: function(combo, selection) {
                     var post = selection[0];
                     if (post) {
-                    	var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><b>{0}</b><br>Record ({1})', post.get('patient_name'), post.get('pid'));
-                        Ext.getCmp('patientButton').setText( newPatientBtn );
-		    			Ext.getCmp('patientButton').enable();
+                    	Ext.Ajax.request({
+					    	url: Ext.String.format('library/patient/patient_search.inc.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
+						    success: function(response, opts){
+						    	var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><b>{0}</b><br>Record ({1})', post.get('patient_name'), post.get('pid'));
+		                        Ext.getCmp('patientButton').setText( newPatientBtn );
+				    			Ext.getCmp('patientButton').enable();
+					    	}
+						});
+                    	
+		    			Ext.data.Request()
                     }
                 }
             }
