@@ -143,8 +143,8 @@ Ext.onReady(function() {
     });
 	var searchPanel = Ext.create('Ext.panel.Panel', {
         width		: 400,
-        bodyPadding	: 6,
-        margin		: '1 5',
+        bodyPadding	: '8 11 5 11',
+        margin		: '0 5',
         style 		: 'float:left',
       	layout		: 'anchor',
         items: [{
