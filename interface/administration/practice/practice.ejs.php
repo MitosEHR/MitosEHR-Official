@@ -39,6 +39,15 @@ Ext.require([
 
 Ext.onReady(function(){
 
+	var rowPos; // Stores the current Grid Row Position (int)
+	var currRec; // Store the current record (Object)
+
+	// *************************************************************************************
+	// If a object called winUser exists destroy it, to create a new one.
+	// *************************************************************************************
+	if ( Ext.getCmp('winPharmacy') ){ Ext.getCmp('winPharmacy').destroy(); }
+	if ( Ext.getCmp('winInsurance') ){ Ext.getCmp('winInsurance').destroy(); }
+	
 	// *************************************************************************************
 	// Phramacy Record Structure
 	// *************************************************************************************
@@ -87,7 +96,7 @@ Ext.onReady(function(){
 			},
         	reader: {
 	            type			: 'json',
-    	        idProperty		: 'idusers',
+    	        idProperty		: 'id',
         	    totalProperty	: 'totals',
             	root			: 'row'
     		},
@@ -154,7 +163,7 @@ Ext.onReady(function(){
 			},
         	reader: {
 	            type			: 'json',
-    	        idProperty		: 'idusers',
+    	        idProperty		: 'id',
         	    totalProperty	: 'totals',
             	root			: 'row'
     		},
@@ -186,14 +195,14 @@ Ext.onReady(function(){
     	proxy		: {
     		type	: 'ajax',
 			api		: {
-				read	: 'interface/administration/pactice/data_read.ejs.php',
-				create	: 'interface/administration/pactice/data_create.ejs.php',
-				update	: 'interface/administration/pactice/data_update.ejs.php',
-				destroy : 'interface/administration/pactice/data_destroy.ejs.php'
+				read	: 'interface/administration/practice/data_read.ejs.php',
+				create	: 'interface/administration/practice/data_create.ejs.php',
+				update	: 'interface/administration/practice/data_update.ejs.php',
+				destroy : 'interface/administration/practice/data_destroy.ejs.php'
 			},
         	reader: {
 	            type			: 'json',
-    	        idProperty		: 'idusers',
+    	        idProperty		: 'id',
         	    totalProperty	: 'totals',
             	root			: 'row'
     		},
@@ -225,10 +234,10 @@ Ext.onReady(function(){
     	proxy		: {
     		type	: 'ajax',
 			api		: {
-				read	: 'interface/administration/pactice/data_read.ejs.php',
-				create	: 'interface/administration/pactice/data_create.ejs.php',
-				update	: 'interface/administration/pactice/data_update.ejs.php',
-				destroy : 'interface/administration/pactice/data_destroy.ejs.php'
+				read	: 'interface/administration/practice/data_read.ejs.php',
+				create	: 'interface/administration/practice/data_create.ejs.php',
+				update	: 'interface/administration/practice/data_update.ejs.php',
+				destroy : 'interface/administration/practice/data_destroy.ejs.php'
 			},
         	reader: {
 	            type			: 'json',
@@ -246,10 +255,41 @@ Ext.onReady(function(){
     	},
     	autoLoad: true
 	});
+
+	
 	// *************************************************************************************
-	// Phramacy Grid (Tab 0)
+	// Phramacy Form, Window, and Form
 	// *************************************************************************************
-	var PharmacyGrid = Ext.create('Ext.grid.Panel', {
+	var pharmacyForm = new Ext.form.FormPanel({
+		id          : 'pharmacyForm',
+		bodyStyle   : 'padding: 5px;',
+		autoWidth   : true,
+		width	  	  : 495,
+		border      : false,
+		hideLabels  : true,
+		defaults: {
+			labelWidth: 89,
+		    anchor: '100%',
+		    layout: {
+		    	type: 'hbox',
+		        defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
+		    }
+		},
+		items: [{}]
+	}); // END FORM
+	var winPharmacy = new Ext.Window({
+		id          : 'winPharmacy',
+		width       : 520,
+	    autoHeight  : true,
+	    modal       : true,
+	    border	  	: false,
+	    resizable   : false,
+	    title       : '<?php i18n('Add or Edit Pharmacy'); ?>',
+	    closeAction : 'hide',
+	    renderTo    : document.body,
+	    items: [pharmacyForm],
+	}); // END WINDOW
+	var pharmacyGrid = Ext.create('Ext.grid.Panel', {
 		store		: pharmacyStore,
         columnLines	: true,
         frame		: false,
@@ -286,35 +326,64 @@ Ext.onReady(function(){
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){ 
-            		Ext.getCmp('insuranceForm').getForm().reset(); // Clear the form
-            		Ext.getCmp('cmdEdit').enable();
-            		Ext.getCmp('cmdDelete').enable();
-					var rec = InsuranceStore.getAt(rowIndex);
-					Ext.getCmp('insuranceForm').getForm().loadRecord(rec);
+            		Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
+            		Ext.getCmp('editPharmacy').enable();
+            		Ext.getCmp('deletePharmacy').enable();
+					var rec = pharmacyStore.getAt(rowIndex);
+					Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
             		currRec = rec;
             		rowPos = rowIndex;
             	}
 			},
 			itemdblclick: {
             	fn: function(DataView, record, item, rowIndex, e){ 
-            		Ext.getCmp('insuranceForm').getForm().reset(); // Clear the form
-            		Ext.getCmp('cmdEdit').enable();
-            		Ext.getCmp('cmdDelete').enable();
-					var rec = InsuranceStore.getAt(rowIndex);
-					Ext.getCmp('insuranceForm').getForm().loadRecord(rec);
+            		Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
+            		Ext.getCmp('editPharmacy').enable();
+            		Ext.getCmp('deletePharmacy').enable();
+					var rec = pharmacyStore.getAt(rowIndex);
+					Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
             		currRec = rec;
             		rowPos = rowIndex;
-            		winInsurance.setTitle('<?php i18n("Edit Insurance"); ?>');
-            		winInsurance.show();
+            		winPharmacy.setTitle('<?php i18n("View / Edit Insurance"); ?>');
+            		winPharmacy.show();
             	}
 			}
 		}
-    }); // END Pharmacy Grid
+    }); // END GRIDs
 
 	// *************************************************************************************
-	// Insurance Grid (Tab 1)
+	// Insurance Form, Window, and GRID
 	// *************************************************************************************
-	var InsuranceGrid = Ext.create('Ext.grid.Panel', {
+	var insuranceForm = new Ext.form.FormPanel({
+		id          : 'insuranceForm',
+		bodyStyle   : 'padding: 5px;',
+		autoWidth   : true,
+		width	  	  : 495,
+		border      : false,
+		hideLabels  : true,
+		defaults: {
+			labelWidth: 89,
+		    anchor: '100%',
+		    layout: {
+		    	type: 'hbox',
+		        defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
+		    }
+		},
+		items: [{}]
+	}); // END FORM
+	var winInsurance = new Ext.Window({
+		id          : 'winInsurance',
+		width       : 520,
+	    autoHeight  : true,
+	    modal       : true,
+	    border	  	: false,
+	    resizable   : false,
+	    title       : '<?php i18n('Add or Edit Insurance'); ?>',
+	    closeAction : 'hide',
+	    renderTo    : document.body,
+	    items: [insuranceForm],
+	}); // END WINDOW
+	var insuranceGrid = Ext.create('Ext.grid.Panel', {
 		store		: insuranceStore,
         columnLines	: true,
         frame		: false,
@@ -352,26 +421,26 @@ Ext.onReady(function(){
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){ 
-            		Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
-            		Ext.getCmp('cmdEdit').enable();
-            		Ext.getCmp('cmdDelete').enable();
-					var rec = PharmacyStore.getAt(rowIndex);
-					Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
+            		Ext.getCmp('insuranceForm').getForm().reset(); // Clear the form
+            		Ext.getCmp('editCompany').enable();
+            		Ext.getCmp('deleteCompany').enable();
+					var rec = insuranceStore.getAt(rowIndex);
+					Ext.getCmp('insuranceForm').getForm().loadRecord(rec);
             		currRec = rec;
             		rowPos = rowIndex;
             	}
 			},
 			itemdblclick: {
             	fn: function(DataView, record, item, rowIndex, e){ 
-            		Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
-            		Ext.getCmp('cmdEdit').enable();
-            		Ext.getCmp('cmdDelete').enable();
-					var rec = PharmacyStore.getAt(rowIndex);
-					Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
+            		Ext.getCmp('insuranceForm').getForm().reset(); // Clear the form
+            		Ext.getCmp('editCompany').enable();
+            		Ext.getCmp('deleteCompany').enable();
+					var rec = insuranceStore.getAt(rowIndex);
+					Ext.getCmp('insuranceForm').getForm().loadRecord(rec);
             		currRec = rec;
             		rowPos = rowIndex;
-            		winPharmacy.setTitle('<?php i18n("Edit Pharmacy"); ?>');
-            		winPharmacy.show();
+            		winInsurance.setTitle('<?php i18n("View / Edit Insurance"); ?>');
+            		winInsurance.show();
             	}
 			}
 		}
@@ -422,7 +491,7 @@ Ext.onReady(function(){
             		Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
             		Ext.getCmp('cmdEdit').enable();
             		Ext.getCmp('cmdDelete').enable();
-					var rec = PharmacyStore.getAt(rowIndex);
+					var rec = insuranceNumbersStore.getAt(rowIndex);
 					Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
             		currRec = rec;
             		rowPos = rowIndex;
@@ -433,7 +502,7 @@ Ext.onReady(function(){
             		Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
             		Ext.getCmp('cmdEdit').enable();
             		Ext.getCmp('cmdDelete').enable();
-					var rec = PharmacyStore.getAt(rowIndex);
+					var rec = insuranceNumbersStore.getAt(rowIndex);
 					Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
             		currRec = rec;
             		rowPos = rowIndex;
@@ -521,14 +590,30 @@ Ext.onReady(function(){
             title	:'<?php i18n("Pharmacies"); ?>',
     	    frame	: false,
 	        border	: false,
-            items	: [ PharmacyGrid ],
+            items	: [ pharmacyGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
 			  	dock: 'bottom',
 			  	items: [{
-					id        : 'addpharmacy',
+					id        : 'addPharmacy',
 				    text      : '<?php i18n("Add a Pharmacy"); ?>',
 				    iconCls   : 'save',
+				    handler   : function(){
+						// TODO //
+				    }
+				},{
+					id        : 'editPharmacy',
+				    text      : '<?php i18n("View / Edit a Pharmacy"); ?>',
+				    iconCls   : 'edit',
+				    disabled  : true,
+				    handler   : function(){
+						// TODO //
+				    }
+				},{
+					id        : 'deletePharmacy',
+				    text      : '<?php i18n("Delete a Pharmacy"); ?>',
+				    iconCls   : 'delete',
+				    disabled  : true,
 				    handler   : function(){
 						// TODO //
 				    }
@@ -538,7 +623,7 @@ Ext.onReady(function(){
             title	:'<?php i18n("Insurance Companies"); ?>',
     	    frame	: false,
 	        border	: false,
-            items	: [ InsuranceGrid ],
+            items	: [ insuranceGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
 			  	dock: 'bottom',
@@ -546,6 +631,22 @@ Ext.onReady(function(){
 					id        : 'addCompany',
 				    text      : '<?php i18n("Add a Comapny"); ?>',
 				    iconCls   : 'save',
+				    handler   : function(){
+						// TODO //
+				    }
+								},{
+					id        : 'editCompany',
+				    text      : '<?php i18n("View / Edit a Company"); ?>',
+				    iconCls   : 'edit',
+				    disabled  : true,
+				    handler   : function(){
+						// TODO //
+				    }
+				},{
+					id        : 'deleteCompany',
+				    text      : '<?php i18n("Delete a Company"); ?>',
+				    iconCls   : 'delete',
+				    disabled  : true,
 				    handler   : function(){
 						// TODO //
 				    }
