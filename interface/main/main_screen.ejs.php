@@ -76,7 +76,7 @@ Ext.onReady(function() {
 		proxy: {
 			type	: 'ajax',
 			url		: 'interface/navigation/default_leftnav.ejs.php'
-		},
+		}
 	});
 	
 	//****************************************************************
@@ -270,7 +270,7 @@ Ext.onReady(function() {
 		bodyPadding		: 0,
 		waitMsg			: '<?php i18n("Loading"); ?>',
 		waitMsgTarget	: true,
-		autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true},
+		autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true}
 	}); // End MainApp
 	
 	//****************************************************************

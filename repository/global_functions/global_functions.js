@@ -31,6 +31,6 @@ Ext.topAlert = function(){
             var m = Ext.core.DomHelper.append(msgCt, createBox(title, s), true);
             m.hide();
             m.slideIn('t').ghost("t", { delay: 5000, remove: true});
-        },
+        }
     };
 }();
