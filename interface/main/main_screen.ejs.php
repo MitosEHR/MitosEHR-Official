@@ -149,6 +149,7 @@ Ext.onReady(function() {
       	layout		: 'anchor',
         items: [{
             xtype		: 'combo',
+            id			: 'liveSearch',
             store		: ds,
             displayField: 'title',
             emptyText	: 'Live patient search...',
@@ -188,7 +189,10 @@ Ext.onReady(function() {
 						});
 		    			Ext.data.Request()
                     }
-                }
+                },
+                blur: function(){
+                 Ext.getCmp('liveSearch').reset();
+                } 
             }
         }]
     });
