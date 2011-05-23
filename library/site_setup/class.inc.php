@@ -16,13 +16,13 @@ class SiteSetup {
 	// Globals vars inside the Class
 	private $conn;
 	private $sites_folder = 'sites';
-	private $siteName = 'testsite';
+	private $siteName = 'defaultTest';
 	private $siteDbPrefix;
-	private $siteDbUser = 'testuser';
-	private $siteDbPass = 'testpass';
+	private $siteDbUser = 'dbuser';
+	private $siteDbPass = 'dbpass';
 	private	$db_server = 'localhost';
 	private	$db_port = '3306';
-	private	$db_name = 'testdb';
+	private	$db_name = 'mitosehr';
 	private	$db_rootUser = 'root';
 	private	$db_rootPass = ''; 
 
@@ -153,21 +153,32 @@ class SiteSetup {
 		
 	}
 	
+	function buildConf(){
+		if (file_exists($conf = "library/site_setup/conf.php")){
+			$buffer = file_get_contents($conf);
+			$search  = array('%host%','%user%', '%pass%', '%db%', '%port%', '%key%');
+			$replace = array($this->db_server, $this->siteDbUser, $this->siteDbPass, $this->db_name, $this->db_port, 'abcdefghijuklmno0123456789012345');
+			$this->newConf = str_replace($search, $replace, $buffer);
+		}else{
+			echo ("Unable to find default conf.pgp file inside library/site_setup/");
+		}
+	} 
+	
 	//*****************************************************************************************
 	// create site files
 	//*****************************************************************************************
 	function createSiteConf() {
 		if($this->check_perms()){
 			$newdir = $this->sites_folder."/".$this->siteName;
-			if (!file_exists($newdir)){
+			if (!file_exists($newdir)){	
 				mkdir($newdir, 0777, true);
 				chmod($newdir, 0777);
 				chdir($newdir);
 				$conf_file = ("conf.php");
 				$handle = fopen($conf_file, "w");
-				fwrite($handle, "writing to conf.php");
+				fwrite($handle, $this->newConf);
 				fclose($handle);
-				chmod($file, 0644);
+				chmod($conf_file, 0644);
 			}else{
 				echo ("The site ".$this->siteName." already exist");
 			}
@@ -179,9 +190,13 @@ class SiteSetup {
 } // end class siteSetup
 
 $setup = new SiteSetup();
+/*
 $setup->rootDatabaseConn();
 $setup->createDatabase();
 $setup->createDatabaseUser();
 $setup->DatabaseConn();
 $setup->sqldump();
+$setup->buildConf();
+$setup->createSiteConf();
+*/
 ?>
