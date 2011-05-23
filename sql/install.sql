@@ -53608,11 +53608,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=79 ;
 
-INSERT INTO `users` (`id`, `username`, `password`, `authorized`, `info`, `source`, `fname`, `mname`, `lname`, `federaltaxid`, `federaldrugid`, `upin`, `facility`, `facility_id`, `see_auth`, `active`, `npi`, `title`, `specialty`, `billname`, `email`, `url`, `assistant`, `organization`, `valedictory`, `street`, `streetb`, `city`, `state`, `zip`, `street2`, `streetb2`, `city2`, `state2`, `zip2`, `phone`, `fax`, `phonew1`, `phonew2`, `phonecell`, `notes`, `cal_ui`, `taxonomy`, `ssi_relayhealth`, `calendar`, `abook_type`, `pwd_expiration_date`, `pwd_history1`, `pwd_history2`, `default_warehouse`, `irnpool`) VALUES
-(1, 'admin', 0x50d2d43e26773061412f97deb0968069, 1, NULL, NULL, '', NULL, 'Administrator', NULL, NULL, NULL, NULL, 3, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, '207Q00000X', NULL, 1, '', NULL, NULL, NULL, '', ''),
-(2, 'vela1606', 0x50d2d43e26773061412f97deb0968069, 1, 'CJR 700', NULL, 'Ernesto', 'Juano', 'Rodriguez', '1234', '40560', '34674', NULL, 3, 3, 1, '454698', 'Dr.', 'Mitos Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '207Q00000X', NULL, 0, '', NULL, NULL, NULL, '', ''),
-(3, 'hrivera', 0x50d2d43e26773061412f97deb0968069, 1, 'â€‹', NULL, 'Hector', 'Gino', 'Falu', '236724', '2342343', '546743', NULL, 3, 3, 1, '4564346', 'Mr.', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '207Q00000X', NULL, 0, '', NULL, NULL, NULL, '', ''),
-(4, 'ernesto', 0x50d2d43e26773061412f97deb0968069, 1, 'â€‹', NULL, 'Ernestito', 'Juan', 'Rodriguez', '', '', '', 'Ernestos Clinic', 3, 3, 1, '', 'Mr.', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, '207Q00000X', NULL, 1, '', '0000-00-00', NULL, NULL, '', '');
 
 CREATE TABLE IF NOT EXISTS `users_facility` (
   `tablename` varchar(64) NOT NULL,

@@ -1,9 +1,13 @@
 <?php
-/* setup class v0.0.1
- * Description: A Class to setup sites dir much easier. 
- * 
- * Author: Ernesto Rodriguez
- */
+//***************************************************************************************
+// setup class v0.0.1
+// Description: A Class to setup sites dir easier. 
+// 
+// Author: Ernesto Rodriguez
+//***************************************************************************************
+
+
+
 /////////////////////////////////////
 // ENABLE PHP ERRORS FOR DEBUGGING //
 /////////////////////////////////////
@@ -13,18 +17,19 @@ ini_set("display_errors", 1);      //
 
 
 class SiteSetup {
-	// Globals vars inside the Class
 	private $conn;
 	private $sites_folder = 'sites';
 	private $siteName = 'defaultTest';
 	private $siteDbPrefix;
-	private $siteDbUser = 'dbuser';
-	private $siteDbPass = 'dbpass';
+	private $siteDbUser = 'mitosehr';
+	private $siteDbPass = 'pass';
 	private	$db_server = 'localhost';
 	private	$db_port = '3306';
 	private	$db_name = 'mitosehr';
 	private	$db_rootUser = 'root';
 	private	$db_rootPass = ''; 
+	private $AESkey;
+	private $userPass = 'pass';
 
 	//*****************************************************************************************
 	// ckeck sites folder cmod 777
@@ -153,11 +158,31 @@ class SiteSetup {
 		
 	}
 	
+	//*****************************************************************************************
+	// Create new AES Key
+	//*****************************************************************************************
+	function createRandomKey() {
+	    $chars = "abcdefghijkmnopqrstuvwxyz023456789";
+	    srand((double)microtime()*1000000);
+	    $i = 0;
+	    $key = "" ;
+	    while ($i <= 31) {
+	        $num = rand() % 33;
+	        $tmp = substr($chars, $num, 1);
+	        $key = $key . $tmp;
+	        $i++;
+	    }
+		$this->AESkey = $key;
+	}
+	
+	//*****************************************************************************************
+	// Bild the new conf.php
+	//*****************************************************************************************
 	function buildConf(){
 		if (file_exists($conf = "library/site_setup/conf.php")){
 			$buffer = file_get_contents($conf);
 			$search  = array('%host%','%user%', '%pass%', '%db%', '%port%', '%key%');
-			$replace = array($this->db_server, $this->siteDbUser, $this->siteDbPass, $this->db_name, $this->db_port, 'abcdefghijuklmno0123456789012345');
+			$replace = array($this->db_server, $this->siteDbUser, $this->siteDbPass, $this->db_name, $this->db_port, $this->AESkey);
 			$this->newConf = str_replace($search, $replace, $buffer);
 		}else{
 			echo ("Unable to find default conf.pgp file inside library/site_setup/");
@@ -173,8 +198,7 @@ class SiteSetup {
 			if (!file_exists($newdir)){	
 				mkdir($newdir, 0777, true);
 				chmod($newdir, 0777);
-				chdir($newdir);
-				$conf_file = ("conf.php");
+				$conf_file = ($newdir."/conf.php");
 				$handle = fopen($conf_file, "w");
 				fwrite($handle, $this->newConf);
 				fclose($handle);
@@ -187,16 +211,40 @@ class SiteSetup {
 		}
 
 	}
+	
+	//*****************************************************************************************
+	// create site files
+	//*****************************************************************************************
+	function adminUser(){
+		require_once("library/phpAES/AES.class.php");
+		$aes = new AES($this->AESkey);
+		$ePass = $aes->encrypt($this->userPass);
+		$this->conn->exec("INSERT INTO users
+							  	   SET username 	='admin',
+							  	       fname		='Adminstrator',
+							  	  	   password 	='".$ePass."',
+							  	       authorized 	='1'");
+	}
 } // end class siteSetup
 
 $setup = new SiteSetup();
-/*
+
+// connect to as a root
 $setup->rootDatabaseConn();
+// creates the mitos database
 $setup->createDatabase();
+// creates the mitos database user
 $setup->createDatabaseUser();
+// connect to user database
 $setup->DatabaseConn();
+// dumps the install.sql into user database
 $setup->sqldump();
+// generate a random 32bit key
+$setup->createRandomKey();
+// builds de conf file
 $setup->buildConf();
+// safe the conf fine into the new site folder
 $setup->createSiteConf();
-*/
+// create a admin user with the AES key generaded for the conf file
+$setup->adminUser();
 ?>
