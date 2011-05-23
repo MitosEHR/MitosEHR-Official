@@ -17,52 +17,50 @@ include_once("../../../library/dbHelper/dbHelper.inc.php");
 include_once("../../../library/I18n/I18n.inc.php");
 require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
-//******************************************************************************
+// **************************************************************************************
 // Reset session count 10 secs = 1 Flop
-//******************************************************************************
+// **************************************************************************************
 $_SESSION['site']['flops'] = 0;
 
-// Count records variable
+// **************************************************************************************
+// Database class instance
+// **************************************************************************************
 $mitos_db = new dbHelper();
 
+// **************************************************************************************
 // catch the total records
-$sql = "SELECT count(*) as total FROM facility";
-$mitos_db->setSQL($sql);
+// **************************************************************************************
+$mitos_db->setSQL("SELECT count(*) as total FROM facility");
 $urow = $mitos_db->execStatement();
 $total = $urow[0]['total'];
 
+// **************************************************************************************
 // Setting defults incase no request is sent by sencha
+// **************************************************************************************
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
-$count = ($_REQUEST["limit"] == null)? 30 : $_REQUEST["limit"];
+$limit = ($_REQUEST["limit"] == null)? 30 : $_REQUEST["limit"];
 
-// *************************************************************************************
+// **************************************************************************************
 // Verify if a $_GET['id'] has passed to select a facility.
 // and execute the apropriate SQL statement
-// *************************************************************************************
+// **************************************************************************************
 if ($_GET['id']){
-	$sql = "SELECT
-				* 
-			FROM
-				facility
-			ORDER BY 
-				name
-			WHERE id=" . $_GET['id'] . "
-			LIMIT " . $start . "," . $count;
+	$sql = "SELECT * 
+			  FROM facility
+		  ORDER BY name
+			 WHERE id=" . $_GET['id'] . "
+			 LIMIT " . $start . "," . $limit;
 } else { // if not select all of them
-	$sql = "SELECT
-				* 
-			FROM
-				facility
-			ORDER BY 
-				name
-			LIMIT " . $start . "," . $count;
+	$sql = "SELECT * 
+			  FROM facility
+		  ORDER BY name
+			 LIMIT " . $start . "," . $limit;
 }
 $mitos_db->setSQL($sql);
 foreach ($mitos_db->execStatement() as $urow) {
-	
-	//----------------------------------------------------
+	//-----------------------------------------------------------------------------------
 	// Parse some data
-	//----------------------------------------------------
+	//-----------------------------------------------------------------------------------
 	$rec['service_location'] = ($urow['service_location'] == '1' ? 'on' : 'off');
 	$rec['billing_location'] = ($urow['billing_location'] == '1' ? 'on' : 'off');
 	$rec['accepts_assignment'] = ($urow['accepts_assignment'] == '1' ? 'on' : 'off');
