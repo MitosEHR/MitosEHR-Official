@@ -17,7 +17,7 @@ if ($count <= 0){
 //******************************************************
 // verified that php 5.2.0 or later is istalled
 //******************************************************
-if (version_compare(phpversion(), "5.2.0", ">=")) {
+if (version_compare(phpversion(), "5.3.2", ">=")) {
 	$phpVer = 'Ok';
 } else {
  	$phpVer = 'Fail';

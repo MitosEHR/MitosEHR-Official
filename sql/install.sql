@@ -1,23 +1,10 @@
--- phpMyAdmin SQL Dump
--- version 3.3.9
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: May 23, 2011 at 04:37 PM
--- Server version: 5.5.8
--- PHP Version: 5.3.5
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
---
--- Database: `mitosdb`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `acl_permissions`
---
 
 CREATE TABLE IF NOT EXISTS `acl_permissions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -27,10 +14,6 @@ CREATE TABLE IF NOT EXISTS `acl_permissions` (
   UNIQUE KEY `permKey` (`perm_key`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
---
--- Dumping data for table `acl_permissions`
---
-
 INSERT INTO `acl_permissions` (`id`, `perm_key`, `perm_name`) VALUES
 (9, 'admin_roles', 'Administer Roles'),
 (10, 'admin_users', 'Administer Users'),
@@ -39,12 +22,6 @@ INSERT INTO `acl_permissions` (`id`, `perm_key`, `perm_name`) VALUES
 (28, 'Test Permission 2', 'Test Permission 2'),
 (27, 'Test Permission', 'Test Permission');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `acl_roles`
---
-
 CREATE TABLE IF NOT EXISTS `acl_roles` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(20) CHARACTER SET latin1 NOT NULL,
@@ -52,19 +29,9 @@ CREATE TABLE IF NOT EXISTS `acl_roles` (
   UNIQUE KEY `roleName` (`role_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
---
--- Dumping data for table `acl_roles`
---
-
 INSERT INTO `acl_roles` (`id`, `role_name`) VALUES
 (5, 'Administrator'),
 (6, 'Doctor');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `acl_role_perms`
---
 
 CREATE TABLE IF NOT EXISTS `acl_role_perms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -75,10 +42,6 @@ CREATE TABLE IF NOT EXISTS `acl_role_perms` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `roleID_2` (`role_id`,`perm_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=141 ;
-
---
--- Dumping data for table `acl_role_perms`
---
 
 INSERT INTO `acl_role_perms` (`id`, `role_id`, `perm_id`, `value`, `add_date`) VALUES
 (46, 6, 11, 1, '2011-03-04 00:00:00'),
@@ -96,12 +59,6 @@ INSERT INTO `acl_role_perms` (`id`, `role_id`, `perm_id`, `value`, `add_date`) V
 (136, 6, 28, 1, '0000-00-00 00:00:00'),
 (135, 5, 28, 2, '0000-00-00 00:00:00');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `acl_user_perms`
---
-
 CREATE TABLE IF NOT EXISTS `acl_user_perms` (
   `id` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
@@ -112,16 +69,6 @@ CREATE TABLE IF NOT EXISTS `acl_user_perms` (
   UNIQUE KEY `userID` (`user_id`,`perm_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
---
--- Dumping data for table `acl_user_perms`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `acl_user_roles`
---
 
 CREATE TABLE IF NOT EXISTS `acl_user_roles` (
   `user_id` bigint(20) NOT NULL,
@@ -130,16 +77,6 @@ CREATE TABLE IF NOT EXISTS `acl_user_roles` (
   UNIQUE KEY `userID` (`user_id`,`role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `acl_user_roles`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `addresses`
---
 
 CREATE TABLE IF NOT EXISTS `addresses` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -155,35 +92,15 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   KEY `foreign_id` (`foreign_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `addresses`
---
-
 INSERT INTO `addresses` (`id`, `line1`, `line2`, `city`, `state`, `zip`, `plus_four`, `country`, `foreign_id`) VALUES
 (3, 'Calle Metropolis', 'Numero 301', '00999', NULL, NULL, NULL, 'USA', 2),
 (7, 'Calle Metropolis', 'Numero 301', '00999', 'PR', '00987', NULL, 'USA', 6);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `array`
---
 
 CREATE TABLE IF NOT EXISTS `array` (
   `array_key` varchar(255) DEFAULT NULL,
   `array_value` longtext
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `array`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ar_activity`
---
 
 CREATE TABLE IF NOT EXISTS `ar_activity` (
   `pid` int(11) NOT NULL,
@@ -206,16 +123,6 @@ CREATE TABLE IF NOT EXISTS `ar_activity` (
   KEY `session_id` (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `ar_activity`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ar_session`
---
 
 CREATE TABLE IF NOT EXISTS `ar_session` (
   `session_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -240,16 +147,6 @@ CREATE TABLE IF NOT EXISTS `ar_session` (
   KEY `deposit_date` (`deposit_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `ar_session`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `automatic_notification`
---
 
 CREATE TABLE IF NOT EXISTS `automatic_notification` (
   `notification_id` int(5) NOT NULL AUTO_INCREMENT,
@@ -265,19 +162,9 @@ CREATE TABLE IF NOT EXISTS `automatic_notification` (
   PRIMARY KEY (`notification_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
---
--- Dumping data for table `automatic_notification`
---
-
 INSERT INTO `automatic_notification` (`notification_id`, `sms_gateway_type`, `next_app_date`, `next_app_time`, `provider_name`, `message`, `email_sender`, `email_subject`, `type`, `notification_sent_date`) VALUES
 (1, 'CLICKATELL', '0000-00-00', ':', 'EMR GROUP 1 .. SMS', 'Welcome to EMR GROUP 1.. SMS', '', '', 'SMS', '0000-00-00 00:00:00'),
 (2, '', '2007-10-02', '05:50', 'EMR GROUP', 'Welcome to EMR GROUP . Email', 'EMR Group', 'Welcome to EMR GROUP', 'Email', '2007-09-30 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `batchcom`
---
 
 CREATE TABLE IF NOT EXISTS `batchcom` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -290,16 +177,6 @@ CREATE TABLE IF NOT EXISTS `batchcom` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `batchcom`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `billing`
---
 
 CREATE TABLE IF NOT EXISTS `billing` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -331,16 +208,6 @@ CREATE TABLE IF NOT EXISTS `billing` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `billing`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories`
---
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -354,10 +221,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `lft` (`lft`,`rght`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `categories`
---
-
 INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`) VALUES
 (1, 'Categories', '', 0, 0, 19),
 (2, 'Lab Report', '', 1, 1, 2),
@@ -370,29 +233,13 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`) VALUES
 (9, 'Living Will', '', 6, 16, 17),
 (10, 'Patient Photograph', '', 4, 8, 9);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `categories_seq`
---
-
 CREATE TABLE IF NOT EXISTS `categories_seq` (
   `id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `categories_seq`
---
-
 INSERT INTO `categories_seq` (`id`) VALUES
 (10);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `categories_to_documents`
---
 
 CREATE TABLE IF NOT EXISTS `categories_to_documents` (
   `category_id` int(11) NOT NULL DEFAULT '0',
@@ -400,16 +247,6 @@ CREATE TABLE IF NOT EXISTS `categories_to_documents` (
   PRIMARY KEY (`category_id`,`document_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `categories_to_documents`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chart_tracker`
---
 
 CREATE TABLE IF NOT EXISTS `chart_tracker` (
   `ct_pid` int(11) NOT NULL,
@@ -419,16 +256,6 @@ CREATE TABLE IF NOT EXISTS `chart_tracker` (
   PRIMARY KEY (`ct_pid`,`ct_when`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `chart_tracker`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `claims`
---
 
 CREATE TABLE IF NOT EXISTS `claims` (
   `patient_id` int(11) NOT NULL,
@@ -446,16 +273,6 @@ CREATE TABLE IF NOT EXISTS `claims` (
   PRIMARY KEY (`patient_id`,`encounter_id`,`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `claims`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `codes`
---
 
 CREATE TABLE IF NOT EXISTS `codes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -476,16 +293,6 @@ CREATE TABLE IF NOT EXISTS `codes` (
   KEY `code` (`code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `codes`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `code_types`
---
 
 CREATE TABLE IF NOT EXISTS `code_types` (
   `ct_key` varchar(15) NOT NULL COMMENT 'short alphanumeric name',
@@ -502,20 +309,10 @@ CREATE TABLE IF NOT EXISTS `code_types` (
   UNIQUE KEY `ct_id` (`ct_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `code_types`
---
-
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`) VALUES
 ('ICD9', 2, 1, 2, '', '', 0, 0, 0, 1),
 ('CPT4', 1, 2, 2, 'ICD9', '', 1, 0, 0, 0),
 ('HCPCS', 3, 3, 2, 'ICD9', '', 1, 0, 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `config`
---
 
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -529,34 +326,14 @@ CREATE TABLE IF NOT EXISTS `config` (
   KEY `lft` (`lft`,`rght`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `config`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `config_seq`
---
 
 CREATE TABLE IF NOT EXISTS `config_seq` (
   `id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `config_seq`
---
-
 INSERT INTO `config_seq` (`id`) VALUES
 (0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `documents`
---
 
 CREATE TABLE IF NOT EXISTS `documents` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -577,16 +354,6 @@ CREATE TABLE IF NOT EXISTS `documents` (
   KEY `owner` (`owner`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `documents`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `drugs`
---
 
 CREATE TABLE IF NOT EXISTS `drugs` (
   `drug_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -609,16 +376,6 @@ CREATE TABLE IF NOT EXISTS `drugs` (
   PRIMARY KEY (`drug_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `drugs`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `drug_inventory`
---
 
 CREATE TABLE IF NOT EXISTS `drug_inventory` (
   `inventory_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -637,16 +394,6 @@ CREATE TABLE IF NOT EXISTS `drug_inventory` (
   PRIMARY KEY (`inventory_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `drug_inventory`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `drug_sales`
---
 
 CREATE TABLE IF NOT EXISTS `drug_sales` (
   `sale_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -666,16 +413,6 @@ CREATE TABLE IF NOT EXISTS `drug_sales` (
   PRIMARY KEY (`sale_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `drug_sales`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `drug_templates`
---
 
 CREATE TABLE IF NOT EXISTS `drug_templates` (
   `drug_id` int(11) NOT NULL,
@@ -688,16 +425,6 @@ CREATE TABLE IF NOT EXISTS `drug_templates` (
   PRIMARY KEY (`drug_id`,`selector`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `drug_templates`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `eligibility_response`
---
 
 CREATE TABLE IF NOT EXISTS `eligibility_response` (
   `response_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -709,16 +436,6 @@ CREATE TABLE IF NOT EXISTS `eligibility_response` (
   PRIMARY KEY (`response_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `eligibility_response`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `eligibility_verification`
---
 
 CREATE TABLE IF NOT EXISTS `eligibility_verification` (
   `verification_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -733,16 +450,6 @@ CREATE TABLE IF NOT EXISTS `eligibility_verification` (
   KEY `insurance_id` (`insurance_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `eligibility_verification`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `employer_data`
---
 
 CREATE TABLE IF NOT EXISTS `employer_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -758,19 +465,9 @@ CREATE TABLE IF NOT EXISTS `employer_data` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
---
--- Dumping data for table `employer_data`
---
-
 INSERT INTO `employer_data` (`id`, `name`, `street`, `postal_code`, `city`, `state`, `country`, `date`, `pid`) VALUES
 (1, '', '', '', '', '', '', '2011-01-23 18:13:42', 1),
 (2, '', '', '', '', '', '', '2011-01-23 18:15:01', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `extended_log`
---
 
 CREATE TABLE IF NOT EXISTS `extended_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -783,16 +480,6 @@ CREATE TABLE IF NOT EXISTS `extended_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `extended_log`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `facility`
---
 
 CREATE TABLE IF NOT EXISTS `facility` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -817,28 +504,14 @@ CREATE TABLE IF NOT EXISTS `facility` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
---
--- Dumping data for table `facility`
---
-
 INSERT INTO `facility` (`id`, `name`, `phone`, `fax`, `street`, `city`, `state`, `postal_code`, `country_code`, `federal_ein`, `service_location`, `billing_location`, `accepts_assignment`, `pos_code`, `x12_sender_id`, `attn`, `domain_identifier`, `facility_npi`, `tax_id_type`) VALUES
 (3, 'Gino Clinic', '000-000-0000', '000-000-0000', '', '', '', '', '', '', 1, 1, 1, 0, '', '', '', '546353253', 'EI');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `fee_sheet_options`
---
 
 CREATE TABLE IF NOT EXISTS `fee_sheet_options` (
   `fs_category` varchar(63) DEFAULT NULL,
   `fs_option` varchar(63) DEFAULT NULL,
   `fs_codes` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `fee_sheet_options`
---
 
 INSERT INTO `fee_sheet_options` (`fs_category`, `fs_option`, `fs_codes`) VALUES
 ('1New Patient', '1Brief', 'CPT4|99201|'),
@@ -851,12 +524,6 @@ INSERT INTO `fee_sheet_options` (`fs_category`, `fs_option`, `fs_codes`) VALUES
 ('2Established Patient', '3Detailed', 'CPT4|99213|'),
 ('2Established Patient', '4Extended', 'CPT4|99214|'),
 ('2Established Patient', '5Comprehensive', 'CPT4|99215|');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `forms`
---
 
 CREATE TABLE IF NOT EXISTS `forms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -873,16 +540,6 @@ CREATE TABLE IF NOT EXISTS `forms` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `forms`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `form_dictation`
---
 
 CREATE TABLE IF NOT EXISTS `form_dictation` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -897,16 +554,6 @@ CREATE TABLE IF NOT EXISTS `form_dictation` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `form_dictation`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `form_encounter`
---
 
 CREATE TABLE IF NOT EXISTS `form_encounter` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -932,16 +579,6 @@ CREATE TABLE IF NOT EXISTS `form_encounter` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `form_encounter`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `form_misc_billing_options`
---
 
 CREATE TABLE IF NOT EXISTS `form_misc_billing_options` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -971,16 +608,6 @@ CREATE TABLE IF NOT EXISTS `form_misc_billing_options` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `form_misc_billing_options`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `form_reviewofs`
---
 
 CREATE TABLE IF NOT EXISTS `form_reviewofs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -1101,16 +728,6 @@ CREATE TABLE IF NOT EXISTS `form_reviewofs` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `form_reviewofs`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `form_ros`
---
 
 CREATE TABLE IF NOT EXISTS `form_ros` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1258,16 +875,6 @@ CREATE TABLE IF NOT EXISTS `form_ros` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `form_ros`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `form_soap`
---
 
 CREATE TABLE IF NOT EXISTS `form_soap` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -1284,16 +891,6 @@ CREATE TABLE IF NOT EXISTS `form_soap` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `form_soap`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `form_vitals`
---
 
 CREATE TABLE IF NOT EXISTS `form_vitals` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -1320,16 +917,6 @@ CREATE TABLE IF NOT EXISTS `form_vitals` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `form_vitals`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `geo_country_reference`
---
 
 CREATE TABLE IF NOT EXISTS `geo_country_reference` (
   `countries_id` int(5) NOT NULL AUTO_INCREMENT,
@@ -1339,10 +926,6 @@ CREATE TABLE IF NOT EXISTS `geo_country_reference` (
   PRIMARY KEY (`countries_id`),
   KEY `IDX_COUNTRIES_NAME` (`countries_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=240 ;
-
---
--- Dumping data for table `geo_country_reference`
---
 
 INSERT INTO `geo_country_reference` (`countries_id`, `countries_name`, `countries_iso_code_2`, `countries_iso_code_3`) VALUES
 (1, 'Afghanistan', 'AF', 'AFG'),
@@ -1585,12 +1168,6 @@ INSERT INTO `geo_country_reference` (`countries_id`, `countries_name`, `countrie
 (238, 'Zambia', 'ZM', 'ZMB'),
 (239, 'Zimbabwe', 'ZW', 'ZWE');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `geo_zone_reference`
---
-
 CREATE TABLE IF NOT EXISTS `geo_zone_reference` (
   `zone_id` int(5) NOT NULL AUTO_INCREMENT,
   `zone_country_id` int(5) NOT NULL DEFAULT '0',
@@ -1598,10 +1175,6 @@ CREATE TABLE IF NOT EXISTS `geo_zone_reference` (
   `zone_name` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=83 ;
-
---
--- Dumping data for table `geo_zone_reference`
---
 
 INSERT INTO `geo_zone_reference` (`zone_id`, `zone_country_id`, `zone_code`, `zone_name`) VALUES
 (1, 223, 'AL', 'Alabama'),
@@ -1687,22 +1260,12 @@ INSERT INTO `geo_zone_reference` (`zone_id`, `zone_country_id`, `zone_code`, `zo
 (81, 61, 'ACT', 'Australian Capital Territory'),
 (82, 61, 'VIC', 'Victoria');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `globals`
---
-
 CREATE TABLE IF NOT EXISTS `globals` (
   `gl_name` varchar(63) NOT NULL,
   `gl_index` int(11) NOT NULL DEFAULT '0',
   `gl_value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`gl_name`,`gl_index`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `globals`
---
 
 INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('default_top_pane', 0, 'main_info.php'),
@@ -1819,12 +1382,6 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('enable_scanner', 0, ''),
 ('scanner_output_directory', 0, '/mnt/scan_docs');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `gprelations`
---
-
 CREATE TABLE IF NOT EXISTS `gprelations` (
   `type1` int(2) NOT NULL,
   `id1` bigint(20) NOT NULL,
@@ -1834,16 +1391,6 @@ CREATE TABLE IF NOT EXISTS `gprelations` (
   KEY `key2` (`type2`,`id2`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='general purpose relations';
 
---
--- Dumping data for table `gprelations`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `groups`
---
 
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -1852,20 +1399,10 @@ CREATE TABLE IF NOT EXISTS `groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
---
--- Dumping data for table `groups`
---
-
 INSERT INTO `groups` (`id`, `name`, `user`) VALUES
 (1, 'Default', 'admin'),
 (2, 'Default', 'ernesto'),
 (3, 'Default', 'vela1606');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `history_data`
---
 
 CREATE TABLE IF NOT EXISTS `history_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -1956,19 +1493,9 @@ CREATE TABLE IF NOT EXISTS `history_data` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
---
--- Dumping data for table `history_data`
---
-
 INSERT INTO `history_data` (`id`, `coffee`, `tobacco`, `alcohol`, `sleep_patterns`, `exercise_patterns`, `seatbelt_use`, `counseling`, `hazardous_activities`, `recreational_drugs`, `last_breast_exam`, `last_mammogram`, `last_gynocological_exam`, `last_rectal_exam`, `last_prostate_exam`, `last_physical_exam`, `last_sigmoidoscopy_colonoscopy`, `last_ecg`, `last_cardiac_echo`, `last_retinal`, `last_fluvax`, `last_pneuvax`, `last_ldl`, `last_hemoglobin`, `last_psa`, `last_exam_results`, `history_mother`, `history_father`, `history_siblings`, `history_offspring`, `history_spouse`, `relatives_cancer`, `relatives_tuberculosis`, `relatives_diabetes`, `relatives_high_blood_pressure`, `relatives_heart_problems`, `relatives_stroke`, `relatives_epilepsy`, `relatives_mental_illness`, `relatives_suicide`, `cataract_surgery`, `tonsillectomy`, `cholecystestomy`, `heart_surgery`, `hysterectomy`, `hernia_repair`, `hip_replacement`, `knee_replacement`, `appendectomy`, `date`, `pid`, `name_1`, `value_1`, `name_2`, `value_2`, `additional_history`, `exams`, `usertext11`, `usertext12`, `usertext13`, `usertext14`, `usertext15`, `usertext16`, `usertext17`, `usertext18`, `usertext19`, `usertext20`, `usertext21`, `usertext22`, `usertext23`, `usertext24`, `usertext25`, `usertext26`, `usertext27`, `usertext28`, `usertext29`, `usertext30`, `userdate11`, `userdate12`, `userdate13`, `userdate14`, `userdate15`, `userarea11`, `userarea12`) VALUES
 (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-01-23 18:13:42', 1, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', ''),
 (2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-01-23 18:15:01', 2, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `immunizations`
---
 
 CREATE TABLE IF NOT EXISTS `immunizations` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -1989,16 +1516,6 @@ CREATE TABLE IF NOT EXISTS `immunizations` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `immunizations`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `insurance_companies`
---
 
 CREATE TABLE IF NOT EXISTS `insurance_companies` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -2012,18 +1529,8 @@ CREATE TABLE IF NOT EXISTS `insurance_companies` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `insurance_companies`
---
-
 INSERT INTO `insurance_companies` (`id`, `name`, `attn`, `cms_id`, `freeb_type`, `x12_receiver_id`, `x12_default_partner_id`, `alt_cms_id`) VALUES
 (6, 'SSS', 'Fulana de Tal', '1234567', 11, NULL, NULL, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `insurance_data`
---
 
 CREATE TABLE IF NOT EXISTS `insurance_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -2059,10 +1566,6 @@ CREATE TABLE IF NOT EXISTS `insurance_data` (
   UNIQUE KEY `pid_type_date` (`pid`,`type`,`date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
---
--- Dumping data for table `insurance_data`
---
-
 INSERT INTO `insurance_data` (`id`, `type`, `provider`, `plan_name`, `policy_number`, `group_number`, `subscriber_lname`, `subscriber_mname`, `subscriber_fname`, `subscriber_relationship`, `subscriber_ss`, `subscriber_DOB`, `subscriber_street`, `subscriber_postal_code`, `subscriber_city`, `subscriber_state`, `subscriber_country`, `subscriber_phone`, `subscriber_employer`, `subscriber_employer_street`, `subscriber_employer_postal_code`, `subscriber_employer_state`, `subscriber_employer_country`, `subscriber_employer_city`, `copay`, `date`, `pid`, `subscriber_sex`, `accept_assignment`) VALUES
 (1, 'primary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 1, '', 'TRUE'),
 (2, 'secondary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 1, '', 'TRUE'),
@@ -2070,12 +1573,6 @@ INSERT INTO `insurance_data` (`id`, `type`, `provider`, `plan_name`, `policy_num
 (4, 'primary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 2, '', 'TRUE'),
 (5, 'secondary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 2, '', 'TRUE'),
 (6, 'tertiary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 2, '', 'TRUE');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `insurance_numbers`
---
 
 CREATE TABLE IF NOT EXISTS `insurance_numbers` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -2089,16 +1586,6 @@ CREATE TABLE IF NOT EXISTS `insurance_numbers` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `insurance_numbers`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `integration_mapping`
---
 
 CREATE TABLE IF NOT EXISTS `integration_mapping` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -2110,16 +1597,6 @@ CREATE TABLE IF NOT EXISTS `integration_mapping` (
   UNIQUE KEY `foreign_id` (`foreign_id`,`foreign_table`,`local_id`,`local_table`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `integration_mapping`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `issue_encounter`
---
 
 CREATE TABLE IF NOT EXISTS `issue_encounter` (
   `pid` int(11) NOT NULL,
@@ -2129,16 +1606,6 @@ CREATE TABLE IF NOT EXISTS `issue_encounter` (
   PRIMARY KEY (`pid`,`list_id`,`encounter`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `issue_encounter`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `lang_constants`
---
 
 CREATE TABLE IF NOT EXISTS `lang_constants` (
   `cons_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -2146,10 +1613,6 @@ CREATE TABLE IF NOT EXISTS `lang_constants` (
   UNIQUE KEY `cons_id` (`cons_id`),
   KEY `constant_name` (`constant_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4369 ;
-
---
--- Dumping data for table `lang_constants`
---
 
 INSERT INTO `lang_constants` (`cons_id`, `constant_name`) VALUES
 (1, 'A'),
@@ -6523,12 +5986,6 @@ INSERT INTO `lang_constants` (`cons_id`, `constant_name`) VALUES
 (4367, '_PC_LOCALE'),
 (4368, '~ Arrived late');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `lang_custom`
---
-
 CREATE TABLE IF NOT EXISTS `lang_custom` (
   `lang_description` varchar(100) NOT NULL DEFAULT '',
   `lang_code` char(2) NOT NULL DEFAULT '',
@@ -6536,16 +5993,6 @@ CREATE TABLE IF NOT EXISTS `lang_custom` (
   `definition` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `lang_custom`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `lang_definitions`
---
 
 CREATE TABLE IF NOT EXISTS `lang_definitions` (
   `def_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -6555,10 +6002,6 @@ CREATE TABLE IF NOT EXISTS `lang_definitions` (
   UNIQUE KEY `def_id` (`def_id`),
   KEY `cons_id` (`cons_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40165 ;
-
---
--- Dumping data for table `lang_definitions`
---
 
 INSERT INTO `lang_definitions` (`def_id`, `cons_id`, `lang_id`, `definition`) VALUES
 (1, 1, 2, 'A'),
@@ -46760,22 +46203,12 @@ INSERT INTO `lang_definitions` (`def_id`, `cons_id`, `lang_id`, `definition`) VA
 (40163, 4367, 22, 'dummy'),
 (40164, 4368, 22, 'dummy');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `lang_languages`
---
-
 CREATE TABLE IF NOT EXISTS `lang_languages` (
   `lang_id` int(11) NOT NULL AUTO_INCREMENT,
   `lang_code` char(2) NOT NULL DEFAULT '',
   `lang_description` varchar(100) DEFAULT NULL,
   UNIQUE KEY `lang_id` (`lang_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
-
---
--- Dumping data for table `lang_languages`
---
 
 INSERT INTO `lang_languages` (`lang_id`, `lang_code`, `lang_description`) VALUES
 (1, 'en', 'English (Standard)'),
@@ -46801,12 +46234,6 @@ INSERT INTO `lang_languages` (`lang_id`, `lang_code`, `lang_description`) VALUES
 (21, 'tr', 'Turkish'),
 (22, 'dd', 'dummy');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `layout_options`
---
-
 CREATE TABLE IF NOT EXISTS `layout_options` (
   `form_id` varchar(31) NOT NULL DEFAULT '',
   `field_id` varchar(31) NOT NULL DEFAULT '',
@@ -46825,10 +46252,6 @@ CREATE TABLE IF NOT EXISTS `layout_options` (
   `description` text,
   PRIMARY KEY (`form_id`,`field_id`,`seq`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `layout_options`
---
 
 INSERT INTO `layout_options` (`form_id`, `field_id`, `group_name`, `title`, `seq`, `data_type`, `uor`, `fld_length`, `max_length`, `list_id`, `titlecols`, `datacols`, `default_value`, `edit_options`, `description`) VALUES
 ('DEM', 'title', '1Who', 'Name', 1, 1, 1, 0, 0, 'titles', 1, 1, '', 'N', 'Title'),
@@ -46957,12 +46380,6 @@ INSERT INTO `layout_options` (`form_id`, `field_id`, `group_name`, `title`, `seq
 ('HIS', 'userarea11', '5Other', 'User Defined Area 11', 6, 3, 0, 30, 3, '', 1, 3, '', '', 'User Defined'),
 ('HIS', 'userarea12', '5Other', 'User Defined Area 12', 7, 3, 0, 30, 3, '', 1, 3, '', '', 'User Defined');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `lbf_data`
---
-
 CREATE TABLE IF NOT EXISTS `lbf_data` (
   `form_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'references forms.form_id',
   `field_id` varchar(31) NOT NULL COMMENT 'references layout_options.field_id',
@@ -46970,16 +46387,6 @@ CREATE TABLE IF NOT EXISTS `lbf_data` (
   PRIMARY KEY (`form_id`,`field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='contains all data from layout-based forms' AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `lbf_data`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `lists`
---
 
 CREATE TABLE IF NOT EXISTS `lists` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -47009,16 +46416,6 @@ CREATE TABLE IF NOT EXISTS `lists` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `lists`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `list_options`
---
 
 CREATE TABLE IF NOT EXISTS `list_options` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -47032,10 +46429,6 @@ CREATE TABLE IF NOT EXISTS `list_options` (
   `notes` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`,`list_id`,`option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=541 ;
-
---
--- Dumping data for table `list_options`
---
 
 INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`) VALUES
 (1, 'yesno', 'NO', 'NO', 1, 0, 0, '', ''),
@@ -47579,12 +46972,6 @@ INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_de
 (539, 'payment_date', 'post_to_date', 'Post To Date', 20, 0, 0, '', ''),
 (540, 'payment_date', 'deposit_date', 'Deposit Date', 30, 0, 0, '', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `log`
---
-
 CREATE TABLE IF NOT EXISTS `log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -47599,10 +46986,6 @@ CREATE TABLE IF NOT EXISTS `log` (
   `crt_user` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6086 ;
-
---
--- Dumping data for table `log`
---
 
 INSERT INTO `log` (`id`, `date`, `event`, `user`, `facility`, `comments`, `user_notes`, `patient_id`, `success`, `checksum`, `crt_user`) VALUES
 (204, NULL, NULL, ' Administrator,  ', 'default', 'UPDATE globlas2 \r\n		SET   gl_value =''0''\r\n      	WHERE gl_name  =''''', NULL, 0, 1, '-1259904827', NULL),
@@ -53509,12 +52892,6 @@ INSERT INTO `log` (`id`, `date`, `event`, `user`, `facility`, `comments`, `user_
 (6084, NULL, NULL, ' Administrator,  ', 'default', 'UPDATE globals\r\n			SET   gl_value =''''\r\n	      	WHERE gl_name  =''enable_scanner''', NULL, 0, 1, '-1473537862', NULL),
 (6085, NULL, NULL, ' Administrator,  ', 'default', 'UPDATE globals\r\n			SET   gl_value =''/mnt/scan_docs''\r\n	      	WHERE gl_name  =''scanner_output_directory''', NULL, 0, 1, '-1328852207', NULL);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `notes`
---
-
 CREATE TABLE IF NOT EXISTS `notes` (
   `id` int(11) NOT NULL DEFAULT '0',
   `foreign_id` int(11) NOT NULL DEFAULT '0',
@@ -53528,16 +52905,6 @@ CREATE TABLE IF NOT EXISTS `notes` (
   KEY `date` (`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `notes`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `notification_log`
---
 
 CREATE TABLE IF NOT EXISTS `notification_log` (
   `iLogId` int(11) NOT NULL AUTO_INCREMENT,
@@ -53558,16 +52925,6 @@ CREATE TABLE IF NOT EXISTS `notification_log` (
   PRIMARY KEY (`iLogId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `notification_log`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `notification_settings`
---
 
 CREATE TABLE IF NOT EXISTS `notification_settings` (
   `SettingsId` int(3) NOT NULL AUTO_INCREMENT,
@@ -53580,18 +52937,8 @@ CREATE TABLE IF NOT EXISTS `notification_settings` (
   PRIMARY KEY (`SettingsId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `notification_settings`
---
-
 INSERT INTO `notification_settings` (`SettingsId`, `Send_SMS_Before_Hours`, `Send_Email_Before_Hours`, `SMS_gateway_username`, `SMS_gateway_password`, `SMS_gateway_apikey`, `type`) VALUES
 (1, 150, 150, 'sms username', 'sms password', 'sms api key', 'SMS/Email Settings');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `onotes`
---
 
 CREATE TABLE IF NOT EXISTS `onotes` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -53603,16 +52950,6 @@ CREATE TABLE IF NOT EXISTS `onotes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `onotes`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `openemr_modules`
---
 
 CREATE TABLE IF NOT EXISTS `openemr_modules` (
   `pn_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -53629,18 +52966,8 @@ CREATE TABLE IF NOT EXISTS `openemr_modules` (
   PRIMARY KEY (`pn_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
 
---
--- Dumping data for table `openemr_modules`
---
-
 INSERT INTO `openemr_modules` (`pn_id`, `pn_name`, `pn_type`, `pn_displayname`, `pn_description`, `pn_regid`, `pn_directory`, `pn_version`, `pn_admin_capable`, `pn_user_capable`, `pn_state`) VALUES
 (46, 'PostCalendar', 2, 'PostCalendar', 'PostNuke Calendar Module', 0, 'PostCalendar', '4.0.0', 1, 1, 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `openemr_module_vars`
---
 
 CREATE TABLE IF NOT EXISTS `openemr_module_vars` (
   `pn_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -53651,10 +52978,6 @@ CREATE TABLE IF NOT EXISTS `openemr_module_vars` (
   KEY `pn_modname` (`pn_modname`),
   KEY `pn_name` (`pn_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=235 ;
-
---
--- Dumping data for table `openemr_module_vars`
---
 
 INSERT INTO `openemr_module_vars` (`pn_id`, `pn_modname`, `pn_name`, `pn_value`) VALUES
 (234, 'PostCalendar', 'pcNotifyEmail', ''),
@@ -53677,12 +53000,6 @@ INSERT INTO `openemr_module_vars` (`pn_id`, `pn_modname`, `pn_name`, `pn_value`)
 (217, 'PostCalendar', 'pcEventsOpenInNewWindow', '0'),
 (216, 'PostCalendar', 'pcTime24Hours', '0');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `openemr_postcalendar_categories`
---
-
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_categories` (
   `pc_catid` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pc_catname` varchar(100) DEFAULT NULL,
@@ -53702,10 +53019,6 @@ CREATE TABLE IF NOT EXISTS `openemr_postcalendar_categories` (
   KEY `basic_cat` (`pc_catname`,`pc_catcolor`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
---
--- Dumping data for table `openemr_postcalendar_categories`
---
-
 INSERT INTO `openemr_postcalendar_categories` (`pc_catid`, `pc_catname`, `pc_catcolor`, `pc_catdesc`, `pc_recurrtype`, `pc_enddate`, `pc_recurrspec`, `pc_recurrfreq`, `pc_duration`, `pc_end_date_flag`, `pc_end_date_type`, `pc_end_date_freq`, `pc_end_all_day`, `pc_dailylimit`) VALUES
 (5, 'Office Visit', '#FFFFCC', 'Normal Office Visit', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0),
 (4, 'Vacation', '#EFEFEF', 'Reserved for use to define Scheduled Vacation Time', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 0, 0, 0, 1, 0),
@@ -53716,12 +53029,6 @@ INSERT INTO `openemr_postcalendar_categories` (`pc_catid`, `pc_catname`, `pc_cat
 (9, 'Established Patient', '#CCFF33', '', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0),
 (10, 'New Patient', '#CCFFFF', '', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 1800, 0, 0, 0, 0, 0),
 (11, 'Reserved', '#FF7777', 'Reserved', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 3, 2, 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `openemr_postcalendar_events`
---
 
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_events` (
   `pc_eid` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -53763,20 +53070,10 @@ CREATE TABLE IF NOT EXISTS `openemr_postcalendar_events` (
   KEY `basic_event` (`pc_catid`,`pc_aid`,`pc_eventDate`,`pc_endDate`,`pc_eventstatus`,`pc_sharing`,`pc_topic`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
---
--- Dumping data for table `openemr_postcalendar_events`
---
-
 INSERT INTO `openemr_postcalendar_events` (`pc_eid`, `pc_catid`, `pc_multiple`, `pc_aid`, `pc_pid`, `pc_title`, `pc_time`, `pc_hometext`, `pc_comments`, `pc_counter`, `pc_topic`, `pc_informant`, `pc_eventDate`, `pc_endDate`, `pc_duration`, `pc_recurrtype`, `pc_recurrspec`, `pc_recurrfreq`, `pc_startTime`, `pc_endTime`, `pc_alldayevent`, `pc_location`, `pc_conttel`, `pc_contname`, `pc_contemail`, `pc_website`, `pc_fee`, `pc_eventstatus`, `pc_sharing`, `pc_language`, `pc_apptstatus`, `pc_prefcatid`, `pc_facility`, `pc_sendalertsms`, `pc_sendalertemail`) VALUES
 (3, 2, 0, '1', '', 'In Office', '2005-03-03 12:22:31', ':text:', 0, 0, 0, '1', '2005-03-03', '2007-03-03', 0, 1, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, '09:00:00', '09:00:00', 0, 'a:6:{s:14:"event_location";N;s:13:"event_street1";N;s:13:"event_street2";N;s:10:"event_city";N;s:11:"event_state";N;s:12:"event_postal";N;}', '', '', '', '', '', 1, 1, '', '-', 0, 0, 'NO', 'NO'),
 (5, 3, 0, '1', '', 'Out Of Office', '2005-03-03 12:22:52', ':text:', 0, 0, 0, '1', '2005-03-03', '2007-03-03', 0, 1, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, '17:00:00', '17:00:00', 0, 'a:6:{s:14:"event_location";N;s:13:"event_street1";N;s:13:"event_street2";N;s:10:"event_city";N;s:11:"event_state";N;s:12:"event_postal";N;}', '', '', '', '', '', 1, 1, '', '-', 0, 0, 'NO', 'NO'),
 (6, 8, 0, '1', '', 'Lunch', '2005-03-03 12:23:31', ':text:', 0, 0, 0, '1', '2005-03-03', '2007-03-03', 3600, 1, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, '12:00:00', '13:00:00', 0, 'a:6:{s:14:"event_location";N;s:13:"event_street1";N;s:13:"event_street2";N;s:10:"event_city";N;s:11:"event_state";N;s:12:"event_postal";N;}', '', '', '', '', '', 1, 1, '', '-', 0, 0, 'NO', 'NO');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `openemr_postcalendar_limits`
---
 
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_limits` (
   `pc_limitid` int(11) NOT NULL AUTO_INCREMENT,
@@ -53787,16 +53084,6 @@ CREATE TABLE IF NOT EXISTS `openemr_postcalendar_limits` (
   PRIMARY KEY (`pc_limitid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `openemr_postcalendar_limits`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `openemr_postcalendar_topics`
---
 
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_topics` (
   `pc_catid` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -53807,16 +53094,6 @@ CREATE TABLE IF NOT EXISTS `openemr_postcalendar_topics` (
   KEY `basic_cat` (`pc_catname`,`pc_catcolor`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `openemr_postcalendar_topics`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `openemr_session_info`
---
 
 CREATE TABLE IF NOT EXISTS `openemr_session_info` (
   `pn_sessid` varchar(32) NOT NULL DEFAULT '',
@@ -53827,10 +53104,6 @@ CREATE TABLE IF NOT EXISTS `openemr_session_info` (
   `pn_vars` blob,
   PRIMARY KEY (`pn_sessid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `openemr_session_info`
---
 
 INSERT INTO `openemr_session_info` (`pn_sessid`, `pn_ipaddr`, `pn_firstused`, `pn_lastused`, `pn_uid`, `pn_vars`) VALUES
 ('978d31441dccd350d406bfab98978f20', '127.0.0.1', 1109233952, 1109234177, 0, NULL),
@@ -53843,12 +53116,6 @@ INSERT INTO `openemr_session_info` (`pn_sessid`, `pn_ipaddr`, `pn_firstused`, `p
 ('8d7db279c3908a4f953e280e7b1e77f2', '::1', 1297980770, 1297980890, 0, NULL),
 ('b4aef8b062fe73a2c599ca8998297918', '::1', 1297985756, 1297985756, 0, NULL),
 ('e71415a75d0c8fde355e7d44712af648', '::1', 1298152068, 1298157864, 0, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `patient_data`
---
 
 CREATE TABLE IF NOT EXISTS `patient_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -53934,10 +53201,6 @@ CREATE TABLE IF NOT EXISTS `patient_data` (
   KEY `id` (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
---
--- Dumping data for table `patient_data`
---
-
 INSERT INTO `patient_data` (`id`, `title`, `language`, `financial`, `fname`, `lname`, `mname`, `DOB`, `street`, `postal_code`, `city`, `state`, `country_code`, `drivers_license`, `ss`, `occupation`, `phone_home`, `phone_biz`, `phone_contact`, `phone_cell`, `pharmacy_id`, `status`, `contact_relationship`, `date`, `sex`, `referrer`, `referrerID`, `providerID`, `email`, `ethnoracial`, `race`, `ethnicity`, `interpretter`, `migrantseasonal`, `family_size`, `monthly_income`, `homeless`, `financial_review`, `pubpid`, `pid`, `genericname1`, `genericval1`, `genericname2`, `genericval2`, `hipaa_mail`, `hipaa_voice`, `hipaa_notice`, `hipaa_message`, `hipaa_allowsms`, `hipaa_allowemail`, `squad`, `fitness`, `referral_source`, `usertext1`, `usertext2`, `usertext3`, `usertext4`, `usertext5`, `usertext6`, `usertext7`, `usertext8`, `userlist1`, `userlist2`, `userlist3`, `userlist4`, `userlist5`, `userlist6`, `userlist7`, `pricelevel`, `regdate`, `contrastart`, `completed_ad`, `ad_reviewed`, `vfc`, `mothersname`, `guardiansname`, `allow_imm_reg_use`, `allow_imm_info_share`, `allow_health_info_ex`) VALUES
 (1, 'Mr.', '', '', 'Ulise', 'Acosta', 'U', '2011-01-02', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '2011-01-23 18:13:42', 'Male', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '1', 1, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', ''),
 (2, '', '', '', 'Omarn', 'Weekasd', 'Asdwjk', '2011-01-03', '', '', '', '', '', '', '837372123', '', '', '', '', '', 0, '', '', '2011-01-23 18:15:01', 'Male', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '2', 2, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', ''),
@@ -53960,12 +53223,6 @@ INSERT INTO `patient_data` (`id`, `title`, `language`, `financial`, `fname`, `ln
 (19, 'Mr.', '', '', 'Michelle', 'Weekasd', '', '2011-01-03', '', '', '', '', '', '', '837372123', '', '', '', '', '', 0, '', '', '2011-01-23 18:15:01', 'Female', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '19', 19, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', ''),
 (20, 'Mr.', '', '', 'Nelly', 'Bartolomei', 'Marie', '2011-01-03', '', '', '', '', '', '', '837372123', '', '', '', '', '', 0, '', '', '2011-01-23 18:15:01', 'Female', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '20', 20, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `payments`
---
-
 CREATE TABLE IF NOT EXISTS `payments` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pid` bigint(20) NOT NULL DEFAULT '0',
@@ -53982,16 +53239,6 @@ CREATE TABLE IF NOT EXISTS `payments` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `payments`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pharmacies`
---
 
 CREATE TABLE IF NOT EXISTS `pharmacies` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -54001,18 +53248,8 @@ CREATE TABLE IF NOT EXISTS `pharmacies` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `pharmacies`
---
-
 INSERT INTO `pharmacies` (`id`, `name`, `transmit_method`, `email`) VALUES
 (2, 'benquil', 2, 'benquil@exmaple.com');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `phone_numbers`
---
 
 CREATE TABLE IF NOT EXISTS `phone_numbers` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -54026,20 +53263,10 @@ CREATE TABLE IF NOT EXISTS `phone_numbers` (
   KEY `foreign_id` (`foreign_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `phone_numbers`
---
-
 INSERT INTO `phone_numbers` (`id`, `country_code`, `area_code`, `prefix`, `number`, `type`, `foreign_id`) VALUES
 (4, '+1', '777', '777', '7777', 2, 2),
 (5, '+1', '888', '888', '8888', 5, 2),
 (8, '+1', '777', '777', '7777', 2, 6);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pma_bookmark`
---
 
 CREATE TABLE IF NOT EXISTS `pma_bookmark` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -54050,21 +53277,11 @@ CREATE TABLE IF NOT EXISTS `pma_bookmark` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Bookmarks' AUTO_INCREMENT=10 ;
 
---
--- Dumping data for table `pma_bookmark`
---
-
 INSERT INTO `pma_bookmark` (`id`, `dbase`, `user`, `label`, `query`) VALUES
 (2, 'openemr', 'openemr', 'Aggregate Race Statistics', 'SELECT ethnoracial as "Race/Ethnicity", count(*) as Count FROM  `patient_data` WHERE 1 group by ethnoracial'),
 (9, 'openemr', 'openemr', 'Search by Code', 'SELECT  b.code, concat(pd.fname," ", pd.lname) as "Patient Name", concat(u.fname," ", u.lname) as "Provider Name", en.reason as "Encounter Desc.", en.date\r\nFROM billing as b\r\nLEFT JOIN users AS u ON b.user = u.id\r\nLEFT JOIN patient_data as pd on b.pid = pd.pid\r\nLEFT JOIN form_encounter as en on b.encounter = en.encounter and b.pid = en.pid\r\nWHERE 1 /* and b.code like ''%[VARIABLE]%'' */ ORDER BY b.code'),
 (8, 'openemr', 'openemr', 'Count No Shows By Provider since Interval ago', 'SELECT concat( u.fname,  " ", u.lname )  AS  "Provider Name", u.id AS  "Provider ID", count(  DISTINCT ev.pc_eid )  AS  "Number of No Shows"/* , concat(DATE_FORMAT(NOW(),''%Y-%m-%d''), '' and '',DATE_FORMAT(DATE_ADD(now(), INTERVAL [VARIABLE]),''%Y-%m-%d'') ) as "Between Dates" */ FROM  `openemr_postcalendar_events`  AS ev LEFT  JOIN users AS u ON ev.pc_aid = u.id WHERE ev.pc_catid =1/* and ( ev.pc_eventDate >= DATE_SUB(now(), INTERVAL [VARIABLE]) )  */\r\nGROUP  BY u.id;'),
 (6, 'openemr', 'openemr', 'Appointments By Race/Ethnicity from today plus interval', 'SELECT  count(pd.ethnoracial) as "Number of Appointments", pd.ethnoracial AS  "Race/Ethnicity" /* , concat(DATE_FORMAT(NOW(),''%Y-%m-%d''), '' and '',DATE_FORMAT(DATE_ADD(now(), INTERVAL [VARIABLE]),''%Y-%m-%d'') ) as "Between Dates" */ FROM openemr_postcalendar_events AS ev LEFT  JOIN   `patient_data`  AS pd ON  pd.pid = ev.pc_pid where ev.pc_eventstatus=1 and ev.pc_catid = 5 and ev.pc_eventDate >= now()  /* and ( ev.pc_eventDate <= DATE_ADD(now(), INTERVAL [VARIABLE]) )  */ group by pd.ethnoracial');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pma_column_info`
---
 
 CREATE TABLE IF NOT EXISTS `pma_column_info` (
   `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
@@ -54079,16 +53296,6 @@ CREATE TABLE IF NOT EXISTS `pma_column_info` (
   UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Column Information for phpMyAdmin' AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `pma_column_info`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pma_history`
---
 
 CREATE TABLE IF NOT EXISTS `pma_history` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -54101,16 +53308,6 @@ CREATE TABLE IF NOT EXISTS `pma_history` (
   KEY `username` (`username`,`db`,`table`,`timevalue`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='SQL history' AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `pma_history`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pma_pdf_pages`
---
 
 CREATE TABLE IF NOT EXISTS `pma_pdf_pages` (
   `db_name` varchar(64) DEFAULT NULL,
@@ -54120,16 +53317,6 @@ CREATE TABLE IF NOT EXISTS `pma_pdf_pages` (
   KEY `db_name` (`db_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='PDF Relationpages for PMA' AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `pma_pdf_pages`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pma_relation`
---
 
 CREATE TABLE IF NOT EXISTS `pma_relation` (
   `master_db` varchar(64) NOT NULL DEFAULT '',
@@ -54142,16 +53329,6 @@ CREATE TABLE IF NOT EXISTS `pma_relation` (
   KEY `foreign_field` (`foreign_db`,`foreign_table`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Relation table';
 
---
--- Dumping data for table `pma_relation`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pma_table_coords`
---
 
 CREATE TABLE IF NOT EXISTS `pma_table_coords` (
   `db_name` varchar(64) NOT NULL DEFAULT '',
@@ -54162,16 +53339,6 @@ CREATE TABLE IF NOT EXISTS `pma_table_coords` (
   PRIMARY KEY (`db_name`,`table_name`,`pdf_page_number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Table coordinates for phpMyAdmin PDF output';
 
---
--- Dumping data for table `pma_table_coords`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pma_table_info`
---
 
 CREATE TABLE IF NOT EXISTS `pma_table_info` (
   `db_name` varchar(64) NOT NULL DEFAULT '',
@@ -54180,16 +53347,6 @@ CREATE TABLE IF NOT EXISTS `pma_table_info` (
   PRIMARY KEY (`db_name`,`table_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Table information for phpMyAdmin';
 
---
--- Dumping data for table `pma_table_info`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pnotes`
---
 
 CREATE TABLE IF NOT EXISTS `pnotes` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -54209,18 +53366,8 @@ CREATE TABLE IF NOT EXISTS `pnotes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `pnotes`
---
-
 INSERT INTO `pnotes` (`id`, `date`, `body`, `pid`, `user_id`, `facility_id`, `activity`, `authorized`, `assigned_to`, `deleted`, `message_status`, `subject`, `reply_id`, `note_type`) VALUES
 (1, '2011-05-19 10:24:40', 'â€‹Hello', 1, 1, 0, 0, 0, 'hrivera', 0, 'New', 'test', 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `prescriptions`
---
 
 CREATE TABLE IF NOT EXISTS `prescriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -54250,16 +53397,6 @@ CREATE TABLE IF NOT EXISTS `prescriptions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `prescriptions`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `prices`
---
 
 CREATE TABLE IF NOT EXISTS `prices` (
   `pr_id` varchar(11) NOT NULL DEFAULT '',
@@ -54269,16 +53406,6 @@ CREATE TABLE IF NOT EXISTS `prices` (
   PRIMARY KEY (`pr_id`,`pr_selector`,`pr_level`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `prices`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `procedure_order`
---
 
 CREATE TABLE IF NOT EXISTS `procedure_order` (
   `procedure_order_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -54297,16 +53424,6 @@ CREATE TABLE IF NOT EXISTS `procedure_order` (
   KEY `datepid` (`date_ordered`,`patient_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `procedure_order`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `procedure_report`
---
 
 CREATE TABLE IF NOT EXISTS `procedure_report` (
   `procedure_report_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -54321,16 +53438,6 @@ CREATE TABLE IF NOT EXISTS `procedure_report` (
   KEY `procedure_order_id` (`procedure_order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `procedure_report`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `procedure_result`
---
 
 CREATE TABLE IF NOT EXISTS `procedure_result` (
   `procedure_result_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -54349,16 +53456,6 @@ CREATE TABLE IF NOT EXISTS `procedure_result` (
   KEY `procedure_report_id` (`procedure_report_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `procedure_result`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `procedure_type`
---
 
 CREATE TABLE IF NOT EXISTS `procedure_type` (
   `procedure_type_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -54381,16 +53478,6 @@ CREATE TABLE IF NOT EXISTS `procedure_type` (
   KEY `parent` (`parent`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `procedure_type`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `registry`
---
 
 CREATE TABLE IF NOT EXISTS `registry` (
   `name` varchar(255) DEFAULT NULL,
@@ -54406,10 +53493,6 @@ CREATE TABLE IF NOT EXISTS `registry` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
---
--- Dumping data for table `registry`
---
-
 INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`) VALUES
 ('New Encounter Form', 1, 'newpatient', 1, 1, 1, '2003-09-14 15:16:45', 0, 'Administrative', ''),
 ('Review of Systems Checks', 1, 'reviewofs', 9, 1, 1, '2003-09-14 15:16:45', 0, 'Clinical', ''),
@@ -54421,28 +53504,12 @@ INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackag
 ('Misc Billing Options HCFA', 1, 'misc_billing_options', 15, 1, 1, '2007-07-28 00:00:00', 0, 'Administrative', ''),
 ('Procedure Order', 1, 'procedure_order', 16, 1, 1, '2010-02-25 00:00:00', 0, 'Administrative', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `sequences`
---
-
 CREATE TABLE IF NOT EXISTS `sequences` (
   `id` int(11) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `sequences`
---
-
 INSERT INTO `sequences` (`id`) VALUES
 (1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `syndromic_surveillance`
---
 
 CREATE TABLE IF NOT EXISTS `syndromic_surveillance` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -54453,16 +53520,6 @@ CREATE TABLE IF NOT EXISTS `syndromic_surveillance` (
   KEY `lists_id` (`lists_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `syndromic_surveillance`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transactions`
---
 
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -54495,16 +53552,6 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `transactions`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -54561,21 +53608,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=79 ;
 
---
--- Dumping data for table `users`
---
-
 INSERT INTO `users` (`id`, `username`, `password`, `authorized`, `info`, `source`, `fname`, `mname`, `lname`, `federaltaxid`, `federaldrugid`, `upin`, `facility`, `facility_id`, `see_auth`, `active`, `npi`, `title`, `specialty`, `billname`, `email`, `url`, `assistant`, `organization`, `valedictory`, `street`, `streetb`, `city`, `state`, `zip`, `street2`, `streetb2`, `city2`, `state2`, `zip2`, `phone`, `fax`, `phonew1`, `phonew2`, `phonecell`, `notes`, `cal_ui`, `taxonomy`, `ssi_relayhealth`, `calendar`, `abook_type`, `pwd_expiration_date`, `pwd_history1`, `pwd_history2`, `default_warehouse`, `irnpool`) VALUES
 (1, 'admin', 0x50d2d43e26773061412f97deb0968069, 1, NULL, NULL, '', NULL, 'Administrator', NULL, NULL, NULL, NULL, 3, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, '207Q00000X', NULL, 1, '', NULL, NULL, NULL, '', ''),
 (2, 'vela1606', 0x50d2d43e26773061412f97deb0968069, 1, 'CJR 700', NULL, 'Ernesto', 'Juano', 'Rodriguez', '1234', '40560', '34674', NULL, 3, 3, 1, '454698', 'Dr.', 'Mitos Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '207Q00000X', NULL, 0, '', NULL, NULL, NULL, '', ''),
 (3, 'hrivera', 0x50d2d43e26773061412f97deb0968069, 1, 'â€‹', NULL, 'Hector', 'Gino', 'Falu', '236724', '2342343', '546743', NULL, 3, 3, 1, '4564346', 'Mr.', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '207Q00000X', NULL, 0, '', NULL, NULL, NULL, '', ''),
 (4, 'ernesto', 0x50d2d43e26773061412f97deb0968069, 1, 'â€‹', NULL, 'Ernestito', 'Juan', 'Rodriguez', '', '', '', 'Ernestos Clinic', 3, 3, 1, '', 'Mr.', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, '207Q00000X', NULL, 1, '', '0000-00-00', NULL, NULL, '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users_facility`
---
 
 CREATE TABLE IF NOT EXISTS `users_facility` (
   `tablename` varchar(64) NOT NULL,
@@ -54584,16 +53621,6 @@ CREATE TABLE IF NOT EXISTS `users_facility` (
   PRIMARY KEY (`tablename`,`table_id`,`facility_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='joins users or patient_data to facility table';
 
---
--- Dumping data for table `users_facility`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_settings`
---
 
 CREATE TABLE IF NOT EXISTS `user_settings` (
   `setting_user` bigint(20) NOT NULL DEFAULT '0',
@@ -54601,10 +53628,6 @@ CREATE TABLE IF NOT EXISTS `user_settings` (
   `setting_value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`setting_user`,`setting_label`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user_settings`
---
 
 INSERT INTO `user_settings` (`setting_user`, `setting_label`, `setting_value`) VALUES
 (0, 'allergy_ps_expand', '1'),
@@ -54625,12 +53648,6 @@ INSERT INTO `user_settings` (`setting_user`, `setting_label`, `setting_value`) V
 (0, 'gacl_protect', '0'),
 (1, 'gacl_protect', '1');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `version`
---
-
 CREATE TABLE IF NOT EXISTS `version` (
   `v_major` int(11) NOT NULL DEFAULT '0',
   `v_minor` int(11) NOT NULL DEFAULT '0',
@@ -54639,18 +53656,8 @@ CREATE TABLE IF NOT EXISTS `version` (
   `v_database` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `version`
---
-
 INSERT INTO `version` (`v_major`, `v_minor`, `v_patch`, `v_tag`, `v_database`) VALUES
 (1, 0, 0, 'Vega', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `x12_partners`
---
 
 CREATE TABLE IF NOT EXISTS `x12_partners` (
   `id` int(11) NOT NULL DEFAULT '0',
@@ -54668,8 +53675,4 @@ CREATE TABLE IF NOT EXISTS `x12_partners` (
   `x12_per06` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `x12_partners`
---
 
