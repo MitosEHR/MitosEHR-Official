@@ -5,35 +5,41 @@
  * Author: Ernesto Rodriguez
  */
 class SiteSetup {
-	
-	// Globals inside he Class
+	// Globals vars inside the Class
+	private $conn;
+	private $path;
 	private $siteName;
 	private $siteDbPrefix;
 	private $siteDbUser;
 	private $siteDbPass;
+	private	$db_server;
+	private	$db_port;
+	private	$db_name;
+	private	$db_rootUser;
+	private	$db_rootPass;
 
 	//*****************************************************************************************
 	// ckeck cmod 777
 	//*****************************************************************************************
-	function check_perms($path){
+	function check_perms(){
 	    clearstatcache();
-    	$configmod = substr(sprintf('%o', fileperms($path)), -4);
+    	$configChmod = substr(sprintf('%o', fileperms($this->path)), -4);
 		return true; 
 	}
 
 	//*****************************************************************************************
 	// create site name folder inside /sites/
 	//*****************************************************************************************
-	function createFolders($siteName) {
-		mkdir("sites/" . $siteName, 0777);
+	function createFolders() {
+		mkdir("sites/" . $this->siteName, 0777);
 		return true;
 	}
 
 	//*****************************************************************************************
 	// Connection error handeler
 	//*****************************************************************************************
-	function connError($conn) {
-		$conn->errorInfo();
+	function connError() {
+		$this->conn->errorInfo();
 		$errorCode = $error[1];
 		$errorMsg =  $error[2];
 		echo "{success:false,errors:{reason:'Error:".$errorCode." - ".$errorMsg."'}}";
@@ -43,42 +49,42 @@ class SiteSetup {
 	//*****************************************************************************************
 	// Database connection and error handeler
 	//*****************************************************************************************
-	function newDatabaseConn($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
+	function newDatabaseConn() {
 		//-------------------------------------------------------------------------------------
 		// connection to mysql w/o database
 		//-------------------------------------------------------------------------------------
-		$conn = new PDO("mysql:host=".$db_server.";port=".$db_port,$db_rootUser,$db_rootPass);
+		$this->conn = new PDO("mysql:host=".$this->db_server.";port=".$this->db_port,$this->db_rootUser,$this->db_rootPass);
 		//-------------------------------------------------------------------------------------
 		// send error callback if conn can't be stablish
 		//-------------------------------------------------------------------------------------
-		if (!$this->$conn){
-			connError($this->$conn);
+		if (!$this->conn){
+			$this->connError();
 		} else {
-			return $conn;
+			return true;
 		}
 	}
 	
 	//*****************************************************************************************
 	// If database exist connect to it 
 	//*****************************************************************************************
-	function oldDatabaseConn($db_server,$db_port,$db_name,$siteDbUser,$siteDbPass) {
+	function oldDatabaseConn() {
 		//-------------------------------------------------------------------------------------
 		// connection to mysql with database and user
 		//-------------------------------------------------------------------------------------
-		$conn = new PDO("mysql:host=".$db_server.";
-							   port=".$db_port.";
-							 dbname=".$db_name,$siteDbUser,$siteDbPass);
-		if (!$this->$conn){
-			connError($this->$conn);
+		$this->conn = new PDO("mysql:host=".$this->db_server.";
+							   		 port=".$this->db_port.";
+							 	   dbname=".$this->db_name,$this->siteDbUser,$this->siteDbPass);
+		if (!$this->conn){
+			$this->connError();
 		} else {
-			return $conn;
+			return true;
 		}
 	}
 	
 	//*****************************************************************************************
 	// lets dump all the new data in the database
 	//*****************************************************************************************
-	function sqldump($conn) {
+	function sqldump() {
 		//-------------------------------------------------------------------------------------
 		// lets look for sitesetup.qsl file
 		//-------------------------------------------------------------------------------------
@@ -86,11 +92,11 @@ class SiteSetup {
 			//---------------------------------------------------------------------------------
 			// if sitesetup.sql found, open it
 			//---------------------------------------------------------------------------------
-			if ($sqlDump = fopen("sitesetup.sql", "r")) {
+			if ($sqlDump = fopen("sql/mitosdb_structure.sql", "r")) {
 				//-----------------------------------------------------------------------------
 				// if was able to open, lets executed
 				//-----------------------------------------------------------------------------
-				$this->$conn->exec($sqlDump);
+				$this->conn->exec($sqlDump);
 				//-----------------------------------------------------------------------------
 				// then close it
 				//-----------------------------------------------------------------------------
@@ -98,13 +104,13 @@ class SiteSetup {
 				//-----------------------------------------------------------------------------
 				// and check for errors
 				//-----------------------------------------------------------------------------
-				if ($this->$conn->errorInfo()) {
-					connError($conn);
+				if ($this->conn->errorInfo()) {
+					$this->connError();
 				} else {
 					//-------------------------------------------------------------------------
 					// Grats! we made it! Database created
 					//-------------------------------------------------------------------------
-					return $this->$conn;
+					return true;
 				}
 			} else {
 				//-----------------------------------------------------------------------------
@@ -123,62 +129,62 @@ class SiteSetup {
 	//*****************************************************************************************
 	// create new database and dump data
 	//*****************************************************************************************
-	function createDatabase($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass) {
+	function createDatabase() {
 		//-------------------------------------------------------------------------------------
 		// connection to mysql w/o database
 		//-------------------------------------------------------------------------------------
-		$this->newDatabaseConn($db_server,$db_port,$db_name,$db_rootUser,$db_rootPass);
+		$this->newDatabaseConn();
 		//-------------------------------------------------------------------------------------
 		// if connection exist Create Databse and dump sql data
 		//-------------------------------------------------------------------------------------
-		if ($this->$conn){
-			$this->$conn->exec("CREATE DATABASE ".$db_name."");
+		if ($this->conn){
+			$this->conn->exec("CREATE DATABASE ".$this->db_name."");
 			//---------------------------------------------------------------------------------
 			// lets check for conn errors
 			//---------------------------------------------------------------------------------
-			if (!$this->$conn->errorInfo()) {
+			if (!$this->conn->errorInfo()) {
 				//-----------------------------------------------------------------------------
 				// if no errors found lets create the database user and give him all privileges
 				//-----------------------------------------------------------------------------
-				$this->$conn->exec("GRANT ALL PRIVILEGES ON ".$db_name.".* 
-							 					  		 TO '".$siteDbUser."'@'localhost'
-	       					 		   		  IDENTIFIED BY '".$siteDbPass."' 
+				$this->$conn->exec("GRANT ALL PRIVILEGES ON ".$this->db_name.".* 
+							 					  		 TO '".$this->siteDbUser."'@'localhost'
+	       					 		   		  IDENTIFIED BY '".$this->siteDbPass."' 
 	       					 	   		  WITH GRANT OPTION;");
 				//-----------------------------------------------------------------------------
 				// lets check for conn errors
 				//-----------------------------------------------------------------------------
-				if (!$this->$conn->errorInfo()) {
+				if (!$this->conn->errorInfo()) {
 					//-------------------------------------------------------------------------
 					// if no error found try to connect using new user 
 					//-------------------------------------------------------------------------
-					$conn = new PDO("mysql:host=".$db_server.";
-									 port=".$db_port.";
-									 dbname=".$db_name,$siteDbUser,$siteDbPass);
+					$this->conn = new PDO("mysql:host=".$this->db_server.";
+									 	   port=".$this->db_port.";
+									 	 dbname=".$this->db_name,$this->siteDbUser,$this->siteDbPass);
 					//-------------------------------------------------------------------------
 					// lets check for conn errors
 					//-------------------------------------------------------------------------
-					if (!$this->$conn->errorInfo()) {
+					if (!$this->conn->errorInfo()) {
 						//---------------------------------------------------------------------
 						// if no error found call sqldump funtion
 						//---------------------------------------------------------------------
-						sqldump();
+						$this->sqldump();
 					} else {
 						//---------------------------------------------------------------------
 						// if Can't stablish connection as user, send error
 						//---------------------------------------------------------------------
-						connError($this->$conn);
+						$this->connError();
 					}
 				} else {
 					//-------------------------------------------------------------------------
 					// if Can't create the user, send error
 					//-------------------------------------------------------------------------
-					connError($this->$conn);
+					$this->connError();
 				}
 			} else {
 				//-----------------------------------------------------------------------------
 				// if Can't create the user, send error
 				//-----------------------------------------------------------------------------
-				connError($this->$conn);
+				$this->connError();
 			}
 		} else {
 			//---------------------------------------------------------------------------------
@@ -191,19 +197,19 @@ class SiteSetup {
 	//*****************************************************************************************
 	// use existing database and dump data
 	//*****************************************************************************************
-	function useDatabase($db_server,$db_port,$db_name,$siteDbUser,$siteDbPass) {
+	function useDatabase() {
 		//-------------------------------------------------------------------------------------
 		// connection to mysql with database
 		//-------------------------------------------------------------------------------------
-		$this->oldDatabaseConn($db_server,$db_port,$db_name,$siteDbUser,$siteDbPass);
+		$this->oldDatabaseConn();
 		//-------------------------------------------------------------------------------------
 		// if connection exist Create Databse and dump sql data
 		//-------------------------------------------------------------------------------------
-		if ($this->$conn){
+		if ($this->conn){
 			//---------------------------------------------------------------------------------
 			// if no conn error call sqldump function
 			//---------------------------------------------------------------------------------
-			sqldump($this->$conn);
+			sqldump($this->conn);
 		} else {
 			//---------------------------------------------------------------------------------
 			// if no $conn just return false, error already haldled by oldDatabaseConn function
@@ -219,7 +225,7 @@ class SiteSetup {
 	 	//-------------------------------------------------------------------------------------
 	 	// ask Gino how we wanna do this!
 	 	//-------------------------------------------------------------------------------------
-		$recordset = $this->$conn->query("");
+		$recordset = $this->conn->query("");
 		
 	}
 	
@@ -228,7 +234,7 @@ class SiteSetup {
 	//*****************************************************************************************
 	function createSiteConf() {
 		// create site conf.php inside current site folder
-		$siteConf = tempnam("sites/".$siteName."conf.php");
+		$siteConf = tempnam("sites/".$this->siteName."conf.php");
 		// change permission to 777
 		chmod($siteConf, 0777);
 		// open new site conf.php
@@ -238,10 +244,9 @@ class SiteSetup {
 		// close file pointer
 		fclose($handle);
 		// change pernission back to 644
-		chmod($siteConf, 0644);
+		chmod($this->siteConf, 0644);
 		
 	}
-	
 } // end class siteSetup
 
 ?>
