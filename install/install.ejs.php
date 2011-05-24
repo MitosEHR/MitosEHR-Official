@@ -129,7 +129,6 @@ Ext.onReady(function() {
         border			: false,
         layout			: 'fit',
         fieldDefaults	: {
-            labelAlign	: 'top',
             msgTarget	: 'side'
         },
         defaults		: {
@@ -145,28 +144,37 @@ Ext.onReady(function() {
             defaults:{bodyStyle:'padding:10px'},
             items:[{
                 title:'Instructions',
-                defaults: {width: 230},
-                defaultType: 'textfield',
-                items: [{
-                  
-                }],
+                layout:'fit',
+                autoLoad		: 'install/instructions.html',
+                autoScroll		: true,
 		        buttons: [{
 		            text: 'Next',
 		            handler: function() {
 		            	Ext.getCmp('clinicInfo').enable();
 						Ext.getCmp('tabsInstall').setActiveTab(1);
-						
 		        	}
-
 		        }]
             },{
-                title:'Clinic Info',
-                defaults: {width: 230},
+                title:'Site Info',
+                defaults: {width: 530},
                 id: 'clinicInfo',
                 defaultType: 'textfield',
                 disabled: true,
                 items: [{
-
+					xtype: 'textfield',
+			        name: 'site',
+			        labelAlign	: 'top',
+			        fieldLabel: 'Site Name ( Normaly set to default )',
+			        allowBlank: false ,
+			    },{
+			    	xtype: 'displayfield',
+		            value: 'Tips...'
+                },{
+			    	xtype: 'displayfield',
+		            value: '<span style="color:red;">The Site will have their own database and will no be able to comunicate to each other</span>'
+                },{
+			    	xtype: 'displayfield',
+		            value: '<span style="color:green;">A Site can have multiples clinics.</span>'
                 }],
 		        buttons: [{
 		            text: 'Back',
@@ -182,12 +190,80 @@ Ext.onReady(function() {
 		        }]
             },{
                 title: 'Database Info',
-                defaults: {width: 230},
+                defaults: {width: 530},
                 id: 'databaseInfo',
                 defaultType: 'textfield',
                 disabled: true,
                 items: [{
-
+			    	xtype: 'displayfield',
+			    	padding: '10px',
+		            value: 'Choose if you want to <a href="javascript:void()" onClick="Ext.getCmp(\'rootFieldset\').enable();">create a new database</a> or use an <a href="javascript:void()" onClick="Ext.getCmp(\'dbuserFieldset\').enable();">existing database</a><br>'
+                },{
+					xtype:'fieldset',
+					id:'rootFieldset',
+		            checkboxToggle:true,
+		            title: 'Create a New Database (Roor Access Needed)',
+		            defaultType: 'textfield',
+		            collapsed: true,
+		            disabled: true,
+		            layout: 'anchor',
+		            defaults: {
+		                anchor: '100%'
+		            },
+		            items :[{
+		                fieldLabel: 'Database Host',
+		                name: 'dbHost',
+		                allowBlank:false
+		            },{
+		                fieldLabel: 'Database Port',
+		                name: 'dbPort'
+		            },{
+		                fieldLabel: 'Root User',
+		                name: 'rootUser'
+		            }, {
+		                fieldLabel: 'Root Password',
+		                name: 'rootPass'
+		            }],
+		            listeners: {
+				   	  	enable: function(){
+							Ext.getCmp('dbuserFieldset').collapse();
+				   			Ext.getCmp('dbuserFieldset').disable();
+							Ext.getCmp('rootFieldset').expand();
+				   		}
+				  	}
+		        },{
+		            xtype:'fieldset',
+		            id:'dbuserFieldset',
+		            checkboxToggle:true,
+		            title: 'Install on Existing Database',
+		            defaultType: 'textfield',
+		            collapsed: true,
+		            disabled: true,
+		            layout: 'anchor',
+		            defaults: {
+		                anchor: '100%'
+		            },
+		            items :[{
+		                fieldLabel: 'Database Host',
+		                name: 'dbHost',
+		                allowBlank:false
+		            },{
+		                fieldLabel: 'Database Port',
+		                name: 'dbPort'
+		            },{
+		                fieldLabel: 'Database User',
+		                name: 'dbUser'
+		            },{
+		                fieldLabel: 'Database Pass',
+		                name: 'dbPass'
+		            }],
+		            listeners: {
+				   	  	enable: function(){
+							Ext.getCmp('rootFieldset').collapse();
+							Ext.getCmp('rootFieldset').disable();
+							Ext.getCmp('dbuserFieldset').expand();
+				   	  	}
+				  	}
                 }],
 		        buttons: [{
 		            text: 'Back',
