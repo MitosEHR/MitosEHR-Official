@@ -19,7 +19,7 @@ ini_set("display_errors", 1);      //
 class SiteSetup {
 	private $conn;
 	private $sites_folder = 'sites';
-	private $siteName = 'defaultTest';
+	private $siteName = 'default';
 	private $siteDbPrefix;
 	private $siteDbUser = 'mitosehr';
 	private $siteDbPass = 'pass';
@@ -32,7 +32,7 @@ class SiteSetup {
 	private $userPass = 'pass';
 
 	//*****************************************************************************************
-	// ckeck sites folder cmod 777
+	// Ckeck sites folder cmod 777
 	//*****************************************************************************************
 	function check_perms(){
 		chmod($this->sites_folder, 0777);
@@ -40,6 +40,27 @@ class SiteSetup {
     	if(substr(sprintf('%o', fileperms($this->sites_folder)), -4) == '0777'){
     		return true; 
     	} 
+	}
+
+	//**********************************************************************
+	// Fetch the last error.
+	// getError - Get the error for a statement, if any.
+	// getConError - Get the connection error, if any.
+	// return: Only the error in a array
+	//
+	// Author: Gino Rivera
+	//**********************************************************************
+	function getError(){
+		return $this->conn->errorInfo();
+	}
+	function getConError(){
+		return $this->err;
+	}
+	function displayError(){
+		$error = $this->conn->errorInfo();
+		if($error[2]){
+			die ("{success:false,errors:{reason:'Error: ".$error[1]." - ".$error[2]."'}}");
+		}
 	}
 
 	//*****************************************************************************************
@@ -75,29 +96,8 @@ class SiteSetup {
 		}
 	}
 	
-	//**********************************************************************
-	// Fetch the last error.
-	// getError - Get the error for a statement, if any.
-	// getConError - Get the connection error, if any.
-	// return: Only the error in a array
-	//
-	// Author: Gino Rivera
-	//**********************************************************************
-	function getError(){
-		return $this->conn->errorInfo();
-	}
-	function getConError(){
-		return $this->err;
-	}
-	function displayError(){
-		$error = $this->conn->errorInfo();
-		if($error[2]){
-			echo ("{success:false,errors:{reason:'Error: ".$error[1]." - ".$error[2]."'}}");
-		}
-	}
-	
 	//*****************************************************************************************
-	// create new database and dump data
+	// Create new database and dump data
 	//*****************************************************************************************
 	function createDatabase() {
 		$this->conn->exec("CREATE DATABASE ".$this->db_name."");
@@ -105,7 +105,7 @@ class SiteSetup {
 	} // end function createDataBase
 	
 	//*****************************************************************************************
-	// create new database user
+	// Create new database user
 	//*****************************************************************************************
 	function createDatabaseUser() {
 		$this->conn->exec("GRANT ALL PRIVILEGES ON ".$this->db_name.".* 
@@ -148,7 +148,7 @@ class SiteSetup {
 	}
 
 	//*****************************************************************************************
-	// set Default Language
+	// set Default Language  //  TODO  //
 	//*****************************************************************************************
 	function defaultLanguage($langauge) {
 	 	//-------------------------------------------------------------------------------------
@@ -190,7 +190,7 @@ class SiteSetup {
 	} 
 	
 	//*****************************************************************************************
-	// create site files
+	// Create site conf file
 	//*****************************************************************************************
 	function createSiteConf() {
 		if($this->check_perms()){
@@ -213,7 +213,7 @@ class SiteSetup {
 	}
 	
 	//*****************************************************************************************
-	// create site files
+	// create Admin user and password
 	//*****************************************************************************************
 	function adminUser(){
 		require_once("library/phpAES/AES.class.php");
@@ -224,6 +224,9 @@ class SiteSetup {
 							  	       fname		='Adminstrator',
 							  	  	   password 	='".$ePass."',
 							  	       authorized 	='1'");
+		if ($this->conn->errorInfo()) {
+				$this->displayError();
+		}
 	}
 } // end class siteSetup
 
