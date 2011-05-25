@@ -64,15 +64,15 @@ Ext.onReady(function(){
 	// 
 	// *************************************************************************************
 	var ListRecord = Ext.define("ListRecord", {extend: "Ext.data.Model", fields: [
-		{name: 'id',			type: 'int',		mapping: 'id'},
-		{name: 'list_id', 		type: 'string',		mapping: 'list_id'},
-		{name: 'option_id', 	type: 'string',		mapping: 'option_id'},
-		{name: 'title', 		type: 'string',		mapping: 'title'},
-		{name: 'seq', 			type: 'int', 		mapping: 'seq'},
-		{name: 'is_default', 	type: 'boolean',	mapping: 'is_default'},
-		{name: 'option_value', 	type: 'string',		mapping: 'option_value'},
-		{name: 'mapping', 		type: 'string',		mapping: 'mapping'},
-		{name: 'notes', 		type: 'string',		mapping: 'notes'}
+		{name: 'id',			type: 'int'		},
+		{name: 'list_id', 		type: 'string'	},
+		{name: 'option_id', 	type: 'string'	},
+		{name: 'title', 		type: 'string'	},
+		{name: 'seq', 			type: 'int' 	},
+		{name: 'is_default', 	type: 'boolean'	},
+		{name: 'option_value', 	type: 'string'	},
+		{name: 'mapping', 		type: 'string'	},
+		{name: 'notes', 		type: 'string'	}
 	],
 		idProperty: 'id',
 	});
@@ -239,13 +239,13 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// RowEditor Class
 	// *************************************************************************************
-	var editor = Ext.create('Ext.grid.plugin.RowEditing', {
+	var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
 		autoCancel: false,
 		errorSummary: false,
 		listeners:{
 			afteredit: function(){
 				storeListsOption.sync();
-				storeListsOption.load();
+				storeListsOption.load({params:{list_id: currList }});
 			}
 		}
 	});
@@ -253,22 +253,25 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Create the GridPanel
 	// *************************************************************************************
+	// FIXME: On the double click event, is giving a error on ExtJSv4, don't know what 
+	// is cousing the problem. I will check this error later.
 	var listGrid = new Ext.create('Ext.grid.Panel', {
 		id			: 'listGrid',
 		store		: storeListsOption,
-		layout		: 'fit',
         columnLines	: true,
-		border		: false, 
-		frame	  	: false,
-		height		: Ext.getCmp('MainApp').getHeight(),
-		plugins		: [editor],
-		columns: [{ 	
+        frame		: false,
+        frameHeader	: false,
+        border		: false,
+        layout		: 'fit',
+        loadMask    : true,
+		plugins		: [rowEditing],
+		columns: [{ 
+			name: 'id',
 			width: 100, 
 			text: 'ID', 
 			sortable: true, 
 			dataIndex: 'option_id',
-            field: {
-                xtype: 'textfield',
+            editor: {
                 allowBlank: false
             }
 		},{ 
@@ -276,23 +279,21 @@ Ext.onReady(function(){
 			text: '<?php i18n('Title'); ?>', 
 			sortable: true, 
 			dataIndex: 'title',
-            field: {
-                xtype: 'textfield',
+            editor: {
                 allowBlank: false
             }
 		},{ 
 			text: '<?php i18n('Order'); ?>', 
 			sortable: true, 
 			dataIndex: 'seq',
-			field: {
-                xtype: 'textfield',
+			editor: {
                 allowBlank: false
             }
 		},{ 
 			text: '<?php i18n('Default'); ?>', 
 			sortable: true, 
 			dataIndex: 'is_default',
-            field: {
+            editor: {
                 xtype: 'checkbox',
                 allowBlank: false
             } 
@@ -301,13 +302,12 @@ Ext.onReady(function(){
 			sortable: true, 
 			dataIndex: 'notes',
 			flex: 1,
-            field: {
-                xtype: 'textfield',
+            editor: {
                 allowBlank: true
             } 
 		}],
 		listeners:{
-			itemclick: function(DataView, record, item, rowIndex, e){ 
+			itemclick: function(view, record, item, rowIndex, element ){ 
 				currRec = storeListsOption.getAt(rowIndex); // Copy the record to the global variable
 			}
 		},
@@ -323,15 +323,15 @@ Ext.onReady(function(){
 				text	: '<?php i18n('Create a list'); ?>',
 				iconCls	: 'icoListOptions',
 				handler: function(){
-					editor.cancelEdit();
+					rowEditing.cancelEdit();
 					Ext.getCmp('frmLists').getForm().reset(); // Clear the form
 					winLists.show();
 				}
 			},'-',{
-				id			  	: 'delList',
-				text		  	: '<?php i18n('Delete list'); ?>',
-				iconCls			: 'delete',
-				handler: function(){
+				id		: 'delList',
+				text	: '<?php i18n('Delete list'); ?>',
+				iconCls	: 'delete',
+				handler	: function(){
 					Ext.Msg.show({
 						title: '<?php i18n('Please confirm...'); ?>', 
 						icon: Ext.MessageBox.QUESTION,
@@ -339,7 +339,7 @@ Ext.onReady(function(){
 						buttons: Ext.Msg.YESNO,
 						fn:function(btn,msgGrid){
 							if(btn=='yes'){
-								editor.cancelEdit();
+								rowEditing.cancelEdit();
 								Ext.getCmp('option_id').setValue( Ext.getCmp('cmbList').getValue() );
 								Ext.getCmp('list_name').setValue( "DEL" ); // This has no purpose.
 				            	var form = Ext.getCmp('frmLists').getForm();
@@ -357,13 +357,11 @@ Ext.onReady(function(){
 				    	                success: function(form, action) {
     	        				        	storeEditList.sync();
 				    	                	storeEditList.load();
-    	        				        	currList = Ext.getCmp('option_id').getValue();
+				    	                	currList = storeEditList.getAt(0);
 				    	                	Ext.getCmp('frmLists').getForm().reset();
-				    	                	
-				    	                	// FIXME: Need to select the first record of the combobox
-				    	                	// at the same time, refresh the list option grid below.
-				    	                	// every time you delete a list option header.
-				    	                	Ext.getCmp('cmbList').select(0);
+				    	                	Ext.getCmp('cmbList').select(currList);
+				    	                	currList = currList.data.option_id;
+				    	                	storeListsOption.load({params:{list_id: currList }});
             					        }
                 					});
             					}
@@ -385,12 +383,13 @@ Ext.onReady(function(){
 				editable		: false,
 				store			: storeEditList,
 				handler: function(){
-					editor.cancelEdit();
+					rowEditing.cancelEdit();
 				},
 				listeners: {
 					select: function(combo, record){
 						// Reload the data store to reflect the new selected list filter
-						storeListsOption.load({params:{list_id: record[0].data.option_id }});
+						currList = record[0].data.option_id;
+						storeListsOption.load({params:{list_id: currList }});
 					}
 				}
 			}]
@@ -405,11 +404,11 @@ Ext.onReady(function(){
 				text		:'<?php i18n('Add record'); ?>',
 				iconCls		: 'icoAddRecord',
 				handler: function() {
-					editor.cancelEdit();
-					var rec = new ListRecord();
-					rec.set('list_id', Ext.getCmp('cmbList').value);
-					storeListsOption.add( rec );
-					editor.startEditing( storeListsOption.getTotalCount() );
+					rowEditing.cancelEdit();
+					currRec = new ListRecord();
+					currRec.set('list_id', Ext.getCmp('cmbList').value);
+					storeListsOption.add( currRec );
+					rowEditing.startEdit( storeListsOption.getTotalCount(), 0 );
 				}
 			},'-',{
 				// Delete the selected record.
@@ -419,14 +418,19 @@ Ext.onReady(function(){
 					Ext.Msg.show({
 						title: '<?php i18n('Please confirm...'); ?>', 
 						icon: Ext.MessageBox.QUESTION,
-						msg:'<?php i18n('Are you sure to delete this record?<br>From: '); ?>',
+						msg:'<?php i18n('Are you sure to delete this record?'); ?>',
 						buttons: Ext.Msg.YESNO,
 						fn:function(btn,msgGrid){
 							if(btn=='yes'){
-								editor.cancelEdit();
-								storeListsOption.remove( currRec );
-								storeListsOption.sync();
-								storeListsOption.load();
+								if(currRec.fields.get('option_id').value == ""){
+									rowEditing.cancelEdit();
+									storeListsOption.remove(currRec);
+								} else {
+									rowEditing.cancelEdit();
+									storeListsOption.remove( currRec );
+									storeListsOption.sync();
+									storeListsOption.load({params:{list_id: currList }});
+								}
 				    	    }
 						}
 					});

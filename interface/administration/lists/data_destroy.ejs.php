@@ -13,9 +13,9 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("library/dbHelper/dbHelper.inc.php");
-include_once("library/I18n/I18n.inc.php");
-require_once("repository/dataExchange/dataExchange.inc.php");
+include_once("../../../library/dbHelper/dbHelper.inc.php");
+include_once("../../../library/I18n/I18n.inc.php");
+require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -30,10 +30,9 @@ $mitos_db = new dbHelper();
 // *************************************************************************************
 // Flag the list item to delete
 // *************************************************************************************
-$data = json_decode ( $_POST['row'] );
-$delete_id = $data[0]->id;
+$data = json_decode ( $_REQUEST['row'] );
 
-$sql = "DELETE FROM list_options WHERE id='$delete_id'"; 
+$sql = "DELETE FROM list_options WHERE id='$data->id'"; 
 
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
