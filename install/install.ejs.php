@@ -197,7 +197,7 @@ Ext.onReady(function() {
                 items: [{
 			    	xtype: 'displayfield',
 			    	padding: '10px',
-		            value: 'Choose if you want to <a href="javascript:void()" onClick="Ext.getCmp(\'rootFieldset\').enable();">create a new database</a> or use an <a href="javascript:void()" onClick="Ext.getCmp(\'dbuserFieldset\').enable();">existing database</a><br>'
+		            value: 'Choose if you want to <a href="javascript:void();" onClick="Ext.getCmp(\'rootFieldset\').enable();">create a new database</a> or use an <a href="javascript:void();" onClick="Ext.getCmp(\'dbuserFieldset\').enable();">existing database</a><br>'
                 },{
 					xtype:'fieldset',
 					id:'rootFieldset',
@@ -216,13 +216,17 @@ Ext.onReady(function() {
 		                allowBlank:false
 		            },{
 		                fieldLabel: 'Database Port',
-		                name: 'dbPort'
+		                name: 'dbPort',
+		                allowBlank:false
 		            },{
 		                fieldLabel: 'Root User',
-		                name: 'rootUser'
+		                name: 'rootUser',
+		                allowBlank:false
 		            }, {
 		                fieldLabel: 'Root Password',
-		                name: 'rootPass'
+		                name: 'rootPass',
+		                inputType: 'password', 
+		                allowBlank:false
 		            }],
 		            listeners: {
 				   	  	enable: function(){
@@ -249,13 +253,17 @@ Ext.onReady(function() {
 		                allowBlank:false
 		            },{
 		                fieldLabel: 'Database Port',
-		                name: 'dbPort'
+		                name: 'dbPort',
+		                allowBlank:false
 		            },{
 		                fieldLabel: 'Database User',
-		                name: 'dbUser'
+		                name: 'dbUser',
+		                allowBlank:false
 		            },{
 		                fieldLabel: 'Database Pass',
-		                name: 'dbPass'
+		                name: 'dbPass',
+		                inputType: 'password',
+		                allowBlank:false
 		            }],
 		            listeners: {
 				   	  	enable: function(){
@@ -279,13 +287,27 @@ Ext.onReady(function() {
 		        }]
             },{
                 title: 'Admin Info',
-                defaults: {width: 230},
+                defaults: {width: 530},
                 id: 'adminInfo',
                 defaultType: 'textfield',
                 disabled: true,
                 items: [{
-
-                }],
+			    	xtype: 'displayfield',
+		            value: 'Choose Admin Username and Password'
+                },{
+			    	xtype: 'displayfield',
+			    	padding: '0 0 10px 0',
+		            value: '(This will be the Super User/Global Admin with access to all areas)'
+                },{
+	                fieldLabel: 'Admin Username',
+	                name: 'adminUser',
+	                padding: '0 0 10px 0',
+	            },{
+	                fieldLabel: 'Admin Password',
+	                type: 'password', 
+	                name: 'adminPass',
+	                inputType: 'password', 
+	            }],
 		        buttons: [{
 		        	text: 'Back',
 		            handler: function() {
