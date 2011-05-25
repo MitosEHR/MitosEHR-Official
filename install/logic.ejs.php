@@ -1,51 +1,68 @@
 <?php 
-if(!defined('_MitosEXEC')) die('No direct access allowed.');
+//if(!defined('_MitosEXEC')) die('No direct access allowed.');
+session_name ( "MitosEHR" );
+session_start();
+session_cache_limiter('private');
 
-//*****************************************************************
-// 1. Show the GPL License, must agree to continue
-//*****************************************************************
+require_once('../library/site_setup/class.inc.php');
 
-//*****************************************************************
-// 2. Create folders and files
-//*****************************************************************
 
-//*****************************************************************
-// 3. Change chmod 766 to files/folders required 
-// Most of the 766 files has to be in sites folder
-// Check if PHP can't do it, if not intruct the user to 
-// make the changes before continue.
-//*****************************************************************
+error_reporting(E_ALL); 		   //
+ini_set("display_errors", 0); 
 
-//*****************************************************************
-// 4. Collect the database connection information
-//*****************************************************************
+// create an instance
+$install = new SiteSetup();
 
-//*****************************************************************
-// 5. Verify if database exists 
-//*****************************************************************
+switch ($_GET['task']) {
+	// *************************************************************************************
+	// Test Connection Only
+	// *************************************************************************************
+	case "connTest":
+		$install->dbHost = $_REQUEST['dbHost'];
+		$install->dbPort = $_REQUEST['dbPort'];
+		switch ($_GET['conn']) {
+			case "rott":
+				$install->rooUser = $_REQUEST['rootUser'];
+				$install->rootPass = $_REQUEST['rootPass'];
+			break;
+			case "user":
+				$install->dbUser = $_REQUEST['dbUser'];
+				$install->dbPass = $_REQUEST['dbPass'];
+			break;
+		}
+  		$install->testConn();
+  	break;	// *************************************************************************************
+	// Installation with Root Access
+	// *************************************************************************************
+	case "rootInstall":
+		$install->siteName = 'defaultTest';
+		$install->dbHost = 'localhost';
+		$install->dbPort = '3306';
+		$install->dbName = 'mitosehr';
+		$install->rootUser = 'root';
+		$install->rootPass = 'pass'; 
+		$install->adminUser = 'admin';
+		$install->adminPass = 'pass';
+		
+		$install->rootInstall();
+	break;
+	// *************************************************************************************
+	// Installation with Database Access
+	// *************************************************************************************
+	case "dbInstall":
+		$install->siteName = 'defaultTest';
+		$install->dbUser = 'mitosehr';
+		$install->dbPass = 'pass';
+		$install->dbHost = 'localhost';
+		$install->dbPort = '3306';
+		$install->dbName = 'mitosehr';
+		$install->adminUser = 'admin';
+		$install->adminPass = 'pass';
+		
+		$install->dbInstall();
+	break;
+}
 
-//*****************************************************************
-// 6. Create database if needed
-//*****************************************************************
-
-//*****************************************************************
-// 7. Dump sql database in database
-//*****************************************************************
-
-//*****************************************************************
-// 8. Choose the default language to use.
-//*****************************************************************
-
-//*****************************************************************
-// 9. Change chmod 644 to files/folders required 
-//*****************************************************************
-
-//*****************************************************************
-// 10. Build a default site, in sites folder
-// 		The best way is to copy from one directory to the sites
-// 		directory.
-// 		Having a Skeleton directory
-//*****************************************************************
 
 ?>
 

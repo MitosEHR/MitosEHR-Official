@@ -6,32 +6,33 @@
 // Author: Ernesto Rodriguez
 //*********************************************************************************************
 
+
+//*********************************************************************************************
+// turn off all PDO error reportings
+//*********************************************************************************************
 error_reporting(0);
 
-/////////////////////////////////////
-// ENABLE PHP ERRORS FOR DEBUGGING //
-/////////////////////////////////////
-// error_reporting(E_ALL); 		   //
-// ini_set("display_errors", 0);   //
-/////////////////////////////////////
-   
+//*********************************************************************************************
+// First... lets change to root directory and work there
+//*********************************************************************************************
+chdir($_SESSION['site']['root']);
+
 class SiteSetup {
 	private $conn;
 	private $err;
 	private $sitesDir = 'sites';
-	private $siteName = 'defaultTest';
 	private $dbPrefix;
-	private $dbUser = 'mitosehr';
-	private $dbPass = 'pass';
-	private	$dbHost = 'localhost';
-	private	$dbPort = '3306';
-	private	$dbName = 'mitosehr';
-	private	$rootUser = 'root';
-	private	$rootPass = 'pass'; 
 	private $AESkey;
-	private $adminUser = 'admin';
-	private $adminPass = 'pass';
-
+	var $siteName = 'default';
+	var $dbUser;
+	var $dbPass;
+	var	$dbHost = 'localhost';
+	var	$dbPort = '3306';
+	var	$dbName = 'mitosdb';
+	var	$rootUser;
+	var	$rootPass; 
+	var $adminUser = 'admin';
+	var $adminPass = 'pass';
 	//*****************************************************************************************
 	// Ckeck sites folder cmod 777
 	//*****************************************************************************************
@@ -62,13 +63,29 @@ class SiteSetup {
 	// Send last error as json back to ExtJs
 	//*****************************************************************************************
 	function displayError(){
-		if($this->err){
-			die ("{success:false,errors:{reason:'Error: ".$this->err."'}}");
-		}else{
-			$error = $this->conn->errorInfo();
-			if($error[2]){
-				die ("{success:false,errors:{reason:'Error: ".$error[1]." - ".$error[2]."'}}");
-			}	
+		if ($this->err || $this->conn->errorInfo()){
+			if($this->err){
+				exit ("{success:false,errors:{reason:'Error: ".$this->err."'}}");
+			}else{
+				$error = $this->conn->errorInfo();
+				if($error[2]){
+					$this->dropDatabase();
+					exit ("{success:false,errors:{reason:'Error: ".$error[1]." - ".$error[2]."'}}");
+				}	
+			}
+		}
+	}
+
+	//*****************************************************************************************
+	// test databases connections
+	//*****************************************************************************************
+	function testConn() {
+		if (($this->rootUser || $this->dbUser) != null) {
+			if ($this->rootUser != null){
+				$this->rootDatabaseConn();
+			}else{
+				$this->DatabaseConn();
+			}
 		}
 	}
 
@@ -120,6 +137,13 @@ class SiteSetup {
 	} // end function createDataBase
 	
 	//*****************************************************************************************
+	// Drop new database and dump data
+	//*****************************************************************************************
+	function dropDatabase() {
+		$this->conn->exec("DROP DATABASE ".$this->dbName."");
+	}
+	
+	//*****************************************************************************************
 	// Create new database user
 	//*****************************************************************************************
 	function createDatabaseUser() {
@@ -138,27 +162,19 @@ class SiteSetup {
 		// lets look for sitesetup.qsl file
 		//-------------------------------------------------------------------------------------
 		if (file_exists($sqlFile = "sql/install.sql")) {
-			
 			$query = file_get_contents($sqlFile);
 			//echo $query;
 			$this->conn->query($query);
-
 			//---------------------------------------------------------------------------------
 			// and check for errors
 			//---------------------------------------------------------------------------------
-			if ($this->conn->errorInfo()) {
-				$this->displayError();
-			} else {
-				//-----------------------------------------------------------------------------
-				// Grats! we made it! Database created
-				//-----------------------------------------------------------------------------
-				return true;
-			}
+			$this->displayError();
 		} else {
 			//---------------------------------------------------------------------------------
 			// error if sitesetup.sql not found
 			//---------------------------------------------------------------------------------
-			die("{success:false,errors:{reason:'Error: Unable to find install.sql inside /sql/ directory'}}");
+			$this->dropDatabase();
+			exit ("{success:false,errors:{reason:'Error: Unable to find install.sql inside /sql/ directory' PHP is looking her ".getcwd()."}}");
 		}
 	}
 
@@ -199,7 +215,8 @@ class SiteSetup {
 			$replace = array($this->dbHost, $this->dbUser, $this->dbPass, $this->dbName, $this->dbPort, $this->AESkey);
 			$this->newConf = str_replace($search, $replace, $buffer);
 		}else{
-			echo ("Unable to find default conf.pgp file inside library/site_setup/ directory");
+			$this->dropDatabase();
+			exit ("Unable to find default conf.php file inside library/site_setup/ directory. PHP is looking her ".getcwd()."");
 		}
 	} 
 	
@@ -217,11 +234,16 @@ class SiteSetup {
 				fwrite($handle, $this->newConf);
 				fclose($handle);
 				chmod($conf_file, 0644);
+				if(!file_exists($conf_file)){
+					exit ("{success:false,errors:{reason:'Error: The conf.php file for ".$this->siteName." could not be created.'}}");
+				}
 			}else{
-				die ("{success:false,errors:{reason:'Error: The site ".$this->siteName." already exist'}}");
+				$this->dropDatabase();
+				exit ("{success:false,errors:{reason:'Error: The site ".$this->siteName." already exist'}}");
 			}
 		}else{
-			die ("{success:false,errors:{reason:'Error: Unable to write on sites folder'}}");
+			$this->dropDatabase();
+			exit ("{success:false,errors:{reason:'Error: Unable to write on sites folder. PHP is looking her ".getcwd()."'}}");
 		}
 	}
 	
@@ -238,36 +260,35 @@ class SiteSetup {
 							  	       fname		='Adminstrator',
 							  	  	   password 	='".$ePass."',
 							  	       authorized 	='1'");
-		if ($this->conn->errorInfo()) {
-				$this->displayError();
-		}
+		$this->displayError();
 	}
+	
+	//*****************************************************************************************
+	// Method to install a site with root access and creating database
+	//*****************************************************************************************
+	function rootInstall(){
+		$this->testConn();
+		$this->createDatabase();
+		$this->createDatabaseUser();
+		$this->DatabaseConn();
+		$this->sqldump();
+		$this->createRandomKey();
+		$this->buildConf();
+		$this->createSiteConf();
+		$this->adminUser();
+	}
+	//*****************************************************************************************
+	// Method to install a site with Databse User access
+	//*****************************************************************************************
+	function dbInstall(){
+		$this->testConn();
+		$this->DatabaseConn();
+		$this->sqldump();
+		$this->createRandomKey();
+		$this->buildConf();
+		$this->createSiteConf();
+		$this->adminUser();
+	}
+
 } // end class siteSetup
-
-
-//////////////////////////
-// For dry run tests!!! //
-//////////////////////////
-
-// create an instance
-$setup = new SiteSetup();
-// connect to as a root
-$setup->rootDatabaseConn();
-// creates the mitos database
-$setup->createDatabase();
-// creates the mitos database user
-$setup->createDatabaseUser();
-// connect to user database
-$setup->DatabaseConn();
-// dumps the install.sql into user database
-$setup->sqldump();
-// generate a random 32bit key
-$setup->createRandomKey();
-// builds de conf file
-$setup->buildConf();
-// safe the conf fine into the new site folder
-$setup->createSiteConf();
-// create a admin user with the AES key generaded for the conf file
-$setup->adminUser();
-
 ?>
