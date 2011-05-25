@@ -27,7 +27,7 @@
  */
 
 class dbHelper {
-		
+	
 	private $sql_statement;
 	private $conn;
 	private $err;
@@ -39,6 +39,7 @@ class dbHelper {
 	// Author: Gino Rivera
 	//**********************************************************************
 	function __construct() {
+		error_reporting(0);
 		try {
     		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
 		} catch (PDOException $e) {
