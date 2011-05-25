@@ -7,14 +7,14 @@
 //***************************************************************************************
 
 
-
+error_reporting(0);   
 /////////////////////////////////////
 // ENABLE PHP ERRORS FOR DEBUGGING //
 /////////////////////////////////////
-error_reporting(E_ALL);            //
-ini_set("display_errors", 1);      //
+//error_reporting(E_ALL); 
+//ini_set("display_errors", 0); 
 /////////////////////////////////////
-
+   
 
 class SiteSetup {
 	private $conn;
@@ -27,9 +27,10 @@ class SiteSetup {
 	private	$db_port = '3306';
 	private	$db_name = 'mitosehr';
 	private	$db_rootUser = 'root';
-	private	$db_rootPass = ''; 
+	private	$db_rootPass = 'pass'; 
 	private $AESkey;
 	private $userPass = 'pass';
+	private $err;
 
 	//*****************************************************************************************
 	// Ckeck sites folder cmod 777
@@ -51,15 +52,23 @@ class SiteSetup {
 	// Author: Gino Rivera
 	//**********************************************************************
 	function getError(){
-		return $this->conn->errorInfo();
+		if (!$this->err){
+			return $this->conn->errorInfo();
+		} else {
+			return $this->err;
+		}
 	}
-	function getConError(){
-		return $this->err;
-	}
+	//**********************************************************************
+	// Send last error as json back to ExtJs
+	//**********************************************************************
 	function displayError(){
-		$error = $this->conn->errorInfo();
-		if($error[2]){
-			die ("{success:false,errors:{reason:'Error: ".$error[1]." - ".$error[2]."'}}");
+		if($this->err){
+			die ("{success:false,errors:{reason:'Error: ".$this->err."'}}");
+		}else{
+			$error = $this->conn->errorInfo();
+			if($error[2]){
+				die ("{success:false,errors:{reason:'Error: ".$error[1]." - ".$error[2]."'}}");
+			}	
 		}
 	}
 
@@ -77,7 +86,11 @@ class SiteSetup {
 		//-------------------------------------------------------------------------------------
 		} catch (PDOException $e) {
     		$this->err = $e->getMessage();
+    		if($e != null){
+				$this->displayError();
+			}
 		}
+		
 	}
 	
 	//*****************************************************************************************
@@ -93,6 +106,9 @@ class SiteSetup {
 								 	   dbname=".$this->db_name,$this->siteDbUser,$this->siteDbPass);
 		} catch (PDOException $e) {
     		$this->err = $e->getMessage();
+			if($e != null){
+				$this->displayError();
+			}
 		}
 	}
 	
@@ -204,10 +220,10 @@ class SiteSetup {
 				fclose($handle);
 				chmod($conf_file, 0644);
 			}else{
-				echo ("The site ".$this->siteName." already exist");
+				die ("{success:false,errors:{reason:'Error: The site ".$this->siteName." already exist'}}");
 			}
 		}else{
-			echo ("Unable to write on sites folder");
+			die ("{success:false,errors:{reason:'Error: Unable to write on sites folder'}}");
 		}
 
 	}
