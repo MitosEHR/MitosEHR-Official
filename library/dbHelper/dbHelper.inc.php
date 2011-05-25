@@ -156,16 +156,19 @@ class dbHelper {
 	//**********************************************************************
 	// Fetch the last error.
 	// getError - Get the error for a statement, if any.
-	// getConError - Get the connection error, if any.
-	// return: Only the error in a array
+	// 
+	// return: If there was a problem with the connection it will return 
+	// the error message, if the was not a connection problem, it will
+	// return a array with the code and message.
 	//
 	// Author: Gino Rivera
 	//**********************************************************************
 	function getError(){
-		return $this->conn->errorInfo();
-	}
-	function getConError(){
-		return $this->err;
+		if (!$this->err){
+			return $this->conn->errorInfo();
+		} else {
+			return $this->err;
+		}
 	}
 	
 	//**********************************************************************
