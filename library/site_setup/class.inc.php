@@ -6,11 +6,10 @@
 // Author: Ernesto Rodriguez
 //*********************************************************************************************
 
-
 //*********************************************************************************************
 // turn off all PDO error reportings
 //*********************************************************************************************
-error_reporting(0);
+error_reporting(1);
 
 //*********************************************************************************************
 // First... lets change to root directory and work there
@@ -18,21 +17,23 @@ error_reporting(0);
 chdir($_SESSION['site']['root']);
 
 class SiteSetup {
+	
 	private $conn;
 	private $err;
 	private $sitesDir = 'sites';
 	private $dbPrefix;
 	private $AESkey;
-	var $siteName = 'default';
+	var $siteName;
+	var $connTest;
 	var $dbUser;
 	var $dbPass;
-	var	$dbHost = 'localhost';
-	var	$dbPort = '3306';
-	var	$dbName = 'mitosdb';
+	var	$dbHost;
+	var	$dbPort;
+	var	$dbName;
 	var	$rootUser;
 	var	$rootPass; 
-	var $adminUser = 'admin';
-	var $adminPass = 'pass';
+	var $adminUser;
+	var $adminPass;
 	//*****************************************************************************************
 	// Ckeck sites folder cmod 777
 	//*****************************************************************************************
@@ -65,12 +66,16 @@ class SiteSetup {
 	function displayError(){
 		if ($this->err || $this->conn->errorInfo()){
 			if($this->err){
-				exit ("{success:false,errors:{reason:'Error: ".$this->err."'}}");
+				$error = array('success' => false, 'jerror' => $this->err);
+				echo json_encode($error, JSON_FORCE_OBJECT);
+				exit;
 			}else{
 				$error = $this->conn->errorInfo();
 				if($error[2]){
 					$this->dropDatabase();
-					exit ("{success:false,errors:{reason:'Error: ".$error[1]." - ".$error[2]."'}}");
+					$error = array('success' => false, 'jerror' => 'Error : '.$error[1].' - '.dataEncode($error[2]));
+					echo json_encode($error, JSON_FORCE_OBJECT);
+					exit;
 				}	
 			}
 		}
@@ -80,12 +85,17 @@ class SiteSetup {
 	// test databases connections
 	//*****************************************************************************************
 	function testConn() {
-		if (($this->rootUser || $this->dbUser) != null) {
-			if ($this->rootUser != null){
-				$this->rootDatabaseConn();
-			}else{
+		switch ($this->connTest) {
+			case 'user':
 				$this->DatabaseConn();
-			}
+			break;
+			case 'root';
+				$this->rootDatabaseConn();
+			break;
+		}
+		if (!$this->displayError()){
+			echo '{"success":true,"jerror":"Congratulation! Your Database Credentials are Valid"}';
+			return;
 		}
 	}
 
@@ -263,7 +273,7 @@ class SiteSetup {
 		if($this->conn->errorInfo()){
 			$this->displayError();
 		}else{
-			echo "{ success: true, Message: 'Congratulation! MitosEHR is installed, please refresh your browser to Login' }";
+			echo "{ success: true, message: 'Congratulation! MitosEHR is installed, please refresh your browser to Login' }";
 		}
 	}
 	

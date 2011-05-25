@@ -24,7 +24,7 @@ Ext.onReady(function() {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-
+	var conn;
 	// *************************************************************************************
 	// Structure, data for storeReq
 	// AJAX -> requirements.ejs.php
@@ -123,10 +123,12 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Install proccess form
 	// *************************************************************************************
+
 	var formInstall = Ext.create('Ext.form.Panel', {
 		id				: 'formInstall',
         bodyStyle		:'padding:5px',
         border			: false,
+        url				: 'install/logic.ejs.php',
         layout			: 'fit',
         fieldDefaults	: {
             msgTarget	: 'side'
@@ -163,9 +165,20 @@ Ext.onReady(function() {
                 items: [{
 					xtype: 'textfield',
 			        name: 'site',
+			        id:'siteNameField',
 			        labelAlign	: 'top',
 			        fieldLabel: 'Site Name ( Normaly set to default )',
 			        allowBlank: false ,
+			        listeners: {
+				   	  	validitychange: function(){
+				   	  	field = Ext.getCmp('siteNameField');
+			   	  		if(field.isValid()){
+				   	  			Ext.getCmp('clinicInfoNext').enable();
+				   	  		}else{
+				   	  			Ext.getCmp('clinicInfoNext').disable();
+				   	  		}
+				   		}
+				  	}
 			    },{
 			    	xtype: 'displayfield',
 		            value: 'Tips...'
@@ -183,6 +196,8 @@ Ext.onReady(function() {
 		        	}
 		        },{
 		            text: 'Next',
+		            id:'clinicInfoNext',
+		            disabled: true,
 		            handler: function() {
 		            	Ext.getCmp('databaseInfo').enable();
 						Ext.getCmp('tabsInstall').setActiveTab(2);
@@ -222,17 +237,21 @@ Ext.onReady(function() {
 		                fieldLabel: 'Root User',
 		                name: 'rootUser',
 		                allowBlank:false
-		            }, {
+		            },{
 		                fieldLabel: 'Root Password',
 		                name: 'rootPass',
+		                id: 'rootPass',
 		                inputType: 'password', 
 		                allowBlank:false
+		            
 		            }],
-		            listeners: {
+			        listeners: {
 				   	  	enable: function(){
+				   	  		conn = 'root';
 							Ext.getCmp('dbuserFieldset').collapse();
 				   			Ext.getCmp('dbuserFieldset').disable();
 							Ext.getCmp('rootFieldset').expand();
+							
 				   		}
 				  	}
 		        },{
@@ -256,20 +275,27 @@ Ext.onReady(function() {
 		                name: 'dbPort',
 		                allowBlank:false
 		            },{
+		                fieldLabel: 'Database Name',
+		                name: 'dbName',
+						allowBlank:false
+		            },{
 		                fieldLabel: 'Database User',
 		                name: 'dbUser',
 		                allowBlank:false
 		            },{
 		                fieldLabel: 'Database Pass',
 		                name: 'dbPass',
+		                id: 'dbPass',
 		                inputType: 'password',
 		                allowBlank:false
 		            }],
 		            listeners: {
 				   	  	enable: function(){
+				   	  		conn = 'user';
 							Ext.getCmp('rootFieldset').collapse();
 							Ext.getCmp('rootFieldset').disable();
 							Ext.getCmp('dbuserFieldset').expand();
+							
 				   	  	}
 				  	}
                 }],
@@ -279,7 +305,34 @@ Ext.onReady(function() {
 						Ext.getCmp('tabsInstall').setActiveTab(1);
 		        	}
 		        },{
+		            text: 'Test Database Credentials',
+		            id:'dataTester',
+		            handler: function() {
+			            var form = this.up('form').getForm();
+			            if (form.isValid()) {
+			                form.submit({
+			                	method:'POST', 
+			                	params: {
+				                    task: 'connTest',
+				                    conn: conn
+				                },
+			                    success: function(form, action) {
+			                    obj = Ext.JSON.decode(action.response.responseText);
+			                       Ext.Msg.alert('Sweet! Database Credentials Are Valid', obj.jerror);
+			                       Ext.getCmp('dataInfoNext').enable();
+			                    },
+			                    failure: function(form, action) {
+			                    obj = Ext.JSON.decode(action.response.responseText);
+			                        Ext.Msg.alert('Oops! Something Went Wrong', obj.jerror);
+			                        Ext.getCmp('dataInfoNext').disable();
+			                    }
+			                });
+			            }
+			        }
+		        },{
 		            text: 'Next',
+		            id:'dataInfoNext',
+		            disabled: true,
 		            handler: function() {
 		            	Ext.getCmp('adminInfo').enable(3);
 						Ext.getCmp('tabsInstall').setActiveTab(3);
@@ -321,10 +374,7 @@ Ext.onReady(function() {
 		        }]
             }]
         }]
-
-        
     });
-
 
 	// *************************************************************************************
 	// The New Instalation Window 
