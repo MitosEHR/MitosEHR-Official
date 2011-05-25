@@ -91,7 +91,7 @@ Ext.onReady(function() {
 		resizable		: true,
 		title			: 'MitosEHR Copyright Notice',
 		draggable		: true,
-		closable		: true,
+		closable		: false,
 		autoLoad		: 'gpl-licence-en.html',
 		autoScroll		: true,
 		dockedItems: [{

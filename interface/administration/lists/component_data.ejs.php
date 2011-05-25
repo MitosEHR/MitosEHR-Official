@@ -125,6 +125,11 @@ switch ($_GET['task']) {
 		$mitos_db->setSQL($sql);
 		$ret = $mitos_db->execLog();
 		
+		// Delete the childs of this list
+		$sql = "DELETE FROM list_options WHERE list_id='". $_POST['option_id'] ."'";
+		$mitos_db->setSQL($sql);
+		$ret = $mitos_db->execLog();
+		
 		// FIXME: When deleting, also delete the childs attached to this primary list.
 		// To keep the database healthy.
 		if ( $ret == "" ){

@@ -15,6 +15,7 @@ if ($count <= 0){
 	$count = 'Fail'; 
 }
 echo '{"msg":"MitosEHR not installed","status":"'.$count.'"},'; 
+
 //******************************************************
 // verified that php 5.2.0 or later is istalled
 //******************************************************
