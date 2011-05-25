@@ -197,7 +197,7 @@ Ext.onReady(function() {
                 items: [{
 			    	xtype: 'displayfield',
 			    	padding: '10px',
-		            value: 'Choose if you want to <a href="javascript:void();" onClick="Ext.getCmp(\'rootFieldset\').enable();">create a new database</a> or use an <a href="javascript:void();" onClick="Ext.getCmp(\'dbuserFieldset\').enable();">existing database</a><br>'
+		            value: 'Choose if you want to <a href="javascript:void(0);" onClick="Ext.getCmp(\'rootFieldset\').enable();">create a new database</a> or use an <a href="javascript:void(0);" onClick="Ext.getCmp(\'dbuserFieldset\').enable();">existing database</a><br>'
                 },{
 					xtype:'fieldset',
 					id:'rootFieldset',
