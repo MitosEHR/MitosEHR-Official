@@ -260,7 +260,11 @@ class SiteSetup {
 							  	       fname		='Adminstrator',
 							  	  	   password 	='".$ePass."',
 							  	       authorized 	='1'");
-		$this->displayError();
+		if($this->conn->errorInfo()){
+			$this->displayError();
+		}else{
+			echo "{ success: true, Message: 'Congratulation! MitosEHR is installed, please refresh your browser to Login' }";
+		}
 	}
 	
 	//*****************************************************************************************
