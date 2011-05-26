@@ -10,10 +10,10 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
  */
 
 ?>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>MitosEHR Logon Screen</title>
-
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 <script type="text/javascript" src="repository/global_functions/global_functions.js"></script>
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">

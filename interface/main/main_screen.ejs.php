@@ -16,6 +16,7 @@ $_SESSION['site']['flops'] = 0;
 include_once('library/compressor/compressor.inc.php');
 
 ?>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>MitosEHR</title>
@@ -26,9 +27,7 @@ include_once('library/compressor/compressor.inc.php');
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="favicon.ico" >
-
 <script type="text/javascript">
-
 // *************************************************************************************
 // Sencha trying to be like a language
 // using requiered to load diferent components
@@ -310,3 +309,6 @@ Ext.onReady(function() {
 }); // End App
 
 </script>
+</head>
+<body></body>
+</html>

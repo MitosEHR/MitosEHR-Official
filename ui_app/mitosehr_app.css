@@ -28,7 +28,17 @@ body#login{
 	background-color: #FFF;
 	margin: 0px;
 }
-
+#bg_logo{
+	position: fixed;
+	background-image:url(mitosehr_big_logo.png);
+	background-position: top center;
+	background-attachment:fixed;
+	background-repeat: no-repeat;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 196px;
+}
 #copyright{
 	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 10px;
