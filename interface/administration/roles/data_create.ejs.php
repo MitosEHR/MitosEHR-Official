@@ -47,7 +47,7 @@ switch ($_GET['task']) {
 		// *************************************************************************************
 		$mitos_db->setSQL("INSERT INTO acl_roles SET role_name = '" . $row['role_name'] . "'");
 		$mitos_db->execLog();
-		$last_insert_id = $mitos_db->lastInsertedId();
+		$lastInsertId = $mitos_db->lastInsertId;
 		// *************************************************************************************
 		// when a new role is added a relationship need to be added 
 		// for every role at acl_role_perm table using the id from new role
@@ -55,10 +55,10 @@ switch ($_GET['task']) {
 		$mitos_db->setSQL("SELECT id FROM acl_permissions");
 		foreach ($mitos_db->execStatement() as $perms_row) {
 			$mitos_db->setSQL("INSERT INTO acl_role_perms 
-					  		  	  	   SET role_id = '" . $last_insert_id . "', " . "
+					  		  	  	   SET role_id = '" . $lastInsertId . "', " . "
 					  	          	  	   perm_id = '" . $perms_row['id'] . "', " . "
 					  			  	       value = '0'");
-			$mitos_db->execLog();
+			$mitos_db->execOnly();
 		}
 		echo "{ success: true }";
 	break;
@@ -83,7 +83,7 @@ switch ($_GET['task']) {
 							  	   SET perm_key = '" . $row['perm_key'] . "', " . "
 								  	   perm_name = '" . $row['perm_name'] . "'");
 		$mitos_db->execLog();
-		$last_insert_id = $mitos_db->lastInsertedId();
+		$lastInsertId = $mitos_db->lastInsertId;
 		//**************************************************************************************
 		// when a new permission is added a relationship need to be added 
 		// for every role at acl_role_perm table 
@@ -92,7 +92,7 @@ switch ($_GET['task']) {
 		foreach ($mitos_db->execStatement() as $roles_row) {
 			$mitos_db->setSQL("INSERT INTO acl_role_perms 
 					  		  	  SET role_id = '" . $roles_row['id'] . "', " . "
-					  	          	  perm_id = '" . $last_insert_id . "', " . "
+					  	          	  perm_id = '" . $lastInsertId . "', " . "
 					  			  	  value = '0'");
 			$mitos_db->execLog();
 		}
