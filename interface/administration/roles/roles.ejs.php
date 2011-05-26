@@ -59,7 +59,7 @@ Ext.onReady(function(){
 	var permModel = Ext.define("PermissionList", {extend: "Ext.data.Model", fields: [
 		{name: 'roleID', 		type: 'int'},
 		{name: 'role_name', 	type: 'string'},
-	    {name: 'permID', 		type: 'string'},
+	    {name: 'permID', 		type: 'int'},
 	    {name: 'perm_key', 		type: 'string'},
 	    {name: 'perm_name', 	type: 'string'},
 		{name: 'rolePermID', 	type: 'int'},
@@ -67,14 +67,15 @@ Ext.onReady(function(){
 	    {name: 'perm_id', 		type: 'int'},
 	    {name: 'value', 		type: 'string'},
 		{name: 'ac_perm', 		type: 'string'}
-	]});
+	],
+		idProperty: 'permID'
+	});
 
 	//******************************************************************************
 	// Roles Store
 	//******************************************************************************
 	var permStore = new Ext.data.Store({
 	    model		: 'PermissionList',
-		autoSync	: true,
 	    proxy		: {
 	    	type	: 'ajax',
 			api		: {
@@ -328,6 +329,9 @@ Ext.onReady(function(){
         layout		: 'fit',
 		plugins: [rowEditing],
         columns: [{
+        	dataIndex: 'permID', 
+        	hidden: true
+        },{
 			text     	: '<?php i18n("Secction Area"); ?>',
 			flex     	: 1,
 			sortable 	: true,
@@ -357,7 +361,8 @@ Ext.onReady(function(){
 			itemclick: {
 	        	fn: function(DataView, record, item, rowIndex, e){ 
 	           		Ext.getCmp('cmdDeletePerm').enable();
-					currPerm = permStore.getAt(rowIndex);
+	           		currPerm = record.data.permID;
+					currRec = permStore.getAt(rowIndex);
 	            }
 			}
 		},
@@ -399,7 +404,7 @@ Ext.onReady(function(){
 					select: function(combo, record){
 						// Reload the data store to reflect the new selected list filter
 						currList = record[0].data.id;
-						permStore.load({params:{role_id: record[0].data.id }});
+						permStore.load({params:{role_id: currList}});
 					}
 				}
 			},'-',{
@@ -444,10 +449,10 @@ Ext.onReady(function(){
 						buttons	: Ext.Msg.YESNO,
 						fn		:function(btn,msgGrid){
 								if(btn=='yes'){
-								var rec = permStore.getAt( currPerm ); // get the record from the store
+								var rec = permStore.getById( currPerm ); // get the record from the store
 								permStore.remove(rec);
 								permStore.sync();
-								permStore.load();
+								permStore.load({params:{role_id: currList}});
 			    		    }
 						}
 					});

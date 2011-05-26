@@ -46,12 +46,12 @@ switch ($_GET['task']) {
 		// Code to delete permissions and related data from acl_role_perms
 		// *********************************************************************************
 	case "delete_permission";
-		$delete_id = $data['id'];
+		$delete_id = $data['permID'];
 		$mitos_db->setSQL("DELETE FROM acl_permissions
 							WHERE id=".$delete_id);
 		$mitos_db->execLog();
 		$mitos_db->setSQL("DELETE FROM acl_role_perms  
-							WHERE acl_role_perms.role_id=".$delete_id);
+							WHERE acl_role_perms.perm_id=".$delete_id);
 		$mitos_db->execLog();
 		echo "{ success: true }";
 	break;
