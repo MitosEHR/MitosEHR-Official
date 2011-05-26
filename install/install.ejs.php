@@ -131,7 +131,8 @@ Ext.onReady(function() {
         url				: 'install/logic.ejs.php',
         layout			: 'fit',
         fieldDefaults	: {
-            msgTarget	: 'side'
+            msgTarget	: 'side',
+            labelWidth 	: 130
         },
         defaults		: {
             anchor		: '100%'
@@ -142,7 +143,7 @@ Ext.onReady(function() {
             plain:true,
             border	: false,
             activeTab: 0,
-            height:350,
+            height:450,
             defaults:{bodyStyle:'padding:10px'},
             items:[{
                 title:'Instructions',
@@ -164,7 +165,7 @@ Ext.onReady(function() {
                 disabled: true,
                 items: [{
 					xtype: 'textfield',
-			        name: 'site',
+			        name: 'siteName',
 			        id:'siteNameField',
 			        labelAlign	: 'top',
 			        fieldLabel: 'Site Name ( Normaly set to default )',
@@ -226,14 +227,6 @@ Ext.onReady(function() {
 		                anchor: '100%'
 		            },
 		            items :[{
-		                fieldLabel: 'Database Host',
-		                name: 'dbHost',
-		                allowBlank:false
-		            },{
-		                fieldLabel: 'Database Port',
-		                name: 'dbPort',
-		                allowBlank:false
-		            },{
 		                fieldLabel: 'Root User',
 		                name: 'rootUser',
 		                allowBlank:false
@@ -242,8 +235,28 @@ Ext.onReady(function() {
 		                name: 'rootPass',
 		                id: 'rootPass',
 		                inputType: 'password', 
+		                allowBlank:false,
+		            },{
+		                fieldLabel: 'SQL Server Host',
+		                name: 'dbHost',
 		                allowBlank:false
-		            
+		            },{
+		                fieldLabel: 'SQL Server Port',
+		                name: 'dbPort',
+		                allowBlank:false
+		            },{
+		                fieldLabel: 'Database Name',
+		                name: 'dbName',
+						allowBlank:false
+		            },{
+		            	fieldLabel: 'New Database User',
+		                name: 'dbUser',
+						allowBlank:false
+					},{
+		            	fieldLabel: 'New Database Pass',
+		                name: 'dbPass',
+		                inputType: 'password',
+						allowBlank:false
 		            }],
 			        listeners: {
 				   	  	enable: function(){
@@ -267,14 +280,6 @@ Ext.onReady(function() {
 		                anchor: '100%'
 		            },
 		            items :[{
-		                fieldLabel: 'Database Host',
-		                name: 'dbHost',
-		                allowBlank:false
-		            },{
-		                fieldLabel: 'Database Port',
-		                name: 'dbPort',
-		                allowBlank:false
-		            },{
 		                fieldLabel: 'Database Name',
 		                name: 'dbName',
 						allowBlank:false
@@ -287,6 +292,14 @@ Ext.onReady(function() {
 		                name: 'dbPass',
 		                id: 'dbPass',
 		                inputType: 'password',
+		                allowBlank:false
+		            },{
+		                fieldLabel: 'Database Host',
+		                name: 'dbHost',
+		                allowBlank:false
+		            },{
+		                fieldLabel: 'Database Port',
+		                name: 'dbPort',
 		                allowBlank:false
 		            }],
 		            listeners: {
@@ -369,8 +382,26 @@ Ext.onReady(function() {
 		        },{
 		            text: 'Finish',
 		            handler: function() {
-						// TODO //
-		        	}
+			            var form = this.up('form').getForm();
+			            if (form.isValid()) {
+			                form.submit({
+			                	method:'POST', 
+			                	params: {
+				                    task: 'install',
+				                },
+			                    success: function(form, action) {
+			                    obj = Ext.JSON.decode(action.response.responseText);
+			                       Ext.Msg.alert('Sweet! Database Credentials Are Valid', obj.jerror);
+			                       Ext.getCmp('dataInfoNext').enable();
+			                    },
+			                    failure: function(form, action) {
+			                    obj = Ext.JSON.decode(action.response.responseText);
+			                        Ext.Msg.alert('Oops! Something Went Wrong', obj.jerror);
+			                        Ext.getCmp('dataInfoNext').disable();
+			                    }
+			                });
+			            }
+			        }
 		        }]
             }]
         }]
@@ -384,7 +415,7 @@ Ext.onReady(function() {
 	    id			: 'winSiteSetup',
 	    closable	: true,
 	    width		: 600,
-		height		: 400,
+		height		: 500,
 		bodyPadding	: 2,
 		closeAction	: 'hide',
 	    plain		: true,
@@ -419,7 +450,7 @@ Ext.onReady(function() {
 	    id			: 'winInstall',
 	    closable	: true,
 	    width		: 600,
-		height		: 400,
+		height		: 500,
 		bodyPadding	: 2,
 		closeAction	: 'hide',
 	    plain		: true,

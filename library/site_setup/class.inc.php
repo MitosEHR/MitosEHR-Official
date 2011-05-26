@@ -9,7 +9,7 @@
 //*********************************************************************************************
 // turn off all PDO error reportings
 //*********************************************************************************************
-error_reporting(1);
+error_reporting(0);
 
 //*********************************************************************************************
 // First... lets change to root directory and work there
@@ -27,11 +27,11 @@ class SiteSetup {
 	var $connTest;
 	var $dbUser;
 	var $dbPass;
-	var	$dbHost;
-	var	$dbPort;
-	var	$dbName;
-	var	$rootUser;
-	var	$rootPass; 
+	var $dbHost;
+	var $dbPort;
+	var $dbName;
+	var $rootUser;
+	var $rootPass; 
 	var $adminUser;
 	var $adminPass;
 	//*****************************************************************************************
@@ -73,7 +73,7 @@ class SiteSetup {
 				$error = $this->conn->errorInfo();
 				if($error[2]){
 					$this->dropDatabase();
-					$error = array('success' => false, 'jerror' => 'Error : '.$error[1].' - '.dataEncode($error[2]));
+					$error = array('success' => false, 'jerror' => $error[1].' - '.$error[2] );
 					echo json_encode($error, JSON_FORCE_OBJECT);
 					exit;
 				}	
@@ -95,7 +95,7 @@ class SiteSetup {
 		}
 		if (!$this->displayError()){
 			echo '{"success":true,"jerror":"Congratulation! Your Database Credentials are Valid"}';
-			return;
+			exit;
 		}
 	}
 
@@ -173,7 +173,6 @@ class SiteSetup {
 		//-------------------------------------------------------------------------------------
 		if (file_exists($sqlFile = "sql/install.sql")) {
 			$query = file_get_contents($sqlFile);
-			//echo $query;
 			$this->conn->query($query);
 			//---------------------------------------------------------------------------------
 			// and check for errors
@@ -184,7 +183,8 @@ class SiteSetup {
 			// error if sitesetup.sql not found
 			//---------------------------------------------------------------------------------
 			$this->dropDatabase();
-			exit ("{success:false,errors:{reason:'Error: Unable to find install.sql inside /sql/ directory' PHP is looking her ".getcwd()."}}");
+			echo '{"success":false,"jerror":"Error - Unable to find install.sql"}';
+			exit;
 		}
 	}
 
@@ -224,9 +224,11 @@ class SiteSetup {
 			$search  = array('%host%','%user%', '%pass%', '%db%', '%port%', '%key%');
 			$replace = array($this->dbHost, $this->dbUser, $this->dbPass, $this->dbName, $this->dbPort, $this->AESkey);
 			$this->newConf = str_replace($search, $replace, $buffer);
+			return;
 		}else{
 			$this->dropDatabase();
-			exit ("Unable to find default conf.php file inside library/site_setup/ directory. PHP is looking her ".getcwd()."");
+			echo '{"success":false,"jerror":"Error - Unable to find default conf.php"}';
+			exit;
 		}
 	} 
 	
@@ -244,16 +246,20 @@ class SiteSetup {
 				fwrite($handle, $this->newConf);
 				fclose($handle);
 				chmod($conf_file, 0644);
+				return;
 				if(!file_exists($conf_file)){
-					exit ("{success:false,errors:{reason:'Error: The conf.php file for ".$this->siteName." could not be created.'}}");
+					echo '{"success":false,"jerror":"Error - The conf.php file for '.$this->siteName.' could not be created."}';
+					exit;
 				}
 			}else{
 				$this->dropDatabase();
-				exit ("{success:false,errors:{reason:'Error: The site ".$this->siteName." already exist'}}");
+				echo '{"success":false,"jerror":"Error - The site '.$this->siteName.' already exist."}';
+				exit;
 			}
 		}else{
 			$this->dropDatabase();
-			exit ("{success:false,errors:{reason:'Error: Unable to write on sites folder. PHP is looking her ".getcwd()."'}}");
+			echo '{"success":false,"jerror":"Error - Unable to write on sites folder."}';
+			exit;
 		}
 	}
 	
@@ -270,18 +276,16 @@ class SiteSetup {
 							  	       fname		='Adminstrator',
 							  	  	   password 	='".$ePass."',
 							  	       authorized 	='1'");
-		if($this->conn->errorInfo()){
-			$this->displayError();
-		}else{
-			echo "{ success: true, message: 'Congratulation! MitosEHR is installed, please refresh your browser to Login' }";
-		}
+		$error = array('success' => true, 'jerror' => 'Congratulation! MitosEHR is installed please refresh your browser to Login.');
+		echo json_encode($error, JSON_FORCE_OBJECT);
+		exit;
 	}
 	
 	//*****************************************************************************************
 	// Method to install a site with root access and creating database
 	//*****************************************************************************************
 	function rootInstall(){
-		$this->testConn();
+		$this->rootDatabaseConn();
 		$this->createDatabase();
 		$this->createDatabaseUser();
 		$this->DatabaseConn();
@@ -295,7 +299,6 @@ class SiteSetup {
 	// Method to install a site with Databse User access
 	//*****************************************************************************************
 	function dbInstall(){
-		$this->testConn();
 		$this->DatabaseConn();
 		$this->sqldump();
 		$this->createRandomKey();

@@ -8,10 +8,6 @@
  * author: Gino Rivera Falú
  */
  
-session_name ( "MitosEHR" );
-session_start();
-session_cache_limiter('private');
- 
 //**********************************************************************
 // Read the SITES directory first
 // To get the conf.php

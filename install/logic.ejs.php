@@ -1,5 +1,7 @@
 <?php 
-
+session_name ( "MitosEHR" );
+session_start();
+session_cache_limiter('private');
 require_once('../library/site_setup/class.inc.php');
 
 
@@ -25,42 +27,51 @@ switch ($_REQUEST["task"]) {
 			case "user":
 				$install->dbHost 	= $_REQUEST['dbHost'];
 				$install->dbPort 	= $_REQUEST['dbPort'];
-				$install->dbname 	= $_REQUEST['dbName'];
+				$install->dbName 	= $_REQUEST['dbName'];
 				$install->dbUser 	= $_REQUEST['dbUser'];
 				$install->dbPass 	= $_REQUEST['dbPass'];
 				$install->connTest  = 'user';
 				$install->testConn();
 			break;
 		}
-  	break;	// *************************************************************************************
-	// Installation with Root Access
-	// *************************************************************************************
-	case "rootInstall":
-		$install->siteName 	= $post['siteName'];
-		$install->dbHost 	= $post['dbHost'];
-		$install->dbPort 	= $post['dbPort'];
-		$install->dbName 	= $post['dbName'];
-		$install->rootUser 	= $post['rootUser'];
-		$install->rootPass 	= $post['rootPass']; 
-		$install->adminUser = $post['adminUser'];
-		$install->adminPass = $post['adminPass'];
+  	break;	
+	
+	case "install":
+		// *************************************************************************************
+		// Installation with Root Access
+		// *************************************************************************************
+		if ($_REQUEST['rootFieldset-checkbox'] == 'on'){
+			
+			$install->siteName 		= $_REQUEST['siteName'];
+			$install->dbHost 		= $_REQUEST['dbHost'];
+			$install->dbPort 		= $_REQUEST['dbPort'];
+			$install->dbName 		= strtolower($_REQUEST['dbName']);
+			$install->dbUser 		= $_REQUEST['dbUser'];
+			$install->dbPass 		= $_REQUEST['dbPass'];
+			$install->rootUser 		= $_REQUEST['rootUser'];
+			$install->rootPass 		= $_REQUEST['rootPass']; 
+			$install->adminUser 	= $_REQUEST['adminUser'];
+			$install->adminPass 	= $_REQUEST['adminPass'];
+			$install->connTest  	= 'root';
+			$install->rootInstall();
+
 		
-		$install->rootInstall();
-	break;
-	// *************************************************************************************
-	// Installation with Database Access
-	// *************************************************************************************
-	case "dbInstall":
-		$install->siteName 	= $post['siteName'];
-		$install->dbUser 	= $post['dbUser'];
-		$install->dbPass 	= $post['dbPass'];
-		$install->dbHost 	= $post['dbHost'];
-		$install->dbPort 	= $post['dbPort'];
-		$install->dbName 	= $post['dbName'];
-		$install->adminUser = $post['adminUser'];
-		$install->adminPass = $post['adminPass'];
-		
-		$install->dbInstall();
+		}
+		if ($_REQUEST['dbuserFieldset-checkbox'] == 'on'){
+			// *************************************************************************************
+			// Installation with Database Access
+			// *************************************************************************************
+			$install->siteName 		= $_REQUEST['siteName'];
+			$install->dbUser 		= $_REQUEST['dbUser'];
+			$install->dbPass 		= $_REQUEST['dbPass'];
+			$install->dbHost 		= $_REQUEST['dbHost'];
+			$install->dbPort 		= $_REQUEST['dbPort'];
+			$install->dbName		= $_REQUEST['dbName'];
+			$install->adminUser 	= $_REQUEST['adminUser'];
+			$install->adminPass 	= $_REQUEST['adminPass'];
+			$install->connTest  	= 'user';
+			$install->dbInstall();
+		}
 	break;
 }
 
