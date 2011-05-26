@@ -235,7 +235,7 @@ Ext.onReady(function() {
 		                name: 'rootPass',
 		                id: 'rootPass',
 		                inputType: 'password', 
-		                allowBlank:false,
+		                allowBlank:false
 		            },{
 		                fieldLabel: 'SQL Server Host',
 		                name: 'dbHost',
@@ -367,12 +367,12 @@ Ext.onReady(function() {
                 },{
 	                fieldLabel: 'Admin Username',
 	                name: 'adminUser',
-	                padding: '0 0 10px 0',
+	                padding: '0 0 10px 0'
 	            },{
 	                fieldLabel: 'Admin Password',
 	                type: 'password', 
 	                name: 'adminPass',
-	                inputType: 'password', 
+	                inputType: 'password'
 	            }],
 		        buttons: [{
 		        	text: 'Back',
@@ -387,7 +387,7 @@ Ext.onReady(function() {
 			                form.submit({
 			                	method:'POST', 
 			                	params: {
-				                    task: 'install',
+				                    task: 'install'
 				                },
 			                    success: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
