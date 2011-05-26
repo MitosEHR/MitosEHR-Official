@@ -245,6 +245,7 @@ winLogon.show();
 </script>
 </head>
 <body id="login">
+<div id="bg_logo"></div>
 <div id="copyright">MitosEHR | <a href="javascript:void(0)" onClick="Ext.getCmp('winCopyright').show();" >Copyright Notice</a></div>
 </body>
 </html>
