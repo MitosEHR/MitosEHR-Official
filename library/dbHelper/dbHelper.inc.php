@@ -31,6 +31,7 @@ class dbHelper {
 	private $sql_statement;
 	private $conn;
 	private $err;
+	public $lastInsertId;
 	
 	//**********************************************************************
 	// Connect to the database
@@ -66,6 +67,9 @@ class dbHelper {
 	//**********************************************************************
 	function execStatement(){
 		$recordset = $this->conn->query($this->sql_statement);
+		if (stristr($this->sql_statement, "SELECT")){
+			$this->lastInsertId = $this->conn->lastInsertId();
+		}
 		$err = $this->conn->errorInfo();
 		if(!$err[2]){
 			return $recordset->fetchAll(PDO::FETCH_ASSOC);
@@ -82,6 +86,9 @@ class dbHelper {
 	//**********************************************************************
 	function execOnly(){
 		$this->conn->query($this->sql_statement);
+		if (stristr($this->sql_statement, "SELECT")){
+			$this->lastInsertId = $this->conn->lastInsertId();
+		}
 		return $this->conn->errorInfo();
 	}
 	
@@ -103,6 +110,7 @@ class dbHelper {
 			stristr($this->sql_statement, "DELETE") ||
 			stristr($this->sql_statement, "UPDATE") || 
 			stristr($this->sql_statement, "ALTER")){
+			$this->lastInsertId = $this->conn->lastInsertId();
 			if (stristr($this->sql_statement, "INSERT")) { $eventLog = "Record insertion"; }
 			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
 			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record update";
@@ -198,21 +206,6 @@ class dbHelper {
 		// Get all the records & count it.
 		$recordset = $this->conn->query("SELECT " . $id_col . " FROM " . $table . "  ORDER BY " . $id_col . " DESC");
 		return $recordset->fetch(PDO::FETCH_ASSOC);
-	}
-	
-	//**********************************************************************
-	// Get last inserted id
-	// Usage: $dbHelper->lastInsertedId();
-	//
-	// Author: Ernesto Rodriguez
-	//**********************************************************************
-	function lastInsertedId(){
-		return $this->conn->lastInsertId();
-	}
-	
+	}	
 }
-
 ?>
-
-
-
