@@ -1,11 +1,12 @@
 <?php
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
-/* Main Screen Application
-* Description: Installation screen procedure
-* version 0.0.1
-* revision: N/A
-* author: Ernesto J Rodriguez - MitosEHR
-*/
+// *****************************************************************************************
+// Main Screen Application
+// Description: Installation screen procedure
+// version 0.0.1
+// revision: N/A
+// author: Ernesto J Rodriguez - MitosEHR
+// *****************************************************************************************
 ?>
 <html>
 <head>
@@ -19,12 +20,6 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <script type="text/javascript">
 Ext.require(['*']);
 Ext.onReady(function() {
-/////////////////////////////// TEST AREA //////////////////////////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-	var conn;
 	// *************************************************************************************
 	// Structure, data for storeReq
 	// AJAX -> requirements.ejs.php
@@ -331,12 +326,12 @@ Ext.onReady(function() {
 				                },
 			                    success: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
-			                       Ext.Msg.alert('Sweet!', obj.jerror);
+			                       Ext.Msg.alert('Sweet!', obj.msg);
 			                       Ext.getCmp('dataInfoNext').enable();
 			                    },
 			                    failure: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
-			                        Ext.Msg.alert('Oops!', obj.jerror);
+			                        Ext.Msg.alert('Oops!', obj.msg);
 			                        Ext.getCmp('dataInfoNext').disable();
 			                    }
 			                });
@@ -391,12 +386,16 @@ Ext.onReady(function() {
 				                },
 			                    success: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
-			                       Ext.Msg.alert('Sweet!.', obj.jerror);
-			                       Ext.getCmp('dataInfoNext').enable();
+			                       Ext.Msg.alert('Sweet!', obj.msg, function(btn, text) {
+				                       if (btn == 'ok'){
+									        window.location = "index.php"
+									    }
+			                       });
+			                       
 			                    },
 			                    failure: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
-			                        Ext.Msg.alert('Oops!', obj.jerror);
+			                        Ext.Msg.alert('Oops!', obj.msg);
 			                        Ext.getCmp('dataInfoNext').disable();
 			                    }
 			                });
