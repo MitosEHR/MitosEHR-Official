@@ -331,12 +331,12 @@ Ext.onReady(function() {
 				                },
 			                    success: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
-			                       Ext.Msg.alert('Sweet! Database Credentials Are Valid', obj.jerror);
+			                       Ext.Msg.alert('Sweet!', obj.jerror);
 			                       Ext.getCmp('dataInfoNext').enable();
 			                    },
 			                    failure: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
-			                        Ext.Msg.alert('Oops! Something Went Wrong', obj.jerror);
+			                        Ext.Msg.alert('Oops!', obj.jerror);
 			                        Ext.getCmp('dataInfoNext').disable();
 			                    }
 			                });
@@ -391,12 +391,12 @@ Ext.onReady(function() {
 				                },
 			                    success: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
-			                       Ext.Msg.alert('Sweet! Database Credentials Are Valid', obj.jerror);
+			                       Ext.Msg.alert('Sweet!.', obj.jerror);
 			                       Ext.getCmp('dataInfoNext').enable();
 			                    },
 			                    failure: function(form, action) {
 			                    obj = Ext.JSON.decode(action.response.responseText);
-			                        Ext.Msg.alert('Oops! Something Went Wrong', obj.jerror);
+			                        Ext.Msg.alert('Oops!', obj.jerror);
 			                        Ext.getCmp('dataInfoNext').disable();
 			                    }
 			                });
