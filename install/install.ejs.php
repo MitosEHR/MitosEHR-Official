@@ -465,6 +465,6 @@ Ext.onReady(function() {
 </script>
 </head>
 <body id="login">
-<div id="copyright">MitosEHR | <a href="javascript:void()" onClick="Ext.getCmp('winCopyright').show();" >Copyright Notice</a></div>
+<div id="copyright">MitosEHR | <a href="javascript:void(0)" onClick="Ext.getCmp('winCopyright').show();" >Copyright Notice</a></div>
 </body>
 </html>
