@@ -22,6 +22,7 @@ session_start();
 session_cache_limiter('private');
 define('_MitosEXEC', 1);
 
+$count = 0;
 //----------------------------------------------------------------
 // Startup the registry
 // This containts SESSION Variables to use in the application
@@ -31,14 +32,15 @@ include_once("registry.php");
 //----------------------------------------------------------------
 // Make the auth process
 //----------------------------------------------------------------
-if ($_SESSION['user']['auth'] == TRUE){
-	//----------------------------------------------------------------
-	// Load the i18n Library
-	// Load the main screen
-	//----------------------------------------------------------------
-	include_once("library/I18n/I18n.inc.php");
-	include_once("interface/main/main_screen.ejs.php");
-	
+if ($_SESSION['user']['auth']){
+	if ($_SESSION['user']['auth'] == true){
+		//----------------------------------------------------------------
+		// Load the i18n Library
+		// Load the main screen
+		//----------------------------------------------------------------
+		include_once("library/I18n/I18n.inc.php");
+		include_once("interface/main/main_screen.ejs.php");
+	}
 //----------------------------------------------------------------
 // Make the logon process or Setup process
 //----------------------------------------------------------------

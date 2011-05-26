@@ -15,7 +15,7 @@ session_cache_limiter('private');
 
 // Count records variable
 $count = 0;
-
+$buff = '';
 // *************************************************************************************
 // Deside what to do with the $_GET['task']
 // *************************************************************************************
@@ -30,7 +30,7 @@ switch ($_GET['task']) {
 			$count++;
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
+		echo '({';
 		echo "results: " . $count . ", " . chr(13);
 		echo "row: [" . chr(13);
 		echo $buff;
