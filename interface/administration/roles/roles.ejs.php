@@ -324,7 +324,7 @@ Ext.onReady(function(){
 		listeners: {
 			afteredit: function () {
 				permStore.sync();
-				permStore.load();
+				permStore.load({params:{role_id: currList}});
 			}
 		}
 	});
