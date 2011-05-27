@@ -21,14 +21,11 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 define('_MitosEXEC', 1);
-
-$count = 0;
 //----------------------------------------------------------------
 // Startup the registry
 // This containts SESSION Variables to use in the application
 //----------------------------------------------------------------
 include_once("registry.php");
-
 //----------------------------------------------------------------
 // Make the auth process
 //----------------------------------------------------------------
@@ -48,6 +45,7 @@ if ($_SESSION['user']['auth']){
 	//----------------------------------------------------------------
 	// Browse the site dir first
 	//----------------------------------------------------------------
+	$count = 0;
 	$d = dir("sites/");
 	while (false !== ($entry = $d->read())) { if ( $entry != "." && $entry != ".."){ $count++; } }
 	//----------------------------------------------------------------
@@ -60,5 +58,4 @@ if ($_SESSION['user']['auth']){
 		include_once("interface/login/login.ejs.php");
 	}	
 }
-
 ?>
