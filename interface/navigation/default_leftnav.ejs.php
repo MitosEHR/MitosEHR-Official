@@ -52,8 +52,14 @@ $buff .= '{"text":"' . i18n('Administration', 'r') . '", "cls":"folder", ' . chr
 	$buff .= '{"text":"' . i18n('Practice', 'r') . '", "leaf":true, "cls":"file", "id":"administration/practice/practice.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Roles', 'r') . '", "leaf":true, "cls":"file", "id":"administration/roles/roles.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Lists', 'r') . '", "leaf":true, "cls":"file", "id":"administration/lists/lists.ejs.php"}' . chr(13);
+$buff .= ']},' . chr(13);
+// -------------------------------------
+// Administration
+// -------------------------------------
+$buff .= '{"text":"' . i18n('Miscellaneous', 'r') . '", "cls":"folder", ' . chr(13);
+	$buff .= '"children": [' . chr(13); // ^ Folder
+	$buff .= '{"text":"' . i18n('Address Book', 'r') . '", "leaf":true, "cls":"file", "id":"miscellaneous/addressbook/addressbook.ejs.php"}' . chr(13);
 $buff .= ']}' . chr(13);
-
 // *************************************************************************************
 // End Nav Data JSON
 // *************************************************************************************
