@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.0" type="widget">
+	<name>Pending Transactions</name>
+	<directory>pending_transactions</directory>
+	<creationDate>1 May 2011</creationDate>
+	<author>Gino Rivera Falu</author>
+	<authorEmail>hrivera@gi-technologies.com</authorEmail>
+	<authorUrl>http://www.gi-technologies.com</authorUrl>
+	<copyright>Copyright in 2011 by mdTechnologies and GI Technologies. All rights reserved</copyright>
+	<license>mdGI Attributed License</license>
+	<version>0.0.1</version>
+	<description>Widget for Passport Dashboard</description>
+</install>
