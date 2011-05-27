@@ -57,9 +57,11 @@ switch ($_GET['task']) {
 		$count++;
 		$buff .= " { value: '0', perm: '" . i18n('No Access','r') . "' },". chr(13);
 		$count++;
-		$buff .= " { value: '1', perm: '" . i18n('View / Read','r') . "' },". chr(13);
+		$buff .= " { value: '1', perm: '" . i18n('View','r') . "' },". chr(13);
 		$count++;
-		$buff .= " { value: '2', perm: '" . i18n('View / read / Edit','r') . "' }";
+		$buff .= " { value: '2', perm: '" . i18n('View / Update','r') . "' },". chr(13);
+		$count++;
+		$buff .= " { value: '3', perm: '" . i18n('View / Update / Create','r') . "' }";
 		echo '({';
 		echo "results: " . $count . ", " . chr(13);
 		echo "row: [" . chr(13);

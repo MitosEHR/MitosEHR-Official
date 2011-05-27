@@ -171,7 +171,18 @@ Ext.onReady(function(){
    		},
     	autoLoad: true
 	});
-
+	function permck(val) {
+	    if (val == 'No Access') {
+	        return 'View <img src="ui_icons/no.gif" /> / Update <img src="ui_icons/no.gif" /> / Create <img src="ui_icons/no.gif" />';
+	    } else if(val == 'View') {
+	        return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/no.gif" /> / Create <img src="ui_icons/no.gif" />';
+	    } else if (val == 'View/Update'){
+	        return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/yes.gif" /> / Create <img src="ui_icons/no.gif" />';
+	    } else if (val == 'View/Update/Create'){
+	    	return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/yes.gif" /> / Create <img src="ui_icons/yes.gif" />';
+	    }
+	    return val;
+	}
 	// ****************************************************************************
 	// Create the Role Form
 	// ****************************************************************************
@@ -306,7 +317,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// RowEditor Class
 	// *************************************************************************************
-	var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+	var rowEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 		//clicksToEdit: 1,
 		saveText: 'Update',
 		errorSummary: false,
@@ -343,6 +354,7 @@ Ext.onReady(function(){
         },{
 			header		: '<?php i18n("Access Control / Permision"); ?>',
             dataIndex	: 'ac_perm',
+            renderer 	: permck,
 			flex     	: 1,
             field: {
                 xtype			: 'combo',

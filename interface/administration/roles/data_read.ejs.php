@@ -57,10 +57,13 @@ foreach ($mitos_db->execStatement() as $urow) {
 			$p = 'No Access';
 		break;
 		case '1':
-			$p = 'View / Read';
+			$p = 'View';
 		break;
 		case '2':
-			$p = 'View / read / Edit';
+			$p = 'View/Update';
+		break;
+		case '3':
+			$p = 'View/Update/Create';
 		break;
 	}
 	$buff .= '{';
