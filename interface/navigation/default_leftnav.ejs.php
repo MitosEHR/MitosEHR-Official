@@ -27,7 +27,7 @@ $buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "
 // -------------------------------------
 // Patient
 // -------------------------------------
-$buff .= '{"text":"' . i18n('Patient - TODO', 'r') . '", "cls":"folder", ' . chr(13);
+$buff .= '{"text":"' . i18n('Patient - TODO', 'r') . '", "cls":"folder", "expanded": true,' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
 	$buff .= '{"text":"' . i18n('New Patient - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"patient_file/new/new_patient.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Patient File - TODO', 'r') . '", "leaf":true, "cls":"file", "id":"patient_file/patient_file.ejs.php"},' . chr(13);
@@ -44,7 +44,7 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 // Administration
 // -------------------------------------
-$buff .= '{"text":"' . i18n('Administration', 'r') . '", "cls":"folder", ' . chr(13);
+$buff .= '{"text":"' . i18n('Administration', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
 	$buff .= '{"text":"' . i18n('Globals', 'r') . '", "leaf":true, "cls":"file", "id":"administration/globals/globals.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Facilities', 'r') . '", "leaf":true, "cls":"file", "id":"administration/facilities/facilities.ejs.php"},' . chr(13);
@@ -56,7 +56,7 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 // Administration
 // -------------------------------------
-$buff .= '{"text":"' . i18n('Miscellaneous', 'r') . '", "cls":"folder", ' . chr(13);
+$buff .= '{"text":"' . i18n('Miscellaneous', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
 	$buff .= '{"text":"' . i18n('Address Book', 'r') . '", "leaf":true, "cls":"file", "id":"miscellaneous/addressbook/addressbook.ejs.php"}' . chr(13);
 $buff .= ']}' . chr(13);
