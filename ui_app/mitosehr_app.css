@@ -29,7 +29,7 @@ body#login{
 	margin: 0px;
 }
 #bg_logo{
-	position: fixed;
+	position: absolute;
 	background-image:url(mitosehr_big_logo.png);
 	background-position: top center;
 	background-attachment:fixed;
@@ -43,7 +43,7 @@ body#login{
 	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 10px;
 	color: #333;
-	position: fixed;
+	position: absolute;
 	bottom: 5px;
 	right: 10px;
 }
