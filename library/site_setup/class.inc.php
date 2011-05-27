@@ -125,7 +125,9 @@ class SiteSetup {
 	// Drop new database - this method is called if and error is found during the instalation
 	//*****************************************************************************************
 	function dropDatabase() {
-		$this->conn->exec("DROP DATABASE ".$this->dbName."");
+		if($this->connTest == 'root') {
+			$this->conn->exec("DROP DATABASE ".$this->dbName."");
+		}
 	}
 	
 	//*****************************************************************************************
