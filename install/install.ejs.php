@@ -39,11 +39,11 @@ Ext.onReady(function() {
 	    return val;
 	}
 	var storeSites = new Ext.data.Store({
-		model: 'Requirements',
-		proxy: {
-			type: 'ajax',
-			url: 'install/requirements.ejs.php',
-			reader: {
+		model	: 'Requirements',
+		proxy	: {
+			type	: 'ajax',
+			url		: 'install/requirements.ejs.php',
+			reader	: {
 				type: 'json'
 			}
 		},
@@ -54,11 +54,11 @@ Ext.onReady(function() {
 	// grid to show all the requirements status
 	// *************************************************************************************
 	var reqGrid = new Ext.grid.GridPanel({
-		id : 'reqGrid',
-	    store: storeSites,
-	    frame: false,
-	    border: false,
-	    viewConfig: {stripeRows: true},
+		id 			: 'reqGrid',
+	    store		: storeSites,
+	    frame		: false,
+	    border		: false,
+	    viewConfig	: {stripeRows: true},
 	    columns: [{
 	        text     	: 'Requirements',
 	        flex     	: 1,
@@ -90,24 +90,24 @@ Ext.onReady(function() {
 		autoLoad		: 'gpl-licence-en.html',
 		autoScroll		: true,
 		dockedItems: [{
-			dock: 'bottom',
-			frame: false,
-			border: false,
-			buttons: [{
-		        text: 'I Agree',
-		        id: 'btn_agree',
-		        margin: '0 5',
-				name: 'btn_reset',
-				handler: function() {
+			dock	: 'bottom',
+			frame	: false,
+			border	: false,
+			buttons	: [{
+		        text	: 'I Agree',
+		        id		: 'btn_agree',
+		        margin	: '0 5',
+				name	: 'btn_reset',
+				handler	: function() {
 		            winCopyright.hide();
 		            winSiteSetup.show();
 		        }
 			}, '-',{
-				text: 'Do Not Agree',
-		        id: 'btn_notAgree',
-		        margin: '0 10 0 5',
-				name: 'btn_reset',
-				handler: function() {
+				text	: 'Do Not Agree',
+		        id		: 'btn_notAgree',
+		        margin	: '0 10 0 5',
+				name	: 'btn_reset',
+				handler	: function() {
 		            formLogin.getForm().reset();
 		        }
 			}]
@@ -121,8 +121,9 @@ Ext.onReady(function() {
 
 	var formInstall = Ext.create('Ext.form.Panel', {
 		id				: 'formInstall',
-        bodyStyle		:'padding:5px',
+        bodyStyle		: 'padding:5px',
         border			: false,
+        height			: 450,
         url				: 'install/logic.ejs.php',
         layout			: 'fit',
         fieldDefaults	: {
@@ -133,38 +134,37 @@ Ext.onReady(function() {
             anchor		: '100%'
         },
         items: [{
-            xtype:'tabpanel',
-            id: 'tabsInstall',
-            plain:true,
-            border	: false,
-            activeTab: 0,
-            height:450,
-            defaults:{bodyStyle:'padding:10px'},
+            xtype		: 'tabpanel',
+            id			: 'tabsInstall',
+            plain		: true,
+            border		: false,
+            activeTab	: 0,
+            defaults	: {bodyStyle:'padding:10px'},
             items:[{
-                title:'Instructions',
-                layout:'fit',
-                autoLoad		: 'install/instructions.html',
-                autoScroll		: true,
+                title		: 'Instructions',
+                layout		: 'fit',
+                autoLoad	: 'install/instructions.html',
+                autoScroll	: true,
 		        buttons: [{
-		            text: 'Next',
-		            handler: function() {
+		            text	: 'Next',
+		            handler	: function() {
 		            	Ext.getCmp('clinicInfo').enable();
 						Ext.getCmp('tabsInstall').setActiveTab(1);
 		        	}
 		        }]
             },{
-                title:'Site Info',
-                defaults: {width: 530},
-                id: 'clinicInfo',
-                defaultType: 'textfield',
-                disabled: true,
+                title		: 'Site Info',
+                defaults	: {width: 530},
+                id			: 'clinicInfo',
+                defaultType	: 'textfield',
+                disabled	: true,
                 items: [{
-					xtype: 'textfield',
-			        name: 'siteName',
-			        id:'siteNameField',
+					xtype		: 'textfield',
+			        name		: 'siteName',
+			        id			: 'siteNameField',
 			        labelAlign	: 'top',
-			        fieldLabel: 'Site Name (Site Name = Your Main Clinic\'s Name)',
-			        allowBlank: false ,
+			        fieldLabel	: 'Site Name (Site Name = Your Main Clinic\'s Name)',
+			        allowBlank	: false ,
 			        listeners: {
 				   	  	validitychange: function(){
 				   	  	field = Ext.getCmp('siteNameField');
@@ -198,72 +198,70 @@ Ext.onReady(function() {
 		            value: '<span style="color:green;">* more tips to come...</span>'
                 }],
 		        buttons: [{
-		            text: 'Back',
-		            handler: function() {
+		            text	: 'Back',
+		            handler	: function() {
 						Ext.getCmp('tabsInstall').setActiveTab(0);
 		        	}
 		        },{
-		            text: 'Next',
-		            id:'clinicInfoNext',
+		            text	: 'Next',
+		            id		:'clinicInfoNext',
 		            disabled: true,
-		            handler: function() {
+		            handler	: function() {
 		            	Ext.getCmp('databaseInfo').enable();
 						Ext.getCmp('tabsInstall').setActiveTab(2);
 		        	}
 		        }]
             },{
-                title: 'Database Info',
-                defaults: {width: 530},
-                id: 'databaseInfo',
-                defaultType: 'textfield',
-                disabled: true,
+                title		: 'Database Info',
+                defaults	: {width: 530},
+                id			: 'databaseInfo',
+                defaultType	: 'textfield',
+                disabled	: true,
                 items: [{
-			    	xtype: 'displayfield',
-			    	padding: '10px',
-		            value: 'Choose if you want to <a href="javascript:void(0);" onClick="Ext.getCmp(\'rootFieldset\').enable();">create a new database</a> or use an <a href="javascript:void(0);" onClick="Ext.getCmp(\'dbuserFieldset\').enable();">existing database</a><br>'
+			    	xtype	: 'displayfield',
+			    	padding	: '10px',
+		            value	: 'Choose if you want to <a href="javascript:void(0);" onClick="Ext.getCmp(\'rootFieldset\').enable();">create a new database</a> or use an <a href="javascript:void(0);" onClick="Ext.getCmp(\'dbuserFieldset\').enable();">existing database</a><br>'
                 },{
-					xtype:'fieldset',
-					id:'rootFieldset',
-		            checkboxToggle:true,
-		            title: 'Create a New Database (Roor Access Needed)',
-		            defaultType: 'textfield',
-		            collapsed: true,
-		            disabled: true,
-		            layout: 'anchor',
-		            defaults: {
-		                anchor: '100%'
-		            },
+					xtype			: 'fieldset',
+					id				: 'rootFieldset',
+		            checkboxToggle	: true,
+		            title			: 'Create a New Database (Roor Access Needed)',
+		            defaultType		: 'textfield',
+		            collapsed		: true,
+		            disabled		: true,
+		            layout			: 'anchor',
+		            defaults		: {anchor: '100%'},
 		            items :[{
-		                fieldLabel: 'Root User',
-		                name: 'rootUser',
-		                allowBlank:false
+		                fieldLabel	: 'Root User',
+		                name		: 'rootUser',
+		                allowBlank	: false
 		            },{
-		                fieldLabel: 'Root Password',
-		                name: 'rootPass',
-		                id: 'rootPass',
-		                inputType: 'password', 
-		                allowBlank:false
+		                fieldLabel	: 'Root Password',
+		                name		: 'rootPass',
+		                id			: 'rootPass',
+		                inputType	: 'password', 
+		                allowBlank	: false
 		            },{
-		                fieldLabel: 'SQL Server Host',
-		                name: 'dbHost',
-		                allowBlank:false
+		                fieldLabel	: 'SQL Server Host',
+		                name		: 'dbHost',
+		                allowBlank	: false
 		            },{
-		                fieldLabel: 'SQL Server Port',
-		                name: 'dbPort',
-		                allowBlank:false
+		                fieldLabel	: 'SQL Server Port',
+		                name		: 'dbPort',
+		                allowBlank	: false
 		            },{
-		                fieldLabel: 'Database Name',
-		                name: 'dbName',
-						allowBlank:false
+		                fieldLabel	: 'Database Name',
+		                name		: 'dbName',
+						allowBlank	: false
 		            },{
-		            	fieldLabel: 'New Database User',
-		                name: 'dbUser',
-						allowBlank:false
+		            	fieldLabel	: 'New Database User',
+		                name		: 'dbUser',
+						allowBlank 	: false
 					},{
-		            	fieldLabel: 'New Database Pass',
-		                name: 'dbPass',
-		                inputType: 'password',
-						allowBlank:false
+		            	fieldLabel	: 'New Database Pass',
+		                name		: 'dbPass',
+		                inputType	: 'password',
+						allowBlank	: false
 		            }],
 			        listeners: {
 				   	  	enable: function(){
@@ -275,39 +273,37 @@ Ext.onReady(function() {
 				   		}
 				  	}
 		        },{
-		            xtype:'fieldset',
-		            id:'dbuserFieldset',
-		            checkboxToggle:true,
-		            title: 'Install on Existing Database',
-		            defaultType: 'textfield',
-		            collapsed: true,
-		            disabled: true,
-		            layout: 'anchor',
-		            defaults: {
-		                anchor: '100%'
-		            },
+		            xtype			: 'fieldset',
+		            id				: 'dbuserFieldset',
+		            checkboxToggle	: true,
+		            title			: 'Install on Existing Database',
+		            defaultType		: 'textfield',
+		            collapsed		: true,
+		            disabled		: true,
+		            layout			: 'anchor',
+		            defaults		: {anchor: '100%'},
 		            items :[{
-		                fieldLabel: 'Database Name',
-		                name: 'dbName',
-						allowBlank:false
+		                fieldLabel	: 'Database Name',
+		                name		: 'dbName',
+						allowBlank	: false
 		            },{
-		                fieldLabel: 'Database User',
-		                name: 'dbUser',
-		                allowBlank:false
+		                fieldLabel	: 'Database User',
+		                name		: 'dbUser',
+		                allowBlank	: false
 		            },{
-		                fieldLabel: 'Database Pass',
-		                name: 'dbPass',
-		                id: 'dbPass',
-		                inputType: 'password',
-		                allowBlank:false
+		                fieldLabel	: 'Database Pass',
+		                name		: 'dbPass',
+		                id			: 'dbPass',
+		                inputType	: 'password',
+		                allowBlank	: false
 		            },{
-		                fieldLabel: 'Database Host',
-		                name: 'dbHost',
-		                allowBlank:false
+		                fieldLabel	: 'Database Host',
+		                name		: 'dbHost',
+		                allowBlank	: false
 		            },{
-		                fieldLabel: 'Database Port',
-		                name: 'dbPort',
-		                allowBlank:false
+		                fieldLabel	: 'Database Port',
+		                name		: 'dbPort',
+		                allowBlank 	: false
 		            }],
 		            listeners: {
 				   	  	enable: function(){
@@ -320,14 +316,14 @@ Ext.onReady(function() {
 				  	}
                 }],
 		        buttons: [{
-		            text: 'Back',
-		            handler: function() {
+		            text	: 'Back',
+		            handler	: function() {
 						Ext.getCmp('tabsInstall').setActiveTab(1);
 		        	}
 		        },{
-		            text: 'Test Database Credentials',
-		            id:'dataTester',
-		            handler: function() {
+		            text	: 'Test Database Credentials',
+		            id		: 'dataTester',
+		            handler	: function() {
 			            var form = this.up('form').getForm();
 			            if (form.isValid()) {
 			                form.submit({
@@ -350,8 +346,8 @@ Ext.onReady(function() {
 			            }
 			        }
 		        },{
-		            text: 'Next',
-		            id:'dataInfoNext',
+		            text	: 'Next',
+		            id		:'dataInfoNext',
 		            disabled: true,
 		            handler: function() {
 		            	Ext.getCmp('adminInfo').enable(3);
@@ -359,36 +355,36 @@ Ext.onReady(function() {
 		        	}
 		        }]
             },{
-                title: 'Admin Info',
-                defaults: {width: 530},
-                id: 'adminInfo',
-                defaultType: 'textfield',
-                disabled: true,
+                title		: 'Admin Info',
+                defaults	: {width: 530},
+                id			: 'adminInfo',
+                defaultType	: 'textfield',
+                disabled	: true,
                 items: [{
-			    	xtype: 'displayfield',
-		            value: 'Choose Admin Username and Password'
+			    	xtype		: 'displayfield',
+		            value		: 'Choose Admin Username and Password'
                 },{
-			    	xtype: 'displayfield',
-			    	padding: '0 0 10px 0',
-		            value: '(This will be the Super User/Global Admin with access to all areas)'
+			    	xtype		: 'displayfield',
+			    	padding		: '0 0 10px 0',
+		            value		: '(This will be the Super User/Global Admin with access to all areas)'
                 },{
-	                fieldLabel: 'Admin Username',
-	                name: 'adminUser',
-	                padding: '0 0 10px 0'
+	                fieldLabel	: 'Admin Username',
+	                name		: 'adminUser',
+	                padding		: '0 0 10px 0'
 	            },{
-	                fieldLabel: 'Admin Password',
-	                type: 'password', 
-	                name: 'adminPass',
-	                inputType: 'password'
+	                fieldLabel	: 'Admin Password',
+	                type		: 'password', 
+	                name		: 'adminPass',
+	                inputType	: 'password'
 	            }],
 		        buttons: [{
-		        	text: 'Back',
-		            handler: function() {
+		        	text	: 'Back',
+		            handler	: function() {
 						Ext.getCmp('tabsInstall').setActiveTab(2);
 		        	}
 		        },{
-		            text: 'Finish',
-		            handler: function() {
+		            text	: 'Finish',
+		            handler	: function() {
 			            var form = this.up('form').getForm();
 			            if (form.isValid()) {
 			                form.submit({
@@ -436,16 +432,16 @@ Ext.onReady(function() {
 		closable	: false,
 	    bodyStyle	: 'background-color: #ffffff; padding: 5px;',
 	    items		: [ reqGrid ],
-	    dockedItems: [{
-			dock: 'bottom',
-			frame: false,
-			border: false,
-			buttons: [{
-		        text: 'Next',
-		        id: 'btn_agree',
-		        padding: '0 10',
-				name: 'btn_reset',
-				handler: function() {
+	    dockedItems	: [{
+			dock	: 'bottom',
+			frame	: false,
+			border	: false,
+			buttons	: [{
+		        text	: 'Next',
+		        id		: 'btn_agree',
+		        padding	: '0 10',
+				name	: 'btn_reset',
+				handler	: function() {
 			        winSiteSetup.hide();
 			        winInstall.show();
 		        }
