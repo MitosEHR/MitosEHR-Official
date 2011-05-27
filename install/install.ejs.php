@@ -333,7 +333,7 @@ Ext.onReady(function() {
 			                form.submit({
 			                	method:'POST', 
 			                	params: {
-				                    task: 'connTest',
+				                    task: 'connType',
 				                    conn: conn
 				                },
 			                    success: function(form, action) {

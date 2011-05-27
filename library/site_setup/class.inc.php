@@ -23,7 +23,7 @@ class SiteSetup {
 	private $dbPrefix;
 	private $AESkey;
 	var $siteName;
-	var $connTest;
+	var $connType;
 	var $dbUser;
 	var $dbPass;
 	var $dbHost;
@@ -69,7 +69,7 @@ class SiteSetup {
 	// Test Databases Connections
 	//*****************************************************************************************
 	function testConn() {
-		switch ($this->connTest) {
+		switch ($this->connType) {
 			case 'user':
 				$this->DatabaseConn();
 			break;
@@ -125,7 +125,7 @@ class SiteSetup {
 	// Drop new database - this method is called if and error is found during the instalation
 	//*****************************************************************************************
 	function dropDatabase() {
-		if($this->connTest == 'root') {
+		if($this->connType == 'root') {
 			$this->conn->exec("DROP DATABASE ".$this->dbName."");
 		}
 	}
