@@ -54,7 +54,7 @@ if ($_SESSION['user']['auth']){
 	// If no directory is found inside sites dir run the setup wizard,
 	// if a directory is found inside sites dir run the logon screen
 	//----------------------------------------------------------------
-	if( $count <= 1){
+	if( $count <= 0){
 		include_once("install/install.ejs.php");
 	} else {
 		include_once("interface/login/login.ejs.php");
