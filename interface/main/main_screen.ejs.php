@@ -60,7 +60,7 @@ Ext.onReady(function() {
 	} 
 	Ext.TaskManager.start({
 	    run: checkSession,
-	    interval: 10000
+	    interval: 100000
 	});
 	
 	//****************************************************************
