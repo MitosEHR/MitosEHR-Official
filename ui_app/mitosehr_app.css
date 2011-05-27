@@ -12,10 +12,11 @@
 	padding: 6px;
 	display: block;
 	width: 100%;
+	height: 51px;
 	border-bottom-width: 2px;
 	border-bottom-style: dotted;
-	border-bottom-color: #f3f3f3;
-	background-color: #ecffee;
+	border-bottom-color: #ccc;
+	background-color: #ffffff;
 	background-image: url(dashboard_bg.png);
 	background-repeat: repeat-x;
 }
