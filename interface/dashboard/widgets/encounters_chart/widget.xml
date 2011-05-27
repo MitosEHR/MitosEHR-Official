@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.0" type="widget">
+	<name>Encounters Chart</name>
+	<directory>encounters_chart</directory>
+	<creationDate>27 May 2011</creationDate>
+	<author>Ernesto J Rodriguez</author>
+	<authorEmail>vela1606@gmail.com</authorEmail>
+	<authorUrl>http://www.mitosehr.org</authorUrl>
+	<copyright>Copyright in 2011 by MitosEHR. All rights reserved</copyright>
+	<license>mdGI Attributed License</license>
+	<version>0.0.1</version>
+	<description>Widget to display a chart of weekly encounters</description>
+</install>

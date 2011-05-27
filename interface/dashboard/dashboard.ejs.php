@@ -42,6 +42,7 @@ Ext.onReady(function() {
 	
 	<?php include_once('widgets/pending_transactions/pt.ejs.php'); ?>
 	<?php include_once('widgets/ammount_pending/ap.ejs.php'); ?>
+	<?php include_once('widgets/encounters_chart/en.ejs.php'); ?>
 	
 	// *************************************************************************************
 	// Top Render Panel
@@ -62,7 +63,7 @@ Ext.onReady(function() {
 			}
 		},
 		id			: 'topRenderPanel',
-		items: [ panelPT, panelAP ],
+		items: [ panelEN, panelPT, panelAP ],
 		dockedItems: [{
 			xtype: 'toolbar',
 			dock: 'top',
