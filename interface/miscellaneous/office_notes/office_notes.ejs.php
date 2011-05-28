@@ -186,7 +186,7 @@ Ext.onReady(function(){
 	// Create the GridPanel
 	// *************************************************************************************
 	var onotesGrid = new Ext.grid.GridPanel({
-  		id          : 'addressbookGrid',
+  		id          : 'onotesGrid',
   		region		: 'center',
   		store       : storeOnotes,
   		layout	    : 'fit',
