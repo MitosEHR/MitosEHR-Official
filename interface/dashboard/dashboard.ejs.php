@@ -15,10 +15,6 @@ $_SESSION['site']['flops'] = 0;
 
 include_once('../../library/I18n/I18n.inc.php');
 
-session_name ( "Passport" );
-session_start();
-session_cache_limiter('private');
-
 ?>
 <div class="dashboard_title"><?php i18n("Dashboard"); ?></div>
 <div id="portal"></div>

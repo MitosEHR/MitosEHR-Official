@@ -9,15 +9,6 @@
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
-
-$_SESSION['site']['flops'] = 0;
-
-include_once('../../library/I18n/I18n.inc.php');
-
-session_name ( "Passport" );
-session_start();
-session_cache_limiter('private');
-
 ?>
 // *************************************************************************************
 // Users Record Structure

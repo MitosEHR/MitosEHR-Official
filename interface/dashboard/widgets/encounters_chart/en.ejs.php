@@ -9,16 +9,8 @@
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
-
-$_SESSION['site']['flops'] = 0;
-
-include_once('../../library/I18n/I18n.inc.php');
-
-session_name ( "Passport" );
-session_start();
-session_cache_limiter('private');
-
 ?>
+	var panelWidth = 0;
 	var storeEn = Ext.create('Ext.data.JsonStore', {
 	    fields: ['name', 'data1', 'data2', 'data3', 'data4', 'data5'],
 	    data: [
@@ -33,9 +25,10 @@ session_cache_limiter('private');
 	// *************************************************************************************
 	// The mini panel
 	// *************************************************************************************
+	
 	var enChart = Ext.create('Ext.chart.Chart', {
         id: 'chartCmp',
-        width: 430,
+        width: panelWidth,
         height: 365,
         style: 'background:#fff',
         shadow: true,
@@ -76,6 +69,7 @@ session_cache_limiter('private');
 	// *************************************************************************************
 	// The mini panel
 	// *************************************************************************************
+	
 	var panelEN = Ext.create('Ext.Panel', {
 		columnWidth		: 1/3,
 		id 				: 'panelEN',
@@ -86,5 +80,13 @@ session_cache_limiter('private');
 		collapsible		: true,
 		closeAction		: 'hide',
 		height			: 400,
-		items			:[ enChart ]
+		items			:[ enChart ],
+		listeners: {
+	   	  	afterrender: function(){
+	   	  		var rawWidth = this.getWidth();
+	   	  		var width = ~~((rawWidth / 3)-7);
+	   	  		this.down('chart').setWidth(width);
+	   	  	}
+	  	}
+	  	
 	});
