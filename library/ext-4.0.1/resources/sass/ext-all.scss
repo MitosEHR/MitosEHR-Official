@@ -1,2 +1,31 @@
 @import 'compass';
+//some Base colors in general
+$base-color: #e6e6e6;
+$panel-header-color: #666666;
+$tab-color: #666666;
+// Tab colors
+$tab-base-color: adjust-color($base-color, $hue: -0.43deg, $saturation: 33.016%, $lightness: 100%) !default; //#deecfd
+$tab-base-color-over: adjust-color($tab-base-color, $hue: -4.208deg, $saturation: 11.429%, $lightness: 2.353%) !default;
+$tab-base-color-active: $tab-base-color !default;
+$tab-base-color-disabled: adjust-color($base-color, $hue: 0.267deg, $saturation: 15.873%, $lightness: 9.02%) !default; //E1ECFA
+$tab-color: adjust-color($tab-base-color, $hue: 5.995deg, $saturation: -25.589%, $lightness: -98.431%) !default;
+$tab-color-active: adjust-color($tab-color, $hue: 5.221deg, $saturation: 5.768%, $lightness: -10.333%) !default;
+// Panel header
+$panel-header-background-gradient: 'flat-panel-header' !default;
+// Default Butns
+$button-default-base-color-over: adjust-color($base-color, $hue: -6.667deg, $saturation: 4.444%, $lightness: -5.588%) !default; //E4F3FF
+$button-default-base-color-focus: $button-default-base-color-over;
+$button-default-base-color-pressed: adjust-color($base-color, $hue: -6.667deg, $saturation: 4.444%, $lightness: -10.588%) !default; //E4F3FF
+$button-default-background-gradient: 'flat-button' !default;
+$button-default-background-gradient-over: 'flat-button-over' !default;
+$button-default-background-gradient-focus: $button-default-background-gradient-over;
+$button-default-background-gradient-pressed: 'flat-button-pressed' !default;
+$button-default-background-gradient-disabled: 'flat-button-disabled' !default;
+// Toolbar Btns
+$button-toolbar-background-color-over: adjust-color($base-color, $hue: -5deg, $saturation: 4.444%, $lightness: -5.824%) !default;
+$button-toolbar-background-color-focus: $button-toolbar-background-color-over;
+$button-toolbar-background-color-pressed: adjust-color($base-color, $hue: -5deg, $saturation: 4.444%, $lightness: -10.824%) !default;
+$button-toolbar-background-gradient-over: 'flat-button-over' !default;
+$button-toolbar-background-gradient-focus: $button-toolbar-background-gradient-over;
+$button-toolbar-background-gradient-pressed: 'flat-button-pressed' !default;
 @import 'ext4/default/all';
