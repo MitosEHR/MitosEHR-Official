@@ -257,7 +257,6 @@ Ext.onReady(function(){
 		id          : 'frmUsers',
 		bodyStyle   : 'padding: 5px;',
 		autoWidth   : true,
-		width	  	  : 495,
 		border      : false,
 		hideLabels  : true,
 		defaults: {
@@ -346,8 +345,24 @@ Ext.onReady(function(){
 		      ]  
 		    },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
 		    { width: 410, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
-		],
-		buttons: [{
+		]
+	});
+	
+	// *************************************************************************************
+	// Message Window Dialog
+	// *************************************************************************************
+	var winUsers = new Ext.Window({
+		id          : 'winUsers',
+		width       : 520,
+	    autoHeight  : true,
+	    modal       : true,
+	    border	  	: false,
+	    resizable   : false,
+	    title       : '<?php i18n('Add or Edit User'); ?>',
+	    closeAction : 'hide',
+	    renderTo    : document.body,
+	    items: [frmUsers],
+	    buttons: [{
             text: '<?php i18n('Save'); ?>',
             handler: function(){
 				//----------------------------------------------------------------
@@ -386,22 +401,6 @@ Ext.onReady(function(){
             	winUsers.hide();
             }
         }]
-	});
-	
-	// *************************************************************************************
-	// Message Window Dialog
-	// *************************************************************************************
-	var winUsers = new Ext.Window({
-		id          : 'winUsers',
-		width       : 520,
-	    autoHeight  : true,
-	    modal       : true,
-	    border	  	: false,
-	    resizable   : false,
-	    title       : '<?php i18n('Add or Edit User'); ?>',
-	    closeAction : 'hide',
-	    renderTo    : document.body,
-	    items: [frmUsers],
 	}); // END WINDOW
 	
 	// *************************************************************************************
