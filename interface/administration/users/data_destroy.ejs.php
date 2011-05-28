@@ -37,7 +37,7 @@ $delete_id = $data['id'];
 // Finally build the Delete SQL Statement and inject it to the SQL Database
 // *************************************************************************************
 $mitos_db->setSQL( "DELETE FROM users WHERE id='" . $delete_id . "'");
-$ret = $mitos_db->execOnly();
+$ret = $mitos_db->execLog();
 
 if ( $ret == "" ){
 	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';

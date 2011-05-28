@@ -125,7 +125,14 @@ Ext.onReady(function(){
 	    },
 	    autoLoad: true
 	});
-
+	function authCk(val) {
+	    if (val == 'Yes') {
+	        return '<img src="ui_icons/yes.gif" />';
+	    } else if(val == 'No') {
+	        return '<img src="ui_icons/no.gif" />';
+	    } 
+	    return val;
+	}
 	// *************************************************************************************
 	// Structure, data for Titles
 	// AJAX -> component_data.ejs.php
@@ -400,10 +407,10 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Create the GridPanel
 	// *************************************************************************************
-	var addressbookGrid = new Ext.grid.GridPanel({
-		id          : 'addressbookGrid',
+	var userGrid = new Ext.grid.GridPanel({
+		id          : 'userGrid',
 	  	store       : storeUsers,
-	  	layout	  : 'fit',
+	  	layout	    : 'fit',
 	  	border      : false,    
 	  	frame       : false,
 	  	loadMask    : true,
@@ -445,8 +452,8 @@ Ext.onReady(function(){
 	    	{ width: 100,  text: '<?php i18n("Username"); ?>', sortable: true, dataIndex: 'username' },
 	    	{ width: 200,  text: '<?php i18n("Name"); ?>', sortable: true, dataIndex: 'fullname' },
 	    	{ flex: 1,  text: '<?php i18n("Aditional info"); ?>', sortable: true, dataIndex: 'info' },
-	    	{ text: '<?php i18n("Active?"); ?>', sortable: true, dataIndex: 'actived' },
-	    	{ text: '<?php i18n("Authorized?"); ?>', sortable: true, dataIndex: 'authorizedd' }
+	    	{ text: '<?php i18n("Active?"); ?>', sortable: true, dataIndex: 'actived',renderer 	: authCk },
+	    	{ text: '<?php i18n("Authorized?"); ?>', sortable: true, dataIndex: 'authorizedd', renderer: authCk }
 	  	],
 	  	//-----------------------------------------------
 	    //  Start grid menu bar
@@ -507,7 +514,7 @@ Ext.onReady(function(){
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [addressbookGrid]
+		items		: [userGrid]
 	});
 }); // End ExtJS
 </script>
