@@ -206,9 +206,48 @@ Ext.onReady(function(){
 			fieldLabel	: '<?php i18n("Role Name"); ?>',
 			id			: 'role_name', 
 			name		: 'role_name'
-		}],
+		}]
+    });
+	// ****************************************************************************
+	// Create the Permisions Form
+	// ****************************************************************************
+    var permsForm = Ext.create('Ext.form.Panel', {
+    	frame		: false,
+    	border		: false,
+    	id			: 'permsForm',
+        bodyStyle	: 'padding:2px',
+        fieldDefaults: {
+            msgTarget	: 'side',
+            labelWidth	: 100
+        },
+        defaultType	: 'textfield',
+        defaults	: { anchor: '100%' },
+        items: [{
+			xtype		: 'textfield',
+			fieldLabel	: '<?php i18n("Permission Name"); ?>',
+			id			: 'perm_name', 
+			name		: 'perm_name'
+		},{
+			xtype		: 'textfield',
+			fieldLabel	: '<?php i18n("Permission Unique Name"); ?>',
+			id			: 'perm_key', 
+			name		: 'perm_key'
+		}]
+    });
 
-        buttons: [{
+	// ****************************************************************************
+	// Create the Window
+	// ****************************************************************************	
+	var winRoles = Ext.create('widget.window', {
+		id			: 'winRoles',
+		closable	: true,
+		closeAction	: 'hide',
+		width		: 450,
+		resizable	: false,
+		modal		: true,
+		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
+		items		: [ rolesForm ],
+		buttons: [{
             text: 'Save',
             handler: function(){
 				if (rolesForm.getForm().findField('id').getValue()){ // Update
@@ -238,32 +277,19 @@ Ext.onReady(function(){
             	winRoles.hide();
             }
         }]
-    });
+	});
 	// ****************************************************************************
-	// Create the Permisions Form
-	// ****************************************************************************
-    var permsForm = Ext.create('Ext.form.Panel', {
-    	frame		: false,
-    	border		: false,
-    	id			: 'permsForm',
-        bodyStyle	: 'padding:2px',
-        fieldDefaults: {
-            msgTarget	: 'side',
-            labelWidth	: 100
-        },
-        defaultType	: 'textfield',
-        defaults	: { anchor: '100%' },
-        items: [{
-			xtype		: 'textfield',
-			fieldLabel	: '<?php i18n("Permission Name"); ?>',
-			id			: 'perm_name', 
-			name		: 'perm_name'
-		},{
-			xtype		: 'textfield',
-			fieldLabel	: '<?php i18n("Permission Unique Name"); ?>',
-			id			: 'perm_key', 
-			name		: 'perm_key'
-		}],
+	// Create the Window
+	// ****************************************************************************	
+	var winPerms = Ext.create('widget.window', {
+		id			: 'winPerms',
+		closable	: true,
+		closeAction	: 'hide',
+		width		: 450,
+		resizable	: false,
+		modal		: true,
+		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
+		items		: [ permsForm ],
         buttons: [{
             text: 'Save',
             handler: function(){
@@ -285,33 +311,6 @@ Ext.onReady(function(){
             	winPerms.hide();
             }
         }]
-    });
-
-	// ****************************************************************************
-	// Create the Window
-	// ****************************************************************************	
-	var winRoles = Ext.create('widget.window', {
-		id			: 'winRoles',
-		closable	: true,
-		closeAction	: 'hide',
-		width		: 450,
-		resizable	: false,
-		modal		: true,
-		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
-		items		: [ rolesForm ]
-	});
-	// ****************************************************************************
-	// Create the Window
-	// ****************************************************************************	
-	var winPerms = Ext.create('widget.window', {
-		id			: 'winPerms',
-		closable	: true,
-		closeAction	: 'hide',
-		width		: 450,
-		resizable	: false,
-		modal		: true,
-		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
-		items		: [ permsForm ]
 	});
 
 	// *************************************************************************************

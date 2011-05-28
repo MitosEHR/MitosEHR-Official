@@ -55,7 +55,7 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
-    Ext.define('FacilitiesRecord', {
+    var FacilitiesRecord = Ext.define('FacilitiesRecord', {
         extend: 'Ext.data.Model',
         pageSize: 30,
         fields: [
@@ -279,8 +279,7 @@ Ext.onReady(function() {
 		modal		: true,
 		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
 		items		: [ facilityForm ],
-		// Window Bottom Bar
-		bbar:[{
+		buttons:[{
 			text		:'<?php i18n('Save'); ?>',
 			name		: 'cmdSave',
 			id			: 'cmdSave',
@@ -309,7 +308,7 @@ Ext.onReady(function() {
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
 					var obj = eval( '(' + Ext.JSON.encode(facilityForm.getForm().getValues()) + ')' );
-					var rec = new usersRecord(obj);
+					var rec = new FacilitiesRecord(obj);
 					FacilityStore.add( rec );
 				}
 				winFacility.hide();		// Finally hide the dialog window
@@ -445,9 +444,9 @@ Ext.onReady(function() {
 						buttons: Ext.Msg.YESNO,
 						fn:function(btn,msgGrid){
 							if(btn=='yes'){
-								storeUsers.remove( currRec );
-								storeUsers.save();
-								storeUsers.load();
+								FacilityStore.remove( currRec );
+								FacilityStore.save();
+								FacilityStore.load();
 			    		    }
 						}
 					});

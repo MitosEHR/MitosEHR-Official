@@ -1100,7 +1100,7 @@ Ext.onReady(function(){
             }],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
-			  	dock: 'bottom',
+			  	dock: 'top',
 			  	items: [{
 					id        : 'addAddressbook',
 				    text      : '<?php i18n("Save Configuration"); ?>',

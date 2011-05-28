@@ -199,7 +199,7 @@ Ext.onReady(function(){
 		// -----------------------------------------
 		// Window Bottom Bar
 		// -----------------------------------------
-		bbar:[{
+		buttons:[{
 			text		:'<?php i18n('Create'); ?>',
 			name		: 'cmdSave',
 			id			: 'cmdSave',
