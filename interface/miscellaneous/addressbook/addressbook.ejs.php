@@ -123,8 +123,8 @@ Ext.onReady(function(){
 		    api		: {
 		      read      : 'interface/miscellaneous/addressbook/data_read.ejs.php',
 		      create    : 'interface/miscellaneous/addressbook/data_create.ejs.php',
-		      update    : 'interface/miscellaneous/addressbook/data_update.ejs.php'
-		    //destroy 	:  <- You can not destroy conatacts, HIPPA Compliant
+		      update    : 'interface/miscellaneous/addressbook/data_update.ejs.php',
+		      destroy 	: 'interface/miscellaneous/addressbook/data_destroy.ejs.php'
 	   	 	},
 	   	 	reader: {
 	            type			: 'json',
@@ -503,6 +503,7 @@ Ext.onReady(function(){
 					Ext.getCmp('frmAddressbook').getForm().reset();
 	   		  		var rec = storeAddressbook.getAt(rowIndex);
 	   		  		Ext.getCmp('cmdEdit').enable();
+	   		  		Ext.getCmp('cmdDelete').enable();
 	   		  		Ext.getCmp('frmAddressbook').getForm().loadRecord(rec);
 					currRec = rec;
             		rowPos = rowIndex;
@@ -559,6 +560,26 @@ Ext.onReady(function(){
 					winAddressbook.setTitle('<?php i18n("Edit Contact"); ?>'); 
 			    	winAddressbook.show();
 			    }
+			},'-',{
+				text: '<?php i18n("Delete Contact"); ?>',
+				iconCls: 'delete',
+				disabled: true,
+				id: 'cmdDelete',
+				handler: function(){
+					Ext.Msg.show({
+						title: '<?php i18n('Please confirm...'); ?>', 
+						icon: Ext.MessageBox.QUESTION,
+						msg:'<?php i18n('Are you sure to delete this Contact?'); ?>',
+						buttons: Ext.Msg.YESNO,
+						fn:function(btn,msgGrid){
+							if(btn=='yes'){
+								storeAddressbook.remove( currRec );
+								storeAddressbook.save();
+								storeAddressbook.load();
+			    		    }
+						}
+					});
+				}
 		  	}]					    
 	  	}]
 	}); // END GRID
