@@ -593,7 +593,7 @@ Ext.onReady(function(){
             items	: [ pharmacyGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
-			  	dock: 'bottom',
+			  	dock: 'top',
 			  	items: [{
 					id        : 'addPharmacy',
 				    text      : '<?php i18n("Add a Pharmacy"); ?>',
@@ -626,7 +626,7 @@ Ext.onReady(function(){
             items	: [ insuranceGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
-			  	dock: 'bottom',
+			  	dock: 'top',
 			  	items: [{
 					id        : 'addCompany',
 				    text      : '<?php i18n("Add a Comapny"); ?>',
@@ -664,7 +664,7 @@ Ext.onReady(function(){
             items	: [ x12ParnersGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
-			  	dock: 'bottom',
+			  	dock: 'top',
 			  	items: [{
 					id        : 'addPartner',
 				    text      : '<?php i18n("Add New Partner"); ?>',
