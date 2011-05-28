@@ -3,6 +3,8 @@
 $base-color: #e6e6e6;
 $panel-header-color: #666666;
 $tab-color: #666666;
+// Windows
+$window-header-color: #666666;
 // Tab colors
 $tab-base-color: adjust-color($base-color, $hue: -0.43deg, $saturation: 33.016%, $lightness: 100%) !default; //#deecfd
 $tab-base-color-over: adjust-color($tab-base-color, $hue: -4.208deg, $saturation: 11.429%, $lightness: 2.353%) !default;
@@ -28,4 +30,10 @@ $button-toolbar-background-color-pressed: adjust-color($base-color, $hue: -5deg,
 $button-toolbar-background-gradient-over: 'flat-button-over' !default;
 $button-toolbar-background-gradient-focus: $button-toolbar-background-gradient-over;
 $button-toolbar-background-gradient-pressed: 'flat-button-pressed' !default;
+// Grid
+$grid-header-over-border-color: adjust-color($base-color, $hue: 0deg, $saturation: 0%, $lightness: -10.549%) !default;
+$grid-header-over-background-color: $grid-header-over-border-color !default;
+$grid-header-over-background-gradient: 'flat-grid-header-over' !default;
+
+
 @import 'ext4/default/all';
