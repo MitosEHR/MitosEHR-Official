@@ -58,7 +58,8 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 $buff .= '{"text":"' . i18n('Miscellaneous', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
-	$buff .= '{"text":"' . i18n('Address Book', 'r') . '", "leaf":true, "cls":"file", "id":"miscellaneous/addressbook/addressbook.ejs.php"}' . chr(13);
+	$buff .= '{"text":"' . i18n('Address Book', 'r') . '", "leaf":true, "cls":"file", "id":"miscellaneous/addressbook/addressbook.ejs.php"},' . chr(13);
+	$buff .= '{"text":"' . i18n('Office Notes', 'r') . '", "leaf":true, "cls":"file", "id":"miscellaneous/office_notes/office_notes.ejs.php"}' . chr(13);
 $buff .= ']}' . chr(13);
 // *************************************************************************************
 // End Nav Data JSON
