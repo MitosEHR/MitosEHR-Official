@@ -25,6 +25,17 @@ if (version_compare(phpversion(), "5.3.2", ">=")) {
  	$phpVer = 'Fail';
 }
 echo '{"msg":"PHP 5.3.2 + installed","status":"'.$phpVer.'"},'; 
+
+//******************************************************
+// Check if get_magic_quotes_gpc is off
+//******************************************************
+if ((get_magic_quotes_gpc() != 1)) {
+	$gpc = 'Ok';
+}else{
+	$gpc = 'Fail';
+}
+echo '{"msg":"get_magic_quotes_gpc off/disabled","status":"'.$gpc.'"},';
+
 //******************************************************
 // try chmod sites folder and check chmod after that
 //******************************************************
