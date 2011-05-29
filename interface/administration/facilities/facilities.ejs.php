@@ -329,13 +329,12 @@ Ext.onReady(function() {
 	// Facility Grid Panel
 	// *************************************************************************************
 	var FacilityGrid = Ext.create('Ext.grid.Panel', {
+		id			: 'FacilityGrid',
 		store		: FacilityStore,
-        columnLines	: true,
+        layout	    : 'fit',
         frame		: false,
-        frameHeader	: false,
         border		: false,
-        layout		: 'fit',
-        height		: Ext.getCmp('MainApp').getHeight(),
+        //height		: Ext.getCmp('MainApp').getHeight(),
         columns: [
 			{
 				text     : '<?php i18n("Name"); ?>',

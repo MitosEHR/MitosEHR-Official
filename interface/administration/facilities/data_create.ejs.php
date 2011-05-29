@@ -58,28 +58,24 @@ $row['facility_npi'] 		= dataEncode( $data[0]->facility_npi );
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-$sql =		"INSERT INTO 
-				facility 
-			SET
-				name 				= " . $row['name'] . ", " . "
-				phone 				= " . $row['phone'] . ", " . "
-				fax 				= " . $row['fax'] . ", " . "
-				street 				= " . $row['street'] . ", " . "
-				city 				= " . $row['city'] . ", " . "
-				state 				= " . $row['state'] . ", " . "
-				postal_code 		= " . $row['postal_code'] . ", " . "
-				country_code 		= " . $row['country_code'] . ", " . "
-				federal_ein 		= " . $row['federal_ein'] . ", " . "
-				service_location 	= " . $row['service_location'] . ", " . " 
-				billing_location 	= " . $row['billing_location'] . ", " . "
-				accepts_assignment 	= " . $row['accepts_assignment'] . ", " . "
-				pos_code 			= " . $row['pos_code'] . ", " . "
-				domain_identifier 	= " . $row['domain_identifier'] . ", " . "
-				attn 				= " . $row['attn'] . ", " . " 
-				tax_id_type 		= " . $row['tax_id_type'] . ", " . "
-				facility_npi 		= " . $row['facility_npi'];
-				
-$mitos_db->setSQL($sql);
+$mitos_db->setSQL("INSERT INTO facility 
+						   SET name					='".$row['name']."',
+							   phone 				='".$row['phone']."',
+							   fax 					='".$row['fax']. "',
+							   street 				='".$row['street']."',
+							   city 				='".$row['city']."',
+							   state 				='".$row['state']."',
+							   postal_code 			='".$row['postal_code']."',
+							   country_code 		='".$row['country_code']."',
+							   federal_ein 			='".$row['federal_ein']."',
+							   service_location 	='".$row['service_location']."',
+							   billing_location 	='".$row['billing_location']."',
+							   accepts_assignment 	='".$row['accepts_assignment']."',
+							   pos_code 			='".$row['pos_code']."',
+							   domain_identifier 	='".$row['domain_identifier']."',
+							   attn 				='".$row['attn']."', 
+							   tax_id_type 			='".$row['tax_id_type']."',
+							   facility_npi 		='".$row['facility_npi']."'");
 $ret = $mitos_db->execLog();
 
 if ( $ret == "" ){
