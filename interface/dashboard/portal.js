@@ -14,7 +14,7 @@ Ext.define('Ext.app.Portal', {
 
     extend: 'Ext.container.Viewport',
 
-    uses: ['Ext.app.PortalPanel', 'Ext.app.PortalColumn', 'Ext.app.GridPortlet', 'Ext.app.ChartPortlet'],
+    uses: ['Ext.app.PortalPanel', 'Ext.app.PortalColumn', 'Ext.app.GridPortlet', 'Ext.app.ChartPortlet', 'Ext.app.OnotesPortlet'],
 
     getTools: function(){
         return [{
@@ -84,10 +84,10 @@ Ext.define('Ext.app.Portal', {
                     items: [{
                         id: 'col-1',
                         items: [{
-                            id: 'portlet-1',
-                            title: 'Grid Portlet',
+                            id: 'portlet-onotes',
+                            title: 'Office Notes',
                             tools: this.getTools(),
-                            items: Ext.create('Ext.app.GridPortlet'),
+                            items: Ext.create('Ext.app.OnotesPortlet'),
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
@@ -103,10 +103,10 @@ Ext.define('Ext.app.Portal', {
                     },{
                         id: 'col-2',
                         items: [{
-                            id: 'portlet-3',
-                            title: 'Portlet 3',
+                            id: 'portlet-1',
+                            title: 'Grid Portlet',
                             tools: this.getTools(),
-                            html: '<div class="portlet-content">'+Ext.example.bogusMarkup+'</div>',
+                            items: Ext.create('Ext.app.GridPortlet'),
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
