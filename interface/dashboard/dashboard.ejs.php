@@ -19,8 +19,7 @@ session_cache_limiter('private');
 $_SESSION['site']['flops'] = 0;
 
 ?>
-
-<iframe style="overflow:auto;width:100%;height:100%;" frameborder="0"  src="library/ext-4.0.1/examples/portal/portal.html"></iframe>'
+<iframe style="overflow:auto;width:100%;height:100%;" frameborder="0"  src="interface/dashboard/portal.html"></iframe>'
 
 
 

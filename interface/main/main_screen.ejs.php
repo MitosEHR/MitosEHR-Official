@@ -27,10 +27,6 @@ include_once('library/compressor/compressor.inc.php');
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
-
-
-<link rel="stylesheet" type="text/css" href="interface/dashboard_t/portal.css" />
-
 <link rel="shortcut icon" href="favicon.ico" >
 <script type="text/javascript">
 // *************************************************************************************
@@ -317,5 +313,5 @@ Ext.onReady(function() {
 
 </script>
 </head>
-<body><span id="app-msg" style="display:none;"></span></body>
+<body></body>
 </html>
