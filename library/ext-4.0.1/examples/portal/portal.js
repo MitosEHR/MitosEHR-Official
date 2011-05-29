@@ -44,15 +44,16 @@ Ext.define('Ext.app.Portal', {
                 xtype: 'box',
                 region: 'north',
                 height: 40,
-                html: 'Ext Portal'
+                html: 'MitosEHR Portal'
             },{
                 xtype: 'container',
                 region: 'center',
                 layout: 'border',
+                padding: '0 2 0 0',
                 items: [{
                     id: 'app-options',
                     title: 'Options',
-                    region: 'west',
+                    region: 'east',
                     animCollapse: true,
                     width: 200,
                     minWidth: 150,
@@ -114,7 +115,7 @@ Ext.define('Ext.app.Portal', {
                         id: 'col-3',
                         items: [{
                             id: 'portlet-4',
-                            title: 'Stock Portlet',
+                            title: 'Portlet 4',
                             tools: this.getTools(),
                             items: Ext.create('Ext.app.ChartPortlet'),
                             listeners: {

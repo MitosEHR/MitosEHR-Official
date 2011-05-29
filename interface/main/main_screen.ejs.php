@@ -21,11 +21,16 @@ include_once('library/compressor/compressor.inc.php');
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>MitosEHR</title>
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+
 <script type="text/javascript" src="repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="repository/global_functions/global_functions.js"></script>
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
+
+
+<link rel="stylesheet" type="text/css" href="interface/dashboard_t/portal.css" />
+
 <link rel="shortcut icon" href="favicon.ico" >
 <script type="text/javascript">
 // *************************************************************************************
@@ -271,7 +276,7 @@ Ext.onReady(function() {
 		bodyPadding		: 0,
 		waitMsg			: '<?php i18n("Loading"); ?>',
 		waitMsgTarget	: true,
-		autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true}
+		autoLoad		: {url: 'interface/dashboard_t/dashboard.ejs.php', scripts: true}
 	}); // End MainApp
 	
 	//****************************************************************
@@ -312,5 +317,5 @@ Ext.onReady(function() {
 
 </script>
 </head>
-<body></body>
+<body><span id="app-msg" style="display:none;"></span></body>
 </html>

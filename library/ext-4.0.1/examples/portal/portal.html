@@ -2,21 +2,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Portal Layout Sample</title>
-
     <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
     <link rel="stylesheet" type="text/css" href="portal.css" />
-
     <script type="text/javascript" src="../../builds/ext-core.js"></script>
-
     <!-- shared example code -->
     <script type="text/javascript" src="../shared/examples.js"></script>
     <script type="text/javascript" src="classes.js"></script>
-
     <script type="text/javascript" src="portal.js"></script>
     <script type="text/javascript">
         Ext.Loader.setPath('Ext.app', 'classes');
-
         Ext.require([
             'Ext.layout.container.*',
             'Ext.resizer.Splitter',
@@ -31,7 +25,6 @@
             'Ext.app.GridPortlet',
             'Ext.app.ChartPortlet'
         ]);
-
         Ext.onReady(function(){
             Ext.create('Ext.app.Portal');
         });
