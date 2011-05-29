@@ -47,8 +47,7 @@ $row['groupname']   = dataEncode($data['groupname']);
 // if not run the INSERT stament
 // *************************************************************************************
 $mitos_db->setSQL("INSERT INTO onotes 
-     			      SET date    		='".$row['date']."',"."
-				          body         	='".$row['body']."',"."
+     			      SET body         	='".$row['body']."',"."
 				          user         	='".$user."',"."
 				          groupname     ='".$row['groupname']."',"."
 				          activity      ='1'");

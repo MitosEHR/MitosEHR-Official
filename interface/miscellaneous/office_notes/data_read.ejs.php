@@ -35,7 +35,7 @@ $WHERE = ($_REQUEST["show"] == "active")? "WHERE activity = 1" : "";
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $limit = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 $facillity = $_REQUEST["facillity"];
-$mitos_db->setSQL("SELECT id FROM onotes ORDER BY date DESC");
+$mitos_db->setSQL("SELECT id FROM onotes ".$WHERE." ORDER BY date DESC");
 $total = $mitos_db->rowCount();
 
 $mitos_db->setSQL("SELECT * FROM onotes ".$WHERE." ORDER BY date DESC

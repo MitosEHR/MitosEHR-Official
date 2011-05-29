@@ -55,22 +55,25 @@ Ext.onReady(function(){
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('modelOnotes')){
-		var modelOnotes = Ext.define("modelOnotes", {extend: "Ext.data.Model", fields: [
-			{name: 'id',      		type: 'int'},
-			{name: 'date',          type: 'date', dateFormat: 'c'},
-			{name: 'body',          type: 'string'},
-			{name: 'user',          type: 'string'},
-			{name: 'facility_id',   type: 'string'},
-		],
-			idProperty: 'id',
-		});
+	if (Ext.ModelManager.isRegistered('modelOnotes')){
+			Ext.ModelManager.unregister('modelOnotes');
 	}
+	var modelOnotes = Ext.define("modelOnotes", {extend: "Ext.data.Model", fields: [
+		{name: 'id',      		type: 'int'},
+		{name: 'date',          type: 'date', dateFormat: 'c'},
+		{name: 'body',          type: 'string'},
+		{name: 'user',          type: 'string'},
+		{name: 'facility_id',   type: 'string'},
+		{name: 'activity',   	type: 'string'},
+	],
+		idProperty: 'id',
+	});
+	
 	var storeOnotes = new Ext.data.Store({
 		model		: 'modelOnotes',
 		noCache		: true,
     	autoSync	: false,
-    	pageSize	: 3,
+    	pageSize	: 20,
 	    proxy		: {
 	    	type	: 'ajax',
 		    api		: {
@@ -148,6 +151,7 @@ Ext.onReady(function(){
 							i = record.fields.get(k).name;
 							record.set( i, fieldValues[i] );
 						}
+						record.set( 'activity', '1' );
 					} else { // Add
 						//----------------------------------------------------------------
 						// 1. Convert the form data into a JSON data Object
@@ -162,13 +166,28 @@ Ext.onReady(function(){
 					storeOnotes.sync();	// Save the record to the dataStore
 					storeOnotes.load();	// Reload the dataSore from the database
 					Ext.getCmp('onotesFormPanel').getForm().reset();
+					Ext.getCmp('cmdHide').disable();
 			    }
 			},'-',{
 				id			: 'cmdHide',
                 text		: '<?php i18n("Hide This Note"); ?>',
                	iconCls   	: 'save',
                 tooltip		: 'Hide Selected Office Note',
-                disabled	: true
+                disabled	: true,
+                handler		: function(){
+                	var form = this.up('form').getForm();
+					var record = storeOnotes.getAt(rowPos);
+					var fieldValues = form.getValues();
+					for ( k=0; k <= record.fields.getCount()-1; k++) {
+						i = record.fields.get(k).name;
+						record.set( i, fieldValues[i] );
+					}
+					record.set( 'activity', '0' );
+					storeOnotes.sync();	// Save the record to the dataStore
+					storeOnotes.load({params:{show: 'active' }});	// Reload the dataSore from the database
+					Ext.getCmp('onotesFormPanel').getForm().reset();
+					Ext.getCmp('cmdHide').disable();
+                }
             },'-',{
 
 				text      	: '<?php i18n("Reset Form"); ?>',
@@ -220,7 +239,7 @@ Ext.onReady(function(){
 		    // Hidden cells
 		    {header: 'id', sortable: false, dataIndex: 'id', hidden: true},
 		    // Viewable cells
-		    { width: 150, header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date', renderer : Ext.util.Format.dateRenderer('m/d/Y'), },
+		    { width: 150, header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date', renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s'), },
 		    { width: 150,  header: '<?php i18n('User'); ?>', sortable: true, dataIndex: 'user' },
 		    { flex: 1, header: '<?php i18n('Note'); ?>', sortable: true, dataIndex: 'body' },
 
