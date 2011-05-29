@@ -50,33 +50,7 @@ $row['specialty']         = dataEncode($data['specialty']);
 $row['organization']      = dataEncode($data['organization']);
 $row['valedictory']       = dataEncode($data['valedictory']);
 // primary address
-$row['street']            = dataEncode($data['street']);
-$row['streetb']           = dataEncode($data['streetb']);
-$row['city']              = dataEncode($data['city']);
-$row['state']             = dataEncode($data['state']);
-$row['zip']               = dataEncode($data['zip']);
-// secondary address
-$row['street2']           = dataEncode($data['street2']);
-$row['streetb2']          = dataEncode($data['streetb2']);
-$row['city2']             = dataEncode($data['city2']);
-$row['state2']            = dataEncode($data['state2']);
-$row['zip2']              = dataEncode($data['zip2']);
-// phones
-$row['phone']             = dataEncode($data['phone']);
-$row['phonew1']           = dataEncode($data['phonew1']);
-$row['phonew2']           = dataEncode($data['phonew2']);
-$row['phonecell']         = dataEncode($data['phonecell']);
-$row['fax']               = dataEncode($data['fax']);
-//additional info
-$row['email']             = dataEncode($data['email']);
-$row['assistant']         = dataEncode($data['assistant']);
-$row['url']               = dataEncode($data['url']);
 
-$row['upin']              = dataEncode($data['upin']);
-$row['npi']               = dataEncode($data['npi']);
-$row['federaltaxid']      = dataEncode($data['federaltaxid']);
-$row['taxonomy']          = dataEncode($data['taxonomy']);
-$row['notes']             = dataEncode($data['notes']);
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
@@ -90,31 +64,7 @@ $mitos_db->setSQL("UPDATE users
 				          fname             = '" . $row['fname'] . "', " . "
 				          mname             = '" . $row['mname'] . "', " . "
 				          lname             = '" . $row['lname'] . "', " . "
-				          specialty         = '" . $row['specialty'] . "', " . "
-				          organization      = '" . $row['organization'] . "', " . "
-				          valedictory       = '" . $row['valedictory'] . "', " . "
-				          street            = '" . $row['street'] . "', " . "
-				          streetb           = '" . $row['streetb'] . "', " . "
-				          city              = '" . $row['city'] . "', " . "
-				          state             = '" . $row['state'] . "', " . "
-				          zip               = '" . $row['zip'] . "', " . "
-				          street2           = '" . $row['street2'] . "', " . "
-				          streetb2          = '" . $row['streetb2'] . "', " . "
-				          city2             = '" . $row['city2'] . "', " . "
-				          state2            = '" . $row['state2'] . "', " . "
-				          zip2              = '" . $row['zip2'] . "', " . "
-				          phone             = '" . $row['phone'] . "', " . "
-				          phonew1           = '" . $row['phonew1'] . "', " . "
-				          phonew2           = '" . $row['phonew2'] . "', " . "
-				          phonecell         = '" . $row['phonecell'] . "', " . "
-				          fax               = '" . $row['fax'] . "', " . "
-				          email             = '" . $row['email'] . "', " . "
-				          assistant         = '" . $row['assistant'] . "', " . "
-				          url               = '" . $row['url'] . "', " . "
-				          upin              = '" . $row['upin'] . "', " . "
-				          npi               = '" . $row['npi'] . "', " . "
-				          federaltaxid      = '" . $row['federaltaxid'] . "', " . "
-				          taxonomy          = '" . $row['taxonomy'] . "', " . "
+
 				          notes             = '" . $row['notes'] . "' " . " 
 				    WHERE id 				= '" . $row['id'] . "'");
 $mitos_db->execLog();

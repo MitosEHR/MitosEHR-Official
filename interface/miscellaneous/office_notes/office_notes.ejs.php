@@ -69,6 +69,7 @@ Ext.onReady(function(){
 		model		: 'modelOnotes',
 		noCache		: true,
     	autoSync	: false,
+    	pageSize	: 3,
 	    proxy		: {
 	    	type	: 'ajax',
 		    api		: {
@@ -91,7 +92,7 @@ Ext.onReady(function(){
 				root	 		: 'row'
 			}
 	    },
-	    autoLoad: true
+	    autoLoad: false
 	});
 	
 	var onotesFormPanel = Ext.create('Ext.form.FormPanel', {
@@ -107,11 +108,13 @@ Ext.onReady(function(){
 	        margin	: 0,
 	        name    : 'body',
 	        anchor  : '100%',
+	        emptyText: '<?php i18n("Type new note here..."); ?>',
 	        listeners: {
 		   	  	validitychange: function(){
 		   	  		Ext.getCmp('cmdNew').show();
 		            if (this.isValid()) {
 		               Ext.getCmp('cmdSave').enable();
+		               Ext.getCmp('cmdNew').enable();
 		            } else {
 		            	Ext.getCmp('cmdSave').disable();
 		            }
@@ -122,10 +125,9 @@ Ext.onReady(function(){
 	  	  	xtype: 'toolbar',
 		  	dock: 'top',
 		  	items: [{
-			    text      	: '<?php i18n("Save New Office Note"); ?>',
+			    text      	: '<?php i18n("Save"); ?>',
 			    iconCls   	: 'save',
 			    id        	: 'cmdSave',
-			    //hidden		: true,
 			    disabled	: true,
 			    handler   : function(){
 					//----------------------------------------------------------------
@@ -158,25 +160,27 @@ Ext.onReady(function(){
 					
 					storeOnotes.sync();	// Save the record to the dataStore
 					storeOnotes.load();	// Reload the dataSore from the database
+					Ext.getCmp('onotesFormPanel').getForm().reset();
 			    }
 			},'-',{
+				id			: 'cmdHide',
+                text		: '<?php i18n("Hide This Note"); ?>',
+               	iconCls   	: 'save',
+                tooltip		: 'Hide Selected Office Note',
+                disabled	: true
+            },'-',{
 
-				text      	: '<?php i18n("Reset"); ?>',
+				text      	: '<?php i18n("Reset Form"); ?>',
 			    iconCls   	: 'save',
 			    id        	: 'cmdNew',
 			    disabled	: true,
 			    handler   	: function(){
 					var form = this.up('form').getForm();
 					Ext.getCmp('cmdHide').disable();
+					Ext.getCmp('cmdSave').setText('Save');
 					form.reset();
 					this.disable();
 			    }
-			},'-',{
-				id			: 'cmdHide',
-                text		: '<?php i18n("Hide Note"); ?>',
-               	iconCls   	: 'save',
-                tooltip		: 'Hide Selected Office Note',
-                disabled	: true
 		  	}]
 		}]
 	}); 
@@ -204,6 +208,7 @@ Ext.onReady(function(){
 	   		  		var rec = storeOnotes.getAt(rowIndex);
 	   		  		Ext.getCmp('cmdNew').enable();
 	   		  		Ext.getCmp('cmdHide').enable();
+	   		  		Ext.getCmp('cmdSave').setText('<?php i18n('Update'); ?>');
 	   		  		Ext.getCmp('onotesFormPanel').getForm().loadRecord(rec);
 					currRec = rec;
             		rowPos = rowIndex;
@@ -219,26 +224,38 @@ Ext.onReady(function(){
 		    { flex: 1, header: '<?php i18n('Note'); ?>', sortable: true, dataIndex: 'body' },
 
   		],
-  		dockedItems: [{
-	  	  	xtype: 'toolbar',
-		  	dock: 'top',
-		  	items: [{
+		tbar: Ext.create('Ext.PagingToolbar', {
+            
+            store: storeOnotes,
+            displayInfo: true,
+            emptyMsg: "<?php i18n('No Office Notes to display'); ?>",
+            plugins: Ext.create('Ext.ux.SlidingPager', {}),
+            items: [{
+            	text      	: '<?php i18n("Show Only Active Notes"); ?>',
+			    iconCls   	: 'save',
+			    id        	: 'cmdShow',
+			    enableToggle: true,
+			    listeners	: {
+			   	  	afterrender: function(){
+			   	  		this.toggle(true);
+			   	  		storeOnotes.load({params:{show: 'active' }});
+			   	  	}
+			   	},
+			    handler   	: function(){
+			    	Ext.getCmp('cmdShowAll').toggle(false);
+					storeOnotes.load({params:{show: 'active' }});
+			    }
+			},'-',{
 			    text      	: '<?php i18n("Show All Notes"); ?>',
 			    iconCls   	: 'save',
 			    id        	: 'cmdShowAll',
+			    enableToggle: true,
 			    handler   : function(){
-					
-			    }
-			},'-',{
-
-				text      	: '<?php i18n("Show Only Active Notes"); ?>',
-			    iconCls   	: 'save',
-			    id        	: 'cmdShow',
-			    handler   	: function(){
-
+			    	Ext.getCmp('cmdShow').toggle(false);
+					storeOnotes.load({params:{show: 'all' }});
 			    }
 		  	}]
-		}]
+        }),
 	}); // END GRID
 	
 	//******************************************************************************

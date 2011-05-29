@@ -40,7 +40,6 @@ $user = $_SESSION['user']['name'];
 $row['date']        = dataEncode($data['date']);
 $row['body']        = dataEncode($data['body']);
 $row['groupname']   = dataEncode($data['groupname']);
-$row['activity']    = dataEncode($data['activity']);
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
@@ -52,7 +51,7 @@ $mitos_db->setSQL("INSERT INTO onotes
 				          body         	='".$row['body']."',"."
 				          user         	='".$user."',"."
 				          groupname     ='".$row['groupname']."',"."
-				          activity      ='".$row['activity']."'");
+				          activity      ='1'");
 $mitos_db->execLog();
 echo "{ success: true }";
 ?>

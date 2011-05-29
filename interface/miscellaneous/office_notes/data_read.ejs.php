@@ -28,16 +28,20 @@ $_SESSION['site']['flops'] = 0;
 //------------------------------------------
 $mitos_db = new dbHelper();
 
+$WHERE = ($_REQUEST["show"] == "active")? "WHERE activity = 1" : "";
+
+
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
-$count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
+$limit = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 $facillity = $_REQUEST["facillity"];
-$mitos_db->setSQL("SELECT * 
-        			 FROM onotes
-        		 ORDER BY date DESC
-        			LIMIT ".$start.",".$count);
-				//	WHERE onotes.facillity = '$facillity'
+$mitos_db->setSQL("SELECT id FROM onotes ORDER BY date DESC");
 $total = $mitos_db->rowCount();
+
+$mitos_db->setSQL("SELECT * FROM onotes ".$WHERE." ORDER BY date DESC
+        			LIMIT ".$start.",".$limit);
+				//	WHERE onotes.facillity = '$facillity'
+
 $buff = '';        			
 foreach ($mitos_db->execStatement() as $urow) {
   $buff .= '{';
