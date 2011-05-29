@@ -55,65 +55,66 @@ Ext.onReady(function(){
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	var addressbookRecord = Ext.define("addressbookRecord", {extend: "Ext.data.Model", fields: [
-		{name: 'id',                    type: 'int',              mapping: 'id'},
-		{name: 'username',              type: 'string',           mapping: 'username'},
-		{name: 'password',              type: 'string',           mapping: 'password'},
-		{name: 'authorized',            type: 'string',           mapping: 'authorized'},
-		{name: 'info',                  type: 'string',           mapping: 'info'},
-		{name: 'source',                type: 'int',              mapping: 'source'},
-		{name: 'fname',                 type: 'string',           mapping: 'fname'},
-		{name: 'mname',                 type: 'string',           mapping: 'mname'},
-		{name: 'lname',                 type: 'string',           mapping: 'lname'},
-		{name: 'fullname',              type: 'string',           mapping: 'fullname'},
-		{name: 'federaltaxid',          type: 'string',           mapping: 'federaltaxid'},
-		{name: 'federaldrugid',         type: 'string',           mapping: 'federaldrugid'},
-		{name: 'upin',                  type: 'string',           mapping: 'upin'},
-		{name: 'facility',              type: 'string',           mapping: 'facility'},
-		{name: 'facility_id',           type: 'int',              mapping: 'facility_id'},
-		{name: 'see_auth',              type: 'int',              mapping: 'see_auth'},
-		{name: 'active',                type: 'int',              mapping: 'active'},
-		{name: 'npi',                   type: 'string',           mapping: 'npi'},
-		{name: 'title',                 type: 'string',           mapping: 'title'},
-		{name: 'specialty',             type: 'string',           mapping: 'specialty'},
-		{name: 'billname',              type: 'string',           mapping: 'billname'},
-		{name: 'email',                 type: 'string',           mapping: 'email'},
-		{name: 'url',                   type: 'string',           mapping: 'url'},
-		{name: 'assistant',             type: 'string',           mapping: 'assistant'},
-		{name: 'organization',          type: 'string',           mapping: 'organization'},
-		{name: 'valedictory',           type: 'string',           mapping: 'valedictory'},
-		{name: 'fulladdress',           type: 'string',           mapping: 'fulladdress'},
-		{name: 'street',                type: 'string',           mapping: 'street'},
-		{name: 'streetb',               type: 'string',           mapping: 'streetb'},
-		{name: 'city',                  type: 'string',           mapping: 'city'},
-		{name: 'state',                 type: 'string',           mapping: 'state'},
-		{name: 'zip',                   type: 'string',           mapping: 'zip'},
-		{name: 'street2',               type: 'string',           mapping: 'street2'},
-		{name: 'streetb2',              type: 'string',           mapping: 'streetb2'},
-		{name: 'city2',                 type: 'string',           mapping: 'city2'},
-		{name: 'state2',                type: 'string',           mapping: 'state2'},
-		{name: 'zip2',                  type: 'string',           mapping: 'zip2'},
-		{name: 'phone',                 type: 'string',           mapping: 'phone'},
-		{name: 'fax',                   type: 'string',           mapping: 'fax'},
-		{name: 'phonew1',               type: 'string',           mapping: 'phonew1'},
-		{name: 'phonew2',               type: 'string',           mapping: 'phonew2'},
-		{name: 'phonecell',             type: 'string',           mapping: 'phonecell'},
-		{name: 'notes',                 type: 'string',           mapping: 'notes'},
-		{name: 'cal_ui',                type: 'string',           mapping: 'cal_ui'},
-		{name: 'taxonomy',              type: 'string',           mapping: 'taxonomy'},
-		{name: 'ssi_relayhealth',       type: 'string',           mapping: 'ssi_relayhealth'},
-		{name: 'calendar',              type: 'int',              mapping: 'calendar'},
-		{name: 'abook_type',            type: 'string',           mapping: 'abook_type'},
-		{name: 'pwd_expiration_date',   type: 'string',           mapping: 'pwd_expiration_date'},
-		{name: 'pwd_history1',          type: 'string',           mapping: 'pwd_history1'},
-		{name: 'pwd_history2',          type: 'string',           mapping: 'pwd_history2'},
-		{name: 'default_warehouse',     type: 'string',           mapping: 'default_warehouse'},
-		{name: 'ab_name',               type: 'string',           mapping: 'ab_name'},
-		{name: 'ab_title',              type: 'string',           mapping: 'ab_title'}
-	],
-		idProperty: 'id',
-	});
-
+	if (!Ext.ModelManager.isRegistered('addressbookRecord')){
+		var addressbookRecord = Ext.define("addressbookRecord", {extend: "Ext.data.Model", fields: [
+			{name: 'id',                    type: 'int',              mapping: 'id'},
+			{name: 'username',              type: 'string',           mapping: 'username'},
+			{name: 'password',              type: 'string',           mapping: 'password'},
+			{name: 'authorized',            type: 'string',           mapping: 'authorized'},
+			{name: 'info',                  type: 'string',           mapping: 'info'},
+			{name: 'source',                type: 'int',              mapping: 'source'},
+			{name: 'fname',                 type: 'string',           mapping: 'fname'},
+			{name: 'mname',                 type: 'string',           mapping: 'mname'},
+			{name: 'lname',                 type: 'string',           mapping: 'lname'},
+			{name: 'fullname',              type: 'string',           mapping: 'fullname'},
+			{name: 'federaltaxid',          type: 'string',           mapping: 'federaltaxid'},
+			{name: 'federaldrugid',         type: 'string',           mapping: 'federaldrugid'},
+			{name: 'upin',                  type: 'string',           mapping: 'upin'},
+			{name: 'facility',              type: 'string',           mapping: 'facility'},
+			{name: 'facility_id',           type: 'int',              mapping: 'facility_id'},
+			{name: 'see_auth',              type: 'int',              mapping: 'see_auth'},
+			{name: 'active',                type: 'int',              mapping: 'active'},
+			{name: 'npi',                   type: 'string',           mapping: 'npi'},
+			{name: 'title',                 type: 'string',           mapping: 'title'},
+			{name: 'specialty',             type: 'string',           mapping: 'specialty'},
+			{name: 'billname',              type: 'string',           mapping: 'billname'},
+			{name: 'email',                 type: 'string',           mapping: 'email'},
+			{name: 'url',                   type: 'string',           mapping: 'url'},
+			{name: 'assistant',             type: 'string',           mapping: 'assistant'},
+			{name: 'organization',          type: 'string',           mapping: 'organization'},
+			{name: 'valedictory',           type: 'string',           mapping: 'valedictory'},
+			{name: 'fulladdress',           type: 'string',           mapping: 'fulladdress'},
+			{name: 'street',                type: 'string',           mapping: 'street'},
+			{name: 'streetb',               type: 'string',           mapping: 'streetb'},
+			{name: 'city',                  type: 'string',           mapping: 'city'},
+			{name: 'state',                 type: 'string',           mapping: 'state'},
+			{name: 'zip',                   type: 'string',           mapping: 'zip'},
+			{name: 'street2',               type: 'string',           mapping: 'street2'},
+			{name: 'streetb2',              type: 'string',           mapping: 'streetb2'},
+			{name: 'city2',                 type: 'string',           mapping: 'city2'},
+			{name: 'state2',                type: 'string',           mapping: 'state2'},
+			{name: 'zip2',                  type: 'string',           mapping: 'zip2'},
+			{name: 'phone',                 type: 'string',           mapping: 'phone'},
+			{name: 'fax',                   type: 'string',           mapping: 'fax'},
+			{name: 'phonew1',               type: 'string',           mapping: 'phonew1'},
+			{name: 'phonew2',               type: 'string',           mapping: 'phonew2'},
+			{name: 'phonecell',             type: 'string',           mapping: 'phonecell'},
+			{name: 'notes',                 type: 'string',           mapping: 'notes'},
+			{name: 'cal_ui',                type: 'string',           mapping: 'cal_ui'},
+			{name: 'taxonomy',              type: 'string',           mapping: 'taxonomy'},
+			{name: 'ssi_relayhealth',       type: 'string',           mapping: 'ssi_relayhealth'},
+			{name: 'calendar',              type: 'int',              mapping: 'calendar'},
+			{name: 'abook_type',            type: 'string',           mapping: 'abook_type'},
+			{name: 'pwd_expiration_date',   type: 'string',           mapping: 'pwd_expiration_date'},
+			{name: 'pwd_history1',          type: 'string',           mapping: 'pwd_history1'},
+			{name: 'pwd_history2',          type: 'string',           mapping: 'pwd_history2'},
+			{name: 'default_warehouse',     type: 'string',           mapping: 'default_warehouse'},
+			{name: 'ab_name',               type: 'string',           mapping: 'ab_name'},
+			{name: 'ab_title',              type: 'string',           mapping: 'ab_title'}
+		],
+			idProperty: 'id',
+		});
+	}
 	var storeAddressbook = new Ext.data.Store({
 		model		: 'addressbookRecord',
 		noCache		: true,
@@ -155,12 +156,14 @@ Ext.onReady(function(){
 	// Structure, data for Titles
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	Ext.define("Titles", {extend: "Ext.data.Model", fields: [
-		{name: 'option_id', type: 'string'},
-	    {name: 'title', type: 'string'}
-	],
-		idProperty: 'option_id'
-	});
+	if (!Ext.ModelManager.isRegistered('Titles')){
+		Ext.define("Titles", {extend: "Ext.data.Model", fields: [
+			{name: 'option_id', type: 'string'},
+		    {name: 'title', type: 'string'}
+		],
+			idProperty: 'option_id'
+		});
+	}
 	var storeTitles = new Ext.data.Store({
 		model		: 'Titles',
 		proxy		: {
@@ -180,12 +183,14 @@ Ext.onReady(function(){
 	// Structure, data for Types
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	Ext.define("Types", {extend: "Ext.data.Model", fields: [
-		{name: 'option_id', type: 'string'},
-	    {name: 'title', type: 'string'}
-	],
-		idProperty: 'option_id'
-	});
+	if (!Ext.ModelManager.isRegistered('Types')){
+		Ext.define("Types", {extend: "Ext.data.Model", fields: [
+			{name: 'option_id', type: 'string'},
+		    {name: 'title', type: 'string'}
+		],
+			idProperty: 'option_id'
+		});
+	}
 	var storeTypes = new Ext.data.Store({
 		model		: 'Types',
 		proxy		: {

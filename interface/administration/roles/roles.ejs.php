@@ -56,21 +56,22 @@ Ext.onReady(function(){
 	//******************************************************************************
 	// Roles model
 	//******************************************************************************
-	var permModel = Ext.define("PermissionList", {extend: "Ext.data.Model", fields: [
-		{name: 'roleID', 		type: 'int'},
-		{name: 'role_name', 	type: 'string'},
-	    {name: 'permID', 		type: 'int'},
-	    {name: 'perm_key', 		type: 'string'},
-	    {name: 'perm_name', 	type: 'string'},
-		{name: 'rolePermID', 	type: 'int'},
-	    {name: 'role_id', 		type: 'int'},
-	    {name: 'perm_id', 		type: 'int'},
-	    {name: 'value', 		type: 'string'},
-		{name: 'ac_perm', 		type: 'string'}
-	],
-		idProperty: 'permID'
-	});
-
+	if (!Ext.ModelManager.isRegistered('PermissionList')){
+		var permModel = Ext.define("PermissionList", {extend: "Ext.data.Model", fields: [
+			{name: 'roleID', 		type: 'int'},
+			{name: 'role_name', 	type: 'string'},
+		    {name: 'permID', 		type: 'int'},
+		    {name: 'perm_key', 		type: 'string'},
+		    {name: 'perm_name', 	type: 'string'},
+			{name: 'rolePermID', 	type: 'int'},
+		    {name: 'role_id', 		type: 'int'},
+		    {name: 'perm_id', 		type: 'int'},
+		    {name: 'value', 		type: 'string'},
+			{name: 'ac_perm', 		type: 'string'}
+		],
+			idProperty: 'permID'
+		});
+	}
 	//******************************************************************************
 	// Roles Store
 	//******************************************************************************
@@ -105,12 +106,14 @@ Ext.onReady(function(){
 	// Structure, data for Roles
 	// AJAX -> component_data.ejs.php
 	// ****************************************************************************
-	var roleModel = Ext.define("Roles", {extend: "Ext.data.Model", fields: [
-		{name: 'id', type: 'int'},
-	    {name: 'role_name', type: 'string'}
-	],
-		idProperty: 'id'
-	});
+	if (!Ext.ModelManager.isRegistered('Roles')){
+		var roleModel = Ext.define("Roles", {extend: "Ext.data.Model", fields: [
+			{name: 'id', type: 'int'},
+		    {name: 'role_name', type: 'string'}
+		],
+			idProperty: 'id'
+		});
+	}
 	var roleStore = new Ext.data.Store({
 		model		: 'Roles',
 		proxy		: {
@@ -150,11 +153,13 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
-	Ext.define("permRecord", {extend: "Ext.data.Model", fields: [
-			{name: 'value',	type: 'string'},
-			{name: 'perm',	type: 'string'}
-		]
-	});
+	if (!Ext.ModelManager.isRegistered('permRecord')){
+		Ext.define("permRecord", {extend: "Ext.data.Model", fields: [
+				{name: 'value',	type: 'string'},
+				{name: 'perm',	type: 'string'}
+			]
+		});
+	}
 	var storePerms = new Ext.data.Store({
     	model		: 'permRecord',
     	proxy		: {

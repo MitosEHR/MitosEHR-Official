@@ -13,14 +13,16 @@
 // *************************************************************************************
 // Users Record Structure
 // *************************************************************************************
-Ext.define('pendingRecord', {
-	extend: 'Ext.data.Model',
-	fields: [
-		{name: 'id',		type: 'int'},
-		{name: 'action',	type: 'string'},
-		{name: 'trans',		type: 'string'}
-	]
-});
+if (!Ext.ModelManager.isRegistered('pendingRecord')){
+	Ext.define('pendingRecord', {
+		extend: 'Ext.data.Model',
+		fields: [
+			{name: 'id',		type: 'int'},
+			{name: 'action',	type: 'string'},
+			{name: 'trans',		type: 'string'}
+		]
+	});
+}
 // *************************************************************************************
 // Pending Transaction store object (MAIN)
 // *************************************************************************************

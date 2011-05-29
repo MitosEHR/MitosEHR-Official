@@ -13,15 +13,17 @@
 // *************************************************************************************
 // Users Record Structure
 // *************************************************************************************
-Ext.define('apRecord', {
-	extend: 'Ext.data.Model',
-	fields: [
-		{name: 'id_x12',	type: 'int'},
-		{name: 'file',		type: 'string'},
-		{name: 'payer',		type: 'string'},
-		{name: 'ammount',	type: 'string'}
-	]
-});
+if (!Ext.ModelManager.isRegistered('apRecord')){
+	Ext.define('apRecord', {
+		extend: 'Ext.data.Model',
+		fields: [
+			{name: 'id_x12',	type: 'int'},
+			{name: 'file',		type: 'string'},
+			{name: 'payer',		type: 'string'},
+			{name: 'ammount',	type: 'string'}
+		]
+	});
+}
 // *************************************************************************************
 // Pending Transaction store object (MAIN)
 // *************************************************************************************

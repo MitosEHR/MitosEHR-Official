@@ -112,26 +112,28 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Search for patient...
 	// *************************************************************************************
-	Ext.define("Post", {
-        extend: 'Ext.data.Model',
-        proxy: {
-            type	: 'ajax',
-            url 	: 'library/patient/patient_search.inc.php?task=search',
-            reader: {
-                type			: 'json',
-                root			: 'row',
-                totalProperty	: 'totals'
-            }
-        },
-        fields: [
-            {name: 'id', 			type: 'int'},
-            {name: 'pid', 			type: 'int'},
-            {name: 'pubpid', 		type: 'int'},
-            {name: 'patient_name', 	type: 'string'},
-            {name: 'patient_dob', 	type: 'string'},
-            {name: 'patient_ss', 	type: 'string'}
-        ]
-    });
+	if (!Ext.ModelManager.isRegistered('Post')){
+		Ext.define("Post", {
+	        extend: 'Ext.data.Model',
+	        proxy: {
+	            type	: 'ajax',
+	            url 	: 'library/patient/patient_search.inc.php?task=search',
+	            reader: {
+	                type			: 'json',
+	                root			: 'row',
+	                totalProperty	: 'totals'
+	            }
+	        },
+	        fields: [
+	            {name: 'id', 			type: 'int'},
+	            {name: 'pid', 			type: 'int'},
+	            {name: 'pubpid', 		type: 'int'},
+	            {name: 'patient_name', 	type: 'string'},
+	            {name: 'patient_dob', 	type: 'string'},
+	            {name: 'patient_ss', 	type: 'string'}
+	        ]
+	    });
+    }
     var ds = Ext.create('Ext.data.Store', {
         pageSize	: 10,
         model		: 'Post'

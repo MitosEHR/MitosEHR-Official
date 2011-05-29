@@ -55,16 +55,17 @@ Ext.onReady(function(){
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	var modelOnotes = Ext.define("modelOnotes", {extend: "Ext.data.Model", fields: [
-		{name: 'id',      		type: 'int'},
-		{name: 'date',          type: 'date', dateFormat: 'c'},
-		{name: 'body',          type: 'string'},
-		{name: 'user',          type: 'string'},
-		{name: 'facility_id',   type: 'string'},
-	],
-		idProperty: 'id',
-	});
-
+	if (!Ext.ModelManager.isRegistered('modelOnotes')){
+		var modelOnotes = Ext.define("modelOnotes", {extend: "Ext.data.Model", fields: [
+			{name: 'id',      		type: 'int'},
+			{name: 'date',          type: 'date', dateFormat: 'c'},
+			{name: 'body',          type: 'string'},
+			{name: 'user',          type: 'string'},
+			{name: 'facility_id',   type: 'string'},
+		],
+			idProperty: 'id',
+		});
+	}
 	var storeOnotes = new Ext.data.Store({
 		model		: 'modelOnotes',
 		noCache		: true,

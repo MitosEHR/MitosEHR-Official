@@ -64,27 +64,28 @@ body_content = '<?php i18n('Nothing posted yet...'); ?>';
 // This should be the structure of the database table
 // 
 // *************************************************************************************
-Ext.define("Messages", {
-	extend: "Ext.data.Model", 
-	fields: [
-	{name: 'id',				type: 'int'},
-	{name: 'date',				type: 'string'},
-	{name: 'body',				type: 'string'},
-	{name: 'curr_msg',			type: 'string'},
-	{name: 'pid',				type: 'string'},
-	{name: 'patient',			type: 'string'},
-	{name: 'user_id',			type: 'string'},
-	{name: 'user',				type: 'string'},
-	{name: 'subject',			type: 'string'},
-	{name: 'facility_id',		type: 'string'},
-	{name: 'activity',			type: 'string'},
-	{name: 'authorized',	  	type: 'string'},
-	{name: 'assigned_to',   	type: 'string'},
-	{name: 'message_status',	type: 'string'},
-	{name: 'reply_id',  		type: 'string'},
-	{name: 'note_type',			type: 'string'}
-]});
-
+if (!Ext.ModelManager.isRegistered('Messages')){
+	Ext.define("Messages", {
+		extend: "Ext.data.Model", 
+		fields: [
+		{name: 'id',				type: 'int'},
+		{name: 'date',				type: 'string'},
+		{name: 'body',				type: 'string'},
+		{name: 'curr_msg',			type: 'string'},
+		{name: 'pid',				type: 'string'},
+		{name: 'patient',			type: 'string'},
+		{name: 'user_id',			type: 'string'},
+		{name: 'user',				type: 'string'},
+		{name: 'subject',			type: 'string'},
+		{name: 'facility_id',		type: 'string'},
+		{name: 'activity',			type: 'string'},
+		{name: 'authorized',	  	type: 'string'},
+		{name: 'assigned_to',   	type: 'string'},
+		{name: 'message_status',	type: 'string'},
+		{name: 'reply_id',  		type: 'string'},
+		{name: 'note_type',			type: 'string'}
+	]});
+}
 // *************************************************************************************
 // Structure and load the data for Messages
 // AJAX -> data_*.ejs.php
@@ -122,16 +123,18 @@ var storeMsgs = new Ext.data.Store({
 // Structure and load the data for cmb_toUsers
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.define("Patients", {
-	extend: "Ext.data.Model", 
-	fields: [
-	{name: 'id',    type: 'int'},
-	{name: 'name',  type: 'string'},
-	{name: 'phone', type: 'string'},
-	{name: 'ss',    type: 'string'},
-	{name: 'dob',   type: 'string'},
-	{name: 'pid',   type: 'string'}
-]});
+if (!Ext.ModelManager.isRegistered('Patients')){
+	Ext.define("Patients", {
+		extend: "Ext.data.Model", 
+		fields: [
+		{name: 'id',    type: 'int'},
+		{name: 'name',  type: 'string'},
+		{name: 'phone', type: 'string'},
+		{name: 'ss',    type: 'string'},
+		{name: 'dob',   type: 'string'},
+		{name: 'pid',   type: 'string'}
+	]});
+}
 var storePat = new Ext.data.Store({
    	model		: 'Patients',
    	proxy		: {
@@ -153,12 +156,14 @@ var storePat = new Ext.data.Store({
 // Structure and load the data for cmb_toUsers
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.define("User", {
-	extend: "Ext.data.Model", 
-	fields: [
-	{name: 'user',      type: 'string' },
-	{name: 'full_name', type: 'string' }
-]});
+if (!Ext.ModelManager.isRegistered('User')){
+	Ext.define("User", {
+		extend: "Ext.data.Model", 
+		fields: [
+		{name: 'user',      type: 'string' },
+		{name: 'full_name', type: 'string' }
+	]});
+}
 var toData = new Ext.data.Store({
    	model		: 'User',
    	proxy		: {
@@ -180,12 +185,14 @@ var toData = new Ext.data.Store({
 // Structure, data for cmb_Type
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.define("Types", {
-	extend: "Ext.data.Model", 
-	fields: [
-	{name: 'option_id', type: 'string' },
-	{name: 'title',     type: 'string' }
-]});
+if (!Ext.ModelManager.isRegistered('Types')){
+	Ext.define("Types", {
+		extend: "Ext.data.Model", 
+		fields: [
+		{name: 'option_id', type: 'string' },
+		{name: 'title',     type: 'string' }
+	]});
+}
 var typeData = new Ext.data.Store({
    	model		: 'Types',
    	proxy		: {
@@ -207,10 +214,12 @@ var typeData = new Ext.data.Store({
 // Structure, data for cmb_Status
 // AJAX -> component_data.ejs.php
 // *************************************************************************************
-Ext.define("Status", {extend: "Ext.data.Model", fields: [
-	{name: 'option_id', type: 'string' },
-	{name: 'title',     type: 'string' }
-]});
+if (!Ext.ModelManager.isRegistered('Status')){
+	Ext.define("Status", {extend: "Ext.data.Model", fields: [
+		{name: 'option_id', type: 'string' },
+		{name: 'title',     type: 'string' }
+	]});
+}
 var statusData = new Ext.data.Store({
    	model		: 'Status',
    	proxy		: {
