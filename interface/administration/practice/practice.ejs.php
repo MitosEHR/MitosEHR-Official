@@ -51,39 +51,40 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Phramacy Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('pharmacyModel')){
-	    Ext.define('pharmacyModel', {
-	        extend: 'Ext.data.Model',
-	        fields: [
-				{name: 'id',					type: 'int'},
-				{name: 'name',					type: 'string'},
-				{name: 'transmit_method',		type: 'string'},
-				{name: 'email',					type: 'string'},
-				{name: 'address_id',			type: 'string'},
-				{name: 'line1',					type: 'string'},
-				{name: 'line2',					type: 'string'},
-				{name: 'city',					type: 'string'},
-				{name: 'state',					type: 'string'},
-				{name: 'zip',					type: 'int'},
-				{name: 'plus_four',				type: 'int'},
-				{name: 'country',				type: 'string'},
-				{name: 'address_foreign_id',	type: 'string'},
-				{name: 'address_full',			type: 'string'},
-				{name: 'phone_country_code',	type: 'string'},
-				{name: 'phone_area_code',		type: 'string'},
-				{name: 'phone_prefix',			type: 'string'},
-				{name: 'phone_number',			type: 'string'},
-				{name: 'phone_foreign_id',		type: 'string'},
-				{name: 'phone_full',			type: 'string'},
-				{name: 'fax_country_code',		type: 'string'},
-				{name: 'fax_area_code',			type: 'string'},
-				{name: 'fax_prefix',			type: 'string'},
-				{name: 'fax_number',			type: 'string'},
-				{name: 'fax_foreign_id',		type: 'string'},
-				{name: 'fax_full',				type: 'string'}
-			]
-		});
+	if (Ext.ModelManager.isRegistered('pharmacyModel')){
+			Ext.ModelManager.unregister('pharmacyModel');
 	}
+    Ext.define('pharmacyModel', {
+        extend: 'Ext.data.Model',
+        fields: [
+			{name: 'id',					type: 'int'},
+			{name: 'name',					type: 'string'},
+			{name: 'transmit_method',		type: 'string'},
+			{name: 'email',					type: 'string'},
+			{name: 'address_id',			type: 'string'},
+			{name: 'line1',					type: 'string'},
+			{name: 'line2',					type: 'string'},
+			{name: 'city',					type: 'string'},
+			{name: 'state',					type: 'string'},
+			{name: 'zip',					type: 'int'},
+			{name: 'plus_four',				type: 'int'},
+			{name: 'country',				type: 'string'},
+			{name: 'address_foreign_id',	type: 'string'},
+			{name: 'address_full',			type: 'string'},
+			{name: 'phone_country_code',	type: 'string'},
+			{name: 'phone_area_code',		type: 'string'},
+			{name: 'phone_prefix',			type: 'string'},
+			{name: 'phone_number',			type: 'string'},
+			{name: 'phone_foreign_id',		type: 'string'},
+			{name: 'phone_full',			type: 'string'},
+			{name: 'fax_country_code',		type: 'string'},
+			{name: 'fax_area_code',			type: 'string'},
+			{name: 'fax_prefix',			type: 'string'},
+			{name: 'fax_number',			type: 'string'},
+			{name: 'fax_foreign_id',		type: 'string'},
+			{name: 'fax_full',				type: 'string'}
+		]
+	});
 	var pharmacyStore = new Ext.data.Store({
 		model: 'pharmacyModel',
     	noCache		: true,
@@ -116,43 +117,44 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Insurance Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('insuranceModel')){
-	    Ext.define('insuranceModel', {
-	        extend: 'Ext.data.Model',
-	        fields: [
-				{name: 'id',						type: 'int'},
-				{name: 'name',						type: 'string'},
-				{name: 'attn',						type: 'string'},
-				{name: 'cms_id',					type: 'string'},
-				{name: 'freeb_type',				type: 'string'},
-				{name: 'x12_receiver_id',			type: 'string'},
-				{name: 'x12_default_partner_id',	type: 'string'},
-				{name: 'alt_cms_id',				type: 'string'},
-				{name: 'address_id',				type: 'string'},
-				{name: 'line1',						type: 'string'},
-				{name: 'line2',						type: 'string'},
-				{name: 'city',						type: 'string'},
-				{name: 'state',						type: 'string'},
-				{name: 'zip',						type: 'int'},
-				{name: 'plus_four',					type: 'int'},
-				{name: 'country',					type: 'string'},
-				{name: 'address_foreign_id',		type: 'string'},
-				{name: 'address_full',				type: 'string'},
-				{name: 'phone_country_code',		type: 'string'},
-				{name: 'phone_area_code',			type: 'string'},
-				{name: 'phone_prefix',				type: 'string'},
-				{name: 'phone_number',				type: 'string'},
-				{name: 'phone_foreign_id',			type: 'string'},
-				{name: 'phone_full',				type: 'string'},
-				{name: 'fax_country_code',			type: 'string'},
-				{name: 'fax_area_code',				type: 'string'},
-				{name: 'fax_prefix',				type: 'string'},
-				{name: 'fax_number',				type: 'string'},
-				{name: 'fax_foreign_id',			type: 'string'},
-				{name: 'fax_full',					type: 'string'}
-			]
-		});
+	if (Ext.ModelManager.isRegistered('insuranceModel')){
+			Ext.ModelManager.unregister('insuranceModel');
 	}
+    Ext.define('insuranceModel', {
+        extend: 'Ext.data.Model',
+        fields: [
+			{name: 'id',						type: 'int'},
+			{name: 'name',						type: 'string'},
+			{name: 'attn',						type: 'string'},
+			{name: 'cms_id',					type: 'string'},
+			{name: 'freeb_type',				type: 'string'},
+			{name: 'x12_receiver_id',			type: 'string'},
+			{name: 'x12_default_partner_id',	type: 'string'},
+			{name: 'alt_cms_id',				type: 'string'},
+			{name: 'address_id',				type: 'string'},
+			{name: 'line1',						type: 'string'},
+			{name: 'line2',						type: 'string'},
+			{name: 'city',						type: 'string'},
+			{name: 'state',						type: 'string'},
+			{name: 'zip',						type: 'int'},
+			{name: 'plus_four',					type: 'int'},
+			{name: 'country',					type: 'string'},
+			{name: 'address_foreign_id',		type: 'string'},
+			{name: 'address_full',				type: 'string'},
+			{name: 'phone_country_code',		type: 'string'},
+			{name: 'phone_area_code',			type: 'string'},
+			{name: 'phone_prefix',				type: 'string'},
+			{name: 'phone_number',				type: 'string'},
+			{name: 'phone_foreign_id',			type: 'string'},
+			{name: 'phone_full',				type: 'string'},
+			{name: 'fax_country_code',			type: 'string'},
+			{name: 'fax_area_code',				type: 'string'},
+			{name: 'fax_prefix',				type: 'string'},
+			{name: 'fax_number',				type: 'string'},
+			{name: 'fax_foreign_id',			type: 'string'},
+			{name: 'fax_full',					type: 'string'}
+		]
+	});
 	var insuranceStore = new Ext.data.Store({
 		model: 'insuranceModel',
     	noCache		: true,
@@ -185,15 +187,16 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Insurance Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('insuranceNumbersModel')){
-	    Ext.define('insuranceNumbersModel', {
-	        extend: 'Ext.data.Model',
-	        fields: [
-				{name: 'id',					type: 'int'},
-				{name: 'name',					type: 'string'}
-			]
-		});
+	if (Ext.ModelManager.isRegistered('insuranceNumbersModel')){
+			Ext.ModelManager.unregister('insuranceNumbersModel');
 	}
+    Ext.define('insuranceNumbersModel', {
+        extend: 'Ext.data.Model',
+        fields: [
+			{name: 'id',					type: 'int'},
+			{name: 'name',					type: 'string'}
+		]
+	});
 	var insuranceNumbersStore = new Ext.data.Store({
 		model: 'insuranceNumbersModel',
     	noCache		: true,
@@ -226,15 +229,16 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// X12 Partners Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('x12PartnersModel')){
-	    Ext.define('x12PartnersModel', {
-	        extend: 'Ext.data.Model',
-	        fields: [
-				{name: 'id',					type: 'int'},
-				{name: 'name',					type: 'string'}
-			]
-		});
+	if (Ext.ModelManager.isRegistered('x12PartnersModel')){
+			Ext.ModelManager.unregister('x12PartnersModel');
 	}
+    Ext.define('x12PartnersModel', {
+        extend: 'Ext.data.Model',
+        fields: [
+			{name: 'id',					type: 'int'},
+			{name: 'name',					type: 'string'}
+		]
+	});
 	var x12PartnersStore = new Ext.data.Store({
 		model: 'x12PartnersModel',
     	noCache		: true,

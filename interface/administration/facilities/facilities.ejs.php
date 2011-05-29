@@ -55,33 +55,34 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('FacilitiesRecord')){
-	    var FacilitiesRecord = Ext.define('FacilitiesRecord', {
-	        extend: 'Ext.data.Model',
-	        pageSize: 30,
-	        fields: [
-				{name: 'id',					type: 'int'},
-				{name: 'name',					type: 'string'},
-				{name: 'phone',					type: 'string'},
-				{name: 'fax',					type: 'string'},
-				{name: 'street',				type: 'string'},
-				{name: 'city',					type: 'string'},
-				{name: 'state',					type: 'string'},
-				{name: 'postal_code',			type: 'string'},
-				{name: 'country_code',			type: 'string'},
-				{name: 'federal_ein',			type: 'string'},
-				{name: 'service_location',		type: 'string'},
-				{name: 'billing_location',		type: 'string'},
-				{name: 'accepts_assignment',	type: 'string'},
-				{name: 'pos_code',				type: 'string'},
-				{name: 'x12_sender_id',			type: 'string'},
-				{name: 'attn',					type: 'string'},
-				{name: 'domain_identifier',		type: 'string'},
-				{name: 'facility_npi',			type: 'string'},
-				{name: 'tax_id_type',			type: 'string'}
-			]
-		});
+	if (Ext.ModelManager.isRegistered('FacilitiesRecord')){
+			Ext.ModelManager.unregister('FacilitiesRecord');
 	}
+    var FacilitiesRecord = Ext.define('FacilitiesRecord', {
+        extend: 'Ext.data.Model',
+        pageSize: 30,
+        fields: [
+			{name: 'id',					type: 'int'},
+			{name: 'name',					type: 'string'},
+			{name: 'phone',					type: 'string'},
+			{name: 'fax',					type: 'string'},
+			{name: 'street',				type: 'string'},
+			{name: 'city',					type: 'string'},
+			{name: 'state',					type: 'string'},
+			{name: 'postal_code',			type: 'string'},
+			{name: 'country_code',			type: 'string'},
+			{name: 'federal_ein',			type: 'string'},
+			{name: 'service_location',		type: 'string'},
+			{name: 'billing_location',		type: 'string'},
+			{name: 'accepts_assignment',	type: 'string'},
+			{name: 'pos_code',				type: 'string'},
+			{name: 'x12_sender_id',			type: 'string'},
+			{name: 'attn',					type: 'string'},
+			{name: 'domain_identifier',		type: 'string'},
+			{name: 'facility_npi',			type: 'string'},
+			{name: 'tax_id_type',			type: 'string'}
+		]
+	});
 	var FacilityStore = new Ext.data.Store({
 		model: 'FacilitiesRecord',
     	noCache		: true,
@@ -114,15 +115,16 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// POS Code Data Store
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('poscodeRecord')){
-	    Ext.define('poscodeRecord', {
-	        extend: 'Ext.data.Model',
-	        fields: [
-				{name: 'option_id',		type: 'string'},
-				{name: 'title',			type: 'string'}
-			]
-		});
+	if (Ext.ModelManager.isRegistered('poscodeRecord')){
+			Ext.ModelManager.unregister('poscodeRecord');
 	}
+    Ext.define('poscodeRecord', {
+        extend: 'Ext.data.Model',
+        fields: [
+			{name: 'option_id',		type: 'string'},
+			{name: 'title',			type: 'string'}
+		]
+	});
 	var storePOSCode = new Ext.data.Store({
     	model		: 'poscodeRecord',
     	proxy		: {
@@ -143,15 +145,16 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('taxidRecord')){
-		Ext.define('taxidRecord', {
-	        extend: 'Ext.data.Model',
-			fields: [
-				{name: 'option_id',		type: 'string'},
-				{name: 'title',			type: 'string'}
-			]
-		});
+	if (Ext.ModelManager.isRegistered('taxidRecord')){
+			Ext.ModelManager.unregister('taxidRecord');
 	}
+	Ext.define('taxidRecord', {
+        extend: 'Ext.data.Model',
+		fields: [
+			{name: 'option_id',		type: 'string'},
+			{name: 'title',			type: 'string'}
+		]
+	});
 	var storeTAXid = new Ext.data.Store({
     	model		: 'taxidRecord',
     	proxy		: {

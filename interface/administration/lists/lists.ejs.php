@@ -63,21 +63,22 @@ Ext.onReady(function(){
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('ListRecord')){
-		var ListRecord = Ext.define("ListRecord", {extend: "Ext.data.Model", fields: [
-			{name: 'id',			type: 'int'		},
-			{name: 'list_id', 		type: 'string'	},
-			{name: 'option_id', 	type: 'string'	},
-			{name: 'title', 		type: 'string'	},
-			{name: 'seq', 			type: 'int' 	},
-			{name: 'is_default', 	type: 'boolean'	},
-			{name: 'option_value', 	type: 'string'	},
-			{name: 'mapping', 		type: 'string'	},
-			{name: 'notes', 		type: 'string'	}
-		],
-			idProperty: 'id',
-		});
+	if (Ext.ModelManager.isRegistered('ListRecord')){
+			Ext.ModelManager.unregister('ListRecord');
 	}
+	var ListRecord = Ext.define("ListRecord", {extend: "Ext.data.Model", fields: [
+		{name: 'id',			type: 'int'		},
+		{name: 'list_id', 		type: 'string'	},
+		{name: 'option_id', 	type: 'string'	},
+		{name: 'title', 		type: 'string'	},
+		{name: 'seq', 			type: 'int' 	},
+		{name: 'is_default', 	type: 'boolean'	},
+		{name: 'option_value', 	type: 'string'	},
+		{name: 'mapping', 		type: 'string'	},
+		{name: 'notes', 		type: 'string'	}
+	],
+		idProperty: 'id',
+	});
 	var storeListsOption = new Ext.data.Store({
 		model		: 'ListRecord',
 		proxy 		: {
@@ -109,14 +110,15 @@ Ext.onReady(function(){
 	// Structure, data for List Select list
 	// AJAX -> component_data.ejs.php
 	// ****************************************************************************
-	if (!Ext.ModelManager.isRegistered('editListModel')){
-		var editListModel = Ext.define("editListModel", {extend: "Ext.data.Model", fields: [
-			{name: 'option_id', type: 'string'},
-		    {name: 'title', type: 'string'}
-		],
-			idProperty: 'option_id',
-		});
+	if (Ext.ModelManager.isRegistered('editListModel')){
+			Ext.ModelManager.unregister('editListModel');
 	}
+	var editListModel = Ext.define("editListModel", {extend: "Ext.data.Model", fields: [
+		{name: 'option_id', type: 'string'},
+	    {name: 'title', type: 'string'}
+	],
+		idProperty: 'option_id',
+	});
 	var storeEditList = new Ext.data.Store({
 		model		: 'editListModel',
 		proxy		: {
