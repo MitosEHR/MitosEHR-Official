@@ -44,7 +44,7 @@ Ext.define('Ext.app.Portal', {
                 xtype: 'box',
                 region: 'north',
                 height: 40,
-                html: 'MitosEHR Dashboard'
+                html: 'Dashboard'
             },{
                 xtype: 'container',
                 region: 'center',
