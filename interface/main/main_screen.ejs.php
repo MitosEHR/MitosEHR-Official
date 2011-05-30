@@ -239,9 +239,15 @@ Ext.onReady(function() {
 			style 		: 'float:right',
 			margin		: '7 0 0 5',
 			menu: [{
-				text:'<?php i18n("My account"); ?>'
+				text:'<?php i18n("My account"); ?>',
+				handler: function(){
+				MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/miscellaneous/my_account/my_account.ejs.php', scripts: true});
+				}
 			},{
-				text:'<?php i18n("My settings"); ?>'
+				text:'<?php i18n("My settings"); ?>',
+				handler: function(){
+				MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/miscellaneous/user_settings/user_settings.ejs.php', scripts: true});
+				}
 			},{
 				text:'<?php i18n("Logout"); ?>',
 				handler: function(){
