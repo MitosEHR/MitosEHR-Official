@@ -64,9 +64,7 @@ Ext.onReady(function() {
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Messages')){
-			Ext.ModelManager.unregister('Messages');
-	}
+	if (!Ext.ModelManager.isRegistered('Messages')){
 	Ext.define("Messages", {
 		extend: "Ext.data.Model", 
 		fields: [
@@ -87,6 +85,7 @@ Ext.onReady(function() {
 		{name: 'reply_id',  		type: 'string'},
 		{name: 'note_type',			type: 'string'}
 	]});
+	}
 	var storeMsgs = new Ext.data.Store({
 		model: 'Messages',
 	  	noCache		: true,
@@ -120,9 +119,7 @@ Ext.onReady(function() {
 	// Structure and load the data for cmb_toUsers
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Patients')){
-			Ext.ModelManager.unregister('Patients');
-	}
+	if (!Ext.ModelManager.isRegistered('Patients')){
 	Ext.define("Patients", {
 		extend: "Ext.data.Model", 
 		fields: [
@@ -133,6 +130,7 @@ Ext.onReady(function() {
 		{name: 'dob',   type: 'string'},
 		{name: 'pid',   type: 'string'}
 	]});
+	}
 	var storePat = new Ext.data.Store({
 	   	model		: 'Patients',
 	   	proxy		: {
@@ -154,15 +152,14 @@ Ext.onReady(function() {
 	// Structure and load the data for cmb_toUsers
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('User')){
-			Ext.ModelManager.unregister('User');
-	}
+	if (!Ext.ModelManager.isRegistered('User')){
 	Ext.define("User", {
 		extend: "Ext.data.Model", 
 		fields: [
 		{name: 'user',      type: 'string' },
 		{name: 'full_name', type: 'string' }
 	]});
+	}
 	var toData = new Ext.data.Store({
 	   	model		: 'User',
 	   	proxy		: {
@@ -184,15 +181,14 @@ Ext.onReady(function() {
 	// Structure, data for cmb_Type
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Types')){
-			Ext.ModelManager.unregister('Types');
-	}
+	if (!Ext.ModelManager.isRegistered('Types')){
 	Ext.define("Types", {
 		extend: "Ext.data.Model", 
 		fields: [
 		{name: 'option_id', type: 'string' },
 		{name: 'title',     type: 'string' }
 	]});
+	}
 	var typeData = new Ext.data.Store({
 	   	model		: 'Types',
 	   	proxy		: {
@@ -214,14 +210,12 @@ Ext.onReady(function() {
 	// Structure, data for cmb_Status
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Status')){
-			Ext.ModelManager.unregister('Status');
-		}
-		Ext.define("Status", {extend: "Ext.data.Model", fields: [
-			{name: 'option_id', type: 'string' },
-			{name: 'title',     type: 'string' }
-		]});
-	
+	if (!Ext.ModelManager.isRegistered('Status')){
+	Ext.define("Status", {extend: "Ext.data.Model", fields: [
+		{name: 'option_id', type: 'string' },
+		{name: 'title',     type: 'string' }
+	]});
+	}
 	var statusData = new Ext.data.Store({
 	   	model		: 'Status',
 	   	proxy		: {
@@ -430,8 +424,7 @@ Ext.onReady(function() {
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
 					var obj = eval( '(' + Ext.JSON.encode(formMessage.getForm().getValues()) + ')' );
-					var rec = new Messages(obj);
-					storeMsgs.add( rec );
+					storeMsgs.add( obj );
 				}
 				winMessage.hide();	// Finally hide the dialog window
 				storeMsgs.sync();	// Save the record to the dataStore

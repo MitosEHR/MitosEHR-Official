@@ -55,9 +55,7 @@ Ext.onReady(function(){
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('addressbookRecord')){
-			Ext.ModelManager.unregister('addressbookRecord');
-	}
+	if (!Ext.ModelManager.isRegistered('addressbookRecord')){
 	var addressbookRecord = Ext.define("addressbookRecord", {extend: "Ext.data.Model", fields: [
 		{name: 'id',                    type: 'int',              mapping: 'id'},
 		{name: 'username',              type: 'string',           mapping: 'username'},
@@ -116,6 +114,7 @@ Ext.onReady(function(){
 	],
 		idProperty: 'id',
 	});
+	}
 	var storeAddressbook = new Ext.data.Store({
 		model		: 'addressbookRecord',
 		noCache		: true,
@@ -157,16 +156,14 @@ Ext.onReady(function(){
 	// Structure, data for Titles
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Titles')){
-			Ext.ModelManager.unregister('Titles');
-	}
+	if (!Ext.ModelManager.isRegistered('Titles')){
 	Ext.define("Titles", {extend: "Ext.data.Model", fields: [
 		{name: 'option_id', type: 'string'},
 	    {name: 'title', type: 'string'}
 	],
 		idProperty: 'option_id'
 	});
-	
+	}
 	var storeTitles = new Ext.data.Store({
 		model		: 'Titles',
 		proxy		: {
@@ -186,16 +183,14 @@ Ext.onReady(function(){
 	// Structure, data for Types
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Types')){
-			Ext.ModelManager.unregister('Types');
-	}
+	if (!Ext.ModelManager.isRegistered('Types')){
 	Ext.define("Types", {extend: "Ext.data.Model", fields: [
 		{name: 'option_id', type: 'string'},
 	    {name: 'title', type: 'string'}
 	],
 		idProperty: 'option_id'
 	});
-
+	}
 	var storeTypes = new Ext.data.Store({
 		model		: 'Types',
 		proxy		: {
@@ -209,7 +204,7 @@ Ext.onReady(function(){
 			}
 		},
 		autoLoad: true
-	}); 
+	});
 	
 	// *************************************************************************************
 	// Facility Form
@@ -479,8 +474,7 @@ Ext.onReady(function(){
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
 					var obj = eval( '(' + Ext.JSON.encode(frmAddressbook.getForm().getValues()) + ')' );
-					var rec = new addressbookRecord(obj);
-					storeAddressbook.add( rec );
+					storeAddressbook.add( obj );
 				}
 				winAddressbook.hide();	// Finally hide the dialog window
 				storeAddressbook.sync();	// Save the record to the dataStore

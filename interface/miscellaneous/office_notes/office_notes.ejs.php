@@ -46,8 +46,7 @@ Ext.onReady(function(){
 	// This destructions must be called for all the objects that
 	// are rendered on the document.body 
 	//******************************************************************************
-	if ( Ext.getCmp('winAddressbook') ){ Ext.getCmp('winAddressbook').destroy(); }
-	
+
 	// *************************************************************************************
 	// Structure of the message record
 	// creates a subclass of Ext.data.Record
@@ -55,9 +54,7 @@ Ext.onReady(function(){
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('modelOnotes')){
-			Ext.ModelManager.unregister('modelOnotes');
-	}
+	if (!Ext.ModelManager.isRegistered('modelOnotes')){
 	var modelOnotes = Ext.define("modelOnotes", {extend: "Ext.data.Model", fields: [
 		{name: 'id',      		type: 'int'},
 		{name: 'date',          type: 'date', dateFormat: 'c'},
@@ -68,7 +65,7 @@ Ext.onReady(function(){
 	],
 		idProperty: 'id',
 	});
-	
+	}
 	var storeOnotes = new Ext.data.Store({
 		model		: 'modelOnotes',
 		noCache		: true,
@@ -159,8 +156,8 @@ Ext.onReady(function(){
 						// 3. Add the new record to the datastore
 						//----------------------------------------------------------------
 						var obj = eval( '(' + Ext.JSON.encode(form.getValues()) + ')' );
-						var rec = new modelOnotes(obj);
-						storeOnotes.add( rec );
+
+						storeOnotes.add( obj );
 					}
 					
 					storeOnotes.sync();	// Save the record to the dataStore

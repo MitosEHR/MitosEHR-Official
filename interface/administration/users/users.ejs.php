@@ -53,10 +53,8 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Users Model and Data store
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Users')){
-			Ext.ModelManager.unregister('Users');
-	}
-	var usersRecord = Ext.define("Users", {extend: "Ext.data.Model", fields: [
+	if (!Ext.ModelManager.isRegistered('Users')){
+	Ext.define("Users", {extend: "Ext.data.Model", fields: [
 			{name: 'id',                    type: 'int'},
 			{name: 'username',              type: 'string'},
 			{name: 'password',              type: 'auto'},
@@ -100,6 +98,7 @@ Ext.onReady(function(){
 			{name: 'ab_title',              type: 'string'}
 		],
 	});
+	}
 	var storeUsers = new Ext.data.Store({
 	    model		: 'Users',
 		noCache		: true,
@@ -140,15 +139,14 @@ Ext.onReady(function(){
 	// Structure, data for Titles
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Titles')){
-			Ext.ModelManager.unregister('Titles');
-	}
+	if (!Ext.ModelManager.isRegistered('Titles')){
 	Ext.define("Titles", {extend: "Ext.data.Model", fields: [
 		{name: 'option_id', type: 'string'},
 	    {name: 'title', type: 'string'}
 	],
 		idProperty: 'option_id'
 	});
+	}
 	var storeTitles = new Ext.data.Store({
 		model		: 'Titles',
 		proxy		: {
@@ -168,15 +166,14 @@ Ext.onReady(function(){
 	// Structure, data for Types
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Types')){
-			Ext.ModelManager.unregister('Types');
-	}
+	if (!Ext.ModelManager.isRegistered('Types')){
 	Ext.define("Types", {extend: "Ext.data.Model", fields: [
 		{name: 'option_id', type: 'string'},
 	    {name: 'title', type: 'string'}
 	],
 		idProperty: 'option_id'
 	});
+	}
 	var storeTypes = new Ext.data.Store({
 		model		: 'Types',
 		proxy		: {
@@ -196,15 +193,14 @@ Ext.onReady(function(){
 	// Structure, data for Facilities
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Facilities')){
-			Ext.ModelManager.unregister('Facilities');
-	}
+	if (!Ext.ModelManager.isRegistered('Facilities')){
 	Ext.define("Facilities", {extend: "Ext.data.Model", fields: [
 		{name: 'id', type: 'string'},
 	    {name: 'name', type: 'string'}
 	],
 		idProperty: 'id'
 	});
+	}
 	var storeFacilities = new Ext.data.Store({
 		model		: 'Facilities',
 		proxy		: {
@@ -224,15 +220,14 @@ Ext.onReady(function(){
 	// Structure, data for AccessControls
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('AccessControls')){
-			Ext.ModelManager.unregister('AccessControls');
-	}
+	if (!Ext.ModelManager.isRegistered('AccessControls')){
 	Ext.define("AccessControls", {extend: "Ext.data.Model", fields: [
 		{name: 'id', type: 'string'},
 	    {name: 'role_name', type: 'string'}
 	],
 		idProperty: 'id'
 	});
+	}
 	var storeAccessControls = new Ext.data.Store({
 		model		: 'AccessControls',
 		proxy		: {
@@ -403,8 +398,7 @@ Ext.onReady(function(){
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
 					var obj = eval( '(' + Ext.JSON.encode(frmUsers.getForm().getValues()) + ')' );
-					var rec = new usersRecord(obj);
-					storeUsers.add( rec );
+					storeUsers.add( obj );
 				}
 				winUsers.hide();	// Finally hide the dialog window
 				storeUsers.sync();	// Save the record to the dataStore

@@ -40,7 +40,6 @@ Ext.define('Ext.app.OnotesPortlet', {
             columns: [{
                 id       : 'user',
                 text   	 : 'From',
-                width	 : 120,
                 sortable : 	true,
                 dataIndex: 'user'
             },{

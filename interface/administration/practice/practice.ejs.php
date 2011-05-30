@@ -51,9 +51,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Phramacy Record Structure
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('pharmacyModel')){
-			Ext.ModelManager.unregister('pharmacyModel');
-	}
+	if (!Ext.ModelManager.isRegistered('pharmacyModel')){
     Ext.define('pharmacyModel', {
         extend: 'Ext.data.Model',
         fields: [
@@ -85,6 +83,7 @@ Ext.onReady(function(){
 			{name: 'fax_full',				type: 'string'}
 		]
 	});
+	}
 	var pharmacyStore = new Ext.data.Store({
 		model: 'pharmacyModel',
     	noCache		: true,
@@ -117,9 +116,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Insurance Record Structure
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('insuranceModel')){
-			Ext.ModelManager.unregister('insuranceModel');
-	}
+	if (!Ext.ModelManager.isRegistered('insuranceModel')){
     Ext.define('insuranceModel', {
         extend: 'Ext.data.Model',
         fields: [
@@ -155,6 +152,7 @@ Ext.onReady(function(){
 			{name: 'fax_full',					type: 'string'}
 		]
 	});
+	}
 	var insuranceStore = new Ext.data.Store({
 		model: 'insuranceModel',
     	noCache		: true,
@@ -187,9 +185,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Insurance Record Structure
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('insuranceNumbersModel')){
-			Ext.ModelManager.unregister('insuranceNumbersModel');
-	}
+	if (!Ext.ModelManager.isRegistered('insuranceNumbersModel')){
     Ext.define('insuranceNumbersModel', {
         extend: 'Ext.data.Model',
         fields: [
@@ -197,6 +193,7 @@ Ext.onReady(function(){
 			{name: 'name',					type: 'string'}
 		]
 	});
+	}
 	var insuranceNumbersStore = new Ext.data.Store({
 		model: 'insuranceNumbersModel',
     	noCache		: true,
@@ -229,9 +226,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// X12 Partners Record Structure
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('x12PartnersModel')){
-			Ext.ModelManager.unregister('x12PartnersModel');
-	}
+	if (!Ext.ModelManager.isRegistered('x12PartnersModel')){
     Ext.define('x12PartnersModel', {
         extend: 'Ext.data.Model',
         fields: [
@@ -239,6 +234,7 @@ Ext.onReady(function(){
 			{name: 'name',					type: 'string'}
 		]
 	});
+	}
 	var x12PartnersStore = new Ext.data.Store({
 		model: 'x12PartnersModel',
     	noCache		: true,

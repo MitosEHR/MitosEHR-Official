@@ -44,9 +44,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Global Model and Data store
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Globals')){
-			Ext.ModelManager.unregister('Globals');
-	}
+	if (!Ext.ModelManager.isRegistered('Globals')){
 	var globalModel = Ext.define("Globals", {extend: "Ext.data.Model", fields: [
 			{ name: 'data_id',								type:'int' },
 			{ name: 'default_top_pane',						type:'auto' },
@@ -165,6 +163,7 @@ Ext.onReady(function(){
 		],
 		idProperty: 'data_id',
 	});
+	}
 	var globalStore = new Ext.data.Store({
 	    model	: 'Globals',
 	    proxy	: {
@@ -199,9 +198,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Data Model for all selet lists
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('selectLists')){
-			Ext.ModelManager.unregister('selectLists');
-	}
+	if (!Ext.ModelManager.isRegistered('selectLists')){
 	Ext.define("selectLists", {extend: "Ext.data.Model", fields: [
 			{ name: 'list_id',		type:'string' },
 			{ name: 'option_id',	type:'string' },
@@ -211,6 +208,7 @@ Ext.onReady(function(){
 		],
 		idProperty: 'list_id',
 	});
+	}
 	selectListsStore = new Ext.data.Store({
     	model		: 'selectLists',
     	proxy		: {
@@ -228,9 +226,7 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Data Model for Languages select list
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('Language')){
-			Ext.ModelManager.unregister('Language');
-	}
+	if (!Ext.ModelManager.isRegistered('Language')){
 	Ext.define("Language", {extend: "Ext.data.Model", fields: [
 			{ name: 'lang_id',		type:'string' },
 			{ name: 'lang_code',	type:'string' },
@@ -238,6 +234,7 @@ Ext.onReady(function(){
 		],
 		idProperty: 'lang_id',
 	});
+	}
 	language_defaultStore = new Ext.data.Store({
     	model		: 'Language',
     	proxy		: {

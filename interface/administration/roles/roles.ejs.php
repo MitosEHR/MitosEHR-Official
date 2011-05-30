@@ -56,10 +56,8 @@ Ext.onReady(function(){
 	//******************************************************************************
 	// Roles model
 	//******************************************************************************
-	if (Ext.ModelManager.isRegistered('PermissionList')){
-			Ext.ModelManager.unregister('PermissionList');
-	}
-	var permModel = Ext.define("PermissionList", {extend: "Ext.data.Model", fields: [
+	if (!Ext.ModelManager.isRegistered('PermissionList')){
+	Ext.define("PermissionList", {extend: "Ext.data.Model", fields: [
 		{name: 'roleID', 		type: 'int'},
 		{name: 'role_name', 	type: 'string'},
 	    {name: 'permID', 		type: 'int'},
@@ -73,6 +71,7 @@ Ext.onReady(function(){
 	],
 		idProperty: 'permID'
 	});
+	}
 	//******************************************************************************
 	// Roles Store
 	//******************************************************************************
@@ -107,15 +106,14 @@ Ext.onReady(function(){
 	// Structure, data for Roles
 	// AJAX -> component_data.ejs.php
 	// ****************************************************************************
-	if (Ext.ModelManager.isRegistered('Roles')){
-			Ext.ModelManager.unregister('Roles');
-	}
-	var roleModel = Ext.define("Roles", {extend: "Ext.data.Model", fields: [
+	if (!Ext.ModelManager.isRegistered('Roles')){
+	Ext.define("Roles", {extend: "Ext.data.Model", fields: [
 		{name: 'id', type: 'int'},
 	    {name: 'role_name', type: 'string'}
 	],
 		idProperty: 'id'
 	});
+	}
 	var roleStore = new Ext.data.Store({
 		model		: 'Roles',
 		proxy		: {
@@ -155,14 +153,13 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('permRecord')){
-			Ext.ModelManager.unregister('permRecord');
-	}
+	if (!Ext.ModelManager.isRegistered('permRecord')){
 	Ext.define("permRecord", {extend: "Ext.data.Model", fields: [
 			{name: 'value',	type: 'string'},
 			{name: 'perm',	type: 'string'}
 		]
 	});
+	}
 	var storePerms = new Ext.data.Store({
     	model		: 'permRecord',
     	proxy		: {
@@ -272,8 +269,7 @@ Ext.onReady(function(){
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
 					var obj = eval( '(' + Ext.JSON.encode(rolesForm.getForm().getValues()) + ')' );
-					var rec = new roleModel(obj);
-					roleStore.add( rec );
+					roleStore.add( obj );
 				}
 				winRoles.hide();	// Finally hide the dialog window
 				roleStore.sync();	// Save the record to the dataStore
@@ -307,8 +303,7 @@ Ext.onReady(function(){
 				// 3. Add the new record to the datastore
 				//----------------------------------------------------------------
 				var obj = eval( '(' + Ext.JSON.encode(permsForm.getForm().getValues()) + ')' );
-				var rec = new permModel(obj);
-				permStore.add( rec );
+				permStore.add( obj );
 				winPerms.hide();	// Finally hide the dialog window
 				permStore.sync();	// Save the record to the dataStore
 				permStore.load();	// Reload the dataSore from the database

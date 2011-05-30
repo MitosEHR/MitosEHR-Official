@@ -55,9 +55,7 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('FacilitiesRecord')){
-			Ext.ModelManager.unregister('FacilitiesRecord');
-	}
+	if (!Ext.ModelManager.isRegistered('FacilitiesRecord')){
     var FacilitiesRecord = Ext.define('FacilitiesRecord', {
         extend: 'Ext.data.Model',
         pageSize: 30,
@@ -83,6 +81,7 @@ Ext.onReady(function() {
 			{name: 'tax_id_type',			type: 'string'}
 		]
 	});
+	}
 	var FacilityStore = new Ext.data.Store({
 		model: 'FacilitiesRecord',
     	noCache		: true,
@@ -115,9 +114,7 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// POS Code Data Store
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('poscodeRecord')){
-			Ext.ModelManager.unregister('poscodeRecord');
-	}
+	if (!Ext.ModelManager.isRegistered('poscodeRecord')){
     Ext.define('poscodeRecord', {
         extend: 'Ext.data.Model',
         fields: [
@@ -125,6 +122,7 @@ Ext.onReady(function() {
 			{name: 'title',			type: 'string'}
 		]
 	});
+	}
 	var storePOSCode = new Ext.data.Store({
     	model		: 'poscodeRecord',
     	proxy		: {
@@ -141,13 +139,11 @@ Ext.onReady(function() {
    		},
     	autoLoad: true
 	});
-
+	
 	// *************************************************************************************
 	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
-	if (Ext.ModelManager.isRegistered('taxidRecord')){
-			Ext.ModelManager.unregister('taxidRecord');
-	}
+	if (!Ext.ModelManager.isRegistered('taxidRecord')){
 	Ext.define('taxidRecord', {
         extend: 'Ext.data.Model',
 		fields: [
@@ -155,6 +151,7 @@ Ext.onReady(function() {
 			{name: 'title',			type: 'string'}
 		]
 	});
+	}
 	var storeTAXid = new Ext.data.Store({
     	model		: 'taxidRecord',
     	proxy		: {
@@ -171,7 +168,7 @@ Ext.onReady(function() {
    		},
     	autoLoad: true
 	});
-
+	
 	// *************************************************************************************
 	// User form
 	// *************************************************************************************
@@ -317,8 +314,7 @@ Ext.onReady(function() {
 					// 3. Add the new record to the datastore
 					//----------------------------------------------------------------
 					var obj = eval( '(' + Ext.JSON.encode(facilityForm.getForm().getValues()) + ')' );
-					var rec = new FacilitiesRecord(obj);
-					FacilityStore.add( rec );
+					FacilityStore.add( obj );
 				}
 				winFacility.hide();		// Finally hide the dialog window
 				FacilityStore.sync();	// Save the record to the dataStore
