@@ -248,7 +248,7 @@ Ext.onReady(function() {
 			},{
 				text:'<?php i18n("My settings"); ?>',
 				handler: function(){
-				MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/miscellaneous/user_settings/user_settings.ejs.php', scripts: true});
+				MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/miscellaneous/my_settings/my_settings.ejs.php', scripts: true});
 				}
 			},{
 				text:'<?php i18n("Logout"); ?>',
