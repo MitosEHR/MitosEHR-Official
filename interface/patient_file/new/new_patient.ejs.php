@@ -40,18 +40,16 @@ Ext.require([
 
 Ext.onReady(function(){
 	
-	//******************************************************************************
-	// Render panel
-	//******************************************************************************
-	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('Add New Patient'); ?>',
-		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
-		height		: Ext.getCmp('MainApp').getHeight(),
-	  	frame 		: false,
-		border 		: false,
-		id			: 'topRenderPanel',
-		items		: [ ]
-	});
+	//***********************************************************************************
+	// Top Render Panel 
+	// This Panel needs only 3 arguments...
+	// PageTigle 	- Title of the current page
+	// PageLayout 	- default 'fit', define this argument if using other than the default value
+	// PageBody 	- List of items to display [foem1, grid1, grid2]
+	//***********************************************************************************
+    Ext.create('Ext.ux.TopRenderPanel', {
+        pageTitle: '<?php i18n('Add New Patient'); ?>',
+        pageBody: []
+    });
 }); // End ExtJS
 </script>

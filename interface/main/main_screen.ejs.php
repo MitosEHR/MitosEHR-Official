@@ -48,7 +48,7 @@ Ext.require([
 ]);
 
 Ext.onReady(function() {
-
+	
 	//****************************************************************
 	// Task Scheduler 
 	// This will run certain task at determined time.
@@ -272,7 +272,7 @@ Ext.onReady(function() {
 	//
 	// tag: ExtJS v4 Ready
 	//****************************************************************
-	var MainApp = Ext.create('Ext.Panel', {
+	MainApp = Ext.create('Ext.Panel', {
 		region			: 'center',
 		id				: 'MainApp', 
 		border			: true,
@@ -285,8 +285,8 @@ Ext.onReady(function() {
 			resize 		: {
 				fn		: function(){
 					if(Ext.getCmp('topRenderPanel')){
-						var height = Ext.getCmp('MainApp').getHeight()
-						var width = Ext.getCmp('MainApp').getWidth()
+						var height = this.getHeight()
+						var width = this.getWidth()
 						Ext.getCmp('topRenderPanel').setSize( width , height );
 					}
 				}
@@ -294,6 +294,8 @@ Ext.onReady(function() {
 		}
 	}); // End MainApp
 	
+	
+    
 	//****************************************************************
 	// TopPanel
 	// Description: It will show up the main layouts
@@ -311,6 +313,8 @@ Ext.onReady(function() {
 		bodyPadding		: 0,
 		items			: [ MainApp ]
 	}); // End TopPanel
+	
+	
 	
 	//****************************************************************
 	// The main ViewPort

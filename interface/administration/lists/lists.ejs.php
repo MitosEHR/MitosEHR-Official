@@ -443,36 +443,17 @@ Ext.onReady(function(){
 		}], // END GRID TOP MENU
 	}); // END GRID
 
-
-	//******************************************************************************
-	// Render panel
-	//******************************************************************************
-	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'border',
-		height		: Ext.getCmp('MainApp').getHeight(),
-	  	frame 		: false,
-		border 		: false,
-		id			: 'topRenderPanel',
-		items		: [{
-			id: 'topRenderPanel-header',
-			xtype: 'box',
-			region: 'north',
-			height: 40,
-			html: '<?php i18n('List Options'); ?>'
-		
-		},{
-			id		: 'topRenderPanel-body',
-			xtype	: 'panel',
-			region	: 'center',
-			layout	: 'fit',
-			height	: Ext.getCmp('MainApp').getHeight() - 40,
-			border 	: false,
-			defaults: {frame:true, border:true, autoScroll:true},
-			items	: [listGrid],
-			
-		}]
-	});
+	//***********************************************************************************
+	// Top Render Panel 
+	// This Panel needs only 3 arguments...
+	// PageTigle 	- Title of the current page
+	// PageLayout 	- default 'fit', define this argument if using other than the default value
+	// PageBody 	- List of items to display [foem1, grid1, grid2]
+	//***********************************************************************************
+    Ext.create('Ext.ux.TopRenderPanel', {
+        pageTitle: '<?php i18n('List Options'); ?>',
+        pageBody: [listGrid]
+    });
 }); // End ExtJS
 
 </script>
