@@ -21,9 +21,11 @@ include_once('library/compressor/compressor.inc.php');
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>MitosEHR</title>
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
-
 <script type="text/javascript" src="repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="repository/global_functions/global_functions.js"></script>
+<!--test-stuff-->
+<link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
+<!--test-stuff-->
 <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
@@ -278,7 +280,18 @@ Ext.onReady(function() {
 		bodyPadding		: 0,
 		waitMsg			: '<?php i18n("Loading"); ?>',
 		waitMsgTarget	: true,
-		autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true}
+		autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true},
+		listeners		: {
+			resize 		: {
+				fn		: function(){
+					if(Ext.getCmp('topRenderPanel')){
+						var height = Ext.getCmp('MainApp').getHeight()
+						var width = Ext.getCmp('MainApp').getWidth()
+						Ext.getCmp('topRenderPanel').setSize( width , height );
+					}
+				}
+			}	
+		}
 	}); // End MainApp
 	
 	//****************************************************************

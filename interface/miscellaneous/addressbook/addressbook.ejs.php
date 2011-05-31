@@ -494,8 +494,7 @@ Ext.onReady(function(){
   		id          : 'addressbookGrid',
   		store       : storeAddressbook,
   		layout	    : 'fit',
-	  	border      : false,    
-	  	frame       : false,
+		frame		: true,
 	  	loadMask    : true,
   		viewConfig  : {stripeRows: true},
     	listeners	: {
@@ -592,15 +591,31 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('Address Book'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [addressbookGrid]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('Address Book'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true},
+			items	: [addressbookGrid]
+		}]
 	});
+	
 }); // End ExtJS
 </script>
 

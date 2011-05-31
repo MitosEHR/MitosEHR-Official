@@ -48,6 +48,8 @@ Ext.onReady(function(){
 	  	bodyStyle   : 'padding: 10px;',
 	  	autoWidth   : true,
 		border      : false,
+		cls			: 'form-white-bg',
+		frame		: true,
 		hideLabels  : true,
 	 	items: [{
 	 		xtype: 'textfield', hidden: true, id: 'id', name: 'id'
@@ -138,14 +140,29 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('My Settings'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [uSettingsForm]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('My Settings'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true},
+			items	: [uSettingsForm]
+		}]
 	});
 }); // End ExtJS
 </script>

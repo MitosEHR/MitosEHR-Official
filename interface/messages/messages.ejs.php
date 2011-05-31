@@ -444,8 +444,8 @@ Ext.onReady(function() {
 		id			: 'msgGrid',
 		store		: storeMsgs,
 		autoHeight 	: true,
-		border     	: false,
-		frame		: false,
+		border     	: true,
+		frame		: true,
 		loadMask    : true,
 		viewConfig 	: {forceFit: true, stripeRows : true},
 		listeners: {
@@ -555,17 +555,31 @@ Ext.onReady(function() {
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n("Messages"); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
-	  	frame		: false,
-	  	border		: false,
-		bodyPadding	: 0,
+	  	frame 		: false,
+		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [msgGrid]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('Messages'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true, autoScroll:true},
+			items	: [msgGrid],
+			
+		}]
 	});
-
 }); // END EXTJS
 
 </script>

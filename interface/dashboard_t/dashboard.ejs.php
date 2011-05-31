@@ -1,34 +1,28 @@
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="../../library/ext-4.0.1/resources/css/ext-all.css" />
-    <link rel="stylesheet" type="text/css" href="portal.css" />
-    <script type="text/javascript" src="../../library/ext-4.0.1/builds/ext-core.js"></script>
-    <!-- shared example code -->
-    <script type="text/javascript" src="../../library/ext-4.0.1/examples/shared/examples.js"></script>
-    <script type="text/javascript" src="classes.js"></script>
-    <script type="text/javascript" src="portal.js"></script>
-    <script type="text/javascript">
-        Ext.Loader.setPath('Ext.app', 'classes');
-        Ext.require([
-            'Ext.layout.container.*',
-            'Ext.resizer.Splitter',
-            'Ext.fx.target.Element',
-            'Ext.fx.target.Component',
-            'Ext.window.Window',
-            'Ext.app.Portlet',
-            'Ext.app.PortalColumn',
-            'Ext.app.PortalPanel',
-            'Ext.app.Portlet',
-            'Ext.app.PortalDropZone',
-            'Ext.app.GridPortlet',
-            'Ext.app.ChartPortlet'
-        ]);
-        Ext.onReady(function(){
-            Ext.create('Ext.app.Portal');
-        });
-    </script>
-</head>
-<body>
-    <span id="app-msg" style="display:none;"></span>
-</body>
-</html>
+<?php 
+//******************************************************************************
+// new.ejs.php
+// New Patient Entry Form
+// v0.0.1
+// 
+// Author: Ernest Rodriguez
+// Modified: Gino Rivera
+// 
+// MitosEHR (Eletronic Health Records) 2011
+//******************************************************************************
+session_name ( "MitosEHR" );
+session_start();
+session_cache_limiter('private');
+
+//******************************************************************************
+// Reset session count 10 secs = 1 Flop
+//******************************************************************************
+$_SESSION['site']['flops'] = 0;
+
+?>
+<iframe style="overflow:auto;width:100%;height:100%;" frameborder="0"  src="interface/dashboard_t/portal.html"></iframe>'
+
+
+
+
+
+

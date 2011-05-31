@@ -412,7 +412,8 @@ Ext.onReady(function(){
 	//**************************************************************************
 	var globalFormPanel = Ext.create('Ext.form.Panel', {
 		id				: 'globalFormPanel',
-		border			: false,
+		frame			: true,
+		border			: true,
 		layout			: 'fit',
 		autoScroll		: true,
         fieldDefaults	: { msgTarget: 'side', labelWidth: 220, width: 520 },
@@ -1132,14 +1133,30 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('MitosEHR Globals'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [globalFormPanel]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('MitosEHR Globals'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true, autoScroll:true},
+			items	: [globalFormPanel],
+			
+		}]
 	});
 }); // End ExtJS
 </script>

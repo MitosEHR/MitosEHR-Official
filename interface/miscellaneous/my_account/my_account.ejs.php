@@ -46,8 +46,9 @@ Ext.onReady(function(){
 	var myAccountForm = new Ext.form.FormPanel({
 	  	id          : 'myAccountForm',
 	  	bodyStyle   : 'padding: 10px;',
+		frame		: true,
+		cls			: 'form-white-bg',
 	  	autoWidth   : true,
-		border      : false,
 		hideLabels  : true,
 	 	items: [{
 	 		xtype: 'textfield', hidden: true, id: 'id', name: 'id'
@@ -131,9 +132,9 @@ Ext.onReady(function(){
 			    text      	: '<?php i18n("Save"); ?>',
 			    iconCls   	: 'save',
 			    id        	: 'cmdSave',
-			    disabled	: true,
+			   // disabled	: true,
 			    handler   : function(){
-				
+
 			    }
 		  	}]
 		}]
@@ -144,14 +145,29 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('My Settings'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [myAccountForm]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('My Account'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true, autoScroll:true},
+			items	: [myAccountForm]
+		}]
 	});
 }); // End ExtJS
 </script>

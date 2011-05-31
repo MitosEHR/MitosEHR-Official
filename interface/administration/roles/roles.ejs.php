@@ -336,9 +336,9 @@ Ext.onReady(function(){
 	var rolesGrid = Ext.create('Ext.grid.Panel', {
 		store		: permStore,
         columnLines	: true,
-        frame		: false,
+        frame		: true,
         frameHeader	: false,
-        border		: false,
+        border		: true,
         layout		: 'fit',
 		plugins: [rowEditing],
         columns: [{
@@ -479,14 +479,30 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('Roles and Permissions'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [	rolesGrid ]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('Roles and Permissions'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true, autoScroll:true},
+			items	: [rolesGrid],
+			
+		}]
 	});
 }); // End ExtJS
 </script>

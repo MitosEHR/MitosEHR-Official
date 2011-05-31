@@ -337,9 +337,8 @@ Ext.onReady(function() {
 		id			: 'FacilityGrid',
 		store		: FacilityStore,
         layout	    : 'fit',
-        frame		: false,
-        border		: false,
-        //height		: Ext.getCmp('MainApp').getHeight(),
+	  	frame		: true,
+	  	border		: true,
         columns: [
 			{
 				text     : '<?php i18n("Name"); ?>',
@@ -399,22 +398,7 @@ Ext.onReady(function() {
             		winFacility.show();
             	}
 			}
-		}
-    }); // END Facility Grid
-
-	// *************************************************************************************
-	// Top Render Panel
-	// *************************************************************************************
-	var topRenderPanel = Ext.create('Ext.Panel', {
-		title		: '<?php i18n("Facilities"); ?>',
-		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
-		height		: Ext.getCmp('MainApp').getHeight(),
-  		frame		: false,
-  		border		: false,
-		bodyPadding	: 0,
-		id			: 'topRenderPanel',
-		items: [ FacilityGrid ],
+		},
 		dockedItems: [{
 			xtype: 'toolbar',
 			dock: 'top',
@@ -432,7 +416,7 @@ Ext.onReady(function() {
 				id: 'cmdEdit',
 				disabled: true,
 				handler: function(){
-      				winFacility.setTitle('<?php i18n("Edit Facility"); ?>');
+					winFacility.setTitle('<?php i18n("Edit Facility"); ?>');
 					winFacility.show(); 
 				}
 			},'-',{
@@ -451,14 +435,43 @@ Ext.onReady(function() {
 								FacilityStore.remove( currRec );
 								FacilityStore.save();
 								FacilityStore.load();
-			    		    }
+							}
 						}
 					});
 				}
 			}]
-    	}]
-	}); // END TOP PANEL
+		}]
+    }); // END Facility Grid
 
+	// *************************************************************************************
+	// Top Render Panel
+	// *************************************************************************************
+	var topRenderPanel = Ext.create('Ext.panel.Panel', {
+		renderTo	: Ext.getCmp('MainApp').body,
+		layout		: 'border',
+		height		: Ext.getCmp('MainApp').getHeight(),
+	  	frame 		: false,
+		border 		: false,
+		id			: 'topRenderPanel',
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('Facilities'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true, autoScroll:true},
+			items	: [FacilityGrid],
+			
+		}]
+	});
 }); // End ExtJS
 
 </script>

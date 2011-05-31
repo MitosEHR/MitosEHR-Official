@@ -366,7 +366,7 @@ Ext.onReady(function(){
 		width       : 520,
 	    autoHeight  : true,
 	    modal       : true,
-	    border	  	: false,
+	    border	  	: true,
 	    resizable   : false,
 	    title       : '<?php i18n('Add or Edit User'); ?>',
 	    closeAction : 'hide',
@@ -419,8 +419,8 @@ Ext.onReady(function(){
 		id          : 'userGrid',
 	  	store       : storeUsers,
 	  	layout	    : 'fit',
-	  	border      : false,    
-	  	frame       : false,
+	  	border      : true,    
+	  	frame       : true,
 	  	loadMask    : true,
 	  	viewConfig  : { stripeRows: true },
 	  	listeners: {
@@ -515,14 +515,30 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('Users'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [userGrid]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('Users'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true, autoScroll:true},
+			items	: [userGrid],
+			
+		}]
 	});
 }); // End ExtJS
 </script>

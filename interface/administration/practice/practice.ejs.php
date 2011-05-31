@@ -273,7 +273,8 @@ Ext.onReady(function(){
 		bodyStyle   : 'padding: 5px;',
 		autoWidth   : true,
 		width	  	  : 495,
-		border      : false,
+		border      : true,
+		frame      : true,
 		hideLabels  : true,
 		defaults: {
 			labelWidth: 89,
@@ -384,7 +385,7 @@ Ext.onReady(function(){
 		width       : 520,
 	    autoHeight  : true,
 	    modal       : true,
-	    border	  	: false,
+	    border	  	: true,
 	    resizable   : false,
 	    title       : '<?php i18n('Add or Edit Insurance'); ?>',
 	    closeAction : 'hide',
@@ -460,9 +461,9 @@ Ext.onReady(function(){
 	var InsuranceNumbersGrid = Ext.create('Ext.grid.Panel', {
 		store		: insuranceNumbersStore,
         columnLines	: true,
-        frame		: false,
+        frame		: true,
         frameHeader	: false,
-        border		: false,
+        border		: true,
         layout		: 'fit',
         columns: [{
         	text     : '<?php i18n("Name"); ?>',
@@ -528,8 +529,8 @@ Ext.onReady(function(){
 		store		: x12PartnersStore,
         columnLines	: true,
         frame		: false,
-        frameHeader	: false,
-        border		: false,
+        frameHeader	: true,
+        border		: true,
         layout		: 'fit',
         columns: [{
         	text     : '<?php i18n("Name"); ?>',
@@ -590,14 +591,15 @@ Ext.onReady(function(){
 	//**************************************************************************
 	var tabPanel = Ext.create('Ext.tab.Panel', {
         activeTab	: 0,
-        frame		: false,
+        frame		: true,
         border		: false,
+		layout		: 'fit',
         height		: Ext.getCmp('MainApp').getHeight(),
         defaults	:{ autoScroll:true },
         items:[{
             title	:'<?php i18n("Pharmacies"); ?>',
     	    frame	: false,
-	        border	: false,
+	        border	: true,
             items	: [ pharmacyGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
@@ -630,7 +632,7 @@ Ext.onReady(function(){
         },{
             title	:'<?php i18n("Insurance Companies"); ?>',
     	    frame	: false,
-	        border	: false,
+	        border	: true,
             items	: [ insuranceGrid ],
 			dockedItems: [{
 		  	  	xtype: 'toolbar',
@@ -742,14 +744,30 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('Practice Settings'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [	tabPanel ]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('Practice Settings'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true, autoScroll:true},
+			items	: [tabPanel],
+			
+		}]
 	});
 }); // End ExtJS
 </script>

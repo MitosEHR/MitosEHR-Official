@@ -263,9 +263,9 @@ Ext.onReady(function(){
 		id			: 'listGrid',
 		store		: storeListsOption,
         columnLines	: true,
-        frame		: false,
+        frame		: true,
         frameHeader	: false,
-        border		: false,
+        border		: true,
         layout		: 'fit',
         loadMask    : true,
 		plugins		: [rowEditing],
@@ -448,16 +448,31 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('List Options'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
-		layout		: 'fit',
+		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [	listGrid ]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('List Options'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'fit',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true, autoScroll:true},
+			items	: [listGrid],
+			
+		}]
 	});
-
 }); // End ExtJS
 
 </script>

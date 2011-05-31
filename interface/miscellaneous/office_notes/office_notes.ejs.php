@@ -99,7 +99,8 @@ Ext.onReady(function(){
 	var onotesFormPanel = Ext.create('Ext.form.FormPanel', {
 		id: 'onotesFormPanel',
 		region		: 'north',
-		margin		: '2px 2px 0 2px',
+		frame 		: true,
+		margin		: '0 0 3 0',
 		items		:[{
 			xtype: 'textfield', hidden: true, id: 'id', name: 'id'
 		},{
@@ -211,8 +212,7 @@ Ext.onReady(function(){
   		region		: 'center',
   		store       : storeOnotes,
   		layout	    : 'fit',
-	  	border      : false,    
-	  	frame       : false,
+		frame		: true,
 	  	loadMask    : true,
   		viewConfig  : {stripeRows: true},
     	listeners	: {
@@ -279,14 +279,29 @@ Ext.onReady(function(){
 	// Render panel
 	//******************************************************************************
 	var topRenderPanel = Ext.create('Ext.panel.Panel', {
-		title		: '<?php i18n('Office Notes'); ?>',
 		renderTo	: Ext.getCmp('MainApp').body,
 		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
 	  	frame 		: false,
 		border 		: false,
 		id			: 'topRenderPanel',
-		items		: [onotesFormPanel, onotesGrid]
+		items		: [{
+			id: 'topRenderPanel-header',
+			xtype: 'box',
+			region: 'north',
+			height: 40,
+			html: '<?php i18n('Office Notes'); ?>'
+		
+		},{
+			id		: 'topRenderPanel-body',
+			xtype	: 'panel',
+			region	: 'center',
+			layout	: 'border',
+			height	: Ext.getCmp('MainApp').getHeight() - 40,
+			border 	: false,
+			defaults: {frame:true, border:true},
+			items	: [onotesFormPanel, onotesGrid]
+		}]
 	});
 }); // End ExtJS
 </script>
