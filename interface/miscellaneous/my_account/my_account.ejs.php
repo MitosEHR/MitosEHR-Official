@@ -331,7 +331,7 @@ Ext.onReady(function(){
 		        	{ width: 110, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
 		        	{ width: 150, xtype: 'textfield', id: 'username', name: 'username' },
 		        	{ width: 120, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
-		        	{ width: 175, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
+		        	{ width: 175, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password', disabled: true  }
 		      	]
 		    }]
 	    },{
@@ -424,7 +424,7 @@ Ext.onReady(function(){
 	//******************************************************************************
 	// Render panel
 	//******************************************************************************
-	var topRenderPanel = Ext.create('Ext.panel.Panel', {
+	Ext.create('Ext.panel.Panel', {
 		renderTo	: Ext.getCmp('MainApp').body,
 		layout		: 'border',
 		height		: Ext.getCmp('MainApp').getHeight(),
