@@ -7,22 +7,18 @@
  * 
  * Author: Gino Rivera Falú
  * Version: 0.0.1 
- * 
  */
-
 //-------------------------------------------
 // Start MitosEHR session 
 //-------------------------------------------
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
-
 //-------------------------------------------
 // Load all the necesary libraries
 //-------------------------------------------
 include_once("../../library/phpAES/AES.class.php");
 include_once("../../repository/dataExchange/dataExchange.inc.php");
-
 //-------------------------------------------
 // Check that the username do not pass 
 // the maximum limit of the field.
@@ -35,7 +31,6 @@ if (strlen($_REQUEST['authUser']) >= 26){
 	echo "{ success: false, errors: { reason: 'Possible hack, please use the Logon Screen.' }}";
  	return;
 }
-
 //-------------------------------------------
 // Check that the username do not pass 
 // the maximum limit of the field.
@@ -48,7 +43,6 @@ if (strlen($_REQUEST['authPass']) >= 11){
 	echo "{ success: false, errors: { reason: 'Possible hack, please use the Logon Screen.' }}";
  	return;
 }
-
 //-------------------------------------------
 // Simple check username
 //-------------------------------------------
@@ -89,22 +83,16 @@ if (file_exists($fileConf)){
 //-------------------------------------------
 $aes = new AES($_SESSION['site']['AESkey']);
 $ret = $aes->encrypt($_REQUEST['authPass']);
-
 //-------------------------------------------
 // Username & password match
 //-------------------------------------------
-$sql = "SELECT 
-			*
-		FROM 
-			users 
-		WHERE 
-			username='" . $_REQUEST['authUser'] . "' and 
-			password='" . $ret . "' and 
-			authorized='1'
-		LIMIT 1";
+$sql = "SELECT * FROM users 
+		 WHERE username='" . $_REQUEST['authUser'] . "' 
+		   AND password='" . $ret . "' 
+		   AND authorized='1'
+		 LIMIT 1";
 $mitos_db->setSQL($sql);
 $rec = $mitos_db->fetch();
-
 if ($rec['username'] == ""){
 	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.'}}";
 	return;
@@ -116,16 +104,11 @@ if ($rec['username'] == ""){
 	$_SESSION['user']['id'] = $rec['id'];
 	$_SESSION['user']['email'] = $rec['email'];
 	$_SESSION['user']['auth'] = true;
-	
 	//-------------------------------------------
 	// Also fetch the current version of the
 	// Application & Database
 	//-------------------------------------------
-	$sql = "SELECT 
-				*
-			FROM 
-				version 
-			LIMIT 1";
+	$sql = "SELECT * FROM version LIMIT 1";
 	$mitos_db->setSQL($sql);
 	$rec = $mitos_db->fetch();
 	$_SESSION['ver']['codeName']= $rec['v_tag'];
@@ -133,7 +116,6 @@ if ($rec['username'] == ""){
 	$_SESSION['ver']['rev'] = $rec['v_patch'];
 	$_SESSION['ver']['minor'] = $rec['v_minor'];
 	$_SESSION['ver']['database'] = $rec['v_database'];
-
 	echo "{ success: true }";
 	return;	
 }

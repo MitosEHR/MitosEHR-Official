@@ -89,9 +89,9 @@ Ext.onReady(function(){
 	    	type	: 'ajax',
 			api		: {
 				read	: 'interface/miscellaneous/my_account/data_read.ejs.php',
-				create	: 'interface/miscellaneous/my_account/data_create.ejs.php',
+			  //create	:  the user can not create accounts
 				update	: 'interface/miscellaneous/my_account/data_update.ejs.php',
-				destroy : 'interface/miscellaneous/my_account/data_destroy.ejs.php'
+			  //destroy :  user will not be able to descroy his account
 			},
 	        reader: {
 	            type			: 'json',
@@ -109,14 +109,13 @@ Ext.onReady(function(){
 	    },
 	    autoLoad: true
 	});
-	function authCk(val) {
-	    if (val == 'Yes') {
-	        return '<img src="ui_icons/yes.gif" />';
-	    } else if(val == 'No') {
-	        return '<img src="ui_icons/no.gif" />';
-	    } 
-	    return val;
-	}
+	//------------------------------------------------------------------------------
+	// When the data is loaded semd values to de form
+	//------------------------------------------------------------------------------
+	storeUsers.on('load',function(DataView, records, o){
+		var rec = storeUsers.getById(1); // get the record from the store
+		Ext.getCmp('myAccountForm').getForm().loadRecord(rec);
+	});
 	// *************************************************************************************
 	// Structure, data for Titles
 	// AJAX -> component_data.ejs.php
@@ -376,8 +375,6 @@ Ext.onReady(function(){
 		      	]  
 		    },{
 		    	width: 110, xtype: 'displayfield', value: '<?php i18n('Notes'); ?>: '
-		    },{
-		    	xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info'
 			}]
 		}],
 		dockedItems: [{
