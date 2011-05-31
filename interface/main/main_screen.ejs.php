@@ -36,7 +36,8 @@ include_once('library/compressor/compressor.inc.php');
 // using requiered to load diferent components
 // *************************************************************************************
 Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ux']; ?>');
+Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux');
+Ext.Loader.setPath('Ext.mitos', '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos');
 Ext.require([
     'Ext.grid.*',
     'Ext.data.*',
@@ -44,11 +45,10 @@ Ext.require([
     'Ext.state.*',
     'Ext.toolbar.Paging',
     'Ext.TaskManager.*',
-    'Ext.ux.SlidingPager'
+    'Ext.ux.SlidingPager',
+    'Ext.mitos.TopRenderPanel'
 ]);
-
 Ext.onReady(function() {
-	
 	//****************************************************************
 	// Task Scheduler 
 	// This will run certain task at determined time.
@@ -284,18 +284,16 @@ Ext.onReady(function() {
 		listeners		: {
 			resize 		: {
 				fn		: function(){
-					if(Ext.getCmp('topRenderPanel')){
+					if( trp = Ext.getCmp('topRenderPanel')){
 						var height = this.getHeight()
 						var width = this.getWidth()
-						Ext.getCmp('topRenderPanel').setSize( width , height );
+						trp.setSize( width , height );
 					}
 				}
 			}	
 		}
 	}); // End MainApp
 	
-	
-    
 	//****************************************************************
 	// TopPanel
 	// Description: It will show up the main layouts
@@ -312,9 +310,7 @@ Ext.onReady(function() {
 		padding			: 0,
 		bodyPadding		: 0,
 		items			: [ MainApp ]
-	}); // End TopPanel
-	
-	
+	}); // End TopPanel	
 	
 	//****************************************************************
 	// The main ViewPort

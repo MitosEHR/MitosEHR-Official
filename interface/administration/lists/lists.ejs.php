@@ -24,23 +24,7 @@ $_SESSION['site']['flops'] = 0;
 ?>
 
 <script type="text/javascript">
-// *************************************************************************************
-// Sencha trying to be like a language
-// using requiered to load diferent components
-// *************************************************************************************
-Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ux']; ?>');
-Ext.require([
-    'Ext.grid.*',
-    'Ext.data.*',
-    'Ext.util.*',
-    'Ext.state.*',
-    'Ext.toolbar.Paging',
-    'Ext.ux.SlidingPager'
-]);
-
 Ext.onReady(function(){
-	
 	//******************************************************************************
 	// ExtJS Global variables 
 	//******************************************************************************
@@ -450,7 +434,7 @@ Ext.onReady(function(){
 	// PageLayout 	- default 'fit', define this argument if using other than the default value
 	// PageBody 	- List of items to display [foem1, grid1, grid2]
 	//***********************************************************************************
-    Ext.create('Ext.ux.TopRenderPanel', {
+    Ext.create('Ext.mitos.TopRenderPanel', {
         pageTitle: '<?php i18n('List Options'); ?>',
         pageBody: [listGrid]
     });

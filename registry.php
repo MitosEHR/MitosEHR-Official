@@ -41,7 +41,7 @@ $_SESSION['dir']['zend'] = "ZendFramework-1.11.6";
 $_SESSION['dir']['ext'] = "ext-4.0.1";
 $_SESSION['dir']['AES'] = "phpAES";
 $_SESSION['dir']['adoHelper'] = "dbHelper";
-$_SESSION['dir']['ux'] = "library/".$_SESSION['dir']['ext']."/examples/ux";
+$_SESSION['dir']['ext_classes'] = "repository/ext_classes";
 
 //**********************************************************************
 // Patient Related Variables

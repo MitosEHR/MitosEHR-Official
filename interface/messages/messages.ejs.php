@@ -20,24 +20,8 @@ include_once("../../library/I18n/I18n.inc.php");
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 ?>
-
 <script type="text/javascript">
-Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ux']; ?>');
-Ext.require([
-    'Ext.grid.*',
-    'Ext.data.*',
-    'Ext.util.*',
-    'Ext.state.*',
-    'Ext.toolbar.Paging',
-    'Ext.ux.SlidingPager'
-]);
-
-// *************************************************************************************
-// Start Sencha Framework
-// *************************************************************************************
 Ext.onReady(function() {
-
 	//******************************************************************************
 	// Sanitizing Objects
 	// Destroy them, if already exists in the browser memory.
@@ -47,16 +31,13 @@ Ext.onReady(function() {
 	if ( Ext.getCmp('winPatients') ){ Ext.getCmp('winPatients').destroy(); }
 	if ( Ext.getCmp('winMessage') ){ Ext.getCmp('winMessage').destroy(); }
 	if ( Ext.getCmp('gridPatients') ){ Ext.getCmp('gridPatients').destroy(); }
-	
 	// *************************************************************************************
 	// Global variables
 	// *************************************************************************************
 	var rowContent;
 	var rowPos;
 	var body_content;
-	
 	body_content = '<?php i18n('Nothing posted yet...'); ?>';
-
 	// *************************************************************************************
 	// Structure of the message record
 	// creates a subclass of Ext.data.Record
@@ -548,7 +529,6 @@ Ext.onReady(function() {
 				});
 			}
 		}], // END GRID TOP MENU
-	
 	}); // END GRID
 
 	//***********************************************************************************
@@ -558,7 +538,7 @@ Ext.onReady(function() {
 	// PageLayout 	- default 'fit', define this argument if using other than the default value
 	// PageBody 	- List of items to display [foem1, grid1, grid2]
 	//***********************************************************************************
-    Ext.create('Ext.ux.TopRenderPanel', {
+    Ext.create('Ext.mitos.TopRenderPanel', {
         pageTitle: '<?php i18n('Messages'); ?>',
         pageBody: [msgGrid]
     });

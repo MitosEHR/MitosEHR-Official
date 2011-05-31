@@ -21,30 +21,11 @@ include_once("../../../library/I18n/I18n.inc.php");
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 ?>
-
 <script type="text/javascript">
-// *************************************************************************************
-// Sencha trying to be like a language
-// using requiered to load diferent components
-// *************************************************************************************
-Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ux']; ?>');
-Ext.require([
-    'Ext.grid.*',
-    'Ext.data.*',
-    'Ext.util.*',
-    'Ext.state.*',
-    'Ext.toolbar.Paging',
-    'Ext.ux.SlidingPager'
-]);
-
 Ext.onReady(function(){
-	
 	Ext.QuickTips.init();
-
 	var rowPos; // Stores the current Grid Row Position (int)
 	var currRec; // Store the current record (Object)
-
 	// *************************************************************************************
 	// If a object called winUser exists destroy it, to create a new one.
 	// *************************************************************************************
@@ -518,7 +499,7 @@ Ext.onReady(function(){
 	// PageLayout 	- default 'fit', define this argument if using other than the default value
 	// PageBody 	- List of items to display [foem1, grid1, grid2]
 	//***********************************************************************************
-    Ext.create('Ext.ux.TopRenderPanel', {
+    Ext.create('Ext.mitos.TopRenderPanel', {
         pageTitle: '<?php i18n('Users'); ?>',
         pageBody: [userGrid]
     });

@@ -22,33 +22,7 @@ $_SESSION['site']['flops'] = 0;
 
 ?>
 <script type="text/javascript">
-// *************************************************************************************
-// Sencha trying to be like a language
-// using requiered to load diferent components
-// *************************************************************************************
-Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ux']; ?>');
-Ext.require([
-    'Ext.grid.*',
-    'Ext.data.*',
-    'Ext.util.*',
-    'Ext.state.*',
-    'Ext.toolbar.Paging',
-    'Ext.TaskManager.*',
-    'Ext.ux.SlidingPager',
-    'Ext.ux.TopRenderPanel'
-    
-]);
-
 Ext.onReady(function(){
-	
-	//******************************************************************************
-	// Sanitizing Objects
-	// Destroy them, if already exists in the browser memory.
-	// This destructions must be called for all the objects that
-	// are rendered on the document.body 
-	//******************************************************************************
-
 	// *************************************************************************************
 	// Structure of the message record
 	// creates a subclass of Ext.data.Record
@@ -284,7 +258,7 @@ Ext.onReady(function(){
 	// PageLayout 	- default 'fit', define this argument if using other than the default value
 	// PageBody 	- List of items to display [foem1, grid1, grid2]
 	//***********************************************************************************
-    Ext.create('Ext.ux.TopRenderPanel', {
+    Ext.create('Ext.mitos.TopRenderPanel', {
         pageTitle: '<?php i18n('Office Notes'); ?>',
         pageLayout: 'border',
         pageBody: [onotesFormPanel,onotesGrid ]

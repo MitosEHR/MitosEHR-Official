@@ -22,27 +22,8 @@ $_SESSION['site']['flops'] = 0;
 
 ?>
 <script type="text/javascript">
-// *************************************************************************************
-// Sencha trying to be like a language
-// using requiered to load diferent components
-// *************************************************************************************
-Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ux']; ?>');
-Ext.require([
-    'Ext.grid.*',
-    'Ext.data.*',
-    'Ext.util.*',
-    'Ext.state.*',
-    'Ext.toolbar.Paging',
-    'Ext.TaskManager.*',
-    'Ext.ux.SlidingPager',
-    'Ext.ux.TopRenderPanel'    
-]);
-
 Ext.onReady(function(){
-	
 	Ext.QuickTips.init();
-
 	var rowPos; // Stores the current Grid Row Position (int)
 	var currRec; // Store the current record (Object)
 
@@ -107,10 +88,10 @@ Ext.onReady(function(){
 	    proxy		: {
 	    	type	: 'ajax',
 			api		: {
-				read	: 'interface/administration/users/data_read.ejs.php',
-				create	: 'interface/administration/users/data_create.ejs.php',
-				update	: 'interface/administration/users/data_update.ejs.php',
-				destroy : 'interface/administration/users/data_destroy.ejs.php'
+				read	: 'interface/miscellaneous/my_account/data_read.ejs.php',
+				create	: 'interface/miscellaneous/my_account/data_create.ejs.php',
+				update	: 'interface/miscellaneous/my_account/data_update.ejs.php',
+				destroy : 'interface/miscellaneous/my_account/data_destroy.ejs.php'
 			},
 	        reader: {
 	            type			: 'json',
@@ -152,7 +133,7 @@ Ext.onReady(function(){
 		model		: 'Titles',
 		proxy		: {
 			type	: 'ajax',
-			url		: 'interface/administration/users/component_data.ejs.php?task=titles',
+			url		: 'interface/miscellaneous/my_account/component_data.ejs.php?task=titles',
 			reader	: {
 				type			: 'json',
 				idProperty		: 'option_id',
@@ -179,7 +160,7 @@ Ext.onReady(function(){
 		model		: 'Types',
 		proxy		: {
 			type	: 'ajax',
-			url		: 'interface/administration/users/component_data.ejs.php?task=types',
+			url		: 'interface/miscellaneous/my_account/component_data.ejs.php?task=types',
 			reader	: {
 				type			: 'json',
 				idProperty		: 'option_id',
@@ -206,7 +187,7 @@ Ext.onReady(function(){
 		model		: 'Facilities',
 		proxy		: {
 			type	: 'ajax',
-			url		: 'interface/administration/users/component_data.ejs.php?task=facilities',
+			url		: 'interface/miscellaneous/my_account/component_data.ejs.php?task=facilities',
 			reader	: {
 				type			: 'json',
 				idProperty		: 'id',
@@ -233,7 +214,7 @@ Ext.onReady(function(){
 		model		: 'AccessControls',
 		proxy		: {
 			type	: 'ajax',
-			url		: 'interface/administration/users/component_data.ejs.php?task=accessControls',
+			url		: 'interface/miscellaneous/my_account/component_data.ejs.php?task=accessControls',
 			reader	: {
 				type			: 'json',
 				idProperty		: 'id',
@@ -428,7 +409,7 @@ Ext.onReady(function(){
 	// PageLayout 	- default 'fit', define this argument if using other than the default value
 	// PageBody 	- List of items to display [foem1, grid1, grid2]
 	//***********************************************************************************
-    Ext.create('Ext.ux.TopRenderPanel', {
+    Ext.create('Ext.mitos.TopRenderPanel', {
         pageTitle: 'My Account',
         pageBody: [myAccountForm]
     });
