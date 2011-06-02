@@ -46,7 +46,16 @@ Ext.require([
     'Ext.toolbar.Paging',
     'Ext.TaskManager.*',
     'Ext.ux.SlidingPager',
-    'Ext.mitos.TopRenderPanel'
+    // miots custom classes
+    'Ext.mitos.CRUDStore',
+    'Ext.mitos.StdGridPanel',
+    'Ext.mitos.TopRenderPanel',
+    'Ext.mitos.SaveCancelWindow',
+    'Ext.mitos.RolesComboBox',
+    'Ext.mitos.TypesComboBox',
+    'Ext.mitos.TitlesComboBox',
+    'Ext.mitos.FacilitiesComboBox',
+    'Ext.mitos.AuthorizationsComboBox'
 ]);
 Ext.onReady(function() {
 	//****************************************************************
