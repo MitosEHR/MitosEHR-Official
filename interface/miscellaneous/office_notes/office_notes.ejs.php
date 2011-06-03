@@ -183,14 +183,10 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Create the GridPanel
 	// *************************************************************************************
-	var onotesGrid = new Ext.grid.GridPanel({
+	var onotesGrid = new Ext.create('Ext.mitos.GridPanel', {
   		id          : 'onotesGrid',
   		region		: 'center',
   		store       : storeOnotes,
-  		layout	    : 'fit',
-		frame		: true,
-	  	loadMask    : true,
-  		viewConfig  : {stripeRows: true},
     	listeners	: {
 	   		// -----------------------------------------
 	   	  	// Single click to select the record
@@ -218,7 +214,6 @@ Ext.onReady(function(){
 
   		],
 		tbar: Ext.create('Ext.PagingToolbar', {
-            
             store: storeOnotes,
             displayInfo: true,
             emptyMsg: "<?php i18n('No Office Notes to display'); ?>",

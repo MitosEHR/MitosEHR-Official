@@ -27,11 +27,9 @@ Ext.onReady(function(){
 	// User Settinga Form
 	// Add or Edit purpose
 	// *************************************************************************************
-	var uSettingsForm = new Ext.form.FormPanel({
+	var uSettingsForm = new Ext.create('Ext.mitos.FormPanel', {
 	  	id          : 'uSettingsForm',
 	  	bodyStyle   : 'padding: 10px;',
-	  	autoWidth   : true,
-		border      : false,
 		cls			: 'form-white-bg',
 		frame		: true,
 		hideLabels  : true,

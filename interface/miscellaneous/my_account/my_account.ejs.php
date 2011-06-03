@@ -116,138 +116,13 @@ Ext.onReady(function(){
 		var rec = storeUsers.getById(1); // get the record from the store
 		Ext.getCmp('myAccountForm').getForm().loadRecord(rec);
 	});
-	// *************************************************************************************
-	// Structure, data for Titles
-	// AJAX -> component_data.ejs.php
-	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Titles')){
-	Ext.define("Titles", {extend: "Ext.data.Model", fields: [
-		{name: 'option_id', type: 'string'},
-	    {name: 'title', type: 'string'}
-	],
-		idProperty: 'option_id'
-	});
-	}
-	var storeTitles = new Ext.data.Store({
-		model		: 'Titles',
-		proxy		: {
-			type	: 'ajax',
-			url		: 'interface/miscellaneous/my_account/component_data.ejs.php?task=titles',
-			reader	: {
-				type			: 'json',
-				idProperty		: 'option_id',
-				totalProperty	: 'totals',
-				root			: 'row'
-			}
-		},
-		autoLoad: true
-	}); // End storeTitles
 
-	// *************************************************************************************
-	// Structure, data for Types
-	// AJAX -> component_data.ejs.php
-	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Types')){
-	Ext.define("Types", {extend: "Ext.data.Model", fields: [
-		{name: 'option_id', type: 'string'},
-	    {name: 'title', type: 'string'}
-	],
-		idProperty: 'option_id'
-	});
-	}
-	var storeTypes = new Ext.data.Store({
-		model		: 'Types',
-		proxy		: {
-			type	: 'ajax',
-			url		: 'interface/miscellaneous/my_account/component_data.ejs.php?task=types',
-			reader	: {
-				type			: 'json',
-				idProperty		: 'option_id',
-				totalProperty	: 'totals',
-				root			: 'row'
-			}
-		},
-		autoLoad: true
-	}); // End storeTypes
-	
-	// *************************************************************************************
-	// Structure, data for Facilities
-	// AJAX -> component_data.ejs.php
-	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Facilities')){
-	Ext.define("Facilities", {extend: "Ext.data.Model", fields: [
-		{name: 'id', type: 'string'},
-	    {name: 'name', type: 'string'}
-	],
-		idProperty: 'id'
-	});
-	}
-	var storeFacilities = new Ext.data.Store({
-		model		: 'Facilities',
-		proxy		: {
-			type	: 'ajax',
-			url		: 'interface/miscellaneous/my_account/component_data.ejs.php?task=facilities',
-			reader	: {
-				type			: 'json',
-				idProperty		: 'id',
-				totalProperty	: 'totals',
-				root			: 'row'
-			}
-		},
-		autoLoad: true
-	}); // End storeFacilities
-	
-	// *************************************************************************************
-	// Structure, data for AccessControls
-	// AJAX -> component_data.ejs.php
-	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('AccessControls')){
-	Ext.define("AccessControls", {extend: "Ext.data.Model", fields: [
-		{name: 'id', type: 'string'},
-	    {name: 'role_name', type: 'string'}
-	],
-		idProperty: 'id'
-	});
-	}
-	var storeAccessControls = new Ext.data.Store({
-		model		: 'AccessControls',
-		proxy		: {
-			type	: 'ajax',
-			url		: 'interface/miscellaneous/my_account/component_data.ejs.php?task=accessControls',
-			reader	: {
-				type			: 'json',
-				idProperty		: 'id',
-				totalProperty	: 'totals',
-				root			: 'row'
-			}
-		},
-		autoLoad: true
-	}); // End storeFacilities
-	
-	
-	// *************************************************************************************
-	// Structure, data for storeSeeAuthorizations
-	// AJAX -> component_data.ejs.php
-	// *************************************************************************************
-	Ext.namespace('Ext.data');
-	Ext.data.authorizations = [
-	    ['1', 'None'],
-	    ['2', 'Only Mine'],
-	    ['3', 'All']
-	];
-	var storeSeeAuthorizations = new Ext.data.ArrayStore({
-	    fields: ['id', 'name'],
-	    data : Ext.data.authorizations
-	});
 	// *************************************************************************************
 	// User Settinga Form
 	// Add or Edit purpose
 	// *************************************************************************************
-	var myAccountForm = new Ext.form.FormPanel({
+	var myAccountForm = new Ext.create('Ext.mitos.FormPanel', {
 		id          : 'myAccountForm',
-		bodyStyle   : 'padding: 5px;',
-		autoWidth   : true,
-		border      : false,
 		cls			: 'form-white-bg',
 		frame       : true,
 		hideLabels  : true,
@@ -284,7 +159,7 @@ Ext.onReady(function(){
 		      	msgTarget : 'under', 
 		      	items: [
 		        	{ width: 110, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
-		        	{ width: 60,  xtype: 'combo',     id: 'cb_title', name: 'title', editable: false, displayField: 'title', queryMode: 'local', store: storeTitles },
+		        	  Ext.create('Ext.mitos.TitlesComboBox', {width: 60 }),
 		        	{ width: 105,  xtype: 'textfield', id: 'fname', name: 'fname' },
 		        	{ width: 100,  xtype: 'textfield', id: 'mname', name: 'mname' },
 		        	{ width: 175, xtype: 'textfield', id: 'lname', name: 'lname' },
@@ -335,16 +210,16 @@ Ext.onReady(function(){
 		      	msgTarget : 'under', 
 		      	items: [
 		        	{ width: 110, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
-		        	{ width: 170, xtype: 'combo', id: 'cb_facility_id', name: 'facility_id', editable: false, displayField: 'name', valueField: 'id', queryMode: 'local', store: storeFacilities, emptyText:'Select ' },
+					  Ext.create('Ext.mitos.FacilitiesComboBox', {width: 170 }),
 		        	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
-		        	{ width: 175, xtype: 'combo', id: 'cb_see_auth', name: 'see_auth', editable: false, displayField: 'name', valueField: 'id', queryMode: 'local', store: storeSeeAuthorizations, emptyText:'Select ' }
+					  Ext.create('Ext.mitos.AuthorizationsComboBox', {width: 175 }),
 		      	] 
 		    },{ 
 		      	xtype: 'fieldcontainer',
 		      	defaults: { hideLabel: true },
 		      	items: [
 		        	{ width: 110, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
-		        	{ width: 170, xtype: 'combo', id: 'cb_none', name: 'none', autoSelect: true, displayField: 'name', valueField: 'value', queryMode: 'local', store: storeAccessControls, emptyText:'Select ' },
+					  Ext.create('Ext.mitos.RolesComboBox', {width: 170 }),
 		        	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
 		        	{ width: 175, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
 		      	]

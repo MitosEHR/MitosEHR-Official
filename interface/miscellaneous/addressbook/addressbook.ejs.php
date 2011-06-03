@@ -137,70 +137,12 @@ Ext.onReady(function(){
 	}
 	
 	// *************************************************************************************
-	// Structure, data for Titles
-	// AJAX -> component_data.ejs.php
-	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Titles')){
-	Ext.define("Titles", {extend: "Ext.data.Model", fields: [
-		{name: 'option_id', type: 'string'},
-	    {name: 'title', type: 'string'}
-	],
-		idProperty: 'option_id'
-	});
-	}
-	var storeTitles = new Ext.data.Store({
-		model		: 'Titles',
-		proxy		: {
-			type	: 'ajax',
-			url		: 'interface/miscellaneous/addressbook/component_data.ejs.php?task=titles',
-			reader	: {
-				type			: 'json',
-				idProperty		: 'option_id',
-				totalProperty	: 'totals',
-				root			: 'row'
-			}
-		},
-		autoLoad: true
-	}); 
-	
-	// *************************************************************************************
-	// Structure, data for Types
-	// AJAX -> component_data.ejs.php
-	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Types')){
-	Ext.define("Types", {extend: "Ext.data.Model", fields: [
-		{name: 'option_id', type: 'string'},
-	    {name: 'title', type: 'string'}
-	],
-		idProperty: 'option_id'
-	});
-	}
-	var storeTypes = new Ext.data.Store({
-		model		: 'Types',
-		proxy		: {
-			type	: 'ajax',
-			url		: 'interface/miscellaneous/addressbook/component_data.ejs.php?task=types',
-			reader	: {
-				type			: 'json',
-				idProperty		: 'option_id',
-				totalProperty	: 'totals',
-				root			: 'row'
-			}
-		},
-		autoLoad: true
-	});
-	
-	// *************************************************************************************
 	// Facility Form
 	// Add or Edit purpose
 	// *************************************************************************************
-	var frmAddressbook = new Ext.form.FormPanel({
+	var frmAddressbook = new Ext.create('Ext.mitos.FormPanel', {
 	  	id          : 'frmAddressbook',
-	  	bodyStyle   : 'padding: 10px;',
-	  	autoWidth   : true,
-		border      : false,
 		hideLabels  : true,
-
 	 	items: [{
 	 		xtype: 'textfield', hidden: true, id: 'id', name: 'id'
 	 	},{
@@ -224,7 +166,7 @@ Ext.onReady(function(){
 			    msgTarget : 'under', 
 		        items: [
 		            { width: 100, xtype: 'displayfield', value: '<?php i18n('Type'); ?>: '},
-		            { width: 130, xtype: 'combo', id: 'abook_type', name: 'abook_type', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'abook_type', mode: 'local', triggerAction: 'all', store: storeTypes }
+					  Ext.create('Ext.mitos.TypesComboBox', {width: 130 }),
 		        ]
 		    },{ 
 		    	xtype: 'fieldcontainer',
@@ -232,8 +174,8 @@ Ext.onReady(function(){
 			    msgTarget : 'under', 
 		        items: [
 		            { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
-		            { width: 50,  xtype: 'combo',     id: 'title', name: 'title', autoSelect: true, displayField: 'title', valueField: 'option_id', hiddenName: 'title', mode: 'local', triggerAction: 'all', store: storeTitles },
-		            { width: 130, xtype: 'textfield', id: 'fname', name: 'fname' },
+					  Ext.create('Ext.mitos.TitlesComboBox', {width: 50 }),		            
+					{ width: 130, xtype: 'textfield', id: 'fname', name: 'fname' },
 		            { width: 100, xtype: 'textfield', id: 'mname', name: 'mname' },
 		            { width: 280, xtype: 'textfield', id: 'lname', name: 'lname' }
 		        ] 
@@ -417,18 +359,11 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Message Window Dialog
 	// *************************************************************************************
-	var winAddressbook = new Ext.Window({
+	var winAddressbook = new Ext.create('Ext.mitos.Window', {
 		id          : 'winAddressbook',
 		width       : 755,
 		height  	: 660,
-		modal       : true,
-		resizable   : false,
-	  	autoScroll  : true,
-	  	bodyStyle	: 'background-color:#ffffff',
-	  	padding		: 5,
 		title       : '<?php i18n('Add or Edit Contact'); ?>',
-		closeAction : 'hide',
-		renderTo    : document.body,
 		items: [ frmAddressbook ],
 		buttons:[{
 		    text      :'<?php i18n('Save'); ?>',
