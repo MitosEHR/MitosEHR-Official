@@ -201,11 +201,8 @@ Ext.onReady(function(){
 	// ****************************************************************************
 	// Create the Permisions Form
 	// ****************************************************************************
-    var permsForm = Ext.create('Ext.form.Panel', {
-    	frame		: false,
-    	border		: false,
+    var permsForm = Ext.create('Ext.mitos.FormPanel', {
     	id			: 'permsForm',
-        bodyStyle	: 'padding:2px',
         fieldDefaults: {
             msgTarget	: 'side',
             labelWidth	: 100
@@ -228,14 +225,9 @@ Ext.onReady(function(){
 	// ****************************************************************************
 	// Create the Window
 	// ****************************************************************************	
-	var winRoles = Ext.create('widget.window', {
+	var winRoles = Ext.create('Ext.mitos.Window', {
 		id			: 'winRoles',
-		closable	: true,
-		closeAction	: 'hide',
 		width		: 450,
-		resizable	: false,
-		modal		: true,
-		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
 		items		: [ rolesForm ],
 		buttons: [{
             text: 'Save',
@@ -270,14 +262,9 @@ Ext.onReady(function(){
 	// ****************************************************************************
 	// Create the Window
 	// ****************************************************************************	
-	var winPerms = Ext.create('widget.window', {
+	var winPerms = Ext.create('Ext.mitos.Window', {
 		id			: 'winPerms',
-		closable	: true,
-		closeAction	: 'hide',
 		width		: 450,
-		resizable	: false,
-		modal		: true,
-		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
 		items		: [ permsForm ],
         buttons: [{
             text: 'Save',
@@ -318,13 +305,8 @@ Ext.onReady(function(){
 	// ****************************************************************************
 	// Create the GridPanel
 	// ****************************************************************************
-	var rolesGrid = Ext.create('Ext.grid.Panel', {
+	var rolesGrid = Ext.create('Ext.mitos.GridPanel', {
 		store		: permStore,
-        columnLines	: true,
-        frame		: true,
-        frameHeader	: false,
-        border		: true,
-        layout		: 'fit',
 		plugins: [rowEditing],
         columns: [{
         	dataIndex: 'permID', 

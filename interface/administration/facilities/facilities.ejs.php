@@ -152,15 +152,9 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// User form
 	// *************************************************************************************
-    var facilityForm = Ext.create('Ext.form.Panel', {
-    	frame: false,
-    	border: false,
+    var facilityForm = new Ext.create('Ext.mitos.FormPanel', {
     	id: 'facilityForm',
-        bodyStyle:'padding:2px',
-        fieldDefaults: {
-            msgTarget: 'side',
-            labelWidth: 100
-        },
+        fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
         defaultType: 'textfield',
         defaults: {
             anchor: '100%'
@@ -245,25 +239,24 @@ Ext.onReady(function() {
         },{
         	name: 'id',
         	hidden: true
-        }]
+        }],
+        listeners: {
+			beforeshow: {
+            	fn: function(){ 
+            		Ext.getCmp('tax_id_type').setValue( storeTAXid.getAt(0).data.option_id );
+   					Ext.getCmp('pos_code').setValue( storePOSCode.getAt(0).data.option_id );
+            	}
+			}
+		},
     });
-   	facilityForm.on('afterrender',function(){
-   		Ext.getCmp('tax_id_type').setValue( storeTAXid.getAt(0).data.option_id );
-   		Ext.getCmp('pos_code').setValue( storePOSCode.getAt(0).data.option_id );
-   	});
     
 	// *************************************************************************************
 	// Window User Form
 	// *************************************************************************************
-	var winFacility = Ext.create('widget.window', {
+	var winFacility = Ext.create('Ext.mitos.Window', {
 		id			: 'winFacility',
-		closable	: true,
-		closeAction	: 'hide',
 		width		: 450,
 		height		: 530,
-		resizable	: false,
-		modal		: true,
-		bodyStyle	: 'background-color: #ffffff; padding: 5px;',
 		items		: [ facilityForm ],
 		buttons:[{
 			text		:'<?php i18n('Save'); ?>',
@@ -313,12 +306,9 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Grid Panel
 	// *************************************************************************************
-	var FacilityGrid = Ext.create('Ext.grid.Panel', {
+	var FacilityGrid = new Ext.create('Ext.mitos.GridPanel', {
 		id			: 'FacilityGrid',
 		store		: FacilityStore,
-        layout	    : 'fit',
-	  	frame		: true,
-	  	border		: true,
         columns: [
 			{
 				text     : '<?php i18n("Name"); ?>',
@@ -352,7 +342,6 @@ Ext.onReady(function() {
             displayInfo: true,
             plugins: Ext.create('Ext.ux.SlidingPager', {})
         }),
-		viewConfig: { stripeRows: true },
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){ 

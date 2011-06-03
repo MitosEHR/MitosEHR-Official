@@ -48,6 +48,9 @@ Ext.require([
     'Ext.ux.SlidingPager',
     // miots custom classes
     'Ext.mitos.CRUDStore',
+    'Ext.mitos.Window',
+    'Ext.mitos.GridPanel',
+    'Ext.mitos.FormPanel',
     'Ext.mitos.StdGridPanel',
     'Ext.mitos.TopRenderPanel',
     'Ext.mitos.SaveCancelWindow',

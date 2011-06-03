@@ -144,11 +144,8 @@ Ext.onReady(function(){
 	// List Create Form
 	// Create or Closse purpose
 	// *************************************************************************************
-	var frmLists = Ext.create('Ext.form.Panel', {
+	var frmLists = Ext.create('Ext.mitos.FormPanel', {
 		id			: 'frmLists',
-		autoWidth	: true,
-		border		: false,
-		bodyStyle	: 'padding: 5px',
 		defaults	: { labelWidth: 100, anchor: '100%' },
 		items:[
 			{ 
@@ -173,17 +170,11 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Create list Window Dialog
 	// *************************************************************************************
-	var winLists = Ext.create('widget.window', {
+	var winLists = Ext.create('Ext.mitos.Window', {
 		id			: 'winList',
 		width		: 400,
-		autoHeight	: true,
-		modal		: true,
-		resizable	: false,
-		autoScroll	: false,
 		title		: '<?php i18n('Create List'); ?>',
-		closeAction	: 'hide',
-		renderTo	: document.body,
-		items: [ frmLists ],
+		items		: [ frmLists ],
 		// -----------------------------------------
 		// Window Bottom Bar
 		// -----------------------------------------
@@ -243,15 +234,9 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// FIXME: On the double click event, is giving a error on ExtJSv4, don't know what 
 	// is cousing the problem. I will check this error later.
-	var listGrid = new Ext.create('Ext.grid.Panel', {
+	var listGrid = new Ext.create('Ext.mitos.GridPanel', {
 		id			: 'listGrid',
 		store		: storeListsOption,
-        columnLines	: true,
-        frame		: true,
-        frameHeader	: false,
-        border		: true,
-        layout		: 'fit',
-        loadMask    : true,
 		plugins		: [rowEditing],
 		columns: [{ 
 			name: 'id',

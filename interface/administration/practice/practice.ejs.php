@@ -252,13 +252,9 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Phramacy Form, Window, and Form
 	// *************************************************************************************
-	var pharmacyForm = new Ext.form.FormPanel({
+	var pharmacyForm = new Ext.create('Ext.mitos.FormPanel', { 
 		id          : 'pharmacyForm',
-		bodyStyle   : 'padding: 5px;',
-		autoWidth   : true,
-		width	  	  : 495,
-		border      : true,
-		frame      : true,
+		width	  	: 495,
 		hideLabels  : true,
 		defaults: {
 			labelWidth: 89,
@@ -270,25 +266,16 @@ Ext.onReady(function(){
 		},
 		items: [{}]
 	}); // END FORM
-	var winPharmacy = new Ext.Window({
+	var winPharmacy = new Ext.create('Ext.mitos.Window', { 
 		id          : 'winPharmacy',
 		width       : 520,
-	    autoHeight  : true,
-	    modal       : true,
-	    border	  	: false,
-	    resizable   : false,
 	    title       : '<?php i18n('Add or Edit Pharmacy'); ?>',
-	    closeAction : 'hide',
-	    renderTo    : document.body,
 	    items: [pharmacyForm],
 	}); // END WINDOW
-	var pharmacyGrid = Ext.create('Ext.grid.Panel', {
+	var pharmacyGrid = new Ext.create('Ext.mitos.GridPanel', { 
 		store		: pharmacyStore,
-        columnLines	: true,
-        frame		: false,
-        frameHeader	: false,
-        border		: false,
-        layout		: 'fit',
+		border		: false,
+		frame		: false,
         columns: [{
 			text     : '<?php i18n("Pharmacy Name"); ?>',
 			width    : 150,
@@ -315,7 +302,6 @@ Ext.onReady(function(){
 			sortable : true,
 			dataIndex: 'transmit_method'
         }],
-		viewConfig: { stripeRows: true },
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){ 
@@ -347,13 +333,9 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Insurance Form, Window, and GRID
 	// *************************************************************************************
-	var insuranceForm = new Ext.form.FormPanel({
+	var insuranceForm = new Ext.create('Ext.mitos.FormPanel', { 
 		id          : 'insuranceForm',
-		bodyStyle   : 'padding: 5px;',
-		autoWidth   : true,
 		width	  	  : 495,
-		border      : false,
-		hideLabels  : true,
 		defaults: {
 			labelWidth: 89,
 		    anchor: '100%',
@@ -367,22 +349,13 @@ Ext.onReady(function(){
 	var winInsurance = new Ext.Window({
 		id          : 'winInsurance',
 		width       : 520,
-	    autoHeight  : true,
-	    modal       : true,
-	    border	  	: true,
-	    resizable   : false,
 	    title       : '<?php i18n('Add or Edit Insurance'); ?>',
-	    closeAction : 'hide',
-	    renderTo    : document.body,
 	    items: [insuranceForm],
 	}); // END WINDOW
-	var insuranceGrid = Ext.create('Ext.grid.Panel', {
+	var insuranceGrid = new Ext.create('Ext.mitos.GridPanel', { 
 		store		: insuranceStore,
-        columnLines	: true,
-        frame		: false,
-        frameHeader	: false,
-        border		: false,
-        layout		: 'fit',
+		border		: false,
+		frame		: false,
         columns: [{
         	text     : '<?php i18n("Insurance Name"); ?>',
 			width    : 150,
@@ -410,7 +383,6 @@ Ext.onReady(function(){
 			sortable : true,
 			dataIndex: 'x12_default_partner_id'			
         }],
-		viewConfig: { stripeRows: true },
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){ 
@@ -442,13 +414,10 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Insurance Numbers Grid (Tab 2)
 	// *************************************************************************************
-	var InsuranceNumbersGrid = Ext.create('Ext.grid.Panel', {
+	var InsuranceNumbersGrid = new Ext.create('Ext.grid.Panel', {
 		store		: insuranceNumbersStore,
-        columnLines	: true,
-        frame		: true,
-        frameHeader	: false,
-        border		: true,
-        layout		: 'fit',
+		border		: false,
+		frame		: false,
         columns: [{
         	text     : '<?php i18n("Name"); ?>',
 			flex     : 1,
@@ -509,13 +478,10 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	//  X12 Partners Grid (Tab 3)
 	// *************************************************************************************
-	var x12ParnersGrid = Ext.create('Ext.grid.Panel', {
+	var x12ParnersGrid = new Ext.create('Ext.mitos.GridPanel', { 
 		store		: x12PartnersStore,
-        columnLines	: true,
-        frame		: false,
-        frameHeader	: true,
-        border		: true,
-        layout		: 'fit',
+		border		: false,
+		frame		: false,
         columns: [{
         	text     : '<?php i18n("Name"); ?>',
 			flex     : 1,
@@ -573,7 +539,7 @@ Ext.onReady(function(){
 	//**************************************************************************
 	// Tab Panel
 	//**************************************************************************
-	var tabPanel = Ext.create('Ext.tab.Panel', {
+	var tabPanel = new Ext.create('Ext.tab.Panel', {
         activeTab	: 0,
         frame		: true,
         border		: false,

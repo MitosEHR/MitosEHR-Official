@@ -392,12 +392,13 @@ Ext.onReady(function(){
 	//**************************************************************************
 	// Global Form Panel
 	//**************************************************************************
-	var globalFormPanel = Ext.create('Ext.form.Panel', {
+	var globalFormPanel = Ext.create('Ext.mitos.FormPanel', {
 		id				: 'globalFormPanel',
 		frame			: true,
 		border			: true,
 		layout			: 'fit',
 		autoScroll		: true,
+		padding			: 0,
         fieldDefaults	: { msgTarget: 'side', labelWidth: 220, width: 520 },
         defaults		: { anchor: '100%' },
         items: [{
