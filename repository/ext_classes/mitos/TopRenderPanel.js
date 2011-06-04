@@ -20,7 +20,7 @@ Ext.define('Ext.mitos.TopRenderPanel', {
             xtype: 'box',
             region: 'north',
             height: 40,
-            html: me.pageTitle
+            html: '<div class="dashboard_title">' + me.pageTitle + '</div>'
         },{
             id      	: 'topRenderPanel-body',
             xtype 		: 'panel',
