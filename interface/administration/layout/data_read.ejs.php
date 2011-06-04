@@ -31,65 +31,45 @@ $mitos_db = new dbHelper();
 // **************************************************************************************
 // catch the total records
 // **************************************************************************************
-$mitos_db->setSQL("SELECT count(*) as total FROM layout_options");
+if(!$_REQUEST['form_id']){
+	$sql = "SELECT count(*) as total FROM layout_options WHERE form_id='Demographics'";
+} else {
+	$sql = "SELECT count(*) as total FROM layout_options WHERE form_id='". $_REQUEST['form_id'] . "'";
+}
+$mitos_db->setSQL($sql);
 $urow = $mitos_db->execStatement();
 $total = $urow[0]['total'];
-
-// **************************************************************************************
-// Setting defults incase no request is sent by sencha
-// **************************************************************************************
-$start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
-$limit = ($_REQUEST["limit"] == null)? 30 : $_REQUEST["limit"];
 
 // **************************************************************************************
 // Verify if a $_GET['id'] has passed to select a facility.
 // and execute the apropriate SQL statement
 // **************************************************************************************
-if ($_GET['id']){
-	$sql = "SELECT * 
-			  FROM layout_options
-		  ORDER BY seq
-			 WHERE id=" . $_GET['id'] . "
-			 LIMIT " . $start . "," . $limit;
-} else { // if not select all of them
-	$sql = "SELECT * 
-			  FROM facility
-		  ORDER BY name
-			 LIMIT " . $start . "," . $limit;
+if(!$_REQUEST['form_id']){
+	$sql = "SELECT * FROM layout_options WHERE form_id='Demographics' ORDER BY seq";
+} else {
+	$sql = "SELECT * FROM layout_options WHERE form_id='". $_REQUEST['form_id'] . "' ORDER BY seq";
 }
+
 $mitos_db->setSQL($sql);
 foreach ($mitos_db->execStatement() as $urow) {
-	//-----------------------------------------------------------------------------------
-	// Parse some data
-	//-----------------------------------------------------------------------------------
-	$rec['service_location'] = ($urow['service_location'] == '1' ? 'on' : 'off');
-	$rec['billing_location'] = ($urow['billing_location'] == '1' ? 'on' : 'off');
-	$rec['accepts_assignment'] = ($urow['accepts_assignment'] == '1' ? 'on' : 'off');
-	if (strlen($urow['pos_code']) <= 1){
-		$rec['pos_code'] = '0'.$urow['pos_code'];
-	} else {
-		$rec['pos_code'] = $urow['pos_code'];
-	}
-	
 	$buff .= "{";
-	$buff .= " id: '" 					. dataEncode( $urow['id'] ) . "',";
-	$buff .= " name: '" 				. dataEncode( $urow['name'] ) . "',";
-	$buff .= " phone: '" 				. dataEncode( $urow['phone'] ) . "',";
-	$buff .= " fax: '" 					. dataEncode( $urow['fax'] ) . "',";
-	$buff .= " street: '" 				. dataEncode( $urow['street'] ) . "'," ;
-	$buff .= " city: '" 				. dataEncode( $urow['city'] ) . "',";
-	$buff .= " state: '" 				. dataEncode( $urow['state'] ) . "',";
-	$buff .= " postal_code: '" 			. dataEncode( $urow['postal_code'] ) . "',";
-	$buff .= " federal_ein: '" 			. dataEncode( $urow['federal_ein'] ) . "',";
-	$buff .= " service_location: '" 	. dataEncode( $rec['service_location'] ) . "',";
-	$buff .= " billing_location: '" 	. dataEncode( $rec['billing_location'] ) . "',";
-	$buff .= " accepts_assignment: '" 	. dataEncode( $rec['accepts_assignment'] ) . "',";
-	$buff .= " pos_code: '" 			. dataEncode( $rec['pos_code'] ) . "',";
-	$buff .= " attn: '" 				. dataEncode( $urow['attn'] ) . "',";
-	$buff .= " domain_identifier: '" 	. dataEncode( $urow['domain_identifier'] ) . "',";
-	$buff .= " facility_npi: '" 		. dataEncode( $urow['facility_npi'] ) . "',";
-	$buff .= " tax_id_type: '" 			. dataEncode( $urow['tax_id_type'] ) . "',";
-	$buff .= " country_code: '" 		. dataEncode( $urow['country_code'] ) . "'}," . chr(13);
+	$buff .= " item_id: '" 			. dataEncode( $urow['item_id'] ) . "',";
+	$buff .= " form_id: '" 			. dataEncode( $urow['form_id'] ) . "',";
+	$buff .= " field_id: '" 		. dataEncode( $urow['field_id'] ) . "',";
+	$buff .= " group_name: '" 		. dataEncode( $urow['group_name'] ) . "',";
+	$buff .= " title: '" 			. dataEncode( $urow['title'] ) . "'," ;
+	$buff .= " seq: '" 				. dataEncode( $urow['seq'] ) . "',";
+	$buff .= " data_type: '" 		. dataEncode( $urow['data_type'] ) . "',";
+	$buff .= " uor: '" 				. dataEncode( $urow['uor'] ) . "',";
+	$buff .= " fld_length: '" 		. dataEncode( $urow['fld_length'] ) . "',";
+	$buff .= " max_length: '" 		. dataEncode( $urow['max_length'] ) . "',";
+	$buff .= " list_id: '" 			. dataEncode( $urow['list_id'] ) . "',";
+	$buff .= " titlecols: '" 		. dataEncode( $urow['titlecols'] ) . "',";
+	$buff .= " datacols: '" 		. dataEncode( $urow['datacols'] ) . "',";
+	$buff .= " default_value: '" 	. dataEncode( $urow['default_value'] ) . "',";
+	$buff .= " edit_options: '" 	. dataEncode( $urow['edit_options'] ) . "',";
+	$buff .= " description: '" 		. dataEncode( $urow['description'] ) . "',";
+	$buff .= " group_order: '" 		. dataEncode( $urow['group_order'] ) . "'}," . chr(13);
 }
 
 $buff = substr($buff, 0, -2); // Delete the last comma.

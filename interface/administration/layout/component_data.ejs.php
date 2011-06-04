@@ -33,7 +33,7 @@ $mitos_db = new dbHelper();
 switch ($_GET['task']) {
 	
 	// *************************************************************************************
-	// Data for for storeTaxID
+	// Data for Form List
 	// *************************************************************************************
 	case "form_list":
 		$mitos_db->setSQL("SELECT DISTINCT form_id FROM layout_options");
