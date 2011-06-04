@@ -26,7 +26,7 @@ $_SESSION['site']['flops'] = 0;
 Ext.onReady(function() {
 
 	// *************************************************************************************
-	// Facility Record Structure
+	// Layout Record Structure
 	// *************************************************************************************
 	var LayoutStore = Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
@@ -44,6 +44,19 @@ Ext.onReady(function() {
 			create	: 'interface/administration/layout/data_create.ejs.php',
 			update	: 'interface/administration/layout/data_update.ejs.php',
 			destroy : 'interface/administration/layout/data_destroy.ejs.php'
+	});
+	
+	// *************************************************************************************
+	// Form List Record Structure
+	// *************************************************************************************
+	var formlistStore = Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'id',		type: 'string'},
+			{name: 'form_id',	type: 'string'}
+		],
+			model 		:'formlistModel',
+			idProperty 	:'id',
+			read	: 'interface/administration/layout/component_data.ejs.php?task=form_list',
 	});
 	
 	// *************************************************************************************
@@ -153,7 +166,7 @@ Ext.onReady(function() {
     // Panel to choose Layouts
     // *************************************************************************************
     var chooseGrid = Ext.create('Ext.grid.Panel', {
-		store		: LayoutStore,
+		store		: formlistStore,
 		region		: 'east',
 		border		: true,
 		frame		: true,
@@ -162,10 +175,15 @@ Ext.onReady(function() {
 		collapsible	: true,
         columns		: [
 			{
+				hidden		: true,
+				sortable 	: true,
+				dataIndex	: 'id'
+            },
+			{
 				text     : '<?php i18n("Name"); ?>',
 				flex     : 1,
 				sortable : true,
-				dataIndex: 'order'
+				dataIndex: 'form_id'
             }
 		]
     }); // END LayoutChoose
