@@ -36,12 +36,7 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
-<<<<<<< HEAD
-	
-	var FacilityStore = new Ext.create('Ext.mitos.CRUDStore',{
-=======
 	var FacilityStore = Ext.create('Ext.mitos.CRUDStore',{
->>>>>>> 1dcbafea624e2c3e544003bc9a340d1534c1016b
 		fields: [
 			{name: 'id',					type: 'int'},
 			{name: 'name',					type: 'string'},
