@@ -21,7 +21,16 @@ $_SESSION['site']['flops'] = 0; ?>
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.UserPage',{
 		extend:'Ext.panel.Panel',
-		uses:['Ext.mitos.TopRenderPanel','Ext.mitos.GridPanel','Ext.mitos.TitlesComboBox','Ext.mitos.FacilitiesComboBox','Ext.mitos.AuthorizationsComboBox','Ext.mitos.SaveCancelWindow','Ext.mitos.DeleteButton','Ext.mitos.CRUDStore'],
+		uses:[
+			'Ext.mitos.CRUDStore',
+			'Ext.mitos.GridPanel',
+			'Ext.mitos.DeleteButton',
+			'Ext.mitos.TopRenderPanel',
+			'Ext.mitos.TitlesComboBox',
+			'Ext.mitos.SaveCancelWindow',
+			'Ext.mitos.FacilitiesComboBox',
+			'Ext.mitos.AuthorizationsComboBox',
+		],
 		
 		initComponent: function(){
 			Ext.QuickTips.init();
@@ -80,7 +89,7 @@ Ext.onReady(function(){
 				create		:'interface/administration/users/data_create.ejs.php',
 				update		:'interface/administration/users/data_update.ejs.php',
 				destroy		:'interface/administration/users/data_destroy.ejs.php'
-			})
+			});
 			
 			function authCk(val) {
 			    if (val == 'Yes') {
@@ -115,7 +124,7 @@ Ext.onReady(function(){
 			   		  		var rec = page.userStore.getAt(rowIndex);
 			   		  		page.frmUsers.getForm().loadRecord(rec);
 							currRec = rec;
-		            		rowPos = rowIndex;
+		            		page.rowPos = rowIndex;
 			   		  	}
 			   	  	},
 			   	  	// -----------------------------------------
@@ -129,7 +138,7 @@ Ext.onReady(function(){
 							var rec = page.userStore.getAt(rowIndex); // get the record from the store
 							page.frmUsers.getForm().loadRecord(rec); // load the record selected into the form
 							currRec = rec;
-		            		rowPos = rowIndex;
+		            		page.rowPos = rowIndex;
 							page.winUsers.setTitle('Edit User');
 			   		  		page.winUsers.show();
 			   		  	}
@@ -276,32 +285,9 @@ Ext.onReady(function(){
 			// *************************************************************************************
 			page.winUsers = new Ext.create('Ext.mitos.SaveCancelWindow', {
 				title       : '<?php i18n('Add or Edit User'); ?>',
-	    		items		: [page.frmUsers],
-	    		buttons: [{
-		            text: '<?php i18n('Save'); ?>',
-		            handler: function(){
-						if (page.frmUsers.getForm().findField('id').getValue()){ // Update
-							var id = page.frmUsers.getForm().findField('id').getValue();
-							var record = page.userStore.getAt(rowPos);
-							var fieldValues = page.frmUsers.getForm().getValues();
-							for ( k=0; k <= record.fields.getCount()-1; k++) {
-								i = record.fields.get(k).name;
-								record.set( i, fieldValues[i] );
-							}
-						} else { // Add
-							var obj = eval( '(' + Ext.JSON.encode(page.frmUsers.getForm().getValues()) + ')' );
-							page.userStore.add( obj );
-						}
-						page.winUsers.hide();	// Finally hide the dialog window
-						page.userStore.sync();	// Save the record to the dataStore
-						page.userStore.load();	// Reload the dataSore from the database
-					}
-		        },{
-		            text: '<?php i18n('Cancel'); ?>',
-		            handler: function(){
-		            	page.winUsers.hide();
-		            }
-		        }]
+	    		form		: page.frmUsers,
+	    		store		: page.userStore,
+	    		scope		: page
 			});
 			// *************************************************************************************
 			// Render Panel
