@@ -51,7 +51,6 @@ Ext.require([
     'Ext.mitos.Window',
     'Ext.mitos.GridPanel',
     'Ext.mitos.FormPanel',
-    'Ext.mitos.StdGridPanel',
     'Ext.mitos.TopRenderPanel',
     'Ext.mitos.SaveCancelWindow',
     'Ext.mitos.RolesComboBox',
