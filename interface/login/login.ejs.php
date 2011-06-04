@@ -54,6 +54,12 @@ var storeSites = new Ext.data.Store({
 	autoLoad: true
 }); // End storeLang
 
+////////////////////////////////////////////////////////////////////////////////////////
+// This will be set in the global settings page... for now lets set the first site    //
+storeSites.on('load',function(ds,records,o){                                          //
+	Ext.getCmp('choiseSite').setValue(records[0].data.site);                          //
+});                                                                                   //
+////////////////////////////////////////////////////////////////////////////////////////
 // *************************************************************************************
 // The Copyright Notice Window
 // *************************************************************************************
