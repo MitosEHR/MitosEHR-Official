@@ -26,8 +26,8 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Global Model and Data store
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Globals')){
-	var globalModel = Ext.define("Globals", {extend: "Ext.data.Model", fields: [
+	var globalStore = Ext.create('Ext.mitos.CRUDStore', {
+		fields: [
 			{ name: 'data_id',								type:'int' },
 			{ name: 'default_top_pane',						type:'auto' },
 			{ name: 'concurrent_layout',					type:'auto' },
@@ -143,32 +143,10 @@ Ext.onReady(function(){
 			{ name: 'enable_scanner',						type:'auto' },
 			{ name: 'scanner_output_directory',				type:'auto' }
 		],
-		idProperty: 'data_id',
-	});
-	}
-	var globalStore = new Ext.data.Store({
-	    model	: 'Globals',
-	    proxy	: {
-	    	type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/globals/data_read.ejs.php',
-				update	: 'interface/administration/globals/data_update.ejs.php',
-			},
-	        reader: {
-	            type			: 'json',
-	            totalProperty	: 'totals',
-   	        	idProperty		: 'data_id',
-	            root			: 'row'
-	    	},
-	    	writer: {
-				type	 		: 'json',
-				writeAllFields	: true,
-				allowSingle	 	: true,
-				encode	 		: true,
-				root	 		: 'row'
-			}
-	    },
-	    autoLoad: true
+		model		: 'Globals',
+		idProperty	: 'data_id',
+		read		: 'interface/administration/globals/data_read.ejs.php',
+		update		: 'interface/administration/globals/data_update.ejs.php'
 	});
 	//------------------------------------------------------------------------------
 	// When the data is loaded semd values to de form

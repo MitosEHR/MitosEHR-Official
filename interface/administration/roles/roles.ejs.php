@@ -39,92 +39,45 @@ Ext.onReady(function(){
 	if ( Ext.getCmp('winRoles') ){ Ext.getCmp('winRoles').destroy(); }
 	if ( Ext.getCmp('winPerms') ){ Ext.getCmp('winPerms').destroy(); }
 	//******************************************************************************
-	// Roles model
-	//******************************************************************************
-	if (!Ext.ModelManager.isRegistered('PermissionList')){
-	Ext.define("PermissionList", {extend: "Ext.data.Model", fields: [
-		{name: 'roleID', 		type: 'int'},
-		{name: 'role_name', 	type: 'string'},
-	    {name: 'permID', 		type: 'int'},
-	    {name: 'perm_key', 		type: 'string'},
-	    {name: 'perm_name', 	type: 'string'},
-		{name: 'rolePermID', 	type: 'int'},
-	    {name: 'role_id', 		type: 'int'},
-	    {name: 'perm_id', 		type: 'int'},
-	    {name: 'value', 		type: 'string'},
-		{name: 'ac_perm', 		type: 'string'}
-	],
-		idProperty: 'permID'
-	});
-	}
-	//******************************************************************************
 	// Roles Store
 	//******************************************************************************
-	var permStore = new Ext.data.Store({
+	var permStore = new Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'roleID', 		type: 'int'},
+			{name: 'role_name', 	type: 'string'},
+		    {name: 'permID', 		type: 'int'},
+		    {name: 'perm_key', 		type: 'string'},
+		    {name: 'perm_name', 	type: 'string'},
+			{name: 'rolePermID', 	type: 'int'},
+		    {name: 'role_id', 		type: 'int'},
+		    {name: 'perm_id', 		type: 'int'},
+		    {name: 'value', 		type: 'string'},
+			{name: 'ac_perm', 		type: 'string'}
+		],
 	    model		: 'PermissionList',
-	    proxy		: {
-	    	type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/roles/data_read.ejs.php',
-				create	: 'interface/administration/roles/data_create.ejs.php?task=create_permission',
-				update	: 'interface/administration/roles/data_update.ejs.php?task=update_role_perms',
-				destroy : 'interface/administration/roles/data_destroy.ejs.php?task=delete_permission'
-			},
-	        reader: {
-	            type			: 'json',
-	            idProperty		: 'permID',
-	            totalProperty	: 'totals',
-	            root			: 'row'
-	    	},
-	    	writer: {
-				type	 		: 'json',
-				writeAllFields	: true,
-				allowSingle	 	: true,
-				encode	 		: true,
-				root	 		: 'row'
-			}
-	    },
-	    autoLoad: true
+	    idProperty	: 'permID',
+		read		: 'interface/administration/roles/data_read.ejs.php',
+		create		: 'interface/administration/roles/data_create.ejs.php?task=create_permission',
+		update		: 'interface/administration/roles/data_update.ejs.php?task=update_role_perms',
+		destroy 	: 'interface/administration/roles/data_destroy.ejs.php?task=delete_permission'
 	});
 
 	// ****************************************************************************
 	// Structure, data for Roles
 	// AJAX -> component_data.ejs.php
 	// ****************************************************************************
-	if (!Ext.ModelManager.isRegistered('Roles')){
-	Ext.define("Roles", {extend: "Ext.data.Model", fields: [
-		{name: 'id', type: 'int'},
-	    {name: 'role_name', type: 'string'}
-	],
-		idProperty: 'id'
-	});
-	}
-	var roleStore = new Ext.data.Store({
+	var roleStore = new Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'id', type: 'int'},
+	    	{name: 'role_name', type: 'string'}
+		],
 		model		: 'Roles',
-		proxy		: {
-			type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/roles/component_data.ejs.php?task=roles',
-				create	: 'interface/administration/roles/data_create.ejs.php?task=create_role',
-				update	: 'interface/administration/roles/data_update.ejs.php?task=update_role',
-				destroy : 'interface/administration/roles/data_destroy.ejs.php?task=delete_role'
-			},
-	        reader: {
-	            type			: 'json',
-	            idProperty		: 'id',
-	            totalProperty	: 'totals',
-	            root			: 'row'
-	    	},
-	    	writer: {
-				type	 		: 'json',
-				writeAllFields	: true,
-				allowSingle	 	: true,
-				encode	 		: true,
-				root	 		: 'row'
-			}
-		},
-		autoLoad: true
-	}); // End storeTitles
+		idProperty	: 'id',
+		read		: 'interface/administration/roles/component_data.ejs.php?task=roles',
+		create		: 'interface/administration/roles/data_create.ejs.php?task=create_role',
+		update		: 'interface/administration/roles/data_update.ejs.php?task=update_role',
+		destroy 	: 'interface/administration/roles/data_destroy.ejs.php?task=delete_role'
+	});
 	//------------------------------------------------------------------------------
 	// When the data is loaded
 	// Select the first record
@@ -149,9 +102,7 @@ Ext.onReady(function(){
     	model		: 'permRecord',
     	proxy		: {
 	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/roles/component_data.ejs.php?task=perms'
-			},
+			url		: 'interface/administration/roles/component_data.ejs.php?task=perms',
     	   	reader: {
         	    type			: 'json',
    	        	idProperty		: 'value',

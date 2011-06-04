@@ -30,46 +30,21 @@ Ext.onReady(function(){
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('modelOnotes')){
-	var modelOnotes = Ext.define("modelOnotes", {extend: "Ext.data.Model", fields: [
-		{name: 'id',      		type: 'int'},
-		{name: 'date',          type: 'date', dateFormat: 'c'},
-		{name: 'body',          type: 'string'},
-		{name: 'user',          type: 'string'},
-		{name: 'facility_id',   type: 'string'},
-		{name: 'activity',   	type: 'string'},
-	],
-		idProperty: 'id',
-	});
-	}
-	var storeOnotes = new Ext.data.Store({
+	var storeOnotes = new Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'id',      		type: 'int'},
+			{name: 'date',          type: 'date', dateFormat: 'c'},
+			{name: 'body',          type: 'string'},
+			{name: 'user',          type: 'string'},
+			{name: 'facility_id',   type: 'string'},
+			{name: 'activity',   	type: 'string'},
+		],
 		model		: 'modelOnotes',
-		noCache		: true,
-    	autoSync	: false,
-    	pageSize	: 20,
-	    proxy		: {
-	    	type	: 'ajax',
-		    api		: {
-		      read      : 'interface/miscellaneous/office_notes/data_read.ejs.php',
-		      create    : 'interface/miscellaneous/office_notes/data_create.ejs.php',
-		      update    : 'interface/miscellaneous/office_notes/data_update.ejs.php',
-		    //destroy 	: <-- No need to delete Office Notes -->
-	   	 	},
-	   	 	reader: {
-	            type			: 'json',
-	            idProperty		: 'id',
-	            totalProperty	: 'totals',
-	            root			: 'row'
-	    	},
-	    	writer: {
-				type	 		: 'json',
-				writeAllFields	: true,
-				allowSingle	 	: true,
-				encode	 		: true,
-				root	 		: 'row'
-			}
-	    },
-	    autoLoad: false
+		idProperty	: 'id',
+        read      	: 'interface/miscellaneous/office_notes/data_read.ejs.php',
+        create    	: 'interface/miscellaneous/office_notes/data_create.ejs.php',
+        update    	: 'interface/miscellaneous/office_notes/data_update.ejs.php',
+      //destroy		: <-- No need to delete Office Notes -->
 	});
 	
 	var onotesFormPanel = Ext.create('Ext.form.FormPanel', {

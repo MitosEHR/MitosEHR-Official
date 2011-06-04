@@ -35,11 +35,9 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('FacilitiesRecord')){
-    var FacilitiesRecord = Ext.define('FacilitiesRecord', {
-        extend: 'Ext.data.Model',
-        pageSize: 30,
-        fields: [
+	
+	var FacilityStore = new Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
 			{name: 'id',					type: 'int'},
 			{name: 'name',					type: 'string'},
 			{name: 'phone',					type: 'string'},
@@ -59,36 +57,13 @@ Ext.onReady(function() {
 			{name: 'domain_identifier',		type: 'string'},
 			{name: 'facility_npi',			type: 'string'},
 			{name: 'tax_id_type',			type: 'string'}
-		]
-	});
-	}
-	var FacilityStore = new Ext.data.Store({
-		model: 'FacilitiesRecord',
-    	noCache		: true,
-    	autoSync	: false,
-    	proxy		: {
-    		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/facilities/data_read.ejs.php',
-				create	: 'interface/administration/facilities/data_create.ejs.php',
-				update	: 'interface/administration/facilities/data_update.ejs.php',
-				destroy : 'interface/administration/facilities/data_destroy.ejs.php'
-			},
-        	reader: {
-	            type			: 'json',
-    	        idProperty		: 'idusers',
-        	    totalProperty	: 'totals',
-            	root			: 'row'
-    		},
-    		writer: {
-    			type			: 'json',
-    			writeAllFields	: true,
-    			allowSingle		: false,
-    			encode			: true,
-    			root			: 'row'
-    		}
-    	},
-    	autoLoad: true
+		],
+		model		: 'FacilitiesRecord',
+		idProperty	: 'idusers',
+		read		: 'interface/administration/facilities/data_read.ejs.php',
+		create		: 'interface/administration/facilities/data_create.ejs.php',
+		update		: 'interface/administration/facilities/data_update.ejs.php',
+		destroy 	: 'interface/administration/facilities/data_destroy.ejs.php'
 	});
 
 	// *************************************************************************************

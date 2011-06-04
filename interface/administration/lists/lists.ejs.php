@@ -43,88 +43,43 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Structure of the message record
 	// creates a subclass of Ext.data.Record
-	//
 	// This should be the structure of the database table
-	// 
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('ListRecord')){
-	var ListRecord = Ext.define("ListRecord", {extend: "Ext.data.Model", fields: [
-		{name: 'id',			type: 'int'		},
-		{name: 'list_id', 		type: 'string'	},
-		{name: 'option_id', 	type: 'string'	},
-		{name: 'title', 		type: 'string'	},
-		{name: 'seq', 			type: 'int' 	},
-		{name: 'is_default', 	type: 'boolean'	},
-		{name: 'option_value', 	type: 'string'	},
-		{name: 'mapping', 		type: 'string'	},
-		{name: 'notes', 		type: 'string'	}
-	],
-		idProperty: 'id',
-	});
-	}
-	var storeListsOption = new Ext.data.Store({
+	var storeListsOption = new Ext.create('Ext.mitos.CRUDStore', {
+		fields: [
+			{name: 'id',			type: 'int'		},
+			{name: 'list_id', 		type: 'string'	},
+			{name: 'option_id', 	type: 'string'	},
+			{name: 'title', 		type: 'string'	},
+			{name: 'seq', 			type: 'int' 	},
+			{name: 'is_default', 	type: 'boolean'	},
+			{name: 'option_value', 	type: 'string'	},
+			{name: 'mapping', 		type: 'string'	},
+			{name: 'notes', 		type: 'string'	}
+		],
 		model		: 'ListRecord',
-		proxy 		: {
-			type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/lists/data_read.ejs.php',
-				create	: 'interface/administration/lists/data_create.ejs.php',
-				update	: 'interface/administration/lists/data_update.ejs.php',
-				destroy : 'interface/administration/lists/data_destroy.ejs.php'
-			},
-	        reader: {
-	            type			: 'json',
-	            idProperty		: 'id',
-	            totalProperty	: 'totals',
-	            root			: 'row'
-	    	},
-	    	writer: {
-				type	 		: 'json',
-				writeAllFields	: true,
-				allowSingle	 	: true,
-				encode	 		: true,
-				root	 		: 'row'
-			}
-		},
-		autoLoad: false
+		idProperty	: 'id',
+		read		: 'interface/administration/lists/data_read.ejs.php',
+		create		: 'interface/administration/lists/data_create.ejs.php',
+		update		: 'interface/administration/lists/data_update.ejs.php',
+		destroy 	: 'interface/administration/lists/data_destroy.ejs.php'
 	});
 	
 	// ****************************************************************************
 	// Structure, data for List Select list
 	// AJAX -> component_data.ejs.php
 	// ****************************************************************************
-	if (!Ext.ModelManager.isRegistered('editListModel')){
-	var editListModel = Ext.define("editListModel", {extend: "Ext.data.Model", fields: [
-		{name: 'option_id', type: 'string'},
-	    {name: 'title', type: 'string'}
-	],
-		idProperty: 'option_id',
-	});
-	}
-	var storeEditList = new Ext.data.Store({
+	var storeEditList = new Ext.create('Ext.mitos.CRUDStore', {
+		fields: [
+			{name: 'option_id', type: 'string'},
+		    {name: 'title', type: 'string'}
+		],
 		model		: 'editListModel',
-		proxy		: {
-			type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/lists/component_data.ejs.php?task=editlist',
-				destroy	: 'interface/administration/lists/component_data.ejs.php?task=d_list',
-			},
-	        reader: {
-	            type			: 'json',
-	            idProperty		: 'option_id',
-	            totalProperty	: 'totals',
-	            root			: 'row'
-	    	},
-	    	writer: {
-				type	 		: 'json',
-				writeAllFields	: true,
-				allowSingle	 	: true,
-				encode	 		: true,
-				root	 		: 'row'
-			}
-		},
-		autoLoad: true
+		idProperty	: 'option_id',
+		read		: 'interface/administration/lists/component_data.ejs.php?task=editlist',
+		destroy		: 'interface/administration/lists/component_data.ejs.php?task=d_list'
 	});
+	
 	//--------------------------
 	// When the data is loaded
 	// Select the first record

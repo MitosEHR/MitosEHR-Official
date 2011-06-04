@@ -45,55 +45,31 @@ Ext.onReady(function() {
 	// This should be the structure of the database table
 	// 
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Messages')){
-	Ext.define("Messages", {
-		extend: "Ext.data.Model", 
+	var storeMsgs = new Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
-		{name: 'id',				type: 'int'},
-		{name: 'date',				type: 'string'},
-		{name: 'body',				type: 'string'},
-		{name: 'curr_msg',			type: 'string'},
-		{name: 'pid',				type: 'string'},
-		{name: 'patient',			type: 'string'},
-		{name: 'user_id',			type: 'string'},
-		{name: 'user',				type: 'string'},
-		{name: 'subject',			type: 'string'},
-		{name: 'facility_id',		type: 'string'},
-		{name: 'activity',			type: 'string'},
-		{name: 'authorized',	  	type: 'string'},
-		{name: 'assigned_to',   	type: 'string'},
-		{name: 'message_status',	type: 'string'},
-		{name: 'reply_id',  		type: 'string'},
-		{name: 'note_type',			type: 'string'}
-	]});
-	}
-	var storeMsgs = new Ext.data.Store({
-		model: 'Messages',
-	  	noCache		: true,
-	   	autoSync	: false,
-	   	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/messages/data_read.ejs.php',
-				create	: 'interface/messages/data_create.ejs.php',
-				update	: 'interface/messages/data_update.ejs.php',
-				destroy : 'interface/messages/data_destroy.ejs.php'
-			},
-	       	reader: {
-	            type			: 'json',
-	   	        idProperty		: 'idusers',
-	       	    totalProperty	: 'totals',
-	           	root			: 'row'
-	   		},
-	   		writer: {
-	   			type			: 'json',
-	   			writeAllFields	: true,
-	   			allowSingle		: false,
-	   			encode			: true,
-	   			root			: 'row'
-	   		}
-	   	},
-	   	autoLoad: true
+			{name: 'id',				type: 'int'},
+			{name: 'date',				type: 'string'},
+			{name: 'body',				type: 'string'},
+			{name: 'curr_msg',			type: 'string'},
+			{name: 'pid',				type: 'string'},
+			{name: 'patient',			type: 'string'},
+			{name: 'user_id',			type: 'string'},
+			{name: 'user',				type: 'string'},
+			{name: 'subject',			type: 'string'},
+			{name: 'facility_id',		type: 'string'},
+			{name: 'activity',			type: 'string'},
+			{name: 'authorized',	  	type: 'string'},
+			{name: 'assigned_to',   	type: 'string'},
+			{name: 'message_status',	type: 'string'},
+			{name: 'reply_id',  		type: 'string'},
+			{name: 'note_type',			type: 'string'}
+		],
+		model		: 'Messages',
+		idProperty	: 'id',
+		read		: 'interface/messages/data_read.ejs.php',
+		create		: 'interface/messages/data_create.ejs.php',
+		update		: 'interface/messages/data_update.ejs.php',
+		destroy 	: 'interface/messages/data_destroy.ejs.php'
 	});
 
 	// *************************************************************************************

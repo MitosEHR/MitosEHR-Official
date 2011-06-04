@@ -35,10 +35,8 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Phramacy Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('pharmacyModel')){
-    Ext.define('pharmacyModel', {
-        extend: 'Ext.data.Model',
-        fields: [
+	var pharmacyStore = Ext.create('Ext.mitos.CRUDStore', {
+		fields: [
 			{name: 'id',					type: 'int'},
 			{name: 'name',					type: 'string'},
 			{name: 'transmit_method',		type: 'string'},
@@ -65,45 +63,19 @@ Ext.onReady(function(){
 			{name: 'fax_number',			type: 'string'},
 			{name: 'fax_foreign_id',		type: 'string'},
 			{name: 'fax_full',				type: 'string'}
-		]
+		],
+		model		: 'pharmacyModel',
+		idProperty	: 'id',
+		read		: 'interface/administration/practice/data_read.ejs.php?task=pharmacy',
+		create		: 'interface/administration/practice/data_read.ejs.php?task=',
+		update		: 'interface/administration/practice/data_read.ejs.php?task=',
+		destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
 	});
-	}
-	var pharmacyStore = new Ext.data.Store({
-		model: 'pharmacyModel',
-    	noCache		: true,
-    	autoSync	: false,
-    	proxy		: {
-    		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/practice/data_read.ejs.php?task=pharmacy',
-				create	: 'interface/administration/practice/data_read.ejs.php?task=',
-				update	: 'interface/administration/practice/data_read.ejs.php?task=',
-				destroy : 'interface/administration/practice/data_read.ejs.php?task='
-			},
-        	reader: {
-	            type			: 'json',
-    	        idProperty		: 'id',
-        	    totalProperty	: 'totals',
-            	root			: 'row'
-    		},
-    		writer: {
-    			type			: 'json',
-    			writeAllFields	: true,
-    			allowSingle		: false,
-    			encode			: true,
-    			root			: 'row'
-    		}
-    	},
-    	autoLoad: true
-	});
-	
 	// *************************************************************************************
 	// Insurance Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('insuranceModel')){
-    Ext.define('insuranceModel', {
-        extend: 'Ext.data.Model',
-        fields: [
+	var insuranceStore = Ext.create('Ext.mitos.CRUDStore', {
+		fields: [
 			{name: 'id',						type: 'int'},
 			{name: 'name',						type: 'string'},
 			{name: 'attn',						type: 'string'},
@@ -134,118 +106,46 @@ Ext.onReady(function(){
 			{name: 'fax_number',				type: 'string'},
 			{name: 'fax_foreign_id',			type: 'string'},
 			{name: 'fax_full',					type: 'string'}
-		]
+		],
+		model		: 'insuranceModel',
+		idProperty	: 'id',
+		read		: 'interface/administration/practice/data_read.ejs.php?task=insurance',
+		create		: 'interface/administration/practice/data_read.ejs.php?task=',
+		update		: 'interface/administration/practice/data_read.ejs.php?task=',
+		destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
 	});
-	}
-	var insuranceStore = new Ext.data.Store({
-		model: 'insuranceModel',
-    	noCache		: true,
-    	autoSync	: false,
-    	proxy		: {
-    		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/practice/data_read.ejs.php?task=insurance',
-				create	: 'interface/administration/practice/data_read.ejs.php?task=',
-				update	: 'interface/administration/practice/data_read.ejs.php?task=',
-				destroy : 'interface/administration/practice/data_read.ejs.php?task='
-			},
-        	reader: {
-	            type			: 'json',
-    	        idProperty		: 'id',
-        	    totalProperty	: 'totals',
-            	root			: 'row'
-    		},
-    		writer: {
-    			type			: 'json',
-    			writeAllFields	: true,
-    			allowSingle		: false,
-    			encode			: true,
-    			root			: 'row'
-    		}
-    	},
-    	autoLoad: true
-	});
+	
+	// *************************************************************************************
+	// Insurance Numbers Record Structure
+	// *************************************************************************************
+	var insuranceNumbersStore = new Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'id',	type: 'int'},
+			{name: 'name',	type: 'string'}
+		],
+		model		: 'insuranceNumbersModel',
+		idProperty	: 'id',
+		read		: 'interface/administration/practice/data_read.ejs.php',
+		create		: 'interface/administration/practice/data_create.ejs.php',
+		update		: 'interface/administration/practice/data_update.ejs.php',
+		destroy 	: 'interface/administration/practice/data_destroy.ejs.php'
 
-	// *************************************************************************************
-	// Insurance Record Structure
-	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('insuranceNumbersModel')){
-    Ext.define('insuranceNumbersModel', {
-        extend: 'Ext.data.Model',
-        fields: [
-			{name: 'id',					type: 'int'},
-			{name: 'name',					type: 'string'}
-		]
-	});
-	}
-	var insuranceNumbersStore = new Ext.data.Store({
-		model: 'insuranceNumbersModel',
-    	noCache		: true,
-    	autoSync	: false,
-    	proxy		: {
-    		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/practice/data_read.ejs.php',
-				create	: 'interface/administration/practice/data_create.ejs.php',
-				update	: 'interface/administration/practice/data_update.ejs.php',
-				destroy : 'interface/administration/practice/data_destroy.ejs.php'
-			},
-        	reader: {
-	            type			: 'json',
-    	        idProperty		: 'id',
-        	    totalProperty	: 'totals',
-            	root			: 'row'
-    		},
-    		writer: {
-    			type			: 'json',
-    			writeAllFields	: true,
-    			allowSingle		: false,
-    			encode			: true,
-    			root			: 'row'
-    		}
-    	},
-    	autoLoad: true
 	});
 	
 	// *************************************************************************************
 	// X12 Partners Record Structure
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('x12PartnersModel')){
-    Ext.define('x12PartnersModel', {
-        extend: 'Ext.data.Model',
+	var x12PartnersStore = new Ext.create('Ext.mitos.CRUDStore',{
         fields: [
-			{name: 'id',					type: 'int'},
-			{name: 'name',					type: 'string'}
-		]
-	});
-	}
-	var x12PartnersStore = new Ext.data.Store({
-		model: 'x12PartnersModel',
-    	noCache		: true,
-    	autoSync	: false,
-    	proxy		: {
-    		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/practice/data_read.ejs.php',
-				create	: 'interface/administration/practice/data_create.ejs.php',
-				update	: 'interface/administration/practice/data_update.ejs.php',
-				destroy : 'interface/administration/practice/data_destroy.ejs.php'
-			},
-        	reader: {
-	            type			: 'json',
-    	        idProperty		: 'idusers',
-        	    totalProperty	: 'totals',
-            	root			: 'row'
-    		},
-    		writer: {
-    			type			: 'json',
-    			writeAllFields	: true,
-    			allowSingle		: false,
-    			encode			: true,
-    			root			: 'row'
-    		}
-    	},
-    	autoLoad: true
+			{name: 'id',	type: 'int'},
+			{name: 'name',	type: 'string'}
+		],
+		model		: 'x12PartnersModel',
+		idProperty	: 'idusers',
+		read		: 'interface/administration/practice/data_read.ejs.php',
+		create		: 'interface/administration/practice/data_create.ejs.php',
+		update		: 'interface/administration/practice/data_update.ejs.php',
+		destroy 	: 'interface/administration/practice/data_destroy.ejs.php'
 	});
 
 	

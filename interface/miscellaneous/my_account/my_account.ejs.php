@@ -35,8 +35,8 @@ Ext.onReady(function(){
 	// *************************************************************************************
 	// Users Model and Data store
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Users')){
-	Ext.define("Users", {extend: "Ext.data.Model", fields: [
+	var storeUsers = new Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
 			{name: 'id',                    type: 'int'},
 			{name: 'username',              type: 'string'},
 			{name: 'password',              type: 'auto'},
@@ -79,36 +79,14 @@ Ext.onReady(function(){
 			{name: 'ab_name',               type: 'string'},
 			{name: 'ab_title',              type: 'string'}
 		],
-	});
-	}
-	var storeUsers = new Ext.data.Store({
 	    model		: 'Users',
-		noCache		: true,
-    	autoSync	: false,
-	    proxy		: {
-	    	type	: 'ajax',
-			api		: {
-				read	: 'interface/miscellaneous/my_account/data_read.ejs.php',
-			  //create	:  the user can not create accounts
-				update	: 'interface/miscellaneous/my_account/data_update.ejs.php',
-			  //destroy :  user will not be able to descroy his account
-			},
-	        reader: {
-	            type			: 'json',
-	            idProperty		: 'id',
-	            totalProperty	: 'totals',
-	            root			: 'row'
-	    	},
-	    	writer: {
-				type	 		: 'json',
-				writeAllFields	: true,
-				allowSingle	 	: true,
-				encode	 		: true,
-				root	 		: 'row'
-			}
-	    },
-	    autoLoad: true
+	    idProperty	: 'id',
+		read		: 'interface/miscellaneous/my_account/data_read.ejs.php',
+	  //create		:  the user can not create accounts
+		update		: 'interface/miscellaneous/my_account/data_update.ejs.php',
+	  //destroy 	:  user will not be able to descroy his account
 	});
+	
 	//------------------------------------------------------------------------------
 	// When the data is loaded semd values to de form
 	//------------------------------------------------------------------------------
