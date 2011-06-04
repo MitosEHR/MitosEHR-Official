@@ -51,6 +51,7 @@ $buff .= '{"text":"' . i18n('Administration', 'r') . '", "cls":"folder", "expand
 	$buff .= '{"text":"' . i18n('Users', 'r') . '", "leaf":true, "cls":"file", "id":"administration/users/users.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Practice', 'r') . '", "leaf":true, "cls":"file", "id":"administration/practice/practice.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Roles', 'r') . '", "leaf":true, "cls":"file", "id":"administration/roles/roles.ejs.php"},' . chr(13);
+	$buff .= '{"text":"' . i18n('Layouts', 'r') . '", "leaf":true, "cls":"file", "id":"administration/layout/layout.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Lists', 'r') . '", "leaf":true, "cls":"file", "id":"administration/lists/lists.ejs.php"}' . chr(13);
 $buff .= ']},' . chr(13);
 // -------------------------------------

@@ -59,28 +59,70 @@ Ext.onReady(function() {
 	  	border		: true,
         columns: [
 			{
-				text     : '<?php i18n("Name"); ?>',
+				text     : '<?php i18n("Order"); ?>',
 				flex     : 1,
 				sortable : true,
-				dataIndex: 'name'
+				dataIndex: 'order'
             },
             {
-				text     : '<?php i18n("Phone"); ?>',
+				text     : '<?php i18n("ID"); ?>',
 				width    : 100,
 				sortable : true,
-				dataIndex: 'phone'
+				dataIndex: 'id'
             },
             {
-				text     : '<?php i18n("Fax"); ?>',
+				text     : '<?php i18n("Label"); ?>',
 				width    : 100,
 				sortable : true,
-				dataIndex: 'fax'
+				dataIndex: 'label'
             },
             {
-				text     : '<?php i18n("City"); ?>',
+				text     : '<?php i18n("UOR"); ?>',
 				width    : 100,
 				sortable : true,
-				dataIndex: 'city'
+				dataIndex: 'uor'
+            },
+            {
+				text     : '<?php i18n("Data Type"); ?>',
+				width    : 100,
+				sortable : true,
+				dataIndex: 'data_type'
+            },
+            {
+				text     : '<?php i18n("Size"); ?>',
+				width    : 100,
+				sortable : true,
+				dataIndex: 'size'
+            },
+            {
+				text     : '<?php i18n("List"); ?>',
+				width    : 100,
+				sortable : true,
+				dataIndex: 'list'
+            },
+            {
+				text     : '<?php i18n("Label Cols"); ?>',
+				width    : 100,
+				sortable : true,
+				dataIndex: 'label_cols'
+            },
+            {
+				text     : '<?php i18n("Data Cols"); ?>',
+				width    : 100,
+				sortable : true,
+				dataIndex: 'data_cols'
+            },
+            {
+				text     : '<?php i18n("Options"); ?>',
+				width    : 100,
+				sortable : true,
+				dataIndex: 'options'
+            },
+            {
+				text     : '<?php i18n("Description"); ?>',
+				width    : 100,
+				sortable : true,
+				dataIndex: 'desc'
             }
 		],
 		// Slider bar or Pagin
