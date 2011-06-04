@@ -54,7 +54,7 @@ Ext.onReady(function() {
         region	: 'center',
    	    border	: true,
   	    frame	: true,
-   	    title	: 'Center',
+   	    title	: '<?php i18n("Field editor"); ?>',
         columns	: [
 			{
 				text     : '<?php i18n("Order"); ?>',
@@ -157,7 +157,7 @@ Ext.onReady(function() {
 		region		: 'east',
 		border		: true,
 		frame		: true,
-		title		: 'East',
+		title		: '<?php i18n("Form list"); ?>',
 		width		: 200,
 		collapsible	: true,
         columns		: [
