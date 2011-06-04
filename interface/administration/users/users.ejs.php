@@ -21,7 +21,7 @@ $_SESSION['site']['flops'] = 0; ?>
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.UserPage',{
 		extend:'Ext.panel.Panel',
-		uses:['Ext.mitos.TopRenderPanel','Ext.mitos.StdGridPanel','Ext.mitos.TitlesComboBox','Ext.mitos.FacilitiesComboBox','Ext.mitos.AuthorizationsComboBox','Ext.mitos.SaveCancelWindow','Ext.mitos.DeleteButton'],
+		uses:['Ext.mitos.TopRenderPanel','Ext.mitos.GridPanel','Ext.mitos.TitlesComboBox','Ext.mitos.FacilitiesComboBox','Ext.mitos.AuthorizationsComboBox','Ext.mitos.SaveCancelWindow','Ext.mitos.DeleteButton','Ext.mitos.CRUDStore'],
 		
 		initComponent: function(){
 			Ext.QuickTips.init();
@@ -29,20 +29,8 @@ Ext.onReady(function(){
 			var page = this;
 			var rowPos; // Stores the current Grid Row Position (int)
 			var currRec; // Store the current record (Object)
-
-			function authCk(val) {
-			    if (val == 'Yes') {
-			        return '<img src="ui_icons/yes.gif" />';
-			    } else if(val == 'No') {
-			        return '<img src="ui_icons/no.gif" />';
-			    } 
-			    return val;
-			}
-			// *************************************************************************************
-			// Create the GridPanel
-			// *************************************************************************************
-			page.userGrid = new Ext.create('Ext.mitos.StdGridPanel', {
-				scope : this,
+			
+			page.userStore = Ext.create('Ext.mitos.CRUDStore',{
 				fields: [
 					{name: 'id',                    type: 'int'},
 					{name: 'username',              type: 'string'},
@@ -84,13 +72,29 @@ Ext.onReady(function(){
 					{name: 'pwd_history2',          type: 'string'},
 					{name: 'default_warehouse',     type: 'string'},
 					{name: 'ab_name',               type: 'string'},
-					{name: 'ab_title',              type: 'string'}
+					{name: 'ab_title',              type: 'string'} 
 				],
-			    idProperty 	: 'id',
-			    read	: 'interface/administration/users/data_read.ejs.php',
-				create	: 'interface/administration/users/data_create.ejs.php',
-				update	: 'interface/administration/users/data_update.ejs.php',
-				destroy : 'interface/administration/users/data_destroy.ejs.php',
+				model 		:'gModel',
+				idProperty 	:'id',
+				read		:'interface/administration/users/data_read.ejs.php',
+				create		:'interface/administration/users/data_create.ejs.php',
+				update		:'interface/administration/users/data_update.ejs.php',
+				destroy		:'interface/administration/users/data_destroy.ejs.php'
+			})
+			
+			function authCk(val) {
+			    if (val == 'Yes') {
+			        return '<img src="ui_icons/yes.gif" />';
+			    } else if(val == 'No') {
+			        return '<img src="ui_icons/no.gif" />';
+			    } 
+			    return val;
+			}
+			// *************************************************************************************
+			// Create the GridPanel
+			// *************************************************************************************
+			page.userGrid = new Ext.create('Ext.mitos.GridPanel', {
+				store : page.userStore,
 				columns: [
 					{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},
 			    	{ width: 100,  text: '<?php i18n("Username"); ?>', sortable: true, dataIndex: 'username' },
@@ -108,7 +112,7 @@ Ext.onReady(function(){
 							page.frmUsers.getForm().reset();
 							page.cmdEdit.enable();
 							page.cmdDelete.enable();
-			   		  		var rec = this.store.getAt(rowIndex);
+			   		  		var rec = page.userStore.getAt(rowIndex);
 			   		  		page.frmUsers.getForm().loadRecord(rec);
 							currRec = rec;
 		            		rowPos = rowIndex;
@@ -122,7 +126,7 @@ Ext.onReady(function(){
 							page.frmUsers.getForm().reset();
 							page.cmdEdit.enable();
 							page.cmdDelete.enable();
-							var rec = this.store.getAt(rowIndex); // get the record from the store
+							var rec = page.userStore.getAt(rowIndex); // get the record from the store
 							page.frmUsers.getForm().loadRecord(rec); // load the record selected into the form
 							currRec = rec;
 		            		rowPos = rowIndex;
@@ -165,9 +169,9 @@ Ext.onReady(function(){
 									buttons: Ext.Msg.YESNO,
 									fn:function(btn,msgGrid){
 										if(btn=='yes'){
-											page.userGrid.store.remove( currRec );
-											page.userGrid.store.sync();
-											page.userGrid.store.load();
+											page.userStore.remove( currRec );
+											page.userStore.sync();
+											page.userStore.load();
 						    		    }
 									}
 								});
@@ -278,7 +282,7 @@ Ext.onReady(function(){
 		            handler: function(){
 						if (page.frmUsers.getForm().findField('id').getValue()){ // Update
 							var id = page.frmUsers.getForm().findField('id').getValue();
-							var record = page.userGrid.store.getAt(rowPos);
+							var record = page.userStore.getAt(rowPos);
 							var fieldValues = page.frmUsers.getForm().getValues();
 							for ( k=0; k <= record.fields.getCount()-1; k++) {
 								i = record.fields.get(k).name;
@@ -286,11 +290,11 @@ Ext.onReady(function(){
 							}
 						} else { // Add
 							var obj = eval( '(' + Ext.JSON.encode(page.frmUsers.getForm().getValues()) + ')' );
-							page.userGrid.store.add( obj );
+							page.userStore.add( obj );
 						}
 						page.winUsers.hide();	// Finally hide the dialog window
-						page.userGrid.store.sync();	// Save the record to the dataStore
-						page.userGrid.store.load();	// Reload the dataSore from the database
+						page.userStore.sync();	// Save the record to the dataStore
+						page.userStore.load();	// Reload the dataSore from the database
 					}
 		        },{
 		            text: '<?php i18n('Cancel'); ?>',

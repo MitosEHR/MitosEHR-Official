@@ -1,23 +1,34 @@
+//  *******************************************
+//  Required properties 
+//  *******************************************
 Ext.define('Ext.mitos.CRUDStore',{
 	extend      : 'Ext.data.Store',
-    alias       : 'mitos.crudstore',
-
-    constructor: function(config){
-		var me = this;
-	    config = {
+//  idProperty	:  databade table id
+//  read		:  url to data_read.eje.php
+//  create		:  url to data_create.eje.php
+//  update		:  url to data_update.eje.php
+//  destroy 	:  url to data_destroy.eje.php
+//  *******************************************
+	constructor:function(config){
+		
+		if (!Ext.ModelManager.isRegistered( config.model )){
+			Ext.define( config.model, {extend:"Ext.data.Model", fields: config.fields, idProperty: config.idProperty });
+		}
+		var config = {
+			model		: config.model,
 			noCache		: true,
 			autoSync	: false,
 		    proxy		: {
 		    	type	: 'ajax',
 				api		: {
-				read		: 'interface/administration/users/data_read.ejs.php',
-				create		: 'interface/administration/users/data_create.ejs.php',
-				update		: 'interface/administration/users/data_update.ejs.php',
-				destroy 	: 'interface/administration/users/data_destroy.ejs.php',
+					read	: config.read,
+					create	: config.create,
+					update	: config.update,
+					destroy : config.destroy
 				},
 		        reader: {
 		            type			: 'json',
-		            idProperty		: me.idProperty,
+		            idProperty		: config.idProperty,
 		            totalProperty	: 'totals',
 		            root			: 'row'
 		    	},
@@ -30,8 +41,8 @@ Ext.define('Ext.mitos.CRUDStore',{
 				}
 		    },
 		    autoLoad: true
-	    }
-		Ext.mitos.CRUDStore.superclass.constructor.call(me, config);
-		
-	} // end constructor
+        }
+		Ext.apply(this, Ext.apply(this.initialConfig, config));
+        Ext.mitos.CRUDStore.superclass.constructor.call(this, config);
+	}
 });
