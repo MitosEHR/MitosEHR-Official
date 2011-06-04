@@ -46,5 +46,5 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
 		        }]
 	    });
         win.callParent(arguments);
-    },
+    }
 });

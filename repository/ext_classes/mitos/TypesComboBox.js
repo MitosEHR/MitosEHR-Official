@@ -38,7 +38,7 @@ Ext.define('Ext.mitos.TypesComboBox',{
     		displayField: 'title',
     		valueField: 'option_id',
     		queryMode: 'local',
-    		store: me.storeTypes,
+    		store: me.storeTypes
 		});
 		me.callParent(arguments);
 	} 

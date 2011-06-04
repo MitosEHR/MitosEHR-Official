@@ -32,5 +32,5 @@ Ext.define('Ext.mitos.TopRenderPanel', {
             items    	: me.pageBody
         }],
         me.callParent();
-    },
+    }
 });
