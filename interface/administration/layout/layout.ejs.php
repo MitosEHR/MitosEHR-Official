@@ -25,7 +25,6 @@ $_SESSION['site']['flops'] = 0;
 <script type="text/javascript">
 Ext.onReady(function() {
 
-
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
@@ -46,18 +45,17 @@ Ext.onReady(function() {
 			update	: 'interface/administration/layout/data_update.ejs.php',
 			destroy : 'interface/administration/layout/data_destroy.ejs.php'
 	});
-
-
+	
 	// *************************************************************************************
 	// Layout fields Grid Panel
 	// *************************************************************************************
-	var LayoutGrid = Ext.create('Ext.grid.Panel', {
-		id			: 'LayoutGrid',
-		store		: LayoutStore,
-        layout	    : 'fit',
-	  	frame		: true,
-	  	border		: true,
-        columns: [
+	var layoutGrid = Ext.create('Ext.grid.Panel', {
+		store	: LayoutStore,
+        region	: 'center',
+   	    border	: true,
+  	    frame	: true,
+   	    title	: 'Center',
+        columns	: [
 			{
 				text     : '<?php i18n("Order"); ?>',
 				flex     : 1,
@@ -125,40 +123,6 @@ Ext.onReady(function() {
 				dataIndex: 'desc'
             }
 		],
-		// Slider bar or Pagin
-        bbar: Ext.create('Ext.PagingToolbar', {
-            pageSize: 30,
-            store: LayoutStore,
-            displayInfo: true,
-            plugins: Ext.create('Ext.ux.SlidingPager', {})
-        }),
-		viewConfig: { stripeRows: true },
-		listeners: {
-			itemclick: {
-            	fn: function(DataView, record, item, rowIndex, e){ 
-            		Ext.getCmp('facilityForm').getForm().reset(); // Clear the form
-            		Ext.getCmp('cmdEdit').enable();
-            		Ext.getCmp('cmdDelete').enable();
-					var rec = FacilityStore.getAt(rowIndex);
-					Ext.getCmp('facilityForm').getForm().loadRecord(rec);
-            		currRec = rec;
-            		rowPos = rowIndex;
-            	}
-			},
-			itemdblclick: {
-            	fn: function(DataView, record, item, rowIndex, e){ 
-            		Ext.getCmp('facilityForm').getForm().reset(); // Clear the form
-            		Ext.getCmp('cmdEdit').enable();
-            		Ext.getCmp('cmdDelete').enable();
-					var rec = FacilityStore.getAt(rowIndex);
-					Ext.getCmp('facilityForm').getForm().loadRecord(rec);
-            		currRec = rec;
-            		rowPos = rowIndex;
-            		winFacility.setTitle('<?php i18n("Edit field"); ?>');
-            		winFacility.show();
-            	}
-			}
-		},
 		dockedItems: [{
 			xtype: 'toolbar',
 			dock: 'top',
@@ -166,9 +130,6 @@ Ext.onReady(function() {
 				text: '<?php i18n("Add field"); ?>',
 				iconCls: 'icoAddRecord',
 				handler: function(){
-					Ext.getCmp('facilityForm').getForm().reset(); // Clear the form
-					winFacility.show();
-					winFacility.setTitle('<?php i18n("Add field"); ?>'); 
 				}
 			},'-',{
 				text: '<?php i18n("Edit field"); ?>',
@@ -176,8 +137,6 @@ Ext.onReady(function() {
 				id: 'cmdEdit',
 				disabled: true,
 				handler: function(){
-					winFacility.setTitle('<?php i18n("Edit field"); ?>');
-					winFacility.show(); 
 				}
 			},'-',{
 				text: '<?php i18n("Delete field"); ?>',
@@ -185,23 +144,42 @@ Ext.onReady(function() {
 				disabled: true,
 				id: 'cmdDelete',
 				handler: function(){
-					Ext.Msg.show({
-						title: '<?php i18n('Please confirm...'); ?>', 
-						icon: Ext.MessageBox.QUESTION,
-						msg:'<?php i18n('Are you sure to delete this field?'); ?>',
-						buttons: Ext.Msg.YESNO,
-						fn:function(btn,msgGrid){
-							if(btn=='yes'){
-								FacilityStore.remove( currRec );
-								FacilityStore.save();
-								FacilityStore.load();
-							}
-						}
-					});
 				}
 			}]
 		}]
     }); // END LayoutGrid Grid
+    
+    // *************************************************************************************
+    // Panel to choose Layouts
+    // *************************************************************************************
+    var chooseGrid = Ext.create('Ext.grid.Panel', {
+		store		: LayoutStore,
+		region		: 'east',
+		border		: true,
+		frame		: true,
+		title		: 'East',
+		width		: 200,
+		collapsible	: true,
+        columns		: [
+			{
+				text     : '<?php i18n("Name"); ?>',
+				flex     : 1,
+				sortable : true,
+				dataIndex: 'order'
+            }
+		]
+    }); // END LayoutChoose
+    
+	// *************************************************************************************
+	// Layout Panel Screen
+	// *************************************************************************************
+	var LayoutPanel = Ext.create('Ext.Panel', {
+		layout	: { type: 'border' },
+        defaults: { split: true },
+		border: true,
+		frame: true,
+        items	: [layoutGrid, chooseGrid]
+	}); // END LayoutPanel
 
 	//***********************************************************************************
 	// Top Render Panel 
@@ -212,7 +190,8 @@ Ext.onReady(function() {
 	//***********************************************************************************
     Ext.create('Ext.mitos.TopRenderPanel', {
         pageTitle: '<?php i18n('Layout Form Editor'); ?>',
-        pageBody: [LayoutGrid]
+        pageBody: [LayoutPanel]
     });
     
 }); // End ExtJS
+</script>
