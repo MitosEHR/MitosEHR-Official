@@ -46,7 +46,7 @@ Ext.require([
     'Ext.toolbar.Paging',
     'Ext.TaskManager.*',
     'Ext.ux.SlidingPager',
-    // miots custom classes
+    // mitos custom classes
     'Ext.mitos.CRUDStore',
     'Ext.mitos.Window',
     'Ext.mitos.GridPanel',

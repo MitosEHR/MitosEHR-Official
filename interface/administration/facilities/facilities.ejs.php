@@ -23,6 +23,7 @@ $_SESSION['site']['flops'] = 0;
 ?>
 <script type="text/javascript">
 Ext.onReady(function() {
+
 	Ext.QuickTips.init();
 	var rowPos; // Stores the current Grid Row Position (int)
 	var currRec; // Store the current record (Object)
@@ -35,8 +36,12 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
+<<<<<<< HEAD
 	
 	var FacilityStore = new Ext.create('Ext.mitos.CRUDStore',{
+=======
+	var FacilityStore = Ext.create('Ext.mitos.CRUDStore',{
+>>>>>>> 1dcbafea624e2c3e544003bc9a340d1534c1016b
 		fields: [
 			{name: 'id',					type: 'int'},
 			{name: 'name',					type: 'string'},
@@ -56,72 +61,40 @@ Ext.onReady(function() {
 			{name: 'attn',					type: 'string'},
 			{name: 'domain_identifier',		type: 'string'},
 			{name: 'facility_npi',			type: 'string'},
-			{name: 'tax_id_type',			type: 'string'}
+			{name: 'tax_id_type',			type: 'string'} 
 		],
-		model		: 'FacilitiesRecord',
-		idProperty	: 'idusers',
-		read		: 'interface/administration/facilities/data_read.ejs.php',
-		create		: 'interface/administration/facilities/data_create.ejs.php',
-		update		: 'interface/administration/facilities/data_update.ejs.php',
-		destroy 	: 'interface/administration/facilities/data_destroy.ejs.php'
+			model 		:'facilityModel',
+			idProperty 	:'id',
+			read		:'interface/administration/facilities/data_read.ejs.php',
+			create		:'interface/administration/facilities/data_create.ejs.php',
+			update		:'interface/administration/facilities/data_update.ejs.php',
+			destroy		:'interface/administration/facilities/data_destroy.ejs.php'
 	});
 
 	// *************************************************************************************
 	// POS Code Data Store
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('poscodeRecord')){
-    Ext.define('poscodeRecord', {
-        extend: 'Ext.data.Model',
-        fields: [
+	var storePOSCode = Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
 			{name: 'option_id',		type: 'string'},
 			{name: 'title',			type: 'string'}
-		]
-	});
-	}
-	var storePOSCode = new Ext.data.Store({
-    	model		: 'poscodeRecord',
-    	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/facilities/component_data.ejs.php?task=poscodes'
-			},
-    	   	reader: {
-        	    type			: 'json',
-   	        	idProperty		: 'id',
-	       	    totalProperty	: 'totals',
-    	       	root			: 'row'
-   			}
-   		},
-    	autoLoad: true
+		],
+			model 		:'posModel',
+			idProperty 	:'id',
+			read		:'interface/administration/facilities/data_read.ejs.php'
 	});
 	
 	// *************************************************************************************
 	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('taxidRecord')){
-	Ext.define('taxidRecord', {
-        extend: 'Ext.data.Model',
+	var storeTAXid = Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
 			{name: 'option_id',		type: 'string'},
 			{name: 'title',			type: 'string'}
-		]
-	});
-	}
-	var storeTAXid = new Ext.data.Store({
-    	model		: 'taxidRecord',
-    	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/facilities/component_data.ejs.php?task=taxid'
-			},
-    	   	reader: {
-        	    type			: 'json',
-   	        	idProperty		: 'id',
-	       	    totalProperty	: 'totals',
-    	       	root			: 'row'
-   			}
-   		},
-    	autoLoad: true
+		],
+			model 		:'taxidRecord',
+			idProperty 	:'id',
+			read		:'interface/administration/facilities/component_data.ejs.php?task=taxid'
 	});
 	
 	// *************************************************************************************
@@ -276,7 +249,6 @@ Ext.onReady(function() {
             }
 		}]
 	});
-	
 
 	// *************************************************************************************
 	// Facility Grid Panel
