@@ -76,119 +76,62 @@ Ext.onReady(function() {
 	// Structure and load the data for cmb_toUsers
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Patients')){
-	Ext.define("Patients", {
-		extend: "Ext.data.Model", 
+	var storePat = new Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
-		{name: 'id',    type: 'int'},
-		{name: 'name',  type: 'string'},
-		{name: 'phone', type: 'string'},
-		{name: 'ss',    type: 'string'},
-		{name: 'dob',   type: 'string'},
-		{name: 'pid',   type: 'string'}
-	]});
-	}
-	var storePat = new Ext.data.Store({
-	   	model		: 'Patients',
-	   	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/messages/component_data.ejs.php?task=patients'
-			},
-	  	   	reader: {
-	      	    type			: 'json',
-	        	idProperty		: 'id',
-	       	    totalProperty	: 'totals',
-	  	       	root			: 'row'
-			}
-		},
-	  	autoLoad: true
+			{name: 'id',    type: 'int'},
+			{name: 'name',  type: 'string'},
+			{name: 'phone', type: 'string'},
+			{name: 'ss',    type: 'string'},
+			{name: 'dob',   type: 'string'},
+			{name: 'pid',   type: 'string'}
+		],
+		model		: 'Patients',
+		idProperty	: 'id',
+		read	: 'interface/messages/component_data.ejs.php?task=patients'
 	});// End storePat
+	
 
 	// *************************************************************************************
 	// Structure and load the data for cmb_toUsers
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('User')){
-	Ext.define("User", {
-		extend: "Ext.data.Model", 
+	var toData = new Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
-		{name: 'user',      type: 'string' },
-		{name: 'full_name', type: 'string' }
-	]});
-	}
-	var toData = new Ext.data.Store({
-	   	model		: 'User',
-	   	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/messages/component_data.ejs.php?task=users'
-			},
-	  	   	reader: {
-	      	    type			: 'json',
-	        	idProperty		: 'id',
-	       	    totalProperty	: 'totals',
-	  	       	root			: 'row'
-			}
-		},
-	  	autoLoad: true
-	}); // End toData
+			{name: 'user',      type: 'string' },
+			{name: 'full_name', type: 'string' }
+		],
+		model		: 'User',
+		idProperty	: 'id',
+		read	: 'interface/messages/component_data.ejs.php?task=users'
+	});// End toData
 	
 	// *************************************************************************************
 	// Structure, data for cmb_Type
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Types')){
-	Ext.define("Types", {
-		extend: "Ext.data.Model", 
+	var typeData = new Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
-		{name: 'option_id', type: 'string' },
-		{name: 'title',     type: 'string' }
-	]});
-	}
-	var typeData = new Ext.data.Store({
-	   	model		: 'Types',
-	   	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/messages/component_data.ejs.php?task=types'
-			},
-	  	   	reader: {
-	      	    type			: 'json',
-	        	idProperty		: 'id',
-	       	    totalProperty	: 'totals',
-	  	       	root			: 'row'
-			}
-		},
-	  	autoLoad: true
-	}); // End typeData
+			{name: 'option_id', type: 'string' },
+			{name: 'title',     type: 'string' }
+		],
+		model		: 'Types',
+		idProperty	: 'id',
+		read	: 'interface/messages/component_data.ejs.php?task=types'
+	});// End typeData
 	
 	// *************************************************************************************
 	// Structure, data for cmb_Status
 	// AJAX -> component_data.ejs.php
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('Status')){
-	Ext.define("Status", {extend: "Ext.data.Model", fields: [
-		{name: 'option_id', type: 'string' },
-		{name: 'title',     type: 'string' }
-	]});
-	}
-	var statusData = new Ext.data.Store({
-	   	model		: 'Status',
-	   	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/messages/component_data.ejs.php?task=status'
-			},
-	  	   	reader: {
-	      	    type			: 'json',
-	        	idProperty		: 'id',
-	       	    totalProperty	: 'totals',
-	  	       	root			: 'row'
-			}
-		},
-	  	autoLoad: true
-	}); // End statusData
+	var statusData = new Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'option_id', type: 'string' },
+			{name: 'title',     type: 'string' }
+		],
+		model		: 'Status',
+		idProperty	: 'id',
+		read		: 'interface/messages/component_data.ejs.php?task=status'
+	});// End statusData
 	
 	// *************************************************************************************
 	// Patient Select Dialog
