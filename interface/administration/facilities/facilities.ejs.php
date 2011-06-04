@@ -58,7 +58,7 @@ Ext.onReady(function() {
 			{name: 'facility_npi',			type: 'string'},
 			{name: 'tax_id_type',			type: 'string'} 
 		],
-			model 		:'gModel',
+			model 		:'facilityModel',
 			idProperty 	:'id',
 			read		:'interface/administration/facilities/data_read.ejs.php',
 			create		:'interface/administration/facilities/data_create.ejs.php',
@@ -69,59 +69,27 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// POS Code Data Store
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('poscodeRecord')){
-    Ext.define('poscodeRecord', {
-        extend: 'Ext.data.Model',
-        fields: [
+	var storePOSCode = Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
 			{name: 'option_id',		type: 'string'},
 			{name: 'title',			type: 'string'}
-		]
-	});
-	}
-	var storePOSCode = new Ext.data.Store({
-    	model		: 'poscodeRecord',
-    	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/facilities/component_data.ejs.php?task=poscodes'
-			},
-    	   	reader: {
-        	    type			: 'json',
-   	        	idProperty		: 'id',
-	       	    totalProperty	: 'totals',
-    	       	root			: 'row'
-   			}
-   		},
-    	autoLoad: true
+		],
+			model 		:'posModel',
+			idProperty 	:'id',
+			read		:'interface/administration/facilities/data_read.ejs.php'
 	});
 	
 	// *************************************************************************************
 	// Federal EIN - TaxID Data Store
 	// *************************************************************************************
-	if (!Ext.ModelManager.isRegistered('taxidRecord')){
-	Ext.define('taxidRecord', {
-        extend: 'Ext.data.Model',
+	var storeTAXid = Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
 			{name: 'option_id',		type: 'string'},
 			{name: 'title',			type: 'string'}
-		]
-	});
-	}
-	var storeTAXid = new Ext.data.Store({
-    	model		: 'taxidRecord',
-    	proxy		: {
-	   		type	: 'ajax',
-			api		: {
-				read	: 'interface/administration/facilities/component_data.ejs.php?task=taxid'
-			},
-    	   	reader: {
-        	    type			: 'json',
-   	        	idProperty		: 'id',
-	       	    totalProperty	: 'totals',
-    	       	root			: 'row'
-   			}
-   		},
-    	autoLoad: true
+		],
+			model 		:'taxidRecord',
+			idProperty 	:'id',
+			read		:'interface/administration/facilities/component_data.ejs.php?task=taxid'
 	});
 	
 	// *************************************************************************************
@@ -276,7 +244,6 @@ Ext.onReady(function() {
             }
 		}]
 	});
-	
 
 	// *************************************************************************************
 	// Facility Grid Panel
