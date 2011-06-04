@@ -8,17 +8,11 @@
 
 .dashboard_title{
 	font-family: "Cuprum";
-	font-size: 34px;
-	padding: 6px;
-	display: block;
+	font-size: 24px;
 	width: 100%;
-	height: 51px;
-	border-bottom-width: 2px;
+	border-bottom-width: 1px;
 	border-bottom-style: dotted;
 	border-bottom-color: #ccc;
-	background-color: #ffffff;
-	background-image: url(dashboard_bg.png);
-	background-repeat: repeat-x;
 }
 
 body#login{
