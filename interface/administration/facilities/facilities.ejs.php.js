@@ -23,7 +23,6 @@ $_SESSION['site']['flops'] = 0;
 ?>
 <script type="text/javascript">
 Ext.onReady(function() {
-
 	Ext.QuickTips.init();
 	var rowPos; // Stores the current Grid Row Position (int)
 	var currRec; // Store the current record (Object)
@@ -36,8 +35,11 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// Facility Record Structure
 	// *************************************************************************************
-	var FacilityStore = Ext.create('Ext.mitos.CRUDStore',{
-		fields: [
+	if (!Ext.ModelManager.isRegistered('FacilitiesRecord')){
+    var FacilitiesRecord = Ext.define('FacilitiesRecord', {
+        extend: 'Ext.data.Model',
+        pageSize: 30,
+        fields: [
 			{name: 'id',					type: 'int'},
 			{name: 'name',					type: 'string'},
 			{name: 'phone',					type: 'string'},
@@ -56,14 +58,37 @@ Ext.onReady(function() {
 			{name: 'attn',					type: 'string'},
 			{name: 'domain_identifier',		type: 'string'},
 			{name: 'facility_npi',			type: 'string'},
-			{name: 'tax_id_type',			type: 'string'} 
-		],
-			model 		:'gModel',
-			idProperty 	:'id',
-			read		:'interface/administration/facilities/data_read.ejs.php',
-			create		:'interface/administration/facilities/data_create.ejs.php',
-			update		:'interface/administration/facilities/data_update.ejs.php',
-			destroy		:'interface/administration/facilities/data_destroy.ejs.php'
+			{name: 'tax_id_type',			type: 'string'}
+		]
+	});
+	}
+	var FacilityStore = new Ext.data.Store({
+		model: 'FacilitiesRecord',
+    	noCache		: true,
+    	autoSync	: false,
+    	proxy		: {
+    		type	: 'ajax',
+			api		: {
+				read	: 'interface/administration/facilities/data_read.ejs.php',
+				create	: 'interface/administration/facilities/data_create.ejs.php',
+				update	: 'interface/administration/facilities/data_update.ejs.php',
+				destroy : 'interface/administration/facilities/data_destroy.ejs.php'
+			},
+        	reader: {
+	            type			: 'json',
+    	        idProperty		: 'idusers',
+        	    totalProperty	: 'totals',
+            	root			: 'row'
+    		},
+    		writer: {
+    			type			: 'json',
+    			writeAllFields	: true,
+    			allowSingle		: false,
+    			encode			: true,
+    			root			: 'row'
+    		}
+    	},
+    	autoLoad: true
 	});
 
 	// *************************************************************************************
