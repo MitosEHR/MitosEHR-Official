@@ -23,26 +23,51 @@ require_once("../../../library/phpAES/AES.class.php");
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 
-//-------------------------------------------
+//------------------------------------------------------------------------------
 // password to AES and validate
-//-------------------------------------------
+//------------------------------------------------------------------------------
 $aes = new AES($_SESSION['site']['AESkey']);
 
-//------------------------------------------
+//------------------------------------------------------------------------------
 // Database class instance
-//------------------------------------------
+//------------------------------------------------------------------------------
 $mitos_db = new dbHelper();
 
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
-$mitos_db->setSQL("SELECT * 
+$mitos_db->setSQL("SELECT *, CONCAT_WS(' ',fname,mname,lname) AS fullname
 				   FROM users 
 				   WHERE users.authorized = 1 OR users.username != '' 
         		   ORDER BY username 
         		   LIMIT ".$start.",".$count);
 $total = $mitos_db->rowCount();
+//------------------------------------------------------------------------------
+// start the array
+//------------------------------------------------------------------------------
+$users = array();
+foreach($mitos_db->execStatement() as $user){
+	//--------------------------------------------------------------------------
+	// decrypt the password
+	//--------------------------------------------------------------------------
+	$user['password'] = $aes->decrypt($user['password']);
+	//--------------------------------------------------------------------------
+	// push the user inside the $users array
+	//--------------------------------------------------------------------------
+	array_push($users, $user);
+}
+//------------------------------------------------------------------------------
+// here we are adding "totals" and the root "row" for sencha use 
+//------------------------------------------------------------------------------
+print_r(json_encode(array('totals'=>$total,'row'=>$users)));
 
+
+
+break;
+//****************************************//
+// VVVVVVVVVVVVVV OLD STUFF VVVVVVVVVVVVV //
+//****************************************//
+        		   
 foreach ($mitos_db->execStatement() as $urow) {
   // returns "Yes" or "NO" for main grid		
   $rec['authorizedd']= ($urow['authorized'] == '1' ? 'Yes' : 'No');
