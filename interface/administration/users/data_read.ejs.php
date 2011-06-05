@@ -36,7 +36,7 @@ $mitos_db = new dbHelper();
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
-$mitos_db->setSQL("SELECT *, CONCAT_WS(' ',fname,mname,lname) AS fullname
+$mitos_db->setSQL("SELECT *
 				   FROM users 
 				   WHERE users.authorized = 1 OR users.username != '' 
         		   ORDER BY username 
@@ -51,6 +51,10 @@ foreach($mitos_db->execStatement() as $user){
 	// decrypt the password
 	//--------------------------------------------------------------------------
 	$user['password'] = $aes->decrypt($user['password']);
+	//--------------------------------------------------------------------------
+	// add fullname to the array
+	$user['fullname'] =  $user['lname'].', '.$user['fname'].' '.$user['mname'];
+	//--------------------------------------------------------------------------
 	//--------------------------------------------------------------------------
 	// push the user inside the $users array
 	//--------------------------------------------------------------------------
