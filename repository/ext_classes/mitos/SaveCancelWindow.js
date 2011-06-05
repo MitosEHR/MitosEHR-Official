@@ -9,7 +9,7 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
     renderTo    : document.body,
 	//formCtl 	: this is the form the save btn will be getting the data from
 	//dataStore	: this is the store we are using to store the data
-	//rowPos	: rowPos # used to update the store
+	//scope		: the scope of dtat store (usually page)
     initComponent: function() {
     	var win = this;
 		Ext.apply(this, {
@@ -22,7 +22,7 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
 		    buttons: [{
 		            text: 'save',
 		            handler: function(){
-						if (win.form.getForm().findField('id').getValue()){ // Update
+						if (win.form.getForm().findField(win.idField).getValue()){ // Update
 							var id = win.form.getForm().findField('id').getValue();
 							var record = win.store.getAt(win.scope.rowPos);
 							var fieldValues = win.form.getForm().getValues();

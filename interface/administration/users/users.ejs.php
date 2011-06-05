@@ -287,7 +287,8 @@ Ext.onReady(function(){
 				title       : '<?php i18n('Add or Edit User'); ?>',
 	    		form		: page.frmUsers,
 	    		store		: page.userStore,
-	    		scope		: page
+	    		scope		: page,
+	    		idField		: 'id'
 			});
 			// *************************************************************************************
 			// Render Panel
