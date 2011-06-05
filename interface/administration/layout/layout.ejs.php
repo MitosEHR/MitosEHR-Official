@@ -77,7 +77,7 @@ Ext.onReady(function() {
         region	: 'center',
    	    border	: true,
   	    frame	: true,
-   	    title	: '<?php i18n("Field editor"); ?>',
+   	    title	: '<?php i18n("Field editor"); ?> (<?php i18n("Demographics"); ?>)',
         columns	: [
 			{ text: 'item_id', hidden: true, dataIndex: 'item_id' },
 			{ text: 'form_id', hidden: true, dataIndex: 'form_id' },
@@ -92,14 +92,14 @@ Ext.onReady(function() {
 				text     	: '<?php i18n("ID"); ?>',
 				sortable 	: true,
 				dataIndex	: 'field_id',
-				width		: 200,
+				width		: 150,
 				align		: 'left',
             },
 			{
 				text     	: '<?php i18n("Label"); ?>',
 				sortable 	: true,
 				dataIndex	: 'title',
-				width		: 150,
+				width		: 130,
 				align		: 'left',
             },
 			{
@@ -211,11 +211,10 @@ Ext.onReady(function() {
 		],
 		listeners: {
 			itemclick: {
-            	fn: function(DataView, record, item, rowIndex, e){ 
-					var rec = formlistStore.getAt(rowIndex);
-					storeListsOption.load({params:{list_id: currList }});
-            		currRec = rec;
-            		rowPos = rowIndex;
+            	fn: function(DataView, record, item, rowIndex, e){
+					var form_id = record.get('form_id');
+					LayoutStore.load({params:{form_id: form_id }});
+					layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
             	}
 			}
 		}
@@ -239,7 +238,7 @@ Ext.onReady(function() {
 	// PageLayout 	- default 'fit', define this argument if using other than the default value
 	// PageBody 	- List of items to display [foem1, grid1, grid2]
 	//***********************************************************************************
-    Ext.create('Ext.mitos.TopRenderPanel', {
+    var TopPanel = Ext.create('Ext.mitos.TopRenderPanel', {
         pageTitle: '<?php i18n('Layout Form Editor'); ?>',
         pageBody: [LayoutPanel]
     });
