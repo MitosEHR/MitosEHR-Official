@@ -3,7 +3,7 @@
  * @extends Ext.Panel
  * A {@link Ext.Panel Panel} class used for providing drag-drop-enabled portal layouts.
  */
-Ext.define('Ext.app.PortalPanel', {
+Ext.define('Ext.mitos.dashboard.PortalPanel', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.portalpanel',
     requires: [
@@ -55,7 +55,7 @@ Ext.define('Ext.app.PortalPanel', {
     // private
     initEvents : function(){
         this.callParent();
-        this.dd = Ext.create('Ext.app.PortalDropZone', this, this.dropConfig);
+        this.dd = Ext.create('Ext.mitos.dashboard.PortalDropZone', this, this.dropConfig);
     },
 
     // private
@@ -63,6 +63,6 @@ Ext.define('Ext.app.PortalPanel', {
         if (this.dd) {
             this.dd.unreg();
         }
-        Ext.app.PortalPanel.superclass.beforeDestroy.call(this);
+        Ext.mitos.dashboard.PortalPanel.superclass.beforeDestroy.call(this);
     }
 });

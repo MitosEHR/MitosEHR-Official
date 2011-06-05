@@ -1,4 +1,4 @@
-Ext.define('Ext.app.OnotesPortlet', {
+Ext.define('Ext.mitos.dashboard.OnotesPortlet', {
 
     extend: 'Ext.grid.Panel',
     alias: 'widget.onotesportlet',
@@ -12,7 +12,7 @@ Ext.define('Ext.app.OnotesPortlet', {
 	    	pageSize	: 13,
 		    proxy		: {
 		    	type	: 'ajax',
-			    url		: 'widgets/OnotesPortlet/data_read.ejs.php',
+			    url		: 'interface/miscellaneous/office_notes/data_read.ejs.php',
 		   	 	reader: {
 		            type			: 'json',
 		            idProperty		: 'id',

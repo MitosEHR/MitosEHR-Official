@@ -343,5 +343,5 @@ Ext.onReady(function() {
 
 </script>
 </head>
-<body></body>
+<body><span id="app-msg" style="display:none;"></span></body>
 </html>
