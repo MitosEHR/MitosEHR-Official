@@ -72,7 +72,7 @@ class dbHelper {
 		}
 		$err = $this->conn->errorInfo();
 		if(!$err[2]){
-			return $recordset->fetchAll(PDO::FETCH_ASSOC);
+			return $recordset->fetchAll(PDO::FETCH_BOTH);
 		} else {
 			return $err;
 		}
