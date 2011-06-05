@@ -14,7 +14,7 @@ Ext.define('Ext.app.Portal', {
 
     extend: 'Ext.container.Viewport',
 
-    uses: ['Ext.app.PortalPanel', 'Ext.app.PortalColumn', 'Ext.app.GridPortlet', 'Ext.app.ChartPortlet', 'Ext.app.OnotesPortlet'],
+    uses: ['Ext.app.PortalPanel', 'Ext.app.PortalColumn', 'Ext.app.GridPortlet', 'Ext.app.ChartPortlet'],
 
     getTools: function(){
         return [{
@@ -44,7 +44,7 @@ Ext.define('Ext.app.Portal', {
                 xtype: 'box',
                 region: 'north',
                 height: 40,
-                html: 'Dashboard'
+                html: 'MitosEHR Portal'
             },{
                 xtype: 'container',
                 region: 'center',
@@ -84,10 +84,10 @@ Ext.define('Ext.app.Portal', {
                     items: [{
                         id: 'col-1',
                         items: [{
-                            id: 'portlet-onotes',
-                            title: 'Office Notes',
+                            id: 'portlet-1',
+                            title: 'Grid Portlet',
                             tools: this.getTools(),
-                            items: Ext.create('Ext.app.OnotesPortlet'),
+                            items: Ext.create('Ext.app.GridPortlet'),
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
@@ -103,10 +103,10 @@ Ext.define('Ext.app.Portal', {
                     },{
                         id: 'col-2',
                         items: [{
-                            id: 'portlet-1',
-                            title: 'Grid Portlet',
+                            id: 'portlet-3',
+                            title: 'Portlet 3',
                             tools: this.getTools(),
-                            items: Ext.create('Ext.app.GridPortlet'),
+                            html: '<div class="portlet-content">'+Ext.example.bogusMarkup+'</div>',
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }

@@ -69,7 +69,6 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 $buff .= '{"text":"' . i18n('Test Area', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
-	$buff .= '{"text":"' . i18n('Dashboard Test', 'r') . '", "leaf":true, "cls":"file", "id":"dashboard_t/dashboard.ejs.php"}' . chr(13);
 $buff .= ']}' . chr(13);
 // *************************************************************************************
 // End Nav Data JSON
