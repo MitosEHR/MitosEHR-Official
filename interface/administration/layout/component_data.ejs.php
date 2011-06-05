@@ -38,15 +38,18 @@ switch ($_GET['task']) {
 	case "form_list":
 		$mitos_db->setSQL("SELECT DISTINCT form_id FROM layout_options");
 		$total = $mitos_db->rowCount();
-		foreach ($mitos_db->execStatement() as $urow) {
-			$buff .= '{"id":"'.dataDecode($urow['form_id']).'", "form_id":"'.dataDecode($urow['form_id']).'"},'. chr(13);
+		//---------------------------------------------------------------------------------------
+		// start the array
+		//---------------------------------------------------------------------------------------
+		$rows = array();
+		foreach($mitos_db->execStatement() as $row){
+			$row['id'] = $row['form_id'];
+			array_push($rows, $row);
 		}
-		$buff = substr($buff, 0, -2); // Delete the last comma.
-		echo '{';
-		echo '"totals": "' . $total . '", ' . chr(13);
-		echo '"row": [' . chr(13);
-		echo $buff;
-		echo ']}' . chr(13);
+		//---------------------------------------------------------------------------------------
+		// here we are adding "totals" and the root "row" for sencha use 
+		//---------------------------------------------------------------------------------------
+		print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
 	break;
 
 }
