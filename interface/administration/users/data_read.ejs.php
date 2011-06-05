@@ -14,8 +14,6 @@ session_start();
 session_cache_limiter('private');
 
 include_once("../../../library/dbHelper/dbHelper.inc.php");
-include_once("../../../library/I18n/I18n.inc.php");
-require_once("../../../repository/dataExchange/dataExchange.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
 
 //******************************************************************************
@@ -45,25 +43,24 @@ $total = $mitos_db->rowCount();
 //------------------------------------------------------------------------------
 // start the array
 //------------------------------------------------------------------------------
-$users = array();
-foreach($mitos_db->execStatement() as $user){
+$rows = array();
+foreach($mitos_db->execStatement() as $row){
 	//--------------------------------------------------------------------------
 	// decrypt the password
 	//--------------------------------------------------------------------------
-	$user['password'] = $aes->decrypt($user['password']);
+	$row['password'] = $aes->decrypt($row['password']);
 	//--------------------------------------------------------------------------
 	// add fullname to the array
-	$user['fullname'] =  $user['lname'].', '.$user['fname'].' '.$user['mname'];
-	//--------------------------------------------------------------------------
+	$row['fullname'] =  $row['lname'].', '.$row['fname'].' '.$row['mname'];
 	//--------------------------------------------------------------------------
 	// push the user inside the $users array
 	//--------------------------------------------------------------------------
-	array_push($users, $user);
+	array_push($rows, $row);
 }
 //------------------------------------------------------------------------------
 // here we are adding "totals" and the root "row" for sencha use 
 //------------------------------------------------------------------------------
-print_r(json_encode(array('totals'=>$total,'row'=>$users)));
+print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
 
 
 

@@ -49,40 +49,24 @@ $mitos_db->setSQL("SELECT acl_roles.id AS roleID,
   		 WHERE acl_roles.id = '$currRole'
   		 ORDER BY role_name DESC");
 $total = $mitos_db->rowCount();
-	$buff = "";
-foreach ($mitos_db->execStatement() as $urow) {
-	$count++;
-	switch($urow['value']){
+$rows = array();
+foreach($mitos_db->execStatement() as $row){
+	switch($row['value']){
 		case '0':
-			$p = 'No Access';
+			$row['ac_perm'] = 'No Access';
 		break;
 		case '1':
-			$p = 'View';
+			$row['ac_perm'] = 'View';
 		break;
 		case '2':
-			$p = 'View/Update';
+			$row['ac_perm'] = 'View/Update';
 		break;
 		case '3':
-			$p = 'View/Update/Create';
+			$row['ac_perm'] = 'View/Update/Create';
 		break;
 	}
-	$buff .= '{';
-	$buff .= ' "roleID": "' . $urow['roleID'] . '",';
-	$buff .= ' "role_name": "' . dataEncode( $urow['role_name'] ) . '",';
-	$buff .= ' "permID": "' . dataEncode( $urow['permID'] ) . '",';
-	$buff .= ' "perm_key": "' . $urow['perm_key'] . '",';
-	$buff .= ' "perm_name": "' . dataEncode( $urow['perm_name'] ) . '",';
-	$buff .= ' "rolePermID": "' . $urow['rolePermID'] . '",';
-	$buff .= ' "role_id": "' . $urow['role_id'] . '",';
-	$buff .= ' "perm_id": "' . $urow['perm_id'] . '",';
-	$buff .= ' "ac_perm": "' . $p . '",';
-	$buff .= ' "value": "' . $urow['value'] . '"},' . chr(13);
+	array_push($rows, $row);
 }
+print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
 
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo '{';
-echo '"totals": "' . $total . '", ' . chr(13);
-echo '"row": [' . chr(13);
-echo $buff;
-echo ']}' . chr(13);
 ?>

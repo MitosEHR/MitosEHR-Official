@@ -14,37 +14,30 @@ session_start();
 session_cache_limiter('private');
 
 include_once("../../../library/dbHelper/dbHelper.inc.php");
-include_once("../../../library/I18n/I18n.inc.php");
-require_once("../../../repository/dataExchange/dataExchange.inc.php");
 
-//******************************************************************************
+// *************************************************************************************
 // Reset session count 10 secs = 1 Flop
-//******************************************************************************
+// *************************************************************************************
 $_SESSION['site']['flops'] = 0;
 
 //--------------------------------------------------------------------------------------
 // Database class instance
 //--------------------------------------------------------------------------------------
 $mitos_db = new dbHelper();
-//--------------------------------------------------------------------------------------
-// JSON will be printed as one record, so there is no need to count all sql record
-//--------------------------------------------------------------------------------------
-$count = 1;
-$buff = "";
 
 // *************************************************************************************
 // SQL query for all Global form values
 // *************************************************************************************
 $mitos_db->setSQL("SELECT gl_name, gl_index, gl_value FROM globals");
-$total = $mitos_db->rowCount();
-foreach ($mitos_db->execStatement() as $urow) {
-	$buff .= '"'.$urow['gl_name'].'":"'.$urow['gl_value'].'",'.chr(13);
+
+// *************************************************************************************
+// $rows = $mitos_db->execStatement() because we wwant to print all recods into one row
+// *************************************************************************************
+$count = 0;
+$rows = array();
+foreach($mitos_db->execStatement() as $row){
+	$rows['data_id'] = '1';
+	$rows[$row[0]] = $row[2];
 }
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo '{';
-echo '"totals":"'.$count.'",'.chr(13);
-echo '"row":[{'.chr(13);
-echo '"data_id":"1",'.chr(13);
-echo $buff;
-echo '}]}'.chr(13);
+print_r(json_encode(array('totals'=>'1','row'=>$rows)));
 ?>
