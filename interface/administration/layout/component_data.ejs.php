@@ -51,6 +51,35 @@ switch ($_GET['task']) {
 		//---------------------------------------------------------------------------------------
 		print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
 	break;
+	
+	case "data_types";
+		$datatypes = array(
+			"1"  => i18n("List box"), 
+			"2"  => i18n("Textbox"),
+			"3"  => i18n("Textarea"),
+			"4"  => i18n("Text-date"),
+			"10" => i18n("Providers"),
+			"11" => i18n("Providers NPI"),
+			"12" => i18n("Pharmacies"),
+			"13" => i18n("Squads"),
+			"14" => i18n("Organizations"),
+			"15" => i18n("Billing codes"),
+			"21" => i18n("Checkbox list"),
+			"22" => i18n("Textbox list"),
+			"23" => i18n("Exam results"),
+			"24" => i18n("Patient allergies"),
+			"25" => i18n("Checkbox w/text"),
+			"26" => i18n("List box w/add"),
+			"27" => i18n("Radio buttons"),
+			"28" => i18n("Lifestyle status"),
+			"31" => i18n("Static Text"),
+			"32" => i18n("Smoking Status"),
+			"33" => i18n("Race and Ethnicity")
+		);
+		$totals = count($datatypes);
+		foreach($datatypes as $row){ array_push($rows, $row); }
+		print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
+	break;
 
 }
 ?>
