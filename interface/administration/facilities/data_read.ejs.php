@@ -28,13 +28,6 @@ $_SESSION['site']['flops'] = 0;
 $mitos_db = new dbHelper();
 
 // **************************************************************************************
-// catch the total records
-// **************************************************************************************
-$mitos_db->setSQL("SELECT count(*) as total FROM facility");
-$urow = $mitos_db->execStatement();
-$total = $urow[0]['total'];
-
-// **************************************************************************************
 // Setting defults incase no request is sent by sencha
 // **************************************************************************************
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
@@ -57,46 +50,30 @@ if ($_GET['id']){
 			 LIMIT " . $start . "," . $limit;
 }
 $mitos_db->setSQL($sql);
-foreach ($mitos_db->execStatement() as $urow) {
-	//-----------------------------------------------------------------------------------
-	// Parse some data
-	//-----------------------------------------------------------------------------------
-	$rec['service_location'] = ($urow['service_location'] == '1' ? 'on' : 'off');
-	$rec['billing_location'] = ($urow['billing_location'] == '1' ? 'on' : 'off');
-	$rec['accepts_assignment'] = ($urow['accepts_assignment'] == '1' ? 'on' : 'off');
-	if (strlen($urow['pos_code']) <= 1){
-		$rec['pos_code'] = '0'.$urow['pos_code'];
+
+//---------------------------------------------------------------------------------------
+// catch the total records
+//---------------------------------------------------------------------------------------
+$total = $mitos_db->rowCount();
+
+//---------------------------------------------------------------------------------------
+// start the array
+//---------------------------------------------------------------------------------------
+$rows = array();
+foreach($mitos_db->execStatement() as $row){
+	$row['service_location'] = ($row['service_location'] == '1' ? 'on' : 'off');
+	$row['billing_location'] = ($row['billing_location'] == '1' ? 'on' : 'off');
+	$row['accepts_assignment'] = ($row['accepts_assignment'] == '1' ? 'on' : 'off');
+	if (strlen($row['pos_code']) <= 1){
+		$row['pos_code'] = '0'.$row['pos_code'];
 	} else {
-		$rec['pos_code'] = $urow['pos_code'];
+		$row['pos_code'] = $row['pos_code'];
 	}
-	
-	$buff .= "{";
-	$buff .= " id: '" 					. dataEncode( $urow['id'] ) . "',";
-	$buff .= " name: '" 				. dataEncode( $urow['name'] ) . "',";
-	$buff .= " phone: '" 				. dataEncode( $urow['phone'] ) . "',";
-	$buff .= " fax: '" 					. dataEncode( $urow['fax'] ) . "',";
-	$buff .= " street: '" 				. dataEncode( $urow['street'] ) . "'," ;
-	$buff .= " city: '" 				. dataEncode( $urow['city'] ) . "',";
-	$buff .= " state: '" 				. dataEncode( $urow['state'] ) . "',";
-	$buff .= " postal_code: '" 			. dataEncode( $urow['postal_code'] ) . "',";
-	$buff .= " federal_ein: '" 			. dataEncode( $urow['federal_ein'] ) . "',";
-	$buff .= " service_location: '" 	. dataEncode( $rec['service_location'] ) . "',";
-	$buff .= " billing_location: '" 	. dataEncode( $rec['billing_location'] ) . "',";
-	$buff .= " accepts_assignment: '" 	. dataEncode( $rec['accepts_assignment'] ) . "',";
-	$buff .= " pos_code: '" 			. dataEncode( $rec['pos_code'] ) . "',";
-	$buff .= " attn: '" 				. dataEncode( $urow['attn'] ) . "',";
-	$buff .= " domain_identifier: '" 	. dataEncode( $urow['domain_identifier'] ) . "',";
-	$buff .= " facility_npi: '" 		. dataEncode( $urow['facility_npi'] ) . "',";
-	$buff .= " tax_id_type: '" 			. dataEncode( $urow['tax_id_type'] ) . "',";
-	$buff .= " country_code: '" 		. dataEncode( $urow['country_code'] ) . "'}," . chr(13);
+	array_push($rows, $row);
 }
-
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo $_GET['callback'] . '({';
-echo "totals: " . $total . ", " . chr(13);
-echo "row: [" . chr(13);
-echo $buff;
-echo "]})" . chr(13);
-
+//---------------------------------------------------------------------------------------
+// here we are adding "totals" and the root "row" for sencha use 
+//---------------------------------------------------------------------------------------
+print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
 
 ?>
