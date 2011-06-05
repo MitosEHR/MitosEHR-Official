@@ -67,25 +67,22 @@ if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is Engli
 			ORDER BY 
 				IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
 }
-$total = $mitos_db->rowCount();
-$buff = "";
-foreach ($mitos_db->execStatement() as $urow) {
-	$buff .= '{';
-	$buff .= '"id":"' 			. $urow['id'].'",';
-	$buff .= '"list_id":"' 		. dataEncode($urow['list_id']).'",';
-	$buff .= '"option_id":"' 	. dataEncode($urow['option_id']).'",';
-	$buff .= '"title":"'		. dataEncode($urow['title']).'",';
-	$buff .= '"seq":"'			. dataEncode($urow['seq']).'",';
-	$buff .= '"is_default":"'	. dataEncode($urow['is_default']).'",';
-	$buff .= '"option_value":"' . dataEncode($urow['option_value']).'",';
-	$buff .= '"mapping":"' 		. dataEncode($urow['mapping']).'",';
-	$buff .= '"notes": "'		. dataEncode($urow['notes']).'"},' . chr(13);
-}
 
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo '{';
-echo '"totals": "' . $total . '", ' . chr(13);
-echo '"row": [' . chr(13);
-echo $buff;
-echo ']}' . chr(13);
+//---------------------------------------------------------------------------------------
+// catch the total records
+//---------------------------------------------------------------------------------------
+$total = $mitos_db->rowCount();
+
+//---------------------------------------------------------------------------------------
+// start the array
+//---------------------------------------------------------------------------------------
+$rows = array();
+foreach($mitos_db->execStatement() as $row){
+	array_push($rows, $row);
+}
+//---------------------------------------------------------------------------------------
+// here we are adding "totals" and the root "row" for sencha use 
+//---------------------------------------------------------------------------------------
+print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
+
 ?>
