@@ -92,9 +92,9 @@ Ext.onReady(function(){
 			});
 			
 			function authCk(val) {
-			    if (val == 'Yes') {
+			    if (val == '1') {
 			        return '<img src="ui_icons/yes.gif" />';
-			    } else if(val == 'No') {
+			    } else if(val == '0') {
 			        return '<img src="ui_icons/no.gif" />';
 			    } 
 			    return val;
@@ -109,8 +109,8 @@ Ext.onReady(function(){
 			    	{ width: 100,  text: '<?php i18n("Username"); ?>', sortable: true, dataIndex: 'username' },
 			    	{ width: 200,  text: '<?php i18n("Name"); ?>', sortable: true, dataIndex: 'fullname' },
 			    	{ flex: 1,  text: '<?php i18n("Aditional info"); ?>', sortable: true, dataIndex: 'info' },
-			    	{ text: '<?php i18n("Active?"); ?>', sortable: true, dataIndex: 'actived',renderer 	: authCk },
-			    	{ text: '<?php i18n("Authorized?"); ?>', sortable: true, dataIndex: 'authorizedd', renderer: authCk }
+			    	{ text: '<?php i18n("Active?"); ?>', sortable: true, dataIndex: 'active',renderer 	: authCk },
+			    	{ text: '<?php i18n("Authorized?"); ?>', sortable: true, dataIndex: 'authorized', renderer: authCk }
 			  	],
 			  	listeners: {
 			   		// -----------------------------------------
