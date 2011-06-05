@@ -30,20 +30,30 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	var LayoutStore = Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
-			{name: 'id',					type: 'int'},
-			{name: 'name',					type: 'string'},
-			{name: 'phone',					type: 'string'},
-			{name: 'fax',					type: 'string'},
-			{name: 'street',				type: 'string'},
-			{name: 'city',					type: 'string'},
-			{name: 'state',					type: 'string'}
+			{name: 'item_id',			type: 'int'},
+			{name: 'form_id',			type: 'string'},
+			{name: 'field_id',			type: 'string'},
+			{name: 'group_name',		type: 'string'},
+			{name: 'title',				type: 'string'},
+			{name: 'seq',				type: 'int'},
+			{name: 'data_type',			type: 'string'},
+			{name: 'uor',				type: 'string'},
+			{name: 'fld_length',		type: 'string'},
+			{name: 'max_length',		type: 'string'},
+			{name: 'list_id',			type: 'string'},
+			{name: 'titlecols',			type: 'string'},
+			{name: 'datacols',			type: 'string'},
+			{name: 'default_value',		type: 'string'},
+			{name: 'edit_options',		type: 'string'},
+			{name: 'description',		type: 'string'},
+			{name: 'group_order',		type: 'string'}
 		],
 			model 		:'layoutModel',
-			idProperty 	:'id',
-			read	: 'interface/administration/layout/data_read.ejs.php',
-			create	: 'interface/administration/layout/data_create.ejs.php',
-			update	: 'interface/administration/layout/data_update.ejs.php',
-			destroy : 'interface/administration/layout/data_destroy.ejs.php'
+			idProperty 	:'item_id',
+			read		: 'interface/administration/layout/data_read.ejs.php',
+			create		: 'interface/administration/layout/data_create.ejs.php',
+			update		: 'interface/administration/layout/data_update.ejs.php',
+			destroy 	: 'interface/administration/layout/data_destroy.ejs.php'
 	});
 	
 	// *************************************************************************************
@@ -56,7 +66,7 @@ Ext.onReady(function() {
 		],
 			model 		:'formlistModel',
 			idProperty 	:'id',
-			read	: 'interface/administration/layout/component_data.ejs.php?task=form_list',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=form_list',
 	});
 	
 	// *************************************************************************************
@@ -69,71 +79,84 @@ Ext.onReady(function() {
   	    frame	: true,
    	    title	: '<?php i18n("Field editor"); ?>',
         columns	: [
+			{ text: 'item_id', hidden: true, dataIndex: 'item_id' },
+			{ text: 'form_id', hidden: true, dataIndex: 'form_id' },
 			{
-				text     : '<?php i18n("Order"); ?>',
-				flex     : 1,
-				sortable : true,
-				dataIndex: 'order'
+				text     	: '<?php i18n("Order"); ?>',
+				sortable 	: true,
+				dataIndex	: 'seq',
+				width		: 50,
+				align		: 'center',
             },
-            {
-				text     : '<?php i18n("ID"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'id'
+			{
+				text     	: '<?php i18n("ID"); ?>',
+				sortable 	: true,
+				dataIndex	: 'field_id',
+				width		: 200,
+				align		: 'left',
             },
-            {
-				text     : '<?php i18n("Label"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'label'
+			{
+				text     	: '<?php i18n("Label"); ?>',
+				sortable 	: true,
+				dataIndex	: 'title',
+				width		: 150,
+				align		: 'left',
             },
-            {
-				text     : '<?php i18n("UOR"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'uor'
+			{
+				text     	: '<?php i18n("UOR"); ?>',
+				sortable 	: true,
+				dataIndex	: 'uor',
+				width		: 50,
+				align		: 'center',
             },
-            {
-				text     : '<?php i18n("Data Type"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'data_type'
+			{
+				text     	: '<?php i18n("Data Type"); ?>',
+				sortable 	: true,
+				dataIndex	: 'data_type',
+				width		: 55,
+				align		: 'center',
             },
-            {
-				text     : '<?php i18n("Size"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'size'
+			{
+				text     	: '<?php i18n("Size"); ?>',
+				sortable 	: true,
+				dataIndex	: 'max_length',
+				width		: 50,
+				align		: 'center',
             },
-            {
-				text     : '<?php i18n("List"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'list'
+			{
+				text     	: '<?php i18n("List"); ?>',
+				sortable 	: true,
+				dataIndex	: 'list_id',
+				width		: 150,
+				align		: 'center',
             },
-            {
-				text     : '<?php i18n("Label Cols"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'label_cols'
+			{
+				text     	: '<?php i18n("Label Cols"); ?>',
+				sortable 	: true,
+				dataIndex	: 'titlecols',
+				width		: 80,
+				align		: 'center',
             },
-            {
-				text     : '<?php i18n("Data Cols"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'data_cols'
+			{
+				text     	: '<?php i18n("Data Cols"); ?>',
+				sortable 	: true,
+				dataIndex	: 'datacols',
+				width		: 80,
+				align		: 'center',
             },
-            {
-				text     : '<?php i18n("Options"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'options'
+			{
+				text     	: '<?php i18n("Options"); ?>',
+				sortable 	: true,
+				dataIndex	: 'edit_options',
+				width		: 80,
+				align		: 'center',
             },
-            {
-				text     : '<?php i18n("Description"); ?>',
-				width    : 100,
-				sortable : true,
-				dataIndex: 'desc'
+			{
+				text     	: '<?php i18n("Description"); ?>',
+				sortable 	: true,
+				dataIndex	: 'description',
+				flex		: 1,
+				align		: 'left',
             }
 		],
 		dockedItems: [{
@@ -171,7 +194,7 @@ Ext.onReady(function() {
 		border		: true,
 		frame		: true,
 		title		: '<?php i18n("Form list"); ?>',
-		width		: 200,
+		width		: 100,
 		collapsible	: true,
         columns		: [
 			{
@@ -185,7 +208,17 @@ Ext.onReady(function() {
 				sortable : true,
 				dataIndex: 'form_id'
             }
-		]
+		],
+		listeners: {
+			itemclick: {
+            	fn: function(DataView, record, item, rowIndex, e){ 
+					var rec = formlistStore.getAt(rowIndex);
+					storeListsOption.load({params:{list_id: currList }});
+            		currRec = rec;
+            		rowPos = rowIndex;
+            	}
+			}
+		}
     }); // END LayoutChoose
     
 	// *************************************************************************************
