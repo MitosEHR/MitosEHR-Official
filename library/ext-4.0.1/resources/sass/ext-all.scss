@@ -36,6 +36,17 @@ padding: 5px !important;
 	border-style: solid !important;
 	border-width: 1px !important;
 }
+.x-grid-table .x-grid-row{
+cursor: hand !important;
+cursor: pointer !important;
+}
+//row cell selected
+$grid-row-cell-selected-border-color: adjust-color($base-color, $hue: 6.952deg, $saturation: 5.848%, $lightness: -6.471%) !default;
+$grid-row-cell-selected-background-color: #e1edfd;
+
+//row cell focus
+$grid-row-cell-focus-background-color: #e1edfd;
+$grid-row-cell-focus-background-gradient: 'grid-row-over' !default;
 
 // Tab colors
 $tab-base-color: adjust-color($base-color, $hue: -0.43deg, $saturation: 33.016%, $lightness: 100%) !default; //#deecfd
