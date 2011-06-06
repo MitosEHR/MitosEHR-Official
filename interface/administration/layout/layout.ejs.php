@@ -77,6 +77,13 @@ Ext.onReady(function() {
     	enableNoGroups: false,
         groupHeaderTpl: 'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
     });
+    
+    // *************************************************************************************
+    // RowEditor Plugin
+    // *************************************************************************************
+    var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+        autoCancel: false
+    });
 	
 	// *************************************************************************************
 	// Layout fields Grid Panel
@@ -88,16 +95,21 @@ Ext.onReady(function() {
   	    frame	: true,
   	    sortable: false,
   	    features: [groupingLayout],
+  	    plugins	: [rowEditing],
    	    title	: '<?php i18n("Field editor"); ?> (<?php i18n("Demographics"); ?>)',
         columns	: [
-			{ text: 'item_id', hidden: true, dataIndex: 'item_id' },
-			{ text: 'form_id', hidden: true, dataIndex: 'form_id' },
 			{
 				text     	: '<?php i18n("Order"); ?>',
 				sortable 	: false,
 				dataIndex	: 'seq',
 				width		: 50,
 				align		: 'center',
+            	editor: {
+	                xtype: 'numberfield',
+    	            allowBlank: false,
+        	        minValue: 1,
+            	    maxValue: 100
+            	}
             },
 			{
 				text     	: '<?php i18n("Group"); ?>',
@@ -105,6 +117,10 @@ Ext.onReady(function() {
 				dataIndex	: 'group_name',
 				width		: 70,
 				align		: 'left',
+            	editor: {
+	                xtype: 'textfield',
+    	            allowBlank: false,
+            	}
             },
 			{
 				text     	: '<?php i18n("ID"); ?>',
@@ -112,6 +128,10 @@ Ext.onReady(function() {
 				dataIndex	: 'field_id',
 				width		: 150,
 				align		: 'left',
+            	editor: {
+	                xtype: 'textfield',
+    	            allowBlank: false,
+            	}
             },
 			{
 				text     	: '<?php i18n("Label"); ?>',
@@ -119,6 +139,10 @@ Ext.onReady(function() {
 				dataIndex	: 'title',
 				width		: 130,
 				align		: 'left',
+            	editor: {
+	                xtype: 'textfield',
+    	            allowBlank: false,
+            	}
             },
 			{
 				text     	: '<?php i18n("UOR"); ?>',
@@ -140,6 +164,12 @@ Ext.onReady(function() {
 				dataIndex	: 'max_length',
 				width		: 50,
 				align		: 'center',
+            	editor: {
+	                xtype: 'numberfield',
+    	            allowBlank: false,
+        	        minValue: 1,
+            	    maxValue: 255
+            	}
             },
 			{
 				text     	: '<?php i18n("List"); ?>',
@@ -154,6 +184,12 @@ Ext.onReady(function() {
 				dataIndex	: 'titlecols',
 				width		: 80,
 				align		: 'center',
+            	editor: {
+	                xtype: 'numberfield',
+    	            allowBlank: false,
+        	        minValue: 1,
+            	    maxValue: 100
+            	}
             },
 			{
 				text     	: '<?php i18n("Data Cols"); ?>',
@@ -161,6 +197,12 @@ Ext.onReady(function() {
 				dataIndex	: 'datacols',
 				width		: 80,
 				align		: 'center',
+            	editor: {
+	                xtype: 'numberfield',
+    	            allowBlank: false,
+        	        minValue: 1,
+            	    maxValue: 100
+            	}
             },
 			{
 				text     	: '<?php i18n("Options"); ?>',
@@ -175,7 +217,13 @@ Ext.onReady(function() {
 				dataIndex	: 'description',
 				flex		: 1,
 				align		: 'left',
-            }
+            	editor: {
+	                xtype: 'textfield',
+    	            allowBlank: false,
+            	}
+            },
+			{ text: 'item_id', hidden: true, dataIndex: 'item_id' },
+			{ text: 'form_id', hidden: true, dataIndex: 'form_id' }
 		],
 		dockedItems: [{
 			xtype: 'toolbar',
