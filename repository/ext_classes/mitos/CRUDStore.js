@@ -18,6 +18,8 @@ Ext.define('Ext.mitos.CRUDStore',{
 			model		: config.model,
 			noCache		: true,
 			autoSync	: false,
+			sortOnFilter: false,
+			remoteSort	: true,
 			groupField	: config.groupField,
 		    proxy		: {
 		    	type	: 'ajax',
