@@ -113,8 +113,8 @@ Ext.onReady(function() {
 				text     	: '<?php i18n("Data Type"); ?>',
 				sortable 	: true,
 				dataIndex	: 'data_type',
-				width		: 55,
-				align		: 'center',
+				width		: 100,
+				align		: 'left',
             },
 			{
 				text     	: '<?php i18n("Size"); ?>',

@@ -12,12 +12,13 @@ Ext.define('Ext.mitos.CRUDStore',{
 	constructor:function(config){
 		
 		if (!Ext.ModelManager.isRegistered( config.model )){
-			Ext.define( config.model, {extend:"Ext.data.Model", fields: config.fields, idProperty: config.idProperty });
+			Ext.define( config.model, {extend:"Ext.data.Model", groupField: config.groupField, fields: config.fields, idProperty: config.idProperty });
 		}
 		var config = {
 			model		: config.model,
 			noCache		: true,
 			autoSync	: false,
+			groupField	: config.groupField,
 		    proxy		: {
 		    	type	: 'ajax',
 				api		: {
