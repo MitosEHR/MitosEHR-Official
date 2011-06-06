@@ -74,6 +74,7 @@ Ext.onReady(function() {
 	// Grouping - group_name
 	// *************************************************************************************
     var groupingLayout = Ext.create('Ext.grid.feature.Grouping',{
+    	enableNoGroups: false,
         groupHeaderTpl: 'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
     });
 	
@@ -85,6 +86,7 @@ Ext.onReady(function() {
         region	: 'center',
    	    border	: true,
   	    frame	: true,
+  	    sortable: false,
   	    features: [groupingLayout],
    	    title	: '<?php i18n("Field editor"); ?> (<?php i18n("Demographics"); ?>)',
         columns	: [
@@ -92,84 +94,84 @@ Ext.onReady(function() {
 			{ text: 'form_id', hidden: true, dataIndex: 'form_id' },
 			{
 				text     	: '<?php i18n("Order"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'seq',
 				width		: 50,
 				align		: 'center',
             },
 			{
 				text     	: '<?php i18n("Group"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'group_name',
 				width		: 70,
 				align		: 'left',
             },
 			{
 				text     	: '<?php i18n("ID"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'field_id',
 				width		: 150,
 				align		: 'left',
             },
 			{
 				text     	: '<?php i18n("Label"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'title',
 				width		: 130,
 				align		: 'left',
             },
 			{
 				text     	: '<?php i18n("UOR"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'uor',
 				width		: 50,
 				align		: 'center',
             },
 			{
 				text     	: '<?php i18n("Data Type"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'data_type',
 				width		: 100,
 				align		: 'left',
             },
 			{
 				text     	: '<?php i18n("Size"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'max_length',
 				width		: 50,
 				align		: 'center',
             },
 			{
 				text     	: '<?php i18n("List"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'list_id',
 				width		: 60,
 				align		: 'center',
             },
 			{
 				text     	: '<?php i18n("Label Cols"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'titlecols',
 				width		: 80,
 				align		: 'center',
             },
 			{
 				text     	: '<?php i18n("Data Cols"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'datacols',
 				width		: 80,
 				align		: 'center',
             },
 			{
 				text     	: '<?php i18n("Options"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'edit_options',
 				width		: 80,
 				align		: 'center',
             },
 			{
 				text     	: '<?php i18n("Description"); ?>',
-				sortable 	: true,
+				sortable 	: false,
 				dataIndex	: 'description',
 				flex		: 1,
 				align		: 'left',

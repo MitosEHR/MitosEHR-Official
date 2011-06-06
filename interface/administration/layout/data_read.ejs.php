@@ -32,9 +32,9 @@ $mitos_db = new dbHelper();
 // and execute the apropriate SQL statement
 // **************************************************************************************
 if(!$_REQUEST['form_id']){
-	$sql = "SELECT * FROM layout_options WHERE form_id='Demographics' ORDER BY seq, group_name";
+	$sql = "SELECT * FROM layout_options WHERE form_id='Demographics' ORDER BY group_order, seq";
 } else {
-	$sql = "SELECT * FROM layout_options WHERE form_id='". $_REQUEST['form_id'] . "' ORDER BY seq, group_name";
+	$sql = "SELECT * FROM layout_options WHERE form_id='". $_REQUEST['form_id'] . "' ORDER BY group_order, seq";
 }
 $mitos_db->setSQL($sql);
 
