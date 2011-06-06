@@ -48,8 +48,9 @@ Ext.onReady(function() {
 			{name: 'description',		type: 'string'},
 			{name: 'group_order',		type: 'string'}
 		],
-			model 		:'layoutModel',
-			idProperty 	:'item_id',
+			groupField	: 'group_name',
+			model 		: 'layoutModel',
+			idProperty 	: 'item_id',
 			read		: 'interface/administration/layout/data_read.ejs.php',
 			create		: 'interface/administration/layout/data_create.ejs.php',
 			update		: 'interface/administration/layout/data_update.ejs.php',
@@ -70,6 +71,13 @@ Ext.onReady(function() {
 	});
 	
 	// *************************************************************************************
+	// Grouping - group_name
+	// *************************************************************************************
+    var groupingLayout = Ext.create('Ext.grid.feature.Grouping',{
+        groupHeaderTpl: 'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
+    });
+	
+	// *************************************************************************************
 	// Layout fields Grid Panel
 	// *************************************************************************************
 	var layoutGrid = Ext.create('Ext.grid.Panel', {
@@ -77,6 +85,7 @@ Ext.onReady(function() {
         region	: 'center',
    	    border	: true,
   	    frame	: true,
+  	    features: [groupingLayout],
    	    title	: '<?php i18n("Field editor"); ?> (<?php i18n("Demographics"); ?>)',
         columns	: [
 			{ text: 'item_id', hidden: true, dataIndex: 'item_id' },
@@ -87,6 +96,13 @@ Ext.onReady(function() {
 				dataIndex	: 'seq',
 				width		: 50,
 				align		: 'center',
+            },
+			{
+				text     	: '<?php i18n("Group"); ?>',
+				sortable 	: true,
+				dataIndex	: 'group_name',
+				width		: 70,
+				align		: 'left',
             },
 			{
 				text     	: '<?php i18n("ID"); ?>',
@@ -127,7 +143,7 @@ Ext.onReady(function() {
 				text     	: '<?php i18n("List"); ?>',
 				sortable 	: true,
 				dataIndex	: 'list_id',
-				width		: 150,
+				width		: 60,
 				align		: 'center',
             },
 			{
