@@ -52,18 +52,7 @@ $row['notes'] 			= dataEncode($data->notes);
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-$sql = "INSERT INTO 
-			list_options 
-		SET
-			list_id = '" 		. $row['list_id'] . "', 
-			option_id = '" 		. $row['option_id'] . "', 
-			title = '" 			. $row['title'] . "', 
-			seq = '" 			. $row['seq'] . "', 
-			is_default = '" 	. $row['is_default'] . "', 
-			option_value = '" 	. $row['option_value'] . "', 
-			mapping = '" 		. $row['mapping'] . "', 
-			notes = '" 			. $row['notes'] . "'";
-			
+$sql = $mitos_db->sqlBind($row, "list_options", "i");
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 
