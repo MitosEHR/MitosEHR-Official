@@ -53,6 +53,8 @@ $row['edit_options'] 	= dataEncode($data->edit_options);
 $row['description'] 	= dataEncode($data->description);
 $row['group_order'] 	= dataEncode($data->group_order);
 
+
+
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
