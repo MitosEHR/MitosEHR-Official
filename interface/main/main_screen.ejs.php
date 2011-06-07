@@ -14,7 +14,10 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 $_SESSION['site']['flops'] = 0;
 
 include_once('library/compressor/compressor.inc.php');
+include_once('/library/dbHelper/dbHelper.inc.php');
+include_once('repository/global_settings/global_settings.php');
 include_once('repository/global_functions/global_funtions.php');
+
 ?>
 <html>
 <head>
@@ -101,7 +104,7 @@ Ext.onReady(function() {
 		store		: storeTree,
 		title		: '<?php i18n("Navigation"); ?>',
 		split		: true,
-		width		: 200,
+		width		: <?php echo $_SESSION['global_settings']['gbl_nav_area_width'] ?>,
 		root: {
 			nodeType	: 'async',
 			draggable	: false,
