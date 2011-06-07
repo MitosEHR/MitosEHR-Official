@@ -117,7 +117,8 @@ class dbHelper {
 		// Step 1
 		// Create the INSERT or UPDATE Clause
 		//------------------------------------------------------------------
-		if (strtolower($iu) == "i"){
+		$iu = strtolower($iu);
+		if ($iu == "i"){
 			$sql_r = "INSERT INTO " . $table;
 		} elseif($iu == "u"){
 			$sql_r = "UPDATE " . $table;
@@ -141,7 +142,7 @@ class dbHelper {
 		// Step 3
 		// Create the WHERE clause, if applicable
 		//------------------------------------------------------------------
-		if ($iu == "U"){ $sql_r .= " WHERE " . $where; }
+		if ($iu == "u"){ $sql_r .= " WHERE " . $where; }
 		return $sql_r;
 	}
 	
