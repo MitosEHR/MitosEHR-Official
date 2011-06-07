@@ -14,6 +14,9 @@ Ext.define('Ext.mitos.CRUDStore',{
 		if (!Ext.ModelManager.isRegistered( config.model )){
 			Ext.define( config.model, {extend:"Ext.data.Model", groupField: config.groupField, fields: config.fields, idProperty: config.idProperty });
 		}
+		
+		if(config.autoLoad == null){config.autoLoad = true}
+		
 		var config = {
 			model		: config.model,
 			noCache		: true,
@@ -43,7 +46,7 @@ Ext.define('Ext.mitos.CRUDStore',{
 					root	 		: 'row'
 				}
 		    },
-		    autoLoad: true
+		    autoLoad: config.autoLoad
         }
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
         Ext.mitos.CRUDStore.superclass.constructor.call(this, config);

@@ -42,18 +42,13 @@ $mitos_db->setSQL("SELECT * FROM onotes ".$WHERE." ORDER BY date DESC
         			LIMIT ".$start.",".$limit);
 				//	WHERE onotes.facillity = '$facillity'
 
-$buff = '';        			
-foreach ($mitos_db->execStatement() as $urow) {
-  $buff .= '{';
-  $buff .= '"id":"' 	. dataEncode($urow['id']).'",';
-  $buff .= '"date":"' 	. dataEncode($urow['date']).'",';
-  $buff .= '"user":"' 	. dataEncode($urow['user']).'",';
-  $buff .= '"body":"' 	. dataEncode($urow['body'] ).'"},'.chr(13);
+
+$rows = array();
+foreach($mitos_db->execStatement() as $row){
+	array_push($rows, $row);
 }
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo '{';
-echo '"totals": "' . $total . '", ' . chr(13);
-echo '"row": [' . chr(13);
-echo $buff;
-echo ']}' . chr(13);
+//------------------------------------------------------------------------------
+// here we are adding "totals" and the root "row" for sencha use 
+//------------------------------------------------------------------------------
+print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
 ?>
