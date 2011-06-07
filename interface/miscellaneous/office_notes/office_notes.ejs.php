@@ -45,6 +45,7 @@ Ext.onReady(function(){
         create    	: 'interface/miscellaneous/office_notes/data_create.ejs.php',
         update    	: 'interface/miscellaneous/office_notes/data_update.ejs.php',
       //destroy		: <-- No need to delete Office Notes -->
+      	autoLoad	: false
 	});
 	
 	var onotesFormPanel = Ext.create('Ext.form.FormPanel', {

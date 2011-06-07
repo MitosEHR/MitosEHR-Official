@@ -26,7 +26,10 @@ $mitos_db = new dbHelper();
 
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $count = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
-$buff = "";
+//---------------------------------------------------------------------------------------
+// start the array
+//---------------------------------------------------------------------------------------
+$rows = array();
 switch ($_GET['task']) {
 	//**********************************************************************
 	// SQL for parmacies, pharmacy address, and phone numbers
@@ -52,47 +55,32 @@ switch ($_GET['task']) {
 	  					LEFT JOIN addresses ON pharmacies.id = addresses.foreign_id
 	  		 			 ORDER BY pharmacies.name DESC");
 		$total = $mitos_db->rowCount();
-		foreach ($mitos_db->execStatement() as $urow) {
-			$buff .= '{';
-			$buff .= '"id":"' 					. $urow['id'] . '",';
-			$buff .= '"name":"' 				. $urow['name'] . '",';
-			$buff .= '"transmit_method":"' 		. $urow['transmit_method'] . '",';
-			$buff .= '"email":"' 				. $urow['email'] . '",';
-			//***************************************************************
-			// Now lets get phone all the numbers and identified them by type
-			//***************************************************************
-			$mitos_db->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$urow['id']."");
+		
+		foreach($mitos_db->execStatement() as $row){
+			$mitos_db->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$row['id']."");
 			foreach ($mitos_db->execStatement() as $phoneRow) {
 				switch ($phoneRow['type']) {
 					case "2":
-						$buff .= '"phone_country_code":"' 	. $phoneRow['country_code'] . '",';
-						$buff .= '"phone_area_code":"' 		. $phoneRow['area_code'] . '",';
-						$buff .= '"phone_prefix":"' 		. $phoneRow['prefix'] . '",';
-						$buff .= '"phone_number":"' 		. $phoneRow['number'] . '",';
-						$buff .= '"phone_foreign_id":"' 	. $phoneRow['foreign_id'] . '",';
-						$buff .= '"phone_full":"' 			. $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'].'",';
+						$row['phone_country_code'] 	= $phoneRow['country_code'];
+						$row['phone_prefix'] 		= $phoneRow['country_code'];
+						$row['phone_number'] 		= $phoneRow['country_code'];
+						$row['phone_foreign_id'] 	= $phoneRow['country_code'];
+						$row['phone_country_code'] 	= $phoneRow['country_code'];
+						$row['phone_full'] 			= $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'];
 						
 					break;
 					case "5":
-						$buff .= '"fax_country_code":"' 	. $phoneRow['country_code'] . '",';
-						$buff .= '"fax_area_code":"' 		. $phoneRow['area_code'] . '",';
-						$buff .= '"fax_prefix":"' 			. $phoneRow['prefix'] . '",';
-						$buff .= '"fax_number":"' 			. $phoneRow['number'] . '",';
-						$buff .= '"fax_foreign_id":"' 		. $phoneRow['foreign_id'] . '",';
-						$buff .= '"fax_full":"' 			. $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'].'",';
+						$row['fax_country_code'] 	= $phoneRow['country_code'];
+						$row['fax_prefix'] 			= $phoneRow['country_code'];
+						$row['fax_number'] 			= $phoneRow['country_code'];
+						$row['fax_foreign_id'] 		= $phoneRow['country_code'];
+						$row['fax_country_code'] 	= $phoneRow['country_code'];
+						$row['fax_full'] 			= $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'];
 					break;
-				}
+				}	
 			}
-			$buff .= '"address_id":"' 				. $urow['address_id'] . '",';
-			$buff .= '"line1":"' 					. $urow['line1'] . '",';
-			$buff .= '"line2":"' 					. $urow['line2'] . '",';
-			$buff .= '"city":"' 					. $urow['city'] . '",';
-			$buff .= '"state":"' 					. $urow['state'] . '",';
-			$buff .= '"zip":"' 						. $urow['zip'] . '",';
-			$buff .= '"plus_four":"' 				. $urow['plus_four'] . '",';
-			$buff .= '"country":"' 					. $urow['country'] . '",';
-			$buff .= '"address_foreign_id":"' 		. $urow['address_foreign_id'] . '",';
-			$buff .= '"address_full":"' 			. $urow['line1'].' '.$urow['line2'].' '.$urow['city'].','.$urow['state'].' '.$urow['zip'].'-'.$urow['plus_four'].' '.$urow['country']. '"},'.chr(13);
+			$row['address_full'] = $row['line1'].' '.$row['line2'].' '.$row['city'].','.$row['state'].' '.$row['zip'].'-'.$row['plus_four'].' '.$row['country'];
+			array_push($rows, $row);
 		}
 	break;
 	//**********************************************************************
@@ -123,59 +111,35 @@ switch ($_GET['task']) {
 	  					LEFT JOIN addresses ON insurance_companies.id = addresses.foreign_id
 	  		 			 ORDER BY insurance_companies.name DESC");
 		$total = $mitos_db->rowCount();
-		foreach ($mitos_db->execStatement() as $urow) {
-			$buff .= '{';
-			$buff .= '"id":"' 						. $urow['id'] . '",';
-			$buff .= '"name":"' 					. $urow['name'] . '",';
-			$buff .= '"attn":"' 					. $urow['attn'] . '",';
-			$buff .= '"cms_id":"' 					. $urow['cms_id'] . '",';
-			$buff .= '"freeb_type":"' 				. $urow['freeb_type'] . '",';
-			$buff .= '"x12_receiver_id":"' 			. $urow['x12_receiver_id'] . '",';
-			$buff .= '"x12_default_partner_id":"' 	. $urow['x12_default_partner_id'] . '",';
-			$buff .= '"alt_cms_id":"' 				. $urow['alt_cms_id'] . '",';	
-			//***************************************************************
-			// Now lets get phone all the numbers and identified them by type
-			//***************************************************************
-			$mitos_db->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$urow['id']."");
+		
+		foreach($mitos_db->execStatement() as $row){
+			$mitos_db->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$row['id']."");
 			foreach ($mitos_db->execStatement() as $phoneRow) {
 				switch ($phoneRow['type']) {
 					case "2":
-						$buff .= '"phone_country_code":"' 	. $phoneRow['country_code'] . '",';
-						$buff .= '"phone_area_code":"' 		. $phoneRow['area_code'] . '",';
-						$buff .= '"phone_prefix":"' 		. $phoneRow['prefix'] . '",';
-						$buff .= '"phone_number":"' 		. $phoneRow['number'] . '",';
-						$buff .= '"phone_foreign_id":"' 	. $phoneRow['foreign_id'] . '",';
-						$buff .= '"phone_full":"' 			. $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'].'",';
+						$row['phone_country_code'] 	= $phoneRow['country_code'];
+						$row['phone_prefix'] 		= $phoneRow['country_code'];
+						$row['phone_number'] 		= $phoneRow['country_code'];
+						$row['phone_foreign_id'] 	= $phoneRow['country_code'];
+						$row['phone_country_code'] 	= $phoneRow['country_code'];
+						$row['phone_full'] 			= $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'];
 						
 					break;
 					case "5":
-						$buff .= '"fax_country_code":"' 	. $phoneRow['country_code'] . '",';
-						$buff .= '"fax_area_code":"' 		. $phoneRow['area_code'] . '",';
-						$buff .= '"fax_prefix":"' 			. $phoneRow['prefix'] . '",';
-						$buff .= '"fax_number":"' 			. $phoneRow['number'] . '",';
-						$buff .= '"fax_foreign_id":"' 		. $phoneRow['foreign_id'] . '",';
-						$buff .= '"fax_full":"' 			. $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'].'",';
+						$row['fax_country_code'] 	= $phoneRow['country_code'];
+						$row['fax_prefix'] 			= $phoneRow['country_code'];
+						$row['fax_number'] 			= $phoneRow['country_code'];
+						$row['fax_foreign_id'] 		= $phoneRow['country_code'];
+						$row['fax_country_code'] 	= $phoneRow['country_code'];
+						$row['fax_full'] 			= $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'];
 					break;
-				}
+				}	
 			}
-			$buff .= '"address_id":"' 				. $urow['address_id'] . '",';
-			$buff .= '"line1":"' 					. $urow['line1'] . '",';
-			$buff .= '"line2":"' 					. $urow['line2'] . '",';
-			$buff .= '"city":"' 					. $urow['city'] . '",';
-			$buff .= '"state":"' 					. $urow['state'] . '",';
-			$buff .= '"zip":"' 						. $urow['zip'] . '",';
-			$buff .= '"plus_four":"' 				. $urow['plus_four'] . '",';
-			$buff .= '"country":"' 					. $urow['country'] . '",';
-			$buff .= '"address_foreign_id":"' 		. $urow['address_foreign_id'] . '",';
-			$buff .= '"address_full":"' 			. $urow['line1'].' '.$urow['line2'].' '.$urow['city'].','.$urow['state'].' '.$urow['zip'].'-'.$urow['plus_four'].' '.$urow['country']. '"},'.chr(13);
+			$row['address_full'] = $row['line1'].' '.$row['line2'].' '.$row['city'].','.$row['state'].' '.$row['zip'].'-'.$row['plus_four'].' '.$row['country'];
+			array_push($rows, $row);
 		}
 	break;
 }
+print_r(json_encode(array('totals'=>$total,'row'=>$rows)));	
 
-$buff = substr($buff, 0, -2); // Delete the last comma.
-echo '{';
-echo '"totals": "' . $total . '", ' . chr(13);
-echo '"row": [' . chr(13);
-echo $buff;
-echo ']}' . chr(13);
 ?>
