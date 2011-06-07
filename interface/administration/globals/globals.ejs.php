@@ -29,6 +29,7 @@ Ext.onReady(function(){
 	var globalStore = Ext.create('Ext.mitos.CRUDStore', {
 		fields: [
 			{ name: 'data_id',								type:'int' },
+            { name: 'fullname',						        type:'auto' },
 			{ name: 'default_top_pane',						type:'auto' },
 			{ name: 'concurrent_layout',					type:'auto' },
 			{ name: 'css_header',							type:'auto' },
@@ -216,6 +217,16 @@ Ext.onReady(function(){
 	    data : [
 	        {"title":"Calendar", "option_id":"main_info.php"},
 	        {"title":"Patient Search/Add Screen", "option_id":"../new/new.php"}
+	    ]
+	});
+    // *************************************************************************************
+	// Data Model for Fullname Format
+	// *************************************************************************************
+    var fullname_store = Ext.create('Ext.data.Store', {
+	    fields: ['format', 'option_id'],
+	    data : [
+	        {"format":"Last, First Middle", "option_id":"0"},
+	        {"format":"First Middle Last", "option_id":"1"}
 	    ]
 	});
 	// *************************************************************************************
@@ -482,6 +493,15 @@ Ext.onReady(function(){
                 //defaults: {},
                 defaultType: 'textfield',
                 items: [{
+                    xtype		: 'combo',
+					fieldLabel	: '<?php i18n('Fullname Format'); ?>',
+					name		: 'fullname',
+					id			: 'fullname',
+					displayField: 'format',
+					valueField	: 'option_id',
+					editable	: false,
+					store		: fullname_store
+				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('Default Language'); ?>',
 					name		: 'language_default',

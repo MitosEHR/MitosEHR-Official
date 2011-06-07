@@ -112,6 +112,7 @@ class dbHelper {
 	// unset($b_array['field']);
 	//**********************************************************************
 	function sqlBind($b_array, $table, $iu="I", $where){
+        $sql_r = '';
 		//------------------------------------------------------------------
 		// Step 1
 		// Create the INSERT or UPDATE Clause
@@ -191,9 +192,9 @@ class dbHelper {
 	
 		// Prepare the SQL stament first, and then execute.
 		$stmt = $this->conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
-		$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
+		$stmt->bindParam(':dtime', date('Y-m-d H:i:s'), PDO::PARAM_STR);
 		$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
-		$stmt->bindParam(':comments', $this->$sql_statement, PDO::PARAM_STR);
+		$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
 		$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
 		$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
 		$stmt->execute();
