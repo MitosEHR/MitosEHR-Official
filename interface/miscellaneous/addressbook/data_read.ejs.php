@@ -14,10 +14,8 @@ session_start();
 session_cache_limiter('private');
 
 include_once("../../../library/dbHelper/dbHelper.inc.php");
-include_once("../../../library/I18n/I18n.inc.php");
-require_once("../../../repository/dataExchange/dataExchange.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
-
+include_once('../../../repository/global_functions/global_funtions.php');
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
 //******************************************************************************
@@ -54,7 +52,7 @@ $total = $mitos_db->rowCount();
 //---------------------------------------------------------------------------------------
 $rows = array();
 foreach($mitos_db->execStatement() as $row){
-	$row['fullname'] = $myrow['lname'].','.$row['fname'].' '.$row['mname'];
+	$row['fullname'] = fullname($row['fname'],$row['mname'],$row['lname']);
 	
 	if($row['street'] != NULL || $row['street']  != "" ) {
      	$rec['street'] = $row['street'] . "<br>";

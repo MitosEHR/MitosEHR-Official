@@ -12,8 +12,6 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 include_once("../../../library/dbHelper/dbHelper.inc.php");
-include_once("../../../library/I18n/I18n.inc.php");
-require_once("../../../repository/dataExchange/dataExchange.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -38,38 +36,38 @@ $data = json_decode ( $_POST['row'], true );
 // just in case 
 // *************************************************************************************
 $row['id'] 				  = trim($data['id']);
-$row['username']          = dataEncode($data['username']);
+$row['username']          = $data['username'];
 $row['password']       	  = $aes->encrypt($data['password']);
-$row['abook_type']        = dataEncode($data['abook_type']);
-$row['title']             = dataEncode($data['title']);
-$row['fname']             = dataEncode($data['fname']);
-$row['mname']             = dataEncode($data['mname']);
-$row['lname']             = dataEncode($data['lname']);
-$row['specialty']         = dataEncode($data['specialty']);
-$row['organization']      = dataEncode($data['organization']);
-$row['valedictory']       = dataEncode($data['valedictory']);
-$row['street']            = dataEncode($data['street']);
-$row['streetb']           = dataEncode($data['streetb']);
-$row['city']              = dataEncode($data['city']);
-$row['state']             = dataEncode($data['state']);
-$row['zip']               = dataEncode($data['zip']);
-$row['street2']           = dataEncode($data['street2']);
-$row['streetb2']          = dataEncode($data['streetb2']);
-$row['city2']             = dataEncode($data['city2']);
-$row['state2']            = dataEncode($data['state2']);
-$row['zip2']              = dataEncode($data['zip2']);
-$row['phone']             = dataEncode($data['phone']);
-$row['phonew1']           = dataEncode($data['phonew1']);
-$row['phonew2']           = dataEncode($data['phonew2']);
-$row['phonecell']         = dataEncode($data['phonecell']);
-$row['fax']               = dataEncode($data['fax']);
-$row['email']             = dataEncode($data['email']);
-$row['assistant']         = dataEncode($data['assistant']);
-$row['url']               = dataEncode($data['url']);
-$row['upin']              = dataEncode($data['upin']);
-$row['npi']               = dataEncode($data['npi']);
-$row['federaltaxid']      = dataEncode($data['federaltaxid']);
-$row['taxonomy']          = dataEncode($data['taxonomy']);
+$row['abook_type']        = $data['abook_type'];
+$row['title']             = $data['title'];
+$row['fname']             = $data['fname'];
+$row['mname']             = $data['mname'];
+$row['lname']             = $data['lname'];
+$row['specialty']         = $data['specialty'];
+$row['organization']      = $data['organization'];
+$row['valedictory']       = $data['valedictory'];
+$row['street']            = $data['street'];
+$row['streetb']           = $data['streetb'];
+$row['city']              = $data['city'];
+$row['state']             = $data['state'];
+$row['zip']               = $data['zip'];
+$row['street2']           = $data['street2'];
+$row['streetb2']          = $data['streetb2'];
+$row['city2']             = $data['city2'];
+$row['state2']            = $data['state2'];
+$row['zip2']              = $data['zip2'];
+$row['phone']             = $data['phone'];
+$row['phonew1']           = $data['phonew1'];
+$row['phonew2']           = $data['phonew2'];
+$row['phonecell']         = $data['phonecell'];
+$row['fax']               = $data['fax'];
+$row['email']             = $data['email'];
+$row['assistant']         = $data['assistant'];
+$row['url']               = $data['url'];
+$row['upin']              = $data['upin'];
+$row['npi']               = $data['npi'];
+$row['federaltaxid']      = $data['federaltaxid'];
+$row['taxonomy']          = $data['taxonomy'];
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
