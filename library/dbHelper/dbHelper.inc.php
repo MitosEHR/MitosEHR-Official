@@ -93,6 +93,41 @@ class dbHelper {
 	}
 	
 	//**********************************************************************
+	// sqlBind 
+	// This function builds a SQL Statement based on an array
+	// arguments to pass:
+	//
+	// $b_array - An array containing a key that has to be the exact field
+	// on the data base, and it's value
+	//
+	// $table - A valid database table to make the SQL statement
+	//
+	// $iu - Insert or Update values
+	//
+	// $where - If in $iu = U is used you must pass a WHERE clause in the
+	// last parameter.
+	//
+	// NOTE: To eliminate fields that are not in the database you can use
+	// unset($b_array['field']);
+	//**********************************************************************
+	function sqlBind($b_array, $table, $iu="I", $where){
+		// Step 1
+		if ($iu == "I"){
+			$sql_r = "INSERT INTO " . $table . chr(13);
+		} elseif($iu == "U"){
+			$sql_r = "UPDATE INTO " . $table . chr(13);
+		}
+		// Step 2
+		foreach($b_array as $key => $value){
+			$sql_r .= " SET " . $key . "='" . addslashes($value) . "'" . chr(13);
+		}
+		// Step 3
+		if ($iu == "U"){
+			$sql_r .= " WHERE " . $where . chr(13); 
+		}
+		return $sql_r;
+	}
+	//**********************************************************************
 	// Simple SQL Stament, with Event LOG injection
 	// $dbHelper->exeLog();
 	// return: Array of records + Inject the action on the event log
