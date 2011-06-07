@@ -34,6 +34,7 @@ Ext.onReady(function() {
 			{name: 'form_id',			type: 'string'},
 			{name: 'field_id',			type: 'string'},
 			{name: 'group_name',		type: 'string'},
+			{name: 'listDesc',			type: 'string'},
 			{name: 'title',				type: 'string'},
 			{name: 'seq',				type: 'int'},
 			{name: 'data_type',			type: 'string'},
@@ -58,7 +59,7 @@ Ext.onReady(function() {
 	});
 	
 	// *************************************************************************************
-	// Form List Record Structure
+	// Form List Record Structure & Store
 	// *************************************************************************************
 	var formlistStore = Ext.create('Ext.mitos.CRUDStore',{
 		fields: [
@@ -68,6 +69,47 @@ Ext.onReady(function() {
 			model 		:'formlistModel',
 			idProperty 	:'id',
 			read		: 'interface/administration/layout/component_data.ejs.php?task=form_list',
+	});
+	
+	// *************************************************************************************
+	// Form List Record Structure & Store
+	// *************************************************************************************
+	var uorStore = Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'id',	type: 'string'},
+			{name: 'uor',	type: 'string'}
+		],
+			model 		:'uorModel',
+			idProperty 	:'id',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=uor',
+	});
+	
+	// *************************************************************************************
+	// Data Types Record Structure & Store
+	// *************************************************************************************
+	var datatypesStore = Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'id',	type: 'string'},
+			{name: 'type',	type: 'string'}
+		],
+			model 		:'typeModel',
+			idProperty 	:'id',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=data_types',
+	});
+	
+	// *************************************************************************************
+	// List Options Record Structure & Store
+	// *************************************************************************************
+	var listoptionStore = Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'id',		type: 'int'},
+			{name: 'title',		type: 'string'},
+			{name: 'list_id',	type: 'string'},
+			{name: 'option_id',	type: 'string'}
+		],
+			model 		:'listoptionModel',
+			idProperty 	:'id',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=lists',
 	});
 	
 	// *************************************************************************************
@@ -126,7 +168,7 @@ Ext.onReady(function() {
 				text     	: '<?php i18n("ID"); ?>',
 				sortable 	: false,
 				dataIndex	: 'field_id',
-				width		: 150,
+				width		: 120,
 				align		: 'left',
             	editor: {
 	                xtype: 'textfield',
@@ -150,6 +192,16 @@ Ext.onReady(function() {
 				dataIndex	: 'uor',
 				width		: 50,
 				align		: 'center',
+				editor: {
+					name: 'uor',
+					xtype: 'combo', 
+					displayField: 'uor',
+					valueField: 'id', 
+					hiddenName: 'id',
+					editable: false, 
+					store: uorStore, 
+					queryMode: 'local'
+				}
             },
 			{
 				text     	: '<?php i18n("Data Type"); ?>',
@@ -157,6 +209,16 @@ Ext.onReady(function() {
 				dataIndex	: 'data_type',
 				width		: 100,
 				align		: 'left',
+				editor: {
+					name: 'data_type',
+					xtype: 'combo', 
+					displayField: 'type',
+					valueField: 'id', 
+					hiddenName: 'id',
+					editable: false, 
+					store: datatypesStore, 
+					queryMode: 'local'
+				}
             },
 			{
 				text     	: '<?php i18n("Size"); ?>',
@@ -166,17 +228,26 @@ Ext.onReady(function() {
 				align		: 'center',
             	editor: {
 	                xtype: 'numberfield',
-    	            allowBlank: false,
-        	        minValue: 1,
+    	            minValue: 0,
             	    maxValue: 255
             	}
             },
 			{
 				text     	: '<?php i18n("List"); ?>',
 				sortable 	: false,
-				dataIndex	: 'list_id',
-				width		: 60,
+				dataIndex	: 'listDesc',
+				width		: 100,
 				align		: 'center',
+				editor: {
+					name: 'list_id',
+					xtype: 'combo', 
+					displayField: 'title',
+					valueField: 'list_id', 
+					hiddenName: 'list_id',
+					editable: false, 
+					store: listoptionStore, 
+					queryMode: 'local'
+				}
             },
 			{
 				text     	: '<?php i18n("Label Cols"); ?>',
@@ -187,7 +258,7 @@ Ext.onReady(function() {
             	editor: {
 	                xtype: 'numberfield',
     	            allowBlank: false,
-        	        minValue: 1,
+        	        minValue: 0,
             	    maxValue: 100
             	}
             },
@@ -200,7 +271,7 @@ Ext.onReady(function() {
             	editor: {
 	                xtype: 'numberfield',
     	            allowBlank: false,
-        	        minValue: 1,
+        	        minValue: 0,
             	    maxValue: 100
             	}
             },
