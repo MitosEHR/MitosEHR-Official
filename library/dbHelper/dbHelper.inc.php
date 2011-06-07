@@ -132,7 +132,7 @@ class dbHelper {
 				$where <> ($key . '="' . addslashes($value) . '"')){
 				$sql_r .= $key . "='" . addslashes($value) . "', "; 
 			} else {
-				return "ERROR: Some key and value pairs are not valid."
+				return "ERROR: Some key and value pairs are not valid.";
 			}
 		}
 		$sql_r = substr($sql_r, 0, -2);
@@ -191,9 +191,9 @@ class dbHelper {
 	
 		// Prepare the SQL stament first, and then execute.
 		$stmt = $this->conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
-		$stmt->bindParam(':dtime', date(), PDO::PARAM_STR);
+		$stmt->bindParam(':dtime', date('Y-m-d H:i:s'), PDO::PARAM_STR);
 		$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
-		$stmt->bindParam(':comments', $this->$sql_statement, PDO::PARAM_STR);
+		$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
 		$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
 		$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
 		$stmt->execute();
