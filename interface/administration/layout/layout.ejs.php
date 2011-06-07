@@ -25,6 +25,8 @@ $_SESSION['site']['flops'] = 0;
 <script type="text/javascript">
 Ext.onReady(function() {
 
+var form_id;
+
 	// *************************************************************************************
 	// Layout Record Structure
 	// *************************************************************************************
@@ -124,7 +126,15 @@ Ext.onReady(function() {
     // RowEditor Plugin
     // *************************************************************************************
     var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
-        autoCancel: false
+        autoCancel: false,
+		errorSummary: false,
+		listeners:{
+			afteredit: function(){
+				LayoutStore.sync();
+				LayoutStore.load({params:{form_id: form_id }});
+				layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
+			}
+		}
     });
 	
 	// *************************************************************************************
@@ -351,7 +361,7 @@ Ext.onReady(function() {
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){
-					var form_id = record.get('form_id');
+					form_id = record.get('form_id');
 					LayoutStore.load({params:{form_id: form_id }});
 					layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
             	}

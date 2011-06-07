@@ -102,7 +102,8 @@ class dbHelper {
 	//
 	// $table - A valid database table to make the SQL statement
 	//
-	// $iu - Insert or Update parameter
+	// $iu - Insert or Update parameter. This has to options
+	// i = Insert, u = Update
 	//
 	// $where - If in $iu = U is used you must pass a WHERE clause in the
 	// last parameter. ie: id='1', list_id='patient'
@@ -115,9 +116,9 @@ class dbHelper {
 		// Step 1
 		// Create the INSERT or UPDATE Clause
 		//------------------------------------------------------------------
-		if ($iu == "I"){
+		if (strtolower($iu) == "i"){
 			$sql_r = "INSERT INTO " . $table;
-		} elseif($iu == "U"){
+		} elseif($iu == "u"){
 			$sql_r = "UPDATE " . $table;
 		}
 		//------------------------------------------------------------------
@@ -130,6 +131,8 @@ class dbHelper {
 				$where <> ($key . "=" . addslashes($value)) &&
 				$where <> ($key . '="' . addslashes($value) . '"')){
 				$sql_r .= $key . "='" . addslashes($value) . "', "; 
+			} else {
+				return "ERROR: Some key and value pairs are not valid."
 			}
 		}
 		$sql_r = substr($sql_r, 0, -2);
