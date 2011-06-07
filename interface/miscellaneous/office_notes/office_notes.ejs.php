@@ -114,7 +114,7 @@ Ext.onReady(function(){
 					}
 					
 					storeOnotes.sync();	// Save the record to the dataStore
-					storeOnotes.load();	// Reload the dataSore from the database
+					storeOnotes.load({params:{show: 'active' }});
 					Ext.getCmp('onotesFormPanel').getForm().reset();
 					Ext.getCmp('cmdHide').disable();
 			    }

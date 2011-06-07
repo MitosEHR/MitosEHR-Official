@@ -56,7 +56,7 @@ $row['facility_npi'] 		= $data->facility_npi;
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
-// if not run the INSERT stament
+// if not run the INSERT statement
 // *************************************************************************************
 $sql = $mitos_db->sqlBind($row, "facility", "I");
 $mitos_db->setSQL($sql);

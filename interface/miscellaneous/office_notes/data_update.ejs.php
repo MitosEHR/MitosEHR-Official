@@ -41,22 +41,24 @@ $user = $_SESSION['user']['name'];
 // although Sencha EXTJS make good validation, we could check again 
 // just in case 
 // *************************************************************************************
-$row['id']        	= dataEncode($data['id']);
-$row['date']        = dataEncode($data['date']);
-$row['body']        = dataEncode($data['body']);
-$row['groupname']   = dataEncode($data['groupname']);
-$row['activity']   	= dataEncode($data['activity']);
+$row['id']        	= $data['id'];
+$row['date']        = $data['date'];
+$row['body']        = $data['body'];
+$row['groupname']   = $data['groupname'];
+$row['activity']   	= $data['activity'];
+
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
-// if not run the INSERT stament
+// if not run the INSERT statement
 // *************************************************************************************
-$mitos_db->setSQL("UPDATE onotes 
-     			      SET body         	='".$row['body']."',
-				          user         	='".$user."',
-				          groupname     ='".$row['groupname']."',
-				          activity      ='".$row['activity']."'
-				   	WHERE id			='".$row['id']."'");
-$mitos_db->execLog();
-echo "{ success: true }";
+$sql = $mitos_db->sqlBind($row, "onotes", "U", "id='" . $row['id'] . "'");
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execLog();
+
+if ( $ret == "" ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+} else {
+	echo "{ success: true }";
+}
 ?>

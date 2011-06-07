@@ -58,12 +58,12 @@ Ext.onReady(function() {
 			{name: 'facility_npi',			type: 'string'},
 			{name: 'tax_id_type',			type: 'string'} 
 		],
-			model 		:'facilityModel',
-			idProperty 	:'id',
-			read		:'interface/administration/facilities/data_read.ejs.php',
-			create		:'interface/administration/facilities/data_create.ejs.php',
-			update		:'interface/administration/facilities/data_update.ejs.php',
-			destroy		:'interface/administration/facilities/data_destroy.ejs.php'
+        model 		:'facilityModel',
+        idProperty 	:'id',
+        read		:'interface/administration/facilities/data_read.ejs.php',
+        create		:'interface/administration/facilities/data_create.ejs.php',
+        update		:'interface/administration/facilities/data_update.ejs.php',
+        destroy		:'interface/administration/facilities/data_destroy.ejs.php'
 	});
 
 	// *************************************************************************************
