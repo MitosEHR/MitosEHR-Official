@@ -10,7 +10,6 @@ Ext.define('Ext.mitos.GridPanel',{
 
     	Ext.apply(this, {
 		  	layout	    : 'fit',
-		  	
 		  	loadMask    : true,
 		  	columnLines	: true,
 		  	frameHeader	: false,
