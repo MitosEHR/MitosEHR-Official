@@ -102,31 +102,45 @@ class dbHelper {
 	//
 	// $table - A valid database table to make the SQL statement
 	//
-	// $iu - Insert or Update values
+	// $iu - Insert or Update parameter
 	//
 	// $where - If in $iu = U is used you must pass a WHERE clause in the
-	// last parameter.
+	// last parameter. ie: id='1', list_id='patient'
 	//
 	// NOTE: To eliminate fields that are not in the database you can use
 	// unset($b_array['field']);
 	//**********************************************************************
 	function sqlBind($b_array, $table, $iu="I", $where){
+		//------------------------------------------------------------------
 		// Step 1
+		// Create the INSERT or UPDATE Clause
+		//------------------------------------------------------------------
 		if ($iu == "I"){
-			$sql_r = "INSERT INTO " . $table . chr(13);
+			$sql_r = "INSERT INTO " . $table;
 		} elseif($iu == "U"){
-			$sql_r = "UPDATE INTO " . $table . chr(13);
+			$sql_r = "UPDATE " . $table;
 		}
+		//------------------------------------------------------------------
 		// Step 2
+		// Create the SET clause
+		//------------------------------------------------------------------
+		$sql_r .= " SET ";
 		foreach($b_array as $key => $value){
-			$sql_r .= " SET " . $key . "='" . addslashes($value) . "'" . chr(13);
+			if($where <> ($key . "='" . addslashes($value) . "'") &&
+				$where <> ($key . "=" . addslashes($value)) &&
+				$where <> ($key . '="' . addslashes($value) . '"')){
+				$sql_r .= $key . "='" . addslashes($value) . "', "; 
+			}
 		}
+		$sql_r = substr($sql_r, 0, -2);
+		//------------------------------------------------------------------
 		// Step 3
-		if ($iu == "U"){
-			$sql_r .= " WHERE " . $where . chr(13); 
-		}
+		// Create the WHERE clause, if applicable
+		//------------------------------------------------------------------
+		if ($iu == "U"){ $sql_r .= " WHERE " . $where; }
 		return $sql_r;
 	}
+	
 	//**********************************************************************
 	// Simple SQL Stament, with Event LOG injection
 	// $dbHelper->exeLog();
