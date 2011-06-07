@@ -183,7 +183,6 @@ Ext.onReady(function() {
 				align		: 'left',
             	editor: {
 	                xtype: 'textfield',
-    	            allowBlank: false,
             	}
             },
 			{
@@ -281,6 +280,9 @@ Ext.onReady(function() {
 				dataIndex	: 'edit_options',
 				width		: 80,
 				align		: 'center',
+            	editor: {
+	                xtype: 'textfield',
+            	}
             },
 			{
 				text     	: '<?php i18n("Description"); ?>',
