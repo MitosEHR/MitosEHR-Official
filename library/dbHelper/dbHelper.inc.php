@@ -112,6 +112,7 @@ class dbHelper {
 	// unset($b_array['field']);
 	//**********************************************************************
 	function sqlBind($b_array, $table, $iu="I", $where){
+        $sql_r = '';
 		//------------------------------------------------------------------
 		// Step 1
 		// Create the INSERT or UPDATE Clause
