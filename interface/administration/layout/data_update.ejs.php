@@ -36,50 +36,30 @@ $data = json_decode ( $_REQUEST['row'] );
 // just in case 
 // *************************************************************************************
 $row['item_id'] 		= trim($data->item_id);
-$row['form_id'] 		= dataEncode($data->form_id);
-$row['field_id'] 		= dataEncode($data->field_id);
-$row['group_name'] 		= dataEncode($data->group_name);
-$row['title'] 			= dataEncode($data->title);
-$row['seq'] 			= dataEncode($data->seq);
-$row['data_type'] 		= dataEncode($data->data_type);
-$row['uor'] 			= dataEncode($data->uor);
-$row['fld_length'] 		= dataEncode($data->fld_length);
-$row['max_length'] 		= dataEncode($data->max_length);
-$row['list_id'] 		= dataEncode($data->list_id);
-$row['titlecols'] 		= dataEncode($data->titlecols);
-$row['datacols'] 		= dataEncode($data->datacols);
-$row['default_value'] 	= dataEncode($data->default_value);
-$row['edit_options'] 	= dataEncode($data->edit_options);
-$row['description'] 	= dataEncode($data->description);
-$row['group_order'] 	= dataEncode($data->group_order);
-
-
+$row['form_id'] 		= $data->form_id;
+$row['field_id'] 		= $data->field_id;
+$row['group_name'] 		= $data->group_name;
+$row['title'] 			= $data->title;
+$row['seq'] 			= $data->seq;
+$row['data_type'] 		= $data->data_type;
+$row['uor'] 			= $data->uor;
+$row['fld_length'] 		= $data->fld_length;
+$row['max_length'] 		= $data->max_length;
+$row['list_id'] 		= $data->list_id;
+$row['titlecols'] 		= $data->titlecols;
+$row['datacols'] 		= $data->datacols;
+$row['default_value'] 	= $data->default_value;
+$row['edit_options'] 	= $data->edit_options;
+$row['description'] 	= $data->description;
+$row['group_order'] 	= $data->group_order;
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-$mitos_db->setSQL("UPDATE layout_options 
-					  SET item_id 		='".$row['item_id']."',
-						  form_id 		='".$row['form_id']."',
-						  field_id 		='".$row['field_id']."',
-						  group_name 	='".$row['group_name']."',
-						  title 		='".$row['title']."',
-						  seq 			='".$row['seq']."',
-						  data_type 	='".$row['data_type']."',
-						  uor 			='".$row['uor']."',
-						  fld_length 	='".$row['fld_length']."',
-						  max_length 	='".$row['max_length']."',
-						  list_id 		='".$row['list_id']."', 
-						  titlecols 	='".$row['titlecols']."',
-						  datacols		='".$row['datacols']."',
-						  default_value ='".$row['default_value']."',
-						  edit_options 	='".$row['edit_options']."',
-						  description 	='".$row['description']."', 
-						  group_order 	='".$row['group_order']."',
-					WHERE 
-						item_id 		='".$row['item_id'] . "'");
+$sql = $mitos_db->sqlBind($row, "layout_options", "U", "item_id='" . $row['item_id'] . "'");
+$mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 
 if ( $ret == "" ){

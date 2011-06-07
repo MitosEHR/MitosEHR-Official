@@ -35,47 +35,31 @@ $mitos_db = new dbHelper();
 // although Sencha EXTJS make good validation, we could check again 
 // just in case 
 // *************************************************************************************
-$row['name'] 				= dataEncode( $data->name );
-$row['phone'] 				= dataEncode( $data->phone );
-$row['fax'] 				= dataEncode( $data->fax );
-$row['street'] 				= dataEncode( $data->street );
-$row['city'] 				= dataEncode( $data->city );
-$row['state'] 				= dataEncode( $data->state );
-$row['postal_code'] 		= dataEncode( $data->postal_code );
-$row['country_code'] 		= dataEncode( $data->country_code );
-$row['federal_ein'] 		= dataEncode( $data->federal_ein );
+$row['name'] 				= $data->name;
+$row['phone'] 				= $data->phone;
+$row['fax'] 				= $data->fax;
+$row['street'] 				= $data->street;
+$row['city'] 				= $data->city;
+$row['state'] 				= $data->state;
+$row['postal_code'] 		= $data->postal_code;
+$row['country_code'] 		= $data->country_code;
+$row['federal_ein'] 		= $data->federal_ein;
 $row['service_location'] 	= ( isset($data->service_location) ? 1 : 0);
 $row['accepts_assignment'] 	= ( isset($data->accepts_assignment) ? 1 : 0);
 $row['billing_location'] 	= ( isset($data->billing_location) ? 1 : 0);
-$row['pos_code'] 			= dataEncode( $data->pos_code );
-$row['domain_identifier'] 	= dataEncode( $data->domain_identifier );
-$row['attn'] 				= dataEncode( $data->attn );
-$row['tax_id_type'] 		= dataEncode( $data->tax_id_type );
-$row['facility_npi'] 		= dataEncode( $data->facility_npi );
+$row['pos_code'] 			= $data->pos_code;
+$row['domain_identifier'] 	= $data->domain_identifier;
+$row['attn'] 				= $data->attn;
+$row['tax_id_type'] 		= $data->tax_id_type;
+$row['facility_npi'] 		= $data->facility_npi;
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-$mitos_db->setSQL("INSERT INTO facility 
-						   SET name					='".$row['name']."',
-							   phone 				='".$row['phone']."',
-							   fax 					='".$row['fax']. "',
-							   street 				='".$row['street']."',
-							   city 				='".$row['city']."',
-							   state 				='".$row['state']."',
-							   postal_code 			='".$row['postal_code']."',
-							   country_code 		='".$row['country_code']."',
-							   federal_ein 			='".$row['federal_ein']."',
-							   service_location 	='".$row['service_location']."',
-							   billing_location 	='".$row['billing_location']."',
-							   accepts_assignment 	='".$row['accepts_assignment']."',
-							   pos_code 			='".$row['pos_code']."',
-							   domain_identifier 	='".$row['domain_identifier']."',
-							   attn 				='".$row['attn']."', 
-							   tax_id_type 			='".$row['tax_id_type']."',
-							   facility_npi 		='".$row['facility_npi']."'");
+$sql = $mitos_db->sqlBind($row, "facility", "I");
+$mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 
 if ( $ret == "" ){
