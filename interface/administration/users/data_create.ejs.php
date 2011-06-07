@@ -68,27 +68,13 @@ $row['info']         = dataEncode($data['info']);
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-$mitos_db->setSQL("INSERT INTO 
-        users 
-      SET
-        username          = '" . $row['username'] . "', " . "
-        password          = '" . $row['password'] . "', " . "
-        title             = '" . $row['title'] . "', " . "
-        fname             = '" . $row['fname'] . "', " . "
-        mname             = '" . $row['mname'] . "', " . "
-        lname             = '" . $row['lname'] . "', " . "
-        authorized        = '" . $row['authorized'] . "', " . "
-        active            = '" . $row['active'] . "', " . "
-        facility_id       = '" . $row['facility_id'] . "', " . "
-        see_auth      	  = '" . $row['see_auth'] . "', " . "
-        taxonomy          = '" . $row['taxonomy'] . "', " . "
-        federaltaxid      = '" . $row['federaltaxid'] . "', " . "
-        federaldrugid     = '" . $row['federaldrugid'] . "', " . "
-        upin              = '" . $row['upin'] . "', " . "
-        npi               = '" . $row['npi'] . "', " . "
-        specialty     	  = '" . $row['specialty'] . "', " . "
-        info              = '" . $row['info'] . "'");
+$sql = $mitos_db->sqlBind($row, "users", "I");
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execLog();
 
-$mitos_db->execLog();
-echo "{ success: true }";	
+if ( $ret == "" ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+} else {
+	echo "{ success: true }";
+}
 ?>

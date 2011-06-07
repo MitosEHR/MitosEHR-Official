@@ -70,47 +70,20 @@ $row['upin']              = dataEncode($data['upin']);
 $row['npi']               = dataEncode($data['npi']);
 $row['federaltaxid']      = dataEncode($data['federaltaxid']);
 $row['taxonomy']          = dataEncode($data['taxonomy']);
+
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
-// if not run the INSERT stament
+// if not run the INSERT statement
 // *************************************************************************************
-$mitos_db->setSQL("UPDATE users 
-				      SET id                ='".$row['id']."',
-				      	  username        	='".$row['username']."',
-				      	  password        	='".$row['password']."',
-				          abook_type        ='".$row['abook_type']."',
-     				      title             ='".$row['title']."',
-				          fname             ='".$row['fname']."',
-				          mname             ='".$row['mname']."',
-				          lname             ='".$row['lname']."',
-				          specialty         ='".$row['specialty']."',
-				          organization      ='".$row['organization']."',
-				          valedictory       ='".$row['valedictory']."',
-				          street            ='".$row['street']."',
-				          streetb           ='".$row['streetb']."',
-				          city              ='".$row['city']."',
-				          state             ='".$row['state']."',
-				          zip               ='".$row['zip']."',
-				          street2           ='".$row['street2']."',
-				          streetb2          ='".$row['streetb2']."',
-				          city2             ='".$row['city2']."',
-				          state2            ='".$row['state2']."',
-				          zip2              ='".$row['zip2']."',
-				          phone             ='".$row['phone']."',
-				          phonew1           ='".$row['phonew1']."',
-				          phonew2           ='".$row['phonew2']."',
-				          phonecell         ='".$row['phonecell']."',
-				          fax               ='".$row['fax']."',
-				          email             ='".$row['email']."',
-				          assistant         ='".$row['assistant']."',
-				          url               ='".$row['url']."',
-				          upin              ='".$row['upin']."',
-				          npi               ='".$row['npi']."',
-				          federaltaxid      ='".$row['federaltaxid']."',
-				          taxonomy          ='".$row['taxonomy']."',
-				          notes             ='".$row['notes']."'
-				    WHERE id 				='".$row['id']."'");
-$mitos_db->execLog();
-echo "{ success: true }";
+$sql = $mitos_db->sqlBind($row, "users", "U", "id='" . $row['id'] . "'");
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execLog();
+
+if ( $ret == "" ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+} else {
+	echo "{ success: true }";
+}
+
 ?>

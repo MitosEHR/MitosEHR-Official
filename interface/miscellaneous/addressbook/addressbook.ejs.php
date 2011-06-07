@@ -105,7 +105,7 @@ Ext.onReady(function(){
 	});
 	
 	function localck(val) {
-	    if (val == 'X') {
+	    if (val != '' ) {
 	        return '<img src="ui_icons/yes.gif" />';
 	    } else {
 	        return '';
