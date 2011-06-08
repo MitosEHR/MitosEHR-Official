@@ -79,6 +79,16 @@ Ext.onReady(function(){
             update		: 'interface/administration/practice/data_read.ejs.php?task=',
             destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
             });
+            function transmit_method(val) {
+			    if (val == '1') {
+			        return '<?php echo "Print" ?>';
+			    } else if(val == '2') {
+			        return '<?php echo "Email" ?>';
+			    } else if(val == '3') {
+			        return '<?php echo "Email" ?>';
+			    }
+			    return val;
+			};
             // *************************************************************************************
             // Insurance Record Structure
             // *************************************************************************************
@@ -174,19 +184,16 @@ Ext.onReady(function(){
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Name"); ?>',
                     width       : 100,
-                    id          : 'name',
                     name        : 'name'
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Address"); ?>',
                     width       : 100,
-                    id          : 'line1',
                     name        : 'line1'
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Address (Cont)"); ?>',
                     width       : 100,
-                    id          : 'line2',
                     name        : 'line2'
                 },{
                     xtype: 'fieldcontainer',
@@ -198,7 +205,6 @@ Ext.onReady(function(){
                     },{
                         xtype   : 'textfield',
                         width   : 150,
-                        id      : 'city',
                         name    : 'city'
                     },{
                         xtype   : 'displayfield',
@@ -207,32 +213,81 @@ Ext.onReady(function(){
                     },{
                         xtype   : 'textfield',
                         width   : 50,
-                        id      : 'state',
                         name    : 'state'
                     },{
                         xtype   : 'textfield',
                         width   : 113,
-                        id      : 'zip',
                         name    : 'zip'
                     }]
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Email"); ?>',
                     width       : 100,
-                    id          : 'email',
                     name        : 'email'
                 },{
-                    xtype       : 'textfield',
-                    fieldLabel  : '<?php i18n("Phone"); ?>',
-                    width       : 100,
-                    id          : 'phone',
-                    name        : 'phone'
+                    xtype: 'fieldcontainer',
+                    defaults: { hideLabel: true },
+                    items: [{
+                        xtype   : 'displayfield',
+                        value   : '<?php i18n("Phone"); ?>',
+                        width   : 89
+                    },{
+                        xtype   : 'displayfield',
+                        value   : '(',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 40,
+                        name    : 'phone_area_code'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : ')',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 50,
+                        name    : 'phone_prefix'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : '-',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 70,
+                        name    : 'phone_number'
+                    }]
                 },{
-                    xtype       : 'textfield',
-                    fieldLabel  : '<?php i18n("Fax"); ?>',
-                    width       : 100,
-                    id          : 'fax',
-                    name        : 'fax'
+                    xtype: 'fieldcontainer',
+                    defaults: { hideLabel: true },
+                    items: [{
+                        xtype   : 'displayfield',
+                        value   : '<?php i18n("Fax"); ?>',
+                        width   : 89
+                    },{
+                        xtype   : 'displayfield',
+                        value   : '(',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 40,
+                        name    : 'fax_area_code'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : ')',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 50,
+                        name    : 'fax_prefix'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : '-',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 70,
+                        name    : 'fax_number'
+                    }]
                 },{
 
 
@@ -274,7 +329,8 @@ Ext.onReady(function(){
                     text     : '<?php i18n("Default Method"); ?>',
                     flex     : 1,
                     sortable : true,
-                    dataIndex: 'transmit_method'
+                    dataIndex: 'transmit_method',
+                    renderer : transmit_method
                 }],
                 listeners: {
                     itemclick: {
@@ -321,19 +377,16 @@ Ext.onReady(function(){
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Name"); ?>',
                     width       : 100,
-                    id          : 'name',
                     name        : 'name'
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Address"); ?>',
                     width       : 100,
-                    id          : 'line1',
                     name        : 'line1'
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Address (Cont)"); ?>',
                     width       : 100,
-                    id          : 'line2',
                     name        : 'line2'
                 },{
                     xtype: 'fieldcontainer',
@@ -345,7 +398,6 @@ Ext.onReady(function(){
                     },{
                         xtype   : 'textfield',
                         width   : 150,
-                        id      : 'city',
                         name    : 'city'
                     },{
                         xtype   : 'displayfield',
@@ -354,35 +406,91 @@ Ext.onReady(function(){
                     },{
                         xtype   : 'textfield',
                         width   : 50,
-                        id      : 'state',
                         name    : 'state'
                     },{
                         xtype   : 'textfield',
                         width   : 113,
-                        id      : 'zip',
                         name    : 'zip'
                     }]
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Email"); ?>',
                     width       : 100,
-                    id          : 'email',
                     name        : 'email'
                 },{
-                    xtype       : 'textfield',
-                    fieldLabel  : '<?php i18n("Phone"); ?>',
-                    width       : 100,
-                    id          : 'phone',
-                    name        : 'phone'
+                   xtype: 'fieldcontainer',
+                    defaults: { hideLabel: true },
+                    items: [{
+                        xtype   : 'displayfield',
+                        value   : '<?php i18n("Phone"); ?>',
+                        width   : 89
+                    },{
+                        xtype   : 'displayfield',
+                        value   : '(',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 40,
+                        name    : 'phone_area_code'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : ')',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 50,
+                        name    : 'phone_prefix'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : '-',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 70,
+                        name    : 'phone_number'
+                    }]
+                },{
+                    xtype: 'fieldcontainer',
+                    defaults: { hideLabel: true },
+                    items: [{
+                        xtype   : 'displayfield',
+                        value   : '<?php i18n("Fax"); ?>',
+                        width   : 89
+                    },{
+                        xtype   : 'displayfield',
+                        value   : '(',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 40,
+                        name    : 'fax_area_code'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : ')',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 50,
+                        name    : 'fax_prefix'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : '-',
+                        width   : 5
+                    },{
+                        xtype   : 'textfield',
+                        width   : 70,
+                        name    : 'fax_number'
+                    }]
                 },{
                     xtype       : 'textfield',
-                    fieldLabel  : '<?php i18n("Fax"); ?>',
+                    fieldLabel  : '<?php i18n("CMS ID"); ?>',
                     width       : 100,
-                    id          : 'fax',
-                    name        : 'fax'
+                    name        : 'cms_id'
                 },{
-
-
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("X12 Partner"); ?>',
+                    width       : 100,
+                    name        : 'x12_default_partner_id'
                 }]
             }); // END FORM
             var winInsurance = new Ext.create('Ext.mitos.SaveCancelWindow',{
