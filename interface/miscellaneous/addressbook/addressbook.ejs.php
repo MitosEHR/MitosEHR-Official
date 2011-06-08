@@ -349,10 +349,10 @@ Ext.onReady(function(){
 		    handler: function() {
 		    	//----------------------------------------------------------------
 				// Check if it has to add or update
-				// Update: 
-				// 1. Get the record from store, 
-				// 2. get the values from the form, 
-				// 3. copy all the 
+				// Update:
+				// 1. Get the record from store,
+				// 2. get the values from the form,
+				// 3. copy all the
 				// values from the form and push it into the store record.
 				// Add: The re-formated record to the dataStore
 				//----------------------------------------------------------------

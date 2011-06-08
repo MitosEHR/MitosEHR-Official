@@ -349,7 +349,7 @@ Ext.onReady(function() {
 		loadMask    : true,
 		viewConfig 	: {forceFit: true, stripeRows : true},
 		listeners: {
-		
+
 			// Single click to select the record, and copy the variables
 			itemclick: function(DataView, record, item, rowIndex, e) {
 	       		Ext.getCmp('formMessage').getForm().reset(); // Clear the form
@@ -359,7 +359,7 @@ Ext.onReady(function() {
 				Ext.getCmp('formMessage').getForm().loadRecord(rowContent);
 	       		rowPos = rowIndex;
 			},
-	
+
 			// Double click to select the record, and edit the record
 			itemdblclick:  function(DataView, record, item, rowIndex, e) {
 	       		Ext.getCmp('formMessage').getForm().reset(); // Clear the form
@@ -384,10 +384,10 @@ Ext.onReady(function() {
 			{ width: 200, header: '<?php i18n('From'); ?>', sortable: true, dataIndex: 'user' },
 			{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
 			{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'note_type' },
-			{ width: 150, header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' }, 
+			{ width: 150, header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' },
 			{ header: '<?php i18n('Status'); ?>', sortable: true, dataIndex: 'message_status' }
 		],
-	
+
 		// *************************************************************************************
 		// Grid Menu
 		// *************************************************************************************
@@ -397,7 +397,7 @@ Ext.onReady(function() {
 			text	: '<?php i18n("Send message", 'e'); ?>',
 			iconCls	: 'newMessage',
 			handler: function(){
-				
+
 				// Clear the rowContent variable
 				Ext.getCmp('formMessage').getForm().reset(); // Clear the form
 				Ext.getCmp('patient').setText('<?php i18n("Click to select patient..."); ?>');
@@ -413,8 +413,8 @@ Ext.onReady(function() {
 			text	   : '<?php i18n('Reply message'); ?>',
 			iconCls	 : 'edit',
 			disabled : true,
-			handler  : function(){ 
-			
+			handler  : function(){
+
 				// Set the buttons state
 				Ext.getCmp('patient').setText( rowContent.get('patient') );
 				Ext.getCmp('patient').disable();
@@ -431,7 +431,7 @@ Ext.onReady(function() {
 			disabled	: true,
 			handler: function(msgGrid){
 				Ext.Msg.show({
-					title: '<?php i18n("Please confirm...", 'e'); ?>', 
+					title: '<?php i18n("Please confirm...", 'e'); ?>',
 					icon: Ext.MessageBox.QUESTION,
 					msg:'<?php i18n('Are you sure to delete this message?<br>From: '); ?>' + rowContent.get('from'),
 					buttons: Ext.Msg.YESNO,

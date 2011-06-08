@@ -34,7 +34,7 @@ Ext.onReady(function(){
 			{ name: 'concurrent_layout',					type:'auto' },
 			{ name: 'css_header',							type:'auto' },
 			{ name: 'gbl_nav_area_width',					type:'auto' },
-			{ name: 'openemr_name',							type:'auto' },
+			{ name: 'mitosehr_name',							type:'auto' },
 			{ name: 'full_new_patient_form',				type:'auto' },
 			{ name: 'patient_search_results_style',			type:'auto' },
 			{ name: 'simplified_demographics',				type:'auto' },
@@ -432,8 +432,8 @@ Ext.onReady(function(){
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n('Application Title'); ?>',
-					name		: 'openemr_name',
-					id			: 'openemr_name'
+					name		: 'mitosehr_name',
+					id			: 'mitosehr_name'
 				},{
 					xtype		: 'combo',
 					fieldLabel	: '<?php i18n('New Patient Form'); ?>',

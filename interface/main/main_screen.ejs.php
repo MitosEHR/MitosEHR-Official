@@ -22,7 +22,7 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>MitosEHR</title>
+<title><?php echo $_SESSION['global_settings']['mitosehr_name'] ?></title>
 <script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 <script type="text/javascript" src="repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="repository/global_functions/global_functions.js"></script>
