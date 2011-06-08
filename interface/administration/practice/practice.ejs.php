@@ -1,5 +1,5 @@
 <?php 
-//******************************************************************************
+//*************************************************************************************************
 // roles.ejs.php
 // Description: Facilities Screen
 // v0.0.3
@@ -8,16 +8,16 @@
 // Modified: n/a
 // 
 // MitosEHR (Electronic Health Records) 2011
-//**********************************************************************************
+//*************************************************************************************************
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
-//**********************************************************************************
+//*************************************************************************************************
 // Reset session count 10 secs = 1 Flop
-//**********************************************************************************
+//*************************************************************************************************
 $_SESSION['site']['flops'] = 0;
 
 ?>
@@ -31,9 +31,7 @@ Ext.onReady(function(){
 			'Ext.mitos.DeleteButton',
 			'Ext.mitos.TopRenderPanel',
 			'Ext.mitos.TitlesComboBox',
-			'Ext.mitos.SaveCancelWindow',
-			'Ext.mitos.FacilitiesComboBox',
-			'Ext.mitos.AuthorizationsComboBox'
+			'Ext.mitos.SaveCancelWindow'
 		],
         initComponent: function(){
             var page = this;
@@ -49,7 +47,7 @@ Ext.onReady(function(){
                     {name: 'name',					type: 'string'},
                     {name: 'transmit_method',		type: 'string'},
                     {name: 'email',					type: 'string'},
-                    {name: 'address_id',			type: 'string'},
+                    {name: 'address_id',			type: 'int'},
                     {name: 'line1',					type: 'string'},
                     {name: 'line2',					type: 'string'},
                     {name: 'city',					type: 'string'},
@@ -57,19 +55,19 @@ Ext.onReady(function(){
                     {name: 'zip',					type: 'int'},
                     {name: 'plus_four',				type: 'int'},
                     {name: 'country',				type: 'string'},
-                    {name: 'address_foreign_id',	type: 'string'},
+                    {name: 'address_foreign_id',	type: 'int'},
                     {name: 'address_full',			type: 'string'},
                     {name: 'phone_country_code',	type: 'string'},
-                    {name: 'phone_area_code',		type: 'string'},
-                    {name: 'phone_prefix',			type: 'string'},
-                    {name: 'phone_number',			type: 'string'},
+                    {name: 'phone_area_code',		type: 'int'},
+                    {name: 'phone_prefix',			type: 'int'},
+                    {name: 'phone_number',			type: 'int'},
                     {name: 'phone_foreign_id',		type: 'string'},
                     {name: 'phone_full',			type: 'string'},
                     {name: 'fax_country_code',		type: 'string'},
-                    {name: 'fax_area_code',			type: 'string'},
-                    {name: 'fax_prefix',			type: 'string'},
-                    {name: 'fax_number',			type: 'string'},
-                    {name: 'fax_foreign_id',		type: 'string'},
+                    {name: 'fax_area_code',			type: 'int'},
+                    {name: 'fax_prefix',			type: 'int'},
+                    {name: 'fax_number',			type: 'int'},
+                    {name: 'fax_foreign_id',		type: 'int'},
                     {name: 'fax_full',				type: 'string'}
                 ],
             model		: 'pharmacyModel',
@@ -79,6 +77,9 @@ Ext.onReady(function(){
             update		: 'interface/administration/practice/data_read.ejs.php?task=',
             destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
             });
+            // -------------------------------------------------------------------------------------
+            // render function for Default Method column in the Pharmacy grid
+            // -------------------------------------------------------------------------------------
             function transmit_method(val) {
 			    if (val == '1') {
 			        return '<?php echo "Print" ?>';
@@ -99,10 +100,10 @@ Ext.onReady(function(){
                     {name: 'attn',						type: 'string'},
                     {name: 'cms_id',					type: 'string'},
                     {name: 'freeb_type',				type: 'string'},
-                    {name: 'x12_receiver_id',			type: 'string'},
+                    {name: 'x12_receiver_id',			type: 'int'},
                     {name: 'x12_default_partner_id',	type: 'string'},
                     {name: 'alt_cms_id',				type: 'string'},
-                    {name: 'address_id',				type: 'string'},
+                    {name: 'address_id',				type: 'int'},
                     {name: 'line1',						type: 'string'},
                     {name: 'line2',						type: 'string'},
                     {name: 'city',						type: 'string'},
@@ -113,16 +114,16 @@ Ext.onReady(function(){
                     {name: 'address_foreign_id',		type: 'string'},
                     {name: 'address_full',				type: 'string'},
                     {name: 'phone_country_code',		type: 'string'},
-                    {name: 'phone_area_code',			type: 'string'},
-                    {name: 'phone_prefix',				type: 'string'},
-                    {name: 'phone_number',				type: 'string'},
-                    {name: 'phone_foreign_id',			type: 'string'},
+                    {name: 'phone_area_code',			type: 'int'},
+                    {name: 'phone_prefix',				type: 'int'},
+                    {name: 'phone_number',				type: 'int'},
+                    {name: 'phone_foreign_id',			type: 'int'},
                     {name: 'phone_full',				type: 'string'},
                     {name: 'fax_country_code',			type: 'string'},
-                    {name: 'fax_area_code',				type: 'string'},
-                    {name: 'fax_prefix',				type: 'string'},
-                    {name: 'fax_number',				type: 'string'},
-                    {name: 'fax_foreign_id',			type: 'string'},
+                    {name: 'fax_area_code',				type: 'int'},
+                    {name: 'fax_prefix',				type: 'int'},
+                    {name: 'fax_number',				type: 'int'},
+                    {name: 'fax_foreign_id',			type: 'int'},
                     {name: 'fax_full',					type: 'string'}
                 ],
             model		: 'insuranceModel',
@@ -685,9 +686,9 @@ Ext.onReady(function(){
             }); // END Insurance Numbers Grid
 
 
-            //**************************************************************************
+            // *************************************************************************************
             // Tab Panel
-            //**************************************************************************
+            // *************************************************************************************
             var tabPanel = new Ext.create('Ext.tab.Panel', {
                 activeTab	: 0,
                 frame		: true,
@@ -837,16 +838,15 @@ Ext.onReady(function(){
                         }]
                     }]
                 }]
-
             });
 
-            //***********************************************************************************
+            // *************************************************************************************
             // Top Render Panel
             // This Panel needs only 3 arguments...
             // PageTitle 	- Title of the current page
             // PageLayout 	- default 'fit', define this argument if using other than the default value
             // PageBody 	- List of items to display [form1, grid1, grid2]
-            //***********************************************************************************
+            // *************************************************************************************
             Ext.create('Ext.mitos.TopRenderPanel', {
                 pageTitle: '<?php i18n('Practice Settings'); ?>',
                 pageBody: [tabPanel]
