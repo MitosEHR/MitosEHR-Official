@@ -15,6 +15,7 @@ session_cache_limiter('private');
 
 include_once("../../../library/dbHelper/dbHelper.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
+include_once('../../../repository/global_functions/global_funtions.php');
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -51,7 +52,7 @@ foreach($mitos_db->execStatement() as $row){
 	$row['password'] = $aes->decrypt($row['password']);
 	//--------------------------------------------------------------------------
 	// add fullname to the array
-	$row['fullname'] =  $row['lname'].', '.$row['fname'].' '.$row['mname'];
+	$row['fullname'] =  fullname($row['fname'],$row['mname'],$row['lname']);
 	//--------------------------------------------------------------------------
 	// push the user inside the $users array
 	//--------------------------------------------------------------------------
