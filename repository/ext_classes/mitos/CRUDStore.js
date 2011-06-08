@@ -3,7 +3,7 @@
 //  *******************************************
 Ext.define('Ext.mitos.CRUDStore',{
 	extend      : 'Ext.data.Store',
-//  idProperty	:  databade table id
+//  idProperty	:  database table id
 //  read		:  url to data_read.eje.php
 //  create		:  url to data_create.eje.php
 //  update		:  url to data_update.eje.php

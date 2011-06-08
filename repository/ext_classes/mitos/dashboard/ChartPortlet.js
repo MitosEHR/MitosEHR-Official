@@ -32,7 +32,7 @@ Ext.define('Ext.mitos.dashboard.ChartPortlet', {
 
         Ext.apply(this, {
             layout: 'fit',
-            width: 600,
+            width: 300,
             height: 300,
             items: {
                 xtype: 'chart',

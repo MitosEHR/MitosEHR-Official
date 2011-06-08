@@ -7,15 +7,18 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
 	width       : 520,
     title       : 'New Save/Cancel Window',
     renderTo    : document.body,
-	//formCtl 	: this is the form the save btn will be getting the data from
-	//dataStore	: this is the store we are using to store the data
-	//scope		: the scope of dtat store (usually page)
+    scope       : '',
+	//form 	    : this is the form the save btn will be getting the data from
+	//store	    : this is the store we are using to store the data
+	//scope		: the scope of data store
+	//idField   : form id filed to save the data
     initComponent: function() {
     	var win = this;
 		Ext.apply(this, {
 			autoHeight  : true,
 		    modal       : true,
 		    border	  	: true,
+		    autoScroll	: true,
 		    resizable   : false,
 		    closeAction : 'hide',
 		    items		: win.form,
