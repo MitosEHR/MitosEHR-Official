@@ -13,7 +13,7 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("../../../library/I18n/I18n.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -143,7 +143,7 @@ Ext.onReady(function(){
 			    msgTarget : 'under', 
 		        items: [
 		            { width: 100, xtype: 'displayfield', value: '<?php i18n('Type'); ?>: '},
-					  Ext.create('Ext.mitos.TypesComboBox', {width: 130 }),
+					  Ext.create('Ext.mitos.TypesComboBox', {width: 130 })
 		        ]
 		    },{ 
 		    	xtype: 'fieldcontainer',
@@ -224,7 +224,7 @@ Ext.onReady(function(){
 		            { width: 100, xtype: 'displayfield', value: '<?php i18n('Address'); ?>: '},
 		            { width: 130, xtype: 'textfield', id: 'street2',  name: 'street2' },
 		            { width: 100, xtype: 'displayfield', value: '<?php i18n('Cont.'); ?>: '},
-		            { width: 335, xtype: 'textfield', id: 'streetb2', name: 'streetb2' },
+		            { width: 335, xtype: 'textfield', id: 'streetb2', name: 'streetb2' }
 		        ]
 		    },{ 
 		        xtype: 'fieldcontainer',
@@ -321,7 +321,7 @@ Ext.onReady(function(){
 		            { width: 50, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
 		            { width: 80,  xtype: 'textfield', id: 'upin',          name: 'upin' },
 		            { width: 50,  xtype: 'displayfield', value: '<?php i18n('NPI'); ?>: '},
-		            { width: 80,  xtype: 'textfield', id: 'npi',           name: 'npi', },
+		            { width: 80,  xtype: 'textfield', id: 'npi',           name: 'npi' },
 		            { width: 50,  xtype: 'displayfield', value: '<?php i18n('TIN'); ?>: '},
 		            { width: 80,  xtype: 'textfield', id: 'federaltaxid',  name: 'federaltaxid' },
 		            { width: 80,  xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
@@ -330,7 +330,7 @@ Ext.onReady(function(){
 			}]
 	    },{
 	   		width: 720, xtype: 'htmleditor', id: 'notes', name: 'notes', emptyText: 'Notes'
-		}], 
+		}]
 	});
 
 	// *************************************************************************************

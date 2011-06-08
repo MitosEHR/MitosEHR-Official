@@ -11,8 +11,8 @@
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
-include_once("../../../library/dbHelper/dbHelper.inc.php");
-require_once("../../../library/phpAES/AES.class.php");
+include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
+require_once($_SESSION['site']['root']."/library/phpAES/AES.class.php");
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
 //******************************************************************************

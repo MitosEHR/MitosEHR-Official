@@ -14,7 +14,7 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("../../../library/I18n/I18n.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -167,7 +167,7 @@ Ext.onReady(function(){
 			{ name: 'seq',			type:'int' },
 			{ name: 'is_default',	type:'int' }
 		],
-		idProperty: 'list_id',
+		idProperty: 'list_id'
 	});
 	}
 	selectListsStore = new Ext.data.Store({
@@ -193,7 +193,7 @@ Ext.onReady(function(){
 			{ name: 'lang_code',	type:'string' },
 			{ name: 'lang_description',		type:'string' }
 		],
-		idProperty: 'lang_id',
+		idProperty: 'lang_id'
 	});
 	}
 	language_defaultStore = new Ext.data.Store({
@@ -779,12 +779,12 @@ Ext.onReady(function(){
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Provider See Entire Calendar'); ?>',
 					name		: 'Cal6',
-					id			: 'Cal6',
+					id			: 'Cal6'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Auto-Create New Encounters'); ?>',
 					name		: 'Cal7',
-					id			: 'Cal7',
+					id			: 'Cal7'
 				},{
 					fieldLabel	: '<?php i18n('Appointment/Event Color'); ?>',
 					name		: 'Cal8',
@@ -800,7 +800,7 @@ Ext.onReady(function(){
                 items: [{
 					fieldLabel	: '<?php i18n('Idle Session Timeout Seconds'); ?>',
 					name		: 'timeout',
-					id			: 'timeout',
+					id			: 'timeout'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Require Strong Passwords'); ?>',
@@ -814,36 +814,36 @@ Ext.onReady(function(){
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Require Unique Passwords'); ?>',
 					name		: 'password_history',
-					id			: 'password_history',
+					id			: 'password_history'
 				},{
 					fieldLabel	: '<?php i18n('Defaults Password Expiration Days'); ?>',
 					name		: 'password_expiration_days',
-					id			: 'password_expiration_days',
+					id			: 'password_expiration_days'
 				},{
 					fieldLabel	: '<?php i18n('Password Expiration Grace Period'); ?>',
 					name		: 'password_grace_time',
-					id			: 'password_grace_time',
+					id			: 'password_grace_time'
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Enable Clients SSL'); ?>',
 					name		: 'is_client_ssl_enabled',
-					id			: 'is_client_ssl_enabled',
+					id			: 'is_client_ssl_enabled'
 				},{
 					fieldLabel	: '<?php i18n('Path to CA Certificate File'); ?>',
 					name		: 'certificate_authority_crt',
-					id			: 'certificate_authority_crt',
+					id			: 'certificate_authority_crt'
 				},{
 					fieldLabel	: '<?php i18n('Path to CA Key File'); ?>',
 					name		: 'certificate_authority_key',
-					id			: 'certificate_authority_key',
+					id			: 'certificate_authority_key'
 				},{
 					fieldLabel	: '<?php i18n('Client Certificate Expiration Days'); ?>',
 					name		: 'client_certificate_valid_in_days',
-					id			: 'client_certificate_valid_in_days',
+					id			: 'client_certificate_valid_in_days'
 				},{
 					fieldLabel	: '<?php i18n('Emergency Login Email Address'); ?>',
 					name		: 'Emergency_Login_email_id',
-					id			: 'Emergency_Login_email_id',
+					id			: 'Emergency_Login_email_id'
 				}]
 			},{
                 title:'Notifocations',
@@ -864,39 +864,39 @@ Ext.onReady(function(){
 				},{
 					fieldLabel	: '<?php i18n('SMPT Server Hostname'); ?>',
 					name		: 'SMTP_HOST',
-					id			: 'SMTP_HOST',
+					id			: 'SMTP_HOST'
 				},{
 					fieldLabel	: '<?php i18n('SMPT Server Port Number'); ?>',
 					name		: 'SMTP_PORT',
-					id			: 'SMTP_PORT',
+					id			: 'SMTP_PORT'
 				},{
 					fieldLabel	: '<?php i18n('SMPT User for Authentication'); ?>',
 					name		: 'SMTP_USER',
-					id			: 'SMTP_USER',
+					id			: 'SMTP_USER'
 				},{
 					fieldLabel	: '<?php i18n('SMPT Password for Authentication'); ?>',
 					name		: 'SMTP_PASS',
-					id			: 'SMTP_PASS',
+					id			: 'SMTP_PASS'
 				},{
 					fieldLabel	: '<?php i18n('Email Notification Hours'); ?>',
 					name		: 'EMAIL_NOTIFICATION_HOUR',
-					id			: 'EMAIL_NOTIFICATION_HOUR',
+					id			: 'EMAIL_NOTIFICATION_HOUR'
 				},{
 					fieldLabel	: '<?php i18n('SMS Notification Hours'); ?>',
 					name		: 'SMS_NOTIFICATION_HOUR',
-					id			: 'SMS_NOTIFICATION_HOUR',
+					id			: 'SMS_NOTIFICATION_HOUR'
 				},{
 					fieldLabel	: '<?php i18n('SMS Gateway Usarname'); ?>',
 					name		: 'SMS_GATEWAY_USENAME',
-					id			: 'SMS_GATEWAY_USENAME',
+					id			: 'SMS_GATEWAY_USENAME'
 				},{
 					fieldLabel	: '<?php i18n('SMS Gateway Password'); ?>',
 					name		: 'SMS_GATEWAY_PASSWORD',
-					id			: 'SMS_GATEWAY_PASSWORD',
+					id			: 'SMS_GATEWAY_PASSWORD'
 				},{
 					fieldLabel	: '<?php i18n('SMS Gateway API Key'); ?>',
 					name		: 'SMS_GATEWAY_APIKEY',
-					id			: 'SMS_GATEWAY_APIKEY',
+					id			: 'SMS_GATEWAY_APIKEY'
 				}]
 			},{
                 title:'Loging',
@@ -989,7 +989,7 @@ Ext.onReady(function(){
 				},{
 					fieldLabel	: '<?php i18n('State Lsit'); ?>',
 					name		: 'state_list',
-					id			: 'state_list',
+					id			: 'state_list'
 				},{
 					xtype 		: 'checkbox',
 					fieldLabel	: '<?php i18n('State List Widget Custom Fields'); ?>',

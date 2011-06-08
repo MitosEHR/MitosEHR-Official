@@ -1,7 +1,4 @@
 <?php
-session_name ( "MitosEHR" );
-session_start();
-session_cache_limiter('private');
 
 //--------------------------------------------------------------------------------------
 // Database class instance

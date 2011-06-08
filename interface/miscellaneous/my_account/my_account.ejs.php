@@ -83,7 +83,7 @@ Ext.onReady(function(){
 	    idProperty	: 'id',
 		read		: 'interface/miscellaneous/my_account/data_read.ejs.php',
 	  //create		:  the user can not create accounts
-		update		: 'interface/miscellaneous/my_account/data_update.ejs.php',
+		update		: 'interface/miscellaneous/my_account/data_update.ejs.php'
 	  //destroy 	:  user will not be able to descroy his account
 	});
 	
@@ -140,7 +140,7 @@ Ext.onReady(function(){
 		        	  Ext.create('Ext.mitos.TitlesComboBox', {width: 60 }),
 		        	{ width: 105,  xtype: 'textfield', id: 'fname', name: 'fname' },
 		        	{ width: 100,  xtype: 'textfield', id: 'mname', name: 'mname' },
-		        	{ width: 175, xtype: 'textfield', id: 'lname', name: 'lname' },
+		        	{ width: 175, xtype: 'textfield', id: 'lname', name: 'lname' }
 		      	]
 		    }]
 		},{
@@ -190,7 +190,7 @@ Ext.onReady(function(){
 		        	{ width: 110, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
 					  Ext.create('Ext.mitos.FacilitiesComboBox', {width: 170 }),
 		        	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
-					  Ext.create('Ext.mitos.AuthorizationsComboBox', {width: 175 }),
+					  Ext.create('Ext.mitos.AuthorizationsComboBox', {width: 175 })
 		      	] 
 		    },{ 
 		      	xtype: 'fieldcontainer',
@@ -224,7 +224,7 @@ Ext.onReady(function(){
 		      	defaults: { hideLabel: true },
 		      	items: [
 		       		{ width: 110, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
-		        	{ width: 455, xtype: 'textfield', id: 'specialty', name: 'specialty' },
+		        	{ width: 455, xtype: 'textfield', id: 'specialty', name: 'specialty' }
 		      	]  
 		    },{
 		    	width: 110, xtype: 'displayfield', value: '<?php i18n('Notes'); ?>: '

@@ -33,7 +33,7 @@ Ext.define('Ext.mitos.RolesPage',{
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
 			'Ext.mitos.FacilitiesComboBox',
-			'Ext.mitos.AuthorizationsComboBox',
+			'Ext.mitos.AuthorizationsComboBox'
 		],
 		initComponent: function(){
 			page = this;
@@ -112,7 +112,7 @@ Ext.define('Ext.mitos.RolesPage',{
 				],
 		    	model		: 'permRecord',
 		    	idProperty	: 'value',
-		    	read		: 'interface/administration/roles/component_data.ejs.php?task=perms',
+		    	read		: 'interface/administration/roles/component_data.ejs.php?task=perms'
 			});
 			
 			function permck(val) {
@@ -244,7 +244,7 @@ Ext.define('Ext.mitos.RolesPage',{
 						displayField	: 'perm',
 						editable		: false,
 						queryMode		: 'local', 
-						store			: storePerms,
+						store			: storePerms
 					},
 		            lazyRender: true,
 		            listClass: 'x-combo-list-small'

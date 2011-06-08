@@ -12,7 +12,7 @@
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
-include_once("../../../library/I18n/I18n.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
 //******************************************************************************
@@ -29,7 +29,7 @@ Ext.onReady(function(){
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
 			'Ext.mitos.FacilitiesComboBox',
-			'Ext.mitos.AuthorizationsComboBox',
+			'Ext.mitos.AuthorizationsComboBox'
 		],
 		
 		initComponent: function(){
@@ -220,7 +220,7 @@ Ext.onReady(function(){
 				          Ext.create('Ext.mitos.TitlesComboBox'),
 				        { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
 				        { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
-				        { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' },
+				        { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' }
 				      ]
 				    },{ 
 				      xtype: 'fieldcontainer',
@@ -274,10 +274,10 @@ Ext.onReady(function(){
 				      defaults: { hideLabel: true },
 				      items: [
 				       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
-				        { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' },
+				        { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' }
 				      ]  
 				    },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
-				    { width: 410, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info', },
+				    { width: 410, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info' }
 				]
 			});
 			// *************************************************************************************

@@ -170,7 +170,7 @@ Ext.onReady(function(){
 		id          : 'winPharmacy',
 		width       : 520,
 	    title       : '<?php i18n('Add or Edit Pharmacy'); ?>',
-	    items: [pharmacyForm],
+	    items: [pharmacyForm]
 	}); // END WINDOW
 	var pharmacyGrid = new Ext.create('Ext.mitos.GridPanel', { 
 		store		: pharmacyStore,
@@ -250,7 +250,7 @@ Ext.onReady(function(){
 		id          : 'winInsurance',
 		width       : 520,
 	    title       : '<?php i18n('Add or Edit Insurance'); ?>',
-	    items: [insuranceForm],
+	    items: [insuranceForm]
 	}); // END WINDOW
 	var insuranceGrid = new Ext.create('Ext.mitos.GridPanel', { 
 		store		: insuranceStore,
@@ -586,7 +586,7 @@ Ext.onReady(function(){
 				    }
 			  	}]
 			}]
-		}],
+		}]
 		
     });
 

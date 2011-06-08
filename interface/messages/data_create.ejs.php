@@ -34,9 +34,9 @@ session_cache_limiter('private');
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 
-include_once("../../library/dbHelper/dbHelper.inc.php");
-include_once("../../library/I18n/I18n.inc.php");
-require_once("../../repository/dataExchange/dataExchange.inc.php");
+include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
+require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 
 //------------------------------------------
 // Database class instance

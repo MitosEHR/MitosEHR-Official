@@ -14,7 +14,7 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("../../../library/I18n/I18n.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -105,7 +105,7 @@ Ext.onReady(function() {
         items: [{
             fieldLabel: '<?php i18n("Name"); ?>',
             name: 'name',
-			allowBlank: false,
+			allowBlank: false
         },{
             fieldLabel: '<?php i18n("Phone"); ?>',
             name: 'phone',
@@ -116,20 +116,20 @@ Ext.onReady(function() {
 			vtype: 'phoneNumber'
         },{
             fieldLabel: '<?php i18n("Street"); ?>',
-            name: 'street',
+            name: 'street'
         },{
             fieldLabel: '<?php i18n("City"); ?>',
-            name: 'city',
+            name: 'city'
         },{
             fieldLabel: '<?php i18n("State"); ?>',
-            name: 'state',
+            name: 'state'
         },{
             fieldLabel: '<?php i18n("Postal Code"); ?>',
             name: 'postal_code',
 			vtype: 'postalCode'
         },{
             fieldLabel: '<?php i18n("Country Code"); ?>',
-            name: 'country_code',
+            name: 'country_code'
         },{
 			xtype: 'fieldcontainer',
 			fieldLabel: '<?php i18n("Tax ID"); ?>',
@@ -151,15 +151,15 @@ Ext.onReady(function() {
 		},{
         	xtype: 'checkboxfield',
             fieldLabel: '<?php i18n("Service Location"); ?>',
-            name: 'service_location',
+            name: 'service_location'
         },{
         	xtype: 'checkboxfield',
             fieldLabel: '<?php i18n("Billing Location"); ?>',
-            name: 'billing_location',
+            name: 'billing_location'
         },{
         	xtype: 'checkboxfield',
             fieldLabel: '<?php i18n("Accepts assignment"); ?>',
-            name: 'accepts_assignment',
+            name: 'accepts_assignment'
         },{
 			fieldLabel: '<?php i18n("POS Code"); ?>',
 			xtype: 'combo', 
@@ -169,16 +169,16 @@ Ext.onReady(function() {
 			editable: false, 
 			store: storePOSCode, 
 			queryMode: 'local',
-            name: 'pos_code',
+            name: 'pos_code'
         },{
             fieldLabel: '<?php i18n("Billing Attn"); ?>',
-            name: 'attn',
+            name: 'attn'
         },{
             fieldLabel: '<?php i18n("CLIA Number"); ?>',
-            name: 'domain_identifier',
+            name: 'domain_identifier'
         },{
             fieldLabel: '<?php i18n("Facility NPI"); ?>',
-            name: 'facility_npi',
+            name: 'facility_npi'
         },{
         	name: 'id',
         	hidden: true
@@ -190,7 +190,7 @@ Ext.onReady(function() {
    					Ext.getCmp('pos_code').setValue( storePOSCode.getAt(0).data.option_id );
             	}
 			}
-		},
+		}
     });
     
 	// *************************************************************************************

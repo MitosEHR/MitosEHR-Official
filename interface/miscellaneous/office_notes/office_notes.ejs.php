@@ -13,7 +13,7 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("../../../library/I18n/I18n.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -37,7 +37,7 @@ Ext.onReady(function(){
 			{name: 'body',          type: 'string'},
 			{name: 'user',          type: 'string'},
 			{name: 'facility_id',   type: 'string'},
-			{name: 'activity',   	type: 'string'},
+			{name: 'activity',   	type: 'string'}
 		],
 		model		: 'modelOnotes',
 		idProperty	: 'id',
@@ -184,9 +184,9 @@ Ext.onReady(function(){
 		    // Hidden cells
 		    {header: 'id', sortable: false, dataIndex: 'id', hidden: true},
 		    // Viewable cells
-		    { width: 150, header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date', renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s'), },
+		    { width: 150, header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date', renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s') },
 		    { width: 150,  header: '<?php i18n('User'); ?>', sortable: true, dataIndex: 'user' },
-		    { flex: 1, header: '<?php i18n('Note'); ?>', sortable: true, dataIndex: 'body' },
+		    { flex: 1, header: '<?php i18n('Note'); ?>', sortable: true, dataIndex: 'body' }
 
   		],
 		tbar: Ext.create('Ext.PagingToolbar', {
@@ -219,7 +219,7 @@ Ext.onReady(function(){
 					storeOnotes.load({params:{show: 'all' }});
 			    }
 		  	}]
-        }),
+        })
 	}); // END GRID
 	
 	//***********************************************************************************

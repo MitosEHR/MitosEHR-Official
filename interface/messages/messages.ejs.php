@@ -385,7 +385,7 @@ Ext.onReady(function() {
 			{ header: '<?php i18n('Patient'); ?>', sortable: true, dataIndex: 'patient' },
 			{ header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'note_type' },
 			{ width: 150, header: '<?php i18n('Date'); ?>', sortable: true, dataIndex: 'date' }, 
-			{ header: '<?php i18n('Status'); ?>', sortable: true, dataIndex: 'message_status' },
+			{ header: '<?php i18n('Status'); ?>', sortable: true, dataIndex: 'message_status' }
 		],
 	
 		// *************************************************************************************
@@ -447,7 +447,7 @@ Ext.onReady(function() {
 					}
 				});
 			}
-		}], // END GRID TOP MENU
+		}] // END GRID TOP MENU
 	}); // END GRID
 
 	//***********************************************************************************

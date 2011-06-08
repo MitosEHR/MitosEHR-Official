@@ -4,6 +4,7 @@ echo '[';
 // verified is already insyalled on server
 //******************************************************
 $d = dir('../sites/');
+$count = 0;
 while (false !== ($entry = $d->read())) {
 	if ( $entry != "." && $entry != "..") {
 		 $count++; 

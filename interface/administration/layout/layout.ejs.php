@@ -70,7 +70,7 @@ var form_id;
 		],
 			model 		:'formlistModel',
 			idProperty 	:'id',
-			read		: 'interface/administration/layout/component_data.ejs.php?task=form_list',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=form_list'
 	});
 	
 	// *************************************************************************************
@@ -83,7 +83,7 @@ var form_id;
 		],
 			model 		:'uorModel',
 			idProperty 	:'id',
-			read		: 'interface/administration/layout/component_data.ejs.php?task=uor',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=uor'
 	});
 	
 	// *************************************************************************************
@@ -96,7 +96,7 @@ var form_id;
 		],
 			model 		:'typeModel',
 			idProperty 	:'id',
-			read		: 'interface/administration/layout/component_data.ejs.php?task=data_types',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=data_types'
 	});
 	
 	// *************************************************************************************
@@ -111,7 +111,7 @@ var form_id;
 		],
 			model 		:'listoptionModel',
 			idProperty 	:'id',
-			read		: 'interface/administration/layout/component_data.ejs.php?task=lists',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=lists'
 	});
 	
 	// *************************************************************************************
@@ -171,7 +171,7 @@ var form_id;
 				align		: 'left',
             	editor: {
 	                xtype: 'textfield',
-    	            allowBlank: false,
+    	            allowBlank: false
             	}
             },
 			{
@@ -182,7 +182,7 @@ var form_id;
 				align		: 'left',
             	editor: {
 	                xtype: 'textfield',
-    	            allowBlank: false,
+    	            allowBlank: false
             	}
             },
 			{
@@ -192,7 +192,7 @@ var form_id;
 				width		: 130,
 				align		: 'left',
             	editor: {
-	                xtype: 'textfield',
+	                xtype: 'textfield'
             	}
             },
 			{
@@ -291,7 +291,7 @@ var form_id;
 				width		: 80,
 				align		: 'center',
             	editor: {
-	                xtype: 'textfield',
+	                xtype: 'textfield'
             	}
             },
 			{
@@ -302,7 +302,7 @@ var form_id;
 				align		: 'left',
             	editor: {
 	                xtype: 'textfield',
-    	            allowBlank: false,
+    	            allowBlank: false
             	}
             },
 			{ text: 'item_id', hidden: true, dataIndex: 'item_id' },

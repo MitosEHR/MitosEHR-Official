@@ -13,10 +13,10 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 // Reset session count
 $_SESSION['site']['flops'] = 0;
 
-include_once('library/compressor/compressor.inc.php');
-include_once('library/dbHelper/dbHelper.inc.php');
-include_once('repository/global_settings/global_settings.php');
-include_once('repository/global_functions/global_funtions.php');
+include_once($_SESSION['site']['root'].'/library/compressor/compressor.inc.php');
+include_once($_SESSION['site']['root'].'/library/dbHelper/dbHelper.inc.php');
+include_once($_SESSION['site']['root'].'/repository/global_settings/global_settings.php');
+include_once($_SESSION['site']['root'].'/repository/global_functions/global_functions.php');
 
 ?>
 <html>
@@ -74,7 +74,7 @@ Ext.onReady(function() {
 		    	if(response.responseText == 'exit'){ window.location="library/authProcedures/unauth.inc.php"; }
 	    	}
 		});
-	} 
+	}
 	Ext.TaskManager.start({
 	    run: checkSession,
 	    interval: 100000
@@ -196,7 +196,7 @@ Ext.onReady(function() {
                     	Ext.Ajax.request({
 					    	url: Ext.String.format('library/patient/patient_search.inc.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
 						    success: function(response, opts){
-						    	var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><b>{0}</b><br>Record ({1})', post.get('patient_name'), post.get('pid'));
+						    	var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
 		                        Ext.getCmp('patientButton').setText( newPatientBtn );
 				    			Ext.getCmp('patientButton').enable();
 					    	}
@@ -299,8 +299,8 @@ Ext.onReady(function() {
 			resize 		: {
 				fn		: function(){
 					if( trp = Ext.getCmp('topRenderPanel')){
-						var height = this.getHeight()
-						var width = this.getWidth()
+						var height = this.getHeight();
+						var width = this.getWidth();
 						trp.setSize( width , height );
 					}
 				}

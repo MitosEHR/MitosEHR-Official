@@ -116,7 +116,7 @@ Ext.onReady(function(){
 
 		 onPortletClose: function(portlet) {
 	        Ext.topAlert.msg('Message!',  portlet.title + ' was removed');
-	    },
+	    }
 	    
 	}); //ens UserPage class
 	
