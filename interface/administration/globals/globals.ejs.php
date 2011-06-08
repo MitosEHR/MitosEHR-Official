@@ -34,7 +34,7 @@ Ext.onReady(function(){
 			{ name: 'concurrent_layout',					type:'auto' },
 			{ name: 'css_header',							type:'auto' },
 			{ name: 'gbl_nav_area_width',					type:'auto' },
-			{ name: 'mitosehr_name',							type:'auto' },
+			{ name: 'mitosehr_name',						type:'auto' },
 			{ name: 'full_new_patient_form',				type:'auto' },
 			{ name: 'patient_search_results_style',			type:'auto' },
 			{ name: 'simplified_demographics',				type:'auto' },
