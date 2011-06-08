@@ -14,7 +14,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 $_SESSION['site']['flops'] = 0;
 
 include_once('library/compressor/compressor.inc.php');
-include_once('/library/dbHelper/dbHelper.inc.php');
+include_once('library/dbHelper/dbHelper.inc.php');
 include_once('repository/global_settings/global_settings.php');
 include_once('repository/global_functions/global_funtions.php');
 
