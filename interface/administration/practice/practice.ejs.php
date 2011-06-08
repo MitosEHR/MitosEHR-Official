@@ -162,8 +162,6 @@ Ext.onReady(function(){
             // *************************************************************************************
             var pharmacyForm = new Ext.create('Ext.mitos.FormPanel', {
                 id          : 'pharmacyForm',
-                width	  	: 495,
-                hideLabels  : true,
                 defaults: {
                     labelWidth: 89,
                     anchor: '100%',
@@ -172,11 +170,76 @@ Ext.onReady(function(){
                         defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
                     }
                 },
-                items: [{}]
+                items: [{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Name"); ?>',
+                    width       : 100,
+                    id          : 'name',
+                    name        : 'name'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Address"); ?>',
+                    width       : 100,
+                    id          : 'line1',
+                    name        : 'line1'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Address (Cont)"); ?>',
+                    width       : 100,
+                    id          : 'line2',
+                    name        : 'line2'
+                },{
+                    xtype: 'fieldcontainer',
+                    defaults: { hideLabel: true },
+                    items: [{
+                        xtype   : 'displayfield',
+                        value   : '<?php i18n("City, State Zip"); ?>',
+                        width   : 89
+                    },{
+                        xtype   : 'textfield',
+                        width   : 150,
+                        id      : 'city',
+                        name    : 'city'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : ',',
+                        width   : 5,
+                    },{
+                        xtype   : 'textfield',
+                        width   : 50,
+                        id      : 'state',
+                        name    : 'state'
+                    },{
+                        xtype   : 'textfield',
+                        width   : 113,
+                        id      : 'zip',
+                        name    : 'zip'
+                    }]
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Email"); ?>',
+                    width       : 100,
+                    id          : 'email',
+                    name        : 'email'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Phone"); ?>',
+                    width       : 100,
+                    id          : 'phone',
+                    name        : 'phone'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Fax"); ?>',
+                    width       : 100,
+                    id          : 'fax',
+                    name        : 'fax'
+                },{
+
+
+                }]
             }); // END FORM
             var winPharmacy = new Ext.create('Ext.mitos.SaveCancelWindow', {
-                height      : 520,
-                width       : 520,
+                width       : 450,
                 title       : '<?php i18n('Add or Edit Pharmacy'); ?>',
                 form        : pharmacyForm,
                 store       : pharmacyStore,
@@ -246,7 +309,6 @@ Ext.onReady(function(){
             // *************************************************************************************
             var insuranceForm = new Ext.create('Ext.mitos.FormPanel', {
                 id          : 'insuranceForm',
-                width	  	  : 495,
                 defaults: {
                     labelWidth: 89,
                     anchor: '100%',
@@ -255,11 +317,76 @@ Ext.onReady(function(){
                         defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
                     }
                 },
-                items: [{}]
+                items: [{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Name"); ?>',
+                    width       : 100,
+                    id          : 'name',
+                    name        : 'name'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Address"); ?>',
+                    width       : 100,
+                    id          : 'line1',
+                    name        : 'line1'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Address (Cont)"); ?>',
+                    width       : 100,
+                    id          : 'line2',
+                    name        : 'line2'
+                },{
+                    xtype: 'fieldcontainer',
+                    defaults: { hideLabel: true },
+                    items: [{
+                        xtype   : 'displayfield',
+                        value   : '<?php i18n("City, State Zip"); ?>',
+                        width   : 89
+                    },{
+                        xtype   : 'textfield',
+                        width   : 150,
+                        id      : 'city',
+                        name    : 'city'
+                    },{
+                        xtype   : 'displayfield',
+                        value   : ',',
+                        width   : 5,
+                    },{
+                        xtype   : 'textfield',
+                        width   : 50,
+                        id      : 'state',
+                        name    : 'state'
+                    },{
+                        xtype   : 'textfield',
+                        width   : 113,
+                        id      : 'zip',
+                        name    : 'zip'
+                    }]
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Email"); ?>',
+                    width       : 100,
+                    id          : 'email',
+                    name        : 'email'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Phone"); ?>',
+                    width       : 100,
+                    id          : 'phone',
+                    name        : 'phone'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : '<?php i18n("Fax"); ?>',
+                    width       : 100,
+                    id          : 'fax',
+                    name        : 'fax'
+                },{
+
+
+                }]
             }); // END FORM
             var winInsurance = new Ext.create('Ext.mitos.SaveCancelWindow',{
-                height      : 520,
-                width       : 520,
+                width       : 450,
                 title       : '<?php i18n('Add or Edit Insurance'); ?>',
                 form        : insuranceForm,
                 store       : insuranceStore,
