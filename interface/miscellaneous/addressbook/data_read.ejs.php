@@ -15,7 +15,7 @@ session_cache_limiter('private');
 
 include_once("../../../library/dbHelper/dbHelper.inc.php");
 require_once("../../../library/phpAES/AES.class.php");
-include_once('../../../repository/global_functions/global_funtions.php');
+include_once('../../../repository/global_functions/global_functions.php');
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
 //******************************************************************************
