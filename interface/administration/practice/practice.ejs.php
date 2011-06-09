@@ -89,7 +89,7 @@ Ext.onReady(function(){
 			        return '<?php echo "Email" ?>';
 			    }
 			    return val;
-			};
+            }
             // *************************************************************************************
             // Insurance Record Structure
             // *************************************************************************************
@@ -290,8 +290,7 @@ Ext.onReady(function(){
                         name    : 'fax_number'
                     }]
                 },{
-
-
+                        // TODO //
                 }]
             }); // END FORM
             var winPharmacy = new Ext.create('Ext.mitos.SaveCancelWindow', {

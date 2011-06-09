@@ -62,19 +62,19 @@ switch ($_GET['task']) {
 				switch ($phoneRow['type']) {
 					case "2":
 						$row['phone_country_code'] 	= $phoneRow['country_code'];
-						$row['phone_prefix'] 		= $phoneRow['country_code'];
-						$row['phone_number'] 		= $phoneRow['country_code'];
-						$row['phone_foreign_id'] 	= $phoneRow['country_code'];
-						$row['phone_country_code'] 	= $phoneRow['country_code'];
+                        $row['phone_area_code'] 	= $phoneRow['area_code'];
+						$row['phone_prefix'] 		= $phoneRow['prefix'];
+						$row['phone_number'] 		= $phoneRow['number'];
+						$row['phone_foreign_id'] 	= $phoneRow['foreign_id'];
 						$row['phone_full'] 			= $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'];
 						
 					break;
 					case "5":
 						$row['fax_country_code'] 	= $phoneRow['country_code'];
-						$row['fax_prefix'] 			= $phoneRow['country_code'];
-						$row['fax_number'] 			= $phoneRow['country_code'];
-						$row['fax_foreign_id'] 		= $phoneRow['country_code'];
-						$row['fax_country_code'] 	= $phoneRow['country_code'];
+                        $row['fax_area_code'] 		= $phoneRow['area_code'];
+						$row['fax_prefix'] 			= $phoneRow['prefix'];
+						$row['fax_number'] 			= $phoneRow['number'];
+						$row['fax_foreign_id'] 		= $phoneRow['foreign_id'];
 						$row['fax_full'] 			= $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'];
 					break;
 				}	
@@ -118,19 +118,19 @@ switch ($_GET['task']) {
 				switch ($phoneRow['type']) {
 					case "2":
 						$row['phone_country_code'] 	= $phoneRow['country_code'];
-						$row['phone_prefix'] 		= $phoneRow['country_code'];
-						$row['phone_number'] 		= $phoneRow['country_code'];
-						$row['phone_foreign_id'] 	= $phoneRow['country_code'];
-						$row['phone_country_code'] 	= $phoneRow['country_code'];
+                        $row['phone_area_code'] 	= $phoneRow['area_code'];
+						$row['phone_prefix'] 		= $phoneRow['prefix'];
+						$row['phone_number'] 		= $phoneRow['number'];
+						$row['phone_foreign_id'] 	= $phoneRow['foreign_id'];
 						$row['phone_full'] 			= $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'];
-						
+
 					break;
 					case "5":
 						$row['fax_country_code'] 	= $phoneRow['country_code'];
-						$row['fax_prefix'] 			= $phoneRow['country_code'];
-						$row['fax_number'] 			= $phoneRow['country_code'];
-						$row['fax_foreign_id'] 		= $phoneRow['country_code'];
-						$row['fax_country_code'] 	= $phoneRow['country_code'];
+                        $row['fax_area_code'] 		= $phoneRow['area_code'];
+						$row['fax_prefix'] 			= $phoneRow['prefix'];
+						$row['fax_number'] 			= $phoneRow['number'];
+						$row['fax_foreign_id'] 		= $phoneRow['foreign_id'];
 						$row['fax_full'] 			= $phoneRow['country_code'].' '.$phoneRow['area_code'].'-'.$phoneRow['prefix'].'-'.$phoneRow['number'];
 					break;
 				}	
