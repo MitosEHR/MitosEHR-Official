@@ -308,6 +308,14 @@ var form_id;
 			{ text: 'item_id', hidden: true, dataIndex: 'item_id' },
 			{ text: 'form_id', hidden: true, dataIndex: 'form_id' }
 		],
+		listeners: {
+			itemclick: {
+            	fn: function(DataView, record, item, rowIndex, e){
+            		//var obj = this.up.getGridColumns();
+					//alert(uneval(obj));
+            	}
+			}
+		},
 		dockedItems: [{
 			xtype: 'toolbar',
 			dock: 'top',
