@@ -160,7 +160,7 @@ Ext.onReady(function(){
                     {name: 'name',	type: 'string'}
                 ],
             model		: 'x12PartnersModel',
-            idProperty	: 'idusers',
+            idProperty	: 'id',
             read		: 'interface/administration/practice/data_read.ejs.php',
             create		: 'interface/administration/practice/data_create.ejs.php',
             update		: 'interface/administration/practice/data_update.ejs.php',
@@ -210,7 +210,7 @@ Ext.onReady(function(){
                     },{
                         xtype   : 'displayfield',
                         value   : ',',
-                        width   : 5,
+                        width   : 5
                     },{
                         xtype   : 'textfield',
                         width   : 50,
@@ -403,7 +403,7 @@ Ext.onReady(function(){
                     },{
                         xtype   : 'displayfield',
                         value   : ',',
-                        width   : 5,
+                        width   : 5
                     },{
                         xtype   : 'textfield',
                         width   : 50,
