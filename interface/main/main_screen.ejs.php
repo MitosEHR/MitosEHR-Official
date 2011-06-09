@@ -96,13 +96,14 @@ Ext.onReady(function() {
 	// Panel
 	//****************************************************************    
 	var Navigation = new Ext.tree.TreePanel({
-		region		: 'west',
+        // TODO: add to region: $_SESSION['global_settings']['concurrent_layout']
+		region		: 'center',
+        bodyPadding  : '5 0',
 		hideHeaders	: true,
 		useArrows	: true,
 		rootVisible	: false,
-		collapsible	: true,
+		border      : false,
 		store		: storeTree,
-		title		: '<?php i18n("Navigation"); ?>',
 		split		: true,
 		width		: <?php echo $_SESSION['global_settings']['gbl_nav_area_width'] ?>,
 		root: {
@@ -111,7 +112,32 @@ Ext.onReady(function() {
 			id			: 'source'
 		}
 	});
-	
+    
+    var navColumnlinks = Ext.create('Ext.panel.Panel', {
+        region		: 'south',
+        border      : false,
+        items       : [{
+            xtype	: 'button',
+			text	: 'MithosEHR Support',
+			scale	: 'large',
+			margin	: '5px 10px',
+			minWidth: 170,
+            handler : function(){
+                var redirect = '<?php echo $_SESSION['global_settings']['online_support_link']?>';
+			    window.location = redirect;
+            }
+        }]
+    });
+
+	var navColumn = Ext.create('Ext.panel.Panel', {
+        title		: '<?php i18n("Navigation"); ?>',
+        layout      : 'border',
+        width		: <?php echo $_SESSION['global_settings']['gbl_nav_area_width'] ?>,
+        region		: 'west',
+        split		: true,
+        collapsible	: true,
+        items       : [Navigation, navColumnlinks]
+    });
 	// *************************************************************************************
 	// Assign the changeLayout function to be called on tree node click.
 	// *************************************************************************************
@@ -339,7 +365,7 @@ Ext.onReady(function() {
 			padding	: 2
 		},
 		defaults	: { split: true },
-		items		: [ Header, Navigation, TopPanel ]
+		items		: [ Header, navColumn, TopPanel ]
 	}); // End ViewPort
 
 }); // End App
