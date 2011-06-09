@@ -38,7 +38,6 @@ $user = $_SESSION['user']['name'];
 // although Sencha EXTJS make good validation, we could check again 
 // just in case 
 // *************************************************************************************
-$row['id']        	= $data['id'];
 $row['date']        = $data['date'];
 $row['body']        = $data['body'];
 $row['groupname']   = $data['groupname'];
@@ -49,7 +48,7 @@ $row['activity']   	= $data['activity'];
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT statement
 // *************************************************************************************
-$sql = $mitos_db->sqlBind($row, "onotes", "U", "id='" . $row['id'] . "'");
+$sql = $mitos_db->sqlBind($row, "onotes", "U", "id='" . $data['id'] . "'");
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 

@@ -62,7 +62,7 @@ $sql = $mitos_db->sqlBind($row, "facility", "I");
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 
-if ( $ret == "" ){
+if ( $ret != "" ){
 	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
 } else {
 	echo "{ success: true }";

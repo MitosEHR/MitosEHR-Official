@@ -55,6 +55,6 @@ foreach($data as $key => $value ){
 		$mitos_db->execLog();
 	}
 }
-include_once('../../../repository/global_settings/global_settings.php');
+include_once($_SESSION['site']['root']."/repository/global_settings/global_settings.php");
 echo "{ success: true }";	
 ?>

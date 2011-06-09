@@ -41,7 +41,7 @@ Ext.onReady(function(){
             // *************************************************************************************
             // Pharmacy Record Structure
             // *************************************************************************************
-            var pharmacyStore = Ext.create('Ext.mitos.CRUDStore', {
+            page.pharmacyStore = Ext.create('Ext.mitos.CRUDStore', {
                 fields: [
                     {name: 'id',					type: 'int'},
                     {name: 'name',					type: 'string'},
@@ -52,29 +52,28 @@ Ext.onReady(function(){
                     {name: 'line2',					type: 'string'},
                     {name: 'city',					type: 'string'},
                     {name: 'state',					type: 'string'},
-                    {name: 'zip',					type: 'int'},
-                    {name: 'plus_four',				type: 'int'},
+                    {name: 'zip',					type: 'string'},
+                    {name: 'plus_four',				type: 'string'},
                     {name: 'country',				type: 'string'},
-                    {name: 'address_foreign_id',	type: 'int'},
                     {name: 'address_full',			type: 'string'},
+                    {name: 'phone_id',		        type: 'int'},
                     {name: 'phone_country_code',	type: 'string'},
-                    {name: 'phone_area_code',		type: 'int'},
-                    {name: 'phone_prefix',			type: 'int'},
-                    {name: 'phone_number',			type: 'int'},
-                    {name: 'phone_foreign_id',		type: 'string'},
+                    {name: 'phone_area_code',		type: 'string'},
+                    {name: 'phone_prefix',			type: 'string'},
+                    {name: 'phone_number',			type: 'string'},
                     {name: 'phone_full',			type: 'string'},
+                    {name: 'fax_id',		        type: 'int'},
                     {name: 'fax_country_code',		type: 'string'},
-                    {name: 'fax_area_code',			type: 'int'},
-                    {name: 'fax_prefix',			type: 'int'},
-                    {name: 'fax_number',			type: 'int'},
-                    {name: 'fax_foreign_id',		type: 'int'},
+                    {name: 'fax_area_code',			type: 'string'},
+                    {name: 'fax_prefix',			type: 'string'},
+                    {name: 'fax_number',			type: 'string'},
                     {name: 'fax_full',				type: 'string'}
                 ],
             model		: 'pharmacyModel',
             idProperty	: 'id',
             read		: 'interface/administration/practice/data_read.ejs.php?task=pharmacy',
             create		: 'interface/administration/practice/data_read.ejs.php?task=',
-            update		: 'interface/administration/practice/data_read.ejs.php?task=',
+            update		: 'interface/administration/practice/data_update.ejs.php?task=pharmacy',
             destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
             });
             // -------------------------------------------------------------------------------------
@@ -171,8 +170,7 @@ Ext.onReady(function(){
             // *************************************************************************************
             // Pharmacy Form, Window, and Form
             // *************************************************************************************
-            var pharmacyForm = new Ext.create('Ext.mitos.FormPanel', {
-                id          : 'pharmacyForm',
+            page.pharmacyForm = new Ext.create('Ext.mitos.FormPanel', {
                 defaults: {
                     labelWidth: 89,
                     anchor: '100%',
@@ -181,7 +179,15 @@ Ext.onReady(function(){
                         defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
                     }
                 },
-                items: [{
+                items: [{ // TODO: create fields for a few of this...
+                    xtype: 'textfield', hidden: true, id: 'id',                 name: 'id'
+                },{ xtype: 'textfield', hidden: true, id: 'phone_id',           name: 'phone_id'
+                },{ xtype: 'textfield', hidden: true, id: 'fax_id',             name: 'fax_id'
+                },{ xtype: 'textfield', hidden: true, id: 'address_id',         name: 'address_id'
+                },{ xtype: 'textfield', hidden: true, id: 'phone_country_code', name: 'phone_country_code'
+                },{ xtype: 'textfield', hidden: true, id: 'fax_country_code',   name: 'fax_country_code'
+                },{ xtype: 'textfield', hidden: true, id: 'transmit_method',    name: 'transmit_method'
+                },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Name"); ?>',
                     width       : 100,
@@ -293,19 +299,21 @@ Ext.onReady(function(){
                         // TODO //
                 }]
             }); // END FORM
-            var winPharmacy = new Ext.create('Ext.mitos.SaveCancelWindow', {
+            page.winPharmacy = new Ext.create('Ext.mitos.SaveCancelWindow', {
                 width       : 450,
                 title       : '<?php i18n('Add or Edit Pharmacy'); ?>',
-                form        : pharmacyForm,
-                store       : pharmacyStore,
-                idField     : 'id',
-                scope       : page
+                form        : page.pharmacyForm,
+                store       : page.pharmacyStore,
+                scope       : page,
+                idField     : 'id'
             }); // END WINDOW
-            var pharmacyGrid = new Ext.create('Ext.mitos.GridPanel', {
-                store		: pharmacyStore,
+            page.pharmacyGrid = new Ext.create('Ext.mitos.GridPanel', {
+                store		: page.pharmacyStore,
                 border		: false,
                 frame		: false,
                 columns: [{
+                    text: 'id', sortable: false, dataIndex: 'id', hidden: true
+                },{
                     text     : '<?php i18n("Pharmacy Name"); ?>',
                     width    : 150,
                     sortable : true,
@@ -335,26 +343,26 @@ Ext.onReady(function(){
                 listeners: {
                     itemclick: {
                         fn: function(DataView, record, item, rowIndex, e){
-                            Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
+                            page.pharmacyForm.getForm().reset(); // Clear the form
                             Ext.getCmp('editPharmacy').enable();
                             Ext.getCmp('deletePharmacy').enable();
-                            var rec = pharmacyStore.getAt(rowIndex);
-                            Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
+                            var rec = page.pharmacyStore.getAt(rowIndex);
+                            page.pharmacyForm.getForm().loadRecord(rec);
                             currRec = rec;
-                            rowPos = rowIndex;
+                            page.rowPos = rowIndex;
                         }
                     },
                     itemdblclick: {
                         fn: function(DataView, record, item, rowIndex, e){
-                            Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
+                            page.pharmacyForm.getForm().reset(); // Clear the form
                             Ext.getCmp('editPharmacy').enable();
                             Ext.getCmp('deletePharmacy').enable();
-                            var rec = pharmacyStore.getAt(rowIndex);
-                            Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
+                            var rec = page.pharmacyStore.getAt(rowIndex);
+                            page.pharmacyForm.getForm().loadRecord(rec);
                             currRec = rec;
-                            rowPos = rowIndex;
-                            winPharmacy.setTitle('<?php i18n("View / Edit Insurance"); ?>');
-                            winPharmacy.show();
+                            page.rowPos = rowIndex;
+                            page.winPharmacy.setTitle('<?php i18n("View / Edit Insurance"); ?>');
+                            page.winPharmacy.show();
                         }
                     }
                 }
@@ -700,7 +708,7 @@ Ext.onReady(function(){
                     frame	: false,
                     border	: true,
                     layout	: 'fit',
-                    items	: [ pharmacyGrid ],
+                    items	: [ page.pharmacyGrid ],
                     dockedItems: [{
                         xtype: 'toolbar',
                         dock: 'top',
@@ -709,7 +717,7 @@ Ext.onReady(function(){
                             text      : '<?php i18n("Add a Pharmacy"); ?>',
                             iconCls   : 'save',
                             handler   : function(){
-                               winPharmacy.show();
+                               page.winPharmacy.show();
                             }
                         },{
                             id        : 'editPharmacy',

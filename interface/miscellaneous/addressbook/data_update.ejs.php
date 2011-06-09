@@ -35,7 +35,6 @@ $data = json_decode ( $_POST['row'], true );
 // although Sencha EXTJS make good validation, we could check again 
 // just in case 
 // *************************************************************************************
-$row['id']                = trim($data['id']);
 $row['abook_type']        = $data['abook_type'];
 $row['title']             = $data['title'];
 $row['fname']             = $data['fname'];
@@ -73,7 +72,7 @@ $row['notes']             = $data['notes'];
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT statement
 // *************************************************************************************
-$sql = $mitos_db->sqlBind($row, "users", "U", "id='" . $row['id'] . "'");
+$sql = $mitos_db->sqlBind($row, "users", "U", "id='" . $data['id'] . "'");
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 

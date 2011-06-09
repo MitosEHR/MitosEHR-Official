@@ -39,7 +39,6 @@ $mitos_db = new dbHelper();
 // just in case 
 // *************************************************************************************
 
-$row['id'] 				= dataEncode($data->id);
 $row['list_id'] 		= dataEncode($data->list_id);
 $row['option_id'] 		= dataEncode($data->option_id);
 $row['title'] 			= dataEncode($data->title);
@@ -54,7 +53,7 @@ $row['notes'] 			= dataEncode($data->notes);
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-$sql = $mitos_db->sqlBind($row, "list_options", "u", "id='".$row['id']."'");
+$sql = $mitos_db->sqlBind($row, "list_options", "u", "id='".$data->id."'");
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 
