@@ -245,8 +245,8 @@ Ext.onReady(function(){
 	var css_header_store = Ext.create('Ext.data.Store', {
 	    fields: ['title', 'option_id'],
 	    data : [
-	        {"title":"Grey (default)", "option_id":"style_default.css"},
-	        {"title":"Blue", "option_id":"style_blue.css"},
+	        {"title":"Grey (default)", "option_id":"ext-all-gray.css"},
+	        {"title":"Blue", "option_id":"ext-all.css"},
 	        {"title":"Green", "option_id":"style_green.css"}
 	    ]
 	});
