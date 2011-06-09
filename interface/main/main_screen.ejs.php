@@ -96,7 +96,6 @@ Ext.onReady(function() {
 	// Panel
 	//****************************************************************    
 	var Navigation = new Ext.tree.TreePanel({
-        // TODO: add to region: $_SESSION['global_settings']['concurrent_layout']
 		region		: 'center',
         bodyPadding  : '5 0',
 		hideHeaders	: true,
@@ -133,7 +132,7 @@ Ext.onReady(function() {
         title		: '<?php i18n("Navigation"); ?>',
         layout      : 'border',
         width		: <?php echo $_SESSION['global_settings']['gbl_nav_area_width'] ?>,
-        region		: 'west',
+        region		: '<?php echo $_SESSION['global_settings']['concurrent_layout'] ?>',
         split		: true,
         collapsible	: true,
         items       : [Navigation, navColumnlinks]
@@ -320,7 +319,7 @@ Ext.onReady(function() {
 		bodyPadding		: 0,
 		waitMsg			: '<?php i18n("Loading"); ?>',
 		waitMsgTarget	: true,
-		autoLoad		: {url: 'interface/dashboard/dashboard.ejs.php', scripts: true},
+		autoLoad		: {url: '<?php echo $_SESSION['global_settings']['default_top_pane'] ?>', scripts: true},
 		listeners		: {
 			resize 		: {
 				fn		: function(){
