@@ -215,8 +215,8 @@ Ext.onReady(function(){
 	var default_top_pane_store = Ext.create('Ext.data.Store', {
 	    fields: ['title', 'option_id'],
 	    data : [
-	        {"title":"Calendar", "option_id":"main_info.php"},
-	        {"title":"Patient Search/Add Screen", "option_id":"../new/new.php"}
+	        {"title":"Dashboard", "option_id":"interface/dashboard/dashboard.ejs.php"},
+	        {"title":"Calendar", "option_id":"interface/dashboard/dashboard.ejs.php"}
 	    ]
 	});
     // *************************************************************************************
@@ -235,10 +235,8 @@ Ext.onReady(function(){
 	var concurrent_layout_store = Ext.create('Ext.data.Store', {
 	    fields: ['title', 'option_id'],
 	    data : [
-	        {"title":"Old style layout with no left menu", "option_id":"0"},
-	        {"title":"Navigation menu consists of pairs of radio buttons", "option_id":"1"},
-	        {"title":"Navigation menu is a tree view", "option_id":"2"},
-	        {"title":"Navigation uses a sliding menu", "option_id":"3"}
+	        {"title":"Main Navigation Menu (left)", "option_id":"west"},
+	        {"title":"Main Navigation Menu (right)", "option_id":"east"}
 	    ]
 	});
 	// *************************************************************************************
@@ -452,16 +450,6 @@ Ext.onReady(function(){
 					valueField	: 'option_id',
 					editable	: false,
 					store		: patient_search_results_style_store
-				},{
-					xtype		: 'checkbox',
-					fieldLabel	: '<?php i18n('Tall Navigation Area -??-'); ?>',
-					name		: 'Appear8',  // ??????????
-					id			: 'Appear8'   // ??????????
-				},{
-					xtype		: 'checkbox',
-					fieldLabel	: '<?php i18n('Navigation Area Visit Form -??-'); ?>',
-					name		: 'Appear9',   // ?????????
-					id			: 'Appear9'    // ?????????
 				},{
 					xtype		: 'checkbox',
 					fieldLabel	: '<?php i18n('Simplified Demographics'); ?>',
