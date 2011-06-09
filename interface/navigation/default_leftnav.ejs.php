@@ -46,7 +46,7 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 $buff .= '{"text":"' . i18n('Administration', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
-	$buff .= '{"text":"' . i18n('Globals', 'r') . '", "leaf":true, "cls":"file", "id":"administration/globals/globals.ejs.php"},' . chr(13);
+	$buff .= '{"text":"' . i18n('Global Settings', 'r') . '", "leaf":true, "cls":"file", "id":"administration/globals/globals.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Facilities', 'r') . '", "leaf":true, "cls":"file", "id":"administration/facilities/facilities.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Users', 'r') . '", "leaf":true, "cls":"file", "id":"administration/users/users.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Practice', 'r') . '", "leaf":true, "cls":"file", "id":"administration/practice/practice.ejs.php"},' . chr(13);
