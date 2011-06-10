@@ -29,7 +29,8 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <!--test-stuff-->
 <link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
 <!--test-stuff-->
-<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
+<!-- <link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>"> -->
+<link rel="stylesheet" type="text/css" href="library/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="favicon.ico" >
