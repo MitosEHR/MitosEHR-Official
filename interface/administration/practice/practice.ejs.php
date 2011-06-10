@@ -28,10 +28,10 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.DeleteButton',
 			'Ext.mitos.TopRenderPanel',
 			'Ext.mitos.TitlesComboBox',
-			'Ext.mitos.SaveCancelWindow'
+			'Ext.mitos.SaveCancelWindow',
+            'Ext.mitos.TransmitMedthodComboBox'
 		],
         initComponent: function(){
             var page = this;
@@ -129,7 +129,7 @@ Ext.onReady(function(){
             idProperty	: 'id',
             read		: 'interface/administration/practice/data_read.ejs.php?task=insurance',
             create		: 'interface/administration/practice/data_read.ejs.php?task=',
-            update		: 'interface/administration/practice/data_read.ejs.php?task=',
+            update		: 'interface/administration/practice/data_update.ejs.php?task=insurance',
             destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
             });
 
@@ -166,7 +166,6 @@ Ext.onReady(function(){
             destroy 	: 'interface/administration/practice/data_destroy.ejs.php'
             });
 
-
             // *************************************************************************************
             // Pharmacy Form, Window, and Form
             // *************************************************************************************
@@ -180,12 +179,12 @@ Ext.onReady(function(){
                     }
                 },
                 items: [{ // TODO: create fields for a few of this...
-                    xtype: 'textfield', hidden: true, id: 'id',                 name: 'id'
-                },{ xtype: 'textfield', hidden: true, id: 'phone_id',           name: 'phone_id'
-                },{ xtype: 'textfield', hidden: true, id: 'fax_id',             name: 'fax_id'
-                },{ xtype: 'textfield', hidden: true, id: 'address_id',         name: 'address_id'
-                },{ xtype: 'textfield', hidden: true, id: 'phone_country_code', name: 'phone_country_code'
-                },{ xtype: 'textfield', hidden: true, id: 'fax_country_code',   name: 'fax_country_code'
+                    xtype: 'textfield', hidden: true, name: 'id'
+                },{ xtype: 'textfield', hidden: true, name: 'phone_id'
+                },{ xtype: 'textfield', hidden: true, name: 'fax_id'
+                },{ xtype: 'textfield', hidden: true, name: 'address_id'
+                },{ xtype: 'textfield', hidden: true, name: 'phone_country_code'
+                },{ xtype: 'textfield', hidden: true, name: 'fax_country_code'
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Name"); ?>',
@@ -374,7 +373,6 @@ Ext.onReady(function(){
             // Insurance Form, Window, and GRID
             // *************************************************************************************
             page.insuranceForm = new Ext.create('Ext.mitos.FormPanel', {
-                id          : 'insuranceForm',
                 defaults: {
                     labelWidth: 89,
                     anchor: '100%',
@@ -384,10 +382,12 @@ Ext.onReady(function(){
                     }
                 },
                 items: [{
-                    xtype: 'textfield', hidden: true,   name: 'id'
-                },{ xtype: 'textfield', hidden: true,   name: 'phone_id'
-                },{ xtype: 'textfield', hidden: true,   name: 'fax_id'
-                },{ xtype: 'textfield', hidden: true,   name: 'address_id'
+                    xtype: 'textfield', hidden: true, name: 'id'
+                },{ xtype: 'textfield', hidden: true, name: 'phone_id'
+                },{ xtype: 'textfield', hidden: true, name: 'fax_id'
+                },{ xtype: 'textfield', hidden: true, name: 'address_id'
+                },{ xtype: 'textfield', hidden: true, name: 'phone_country_code'
+                },{ xtype: 'textfield', hidden: true, name: 'fax_country_code'
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Name"); ?>',
@@ -513,14 +513,16 @@ Ext.onReady(function(){
                 title       : '<?php i18n('Add or Edit Insurance'); ?>',
                 form        : page.insuranceForm,
                 store       : page.insuranceStore,
-                idField     : 'id',
-                scope       : page
+                scope       : page,
+                idField     : 'id'
             }); // END WINDOW
             page.insuranceGrid = new Ext.create('Ext.mitos.GridPanel', {
                 store		: page.insuranceStore,
                 border		: false,
                 frame		: false,
                 columns: [{
+                    text: 'id', sortable: false, dataIndex: 'id', hidden: true
+                },{
                     text     : '<?php i18n("Insurance Name"); ?>',
                     width    : 150,
                     sortable : true,
@@ -556,7 +558,7 @@ Ext.onReady(function(){
                             var rec = page.insuranceStore.getAt(rowIndex);
                             page.insuranceForm.getForm().loadRecord(rec);
                             currRec = rec;
-                            rowPos = rowIndex;
+                            page.rowPos = rowIndex;
                         }
                     },
                     itemdblclick: {
@@ -567,13 +569,14 @@ Ext.onReady(function(){
                             var rec = page.insuranceStore.getAt(rowIndex);
                             page.insuranceForm.getForm().loadRecord(rec);
                             currRec = rec;
-                            rowPos = rowIndex;
+                            page.rowPos = rowIndex;
                             page.winInsurance.setTitle('<?php i18n("Edit Insurance"); ?>');
                             page.winInsurance.show();
                         }
                     }
                 }
             }); // END Insurance Grid
+
 
             // *************************************************************************************
             // Insurance Numbers Grid (Tab 2)
@@ -700,10 +703,11 @@ Ext.onReady(function(){
             }); // END Insurance Numbers Grid
 
 
+
             // *************************************************************************************
             // Tab Panel
             // *************************************************************************************
-            var tabPanel = new Ext.create('Ext.tab.Panel', {
+            page.tabPanel = new Ext.create('Ext.tab.Panel', {
                 activeTab	: 0,
                 frame		: true,
                 border		: false,
@@ -724,7 +728,8 @@ Ext.onReady(function(){
                             text      : '<?php i18n("Add a Pharmacy"); ?>',
                             iconCls   : 'save',
                             handler   : function(){
-                               page.winPharmacy.show();
+                                page.pharmacyForm.getForm().reset();
+                                page.winPharmacy.show();
                             }
                         },{
                             id        : 'editPharmacy',
@@ -757,6 +762,7 @@ Ext.onReady(function(){
                             text      : '<?php i18n("Add a Comapny"); ?>',
                             iconCls   : 'save',
                             handler   : function(){
+                                page.insuranceForm.getForm().reset();
                                 page.winInsurance.show();
                             }
                                         },{
@@ -863,7 +869,7 @@ Ext.onReady(function(){
             // *************************************************************************************
             Ext.create('Ext.mitos.TopRenderPanel', {
                 pageTitle: '<?php i18n('Practice Settings'); ?>',
-                pageBody: [tabPanel]
+                pageBody: [page.tabPanel]
             });
             page.callParent(arguments);
 		} // end of initComponent

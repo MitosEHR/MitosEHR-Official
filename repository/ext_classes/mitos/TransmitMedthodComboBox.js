@@ -5,7 +5,7 @@ Ext.define('Ext.mitos.TransmitMedthodComboBox',{
     	var me = this;
 		
 		
-		me.store = Ext.create('Ext.data.Store', {
+		me.storeTrsmit = Ext.create('Ext.data.Store', {
 		    fields: ['id', 'name'],
 		    data : [
 		        {"id":"1", "name":"Print"},
@@ -21,7 +21,7 @@ Ext.define('Ext.mitos.TransmitMedthodComboBox',{
     		valueField: 'id',  
     		queryMode: 'local',
     		emptyText:'Select', 
-    		store: me.store
+    		store: me.storeTrsmit
 		});
 		me.callParent();
 	} // end initComponent

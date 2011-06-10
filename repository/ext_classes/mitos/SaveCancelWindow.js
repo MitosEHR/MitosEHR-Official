@@ -29,6 +29,8 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
 							var id = win.form.getForm().findField('id').getValue();
 							var record = win.store.getAt(win.scope.rowPos);
 							var fieldValues = win.form.getForm().getValues();
+                            // alert the record ID for debug!!!
+                            alert('For debug... Record id is ' +id);
 							for ( k=0; k <= record.fields.getCount()-1; k++) {
 								i = record.fields.get(k).name;
 								record.set( i, fieldValues[i] );
