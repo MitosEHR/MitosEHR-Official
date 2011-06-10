@@ -16156,7 +16156,7 @@ Ext.state.Manager.setProvider(new Ext.state.CookieProvider({
      * handlers to the {@link #beforestaterestore}, {@link #staterestore},
      * {@link #beforestatesave} and {@link #statesave} events.</p>
      */
-    stateful: true,
+    stateful: false,
 
     /**
      * @cfg {String} stateId
