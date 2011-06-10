@@ -1,6 +1,6 @@
-Ext.define('Ext.mitos.AuthorizationsComboBox',{
+Ext.define('Ext.mitos.TransmitMedthodComboBox',{
 	extend      : 'Ext.form.ComboBox',
-    alias       : 'mitos.authorizationscombobox',
+    alias       : 'mitos.transmitmethodcombox',
     initComponent: function(){	
     	var me = this;
 		
@@ -15,7 +15,7 @@ Ext.define('Ext.mitos.AuthorizationsComboBox',{
 		});
 
     	Ext.apply(this, {
-    		name: 'see_auth', 
+    		name: 'transmit_method',
     		editable: false, 
     		displayField: 'name',
     		valueField: 'id',  

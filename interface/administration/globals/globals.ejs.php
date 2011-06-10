@@ -247,7 +247,7 @@ Ext.onReady(function(){
 	    data : [
 	        {"title":"Grey (default)", "option_id":"ext-all-gray.css"},
 	        {"title":"Blue", "option_id":"ext-all.css"},
-	        {"title":"Green", "option_id":"style_green.css"}
+	        {"title":"Access", "option_id":"ext-all-access.css"}
 	    ]
 	});
 	// *************************************************************************************

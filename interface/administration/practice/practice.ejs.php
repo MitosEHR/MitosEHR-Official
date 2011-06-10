@@ -92,7 +92,7 @@ Ext.onReady(function(){
             // *************************************************************************************
             // Insurance Record Structure
             // *************************************************************************************
-            var insuranceStore = Ext.create('Ext.mitos.CRUDStore', {
+            page.insuranceStore = Ext.create('Ext.mitos.CRUDStore', {
                 fields: [
                     {name: 'id',						type: 'int'},
                     {name: 'name',						type: 'string'},
@@ -186,7 +186,6 @@ Ext.onReady(function(){
                 },{ xtype: 'textfield', hidden: true, id: 'address_id',         name: 'address_id'
                 },{ xtype: 'textfield', hidden: true, id: 'phone_country_code', name: 'phone_country_code'
                 },{ xtype: 'textfield', hidden: true, id: 'fax_country_code',   name: 'fax_country_code'
-                },{ xtype: 'textfield', hidden: true, id: 'transmit_method',    name: 'transmit_method'
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Name"); ?>',
@@ -295,9 +294,12 @@ Ext.onReady(function(){
                         width   : 70,
                         name    : 'fax_number'
                     }]
-                },{
-                        // TODO //
-                }]
+                },
+                    Ext.create('Ext.mitos.TransmitMedthodComboBox',{
+                        fieldLabel  : '<?php i18n("default Method"); ?>',
+                        width       : 89
+                    })
+                ]
             }); // END FORM
             page.winPharmacy = new Ext.create('Ext.mitos.SaveCancelWindow', {
                 width       : 450,
@@ -361,7 +363,7 @@ Ext.onReady(function(){
                             page.pharmacyForm.getForm().loadRecord(rec);
                             currRec = rec;
                             page.rowPos = rowIndex;
-                            page.winPharmacy.setTitle('<?php i18n("View / Edit Insurance"); ?>');
+                            page.winPharmacy.setTitle('<?php i18n("Edit Pharmacy"); ?>');
                             page.winPharmacy.show();
                         }
                     }
@@ -371,7 +373,7 @@ Ext.onReady(function(){
             // *************************************************************************************
             // Insurance Form, Window, and GRID
             // *************************************************************************************
-            var insuranceForm = new Ext.create('Ext.mitos.FormPanel', {
+            page.insuranceForm = new Ext.create('Ext.mitos.FormPanel', {
                 id          : 'insuranceForm',
                 defaults: {
                     labelWidth: 89,
@@ -382,6 +384,11 @@ Ext.onReady(function(){
                     }
                 },
                 items: [{
+                    xtype: 'textfield', hidden: true,   name: 'id'
+                },{ xtype: 'textfield', hidden: true,   name: 'phone_id'
+                },{ xtype: 'textfield', hidden: true,   name: 'fax_id'
+                },{ xtype: 'textfield', hidden: true,   name: 'address_id'
+                },{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("Name"); ?>',
                     width       : 100,
@@ -501,16 +508,16 @@ Ext.onReady(function(){
                     name        : 'x12_default_partner_id'
                 }]
             }); // END FORM
-            var winInsurance = new Ext.create('Ext.mitos.SaveCancelWindow',{
+            page.winInsurance = new Ext.create('Ext.mitos.SaveCancelWindow',{
                 width       : 450,
                 title       : '<?php i18n('Add or Edit Insurance'); ?>',
-                form        : insuranceForm,
-                store       : insuranceStore,
+                form        : page.insuranceForm,
+                store       : page.insuranceStore,
                 idField     : 'id',
                 scope       : page
             }); // END WINDOW
-            var insuranceGrid = new Ext.create('Ext.mitos.GridPanel', {
-                store		: insuranceStore,
+            page.insuranceGrid = new Ext.create('Ext.mitos.GridPanel', {
+                store		: page.insuranceStore,
                 border		: false,
                 frame		: false,
                 columns: [{
@@ -543,26 +550,26 @@ Ext.onReady(function(){
                 listeners: {
                     itemclick: {
                         fn: function(DataView, record, item, rowIndex, e){
-                            Ext.getCmp('insuranceForm').getForm().reset(); // Clear the form
+                            page.insuranceForm.getForm().reset(); // Clear the form
                             Ext.getCmp('editCompany').enable();
                             Ext.getCmp('deleteCompany').enable();
-                            var rec = insuranceStore.getAt(rowIndex);
-                            Ext.getCmp('insuranceForm').getForm().loadRecord(rec);
+                            var rec = page.insuranceStore.getAt(rowIndex);
+                            page.insuranceForm.getForm().loadRecord(rec);
                             currRec = rec;
                             rowPos = rowIndex;
                         }
                     },
                     itemdblclick: {
                         fn: function(DataView, record, item, rowIndex, e){
-                            Ext.getCmp('insuranceForm').getForm().reset(); // Clear the form
+                            page.insuranceForm.getForm().reset(); // Clear the form
                             Ext.getCmp('editCompany').enable();
                             Ext.getCmp('deleteCompany').enable();
-                            var rec = insuranceStore.getAt(rowIndex);
-                            Ext.getCmp('insuranceForm').getForm().loadRecord(rec);
+                            var rec = page.insuranceStore.getAt(rowIndex);
+                            page.insuranceForm.getForm().loadRecord(rec);
                             currRec = rec;
                             rowPos = rowIndex;
-                            winInsurance.setTitle('<?php i18n("View / Edit Insurance"); ?>');
-                            winInsurance.show();
+                            page.winInsurance.setTitle('<?php i18n("Edit Insurance"); ?>');
+                            page.winInsurance.show();
                         }
                     }
                 }
@@ -741,7 +748,7 @@ Ext.onReady(function(){
                     title	:'<?php i18n("Insurance Companies"); ?>',
                     frame	: false,
                     border	: true,
-                    items	: [ insuranceGrid ],
+                    items	: [ page.insuranceGrid ],
                     dockedItems: [{
                         xtype: 'toolbar',
                         dock: 'top',
@@ -750,7 +757,7 @@ Ext.onReady(function(){
                             text      : '<?php i18n("Add a Comapny"); ?>',
                             iconCls   : 'save',
                             handler   : function(){
-                                winInsurance.show();
+                                page.winInsurance.show();
                             }
                                         },{
                             id        : 'editCompany',
