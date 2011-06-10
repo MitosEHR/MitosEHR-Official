@@ -1,12 +1,10 @@
 $theme-name: 'gray';
-$base-color: #e6e6e6;
-$tab-color: #666666;
-// Windows
-$window-header-color: #666666;
+$base-color: #ccc;
+
 //panel
 $panel-header-background-gradient: color-stops(#F0F0F0, #D7D7D7);
 $panel-border-color: #D0D0D0;
-$panel-header-color: #666666;
+$panel-header-color: #333;
 
 $panel-frame-background-color: #f1f1f1;
 
@@ -110,39 +108,5 @@ $button-toolbar-background-gradient-color-stops-focus: null;
 $button-toolbar-background-gradient-color-stops-pressed: null;
 $button-toolbar-background-gradient-color-stops-disabled: null;
 
-
-#topRenderPanel{
-background-color: #DFE8F6;
-padding: 5px !important;
-}
-#topRenderPanel .x-panel-body{
-	background-color: #fff !important;
-}
-#topRenderPanel-header{
-	background-color: #DFE8F6;
-    color: #596F8F;
-    font-size: 22px;
-    font-weight: 200;
-    padding: 8px 15px;
-    text-shadow: 0 1px 0 #fff;
-}
-#topRenderPanel-body{
-	padding:5px;
-	background-color: #fff;
-	border-color: #D4CDCC;
-	border-style: solid;
-	border-width:1px;
-}
-.form-white-bg .x-panel-body {
-	background-color: #fff !important;
-	background-color: #fff !important;
-	border-color: #D4CDCC !important;
-	border-style: solid !important;
-	border-width: 1px !important;
-}
-.x-grid-table .x-grid-row{
-cursor: hand !important;
-cursor: pointer !important;
-}
 @import 'compass';
 @import 'ext4/default/all';
