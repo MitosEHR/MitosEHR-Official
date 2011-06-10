@@ -2,7 +2,7 @@
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
 
 /* Main Screen Application
-*
+*q
 * Description: This is the main application, with all the panels
 *
 * version 0.0.3

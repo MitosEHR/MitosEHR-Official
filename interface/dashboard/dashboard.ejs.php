@@ -64,7 +64,8 @@ Ext.onReady(function(){
 	            items: [{
                     id: 'app-portal',
                     xtype: 'portalpanel',
-                    frame :true,
+                    frame : true,
+                    layout: 'fit',
                     border: true,
                     region: 'center',
                     items: [{
