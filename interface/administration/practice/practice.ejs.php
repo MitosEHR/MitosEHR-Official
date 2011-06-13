@@ -31,7 +31,8 @@ Ext.onReady(function(){
 			'Ext.mitos.TopRenderPanel',
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
-            'Ext.mitos.TransmitMedthodComboBox'
+            'Ext.mitos.TransmitMedthodComboBox',
+            'Ext.mitos.InsurancePayerType'
 		],
         initComponent: function(){
             var page = this;
@@ -72,7 +73,7 @@ Ext.onReady(function(){
             model		: 'pharmacyModel',
             idProperty	: 'id',
             read		: 'interface/administration/practice/data_read.ejs.php?task=pharmacy',
-            create		: 'interface/administration/practice/data_read.ejs.php?task=',
+            create		: 'interface/administration/practice/data_create.ejs.php?task=pharmacy',
             update		: 'interface/administration/practice/data_update.ejs.php?task=pharmacy',
             destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
             });
@@ -99,7 +100,7 @@ Ext.onReady(function(){
                     {name: 'attn',						type: 'string'},
                     {name: 'cms_id',					type: 'string'},
                     {name: 'freeb_type',				type: 'string'},
-                    {name: 'x12_receiver_id',			type: 'int'},
+                    {name: 'x12_receiver_id',			type: 'string'},
                     {name: 'x12_default_partner_id',	type: 'string'},
                     {name: 'alt_cms_id',				type: 'string'},
                     {name: 'address_id',				type: 'int'},
@@ -107,28 +108,27 @@ Ext.onReady(function(){
                     {name: 'line2',						type: 'string'},
                     {name: 'city',						type: 'string'},
                     {name: 'state',						type: 'string'},
-                    {name: 'zip',						type: 'int'},
-                    {name: 'plus_four',					type: 'int'},
+                    {name: 'zip',						type: 'string'},
+                    {name: 'plus_four',					type: 'string'},
                     {name: 'country',					type: 'string'},
-                    {name: 'address_foreign_id',		type: 'string'},
                     {name: 'address_full',				type: 'string'},
+                    {name: 'phone_id',		            type: 'int'},
                     {name: 'phone_country_code',		type: 'string'},
-                    {name: 'phone_area_code',			type: 'int'},
-                    {name: 'phone_prefix',				type: 'int'},
-                    {name: 'phone_number',				type: 'int'},
-                    {name: 'phone_foreign_id',			type: 'int'},
+                    {name: 'phone_area_code',			type: 'string'},
+                    {name: 'phone_prefix',				type: 'string'},
+                    {name: 'phone_number',				type: 'string'},
                     {name: 'phone_full',				type: 'string'},
+                    {name: 'fax_id',		            type: 'int'},
                     {name: 'fax_country_code',			type: 'string'},
-                    {name: 'fax_area_code',				type: 'int'},
-                    {name: 'fax_prefix',				type: 'int'},
-                    {name: 'fax_number',				type: 'int'},
-                    {name: 'fax_foreign_id',			type: 'int'},
+                    {name: 'fax_area_code',				type: 'string'},
+                    {name: 'fax_prefix',				type: 'string'},
+                    {name: 'fax_number',				type: 'string'},
                     {name: 'fax_full',					type: 'string'}
                 ],
             model		: 'insuranceModel',
             idProperty	: 'id',
             read		: 'interface/administration/practice/data_read.ejs.php?task=insurance',
-            create		: 'interface/administration/practice/data_read.ejs.php?task=',
+            create		: 'interface/administration/practice/data_create.ejs.php?task=insurance',
             update		: 'interface/administration/practice/data_update.ejs.php?task=insurance',
             destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
             });
@@ -296,7 +296,7 @@ Ext.onReady(function(){
                 },
                     Ext.create('Ext.mitos.TransmitMedthodComboBox',{
                         fieldLabel  : '<?php i18n("default Method"); ?>',
-                        width       : 89
+                        labelWidth  : 89
                     })
                 ]
             }); // END FORM
@@ -428,11 +428,6 @@ Ext.onReady(function(){
                         name    : 'zip'
                     }]
                 },{
-                    xtype       : 'textfield',
-                    fieldLabel  : '<?php i18n("Email"); ?>',
-                    width       : 100,
-                    name        : 'email'
-                },{
                    xtype: 'fieldcontainer',
                     defaults: { hideLabel: true },
                     items: [{
@@ -501,7 +496,11 @@ Ext.onReady(function(){
                     fieldLabel  : '<?php i18n("CMS ID"); ?>',
                     width       : 100,
                     name        : 'cms_id'
-                },{
+                },
+                    Ext.create('Ext.mitos.InsurancePayerType',{
+                        fieldLabel  : '<?php i18n("Payer Type"); ?>',
+                        labelWidth  : 89
+                 }),{
                     xtype       : 'textfield',
                     fieldLabel  : '<?php i18n("X12 Partner"); ?>',
                     width       : 100,

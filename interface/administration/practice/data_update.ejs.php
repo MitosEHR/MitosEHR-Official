@@ -45,7 +45,7 @@ switch ($_GET['task']) {
 		$row['email'] 					= $data['email'];
 	break;
 	case 'insurance':
-        $row['id'] 					    = $data['id'];
+        //$row['id'] 					    = $data['id'];
 		$row['name'] 					= $data['name'];
 		$row['attn'] 					= $data['attn'];
 		$row['cms_id'] 					= $data['cms_id'];
@@ -91,7 +91,6 @@ switch ($_GET['task']) {
         $ret = $mitos_db->execLog();
 	break;
 }
-
 
 // *************************************************************************************
 // Lets Insert the address for the new pharmacy or insurance
