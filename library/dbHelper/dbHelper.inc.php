@@ -167,11 +167,12 @@ class dbHelper {
 			$this->lastInsertId = $this->conn->lastInsertId();
 			if (stristr($this->sql_statement, "INSERT")) { $eventLog = "Record insertion"; }
 			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
-			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record update";
+			if (stristr($this->sql_statement, "UPDATE")) $eventLog = "Record update";
 			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
 			// Prepare the SQL stament first, and then execute.
-			$stmt = $this->conn->prepare("INSERT INTO log (facility, event, comments, user, patient_id, checksum) VALUES (:facility, :event, :comments, :user, :patient_id, :checksum)");
-			$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
+			$stmt = $this->conn->prepare("INSERT INTO log (date, facility, event, comments, user, patient_id, checksum) VALUES (:dtime, :facility, :event, :comments, :user, :patient_id, :checksum)");
+			$stmt->bindParam(':dtime', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
 			$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
 			$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
 			$stmt->bindParam(':checksum', crc32($this->sql_statement), PDO::PARAM_STR);

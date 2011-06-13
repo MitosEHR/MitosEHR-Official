@@ -60,7 +60,7 @@ Ext.onReady(function(){
 				store : page.logStore,
 				columns: [
 					{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},
-			    	{ width: 100, text: '<?php i18n("Date"); ?>',       sortable: true, dataIndex: 'date' },
+			    	{ width: 120, text: '<?php i18n("Date"); ?>',       sortable: true, dataIndex: 'date' },
 			    	{ width: 170, text: '<?php i18n("User"); ?>',       sortable: true, dataIndex: 'user' },
                     { width: 140, text: '<?php i18n("Event"); ?>',      sortable: true, dataIndex: 'event' },
 			    	{ flex: 1,    text: '<?php i18n("Activity"); ?>',   sortable: true, dataIndex: 'comments' }
