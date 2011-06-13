@@ -13,8 +13,11 @@ Ext.define('Ext.mitos.TopRenderPanel', {
     pageBody	: '',
     initComponent: function() {
     	var me = this;
-    	config = {renderTo:MainApp.body,height:MainApp.getHeight()};
-    	Ext.apply(me, Ext.apply(me.initialConfig, config)); 	
+    	config = {
+            renderTo:MainApp.body,
+            height:MainApp.getHeight()
+        };
+    	Ext.apply(me, Ext.apply(me.initialConfig, config));
         me.items = [{
             id: 'topRenderPanel-header',
             xtype: 'box',
@@ -26,7 +29,6 @@ Ext.define('Ext.mitos.TopRenderPanel', {
             xtype 		: 'panel',
             region  	: 'center',
             layout  	: me.pageLayout,
-            height  	: MainApp.getHeight() - 40,
             border  	: false,
             defaults	: {frame:true, border:true, autoScroll:true},
             items    	: me.pageBody

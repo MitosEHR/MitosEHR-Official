@@ -710,14 +710,11 @@ Ext.onReady(function(){
                 activeTab	: 0,
                 frame		: true,
                 border		: false,
-                layout		: 'fit',
-                height		: Ext.getCmp('MainApp').getHeight(),
                 defaults	:{ autoScroll:true },
                 items:[{
                     title	:'<?php i18n("Pharmacies"); ?>',
                     frame	: false,
                     border	: true,
-                    layout	: 'fit',
                     items	: [ page.pharmacyGrid ],
                     dockedItems: [{
                         xtype: 'toolbar',
