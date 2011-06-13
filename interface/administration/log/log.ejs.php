@@ -7,7 +7,7 @@
 // Author: Ernesto J Rodriguez
 // Modified: n/a
 //
-// MitosEHR (Eletronic Health Records) 2011
+// MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 session_name ( "MitosEHR" );
 session_start();
@@ -61,8 +61,8 @@ Ext.onReady(function(){
 				columns: [
 					{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},
 			    	{ width: 120, text: '<?php i18n("Date"); ?>',       sortable: true, dataIndex: 'date' },
-			    	{ width: 170, text: '<?php i18n("User"); ?>',       sortable: true, dataIndex: 'user' },
-                    { width: 140, text: '<?php i18n("Event"); ?>',      sortable: true, dataIndex: 'event' },
+			    	{ width: 160, text: '<?php i18n("User"); ?>',       sortable: true, dataIndex: 'user' },
+                    { width: 100, text: '<?php i18n("Event"); ?>',      sortable: true, dataIndex: 'event' },
 			    	{ flex: 1,    text: '<?php i18n("Activity"); ?>',   sortable: true, dataIndex: 'comments' }
 			  	],
 			  	listeners: {
@@ -114,7 +114,7 @@ Ext.onReady(function(){
                 })
 			});
 			// *************************************************************************************
-			// User Add/Eddit Form
+			// Event Detail Form
 			// *************************************************************************************
 			page.frmLog = new Ext.form.FormPanel({
 				bodyStyle   : 'padding: 10px;',
@@ -125,25 +125,26 @@ Ext.onReady(function(){
 				    layout: { type: 'hbox', defaultMargins: {top: 0, right: 5, bottom: 0, left: 0} }
 				},
 				items: [
-					{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
-                    { fieldLabel  : '<?php i18n("Date"); ?>', xtype: 'displayfield', name: 'date'},
-                    { fieldLabel  : '<?php i18n("Event"); ?>', xtype: 'displayfield', name: 'event'},
-                    { fieldLabel  : '<?php i18n("User"); ?>', xtype: 'displayfield', name: 'user'},
-                    { fieldLabel  : '<?php i18n("Facility"); ?>', xtype: 'displayfield', name: 'facility'},
-                    { fieldLabel  : '<?php i18n("Comments"); ?>', xtype: 'displayfield', name: 'comments'},
-                    { fieldLabel  : '<?php i18n("user Notes"); ?>', xtype: 'displayfield', name: 'user_notes'},
-                    { fieldLabel  : '<?php i18n("Patient ID"); ?>', xtype: 'displayfield', name: 'patient_id'},
-                    { fieldLabel  : '<?php i18n("Success"); ?>', xtype: 'displayfield', name: 'success'},
-                    { fieldLabel  : '<?php i18n("Check Sum"); ?>', xtype: 'displayfield', name: 'checksum'},
-                    { fieldLabel  : '<?php i18n("CRT USER"); ?>', xtype: 'displayfield', name: 'crt_user'}
+					{ xtype: 'textfield', hidden: true, name: 'id'},
+                    { fieldLabel: '<?php i18n("Date"); ?>',         xtype: 'displayfield', name: 'date'},
+                    { fieldLabel: '<?php i18n("Event"); ?>',        xtype: 'displayfield', name: 'event'},
+                    { fieldLabel: '<?php i18n("User"); ?>',         xtype: 'displayfield', name: 'user'},
+                    { fieldLabel: '<?php i18n("Facility"); ?>',     xtype: 'displayfield', name: 'facility'},
+                    { fieldLabel: '<?php i18n("Comments"); ?>',     xtype: 'displayfield', name: 'comments'},
+                    { fieldLabel: '<?php i18n("user Notes"); ?>',   xtype: 'displayfield', name: 'user_notes'},
+                    { fieldLabel: '<?php i18n("Patient ID"); ?>',   xtype: 'displayfield', name: 'patient_id'},
+                    { fieldLabel: '<?php i18n("Success"); ?>',      xtype: 'displayfield', name: 'success'},
+                    { fieldLabel: '<?php i18n("Check Sum"); ?>',    xtype: 'displayfield', name: 'checksum'},
+                    { fieldLabel: '<?php i18n("CRT USER"); ?>',     xtype: 'displayfield', name: 'crt_user'}
 				]
 			});
 			// *************************************************************************************
 			// Event Detail Window
 			// *************************************************************************************
             page.winLog = new Ext.window.Window({
-                width   : 500,
-                items   : [page.frmLog],
+                width       : 500,
+                closeAction : 'hide',
+                items       : [page.frmLog],
                 buttons: [{
                     text: '<?php i18n('Close'); ?>',
                     handler: function(){
@@ -160,7 +161,7 @@ Ext.onReady(function(){
 		    });
 			page.callParent(arguments);
 		} // end of initComponent
-	}); //ens UserPage class
+	}); //ens LogPage class
     Ext.create('Ext.mitos.LogPage');
 }); // End ExtJS
 </script>
