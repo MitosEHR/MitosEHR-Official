@@ -23,32 +23,32 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
 		    closeAction : 'hide',
 		    items		: win.form,
 		    buttons: [{
-		            text: 'save',
-		            handler: function(){
-						if (win.form.getForm().findField(win.idField).getValue()){ // Update
-							var id = win.form.getForm().findField('id').getValue();
-							var record = win.store.getAt(win.scope.rowPos);
-							var fieldValues = win.form.getForm().getValues();
-                            // alert the record ID for debug!!!
-                            alert('For debug... Record id is ' +id);
-							for ( k=0; k <= record.fields.getCount()-1; k++) {
-								i = record.fields.get(k).name;
-								record.set( i, fieldValues[i] );
-							}
-						} else { // Add
-							var obj = eval( '(' + Ext.JSON.encode(win.form.getForm().getValues()) + ')' );
-							win.store.add( obj );
-						}
-						win.hide();	// Finally hide the dialog window
-						win.store.sync();	// Save the record to the dataStore
-						win.store.load();	// Reload the dataSore from the database
-					}
-		        },{
-		            text: 'cancel',
-		            handler: function(){
-		            	win.hide();
-		            }
-		        }]
+                text: 'save',
+                handler: function(){
+                    if (win.form.getForm().findField(win.idField).getValue()){ // Update
+                        var id = win.form.getForm().findField('id').getValue();
+                        var record = win.store.getAt(win.scope.rowPos);
+                        var fieldValues = win.form.getForm().getValues();
+                        // alert the record ID for debug!!!
+                        alert('For debug... Record id is ' +id);
+                        for ( k=0; k <= record.fields.getCount()-1; k++) {
+                            i = record.fields.get(k).name;
+                            record.set( i, fieldValues[i] );
+                        }
+                    } else { // Add
+                        var obj = eval( '(' + Ext.JSON.encode(win.form.getForm().getValues()) + ')' );
+                        win.store.add( obj );
+                    }
+                    win.hide();	// Finally hide the dialog window
+                    win.store.sync();	// Save the record to the dataStore
+                    win.store.load();	// Reload the dataSore from the database
+                }
+            },{
+                text: 'cancel',
+                handler: function(){
+                    win.hide();
+                }
+            }]
 	    });
         win.callParent(arguments);
     }
