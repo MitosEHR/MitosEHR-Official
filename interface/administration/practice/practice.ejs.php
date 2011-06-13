@@ -294,7 +294,7 @@ Ext.onReady(function(){
                         name    : 'fax_number'
                     }]
                 },
-                    Ext.create('Ext.mitos.TransmitMedthodComboBox',{
+                    new Ext.create('Ext.mitos.TransmitMedthodComboBox',{
                         fieldLabel  : '<?php i18n("default Method"); ?>',
                         labelWidth  : 89
                     })
@@ -345,8 +345,8 @@ Ext.onReady(function(){
                     itemclick: {
                         fn: function(DataView, record, item, rowIndex, e){
                             page.pharmacyForm.getForm().reset(); // Clear the form
-                            Ext.getCmp('editPharmacy').enable();
-                            Ext.getCmp('deletePharmacy').enable();
+                            page.editPharmacy.enable();
+                            page.deletePharmacy.enable();
                             var rec = page.pharmacyStore.getAt(rowIndex);
                             page.pharmacyForm.getForm().loadRecord(rec);
                             currRec = rec;
@@ -356,8 +356,8 @@ Ext.onReady(function(){
                     itemdblclick: {
                         fn: function(DataView, record, item, rowIndex, e){
                             page.pharmacyForm.getForm().reset(); // Clear the form
-                            Ext.getCmp('editPharmacy').enable();
-                            Ext.getCmp('deletePharmacy').enable();
+                            page.editPharmacy.enable();
+                            page.deletePharmacy.enable();
                             var rec = page.pharmacyStore.getAt(rowIndex);
                             page.pharmacyForm.getForm().loadRecord(rec);
                             currRec = rec;
@@ -497,7 +497,7 @@ Ext.onReady(function(){
                     width       : 100,
                     name        : 'cms_id'
                 },
-                    Ext.create('Ext.mitos.InsurancePayerType',{
+                    new Ext.create('Ext.mitos.InsurancePayerType',{
                         fieldLabel  : '<?php i18n("Payer Type"); ?>',
                         labelWidth  : 89
                  }),{
@@ -552,8 +552,8 @@ Ext.onReady(function(){
                     itemclick: {
                         fn: function(DataView, record, item, rowIndex, e){
                             page.insuranceForm.getForm().reset(); // Clear the form
-                            Ext.getCmp('editCompany').enable();
-                            Ext.getCmp('deleteCompany').enable();
+                            page.editCompany.enable();
+                            page.deleteCompany.enable();
                             var rec = page.insuranceStore.getAt(rowIndex);
                             page.insuranceForm.getForm().loadRecord(rec);
                             currRec = rec;
@@ -563,8 +563,8 @@ Ext.onReady(function(){
                     itemdblclick: {
                         fn: function(DataView, record, item, rowIndex, e){
                             page.insuranceForm.getForm().reset(); // Clear the form
-                            Ext.getCmp('editCompany').enable();
-                            Ext.getCmp('deleteCompany').enable();
+                            page.editCompany.enable();
+                            page.deleteCompany.enable();
                             var rec = page.insuranceStore.getAt(rowIndex);
                             page.insuranceForm.getForm().loadRecord(rec);
                             currRec = rec;
@@ -719,43 +719,44 @@ Ext.onReady(function(){
                     dockedItems: [{
                         xtype: 'toolbar',
                         dock: 'top',
-                        items: [{
-                            id        : 'addPharmacy',
-                            text      : '<?php i18n("Add a Pharmacy"); ?>',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                page.pharmacyForm.getForm().reset();
-                                page.winPharmacy.show();
-                            }
-                        },{
-                            id        : 'editPharmacy',
-                            text      : '<?php i18n("View / Edit a Pharmacy"); ?>',
-                            iconCls   : 'edit',
-                            disabled  : true,
-                            handler   : function(){
-                                page.winPharmacy.show();
-                            }
-                        },{
-                            id        : 'deletePharmacy',
-                            text      : '<?php i18n("Delete a Pharmacy"); ?>',
-                            iconCls   : 'delete',
-                            disabled  : true,
-                            handler   : function(){
-                                Ext.Msg.show({
-									title: '<?php i18n('Please confirm...'); ?>',
-									icon: Ext.MessageBox.QUESTION,
-									msg:'<?php i18n('Are you sure to delete this Pharmacy?'); ?>',
-									buttons: Ext.Msg.YESNO,
-									fn:function(btn,msgGrid){
-										if(btn=='yes'){
-											page.pharmacyStore.remove( currRec );
-											page.pharmacyStore.sync();
-											page.pharmacyStore.load();
-						    		    }
-									}
-								});
-                            }
-                        }]
+                        items: [
+                            page.addPharmacy = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Add a Pharmacy"); ?>',
+                                iconCls   : 'save',
+                                handler   : function(){
+                                    page.pharmacyForm.getForm().reset();
+                                    page.winPharmacy.show();
+                                }
+                            }),'-',
+                            page.editPharmacy = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("View / Edit a Pharmacy"); ?>',
+                                iconCls   : 'edit',
+                                disabled  : true,
+                                handler   : function(){
+                                    page.winPharmacy.show();
+                                }
+                            }),'-',
+                            page.deletePharmacy = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Delete a Pharmacy"); ?>',
+                                iconCls   : 'delete',
+                                disabled  : true,
+                                handler   : function(){
+                                    Ext.Msg.show({
+                                        title: '<?php i18n('Please confirm...'); ?>',
+                                        icon: Ext.MessageBox.QUESTION,
+                                        msg:'<?php i18n('Are you sure to delete this Pharmacy?'); ?>',
+                                        buttons: Ext.Msg.YESNO,
+                                        fn:function(btn,msgGrid){
+                                            if(btn=='yes'){
+                                                page.pharmacyStore.remove( currRec );
+                                                page.pharmacyStore.sync();
+                                                page.pharmacyStore.load();
+                                            }
+                                        }
+                                    });
+                                }
+                            })
+                        ]
                     }]
                 },{
                     title	:'<?php i18n("Insurance Companies"); ?>',
@@ -765,43 +766,44 @@ Ext.onReady(function(){
                     dockedItems: [{
                         xtype: 'toolbar',
                         dock: 'top',
-                        items: [{
-                            id        : 'addCompany',
-                            text      : '<?php i18n("Add a Comapny"); ?>',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                page.insuranceForm.getForm().reset();
-                                page.winInsurance.show();
-                            }
-                                        },{
-                            id        : 'editCompany',
-                            text      : '<?php i18n("View / Edit a Company"); ?>',
-                            iconCls   : 'edit',
-                            disabled  : true,
-                            handler   : function(){
-                                page.winInsurance.show();
-                            }
-                        },{
-                            id        : 'deleteCompany',
-                            text      : '<?php i18n("Delete a Company"); ?>',
-                            iconCls   : 'delete',
-                            disabled  : true,
-                            handler   : function(){
-                                Ext.Msg.show({
-									title: '<?php i18n('Please confirm...'); ?>',
-									icon: Ext.MessageBox.QUESTION,
-									msg:'<?php i18n('Are you sure to delete this Insurance Company?'); ?>',
-									buttons: Ext.Msg.YESNO,
-									fn:function(btn,msgGrid){
-										if(btn=='yes'){
-											page.insuranceStore.remove( currRec );
-											page.insuranceStore.sync();
-											page.insuranceStore.load();
-						    		    }
-									}
-								});
-                            }
-                        }]
+                        items: [
+                            page.addCompany = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Add a Comapny"); ?>',
+                                iconCls   : 'save',
+                                handler   : function(){
+                                    page.insuranceForm.getForm().reset();
+                                    page.winInsurance.show();
+                                }
+                            }),'-',
+                            page.editCompany = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("View / Edit a Company"); ?>',
+                                iconCls   : 'edit',
+                                disabled  : true,
+                                handler   : function(){
+                                    page.winInsurance.show();
+                                }
+                            }),'-',
+                            page.deleteCompany = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Delete a Company"); ?>',
+                                iconCls   : 'delete',
+                                disabled  : true,
+                                handler   : function(){
+                                    Ext.Msg.show({
+                                        title: '<?php i18n('Please confirm...'); ?>',
+                                        icon: Ext.MessageBox.QUESTION,
+                                        msg:'<?php i18n('Are you sure to delete this Insurance Company?'); ?>',
+                                        buttons: Ext.Msg.YESNO,
+                                        fn:function(btn,msgGrid){
+                                            if(btn=='yes'){
+                                                page.insuranceStore.remove( currRec );
+                                                page.insuranceStore.sync();
+                                                page.insuranceStore.load();
+                                            }
+                                        }
+                                    });
+                                }
+                            })
+                        ]
                     }]
                 },{
                     title	:'<?php i18n("Insurance Numbers"); ?>',
@@ -816,14 +818,15 @@ Ext.onReady(function(){
                     dockedItems: [{
                         xtype: 'toolbar',
                         dock: 'top',
-                        items: [{
-                            id        : 'addPartner',
-                            text      : '<?php i18n("Add New Partner"); ?>',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                // TODO //
-                            }
-                        }]
+                        items: [
+                            page.addPartner = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Add New Partner"); ?>',
+                                iconCls   : 'save',
+                                handler   : function(){
+                                    // TODO //
+                                }
+                            })
+                        ]
                     }]
                 },{
                     title	:'<?php i18n("Documents"); ?>',
@@ -835,21 +838,22 @@ Ext.onReady(function(){
                     dockedItems: [{
                         xtype: 'toolbar',
                         dock: 'bottom',
-                        items: [{
-                            id        : 'editCategory',
-                            text      : '<?php i18n("Edit Category"); ?>',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                // TODO //
-                            }
-                        },{
-                            id        : 'updateFiles',
-                            text      : '<?php i18n("Update Files"); ?>',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                // TODO //
-                            }
-                        }]
+                        items: [
+                            page.editCategory = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Edit Category"); ?>',
+                                iconCls   : 'save',
+                                handler   : function(){
+                                    // TODO //
+                                }
+                            }),'-',
+                            page.updateFiles = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Update Files"); ?>',
+                                iconCls   : 'save',
+                                handler   : function(){
+                                    // TODO //
+                                }
+                            })
+                        ]
                     }]
                 },{
                     title	:'<?php i18n("HL7 Viewer"); ?>',
@@ -861,21 +865,22 @@ Ext.onReady(function(){
                     dockedItems: [{
                         xtype: 'toolbar',
                         dock: 'bottom',
-                        items: [{
-                            id        : 'clearHl7Data',
-                            text      : '<?php i18n("Clear HL7 Data"); ?>',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                // TODO //
-                            }
-                        },{
-                            id        : 'parseHl7Data',
-                            text      : '<?php i18n("Parse HL7"); ?>',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                // TODO //
-                            }
-                        }]
+                        items: [
+                            page.clearHl7Data = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Clear HL7 Data"); ?>',
+                                iconCls   : 'save',
+                                handler   : function(){
+                                    // TODO //
+                                }
+                            }),'-',
+                            page.parseHl7Data = new Ext.create('Ext.Button', {
+                                text      : '<?php i18n("Parse HL7"); ?>',
+                                iconCls   : 'save',
+                                handler   : function(){
+                                    // TODO //
+                                }
+                            })
+                        ]
                     }]
                 }]
             });

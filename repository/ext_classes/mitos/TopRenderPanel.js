@@ -11,7 +11,7 @@ Ext.define('Ext.mitos.TopRenderPanel', {
     pageTitle	: 'Page Title',
     pageLayout	: 'fit',
     pageBody	: '',
-    initComponent: function() {
+    initComponent: function(){
     	var me = this;
     	config = {
             renderTo:MainApp.body,

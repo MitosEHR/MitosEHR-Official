@@ -24,7 +24,6 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.DeleteButton',
 			'Ext.mitos.TopRenderPanel',
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
@@ -201,15 +200,15 @@ Ext.onReady(function(){
 				    layout: { type: 'hbox', defaultMargins: {top: 0, right: 5, bottom: 0, left: 0} }
 				},
 				items: [
-					{ xtype: 'textfield', hidden: true, id: 'id', name: 'id'},
+					{ xtype: 'textfield', hidden: true, name: 'id'},
 				    { xtype: 'fieldcontainer',
 				      defaults: { hideLabel: true },
 				      msgTarget : 'under', 
 				      items: [
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
-				        { width: 100, xtype: 'textfield', id: 'username', name: 'username' },
+				        { width: 100, xtype: 'textfield',  name: 'username' },
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
-				        { width: 105, xtype: 'textfield', id: 'password', name: 'password',  inputType: 'password' }
+				        { width: 105, xtype: 'textfield', name: 'password',  inputType: 'password' }
 				      ] 
 				    },{
 				      xtype: 'fieldcontainer',
@@ -218,9 +217,9 @@ Ext.onReady(function(){
 				      items: [
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
 				          Ext.create('Ext.mitos.TitlesComboBox'),
-				        { width: 80,  xtype: 'textfield', id: 'fname', name: 'fname' },
-				        { width: 65,  xtype: 'textfield', id: 'mname', name: 'mname' },
-				        { width: 105, xtype: 'textfield', id: 'lname', name: 'lname' }
+				        { width: 80,  xtype: 'textfield', name: 'fname' },
+				        { width: 65,  xtype: 'textfield', name: 'mname' },
+				        { width: 105, xtype: 'textfield', name: 'lname' }
 				      ]
 				    },{ 
 				      xtype: 'fieldcontainer',
@@ -228,9 +227,9 @@ Ext.onReady(function(){
 				      msgTarget : 'under', 
 				      items: [
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Active?'); ?>: '},
-				        { width: 100, xtype: 'checkbox', id: 'active', name: 'active' },
+				        { width: 100, xtype: 'checkbox', name: 'active' },
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorized?'); ?>: '},
-				        { width: 105, xtype: 'checkbox', value: 'off', id: 'authorized', name: 'authorized' }
+				        { width: 105, xtype: 'checkbox', value: 'off', name: 'authorized' }
 				      ]  
 				    },{ 
 				      xtype: 'fieldcontainer',
@@ -249,35 +248,35 @@ Ext.onReady(function(){
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
 				          Ext.create('Ext.mitos.RolesComboBox', {width: 100 }),
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
-				        { width: 105, xtype: 'textfield', id: 'taxonomy',  name: 'taxonomy' }
+				        { width: 105, xtype: 'textfield', name: 'taxonomy' }
 				      ]
 				    },{ 
 				      xtype: 'fieldcontainer',
 				      defaults: { hideLabel: true },
 				      items: [
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Federal Tax ID'); ?>: '},
-				        { width: 100, xtype: 'textfield', id: 'federaltaxid', name: 'federaltaxid' },
+				        { width: 100, xtype: 'textfield',  name: 'federaltaxid' },
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Fed Drug ID'); ?>: '},
-				        { width: 105, xtype: 'textfield', id: 'federaldrugid', name: 'federaldrugid' }
+				        { width: 105, xtype: 'textfield', name: 'federaldrugid' }
 				      ]
 				    },{
 				      xtype: 'fieldcontainer',
 				      defaults: { hideLabel: true },
 				      items: [
 				       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
-				        { width: 100, xtype: 'textfield', id: 'upin', name: 'upin' },
+				        { width: 100, xtype: 'textfield',  name: 'upin' },
 				        { width: 100, xtype: 'displayfield', value: '<?php i18n('NPI'); ?>: '},
-				        { width: 105, xtype: 'textfield', id: 'npi', name: 'npi' }
+				        { width: 105, xtype: 'textfield', name: 'npi' }
 				      ]
 				    },{ 
 				      xtype: 'fieldcontainer',
 				      defaults: { hideLabel: true },
 				      items: [
 				       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
-				        { width: 315, xtype: 'textfield', id: 'specialty', name: 'specialty' }
+				        { width: 315, xtype: 'textfield', name: 'specialty' }
 				      ]  
 				    },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
-				    { width: 410, xtype: 'htmleditor', id: 'info', name: 'info', emptyText: 'info' }
+				    { width: 410, xtype: 'htmleditor', name: 'info', emptyText: 'info' }
 				]
 			});
 			// *************************************************************************************

@@ -52,6 +52,7 @@ Ext.onReady(function(){
 		id: 'onotesFormPanel',
 		region		: 'north',
 		frame 		: true,
+        height      : 97,
 		margin		: '0 0 3 0',
 		items		:[{
 			xtype: 'textfield', hidden: true, id: 'id', name: 'id'
