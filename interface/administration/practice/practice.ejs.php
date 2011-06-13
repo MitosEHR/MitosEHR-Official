@@ -75,7 +75,7 @@ Ext.onReady(function(){
             read		: 'interface/administration/practice/data_read.ejs.php?task=pharmacy',
             create		: 'interface/administration/practice/data_create.ejs.php?task=pharmacy',
             update		: 'interface/administration/practice/data_update.ejs.php?task=pharmacy',
-            destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
+            destroy 	: 'interface/administration/practice/data_destroy.ejs.php?task=pharmacy'
             });
             // -------------------------------------------------------------------------------------
             // render function for Default Method column in the Pharmacy grid
@@ -130,7 +130,7 @@ Ext.onReady(function(){
             read		: 'interface/administration/practice/data_read.ejs.php?task=insurance',
             create		: 'interface/administration/practice/data_create.ejs.php?task=insurance',
             update		: 'interface/administration/practice/data_update.ejs.php?task=insurance',
-            destroy 	: 'interface/administration/practice/data_read.ejs.php?task='
+            destroy 	: 'interface/administration/practice/data_destroy.ejs.php?task=insurance'
             });
 
             // *************************************************************************************
@@ -736,7 +736,7 @@ Ext.onReady(function(){
                             iconCls   : 'edit',
                             disabled  : true,
                             handler   : function(){
-                                // TODO //
+                                page.winPharmacy.show();
                             }
                         },{
                             id        : 'deletePharmacy',
@@ -744,7 +744,19 @@ Ext.onReady(function(){
                             iconCls   : 'delete',
                             disabled  : true,
                             handler   : function(){
-                                // TODO //
+                                Ext.Msg.show({
+									title: '<?php i18n('Please confirm...'); ?>',
+									icon: Ext.MessageBox.QUESTION,
+									msg:'<?php i18n('Are you sure to delete this Pharmacy?'); ?>',
+									buttons: Ext.Msg.YESNO,
+									fn:function(btn,msgGrid){
+										if(btn=='yes'){
+											page.pharmacyStore.remove( currRec );
+											page.pharmacyStore.sync();
+											page.pharmacyStore.load();
+						    		    }
+									}
+								});
                             }
                         }]
                     }]
@@ -770,7 +782,7 @@ Ext.onReady(function(){
                             iconCls   : 'edit',
                             disabled  : true,
                             handler   : function(){
-                                // TODO //
+                                page.winInsurance.show();
                             }
                         },{
                             id        : 'deleteCompany',
@@ -778,7 +790,19 @@ Ext.onReady(function(){
                             iconCls   : 'delete',
                             disabled  : true,
                             handler   : function(){
-                                // TODO //
+                                Ext.Msg.show({
+									title: '<?php i18n('Please confirm...'); ?>',
+									icon: Ext.MessageBox.QUESTION,
+									msg:'<?php i18n('Are you sure to delete this Insurance Company?'); ?>',
+									buttons: Ext.Msg.YESNO,
+									fn:function(btn,msgGrid){
+										if(btn=='yes'){
+											page.insuranceStore.remove( currRec );
+											page.insuranceStore.sync();
+											page.insuranceStore.load();
+						    		    }
+									}
+								});
                             }
                         }]
                     }]

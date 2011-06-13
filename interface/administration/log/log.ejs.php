@@ -62,7 +62,7 @@ Ext.onReady(function(){
 					{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},
 			    	{ width: 100, text: '<?php i18n("Date"); ?>',       sortable: true, dataIndex: 'date' },
 			    	{ width: 170, text: '<?php i18n("User"); ?>',       sortable: true, dataIndex: 'user' },
-                    { width: 130, text: '<?php i18n("Event"); ?>',      sortable: true, dataIndex: 'event' },
+                    { width: 140, text: '<?php i18n("Event"); ?>',      sortable: true, dataIndex: 'event' },
 			    	{ flex: 1,    text: '<?php i18n("Activity"); ?>',   sortable: true, dataIndex: 'comments' }
 			  	],
 			  	listeners: {
@@ -150,7 +150,7 @@ Ext.onReady(function(){
                         this.up('window').hide();
                     }
                 }]
-            })
+            });
 			// *************************************************************************************
 			// Render Panel
 			// *************************************************************************************

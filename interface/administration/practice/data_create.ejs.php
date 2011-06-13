@@ -31,7 +31,6 @@ $mitos_db = new dbHelper();
 $data = json_decode ( $_POST['row'], true );
 // *************************************************************************************
 // Get last "id" add 1 and use $new_id to insert the new data
-// TODO: Build a class to manage this!
 // *************************************************************************************
 $mitos_db->setSQL("SELECT id FROM pharmacies ORDER BY id DESC");
 $prec = $mitos_db->fetch();
@@ -106,17 +105,17 @@ $frow['foreign_id'] 	= $new_id;
 // *************************************************************************************
 $sql = $mitos_db->sqlBind($arow, "addresses", "I");
 $mitos_db->setSQL($sql);
-$ret = $mitos_db->execLog();
+$ret = $mitos_db->execOnly();
 // *************************************************************************************
 // Lets Insert the phone number for the new pharmacy or insurance
 // *************************************************************************************
 $sql = $mitos_db->sqlBind($prow, "phone_numbers", "I");
 $mitos_db->setSQL($sql);
-$ret = $mitos_db->execLog();
+$ret = $mitos_db->execOnly();
 // *************************************************************************************
 // Lets Insert the Fax number for the new pharmacy or insurance
 // *************************************************************************************
 $sql = $mitos_db->sqlBind($frow, "phone_numbers", "I");
 $mitos_db->setSQL($sql);
-$ret = $mitos_db->execLog();
+$ret = $mitos_db->execOnly();
 ?>
