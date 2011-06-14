@@ -133,8 +133,6 @@ class dbHelper {
 				$where <> ($key . "=" . addslashes($value)) &&
 				$where <> ($key . '="' . addslashes($value) . '"')){
 				$sql_r .= $key . "='" . trim(addslashes($value)) . "', "; 
-			} else {
-				return "ERROR: Some key and value pairs are not valid.";
 			}
 		}
 		$sql_r = substr($sql_r, 0, -2);
