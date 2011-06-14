@@ -58,7 +58,7 @@ Ext.onReady(function(){
 					{name: 'federaldrugid',         type: 'string'},
 					{name: 'upin',                  type: 'string'},
 					{name: 'facility',              type: 'string'},
-					{name: 'facility_id',           type: 'auto'},
+					{name: 'facility_id',           type: 'int'},
 					{name: 'see_auth',              type: 'auto'},
 					{name: 'active',                type: 'auto'},
 					{name: 'npi',                   type: 'string'},
