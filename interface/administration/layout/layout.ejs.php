@@ -212,7 +212,6 @@ var currRec; // A stored current record selected by the user.
 					xtype: 'combo', 
 					displayField: 'uor',
 					valueField: 'uor', 
-					hiddenName: 'id',
 					editable: false, 
 					store: uorStore, 
 					queryMode: 'local'
@@ -229,7 +228,6 @@ var currRec; // A stored current record selected by the user.
 					xtype: 'combo', 
 					displayField: 'type',
 					valueField: 'type', 
-					hiddenName: 'id',
 					editable: false, 
 					store: datatypesStore, 
 					queryMode: 'local'
@@ -258,7 +256,6 @@ var currRec; // A stored current record selected by the user.
 					xtype: 'combo', 
 					displayField: 'title',
 					valueField: 'title', 
-					hiddenName: 'list_id',
 					editable: false, 
 					store: listoptionStore, 
 					queryMode: 'local'
