@@ -30,6 +30,7 @@ Ext.onReady(function(){
 		initComponent: function(){
             var page = this;
             var rowPos;
+            var currRec;
             page.storeOnotes = new Ext.create('Ext.mitos.CRUDStore',{
                 fields: [
                     {name: 'id',      		type: 'int'},
@@ -150,7 +151,8 @@ Ext.onReady(function(){
                             page.cmdHide.enable();
                             page.cmdSave.setText('<?php i18n('Update'); ?>');
                             page.onotesFormPanel.getForm().loadRecord(rec);
-                            page.currRec = rec;
+                            currRec = rec;
+                            rowPos = rowIndex;
                         }
                     }
                 },
