@@ -25,7 +25,9 @@ $_SESSION['site']['flops'] = 0;
 <script type="text/javascript">
 Ext.onReady(function() {
 
-var form_id;
+var form_id; // Stores the current form group selected by the user.
+var rowPos; // Stores the current Grid Row Position (int)
+var currRec; // A stored current record selected by the user.
 
 	// *************************************************************************************
 	// Layout Record Structure
@@ -119,7 +121,7 @@ var form_id;
 	// *************************************************************************************
     var groupingLayout = Ext.create('Ext.grid.feature.Grouping',{
     	enableNoGroups: false,
-        groupHeaderTpl: 'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
+        groupHeaderTpl: '<?php i18n("Group"); ?>: {name} ({rows.length} <?php i18n("Field"); ?>{[values.rows.length > 1 ? "s" : ""]})'
     });
     
     // *************************************************************************************
@@ -133,6 +135,9 @@ var form_id;
 				LayoutStore.sync();
 				LayoutStore.load({params:{form_id: form_id }});
 				layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
+			},
+			beforeedit: function( editor, e, options ){
+				//alert(uneval(editor.record));
 			}
 		}
     });
@@ -151,6 +156,7 @@ var form_id;
    	    title	: '<?php i18n("Field editor"); ?> (<?php i18n("Demographics"); ?>)',
         columns	: [
 			{
+				name		: 'seq',
 				text     	: '<?php i18n("Order"); ?>',
 				sortable 	: false,
 				dataIndex	: 'seq',
@@ -205,8 +211,7 @@ var form_id;
 					name: 'uor',
 					xtype: 'combo', 
 					displayField: 'uor',
-					valueField: 'id', 
-					hiddenName: 'id',
+					valueField: 'uor', 
 					editable: false, 
 					store: uorStore, 
 					queryMode: 'local'
@@ -222,8 +227,7 @@ var form_id;
 					name: 'data_type',
 					xtype: 'combo', 
 					displayField: 'type',
-					valueField: 'id', 
-					hiddenName: 'id',
+					valueField: 'type', 
 					editable: false, 
 					store: datatypesStore, 
 					queryMode: 'local'
@@ -251,8 +255,7 @@ var form_id;
 					name: 'list_id',
 					xtype: 'combo', 
 					displayField: 'title',
-					valueField: 'list_id', 
-					hiddenName: 'list_id',
+					valueField: 'title', 
 					editable: false, 
 					store: listoptionStore, 
 					queryMode: 'local'
@@ -310,9 +313,9 @@ var form_id;
 		],
 		listeners: {
 			itemclick: {
-            	fn: function(DataView, record, item, rowIndex, e){
-            		//var obj = this.up.getGridColumns();
-					//alert(uneval(obj));
+            	fn: function(DataView, record, item, rowIndex, e){ 
+            		currRec = LayoutStore.getAt(rowIndex);
+            		rowPos = rowIndex;
             	}
 			}
 		},
@@ -322,13 +325,6 @@ var form_id;
 			items: [{
 				text: '<?php i18n("Add field"); ?>',
 				iconCls: 'icoAddRecord',
-				handler: function(){
-				}
-			},'-',{
-				text: '<?php i18n("Edit field"); ?>',
-				iconCls: 'edit',
-				id: 'cmdEdit',
-				disabled: true,
 				handler: function(){
 				}
 			},'-',{

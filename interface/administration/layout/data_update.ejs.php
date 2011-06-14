@@ -29,6 +29,42 @@ $mitos_db = new dbHelper();
 // *************************************************************************************
 $data = json_decode ( $_REQUEST['row'] );
 
+//---------------------------------------------------------------------------------------
+// dataTypes - Defines what type of fields are.
+//---------------------------------------------------------------------------------------
+$dataTypes = array(
+	i18n("List box", 'r') 			=> "1", 
+	i18n("Textbox", 'r') 			=> "2",
+	i18n("Textarea", 'r') 			=> "3",
+	i18n("Text-date", 'r') 			=> "4",
+	i18n("Providers", 'r') 			=> "10",
+	i18n("Providers NPI", 'r') 		=> "11",
+	i18n("Pharmacies", 'r') 		=> "12",
+	i18n("Squads", 'r') 			=> "13",
+	i18n("Organizations", 'r') 		=> "14",
+	i18n("Billing codes", 'r') 		=> "15",
+	i18n("Checkbox list", 'r') 		=> "21",
+	i18n("Textbox list", 'r') 		=> "22",
+	i18n("Exam results", 'r') 		=> "23",
+	i18n("Patient allergies", 'r') 	=> "24",
+	i18n("Checkbox w/text", 'r') 	=> "25",
+	i18n("List box w/add", 'r') 	=> "26",
+	i18n("Radio buttons", 'r') 		=> "27",
+	i18n("Lifestyle status", 'r') 	=> "28",
+	i18n("Static Text", 'r') 		=> "31",
+	i18n("Smoking Status", 'r') 	=> "32",
+	i18n("Race and Ethnicity", 'r') => "33"
+);
+
+//---------------------------------------------------------------------------------------
+// UOR
+//---------------------------------------------------------------------------------------
+$uorTypes = array(
+	i18n('Unused', 'r') 	=> 0, 
+	i18n('Optional', 'r') 	=> 1, 
+	i18n('Required', 'r') 	=> 2
+);
+
 // *************************************************************************************
 // Validate and pass the POST variables to an array
 // This is the moment to validate the entered values from the user
@@ -41,8 +77,8 @@ $row['field_id'] 		= $data->field_id;
 $row['group_name'] 		= $data->group_name;
 $row['title'] 			= $data->title;
 $row['seq'] 			= $data->seq;
-$row['data_type'] 		= $data->data_type;
-$row['uor'] 			= $data->uor;
+$row['data_type'] 		= $dataTypes[$data->data_type]; // Reverse
+$row['uor'] 			= $uorTypes[$data->uor]; // Reverse
 $row['fld_length'] 		= $data->fld_length;
 $row['max_length'] 		= $data->max_length;
 $row['list_id'] 		= $data->list_id;
