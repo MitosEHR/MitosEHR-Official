@@ -317,7 +317,7 @@ var currRec; // A stored current record selected by the user.
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){ 
-            		currRec = FacilityStore.getAt(rowIndex);
+            		currRec = LayoutStore.getAt(rowIndex);
             		rowPos = rowIndex;
             	}
 			}
