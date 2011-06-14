@@ -25,7 +25,7 @@ $_SESSION['site']['flops'] = 0;
 <script type="text/javascript">
 Ext.onReady(function() {
 
-var form_id;
+var form_id; // Stores the current form group selected by the user.
 var rowPos; // Stores the current Grid Row Position (int)
 var currRec; // A stored current record selected by the user.
 
@@ -121,7 +121,7 @@ var currRec; // A stored current record selected by the user.
 	// *************************************************************************************
     var groupingLayout = Ext.create('Ext.grid.feature.Grouping',{
     	enableNoGroups: false,
-        groupHeaderTpl: 'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
+        groupHeaderTpl: '<?php i18n("Group"); ?>: {name} ({rows.length} <?php i18n("Field"); ?>{[values.rows.length > 1 ? "s" : ""]})'
     });
     
     // *************************************************************************************
