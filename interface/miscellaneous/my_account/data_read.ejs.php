@@ -26,11 +26,8 @@ $aes = new AES($_SESSION['site']['AESkey']);
 //------------------------------------------
 $mitos_db = new dbHelper();
 $user = $_SESSION['user']['id'];
-$mitos_db->setSQL("SELECT users.*, 
-          				  list_options.option_id AS ab_name,
-          				  list_options.title AS ab_title  
+$mitos_db->setSQL("SELECT *
         			 FROM users
-        		LEFT JOIN list_options ON list_id = 'abook_type' AND option_id = users.abook_type
         			WHERE users.id = ".$user);
 $total = $mitos_db->rowCount();
 //---------------------------------------------------------------------------------------
@@ -38,7 +35,9 @@ $total = $mitos_db->rowCount();
 //---------------------------------------------------------------------------------------
 $rows = array();
 foreach($mitos_db->execStatement() as $row){
+
 	$row['password'] = $aes->decrypt($row['password']);
+    $row['facility_id'] = intval($row['facility_id']);
 	array_push($rows, $row);
 }
 //---------------------------------------------------------------------------------------

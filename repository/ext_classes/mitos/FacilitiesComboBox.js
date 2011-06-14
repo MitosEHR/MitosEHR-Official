@@ -6,7 +6,7 @@ Ext.define('Ext.mitos.FacilitiesComboBox',{
 
 		if (!Ext.ModelManager.isRegistered('Facilities')){
 			Ext.define("Facilities", {extend: "Ext.data.Model", fields: [
-				{name: 'id', type: 'string'},
+				{name: 'id', type: 'int'},
 			    {name: 'name', type: 'string'}
 			],
 				idProperty: 'id'

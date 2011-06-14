@@ -34,9 +34,6 @@ Ext.onReady(function(){
 		],
 		initComponent: function(){
 			var page = this;
-			//******************************************************************************
-			// ExtJS Global variables 
-			//******************************************************************************
 			var rowPos; // Stores the current Grid Row Position (int)
 			var currList; // Stores the current List Option (string)
 			var currRec; // Store the current record (Object)
@@ -285,7 +282,7 @@ Ext.onReady(function(){
                                 var rec = page.roleStore.getById(currList); // get the record from the store
                                 page.rolesForm.getForm().loadRecord(rec);
                                 page.winRoles.setTitle('<?php i18n("Edit a Role"); ?>');
-                                page.winRoles.show();
+                                page.permStore.load({params:{role_id: currList}});
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {

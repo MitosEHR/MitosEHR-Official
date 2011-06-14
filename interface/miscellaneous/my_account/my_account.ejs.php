@@ -47,65 +47,42 @@ Ext.onReady(function(){
             page.storeUsers = new Ext.create('Ext.mitos.CRUDStore',{
                 fields: [
                     {name: 'id',                    type: 'int'},
-                    {name: 'username',              type: 'string'},
-                    {name: 'password',              type: 'auto'},
-                    {name: 'authorizedd',           type: 'string'},
-                    {name: 'authorized',            type: 'string'},
-                    {name: 'actived',            	type: 'string'},
-                    {name: 'active',            	type: 'string'},
-                    {name: 'info',                  type: 'string'},
-                    {name: 'source',                type: 'int'},
+                    {name: 'title',                 type: 'string'},
                     {name: 'fname',                 type: 'string'},
                     {name: 'mname',                 type: 'string'},
                     {name: 'lname',                 type: 'string'},
-                    {name: 'fullname',              type: 'string'},
+                    {name: 'username',              type: 'string'},
+                    {name: 'password',              type: 'string'},
+                    {name: 'facility_id',           type: 'int'},
+                    {name: 'see_auth',              type: 'string'},
+                    {name: 'taxonomy',              type: 'string'},
                     {name: 'federaltaxid',          type: 'string'},
                     {name: 'federaldrugid',         type: 'string'},
                     {name: 'upin',                  type: 'string'},
-                    {name: 'facility',              type: 'string'},
-                    {name: 'facility_id',           type: 'auto'},
-                    {name: 'see_auth',              type: 'auto'},
-                    {name: 'active',                type: 'auto'},
                     {name: 'npi',                   type: 'string'},
-                    {name: 'title',                 type: 'string'},
-                    {name: 'specialty',             type: 'string'},
-                    {name: 'billname',              type: 'string'},
-                    {name: 'email',                 type: 'string'},
-                    {name: 'url',                   type: 'string'},
-                    {name: 'assistant',             type: 'string'},
-                    {name: 'organization',          type: 'string'},
-                    {name: 'valedictory',           type: 'string'},
-                    {name: 'fulladdress',           type: 'string'},
-                    {name: 'cal_ui',                type: 'string'},
-                    {name: 'taxonomy',              type: 'string'},
-                    {name: 'ssi_relayhealth',       type: 'string'},
-                    {name: 'calendar',              type: 'int'},
-                    {name: 'abook_type',            type: 'string'},
-                    {name: 'pwd_expiration_date',   type: 'string'},
-                    {name: 'pwd_history1',          type: 'string'},
-                    {name: 'pwd_history2',          type: 'string'},
-                    {name: 'default_warehouse',     type: 'string'},
-                    {name: 'ab_name',               type: 'string'},
-                    {name: 'ab_title',              type: 'string'}
+                    {name: 'specialty',            	type: 'string'}
                 ],
                 model		: 'Users',
                 idProperty	: 'id',
                 read		: 'interface/miscellaneous/my_account/data_read.ejs.php',
               //create		:  the user can not create accounts
-                update		: 'interface/miscellaneous/my_account/data_update.ejs.php'
+                update		: 'interface/miscellaneous/my_account/data_update.ejs.php',
               //destroy 	:  user will not be able to destroy his account
+                autoLoad    : false
             });
 
             //------------------------------------------------------------------------------
             // When the data is loaded semd values to de form
             //------------------------------------------------------------------------------
-            page.storeUsers.on('load',function(DataView, records, o){
-                var rec = page.storeUsers.getById(1); // get the record from the store
+            var task = new Ext.util.DelayedTask(function(){
+                var rec = page.storeUsers.getAt(0); // get the record from the store
                 page.myAccountForm.getForm().loadRecord(rec);
             });
-
+            page.storeUsers.on('load',function(DataView, records, o){
+                task.delay(200);
+            });
             // *************************************************************************************
-            // User Settinga Form
+            // User Settings Form
             // Add or Edit purpose
             // *************************************************************************************
             page.myAccountForm = new Ext.create('Ext.mitos.FormPanel', {
@@ -140,7 +117,7 @@ Ext.onReady(function(){
                         msgTarget : 'under',
                         items: [
                             { width: 110, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
-                              Ext.create('Ext.mitos.TitlesComboBox', {width: 60 }),
+                              new Ext.create('Ext.mitos.TitlesComboBox'),
                             { width: 105,  xtype: 'textfield', name: 'fname' },
                             { width: 100,  xtype: 'textfield', name: 'mname' },
                             { width: 175, xtype: 'textfield', name: 'lname' }
@@ -227,8 +204,6 @@ Ext.onReady(function(){
                             { width: 110, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
                             { width: 455, xtype: 'textfield', name: 'specialty' }
                         ]
-                    },{
-                        width: 110, xtype: 'displayfield', value: '<?php i18n('Notes'); ?>: '
                     }]
                 }],
                 dockedItems: [{
@@ -238,9 +213,17 @@ Ext.onReady(function(){
                         page.cmdSave = new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Save"); ?>',
                             iconCls   	: 'save',
-                            id        	: 'cmdSave',
                             handler   : function(){
+                                var record =  page.storeUsers.getAt('0');
+                                var fieldValues = page.myAccountForm.getForm().getValues();
+                                for ( var k=0; k <= record.fields.getCount()-1; k++) {
+                                    var i = record.fields.get(k).name;
+                                    record.set( i, fieldValues[i] );
+                                }
+                                 page.storeUsers.sync();	// Save the record to the dataStore
+                                 page.storeUsers.load();	// Reload the dataSore from the database
 
+                                Ext.topAlert.msg('Sweet!', 'Your Account have been updated.');
                             }
                         }),'-',
                         page.cmdSavePass = new Ext.create('Ext.Button', {
@@ -248,19 +231,56 @@ Ext.onReady(function(){
                             iconCls   	: 'save',
                             id        	: 'cmdSavePass',
                             handler   : function(){
-
+                                page.winPass.show();
                             }
                         })
                     ]
-                }]
+                }],
+                listeners:{
+                    afterrender: {
+                        fn: function(){
+                            page.storeUsers.load();
+                        }
+                    }
+                }
             });
+            page.formPass = new Ext.form.FormPanel({
+                bodyPadding: 15,
+                items   :[{
+                    fieldLabel  : 'Old Password',
+                    labelWidth  : 130,
+                    xtype       : 'textfield',
+                    width       : 380,
+                    name        : 'password',
+                    inputType   : 'password'
+                },{
+                    fieldLabel  : 'New Password',
+                    labelWidth  : 130,
+                    xtype       : 'textfield',
+                    width       : 380,
+                    name        : 'nPassword',
+                    inputType   : 'password'
+                },{
+                    fieldLabel  : 'Re Type Password',
+                    labelWidth  : 130,
+                    xtype       : 'textfield',
+                    width       : 380,
+                    name        : 'vPassword',
+                    inputType   : 'password'
+                }]
 
+            });
+            page.winPass = new Ext.create('Ext.mitos.SaveCancelWindow', {
+                width   : 420,
+                title   :'Change you password',
+                form    : page.formPass
+            });
             //***********************************************************************************
             // Top Render Panel
             // This Panel needs only 3 arguments...
-            // PageTigle 	- Title of the current page
+            // PageTitle 	- Title of the current page
             // PageLayout 	- default 'fit', define this argument if using other than the default value
-            // PageBody 	- List of items to display [foem1, grid1, grid2]
+            // PageBody 	- List of items to display [form 1, grid 1, grid 2]
             //***********************************************************************************
             Ext.create('Ext.mitos.TopRenderPanel', {
                 pageTitle: 'My Account',
