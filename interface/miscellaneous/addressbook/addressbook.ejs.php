@@ -28,8 +28,7 @@ Ext.onReady(function(){
 			'Ext.mitos.TopRenderPanel',
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
-			'Ext.mitos.FacilitiesComboBox',
-			'Ext.mitos.AuthorizationsComboBox'
+			'Ext.mitos.TypesComboBox'
 		],
 		initComponent: function(){
 			var page = this;
@@ -318,53 +317,6 @@ Ext.onReady(function(){
                 }]
             });
             // *************************************************************************************
-            // Message Window Dialog
-            // *************************************************************************************
-            page.winAddressbook = new Ext.create('Ext.mitos.Window', {
-                width   : 755,
-                title   : '<?php i18n('Add or Edit Contact'); ?>',
-                items   : [ page.frmAddressbook ],
-                buttons:[{
-                    text      :'<?php i18n('Save'); ?>',
-                    ref       : '../save',
-                    iconCls   : 'save',
-                    handler: function() {
-                        //----------------------------------------------------------------
-                        // Check if it has to add or update
-                        // Update:
-                        // 1. Get the record from store,
-                        // 2. get the values from the form,
-                        // 3. copy all the
-                        // values from the form and push it into the store record.
-                        // Add: The re-formated record to the dataStore
-                        //----------------------------------------------------------------
-                        if (page.frmAddressbook.getForm().findField('id').getValue()){ // Update
-                            var record = page.storeAddressbook.getAt(rowPos);
-                            var fieldValues = page.frmAddressbook.getForm().getValues();
-                            for (var k=0; k <= record.fields.getCount()-1; k++) {
-                                var i = record.fields.get(k).name;
-                                record.set( i, fieldValues[i] );
-                            }
-                        } else { // Add
-                            //----------------------------------------------------------------
-                            // 1. Convert the form data into a JSON data Object
-                            // 2. Re-format the Object to be a valid record (UserRecord)
-                            // 3. Add the new record to the datastore
-                            //----------------------------------------------------------------
-                            var obj = eval( '(' + Ext.JSON.encode(page.frmAddressbook.getForm().getValues()) + ')' );
-                            page.storeAddressbook.add( obj );
-                        }
-                        page.winAddressbook.hide();	// Finally hide the dialog window
-                        page.storeAddressbook.sync();	// Save the record to the dataStore
-                        page.storeAddressbook.load();	// Reload the dataSore from the database
-                    }
-                },{
-                    text:'<?php i18n('Close'); ?>',
-                    iconCls: 'delete',
-                    handler: function(){ page.winAddressbook.hide(); }
-                }]
-            }); // END WINDOW
-            // *************************************************************************************
             // Create the GridPanel
             // *************************************************************************************
             page.addressBookGrid = new Ext.grid.GridPanel({
@@ -385,7 +337,7 @@ Ext.onReady(function(){
                             page.cmdDelete.enable();
                             page.frmAddressbook.getForm().loadRecord(rec);
                             currRec = rec;
-                            rowPos = rowIndex;
+                            page.rowPos = rowIndex;
                         }
                     },
                     // -----------------------------------------
@@ -398,14 +350,14 @@ Ext.onReady(function(){
                             var rec = page.storeAddressbook.getAt(rowIndex); // get the record from the store
                             page.frmAddressbook.getForm().loadRecord(rec); // load the record selected into the form
                             currRec = rec;
-                            rowPos = rowIndex;
+                            page.rowPos = rowIndex;
                             page.winAddressbook.setTitle('<?php i18n("Edit Contact"); ?>');
                             page.winAddressbook.show();
                         }
                     }
                 },
                 columns: [
-                    {header: 'id', sortable: false, dataIndex: 'id', hidden: true},
+                    { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
                     { width: 150, header: '<?php i18n('Name'); ?>', sortable: true, dataIndex: 'fullname' },
                     { width: 50,  header: '<?php i18n('Local'); ?>', sortable: true, dataIndex: 'username', renderer : localck },
                     { header: '<?php i18n('Type'); ?>', sortable: true, dataIndex: 'ab_title' },
@@ -462,6 +414,17 @@ Ext.onReady(function(){
                     ]
                 }]
             }); // END GRID
+            // *************************************************************************************
+            // Message Window Dialog
+            // *************************************************************************************
+            page.winAddressbook = new Ext.create('Ext.mitos.SaveCancelWindow', {
+                width   : 755,
+                title   : '<?php i18n('Add or Edit Contact'); ?>',
+                form    : page.frmAddressbook,
+                store   : page.storeAddressbook,
+                scope   : page,
+                idField : 'id'
+            }); // END WINDOW
             //***********************************************************************************
             // Top Render Panel
             // This Panel needs only 3 arguments...
@@ -479,7 +442,3 @@ Ext.onReady(function(){
     Ext.create('Ext.mitos.addressBookPage');
 }); // End ExtJS
 </script>
-
-
-
-

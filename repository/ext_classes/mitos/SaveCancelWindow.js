@@ -7,11 +7,11 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
 	width       : 520,
     title       : 'New Save/Cancel Window',
     renderTo    : document.body,
-    scope       : '',
-	//form 	    : this is the form the save btn will be getting the data from
-	//store	    : this is the store we are using to store the data
-	//scope		: the scope of data store
-	//idField   : form id filed to save the data
+	form 	    : '', //this is the form the save btn will be getting the data from
+	store	    : '', //this is the store we are using to store the data
+	scope		: '', //the scope of data store
+	idField     : '', //form id field, use to ck if the form is new an update
+    rowPos      : '', //rowPos value, use to update store
     initComponent: function() {
     	var win = this;
 		Ext.apply(this, {
@@ -26,13 +26,10 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
                 text: 'save',
                 handler: function(){
                     if (win.form.getForm().findField(win.idField).getValue()){ // Update
-                        var id = win.form.getForm().findField('id').getValue();
                         var record = win.store.getAt(win.scope.rowPos);
                         var fieldValues = win.form.getForm().getValues();
-                        // alert the record ID for debug!!!
-                        alert('For debug... Record id is ' +id);
-                        for ( k=0; k <= record.fields.getCount()-1; k++) {
-                            i = record.fields.get(k).name;
+                        for ( var k=0; k <= record.fields.getCount()-1; k++) {
+                            var i = record.fields.get(k).name;
                             record.set( i, fieldValues[i] );
                         }
                     } else { // Add
