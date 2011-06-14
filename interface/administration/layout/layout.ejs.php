@@ -328,13 +328,6 @@ var currRec; // A stored current record selected by the user.
 				handler: function(){
 				}
 			},'-',{
-				text: '<?php i18n("Edit field"); ?>',
-				iconCls: 'edit',
-				id: 'cmdEdit',
-				disabled: true,
-				handler: function(){
-				}
-			},'-',{
 				text: '<?php i18n("Delete field"); ?>',
 				iconCls: 'delete',
 				disabled: true,
