@@ -124,13 +124,10 @@ Ext.onReady(function(){
 		        defaultType	: 'textfield',
 		        defaults	: { anchor: '100%' },
 		        items: [{
-					hidden: true, 
-					id: 'id', 
-					name: 'id'
+					hidden: true, name: 'id'
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n("Role Name"); ?>',
-					id			: 'role_name', 
 					name		: 'role_name'
 				}]
 		    });
@@ -145,18 +142,14 @@ Ext.onReady(function(){
 		        defaultType	: 'textfield',
 		        defaults	: { anchor: '100%' },
 		        items: [{ 
-					hidden: true, 
-					id: 'permID',
-					name: 'permID'
+					hidden: true, name: 'permID'
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n("Permission Name"); ?>',
-					id			: 'perm_name', 
 					name		: 'perm_name'
 				},{
 					xtype		: 'textfield',
 					fieldLabel	: '<?php i18n("Permission Unique Name"); ?>',
-					id			: 'perm_key', 
 					name		: 'perm_key'
 				}]
 		    });
@@ -306,7 +299,7 @@ Ext.onReady(function(){
                                     buttons	: Ext.Msg.YESNO,
                                     fn		:function(btn,msgGrid){
                                             if(btn=='yes'){
-                                            var rec = roleStore.getById( currList ); // get the record from the store
+                                            var rec = page.roleStore.getById( currList ); // get the record from the store
                                             page.roleStore.remove(rec);
                                             page.roleStore.sync();
                                             page.roleStore.load();

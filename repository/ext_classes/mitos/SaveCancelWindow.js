@@ -14,6 +14,8 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
     rowPos      : '', //rowPos value, use to update store
     initComponent: function() {
     	var win = this;
+        var record;
+        var id;
 		Ext.apply(this, {
 			autoHeight  : true,
 		    modal       : true,
@@ -26,7 +28,12 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
                 text: 'save',
                 handler: function(){
                     if (win.form.getForm().findField(win.idField).getValue()){ // Update
-                        var record = win.store.getAt(win.scope.rowPos);
+                        if (win.store.getAt(win.scope.rowPos != undefined )){
+                            record = win.store.getAt(win.scope.rowPos);
+                        }else{
+                            id = parseInt(win.form.getForm().findField(win.idField).getValue());
+                            record = win.store.getById(id);
+                        }
                         var fieldValues = win.form.getForm().getValues();
                         for ( var k=0; k <= record.fields.getCount()-1; k++) {
                             var i = record.fields.get(k).name;
