@@ -133,6 +133,9 @@ var form_id;
 				LayoutStore.sync();
 				LayoutStore.load({params:{form_id: form_id }});
 				layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
+			},
+			beforeedit: function( editor, e, options ){
+				alert(uneval(editor.view));
 			}
 		}
     });
@@ -151,6 +154,7 @@ var form_id;
    	    title	: '<?php i18n("Field editor"); ?> (<?php i18n("Demographics"); ?>)',
         columns	: [
 			{
+				name		: 'seq',
 				text     	: '<?php i18n("Order"); ?>',
 				sortable 	: false,
 				dataIndex	: 'seq',
@@ -311,7 +315,8 @@ var form_id;
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){
-            		//var obj = this.up.getGridColumns();
+            		//var obj = this.columns['seq'];
+            		//var obj = record;
 					//alert(uneval(obj));
             	}
 			}
