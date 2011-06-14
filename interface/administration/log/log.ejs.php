@@ -28,7 +28,8 @@ Ext.onReady(function(){
 		],
 
 		initComponent: function(){
-			Ext.QuickTips.init();
+            /** @namespace Ext.QuickTips */
+            Ext.QuickTips.init();
 
 			var page = this;
 			var rowPos; // Stores the current Grid Row Position (int)

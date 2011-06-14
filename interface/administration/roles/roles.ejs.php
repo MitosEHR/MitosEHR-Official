@@ -12,9 +12,7 @@
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
-
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
-
 //**********************************************************************************
 // Reset session count 10 secs = 1 Flop
 //**********************************************************************************
@@ -43,7 +41,6 @@ Ext.onReady(function(){
 			var currList; // Stores the current List Option (string)
 			var currRec; // Store the current record (Object)
 			var currPerm; //store the current permission (object)
-
 			//******************************************************************************
 			// Roles Store
 			//******************************************************************************
@@ -67,7 +64,6 @@ Ext.onReady(function(){
 				update		: 'interface/administration/roles/data_update.ejs.php?task=update_role_perms',
 				destroy 	: 'interface/administration/roles/data_destroy.ejs.php?task=delete_permission'
 			});
-		
 			// ****************************************************************************
 			// Structure, data for Roles
 			// AJAX -> component_data.ejs.php
@@ -93,7 +89,6 @@ Ext.onReady(function(){
 				currList = records[0].data.id; // Get first result for first grid data
 				page.permStore.load({params:{role_id: currList}}); // Filter the data store from the currList value
 			});
-		
 			// *************************************************************************************
 			// Federal EIN - TaxID Data Store
 			// *************************************************************************************
@@ -106,7 +101,6 @@ Ext.onReady(function(){
 		    	idProperty	: 'value',
 		    	read		: 'interface/administration/roles/component_data.ejs.php?task=perms'
 			});
-			
 			function permck(val) {
 			    if (val == 'No Access') {
 			        return 'View <img src="ui_icons/no.gif" /> / Update <img src="ui_icons/no.gif" /> / Create <img src="ui_icons/no.gif" />';
@@ -166,7 +160,6 @@ Ext.onReady(function(){
 					name		: 'perm_key'
 				}]
 		    });
-		
 			// ****************************************************************************
 			// Create the Window
 			// ****************************************************************************	
@@ -187,11 +180,11 @@ Ext.onReady(function(){
 	    		scope		: page,
 	    		idField		: 'permID'
 			});
-		
 			// *************************************************************************************
 			// RowEditor Class
 			// *************************************************************************************
-			page.rowEditing = Ext.create('Ext.grid.plugin.CellEditing', {
+            //noinspection JSUnusedGlobalSymbols
+            page.rowEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 				//clicksToEdit: 1,
 				saveText: 'Update',
 				errorSummary: false,
@@ -346,7 +339,6 @@ Ext.onReady(function(){
                     ]
 				}]
 		    }); // END Facility Grid
-		
 		    Ext.create('Ext.mitos.TopRenderPanel', {
 		        pageTitle: '<?php i18n('Roles and Permissions'); ?>',
 		        pageBody: [page.rolesGrid]

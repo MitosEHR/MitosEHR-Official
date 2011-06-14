@@ -29,6 +29,8 @@ Ext.onReady(function(){
 		],
 		initComponent: function(){
             var page = this;
+            var rowPos;
+            var currRec;
             page.storeOnotes = new Ext.create('Ext.mitos.CRUDStore',{
                 fields: [
                     {name: 'id',      		type: 'int'},
@@ -88,7 +90,7 @@ Ext.onReady(function(){
                                     var record = page.storeOnotes.getAt(rowPos);
                                     var fieldValues = form.getValues();
                                     for (var k=0; k <= record.fields.getCount()-1; k++) {
-                                        i = record.fields.get(k).name;
+                                        var i = record.fields.get(k).name;
                                         record.set( i, fieldValues[i] );
                                     }
                                     record.set( 'activity', '1' );
@@ -112,7 +114,7 @@ Ext.onReady(function(){
                                 var record = page.storeOnotes.getAt(rowPos);
                                 var fieldValues = form.getValues();
                                 for (var k=0; k <= record.fields.getCount()-1; k++) {
-                                    i = record.fields.get(k).name;
+                                    var i = record.fields.get(k).name;
                                     record.set( i, fieldValues[i] );
                                 }
                                 record.set( 'activity', '0' );
@@ -150,6 +152,7 @@ Ext.onReady(function(){
                             page.cmdSave.setText('<?php i18n('Update'); ?>');
                             page.onotesFormPanel.getForm().loadRecord(rec);
                             currRec = rec;
+                            rowPos = rowIndex;
                         }
                     }
                 },
