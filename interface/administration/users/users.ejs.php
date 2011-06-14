@@ -32,7 +32,8 @@ Ext.onReady(function(){
 		],
 		
 		initComponent: function(){
-			Ext.QuickTips.init();
+            /** @namespace Ext.QuickTips */
+            Ext.QuickTips.init();
 			
 			var page = this;
 			var rowPos; // Stores the current Grid Row Position (int)
@@ -147,7 +148,7 @@ Ext.onReady(function(){
 			  	  	xtype: 'toolbar',
 				  	dock: 'top',
 				  	items: [ 
-				  		page.cmdAdd = new Ext.create('Ext.Button', {
+				  		new Ext.create('Ext.Button', {
 						    text      : '<?php i18n("Add User"); ?>',
 						    iconCls   : 'icoAddressBook',
 						    handler   : function(){
@@ -275,8 +276,8 @@ Ext.onReady(function(){
 				       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
 				        { width: 315, xtype: 'textfield', name: 'specialty' }
 				      ]  
-				    },{html: '<hr style="margin:5px 0"><p><?php i18n('Additional Info'); ?>:</p>', border:false},
-				    { width: 410, xtype: 'htmleditor', name: 'info', emptyText: 'info' }
+				    },
+				    { width: 410, height: 50, xtype: 'textfield', name: 'info', emptyText: '<?php i18n('Additional Info'); ?>' }
 				]
 			});
 			// *************************************************************************************
