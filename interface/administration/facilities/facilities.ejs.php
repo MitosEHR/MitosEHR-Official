@@ -23,8 +23,8 @@ $_SESSION['site']['flops'] = 0;
 ?>
 <script type="text/javascript">
 Ext.onReady(function() {
-
-	Ext.QuickTips.init();
+    /** @namespace Ext.QuickTips */
+    Ext.QuickTips.init();
 	var rowPos; // Stores the current Grid Row Position (int)
 	var currRec; // Store the current record (Object)
 	

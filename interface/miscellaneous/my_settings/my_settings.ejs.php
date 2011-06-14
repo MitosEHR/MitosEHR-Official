@@ -40,7 +40,6 @@ Ext.onReady(function(){
 	        title: '<?php i18n('Appearance Settings'); ?>',
 	        collapsible: true,
 	        defaultType: 'textfield',
-	        defaults: {anchor: '100%'},
 	        layout: 'anchor',
 	        defaults: {
 				labelWidth: 89,
@@ -62,7 +61,6 @@ Ext.onReady(function(){
 	        title: '<?php i18n('Locale Settings'); ?>',
 	        collapsible: true,
 	        defaultType: 'textfield',
-	        defaults: {anchor: '100%'},
 	        layout: 'anchor',
 	        defaults: {
 				labelWidth: 89,
@@ -84,7 +82,6 @@ Ext.onReady(function(){
 	        title: '<?php i18n('Calendar Settings'); ?>',
 	        collapsible: true,
 	        defaultType: 'textfield',
-	        defaults: {anchor: '100%'},
 	        layout: 'anchor',
 	        defaults: {
 				labelWidth: 89,
