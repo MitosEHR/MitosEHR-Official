@@ -26,6 +26,8 @@ $_SESSION['site']['flops'] = 0;
 Ext.onReady(function() {
 
 var form_id;
+var rowPos; // Stores the current Grid Row Position (int)
+var currRec; // A stored current record selected by the user.
 
 	// *************************************************************************************
 	// Layout Record Structure
@@ -135,7 +137,7 @@ var form_id;
 				layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
 			},
 			beforeedit: function( editor, e, options ){
-				alert(uneval(editor.view));
+				//alert(uneval(editor.record));
 			}
 		}
     });
@@ -209,7 +211,7 @@ var form_id;
 					name: 'uor',
 					xtype: 'combo', 
 					displayField: 'uor',
-					valueField: 'id', 
+					valueField: 'uor', 
 					hiddenName: 'id',
 					editable: false, 
 					store: uorStore, 
@@ -226,7 +228,7 @@ var form_id;
 					name: 'data_type',
 					xtype: 'combo', 
 					displayField: 'type',
-					valueField: 'id', 
+					valueField: 'type', 
 					hiddenName: 'id',
 					editable: false, 
 					store: datatypesStore, 
@@ -255,7 +257,7 @@ var form_id;
 					name: 'list_id',
 					xtype: 'combo', 
 					displayField: 'title',
-					valueField: 'list_id', 
+					valueField: 'title', 
 					hiddenName: 'list_id',
 					editable: false, 
 					store: listoptionStore, 
@@ -314,10 +316,9 @@ var form_id;
 		],
 		listeners: {
 			itemclick: {
-            	fn: function(DataView, record, item, rowIndex, e){
-            		//var obj = this.columns['seq'];
-            		//var obj = record;
-					//alert(uneval(obj));
+            	fn: function(DataView, record, item, rowIndex, e){ 
+            		currRec = FacilityStore.getAt(rowIndex);
+            		rowPos = rowIndex;
             	}
 			}
 		},
