@@ -25,9 +25,14 @@ $_SESSION['site']['flops'] = 0;
 <script type="text/javascript">
 Ext.onReady(function() {
 
-var form_id; // Stores the current form group selected by the user.
+var form_id = 'Demographics'; // Stores the current form group selected by the user.
 var rowPos; // Stores the current Grid Row Position (int)
 var currRec; // A stored current record selected by the user.
+
+	// *************************************************************************************
+	// If a object called winUser exists destroy it, to create a new one.
+	// *************************************************************************************
+	if ( Ext.getCmp('winAddField') ){ Ext.getCmp('winAddField').destroy(); }
 
 	// *************************************************************************************
 	// Layout Record Structure
@@ -114,6 +119,64 @@ var currRec; // A stored current record selected by the user.
 			model 		:'listoptionModel',
 			idProperty 	:'id',
 			read		: 'interface/administration/layout/component_data.ejs.php?task=lists'
+	});
+	
+	// *************************************************************************************
+	// List Options Record Structure & Store
+	// *************************************************************************************
+	var whereStore = Ext.create('Ext.mitos.CRUDStore',{
+		fields: [
+			{name: 'group_name',type: 'string'}
+		],
+			model 		:'whereModel',
+			idProperty 	:'group_name',
+			read		: 'interface/administration/layout/component_data.ejs.php?task=groups&form_id=' + form_id
+	});
+	
+	// *************************************************************************************
+	// User form
+	// *************************************************************************************
+    var whereForm = new Ext.create('Ext.mitos.FormPanel', {
+    	id: 'facilityForm',
+        fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
+        defaults: {
+            anchor: '100%'
+        },
+        items: [{
+			xtype: 'combo', 
+			displayField: 'group_name',
+			valueField: 'group_name', 
+			editable: false, 
+			store: whereStore, 
+			queryMode: 'local',
+            name: 'where'
+        }]
+    });
+	
+	// *************************************************************************************
+	// window - Add Field Window
+	// *************************************************************************************
+	var winAddField = Ext.create('Ext.mitos.Window', {
+		title		: '<?php i18n('Select a group to add the field.'); ?>',
+		id			: 'winAddField',
+		width		: 450,
+		height		: 100,
+		items		: [ whereForm ],
+		buttons:[{
+			text		:'<?php i18n('Add'); ?>',
+			name		: 'cmdSave',
+			id			: 'cmdSave',
+			iconCls		: 'save',
+            handler: function(){
+				winAddField.hide();		// Finally hide the dialog window
+			}
+		},'-',{
+			text:'<?php i18n('Close'); ?>',
+			iconCls: 'delete',
+            handler: function(){
+            	winAddField.hide();
+            }
+		}]
 	});
 	
 	// *************************************************************************************
@@ -332,6 +395,7 @@ var currRec; // A stored current record selected by the user.
 				text: '<?php i18n("Add field"); ?>',
 				iconCls: 'icoAddRecord',
 				handler: function(){
+					winAddField.show();
 				}
 			},'-',{
 				text: '<?php i18n("Delete field"); ?>',

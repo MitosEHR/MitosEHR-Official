@@ -97,6 +97,32 @@ switch ($_GET['task']) {
 	break;
 	
 	// *************************************************************************************
+	// Returns the available group in the selected form
+	// *************************************************************************************
+	case "groups":
+		$mitos_db->setSQL("SELECT DISTINCT 
+								group_name
+							FROM
+  								layout_options
+							WHERE
+  								form_id = '". $_REQUEST['form_id'] . "'
+							ORDER BY
+  								group_order, seq");
+		$totals = $mitos_db->rowCount();
+		//---------------------------------------------------------------------------------------
+		// start the array
+		//---------------------------------------------------------------------------------------
+		$rows = array();
+		foreach($mitos_db->execStatement() as $row){
+			array_push($rows, $row);
+		}
+		//---------------------------------------------------------------------------------------
+		// here we are adding "totals" and the root "row" for sencha use 
+		//---------------------------------------------------------------------------------------
+		print_r(json_encode(array('totals'=>$totals,'row'=>$rows)));
+	break;
+	
+	// *************************************************************************************
 	// Available List for the available data types
 	// *************************************************************************************
 	case "lists":
