@@ -25,9 +25,9 @@ $_SESSION['site']['flops'] = 0;
 <script type="text/javascript">
 Ext.onReady(function() {
 
-var form_id = 'Demographics'; // Stores the current form group selected by the user.
-var rowPos; // Stores the current Grid Row Position (int)
-var currRec; // A stored current record selected by the user.
+var form_id = 'Demographics'; 	// Stores the current form group selected by the user.
+var rowPos; 					// Stores the current Grid Row Position (int)
+var currRec; 					// A stored current record selected by the user.
 
 	// *************************************************************************************
 	// If a object called winUser exists destroy it, to create a new one.
@@ -437,6 +437,7 @@ var currRec; // A stored current record selected by the user.
             	fn: function(DataView, record, item, rowIndex, e){
 					form_id = record.get('form_id');
 					LayoutStore.load({params:{form_id: form_id }});
+					whereStore.load({params:{task: 'groups', form_id: form_id} });
 					layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
             	}
 			}

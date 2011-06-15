@@ -114,5 +114,5 @@ foreach($mitos_db->execStatement() as $row){
 //---------------------------------------------------------------------------------------
 // here we are adding "totals" and the root "row" for sencha use 
 //---------------------------------------------------------------------------------------
-print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
+print(json_encode(array('totals'=>$total,'row'=>$rows)));
 ?>

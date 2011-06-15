@@ -49,7 +49,7 @@ switch ($_GET['task']) {
 		//---------------------------------------------------------------------------------------
 		// here we are adding "totals" and the root "row" for sencha use 
 		//---------------------------------------------------------------------------------------
-		print_r(json_encode(array('totals'=>$totals,'row'=>$rows)));
+		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
 	break;
 	
 	// *************************************************************************************
@@ -80,7 +80,7 @@ switch ($_GET['task']) {
 			20 => array("id" => "33", "type" => i18n("Race and Ethnicity", 'r'))
 		);
 		$totals = count($datatypes);
-		print_r(json_encode(array('totals'=>$totals,'row'=>$datatypes)));
+		print(json_encode(array('totals'=>$totals,'row'=>$datatypes)));
 	break;
 
 	//---------------------------------------------------------------------------------------
@@ -93,11 +93,11 @@ switch ($_GET['task']) {
 			2 => array("id"=> 2, "uor" => i18n('Required', 'r'))
 		);
 		$totals = count($uorTypes);
-		print_r(json_encode(array('totals'=>$totals,'row'=>$uorTypes)));
+		print(json_encode(array('totals'=>$totals,'row'=>$uorTypes)));
 	break;
 	
 	// *************************************************************************************
-	// Returns the available group in the selected form
+	// Returns the available groups in the selected form
 	// *************************************************************************************
 	case "groups":
 		$mitos_db->setSQL("SELECT DISTINCT 
@@ -109,17 +109,11 @@ switch ($_GET['task']) {
 							ORDER BY
   								group_order, seq");
 		$totals = $mitos_db->rowCount();
-		//---------------------------------------------------------------------------------------
-		// start the array
-		//---------------------------------------------------------------------------------------
 		$rows = array();
 		foreach($mitos_db->execStatement() as $row){
 			array_push($rows, $row);
 		}
-		//---------------------------------------------------------------------------------------
-		// here we are adding "totals" and the root "row" for sencha use 
-		//---------------------------------------------------------------------------------------
-		print_r(json_encode(array('totals'=>$totals,'row'=>$rows)));
+		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
 	break;
 	
 	// *************************************************************************************
@@ -167,7 +161,7 @@ switch ($_GET['task']) {
 		//---------------------------------------------------------------------------------------
 		// here we are adding "totals" and the root "row" for sencha use 
 		//---------------------------------------------------------------------------------------
-		print_r(json_encode(array('totals'=>$totals,'row'=>$rows)));
+		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
 	break;
 
 }
