@@ -110,7 +110,7 @@ switch ($_GET['task']) {
 					ORDER BY 
 						seq");
 		} else {
-			// Use and sort by the translated list name.
+			// If a language is selected, translate the list.
 			$mitos_db->setSQL("SELECT 
 						lo.id,
 						lo.list_id,

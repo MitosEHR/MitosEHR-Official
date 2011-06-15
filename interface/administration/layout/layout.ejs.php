@@ -135,9 +135,6 @@ var currRec; // A stored current record selected by the user.
 				LayoutStore.sync();
 				LayoutStore.load({params:{form_id: form_id }});
 				layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
-			},
-			beforeedit: function( editor, e, options ){
-				//alert(uneval(editor.record));
 			}
 		}
     });
@@ -163,6 +160,7 @@ var currRec; // A stored current record selected by the user.
 				width		: 50,
 				align		: 'center',
             	editor: {
+            		name: 'seq',
 	                xtype: 'numberfield',
     	            allowBlank: false,
         	        minValue: 1,
@@ -176,6 +174,7 @@ var currRec; // A stored current record selected by the user.
 				width		: 70,
 				align		: 'left',
             	editor: {
+            		name: 'group_name',
 	                xtype: 'textfield',
     	            allowBlank: false
             	}
@@ -187,6 +186,7 @@ var currRec; // A stored current record selected by the user.
 				width		: 120,
 				align		: 'left',
             	editor: {
+            		name: 'field_id',
 	                xtype: 'textfield',
     	            allowBlank: false
             	}
@@ -198,6 +198,7 @@ var currRec; // A stored current record selected by the user.
 				width		: 130,
 				align		: 'left',
             	editor: {
+            		name: 'title',
 	                xtype: 'textfield'
             	}
             },
@@ -240,6 +241,7 @@ var currRec; // A stored current record selected by the user.
 				width		: 50,
 				align		: 'center',
             	editor: {
+            		name: 'max_length',
 	                xtype: 'numberfield',
     	            minValue: 0,
             	    maxValue: 255
@@ -268,6 +270,7 @@ var currRec; // A stored current record selected by the user.
 				width		: 80,
 				align		: 'center',
             	editor: {
+            		name: 'titlecols',
 	                xtype: 'numberfield',
     	            allowBlank: false,
         	        minValue: 0,
@@ -281,6 +284,7 @@ var currRec; // A stored current record selected by the user.
 				width		: 80,
 				align		: 'center',
             	editor: {
+            		name: 'datacols',
 	                xtype: 'numberfield',
     	            allowBlank: false,
         	        minValue: 0,
@@ -294,6 +298,7 @@ var currRec; // A stored current record selected by the user.
 				width		: 80,
 				align		: 'center',
             	editor: {
+            		name: 'edit_options',
 	                xtype: 'textfield'
             	}
             },
@@ -304,6 +309,7 @@ var currRec; // A stored current record selected by the user.
 				flex		: 1,
 				align		: 'left',
             	editor: {
+            		name: 'description',
 	                xtype: 'textfield',
     	            allowBlank: false
             	}

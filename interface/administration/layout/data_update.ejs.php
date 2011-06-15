@@ -31,6 +31,7 @@ $data = json_decode ( $_REQUEST['row'] );
 
 //---------------------------------------------------------------------------------------
 // dataTypes - Defines what type of fields are.
+// This is just a reverse thing, translate the dataTypes into numbers.
 //---------------------------------------------------------------------------------------
 $dataTypes = array(
 	i18n("List box", 'r') 			=> "1", 
@@ -58,6 +59,7 @@ $dataTypes = array(
 
 //---------------------------------------------------------------------------------------
 // UOR
+// This is just a reverse thing, translate the dataTypes into numbers.
 //---------------------------------------------------------------------------------------
 $uorTypes = array(
 	i18n('Unused', 'r') 	=> 0, 
@@ -65,12 +67,54 @@ $uorTypes = array(
 	i18n('Required', 'r') 	=> 2
 );
 
+//---------------------------------------------------------------------------------------
+// Reverse the list_option to get the number and inject it, into the database
+//---------------------------------------------------------------------------------------
+if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is English, do not translate
+	$mitos_db->setSQL("SELECT 
+						*
+						FROM 
+							list_options 
+						WHERE 
+							list_id = 'lists' AND title='".$data->listDesc."'
+						ORDER BY 
+							seq");
+} else {
+	// If a language is selected, translate the list.
+	$mitos_db->setSQL("SELECT 
+						lo.id,
+						lo.list_id,
+						lo.option_id, 
+						IF(LENGTH(ld.definition),ld.definition,lo.title) AS title ,
+						lo.seq,
+						lo.is_default,
+						lo.option_value,
+						lo.mapping,
+						lo.notes 
+					FROM 
+						list_options AS lo 
+						LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title 
+						LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '" . $_SESSION['lang']['code'] . "
+					WHERE 
+						lo.list_id = 'lists' AND title='".$data->listDesc."'
+					ORDER BY 
+						IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
+}
+//---------------------------------------------------------------------------------------+
+// start the array
+//---------------------------------------------------------------------------------------
+$reverse_list = array();
+foreach($mitos_db->execStatement() as $row){
+	array_push($reverse_list, $row);
+}
+
 // *************************************************************************************
 // Validate and pass the POST variables to an array
 // This is the moment to validate the entered values from the user
 // although Sencha EXTJS make good validation, we could check again 
 // just in case 
 // *************************************************************************************
+$row = array();
 $row['item_id'] 		= trim($data->item_id);
 $row['form_id'] 		= $data->form_id;
 $row['field_id'] 		= $data->field_id;
@@ -81,7 +125,7 @@ $row['data_type'] 		= $dataTypes[$data->data_type]; // Reverse
 $row['uor'] 			= $uorTypes[$data->uor]; // Reverse
 $row['fld_length'] 		= $data->fld_length;
 $row['max_length'] 		= $data->max_length;
-$row['list_id'] 		= $data->list_id;
+$row['list_id'] 		= $reverse_list[0]['option_id'];
 $row['titlecols'] 		= $data->titlecols;
 $row['datacols'] 		= $data->datacols;
 $row['default_value'] 	= $data->default_value;
