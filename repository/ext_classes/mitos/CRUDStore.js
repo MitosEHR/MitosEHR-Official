@@ -44,9 +44,21 @@ Ext.define('Ext.mitos.CRUDStore',{
 					allowSingle	 	: true,
 					encode	 		: true,
 					root	 		: 'row'
-				}
-		    },
-		    autoLoad: config.autoLoad
+				},
+                listeners: {
+                    exception: function(proxy, response){
+                        obj = Ext.JSON.decode(response.responseText);
+                        Ext.Msg.alert({
+                                title   : 'Oops!',
+                                msg     : obj.errors.reason,
+                                icon    : Ext.MessageBox.ERROR,
+                                buttons : Ext.Msg.OK
+                        });
+                    }
+                }
+
+            },
+            autoLoad: config.autoLoad
         }
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
         Ext.mitos.CRUDStore.superclass.constructor.call(this, config);
