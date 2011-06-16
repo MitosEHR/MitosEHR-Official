@@ -145,7 +145,6 @@ Ext.onReady(function() {
 			// User form
 			// *************************************************************************************
     		panel.whereForm = new Ext.create('Ext.mitos.FormPanel', {
-    			id: 'facilityForm',
         		fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
         		defaults: {
             		anchor: '100%'
@@ -166,7 +165,6 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			panel.winAddField = Ext.create('Ext.mitos.Window', {
 				title		: '<?php i18n('Select a group to add the field.'); ?>',
-				id			: 'winAddField',
 				width		: 450,
 				height		: 100,
 				items		: [ panel.whereForm ],
