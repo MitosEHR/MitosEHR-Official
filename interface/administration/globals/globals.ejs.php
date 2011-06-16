@@ -1090,8 +1090,8 @@ Ext.onReady(function(){
 						}
 						globalStore.sync();	// Save the record to the dataStore
 						globalStore.load();	// Reload the dataSore from the database
-						
-						Ext.topAlert.msg('New Global Configuration Saved', 'For some settings to take place you will have to logout and log back in.');
+
+						Ext.topAlert.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
 				    }
 			  	}]
 			}]

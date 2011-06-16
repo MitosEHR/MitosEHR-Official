@@ -53,6 +53,8 @@ Ext.onReady(function(){
                     {name: 'lname',                 type: 'string'},
                     {name: 'username',              type: 'string'},
                     {name: 'password',              type: 'string'},
+                    {name: 'oPassword',             type: 'string'},
+                    {name: 'nPassword',             type: 'string'},
                     {name: 'facility_id',           type: 'int'},
                     {name: 'see_auth',              type: 'string'},
                     {name: 'taxonomy',              type: 'string'},
@@ -230,8 +232,12 @@ Ext.onReady(function(){
                             text      	: '<?php i18n("Change Password"); ?>',
                             iconCls   	: 'save',
                             id        	: 'cmdSavePass',
-                            handler   : function(){
+                            handler     : function(){
+                                page.formPass.getForm().reset();
+                                var rec = page.storeUsers.getAt(0);
+							    page.formPass.getForm().loadRecord(rec);
                                 page.winPass.show();
+
                             }
                         })
                     ]
@@ -245,35 +251,37 @@ Ext.onReady(function(){
                 }
             });
             page.formPass = new Ext.form.FormPanel({
-                bodyPadding: 15,
-                items   :[{
-                    fieldLabel  : 'Old Password',
-                    labelWidth  : 130,
-                    xtype       : 'textfield',
-                    width       : 380,
-                    name        : 'password',
-                    inputType   : 'password'
+                bodyPadding : 15,
+                defaultType : 'textfield',
+                defaults    : {labelWidth:130,width:380,inputType:'password'},
+                items :[{
+                    name: 'id',
+                    hidden: true
                 },{
-                    fieldLabel  : 'New Password',
-                    labelWidth  : 130,
-                    xtype       : 'textfield',
-                    width       : 380,
-                    name        : 'nPassword',
-                    inputType   : 'password'
+                    fieldLabel          : 'Old Password',
+                    name                : 'oPassword',
+                    allowBlank          : false
                 },{
-                    fieldLabel  : 'Re Type Password',
-                    labelWidth  : 130,
-                    xtype       : 'textfield',
-                    width       : 380,
-                    name        : 'vPassword',
-                    inputType   : 'password'
+                    fieldLabel          : 'New Password',
+                    name                : 'nPassword',
+                    allowBlank          : false,
+                    id                  : 'myAccountPage_nPassword'
+                },{
+                    fieldLabel          : 'Re Type Password',
+                    name                : 'vPassword',
+                    allowBlank          : false,
+                    vtype               : 'password',
+                    initialPassField    : 'myAccountPage_nPassword',
+                    validateOnChange    : true
                 }]
-
             });
             page.winPass = new Ext.create('Ext.mitos.SaveCancelWindow', {
                 width   : 420,
                 title   :'Change you password',
-                form    : page.formPass
+                form    : page.formPass,
+                store   : page.storeUsers,
+                scope   : page,
+                idField : 'id'
             });
             //***********************************************************************************
             // Top Render Panel
