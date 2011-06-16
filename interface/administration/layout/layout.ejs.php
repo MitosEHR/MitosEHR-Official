@@ -143,13 +143,13 @@ var currRec; 					// A stored current record selected by the user.
             anchor: '100%'
         },
         items: [{
-			xtype: 'combo', 
+			xtype: 'combo',
+			name: 'where',
 			displayField: 'group_name',
 			valueField: 'group_name', 
 			editable: false, 
 			store: whereStore, 
-			queryMode: 'local',
-            name: 'where'
+			queryMode: 'local'
         }]
     });
 	
@@ -168,12 +168,20 @@ var currRec; 					// A stored current record selected by the user.
 			id			: 'cmdSave',
 			iconCls		: 'save',
             handler: function(){
-				winAddField.hide();		// Finally hide the dialog window
+				currRec = new layoutModel();						// Create a new record object based from the model
+				var fieldValues = whereForm.getForm().getValues();	// Get the values from the FORM
+				currRec.set('group_name', fieldValues['where']);	// Set the hidden values of the record
+				currRec.set('form_id', form_id);					// Set the hidden values of the record 
+				LayoutStore.add( currRec );							// Add the new record to the STORE
+				rowEditing.startEdit(currRec, 0);					// inject the record to the GRID and start editing
+				layoutGrid.setAutoScroll(true);						// try to scroll down or up to the new added racord
+				winAddField.hide();									// Finally hide the dialog window
 			}
 		},'-',{
 			text:'<?php i18n('Close'); ?>',
 			iconCls: 'delete',
             handler: function(){
+            	rowEditing.cancelEdit();
             	winAddField.hide();
             }
 		}]
@@ -395,6 +403,7 @@ var currRec; 					// A stored current record selected by the user.
 				text: '<?php i18n("Add field"); ?>',
 				iconCls: 'icoAddRecord',
 				handler: function(){
+					rowEditing.cancelEdit();
 					winAddField.show();
 				}
 			},'-',{
@@ -403,6 +412,7 @@ var currRec; 					// A stored current record selected by the user.
 				disabled: true,
 				id: 'cmdDelete',
 				handler: function(){
+					rowEditing.cancelEdit();
 				}
 			}]
 		}]
@@ -435,6 +445,7 @@ var currRec; 					// A stored current record selected by the user.
 		listeners: {
 			itemclick: {
             	fn: function(DataView, record, item, rowIndex, e){
+            		rowEditing.cancelEdit();
 					form_id = record.get('form_id');
 					LayoutStore.load({params:{form_id: form_id }});
 					whereStore.load({params:{task: 'groups', form_id: form_id} });
