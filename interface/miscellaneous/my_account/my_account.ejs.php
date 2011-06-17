@@ -7,13 +7,13 @@
 // Author: Ernest Rodriguez
 // Modified: Gino Rivera
 // 
-// MitosEHR (Eletronic Health Records) 2011
+// MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("../../../library/I18n/I18n.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -38,9 +38,6 @@ Ext.onReady(function(){
 			var page = this;
             /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
-            var rowPos; // Stores the current Grid Row Position (int)
-            var currRec; // Store the current record (Object)
-
             // *************************************************************************************
             // Users Model and Data store
             // *************************************************************************************
@@ -74,7 +71,7 @@ Ext.onReady(function(){
             });
 
             //------------------------------------------------------------------------------
-            // When the data is loaded semd values to de form
+            // When the data is loaded send values to de form
             //------------------------------------------------------------------------------
             var task = new Ext.util.DelayedTask(function(){
                 var rec = page.storeUsers.getAt(0); // get the record from the store
