@@ -126,7 +126,7 @@ Ext.onReady(function(){
 
 
             Ext.create('Ext.mitos.TopRenderPanel', {
-                pageTitle: '<?php i18n('Office Notes'); ?>',
+                pageTitle: '<?php i18n('Web Search'); ?>',
                 pageLayout: 'border',
                 pageBody: [page.searchPanel,page.searchResults ]
             });
