@@ -72,9 +72,4 @@ $sql = $mitos_db->sqlBind($row, "users", "U", "id='" . $data['id'] . "'");
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 
-if ( $ret != "" ){
-	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
-} else {
-	echo "{ success: true }";
-}
 ?>
