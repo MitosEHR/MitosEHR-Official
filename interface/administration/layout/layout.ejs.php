@@ -237,11 +237,11 @@ Ext.onReady(function() {
 						width		: 50,
 						align		: 'center',
         		    	editor		: {
-            				name: 'seq',
-			                xtype: 'numberfield',
-    			            allowBlank: false,
-        	    		    minValue: 1,
-		            	    maxValue: 100
+           					name: 'seq',
+		                	xtype: 'numberfield',
+   			            	allowBlank: false,
+       	    		    	minValue: 1,
+	            	    	maxValue: 100
         		    	}
 		            },
 					{
@@ -285,9 +285,9 @@ Ext.onReady(function() {
 						dataIndex	: 'uor',
 						width		: 50,
 						align		: 'center',
-						editor		: {
+						editor		:{
+							xtype: 'combo',
 							name: 'uor',
-							xtype: 'combo', 
 							displayField: 'uor',
 							valueField: 'uor', 
 							editable: false, 
