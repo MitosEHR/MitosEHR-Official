@@ -8,7 +8,6 @@
 // Modified: n/a
 // 
 // MitosEHR (Eletronic Health Records) 2011
-// Testing new index.
 //******************************************************************************
 
 session_name ( "MitosEHR" );
