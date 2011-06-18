@@ -1,0 +1,157 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*=============================================================
+ * New Styles
+ * by Gino Rivera Falu
+ *============================================================*/
+.topheader .x-panel-body {
+	background-color: transparent !important;
+	border: none !important; 
+}
+
+.noHeader .x-grid3-header {
+  visibility:hidden !important;  /* class use to hide grid colunm header */
+  height:0 !important;
+  margin-top:-8px !important;
+}
+
+.x-grid3-cell-inner { white-space: normal !important; }
+
+.x-grid-wrap-cells td.x-grid3-cell {
+    overflow: hidden !important;
+}
+.x-grid-wrap-cells td.x-grid3-cell div.x-grid3-cell-inner {
+    white-space: normal !important;
+}
+.addService{
+	background-image: url(../ui_icons/service_ico.png) !important;
+}
+
+.facilities{
+	background-image: url(../ui_icons/facilities.png) !important;
+}
+
+
+.delete{
+	background-image: url(../ui_icons/delete.png) !important;
+}
+
+.save{
+	background-image: url(../ui_icons/save.png) !important;
+}
+
+.edit{
+	background-image: url(../ui_icons/edit.png) !important;
+}
+
+.searchUsers{
+	background-image: url(../ui_icons/search-user.png) !important;
+}
+
+.searchData{
+	background-image: url(../ui_icons/search-data.png) !important;
+}
+
+.icoInjection{
+	background-image: url(../ui_icons/injection.png) !important;
+}
+
+.icoCalendar{
+	background-image: url(../ui_icons/icoCalendar.png) !important;
+}
+
+.icoFilter{
+	background-image: url(../ui_icons/icoFilter.png) !important;
+}
+.icoAddressBook{
+	background-image: url(../ui_icons/address_book.png) !important;
+}
+.icoListOptions{
+	background-image: url(../ui_icons/list.png) !important;
+}
+.icoAddRecord{
+	background-image: url(../ui_icons/add_record.png) !important;
+}
+.newMessage{
+	background-image: url(../ui_icons/new_message.png) !important;
+}
+.mail{
+	background-image: url(../ui_icons/mail.png) !important;
+}
+.document{
+	background-image: url(../ui_icons/document.png) !important;
+}
+.select{
+	background-image: url(../ui_icons/select.png) !important;
+}
+.list{
+	background-image: url(../ui_icons/list_bullets.png) !important;
+}
+
+.app_bg{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	text-shadow: #6374AB 1px 1px 1px;
+	font-size: 18px;
+	color: #FFF;
+}
+
+.searchCriteria{
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	border: 1px solid #FFF;
+	background-color: #CCC;
+	margin: 5px;
+	padding: 5px;
+	-moz-border-radius: 6px;
+	-webkit-border: 6px;
+}
+.ux-calendar-box-txt{
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: #d0def0;
+	color: #333;
+	font-weight: bold;
+	padding-left: 5px;
+}
+
+.ux-bold_title{
+	font-weight: bold;
+	font-size: 10px;
+	white-space: nowrap;
+}
+
+.ux-value{
+	font-size: 10px;
+}
+
+.ux-enclousure{
+	background-image: url(../ui_app/panel_bg.png) !important;
+	background-repeat: repeat-x;
+	padding: 6px;
+}
+
+.ux-eclosure-photo{
+	background-color: #f4f4f4;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #CCC;
+	padding-top: 2px;
+	padding-right: 2px;
+	padding-bottom: 6px;
+	padding-left: 2px;
+}
+
+.ux-center{
+	text-align: center;
+}
+
+.fieldMark{
+	background-color: #ffed27;
+}

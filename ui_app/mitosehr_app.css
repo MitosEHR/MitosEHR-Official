@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face{
+	font-family: 'Cuprum';
+	src: url('../ui_fonts/Cuprum.ttf');
+}
+
+
+#topRenderPanel{
+background-color: #DFE8F6;
+padding: 5px !important;
+}
+#topRenderPanel .x-panel-body{
+	background-color: #fff !important;
+}
+#topRenderPanel-header{
+	background-color: #DFE8F6;
+    color: #596F8F;
+    font-size: 22px;
+    font-weight: 200;
+    padding: 8px 15px;
+    text-shadow: 0 1px 0 #fff;
+}
+#topRenderPanel-body{
+	padding:5px;
+	background-color: #fff;
+	border-color: #D4CDCC;
+	border-style: solid;
+	border-width:1px;
+}
+.form-white-bg .x-panel-body {
+	background-color: #fff !important;
+	background-color: #fff !important;
+	border-color: #D4CDCC !important;
+	border-style: solid !important;
+	border-width: 1px !important;
+}
+.x-grid-table .x-grid-row{
+cursor: pointer !important;
+}
+.x-border-layout-ct{
+    background-color: #f7f7f7;
+}
+.dashboard_title{
+	font-family: "Cuprum";
+	font-size: 24px;
+	width: 100%;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #ccc;
+}
+
+body#login{
+	background-image:url(login_bg.png) !important;
+	background-position: bottom;
+	background-attachment:fixed;
+	background-repeat:repeat-x !important;
+	background-color: #FFF;
+	margin: 0px;
+}
+#bg_logo{
+	position: absolute;
+	background-image:url(mitosehr_big_logo.png);
+	background-position: top center;
+	background-attachment:fixed;
+	background-repeat: no-repeat;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 196px;
+}
+#copyright{
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 10px;
+	color: #333;
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+}
+
+#copyright a{
+	color: #333;;
+}
+
+#dashboard_title{
+	font-size: 24px;
+	color: #333;
+	width: 100%;
+}
+/*Top Alert Message Styles*/
+.msg .x-box-mc {
+    font-size:14px;
+}
+#msg-div {
+    position:absolute;
+    left:35%;
+    top:10px;
+    width:300px;
+    z-index:20000;
+}
+#msg-div .msg {
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    background: #F6F6F6;
+    border: 2px solid #ccc;
+    margin-top: 2px;
+    padding: 10px 15px;
+    color: #555;
+}
+#msg-div .msg h3 {
+    margin: 0 0 8px;
+    font-weight: bold;
+    font-size: 15px;
+}
+#msg-div .msg p {
+    margin: 0;
+}
