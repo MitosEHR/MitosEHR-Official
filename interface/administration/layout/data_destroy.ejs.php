@@ -33,16 +33,41 @@ $mitos_db = new dbHelper();
 // Flag the message to delete
 // *************************************************************************************
 $data = json_decode ( $_REQUEST['row'] );
-$delete_id = $data->item_id;
+$row = array();
+$row['item_id'] 		= trim($data->item_id);
+$row['form_id'] 		= $data->form_id;
+$row['field_id'] 		= $data->field_id;
+$row['group_name'] 		= $data->group_name;
+$row['title'] 			= $data->title;
+$row['seq'] 			= $data->seq;
+$row['data_type'] 		= $dataTypes[$data->data_type]; // Reverse
+$row['uor'] 			= $uorTypes[$data->uor]; // Reverse
+$row['fld_length'] 		= $data->fld_length;
+$row['max_length'] 		= $data->max_length;
+$row['list_id'] 		= $reverse_list[0]['option_id'];
+$row['titlecols'] 		= $data->titlecols;
+$row['datacols'] 		= $data->datacols;
+$row['default_value'] 	= $data->default_value;
+$row['edit_options'] 	= $data->edit_options;
+$row['description'] 	= $data->description;
+$row['group_order'] 	= $data->group_order;
+
+// *************************************************************************************
+// Check if this field about to be deleted, has data on the patient_data
+// If so, advice the user
+// *************************************************************************************
+$sql = "ALTER TABLE patient_data DROP COLUMN " . $row['field_id'];
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execLog();
 
 // *************************************************************************************
 // Finally build the Delete SQL Statement and inject it to the SQL Database
 // *************************************************************************************
-$sql = "DELETE FROM layout_options WHERE item_id='" . $delete_id . "'";
+$sql = "DELETE FROM layout_options WHERE item_id='" . $row['item_id'] . "'";
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 
-if ( $ret == "" ){
+if ( $ret[2] <> "" ){
 	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
 } else {
 	echo "{ success: true }";

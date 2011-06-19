@@ -427,7 +427,7 @@ Ext.onReady(function() {
 								Ext.Msg.show({
 									title: '<?php i18n('Please confirm...'); ?>', 
 									icon: Ext.MessageBox.QUESTION,
-									msg:'<?php i18n('Are you sure to delete this field?'); ?>',
+									msg:'<?php i18n('Are you sure to delete this field?<br>WARNING: This will also detele the field on the patient data.'); ?>',
 									buttons: Ext.Msg.YESNO,
 									fn:function(btn,msgGrid){
 										if(btn=='yes'){
