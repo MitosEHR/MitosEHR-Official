@@ -112,5 +112,16 @@ Ext.apply(Ext.form.VTypes, {
             return (val == pwd.getValue());
         }
         return true;
-    }, passwordText: 'Passwords do not match'
+    }, passwordText: 'Passwords do not match',
+    
+    // ---------------------------------------
+    // Validate for a correct MySQL field
+    // compliance. 
+    // NO SPACES, NO INVALID CHARACTERS
+    // --------------------------------------- 
+    mysqlField: function(val, field){
+    	var regexObj = /[A-Za-z][A-Za-z0-9_]*/;
+    	if(!val.match(regexObj)){ return false; } else { return true; } 
+    }, mysqlFieldText: 'The field entered has invalid characters'
+    
 });
