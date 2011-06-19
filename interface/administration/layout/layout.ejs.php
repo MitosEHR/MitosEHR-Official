@@ -65,7 +65,7 @@ Ext.onReady(function() {
 					{name: 'default_value',		type: 'string'},
 					{name: 'edit_options',		type: 'string'},
 					{name: 'description',		type: 'string'},
-					{name: 'group_order',		type: 'string'}
+					{name: 'group_order',		type: 'string'},
 				],
 					groupField	: 'group_name',
 					model 		: 'layoutModel',

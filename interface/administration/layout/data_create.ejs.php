@@ -134,8 +134,47 @@ $row['group_order'] 	= $data->group_order;
 
 // *************************************************************************************
 // Create the COLUMN into the patient_data table
+// Step 1
 // *************************************************************************************
-$sql = "ALTER TABLE patient_data ADD COLUMN " . $row['field_id'];
+if($row['form_id']=='Demographics') $table = 'patient_data';
+if($row['form_id']=='Refferals') $table = 'transactions';
+if($row['form_id']=='History') $table = 'history_data';
+$sql = "ALTER TABLE " . $table . " ADD COLUMN " . $row['field_id'] . " ";
+
+// *************************************************************************************
+// COLUMN field definition
+// Step 2
+// *************************************************************************************
+switch ( $row['data_type'] ){
+	//-------------------------
+	// Listbox
+	//-------------------------
+	case '1':
+		$sql .= "VARCHAR(255)";
+	break;
+	//-------------------------
+	// Textbox
+	//-------------------------
+	case '2':
+		$sql .= "VARCHAR(".$row['max_length'].")";
+	break;
+	
+	//-------------------------
+	// Textarea
+	//-------------------------
+	case '3':
+		$sql .= "VARCHAR(".$row['max_length'].")";
+	break;
+}
+
+// *************************************************************************************
+// COLUMN Extra parameters
+// Step 3
+// *************************************************************************************
+if(substr_count($row['edit_options'], 'N') ){
+	$sql .= " NOT NULL ";
+}
+
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 if ( $ret[2] <> "" ){
