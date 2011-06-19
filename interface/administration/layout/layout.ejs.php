@@ -37,6 +37,7 @@ Ext.onReady(function() {
 		
             /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
+            
             var panel = this;
 			var form_id = 'Demographics'; 	// Stores the current form group selected by the user.
 			var rowPos; 					// Stores the current Grid Row Position (int)
