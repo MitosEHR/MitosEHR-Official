@@ -30,20 +30,23 @@ Ext.onReady(function(){
 			'Ext.mitos.FacilitiesComboBox',
 			'Ext.mitos.AuthorizationsComboBox'
 		],
+		
 		initComponent: function(){
             /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
+			
 			var page = this;
 			var rowPos; // Stores the current Grid Row Position (int)
 			var currRec; // Store the current record (Object)
+			
 			page.userStore = Ext.create('Ext.mitos.CRUDStore',{
 				fields: [
 					{name: 'id',                    type: 'int'},
 					{name: 'username',              type: 'string'},
 					{name: 'password',              type: 'auto'},
-					//{name: 'authorizedd',           type: 'string'},
+					{name: 'authorizedd',           type: 'string'},
 					{name: 'authorized',            type: 'string'},
-					//{name: 'actived',            	type: 'string'},
+					{name: 'actived',            	type: 'string'},
 					{name: 'active',            	type: 'string'},
 					{name: 'info',                  type: 'string'},
 					{name: 'source',                type: 'int'},
@@ -54,31 +57,31 @@ Ext.onReady(function(){
 					{name: 'federaltaxid',          type: 'string'},
 					{name: 'federaldrugid',         type: 'string'},
 					{name: 'upin',                  type: 'string'},
-					//{name: 'facility',              type: 'string'},
+					{name: 'facility',              type: 'string'},
 					{name: 'facility_id',           type: 'int'},
 					{name: 'see_auth',              type: 'auto'},
 					{name: 'active',                type: 'auto'},
 					{name: 'npi',                   type: 'string'},
 					{name: 'title',                 type: 'string'},
 					{name: 'specialty',             type: 'string'},
-					//{name: 'billname',              type: 'string'},
-					//{name: 'email',                 type: 'string'},
-					//{name: 'url',                   type: 'string'},
-					//{name: 'assistant',             type: 'string'},
-					//{name: 'organization',          type: 'string'},
-					//{name: 'valedictory',           type: 'string'},
-					//{name: 'fulladdress',           type: 'string'},
+					{name: 'billname',              type: 'string'},
+					{name: 'email',                 type: 'string'},
+					{name: 'url',                   type: 'string'},
+					{name: 'assistant',             type: 'string'},
+					{name: 'organization',          type: 'string'},
+					{name: 'valedictory',           type: 'string'},
+					{name: 'fulladdress',           type: 'string'},
 					{name: 'cal_ui',                type: 'string'},
 					{name: 'taxonomy',              type: 'string'},
-					//{name: 'ssi_relayhealth',       type: 'string'},
+					{name: 'ssi_relayhealth',       type: 'string'},
 					{name: 'calendar',              type: 'int'},
 					{name: 'abook_type',            type: 'string'},
 					{name: 'pwd_expiration_date',   type: 'string'},
 					{name: 'pwd_history1',          type: 'string'},
 					{name: 'pwd_history2',          type: 'string'},
-					{name: 'default_warehouse',     type: 'string'}
-					//{name: 'ab_name',               type: 'string'},
-					//{name: 'ab_title',              type: 'string'}
+					{name: 'default_warehouse',     type: 'string'},
+					{name: 'ab_name',               type: 'string'},
+					{name: 'ab_title',              type: 'string'} 
 				],
 				model 		:'gModel',
 				idProperty 	:'id',

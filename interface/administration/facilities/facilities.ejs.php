@@ -219,6 +219,7 @@ Ext.onReady(function() {
 				if (facilityForm.getForm().findField('id').getValue()){ // Update
 					var record = FacilityStore.getAt(rowPos);
 					var fieldValues = facilityForm.getForm().getValues();
+                    var k, i;
 					for ( k=0; k <= record.fields.getCount()-1; k++) {
 						i = record.fields.get(k).name;
 						record.set( i, fieldValues[i] );

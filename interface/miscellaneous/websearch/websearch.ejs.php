@@ -119,7 +119,7 @@ Ext.onReady(function(){
                 region		: 'center',
                 store       : page.store,
                 listeners	: {
-                    
+
                 },
                 columns: [
                     { width: 250, header: '<?php i18n('Title'); ?>', sortable: true, dataIndex: 'title'  },
