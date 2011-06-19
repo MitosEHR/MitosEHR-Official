@@ -178,7 +178,7 @@ Ext.onReady(function() {
 						var fieldValues = panel.whereForm.getForm().getValues();	// Get the values from the FORM
 						currRec.set('group_name', fieldValues['where']);			// Set the hidden values of the record
 						currRec.set('form_id', form_id);							// Set the hidden values of the record
-						panel.LayoutStore.insert(1, currRec );						// Add the new record to the STORE
+						panel.LayoutStore.insert(0, currRec );						// Add the new record to the STORE
 						panel.winAddField.hide();									// Finally hide the dialog window
 						panel.rowEditing.startEdit(currRec, 0);						// inject the record to the GRID and start editing
 					}
@@ -386,8 +386,7 @@ Ext.onReady(function() {
 						align		: 'left',
 		            	editor		: {
         		    		name: 'description',
-	            		    xtype: 'textfield',
-		    	            allowBlank: false
+	            		    xtype: 'textfield'
         		    	}
 		            },
 					{ text: 'item_id', hidden: true, dataIndex: 'item_id' },
