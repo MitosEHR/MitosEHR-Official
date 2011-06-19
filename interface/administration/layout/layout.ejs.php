@@ -399,30 +399,47 @@ Ext.onReady(function() {
 		            		panel.rowEditing.cancelEdit();
         		    		currRec = panel.LayoutStore.getAt(rowIndex);
             				rowPos = rowIndex;
+            				panel.cmdDelete.enable();
             			}
 					}
 				},
 				dockedItems: [{
 					xtype: 'toolbar',
 					dock: 'top',
-					items: [{
-						name: 'cmdAddField',
-						text: '<?php i18n("Add field"); ?>',
-						iconCls: 'icoAddRecord',
-						handler: function(){
-							panel.rowEditing.cancelEdit();
-							panel.winAddField.show();
-						}
-					},'-',{
-						name: 'cmdDelField',
-						text: '<?php i18n("Delete field"); ?>',
-						iconCls: 'delete',
-						disabled: true,
-						id: 'cmdDelete',
-						handler: function(){
-							panel.rowEditing.cancelEdit();
-						}
-					}]
+					items: [
+						panel.cmdDelete = new Ext.create('Ext.Button', {
+							name: 'cmdAddField',
+							text: '<?php i18n("Add field"); ?>',
+							iconCls: 'icoAddRecord',
+							handler: function(){
+								panel.rowEditing.cancelEdit();
+								panel.winAddField.show();
+							}
+						})
+					,'-',
+						panel.cmdDelete = new Ext.create('Ext.Button', {
+							name: 'cmdDelField',
+							text: '<?php i18n("Delete field"); ?>',
+							iconCls: 'delete',
+							disabled: true,
+							handler: function(){
+								panel.rowEditing.cancelEdit();
+								Ext.Msg.show({
+									title: '<?php i18n('Please confirm...'); ?>', 
+									icon: Ext.MessageBox.QUESTION,
+									msg:'<?php i18n('Are you sure to delete this field?'); ?>',
+									buttons: Ext.Msg.YESNO,
+									fn:function(btn,msgGrid){
+										if(btn=='yes'){
+											panel.layoutGrid.remove( currRec );
+											panel.layoutGrid.sync();
+											panel.layoutGrid.load();
+						    		    }
+									}
+								});
+							}
+						})
+					]
 				}]
 		    }); // END LayoutGrid Grid
     

@@ -115,7 +115,6 @@ foreach($mitos_db->execStatement() as $row){
 // just in case 
 // *************************************************************************************
 $row = array();
-$row['item_id'] 		= trim($data->item_id);
 $row['form_id'] 		= $data->form_id;
 $row['field_id'] 		= $data->field_id;
 $row['group_name'] 		= $data->group_name;
