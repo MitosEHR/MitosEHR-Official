@@ -13,6 +13,9 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
+//******************************************************************************
+// Reset session count 10 secs = 1 Flop
+//******************************************************************************
 $_SESSION['site']['flops'] = 0; ?>
 <script type="text/javascript">
 Ext.onReady(function(){
@@ -40,6 +43,7 @@ Ext.onReady(function(){
                     ]
                 });
             }
+            
             page.store = Ext.create('Ext.data.Store', {
                 pageSize	: 10,
                 model		: 'webSearch',
@@ -55,6 +59,7 @@ Ext.onReady(function(){
                 },
                 autoLoad:true
             });
+
             page.searchPanel = new Ext.create('Ext.panel.Panel', {
                 region      : 'north',
                 bodyPadding	: '8 11 5 11',
@@ -113,9 +118,11 @@ Ext.onReady(function(){
                     }
                 }]
             });
+
             page.searchRow = function(value, p, record){
                 return Ext.String.format('<div class="topic"><span class="search_title">{0}</span><br><span class="search_source">{1}</span><br><span class="search_snippet" style="white-space: normal;">{2}</span></div>', value, record.get('source')||"Unknown", record.get('snippet')||"Unknown");
             };
+
  			page.onotesGrid = new Ext.create('Ext.mitos.GridPanel', {
                 margin      : '0 0 2 0',
                 region		: 'center',
@@ -139,6 +146,7 @@ Ext.onReady(function(){
                     }
                 }
             }); // END GRID
+
             page.viewPanel = new Ext.create('Ext.panel.Panel', {
                 region: 'south',
                 height:300,
@@ -160,7 +168,8 @@ Ext.onReady(function(){
             });
 			page.callParent(arguments);
 		} // end of initComponent
-	}); //end WebSearchPage class
+	}); //ens UserPage class
     Ext.create('Ext.mitos.WebSearchPage');
 }); // End ExtJS
+
 </script>
