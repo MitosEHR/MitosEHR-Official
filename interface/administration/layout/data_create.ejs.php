@@ -133,7 +133,7 @@ $row['description'] 	= $data->description;
 $row['group_order'] 	= $data->group_order;
 
 // *************************************************************************************
-// Create the COLUMN into the patient_data table
+// Create the ALTER statement
 // Step 1
 // *************************************************************************************
 if($row['form_id']=='Demographics') $table = 'patient_data';
@@ -142,7 +142,7 @@ if($row['form_id']=='History') 		$table = 'history_data';
 $sql = "ALTER TABLE " . $table . " ADD " . $row['field_id'] . " ";
 
 // *************************************************************************************
-// COLUMN field definition
+// ALTER COLUMN field definition
 // Step 2
 // *************************************************************************************
 if($row['data_type']=='1') $sql .= "VARCHAR(255)"; 						// Listbox
@@ -150,11 +150,14 @@ if($row['data_type']=='2') $sql .= "VARCHAR(".$row['max_length'].")";	// Textbox
 if($row['data_type']=='3') $sql .= "VARCHAR(".$row['max_length'].")";	// Textarea
 
 // *************************************************************************************
-// COLUMN Description 
+// ALTER COLUMN Description 
 // Step 3
 // *************************************************************************************
 if($row['description'] <> '') $sql .= " COMMENT '" . $row['description'] . "'"; // Textbox
 
+// *************************************************************************************
+// Finally create the extra field in the selected table
+// *************************************************************************************
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 if ( $ret[2] <> "" ){
