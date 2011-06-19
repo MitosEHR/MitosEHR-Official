@@ -142,7 +142,6 @@ switch($_SESSION['search_type']){
         $totals = $count;
     break;
 }
-echo $url;
 
 //********************************************************************************
 // lets print the json for sencha
