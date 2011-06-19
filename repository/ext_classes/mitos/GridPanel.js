@@ -5,12 +5,12 @@ Ext.define('Ext.mitos.GridPanel',{
     border      : true,    
 	frame       : true,
     viewConfig  : { stripeRows: true },
+    loadMask    : true,
     initComponent: function(){	
     	var me = this;
 
     	Ext.apply(this, {
 		  	layout	    : 'fit',
-		  	loadMask    : true,
 		  	columnLines	: true,
 		  	frameHeader	: false
 		});
