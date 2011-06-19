@@ -48,16 +48,20 @@ Ext.onReady(function(){
                 pageSize	: 10,
                 model		: 'webSearch',
                 proxy: {
-                    type	: 'ajax',
-                    url 	: 'interface/miscellaneous/websearch/data_read.ejs.php',
+                    type	    : 'ajax',
+                    url 	    : 'interface/miscellaneous/websearch/data_read.ejs.php',
+                    noCache     : false,
+                    startParam  : 'retstart',
+                    limitParam  : 'retmax',
+                    pageParam   : 'file',
                     reader: {
                         type			: 'json',
                         root            : 'row',
                         totalProperty	: 'totals',
                         idProperty      : 'id'
                     }
-                },
-                autoLoad:true
+                }
+                //autoLoad:true
             });
 
             page.searchPanel = new Ext.create('Ext.panel.Panel', {
@@ -69,54 +73,55 @@ Ext.onReady(function(){
                     xtype: 'radiogroup',
                     fieldLabel: 'Search By',
                     items: [
-                        {boxLabel: 'Heath Topics', name: 'url', inputValue: 'http://wsearch.nlm.nih.gov/ws/query'},
-                        {boxLabel: 'N/A', name: 'url', inputValue: 2},
-                        {boxLabel: 'N/A', name: 'url', inputValue: 3},
-                        {boxLabel: 'N/A', name: 'url', inputValue: 4},
-                        {boxLabel: 'N/A', name: 'url', inputValue: 5}
+                        {boxLabel: 'Heath Topics', name: 'url', inputValue: 'http://wsearch.nlm.nih.gov/ws/query?db=healthTopics'}
+                        //{boxLabel: 'N/A', name: 'url', inputValue: 2},
+                        //{boxLabel: 'N/A', name: 'url', inputValue: 3},
+                        //{boxLabel: 'N/A', name: 'url', inputValue: 4},
+                        //{boxLabel: 'N/A', name: 'url', inputValue: 5}
                     ],
                     listeners:{
                         change: function(){
                             var value = this.getValue();
                             baseUrl = value.url;
+                             page.searchField.enable();
                         }
                     }
-                },{
-                    xtype		: 'textfield',
-                    id			: 'liveSearch',
-                    emptyText	: 'Live patient search...',
-                    enableKeyEvents: true,
-                    hideLabel	: true,
-                    anchor		: '100%',
-                    listeners:{
-                        keyup: function(){
-                            var query = this.getValue();
-                            if(query.length > 2){
-                                page.store.load({params:{ url:baseUrl, query:query }});
-                            }
-                        },
-                        focus: function(){
-                          page.viewPanel.collapse();
-                        },
-                        blur: function(){
-                         Ext.getCmp('liveSearch').reset();
-                        },
-                        select: function(combo, selection) {
-                            var post = selection[0];
-                            if (post) {
-                                Ext.Ajax.request({
-                                    url: Ext.String.format('library/patient/patient_search.inc.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
-                                    success: function(response, opts){
-                                        var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
-                                        Ext.getCmp('patientButton').setText( newPatientBtn );
-                                        Ext.getCmp('patientButton').enable();
-                                    }
-                                });
-                                Ext.data.Request()
+                },  page.searchField = new Ext.form.field.Text({
+                        emptyText	: 'Web search...',
+                        enableKeyEvents: true,
+                        hideLabel	: true,
+                        anchor		: '100%',
+                        disabled     : true,
+                        listeners:{
+                            keyup: function(){
+                                var query = this.getValue();
+                                if(query.length > 2){
+                                    page.store.load({params:{ url:baseUrl, term:query }});
+                                }
+                            },
+                            focus: function(){
+                              page.viewPanel.collapse();
+                            },
+                            blur: function(){
+                             Ext.getCmp('liveSearch').reset();
+                            },
+                            select: function(combo, selection) {
+                                var post = selection[0];
+                                if (post) {
+                                    Ext.Ajax.request({
+                                        url: Ext.String.format('library/patient/patient_search.inc.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
+                                        success: function(response, opts){
+                                            var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
+                                            Ext.getCmp('patientButton').setText( newPatientBtn );
+                                            Ext.getCmp('patientButton').enable();
+                                        }
+                                    });
+                                    Ext.data.Request()
+                                }
                             }
                         }
-                    }
-                }]
+                    })
+                ]
             });
 
             page.searchRow = function(value, p, record){
