@@ -1,23 +1,31 @@
 <?php
-//--------------------------------------------------------------------------------------------------------------------------
-// manage_messages.ejs.php
+//********************************************************************************
+// data _read.ejs.php
 // v0.0.1
 // Under GPLv3 License
 //
 // Integrated by: Ernesto Rodriguez. in 2011
 //
-// Remember, this file is called via the Framework Store, this is the AJAX thing.
-//--------------------------------------------------------------------------------------------------------------------------
+// This file will manage and parse all Web Search Requests
+//********************************************************************************
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 require_once($_SESSION['site']['root']."/library/XMLParser/XMLParser.inc.php");
-
-//$url = ('http://wsearch.nlm.nih.gov/ws/query?db=healthTopics&term=diabetes&retmax=10');
-
-
+//--------------------------------------------------------------------------------
+// lets declare few vars for later use.
+//--------------------------------------------------------------------------------
 $args = '';
-if($_REQUEST['file'] == 1){
+$count = 0;
+//********************************************************************************
+// lets check if the request is search request or if is a pager request.
+// the pager does not pass the url.
+//********************************************************************************
+if(isset($_REQUEST['url'])){
+    //----------------------------------------------------------------------------
+    // Search request!
+    // lets use and store few arguments for pager requests if need it
+    //----------------------------------------------------------------------------
     $baseUrl = $_REQUEST['url'];
     $_SESSION['web_search_baseUrl'] = $baseUrl;
 
@@ -28,6 +36,10 @@ if($_REQUEST['file'] == 1){
         }
     }
 }else{
+    //----------------------------------------------------------------------------
+    // Pager Request!
+    // lets use a few session stored values.
+    //----------------------------------------------------------------------------
     $baseUrl = $_SESSION['web_search_baseUrl'];
     $args .= '&term='.$_SESSION['web_search_term'];
     $args .= '&file='.$_SESSION['web_search_file'];
@@ -37,18 +49,29 @@ if($_REQUEST['file'] == 1){
         }
     }
 }
-
+//********************************************************************************
+// build the URL using the baseUrl and the appended arguments from the if/else
+//********************************************************************************
 $url = $baseUrl.$args;
-
+//********************************************************************************
+// XML parser... PFM!
+//********************************************************************************
 $xml = file_get_contents($url);
 $parser = new XMLParser($xml);
 $parser->Parse();
 $rows = array();
-
+//--------------------------------------------------------------------------------
+// get the total value form the xml
+//--------------------------------------------------------------------------------
 $totals = $parser->document->count[0]->tagData;
+//--------------------------------------------------------------------------------
+// store file value for pager, if need it
+//--------------------------------------------------------------------------------
 $_SESSION['web_search_file'] = $parser->document->file[0]->tagData;
 
-$count = 0;
+//********************************************************************************
+// now lets work the xml file to push stuff into the $rows array()
+//********************************************************************************
 if(isset($parser->document->list[0]->document)){
    foreach($parser->document->list[0]->document as $document){
         foreach($parser->document->list[0]->document[$count]->content as $content){
@@ -67,5 +90,8 @@ if(isset($parser->document->list[0]->document)){
         $count++;
     }
 }
+//********************************************************************************
+// lets print the json for sencha
+//********************************************************************************
 print_r(json_encode(array('url' => $url, 'totals'=>$totals,'row'=>$rows)));
 ?>
