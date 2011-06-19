@@ -116,7 +116,7 @@ foreach($mitos_db->execStatement() as $row){
 // *************************************************************************************
 $row = array();
 $row['form_id'] 		= $data->form_id;
-$row['field_id'] 		= $data->field_id;
+$row['field_id'] 		= strtolower($data->field_id);
 $row['group_name'] 		= $data->group_name;
 $row['title'] 			= $data->title;
 $row['seq'] 			= $data->seq;
@@ -131,6 +131,17 @@ $row['default_value'] 	= $data->default_value;
 $row['edit_options'] 	= $data->edit_options;
 $row['description'] 	= $data->description;
 $row['group_order'] 	= $data->group_order;
+
+// *************************************************************************************
+// Create the COLUMN into the patient_data table
+// *************************************************************************************
+$sql = "ALTER TABLE patient_data ADD COLUMN " . $row['field_id'];
+$mitos_db->setSQL($sql);
+$ret = $mitos_db->execLog();
+if ( $ret[2] <> "" ){
+	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+	return;
+}
 
 // *************************************************************************************
 // Finally that validated POST variables is inserted to the database

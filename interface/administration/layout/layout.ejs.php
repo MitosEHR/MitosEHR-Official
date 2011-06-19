@@ -225,6 +225,7 @@ Ext.onReady(function() {
    	    		border	: true,
   	    		frame	: true,
   	    		sortable: false,
+  	    		selType	: 'rowmodel',
   	    		features: [panel.groupingLayout],
   	    		plugins	: [panel.rowEditing],
    	    		title	: '<?php i18n("Field editor"); ?> (<?php i18n("Demographics"); ?>)',
@@ -241,7 +242,8 @@ Ext.onReady(function() {
 		                	xtype: 'numberfield',
    			            	allowBlank: false,
        	    		    	minValue: 1,
-	            	    	maxValue: 100
+	            	    	maxValue: 100,
+	            	    	required: true
         		    	}
 		            },
 					{
@@ -253,7 +255,8 @@ Ext.onReady(function() {
             			editor		: {
 		            		name: 'group_name',
 	    		            xtype: 'textfield',
-    	        		    allowBlank: false
+    	        		    allowBlank: false,
+    	        		    required: true
 		            	}
         		    },
 					{
@@ -265,7 +268,9 @@ Ext.onReady(function() {
 		            	editor		: {
         		    		name: 'field_id',
 	            		    xtype: 'textfield',
-		    	            allowBlank: false
+	            		    vtype: 'mysqlField',
+		    	            allowBlank: false,
+		    	            required: true
         		    	}
 		            },
 					{
