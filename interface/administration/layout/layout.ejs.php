@@ -174,14 +174,13 @@ Ext.onReady(function() {
 					id			: 'cmdSave',
 					iconCls		: 'save',
             		handler: function(){
-						currRec = new panel.layoutModel();							// Create a new record object based from the model
+						currRec = new layoutModel();								// Create a new record object based from the model
 						var fieldValues = panel.whereForm.getForm().getValues();	// Get the values from the FORM
 						currRec.set('group_name', fieldValues['where']);			// Set the hidden values of the record
 						currRec.set('form_id', form_id);							// Set the hidden values of the record
-						panel.LayoutStore.add( currRec );							// Add the new record to the STORE
-						panel.rowEditing.startEdit(currRec, 0);						// inject the record to the GRID and start editing
-						panel.layoutGrid.setAutoScroll(true);						// try to scroll down or up to the new added racord
+						panel.LayoutStore.insert(1, currRec );						// Add the new record to the STORE
 						panel.winAddField.hide();									// Finally hide the dialog window
+						panel.rowEditing.startEdit(currRec, 0);						// inject the record to the GRID and start editing
 					}
 				},'-',{
 					text:'<?php i18n('Close'); ?>',
