@@ -31,6 +31,7 @@ Ext.onReady(function(){
             Ext.QuickTips.init();
 			var page = this;
             var bseUrl;
+            var rec = '';
             if (!Ext.ModelManager.isRegistered('webSearch')){
                 Ext.define("webSearch", {
                     extend: 'Ext.data.Model',
@@ -59,10 +60,10 @@ Ext.onReady(function(){
                 autoLoad:true
             });
 
-            page.searchPanel = Ext.create('Ext.panel.Panel', {
+            page.searchPanel = new Ext.create('Ext.panel.Panel', {
                 region      : 'north',
                 bodyPadding	: '8 11 5 11',
-                margin		: '0 0 5 0',
+                margin		: '0 0 2 0',
                 layout		: 'anchor',
                 items: [{
                     xtype: 'radiogroup',
@@ -94,6 +95,12 @@ Ext.onReady(function(){
                                 page.store.load({params:{ baseUrl:baseUrl, query:query }});
                             }
                         },
+                        focus: function(){
+                          page.viewPanel.collapse();
+                        },
+                        blur: function(){
+                         Ext.getCmp('liveSearch').reset();
+                        },
                         select: function(combo, selection) {
                             var post = selection[0];
                             if (post) {
@@ -107,31 +114,57 @@ Ext.onReady(function(){
                                 });
                                 Ext.data.Request()
                             }
-                        },
-                        blur: function(){
-                         Ext.getCmp('liveSearch').reset();
                         }
                     }
                 }]
             });
 
-			page.onotesGrid = new Ext.create('Ext.mitos.GridPanel', {
+            page.searchRow = function(value, p, record){
+                return Ext.String.format('<div class="topic"><span class="search_title">{0}</span><br><span class="search_source">{1}</span><br><span class="search_snippet" style="white-space: normal;">{2}</span></div>', value, record.get('source')||"Unknown", record.get('snippet')||"Unknown");
+            };
+
+ 			page.onotesGrid = new Ext.create('Ext.mitos.GridPanel', {
+                margin      : '0 0 2 0',
                 region		: 'center',
                 store       : page.store,
-                listeners	: {
-
-                },
                 columns: [
-                    { width: 250, header: '<?php i18n('Title'); ?>', sortable: true, dataIndex: 'title'  },
-                    { width: 250, header: '<?php i18n('Source'); ?>', sortable: true, dataIndex: 'source' },
-                    { flex: 1, header: '<?php i18n('Snippet'); ?>', sortable: true, dataIndex: 'snippet' }
-                ]
-
+                    { flex: 1, header:'<?php i18n("Search Results"); ?>', sortable: true, dataIndex: 'title', renderer:page.searchRow  },
+                    { hidden: true, sortable: true, dataIndex: 'source' },
+                    { hidden: true, sortable: true, dataIndex: 'snippet' }
+                ],
+                tbar: Ext.create('Ext.PagingToolbar', {
+                    store: page.store,
+                    displayInfo: true,
+                    emptyMsg: "<?php i18n('No Office Notes to display'); ?>",
+                    plugins: Ext.create('Ext.ux.SlidingPager', {})
+                }),
+                listeners:{
+                    itemclick:function(DataView, record, item, rowIndex, e){
+                        page.viewPanel.expand();
+                        rec = page.store.getAt(rowIndex);
+                        page.viewPanel.update(rec.data)
+                    }
+                }
             }); // END GRID
+
+            page.viewPanel = new Ext.create('Ext.panel.Panel', {
+                region: 'south',
+                height:300,
+                collapsible:true,
+                collapsed: true,
+                layout:'fit',
+                tpl: Ext.create('Ext.XTemplate',
+                    '<div class="search-data">',
+                        '<h3 class="search-title">Title:{title}</h3>',
+                        '<h4 class="search-source">Source: {source}</h4>',
+                    '</div>',
+                    '<div class="search-body">{FullSummary}</div>'
+                 )
+            });
             Ext.create('Ext.mitos.TopRenderPanel', {
                 pageTitle: '<?php i18n('Web Search'); ?>',
                 pageLayout: 'border',
-                pageBody: [page.searchPanel,page.onotesGrid ]
+                pageBody: [page.searchPanel,page.onotesGrid, page.viewPanel ]
             });
 			page.callParent(arguments);
 		} // end of initComponent
