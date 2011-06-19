@@ -174,14 +174,14 @@ Ext.onReady(function() {
 					id			: 'cmdSave',
 					iconCls		: 'save',
             		handler: function(){
-                        panel.rowEditing.cancelEdit();
-						currRec = new layoutModel;      							// Create a new record object based from the model
+						currRec = new panel.layoutModel();							// Create a new record object based from the model
 						var fieldValues = panel.whereForm.getForm().getValues();	// Get the values from the FORM
 						currRec.set('group_name', fieldValues['where']);			// Set the hidden values of the record
 						currRec.set('form_id', form_id);							// Set the hidden values of the record
-						panel.LayoutStore.insert( 0, currRec );						// Add the new record into the STORE & GRID
+						panel.LayoutStore.add( currRec );							// Add the new record to the STORE
+						panel.rowEditing.startEdit(currRec, 0);						// inject the record to the GRID and start editing
+						panel.layoutGrid.setAutoScroll(true);						// try to scroll down or up to the new added racord
 						panel.winAddField.hide();									// Finally hide the dialog window
-                        panel.rowEditing.startEdit(currRec, 1);					    // start editing the record
 					}
 				},'-',{
 					text:'<?php i18n('Close'); ?>',
@@ -199,7 +199,7 @@ Ext.onReady(function() {
     		panel.groupingLayout = Ext.create('Ext.grid.feature.Grouping',{
     			enableNoGroups: false,
         		groupHeaderTpl: '<?php i18n("Group"); ?>: {name} ({rows.length} <?php i18n("Field"); ?>{[values.rows.length > 1 ? "s" : ""]})'
-    		}); // end of grouping
+    		});
     
     		// *************************************************************************************
     		// RowEditor Plugin
@@ -387,7 +387,8 @@ Ext.onReady(function() {
 						align		: 'left',
 		            	editor		: {
         		    		name: 'description',
-	            		    xtype: 'textfield'
+	            		    xtype: 'textfield',
+		    	            allowBlank: false
         		    	}
 		            },
 					{ text: 'item_id', hidden: true, dataIndex: 'item_id' },

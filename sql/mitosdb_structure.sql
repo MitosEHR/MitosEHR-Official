@@ -1,13 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9
+-- version 3.4.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 23, 2011 at 04:37 PM
--- Server version: 5.5.8
--- PHP Version: 5.3.5
+-- Generation Time: Jun 16, 2011 at 01:45 PM
+-- Server version: 5.1.41
+-- PHP Version: 5.3.2-1ubuntu4.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `mitosdb`
@@ -19,6 +26,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `acl_permissions`
 --
 
+DROP TABLE IF EXISTS `acl_permissions`;
 CREATE TABLE IF NOT EXISTS `acl_permissions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `perm_key` varchar(30) CHARACTER SET latin1 NOT NULL,
@@ -45,6 +53,7 @@ INSERT INTO `acl_permissions` (`id`, `perm_key`, `perm_name`) VALUES
 -- Table structure for table `acl_roles`
 --
 
+DROP TABLE IF EXISTS `acl_roles`;
 CREATE TABLE IF NOT EXISTS `acl_roles` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(20) CHARACTER SET latin1 NOT NULL,
@@ -66,6 +75,7 @@ INSERT INTO `acl_roles` (`id`, `role_name`) VALUES
 -- Table structure for table `acl_role_perms`
 --
 
+DROP TABLE IF EXISTS `acl_role_perms`;
 CREATE TABLE IF NOT EXISTS `acl_role_perms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) NOT NULL,

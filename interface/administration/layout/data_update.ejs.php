@@ -7,7 +7,7 @@
 // Integrated by: GI Technologies Inc. in 2011
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
-//-------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------
 
 session_name ( "MitosEHR" );
 session_start();
@@ -138,8 +138,6 @@ $row['group_order'] 	= $data->group_order;
 // This one make the JOB of two, if it has an ID key run the UPDATE statement
 // if not run the INSERT stament
 // *************************************************************************************
-// TODO: Better error handling.
-
 $sql = $mitos_db->sqlBind($row, "layout_options", "U", "item_id='" . $row['item_id'] . "'");
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();

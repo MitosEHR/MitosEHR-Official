@@ -27,25 +27,27 @@ Ext.define('Ext.mitos.SaveCancelWindow', {
 		    buttons: [{
                 text: 'save',
                 handler: function(){
-                    if (win.form.getForm().findField(win.idField).getValue()){ // Update
-                        if (win.store.getAt(win.scope.rowPos != undefined )){
-                            record = win.store.getAt(win.scope.rowPos);
-                        }else{
-                            id = parseInt(win.form.getForm().findField(win.idField).getValue());
-                            record = win.store.getById(id);
+                    if (win.form.getForm().isValid()) {
+                        if (win.form.getForm().findField(win.idField).getValue()){ // Update
+                            if (win.store.getAt(win.scope.rowPos != undefined )){
+                                record = win.store.getAt(win.scope.rowPos);
+                            }else{
+                                id = parseInt(win.form.getForm().findField(win.idField).getValue());
+                                record = win.store.getById(id);
+                            }
+                            var fieldValues = win.form.getForm().getValues();
+                            for ( var k=0; k <= record.fields.getCount()-1; k++) {
+                                var i = record.fields.get(k).name;
+                                record.set( i, fieldValues[i] );
+                            }
+                        } else { // Add
+                            var obj = eval( '(' + Ext.JSON.encode(win.form.getForm().getValues()) + ')' );
+                            win.store.add( obj );
                         }
-                        var fieldValues = win.form.getForm().getValues();
-                        for ( var k=0; k <= record.fields.getCount()-1; k++) {
-                            var i = record.fields.get(k).name;
-                            record.set( i, fieldValues[i] );
-                        }
-                    } else { // Add
-                        var obj = eval( '(' + Ext.JSON.encode(win.form.getForm().getValues()) + ')' );
-                        win.store.add( obj );
+                        win.hide();	// Finally hide the dialog window
+                        win.store.sync();	// Save the record to the dataStore
+                        win.store.load(win.params);	// Reload the dataSore from the database
                     }
-                    win.hide();	// Finally hide the dialog window
-                    win.store.sync();	// Save the record to the dataStore
-                    win.store.load();	// Reload the dataSore from the database
                 }
             },{
                 text: 'cancel',

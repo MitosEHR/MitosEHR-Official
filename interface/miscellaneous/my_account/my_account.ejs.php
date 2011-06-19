@@ -7,13 +7,13 @@
 // Author: Ernest Rodriguez
 // Modified: Gino Rivera
 // 
-// MitosEHR (Eletronic Health Records) 2011
+// MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("../../../library/I18n/I18n.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -38,9 +38,6 @@ Ext.onReady(function(){
 			var page = this;
             /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
-            var rowPos; // Stores the current Grid Row Position (int)
-            var currRec; // Store the current record (Object)
-
             // *************************************************************************************
             // Users Model and Data store
             // *************************************************************************************
@@ -53,6 +50,8 @@ Ext.onReady(function(){
                     {name: 'lname',                 type: 'string'},
                     {name: 'username',              type: 'string'},
                     {name: 'password',              type: 'string'},
+                    {name: 'oPassword',             type: 'string'},
+                    {name: 'nPassword',             type: 'string'},
                     {name: 'facility_id',           type: 'int'},
                     {name: 'see_auth',              type: 'string'},
                     {name: 'taxonomy',              type: 'string'},
@@ -72,7 +71,7 @@ Ext.onReady(function(){
             });
 
             //------------------------------------------------------------------------------
-            // When the data is loaded semd values to de form
+            // When the data is loaded send values to de form
             //------------------------------------------------------------------------------
             var task = new Ext.util.DelayedTask(function(){
                 var rec = page.storeUsers.getAt(0); // get the record from the store
@@ -230,8 +229,12 @@ Ext.onReady(function(){
                             text      	: '<?php i18n("Change Password"); ?>',
                             iconCls   	: 'save',
                             id        	: 'cmdSavePass',
-                            handler   : function(){
+                            handler     : function(){
+                                page.formPass.getForm().reset();
+                                var rec = page.storeUsers.getAt(0);
+							    page.formPass.getForm().loadRecord(rec);
                                 page.winPass.show();
+
                             }
                         })
                     ]
@@ -245,35 +248,37 @@ Ext.onReady(function(){
                 }
             });
             page.formPass = new Ext.form.FormPanel({
-                bodyPadding: 15,
-                items   :[{
-                    fieldLabel  : 'Old Password',
-                    labelWidth  : 130,
-                    xtype       : 'textfield',
-                    width       : 380,
-                    name        : 'password',
-                    inputType   : 'password'
+                bodyPadding : 15,
+                defaultType : 'textfield',
+                defaults    : {labelWidth:130,width:380,inputType:'password'},
+                items :[{
+                    name: 'id',
+                    hidden: true
                 },{
-                    fieldLabel  : 'New Password',
-                    labelWidth  : 130,
-                    xtype       : 'textfield',
-                    width       : 380,
-                    name        : 'nPassword',
-                    inputType   : 'password'
+                    fieldLabel          : 'Old Password',
+                    name                : 'oPassword',
+                    allowBlank          : false
                 },{
-                    fieldLabel  : 'Re Type Password',
-                    labelWidth  : 130,
-                    xtype       : 'textfield',
-                    width       : 380,
-                    name        : 'vPassword',
-                    inputType   : 'password'
+                    fieldLabel          : 'New Password',
+                    name                : 'nPassword',
+                    allowBlank          : false,
+                    id                  : 'myAccountPage_nPassword'
+                },{
+                    fieldLabel          : 'Re Type Password',
+                    name                : 'vPassword',
+                    allowBlank          : false,
+                    vtype               : 'password',
+                    initialPassField    : 'myAccountPage_nPassword',
+                    validateOnChange    : true
                 }]
-
             });
             page.winPass = new Ext.create('Ext.mitos.SaveCancelWindow', {
                 width   : 420,
                 title   :'Change you password',
-                form    : page.formPass
+                form    : page.formPass,
+                store   : page.storeUsers,
+                scope   : page,
+                idField : 'id'
             });
             //***********************************************************************************
             // Top Render Panel
