@@ -121,7 +121,7 @@ $row['group_name'] 		= $data->group_name;
 $row['title'] 			= $data->title;
 $row['seq'] 			= $data->seq;
 $row['data_type'] 		= $dataTypes[$data->data_type]; // Reverse
-$row['uor'] 			= $uorTypes[$data->uor]; // Reverse
+$row['uor'] 			= $uorTypes[$data->uor];		// Reverse
 $row['fld_length'] 		= $data->fld_length;
 $row['max_length'] 		= $data->max_length;
 $row['list_id'] 		= $reverse_list[0]['option_id'];
@@ -137,43 +137,23 @@ $row['group_order'] 	= $data->group_order;
 // Step 1
 // *************************************************************************************
 if($row['form_id']=='Demographics') $table = 'patient_data';
-if($row['form_id']=='Refferals') $table = 'transactions';
-if($row['form_id']=='History') $table = 'history_data';
-$sql = "ALTER TABLE " . $table . " ADD COLUMN " . $row['field_id'] . " ";
+if($row['form_id']=='Refferals') 	$table = 'transactions';
+if($row['form_id']=='History') 		$table = 'history_data';
+$sql = "ALTER TABLE " . $table . " ADD " . $row['field_id'] . " ";
 
 // *************************************************************************************
 // COLUMN field definition
 // Step 2
 // *************************************************************************************
-switch ( $row['data_type'] ){
-	//-------------------------
-	// Listbox
-	//-------------------------
-	case '1':
-		$sql .= "VARCHAR(255)";
-	break;
-	//-------------------------
-	// Textbox
-	//-------------------------
-	case '2':
-		$sql .= "VARCHAR(".$row['max_length'].")";
-	break;
-	
-	//-------------------------
-	// Textarea
-	//-------------------------
-	case '3':
-		$sql .= "VARCHAR(".$row['max_length'].")";
-	break;
-}
+if($row['data_type']=='1') $sql .= "VARCHAR(255)"; 						// Listbox
+if($row['data_type']=='2') $sql .= "VARCHAR(".$row['max_length'].")";	// Textbox
+if($row['data_type']=='3') $sql .= "VARCHAR(".$row['max_length'].")";	// Textarea
 
 // *************************************************************************************
-// COLUMN Extra parameters
+// COLUMN Description 
 // Step 3
 // *************************************************************************************
-if(substr_count($row['edit_options'], 'N') ){
-	$sql .= " NOT NULL ";
-}
+if($row['description'] <> '') $sql .= " COMMENT '" . $row['description'] . "'"; // Textbox
 
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();

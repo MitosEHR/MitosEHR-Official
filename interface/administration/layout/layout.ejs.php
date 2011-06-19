@@ -268,7 +268,7 @@ Ext.onReady(function() {
 		            	editor		: {
         		    		name: 'field_id',
 	            		    xtype: 'textfield',
-	            		    vtype: 'mysqlField',
+	            		    //vtype: 'mysqlField',
 		    	            allowBlank: false,
 		    	            required: true
         		    	}
