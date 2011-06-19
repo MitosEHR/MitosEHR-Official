@@ -431,9 +431,9 @@ Ext.onReady(function() {
 									buttons: Ext.Msg.YESNO,
 									fn:function(btn,msgGrid){
 										if(btn=='yes'){
-											panel.layoutGrid.remove( currRec );
-											panel.layoutGrid.sync();
-											panel.layoutGrid.load();
+											panel.LayoutStore.remove( currRec );
+											panel.LayoutStore.sync();
+											panel.LayoutStore.load();
 						    		    }
 									}
 								});

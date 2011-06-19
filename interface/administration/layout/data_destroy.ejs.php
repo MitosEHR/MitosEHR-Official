@@ -8,6 +8,8 @@
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
+// TODO: Create a procedure to check if the field has data on the patient_data. If there is data do not allow the
+// user to delete the field. Return an error, indicating that the field has data in it.
 
 session_name ( "MitosEHR" );
 session_start();
