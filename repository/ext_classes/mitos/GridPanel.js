@@ -4,7 +4,7 @@ Ext.define('Ext.mitos.GridPanel',{
     alias       : 'mitos.gridpanel',
     border      : true,    
 	frame       : true,
-
+    viewConfig  : { stripeRows: true },
     initComponent: function(){	
     	var me = this;
 
@@ -12,8 +12,8 @@ Ext.define('Ext.mitos.GridPanel',{
 		  	layout	    : 'fit',
 		  	loadMask    : true,
 		  	columnLines	: true,
-		  	frameHeader	: false,
-		  	viewConfig  : { stripeRows: true }		});
+		  	frameHeader	: false
+		});
 		me.callParent(arguments);
 		
 	} // end initComponent

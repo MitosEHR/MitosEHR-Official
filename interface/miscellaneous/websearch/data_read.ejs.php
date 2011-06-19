@@ -17,6 +17,7 @@ require_once($_SESSION['site']['root']."/library/XMLParser/XMLParser.inc.php");
 //--------------------------------------------------------------------------------
 $args = '';
 $count = 0;
+$totals = 0;
 //********************************************************************************
 // lets check if the request is search request or if is a pager request.
 // the pager does not pass the url.
@@ -63,16 +64,15 @@ $rows = array();
 //--------------------------------------------------------------------------------
 // get the total value form the xml
 //--------------------------------------------------------------------------------
-$totals = $parser->document->count[0]->tagData;
-//--------------------------------------------------------------------------------
-// store file value for pager, if need it
-//--------------------------------------------------------------------------------
-$_SESSION['web_search_file'] = $parser->document->file[0]->tagData;
-
-//********************************************************************************
-// now lets work the xml file to push stuff into the $rows array()
-//********************************************************************************
 if(isset($parser->document->list[0]->document)){
+    $totals = $parser->document->count[0]->tagData;
+    //----------------------------------------------------------------------------
+    // store file value for pager, if need it
+    //----------------------------------------------------------------------------
+    $_SESSION['web_search_file'] = $parser->document->file[0]->tagData;
+    //****************************************************************************
+    // now lets work the xml file to push stuff into the $rows array()
+    //****************************************************************************
    foreach($parser->document->list[0]->document as $document){
         foreach($parser->document->list[0]->document[$count]->content as $content){
             $item['id'] = ($count+1);
@@ -93,5 +93,5 @@ if(isset($parser->document->list[0]->document)){
 //********************************************************************************
 // lets print the json for sencha
 //********************************************************************************
-print_r(json_encode(array('url' => $url, 'totals'=>$totals,'row'=>$rows)));
+print_r(json_encode(array('totals'=>$totals,'row'=>$rows)));
 ?>

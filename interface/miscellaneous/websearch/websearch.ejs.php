@@ -45,7 +45,7 @@ Ext.onReady(function(){
             }
             
             page.store = Ext.create('Ext.data.Store', {
-                pageSize	: 10,
+                pageSize	: 15,
                 model		: 'webSearch',
                 proxy: {
                     type	    : 'ajax',
@@ -132,6 +132,11 @@ Ext.onReady(function(){
                 margin      : '0 0 2 0',
                 region		: 'center',
                 store       : page.store,
+                viewConfig: {
+                    deferEmptyText :false,
+                    emptyText :'<p class="search_nothing_found" style="padding: 10px 0 0 20px; font-size: 24px"><?php i18n("Nothing Found!") ?></p>',
+                    stripeRows: true
+                },
                 columns: [
                     { flex: 1, header:'<?php i18n("Search Results"); ?>', sortable: true, dataIndex: 'title', renderer:page.searchRow  },
                     { hidden: true, sortable: true, dataIndex: 'source' },
@@ -140,7 +145,7 @@ Ext.onReady(function(){
                 tbar: Ext.create('Ext.PagingToolbar', {
                     store: page.store,
                     displayInfo: true,
-                    emptyMsg: "<?php i18n('No Office Notes to display'); ?>",
+                    emptyMsg: "<?php i18n('Nothing to display'); ?>",
                     plugins: Ext.create('Ext.ux.SlidingPager', {})
                 }),
                 listeners:{
