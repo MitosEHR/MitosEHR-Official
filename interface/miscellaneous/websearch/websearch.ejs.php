@@ -30,7 +30,7 @@ Ext.onReady(function(){
             /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
 			var page = this;
-            var baseUrl;
+            var search_type;
             var rec;
             if (!Ext.ModelManager.isRegistered('webSearch')){
                 Ext.define("webSearch", {
@@ -43,7 +43,6 @@ Ext.onReady(function(){
                     ]
                 });
             }
-            
             page.store = Ext.create('Ext.data.Store', {
                 pageSize	: 15,
                 model		: 'webSearch',
@@ -63,7 +62,6 @@ Ext.onReady(function(){
                 }
                 //autoLoad:true
             });
-
             page.searchPanel = new Ext.create('Ext.panel.Panel', {
                 region      : 'north',
                 bodyPadding	: '8 11 5 11',
@@ -73,17 +71,18 @@ Ext.onReady(function(){
                     xtype: 'radiogroup',
                     fieldLabel: 'Search By',
                     items: [
-                        {boxLabel: 'Heath Topics', name: 'url', inputValue: 'http://wsearch.nlm.nih.gov/ws/query?db=healthTopics'}
-                        //{boxLabel: 'N/A', name: 'url', inputValue: 2},
-                        //{boxLabel: 'N/A', name: 'url', inputValue: 3},
-                        //{boxLabel: 'N/A', name: 'url', inputValue: 4},
-                        //{boxLabel: 'N/A', name: 'url', inputValue: 5}
+                        {boxLabel: 'Heath Topics', name: 'type', inputValue: 'health_topics'},
+                        {boxLabel: 'ICD-9-CM', name: 'type', inputValue: 'icd9cm'}
+                        //{boxLabel: 'N/A', name: 'type', inputValue: 3},
+                        //{boxLabel: 'N/A', name: 'type', inputValue: 4},
+                        //{boxLabel: 'N/A', name: 'type', inputValue: 5}
                     ],
                     listeners:{
                         change: function(){
                             var value = this.getValue();
-                            baseUrl = value.url;
-                             page.searchField.enable();
+                            search_type = value.type;
+                            page.searchField.enable();
+                            page.searchField.reset();
                         }
                     }
                 },  page.searchField = new Ext.form.field.Text({
@@ -96,38 +95,19 @@ Ext.onReady(function(){
                             keyup: function(){
                                 var query = this.getValue();
                                 if(query.length > 2){
-                                    page.store.load({params:{ url:baseUrl, term:query }});
+                                    page.store.load({params:{ type:search_type, q:query }});
                                 }
-                            },
+                            },buffer:500,
                             focus: function(){
                               page.viewPanel.collapse();
-                            },
-                            blur: function(){
-                             Ext.getCmp('liveSearch').reset();
-                            },
-                            select: function(combo, selection) {
-                                var post = selection[0];
-                                if (post) {
-                                    Ext.Ajax.request({
-                                        url: Ext.String.format('library/patient/patient_search.inc.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
-                                        success: function(response, opts){
-                                            var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
-                                            Ext.getCmp('patientButton').setText( newPatientBtn );
-                                            Ext.getCmp('patientButton').enable();
-                                        }
-                                    });
-                                    Ext.data.Request()
-                                }
                             }
                         }
                     })
                 ]
             });
-
             page.searchRow = function(value, p, record){
                 return Ext.String.format('<div class="topic"><span class="search_title">{0}</span><br><span class="search_source">{1}</span><br><span class="search_snippet" style="white-space: normal;">{2}</span></div>', value, record.get('source')||"Unknown", record.get('snippet')||"Unknown");
             };
-
  			page.onotesGrid = new Ext.create('Ext.mitos.GridPanel', {
                 margin      : '0 0 2 0',
                 region		: 'center',
@@ -135,7 +115,8 @@ Ext.onReady(function(){
                 viewConfig: {
                     deferEmptyText :false,
                     emptyText :'<p class="search_nothing_found" style="padding: 10px 0 0 20px; font-size: 24px"><?php i18n("Nothing Found!") ?></p>',
-                    stripeRows: true
+                    stripeRows: true,
+                    loadingText: 'Searching...  Please Wait!'
                 },
                 columns: [
                     { flex: 1, header:'<?php i18n("Search Results"); ?>', sortable: true, dataIndex: 'title', renderer:page.searchRow  },
@@ -156,10 +137,9 @@ Ext.onReady(function(){
                     }
                 }
             }); // END GRID
-
             page.viewPanel = new Ext.create('Ext.panel.Panel', {
                 region: 'south',
-                height:300,
+                height:500,
                 collapsible:true,
                 collapsed: true,
                 layout:'fit',
@@ -172,7 +152,7 @@ Ext.onReady(function(){
                  )
             });
             Ext.create('Ext.mitos.TopRenderPanel', {
-                pageTitle: '<?php i18n('Web Search'); ?>',
+                pageTitle: '<?php i18n('National Library of Medicine Search'); ?>',
                 pageLayout: 'border',
                 pageBody: [page.searchPanel,page.onotesGrid, page.viewPanel ]
             });
