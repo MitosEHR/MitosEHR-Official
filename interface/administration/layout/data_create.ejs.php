@@ -104,6 +104,7 @@ if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is Engli
 					ORDER BY 
 						IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
 }
+
 // *************************************************************************************
 // start the array
 // *************************************************************************************

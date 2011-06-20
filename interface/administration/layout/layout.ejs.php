@@ -268,6 +268,9 @@ Ext.onReady(function() {
 		            	editor		: {
         		    		name: 'field_id',
 	            		    xtype: 'textfield',
+	            		    //------
+	            		    // @TODO@ Check why this thing is not working.
+	            		    //------
 	            		    //vtype: 'mysqlField',
 		    	            allowBlank: false,
 		    	            required: true
