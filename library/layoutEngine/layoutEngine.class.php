@@ -13,6 +13,7 @@
 class layoutEngine {
 
 	private $conn;
+	private $switcher;
 	
 	//**********************************************************************
 	// Connect to the database just like dbHelper
@@ -27,6 +28,15 @@ class layoutEngine {
     		$this->err = $e->getMessage();
 		}
 	}
+
+	//**********************************************************************
+	// switchTF
+	// This function will write the Sencha ExtJS v4 code, in two modes
+	// T = Text: Will display the form only in HTML, no fields
+	// F = Fields: Will create the form with fields
+	//**********************************************************************
+	function switchTF($v = "F"){ $this->switcher = $v; } 
+	
 	
 }
 
