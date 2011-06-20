@@ -141,13 +141,13 @@ Ext.onReady(function() {
 	// Assign the changeLayout function to be called on tree node click.
 	// *************************************************************************************
 	Navigation.on('itemclick', function(dv, record, item, index, n){
-		if ( record.data.id == '') { 
+		if ( record.data.hrefTarget == '') { 
 			//...
 		} else {
 			//----------------------------------------------------------------------
 			// Loads the screen on the top panel
 			//----------------------------------------------------------------------
-			MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.id, scripts: true});
+			MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.hrefTarget, scripts: true});
 		}
 	});
 	
