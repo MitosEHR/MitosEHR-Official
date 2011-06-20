@@ -143,12 +143,16 @@ Ext.onReady(function(){
                 collapsible:true,
                 collapsed: true,
                 layout:'fit',
+                frame: true,
+                bodyBorder: true,
                 tpl: Ext.create('Ext.XTemplate',
-                    '<div class="search-data">',
-                        '<h3 class="search-title">Title:{title}</h3>',
-                        '<h4 class="search-source">Source: {source}</h4>',
+                    '<div class="search_container">',
+                    '<div class="search_data">',
+                        '<h3 class="search_title">Title: {title}</h3>',
+                        '<h4 class="search_source">Source: {source}</h4>',
                     '</div>',
-                    '<div class="search-body">{FullSummary}</div>'
+                    '<div class="search_body">{FullSummary}</div>',
+                    '</div>'
                  )
             });
             Ext.create('Ext.mitos.TopRenderPanel', {
