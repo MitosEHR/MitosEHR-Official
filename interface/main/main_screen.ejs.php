@@ -23,16 +23,16 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title><?php echo $_SESSION['global_settings']['mitosehr_name'] ?></title>
-<script type="text/javascript" src="library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
-<script type="text/javascript" src="repository/formValidation/formValidation.js"></script>
-<script type="text/javascript" src="repository/global_functions/global_functions.js"></script>
+<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/formValidation/formValidation.js"></script>
+<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/global_functions/global_functions.js"></script>
 <!--test-stuff-->
-<link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
 <!--test-stuff-->
-<link rel="stylesheet" type="text/css" href="themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
-<link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
-<link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
-<link rel="shortcut icon" href="favicon.ico" >
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" >
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" >
+<link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
 <script type="text/javascript">
 // *************************************************************************************
 // Sencha trying to be like a language
@@ -74,7 +74,7 @@ Ext.onReady(function() {
 		    	if(response.responseText == 'exit'){ window.location="library/authProcedures/unauth.inc.php"; }
 	    	}
 		});
-	}
+	};
 	Ext.TaskManager.start({
 	    run: checkSession,
 	    interval: 100000
@@ -95,7 +95,7 @@ Ext.onReady(function() {
 	// Navigation Panel
 	// Panel
 	//****************************************************************    
-	var Navigation = new Ext.tree.TreePanel({
+    var Navigation = new Ext.create('Ext.tree.TreePanel',{
 		region		: 'center',
         bodyPadding  : '5 0',
 		hideHeaders	: true,
@@ -122,8 +122,7 @@ Ext.onReady(function() {
 			margin	: '5px 10px',
 			minWidth: 170,
             handler : function(){
-                var redirect = '<?php echo $_SESSION['global_settings']['online_support_link']?>';
-			    window.location = redirect;
+			    window.location = '<?php echo $_SESSION['global_settings']['online_support_link']?>';
             }
         }]
     });
@@ -141,13 +140,13 @@ Ext.onReady(function() {
 	// Assign the changeLayout function to be called on tree node click.
 	// *************************************************************************************
 	Navigation.on('itemclick', function(dv, record, item, index, n){
-		if ( record.data.id == '') { 
+		if ( record.data.hrefTarget == '') {
 			//...
 		} else {
 			//----------------------------------------------------------------------
 			// Loads the screen on the top panel
 			//----------------------------------------------------------------------
-			MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.id, scripts: true});
+			MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.hrefTarget, scripts: true});
 		}
 	});
 	
