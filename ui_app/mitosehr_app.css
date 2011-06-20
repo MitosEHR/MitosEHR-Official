@@ -5,8 +5,6 @@
 	font-family: 'Cuprum';
 	src: url('../ui_fonts/Cuprum.ttf');
 }
-
-
 #topRenderPanel{
 background-color: #DFE8F6;
 padding: 5px !important;
@@ -51,6 +49,41 @@ cursor: pointer !important;
 	border-bottom-color: #ccc;
 }
 
+.search_title{
+    color: #0066CC !important;
+    font-size: 14px !important;
+    border-bottom: 1px dotted #0066CC !important;
+}
+.search_source{
+    font-size: 10px !important;
+
+}
+.search_snippet{
+    font-size: 12px !important;
+
+}
+.search_data{
+    background-color: #DFE8F6;
+    padding:10px;
+    border-bottom: 1px dotted #0066CC !important;
+}
+.search_data .search_title{
+    color: #596F8F !important;
+    border: none !important;
+}
+.search_body{
+    padding: 10px;
+    font-size: 14px !important;
+}
+.search_body p{
+    padding: 5px 0 5px 0 !important;
+}
+.search_body ul, .search_body ol{
+    margin-left: 25px !important;
+}
+.search_body li{
+    list-style: circle !important;
+}
 body#login{
 	background-image:url(login_bg.png) !important;
 	background-position: bottom;
