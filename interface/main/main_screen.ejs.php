@@ -140,7 +140,7 @@ Ext.onReady(function() {
 	// Assign the changeLayout function to be called on tree node click.
 	// *************************************************************************************
 	Navigation.on('itemclick', function(dv, record, item, index, n){
-		if ( record.data.hrefTarget == '') {
+		if ( record.data.hrefTarget == '') { 
 			//...
 		} else {
 			//----------------------------------------------------------------------
