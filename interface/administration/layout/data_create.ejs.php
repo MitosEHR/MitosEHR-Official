@@ -38,12 +38,16 @@ $dataTypes = array(
 	i18n("Textbox", 'r') 			=> "2",
 	i18n("Textarea", 'r') 			=> "3",
 	i18n("Text-date", 'r') 			=> "4",
+	
+	// Specific App ListBox
 	i18n("Providers", 'r') 			=> "10",
 	i18n("Providers NPI", 'r') 		=> "11",
 	i18n("Pharmacies", 'r') 		=> "12",
 	i18n("Squads", 'r') 			=> "13",
 	i18n("Organizations", 'r') 		=> "14",
 	i18n("Billing codes", 'r') 		=> "15",
+	
+	// Custom input fields
 	i18n("Checkbox list", 'r') 		=> "21",
 	i18n("Textbox list", 'r') 		=> "22",
 	i18n("Exam results", 'r') 		=> "23",
