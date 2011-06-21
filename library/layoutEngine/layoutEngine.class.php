@@ -81,7 +81,15 @@ class layoutEngine {
 	}
 	
 	//**********************************************************************
-	// Create the fieldset
+	// formFieldset
+	// 
+	// This creates the fielsets for the formPanel, this should be called
+	// between formPanel's start & ends.
+	// 
+	// Parameters:
+	// $start: S to start the fieldset, E to end it.
+	// $fieldsetName: The name of the field set, can be empty
+	// $column: The column position, to write the fields.
 	//**********************************************************************
 	function formFieldset($start="S", $fieldsetName, $column=1){
 		$cpos = $column * 0.5;
