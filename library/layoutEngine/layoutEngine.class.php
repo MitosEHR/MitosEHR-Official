@@ -6,8 +6,12 @@
  * from the Layout Form Editor. Gathering all it's data and parameters from the layout_options table. 
  * Most of the structural database table was originally created by OpenEMR developers.
  * 
+ * What this class will not do: This class will not create the entire Screen Panel for you, this
+ * will only create the form object with the fields names, configured on the layout_options table.
+ * 
  * version: 0.0.1 
  * author: Gino Rivera Falu
+ * 
  */
 
 class layoutEngine {
@@ -16,17 +20,14 @@ class layoutEngine {
 	private $switcher;
 	
 	//**********************************************************************
-	// Connect to the database just like dbHelper
+	// dbObject
 	//
-	// Author: Gino Rivera
+	// Description:
+	// Makes a copy of the current database connection object into the
+	// class itself.
 	//**********************************************************************
-	function __construct() {
-		error_reporting(0);
-		try {
-    		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
-		} catch (PDOException $e) {
-    		$this->err = $e->getMessage();
-		}
+	function dbObject($dbobj){
+		$this->conn = $dbobj;
 	}
 
 	function getForm($form_id="Demographics"){
@@ -63,11 +64,11 @@ class layoutEngine {
 	// $title: The title of the form panel object
 	// $url: Where te results will be send to.
 	//**********************************************************************
-	function formPanel($start="S", $formPanel="formPanel", $title, $url){
+	function formPanel($title, $url, $start="S", $formPanel="formPanel", $labelWidth="80"){
 		if($start=="S"){
 			echo "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
     					title: '" . $title . "',
-    					labelWidth: 80,
+    					labelWidth: " . $labelWidth . ",
     					url: '" . $url . "',
 	    				frame: true,
     					bodyStyle: 'padding: 5px',
@@ -89,24 +90,47 @@ class layoutEngine {
 	// Parameters:
 	// $start: S to start the fieldset, E to end it.
 	// $fieldsetName: The name of the field set, can be empty
-	// $column: The column position, to write the fields.
 	//**********************************************************************
-	function formFieldset($start="S", $fieldsetName, $column=1){
-		$cpos = $column * 0.5;
+	function formFieldset($fieldsetName, $start="S"){
 		if($start=="S"){
 			echo "items: [{
         				xtype:'fieldset',
-        				columnWidth: ".$cpos.",
+        				columnWidth: 0.5,
         				title: '".$fieldsetName."',
-        				collapsible: true,
         				defaults: {anchor: '100%'},
-        				layout: 'anchor',";	
+        				layout: 'anchor',
+        				items :[";	
 		}
+		
 		if($start=="E"){
-			echo "}]";
+			echo "]";
 		}
 	}
 	
+	//**********************************************************************
+	// fieldAdd
+	//
+	// This creates the fields into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	// $initValue: The initial value of the field
+	// $fieldLengh: The max length of the field
+	// $xtype: The xtype value this one is the same a Sencha has.
+	//**********************************************************************
+	function fieldAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255", $xtype="textfield"){
+		echo "
+			{
+				xtype: '".$xtype."',
+				fieldLabel: '".$fieldLabel."',
+            	name: '".$fieldName."',
+            	maxLength: ".$fieldLengh.",
+            	size: ".$fieldLengh.",
+            	submitValue: true,
+            	value: '".$initValue."',
+            }";
+	}
 	
 }
 
