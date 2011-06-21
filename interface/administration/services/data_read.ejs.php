@@ -25,20 +25,21 @@ $_SESSION['site']['flops'] = 0;
 //------------------------------------------
 $mitos_db = new dbHelper();
 
-$WHERE = ($_REQUEST["show"] == "active")? "WHERE activity = 1" : "";
+$where = "";
+if ($filter) {
+  $where .= " AND code_type = '$filter'";
+}
+if (!empty($search)) {
+  $where .= " AND code LIKE '" . ffescape($search) . "%'";
+}
 
 
 // Setting defults incase no request is sent by sencha
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $limit = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
-$facillity = $_REQUEST["facillity"];
-$mitos_db->setSQL("SELECT id FROM onotes ".$WHERE." ORDER BY date DESC");
+
+$mitos_db->setSQL("SELECT * FROM codes ".$WHERE." ORDER BY code_type, code, code_text LIMIT ".$start.",".$limit);
 $total = $mitos_db->rowCount();
-
-$mitos_db->setSQL("SELECT * FROM onotes ".$WHERE." ORDER BY date DESC
-        			LIMIT ".$start.",".$limit);
-				//	WHERE onotes.facillity = '$facillity'
-
 
 $rows = array();
 foreach($mitos_db->execStatement() as $row){

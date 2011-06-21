@@ -115,5 +115,21 @@ switch ($_GET['task']) {
 	  echo $buff;
 	  echo ']}' . chr(13);  
 	break;
+    case "codetypes":
+	  $sql = "SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq";
+	  $mitos_db->setSQL($sql);
+	  foreach ($mitos_db->execStatement() as $urow) {
+	    $count++;
+	    $buff .= '{';
+	    $buff .= ' "ct_id": "' . dataEncode( $urow['ct_id'] ) . '",';
+	    $buff .= ' "ct_key": "' . dataEncode( $urow['ct_key'] ) . '"},' . chr(13);
+	  }
+	  $buff = substr($buff, 0, -2); // Delete the last comma.
+	  echo '{';
+	  echo '"totals": "' . $count . '", ' . chr(13);
+	  echo '"row": [' . chr(13);
+	  echo $buff;
+	  echo ']}' . chr(13);
+	break;
 }
 ?>
