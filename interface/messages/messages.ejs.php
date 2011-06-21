@@ -89,7 +89,7 @@ Ext.onReady(function() {
 		],
 		model		: 'Patients',
 		idProperty	: 'id',
-		read	: 'interface/messages/component_data.ejs.php',
+		read		: 'interface/messages/component_data.ejs.php',
 		extraParams	: {"task": "patients"}
 	});// End storePat
 	
@@ -105,7 +105,7 @@ Ext.onReady(function() {
 		],
 		model		: 'User',
 		idProperty	: 'id',
-		read		: 'interface/messages/component_data.ejs.php'
+		read		: 'interface/messages/component_data.ejs.php',
 		extraParams	: {"task": "users"}
 	});// End toData
 	

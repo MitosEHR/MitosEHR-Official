@@ -42,7 +42,7 @@ $mitos_db = new dbHelper();
 // *************************************************************************************
 // Deside what to do with the $_GET['task']
 // *************************************************************************************
-switch ($_GET['task']) {
+switch ($_REQUEST['task']) {
 
 	// *************************************************************************************
 	// Pull users from the database
@@ -83,71 +83,6 @@ switch ($_GET['task']) {
 		echo $buff;
 		echo "]})" . chr(13);
 	break;
-
-
-	// *************************************************************************************
-	// Data for for cmb_Type
-	// *************************************************************************************
-	case "types":
-		// catch the total records
-		$sql = "SELECT count(*) as total FROM list_options WHERE list_id = 'note_type'";
-		$mitos_db->setSQL($sql);
-		$urow = $mitos_db->execStatement();
-		$total = $urow[0]['total'];
-		
-		$sql = "SELECT
-					*
-				FROM
-					list_options
-				WHERE
-					list_id = 'note_type'
-				ORDER BY
-					seq, title";
-		$mitos_db->setSQL($sql);
-		foreach ($mitos_db->execStatement() as $urow) {
-			$count++;
-			$buff .= " { option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
-		}
-		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
-		echo "totals: " . $total . ", " . chr(13);
-		echo "row: [" . chr(13);
-		echo $buff;
-		echo "]})" . chr(13);
-	break;
-
-
-	// *************************************************************************************
-	// Pull Status from the database
-	// *************************************************************************************
-	case "status";
-		// catch the total records
-		$sql = "SELECT count(*) as total FROM list_options WHERE list_id = 'message_status'"; 
-		$mitos_db->setSQL($sql);
-		$urow = $mitos_db->execStatement();
-		$total = $urow[0]['total'];
-		
-		$sql = "SELECT
-					*
-				FROM
-					list_options
-				WHERE
-					list_id = 'message_status'
-				ORDER BY
-					seq, title";
-		$mitos_db->setSQL($sql);
-		foreach ($mitos_db->execStatement() as $urow) {
-			$count++;
-			$buff .= "{ option_id: '" . dataDecode( $urow['option_id'] ) . "', title: '" . dataDecode( $urow['title'] ) . "' },". chr(13);
-		}
-		$buff = substr($buff, 0, -2); // Delete the last comma and clear the buff.
-		echo $_GET['callback'] . '({';
-		echo "totals: " . $total . ", " . chr(13);
-		echo "row: [" . chr(13);
-		echo $buff;
-		echo "]})" . chr(13);
-	break;
-
 
 	// *************************************************************************************
 	// Pull the patients from the database
