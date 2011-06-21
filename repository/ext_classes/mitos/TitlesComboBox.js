@@ -19,8 +19,9 @@ Ext.define('Ext.mitos.TitlesComboBox',{
 		me.storeTypes = new Ext.data.Store({
 			model		: 'Titles',
 			proxy		: {
-				type	: 'ajax',
-				url		: 'repository/ext_classes/mitos/data/components_data.ejs.php?task=titles',
+				type		: 'ajax',
+				url			: 'library/layoutEngine/listOptions.json.php',
+				extraParams	: {"task": "title"},
 				reader	: {
 					type			: 'json',
 					idProperty		: 'option_id',
