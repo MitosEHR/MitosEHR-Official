@@ -21,7 +21,7 @@ Ext.define('Ext.mitos.TypesComboBox',{
 				proxy		: {
 					type		: 'ajax',
 					url			: 'library/layoutEngine/listOptions.json.php',
-					extraParams	: {"task": "types"},
+					extraParams	: {"filter": "types"},
 					reader	: {
 						type			: 'json',
 						idProperty		: 'option_id',
