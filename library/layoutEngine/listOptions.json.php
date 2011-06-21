@@ -50,7 +50,7 @@ if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is Engli
 							IF(LENGTH(ld.definition),ld.definition,lo.title) AS title 
 						FROM list_options AS lo 
 							LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title 
-							LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '$lang_id' 
+							LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '" . $_SESSION['lang']['code'] . "' 
 						WHERE 
 							lo.list_id = '".$filter."' 
 						ORDER BY 
