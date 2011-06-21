@@ -3,7 +3,8 @@
 // listOptions.json.php
 // 
 // This is a json spitter, to deal with the table list_options
-// depending on the params: filter option passed trough ExtJS v4 dataStore
+// depending on the panel.store.load({params:{filter: lists }}); 
+// option passed trough ExtJS v4 dataStore
 // it will return the list
 //
 // v0.0.1
