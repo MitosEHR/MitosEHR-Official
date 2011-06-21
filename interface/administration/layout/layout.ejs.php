@@ -30,7 +30,6 @@ Ext.onReady(function() {
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
 			'Ext.mitos.TopRenderPanel',
-			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow'
 		],
 		initComponent: function(){
@@ -433,9 +432,9 @@ Ext.onReady(function() {
 							handler: function(){
 								panel.rowEditing.cancelEdit();
 								Ext.Msg.show({
-									title: '<?php i18n('Please confirm...'); ?>', 
+									title: '<?php i18n("Please confirm..."); ?>', 
 									icon: Ext.MessageBox.QUESTION,
-									msg:'<?php i18n('Are you sure to delete this field?<br>WARNING: This will also detele the field and data on the table.'); ?>',
+									msg:'<?php i18n("Are you sure to delete this field?<br>WARNING: This will also detele the field and data on the table."); ?>',
 									buttons: Ext.Msg.YESNO,
 									fn:function(btn,msgGrid){
 										if(btn=='yes'){
@@ -507,7 +506,7 @@ Ext.onReady(function() {
 			// PageBody 	- List of items to display [foem1, grid1, grid2]
 			//***********************************************************************************
     		new Ext.create('Ext.mitos.TopRenderPanel', {
-        		pageTitle: '<?php i18n('Layout Form Editor'); ?>',
+        		pageTitle: '<?php i18n("Layout Form Editor"); ?>',
         		pageBody: [panel.LayoutPanel]
     		});
 			panel.callParent(arguments);
