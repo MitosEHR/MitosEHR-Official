@@ -31,6 +31,7 @@ Ext.onReady(function() {
 	if ( Ext.getCmp('winPatients') ){ Ext.getCmp('winPatients').destroy(); }
 	if ( Ext.getCmp('winMessage') ){ Ext.getCmp('winMessage').destroy(); }
 	if ( Ext.getCmp('gridPatients') ){ Ext.getCmp('gridPatients').destroy(); }
+	
 	// *************************************************************************************
 	// Global variables
 	// *************************************************************************************
@@ -38,6 +39,7 @@ Ext.onReady(function() {
 	var rowPos;
 	var body_content;
 	body_content = '<?php i18n('Nothing posted yet...'); ?>';
+	
 	// *************************************************************************************
 	// Structure of the message record
 	// creates a subclass of Ext.data.Record
@@ -87,7 +89,8 @@ Ext.onReady(function() {
 		],
 		model		: 'Patients',
 		idProperty	: 'id',
-		read	: 'interface/messages/component_data.ejs.php?task=patients'
+		read	: 'interface/messages/component_data.ejs.php',
+		extraParams	: {"task": "patients"}
 	});// End storePat
 	
 
@@ -102,7 +105,8 @@ Ext.onReady(function() {
 		],
 		model		: 'User',
 		idProperty	: 'id',
-		read	: 'interface/messages/component_data.ejs.php?task=users'
+		read		: 'interface/messages/component_data.ejs.php'
+		extraParams	: {"task": "users"}
 	});// End toData
 	
 	// *************************************************************************************
@@ -116,7 +120,8 @@ Ext.onReady(function() {
 		],
 		model		: 'Types',
 		idProperty	: 'id',
-		read	: 'interface/messages/component_data.ejs.php?task=types'
+		read		: 'library/layoutEngine/listOptions.json.php',
+		extraParams	: {"filter": "note_type"}
 	});// End typeData
 	
 	// *************************************************************************************
@@ -130,7 +135,8 @@ Ext.onReady(function() {
 		],
 		model		: 'Status',
 		idProperty	: 'id',
-		read		: 'interface/messages/component_data.ejs.php?task=status'
+		read		: 'library/layoutEngine/listOptions.json.php',
+		extraParams	: {"filter": "message_status"}
 	});// End statusData
 	
 	// *************************************************************************************
