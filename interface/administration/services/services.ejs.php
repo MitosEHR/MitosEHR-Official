@@ -71,7 +71,7 @@ Ext.onReady(function(){
                     msgTarget : 'under',
                     items: [
                         { width: 70, xtype: 'displayfield', value: '<?php i18n('Type'); ?>: '},
-                          new Ext.create('Ext.mitos.TitlesComboBox', {width: 70 }),
+                          new Ext.create('Ext.mitos.CodeTypesComboBox'),
                         { width: 15, xtype: 'displayfield', value: '<?php i18n('Code'); ?>: '},
                         { width: 130, xtype: 'textfield', name: 'code' },
                         { width: 30, xtype: 'displayfield', value: '<?php i18n('Modifier'); ?>: '},
@@ -85,7 +85,7 @@ Ext.onReady(function(){
                     msgTarget : 'under',
                     items: [
                         { width: 70, xtype: 'displayfield', value: '<?php i18n('Description'); ?>: '},
-                        { width: 245, xtype: 'textfield', name: 'code' },
+                        { width: 295, xtype: 'textfield', name: 'code' },
                         { width: 30, xtype: 'displayfield', value: '<?php i18n('Ctegory'); ?>: '},
                           new Ext.create('Ext.mitos.TitlesComboBox', {width: 100 }),
                         { width: 55, xtype: 'displayfield', value: '<?php i18n('Reportable?'); ?>: '},
@@ -96,8 +96,7 @@ Ext.onReady(function(){
                     defaults: { hideLabel: true },
                     msgTarget : 'under',
                     items: [
-                        { width: 70, xtype: 'displayfield', value: '<?php i18n('Fees'); ?>: '},
-                        { width: 100, xtype: 'textfield', name: 'mod', emptyText: '<?php i18n('Satandad'); ?>' }
+                        <?php include_once ($_SESSION['site']['root']."/interface/administration/services/fees_taxes.ejs.php") ?>
                     ]
                 }],
                 dockedItems: [{
@@ -159,7 +158,34 @@ Ext.onReady(function(){
                     store: page.storeOnotes,
                     displayInfo: true,
                     emptyMsg: "<?php i18n('No Office Notes to display'); ?>",
-                    plugins: Ext.create('Ext.ux.SlidingPager', {})
+                    plugins: Ext.create('Ext.ux.SlidingPager', {}),
+                    items: [
+                        '-',
+                        page.codeTypeCombo = new Ext.create('Ext.mitos.CodeTypesComboBox', {
+                            listeners	: {
+                                afterrender: function(){
+
+                                }
+                            },
+                            handler   	: function(){
+
+                            }
+                        }),'-',
+                        new Ext.create('Ext.form.field.Text',{
+                            emptyText:'Search',
+                            handler: function(){
+                                
+                            }
+                        }),'-',
+                        page.cmdShowAll = new Ext.create('Ext.Button', {
+                            text      	: '<?php i18n("Show All Active/Deactivate Codes"); ?>',
+                            iconCls   	: 'save',
+                            enableToggle: true,
+                            handler   : function(){
+
+                            }
+                        })
+                    ]
                 })
             }); // END GRID
             Ext.create('Ext.mitos.TopRenderPanel', {

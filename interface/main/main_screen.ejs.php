@@ -59,6 +59,7 @@ Ext.require([
     'Ext.mitos.RolesComboBox',
     'Ext.mitos.TypesComboBox',
     'Ext.mitos.TitlesComboBox',
+    'Ext.mitos.CodeTypesComboBox',
     'Ext.mitos.FacilitiesComboBox',
     'Ext.mitos.AuthorizationsComboBox'
 ]);
@@ -266,7 +267,7 @@ Ext.onReady(function() {
 				items: [{
 					text:'<?php i18n("New Encounter"); ?>'
 				},{
-					text:'<?php i18n("Appointments"); ?>'
+					text:'<?php i18n("Past Encounter List"); ?>'
 				},{
 					text:'<?php i18n("Patient Notes"); ?>'
 				}]
