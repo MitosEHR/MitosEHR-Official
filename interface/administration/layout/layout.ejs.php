@@ -234,7 +234,7 @@ Ext.onReady(function() {
 						text     	: '<?php i18n("Order"); ?>',
 						sortable 	: false,
 						dataIndex	: 'seq',
-						width		: 50,
+						width		: 40,
 						align		: 'center',
         		    	editor		: {
            					name: 'seq',
