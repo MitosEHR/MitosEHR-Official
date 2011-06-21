@@ -31,7 +31,7 @@ Ext.onReady(function(){
 	var rowPos; // Stores the current Grid Row Position (int)
 	var currList; // Stores the current List Option (string)
 	var currRec; // Store the current record (Object)
-	
+
 	//******************************************************************************
 	// Sanitizing Objects!
 	// Destroy them, if already exists in the browser memory.
@@ -147,7 +147,7 @@ Ext.onReady(function(){
 	                    waitMsg: '<?php i18n("Saving new list..."); ?>',
 	                    waitTitle: '<?php i18n("Processing..."); ?>',
 						failure: function(form, action){
-							obj = Ext.JSON.decode(action.response.responseText); 
+							var obj = Ext.JSON.decode(action.response.responseText);
         	                Ext.Msg.alert('<?php i18n("Failed"); ?>', obj.errors.reason);
         	                Ext.getCmp('frmLists').getForm().reset();
 						},
@@ -193,7 +193,7 @@ Ext.onReady(function(){
 		id			: 'listGrid',
 		store		: storeListsOption,
 		plugins		: [rowEditing],
-		columns: [{ 
+		columns: [{
 			name: 'id',
 			width: 100, 
 			text: 'ID', 
@@ -241,7 +241,7 @@ Ext.onReady(function(){
 		},
 		// -----------------------------------------
 		// Grid Top Menu
-		// -----------------------------------------
+		// -----------------------------------------s
 		dockedItems: [{
 			xtype	: 'toolbar',
 			dock	: 'top',
@@ -278,7 +278,7 @@ Ext.onReady(function(){
 	            				        waitMsg: '<?php i18n("Deleting list..."); ?>',
 					                    waitTitle: '<?php i18n("Processing..."); ?>',
 										failure: function(form, action){
-											obj = Ext.JSON.decode(action.response.responseText); 
+											var obj = Ext.JSON.decode(action.response.responseText);
         	    				            Ext.Msg.alert('<?php i18n("Failed"); ?>', obj.errors.reason);
 				        	                Ext.getCmp('frmLists').getForm().reset();
 										},
@@ -320,6 +320,15 @@ Ext.onReady(function(){
 						storeListsOption.load({params:{list_id: currList }});
 					}
 				}
+
+            },'-',{
+                text   : "Add User",
+                iconCls: 'icon-add',
+                handler: function(){
+                    // add an empty record
+                    storeListsOption.insert(0, new ListRecord({list_id:currList}));
+                    rowEditing.startEdit(0, 0);
+                }
 			}]
 		},{
 			// -----------------------------------------
