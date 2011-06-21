@@ -164,12 +164,12 @@ Ext.onReady(function() {
 			// window - Add Field Window
 			// *************************************************************************************
 			panel.winAddField = Ext.create('Ext.mitos.Window', {
-				title		: '<?php i18n('Select a group to add the field.'); ?>',
+				title		: '<?php i18n("Select a group to add the field."); ?>',
 				width		: 450,
 				height		: 100,
 				items		: [ panel.whereForm ],
 				buttons:[{
-					text		:'<?php i18n('Add'); ?>',
+					text		:'<?php i18n("Add"); ?>',
 					name		: 'cmdSave',
 					id			: 'cmdSave',
 					iconCls		: 'save',
@@ -183,7 +183,7 @@ Ext.onReady(function() {
 						panel.rowEditing.startEdit(currRec, 0);						// inject the record to the GRID and start editing
 					}
 				},'-',{
-					text:'<?php i18n('Close'); ?>',
+					text:'<?php i18n("Close"); ?>',
 					iconCls: 'delete',
 		            handler: function(){
         		    	panel.rowEditing.cancelEdit();
