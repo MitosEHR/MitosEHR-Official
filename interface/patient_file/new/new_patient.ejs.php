@@ -17,8 +17,13 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
+include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
 include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 include_once($_SESSION['site']['root']."/library/layoutEngine/layoutEngine.class.php");
+
+$mitos_db = new dbHelper();
+$layoutSpitter = new layoutEngine();
+$layoutSpitter->dbObject($mitos_db);
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -28,7 +33,7 @@ $_SESSION['site']['flops'] = 0;
 
 <script type="text/javascript">
 Ext.onReady(function(){
-	Ext.define('Ext.mitos.LayoutPanel',{
+	Ext.define('Ext.mitos.PatientPanel',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
@@ -49,7 +54,6 @@ Ext.onReady(function(){
 			// *************************************************************************************
 			//...
 
-
 			// *************************************************************************************
 			// Layout Panel Screen
 			// *************************************************************************************
@@ -58,7 +62,7 @@ Ext.onReady(function(){
 		        defaults: { split: true },
 				border: true,
 				frame: true,
-        		items	: [ panel.layoutGrid ]
+        		items	: [ panel.patientForm ]
 			}); // END LayoutPanel
 
 			//***********************************************************************************
