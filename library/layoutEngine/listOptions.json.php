@@ -2,7 +2,7 @@
 //--------------------------------------------------------------------------------------------------------------------------
 // listOptions.json.php
 // 
-// This is a json injector, to deal with the table list_options
+// This is a json spitter, to deal with the table list_options
 // depending on the params: filter option passed trough ExtJS v4 dataStore
 // it will return the list
 //
