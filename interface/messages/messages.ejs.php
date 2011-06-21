@@ -119,7 +119,7 @@ Ext.onReady(function() {
 			{name: 'title',     type: 'string' }
 		],
 		model		: 'Types',
-		idProperty	: 'id',
+		idProperty	: 'option_id',
 		read		: 'library/layoutEngine/listOptions.json.php',
 		extraParams	: {"filter": "note_type"}
 	});// End typeData
@@ -134,7 +134,7 @@ Ext.onReady(function() {
 			{name: 'title',     type: 'string' }
 		],
 		model		: 'Status',
-		idProperty	: 'id',
+		idProperty	: 'option_id',
 		read		: 'library/layoutEngine/listOptions.json.php',
 		extraParams	: {"filter": "message_status"}
 	});// End statusData

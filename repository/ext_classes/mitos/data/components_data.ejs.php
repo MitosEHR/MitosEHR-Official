@@ -32,44 +32,6 @@ $buff = "";
 // *************************************************************************************
 switch ($_GET['task']) {
 	// *************************************************************************************
-	// Data for for storeTitles
-	// *************************************************************************************
-	case "titles":
-	  $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'titles' ";
-	  $mitos_db->setSQL($sql);
-	  foreach ($mitos_db->execStatement() as $urow) {
-	    $count++;
-	    $buff .= '{';
-	    $buff .= ' "option_id": "' . dataEncode( $urow['option_id'] ) . '",';
-	    $buff .= ' "title": "' . dataEncode( $urow['title'] ) . '"},' . chr(13);
-	  }
-	  $buff = substr($buff, 0, -2); // Delete the last comma.
-	  echo '{';
-	  echo '"totals": "' . $count . '", ' . chr(13);
-	  echo '"row": [' . chr(13);
-	  echo $buff;
-	  echo ']}' . chr(13);   
-  	break;
-	// *************************************************************************************
-	// Data for for storeTypes
-	// *************************************************************************************
-	case "types":
-	  $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'abook_type' ";
-	  $mitos_db->setSQL($sql);
-	  foreach ($mitos_db->execStatement() as $urow) {
-	    $count++;
-	    $buff .= '{';
-	    $buff .= ' "option_id": "' . dataEncode( $urow['option_id'] ) . '",';
-	    $buff .= ' "title": "' . dataEncode( $urow['title'] ) . '"},' . chr(13);
-	  }
-	  $buff = substr($buff, 0, -2); // Delete the last comma.
-	  echo '{';
-	  echo '"totals": "' . $count . '", ' . chr(13);
-	  echo '"row": [' . chr(13);
-	  echo $buff;
-	  echo ']}' . chr(13);   
-	break;
-	// *************************************************************************************
 	// Data for for Facilities
 	// *************************************************************************************
 	case "facilities":

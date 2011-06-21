@@ -76,7 +76,8 @@ Ext.onReady(function() {
 		],
 			model 		:'posModel',
 			idProperty 	:'id',
-			read		:'interface/administration/facilities/data_read.ejs.php'
+			read		:'interface/administration/facilities/component_data.ejs.php',
+			extraParams	: {"task": "poscodes"}
 	});
 	
 	// *************************************************************************************
@@ -89,7 +90,8 @@ Ext.onReady(function() {
 		],
 			model 		:'taxidRecord',
 			idProperty 	:'id',
-			read		:'interface/administration/facilities/component_data.ejs.php?task=taxid'
+			read		:'interface/administration/facilities/component_data.ejs.php',
+			extraParams	: {"task": "taxid"}
 	});
 	
 	// *************************************************************************************
