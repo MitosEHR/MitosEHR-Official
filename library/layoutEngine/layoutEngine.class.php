@@ -132,6 +132,16 @@ class layoutEngine {
             }";
 	}
 	
+	//**********************************************************************
+	// renderForm 
+	//
+	// This will render the selected form, and returns the Sencha ExtJS v4 
+	// code.
+	//**********************************************************************
+	function renderForm($form, $echo="TRUE"){
+		
+	}
+	
 }
 
 ?>
