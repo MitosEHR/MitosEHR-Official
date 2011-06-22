@@ -64,19 +64,17 @@ class layoutEngine {
 	// $title: The title of the form panel object
 	// $url: Where te results will be send to.
 	//**********************************************************************
-	function formPanel($title, $url, $start="S", $formPanel="formPanel", $labelWidth="80"){
+	function formPanel($start, $title, $url, $formPanel="formPanel", $labelWidth="80"){
 		if($start=="S"){
 			echo "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
-    					title: '" . $title . "',
-    					labelWidth: " . $labelWidth . ",
-    					url: '" . $url . "',
-	    				frame: true,
-    					bodyStyle: 'padding: 5px',
-    					width: '100%',
-    					layout: 'column',
-    					defaults: {
-    	    				bodyPadding: 4
-	    				},";
+  					title		: '" . $title . "',
+					labelWidth	: " . $labelWidth . ",
+					url		: '" . $url . "',
+  					frame		: true,
+					bodyStyle	: 'padding: 5px',
+					width		: '100%',
+					layout		: 'column',
+  					defaults	: { bodyPadding: 4 },";
     	}
 		if ($start=="E") echo "});";
 	}
