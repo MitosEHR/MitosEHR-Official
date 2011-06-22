@@ -29,7 +29,7 @@ $buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "
 // -------------------------------------
 $buff .= '{"text":"' . i18n('Patient - TODO', 'r') . '", "cls":"folder", "expanded": true,' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
-	$buff .= '{"text":"' . i18n('New Patient', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/new/new_patient.ejs.php"},' . chr(13);
+	$buff .= '{"text":"' . i18n('New Patient - TODO', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/new/new_patient.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Patient File - TODO', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/patient_file.ejs.php"},' . chr(13);
 	// -------------------------------------
 	// Patient
@@ -72,12 +72,12 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 $buff .= '{"text":"' . i18n('Test Area', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
+    $buff .= '{"text":"' . i18n('Calendar Test', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"calendar_t/calendar.ejs.php"}' . chr(13);
+
 $buff .= ']}' . chr(13);
 // *************************************************************************************
 // End Nav Data JSON
 // *************************************************************************************
 $buff .= "]" . chr(13);
-
 echo $buff;
-
 ?>

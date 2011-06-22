@@ -26,10 +26,17 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/global_functions/global_functions.js"></script>
-<!--test-stuff-->
+
+<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/Extensible.js"></script>
+
+<!--test stuff-->
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
-<!--test-stuff-->
+<!--end test stuff-->
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
+<!--calendar css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar.css" />
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar-colors.css" />
+<!--ens calendar css-->
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
@@ -43,9 +50,9 @@ Ext.Loader.setConfig({
     disableCaching: false,
     paths: {
         'Ext.ux': '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux',
-        'Ext.mitos': '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos'
-        //'Extensible': '../../../src',
-        //'Extensible.example': '../../'
+        'Ext.mitos': '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos',
+        'Extensible': 'library/extensible-1.0/src',
+        'Extensible.example': 'library/extensible-1.0/examples'
     }
 });
 Ext.require([
@@ -72,6 +79,7 @@ Ext.require([
 ]);
 Ext.onReady(function() {
     var trp;
+    var app = this;
 	//****************************************************************
 	// Task Scheduler 
 	// This will run certain task at determined time.
@@ -319,7 +327,7 @@ Ext.onReady(function() {
 	//
 	// tag: ExtJS v4 Ready
 	//****************************************************************
-	var MainApp = Ext.create('Ext.Panel', {
+	MainApp = Ext.create('Ext.Panel', {
 		region			: 'center',
 		id				: 'MainApp', 
 		border			: true,
