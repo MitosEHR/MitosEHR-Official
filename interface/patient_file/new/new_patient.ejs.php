@@ -60,8 +60,8 @@ Ext.onReady(function(){
 			panel.PatientPanel = Ext.create('Ext.Panel', {
 				layout	: { type: 'border' },
 		        defaults: { split: true },
-				border: true,
-				frame: true,
+				border	: true,
+				frame	: true,
         		items	: [ panel.patientForm ]
 			}); // END LayoutPanel
 
