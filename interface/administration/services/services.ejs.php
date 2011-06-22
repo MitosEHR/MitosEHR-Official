@@ -32,21 +32,46 @@ Ext.onReady(function(){
             var currRec;
             page.storeOnotes = new Ext.create('Ext.mitos.CRUDStore',{
                 fields: [
-                    {name: 'id',      		type: 'int'},
-                    {name: 'date',          type: 'date', dateFormat: 'c'},
-                    {name: 'body',          type: 'string'},
-                    {name: 'user',          type: 'string'},
-                    {name: 'facility_id',   type: 'string'},
-                    {name: 'activity',   	type: 'string'}
+                    {name: 'id',      		    type: 'int'},
+                    {name: 'code_text',         type: 'string'},
+                    {name: 'code_text_short',   type: 'string'},
+                    {name: 'code',              type: 'string'},
+                    {name: 'code_type',         type: 'int'},
+                    {name: 'modifier',          type: 'string'},
+                    {name: 'units',             type: 'string'},
+                    {name: 'fee',               type: 'int'},
+                    {name: 'superbill',         type: 'string'},
+                    {name: 'related_code',      type: 'string'},
+                    {name: 'taxrates',          type: 'string'},
+                    {name: 'cyp_factor',        type: 'string'},
+                    {name: 'active',            type: 'int'},
+                    {name: 'reportable',        type: 'int'}
                 ],
-                model		: 'modelOnotes',
+                model		: 'modelService',
                 idProperty	: 'id',
-                read      	: 'interface/miscellaneous/office_notes/data_read.ejs.php',
+                read      	: 'interface/administration/services/data_read.ejs.php',
                 create    	: 'interface/miscellaneous/office_notes/data_create.ejs.php',
                 update    	: 'interface/miscellaneous/office_notes/data_update.ejs.php',
-                destroy		: 'interface/miscellaneous/office_notes/data_destroy.ejs.php',
-                autoLoad	: false
+                destroy		: 'interface/miscellaneous/office_notes/data_destroy.ejs.php'
             });
+            function code_type(val) {
+			    if(val == '1') {
+			        return 'CPT4';
+			    } else if (val == '2'){
+			        return 'ICD9';
+			    } else if (val == '3'){
+			    	return 'HCPCS';
+			    }
+			    return val;
+			}
+            function bool(val){
+            if (val == '0') {
+			        return '<img src="ui_icons/no.gif" />';
+			    } else if(val == '1') {
+			        return '<img src="ui_icons/yes.gif" />';
+			    }
+                return val;
+            }
             page.servicesFormPanel = Ext.create('Ext.form.FormPanel', {
                 region		: 'north',
                 frame 		: true,
@@ -85,11 +110,11 @@ Ext.onReady(function(){
                     msgTarget : 'under',
                     items: [
                         { width: 70, xtype: 'displayfield', value: '<?php i18n('Description'); ?>: '},
-                        { width: 295, xtype: 'textfield', name: 'code' },
-                        { width: 30, xtype: 'displayfield', value: '<?php i18n('Ctegory'); ?>: '},
+                        { width: 295, xtype: 'textfield', name: 'code_text' },
+                        { width: 30, xtype: 'displayfield', value: '<?php i18n('Category'); ?>: '},
                           new Ext.create('Ext.mitos.TitlesComboBox', {width: 100 }),
                         { width: 55, xtype: 'displayfield', value: '<?php i18n('Reportable?'); ?>: '},
-                        { width: 10, xtype: 'checkbox', name: 'code' }
+                        { width: 10, xtype: 'checkbox', name: 'reportable' }
                     ]
                 },{
                     xtype: 'fieldcontainer',
@@ -125,8 +150,17 @@ Ext.onReady(function(){
                                 page.storeOnotes.load({params:{show: 'active' }});
                                 page.servicesFormPanel.getForm().reset();
                             }
-                        }),
-                    { text:'<?php i18n('Not all fields are required for all codes or code types.'); ?>', disabled:true }
+                        }),'-',{
+                            text:'<?php i18n('Reset'); ?>',
+                            handler: function(){
+                                page.servicesFormPanel.getForm().reset();
+                                page.cmdSave.setText('<?php i18n('Save'); ?>');
+                                page.cmdSave.disable();
+                            }
+                        },'-',{
+                            text:'<?php i18n('Not all fields are required for all codes or code types.'); ?>',
+                            disabled:true
+                        }
                     ]
                 }]
             });
@@ -139,6 +173,7 @@ Ext.onReady(function(){
                             page.servicesFormPanel.getForm().reset();
                             var rec = page.storeOnotes.getAt(rowIndex);
                             page.cmdSave.setText('<?php i18n('Update'); ?>');
+                            page.cmdSave.enable();
                             page.servicesFormPanel.getForm().loadRecord(rec);
                             currRec = rec;
                             rowPos = rowIndex;
@@ -147,12 +182,13 @@ Ext.onReady(function(){
                 },
                 columns: [
                     { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-                    { width: 80,  header: '<?php i18n('Code'); ?>',        sortable: true, dataIndex: 'user' },
-                    { width: 80,  header: '<?php i18n('Modifier'); ?>',    sortable: true, dataIndex: 'user' },
-                    { width: 50,  header: '<?php i18n('Active'); ?>',      sortable: true, dataIndex: 'user' },
-                    { width: 100, header: '<?php i18n('Reportable'); ?>',  sortable: true, dataIndex: 'user' },
-                    { flex: 1,    header: '<?php i18n('Description'); ?>', sortable: true, dataIndex: 'user' },
-                    { width: 100, header: '<?php i18n('Standard'); ?>',    sortable: true, dataIndex: 'user' }
+                    { width: 80,  header: '<?php i18n('Code Type'); ?>',   sortable: true, dataIndex: 'code_type',  renderer:code_type },
+                    { width: 80,  header: '<?php i18n('Code'); ?>',        sortable: true, dataIndex: 'code' },
+                    { width: 80,  header: '<?php i18n('Modifier'); ?>',    sortable: true, dataIndex: 'modifier' },
+                    { width: 60,  header: '<?php i18n('Active'); ?>',      sortable: true, dataIndex: 'active',     renderer:bool },
+                    { width: 70, header: '<?php i18n('Reportable'); ?>',   sortable: true, dataIndex: 'reportable', renderer:bool },
+                    { flex: 1,    header: '<?php i18n('Description'); ?>', sortable: true, dataIndex: 'code_text' },
+                    { width: 100, header: '<?php i18n('Standard'); ?>',    sortable: true, dataIndex: '' }
                 ],
                 tbar: Ext.create('Ext.PagingToolbar', {
                     store: page.storeOnotes,
@@ -161,7 +197,7 @@ Ext.onReady(function(){
                     plugins: Ext.create('Ext.ux.SlidingPager', {}),
                     items: [
                         '-',
-                        page.codeTypeCombo = new Ext.create('Ext.mitos.CodeTypesComboBox', {
+                        new Ext.create('Ext.mitos.CodeTypesComboBox', {
                             listeners	: {
                                 afterrender: function(){
 
@@ -195,7 +231,7 @@ Ext.onReady(function(){
             });
 			page.callParent(arguments);
 		} // end of initComponent
-	}); //ens oNotesPage class
+	}); //ens servicesPage class
     Ext.create('Ext.mitos.servicesPage');
 }); // End ExtJS
 </script>
