@@ -182,7 +182,8 @@ Ext.onReady(function(){
                 },
                 columns: [
                     { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-                    { width: 80,  header: '<?php i18n('Code'); ?>',        sortable: true, dataIndex: 'code_type',  renderer:code_type },
+                    { width: 80,  header: '<?php i18n('Code Type'); ?>',   sortable: true, dataIndex: 'code_type',  renderer:code_type },
+                    { width: 80,  header: '<?php i18n('Code'); ?>',        sortable: true, dataIndex: 'code' },
                     { width: 80,  header: '<?php i18n('Modifier'); ?>',    sortable: true, dataIndex: 'modifier' },
                     { width: 60,  header: '<?php i18n('Active'); ?>',      sortable: true, dataIndex: 'active',     renderer:bool },
                     { width: 70, header: '<?php i18n('Reportable'); ?>',   sortable: true, dataIndex: 'reportable', renderer:bool },
