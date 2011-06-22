@@ -31,7 +31,6 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/global_functions/global_functions.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/Extensible.js"></script>
-<<<<<<< HEAD
 
 <!--test stuff-->
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
