@@ -38,9 +38,9 @@ if (!empty($search)) {
 $start = ($_REQUEST["start"] == null)? 0 : $_REQUEST["start"];
 $limit = ($_REQUEST["limit"] == null)? 10 : $_REQUEST["limit"];
 
-$mitos_db->setSQL("SELECT * FROM codes ".$WHERE." ORDER BY code_type, code, code_text LIMIT ".$start.",".$limit);
+$mitos_db->setSQL("SELECT * FROM codes $WHERE ORDER BY code_type, code, code_text");
 $total = $mitos_db->rowCount();
-
+$mitos_db->setSQL("SELECT * FROM codes $WHERE ORDER BY code_type, code, code_text LIMIT $start,$limit");
 $rows = array();
 foreach($mitos_db->execStatement() as $row){
 	array_push($rows, $row);
