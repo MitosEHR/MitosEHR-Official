@@ -51,15 +51,17 @@ Ext.onReady(function(){
 			
 			// *************************************************************************************
 			// Dynamically generate the screen layout.
+			// This is done, via PHP Language.
 			// *************************************************************************************
-			//...
+			<?php
+				$layoutSpitter->formPanel("New Patient Entry Form", "data_create.ejs.php", "S", "patientForm");
+				$layoutSpitter->formPanel("", "", "E");
+			?>
 
 			// *************************************************************************************
 			// Layout Panel Screen
 			// *************************************************************************************
 			panel.PatientPanel = Ext.create('Ext.Panel', {
-				layout	: { type: 'border' },
-		        defaults: { split: true },
 				border	: true,
 				frame	: true,
         		items	: [ panel.patientForm ]
