@@ -64,7 +64,7 @@ class layoutEngine {
 	// $title: The title of the form panel object
 	// $url: Where te results will be send to.
 	//**********************************************************************
-	function formPanel($title, $url, $start="S", $formPanel="formPanel", $labelWidth="80"){
+	function formPanel($start, $title, $url, $formPanel="formPanel", $labelWidth="80"){
 		if($start=="S"){
 			echo "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
   					title		: '" . $title . "',

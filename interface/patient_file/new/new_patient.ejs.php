@@ -54,8 +54,9 @@ Ext.onReady(function(){
 			// This is done, via PHP Language.
 			// *************************************************************************************
 			<?php
-				$layoutSpitter->formPanel("New Patient Entry Form", "data_create.ejs.php", "S", "patientForm");
-				$layoutSpitter->formPanel("", "", "E");
+				$layoutSpitter->formPanel("S", "New Patient Entry Form", "data_create.ejs.php", "patientForm");
+				//...
+				$layoutSpitter->formPanel("E");
 			?>
 
 			// *************************************************************************************
