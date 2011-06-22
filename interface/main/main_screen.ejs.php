@@ -1,13 +1,15 @@
 <?php
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
+
 /* Main Screen Application
-*
-* Description: This is the main application, with all the panels
-*
-* version 0.0.3
-* revision: N/A
-* author: Gino Rivera Falú
-*/
+ *
+ * Description: This is the main application, with all the panels
+ *
+ * version 0.0.3
+ * revision: N/A
+ * author: Gino Rivera Falú
+ * 
+ */
 
 // Reset session count
 $_SESSION['site']['flops'] = 0;
@@ -23,6 +25,7 @@ include_once($_SESSION['site']['root'].'/library/dbHelper/dbHelper.inc.php');
 include_once($_SESSION['site']['root'].'/repository/global_settings/global_settings.php');
 include_once($_SESSION['site']['root'].'/repository/global_functions/global_functions.php');
 ?>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -46,28 +49,32 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
-<script type="text/javascript">
+<!--dashboard css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
+<!--main ExtJs css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
+<!--calendar css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar.css" />
+<!--calendar css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar-colors.css" />
 
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" ><!--dashboard css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>"><!--main ExtJs css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar.css" /><!--calendar css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar-colors.css" /><!--calendar css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" ><!--app css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" ><!--app css-->
+<!--app css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" >
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" >
+
 <link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
 
 <script type="text/javascript">
 
 // *************************************************************************************
-// Sencha trying to be like a language
-// using required to load different components
+// Set the path for the components, so the application can find them.
 // *************************************************************************************
 Ext.Loader.setConfig({
     enabled			: true,
     disableCaching	: false,
     paths			: {
-        'Ext.ux'            : '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux',
-        'Ext.mitos'         : '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos',
+        'Ext.ux'            : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/ux',
+        'Ext.mitos'         : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/mitos',
         'Extensible'        : 'library/extensible-1.0/src',
         'Extensible.example': 'library/extensible-1.0/examples'
     }
@@ -81,19 +88,12 @@ Ext.require([
     'Ext.toolbar.Paging',
     'Ext.TaskManager.*',
     'Ext.ux.SlidingPager',
-    
-    // mitos custom classes
     'Ext.mitos.CRUDStore',
     'Ext.mitos.Window',
     'Ext.mitos.GridPanel',
     'Ext.mitos.FormPanel',
     'Ext.mitos.TopRenderPanel',
     'Ext.mitos.SaveCancelWindow',
-    'Ext.mitos.RolesComboBox',
-    'Ext.mitos.TypesComboBox',
-    'Ext.mitos.TitlesComboBox',
-    'Ext.mitos.CodeTypesComboBox',
-    'Ext.mitos.FacilitiesComboBox',
     'Ext.mitos.AuthorizationsComboBox'
 ]);
 
@@ -109,15 +109,13 @@ Ext.onReady(function() {
 			'Ext.toolbar.Paging',
 			'Ext.TaskManager.*',
 			'Ext.ux.SlidingPager',
-    
-			// mitos custom classes
-			'Ext.mitos.CRUDStore',
-			'Ext.mitos.Window',
-			'Ext.mitos.GridPanel',
-			'Ext.mitos.FormPanel',
-			'Ext.mitos.TopRenderPanel',
-			'Ext.mitos.SaveCancelWindow',
-			'Ext.mitos.AuthorizationsComboBox'
+		    'Ext.mitos.CRUDStore',
+		    'Ext.mitos.Window',
+    		'Ext.mitos.GridPanel',
+    		'Ext.mitos.FormPanel',
+    		'Ext.mitos.TopRenderPanel',
+    		'Ext.mitos.SaveCancelWindow',
+	    	'Ext.mitos.AuthorizationsComboBox'
 		],
 		initComponent: function(){
 		
@@ -174,8 +172,8 @@ Ext.onReady(function() {
 				border      : false,
 				store		: application.storeTree,
 				split		: true,
-				width		: <?php echo $_SESSION['global_settings']['gbl_nav_area_width'] ?>,
-				root: {
+				width		: <?php echo $_SESSION["global_settings"]["gbl_nav_area_width"]; ?>,
+				root		: {
 					nodeType	: 'async',
 					draggable	: false,
 					id			: 'source'
@@ -195,7 +193,7 @@ Ext.onReady(function() {
 					margin	: '5px 10px',
 					minWidth: 170,
 					handler : function(){
-						window.location = '<?php echo $_SESSION['global_settings']['online_support_link']?>';
+						window.location = '<?php echo $_SESSION["global_settings"]["online_support_link"]; ?>';
 					}
 				}]
 			});
@@ -206,8 +204,8 @@ Ext.onReady(function() {
 			application.navColumn = Ext.create('Ext.panel.Panel', {
 				title		: '<?php i18n("Navigation"); ?>',
 				layout      : 'border',
-				width		: <?php echo $_SESSION['global_settings']['gbl_nav_area_width'] ?>,
-				region		: '<?php echo $_SESSION['global_settings']['concurrent_layout'] ?>',
+				width		: <?php echo $_SESSION["global_settings"]["gbl_nav_area_width"]; ?>,
+				region		: '<?php echo $_SESSION["global_settings"]["concurrent_layout"]; ?>',
 				split		: true,
 				collapsible	: true,
 				items       : [application.Navigation, application.navColumnlinks]
@@ -217,7 +215,7 @@ Ext.onReady(function() {
 			// Load the selected menu item into the main application panel
 			// *************************************************************************************
 			application.Navigation.on('itemclick', function(dv, record, item, index, n){
-					application.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.hrefTarget, scripts: true});
+				application.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.hrefTarget, scripts: true});
 			});
 	
 			// *************************************************************************************
@@ -280,10 +278,7 @@ Ext.onReady(function() {
 							// Custom rendering template for each item
 							//---------------------------------------------------------------------
 							getInnerTpl: function() {
-								return '<div class="search-item">' +
-								'<h3><span>{patient_name}</span>  ({pid})</h3>' +
-								'DOB: {patient_dob} SS: {patient_ss}' +
-								'</div>';
+								return '<div class="search-item"><h3><span>{patient_name}</span>&nbsp;&nbsp;({pid})</h3>DOB:&nbsp;{patient_dob}&nbsp;SS:&nbsp;{patient_ss}</div>';
 							}
 						},
 						pageSize: 10,
@@ -315,7 +310,6 @@ Ext.onReady(function() {
     
 			//****************************************************************
 			// header Panel
-			// tag: ExtJS v4 Ready
 			//****************************************************************
 			application.Header = Ext.create('Ext.Panel', {
 				region		: 'north',
@@ -329,7 +323,7 @@ Ext.onReady(function() {
 				items		: [{
 					xtype	: 'container',
 					html	: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
-					style	:'float:left',
+					style	: 'float:left',
 					border	:	false
 				},
 					application.patientButton = new Ext.create('Ext.Button', {
@@ -349,9 +343,10 @@ Ext.onReady(function() {
 							}]
 						})
 					})
-				, application.searchPanel, {
+				, application.searchPanel, 
+				{
 					xtype		: 'button',
-					text		: '<?php echo $_SESSION['user']['name'] ?>',
+					text		: '<?php echo $_SESSION["user"]["name"]; ?>',
 					iconCls		: 'add',
 					iconAlign	: 'left',
 					style 		: 'float:right',
@@ -380,12 +375,11 @@ Ext.onReady(function() {
 							});
 						}
 					}]
+				}]
 			}); // End Header
 	
 			//****************************************************************
 			// Main Panel
-			//
-			// tag: ExtJS v4 Ready
 			//****************************************************************
 			application.MainApp = Ext.create('Ext.Panel', {
 				id 				: 'MainApp',
@@ -395,7 +389,7 @@ Ext.onReady(function() {
 				bodyPadding		: 0,
 				waitMsg			: '<?php i18n("Loading"); ?>',
 				waitMsgTarget	: true,
-				autoLoad		: {url: '<?php echo $_SESSION['global_settings']['default_top_pane']; ?>', scripts: true},
+				autoLoad		: {url: '<?php echo $_SESSION["global_settings"]["default_top_pane"]; ?>', scripts: true},
 				listeners		: {
 					resize 		: {
 						fn		: function(){
@@ -412,8 +406,6 @@ Ext.onReady(function() {
 			//****************************************************************
 			// TopPanel
 			// Description: It will show up the main layouts
-			//
-			// tag: ExtJS v4 Ready
 			//****************************************************************
 			application.TopPanel = Ext.create('Ext.Panel', {
 				region			: 'center',
@@ -430,8 +422,6 @@ Ext.onReady(function() {
 			// The main ViewPort
 			// Description: It will display all the previuosly declared
 			// panels above.
-			//
-			// tag: ExtJS v4 Ready 
 			//****************************************************************
 			Ext.create('Ext.Viewport', {
 				layout: {
@@ -441,18 +431,17 @@ Ext.onReady(function() {
 				defaults	: { split: true },
 				items		: [ application.Header, application.navColumn, application.TopPanel ]
 			}); // End ViewPort
-			
 			application.callParent(arguments);
 				
-			} // end of initComponent
+		} // end of initComponent
 		
 	}); //end MitosApplication class
-
     Ext.create('Ext.mitos.MitosApplication');
 
 }); // End App
 
 </script>
+
 </head>
 <body><span id="app-msg" style="display:none;"></span></body>
 </html>
