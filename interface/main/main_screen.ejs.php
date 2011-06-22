@@ -1,6 +1,5 @@
 <?php
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
-
 /* Main Screen Application
 *
 * Description: This is the main application, with all the panels
@@ -9,15 +8,12 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 * revision: N/A
 * author: Gino Rivera Falú
 */
-
 // Reset session count
 $_SESSION['site']['flops'] = 0;
-
 include_once($_SESSION['site']['root'].'/library/compressor/compressor.inc.php');
 include_once($_SESSION['site']['root'].'/library/dbHelper/dbHelper.inc.php');
 include_once($_SESSION['site']['root'].'/repository/global_settings/global_settings.php');
 include_once($_SESSION['site']['root'].'/repository/global_functions/global_functions.php');
-
 ?>
 <html>
 <head>
@@ -26,19 +22,13 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/global_functions/global_functions.js"></script>
-
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/Extensible.js"></script>
-
-<!--test stuff-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
-<!--end test stuff-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
-<!--calendar css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar.css" />
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar-colors.css" />
-<!--ens calendar css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" >
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" >
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" ><!--dashboard css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>"><!--main ExtJs css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar.css" /><!--calendar css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/resources/css/calendar-colors.css" /><!--calendar css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" ><!--app css-->
+<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" ><!--app css-->
 <link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
 <script type="text/javascript">
 // *************************************************************************************
@@ -49,9 +39,9 @@ Ext.Loader.setConfig({
     enabled: true,
     disableCaching: false,
     paths: {
-        'Ext.ux': '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux',
-        'Ext.mitos': '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos',
-        'Extensible': 'library/extensible-1.0/src',
+        'Ext.ux'            : '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux',
+        'Ext.mitos'         : '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos',
+        'Extensible'        : 'library/extensible-1.0/src',
         'Extensible.example': 'library/extensible-1.0/examples'
     }
 });
