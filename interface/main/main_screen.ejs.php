@@ -55,6 +55,7 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" ><!--app css-->
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" ><!--app css-->
 <link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
+
 <script type="text/javascript">
 
 // *************************************************************************************
@@ -62,9 +63,9 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 // using required to load different components
 // *************************************************************************************
 Ext.Loader.setConfig({
-    enabled: true,
-    disableCaching: false,
-    paths: {
+    enabled			: true,
+    disableCaching	: false,
+    paths			: {
         'Ext.ux'            : '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux',
         'Ext.mitos'         : '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos',
         'Extensible'        : 'library/extensible-1.0/src',
@@ -80,6 +81,7 @@ Ext.require([
     'Ext.toolbar.Paging',
     'Ext.TaskManager.*',
     'Ext.ux.SlidingPager',
+    
     // mitos custom classes
     'Ext.mitos.CRUDStore',
     'Ext.mitos.Window',
@@ -96,21 +98,6 @@ Ext.require([
 ]);
 
 Ext.onReady(function() {
-
-	// *************************************************************************************
-	// Sencha ExtJS v4 trying to be like a language
-	// using required to load different components
-	// *************************************************************************************
-	Ext.Loader.setConfig({
-		enabled: true,
-		disableCaching: false,
-		paths: {
-			'Ext.ux': '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux',
-			'Ext.mitos': '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos',
-        	'Extensible': 'library/extensible-1.0/src',
-    	    'Extensible.example': 'library/extensible-1.0/examples'
-	    }
-	});
 
 	Ext.define('Ext.mitos.MitosApplication',{
 		extend:'Ext.panel.Panel',
@@ -340,10 +327,10 @@ Ext.onReady(function() {
 				bodyStyle	: 'background: transparent',
 				margins		: '0 0 0 0',
 				items		: [{
-					xtype: 'container',
-					html: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
-					style:'float:left',
-					border: false
+					xtype	: 'container',
+					html	: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
+					style	:'float:left',
+					border	:	false
 				},
 					application.patientButton = new Ext.create('Ext.Button', {
 						text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
@@ -393,7 +380,6 @@ Ext.onReady(function() {
 							});
 						}
 					}]
-				}]
 			}); // End Header
 	
 			//****************************************************************
