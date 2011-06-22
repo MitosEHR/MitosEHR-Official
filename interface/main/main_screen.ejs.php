@@ -36,11 +36,18 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <script type="text/javascript">
 // *************************************************************************************
 // Sencha trying to be like a language
-// using requiered to load diferent components
+// using required to load different components
 // *************************************************************************************
-Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux', '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux');
-Ext.Loader.setPath('Ext.mitos', '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos');
+Ext.Loader.setConfig({
+    enabled: true,
+    disableCaching: false,
+    paths: {
+        'Ext.ux': '<?php echo $_SESSION['dir']['ext_classes']; ?>/ux',
+        'Ext.mitos': '<?php echo $_SESSION['dir']['ext_classes']; ?>/mitos'
+        //'Extensible': '../../../src',
+        //'Extensible.example': '../../'
+    }
+});
 Ext.require([
     'Ext.grid.*',
     'Ext.data.*',
@@ -64,6 +71,7 @@ Ext.require([
     'Ext.mitos.AuthorizationsComboBox'
 ]);
 Ext.onReady(function() {
+    var trp;
 	//****************************************************************
 	// Task Scheduler 
 	// This will run certain task at determined time.
@@ -311,7 +319,7 @@ Ext.onReady(function() {
 	//
 	// tag: ExtJS v4 Ready
 	//****************************************************************
-	MainApp = Ext.create('Ext.Panel', {
+	var MainApp = Ext.create('Ext.Panel', {
 		region			: 'center',
 		id				: 'MainApp', 
 		border			: true,
