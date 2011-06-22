@@ -24,6 +24,7 @@ Ext.require([
     'Ext.fx.target.Element',
     'Ext.fx.target.Component',
     'Ext.window.Window',
+    
     // mitos custom classes
     'Ext.mitos.TopRenderPanel',
     'Ext.mitos.dashboard.Portlet',
@@ -32,12 +33,13 @@ Ext.require([
     'Ext.mitos.dashboard.PortalDropZone',
     'Ext.mitos.dashboard.GridPortlet',
     'Ext.mitos.dashboard.ChartPortlet', 
-    'Ext.mitos.dashboard.OnotesPortlet'
+    'Ext.mitos.dashboard.OnotesPortlet',
+    'Ext.mitos.MitosApplication'
 ]);
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.dashboard.DashboardPage',{
 		extend:'Ext.panel.Panel',
-		uses: ['Ext.mitos.dashboard.PortalPanel', 'Ext.mitos.dashboard.PortalColumn', 'Ext.mitos.dashboard.GridPortlet', 'Ext.mitos.dashboard.ChartPortlet'],
+		uses: ['Ext.mitos.MitosApplication', 'Ext.mitos.dashboard.PortalPanel', 'Ext.mitos.dashboard.PortalColumn', 'Ext.mitos.dashboard.GridPortlet', 'Ext.mitos.dashboard.ChartPortlet'],
 
 	    getTools: function(){
 	        return [{
@@ -121,7 +123,7 @@ Ext.onReady(function(){
 	    
 	}); //ens UserPage class
 	
-	new Ext.create('Ext.mitos.TopRenderPanel', {
+	var panel = new Ext.create('Ext.mitos.TopRenderPanel', {
         pageTitle: '<?php i18n('Dashboard'); ?>',
         pageBody: Ext.create('Ext.mitos.dashboard.DashboardPage')
     });

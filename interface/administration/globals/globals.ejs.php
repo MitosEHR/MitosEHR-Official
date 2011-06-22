@@ -27,7 +27,8 @@ Ext.onReady(function(){
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
-			'Ext.mitos.TopRenderPanel'
+			'Ext.mitos.TopRenderPanel',
+			'Ext.mitos.MitosApplication'
 		],
 		initComponent: function(){
             var page = this;

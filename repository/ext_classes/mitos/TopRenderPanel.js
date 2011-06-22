@@ -8,19 +8,17 @@ Ext.define('Ext.mitos.TopRenderPanel', {
     frame       : false,
     border      : false,
     id          : 'topRenderPanel',
-    pageTitle	: 'Page Title',
     pageLayout	: 'fit',
-    pageBody	: '',
     initComponent: function(){
     	var me = this;
-    	config = {
-            renderTo	: MainApp.body,
-            height		: MainApp.getHeight()
-        };
+    	var config = { 
+    		renderTo: Ext.getCmp('MainApp').body,
+    		height	: Ext.getCmp('MainApp').getHeight()
+    	}
     	Ext.apply(me, Ext.apply(me.initialConfig, config));
         me.items = [{
-            id: 'topRenderPanel-header',
-            xtype: 'box',
+        	id: 'topRenderPanel-header',
+			xtype: 'box',
             region: 'north',
             height: 40,
             html: '<div class="dashboard_title">' + me.pageTitle + '</div>'

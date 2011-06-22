@@ -27,7 +27,8 @@ Ext.require([
     'Ext.data.proxy.Rest',
     'Extensible.calendar.data.MemoryCalendarStore',
     'Extensible.calendar.data.EventStore',
-    'Extensible.calendar.CalendarPanel'
+    'Extensible.calendar.CalendarPanel',
+    'Ext.mitos.MitosApplication'
 ]);
 
 Ext.onReady(function(){

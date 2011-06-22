@@ -30,7 +30,8 @@ Ext.onReady(function(){
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
 			'Ext.mitos.FacilitiesComboBox',
-			'Ext.mitos.AuthorizationsComboBox'
+			'Ext.mitos.AuthorizationsComboBox',
+			'Ext.mitos.MitosApplication'
 		],
 		initComponent: function(){
 			var page = this;
