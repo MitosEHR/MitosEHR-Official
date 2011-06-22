@@ -120,13 +120,13 @@ class layoutEngine {
 	function fieldAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255", $xtype="textfield"){
 		echo "
 			{
-				xtype: '".$xtype."',
-				fieldLabel: '".$fieldLabel."',
-            	name: '".$fieldName."',
-            	maxLength: ".$fieldLengh.",
-            	size: ".$fieldLengh.",
-            	submitValue: true,
-            	value: '".$initValue."',
+				xtype		: '".$xtype."',
+				fieldLabel	: '".$fieldLabel."',
+            	name		: '".$fieldName."',
+            	maxLength	: ".$fieldLengh.",
+            	size		: ".$fieldLengh.",
+            	submitValue	: true,
+            	value		: '".$initValue."',
             }";
 	}
 	

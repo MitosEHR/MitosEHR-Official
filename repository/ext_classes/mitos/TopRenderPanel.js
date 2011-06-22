@@ -14,8 +14,8 @@ Ext.define('Ext.mitos.TopRenderPanel', {
     initComponent: function(){
     	var me = this;
     	config = {
-            renderTo:MainApp.body,
-            height:MainApp.getHeight()
+            renderTo	: MainApp.body,
+            height		: MainApp.getHeight()
         };
     	Ext.apply(me, Ext.apply(me.initialConfig, config));
         me.items = [{

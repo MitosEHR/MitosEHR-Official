@@ -73,7 +73,7 @@ Ext.onReady(function(){
 			// This Panel needs only 3 arguments...
 			// PageTigle 	- Title of the current page
 			// PageLayout 	- default 'fit', define this argument if using other than the default value
-			// PageBody 	- List of items to display [foem1, grid1, grid2]
+			// PageBody 	- List of items to display [form1, grid1, grid2]
 			//***********************************************************************************
     		new Ext.create('Ext.mitos.TopRenderPanel', {
         		pageTitle: '<?php i18n("Patient Entry Form"); ?>',
@@ -83,7 +83,7 @@ Ext.onReady(function(){
 			
 		} // end of initComponent
 		
-	}); //ens LayoutPanel class
+	}); //ens PatientPanel class
     Ext.create('Ext.mitos.PatientPanel');
     
 }); // End ExtJS
