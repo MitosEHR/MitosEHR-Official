@@ -406,21 +406,6 @@ Ext.onReady(function() {
 			}); // End MainApp
 	
 			//****************************************************************
-			// TopPanel
-			// Description: It will show up the main layouts
-			//****************************************************************
-			//app.TopPanel = Ext.create('Ext.Panel', {
-			//	region			: 'center',
-			//	layout			: 'border',
-			//	waitMsgTarget	: true,
-			//	border			: false,
-			//	margins			: '0 0 0 0',
-			//	padding			: 0,
-			//	bodyPadding		: 0,
-			//	items			: [ app.MainApp ]
-			//}); // End TopPanel
-	
-			//****************************************************************
 			// The main ViewPort
 			// Description: It will display all the previously declared
 			// panels above.
