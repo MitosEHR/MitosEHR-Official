@@ -4,6 +4,8 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* Main Screen Application
  *
  * Description: This is the main application, with all the panels
+ * also this is the viewport of the application, this will call 
+ * all the interface->screen panels
  *
  * version 0.0.3
  * revision: N/A
