@@ -64,7 +64,7 @@ Ext.onReady(function() {
 					{name: 'default_value',		type: 'string'},
 					{name: 'edit_options',		type: 'string'},
 					{name: 'description',		type: 'string'},
-					{name: 'group_order',		type: 'string'},
+					{name: 'group_order',		type: 'string'}
 				],
 					groupField	: 'group_name',
 					model 		: 'layoutModel',
@@ -487,17 +487,6 @@ Ext.onReady(function() {
 				}
 		    }); // END LayoutChoose
     
-			// *************************************************************************************
-			// Layout Panel Screen
-			// *************************************************************************************
-			panel.LayoutPanel = Ext.create('Ext.Panel', {
-				layout	: { type: 'border' },
-		        defaults: { split: true },
-				border: true,
-				frame: true,
-        		items	: [panel.layoutGrid, panel.chooseGrid]
-			}); // END LayoutPanel
-
 			//***********************************************************************************
 			// Top Render Panel 
 			// This Panel needs only 3 arguments...
@@ -507,7 +496,8 @@ Ext.onReady(function() {
 			//***********************************************************************************
     		new Ext.create('Ext.mitos.TopRenderPanel', {
         		pageTitle: '<?php i18n("Layout Form Editor"); ?>',
-        		pageBody: [panel.LayoutPanel]
+        		pageLayout: 'border',
+        		pageBody: [panel.layoutGrid, panel.chooseGrid]
     		});
 			panel.callParent(arguments);
 			
