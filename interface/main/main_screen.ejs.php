@@ -395,7 +395,7 @@ Ext.onReady(function() {
 				listeners		: {
 					resize 		: {
 						fn		: function(){
-							if( trp = Ext.getCmp('topRenderPanel')){
+							if( trp = Ext.getCmp('RenderPanel')){
 								var height = app.MainApp.getHeight();
 								var width = app.MainApp.getWidth();
 								trp.setSize( width , height );
