@@ -59,7 +59,7 @@ Ext.onReady(function(){
 
 			Ext.apply(this, {
 	            //id: 'app-viewport',
-	            layout: { type: 'border' },
+	            layout: { type: 'fit' },
 	            border: false,
 	            items: [{
                     id: 'app-portal',

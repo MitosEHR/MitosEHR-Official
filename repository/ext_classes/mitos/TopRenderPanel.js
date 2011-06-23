@@ -11,10 +11,10 @@ Ext.define('Ext.mitos.TopRenderPanel', {
     pageLayout	: 'fit',
     initComponent: function(){
     	var me = this;
-    	var config = { 
-    		renderTo: Ext.getCmp('MainApp').body,
-    		height	: Ext.getCmp('MainApp').getHeight()
-    	}
+    	var config = {
+    		renderTo: app.MainApp.body,
+    		height	: app.MainApp.getHeight()
+    	};
     	Ext.apply(me, Ext.apply(me.initialConfig, config));
         me.items = [{
         	id: 'topRenderPanel-header',
