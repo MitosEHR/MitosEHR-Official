@@ -171,7 +171,7 @@ Ext.onReady(function() {
 						valueField: 'option_id', 
 						editable: false, 
 						store: panel.storePOSCode, 
-						queryMode: 'local',
+						queryMode: 'local'
 					})
 	        	,{
     	        	fieldLabel: '<?php i18n("Billing Attn"); ?>',

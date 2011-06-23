@@ -101,7 +101,7 @@ Ext.require([
 
 Ext.onReady(function() {
 
-	Ext.define('Ext.mitos.MitosApplication',{
+	Ext.define('Ext.mitos.MitosApp',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.grid.*',
@@ -128,13 +128,13 @@ Ext.onReady(function() {
 			// Global Variables
 			//****************************************************************
 			var trp;
-			var application = this;
+			var app = this;
 			
 			//****************************************************************
 			// Task Scheduler 
 			// This will run certain task at determined time.
 			//****************************************************************
-			checkSession = function(){
+			app.checkSession = function(){
 				Ext.Ajax.request({
 					url: 'library/authProcedures/chkAuth.inc.php',
 					success: function(response, opts){
@@ -147,15 +147,15 @@ Ext.onReady(function() {
 			// TaskScheduler
 			// This will run all the procedures inside the checkSession
 			//****************************************************************
-			application.taskScheduler = Ext.TaskManager.start({
-				run		: checkSession,
+			Ext.TaskManager.start({
+				run		: app.checkSession,
 				interval: 100000
 			});
 	
 			//****************************************************************
 			// Navigation Panel Tree Data
 			//****************************************************************
-			application.storeTree = new Ext.data.TreeStore({
+			app.storeTree = new Ext.data.TreeStore({
 				proxy: {
 					type	: 'ajax',
 					url		: 'interface/navigation/default_leftnav.ejs.php'
@@ -165,14 +165,14 @@ Ext.onReady(function() {
 			//****************************************************************
 			// Navigation Panel
 			//****************************************************************    
-			application.Navigation = new Ext.create('Ext.tree.TreePanel',{
+			app.Navigation = new Ext.create('Ext.tree.TreePanel',{
 				region		: 'center',
 				bodyPadding : '5 0',
 				hideHeaders	: true,
 				useArrows	: true,
 				rootVisible	: false,
 				border      : false,
-				store		: application.storeTree,
+				store		: app.storeTree,
 				split		: true,
 				width		: <?php echo $_SESSION["global_settings"]["gbl_nav_area_width"]; ?>,
 				root		: {
@@ -185,7 +185,7 @@ Ext.onReady(function() {
 			//****************************************************************
 			// The MitosEHR Support Button Link
 			//****************************************************************
-			application.navColumnlinks = Ext.create('Ext.panel.Panel', {
+			app.navColumnlinks = Ext.create('Ext.panel.Panel', {
 				region		: 'south',
 				border      : false,
 				items       : [{
@@ -203,21 +203,21 @@ Ext.onReady(function() {
 			// ************************************************************************************* 
 			// The panel definition for the the TreeMenu & the support button
 			// *************************************************************************************
-			application.navColumn = Ext.create('Ext.panel.Panel', {
+			app.navColumn = Ext.create('Ext.panel.Panel', {
 				title		: '<?php i18n("Navigation"); ?>',
 				layout      : 'border',
 				width		: <?php echo $_SESSION["global_settings"]["gbl_nav_area_width"]; ?>,
 				region		: '<?php echo $_SESSION["global_settings"]["concurrent_layout"]; ?>',
 				split		: true,
 				collapsible	: true,
-				items       : [application.Navigation, application.navColumnlinks]
+				items       : [app.Navigation, app.navColumnlinks]
 			});
 			
 			// *************************************************************************************
 			// Load the selected menu item into the main application panel
 			// *************************************************************************************
-			application.Navigation.on('itemclick', function(dv, record, item, index, n){
-				application.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.hrefTarget, scripts: true});
+			app.Navigation.on('itemclick', function(dv, record, item, index, n){
+				app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/' + record.data.hrefTarget, scripts: true});
 			});
 	
 			// *************************************************************************************
@@ -249,7 +249,7 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Live Search data store
 			// *************************************************************************************
-    		application.searchStore = Ext.create('Ext.data.Store', {
+    		app.searchStore = Ext.create('Ext.data.Store', {
 				pageSize	: 10,
 				model		: 'Post'
 			});
@@ -257,15 +257,15 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Panel for the live search
 			// *************************************************************************************
-			application.searchPanel = Ext.create('Ext.panel.Panel', {
+			app.searchPanel = Ext.create('Ext.panel.Panel', {
 				width		: 400,
 				bodyPadding	: '8 11 5 11',
 				margin		: '0 5',
 				style 		: 'float:left',
 				layout		: 'anchor',
 				items: [
-					application.liveSearch = new Ext.create('Ext.form.ComboBox',{
-						store		: application.searchStore,
+					app.liveSearch = new Ext.create('Ext.form.ComboBox',{
+						store		: app.searchStore,
 						displayField: 'title',
 						emptyText	: '<?php i18n("Live patient search..."); ?>',
 						typeAhead	: false,
@@ -295,15 +295,15 @@ Ext.onReady(function() {
 										url: Ext.String.format('library/patient/patient_search.inc.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
 										success: function(response, opts){
 											var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
-											application.patientButton.setText( newPatientBtn );
-											application.patientButton.enable();
+											app.patientButton.setText( newPatientBtn );
+											app.patientButton.enable();
 										}
 									});
 									Ext.data.Request()
 								}
                 			},
 							blur: function(){
-								application.liveSearch.reset();
+								app.liveSearch.reset();
 							} 
 						}
 					})
@@ -313,7 +313,7 @@ Ext.onReady(function() {
 			//****************************************************************
 			// header Panel
 			//****************************************************************
-			application.Header = Ext.create('Ext.Panel', {
+			app.Header = Ext.create('Ext.Panel', {
 				region		: 'north',
 				height		: 44,
 				split		: false,
@@ -328,7 +328,7 @@ Ext.onReady(function() {
 					style	: 'float:left',
 					border	:	false
 				},
-					application.patientButton = new Ext.create('Ext.Button', {
+					app.patientButton = new Ext.create('Ext.Button', {
 						text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
 						scale	: 'large',
 						style 	: 'float:left',
@@ -345,7 +345,7 @@ Ext.onReady(function() {
 							}]
 						})
 					})
-				, application.searchPanel, 
+				, app.searchPanel,
 				{
 					xtype		: 'button',
 					text		: '<?php echo $_SESSION["user"]["name"]; ?>',
@@ -356,12 +356,12 @@ Ext.onReady(function() {
 					menu: [{
 						text:'<?php i18n("My account"); ?>',
 						handler: function(){
-							application.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/miscellaneous/my_account/my_account.ejs.php', scripts: true});
+							app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/miscellaneous/my_account/my_account.ejs.php', scripts: true});
 						}
 					},{
 						text:'<?php i18n("My settings"); ?>',
 						handler: function(){
-							application.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/miscellaneous/my_settings/my_settings.ejs.php', scripts: true});
+							app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'interface/miscellaneous/my_settings/my_settings.ejs.php', scripts: true});
 						}
 					},{
 						text:'<?php i18n("Logout"); ?>',
@@ -383,7 +383,7 @@ Ext.onReady(function() {
 			//****************************************************************
 			// Main Panel
 			//****************************************************************
-			application.MainApp = Ext.create('Ext.Panel', {
+			app.MainApp = Ext.create('Ext.Panel', {
 				id 				: 'MainApp',
 				region			: 'center',
 				border			: true,
@@ -396,8 +396,8 @@ Ext.onReady(function() {
 					resize 		: {
 						fn		: function(){
 							if( trp = Ext.getCmp('topRenderPanel')){
-								var height = application.MainApp.getHeight();
-								var width = application.MainApp.getWidth();
+								var height = app.MainApp.getHeight();
+								var width = app.MainApp.getWidth();
 								trp.setSize( width , height );
 							}
 						}
@@ -409,7 +409,7 @@ Ext.onReady(function() {
 			// TopPanel
 			// Description: It will show up the main layouts
 			//****************************************************************
-			application.TopPanel = Ext.create('Ext.Panel', {
+			app.TopPanel = Ext.create('Ext.Panel', {
 				region			: 'center',
 				layout			: 'border',
 				waitMsgTarget	: true,
@@ -417,12 +417,12 @@ Ext.onReady(function() {
 				margins			: '0 0 0 0',
 				padding			: 0,
 				bodyPadding		: 0,
-				items			: [ application.MainApp ]
+				items			: [ app.MainApp ]
 			}); // End TopPanel	
 	
 			//****************************************************************
 			// The main ViewPort
-			// Description: It will display all the previuosly declared
+			// Description: It will display all the previously declared
 			// panels above.
 			//****************************************************************
 			Ext.create('Ext.Viewport', {
@@ -431,14 +431,14 @@ Ext.onReady(function() {
 					padding	: 2
 				},
 				defaults	: { split: true },
-				items		: [ application.Header, application.navColumn, application.TopPanel ]
+				items		: [ app.Header, app.navColumn, app.TopPanel ]
 			}); // End ViewPort
-			application.callParent(arguments);
+			app.callParent(arguments);
 				
 		} // end of initComponent
 		
-	}); //end MitosApplication class
-    Ext.create('Ext.mitos.MitosApplication');
+	}); //end MitosApp class
+    Ext.create('Ext.mitos.MitosApp');
 
 }); // End App
 

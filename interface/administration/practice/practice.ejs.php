@@ -32,8 +32,7 @@ Ext.onReady(function(){
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
             'Ext.mitos.TransmitMedthodComboBox',
-            'Ext.mitos.InsurancePayerType',
-            'Ext.mitos.MitosApplication'
+            'Ext.mitos.InsurancePayerType'
 		],
         initComponent: function(){
             var page = this;
