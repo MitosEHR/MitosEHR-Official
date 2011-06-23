@@ -29,8 +29,7 @@ Ext.onReady(function() {
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
 			'Ext.mitos.TopRenderPanel',
-			'Ext.mitos.SaveCancelWindow',
-			'Ext.mitos.MitosApplication'
+			'Ext.mitos.SaveCancelWindow'
 		],
 		initComponent: function(){
 		    /** @namespace Ext.QuickTips */
@@ -172,7 +171,7 @@ Ext.onReady(function() {
 						valueField: 'option_id', 
 						editable: false, 
 						store: panel.storePOSCode, 
-						queryMode: 'local',
+						queryMode: 'local'
 					})
 	        	,{
     	        	fieldLabel: '<?php i18n("Billing Attn"); ?>',

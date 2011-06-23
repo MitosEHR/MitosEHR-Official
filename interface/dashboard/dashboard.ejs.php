@@ -24,7 +24,6 @@ Ext.require([
     'Ext.fx.target.Element',
     'Ext.fx.target.Component',
     'Ext.window.Window',
-    
     // mitos custom classes
     'Ext.mitos.TopRenderPanel',
     'Ext.mitos.dashboard.Portlet',
@@ -33,13 +32,12 @@ Ext.require([
     'Ext.mitos.dashboard.PortalDropZone',
     'Ext.mitos.dashboard.GridPortlet',
     'Ext.mitos.dashboard.ChartPortlet', 
-    'Ext.mitos.dashboard.OnotesPortlet',
-    'Ext.mitos.MitosApplication'
+    'Ext.mitos.dashboard.OnotesPortlet'
 ]);
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.dashboard.DashboardPage',{
 		extend:'Ext.panel.Panel',
-		uses: ['Ext.mitos.MitosApplication', 'Ext.mitos.dashboard.PortalPanel', 'Ext.mitos.dashboard.PortalColumn', 'Ext.mitos.dashboard.GridPortlet', 'Ext.mitos.dashboard.ChartPortlet'],
+		uses: ['Ext.mitos.dashboard.PortalPanel', 'Ext.mitos.dashboard.PortalColumn', 'Ext.mitos.dashboard.GridPortlet', 'Ext.mitos.dashboard.ChartPortlet'],
 
 	    getTools: function(){
 	        return [{

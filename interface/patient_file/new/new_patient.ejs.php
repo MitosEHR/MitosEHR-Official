@@ -39,8 +39,7 @@ Ext.onReady(function(){
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
 			'Ext.mitos.TopRenderPanel',
-			'Ext.mitos.SaveCancelWindow',
-			'Ext.mitos.MitosApplication'
+			'Ext.mitos.SaveCancelWindow'
 		],
 		initComponent: function(){
 		
