@@ -409,16 +409,16 @@ Ext.onReady(function() {
 			// TopPanel
 			// Description: It will show up the main layouts
 			//****************************************************************
-			app.TopPanel = Ext.create('Ext.Panel', {
-				region			: 'center',
-				layout			: 'border',
-				waitMsgTarget	: true,
-				border			: false,
-				margins			: '0 0 0 0',
-				padding			: 0,
-				bodyPadding		: 0,
-				items			: [ app.MainApp ]
-			}); // End TopPanel	
+			//app.TopPanel = Ext.create('Ext.Panel', {
+			//	region			: 'center',
+			//	layout			: 'border',
+			//	waitMsgTarget	: true,
+			//	border			: false,
+			//	margins			: '0 0 0 0',
+			//	padding			: 0,
+			//	bodyPadding		: 0,
+			//	items			: [ app.MainApp ]
+			//}); // End TopPanel
 	
 			//****************************************************************
 			// The main ViewPort
@@ -431,7 +431,7 @@ Ext.onReady(function() {
 					padding	: 2
 				},
 				defaults	: { split: true },
-				items		: [ app.Header, app.navColumn, app.TopPanel ]
+				items		: [ app.Header, app.navColumn, app.MainApp ]
 			}); // End ViewPort
 			app.callParent(arguments);
 				
