@@ -27,7 +27,9 @@ Ext.require([
     'Ext.data.proxy.Rest',
     'Extensible.calendar.data.MemoryCalendarStore',
     'Extensible.calendar.data.EventStore',
-    'Extensible.calendar.CalendarPanel'
+    'Extensible.calendar.CalendarPanel',
+    'Extensible.calendar.gadget.CalendarListPanel',
+    'Extensible.example.calendar.data.Calendars'
 ]);
 
 Ext.onReady(function(){
@@ -44,7 +46,6 @@ Ext.onReady(function(){
             }
         }
     });
-
     var eventStore = Ext.create('Extensible.calendar.data.EventStore', {
         autoLoad: true,
         proxy: {
@@ -94,13 +95,172 @@ Ext.onReady(function(){
         }
     });
 
-    var cp = Ext.create('Extensible.calendar.CalendarPanel', {
-        id: 'calendar-remote',
+    var leftCol = new Ext.create('Ext.container.Container', {
+        id:'app-west',
+        region: 'west',
+        width: 179,
+        border: false,
+        items: [{
+            xtype: 'datepicker',
+            id: 'app-nav-picker',
+            layout:'vbox',
+            cls: 'ext-cal-nav-picker',
+            listeners: {
+                'select': {
+                    fn: function(dp, dt){
+                        calendar.setStartDate(dt);
+                    },
+                    scope: this
+                }
+            }
+        },{
+            xtype: 'extensible.calendarlist',
+            store: calendarStore,
+            border: false,
+            height: 200,
+            width: 178
+        }]
+    });
+
+
+    var calendar = Ext.create('Extensible.calendar.CalendarPanel', {
         eventStore: eventStore,
         calendarStore: calendarStore,
         title: 'Remote Calendar',
-        width: 900,
-        height: 700
+        border: false,
+        id:'app-calendar',
+        region: 'center',
+        activeItem: 3, // month view
+
+        // Any generic view options that should be applied to all sub views:
+        viewConfig: {
+            //enableFx: false,
+            //ddIncrement: 10, //only applies to DayView and subclasses, but convenient to put it here
+            //viewStartHour: 6,
+            //viewEndHour: 18,
+            //minEventDisplayMinutes: 15
+            showTime: false
+        },
+
+        // View options specific to a certain view (if the same options exist in viewConfig
+        // they will be overridden by the view-specific config):
+        monthViewCfg: {
+            showHeader: true,
+            showWeekLinks: true,
+            showWeekNumbers: true
+        },
+
+        multiWeekViewCfg: {
+            //weekCount: 3
+        },
+
+        // Some optional CalendarPanel configs to experiment with:
+        //readOnly: true,
+        //showDayView: false,
+        //showMultiDayView: true,
+        //showWeekView: false,
+        //showMultiWeekView: false,
+        //showMonthView: false,
+        //showNavBar: false,
+        //showTodayText: false,
+        //showTime: false,
+        //editModal: true,
+        //enableEditDetails: false,
+        //title: 'My Calendar', // the header of the calendar, could be a subtitle for the app
+
+        listeners: {
+            'eventclick': {
+                fn: function(vw, rec, el){
+                    this.clearMsg();
+                },
+                scope: this
+            },
+            'eventover': function(vw, rec, el){
+                //console.log('Entered evt rec='+rec.data[Extensible.calendar.data.EventMappings.Title.name]', view='+ vw.id +', el='+el.id);
+            },
+            'eventout': function(vw, rec, el){
+                //console.log('Leaving evt rec='+rec.data[Extensible.calendar.data.EventMappings.Title.name]+', view='+ vw.id +', el='+el.id);
+            },
+            'eventadd': {
+                fn: function(cp, rec){
+                    this.showMsg('Event '+ rec.data[Extensible.calendar.data.EventMappings.Title.name] +' was added');
+                },
+                scope: this
+            },
+            'eventupdate': {
+                fn: function(cp, rec){
+                    this.showMsg('Event '+ rec.data[Extensible.calendar.data.EventMappings.Title.name] +' was updated');
+                },
+                scope: this
+            },
+            'eventdelete': {
+                fn: function(cp, rec){
+                    //this.eventStore.remove(rec);
+                    this.showMsg('Event '+ rec.data[Extensible.calendar.data.EventMappings.Title.name] +' was deleted');
+                },
+                scope: this
+            },
+            'eventcancel': {
+                fn: function(cp, rec){
+                    // edit canceled
+                },
+                scope: this
+            },
+            'viewchange': {
+                fn: function(p, vw, dateInfo){
+                    if(this.editWin){
+                        this.editWin.hide();
+                    };
+                    if(dateInfo){
+                        //this.updateTitle(dateInfo.viewStart, dateInfo.viewEnd);
+                    }
+                },
+                scope: this
+            },
+            'dayclick': {
+                fn: function(vw, dt, ad, el){
+                    this.clearMsg();
+                },
+                scope: this
+            },
+            'rangeselect': {
+                fn: function(vw, dates, onComplete){
+                    this.clearMsg();
+                },
+                scope: this
+            },
+            'eventmove': {
+                fn: function(vw, rec){
+                    rec.commit();
+                    var time = rec.data[Extensible.calendar.data.EventMappings.IsAllDay.name] ? '' : ' \\a\\t g:i a';
+                    this.showMsg('Event '+ rec.data[Extensible.calendar.data.EventMappings.Title.name] +' was moved to '+
+                        Ext.Date.format(rec.data[Extensible.calendar.data.EventMappings.StartDate.name], ('F jS'+time)));
+                },
+                scope: this
+            },
+            'eventresize': {
+                fn: function(vw, rec){
+                    rec.commit();
+                    this.showMsg('Event '+ rec.data[Extensible.calendar.data.EventMappings.Title.name] +' was updated');
+                },
+                scope: this
+            },
+            'eventdelete': {
+                fn: function(win, rec){
+                    this.eventStore.remove(rec);
+                    this.showMsg('Event '+ rec.data[Extensible.calendar.data.EventMappings.Title.name] +' was deleted');
+                },
+                scope: this
+            },
+            'initdrag': {
+                fn: function(vw){
+                    if(this.editWin && this.editWin.isVisible()){
+                        this.editWin.hide();
+                    }
+                },
+                scope: this
+            }
+        }
     });
 
     // You can optionally call load() here if you prefer instead of using the
@@ -138,7 +298,8 @@ Ext.onReady(function(){
 	//***********************************************************************************
     new Ext.create('Ext.mitos.RenderPanel', {
         pageTitle: '<?php i18n('Calendar Test'); ?>',
-        pageBody: [cp]
+        pageLayout: 'border',
+        pageBody: [leftCol, calendar ]
     });
 }); // End ExtJS
 </script>

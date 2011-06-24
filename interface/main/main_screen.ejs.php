@@ -96,7 +96,13 @@ Ext.require([
     'Ext.mitos.FormPanel',
     'Ext.mitos.RenderPanel',
     'Ext.mitos.SaveCancelWindow',
-    'Ext.mitos.AuthorizationsComboBox'
+    'Ext.mitos.AuthorizationsComboBox',
+    'Extensible.calendar.CalendarPanel',
+    'Extensible.calendar.gadget.CalendarListPanel',
+    'Extensible.calendar.data.MemoryCalendarStore',
+    'Extensible.calendar.data.MemoryEventStore',
+    'Extensible.example.calendar.data.Events',
+    'Extensible.example.calendar.data.Calendars'
 ]);
 
 Ext.onReady(function() {
