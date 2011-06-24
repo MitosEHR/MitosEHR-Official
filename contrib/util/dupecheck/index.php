@@ -1,5 +1,5 @@
 <?php 
-require_once("../../../interface/registry.php");
+require_once("../../../app/registry.php");
 require_once("./Utils.php");
 
 /* Use this code to identify duplicate patients in OpenEMR
@@ -25,7 +25,7 @@ $oemrdb = $GLOBALS['dbh'];
 
 <html>
 <head>
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/library/js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/lib/js/jquery.js"></script>
 <style>
 body {
     font-family: arial, helvetica, times new roman;

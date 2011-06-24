@@ -18,7 +18,7 @@
 
  include_once("../../registry.php");
 
- include_once("../../../library/acl.inc.php");
+ include_once("../../../lib/acl.inc.php");
 
  formHeader("Habits");
 

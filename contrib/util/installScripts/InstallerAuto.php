@@ -69,7 +69,7 @@
 // This exit is to avoid malicious use of this script.
 exit;
 
-require_once(dirname(__FILE__).'/../../../library/classes/Installer.class.php');
+require_once(dirname(__FILE__) . '/../../../lib/classes/Installer.class.php');
 
 // Set up default configuration settings
 $installSettings = array();

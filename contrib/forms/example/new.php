@@ -1,5 +1,5 @@
 <?
-include("../../../library/acl.inc.php");
+include("../../../lib/acl.inc.php");
 //use the suggested header
 formHeader("newerpatient form");
 ?>

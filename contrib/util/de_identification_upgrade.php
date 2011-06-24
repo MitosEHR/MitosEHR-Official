@@ -25,9 +25,9 @@ $ignoreAuth = true; // no login required
 //set de_identification_config to 1 to run the de_identification_upgrade script
 $de_identification_config = 0;
 
-require_once('../../interface/registry.php');
-require_once('../../library/sql.inc.php');
-require_once('../../library/sqlconf.php');
+require_once('../../app/registry.php');
+require_once('../../lib/sql.inc.php');
+require_once('../../lib/sqlconf.php');
 
 function tableExists($tblname) {
   $row = sqlQuery("SHOW TABLES LIKE '$tblname'");
@@ -115,7 +115,7 @@ closedir($dh);
 <html>
 <head>
 <title><?php xl('OpenEMR Database Upgrade','e'); ?></title>
-<link rel='STYLESHEET' href='../../interface/themes/style_sky_blue.css'>
+<link rel='STYLESHEET' href='../../app/themes/style_sky_blue.css'>
 </head>
 <body> <br>
 <center>

@@ -35,8 +35,8 @@ if(isset($_SESSION['user']['auth'])){
 		// Load the i18n Library
 		// Load the main screen
 		//----------------------------------------------------------------
-		include_once("library/I18n/I18n.inc.php");
-		include_once("interface/main/main_screen.ejs.php");
+		include_once("classes/I18n.class.php");
+		include_once("app/MitosApp.ejs.php");
 	}
 //----------------------------------------------------------------
 // Make the logon process or Setup process
@@ -55,7 +55,7 @@ if(isset($_SESSION['user']['auth'])){
 	if( $count <= 0){
 		include_once("install/install.ejs.php");
 	} else {
-		include_once("interface/login/login.ejs.php");
+		include_once("app/login/login.ejs.php");
 	}	
 }
 ?>

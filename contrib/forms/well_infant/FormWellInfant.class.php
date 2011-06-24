@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . "/../../../library/classes/ORDataObject.class.php");
+require_once(dirname(__FILE__) . "/../../../lib/classes/ORDataObject.class.php");
 
 /**
  * class FormWellInfant

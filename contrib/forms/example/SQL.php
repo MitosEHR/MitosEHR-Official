@@ -1,6 +1,6 @@
 <?php
 
-include_once("../../../interface/registry.php");
+include_once("../../../app/registry.php");
 echo "Building Statement<br>";
 flush();
 

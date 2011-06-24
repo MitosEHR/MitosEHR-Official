@@ -37,7 +37,7 @@ $_SESSION['lang']['language'] = "English (Standard)";
 $_SESSION['dir']['ext'] = "ext-4.0.2";
 $_SESSION['dir']['AES'] = "phpAES";
 $_SESSION['dir']['adoHelper'] = "dbHelper";
-$_SESSION['dir']['ext_classes'] = "repository/ext_classes";
+$_SESSION['dir']['ext_classes'] = "classes/ext";
 //**********************************************************************
 // Patient Related Variables
 //**********************************************************************
