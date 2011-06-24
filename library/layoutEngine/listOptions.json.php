@@ -2,7 +2,7 @@
 //--------------------------------------------------------------------------------------------------------------------------
 // listOptions.json.php
 // 
-// This is a json spitter, to deal with the table list_options
+// This is a json factorer, to deal with the table list_options
 // depending on the panel.store.load({params:{filter: lists }}); 
 // option passed trough ExtJS v4 dataStore
 // it will return the list

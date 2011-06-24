@@ -26,10 +26,14 @@ class layoutEngine {
 	// Makes a copy of the current database connection object into the
 	// class itself.
 	//**********************************************************************
-	function dbObject($dbobj){
-		$this->conn = $dbobj;
-	}
+	function dbObject($dbobj){ $this->conn = $dbobj; }
 
+	//**********************************************************************
+	// getForm
+	//
+	// SQL Statement, to get the diferent forms created in the
+	// layout_options 
+	//**********************************************************************
 	function getForm($form_id="Demographics"){
 		$sql = "SELECT 
 					layout_options.*, list_options.title AS listDesc
@@ -47,6 +51,7 @@ class layoutEngine {
 
 	//**********************************************************************
 	// switchTF
+	//
 	// This function will write the Sencha ExtJS v4 code, in two modes
 	// T = Text: Will display the form only in HTML, no fields
 	// F = Fields: Will create the form with fields
@@ -64,7 +69,7 @@ class layoutEngine {
 	// $title: The title of the form panel object
 	// $url: Where te results will be send to.
 	//**********************************************************************
-	function formPanel($start, $title, $url, $formPanel="formPanel", $labelWidth="80"){
+	function formPanel($start="S", $title, $url, $formPanel="formPanel", $labelWidth="80"){
 		if($start=="S"){
 			echo "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
   					title		: '" . $title . "',
@@ -118,16 +123,15 @@ class layoutEngine {
 	// $xtype: The xtype value this one is the same a Sencha has.
 	//**********************************************************************
 	function fieldAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255", $xtype="textfield"){
-		echo "
-			{
-				xtype		: '".$xtype."',
-				fieldLabel	: '".$fieldLabel."',
-            	name		: '".$fieldName."',
-            	maxLength	: ".$fieldLengh.",
-            	size		: ".$fieldLengh.",
-            	submitValue	: true,
-            	value		: '".$initValue."',
-            }";
+		echo "	{
+					xtype		: '".$xtype."', 
+					fieldLabel	: '".$fieldLabel."', 
+					name		: '".$fieldName."', 
+					maxLength	: ".$fieldLengh.", 
+					size		: ".$fieldLengh.", 
+					submitValue	: true, 
+					value		: '".$initValue."' 
+				}";
 	}
 	
 	//**********************************************************************

@@ -22,8 +22,8 @@ include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 include_once($_SESSION['site']['root']."/library/layoutEngine/layoutEngine.class.php");
 
 $mitos_db = new dbHelper();
-$layoutSpitter = new layoutEngine();
-$layoutSpitter->dbObject($mitos_db);
+$layoutFactorer = new layoutEngine();
+$layoutFactorer->dbObject($mitos_db);
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -54,9 +54,9 @@ Ext.onReady(function(){
 			// This is done, via PHP Language.
 			// *************************************************************************************
 			<?php
-				$layoutSpitter->formPanel("S", "New Patient Entry Form", "data_create.ejs.php", "patientForm");
+				$layoutFactorer->formPanel("S", "New Patient Entry Form", "data_create.ejs.php", "patientForm");
 				//...
-				$layoutSpitter->formPanel("E");
+				$layoutFactorer->formPanel("E");
 			?>
 
 			// *************************************************************************************
