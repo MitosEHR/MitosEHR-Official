@@ -29,7 +29,7 @@ Ext.onReady(function() {
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.TopRenderPanel',
+			'Ext.mitos.RenderPanel',
 			'Ext.mitos.SaveCancelWindow'
 		],
 		initComponent: function(){
@@ -46,7 +46,7 @@ Ext.onReady(function() {
 			// PageLayout 	- default 'fit', define this argument if using other than the default value
 			// PageBody 	- List of items to display [foem1, grid1, grid2]
 			//***********************************************************************************
-    		new Ext.create('Ext.mitos.TopRenderPanel', {
+    		new Ext.create('Ext.mitos.RenderPanel', {
         		pageTitle: '<?php i18n("Calendar"); ?>',
         		pageBody: [panel.CalendarPanel]
     		});

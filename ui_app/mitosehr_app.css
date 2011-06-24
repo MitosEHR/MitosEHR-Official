@@ -5,14 +5,14 @@
 	font-family: 'Cuprum';
 	src: url('../ui_fonts/Cuprum.ttf');
 }
-#topRenderPanel{
+#RenderPanel{
 background-color: #DFE8F6;
 padding: 5px !important;
 }
-#topRenderPanel .x-panel-body{
+#RenderPanel .x-panel-body{
 	background-color: #fff !important;
 }
-#topRenderPanel-header{
+#RenderPanel-header{
 	background-color: #DFE8F6;
     color: #596F8F;
     font-size: 22px;
@@ -20,7 +20,7 @@ padding: 5px !important;
     padding: 8px 15px;
     text-shadow: 0 1px 0 #fff;
 }
-#topRenderPanel-body{
+#RenderPanel-body{
 	padding:5px;
 	background-color: #fff;
 	border-color: #D4CDCC;

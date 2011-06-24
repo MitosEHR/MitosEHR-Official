@@ -7,7 +7,7 @@
 // Author: Ernest Rodriguez
 // Modified: Gino Rivera
 // 
-// MitosEHR (Eletronic Health Records) 2011
+// MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 session_name ( "MitosEHR" );
 session_start();
@@ -24,7 +24,7 @@ $_SESSION['site']['flops'] = 0;
 <script type="text/javascript">
 Ext.onReady(function(){
 	// *************************************************************************************
-	// User Settinga Form
+	// User Settings Form
 	// Add or Edit purpose
 	// *************************************************************************************
 	var uSettingsForm = new Ext.create('Ext.mitos.FormPanel', {
@@ -50,7 +50,7 @@ Ext.onReady(function(){
 			    }
 			},
 	        items :[{
-				// fileds
+				// fields
 			},{
 			
 			},{
@@ -71,7 +71,7 @@ Ext.onReady(function(){
 			    }
 			},
 	        items :[{
-		       // fileds
+		       // fields
 		    },{
 			
 			},{
@@ -92,7 +92,7 @@ Ext.onReady(function(){
 			    }
 			},
 	        items :[{
-		    	// fileds
+		    	// fields
 		    },{
 			
 			},{
@@ -118,11 +118,11 @@ Ext.onReady(function(){
 	//***********************************************************************************
 	// Top Render Panel 
 	// This Panel needs only 3 arguments...
-	// PageTigle 	- Title of the current page
+	// PageTitle 	- Title of the current page
 	// PageLayout 	- default 'fit', define this argument if using other than the default value
-	// PageBody 	- List of items to display [foem1, grid1, grid2]
+	// PageBody 	- List of items to display [form1, grid1, grid2]
 	//***********************************************************************************
-    Ext.create('Ext.mitos.TopRenderPanel', {
+    new Ext.create('Ext.mitos.RenderPanel', {
         pageTitle: '<?php i18n('My Settings'); ?>',
         pageBody: [uSettingsForm]
     });

@@ -26,7 +26,7 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.TopRenderPanel',
+			'Ext.mitos.RenderPanel',
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
 			'Ext.mitos.FacilitiesComboBox',
@@ -329,7 +329,7 @@ Ext.onReady(function(){
                     ]
 				}]
 		    }); // END Facility Grid
-		    Ext.create('Ext.mitos.TopRenderPanel', {
+		    new Ext.create('Ext.mitos.RenderPanel', {
 		        pageTitle: '<?php i18n('Roles and Permissions'); ?>',
 		        pageBody: [page.rolesGrid]
 		    });

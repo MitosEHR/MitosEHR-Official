@@ -24,7 +24,7 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.TopRenderPanel'
+			'Ext.mitos.RenderPanel'
 		],
 		initComponent: function(){
             var page = this;
@@ -224,7 +224,7 @@ Ext.onReady(function(){
                     ]
                 })
             }); // END GRID
-            Ext.create('Ext.mitos.TopRenderPanel', {
+            new Ext.create('Ext.mitos.RenderPanel', {
                 pageTitle: '<?php i18n('Sevices'); ?>',
                 pageLayout: 'border',
                 pageBody: [page.servicesFormPanel,page.servicesGrid ]

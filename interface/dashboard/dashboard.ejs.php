@@ -25,7 +25,7 @@ Ext.require([
     'Ext.fx.target.Component',
     'Ext.window.Window',
     // mitos custom classes
-    'Ext.mitos.TopRenderPanel',
+    'Ext.mitos.RenderPanel',
     'Ext.mitos.dashboard.Portlet',
     'Ext.mitos.dashboard.PortalColumn',
     'Ext.mitos.dashboard.PortalPanel',
@@ -121,7 +121,7 @@ Ext.onReady(function(){
 	    
 	}); //ens UserPage class
 	
-	var panel = new Ext.create('Ext.mitos.TopRenderPanel', {
+	new Ext.create('Ext.mitos.RenderPanel', {
         pageTitle: '<?php i18n('Dashboard'); ?>',
         pageBody: Ext.create('Ext.mitos.dashboard.DashboardPage')
     });

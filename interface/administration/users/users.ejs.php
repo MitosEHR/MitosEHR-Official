@@ -7,7 +7,7 @@
 // Author: Ernesto J Rodriguez
 // Modified: n/a
 // 
-// MitosEHR (Eletronic Health Records) 2011
+// MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 session_name ( "MitosEHR" );
 session_start();
@@ -24,7 +24,7 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.TopRenderPanel',
+			'Ext.mitos.RenderPanel',
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
 			'Ext.mitos.FacilitiesComboBox',
@@ -41,9 +41,7 @@ Ext.onReady(function(){
 					{name: 'id',                    type: 'int'},
 					{name: 'username',              type: 'string'},
 					{name: 'password',              type: 'auto'},
-					//{name: 'authorizedd',           type: 'string'},
 					{name: 'authorized',            type: 'string'},
-					//{name: 'actived',            	type: 'string'},
 					{name: 'active',            	type: 'string'},
 					{name: 'info',                  type: 'string'},
 					{name: 'source',                type: 'int'},
@@ -54,31 +52,20 @@ Ext.onReady(function(){
 					{name: 'federaltaxid',          type: 'string'},
 					{name: 'federaldrugid',         type: 'string'},
 					{name: 'upin',                  type: 'string'},
-					//{name: 'facility',              type: 'string'},
 					{name: 'facility_id',           type: 'int'},
 					{name: 'see_auth',              type: 'auto'},
 					{name: 'active',                type: 'auto'},
 					{name: 'npi',                   type: 'string'},
 					{name: 'title',                 type: 'string'},
 					{name: 'specialty',             type: 'string'},
-					//{name: 'billname',              type: 'string'},
-					//{name: 'email',                 type: 'string'},
-					//{name: 'url',                   type: 'string'},
-					//{name: 'assistant',             type: 'string'},
-					//{name: 'organization',          type: 'string'},
-					//{name: 'valedictory',           type: 'string'},
-					//{name: 'fulladdress',           type: 'string'},
 					{name: 'cal_ui',                type: 'string'},
 					{name: 'taxonomy',              type: 'string'},
-					//{name: 'ssi_relayhealth',       type: 'string'},
 					{name: 'calendar',              type: 'int'},
 					{name: 'abook_type',            type: 'string'},
 					{name: 'pwd_expiration_date',   type: 'string'},
 					{name: 'pwd_history1',          type: 'string'},
 					{name: 'pwd_history2',          type: 'string'},
 					{name: 'default_warehouse',     type: 'string'}
-					//{name: 'ab_name',               type: 'string'},
-					//{name: 'ab_title',              type: 'string'}
 				],
 				model 		:'gModel',
 				idProperty 	:'id',
@@ -290,7 +277,7 @@ Ext.onReady(function(){
 			// *************************************************************************************
 			// Render Panel
 			// *************************************************************************************
-			new Ext.create('Ext.mitos.TopRenderPanel', {
+			new Ext.create('Ext.mitos.RenderPanel', {
 		        pageTitle: '<?php i18n('Users'); ?>',
 		        pageBody: [page.userGrid]
 		    });

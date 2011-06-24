@@ -28,7 +28,7 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.TopRenderPanel',
+			'Ext.mitos.RenderPanel',
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
 			'Ext.mitos.FacilitiesComboBox',
@@ -287,7 +287,7 @@ Ext.onReady(function(){
             // PageLayout 	- default 'fit', define this argument if using other than the default value
             // PageBody 	- List of items to display [form 1, grid 1, grid 2]
             //***********************************************************************************
-            Ext.create('Ext.mitos.TopRenderPanel', {
+            Ext.create('Ext.mitos.RenderPanel', {
                 pageTitle: 'My Account',
                 pageBody: [page.myAccountForm]
             });

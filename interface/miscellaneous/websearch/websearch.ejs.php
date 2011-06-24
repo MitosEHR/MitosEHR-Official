@@ -24,7 +24,7 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.TopRenderPanel'
+			'Ext.mitos.RenderPanel'
 		],
 		initComponent: function(){
             /** @namespace Ext.QuickTips */
@@ -155,7 +155,7 @@ Ext.onReady(function(){
                     '</div>'
                  )
             });
-            Ext.create('Ext.mitos.TopRenderPanel', {
+            Ext.create('Ext.mitos.RenderPanel', {
                 pageTitle: '<?php i18n('National Library of Medicine Search'); ?>',
                 pageLayout: 'border',
                 pageBody: [page.searchPanel,page.onotesGrid, page.viewPanel ]
