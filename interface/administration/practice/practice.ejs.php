@@ -147,7 +147,6 @@ Ext.onReady(function(){
             create		: 'interface/administration/practice/data_create.ejs.php',
             update		: 'interface/administration/practice/data_update.ejs.php',
             destroy 	: 'interface/administration/practice/data_destroy.ejs.php'
-
             });
 
             // *************************************************************************************
