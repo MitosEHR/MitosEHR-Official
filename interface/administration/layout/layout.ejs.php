@@ -83,9 +83,10 @@ Ext.onReady(function() {
 					{name: 'id',		type: 'string'},
 					{name: 'form_id',	type: 'string'}
 				],
-					model 		:'formlistModel',
-					idProperty 	:'id',
-					read		: 'interface/administration/layout/component_data.ejs.php?task=form_list'
+				model 		:'formlistModel',
+				idProperty 	:'id',
+				read		: 'interface/administration/layout/component_data.ejs.php',
+				extraParams	: {"task": "form_list"}
 			});
 	
 			// *************************************************************************************
@@ -96,9 +97,10 @@ Ext.onReady(function() {
 					{name: 'id',	type: 'string'},
 					{name: 'uor',	type: 'string'}
 				],
-					model 		:'uorModel',
-					idProperty 	:'id',
-					read		: 'interface/administration/layout/component_data.ejs.php?task=uor'
+				model 		:'uorModel',
+				idProperty 	:'id',
+				read		: 'interface/administration/layout/component_data.ejs.php',
+				extraParams	: {"task": "uor"}
 			});
 	
 			// *************************************************************************************
@@ -109,9 +111,10 @@ Ext.onReady(function() {
 					{name: 'id',	type: 'string'},
 					{name: 'type',	type: 'string'}
 				],
-					model 		:'typeModel',
-					idProperty 	:'id',
-					read		: 'interface/administration/layout/component_data.ejs.php?task=data_types'
+				model 		:'typeModel',
+				idProperty 	:'id',
+				read		: 'interface/administration/layout/component_data.ejs.php',
+				extraParams	: {"task": "data_types"}
 			});
 	
 			// *************************************************************************************
@@ -124,9 +127,10 @@ Ext.onReady(function() {
 					{name: 'list_id',	type: 'string'},
 					{name: 'option_id',	type: 'string'}
 				],
-					model 		:'listoptionModel',
-					idProperty 	:'id',
-					read		: 'interface/administration/layout/component_data.ejs.php?task=lists'
+				model 		:'listoptionModel',
+				idProperty 	:'id',
+				read		: 'interface/administration/layout/component_data.ejs.php',
+				extraParams	: {"task": "lists"}
 			});
 	
 			// *************************************************************************************
@@ -136,9 +140,10 @@ Ext.onReady(function() {
 				fields: [
 					{name: 'group_name',type: 'string'}
 				],
-					model 		:'whereModel',
-					idProperty 	:'group_name',
-					read		: 'interface/administration/layout/component_data.ejs.php?task=groups&form_id=' + form_id
+				model 		:'whereModel',
+				idProperty 	:'group_name',
+				read		: 'interface/administration/layout/component_data.ejs.php',
+				extraParams	: {"task": "groups", "form_id": form_id}
 			});
 	
 			// *************************************************************************************
@@ -150,13 +155,13 @@ Ext.onReady(function() {
             		anchor: '100%'
         		},
         		items: [{
-					xtype: 'combo',
-					name: 'where',
-					displayField: 'group_name',
-					valueField: 'group_name', 
-					editable: false, 
-					store: panel.whereStore, 
-					queryMode: 'local'
+					xtype			: 'combo',
+					name			: 'where',
+					displayField	: 'group_name',
+					valueField		: 'group_name', 
+					editable		: false, 
+					store			: panel.whereStore, 
+					queryMode		: 'local'
         		}]
     		});
 	
