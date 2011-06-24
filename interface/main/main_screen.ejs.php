@@ -35,7 +35,7 @@ include_once($_SESSION['site']['root'].'/repository/global_functions/global_func
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repository/global_functions/global_functions.js"></script>
-<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/extensible-1.0/Extensible.js"></script>
+<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>library/extensible-1.5.0-beta1/Extensible.js"></script>
 
 <!--test stuff-->
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
@@ -77,8 +77,8 @@ Ext.Loader.setConfig({
     paths			: {
         'Ext.ux'            : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/ux',
         'Ext.mitos'         : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/mitos',
-        'Extensible'        : 'library/extensible-1.0/src',
-        'Extensible.example': 'library/extensible-1.0/examples'
+        'Extensible'        : 'library/extensible-1.5.0-beta1/src',
+        'Extensible.example': 'library/extensible-1.5.0-beta1/examples'
     }
 });
 

@@ -20,8 +20,8 @@ include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
 //**********************************************************************************
 $_SESSION['site']['flops'] = 0;
 ?>
-<link rel="stylesheet" type="text/css" href="library/extensible-1.0/examples/examples.css" />
-<script type="text/javascript" src="library/extensible-1.0/examples/examples.js"></script>
+<link rel="stylesheet" type="text/css" href="library/extensible-1.5.0-beta1/examples/examples.css" />
+<script type="text/javascript" src="library/extensible-1.5.0-beta1/examples/examples.js"></script>
 <script type="text/javascript">
 Ext.require([
     'Ext.data.proxy.Rest',
