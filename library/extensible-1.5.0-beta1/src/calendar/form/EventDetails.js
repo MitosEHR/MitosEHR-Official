@@ -157,8 +157,8 @@ Ext.define('Extensible.calendar.form.EventDetails', {
             anchor: '100%'
         });
         
-        var leftFields = [this.titleField, this.dateRangeField, this.reminderField], 
-            rightFields = [this.notesField, this.locationField, this.urlField];
+        var leftFields = [this.titleField, this.dateRangeField, this.reminderField, this.notesField, this.locationField, this.urlField],
+            rightFields = [];
             
         if(this.enableRecurrence){
             this.recurrenceField = Ext.create('Extensible.form.recurrence.Fieldset', {

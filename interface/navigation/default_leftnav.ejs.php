@@ -4,9 +4,9 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("../../library/dbHelper/dbHelper.inc.php");
-include_once("../../library/I18n/I18n.inc.php");
-require_once("../../repository/dataExchange/dataExchange.inc.php");
+include_once($_SESSION['site']['root']."/library/dbHelper/dbHelper.inc.php");
+include_once($_SESSION['site']['root']."/library/I18n/I18n.inc.php");
+require_once($_SESSION['site']['root']."/repository/dataExchange/dataExchange.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -23,6 +23,7 @@ $buff = "[" . chr(13);
 // Dashboard
 // -------------------------------------
 $buff .= '{ "text":"' . i18n('Dashboard', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"dashboard/dashboard.ejs.php"},' . chr(13);
+$buff .= '{"text":"' . i18n('Calendar', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"calendar/calendar.ejs.php"},' . chr(13);
 $buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"messages/messages.ejs.php"},' . chr(13);
 // -------------------------------------
 // Patient
@@ -72,7 +73,7 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 $buff .= '{"text":"' . i18n('Test Area', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
-    $buff .= '{"text":"' . i18n('Calendar Test', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"calendar_t/calendar.ejs.php"}' . chr(13);
+
 
 $buff .= ']}' . chr(13);
 // *************************************************************************************
