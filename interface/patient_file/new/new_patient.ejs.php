@@ -23,7 +23,6 @@ include_once($_SESSION['site']['root']."/library/layoutEngine/layoutEngine.class
 
 $mitos_db = new dbHelper();
 $layoutFactorer = new layoutEngine();
-$layoutFactorer->dbObject($mitos_db);
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -54,9 +53,7 @@ Ext.onReady(function(){
 			// This is done, via PHP Language.
 			// *************************************************************************************
 			<?php
-				$layoutFactorer->formPanel("S", "New Patient Entry Form", "data_create.ejs.php", "patientForm");
-				//...
-				$layoutFactorer->formPanel("E");
+
 			?>
 
 			// *************************************************************************************
