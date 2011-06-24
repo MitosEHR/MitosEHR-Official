@@ -27,21 +27,21 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title><?php echo $_SESSION['global_settings']['mitosehr_name'] ?></title>
-<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
-<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repo/formValidation/formValidation.js"></script>
-<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repo/global_functions/global_functions.js"></script>
-<script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>lib/extensible-1.5.0-beta1/Extensible.js"></script>
+<script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+<script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
+<script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
+<script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/Extensible.js"></script>
 <!--test stuff-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
+<link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
 <!--end test stuff-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
+<link rel="stylesheet" type="text/css" href="themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
 <!--calendar css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>lib/extensible-1.5.0-beta1/resources/css/calendar.css" />
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>lib/extensible-1.5.0-beta1/resources/css/calendar-colors.css" />
+<link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/resources/css/calendar.css" />
+<link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/resources/css/calendar-colors.css" />
 <!--ens calendar css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" >
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" >
-<link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
+<link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
+<link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
+<link rel="shortcut icon" href="favicon.ico" >
 <script type="text/javascript">
 // *************************************************************************************
 // Set the path for the components, so the application can find them.
@@ -374,7 +374,7 @@ Ext.onReady(function() {
                 split       : false,
                 padding     : 3,
                 region      : 'south',
-                html        : '<div><p style="font-size: 10px"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) is a Open source Web-Based Software | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
+                html        : '<div> <?php echo $_SESSION['site']['root'] ?><p style="font-size: 10px"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) is a Open source Web-Based Software | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
             });
 			// *************************************************************************************
 			// The main ViewPort

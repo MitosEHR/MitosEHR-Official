@@ -7,12 +7,12 @@
 // Author: Ernesto J Rodriguez
 // Modified: n/a
 // 
-// MitosEHR (Eletronic Health Records) 2011
+// MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
-include_once("../../classes/I18n.class.php");
+include_once($_SESSION['site']['root']."/classes/I18n.class.php");
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
 //******************************************************************************
@@ -24,7 +24,6 @@ Ext.require([
     'Ext.fx.target.Element',
     'Ext.fx.target.Component',
     'Ext.window.Window',
-    // mitos custom classes
     'Ext.mitos.RenderPanel',
     'Ext.mitos.dashboard.Portlet',
     'Ext.mitos.dashboard.PortalColumn',
@@ -38,7 +37,6 @@ Ext.onReady(function(){
 	Ext.define('Ext.mitos.dashboard.DashboardPage',{
 		extend:'Ext.panel.Panel',
 		uses: ['Ext.mitos.dashboard.PortalPanel', 'Ext.mitos.dashboard.PortalColumn', 'Ext.mitos.dashboard.GridPortlet', 'Ext.mitos.dashboard.ChartPortlet'],
-
 	    getTools: function(){
 	        return [{
 	            xtype: 'tool',
@@ -52,11 +50,8 @@ Ext.onReady(function(){
 	            }
 	        }];
 	    },
-		
 		initComponent: function(){
-
 			var content = '<div class="portlet-content">HELLO WORLD!</div>';
-
 			Ext.apply(this, {
 	            //id: 'app-viewport',
 	            layout: { type: 'fit' },
@@ -114,13 +109,10 @@ Ext.onReady(function(){
 	        });
 	        this.callParent(arguments);
 	    },
-
 		 onPortletClose: function(portlet) {
 	        Ext.topAlert.msg('Message!',  portlet.title + ' was removed');
 	    }
-	    
 	}); //ens UserPage class
-	
 	new Ext.create('Ext.mitos.RenderPanel', {
         pageTitle: '<?php i18n('Dashboard'); ?>',
         pageBody: Ext.create('Ext.mitos.dashboard.DashboardPage')

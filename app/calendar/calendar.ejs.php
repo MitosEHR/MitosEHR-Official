@@ -20,8 +20,8 @@ include_once($_SESSION['site']['root']."/classes/I18n.class.php");
 //**********************************************************************************
 $_SESSION['site']['flops'] = 0;
 ?>
-<link rel="stylesheet" type="text/css" href="lib/extensible-1.5.0-beta1/examples/examples.css" />
-<script type="text/javascript" src="lib/extensible-1.5.0-beta1/examples/examples.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.css" />
+<script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
 <script type="text/javascript">
 Ext.onReady(function(){
 
