@@ -7,27 +7,18 @@
  * Most of the structural database table was originally created by OpenEMR developers.
  * 
  * What this class will not do: This class will not create the entire Screen Panel for you, this
- * will only create the form object with the fields names, configured on the layout_options table.
+ * will only create the form object with the fields names & dataStores configured on the layout_options table.
  * 
  * version: 0.0.1 
  * author: Gino Rivera Falu
  * 
  */
 
-class layoutEngine {
+ class layoutEngine extends dbHelper {
 
 	private $conn;
 	private $switcher;
 	
-	//**********************************************************************
-	// dbObject
-	//
-	// Description:
-	// Makes a copy of the current database connection object into the
-	// class itself.
-	//**********************************************************************
-	function dbObject($dbobj){ $this->conn = $dbobj; }
-
 	//**********************************************************************
 	// getForm
 	//
@@ -47,6 +38,8 @@ class layoutEngine {
   					layout_options.form_id = '". $form_id . "'
 				ORDER BY
   					layout_options.group_order, layout_options.seq";
+		$this->setSQL($sql);
+		return $this->execStatement();
 	}
 
 	//**********************************************************************
@@ -57,32 +50,6 @@ class layoutEngine {
 	// F = Fields: Will create the form with fields
 	//**********************************************************************
 	function switchTF($v = "F"){ $this->switcher = $v; } 
-	
-	//**********************************************************************
-	// formPanel
-	//
-	// This creates the Sencha form object, in OOP
-	//
-	// Parameters:
-	// $start: S for start the form, or E to end the form
-	// $formPanel: The name of the form panel object
-	// $title: The title of the form panel object
-	// $url: Where te results will be send to.
-	//**********************************************************************
-	function formPanel($start="S", $title, $url, $formPanel="formPanel", $labelWidth="80"){
-		if($start=="S"){
-			echo "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
-  					title		: '" . $title . "',
-					labelWidth	: " . $labelWidth . ",
-					url		: '" . $url . "',
-  					frame		: true,
-					bodyStyle	: 'padding: 5px',
-					width		: '100%',
-					layout		: 'column',
-  					defaults	: { bodyPadding: 4 },";
-    	}
-		if ($start=="E") echo "});";
-	}
 	
 	//**********************************************************************
 	// formFieldset
@@ -96,13 +63,13 @@ class layoutEngine {
 	//**********************************************************************
 	function formFieldset($fieldsetName, $start="S"){
 		if($start=="S"){
-			echo "items: [{
-        				xtype:'fieldset',
-        				columnWidth: 0.5,
-        				title: '".$fieldsetName."',
-        				defaults: {anchor: '100%'},
-        				layout: 'anchor',
-        				items :[";	
+			echo "{
+        			xtype:'fieldset',
+        			columnWidth: 0.5,
+        			title: '".$fieldsetName."',
+        			defaults: {anchor: '100%'},
+        			layout: 'anchor',
+        			items :[";	
 		}
 		
 		if($start=="E"){
@@ -135,13 +102,72 @@ class layoutEngine {
 	}
 	
 	//**********************************************************************
+	// factorDataStore
+	// 
+	// This will create the code for the dataStores requiered by
+	// the comboboxes, or any other object that requieres dataStore.
+	//
+	// Parameters:
+	// $list
+	//
+	// Return:
+	// Return the name of the dataStore, i.e.
+	// if $list parameter was patients, the name of the dataStore will be
+	// storePatients, and the record model will be patientsModel.
+	//**********************************************************************
+	function factorDataStore($list){
+			echo "panel.store" . ucfirst($list) . " = Ext.create('Ext.mitos.CRUDStore',{
+						fields: [
+							{name: 'option_id',		type: 'string'},
+							{name: 'title',			type: 'string'}
+						],
+						model 		:'".$list."Model',
+						idProperty 	:'id',
+						read		: 'library/layoutEngine/listOptions.json.php',
+						extraParams	: {\"task\": \"".$list."\"}
+					});";
+			return "store".ucfirst($list);
+	}
+	
+	//**********************************************************************
 	// renderForm 
 	//
 	// This will render the selected form, and returns the Sencha ExtJS v4 
 	// code.
 	//**********************************************************************
-	function renderForm($form, $echo="TRUE"){
+	function renderForm($formPanel, $url, $title, $labelWidth){
 		
+		$dataStoresNames = array();
+		
+		// First we need to render all the dataStores
+		// and gather all the dataStore names
+		//---
+		foreach(getForm($formPanel) as $row){
+			
+		}
+		
+		// Begin with the form
+		//---
+		echo "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
+				title		: '" . $title . "',
+				url			: '" . $url . "',
+				frame		: false,
+				bodyStyle	: 'padding: 5px',
+				width		: '100%',
+				layout		: 'column',
+				defaults	: { bodyPadding: 4, labelWidth: ".$labelWidth.", anchor: '100%'},
+				items		: [";
+		
+		// Loop through the form groups
+		//---
+		foreach(getForm($formPanel) as $row){
+			
+		}
+				
+		// End with the form
+		//---
+		echo "		]
+				}); // End of ".$formPanel;
 	}
 	
 }
