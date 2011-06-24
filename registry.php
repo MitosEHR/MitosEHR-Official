@@ -52,33 +52,5 @@ $_SESSION['server']['OS'] = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "
 // Client related variables
 //**********************************************************************
 $_SESSION['client']['os'] = php_uname('s');
-//$operating_systems = array  (
-	// User Agent String will have a information about Os. Lets identify them.
-//	'Windows 3.11' => 'Win16',
-//	'Windows 95' => '(Windows 95)|(Win95)|(Windows_95)',
-//	'Windows 98' => '(Windows 98)|(Win98)',
-//	'Windows 2000' => '(Windows NT 5.0)|(Windows 2000)',
-//	'Windows XP' => '(Windows NT 5.1)|(Windows XP)',
-//	'Windows Server 2003 ' => '(Windows NT 5.2)',
-//	'Windows Vista ' => '(Windows NT 6.0)',
-//	'Windows 7' => '(Windows NT 7.0)',
-//	'Windows NT 4.0' => '(Windows NT 4.0)|(WinNT4.0)|(WinNT)|(Windows NT)',
-//	'Windows ME' => '(Windows 98)|(Win 9x 4.90)|(Windows ME)',
-//	'Open BSD' => 'OpenBSD',
-//	'Sun OS' => 'SunOS',
-//	'Linux' => '(Linux)|(X11)',
-//	'Mac OS' => '(Mac_PowerPC)|(Macintosh)',
-//	'QNX' => 'QNX',
-//	'BeOS' => 'BeOS',
-//	'OS/2' => 'OS/2',
-//);
-// Match against our array of operating systems, To match
-//foreach($operating_systems as $current_os=>$found){
-//	if (explode($found, $_SERVER['HTTP_USER_AGENT'])){
-//		$_SESSION['client']['os'] = $current_os;
-//		break;
-//	} else {
-//		$_SESSION['client']['os'] = 'Unknow';
-//	}
-//}
+
 ?>
