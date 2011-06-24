@@ -94,7 +94,7 @@ Ext.require([
     'Ext.mitos.Window',
     'Ext.mitos.GridPanel',
     'Ext.mitos.FormPanel',
-    'Ext.mitos.TopRenderPanel',
+    'Ext.mitos.RenderPanel',
     'Ext.mitos.SaveCancelWindow',
     'Ext.mitos.AuthorizationsComboBox'
 ]);
@@ -115,7 +115,7 @@ Ext.onReady(function() {
 		    'Ext.mitos.Window',
     		'Ext.mitos.GridPanel',
     		'Ext.mitos.FormPanel',
-    		'Ext.mitos.TopRenderPanel',
+    		'Ext.mitos.RenderPanel',
     		'Ext.mitos.SaveCancelWindow',
 	    	'Ext.mitos.AuthorizationsComboBox'
 		],
@@ -404,7 +404,14 @@ Ext.onReady(function() {
 					}	
 				}
 			}); // End MainApp
-	
+	        app.Footer = Ext.create('Ext.container.Container', {
+                height:18,
+                split:false,
+                padding: 3,
+                region:'south',
+                html: '<div><p style="font-size: 10px"><a href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) is a Open source Web-Based Software | <a href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
+
+            });
 			//****************************************************************
 			// The main ViewPort
 			// Description: It will display all the previously declared
@@ -416,7 +423,7 @@ Ext.onReady(function() {
 					padding	: 2
 				},
 				defaults	: { split: true },
-				items		: [ app.Header, app.navColumn, app.MainApp ]
+				items		: [ app.Header, app.navColumn, app.MainApp, app.Footer ]
 			}); // End ViewPort
 			app.callParent(arguments);
 				
