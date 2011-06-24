@@ -12,22 +12,17 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
  * author: Gino Rivera Falú
  * 
  */
-
 // Reset session count
 $_SESSION['site']['flops'] = 0;
-
-/* 
- * 
- * Include the necesary libraries, so the web application 
+/*
+ * Include the necessary libraries, so the web application
  * can work.
- * 
  */
 include_once($_SESSION['site']['root'].'/lib/compressor/compressor.inc.php');
 include_once($_SESSION['site']['root'].'/classes/dbHelper.class.php');
 include_once($_SESSION['site']['root'].'/repo/global_settings/global_settings.php');
 include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.php');
 ?>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -36,38 +31,18 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repo/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>repo/global_functions/global_functions.js"></script>
 <script type="text/javascript" src="<?php $_SESSION['site']['root'] ?>lib/extensible-1.5.0-beta1/Extensible.js"></script>
-
 <!--test stuff-->
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
 <!--end test stuff-->
-
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
-
 <!--calendar css-->
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>lib/extensible-1.5.0-beta1/resources/css/calendar.css" />
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>lib/extensible-1.5.0-beta1/resources/css/calendar-colors.css" />
 <!--ens calendar css-->
-
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
-<!--dashboard css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/dashboard.css" >
-<!--main ExtJs css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
-<!--calendar css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>lib/extensible-1.5.0-beta1/resources/css/calendar.css" />
-<!--calendar css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>lib/extensible-1.5.0-beta1/resources/css/calendar-colors.css" />
-
-<!--app css-->
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/style_newui.css" >
-<link rel="stylesheet" type="text/css" href="<?php $_SESSION['site']['root'] ?>ui_app/mitosehr_app.css" >
-
-<link rel="shortcut icon" href="<?php $_SESSION['site']['root'] ?>favicon.ico" >
-
 <script type="text/javascript">
-
 // *************************************************************************************
 // Set the path for the components, so the application can find them.
 // *************************************************************************************
@@ -81,7 +56,6 @@ Ext.Loader.setConfig({
         'Extensible.example': 'lib/extensible-1.5.0-beta1/examples'
     }
 });
-
 Ext.require([
     'Ext.grid.*',
     'Ext.data.*',
@@ -100,13 +74,9 @@ Ext.require([
     'Extensible.calendar.CalendarPanel',
     'Extensible.calendar.gadget.CalendarListPanel',
     'Extensible.calendar.data.MemoryCalendarStore',
-    'Extensible.calendar.data.MemoryEventStore',
-    'Extensible.example.calendar.data.Events',
-    'Extensible.example.calendar.data.Calendars'
+    'Extensible.calendar.data.MemoryEventStore'
 ]);
-
 Ext.onReady(function() {
-
 	Ext.define('Ext.mitos.MitosApp',{
 		extend:'Ext.panel.Panel',
 		uses:[
@@ -126,51 +96,45 @@ Ext.onReady(function() {
 	    	'Ext.mitos.AuthorizationsComboBox'
 		],
 		initComponent: function(){
-		
-            /** @namespace Ext.QuickTips */
+	        /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
-
-			//****************************************************************
+			// *************************************************************************************
 			// Global Variables
-			//****************************************************************
+			// *************************************************************************************
 			var trp;
 			app = this;
-			
-			//****************************************************************
+			// *************************************************************************************
 			// Task Scheduler 
 			// This will run certain task at determined time.
-			//****************************************************************
+			// *************************************************************************************
 			app.checkSession = function(){
 				Ext.Ajax.request({
-					url: 'lib/authProcedures/chkAuth.inc.php',
-					success: function(response, opts){
+					url     : 'lib/authProcedures/chkAuth.inc.php',
+					success : function(response, opts){
 						if(response.responseText == 'exit'){ window.location="lib/authProcedures/unauth.inc.php"; }
 					}
 				});
 			};
-			
-			//****************************************************************
+			// *************************************************************************************
 			// TaskScheduler
 			// This will run all the procedures inside the checkSession
-			//****************************************************************
+			// *************************************************************************************
 			Ext.TaskManager.start({
-				run		: app.checkSession,
-				interval: 100000
+				run		    : app.checkSession,
+				interval    : 100000
 			});
-	
-			//****************************************************************
+			// *************************************************************************************
 			// Navigation Panel Tree Data
-			//****************************************************************
+			// *************************************************************************************
 			app.storeTree = new Ext.data.TreeStore({
 				proxy: {
 					type	: 'ajax',
 					url		: 'app/navigation/default_leftnav.ejs.php'
 				}
 			});
-	
-			//****************************************************************
+			// *************************************************************************************
 			// Navigation Panel
-			//****************************************************************    
+			// *************************************************************************************
 			app.Navigation = new Ext.create('Ext.tree.TreePanel',{
 				region		: 'center',
 				bodyPadding : '5 0',
@@ -187,10 +151,9 @@ Ext.onReady(function() {
 					id			: 'source'
 				}
 			});
-			
-			//****************************************************************
+			// *************************************************************************************
 			// The MitosEHR Support Button Link
-			//****************************************************************
+			// *************************************************************************************
 			app.navColumnlinks = Ext.create('Ext.panel.Panel', {
 				region		: 'south',
 				border      : false,
@@ -205,8 +168,7 @@ Ext.onReady(function() {
 					}
 				}]
 			});
-
-			// ************************************************************************************* 
+			// *************************************************************************************
 			// The panel definition for the the TreeMenu & the support button
 			// *************************************************************************************
 			app.navColumn = Ext.create('Ext.panel.Panel', {
@@ -218,14 +180,12 @@ Ext.onReady(function() {
 				collapsible	: true,
 				items       : [app.Navigation, app.navColumnlinks]
 			});
-			
 			// *************************************************************************************
 			// Load the selected menu item into the main application panel
 			// *************************************************************************************
 			app.Navigation.on('itemclick', function(dv, record, item, index, n){
 				app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/' + record.data.hrefTarget, scripts: true});
 			});
-	
 			// *************************************************************************************
 			// Search for patient...
 			// *************************************************************************************
@@ -251,7 +211,6 @@ Ext.onReady(function() {
 					]
 				});
 			}
-			
 			// *************************************************************************************
 			// Live Search data store
 			// *************************************************************************************
@@ -259,7 +218,6 @@ Ext.onReady(function() {
 				pageSize	: 10,
 				model		: 'Post'
 			});
-			
 			// *************************************************************************************
 			// Panel for the live search
 			// *************************************************************************************
@@ -315,10 +273,9 @@ Ext.onReady(function() {
 					})
 				]
 			}); // END Search for patient.
-    
-			//****************************************************************
+			// *************************************************************************************
 			// header Panel
-			//****************************************************************
+			// *************************************************************************************
 			app.Header = Ext.create('Ext.Panel', {
 				region		: 'north',
 				height		: 44,
@@ -385,10 +342,9 @@ Ext.onReady(function() {
 					}]
 				}]
 			}); // End Header
-	
-			//****************************************************************
+			// *************************************************************************************
 			// Main Panel
-			//****************************************************************
+			// *************************************************************************************
 			app.MainApp = Ext.create('Ext.Panel', {
 				id 				: 'MainApp',
 				region			: 'center',
@@ -410,19 +366,21 @@ Ext.onReady(function() {
 					}	
 				}
 			}); // End MainApp
+            // *************************************************************************************
+			// Footer Panel
+			// *************************************************************************************
 	        app.Footer = Ext.create('Ext.container.Container', {
-                height:18,
-                split:false,
-                padding: 3,
-                region:'south',
-                html: '<div><p style="font-size: 10px"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) is a Open source Web-Based Software | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
-
+                height      : 18,
+                split       : false,
+                padding     : 3,
+                region      : 'south',
+                html        : '<div><p style="font-size: 10px"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) is a Open source Web-Based Software | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
             });
-			//****************************************************************
+			// *************************************************************************************
 			// The main ViewPort
 			// Description: It will display all the previously declared
 			// panels above.
-			//****************************************************************
+			// *************************************************************************************
 			Ext.create('Ext.Viewport', {
 				layout: {
 					type	: 'border',
@@ -432,16 +390,11 @@ Ext.onReady(function() {
 				items		: [ app.Header, app.navColumn, app.MainApp, app.Footer ]
 			}); // End ViewPort
 			app.callParent(arguments);
-				
 		} // end of initComponent
-		
 	}); //end MitosApp class
     Ext.create('Ext.mitos.MitosApp');
-
 }); // End App
-
 </script>
-
 </head>
 <body><span id="app-msg" style="display:none;"></span></body>
 </html>
