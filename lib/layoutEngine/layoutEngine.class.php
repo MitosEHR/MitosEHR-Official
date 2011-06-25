@@ -65,6 +65,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',"; 
 		$buff .= "name: '".$fieldName."',"; 
 		$buff .= "grow: false,";
+		$buff .= "value: '".$initValue."',";
 		$buff .= "size: ".$fieldLengh.",}";
 		return $buff;
 	}

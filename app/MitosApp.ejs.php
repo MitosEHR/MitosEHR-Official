@@ -374,7 +374,7 @@ Ext.onReady(function() {
                 split       : false,
                 padding     : 3,
                 region      : 'south',
-                html        : '<div> <?php echo $_SESSION['site']['root'] ?><p style="font-size: 10px"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) is a Open source Web-Based Software | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
+                html        : '<div><p style="font-size: 10px"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) is a Open source Web-Based Software | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
             });
 			// *************************************************************************************
 			// The main ViewPort
