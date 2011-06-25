@@ -27,7 +27,6 @@ Ext.define('Ext.mitos.CRUDStore',{
 		    proxy		: {
 		    	type		: 'ajax',
 		    	extraParams	: config.extraParams,
-                noCache     : false,
 				api		: {
 					read	: config.read,
 					create	: config.create,
@@ -61,7 +60,7 @@ Ext.define('Ext.mitos.CRUDStore',{
 
             },
             autoLoad: config.autoLoad
-        }
+        };
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
         Ext.mitos.CRUDStore.superclass.constructor.call(this, config);
 	}
