@@ -33,11 +33,100 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 // *************************************************************************************
 // Start MitosEHR Mobile App
 // *************************************************************************************
-Ext.onReady(function() {
+Ext.regModel('File', {
+    idProperty: 'id',
+    fields: [
+        {name: 'id',       type: 'string'},
+        {name: 'fileName', type: 'string'}
+    ]
+});
 
 
-    
-}); // End App
+Ext.setup({
+    icon: 'icon.png',
+    tabletStartupScreen: 'tablet_startup.png',
+    phoneStartupScreen: 'phone_startup.png',
+    glossOnIcon: false,
+    onReady: function(){
+
+        var store = new Ext.data.TreeStore({
+            model: 'File',
+            proxy: {
+                type: 'ajax',
+                url: 'lib/touch-1.1.0/examples/nestedlist/getSourceFiles.php',
+                reader: {
+                    type: 'tree',
+                    root: 'children'
+                }
+            }
+        });
+
+
+        var nestedList = new Ext.NestedList({
+            fullscreen: true,
+            title: 'MitosEHR',
+            displayField: 'fileName',
+            // add a / for folder nodes in title/back button
+            getTitleTextTpl: function() {
+                return '{' + this.displayField + '}<tpl if="leaf !== true">/</tpl>';
+            },
+            // add a / for folder nodes in the list
+            getItemTextTpl: function() {
+                return '{' + this.displayField + '}<tpl if="leaf !== true">/</tpl>';
+            },
+            // provide a codebox for each source file
+            getDetailCard: function(record, parentRecord) {
+                return new Ext.ux.CodeBox({
+                    value: 'Loading...',
+                    scroll: {
+                        direction: 'both',
+                        eventTarget: 'parent'
+                    }
+                });
+            },
+            store: store,
+            dockedItems:[{
+                xtype: 'toolbar',
+                dock: 'bottom',
+                items:[{
+                    text:'Logout',
+                    ui: 'round',
+                    handler: function() {
+                        Ext.Msg.show({
+                            title: '<?php i18n("Please confirm..."); ?>',
+                            icon: Ext.MessageBox.QUESTION,
+                            msg:'<?php i18n("Are you sure to quit MitosEHR?"); ?>',
+                            buttons: [{
+                                text: 'yes',
+                                handler: function() {
+                                    window.location = "lib/authProcedures/unauth.inc.php";
+                                }
+                            },{
+                                text :'No'
+                            }]
+                        });
+                    }
+                }]
+            }]
+        });
+
+
+        nestedList.on('leafitemtap', function(subList, subIdx, el, e, detailCard) {
+            var ds = subList.getStore(),
+                r  = ds.getAt(subIdx);
+
+            Ext.Ajax.request({
+                url: '../../src/' + r.get('id'),
+                success: function(response) {
+                    detailCard.setValue(response.responseText);
+                },
+                failure: function() {
+                    detailCard.setValue("Loading failed.");
+                }
+            });
+        });
+    }
+});
 </script>
 </head>
 <body><span id="app-msg" style="display:none;"></span></body>
