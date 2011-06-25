@@ -39,15 +39,14 @@ class layoutEngine extends dbHelper {
 	// $fieldLengh: The max length of the field
 	//**********************************************************************
 	private function textAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
-		echo "{
-						xtype		: 'textfield', 
-						fieldLabel	: '".addslashes( trim($fieldLabel) )."',
-						name		: '".$fieldName."', 
-						maxLength	: ".$fieldLengh.", 
-						size		: ".$fieldLengh.", 
-						submitValue	: true, 
-						value		: '".$initValue."' 
-					}";
+		$buff  = "{ xtype: 'textfield',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "maxLength: ".$fieldLengh.",";
+		$buff .= "size: ".$fieldLengh.",";
+		$buff .= "submitValue: true,";
+		$buff .= "value: '".$initValue."'}";
+		return $buff;
 	}
 	
 	//**********************************************************************
@@ -62,13 +61,12 @@ class layoutEngine extends dbHelper {
 	// $fieldLengh: The max length of the field
 	//**********************************************************************
 	private function textareaAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
-		echo "{
-						xtype		: 'textarea', 
-						fieldLabel	: '".addslashes( trim($fieldLabel) )."', 
-						name		: '".$fieldName."', 
-						grow		: true,
-						size		: ".$fieldLengh.", 
-					}";
+		$buff  = "{xtype: 'textarea',"; 
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',"; 
+		$buff .= "name: '".$fieldName."',"; 
+		$buff .= "grow: false,";
+		$buff .= "size: ".$fieldLengh.",}";
+		return $buff;
 	}
 	
 	//**********************************************************************
@@ -81,12 +79,11 @@ class layoutEngine extends dbHelper {
 	// $fieldLabel: The field label
 	//**********************************************************************
 	private function dateAdd($fieldName, $fieldLabel){
-		echo "{
-						xtype		: 'datefield', 
-						fieldLabel	: '".addslashes( trim($fieldLabel) )."', 
-						name		: '".$fieldName."', 
-						vale		: new Date()
-					}";
+		$buff  = "{xtype: 'datefield',"; 
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',"; 
+		$buff .= "name: '".$fieldName."',"; 
+		$buff .= "value: new Date()}";
+		return $buff;
 	}
 	
 	//**********************************************************************
@@ -99,18 +96,17 @@ class layoutEngine extends dbHelper {
 	// $fieldLabel: The field label
 	//**********************************************************************
 	private function comboAdd($fieldName, $list_id, $fieldLabel){
-		echo "{
-						xtype			: 'combo', 
-						submitValue		: true, 
-						name			: '".$fieldName."',
-						fieldLabel		: '".addslashes( trim($fieldLabel) )."',
-						editable		: false,
-						triggerAction	: 'all',
-						mode			: 'local',
-						valueField		: 'title',
-						displayField	: 'title',
-						store			: panel.store".ucfirst($list_id)."
-					}";
+		$buff  = "{xtype			: 'combo',"; 
+		$buff .= "submitValue: true,"; 
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "editable: false,";
+		$buff .= "triggerAction: 'all',";
+		$buff .= "mode: 'local',";
+		$buff .= "valueField: 'title',";
+		$buff .= "displayField: 'title',";
+		$buff .= "store: panel.store".ucfirst($list_id)."}";
+		return $buff;
 	}
 	
 	//**********************************************************************
@@ -123,43 +119,38 @@ class layoutEngine extends dbHelper {
 	// $fieldLabel: The field label
 	//**********************************************************************
 	private function comboAdd_Editable($fieldName, $list_id, $fieldLabel){
-		echo "{
-						xtype			: 'combo', 
-						submitValue		: true, 
-						name			: '".$fieldName."',
-						fieldLabel		: '".addslashes( trim($fieldLabel) )."',
-						editable		: true,
-						triggerAction	: 'all',
-						mode			: 'local',
-						valueField		: 'title',
-						displayField	: 'title',
-						store			: panel.store".ucfirst($list_id)."
-					}";
+		$buff  = "{xtype: 'combo',"; 
+		$buff .= "submitValue: true,"; 
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "editable: true,";
+		$buff .= "triggerAction: 'all',";
+		$buff .= "mode: 'local',";
+		$buff .= "valueField: 'title',";
+		$buff .= "displayField: 'title',";
+		$buff .= "store: panel.store".ucfirst($list_id)."}";
+		return $buff;
 	}
 	
+	//**********************************************************************
+	// factorFormStore
+	//
+	// This creates the dataStore for the form.
+	//**********************************************************************
 	private function factorFormStore($dataStore, $path, $fieldArray, $index){
-		echo "
-			// *************************************************************************************
-			// Data Store Object for ".$dataStore."
-			// *************************************************************************************
-			panel.".$dataStore." = Ext.create('Ext.mitos.CRUDStore',{
-				fields: [";
-		$buff="
-			{name: '".$index."', type: 'int'}," . chr(13);
+		$buff  = "panel.".$dataStore." = Ext.create('Ext.mitos.CRUDStore',{fields: [";
+		$buff .="{name: '".$index."', type: 'int'},";
 		foreach($fieldArray as $key => $row){
-			$buff .= "{name: '".$row['field_id']."', type: 'string'}," . chr(13);
+			$buff .= "{name: '".$row['field_id']."', type: 'string'},";
 		}
-		echo substr($buff, 0, -2);
-		echo"
-				],
-					model 		: '".$dataStore."Model',
-					idProperty 	: 'item_id',
-					read		: '".$path."/data_read.ejs.php',
-					create		: '".$path."/data_create.ejs.php',
-					update		: '".$path."/data_update.ejs.php',
-					destroy 	: '".$path."/data_destroy.ejs.php'
-			});
-		";
+		$buff = substr($buff, 0, -1);
+		$buff .= "],model: '".$dataStore."Model',";
+		$buff .= "idProperty: 'item_id',";
+		$buff .= "read: '".$path."/data_read.ejs.php',";
+		$buff .= "create: '".$path."/data_create.ejs.php',";
+		$buff .= "update: '".$path."/data_update.ejs.php',";
+		$buff .= "destroy: '".$path."/data_destroy.ejs.php'});";
+		return $buff;
 	}
 	
 	//**********************************************************************
@@ -171,25 +162,17 @@ class layoutEngine extends dbHelper {
 	// Parameters:
 	// $list
 	//
-	// Return:
-	// Return the name of the dataStore, i.e.
-	// if $list parameter was patients, the name of the dataStore will be
-	// storePatients, and the record model will be patientsModel.
 	//**********************************************************************
 	private function factorDataStore($list){
-		echo "
-			panel.store" . ucfirst($list) . " = Ext.create('Ext.mitos.CRUDStore',{
-				fields: [
-					{name: 'option_id',		type: 'string'},
-					{name: 'title',			type: 'string'}
-				],
-				model 		:'".$list."Model',
-				idProperty 	:'option_id',
-				read		: 'lib/layoutEngine/listOptions.json.php',
-				extraParams	: {\"filter\": \"".$list."\"}
-			});
-			" . chr(13);
-			return "store".ucfirst($list);
+		$buff  = "panel.store" . ucfirst($list) . " = Ext.create('Ext.mitos.CRUDStore',{";
+		$buff .= "fields: [{name: 'option_id', type: 'string'},";
+		$buff .= "{name: 'title', type: 'string'}";
+		$buff .= "],";
+		$buff .= "model:'".$list."Model',";
+		$buff .= "idProperty:'option_id',";
+		$buff .= "read: 'lib/layoutEngine/listOptions.json.php',";
+		$buff .= 'extraParams: {"filter": "'.$list.'"} });';
+		return $buff;
 	}
 				
 	//**********************************************************************
@@ -224,11 +207,11 @@ class layoutEngine extends dbHelper {
 		
 		// 1.Render the form dataStore
 		//---
-		$this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
+		echo $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
 		
 		// 2.Render the dataStores for the combo boxes first
 		//---
-		foreach($dataStoresNames as $key => $row){if($row['list_id'] != ""){ $this->factorDataStore($row['list_id']);	} }
+		foreach($dataStoresNames as $key => $row){if($row['list_id'] != ""){ echo $this->factorDataStore($row['list_id']); } }
 		
 		// 3.Begin with the form
 		//---
@@ -273,29 +256,29 @@ class layoutEngine extends dbHelper {
 			switch ($row['data_type']){
 				// list box
 				case 1:
-					$this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
+					echo $this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 				// Text box
 				case 2:
-					if ($row['fld_length'] != ""){$s=255;}
-					$this->textAdd($row['field_id'], $row['title'], "", $s);
+					if ($row['fld_length'] != "")$s=255;
+					echo $this->textAdd($row['field_id'], $row['title'], "", $s);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 				// Text area
 				case 3:
-					if ($row['fld_length'] != ""){$s=255;}
-					$this->textareaAdd($row['field_id'], $row['title'], "", $s);
+					if ($row['fld_length'] != "") $s=255;
+					echo $this->textareaAdd($row['field_id'], $row['title'], "", $s);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 				// Text-date
 				case 4:
-					$this->dateAdd($row['field_id'], $row['title']);
+					echo $this->dateAdd($row['field_id'], $row['title']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 				// List box w/ Add (Editable)
 				case 26:
-					$this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
+					echo $this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 			}
