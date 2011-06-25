@@ -198,10 +198,12 @@ class layoutEngine extends dbHelper {
 	// This will render the selected form, and returns the Sencha ExtJS v4 
 	// code.
 	//**********************************************************************
-	function renderForm($formPanel, $url, $title, $labelWidth, $saveText){
+	function renderForm($formPanel, $path, $title, $labelWidth, $saveText){
 		
 		// First we need to render all the dataStores
 		// and gather all the dataStore names
+		// This SQL Statement has the uor in action UOR means
+		// U.Unused O.Optional R.Requiered
 		//---
 		$this->setSQL("SELECT 
 					layout_options.*, list_options.title AS listDesc
@@ -220,20 +222,19 @@ class layoutEngine extends dbHelper {
 		$dataStoresNames = array();
 		$dataStoresNames = $this->execStatement();
 		
-		// Render the form dataStore
+		// 1.Render the form dataStore
 		//---
-		$this->factorFormStore("store".ucfirst($formPanel), "app/patient_file/new", $dataStoresNames, "item_id");
+		$this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
 		
-		// Render the dataStores for the combo boxes first
+		// 2.Render the dataStores for the combo boxes first
 		//---
 		foreach($dataStoresNames as $key => $row){if($row['list_id'] != ""){ $this->factorDataStore($row['list_id']);	} }
 		
-		// Begin with the form
+		// 3.Begin with the form
 		//---
 		echo "
 			panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
 				title		: '" . $title . "',
-				url			: '" . $url . "',
 				frame		: true,
 				bodyStyle	: 'padding: 5px',
 				width		: '100%',
@@ -242,7 +243,7 @@ class layoutEngine extends dbHelper {
 				items		: [
 			";
 		
-		// Loop through the form groups & fields
+		// 4.Loop through the form groups & fields
 		//---
 		$group_name = array();
 		foreach($dataStoresNames as $key => $row){
@@ -313,6 +314,8 @@ class layoutEngine extends dbHelper {
 				
 		// End with the form
 		//---
+		
+		// 5.Write the save toolbar 
 		echo "
 				],
                     dockedItems: [{

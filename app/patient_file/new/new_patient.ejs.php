@@ -51,7 +51,7 @@ Ext.onReady(function(){
 			// Dynamically generate the screen layout.
 			// This is done, via PHP Language.
 			// *************************************************************************************
-			<?php $layoutFactorer->renderForm("Demographics", "app/patient_file/new/data_create.ejs.php", "New Patient", 80, i18n("Save as new patient", "r") ); ?>
+			<?php $layoutFactorer->renderForm("Demographics", "app/patient_file/new", "New Patient", 80, i18n("Save as new patient", "r") ); ?>
 
 			//***********************************************************************************
 			// Top Render Panel 
