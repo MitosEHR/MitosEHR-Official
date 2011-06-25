@@ -96,7 +96,7 @@ class layoutEngine extends dbHelper {
 	// $fieldLabel: The field label
 	//**********************************************************************
 	private function comboAdd($fieldName, $list_id, $fieldLabel){
-		$buff  = "{xtype			: 'combo',"; 
+		$buff  = "{xtype: 'combo',"; 
 		$buff .= "submitValue: true,"; 
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
