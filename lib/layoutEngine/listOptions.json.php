@@ -22,7 +22,7 @@ session_cache_limiter('private');
 // **************************************************************************************
 // filter params passed by ExtJS Data Store
 // **************************************************************************************
-$filter = $_REQUEST['filter'];
+if(isset($_REQUEST)){$filter = $_REQUEST['filter'];}else{return;}
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 

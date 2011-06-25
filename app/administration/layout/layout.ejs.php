@@ -251,6 +251,22 @@ Ext.onReady(function() {
         		    	}
 		            },
 					{
+						text     	: '<?php i18n("Data Type"); ?>',
+						sortable 	: false,
+						dataIndex	: 'data_type',
+						width		: 100,
+						align		: 'left',
+						editor		: {
+							name: 'data_type',
+							xtype: 'combo', 
+							displayField: 'type',
+							valueField: 'type', 
+							editable: false, 
+							store: panel.datatypesStore, 
+							queryMode: 'local'
+						}
+		            },
+					{
 						text     	: '<?php i18n("Group"); ?>',
 						sortable 	: false,
 						dataIndex	: 'group_name',
@@ -307,22 +323,6 @@ Ext.onReady(function() {
 							queryMode: 'local'
 						}
         		    },
-					{
-						text     	: '<?php i18n("Data Type"); ?>',
-						sortable 	: false,
-						dataIndex	: 'data_type',
-						width		: 100,
-						align		: 'left',
-						editor		: {
-							name: 'data_type',
-							xtype: 'combo', 
-							displayField: 'type',
-							valueField: 'type', 
-							editable: false, 
-							store: panel.datatypesStore, 
-							queryMode: 'local'
-						}
-		            },
 					{
 						text     	: '<?php i18n("Size"); ?>',
 						sortable 	: false,

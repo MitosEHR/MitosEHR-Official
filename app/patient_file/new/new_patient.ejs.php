@@ -52,18 +52,7 @@ Ext.onReady(function(){
 			// Dynamically generate the screen layout.
 			// This is done, via PHP Language.
 			// *************************************************************************************
-			<?php
-
-			?>
-
-			// *************************************************************************************
-			// Layout Panel Screen
-			// *************************************************************************************
-			panel.PatientPanel = Ext.create('Ext.Panel', {
-				border	: true,
-				frame	: true,
-        		items	: [ panel.patientForm ]
-			}); // END LayoutPanel
+			<?php $layoutFactorer->renderForm("Demographics", "app/patient_file/new/data_create.ejs.php", "New Patient", 80, i18n("Save as new patient", "r") ); ?>
 
 			//***********************************************************************************
 			// Top Render Panel 
@@ -74,7 +63,9 @@ Ext.onReady(function(){
 			//***********************************************************************************
     		new Ext.create('Ext.mitos.RenderPanel', {
         		pageTitle: '<?php i18n("Patient Entry Form"); ?>',
-        		pageBody: [panel.PatientPanel]
+				border	: true,
+				frame	: true,
+        		pageBody: [panel.Demographics]
     		});
 			panel.callParent(arguments);
 			

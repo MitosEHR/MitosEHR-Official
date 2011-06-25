@@ -967,7 +967,6 @@ Ext.onReady(function(){
                         xtype: 'toolbar',
                         dock: 'top',
                         items: [{
-                            id        : 'addAddressbook',
                             text      : '<?php i18n("Save Configuration"); ?>',
                             iconCls   : 'save',
                             handler   : function(){

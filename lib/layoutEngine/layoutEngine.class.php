@@ -13,35 +13,11 @@
  * author: Gino Rivera Falu
  * 
  */
+include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+class layoutEngine extends dbHelper {
 
- class layoutEngine extends dbHelper {
-
-	private $conn;
 	private $switcher;
 	
-	//**********************************************************************
-	// getForm
-	//
-	// SQL Statement, to get the diferent forms created in the
-	// layout_options 
-	//**********************************************************************
-	function getForm($form_id="Demographics"){
-		$sql = "SELECT 
-					layout_options.*, list_options.title AS listDesc
-				FROM
-  					layout_options
-				LEFT OUTER JOIN 
-					list_options
-				ON 
-					layout_options.list_id = list_options.option_id
-				WHERE
-  					layout_options.form_id = '". $form_id . "'
-				ORDER BY
-  					layout_options.group_order, layout_options.seq";
-		$this->setSQL($sql);
-		return $this->execStatement();
-	}
-
 	//**********************************************************************
 	// switchTF
 	//
@@ -61,7 +37,7 @@
 	// $start: S to start the fieldset, E to end it.
 	// $fieldsetName: The name of the field set, can be empty
 	//**********************************************************************
-	function formFieldset($fieldsetName, $start="S"){
+	function factorFieldset($fieldsetName, $start="S"){
 		if($start=="S"){
 			echo "{
         			xtype:'fieldset',
@@ -78,7 +54,7 @@
 	}
 	
 	//**********************************************************************
-	// fieldAdd
+	// textAdd
 	//
 	// This creates the fields into the fieldset & form.
 	// 
@@ -89,16 +65,113 @@
 	// $fieldLengh: The max length of the field
 	// $xtype: The xtype value this one is the same a Sencha has.
 	//**********************************************************************
-	function fieldAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255", $xtype="textfield"){
-		echo "	{
-					xtype		: '".$xtype."', 
-					fieldLabel	: '".$fieldLabel."', 
-					name		: '".$fieldName."', 
-					maxLength	: ".$fieldLengh.", 
-					size		: ".$fieldLengh.", 
-					submitValue	: true, 
-					value		: '".$initValue."' 
-				}";
+	function textAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
+		echo "{
+						xtype		: 'textfield', 
+						fieldLabel	: '".addslashes( trim($fieldLabel) )."', 
+						name		: '".$fieldName."', 
+						maxLength	: ".$fieldLengh.", 
+						size		: ".$fieldLengh.", 
+						submitValue	: true, 
+						value		: '".$initValue."' 
+					}";
+	}
+	
+	//**********************************************************************
+	// textareaAdd
+	//
+	// This creates the fields into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	// $initValue: The initial value of the field
+	// $fieldLengh: The max length of the field
+	// $xtype: The xtype value this one is the same a Sencha has.
+	//**********************************************************************
+	function textareaAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
+		echo "{
+						xtype		: 'textarea', 
+						fieldLabel	: '".addslashes( trim($fieldLabel) )."', 
+						name		: '".$fieldName."', 
+						grow		: true,
+						size		: ".$fieldLengh.", 
+					}";
+	}
+	
+	//**********************************************************************
+	// dateAdd
+	//
+	// This creates the fields into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	// $initValue: The initial value of the field
+	// $fieldLengh: The max length of the field
+	// $xtype: The xtype value this one is the same a Sencha has.
+	//**********************************************************************
+	function dateAdd($fieldName, $fieldLabel){
+		echo "{
+						xtype		: 'datefield', 
+						fieldLabel	: '".addslashes( trim($fieldLabel) )."', 
+						name		: '".$fieldName."', 
+						vale		: new Date()
+					}";
+	}
+	
+	//**********************************************************************
+	// comboAdd
+	//
+	// This creates the combo into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	// $initValue: The initial value of the field
+	// $fieldLengh: The max length of the field
+	// $xtype: The xtype value this one is the same a Sencha has.
+	//**********************************************************************
+	function comboAdd($fieldName, $list_id, $fieldLabel){
+		echo "{
+						xtype			: 'combo', 
+						submitValue		: true, 
+						name			: '".$fieldName."',
+						fieldLabel		: '".addslashes( trim($fieldLabel) )."',
+						editable		: false,
+						triggerAction	: 'all',
+						mode				: 'local',
+						valueField		: 'title',
+						displayField	: 'title',
+						store			: panel.store".ucfirst($list_id)."
+					}";
+	}
+	
+	//**********************************************************************
+	// comboAdd_Editable
+	//
+	// This creates the combo into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	// $initValue: The initial value of the field
+	// $fieldLengh: The max length of the field
+	// $xtype: The xtype value this one is the same a Sencha has.
+	//**********************************************************************
+	function comboAdd_Editable($fieldName, $list_id, $fieldLabel){
+		echo "{
+						xtype			: 'combo', 
+						submitValue		: true, 
+						name			: '".$fieldName."',
+						fieldLabel		: '".addslashes( trim($fieldLabel) )."',
+						editable		: true,
+						triggerAction	: 'all',
+						mode			: 'local',
+						valueField		: 'title',
+						displayField	: 'title',
+						store			: panel.store".ucfirst($list_id)."
+					}";
 	}
 	
 	//**********************************************************************
@@ -116,16 +189,18 @@
 	// storePatients, and the record model will be patientsModel.
 	//**********************************************************************
 	function factorDataStore($list){
-			echo "panel.store" . ucfirst($list) . " = Ext.create('Ext.mitos.CRUDStore',{
-						fields: [
-							{name: 'option_id',		type: 'string'},
-							{name: 'title',			type: 'string'}
-						],
-						model 		:'".$list."Model',
-						idProperty 	:'id',
-						read		: 'lib/layoutEngine/listOptions.json.php',
-						extraParams	: {\"task\": \"".$list."\"}
-					});";
+		echo "
+			panel.store" . ucfirst($list) . " = Ext.create('Ext.mitos.CRUDStore',{
+				fields: [
+					{name: 'option_id',		type: 'string'},
+					{name: 'title',			type: 'string'}
+				],
+				model 		:'".$list."Model',
+				idProperty 	:'option_id',
+				read		: 'lib/layoutEngine/listOptions.json.php',
+				extraParams	: {\"filter\": \"".$list."\"}
+			});
+			" . chr(13);
 			return "store".ucfirst($list);
 	}
 	
@@ -135,39 +210,141 @@
 	// This will render the selected form, and returns the Sencha ExtJS v4 
 	// code.
 	//**********************************************************************
-	function renderForm($formPanel, $url, $title, $labelWidth){
-		
-		$dataStoresNames = array();
+	function renderForm($formPanel, $url, $title, $labelWidth, $saveText){
 		
 		// First we need to render all the dataStores
 		// and gather all the dataStore names
 		//---
-		foreach(getForm($formPanel) as $row){
-			
-		}
+		$this->setSQL("SELECT 
+					layout_options.*, list_options.title AS listDesc
+				FROM
+  					layout_options
+				LEFT OUTER JOIN 
+					list_options
+				ON 
+					layout_options.list_id = list_options.option_id
+				WHERE
+  					layout_options.form_id = '".$formPanel."'
+				HAVING
+					uor = '1' OR uor = '2'
+				ORDER BY
+  					layout_options.group_order, layout_options.seq");
+		$dataStoresNames = array();
+		$dataStoresNames = $this->execStatement();
+		
+		// Render the dataStores for the combo boxes first
+		//---
+		foreach($dataStoresNames as $key => $row){if($row['list_id'] != ""){ $this->factorDataStore($row['list_id']);	} }
 		
 		// Begin with the form
 		//---
-		echo "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
+		echo "
+			panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
 				title		: '" . $title . "',
 				url			: '" . $url . "',
-				frame		: false,
+				frame		: true,
 				bodyStyle	: 'padding: 5px',
 				width		: '100%',
-				layout		: 'column',
+				layout		: 'anchor',
 				defaults	: { bodyPadding: 4, labelWidth: ".$labelWidth.", anchor: '100%'},
-				items		: [";
+				items		: [
+			";
 		
-		// Loop through the form groups
+		// Loop through the form groups & fields
 		//---
-		foreach(getForm($formPanel) as $row){
+		$group_name = array();
+		foreach($dataStoresNames as $key => $row){
+			$ahead = $key + 1;
 			
-		}
+			/*
+			 * Check if the group_name already has been deployed
+			 * if not create the fieldset.
+			 */
+			if(!array_key_exists($row['group_name'], $group_name)){
+				echo "{
+					xtype:'fieldset',
+        				//columnWidth: 0.5,
+        				collapsible: true,
+        				collapsed: true,
+        				title: '".$row['group_name']."',
+        				defaults: {anchor: '100%'},
+        				layout: 'anchor',
+	        			items :[
+	        		";	
+			} 
+			
+			/*
+			 * Create the fields inside of the fieldset
+			 * depending on the data_type field create
+			 * the field
+			 */
+			switch ($row['data_type']){
+				// list box
+				case 1:
+					$this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Text box
+				case 2:
+					if ($row['fld_length'] != ""){$s=255;}
+					$this->textAdd($row['field_id'], $row['title'], "", $s);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Text area
+				case 3:
+					if ($row['fld_length'] != ""){$s=255;}
+					$this->textareaAdd($row['field_id'], $row['title'], "", $s);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Text-date
+				case 4:
+					$this->dateAdd($row['field_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// List box w/ Add (Editable)
+				case 26:
+					$this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+			}
+			
+			/*
+			 * Close the fieldset, if it is the end.
+			 */
+			if($dataStoresNames[$ahead]['group_name'] != $row['group_name']){ echo "]},"; }
+			
+			/*
+			 * Update the group_name variable to see if in the
+			 * next round trip we make a fieldset.
+			 */
+			$group_name[$row['group_name']] = $row['group_name'];
+		} 
 				
 		// End with the form
 		//---
-		echo "		]
-				}); // End of ".$formPanel;
+		echo "
+				],
+                    dockedItems: [{
+                        xtype: 'toolbar',
+                        dock: 'top',
+                        items: [{
+                            text      : '". $saveText . "',
+                            iconCls   : 'save',
+                            handler   : function(){
+                                var record = panel." . $formPanel . ".getAt('0');
+                                var fieldValues = panel." . $formPanel . ".getForm().getValues();
+                                for (var k=0; k <= record.fields.getCount()-1; k++) {
+                                    var i = record.fields.get(k).name;
+                                    record.set( i, fieldValues[i] );
+                                }
+                                panel.globalStore.sync();	// Save the record to the dataStore
+                                panel.globalStore.load();	// Reload the dataSore from the database
+
+                                Ext.topAlert.msg('New patient as been saves!','');
+                            }
+                        }]
+                    }]
+				}); // End of ".$formPanel . chr(13);
 	}
 	
 }

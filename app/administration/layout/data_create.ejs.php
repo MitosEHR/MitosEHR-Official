@@ -16,6 +16,7 @@ session_cache_limiter('private');
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 include_once($_SESSION['site']['root']."/classes/I18n.class.php");
 require_once($_SESSION['site']['root']."/classes/dataExchange.class.php");
+require_once($_SESSION['site']['root']."/lib/layoutEngine/dataTypes.array.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -28,38 +29,6 @@ $_SESSION['site']['flops'] = 0;
 $data = json_decode ( $_REQUEST['row'] );
 
 $mitos_db = new dbHelper();
-
-// *************************************************************************************
-// dataTypes - Defines what type of fields are.
-// This is just a reverse thing, translate the dataTypes into numbers.
-// *************************************************************************************
-$dataTypes = array(
-	i18n("List box", 'r') 			=> "1", 
-	i18n("Textbox", 'r') 			=> "2",
-	i18n("Textarea", 'r') 			=> "3",
-	i18n("Text-date", 'r') 			=> "4",
-	
-	// Specific App ListBox
-	i18n("Providers", 'r') 			=> "10",
-	i18n("Providers NPI", 'r') 		=> "11",
-	i18n("Pharmacies", 'r') 		=> "12",
-	i18n("Squads", 'r') 			=> "13",
-	i18n("Organizations", 'r') 		=> "14",
-	i18n("Billing codes", 'r') 		=> "15",
-	
-	// Custom input fields
-	i18n("Checkbox list", 'r') 		=> "21",
-	i18n("Textbox list", 'r') 		=> "22",
-	i18n("Exam results", 'r') 		=> "23",
-	i18n("Patient allergies", 'r') 	=> "24",
-	i18n("Checkbox w/text", 'r') 	=> "25",
-	i18n("List box w/add", 'r') 	=> "26",
-	i18n("Radio buttons", 'r') 		=> "27",
-	i18n("Lifestyle status", 'r') 	=> "28",
-	i18n("Static Text", 'r') 		=> "31",
-	i18n("Smoking Status", 'r') 	=> "32",
-	i18n("Race and Ethnicity", 'r') => "33"
-);
 
 // *************************************************************************************
 // UOR
