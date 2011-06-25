@@ -15,6 +15,7 @@ session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 include_once($_SESSION['site']['root']."/classes/I18n.class.php");
+include_once($_SESSION['site']['root']."/lib/layoutEngine/dataTypes.array.php");
 require_once($_SESSION['site']['root']."/classes/dataExchange.class.php");
 
 //******************************************************************************
@@ -56,31 +57,8 @@ switch ($_GET['task']) {
 	// Available Data Types for the Form Editor
 	// *************************************************************************************
 	case "data_types":
-		$datatypes = array(
-			0 => array("id" => "1", "type" => i18n("List box", 'r')), 
-			1 => array("id" => "2", "type"  => i18n("Textbox", 'r')),
-			2 => array("id" => "3", "type"  => i18n("Textarea", 'r')),
-			3 => array("id" => "4", "type"  => i18n("Text-date", 'r')),
-			4 => array("id" => "10", "type" => i18n("Providers", 'r')),
-			5 => array("id" => "11", "type" => i18n("Providers NPI", 'r')),
-			6 => array("id" => "12", "type" => i18n("Pharmacies", 'r')),
-			7 => array("id" => "13", "type" => i18n("Squads", 'r')),
-			8 => array("id" => "14", "type" => i18n("Organizations", 'r')),
-			9 => array("id" => "15", "type" => i18n("Billing codes", 'r')),
-			10 => array("id" => "21", "type" => i18n("Checkbox list", 'r')),
-			11 => array("id" => "22", "type" => i18n("Textbox list", 'r')),
-			12 => array("id" => "23", "type" => i18n("Exam results", 'r')),
-			13 => array("id" => "24", "type" => i18n("Patient allergies", 'r')),
-			14 => array("id" => "25", "type" => i18n("Checkbox w/text", 'r')),
-			15 => array("id" => "26", "type" => i18n("List box w/add", 'r')),
-			16 => array("id" => "27", "type" => i18n("Radio buttons", 'r')),
-			17 => array("id" => "28", "type" => i18n("Lifestyle status", 'r')),
-			18 => array("id" => "31", "type" => i18n("Static Text", 'r')),
-			19 => array("id" => "32", "type" => i18n("Smoking Status", 'r')),
-			20 => array("id" => "33", "type" => i18n("Race and Ethnicity", 'r'))
-		);
-		$totals = count($datatypes);
-		print(json_encode(array('totals'=>$totals,'row'=>$datatypes)));
+		$totals = count($dataTypes);
+		print(json_encode(array('totals'=>$totals,'row'=>$dataTypes)));
 	break;
 
 	//---------------------------------------------------------------------------------------
