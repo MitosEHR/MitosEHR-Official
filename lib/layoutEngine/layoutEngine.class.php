@@ -28,32 +28,6 @@ class layoutEngine extends dbHelper {
 	function switchTF($v = "F"){ $this->switcher = $v; } 
 	
 	//**********************************************************************
-	// formFieldset
-	// 
-	// This creates the fielsets for the formPanel, this should be called
-	// between formPanel's start & ends.
-	// 
-	// Parameters:
-	// $start: S to start the fieldset, E to end it.
-	// $fieldsetName: The name of the field set, can be empty
-	//**********************************************************************
-	function factorFieldset($fieldsetName, $start="S"){
-		if($start=="S"){
-			echo "{
-        			xtype:'fieldset',
-        			columnWidth: 0.5,
-        			title: '".$fieldsetName."',
-        			defaults: {anchor: '100%'},
-        			layout: 'anchor',
-        			items :[";	
-		}
-		
-		if($start=="E"){
-			echo "]";
-		}
-	}
-	
-	//**********************************************************************
 	// textAdd
 	//
 	// This creates the fields into the fieldset & form.
@@ -63,12 +37,11 @@ class layoutEngine extends dbHelper {
 	// $fieldLabel: The field label
 	// $initValue: The initial value of the field
 	// $fieldLengh: The max length of the field
-	// $xtype: The xtype value this one is the same a Sencha has.
 	//**********************************************************************
 	function textAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
 		echo "{
 						xtype		: 'textfield', 
-						fieldLabel	: '".addslashes( trim($fieldLabel) )."', 
+						fieldLabel	: '".addslashes( trim($fieldLabel) )."',
 						name		: '".$fieldName."', 
 						maxLength	: ".$fieldLengh.", 
 						size		: ".$fieldLengh.", 
@@ -87,7 +60,6 @@ class layoutEngine extends dbHelper {
 	// $fieldLabel: The field label
 	// $initValue: The initial value of the field
 	// $fieldLengh: The max length of the field
-	// $xtype: The xtype value this one is the same a Sencha has.
 	//**********************************************************************
 	function textareaAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
 		echo "{
@@ -107,9 +79,6 @@ class layoutEngine extends dbHelper {
 	// Parameters:
 	// $fieldName: The field name
 	// $fieldLabel: The field label
-	// $initValue: The initial value of the field
-	// $fieldLengh: The max length of the field
-	// $xtype: The xtype value this one is the same a Sencha has.
 	//**********************************************************************
 	function dateAdd($fieldName, $fieldLabel){
 		echo "{
@@ -128,9 +97,6 @@ class layoutEngine extends dbHelper {
 	// Parameters:
 	// $fieldName: The field name
 	// $fieldLabel: The field label
-	// $initValue: The initial value of the field
-	// $fieldLengh: The max length of the field
-	// $xtype: The xtype value this one is the same a Sencha has.
 	//**********************************************************************
 	function comboAdd($fieldName, $list_id, $fieldLabel){
 		echo "{
@@ -155,9 +121,6 @@ class layoutEngine extends dbHelper {
 	// Parameters:
 	// $fieldName: The field name
 	// $fieldLabel: The field label
-	// $initValue: The initial value of the field
-	// $fieldLengh: The max length of the field
-	// $xtype: The xtype value this one is the same a Sencha has.
 	//**********************************************************************
 	function comboAdd_Editable($fieldName, $list_id, $fieldLabel){
 		echo "{
@@ -267,7 +230,7 @@ class layoutEngine extends dbHelper {
         				collapsible: true,
         				collapsed: true,
         				title: '".$row['group_name']."',
-        				defaults: {anchor: '100%'},
+        				defaults: {anchor: '20%'},
         				layout: 'anchor',
 	        			items :[
 	        		";	
