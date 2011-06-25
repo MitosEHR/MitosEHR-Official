@@ -57,8 +57,8 @@ switch ($_GET['task']) {
 	// Available Data Types for the Form Editor
 	// *************************************************************************************
 	case "data_types":
-		$totals = count($dataTypes);
-		print(json_encode(array('totals'=>$totals,'row'=>$dataTypes)));
+		$totals = count($dataTypes_json);
+		print(json_encode(array('totals'=>$totals,'row'=>$dataTypes_json)));
 	break;
 
 	//---------------------------------------------------------------------------------------
