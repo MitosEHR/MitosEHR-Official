@@ -7,7 +7,7 @@
 // Description: This is one of many ANSI X12 Compliance Utilities
 // to manage ANSI X12 Documents (4010 & 5010)
 //
-// Author: Gino Rivera Falú
+// Author: GI Technologies, 2011
 // Created Date: 23/4/2011
 //
 // Companies:

@@ -10,7 +10,7 @@
  * will only create the form object with the fields names & dataStores configured on the layout_options table.
  * 
  * version: 0.0.1 
- * author: Gino Rivera Falu
+ * author: GI Technologies, 2011
  * 
  */
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");

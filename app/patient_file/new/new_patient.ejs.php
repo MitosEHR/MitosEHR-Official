@@ -11,6 +11,8 @@
 // 
 // MitosEHR (Eletronic Health Records) 2011
 //
+// Author: GI Technologies, 2011
+//
 //******************************************************************************
 
 session_name ( "MitosEHR" );

@@ -4,7 +4,7 @@
 // Description: Layout Screen Panel
 // v0.0.1
 // 
-// Author: Gino Rivera Falú
+// Author: GI Technologies, 2011
 // Modified: n/a
 // 
 // MitosEHR (Eletronic Health Records) 2011

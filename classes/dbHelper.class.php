@@ -22,7 +22,7 @@
  * PDO requires the new OO features in the core of PHP 5, and so will not 
  * run with earlier versions of PHP.
  * 
- * Author: Gino Rivera Falú
+ * Author: GI Technologies, 2011
  * Ver: 0.0.3
  */
 
@@ -37,7 +37,7 @@ class dbHelper {
 	// Connect to the database
 	// $db = new $dbHelper();
 	//
-	// Author: Gino Rivera
+	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function __construct() {
 		error_reporting(0);
@@ -51,7 +51,7 @@ class dbHelper {
 	//**********************************************************************
 	// Set the SQL Statement
 	//
-	// Author: Gino Rivera
+	// Author: GI Technologies, 2011
 	//**********************************************************************	
 	function setSQL($sql){
 		$this->sql_statement = $sql;
@@ -63,7 +63,7 @@ class dbHelper {
 	// return: Array of records, if error ocurred return the error instead
 	// foreach (sqlStatement($sql) as $urow) {
 	//
-	// Author: Gino Rivera
+	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function execStatement(){
 		$recordset = $this->conn->query($this->sql_statement);
@@ -82,7 +82,7 @@ class dbHelper {
 	// Simple exec SQL Stament, with no Event LOG injection
 	// return: Array of errors, if any.
 	//
-	// Author: Gino Rivera
+	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function execOnly(){
 		$this->conn->query($this->sql_statement);
@@ -151,7 +151,7 @@ class dbHelper {
 	// The Log Injection is automatic 
 	// It tries to detect an insert, delete, alter and log the event
 	//
-	// Author: Gino Rivera
+	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function execLog(){
 		
@@ -205,7 +205,7 @@ class dbHelper {
 	// $dbHelper->execEvent("Need to be audited!");
 	// return: N/A
 	//
-	// Author: Gino Rivera
+	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function execEvent($eventLog){
 	
@@ -226,7 +226,7 @@ class dbHelper {
 	// $rec = $dbHelper->fetch($sql);
 	// if ($rec['username'] == ""){
 	//
-	// Author: Gino Rivera
+	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function fetch(){
 		// Get all the records
@@ -242,7 +242,7 @@ class dbHelper {
 	// the error message, if the was not a connection problem, it will
 	// return a array with the code and message.
 	//
-	// Author: Gino Rivera
+	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function getError(){
 		if (!$this->err){

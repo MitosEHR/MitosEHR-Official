@@ -7,7 +7,7 @@
  * run the login screen. When the logon is submitted it will validate
  * the user and start the main application
  * 
- * Author: Gino Rivera Falú
+ * Author: GI Technologies, 2011
  * Ver: 0.0.2
  * 
  */

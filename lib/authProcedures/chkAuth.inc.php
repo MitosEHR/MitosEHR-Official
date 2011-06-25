@@ -8,7 +8,7 @@
  * logon screen. Also is in charge of giving the command to
  * logoff.
  * 
- * Author: Gino Rivera Falú
+ * Author: GI Technologies, 2011
  * Modified: N/A
  * Ver: 0.0.1
  * 

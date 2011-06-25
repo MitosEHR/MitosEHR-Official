@@ -9,7 +9,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
  *
  * version 0.0.3
  * revision: N/A
- * author: Gino Rivera Falú
+ * author: GI Technologies, 2011
  * 
  */
 // Reset session count

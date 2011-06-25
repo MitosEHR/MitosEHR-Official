@@ -4,7 +4,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* Logon Screen Window
  * Description: Obviously the Logon Window. I think every WebApp has one.
  * 
- * author: Gino Rivera Falu
+ * author: GI Technologies, 2011
  * Version 0.0.3
  * Revision: N/A
  */

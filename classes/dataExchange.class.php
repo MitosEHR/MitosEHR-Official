@@ -3,7 +3,7 @@
 //
 // Functions to encode and decode data between Sencha and PHP
 //
-// Author: Gino Rivera Falú
+// Author: GI Technologies, 2011
 // Create Date: Feb 12 2011
 // Modified: 
 // Modified Date: 

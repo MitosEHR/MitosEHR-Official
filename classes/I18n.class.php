@@ -2,7 +2,7 @@
 /* I18n Library v0.0.1
  *
  * Description: This will contain all the function for translation 
- * Author: Gino Rivera Falú
+ * Author: GI Technologies, 2011
  */
 
 // The master function

@@ -5,7 +5,7 @@
  * 
  * version 0.0.1
  * revision: N/A
- * author: Gino Rivera Falú
+ * author: GI Technologies, 2011
  */
  
 //**********************************************************************

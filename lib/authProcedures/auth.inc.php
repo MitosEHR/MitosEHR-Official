@@ -5,7 +5,7 @@
  * it's purpose is to validate the user and return a JSON formated data back 
  * to the logon window on success or failed.
  * 
- * Author: Gino Rivera Falú
+ * Author: GI Technologies, 2011
  * Version: 0.0.1 
  */
 //-------------------------------------------

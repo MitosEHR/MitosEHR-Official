@@ -5,7 +5,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
  * Description: This script will navigate the user throgh the correct
  * setup of the software.
  * 
- * Author: Gino Rivera Falú
+ * Author: GI Technologies, 2011
  * Ver: 0.0.1 
  */
 

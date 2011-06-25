@@ -5,7 +5,7 @@
 // v0.0.1
 // 
 // Author: Ernest Rodriguez
-// Modified: Gino Rivera
+// Modified: GI Technologies, 2011
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
