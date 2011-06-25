@@ -210,8 +210,16 @@ class layoutEngine extends dbHelper {
 		echo $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
 		
 		// 2.Render the dataStores for the combo boxes first
+		// and do not duplicate the dataStore
 		//---
-		foreach($dataStoresNames as $key => $row){if($row['list_id'] != ""){ echo $this->factorDataStore($row['list_id']); } }
+		foreach($dataStoresNames as $key => $row){
+			if($row['list_id'] != ""){
+				if(!array_key_exists($row['list_id'], $dCheck)){
+					echo $this->factorDataStore($row['list_id']);
+				}
+				$dCheck[$row['list_id']] = true;
+			} 
+		}
 		
 		// 3.Begin with the form
 		//---
