@@ -38,7 +38,7 @@ class layoutEngine extends dbHelper {
 	// $initValue: The initial value of the field
 	// $fieldLengh: The max length of the field
 	//**********************************************************************
-	function textAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
+	private function textAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
 		echo "{
 						xtype		: 'textfield', 
 						fieldLabel	: '".addslashes( trim($fieldLabel) )."',
@@ -61,7 +61,7 @@ class layoutEngine extends dbHelper {
 	// $initValue: The initial value of the field
 	// $fieldLengh: The max length of the field
 	//**********************************************************************
-	function textareaAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
+	private function textareaAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
 		echo "{
 						xtype		: 'textarea', 
 						fieldLabel	: '".addslashes( trim($fieldLabel) )."', 
@@ -80,7 +80,7 @@ class layoutEngine extends dbHelper {
 	// $fieldName: The field name
 	// $fieldLabel: The field label
 	//**********************************************************************
-	function dateAdd($fieldName, $fieldLabel){
+	private function dateAdd($fieldName, $fieldLabel){
 		echo "{
 						xtype		: 'datefield', 
 						fieldLabel	: '".addslashes( trim($fieldLabel) )."', 
@@ -98,7 +98,7 @@ class layoutEngine extends dbHelper {
 	// $fieldName: The field name
 	// $fieldLabel: The field label
 	//**********************************************************************
-	function comboAdd($fieldName, $list_id, $fieldLabel){
+	private function comboAdd($fieldName, $list_id, $fieldLabel){
 		echo "{
 						xtype			: 'combo', 
 						submitValue		: true, 
@@ -106,7 +106,7 @@ class layoutEngine extends dbHelper {
 						fieldLabel		: '".addslashes( trim($fieldLabel) )."',
 						editable		: false,
 						triggerAction	: 'all',
-						mode				: 'local',
+						mode			: 'local',
 						valueField		: 'title',
 						displayField	: 'title',
 						store			: panel.store".ucfirst($list_id)."
@@ -122,7 +122,7 @@ class layoutEngine extends dbHelper {
 	// $fieldName: The field name
 	// $fieldLabel: The field label
 	//**********************************************************************
-	function comboAdd_Editable($fieldName, $list_id, $fieldLabel){
+	private function comboAdd_Editable($fieldName, $list_id, $fieldLabel){
 		echo "{
 						xtype			: 'combo', 
 						submitValue		: true, 
@@ -135,6 +135,31 @@ class layoutEngine extends dbHelper {
 						displayField	: 'title',
 						store			: panel.store".ucfirst($list_id)."
 					}";
+	}
+	
+	private function factorFormStore($dataStore, $path, $fieldArray, $index){
+		echo "
+			// *************************************************************************************
+			// Data Store Object for ".$dataStore."
+			// *************************************************************************************
+			panel.".$dataStore." = Ext.create('Ext.mitos.CRUDStore',{
+				fields: [";
+		$buff="
+			{name: '".$index."', type: 'int'}," . chr(13);
+		foreach($fieldArray as $key => $row){
+			$buff .= "{name: '".$row['field_id']."', type: 'string'}," . chr(13);
+		}
+		echo substr($buff, 0, -2);
+		echo"
+				],
+					model 		: '".$dataStore."Model',
+					idProperty 	: 'item_id',
+					read		: '".$path."/data_read.ejs.php',
+					create		: '".$path."/data_create.ejs.php',
+					update		: '".$path."/data_update.ejs.php',
+					destroy 	: '".$path."/data_destroy.ejs.php'
+			});
+		";
 	}
 	
 	//**********************************************************************
@@ -151,7 +176,7 @@ class layoutEngine extends dbHelper {
 	// if $list parameter was patients, the name of the dataStore will be
 	// storePatients, and the record model will be patientsModel.
 	//**********************************************************************
-	function factorDataStore($list){
+	private function factorDataStore($list){
 		echo "
 			panel.store" . ucfirst($list) . " = Ext.create('Ext.mitos.CRUDStore',{
 				fields: [
@@ -166,7 +191,7 @@ class layoutEngine extends dbHelper {
 			" . chr(13);
 			return "store".ucfirst($list);
 	}
-	
+				
 	//**********************************************************************
 	// renderForm 
 	//
@@ -194,6 +219,10 @@ class layoutEngine extends dbHelper {
   					layout_options.group_order, layout_options.seq");
 		$dataStoresNames = array();
 		$dataStoresNames = $this->execStatement();
+		
+		// Render the form dataStore
+		//---
+		$this->factorFormStore("store".ucfirst($formPanel), "app/patient_file/new", $dataStoresNames, "item_id");
 		
 		// Render the dataStores for the combo boxes first
 		//---
@@ -226,7 +255,6 @@ class layoutEngine extends dbHelper {
 			if(!array_key_exists($row['group_name'], $group_name)){
 				echo "{
 					xtype:'fieldset',
-        				//columnWidth: 0.5,
         				collapsible: true,
         				collapsed: true,
         				title: '".$row['group_name']."',
@@ -300,10 +328,10 @@ class layoutEngine extends dbHelper {
                                     var i = record.fields.get(k).name;
                                     record.set( i, fieldValues[i] );
                                 }
-                                panel.globalStore.sync();	// Save the record to the dataStore
-                                panel.globalStore.load();	// Reload the dataSore from the database
+                                panel.store".ucfirst($formPanel).".sync();	// Save the record to the dataStore
+                                panel.store".ucfirst($formPanel).".load();	// Reload the dataSore from the database
 
-                                Ext.topAlert.msg('New patient as been saves!','');
+                                Ext.topAlert.msg('New patient as been saved!','');
                             }
                         }]
                     }]

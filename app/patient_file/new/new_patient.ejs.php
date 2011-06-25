@@ -36,7 +36,6 @@ Ext.onReady(function(){
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
-			'Ext.mitos.GridPanel',
 			'Ext.mitos.RenderPanel',
 			'Ext.mitos.SaveCancelWindow'
 		],
