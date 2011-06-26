@@ -92,19 +92,13 @@ Ext.setup({
                     text:'Logout',
                     ui: 'round',
                     handler: function() {
-                        Ext.Msg.show({
-                            title: '<?php i18n("Please confirm..."); ?>',
-                            icon: Ext.MessageBox.QUESTION,
-                            msg:'<?php i18n("Are you sure to quit MitosEHR?"); ?>',
-                            buttons: [{
-                                text: 'yes',
-                                handler: function() {
-                                    window.location = "lib/authProcedures/unauth.inc.php";
+                        Ext.Msg.confirm("<?php i18n("Please confirm..."); ?>", "<?php i18n("Are you sure to quit MitosEHR?"); ?>",
+                            function(btn,msgGrid){
+								if(btn=='yes'){
+                                    document.location = "lib/authProcedures/unauth.inc.php";
                                 }
-                            },{
-                                text :'No'
-                            }]
-                        });
+                            }
+                        )
                     }
                 }]
             }]
@@ -119,6 +113,7 @@ Ext.setup({
                 url: '../../src/' + r.get('id'),
                 success: function(response) {
                     detailCard.setValue(response.responseText);
+				    document.location = 'index.php';
                 },
                 failure: function() {
                     detailCard.setValue("Loading failed.");

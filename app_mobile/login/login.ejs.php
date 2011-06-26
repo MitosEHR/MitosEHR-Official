@@ -28,10 +28,11 @@ Ext.setup({
             fields: [
                 { type: 'int', name: 'site_id', mapping: 'value'},
                 { type: 'string', name: 'site', mapping: 'text'}
-            ]
+            ],
+            idProperty: 'site_id'
         });
         var storeSites = new Ext.data.Store({
-            model: 'Sites',
+            model: 'User',
             proxy: new Ext.data.AjaxProxy({
                 url: 'app/login/component_data.ejs.php?task=sites',
                 reader: {
@@ -86,7 +87,7 @@ Ext.setup({
                         id:'choiseSite',
                         //displayField:'site',
                         //valueField:'site_id',
-                        //store: storeSites
+                        //options: storeSites
                         options: [{text: 'default',  value: 'default'}]
                     }),
                     new Ext.Button({
@@ -94,8 +95,8 @@ Ext.setup({
                         margin: '20 0',
                         ui  : 'confirm',
                         handler: function() {
-                            if(formLogin.user){
-                                form.updateRecord(formLogin.user, true);
+                            if(formLogin){
+                                form.updateRecord(formLogin, true);
                             }
                             form.submit({
                                 waitMsg : {message:'Submitting', cls : 'demos-loading'}
@@ -113,14 +114,13 @@ Ext.setup({
                 ]
             }],
             listeners : {
-                success:function(){
-                    var redirect = 'index.php';
-                    window.location = redirect;
-                },
-                // Failed to logon
-                failure:function(form, action){
-
-                    formLogin.getForm().reset();
+                submit : function(form, result){
+                    if (result.errors){
+                        Ext.Msg.alert('Opps!',result.errors.reason , Ext.emptyFn);
+                    } else {
+                        window.location = 'index.php'
+                    }
+                    console.log('success', Ext.toArray(arguments));
                 }
             }
         };
@@ -135,7 +135,6 @@ Ext.setup({
                 hideOnMaskTap: false
             });
         }
-
         form = new Ext.form.FormPanel(formLogin);
         form.show();
     }

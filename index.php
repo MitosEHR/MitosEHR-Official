@@ -27,7 +27,7 @@ define('_MitosEXEC', 1);
 // and mobile_detect class is used to detect mobile browsers.
 //-------------------------------------------------------------------
 include_once("registry.php");
-include_once("classes/Mobile_Detect.php");
+include_once("classes/mobile_detect.php");
 $mobile = new Mobile_Detect();
 //-------------------------------------------------------------------
 // Make the auth process
@@ -43,6 +43,7 @@ if(isset($_SESSION['user']['auth'])){
         // if mobile go to mobile app, else go to app
         //-----------------------------------------------------------
         if ($mobile->isMobile()) {
+
 		    include_once("app_mobile/MitosApp.ejs.php");
         }else{
             include_once("app/MitosApp.ejs.php");
