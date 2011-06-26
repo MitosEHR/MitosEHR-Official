@@ -9,7 +9,6 @@ $dataTypes_json = array(
 	array("id" 	=> "10", "type"  => i18n("Providers", 'r')),
 	array("id" 	=> "11", "type"  => i18n("Providers NPI", 'r')),
 	array("id" 	=> "12", "type"  => i18n("Pharmacies", 'r')),
-	array("id" 	=> "13", "type"  => i18n("Squads", 'r')),
 	array("id" 	=> "14", "type"  => i18n("Organizations", 'r')),
 	array("id" 	=> "15", "type"  => i18n("Billing codes", 'r')),
 	
@@ -37,7 +36,6 @@ $dataTypes = array(
 	"10" => i18n("Providers", 'r'),
 	"11" => i18n("Providers NPI", 'r'),
 	"12" => i18n("Pharmacies", 'r'),
-	"13" => i18n("Squads", 'r'),
 	"14" => i18n("Organizations", 'r'),
 	"15" => i18n("Billing codes", 'r'),
 	
@@ -69,7 +67,6 @@ $dataTypes_Reverse = array(
 	i18n("Providers", 'r') 			=> "10",
 	i18n("Providers NPI", 'r') 		=> "11",
 	i18n("Pharmacies", 'r') 		=> "12",
-	i18n("Squads", 'r') 			=> "13",
 	i18n("Organizations", 'r') 		=> "14",
 	i18n("Billing codes", 'r') 		=> "15",
 	
