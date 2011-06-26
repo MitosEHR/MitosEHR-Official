@@ -1,27 +1,27 @@
 <?php
 
 $dataTypes_json = array(
-	array("id" 	=> "1", "type" => i18n("List box", 'r')), // Done
-	array("id" 	=> "2", "type" => i18n("Textbox", 'r')), // Done
-	array("id" 	=> "3", "type"  => i18n("Textarea", 'r')), // Done
-	array( "id" 	=> "4", "type"  => i18n("Text-date", 'r')), // Done
+	array("id" 	=> "1", "type" => i18n("List box", 'r')), 				// Done
+	array("id" 	=> "2", "type" => i18n("Textbox", 'r')), 				// Done
+	array("id" 	=> "3", "type"  => i18n("Textarea", 'r')), 				// Done
+	array( "id" 	=> "4", "type"  => i18n("Text-date", 'r')), 		// Done
 	
-	array("id" 	=> "10", "type"  => i18n("Providers", 'r')), // Done
-	array("id" 	=> "11", "type"  => i18n("Providers NPI", 'r')), // Done
-	array("id" 	=> "12", "type"  => i18n("Pharmacies", 'r')), // Done
-	array("id" 	=> "14", "type"  => i18n("Organizations", 'r')), // Done
+	array("id" 	=> "10", "type"  => i18n("Providers", 'r')), 			// Done
+	array("id" 	=> "11", "type"  => i18n("Providers NPI", 'r')), 		// Done
+	array("id" 	=> "12", "type"  => i18n("Pharmacies", 'r')), 			// Done
+	array("id" 	=> "14", "type"  => i18n("Organizations", 'r')), 		// Done
 	array("id" 	=> "15", "type"  => i18n("Billing codes", 'r')),
 	
-	array("id" 	=> "21", "type"  => i18n("Checkbox list", 'r')),
-	array("id" 	=> "22", "type"  => i18n("Textbox list", 'r')),
+	array("id" 	=> "21", "type"  => i18n("Checkbox list", 'r')), 		// Done
+	array("id" 	=> "22", "type"  => i18n("Textbox list", 'r')), 
 	array("id" 	=> "23", "type"  => i18n("Exam results", 'r')),
-	array("id" 	=> "24", "type"  => i18n("Patient allergies", 'r')),
-	array("id" 	=> "25", "type"  => i18n("Checkbox w/text", 'r')),
-	array("id" 	=> "26", "type"  => i18n("List box w/add", 'r')),
+	array("id" 	=> "24", "type"  => i18n("Patient allergies", 'r')), 	// Done
+	array("id" 	=> "25", "type"  => i18n("Checkbox w/text", 'r')), 		// Done
+	array("id" 	=> "26", "type"  => i18n("List box w/add", 'r')), 		// Done
 	array("id" 	=> "27", "type"  => i18n("Radio button", 'r')),
 	array("id" 	=> "28", "type"  => i18n("Lifestyle status", 'r')),
 	
-	array("id" 	=> "31", "type"  => i18n("Static Text", 'r')), // Done
+	array("id" 	=> "31", "type"  => i18n("Static Text", 'r')), 			// Done
 	array("id" 	=> "32", "type"  => i18n("Smoking Status", 'r')),
 	array("id" 	=> "33", "type"  => i18n("Race and Ethnicity", 'r')),
 	array("id" 	=> "34", "type"  => i18n("Line Break", "r"))

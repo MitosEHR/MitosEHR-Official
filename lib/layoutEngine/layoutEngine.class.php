@@ -240,6 +240,29 @@ class layoutEngine extends dbHelper {
 	}
 	
 	//**********************************************************************
+	// allergiesAdd
+	//
+	// This creates the combo into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	//**********************************************************************
+	private function allergiesAdd($fieldName, $fieldLabel){
+		$buff  = "{xtype: 'combo',"; 
+		$buff .= "submitValue: true,"; 
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "editable: false,";
+		$buff .= "triggerAction: 'all',";
+		$buff .= "mode: 'local',";
+		$buff .= "valueField: 'id',";
+		$buff .= "displayField: 'type',";
+		$buff .= "store: panel.storeAllergies}";
+		return $buff;
+	}
+	
+	//**********************************************************************
 	// comboAdd_Editable
 	//
 	// This creates the combo into the fieldset & form.
@@ -361,6 +384,24 @@ class layoutEngine extends dbHelper {
 		$buff .= "read: 'lib/layoutEngine/listOrganizations.json.php' });";
 		return $buff;
 	}
+	
+	//**********************************************************************
+	// factor DataStore for allergies
+	// 
+	// This will create the code for the dataStores requiered by
+	// the comboboxes, or any other object that requieres dataStore.
+	//
+	//**********************************************************************
+	private function factorStoreAllergies(){
+		$buff  = "panel.storeAllergies = Ext.create('Ext.mitos.CRUDStore',{";
+		$buff .= "fields: [{name: 'id', type: 'int'},";
+		$buff .= "{name: 'type', type: 'string'}";
+		$buff .= "],";
+		$buff .= "model:'allegiesModel',";
+		$buff .= "idProperty:'id',";
+		$buff .= "read: 'lib/layoutEngine/listAllergies.json.php' });";
+		return $buff;
+	}
 				
 	//**********************************************************************
 	// renderForm 
@@ -398,6 +439,7 @@ class layoutEngine extends dbHelper {
 		echo $this->factorStoreProviders();
 		echo $this->factorStorePharmacies();
 		echo $this->factorStoreOrganizations();
+		echo $this->factorStoreAllergies();
 		
 		// 2.Render the dataStores for the combo boxes first
 		// and do not duplicate the dataStore
@@ -497,6 +539,11 @@ class layoutEngine extends dbHelper {
 				// Check box List
 				case 21:
 					echo $this->checkboxAdd($row['field_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Check box Allergies
+				case 24:
+					echo $this->allergiesAdd($row['field_id'], $row['title']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 				// Check box w/ Text
