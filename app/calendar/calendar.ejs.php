@@ -39,7 +39,8 @@ Ext.onReady(function(){
                 autoLoad: true,
                 proxy: {
                     type: 'ajax',
-                    url: 'app/calendar/data/calendars.json',
+                    //url: 'app/calendar/data/calendars.json',
+                    url: 'app/calendar/data_read.ejs.php?task=calendars',
                     noCache: false,
 
                     reader: {
