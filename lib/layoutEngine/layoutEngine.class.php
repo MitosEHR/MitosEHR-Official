@@ -217,6 +217,29 @@ class layoutEngine extends dbHelper {
 	}
 	
 	//**********************************************************************
+	// organizationsAdd
+	//
+	// This creates the combo into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	//**********************************************************************
+	private function organizationsAdd($fieldName, $fieldLabel){
+		$buff  = "{xtype: 'combo',"; 
+		$buff .= "submitValue: true,"; 
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "editable: false,";
+		$buff .= "triggerAction: 'all',";
+		$buff .= "mode: 'local',";
+		$buff .= "valueField: 'id',";
+		$buff .= "displayField: 'organization',";
+		$buff .= "store: panel.storeOrganization}";
+		return $buff;
+	}
+	
+	//**********************************************************************
 	// comboAdd_Editable
 	//
 	// This creates the combo into the fieldset & form.
@@ -319,6 +342,25 @@ class layoutEngine extends dbHelper {
 		$buff .= "read: 'lib/layoutEngine/listPharmacies.json.php' });";
 		return $buff;
 	}
+	
+	//**********************************************************************
+	// factor DataStore for pharmacies
+	// 
+	// This will create the code for the dataStores requiered by
+	// the comboboxes, or any other object that requieres dataStore.
+	//
+	//**********************************************************************
+	private function factorStoreOrganizations(){
+		$buff  = "panel.storeOrganizations = Ext.create('Ext.mitos.CRUDStore',{";
+		$buff .= "fields: [{name: 'id', type: 'int'},";
+		$buff .= "{name: 'cName', type: 'string'},";
+		$buff .= "{name: 'organization', type: 'string'}";
+		$buff .= "],";
+		$buff .= "model:'organizationsModel',";
+		$buff .= "idProperty:'id',";
+		$buff .= "read: 'lib/layoutEngine/listOrganizations.json.php' });";
+		return $buff;
+	}
 				
 	//**********************************************************************
 	// renderForm 
@@ -355,6 +397,7 @@ class layoutEngine extends dbHelper {
 		echo $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
 		echo $this->factorStoreProviders();
 		echo $this->factorStorePharmacies();
+		echo $this->factorStoreOrganizations();
 		
 		// 2.Render the dataStores for the combo boxes first
 		// and do not duplicate the dataStore
@@ -444,6 +487,11 @@ class layoutEngine extends dbHelper {
 				// Pharmacies Combo
 				case 12:
 					echo $this->pharmaciesAdd($row['field_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Organizations Combo
+				case 14:
+					echo $this->organizationsAdd($row['field_id'], $row['title']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 				// Check box List

@@ -9,7 +9,7 @@ $dataTypes_json = array(
 	array("id" 	=> "10", "type"  => i18n("Providers", 'r')), // Done
 	array("id" 	=> "11", "type"  => i18n("Providers NPI", 'r')), // Done
 	array("id" 	=> "12", "type"  => i18n("Pharmacies", 'r')), // Done
-	array("id" 	=> "14", "type"  => i18n("Organizations", 'r')),
+	array("id" 	=> "14", "type"  => i18n("Organizations", 'r')), // Done
 	array("id" 	=> "15", "type"  => i18n("Billing codes", 'r')),
 	
 	array("id" 	=> "21", "type"  => i18n("Checkbox list", 'r')),
