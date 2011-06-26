@@ -16,16 +16,16 @@
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 class layoutEngine extends dbHelper {
 
-	private $switcher;
+	private $cu;
 	
 	//**********************************************************************
 	// switchTF
 	//
 	// This function will write the Sencha ExtJS v4 code, in two modes
-	// T = Text: Will display the form only in HTML, no fields
-	// F = Fields: Will create the form with fields
+	// C = Create: Create a new record
+	// U = Update: Read for Update a record
 	//**********************************************************************
-	function switchTF($v = "F"){ $this->switcher = $v; } 
+	function actionCU($a = "C"){ $this->cru = $c; } 
 	
 	//**********************************************************************
 	// textAdd
@@ -253,10 +253,9 @@ class layoutEngine extends dbHelper {
 		$buff = substr($buff, 0, -1);
 		$buff .= "],model: '".$dataStore."Model',";
 		$buff .= "idProperty: 'item_id',";
-		$buff .= "read: '".$path."/data_read.ejs.php',";
-		$buff .= "create: '".$path."/data_create.ejs.php',";
-		$buff .= "update: '".$path."/data_update.ejs.php',";
-		$buff .= "destroy: '".$path."/data_destroy.ejs.php'});";
+		if ($cu == "U") $buff .= "read: '".$path."/data_read.ejs.php',";
+		if ($cu == "C") $buff .= "create: '".$path."/data_create.ejs.php',";
+		if ($cu == "U") $buff .= "update: '".$path."/data_update.ejs.php'});";
 		return $buff;
 	}
 	
