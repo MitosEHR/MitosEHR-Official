@@ -28,7 +28,7 @@ include_once($_SESSION['site']['root']."/classes/dataExchange.class.php");
 // use the logon form. Possible hack.
 //-------------------------------------------
 if (strlen($_REQUEST['authUser']) >= 26){
-	echo "{ success: false, errors: { reason: 'Possible hack, please use the Logon Screen.' }}";
+	echo '{ "success": "false", "errors": { "Possible hack, please use the Logon Screen." }}';
  	return;
 }
 //-------------------------------------------
@@ -40,21 +40,21 @@ if (strlen($_REQUEST['authUser']) >= 26){
 // use the logon form. Possible hack.
 //-------------------------------------------
 if (strlen($_REQUEST['authPass']) >= 11){
-	echo "{ success: false, errors: { reason: 'Possible hack, please use the Logon Screen.' }}";
+	echo '{ "success": "false", "errors": { "Possible hack, please use the Logon Screen." }}';
  	return;
 }
 //-------------------------------------------
 // Simple check username
 //-------------------------------------------
 if (!$_REQUEST['authUser']){
-	echo "{ success: false, errors: { reason: 'The username field can not be in blank. Try again.' }}";
+	echo '{ "success": "false", "errors": { "The username field can not be in blank. Try again." }}';
  	return;
 }
 //-------------------------------------------
 // Simple check password
 //------------------------------------------- 
 if (!$_REQUEST['authPass']){
-	echo "{ success: false, errors: { reason: 'The password field can not be in blank. Try again.' }}";
+	echo '{ "success": "false", "errors": { "The password field can not be in blank. Try again." }}';
  	return;
 }
 //-------------------------------------------
@@ -70,12 +70,12 @@ if (file_exists($fileConf)){
 	$mitos_db = new dbHelper();
 	$err = $mitos_db->getError();
 	if (!is_array($err)){
-		echo "{ success: false, errors: { reason: 'For some reason, I can\'t connect to the database.'}}";
+		echo '{ "success": "false", "errors": { "reason": "For some reason, I can\'t connect to the database."}';
 		return;
 	}
 	// Do not stop here!, continue with the rest of the code.
 } else {
-	echo "{ success: false, errors: { reason: 'No configuration file found on the selected site.<br>Please contact support.'}}";
+	echo '{ "success": "false", "errors": { "reason": "No configuration file found on the selected site.<br>Please contact support."}}';
  	return;
 }
 //-------------------------------------------
@@ -94,7 +94,7 @@ $sql = "SELECT * FROM users
 $mitos_db->setSQL($sql);
 $rec = $mitos_db->fetch();
 if ($rec['username'] == ""){
-	echo "{ success: false, errors: { reason: 'The username or password you provided is invalid.'}}";
+	echo '{ "success": "false", "errors": { "reason": "The username or password you provided is invalid."}}';
 	return;
 } else {
 	//-------------------------------------------
@@ -116,7 +116,7 @@ if ($rec['username'] == ""){
 	$_SESSION['ver']['rev'] = $rec['v_patch'];
 	$_SESSION['ver']['minor'] = $rec['v_minor'];
 	$_SESSION['ver']['database'] = $rec['v_database'];
-	echo "{ success: true }";
+	echo '{ "success": "true" }';
 	return;	
 }
 ?>
