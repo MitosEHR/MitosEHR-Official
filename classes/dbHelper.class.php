@@ -65,14 +65,14 @@ class dbHelper {
 	//
 	// Author: GI Technologies, 2011
 	//**********************************************************************
-	function execStatement(){
+	function execStatement($fetchStyle = "PDO::FETCH_BOTH "){
 		$recordset = $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, "SELECT")){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}
 		$err = $this->conn->errorInfo();
 		if(!$err[2]){
-			return $recordset->fetchAll(PDO::FETCH_BOTH);
+			return $recordset->fetchAll($fetchStyle);
 		} else {
 			return $err;
 		}
