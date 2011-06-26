@@ -36,9 +36,9 @@ enableEditDetails: true
  * @constructor
  * @param {Object} config The config object
  */
-Ext.define('Extensible.calendar.form.EventWindow', {
+Ext.define('Ext.mitos.calendar.MitosEventWindow', {
     extend: 'Ext.window.Window',
-    alias: 'widget.extensible.eventeditwindow',
+    alias: 'widget.extensible.mitoseventeditwindow',
     
     requires: [
         'Ext.form.Panel',
@@ -47,24 +47,19 @@ Ext.define('Extensible.calendar.form.EventWindow', {
     ],
     
     // Locale configs
-    titleTextAdd: 'Add Event',
-    titleTextEdit: 'Edit Event',
+    titleTextAdd: 'Add Appointment...',
+    titleTextEdit: 'Edit Appointment',
     width: 600,
-    labelWidth: 85,
+    labelWidth: 65,
     detailsLinkText: 'Edit Details...',
     savingMessage: 'Saving changes...',
-    deletingMessage: 'Deleting App...',
+    deletingMessage: 'Deleting appointment...',
     saveButtonText: 'Save',
     deleteButtonText: 'Delete',
     cancelButtonText: 'Cancel',
-    categoryLabelTex: 'Category',
-    facilityLabelTex: 'Facility',
-    billingLabelTex: 'Billing Facility',
-    statusLabelTex: 'Status',
-    patientLabelTex: 'Patient',
-    titleLabelText: 'Notes',
+    titleLabelText: 'Title',
     datesLabelText: 'When',
-    calendarLabelText: 'Provider',
+    calendarLabelText: 'Calendar',
     
     // General configs
     closeAction: 'hide',
@@ -180,34 +175,6 @@ Ext.define('Extensible.calendar.form.EventWindow', {
     
     getFormItemConfigs: function() {
         var items = [{
-            xtype: 'combobox',
-            itemId: this.id + '-category',
-            name: Extensible.calendar.data.EventMappings.Category.name,
-            fieldLabel: this.categoryLabelTex,
-            anchor: '100%',
-            store: this.calendarStore
-        },{
-            xtype: 'combobox',
-            itemId: this.id + '-facility',
-            name: Extensible.calendar.data.EventMappings.Facility.name,
-            fieldLabel: this.facilityLabelTex,
-            anchor: '100%',
-            store: this.calendarStore
-        },{
-            xtype: 'combobox',
-            itemId: this.id + '-billingfacility',
-            name: Extensible.calendar.data.EventMappings.BillingFacility.name,
-            fieldLabel: this.billingLabelTex,
-            anchor: '100%',
-            store: this.calendarStore
-        },{
-            xtype: 'combobox',
-            itemId: this.id + '-patient',
-            name: Extensible.calendar.data.EventMappings.Patient.name,
-            fieldLabel: this.patientLabelTex,
-            anchor: '100%',
-            store: this.calendarStore
-        },{
             xtype: 'textfield',
             itemId: this.id + '-title',
             name: Extensible.calendar.data.EventMappings.Title.name,
@@ -219,13 +186,6 @@ Ext.define('Extensible.calendar.form.EventWindow', {
             name: 'dates',
             anchor: '95%',
             fieldLabel: this.datesLabelText
-        },{
-            xtype: 'combobox',
-            itemId: this.id + '-status',
-            name: Extensible.calendar.data.EventMappings.Status.name,
-            fieldLabel: this.statusLabelTex,
-            anchor: '100%',
-            store: this.calendarStore
         }];
         
         if(this.calendarStore){

@@ -19,6 +19,7 @@ class Mobile_Detect {
     protected $isPalm       = null;
     protected $isWindows    = null;
     protected $isGeneric    = null;
+    protected $isIphone     = null;
 
     protected $devices = array(
         "android"       => "android",

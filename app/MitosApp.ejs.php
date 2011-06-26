@@ -75,6 +75,7 @@ Ext.require([
     'Extensible.calendar.gadget.CalendarListPanel',
     'Extensible.calendar.data.MemoryCalendarStore',
     'Extensible.calendar.data.MemoryEventStore'
+
 ]);
 Ext.onReady(function() {
 	Ext.define('Ext.mitos.MitosApp',{
