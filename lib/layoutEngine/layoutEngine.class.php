@@ -50,6 +50,25 @@ class layoutEngine extends dbHelper {
 	}
 	
 	//**********************************************************************
+	// statictextAdd
+	//
+	// This creates the fields into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	//**********************************************************************
+	private function statictexAdd($fieldName, $fieldLabel, $initValue){
+		$buff  = "{ xtype: 'textfield',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "submitValue: true,";
+		$buff .= "disabled: true,";
+		$buff .= "value: '".$initValue."'}";
+		return $buff;
+	}
+	
+	//**********************************************************************
 	// checkboxAdd
 	//
 	// This creates the fields into the fieldset & form.
@@ -441,6 +460,11 @@ class layoutEngine extends dbHelper {
 				// List box w/ Add (Editable)
 				case 26:
 					echo $this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Static Test
+				case 31:
+					echo $this->statictexAdd($row['field_id'], $row['title'], $row['default_value']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 			}
