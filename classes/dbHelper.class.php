@@ -65,7 +65,7 @@ class dbHelper {
 	//
 	// Author: GI Technologies, 2011
 	//**********************************************************************
-	function execStatement($fetchStyle = "PDO::FETCH_BOTH "){
+	function execStatement($fetchStyle = PDO::FETCH_BOTH){
 		$recordset = $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, "SELECT")){
 			$this->lastInsertId = $this->conn->lastInsertId();
