@@ -1,14 +1,14 @@
 <?php
 
 $dataTypes_json = array(
-	array("id" 	=> "1", "type" => i18n("List box", 'r')),
-	array("id" 	=> "2", "type" => i18n("Textbox", 'r')),
-	array("id" 	=> "3", "type"  => i18n("Textarea", 'r')),
-	array( "id" 	=> "4", "type"  => i18n("Text-date", 'r')),
+	array("id" 	=> "1", "type" => i18n("List box", 'r')), // Done
+	array("id" 	=> "2", "type" => i18n("Textbox", 'r')), // Done
+	array("id" 	=> "3", "type"  => i18n("Textarea", 'r')), // Done
+	array( "id" 	=> "4", "type"  => i18n("Text-date", 'r')), // Done
 	
-	array("id" 	=> "10", "type"  => i18n("Providers", 'r')),
-	array("id" 	=> "11", "type"  => i18n("Providers NPI", 'r')),
-	array("id" 	=> "12", "type"  => i18n("Pharmacies", 'r')),
+	array("id" 	=> "10", "type"  => i18n("Providers", 'r')), // Done
+	array("id" 	=> "11", "type"  => i18n("Providers NPI", 'r')), // Done
+	array("id" 	=> "12", "type"  => i18n("Pharmacies", 'r')), // Done
 	array("id" 	=> "14", "type"  => i18n("Organizations", 'r')),
 	array("id" 	=> "15", "type"  => i18n("Billing codes", 'r')),
 	
@@ -21,7 +21,7 @@ $dataTypes_json = array(
 	array("id" 	=> "27", "type"  => i18n("Radio button", 'r')),
 	array("id" 	=> "28", "type"  => i18n("Lifestyle status", 'r')),
 	
-	array("id" 	=> "31", "type"  => i18n("Static Text", 'r')),
+	array("id" 	=> "31", "type"  => i18n("Static Text", 'r')), // Done
 	array("id" 	=> "32", "type"  => i18n("Smoking Status", 'r')),
 	array("id" 	=> "33", "type"  => i18n("Race and Ethnicity", 'r')),
 	array("id" 	=> "34", "type"  => i18n("Line Break", "r"))
