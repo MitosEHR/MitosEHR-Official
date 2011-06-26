@@ -19,7 +19,7 @@ $dataTypes_json = array(
 	array("id" 	=> "24", "type"  => i18n("Patient allergies", 'r')),
 	array("id" 	=> "25", "type"  => i18n("Checkbox w/text", 'r')),
 	array("id" 	=> "26", "type"  => i18n("List box w/add", 'r')),
-	array("id" 	=> "27", "type"  => i18n("Radio buttons", 'r')),
+	array("id" 	=> "27", "type"  => i18n("Radio button", 'r')),
 	array("id" 	=> "28", "type"  => i18n("Lifestyle status", 'r')),
 	
 	array("id" 	=> "31", "type"  => i18n("Static Text", 'r')),
@@ -47,7 +47,7 @@ $dataTypes = array(
 	"24" => i18n("Patient allergies", 'r'),
 	"25" => i18n("Checkbox w/text", 'r'),
 	"26" => i18n("List box w/add", 'r'),
-	"27" => i18n("Radio buttons", 'r'),
+	"27" => i18n("Radio button", 'r'),
 	"28" => i18n("Lifestyle status", 'r'),
 	
 	"31" => i18n("Static Text", 'r'),
@@ -57,8 +57,8 @@ $dataTypes = array(
 );
 	
 //---------------------------------------------------------------------------------------
-// dataTypes - Defines what type of fields are.
-// This is just a reverse thing, translate the dataTypes into numbers.
+// dataTypes_Reverse - Defines what type of fields are.
+// This is just a reverse thing, translate the dataTypes back into numbers.
 //---------------------------------------------------------------------------------------
 $dataTypes_Reverse = array(
 	i18n("List box", 'r') 			=> "1", 
@@ -79,7 +79,7 @@ $dataTypes_Reverse = array(
 	i18n("Patient allergies", 'r') 	=> "24",
 	i18n("Checkbox w/text", 'r') 	=> "25",
 	i18n("List box w/add", 'r') 	=> "26",
-	i18n("Radio buttons", 'r') 		=> "27",
+	i18n("Radio button", 'r') 		=> "27",
 	i18n("Lifestyle status", 'r') 	=> "28",
 	
 	i18n("Static Text", 'r') 		=> "31",

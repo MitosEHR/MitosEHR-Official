@@ -50,6 +50,24 @@ class layoutEngine extends dbHelper {
 	}
 	
 	//**********************************************************************
+	// checkboxAdd
+	//
+	// This creates the fields into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	// $initValue: The initial value of the field
+	//**********************************************************************
+	private function checkboxAdd($fieldName, $fieldLabel, $initValue){
+		$buff  = "{ xtype: 'checkboxfield',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "inputValue: '".$initValue."'}";
+		return $buff;
+	}
+	
+	//**********************************************************************
 	// textareaAdd
 	//
 	// This creates the fields into the fieldset & form.
@@ -107,6 +125,52 @@ class layoutEngine extends dbHelper {
 		$buff .= "valueField: 'title',";
 		$buff .= "displayField: 'title',";
 		$buff .= "store: panel.store".ucfirst($list_id)."}";
+		return $buff;
+	}
+	
+	//**********************************************************************
+	// providersAdd
+	//
+	// This creates the combo into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	//**********************************************************************
+	private function providersAdd($fieldName, $fieldLabel){
+		$buff  = "{xtype: 'combo',"; 
+		$buff .= "submitValue: true,"; 
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "editable: false,";
+		$buff .= "triggerAction: 'all',";
+		$buff .= "mode: 'local',";
+		$buff .= "valueField: 'id',";
+		$buff .= "displayField: 'cName',";
+		$buff .= "store: panel.storeProviders }";
+		return $buff;
+	}
+	
+	//**********************************************************************
+	// providersNPIAdd
+	//
+	// This creates the combo into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	//**********************************************************************
+	private function providersNPIAdd($fieldName, $fieldLabel){
+		$buff  = "{xtype: 'combo',"; 
+		$buff .= "submitValue: true,"; 
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "editable: false,";
+		$buff .= "triggerAction: 'all',";
+		$buff .= "mode: 'local',";
+		$buff .= "valueField: 'npi',";
+		$buff .= "displayField: 'cName',";
+		$buff .= "store: panel.storeProviders }";
 		return $buff;
 	}
 	
@@ -175,6 +239,28 @@ class layoutEngine extends dbHelper {
 		$buff .= 'extraParams: {"filter": "'.$list.'"} });';
 		return $buff;
 	}
+
+	//**********************************************************************
+	// factor DataStore for providers
+	// 
+	// This will create the code for the dataStores requiered by
+	// the comboboxes, or any other object that requieres dataStore.
+	//
+	// Parameters:
+	// $list
+	//
+	//**********************************************************************
+	private function factorStoreProviders(){
+		$buff  = "panel.storeProviders = Ext.create('Ext.mitos.CRUDStore',{";
+		$buff .= "fields: [{name: 'id', type: 'int'},";
+		$buff .= "{name: 'cName', type: 'string'},";
+		$buff .= "{name: 'npi', type: 'string'}";
+		$buff .= "],";
+		$buff .= "model:'providersModel',";
+		$buff .= "idProperty:'id',";
+		$buff .= "read: 'lib/layoutEngine/listProviders.json.php' });";
+		return $buff;
+	}
 				
 	//**********************************************************************
 	// renderForm 
@@ -206,9 +292,10 @@ class layoutEngine extends dbHelper {
 		$dataStoresNames = array();
 		$dataStoresNames = $this->execStatement();
 		
-		// 1.Render the form dataStore
+		// 1.Render the form dataStores
 		//---
 		echo $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
+		echo $this->factorStoreProviders();
 		
 		// 2.Render the dataStores for the combo boxes first
 		// and do not duplicate the dataStore
@@ -251,7 +338,7 @@ class layoutEngine extends dbHelper {
         				collapsible: true,
         				collapsed: true,
         				title: '".$row['group_name']."',
-        				defaults: {anchor: '20%'},
+        				defaults: {anchor: '30%', labelWidth: ".$labelWidth."},
         				layout: 'anchor',
 	        			items :[
 	        		";	
@@ -285,12 +372,33 @@ class layoutEngine extends dbHelper {
 					echo $this->dateAdd($row['field_id'], $row['title']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
+				// Providers Combo
+				case 10:
+					echo $this->providersAdd($row['field_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Providers NPI Combo
+				case 11:
+					echo $this->providersNPIAdd($row['field_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Check box List
+				case 21:
+					echo $this->checkboxAdd($row['field_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Check box w/ Text
+				case 25:
+					echo $this->checkboxAdd($row['field_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
 				// List box w/ Add (Editable)
 				case 26:
 					echo $this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 			}
+			
 			
 			/*
 			 * Close the fieldset, if it is the end.
@@ -317,17 +425,22 @@ class layoutEngine extends dbHelper {
                             text      : '". $saveText . "',
                             iconCls   : 'save',
                             handler   : function(){
-                                var record = panel." . $formPanel . ".getAt('0');
-                                var fieldValues = panel." . $formPanel . ".getForm().getValues();
-                                for (var k=0; k <= record.fields.getCount()-1; k++) {
-                                    var i = record.fields.get(k).name;
-                                    record.set( i, fieldValues[i] );
-                                }
-                                panel.store".ucfirst($formPanel).".sync();	// Save the record to the dataStore
-                                panel.store".ucfirst($formPanel).".load();	// Reload the dataSore from the database
-
-                                Ext.topAlert.msg('New patient as been saved!','');
-                            }
+								if (panel." . $formPanel . ".getForm().findField('id').getValue()){ // Update
+									var record = panel." . $formPanel . ".getAt(rowPos);
+									var fieldValues = panel." . $formPanel . ".getForm().getValues();
+            			    	    var k, i;
+									for ( k=0; k <= record.fields.getCount()-1; k++) {
+										i = record.fields.get(k).name;
+										record.set( i, fieldValues[i] );
+									}
+								} else { // Add
+									var obj = eval( '(' + Ext.JSON.encode(panel." . $formPanel . ".getForm().getValues()) + ')' );
+									panel." . $formPanel . ".add( obj );
+								}
+								panel." . $formPanel . ".sync();	// Save the record to the dataStore
+								panel." . $formPanel . ".load();	// Reload the dataSore from the database
+								Ext.topAlert.msg('New patient as been saved!','');
+							}
                         }]
                     }]
 				}); // End of ".$formPanel . chr(13);
