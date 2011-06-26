@@ -140,13 +140,52 @@ if ( $ret[2] <> "" ){
 }
 
 // *************************************************************************************
-// Finally that validated POST variables is inserted to the database
-// This one make the JOB of two, if it has an ID key run the UPDATE statement
-// if not run the INSERT statement
+// Reorder the seq field
 // *************************************************************************************
-$sql = $mitos_db->sqlBind($row, "layout_options", "I");
-$mitos_db->setSQL($sql);
-$ret = $mitos_db->execLog();
+$new_seq = 1;
+$row = array();
+$mitos_db->setSQL("SELECT 
+						*
+					FROM
+						layout_options
+					WHERE
+  						form_id = '".$data->form_id."'
+  						AND group_name = '".$data->group_name."'
+  					ORDER BY
+  						seq");
+foreach($mitos_db->execStatement() as $urow){
+	if($new_seq == $data->seq){ // the seq is equal the user selected update the record
+		$row['form_id'] 		= $data->form_id;
+		$row['field_id'] 		= strtolower($data->field_id);
+		$row['group_name'] 		= $data->group_name;
+		$row['title'] 			= $data->title;
+		$row['seq'] 			= $data->seq;
+		$row['data_type'] 		= $dataTypes[$data->data_type]; // Reverse
+		$row['uor'] 			= $uorTypes[$data->uor];		// Reverse
+		$row['fld_length'] 		= $data->fld_length;
+		$row['max_length'] 		= $data->max_length;
+		$row['list_id'] 		= $reverse_list[0]['option_id'];
+		$row['titlecols'] 		= $data->titlecols;
+		$row['datacols'] 		= $data->datacols;
+		$row['default_value'] 	= $data->default_value;
+		$row['edit_options'] 	= $data->edit_options;
+		$row['description'] 	= $data->description;
+		$row['group_order'] 	= $data->group_order;
+		// *************************************************************************************
+		// Finally that validated POST variables is inserted to the database
+		// This one make the JOB of two, if it has an ID key run the UPDATE statement
+		// if not run the INSERT stament
+		// *************************************************************************************
+		$sql = $mitos_db->sqlBind($row, "layout_options", "I");
+		$mitos_db->setSQL($sql);
+		$ret = $mitos_db->execLog();
+	} else {
+		$row['seq']=$new_seq;
+		$sql = $mitos_db->sqlBind($urow, "layout_options", "U", "item_id='" . $urow['item_id'] . "'");
+		$ret = $mitos_db->execLog();
+	}
+	$new_seq++; 
+}
 
 if ( $ret[2] <> "" ){
 	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
