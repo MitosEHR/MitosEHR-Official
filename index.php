@@ -27,7 +27,7 @@ define('_MitosEXEC', 1);
 // and mobile_detect class is used to detect mobile browsers.
 //-------------------------------------------------------------------
 include_once("registry.php");
-include_once("classes/mobile_detect.php");
+include_once("classes/Mobile_Detect.php");
 $mobile = new Mobile_Detect();
 //-------------------------------------------------------------------
 // Make the auth process
