@@ -152,6 +152,29 @@ class layoutEngine extends dbHelper {
 	}
 	
 	//**********************************************************************
+	// pharmaciesAdd
+	//
+	// This creates the combo into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	//**********************************************************************
+	private function pharmaciesAdd($fieldName, $fieldLabel){
+		$buff  = "{xtype: 'combo',"; 
+		$buff .= "submitValue: true,"; 
+		$buff .= "name: '".$fieldName."',";
+		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
+		$buff .= "editable: false,";
+		$buff .= "triggerAction: 'all',";
+		$buff .= "mode: 'local',";
+		$buff .= "valueField: 'id',";
+		$buff .= "displayField: 'name',";
+		$buff .= "store: panel.storePharmacies }";
+		return $buff;
+	}
+	
+	//**********************************************************************
 	// providersNPIAdd
 	//
 	// This creates the combo into the fieldset & form.
@@ -246,9 +269,6 @@ class layoutEngine extends dbHelper {
 	// This will create the code for the dataStores requiered by
 	// the comboboxes, or any other object that requieres dataStore.
 	//
-	// Parameters:
-	// $list
-	//
 	//**********************************************************************
 	private function factorStoreProviders(){
 		$buff  = "panel.storeProviders = Ext.create('Ext.mitos.CRUDStore',{";
@@ -259,6 +279,26 @@ class layoutEngine extends dbHelper {
 		$buff .= "model:'providersModel',";
 		$buff .= "idProperty:'id',";
 		$buff .= "read: 'lib/layoutEngine/listProviders.json.php' });";
+		return $buff;
+	}
+	
+	//**********************************************************************
+	// factor DataStore for pharmacies
+	// 
+	// This will create the code for the dataStores requiered by
+	// the comboboxes, or any other object that requieres dataStore.
+	//
+	//**********************************************************************
+	private function factorStorePharmacies(){
+		$buff  = "panel.storeProviders = Ext.create('Ext.mitos.CRUDStore',{";
+		$buff .= "fields: [{name: 'id', type: 'int'},";
+		$buff .= "{name: 'name', type: 'string'},";
+		$buff .= "{name: 'transmit_method', type: 'string'},";
+		$buff .= "{name: 'email', type: 'string'}";
+		$buff .= "],";
+		$buff .= "model:'pharmaciesModel',";
+		$buff .= "idProperty:'id',";
+		$buff .= "read: 'lib/layoutEngine/listPharmacies.json.php' });";
 		return $buff;
 	}
 				
@@ -296,6 +336,7 @@ class layoutEngine extends dbHelper {
 		//---
 		echo $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
 		echo $this->factorStoreProviders();
+		echo $this->factorStorePharmacies();
 		
 		// 2.Render the dataStores for the combo boxes first
 		// and do not duplicate the dataStore
@@ -380,6 +421,11 @@ class layoutEngine extends dbHelper {
 				// Providers NPI Combo
 				case 11:
 					echo $this->providersNPIAdd($row['field_id'], $row['title']);
+					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+				break;
+				// Pharmacies Combo
+				case 12:
+					echo $this->pharmaciesAdd($row['field_id'], $row['title']);
 					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
 				break;
 				// Check box List
