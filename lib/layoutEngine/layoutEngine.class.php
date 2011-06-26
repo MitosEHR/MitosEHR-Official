@@ -25,7 +25,7 @@ class layoutEngine extends dbHelper {
 	// C = Create: Create a new record
 	// U = Update: Read for Update a record
 	//**********************************************************************
-	function actionCU($a = "C"){ $this->cru = $c; } 
+	function actionCU($a = "C"){ $this->cu = $a; } 
 	
 	//**********************************************************************
 	// textAdd
@@ -253,9 +253,9 @@ class layoutEngine extends dbHelper {
 		$buff = substr($buff, 0, -1);
 		$buff .= "],model: '".$dataStore."Model',";
 		$buff .= "idProperty: 'item_id',";
-		if ($cu == "U") $buff .= "read: '".$path."/data_read.ejs.php',";
-		if ($cu == "C") $buff .= "create: '".$path."/data_create.ejs.php',";
-		if ($cu == "U") $buff .= "update: '".$path."/data_update.ejs.php'});";
+		if ($this->cu == "U") $buff .= "read: '".$path."/data_read.ejs.php',";
+		if ($this->cu == "C") $buff .= "create: '".$path."/data_create.ejs.php'});";
+		if ($this->cu == "U") $buff .= "update: '".$path."/data_update.ejs.php'});";
 		return $buff;
 	}
 	
@@ -308,7 +308,7 @@ class layoutEngine extends dbHelper {
 	//
 	//**********************************************************************
 	private function factorStorePharmacies(){
-		$buff  = "panel.storeProviders = Ext.create('Ext.mitos.CRUDStore',{";
+		$buff  = "panel.storePharmacies = Ext.create('Ext.mitos.CRUDStore',{";
 		$buff .= "fields: [{name: 'id', type: 'int'},";
 		$buff .= "{name: 'name', type: 'string'},";
 		$buff .= "{name: 'transmit_method', type: 'string'},";
