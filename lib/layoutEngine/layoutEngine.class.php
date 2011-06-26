@@ -39,11 +39,12 @@ class layoutEngine extends dbHelper {
 	// $fieldLengh: The max length of the field
 	//**********************************************************************
 	private function textAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
+		if ($fieldLengh != ""){$s=255;}else{$s=$fieldLengh;}
 		$buff  = "{ xtype: 'textfield',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
 		$buff .= "name: '".$fieldName."',";
-		$buff .= "maxLength: ".$fieldLengh.",";
-		$buff .= "size: ".$fieldLengh.",";
+		$buff .= "maxLength: ".$s.",";
+		$buff .= "size: ".$s.",";
 		$buff .= "submitValue: true,";
 		$buff .= "value: '".$initValue."'}";
 		return $buff;
@@ -98,12 +99,13 @@ class layoutEngine extends dbHelper {
 	// $fieldLengh: The max length of the field
 	//**********************************************************************
 	private function textareaAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
+		if ($fieldLengh != ""){$s=255;}else{$s=$fieldLengh;}
 		$buff  = "{xtype: 'textarea',"; 
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',"; 
 		$buff .= "name: '".$fieldName."',"; 
 		$buff .= "grow: false,";
 		$buff .= "value: '".$initValue."',";
-		$buff .= "size: ".$fieldLengh.",}";
+		$buff .= "size: ".$s.",}";
 		return $buff;
 	}
 	
@@ -402,6 +404,24 @@ class layoutEngine extends dbHelper {
 		$buff .= "read: 'lib/layoutEngine/listAllergies.json.php' });";
 		return $buff;
 	}
+	
+	//**********************************************************************
+	// startFieldContainer & endFieldContainer
+	//
+	// 
+	//**********************************************************************
+	private function startFieldContainer($fieldLabel, $labelWidth){
+		$buff  = "{";
+		$buff .= "xtype: 'fieldcontainer',";
+        $buff .= "fieldLabel: '".$fieldLabel."',";
+        $buff .= "labelWidth: ".$labelWidth.",";
+		$buff .= "layout: 'hbox',";
+        $buff .= "items: [";
+		return $buff;
+	}
+	private function endFieldContainer(){
+		return "]}";
+	}
 				
 	//**********************************************************************
 	// renderForm 
@@ -497,59 +517,57 @@ class layoutEngine extends dbHelper {
 				// list box
 				case 1:
 					echo $this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Text box
 				case 2:
-					if ($row['fld_length'] != "")$s=255;
-					echo $this->textAdd($row['field_id'], $row['title'], "", $s);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo $this->textAdd($row['field_id'], $row['title'], "", $row['fld_length']);
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Text area
 				case 3:
-					if ($row['fld_length'] != "") $s=255;
-					echo $this->textareaAdd($row['field_id'], $row['title'], "", $s);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo $this->textareaAdd($row['field_id'], $row['title'], "", $row['fld_length']);
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Text-date
 				case 4:
 					echo $this->dateAdd($row['field_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Providers Combo
 				case 10:
 					echo $this->providersAdd($row['field_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Providers NPI Combo
 				case 11:
 					echo $this->providersNPIAdd($row['field_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Pharmacies Combo
 				case 12:
 					echo $this->pharmaciesAdd($row['field_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Organizations Combo
 				case 14:
 					echo $this->organizationsAdd($row['field_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Check box List
 				case 21:
 					echo $this->checkboxAdd($row['field_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Check box Allergies
 				case 24:
 					echo $this->allergiesAdd($row['field_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// Check box w/ Text
 				case 25:
 					echo $this->checkboxAdd($row['field_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
 				break;
 				// List box w/ Add (Editable)
 				case 26:
