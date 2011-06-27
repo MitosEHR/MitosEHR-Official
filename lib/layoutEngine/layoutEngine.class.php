@@ -427,7 +427,7 @@ class layoutEngine extends dbHelper {
 	//**********************************************************************
 	function renderForm($formPanel, $path, $title, $labelWidth, $saveText){
 			
-		$big_buff = "";
+		$bBuff = "";
 		
 		// First we need to render all the dataStores
 		// and gather all the dataStore names
@@ -439,29 +439,29 @@ class layoutEngine extends dbHelper {
 		
 		// 1.Render the form dataStores
 		//---
-		$big_buff  = $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
-		$big_buff .= $this->factorStoreProviders();
-		$big_buff .= $this->factorStorePharmacies();
-		$big_buff .= $this->factorStoreOrganizations();
-		$big_buff .= $this->factorStoreAllergies();
+		$bBuff  = $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
+		$bBuff .= $this->factorStoreProviders();
+		$bBuff .= $this->factorStorePharmacies();
+		$bBuff .= $this->factorStoreOrganizations();
+		$bBuff .= $this->factorStoreAllergies();
 		
 		// 2.Render the dataStores for the combo boxes first
 		// and do not duplicate the dataStore
 		//---
 		foreach($dataStoresNames as $key => $row){
 			if($row['list_id'] != ""){
-				if(!array_key_exists($row['list_id'], $dCheck)){ $big_buff .= $this->factorDataStore($row['list_id']); }
+				if(!array_key_exists($row['list_id'], $dCheck)){ $bBuff .= $this->factorDataStore($row['list_id']); }
 				$dCheck[$row['list_id']] = true;
 			} 
 		}
 		
 		// 3.Begin with the form
 		//---
-		$big_buff .= "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {";
-		$big_buff .= "title: '" . $title . "',";
-		$big_buff .= "frame: true, bodyStyle: 'padding: 5px', layout: 'anchor',";
-		$big_buff .= "fieldDefaults: {labelAlign: 'top', msgTarget: 'side', anchor: '40%'},";
-		$big_buff .= "items: [";
+		$bBuff .= "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {";
+		$bBuff .= "title: '" . $title . "',";
+		$bBuff .= "frame: true, bodyStyle: 'padding: 5px', layout: 'anchor',";
+		$bBuff .= "fieldDefaults: {labelAlign: 'top', msgTarget: 'side', anchor: '40%'},";
+		$bBuff .= "items: [";
 		
 		// 4.Loop through the form groups & fields
 		//---
@@ -476,28 +476,23 @@ class layoutEngine extends dbHelper {
 			 * if not create the fieldset.
 			 */
 			if(!array_key_exists($row['group_name'], $group_name)){
-				// Get the number of fields on a form and in a group
-				// and divide it by 2, so it can give us the number of fields
-				// alfter rendering the fields into the next column
 				$tfGroup = $this->tfInGroup($formPanel, $row['group_name']);			// Total Fields in Group
 				$cols = round($this->tfInGroup($formPanel, $row['group_name']) / 2);	// Middle of the total fields
-				$big_buff .= "{xtype:'fieldset',";
-        		$big_buff .= "collapsible: true, collapsed: ". (($first) ? 'false' : 'true') .", title: '".$row["group_name"]."',";
-        		$big_buff .= "defaults: {border: false, xtype: 'panel', flex: 1, layout: 'anchor', labelWidth: ".$labelWidth."},";
-        		$big_buff .= "layout: 'hbox',";
-        		$big_buff .= "items: [{";
+				$bBuff .= "{xtype:'fieldset',";
+        		$bBuff .= "collapsible: true, collapsed: ". (($first) ? 'false' : 'true') .", title: '".$row["group_name"]."',";
+        		$bBuff .= "defaults: {border: false, xtype: 'panel', flex: 1, layout: 'anchor', labelWidth: ".$labelWidth."},";
+        		$bBuff .= "layout: 'hbox',";
+        		$bBuff .= "items: [{ items :[";
 	        	$first=false;
 	        	$gfCount=1;
 			} 
 			
 			/* 
-			 * Divide the group into 2 columns
-			 * pre-calculated on $cols
-			 */
-			if($gfCount == 1){ $big_buff .= "items :["; }	// Render fields to the first column 
-			if ($gfCount == $cols){ 						// Render fields to the next column
-				$big_buff = substr($big_buff, 0, -1);
-				$big_buff .= "] }, { items: ["; 
+			 * Render fields to the next column
+			 */ 
+			if ($gfCount == $cols){
+				$bBuff = substr($bBuff, 0, -1);
+				$bBuff .= "] }, { items: ["; 
 			}
 			
 			/*
@@ -508,76 +503,76 @@ class layoutEngine extends dbHelper {
 			switch ($row['data_type']){
 				// list box
 				case 1:
-					$big_buff .= $this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text box
 				case 2:
-					$big_buff .= $this->textAdd($row['field_id'], $row['title'], "", $row['fld_length']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->textAdd($row['field_id'], $row['title'], "", $row['fld_length']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text area
 				case 3:
-					$big_buff .= $this->textareaAdd($row['field_id'], $row['title'], "", $row['fld_length']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->textareaAdd($row['field_id'], $row['title'], "", $row['fld_length']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text-date
 				case 4:
-					$big_buff .= $this->dateAdd($row['field_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->dateAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Providers Combo
 				case 10:
-					$big_buff .= $this->providersAdd($row['field_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->providersAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Providers NPI Combo
 				case 11:
-					$big_buff .= $this->providersNPIAdd($row['field_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->providersNPIAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Pharmacies Combo
 				case 12:
-					$big_buff .= $this->pharmaciesAdd($row['field_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->pharmaciesAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Organizations Combo
 				case 14:
-					$big_buff .= $this->organizationsAdd($row['field_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->organizationsAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box List
 				case 21:
-					$big_buff .= $this->checkboxAdd($row['field_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->checkboxAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box Allergies
 				case 24:
-					$big_buff .= $this->allergiesAdd($row['field_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->allergiesAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box w/ Text
 				case 25:
-					$big_buff .= $this->checkboxAdd($row['field_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->checkboxAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// List box w/ Add (Editable)
 				case 26:
-					$big_buff .= $this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Static Test
 				case 31:
-					$big_buff .= $this->statictexAdd($row['field_id'], $row['title'], $row['default_value']);
-					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$bBuff .= $this->statictexAdd($row['field_id'], $row['title'], $row['default_value']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 			}
 			
 			/*
 			 * Close the fieldset, if it is the end.
 			 */
-			if($tfGroup == $gfCount){ $big_buff .= "]"; }
-			if($dataStoresNames[$ahead]['group_name'] != $row['group_name']) $big_buff .= "}]},";
+			if($tfGroup == $gfCount){ $bBuff .= "]"; }
+			if($dataStoresNames[$ahead]['group_name'] != $row['group_name']) $bBuff .= "}]},";
 			
 			/*
 			 * Update the group_name variable to see if in the
@@ -586,14 +581,14 @@ class layoutEngine extends dbHelper {
 			$group_name[$row['group_name']] = $row['group_name'];
 			$gfCount++;
 		} 
-		$big_buff = substr($big_buff, 0, -1);
+		$bBuff = substr($bBuff, 0, -1);
 
 		// 5. End the form
 		//---
-		$big_buff .= "]";
-		$big_buff .= "}); // End of ".$formPanel . chr(13);
+		$bBuff .= "]";
+		$bBuff .= "}); // End of ".$formPanel . chr(13);
 		
-		echo $big_buff;
+		echo $bBuff;
 	}
 	
 }
