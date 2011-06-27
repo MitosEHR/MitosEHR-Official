@@ -37,7 +37,7 @@ switch ($_GET['task']) {
 	case "titles":
 	  $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'titles' ";
 	  $mitos_db->setSQL($sql);
-	  foreach ($mitos_db->execStatement() as $urow) {
+	  foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 	    $count++;
 	    $buff .= '{';
 	    $buff .= ' "option_id": "' . dataEncode( $urow['option_id'] ) . '",';
@@ -56,7 +56,7 @@ switch ($_GET['task']) {
 	case "types":
 	  $sql = "SELECT option_id, title FROM list_options WHERE list_id = 'abook_type' ";
 	  $mitos_db->setSQL($sql);
-	  foreach ($mitos_db->execStatement() as $urow) {
+	  foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 	    $count++;
 	    $buff .= '{';
 	    $buff .= ' "option_id": "' . dataEncode( $urow['option_id'] ) . '",';
@@ -75,7 +75,7 @@ switch ($_GET['task']) {
 	case "facilities":
 	  $sql = "SELECT * FROM facility WHERE service_location != 0 ORDER BY name";
 	  $mitos_db->setSQL($sql);
-	  foreach ($mitos_db->execStatement() as $urow) {
+	  foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 	    $count++;
 	    $buff .= '{';
 	    $buff .= ' "id": "' . dataEncode( $urow['id'] ) . '",';
@@ -102,7 +102,7 @@ switch ($_GET['task']) {
 	case "accessControls":
 	  $sql = "SELECT id, role_name FROM acl_roles ORDER BY role_name";
 	  $mitos_db->setSQL($sql);
-	  foreach ($mitos_db->execStatement() as $urow) {
+	  foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 	    $count++;
 	    $buff .= '{';
 	    $buff .= ' "id": "' . dataEncode( $urow['id'] ) . '",';

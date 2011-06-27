@@ -53,7 +53,7 @@ $total = $mitos_db->rowCount();
 // start the array
 //---------------------------------------------------------------------------------------
 $rows = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 	$row['fullname'] = $myrow['lname'].','.$row['fname'].' '.$row['mname'];
 	
 	if($row['street'] != NULL || $row['street']  != "" ) {

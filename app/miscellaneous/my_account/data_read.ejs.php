@@ -34,7 +34,7 @@ $total = $mitos_db->rowCount();
 // start the array
 //---------------------------------------------------------------------------------------
 $rows = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 
 	$row['password'] = $aes->decrypt($row['password']);
     $row['facility_id'] = intval($row['facility_id']);
