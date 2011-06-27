@@ -2,7 +2,7 @@
 /* 
  * layoutEngine.class.php
  * 
- * @DESCRIPTION: This class object will create dynamic ExtJS v4 form, previuosly created or edited 
+ * @DESCRIPTION@: This class object will create dynamic ExtJS v4 form, previuosly created or edited 
  * from the Layout Form Editor. Gathering all it's data and parameters from the layout_options table. 
  * Most of the structural database table was originally created by OpenEMR developers.
  * 
@@ -42,10 +42,7 @@ class layoutEngine extends dbHelper {
 		$s = (($fieldLengh) ? $fieldLengh : '255');
 		$buff  = "{xtype: 'textfield',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "name: '".$fieldName."',";
-		$buff .= "maxLength: ".$s.",";
-		$buff .= "size: " . $s . ",";
-		$buff .= "submitValue: true,";
+		$buff .= "name: '".$fieldName."', maxLength: ".$s.", size: " . $s . ", submitValue: true,";
 		$buff .= "value: '".$initValue."'}";
 		return $buff;
 	}
@@ -62,9 +59,7 @@ class layoutEngine extends dbHelper {
 	private function statictexAdd($fieldName, $fieldLabel, $initValue){
 		$buff  = "{xtype: 'textfield',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "name: '".$fieldName."',";
-		$buff .= "submitValue: true,";
-		$buff .= "disabled: true,";
+		$buff .= "name: '".$fieldName."', submitValue: true, disabled: true,";
 		$buff .= "value: '".$initValue."'}";
 		return $buff;
 	}
@@ -102,9 +97,7 @@ class layoutEngine extends dbHelper {
 		$s = (($fieldLengh) ? $fieldLengh : '255');
 		$buff  = "{xtype: 'textarea',"; 
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',"; 
-		$buff .= "name: '".$fieldName."',"; 
-		$buff .= "grow: false,";
-		$buff .= "value: '".$initValue."',";
+		$buff .= "name: '".$fieldName."', grow: false, value: '".$initValue."',";
 		$buff .= "size: ".$s.",}";
 		return $buff;
 	}
@@ -140,11 +133,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "submitValue: true,"; 
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "editable: false,";
-		$buff .= "triggerAction: 'all',";
-		$buff .= "mode: 'local',";
-		$buff .= "valueField: 'title',";
-		$buff .= "displayField: 'title',";
+		$buff .= "editable: false, triggerAction: 'all', mode: 'local', valueField: 'title', displayField: 'title',";
 		$buff .= "store: panel.store".ucfirst($list_id)."}";
 		return $buff;
 	}
@@ -163,11 +152,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "submitValue: true,"; 
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "editable: false,";
-		$buff .= "triggerAction: 'all',";
-		$buff .= "mode: 'local',";
-		$buff .= "valueField: 'id',";
-		$buff .= "displayField: 'cName',";
+		$buff .= "editable: false, triggerAction: 'all', mode: 'local', valueField: 'id', displayField: 'cName',";
 		$buff .= "store: panel.storeProviders }";
 		return $buff;
 	}
@@ -186,11 +171,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "submitValue: true,"; 
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "editable: false,";
-		$buff .= "triggerAction: 'all',";
-		$buff .= "mode: 'local',";
-		$buff .= "valueField: 'id',";
-		$buff .= "displayField: 'name',";
+		$buff .= "editable: false, triggerAction: 'all', mode: 'local', valueField: 'id', displayField: 'name',";
 		$buff .= "store: panel.storePharmacies }";
 		return $buff;
 	}
@@ -209,11 +190,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "submitValue: true,"; 
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "editable: false,";
-		$buff .= "triggerAction: 'all',";
-		$buff .= "mode: 'local',";
-		$buff .= "valueField: 'npi',";
-		$buff .= "displayField: 'cName',";
+		$buff .= "editable: false, triggerAction: 'all', mode: 'local', valueField: 'npi', displayField: 'cName',";
 		$buff .= "store: panel.storeProviders }";
 		return $buff;
 	}
@@ -232,11 +209,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "submitValue: true,"; 
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "editable: false,";
-		$buff .= "triggerAction: 'all',";
-		$buff .= "mode: 'local',";
-		$buff .= "valueField: 'id',";
-		$buff .= "displayField: 'organization',";
+		$buff .= "editable: false, triggerAction: 'all', mode: 'local', valueField: 'id', displayField: 'organization',";
 		$buff .= "store: panel.storeOrganization}";
 		return $buff;
 	}
@@ -255,11 +228,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "submitValue: true,"; 
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "editable: false,";
-		$buff .= "triggerAction: 'all',";
-		$buff .= "mode: 'local',";
-		$buff .= "valueField: 'id',";
-		$buff .= "displayField: 'type',";
+		$buff .= "editable: false, triggerAction: 'all', mode: 'local', valueField: 'id', displayField: 'type',";
 		$buff .= "store: panel.storeAllergies}";
 		return $buff;
 	}
@@ -278,11 +247,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "submitValue: true,"; 
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
-		$buff .= "editable: true,";
-		$buff .= "triggerAction: 'all',";
-		$buff .= "mode: 'local',";
-		$buff .= "valueField: 'title',";
-		$buff .= "displayField: 'title',";
+		$buff .= "editable: true, triggerAction: 'all', mode: 'local', valueField: 'title', displayField: 'title',";
 		$buff .= "store: panel.store".ucfirst($list_id)."}";
 		return $buff;
 	}
@@ -301,9 +266,9 @@ class layoutEngine extends dbHelper {
 		$buff = substr($buff, 0, -1);
 		$buff .= "],model: '".$dataStore."Model',";
 		$buff .= "idProperty: 'item_id',";
-		if ($this->cu == "U") $buff .= "read: '".$path."/data_read.ejs.php',";
-		if ($this->cu == "C") $buff .= "create: '".$path."/data_create.ejs.php'});";
-		if ($this->cu == "U") $buff .= "update: '".$path."/data_update.ejs.php'});";
+		if ($this->cu == "U") $buff .= "read: '".$path."/data_read.ejs.php',";			// Only when updating
+		if ($this->cu == "C") $buff .= "create: '".$path."/data_create.ejs.php'});";	// Only when creating
+		if ($this->cu == "U") $buff .= "update: '".$path."/data_update.ejs.php'});";	// Only when updating
 		return $buff;
 	}
 	
@@ -322,8 +287,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "fields: [{name: 'option_id', type: 'string'},";
 		$buff .= "{name: 'title', type: 'string'}";
 		$buff .= "],";
-		$buff .= "model:'".$list."Model',";
-		$buff .= "idProperty:'option_id',";
+		$buff .= "model:'".$list."Model', idProperty:'option_id',";
 		$buff .= "read: 'lib/layoutEngine/listOptions.json.php',";
 		$buff .= 'extraParams: {"filter": "'.$list.'"} });';
 		return $buff;
@@ -342,8 +306,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "{name: 'cName', type: 'string'},";
 		$buff .= "{name: 'npi', type: 'string'}";
 		$buff .= "],";
-		$buff .= "model:'providersModel',";
-		$buff .= "idProperty:'id',";
+		$buff .= "model:'providersModel', idProperty:'id',";
 		$buff .= "read: 'lib/layoutEngine/listProviders.json.php' });";
 		return $buff;
 	}
@@ -362,8 +325,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "{name: 'transmit_method', type: 'string'},";
 		$buff .= "{name: 'email', type: 'string'}";
 		$buff .= "],";
-		$buff .= "model:'pharmaciesModel',";
-		$buff .= "idProperty:'id',";
+		$buff .= "model:'pharmaciesModel', idProperty:'id',";
 		$buff .= "read: 'lib/layoutEngine/listPharmacies.json.php' });";
 		return $buff;
 	}
@@ -381,8 +343,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "{name: 'cName', type: 'string'},";
 		$buff .= "{name: 'organization', type: 'string'}";
 		$buff .= "],";
-		$buff .= "model:'organizationsModel',";
-		$buff .= "idProperty:'id',";
+		$buff .= "model:'organizationsModel', idProperty:'id',";
 		$buff .= "read: 'lib/layoutEngine/listOrganizations.json.php' });";
 		return $buff;
 	}
@@ -399,8 +360,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "fields: [{name: 'id', type: 'int'},";
 		$buff .= "{name: 'type', type: 'string'}";
 		$buff .= "],";
-		$buff .= "model:'allegiesModel',";
-		$buff .= "idProperty:'id',";
+		$buff .= "model:'allegiesModel', idProperty:'id',";
 		$buff .= "read: 'lib/layoutEngine/listAllergies.json.php' });";
 		return $buff;
 	}
@@ -412,9 +372,7 @@ class layoutEngine extends dbHelper {
 	//**********************************************************************
 	private function startFieldContainer($fieldLabel, $labelWidth){
 		$buff  = "{xtype: 'fieldcontainer',";
-        $buff .= "fieldLabel: '".$fieldLabel."',";
-        $buff .= "labelWidth: ".$labelWidth.",";
-		$buff .= "layout: 'hbox',";
+        $buff .= "fieldLabel: '".$fieldLabel."', labelWidth: ".$labelWidth.", layout: 'hbox',";
         $buff .= "items: [";
 		return $buff;
 	}
@@ -444,7 +402,7 @@ class layoutEngine extends dbHelper {
 		return $this->execStatement(PDO::FETCH_ASSOC);
 	}
 	
-	private function fieldsGroup($formPanel, $group){
+	private function tfInGroup($formPanel, $group){
 		$this->setSQL("SELECT 
 							*
 						FROM
@@ -499,9 +457,7 @@ class layoutEngine extends dbHelper {
 		//---
 		$big_buff .= "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {";
 		$big_buff .= "title: '" . $title . "',";
-		$big_buff .= "frame: true,";
-		$big_buff .= "bodyStyle: 'padding: 5px',";
-		$big_buff .= "layout: 'anchor',";
+		$big_buff .= "frame: true, bodyStyle: 'padding: 5px', layout: 'anchor',";
 		$big_buff .= "fieldDefaults: {labelAlign: 'top', msgTarget: 'side', anchor: '40%'},";
 		$big_buff .= "items: [";
 		
@@ -521,12 +477,10 @@ class layoutEngine extends dbHelper {
 				// Get the number of fields on a form and in a group
 				// and divide it by 2, so it can give us the number of fields
 				// alfter rendering the fields into the next column
-				$tfGroup = $this->fieldsGroup($formPanel, $row['group_name']);			// Total Fields in Group
-				$cols = round($this->fieldsGroup($formPanel, $row['group_name']) / 2);	// Middle of the total fields
+				$tfGroup = $this->tfInGroup($formPanel, $row['group_name']);			// Total Fields in Group
+				$cols = round($this->tfInGroup($formPanel, $row['group_name']) / 2);	// Middle of the total fields
 				$big_buff .= "{xtype:'fieldset',";
-        		$big_buff .= "collapsible: true,";
-        		$big_buff .= "collapsed: ". (($first) ? 'false' : 'true') .",";
-        		$big_buff .= "title: '".$row["group_name"]."',";
+        		$big_buff .= "collapsible: true, collapsed: ". (($first) ? 'false' : 'true') .", title: '".$row["group_name"]."',";
         		$big_buff .= "defaults: {border: false, xtype: 'panel', flex: 1, layout: 'anchor', labelWidth: ".$labelWidth."},";
         		$big_buff .= "layout: 'hbox',";
         		$big_buff .= "items: [{";
@@ -536,11 +490,10 @@ class layoutEngine extends dbHelper {
 			
 			/* 
 			 * Divide the group into 2 columns
+			 * pre-calculated on $cols
 			 */
-			// Render fields to the first column
-			if($gfCount == 1){ $big_buff .= "items :["; }
-			// Render fields to the next column 
-			if ($gfCount == $cols){
+			if($gfCount == 1){ $big_buff .= "items :["; }	// Render fields to the first column 
+			if ($gfCount == $cols){ 						// Render fields to the next column
 				$big_buff = substr($big_buff, 0, -1);
 				$big_buff .= "] }, { items: ["; 
 			}
@@ -632,13 +585,9 @@ class layoutEngine extends dbHelper {
 			$gfCount++;
 		} 
 		$big_buff = substr($big_buff, 0, -1);
-		
-		// End with the form
+
+		// 5. End the form
 		//---
-		
-		// 5.Write the save toolbar
-		//---
-		// This should not be here. 
 		$big_buff .= "]";
 		$big_buff .= "}); // End of ".$formPanel . chr(13);
 		
