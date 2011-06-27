@@ -57,6 +57,32 @@ Ext.onReady(function(){
 				$layoutFactorer->actionCU("C");
 				$layoutFactorer->renderForm("Demographics", "app/patient_file/new", "New Patient", 300, i18n("Save new patient", "r") ); 
 			?>
+			
+			panel.Demographics.addDocked({
+        		xtype: 'toolbar',
+        		dock: 'top',
+        		items: [{
+        			text: '<?php i18n("Save new patient", "e"); ?>',
+        			iconCls: 'save',
+        			handler   : function(){
+						if (panel.Demographics.getForm().findField('id').getValue()){
+							var record = panel.Demographics.getAt(rowPos);
+							var fieldValues = panel.Demographics.getForm().getValues();
+        					var k, i;
+							for ( k=0; k <= record.fields.getCount()-1; k++) {
+								i = record.fields.get(k).name;
+								record.set( i, fieldValues[i] );
+							}
+						} else {
+							var obj = eval( '(' + Ext.JSON.encode(panel.Demographics.getForm().getValues()) + ')' );
+							panel.Demographics.add( obj );
+						}
+						panel.Demographics.sync();
+						panel.Demographics.load();
+						Ext.topAlert.msg('<?php i18n("New patient as been saved!", "e"); ?>');
+					}
+        		}]
+    		});
 
 			//***********************************************************************************
 			// Top Render Panel 

@@ -636,32 +636,10 @@ class layoutEngine extends dbHelper {
 		// End with the form
 		//---
 		
-		// 5.Write the save toolbar 
-		$big_buff .= "],dockedItems: [{";
-        $big_buff .= "xtype: 'toolbar',";
-        $big_buff .= "dock: 'top',";
-        $big_buff .= "items: [{";
-        $big_buff .= "text: '". $saveText . "',";
-        $big_buff .= "iconCls: 'save',";
-        $big_buff .= "handler   : function(){";
-		$big_buff .= "if (panel." . $formPanel . ".getForm().findField('id').getValue()){";
-		$big_buff .= "var record = panel." . $formPanel . ".getAt(rowPos);";
-		$big_buff .= "var fieldValues = panel." . $formPanel . ".getForm().getValues();";
-        $big_buff .= "var k, i;";
-		$big_buff .= "for ( k=0; k <= record.fields.getCount()-1; k++) {";
-		$big_buff .= "i = record.fields.get(k).name;";
-		$big_buff .= "record.set( i, fieldValues[i] );";
-		$big_buff .= "}";
-		$big_buff .= "} else {";
-		$big_buff .= "var obj = eval( '(' + Ext.JSON.encode(panel." . $formPanel . ".getForm().getValues()) + ')' );";
-		$big_buff .= "panel." . $formPanel . ".add( obj );";
-		$big_buff .= "}";
-		$big_buff .= "panel." . $formPanel . ".sync();";
-		$big_buff .= "panel." . $formPanel . ".load();";
-		$big_buff .= "Ext.topAlert.msg('New patient as been saved!','');";
-		$big_buff .= "}";
-        $big_buff .= "}]";
-        $big_buff .= "}]";
+		// 5.Write the save toolbar
+		//---
+		// This should not be here. 
+		$big_buff .= "]";
 		$big_buff .= "}); // End of ".$formPanel . chr(13);
 		
 		echo $big_buff;
