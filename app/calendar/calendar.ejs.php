@@ -55,10 +55,11 @@ Ext.onReady(function(){
                     type: 'rest',
                     //url: 'app/calendar/php/app.php/events',
                     api:{
-                        read: 'app/calendar/data_read.ejs.php',
-                        create: 'app/calendar/data_create.ejs.php'
+                        read    : 'app/calendar/data_read.ejs.php',
+                        create  : 'app/calendar/data_create.ejs.php',
+                        update  : 'app/calendar/data_update.ejs.php',
+                        destroy : 'app/calendar/data_destroy.ejs.php'
                     },
-                    //url: 'app/calendar/data_read.ejs.php',
                     extraParams:{"task":"events"},
                     noCache: false,
 
