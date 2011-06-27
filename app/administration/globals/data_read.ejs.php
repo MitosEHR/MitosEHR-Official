@@ -31,11 +31,11 @@ $mitos_db = new dbHelper();
 $mitos_db->setSQL("SELECT gl_name, gl_index, gl_value FROM globals");
 
 // *************************************************************************************
-// $rows = $mitos_db->execStatement() because we wwant to print all recods into one row
+// $rows = $mitos_db->execStatement(PDO::FETCH_ASSOC) because we wwant to print all recods into one row
 // *************************************************************************************
 $count = 0;
 $rows = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 	$rows['data_id'] = '1';
 	$rows[$row[0]] = $row[2];
 }

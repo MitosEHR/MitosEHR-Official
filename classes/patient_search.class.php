@@ -70,7 +70,7 @@ switch ($_GET['task']) {
 							   OR mname LIKE '".$search."%'
 							   OR pid 	LIKE '".$search."%'
 							   OR ss 	LIKE '".$search."%'");
-		$urow  = $mitos_db->execStatement();
+		$urow  = $mitos_db->execStatement(PDO::FETCH_ASSOC);
 		$total = $urow[0]['total'];
 		// ------------------------------------------------------------------------------
 		// sql statement and json to get patients
@@ -84,7 +84,7 @@ switch ($_GET['task']) {
 							   OR ss 	LIKE '".$search."%'
 							LIMIT ".$start.",".$limit);
 		$buff = '';
-		foreach ($mitos_db->execStatement() as $urow) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 		  	$buff .= '{';
 		  	$buff .= '"id":"'			.trim($urow['id']).'",';
 		  	$buff .= '"pid":"'			.trim($urow['pid']).'",';

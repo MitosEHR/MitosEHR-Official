@@ -53,7 +53,7 @@ switch ($_GET['task']) {
 		// for every role at acl_role_perm table using the id from new role
 		// *************************************************************************************
 		$mitos_db->setSQL("SELECT id FROM acl_permissions");
-		foreach ($mitos_db->execStatement() as $perms_row) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $perms_row) {
 			$mitos_db->setSQL("INSERT INTO acl_role_perms 
 					  		  	  	   SET role_id = '" . $lastInsertId . "', " . "
 					  	          	  	   perm_id = '" . $perms_row['id'] . "', " . "
@@ -89,7 +89,7 @@ switch ($_GET['task']) {
 		// for every role at acl_role_perm table 
 		//**************************************************************************************
 		$mitos_db->setSQL("SELECT id FROM acl_roles");
-		foreach ($mitos_db->execStatement() as $roles_row) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $roles_row) {
 			$mitos_db->setSQL("INSERT INTO acl_role_perms 
 					  		  	  SET role_id = '" . $roles_row['id'] . "', " . "
 					  	          	  perm_id = '" . $lastInsertId . "', " . "

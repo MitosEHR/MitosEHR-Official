@@ -36,7 +36,7 @@ switch ($_GET['task']) {
 		// get full list of roles
 		// *****************************************************************************
 		$mitos_db->setSQL("SELECT * FROM acl_roles ORDER BY role_name ASC");
-		foreach ($mitos_db->execStatement() as $urow) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 			$count++;
 			$buff .= '{';
 			$buff .= ' "id": "' . $urow['id'] . '",';

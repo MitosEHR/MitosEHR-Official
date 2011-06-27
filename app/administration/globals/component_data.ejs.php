@@ -34,7 +34,7 @@ switch ($_GET['task']) {
 	case "selectLists":
 		$sql = "SELECT * FROM list_options ORDER BY list_id ";
 		$mitos_db->setSQL($sql);
-		foreach ($mitos_db->execStatement() as $urow) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 			$count++;
 		    $buff .= '{';
 			$buff .= '"list_id":"' 			. dataEncode( $urow['list_id'] ) . '",';
@@ -57,7 +57,7 @@ switch ($_GET['task']) {
 	case "langs":
 		$sql = "SELECT * FROM lang_languages ORDER BY lang_description ";
 		$mitos_db->setSQL($sql);
-		foreach ($mitos_db->execStatement() as $urow) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC as $urow) {
 			$count++;
 		    $buff .= '{';
 			$buff .= '"lang_id":"' 			. dataEncode( $urow['lang_id'] ) . '",';

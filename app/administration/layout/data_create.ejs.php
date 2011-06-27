@@ -78,7 +78,7 @@ if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is Engli
 // start the array
 // *************************************************************************************
 $reverse_list = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 	array_push($reverse_list, $row);
 }
 

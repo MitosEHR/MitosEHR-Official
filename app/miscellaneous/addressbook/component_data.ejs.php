@@ -58,7 +58,7 @@ switch ($_GET['task']) {
 		$mitos_db->setSQL("SELECT option_id, title 
 		        			 FROM list_options
 		        			WHERE list_id = 'abook_type'");
-		foreach ($mitos_db->execStatement() as $urow) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 		    $count++;
 		    $buff .= "{";
 		    $buff .= " option_id: '" . dataEncode( $urow['option_id'] ) . "',";

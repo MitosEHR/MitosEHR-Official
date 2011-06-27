@@ -80,7 +80,7 @@ switch ($_GET['task']) {
 		// check if this already exists
 		$sql="SELECT count(*) as howmany FROM list_options WHERE title= '".$_POST['list_name']."' OR option_id = '".strtolower($_POST['option_id'])."'";
 		$mitos_db->setSQL($sql);
-		$ret = $mitos_db->execStatement();
+		$ret = $mitos_db->execStatement(PDO::FETCH_ASSOC);
 		if ($ret[0]['howmany']){
 			echo '{ success: false, errors: { reason: "'. i18n('This record already exists', 'r') .'" }}';
 			return;

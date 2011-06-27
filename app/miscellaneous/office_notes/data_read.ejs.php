@@ -41,7 +41,7 @@ $mitos_db->setSQL("SELECT * FROM onotes ".$WHERE." ORDER BY date DESC
 
 
 $rows = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 	array_push($rows, $row);
 }
 //------------------------------------------------------------------------------

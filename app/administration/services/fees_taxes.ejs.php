@@ -29,7 +29,7 @@ $mitos_db->setSQL("SELECT option_id, title
 //--------------------------------------------------------------------------------
 // echo the fields
 //--------------------------------------------------------------------------------
-foreach($mitos_db->execStatement() as $fee){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $fee){
 	echo ",{ width: 100, xtype: 'textfield', name: 'fee_".$fee['option_id']."', emptyText: '";
     echo i18n($fee['title']);
     echo "'}";
@@ -49,7 +49,7 @@ if($total > 0){
     echo ",{ width: 70, xtype: 'displayfield', value: '";
     echo i18n('Taxes');
     echo ": '}";
-    foreach($mitos_db->execStatement() as $ftax){
+    foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $ftax){
 	    echo ",{ width: 100, xtype: 'textfield', name: 'taxrate_".$tax['option_id']."', emptyText: '";
         echo i18n($tax['title']);
         echo "'}";

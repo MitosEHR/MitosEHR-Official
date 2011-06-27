@@ -28,7 +28,7 @@ $mitos_db = new dbHelper();
 // catch the total records
 $sql = "SELECT count(*) as total FROM facility";
 $mitos_db->setSQL($sql);
-$urow = $mitos_db->execStatement();
+$urow = $mitos_db->execStatement(PDO::FETCH_ASSOC);
 $total = $urow[0]['total'];
 
 // Setting defults incase no request is sent by sencha
@@ -58,7 +58,7 @@ if ($_GET['id']){
 			LIMIT " . $start . "," . $count;
 }
 $mitos_db->setSQL($sql);
-foreach ($mitos_db->execStatement() as $urow) {
+foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 	
 	//----------------------------------------------------
 	// Parse some data
