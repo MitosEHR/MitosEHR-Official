@@ -501,10 +501,8 @@ class layoutEngine extends dbHelper {
 		$big_buff .= "title: '" . $title . "',";
 		$big_buff .= "frame: true,";
 		$big_buff .= "bodyStyle: 'padding: 5px',";
-		$big_buff .= "width: '100%',";
 		$big_buff .= "layout: 'anchor',";
 		$big_buff .= "fieldDefaults: {labelAlign: 'top', msgTarget: 'side', anchor: '40%'},";
-		$big_buff .= "defaults: { bodyPadding: 4, anchor: '100%'},";
 		$big_buff .= "items: [";
 		
 		// 4.Loop through the form groups & fields
