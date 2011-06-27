@@ -32,8 +32,7 @@ $mitos_db = new dbHelper();
 // Verify if a $_GET['id'] has passed to select a facility.
 // and execute the apropriate SQL statement
 // **************************************************************************************
-if(!$_REQUEST['form_id']){
-	$sql = "SELECT 
+$mitos_db->setSQL("SELECT 
 				layout_options.*, list_options.title AS listDesc
 			FROM
   				layout_options
@@ -42,24 +41,9 @@ if(!$_REQUEST['form_id']){
 			ON 
 				layout_options.list_id = list_options.option_id
 			WHERE
-  				layout_options.form_id = 'Demographics'
+  				layout_options.form_id = '". (($_REQUEST['form_id']) ? $_REQUEST['form_id'] : 'Demographics') . "'
 			ORDER BY
-  				layout_options.seq, layout_options.group_order";
-} else {
-	$sql = "SELECT 
-				layout_options.*, list_options.title AS listDesc
-			FROM
-  				layout_options
-			LEFT OUTER JOIN 
-				list_options
-			ON 
-				layout_options.list_id = list_options.option_id
-			WHERE
-  				layout_options.form_id = '". $_REQUEST['form_id'] . "'
-			ORDER BY
-  				layout_options.seq, layout_options.group_order";
-}
-$mitos_db->setSQL($sql);
+  				layout_options.group_order, layout_options.seq");
 
 //---------------------------------------------------------------------------------------
 // catch the total records

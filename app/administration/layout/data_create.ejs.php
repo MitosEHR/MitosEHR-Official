@@ -89,15 +89,16 @@ foreach($mitos_db->execStatement() as $row){
 if($data->form_id=='Demographics')  $table = 'patient_data';
 if($data->form_id=='Refferals') 	$table = 'transactions';
 if($data->form_id=='History') 		$table = 'history_data';
-$sql = "ALTER TABLE " . $table . " ADD " . $data->form_id . " ";
+$sql = "ALTER TABLE " . $table . " ADD " . $data->field_id . " ";
 
 // *************************************************************************************
 // ALTER COLUMN field definition
 // Step 2
 // *************************************************************************************
-if($dataTypes[$data->data_type]=='1') $sql .= "VARCHAR(255)"; 						// Listbox
-if($dataTypes[$data->data_type]=='2') $sql .= "VARCHAR(".$data->max_length.")";		// Textbox
-if($dataTypes[$data->data_type]=='3') $sql .= "VARCHAR(".$data->max_length.")";		// Textarea
+$s = (($data->max_length) ? $data->max_length : 255);
+if($dataTypes_Reverse[$data->data_type]=='1') $sql .= "VARCHAR(255)"; 						// Listbox
+if($dataTypes_Reverse[$data->data_type]=='2') $sql .= "VARCHAR(".$s.")";		// Textbox
+if($dataTypes_Reverse[$data->data_type]=='3') $sql .= "VARCHAR(".$s.")";		// Textarea
 
 // *************************************************************************************
 // ALTER COLUMN Description 
@@ -116,7 +117,7 @@ if ( $ret[2] <> "" ){
 }
 
 // *************************************************************************************
-// Reorder the seq field
+// Reorder the seq field and inject the new record.
 // *************************************************************************************
 $new_seq = 1;
 $row = array();

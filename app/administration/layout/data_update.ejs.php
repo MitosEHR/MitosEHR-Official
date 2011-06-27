@@ -124,7 +124,6 @@ foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow){
 		$mitos_db->setSQL($sql);
 		$ret = $mitos_db->execLog();
 		
-		$new_seq++;
 		$urow['seq']=$new_seq;
 		$sql = $mitos_db->sqlBind($urow, "layout_options", "U", "item_id='" . $urow['item_id'] . "'");
 		$mitos_db->setSQL($sql);

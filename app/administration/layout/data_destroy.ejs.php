@@ -67,6 +67,28 @@ $sql = "DELETE FROM layout_options WHERE item_id='" . $row['item_id'] . "'";
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
 
+// *************************************************************************************
+// Reorder the seq field
+// *************************************************************************************
+$new_seq = 1;
+$row = array();
+$mitos_db->setSQL("SELECT 
+						*
+					FROM
+						layout_options
+					WHERE
+  						form_id = '".$data->form_id."'
+  						AND group_name = '".$data->group_name."'
+  					ORDER BY
+  						seq");
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow){
+	$urow['seq']=$new_seq;
+	$sql = $mitos_db->sqlBind($urow, "layout_options", "U", "item_id='" . $urow['item_id'] . "'");
+	$mitos_db->setSQL($sql);
+	$ret = $mitos_db->execLog();
+	$new_seq++;		
+}
+
 if ( $ret[2] <> "" ){
 	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
 } else {
