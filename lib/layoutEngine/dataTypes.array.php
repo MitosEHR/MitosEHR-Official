@@ -18,7 +18,6 @@ $dataTypes_json = array(
 	array("id" 	=> "24", "type"  => i18n("Patient allergies", 'r')), 	// Done
 	array("id" 	=> "25", "type"  => i18n("Checkbox w/text", 'r')), 		// Done
 	array("id" 	=> "26", "type"  => i18n("List box w/add", 'r')), 		// Done
-	array("id" 	=> "27", "type"  => i18n("Radio button", 'r')),
 	array("id" 	=> "28", "type"  => i18n("Lifestyle status", 'r')),
 	
 	array("id" 	=> "31", "type"  => i18n("Static Text", 'r')), 			// Done
@@ -45,7 +44,6 @@ $dataTypes = array(
 	"24" => i18n("Patient allergies", 'r'),
 	"25" => i18n("Checkbox w/text", 'r'),
 	"26" => i18n("List box w/add", 'r'),
-	"27" => i18n("Radio button", 'r'),
 	"28" => i18n("Lifestyle status", 'r'),
 	
 	"31" => i18n("Static Text", 'r'),
@@ -76,8 +74,7 @@ $dataTypes_Reverse = array(
 	i18n("Patient allergies", 'r') 	=> "24",
 	i18n("Checkbox w/text", 'r') 	=> "25",
 	i18n("List box w/add", 'r') 	=> "26",
-	i18n("Radio button", 'r') 		=> "27",
-	i18n("Lifestyle status", 'r') 	=> "28",
+		i18n("Lifestyle status", 'r') 	=> "28",
 	
 	i18n("Static Text", 'r') 		=> "31",
 	i18n("Smoking Status", 'r') 	=> "32",

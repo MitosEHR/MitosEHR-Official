@@ -489,6 +489,7 @@ class layoutEngine extends dbHelper {
 		// 4.Loop through the form groups & fields
 		//---
 		$group_name = array();
+		$first=0;
 		foreach($dataStoresNames as $key => $row){
 			$ahead = $key + 1;
 			
@@ -500,7 +501,7 @@ class layoutEngine extends dbHelper {
 				echo "{
 					xtype:'fieldset',
         				collapsible: true,
-        				collapsed: true,
+        				collapsed: ". (($first) ? 'true' : 'false') .",
         				title: '".$row['group_name']."',
         				defaults: {anchor: '30%', labelWidth: ".$labelWidth."},
         				layout: 'anchor',
@@ -517,67 +518,67 @@ class layoutEngine extends dbHelper {
 				// list box
 				case 1:
 					echo $this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text box
 				case 2:
 					echo $this->textAdd($row['field_id'], $row['title'], "", $row['fld_length']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text area
 				case 3:
 					echo $this->textareaAdd($row['field_id'], $row['title'], "", $row['fld_length']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text-date
 				case 4:
 					echo $this->dateAdd($row['field_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Providers Combo
 				case 10:
 					echo $this->providersAdd($row['field_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Providers NPI Combo
 				case 11:
 					echo $this->providersNPIAdd($row['field_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Pharmacies Combo
 				case 12:
 					echo $this->pharmaciesAdd($row['field_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Organizations Combo
 				case 14:
 					echo $this->organizationsAdd($row['field_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box List
 				case 21:
 					echo $this->checkboxAdd($row['field_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box Allergies
 				case 24:
 					echo $this->allergiesAdd($row['field_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box w/ Text
 				case 25:
 					echo $this->checkboxAdd($row['field_id'], $row['title']);
-					echo ($dataStoresNames[$ahead]['group_name']) ? $row['group_name'] : ',';
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// List box w/ Add (Editable)
 				case 26:
 					echo $this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Static Test
 				case 31:
 					echo $this->statictexAdd($row['field_id'], $row['title'], $row['default_value']);
-					if($dataStoresNames[$ahead]['group_name'] == $row['group_name']){ echo ","; }
+					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 			}
 			
@@ -592,6 +593,7 @@ class layoutEngine extends dbHelper {
 			 * next round trip we make a fieldset.
 			 */
 			$group_name[$row['group_name']] = $row['group_name'];
+			$first++;
 		} 
 				
 		// End with the form
