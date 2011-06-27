@@ -26,18 +26,11 @@ $_SESSION['site']['flops'] = 0;
 // **************************************************************************************
 $mitos_db = new dbHelper();
 $mitos_db->setSQL("SELECT 
-						users.*,
-						option_id AS ab_name,
-     					title AS ab_title
+						*
 					FROM
   						users
-					LEFT OUTER JOIN 
-						list_options
-					ON list_id = 'abook_type' AND option_id = abook_type
-					WHERE
-  						active = 1
-  						AND (authorized = 1 OR username = '')
-  						AND organization <> ''");
+					HAVING
+  						organization <> ''");
 
 $total = $mitos_db->rowCount();
 $rows = array();
