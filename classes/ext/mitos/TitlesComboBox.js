@@ -34,13 +34,13 @@ Ext.define('Ext.mitos.TitlesComboBox',{
 			
 
     	Ext.apply(this, {
-    		width: 50,
-    		name: 'title', 
-    		editable: false, 
+    		width       : 50,
+    		name        : 'title',
+    		editable    : false,
     		displayField: 'title',
-    		valueField: 'option_id',  
-    		queryMode: 'local', 
-    		store: me.storeTypes
+    		valueField  : 'option_id',
+    		queryMode   : 'local',
+    		store       : me.storeTypes
 
 		});
 		me.callParent();

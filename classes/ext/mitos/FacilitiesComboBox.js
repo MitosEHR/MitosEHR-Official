@@ -1,6 +1,13 @@
 Ext.define('Ext.mitos.FacilitiesComboBox',{
 	extend      : 'Ext.form.ComboBox',
-    alias       : 'mitos.facilitiescombobox',
+    alias       : 'widget.mitos.facilitiescombobox',
+    name        : 'facility_id',
+    editable    : false,
+    displayField: 'name',
+    valueField  : 'id',
+    queryMode   : 'local',
+    emptyText   :'Select',
+    
     initComponent: function(){	
     	var me = this;
 
@@ -28,12 +35,6 @@ Ext.define('Ext.mitos.FacilitiesComboBox',{
 			}); // end storeFacilities
 
     	Ext.apply(this, {
-    		name: 'facility_id', 
-    		editable: false, 
-    		displayField: 'name',
-    		valueField: 'id',  
-    		queryMode: 'local', 
-    		emptyText:'Select',
     		store: me.storeFacilities
 		});
 		me.callParent();

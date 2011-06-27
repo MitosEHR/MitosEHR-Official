@@ -43,7 +43,7 @@ if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is Engli
 								list_options 
 							WHERE 
 								list_id = '".$filter."' 
-							ORDER BY title, seq");
+							ORDER BY seq");
 } else {
 	// Use and sort by the translated list name.
 	$mitos_db->setSQL("SELECT 
