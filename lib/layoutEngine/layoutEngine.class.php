@@ -19,9 +19,11 @@ class layoutEngine extends dbHelper {
 	private $cu;
 	
 	//**********************************************************************
-	// switchTF
+	// actionCU
 	//
-	// This function will write the Sencha ExtJS v4 code, in two modes
+	// This function will set the main dataStore in two modes Create and
+	// Update
+	//
 	// C = Create: Create a new record
 	// U = Update: Read for Update a record
 	//**********************************************************************
