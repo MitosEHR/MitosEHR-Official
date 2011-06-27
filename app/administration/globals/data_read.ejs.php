@@ -35,7 +35,7 @@ $mitos_db->setSQL("SELECT gl_name, gl_index, gl_value FROM globals");
 // *************************************************************************************
 $count = 0;
 $rows = array();
-foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
+foreach($mitos_db->execStatement() as $row){
 	$rows['data_id'] = '1';
 	$rows[$row[0]] = $row[2];
 }
