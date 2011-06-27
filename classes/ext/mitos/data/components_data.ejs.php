@@ -93,5 +93,21 @@ switch ($_GET['task']) {
 	  echo $buff;
 	  echo ']}' . chr(13);
 	break;
+    case "calcategories":
+	  $sql = "SELECT * FROM calendar_categories ORDER BY cattype, catname";
+	  $mitos_db->setSQL($sql);
+	  foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
+	    $count++;
+	    $buff .= '{';
+	    $buff .= ' "catid": "' . dataEncode( $urow['catid'] ) . '",';
+	    $buff .= ' "catname": "' . dataEncode( $urow['catname'] ) . '"},' . chr(13);
+	  }
+	  $buff = substr($buff, 0, -2); // Delete the last comma.
+	  echo '{';
+	  echo '"totals": "' . $count . '", ' . chr(13);
+	  echo '"row": [' . chr(13);
+	  echo $buff;
+	  echo ']}' . chr(13);
+	break;
 }
 ?>
