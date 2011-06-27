@@ -70,6 +70,7 @@ Ext.require([
     'Ext.mitos.FormPanel',
     'Ext.mitos.RenderPanel',
     'Ext.mitos.SaveCancelWindow',
+    'Ext.mitos.LivePatientSearch',
     'Ext.mitos.AuthorizationsComboBox',
     'Extensible.calendar.CalendarPanel',
     'Extensible.calendar.gadget.CalendarListPanel',
@@ -187,38 +188,7 @@ Ext.onReady(function() {
 			app.Navigation.on('itemclick', function(dv, record, item, index, n){
 				app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/' + record.data.hrefTarget, scripts: true});
 			});
-			// *************************************************************************************
-			// Search for patient...
-			// *************************************************************************************
-			if (!Ext.ModelManager.isRegistered('Post')){
-				Ext.define("Post", {
-					extend: 'Ext.data.Model',
-					proxy: {
-						type	: 'ajax',
-						url 	: 'classes/patient_search.class.php?task=search',
-						reader: {
-							type			: 'json',
-							root			: 'row',
-							totalProperty	: 'totals'
-						}
-					},
-					fields: [
-						{name: 'id', 			type: 'int'},
-						{name: 'pid', 			type: 'int'},
-						{name: 'pubpid', 		type: 'int'},
-						{name: 'patient_name', 	type: 'string'},
-						{name: 'patient_dob', 	type: 'string'},
-						{name: 'patient_ss', 	type: 'string'}
-					]
-				});
-			}
-			// *************************************************************************************
-			// Live Search data store
-			// *************************************************************************************
-    		app.searchStore = Ext.create('Ext.data.Store', {
-				pageSize	: 10,
-				model		: 'Post'
-			});
+			
 			// *************************************************************************************
 			// Panel for the live search
 			// *************************************************************************************
@@ -229,51 +199,31 @@ Ext.onReady(function() {
 				style 		: 'float:left',
 				layout		: 'anchor',
 				items: [
-					app.liveSearch = new Ext.create('Ext.form.ComboBox',{
-						store		: app.searchStore,
-						displayField: 'title',
-						emptyText	: '<?php i18n("Live patient search..."); ?>',
-						typeAhead	: false,
-						hideLabel	: true,
-						hideTrigger	: true,
-						minChars	: 1,
-						anchor		: '100%',
-						listConfig: {
-							loadingText	: '<?php i18n("Searching..."); ?>',
-							emptyText	: '<?php i18n("No matching posts found."); ?>',
-							//---------------------------------------------------------------------
-							// Custom rendering template for each item
-							//---------------------------------------------------------------------
-							getInnerTpl: function() {
-								return '<div class="search-item"><h3><span>{patient_name}</span>&nbsp;&nbsp;({pid})</h3>DOB:&nbsp;{patient_dob}&nbsp;SS:&nbsp;{patient_ss}</div>';
-							}
-						},
-						pageSize: 10,
-            			//--------------------------------------------------------------------------
-            			// override default onSelect to do redirect
-            			//--------------------------------------------------------------------------
-						listeners: {
-							select: function(combo, selection) {
-								var post = selection[0];
-								if (post) {
-									Ext.Ajax.request({
-										url: Ext.String.format('lib/patient/patient_search.inc.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
-										success: function(response, opts){
-											var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
-											app.patientButton.setText( newPatientBtn );
-											app.patientButton.enable();
-										}
-									});
-									Ext.data.Request()
-								}
-                			},
-							blur: function(){
-								app.liveSearch.reset();
-							} 
-						}
-					})
+					app.liveSearch = new Ext.create('Ext.mitos.LivePatientSearch',{
+                        emptyText: '<?php i18n("Live Patient Search..."); ?>',
+                        listeners: {
+                            select: function(combo, selection) {
+                                var post = selection[0];
+                                if (post) {
+                                    Ext.Ajax.request({
+                                        url: Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
+                                        success: function(response, opts){
+                                            var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
+                                            app.patientButton.setText( newPatientBtn );
+                                            app.patientButton.enable();
+                                        }
+                                    });
+                                    Ext.data.Request()
+                                }
+                            },
+                            blur: function(){
+                                app.liveSearch.reset();
+                            }
+                        }
+                    })
 				]
 			}); // END Search for patient.
+
 			// *************************************************************************************
 			// header Panel
 			// *************************************************************************************
@@ -301,7 +251,10 @@ Ext.onReady(function() {
 						minWidth: 190,
 						menu 	: Ext.create('Ext.menu.Menu', {
 							items: [{
-								text:'<?php i18n("New Encounter"); ?>'
+								text:'<?php i18n("New Encounter"); ?>',
+                                handler:function(){
+                                    app.searchWin.show();
+                                }
 							},{
 								text:'<?php i18n("Past Encounter List"); ?>'
 							},{
