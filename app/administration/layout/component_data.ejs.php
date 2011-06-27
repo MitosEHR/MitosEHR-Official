@@ -43,7 +43,7 @@ switch ($_GET['task']) {
 		// start the array
 		//---------------------------------------------------------------------------------------
 		$rows = array();
-		foreach($mitos_db->execStatement() as $row){
+		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 			$row['id'] = $row['form_id'];
 			array_push($rows, $row);
 		}
@@ -88,7 +88,7 @@ switch ($_GET['task']) {
   								group_order, seq");
 		$totals = $mitos_db->rowCount();
 		$rows = array();
-		foreach($mitos_db->execStatement() as $row){
+		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 			array_push($rows, $row);
 		}
 		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
@@ -133,7 +133,7 @@ switch ($_GET['task']) {
 		// start the array
 		//---------------------------------------------------------------------------------------
 		$rows = array();
-		foreach($mitos_db->execStatement() as $row){
+		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 			array_push($rows, $row);
 		}
 		//---------------------------------------------------------------------------------------

@@ -59,7 +59,7 @@ switch ($_GET['task']) {
 									IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
 		}
 		$total = $mitos_db->rowCount();
-		foreach ($mitos_db->execStatement() as $urow) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 			$buff .= '{"option_id":"'.dataDecode($urow['option_id']).'","title":"'.dataDecode($urow['title']).'"},'. chr(13);
 		}
 		$buff = substr($buff, 0, -2); // Delete the last comma.
@@ -89,7 +89,7 @@ switch ($_GET['task']) {
 		// Get last sequence of the list option
 		$sql="SELECT count(seq) as last_seq FROM list_options WHERE list_id = 'lists' ORDER BY title, seq";
 		$mitos_db->setSQL($sql);
-		$ret = $mitos_db->execStatement();
+		$ret = $mitos_db->execStatement(PDO::FETCH_ASSOC);
 		$c = $ret[0]['last_seq'] + 1;
 		
 		// Finally - Insert the list option

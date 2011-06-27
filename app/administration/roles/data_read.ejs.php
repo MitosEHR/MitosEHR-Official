@@ -50,7 +50,7 @@ $mitos_db->setSQL("SELECT acl_roles.id AS roleID,
   		 ORDER BY role_name DESC");
 $total = $mitos_db->rowCount();
 $rows = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 	switch($row['value']){
 		case '0':
 			$row['ac_perm'] = 'No Access';

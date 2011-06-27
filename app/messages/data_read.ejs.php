@@ -40,7 +40,7 @@ $sql = "SELECT COUNT(*) as total FROM
         WHERE
 			pnotes.deleted = '0'";
 $mitos_db->setSQL($sql);
-$urow = $mitos_db->execStatement();
+$urow = $mitos_db->execStatement(PDO::FETCH_ASSOC);
 $total = $urow[0]['total'];
 
 // Setting defults incase no request is sent by sencha
@@ -71,7 +71,7 @@ $sql = "SELECT
 		LIMIT ".$start.",".$count;
 
 $mitos_db->setSQL($sql);
-foreach ($mitos_db->execStatement() as $myrow) {
+foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $myrow) {
 	$p_body = str_replace(chr(10), '<br>', dataEncode( $myrow['body'] ));
 	
 	if ($myrow['fname']) {

@@ -60,7 +60,7 @@ $total = $mitos_db->rowCount();
 // start the array
 //---------------------------------------------------------------------------------------
 $rows = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 	$row['service_location'] = ($row['service_location'] == '1' ? 'on' : 'off');
 	$row['billing_location'] = ($row['billing_location'] == '1' ? 'on' : 'off');
 	$row['accepts_assignment'] = ($row['accepts_assignment'] == '1' ? 'on' : 'off');

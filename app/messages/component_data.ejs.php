@@ -51,7 +51,7 @@ switch ($_REQUEST['task']) {
 		// catch the total records
 		$sql = "SELECT count(*) as total FROM users WHERE username != '' AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' )";
 		$mitos_db->setSQL($sql);
-		$urow = $mitos_db->execStatement();
+		$urow = $mitos_db->execStatement(PDO::FETCH_ASSOC);
 		$total = $urow[0]['total'];
 		
 		$sql = "SELECT
@@ -66,7 +66,7 @@ switch ($_REQUEST['task']) {
 					lname,
 					fname";
 		$mitos_db->setSQL($sql);
-		foreach ($mitos_db->execStatement() as $urow) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 			$count++;
 			// Merge firstname with lastname
 			if ($urow['fname']){
@@ -91,7 +91,7 @@ switch ($_REQUEST['task']) {
 		// catch the total records
 		$sql = "SELECT count(*) as total FROM patient_data"; 
 		$mitos_db->setSQL($sql);
-		$urow = $mitos_db->execStatement();
+		$urow = $mitos_db->execStatement(PDO::FETCH_ASSOC);
 		$total = $urow[0]['total'];
 	
 		$sql = "SELECT
@@ -101,7 +101,7 @@ switch ($_REQUEST['task']) {
 				ORDER BY
 					lname ASC, fname ASC";
 		$mitos_db->setSQL($sql);
-		foreach ($mitos_db->execStatement() as $urow) {
+		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 			$count++;
 			$buff .= "{ id: '" . dataDecode( $urow['id'] ) . "',";
 			$buff .= " name: '" . dataDecode( $urow['fname'] ) . ", " . dataDecode( $urow['lname'] )  . "',";

@@ -42,7 +42,7 @@ $mitos_db->setSQL("SELECT * FROM codes $WHERE ORDER BY code_type, code, code_tex
 $total = $mitos_db->rowCount();
 $mitos_db->setSQL("SELECT * FROM codes $WHERE ORDER BY code_type, code, code_text LIMIT $start,$limit");
 $rows = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 	array_push($rows, $row);
 }
 //------------------------------------------------------------------------------

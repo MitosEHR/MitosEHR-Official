@@ -35,7 +35,7 @@ $total = $mitos_db->rowCount();
 //******************************************************************
 $mitos_db->setSQL("SELECT * FROM log ORDER BY id DESC LIMIT ".$start.",".$count);
 
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
     array_push($rows, $row);
 }
 

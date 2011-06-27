@@ -56,9 +56,9 @@ switch ($_GET['task']) {
 	  		 			 ORDER BY pharmacies.name DESC");
 		$total = $mitos_db->rowCount();
 		
-		foreach($mitos_db->execStatement() as $row){
+		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 			$mitos_db->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$row['id']."");
-			foreach ($mitos_db->execStatement() as $phoneRow) {
+			foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $phoneRow) {
 				switch ($phoneRow['type']) {
 					case "2":
                         $row['phone_id'] 	        = $phoneRow['id'];
@@ -112,9 +112,9 @@ switch ($_GET['task']) {
 	  		 			 ORDER BY insurance_companies.name DESC");
 		$total = $mitos_db->rowCount();
 		
-		foreach($mitos_db->execStatement() as $row){
+		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 			$mitos_db->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$row['id']."");
-			foreach ($mitos_db->execStatement() as $phoneRow) {
+			foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $phoneRow) {
 				switch ($phoneRow['type']) {
 					case "2":
                         $row['phone_id'] 	        = $phoneRow['id'];
