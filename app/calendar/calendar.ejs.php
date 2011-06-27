@@ -39,8 +39,8 @@ Ext.onReady(function(){
                 autoLoad: true,
                 proxy: {
                     type: 'ajax',
-                    //url: 'app/calendar/data/calendars.json',
-                    url: 'app/calendar/data_read.ejs.php?task=calendars',
+                    url: 'app/calendar/data_read.ejs.php',
+                    extraParams:{"task":"calendars"},
                     noCache: false,
 
                     reader: {
@@ -53,7 +53,13 @@ Ext.onReady(function(){
                 autoLoad: true,
                 proxy: {
                     type: 'rest',
-                    url: 'app/calendar/php/app.php/events',
+                    //url: 'app/calendar/php/app.php/events',
+                    api:{
+                        read: 'app/calendar/data_read.ejs.php',
+                        create: 'app/calendar/data_create.ejs.php'
+                    },
+                    //url: 'app/calendar/data_read.ejs.php',
+                    extraParams:{"task":"events"},
                     noCache: false,
 
                     reader: {
