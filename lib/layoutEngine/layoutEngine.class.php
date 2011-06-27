@@ -50,6 +50,53 @@ class layoutEngine extends dbHelper {
 	}
 	
 	//**********************************************************************
+	// examsAdd
+	//
+	// This creates the fields into the fieldset & form.
+	// 
+	// Parameters:
+	// $fieldName: The field name
+	// $fieldLabel: The field label
+	//**********************************************************************
+	private function examsAdd($fieldName, $fieldLabel){
+		$buff  = "{xtype: 'fieldcontainer',";
+		$buff .= "fieldLabel: '".$fieldLabel."',";
+		$buff .= "defaultType: 'radiofield',";
+		$buff .= "defaults: {flex: 1},";
+		$buff .= "layout: 'hbox',";
+		$buff .= "items: [";
+		if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is English, do not translate
+			$this->setSQL("SELECT 
+								*
+							FROM
+								list_options
+							WHERE
+								list_id = 'exams'
+							ORDER BY seq");
+		} else {
+		// Use and sort by the translated list name.
+			$this->setSQL("SELECT 
+							*, 
+							IF(LENGTH(ld.definition),ld.definition,lo.title) AS title 
+						FROM list_options AS lo 
+							LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title 
+							LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '" . $_SESSION['lang']['code'] . "' 
+						WHERE 
+							lo.list_id = 'exams' 
+						ORDER BY 
+							IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
+}
+		foreach($this->execStatement(PDO::FETCH_ASSOC) as $key => $row){
+			$buff .= "{boxLabel: '".$row['title']."',";
+			$buff .= "name: '".$fieldName."',";
+			$buff .= "inputValue: '".$row['option_id']."'";
+			$buff .= "}";
+		}
+		$buff .= "]}";
+		return $buff;
+	}
+	
+	//**********************************************************************
 	// statictextAdd
 	//
 	// This creates the fields into the fieldset & form.
@@ -293,7 +340,7 @@ class layoutEngine extends dbHelper {
 		$buff .= "read: 'lib/layoutEngine/listOptions.json.php',";
 		$buff .= 'extraParams: {"filter": "'.$list.'"} });';
 		return $buff;
-	}
+	}	
 
 	//**********************************************************************
 	// factor DataStore for providers
@@ -309,6 +356,27 @@ class layoutEngine extends dbHelper {
 		$buff .= "{name: 'npi', type: 'string'}";
 		$buff .= "],";
 		$buff .= "model:'providersModel', idProperty:'id',";
+		$buff .= "read: 'lib/layoutEngine/listProviders.json.php' });";
+		return $buff;
+	}
+	
+	//**********************************************************************
+	// factor DataStore for providers
+	// 
+	// This will create the code for the dataStores requiered by
+	// the comboboxes, or any other object that requieres dataStore.
+	//
+	//**********************************************************************
+	private function factorStoreExams(){
+		$buff  = "panel.storeExams = Ext.create('Ext.mitos.CRUDStore',{";
+		$buff .= "fields: [{name: 'id', type: 'int'},";
+		$buff .= "{name: 'option_id', type: 'string'},";
+		$buff .= "{name: 'title', type: 'string'},";
+		$buff .= "{name: 'seq', type: 'int'},";
+		$buff .= "{name: 'is_default', type: 'string'},";
+		$buff .= "{name: 'option_value', type: 'string'}";
+		$buff .= "],";
+		$buff .= "model:'examsModel', idProperty:'id',";
 		$buff .= "read: 'lib/layoutEngine/listProviders.json.php' });";
 		return $buff;
 	}
@@ -444,6 +512,7 @@ class layoutEngine extends dbHelper {
 		$bBuff .= $this->factorStorePharmacies();
 		$bBuff .= $this->factorStoreOrganizations();
 		$bBuff .= $this->factorStoreAllergies();
+		$bBuff .= $this->factorStoreExams();
 		
 		// 2.Render the dataStores for the combo boxes first
 		// and do not duplicate the dataStore
@@ -544,6 +613,11 @@ class layoutEngine extends dbHelper {
 				// Check box List
 				case 21:
 					$bBuff .= $this->checkboxAdd($row['field_id'], $row['title']);
+					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+				break;
+				// Exams Radio Group
+				case 23:
+					$bBuff .= $this->examsAdd($row['field_id'], $row['title']);
 					$bBuff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box Allergies
