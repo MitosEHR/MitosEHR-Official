@@ -55,7 +55,7 @@ Ext.onReady(function(){
 			// *************************************************************************************
 			<?php 
 				$layoutFactorer->actionCU("C");
-				$layoutFactorer->renderForm("Demographics", "app/patient_file/new", "New Patient", 200, i18n("Save new patient", "r") ); 
+				$layoutFactorer->renderForm("Demographics", "app/patient_file/new", "New Patient", 300, i18n("Save new patient", "r") ); 
 			?>
 
 			//***********************************************************************************

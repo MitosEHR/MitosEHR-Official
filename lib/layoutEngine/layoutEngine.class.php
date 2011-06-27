@@ -39,12 +39,12 @@ class layoutEngine extends dbHelper {
 	// $fieldLengh: The max length of the field
 	//**********************************************************************
 	private function textAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
-		if ($fieldLengh != ""){$s=255;}else{$s=$fieldLengh;}
-		$buff  = "{ xtype: 'textfield',";
+		$s = (($fieldLengh) ? $fieldLengh : '255');
+		$buff  = "{xtype: 'textfield',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "maxLength: ".$s.",";
-		$buff .= "size: ".$s.",";
+		$buff .= "size: " . $s . ",";
 		$buff .= "submitValue: true,";
 		$buff .= "value: '".$initValue."'}";
 		return $buff;
@@ -60,7 +60,7 @@ class layoutEngine extends dbHelper {
 	// $fieldLabel: The field label
 	//**********************************************************************
 	private function statictexAdd($fieldName, $fieldLabel, $initValue){
-		$buff  = "{ xtype: 'textfield',";
+		$buff  = "{xtype: 'textfield',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "submitValue: true,";
@@ -80,7 +80,7 @@ class layoutEngine extends dbHelper {
 	// $initValue: The initial value of the field
 	//**********************************************************************
 	private function checkboxAdd($fieldName, $fieldLabel, $initValue){
-		$buff  = "{ xtype: 'checkboxfield',";
+		$buff  = "{xtype: 'checkboxfield',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "inputValue: '".$initValue."'}";
@@ -99,7 +99,7 @@ class layoutEngine extends dbHelper {
 	// $fieldLengh: The max length of the field
 	//**********************************************************************
 	private function textareaAdd($fieldName, $fieldLabel, $initValue, $fieldLengh="255"){
-		if ($fieldLengh != ""){$s=255;}else{$s=$fieldLengh;}
+		$s = (($fieldLengh) ? $fieldLengh : '255');
 		$buff  = "{xtype: 'textarea',"; 
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',"; 
 		$buff .= "name: '".$fieldName."',"; 
@@ -411,8 +411,7 @@ class layoutEngine extends dbHelper {
 	// 
 	//**********************************************************************
 	private function startFieldContainer($fieldLabel, $labelWidth){
-		$buff  = "{";
-		$buff .= "xtype: 'fieldcontainer',";
+		$buff  = "{xtype: 'fieldcontainer',";
         $buff .= "fieldLabel: '".$fieldLabel."',";
         $buff .= "labelWidth: ".$labelWidth.",";
 		$buff .= "layout: 'hbox',";
@@ -422,20 +421,12 @@ class layoutEngine extends dbHelper {
 	private function endFieldContainer(){
 		return "]}";
 	}
-				
+	
 	//**********************************************************************
-	// renderForm 
-	//
-	// This will render the selected form, and returns the Sencha ExtJS v4 
-	// code.
+	// Get all the fields from a particupar form and give back
+	// the array of the fields.
 	//**********************************************************************
-	function renderForm($formPanel, $path, $title, $labelWidth, $saveText){
-		
-		// First we need to render all the dataStores
-		// and gather all the dataStore names
-		// This SQL Statement has the uor in action UOR means
-		// U.Unused O.Optional R.Requiered
-		//---
+	private function arrayFields($formPanel){
 		$this->setSQL("SELECT 
 					layout_options.*, list_options.title AS listDesc
 				FROM
@@ -450,46 +441,77 @@ class layoutEngine extends dbHelper {
 					uor = '1' OR uor = '2'
 				ORDER BY
   					layout_options.group_order, layout_options.seq");
+		return $this->execStatement(PDO::FETCH_ASSOC);
+	}
+	
+	private function fieldsGroup($formPanel, $group){
+		$this->setSQL("SELECT 
+							*
+						FROM
+  							layout_options
+						WHERE
+  							form_id = '".$formPanel."' AND group_name = '".$group."'
+						HAVING
+  							layout_options.uor = '1' OR layout_options.uor = '2'
+						ORDER BY
+  							layout_options.group_order
+							, layout_options.seq");
+		return count($this->execStatement(PDO::FETCH_ASSOC));
+	}
+				
+	//**********************************************************************
+	// renderForm 
+	//
+	// This will render the selected form, and returns the Sencha ExtJS v4 
+	// code.
+	//**********************************************************************
+	function renderForm($formPanel, $path, $title, $labelWidth, $saveText){
+			
+		$big_buff = "";
+		
+		// First we need to render all the dataStores
+		// and gather all the dataStore names
+		// This SQL Statement has the uor in action UOR means
+		// U.Unused O.Optional R.Requiered
+		//---
 		$dataStoresNames = array();
-		$dataStoresNames = $this->execStatement();
+		$dataStoresNames = $this->arrayFields($formPanel);
 		
 		// 1.Render the form dataStores
 		//---
-		echo $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
-		echo $this->factorStoreProviders();
-		echo $this->factorStorePharmacies();
-		echo $this->factorStoreOrganizations();
-		echo $this->factorStoreAllergies();
+		$big_buff  = $this->factorFormStore("store".ucfirst($formPanel), $path, $dataStoresNames, "item_id");
+		$big_buff .= $this->factorStoreProviders();
+		$big_buff .= $this->factorStorePharmacies();
+		$big_buff .= $this->factorStoreOrganizations();
+		$big_buff .= $this->factorStoreAllergies();
 		
 		// 2.Render the dataStores for the combo boxes first
 		// and do not duplicate the dataStore
 		//---
 		foreach($dataStoresNames as $key => $row){
 			if($row['list_id'] != ""){
-				if(!array_key_exists($row['list_id'], $dCheck)){
-					echo $this->factorDataStore($row['list_id']);
-				}
+				if(!array_key_exists($row['list_id'], $dCheck)){ $big_buff .= $this->factorDataStore($row['list_id']); }
 				$dCheck[$row['list_id']] = true;
 			} 
 		}
 		
 		// 3.Begin with the form
 		//---
-		echo "
-			panel." . $formPanel . " = Ext.create('Ext.form.Panel', {
-				title		: '" . $title . "',
-				frame		: true,
-				bodyStyle	: 'padding: 5px',
-				width		: '100%',
-				layout		: 'anchor',
-				defaults	: { bodyPadding: 4, labelWidth: ".$labelWidth.", anchor: '100%'},
-				items		: [
-			";
+		$big_buff .= "panel." . $formPanel . " = Ext.create('Ext.form.Panel', {";
+		$big_buff .= "title: '" . $title . "',";
+		$big_buff .= "frame: true,";
+		$big_buff .= "bodyStyle: 'padding: 5px',";
+		$big_buff .= "width: '100%',";
+		$big_buff .= "layout: 'anchor',";
+		$big_buff .= "fieldDefaults: {labelAlign: 'top', msgTarget: 'side', anchor: '40%'},";
+		$big_buff .= "defaults: { bodyPadding: 4, anchor: '100%'},";
+		$big_buff .= "items: [";
 		
 		// 4.Loop through the form groups & fields
 		//---
 		$group_name = array();
-		$first=0;
+		$first=true;
+		$gfCount=1;
 		foreach($dataStoresNames as $key => $row){
 			$ahead = $key + 1;
 			
@@ -498,16 +520,32 @@ class layoutEngine extends dbHelper {
 			 * if not create the fieldset.
 			 */
 			if(!array_key_exists($row['group_name'], $group_name)){
-				echo "{
-					xtype:'fieldset',
-        				collapsible: true,
-        				collapsed: ". (($first) ? 'true' : 'false') .",
-        				title: '".$row['group_name']."',
-        				defaults: {anchor: '30%', labelWidth: ".$labelWidth."},
-        				layout: 'anchor',
-	        			items :[
-	        		";	
+				// Get the number of fields on a form and in a group
+				// and divide it by 2, so it can give us the number of fields
+				// alfter rendering the fields into the next column
+				$tfGroup = $this->fieldsGroup($formPanel, $row['group_name']);			// Total Fields in Group
+				$cols = round($this->fieldsGroup($formPanel, $row['group_name']) / 2);	// Middle of the total fields
+				$big_buff .= "{xtype:'fieldset',";
+        		$big_buff .= "collapsible: true,";
+        		$big_buff .= "collapsed: ". (($first) ? 'false' : 'true') .",";
+        		$big_buff .= "title: '".$row["group_name"]."',";
+        		$big_buff .= "defaults: {border: false, xtype: 'panel', flex: 1, layout: 'anchor', labelWidth: ".$labelWidth."},";
+        		$big_buff .= "layout: 'hbox',";
+        		$big_buff .= "items: [{";
+	        	$first=false;
+	        	$gfCount=1;
 			} 
+			
+			/* 
+			 * Divide the group into 2 columns
+			 */
+			// Render fields to the first column
+			if($gfCount == 1){ $big_buff .= "items :["; }
+			// Render fields to the next column 
+			if ($gfCount == $cols){
+				$big_buff = substr($big_buff, 0, -1);
+				$big_buff .= "] }, { items: ["; 
+			}
 			
 			/*
 			 * Create the fields inside of the fieldset
@@ -517,117 +555,118 @@ class layoutEngine extends dbHelper {
 			switch ($row['data_type']){
 				// list box
 				case 1:
-					echo $this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->comboAdd($row['field_id'], $row['list_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text box
 				case 2:
-					echo $this->textAdd($row['field_id'], $row['title'], "", $row['fld_length']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->textAdd($row['field_id'], $row['title'], "", $row['fld_length']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text area
 				case 3:
-					echo $this->textareaAdd($row['field_id'], $row['title'], "", $row['fld_length']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->textareaAdd($row['field_id'], $row['title'], "", $row['fld_length']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Text-date
 				case 4:
-					echo $this->dateAdd($row['field_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->dateAdd($row['field_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Providers Combo
 				case 10:
-					echo $this->providersAdd($row['field_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->providersAdd($row['field_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Providers NPI Combo
 				case 11:
-					echo $this->providersNPIAdd($row['field_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->providersNPIAdd($row['field_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Pharmacies Combo
 				case 12:
-					echo $this->pharmaciesAdd($row['field_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->pharmaciesAdd($row['field_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Organizations Combo
 				case 14:
-					echo $this->organizationsAdd($row['field_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->organizationsAdd($row['field_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box List
 				case 21:
-					echo $this->checkboxAdd($row['field_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->checkboxAdd($row['field_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box Allergies
 				case 24:
-					echo $this->allergiesAdd($row['field_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->allergiesAdd($row['field_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Check box w/ Text
 				case 25:
-					echo $this->checkboxAdd($row['field_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->checkboxAdd($row['field_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// List box w/ Add (Editable)
 				case 26:
-					echo $this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->comboAdd_Editable($row['field_id'], $row['list_id'], $row['title']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 				// Static Test
 				case 31:
-					echo $this->statictexAdd($row['field_id'], $row['title'], $row['default_value']);
-					echo (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
+					$big_buff .= $this->statictexAdd($row['field_id'], $row['title'], $row['default_value']);
+					$big_buff .= (($dataStoresNames[$ahead]['group_name']==$row['group_name']) ? ',' : '');
 				break;
 			}
-			
 			
 			/*
 			 * Close the fieldset, if it is the end.
 			 */
-			if($dataStoresNames[$ahead]['group_name'] != $row['group_name']){ echo "]},"; }
+			if($tfGroup == $gfCount){ $big_buff .= "]"; }
+			if($dataStoresNames[$ahead]['group_name'] != $row['group_name']) $big_buff .= "}]},";
 			
 			/*
 			 * Update the group_name variable to see if in the
 			 * next round trip we make a fieldset.
 			 */
 			$group_name[$row['group_name']] = $row['group_name'];
-			$first++;
+			$gfCount++;
 		} 
-				
+		$big_buff = substr($big_buff, 0, -1);
+		
 		// End with the form
 		//---
 		
 		// 5.Write the save toolbar 
-		echo "
-				],
-                    dockedItems: [{
-                        xtype: 'toolbar',
-                        dock: 'top',
-                        items: [{
-                            text      : '". $saveText . "',
-                            iconCls   : 'save',
-                            handler   : function(){
-								if (panel." . $formPanel . ".getForm().findField('id').getValue()){ // Update
-									var record = panel." . $formPanel . ".getAt(rowPos);
-									var fieldValues = panel." . $formPanel . ".getForm().getValues();
-            			    	    var k, i;
-									for ( k=0; k <= record.fields.getCount()-1; k++) {
-										i = record.fields.get(k).name;
-										record.set( i, fieldValues[i] );
-									}
-								} else { // Add
-									var obj = eval( '(' + Ext.JSON.encode(panel." . $formPanel . ".getForm().getValues()) + ')' );
-									panel." . $formPanel . ".add( obj );
-								}
-								panel." . $formPanel . ".sync();	// Save the record to the dataStore
-								panel." . $formPanel . ".load();	// Reload the dataSore from the database
-								Ext.topAlert.msg('New patient as been saved!','');
-							}
-                        }]
-                    }]
-				}); // End of ".$formPanel . chr(13);
+		$big_buff .= "],dockedItems: [{";
+        $big_buff .= "xtype: 'toolbar',";
+        $big_buff .= "dock: 'top',";
+        $big_buff .= "items: [{";
+        $big_buff .= "text: '". $saveText . "',";
+        $big_buff .= "iconCls: 'save',";
+        $big_buff .= "handler   : function(){";
+		$big_buff .= "if (panel." . $formPanel . ".getForm().findField('id').getValue()){";
+		$big_buff .= "var record = panel." . $formPanel . ".getAt(rowPos);";
+		$big_buff .= "var fieldValues = panel." . $formPanel . ".getForm().getValues();";
+        $big_buff .= "var k, i;";
+		$big_buff .= "for ( k=0; k <= record.fields.getCount()-1; k++) {";
+		$big_buff .= "i = record.fields.get(k).name;";
+		$big_buff .= "record.set( i, fieldValues[i] );";
+		$big_buff .= "}";
+		$big_buff .= "} else {";
+		$big_buff .= "var obj = eval( '(' + Ext.JSON.encode(panel." . $formPanel . ".getForm().getValues()) + ')' );";
+		$big_buff .= "panel." . $formPanel . ".add( obj );";
+		$big_buff .= "}";
+		$big_buff .= "panel." . $formPanel . ".sync();";
+		$big_buff .= "panel." . $formPanel . ".load();";
+		$big_buff .= "Ext.topAlert.msg('New patient as been saved!','');";
+		$big_buff .= "}";
+        $big_buff .= "}]";
+        $big_buff .= "}]";
+		$big_buff .= "}); // End of ".$formPanel . chr(13);
+		
+		echo $big_buff;
 	}
 	
 }
