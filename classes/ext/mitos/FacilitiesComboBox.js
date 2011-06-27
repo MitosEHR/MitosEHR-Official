@@ -23,7 +23,8 @@ Ext.define('Ext.mitos.FacilitiesComboBox',{
 				model		: 'Facilities',
 				proxy		: {
 					type	: 'ajax',
-					url		: 'classes/ext/mitos/data/components_data.ejs.php?task=facilities',
+					url		: 'classes/ext/mitos/data/components_data.ejs.php',
+                    extraParams	: {"task": "facilities"},
 					reader	: {
 						type			: 'json',
 						idProperty		: 'id',

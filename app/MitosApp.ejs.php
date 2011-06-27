@@ -69,6 +69,7 @@ Ext.require([
     'Ext.mitos.GridPanel',
     'Ext.mitos.FormPanel',
     'Ext.mitos.RenderPanel',
+    'Ext.mitos.CalStatusComboBox',
     'Ext.mitos.SaveCancelWindow',
     'Ext.mitos.LivePatientSearch',
     'Ext.mitos.AuthorizationsComboBox',
