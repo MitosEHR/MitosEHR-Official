@@ -44,7 +44,7 @@ if(!$_REQUEST['form_id']){
 			WHERE
   				layout_options.form_id = 'Demographics'
 			ORDER BY
-  				layout_options.group_order, layout_options.seq";
+  				layout_options.seq, layout_options.group_order";
 } else {
 	$sql = "SELECT 
 				layout_options.*, list_options.title AS listDesc
@@ -57,7 +57,7 @@ if(!$_REQUEST['form_id']){
 			WHERE
   				layout_options.form_id = '". $_REQUEST['form_id'] . "'
 			ORDER BY
-  				layout_options.group_order, layout_options.seq";
+  				layout_options.seq, layout_options.group_order";
 }
 $mitos_db->setSQL($sql);
 
@@ -79,7 +79,7 @@ $uorTypes = array(
 // start the array
 //---------------------------------------------------------------------------------------
 $rows = array();
-foreach($mitos_db->execStatement() as $row){
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 	// Some parsing before output the data
 	$row['data_type'] = $dataTypes[ $row['data_type'] ];
 	$row['uor'] = $uorTypes[ $row['uor'] ];

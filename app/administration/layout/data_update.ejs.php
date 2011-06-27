@@ -96,8 +96,8 @@ $mitos_db->setSQL("SELECT
   						AND group_name = '".$data->group_name."'
   					ORDER BY
   						seq");
-foreach($mitos_db->execStatement() as $urow){
-	if($new_seq == $data->seq){ // the seq is equal the user selected update the record
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow){
+	if($urow['seq'] == $data->seq){ // the seq is equal the user selected update the record
 		$row['item_id'] 		= trim($data->item_id);
 		$row['form_id'] 		= $data->form_id;
 		$row['field_id'] 		= strtolower($data->field_id);
@@ -123,12 +123,20 @@ foreach($mitos_db->execStatement() as $urow){
 		$sql = $mitos_db->sqlBind($row, "layout_options", "U", "item_id='" . $row['item_id'] . "'");
 		$mitos_db->setSQL($sql);
 		$ret = $mitos_db->execLog();
-	} else {
-		$row['seq']=$new_seq;
+		
+		$new_seq++;
+		$urow['seq']=$new_seq;
 		$sql = $mitos_db->sqlBind($urow, "layout_options", "U", "item_id='" . $urow['item_id'] . "'");
+		$mitos_db->setSQL($sql);
 		$ret = $mitos_db->execLog();
+		$new_seq++;		
+	} else {
+		$urow['seq']=$new_seq;
+		$sql = $mitos_db->sqlBind($urow, "layout_options", "U", "item_id='" . $urow['item_id'] . "'");
+		$mitos_db->setSQL($sql);
+		$ret = $mitos_db->execLog();
+		$new_seq++;
 	}
-	$new_seq++; 
 }
 
 if ( $ret[2] <> "" ){

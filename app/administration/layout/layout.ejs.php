@@ -183,6 +183,9 @@ Ext.onReady(function() {
 						var fieldValues = panel.whereForm.getForm().getValues();	// Get the values from the FORM
 						currRec.set('group_name', fieldValues['where']);			// Set the hidden values of the record
 						currRec.set('form_id', form_id);							// Set the hidden values of the record
+						currRec.set('seq', 1);										// Set the seq value
+						currRec.set('titlecols', 0);
+						currRec.set('datacols', 0);
 						panel.LayoutStore.insert(0, currRec );						// Add the new record to the STORE
 						panel.winAddField.hide();									// Finally hide the dialog window
 						panel.rowEditing.startEdit(currRec, 0);						// inject the record to the GRID and start editing
