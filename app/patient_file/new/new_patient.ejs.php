@@ -58,6 +58,9 @@ Ext.onReady(function(){
 				$layoutFactorer->renderForm("Demographics", "app/patient_file/new", "New Patient", 300, i18n("Save new patient", "r") ); 
 			?>
 			
+			//***********************************************************************************
+			// Attach the dockbar to the demographics form.
+			//***********************************************************************************
 			panel.Demographics.addDocked({
         		xtype: 'toolbar',
         		dock: 'top',
