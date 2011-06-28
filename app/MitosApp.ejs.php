@@ -174,7 +174,7 @@ Ext.onReady(function() {
 				maximizable		: true,
 				headerPosition	: 'right',
 				animateTarget	: 'support',
-				autoScroll		: true
+				autoScroll		: true,
                 maximized       : true,
                 items : {
                     xtype : 'miframe',
