@@ -118,6 +118,7 @@ Ext.onReady(function() {
 					}
 				});
 			};
+			
 			// *************************************************************************************
 			// TaskScheduler
 			// This will run all the procedures inside the checkSession
@@ -135,6 +136,7 @@ Ext.onReady(function() {
 					url		: 'app/navigation/default_leftnav.ejs.php'
 				}
 			});
+			
 			// *************************************************************************************
 			// Navigation Panel
 			// *************************************************************************************
@@ -154,23 +156,26 @@ Ext.onReady(function() {
 					id			: 'source'
 				}
 			});
+			
 			// *************************************************************************************
-			// The MitosEHR Support Button Link
+			// MitosEHR Support Page
 			// *************************************************************************************
-			app.navColumnlinks = Ext.create('Ext.panel.Panel', {
-				region		: 'south',
-				border      : false,
-				items       : [{
-					xtype	: 'button',
-					text	: '<?php i18n("MithosEHR Support"); ?>',
-					scale	: 'large',
-					margin	: '5px 10px',
-					minWidth: 170,
-					handler : function(){
-						window.location = '<?php echo $_SESSION["global_settings"]["online_support_link"]; ?>';
-					}
-				}]
-			});
+			app.winSupport = Ext.create('Ext.window.Window', {
+				width			: 750,
+				height			: 550,
+				closeAction		: 'hide',
+				bodyStyle		: 'background-color: #ffffff; padding: 5px;',
+				modal			: false,
+				resizable		: true,
+				title			: 'Support',
+				draggable		: true,
+				closable		: true,
+				maximizable		: true,
+				headerPosition	: 'right',
+				animateTarget	: 'support',
+				autoScroll		: true
+			}); // End winSupport
+
 			// *************************************************************************************
 			// The panel definition for the the TreeMenu & the support button
 			// *************************************************************************************
@@ -189,14 +194,19 @@ Ext.onReady(function() {
         			padding: 5,
         			buttonAlign : 'center',
         			items: [{
+        				id: 'support',
         				xtype: 'button',
-        				shadow: 'drop',
         				frame: true,
             			text: '<?php i18n("MithosEHR Support"); ?>',
-            			iconCls: 'icoHelp'
+            			iconCls: 'icoHelp',
+						handler : function(){ 
+							app.winSupport.show();
+							app.winSupport.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'http://www.google.com', scripts: true}); 
+						}
         			}]
     			}]
 			});
+			
 			// *************************************************************************************
 			// Load the selected menu item into the main application panel
 			// *************************************************************************************
