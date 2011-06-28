@@ -175,13 +175,18 @@ Ext.onReady(function() {
                 maximized       : true,
 				headerPosition	: 'left',
 				animateTarget	: 'support',
-				autoScroll		: true,
-                items : {
-                    xtype : 'miframe',
-                    src : 'http://mitosehr.org/projects/mitosehr001/wiki'
-                }
+				autoScroll		: true
 			}); // End winSupport
 
+            function showMiframe(src){
+                app.winSupport.remove(app.miframe);
+                app.winSupport.add(
+                        app.miframe = new Ext.create('Ext.mitos.ManagedIframe',{
+                            src:src  
+                        })
+            );
+                app.winSupport.show();
+            }
 			// *************************************************************************************
 			// The panel definition for the the TreeMenu & the support button
 			// *************************************************************************************
@@ -198,18 +203,20 @@ Ext.onReady(function() {
         			xtype: 'toolbar',
         			dock: 'bottom',
         			padding: 5,
-        			buttonAlign : 'center',
-        			items: [{
+                    layout : {
+                        type : 'hbox',
+                        pack : 'center'
+                    },
+        			items: ['-',{
         				id: 'support',
         				xtype: 'button',
         				frame: true,
             			text: '<?php i18n("MithosEHR Support"); ?>',
             			iconCls: 'icoHelp',
 						handler : function(){ 
-							app.winSupport.show();
-							//app.winSupport.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'http://www.google.com', scripts: true});
+                            showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
 						}
-        			}]
+        			},'-']
     			}]
 			});
 			
@@ -355,11 +362,43 @@ Ext.onReady(function() {
 			// Footer Panel
 			// *************************************************************************************
 	        app.Footer = Ext.create('Ext.container.Container', {
-                height      : 18,
+                height      : 30,
                 split       : false,
-                padding     : 3,
+                padding     : '3 0',
                 region      : 'south',
-                html        : '<div><p style="font-size: 10px"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) is a Open source Web-Based Software | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
+                items       : [{
+                    xtype: 'toolbar',
+        			dock: 'bottom',
+        			items: [{
+            			text: '<?php i18n("Copyright (C) 2011 MitosEHR (Electronic Health Records) |:|  Open Source Software operating under GPLv3 "); ?>',
+                        disabled:true,
+						handler : function(){
+                            showMiframe('http://mitosehr.org/projects/mitosehr001');
+						}
+                    },'->',{
+                        text: '<?php i18n("news"); ?>',
+                        handler: function(){
+                            showMiframe('http://mitosehr.org/projects/mitosehr001/news');
+                        }
+                    },'-',{
+                        text: '<?php i18n("wiki"); ?>',
+                        handler: function(){
+                            showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
+                        }
+                    },'-',{
+                        text: '<?php i18n("issues"); ?>',
+                        handler: function(){
+                            showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
+                        }
+                    },'-',{
+                        text: '<?php i18n("forums"); ?>',
+                        handler: function(){
+                            showMiframe('http://mitosehr.org/projects/mitosehr001/boards');
+                        }
+        			}]
+
+                }]
+                //html        : '<div class="footer_content"><p class="copyright">Copyright (C) 2011 <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) |:|  Open Source Software operating under <a target="_blank" href="http://www.gnu.org/licenses/gpl.html">GPLv3</a> </p><p class="links"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
             });
 			// *************************************************************************************
 			// The main ViewPort
