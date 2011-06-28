@@ -205,10 +205,7 @@ Ext.onReady(function() {
         				frame: true,
             			text: '<?php i18n("MithosEHR Support"); ?>',
             			iconCls: 'icoHelp',
-						handler : function(){ 
-							app.winSupport.show();
-							app.winSupport.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'http://www.google.com', scripts: true}); 
-						}
+						handler : function(){ app.winSupport.show(); }
         			}]
     			}]
 			});
