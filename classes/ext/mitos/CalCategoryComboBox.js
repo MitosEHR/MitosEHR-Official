@@ -1,11 +1,11 @@
 Ext.define('Ext.mitos.CalCategoryComboBox',{
 	extend          : 'Ext.form.ComboBox',
     alias           : 'widget.mitos.calcategoriescombobox',
-    name            : 'categories',
+    //name            : 'categories',
     editable        : false,
     displayField    : 'catname',
     valueField      : 'catid',
-    queryMode       : 'local',
+    //queryMode       : 'local',
     emptyText       : 'Select',
     
     initComponent: function(){	
@@ -14,7 +14,7 @@ Ext.define('Ext.mitos.CalCategoryComboBox',{
             if (!Ext.ModelManager.isRegistered('Categories')){
                 Ext.define("Categories", {extend: "Ext.data.Model",
                     fields: [
-                        {name: 'catid', type: 'string'},
+                        {name: 'catid', type: 'int'},
                         {name: 'catname', type: 'string'}
                     ],
                     idProperty: 'catid'

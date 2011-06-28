@@ -18,13 +18,20 @@ $mitos_db = new dbHelper();
 
 $rawData = file_get_contents("php://input");
 $data = json_decode($rawData, true);
+// ********************************************************************
+// Lets get the patient full name to use it as the event title
+// ********************************************************************
+$sql = "SELECT fname, mname, lname FROM patient_data WHERE id='".$data['patient_id']."'";
+$mitos_db->setSQL($sql);
+$rec = $mitos_db->fetch();
+$fullName = fullname($rec['fname'],$rec['mname'],$rec['lname']);
 
 $row['user_id']             = $data['user_id'];
 $row['category']            = $data['category'];
 $row['facility']            = $data['facility'];
 $row['billing_facillity']   = $data['billing_facillity'];
 $row['patient_id']          = $data['patient_id'];
-$row['title']               = $data['title'];
+$row['title']               = $fullName;
 $row['status']              = $data['status'];
 $row['start']               = $data['start'];
 $row['end']                 = $data['end'];
@@ -35,9 +42,11 @@ $row['url']                 = $data['url'];
 $row['ad']                  = $data['ad'];
 
 $sql = $mitos_db->sqlBind($row, "calendar_events", "I");
-
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
+// ********************************************************************
+// If no error found, return the same record back to the calendar
+// ********************************************************************
 if ($ret[2]){
     echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
 } else {
@@ -51,7 +60,4 @@ if ($ret[2]){
     }
     print_r(json_encode(array('success'=>true, 'message'=>'Loaded data', 'data'=>$rows)));
 }
-
-
-
 ?>

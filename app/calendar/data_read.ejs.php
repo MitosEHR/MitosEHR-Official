@@ -30,21 +30,28 @@ switch($_REQUEST['task']){
         print_r(json_encode(array('calendars'=>$rows)));
     break;
     case 'events':
-
         $startDate  = $_REQUEST['startDate'];
         $endDate    = $_REQUEST['endDate'];
-
-        $sql = ("SELECT * FROM calendar_events WHERE start BETWEEN '".$startDate."' AND '".$endDate."' ");
+        $sql = ("SELECT * FROM calendar_events WHERE start BETWEEN '".$startDate." 00:00:00' AND '".$endDate." 23:59:59' ");
         $mitos_db->setSQL($sql);
         $total = $mitos_db->rowCount();
         $rows = array();
         foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['id']                  = intval($row['id']);
+            $row['user_id']             = intval($row['user_id']);
+            $row['category']            = intval($row['category']);
+            $row['facility']            = intval($row['facility']);
+            $row['billing_facillity']   = intval($row['billing_facillity']);
+            $row['patient_id']          = intval($row['patient_id']);
+
+            $sql = ("SELECT * FROM patient_data WHERE id= '".$row['patient_id']."'");
+            $mitos_db->setSQL($sql);
+            foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow){
+            $row['title'] = fullname($urow['fname'],$urow['mname'],$urow['lname']);
+            }
             array_push($rows, $row);
         }
         print_r(json_encode(array('success'=>true, 'message'=>'Loaded data', 'data'=>$rows)));
     break;
 }
-
-
-
 ?>
