@@ -69,6 +69,7 @@ Ext.require([
     'Ext.mitos.GridPanel',
     'Ext.mitos.FormPanel',
     'Ext.mitos.RenderPanel',
+    'Ext.mitos.ManagedIframe',
 
     'Ext.mitos.SaveCancelWindow',
     'Ext.mitos.LivePatientSearch',
@@ -118,6 +119,7 @@ Ext.onReady(function() {
 					}
 				});
 			};
+			
 			// *************************************************************************************
 			// TaskScheduler
 			// This will run all the procedures inside the checkSession
@@ -135,6 +137,7 @@ Ext.onReady(function() {
 					url		: 'app/navigation/default_leftnav.ejs.php'
 				}
 			});
+			
 			// *************************************************************************************
 			// Navigation Panel
 			// *************************************************************************************
@@ -154,23 +157,31 @@ Ext.onReady(function() {
 					id			: 'source'
 				}
 			});
+			
 			// *************************************************************************************
-			// The MitosEHR Support Button Link
+			// MitosEHR Support Page
 			// *************************************************************************************
-			app.navColumnlinks = Ext.create('Ext.panel.Panel', {
-				region		: 'south',
-				border      : false,
-				items       : [{
-					xtype	: 'button',
-					text	: '<?php i18n("MithosEHR Support"); ?>',
-					scale	: 'large',
-					margin	: '5px 10px',
-					minWidth: 170,
-					handler : function(){
-						window.location = '<?php echo $_SESSION["global_settings"]["online_support_link"]; ?>';
-					}
-				}]
-			});
+			app.winSupport = Ext.create('Ext.window.Window', {
+				width			: 1000,
+				height			: 650,
+				closeAction		: 'hide',
+				bodyStyle		: 'background-color: #ffffff; padding: 5px;',
+				modal			: false,
+				resizable		: true,
+				title			: 'Support',
+				draggable		: true,
+				closable		: true,
+				maximizable		: true,
+                maximized       : true,
+				headerPosition	: 'left',
+				animateTarget	: 'support',
+				autoScroll		: true,
+                items : {
+                    xtype : 'miframe',
+                    src : 'http://mitosehr.org/projects/mitosehr001/wiki'
+                }
+			}); // End winSupport
+
 			// *************************************************************************************
 			// The panel definition for the the TreeMenu & the support button
 			// *************************************************************************************
@@ -181,8 +192,27 @@ Ext.onReady(function() {
 				region		: '<?php echo $_SESSION["global_settings"]["concurrent_layout"]; ?>',
 				split		: true,
 				collapsible	: true,
-				items       : [app.Navigation, app.navColumnlinks]
+				//items       : [app.Navigation, app.navColumnlinks]
+				items		: [app.Navigation],
+				dockedItems: [{
+        			xtype: 'toolbar',
+        			dock: 'bottom',
+        			padding: 5,
+        			buttonAlign : 'center',
+        			items: [{
+        				id: 'support',
+        				xtype: 'button',
+        				frame: true,
+            			text: '<?php i18n("MithosEHR Support"); ?>',
+            			iconCls: 'icoHelp',
+						handler : function(){ 
+							app.winSupport.show();
+							//app.winSupport.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'http://www.google.com', scripts: true});
+						}
+        			}]
+    			}]
 			});
+			
 			// *************************************************************************************
 			// Load the selected menu item into the main application panel
 			// *************************************************************************************
