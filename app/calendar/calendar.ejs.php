@@ -136,7 +136,7 @@ Ext.onReady(function(){
             this.calendar = Ext.create('Extensible.calendar.CalendarPanel', {
                 eventStore: this.eventStore,
                 calendarStore: this.calendarStore,
-                title: 'Remote Calendar',
+                //title: 'Remote Calendar',
                 border: true,
                 id:'app-calendar',
                 region: 'center',
@@ -144,11 +144,11 @@ Ext.onReady(function(){
 
                 // Any generic view options that should be applied to all sub views:
                 viewConfig: {
-                    //enableFx: false,
+                    enableFx: false,
                     //ddIncrement: 10, //only applies to DayView and subclasses, but convenient to put it here
-                    //viewStartHour: 6,
-                    //viewEndHour: 18,
-                    //minEventDisplayMinutes: 15
+                    //viewStartHour: 8,
+                    //viewEndHour: 16,
+                    //minEventDisplayMinutes: 15,
                     showTime: false
                 },
 
@@ -175,7 +175,7 @@ Ext.onReady(function(){
                 //showTodayText: false,
                 //showTime: false,
                 //editModal: true,
-                //enableEditDetails: false,
+                enableEditDetails: false,
                 //title: 'My Calendar', // the header of the calendar, could be a subtitle for the app
 
                 listeners: {
