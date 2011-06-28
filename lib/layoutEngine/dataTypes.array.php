@@ -74,7 +74,7 @@ $dataTypes_Reverse = array(
 	i18n("Patient allergies", 'r') 	=> "24",
 	i18n("Checkbox w/text", 'r') 	=> "25",
 	i18n("List box w/add", 'r') 	=> "26",
-		i18n("Lifestyle status", 'r') 	=> "28",
+	i18n("Lifestyle status", 'r') 	=> "28",
 	
 	i18n("Static Text", 'r') 		=> "31",
 	i18n("Smoking Status", 'r') 	=> "32",

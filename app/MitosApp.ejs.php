@@ -181,7 +181,21 @@ Ext.onReady(function() {
 				region		: '<?php echo $_SESSION["global_settings"]["concurrent_layout"]; ?>',
 				split		: true,
 				collapsible	: true,
-				items       : [app.Navigation, app.navColumnlinks]
+				//items       : [app.Navigation, app.navColumnlinks]
+				items		: [app.Navigation],
+				dockedItems: [{
+        			xtype: 'toolbar',
+        			dock: 'bottom',
+        			padding: 5,
+        			buttonAlign : 'center',
+        			items: [{
+        				xtype: 'button',
+        				shadow: 'drop',
+        				frame: true,
+            			text: '<?php i18n("MithosEHR Support"); ?>',
+            			iconCls: 'icoHelp'
+        			}]
+    			}]
 			});
 			// *************************************************************************************
 			// Load the selected menu item into the main application panel
