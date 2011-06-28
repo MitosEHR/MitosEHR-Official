@@ -69,6 +69,7 @@ Ext.require([
     'Ext.mitos.GridPanel',
     'Ext.mitos.FormPanel',
     'Ext.mitos.RenderPanel',
+    'Ext.mitos.ManagedIframe',
 
     'Ext.mitos.SaveCancelWindow',
     'Ext.mitos.LivePatientSearch',
@@ -161,8 +162,8 @@ Ext.onReady(function() {
 			// MitosEHR Support Page
 			// *************************************************************************************
 			app.winSupport = Ext.create('Ext.window.Window', {
-				width			: 750,
-				height			: 550,
+				width			: 1000,
+				height			: 650,
 				closeAction		: 'hide',
 				bodyStyle		: 'background-color: #ffffff; padding: 5px;',
 				modal			: false,
@@ -174,6 +175,11 @@ Ext.onReady(function() {
 				headerPosition	: 'right',
 				animateTarget	: 'support',
 				autoScroll		: true
+                maximized       : true,
+                items : {
+                    xtype : 'miframe',
+                    src : 'http://mitosehr.org/projects/mitosehr001/wiki'
+                }
 			}); // End winSupport
 
 			// *************************************************************************************
