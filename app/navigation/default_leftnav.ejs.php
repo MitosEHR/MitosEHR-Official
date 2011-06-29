@@ -31,7 +31,7 @@ $buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "
 $buff .= '{"text":"' . i18n('Patient - TODO', 'r') . '", "cls":"folder", "expanded": true,' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
 	$buff .= '{"text":"' . i18n('New Patient', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/new/new_patient.ejs.php"},' . chr(13);
-	$buff .= '{"text":"' . i18n('Patient File - TODO', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/patient_file.ejs.php"},' . chr(13);
+	$buff .= '{"text":"' . i18n('Patient Summary', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/summary/summary.ejs.php"},' . chr(13);
 	// -------------------------------------
 	// Patient
 	// -------------------------------------
