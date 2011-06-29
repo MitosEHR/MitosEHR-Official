@@ -172,10 +172,14 @@ Ext.onReady(function() {
 				draggable		: true,
 				closable		: true,
 				maximizable		: true,
-                maximized       : true,
-				headerPosition	: 'left',
+				headerPosition	: 'right',
 				animateTarget	: 'support',
-				autoScroll		: true
+				autoScroll		: true,
+                maximized       : true,
+                items : {
+                    xtype : 'miframe',
+                    src : 'http://mitosehr.org/projects/mitosehr001/wiki'
+                }
 			}); // End winSupport
 
             function showMiframe(src){
@@ -402,7 +406,6 @@ Ext.onReady(function() {
                             showMiframe('http://mitosehr.org/projects/mitosehr001/boards');
                         }
         			}]
-
                 }]
             });
 			// *************************************************************************************

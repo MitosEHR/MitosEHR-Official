@@ -88,7 +88,9 @@
 .list{
 	background-image: url(../ui_icons/list_bullets.png) !important;
 }
-
+.icoHelp{
+	background-image: url(../ui_icons/icohelp.png) !important;
+}
 .app_bg{
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	text-shadow: #6374AB 1px 1px 1px;
