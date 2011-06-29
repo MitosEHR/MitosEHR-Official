@@ -96,7 +96,8 @@ Ext.onReady(function() {
     		'Ext.mitos.FormPanel',
     		'Ext.mitos.RenderPanel',
     		'Ext.mitos.SaveCancelWindow',
-	    	'Ext.mitos.AuthorizationsComboBox'
+	    	'Ext.mitos.AuthorizationsComboBox',
+            'Ext.mitos.ManagedIframe'
 		],
 		initComponent: function(){
 	        /** @namespace Ext.QuickTips */
