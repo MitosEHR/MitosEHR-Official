@@ -33,7 +33,7 @@
 }
 
 
-.delete{
+.delete, .close{
 	background-image: url(../ui_icons/delete.png) !important;
 }
 
@@ -56,11 +56,18 @@
 .icoInjection{
 	background-image: url(../ui_icons/injection.png) !important;
 }
-
+.icoArrow{
+	background-image: url(../ui_icons/arrow.png) !important;
+}
 .icoCalendar{
 	background-image: url(../ui_icons/icoCalendar.png) !important;
 }
-
+.icoClose{
+    background-image: url(../ui_icons/no.gif) !important;
+}
+.icoGreen{
+    background-image: url(../ui_icons/green.png) !important;
+}
 .icoFilter{
 	background-image: url(../ui_icons/icoFilter.png) !important;
 }

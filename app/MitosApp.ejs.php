@@ -181,16 +181,19 @@ Ext.onReady(function() {
         			dock: 'top',
                     items:['-',{
                         text:'Issues/Bugs',
+                        iconCls:'list',
                         handler:function(){
                             showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
                         }
                     },'-',{
                         text:'New Issue/Bug',
+                        iconCls:'icoAddRecord',
                         handler:function(){
                             showMiframe('http://mitosehr.org/projects/mitosehr001/issues/new');
                         }
                     },'->',{
-                        text:'Close Support Window',
+                        text:'Close',
+                        iconCls:'close',
                         handler:function(){
                             app.winSupport.hide();
                         }
@@ -329,22 +332,25 @@ Ext.onReady(function() {
 				{
 					xtype		: 'button',
 					text		: '<?php echo $_SESSION["user"]["name"]; ?>',
-					iconCls		: 'add',
+					iconCls		: 'icoInjection',
 					iconAlign	: 'left',
 					style 		: 'float:right',
 					margin		: '7 0 0 5',
 					menu: [{
 						text:'<?php i18n("My account"); ?>',
+                        iconCls		: 'icoArrow',
 						handler: function(){
 							app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/miscellaneous/my_account/my_account.ejs.php', scripts: true});
 						}
 					},{
 						text:'<?php i18n("My settings"); ?>',
+                        iconCls		: 'icoArrow',
 						handler: function(){
 							app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/miscellaneous/my_settings/my_settings.ejs.php', scripts: true});
 						}
 					},{
 						text:'<?php i18n("Logout"); ?>',
+                        iconCls		: 'icoArrow',
 						handler: function(){
 							Ext.Msg.show({
 								title: '<?php i18n("Please confirm..."); ?>', 
@@ -396,6 +402,7 @@ Ext.onReady(function() {
         			dock: 'bottom',
         			items: [{
             			text: '<?php i18n("Copyright (C) 2011 MitosEHR (Electronic Health Records) |:|  Open Source Software operating under GPLv3 "); ?>',
+                        iconCls: 'icoGreen',
                         disabled:true,
 						handler : function(){
                             showMiframe('http://mitosehr.org/projects/mitosehr001');
