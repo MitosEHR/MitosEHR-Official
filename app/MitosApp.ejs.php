@@ -175,7 +175,27 @@ Ext.onReady(function() {
 				headerPosition	: 'right',
 				animateTarget	: 'support',
 				autoScroll		: true,
-                maximized       : true
+                maximized       : true,
+                dockedItems:{
+                    xtype: 'toolbar',
+        			dock: 'top',
+                    items:['-',{
+                        text:'Issues/Bugs',
+                        handler:function(){
+                            showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
+                        }
+                    },'-',{
+                        text:'New Issue/Bug',
+                        handler:function(){
+                            showMiframe('http://mitosehr.org/projects/mitosehr001/issues/new');
+                        }
+                    },'->',{
+                        text:'Close Support Window',
+                        handler:function(){
+                            app.winSupport.hide();
+                        }
+                    }]
+                }
 			}); // End winSupport
 
             function showMiframe(src){
