@@ -291,12 +291,18 @@ Ext.onReady(function() {
 							items: [{
 								text:'<?php i18n("New Encounter"); ?>',
                                 handler:function(){
-                                    app.searchWin.show();
+                                    
                                 }
 							},{
-								text:'<?php i18n("Past Encounter List"); ?>'
+								text:'<?php i18n("Past Encounter List"); ?>',
+                                handler:function(){
+
+                                }
 							},{
-								text:'<?php i18n("Patient Notes"); ?>'
+								text:'<?php i18n("Patient Notes"); ?>',
+                                handler:function(){
+
+                                }
 							}]
 						})
 					})
@@ -398,7 +404,6 @@ Ext.onReady(function() {
         			}]
 
                 }]
-                //html        : '<div class="footer_content"><p class="copyright">Copyright (C) 2011 <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001">MitosEHR</a> (Electronic Health Records) |:|  Open Source Software operating under <a target="_blank" href="http://www.gnu.org/licenses/gpl.html">GPLv3</a> </p><p class="links"><a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/news">news</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/wiki">wiki</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/boards">forums</a> | <a target="_blank" href="http://www.mitosehr.org/projects/mitosehr001/issues">issues</a></p></div>'
             });
 			// *************************************************************************************
 			// The main ViewPort
