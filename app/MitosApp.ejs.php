@@ -70,7 +70,6 @@ Ext.require([
     'Ext.mitos.FormPanel',
     'Ext.mitos.RenderPanel',
     'Ext.mitos.ManagedIframe',
-
     'Ext.mitos.SaveCancelWindow',
     'Ext.mitos.LivePatientSearch',
     'Ext.mitos.AuthorizationsComboBox',
@@ -175,11 +174,7 @@ Ext.onReady(function() {
 				headerPosition	: 'right',
 				animateTarget	: 'support',
 				autoScroll		: true,
-                maximized       : true,
-                items : {
-                    xtype : 'miframe',
-                    src : 'http://mitosehr.org/projects/mitosehr001/wiki'
-                }
+                maximized       : true
 			}); // End winSupport
 
             function showMiframe(src){
@@ -201,7 +196,6 @@ Ext.onReady(function() {
 				region		: '<?php echo $_SESSION["global_settings"]["concurrent_layout"]; ?>',
 				split		: true,
 				collapsible	: true,
-				//items       : [app.Navigation, app.navColumnlinks]
 				items		: [app.Navigation],
 				dockedItems: [{
         			xtype: 'toolbar',
