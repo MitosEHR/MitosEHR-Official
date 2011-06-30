@@ -16,7 +16,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <title>MitosEHR Logon Screen</title>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
 <script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
-<link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
+<link rel="stylesheet" type="text/css" href="themes/resources/css/ext-all-gray.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="favicon.ico" >
