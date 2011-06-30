@@ -22,9 +22,9 @@ $buff = "[" . chr(13);
 // -------------------------------------
 // Dashboard
 // -------------------------------------
-$buff .= '{ "text":"' . i18n('Dashboard', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"dashboard/dashboard.ejs.php"},' . chr(13);
-$buff .= '{"text":"' . i18n('Calendar', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"calendar/calendar.ejs.php"},' . chr(13);
-$buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"messages/messages.ejs.php"},' . chr(13);
+$buff .= '{ "text":"' . i18n('Dashboard', 'r') . '", "leaf":true, "cls":"file", iconCls:"icoDash", "hrefTarget":"dashboard/dashboard.ejs.php"},' . chr(13);
+$buff .= '{"text":"' . i18n('Calendar', 'r') . '", "leaf":true, "cls":"file", iconCls:"icoCalendar", "hrefTarget":"calendar/calendar.ejs.php"},' . chr(13);
+$buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", iconCls:"mail", "hrefTarget":"messages/messages.ejs.php"},' . chr(13);
 // -------------------------------------
 // Patient
 // -------------------------------------

@@ -5,6 +5,13 @@
  * New Styles
  * by GI Technologies, 2011
  *============================================================*/
+
+
+
+.x-tree-icon-leaf {
+    background-image: url(../ui_icons/list.png) !important;
+}
+
 .topheader .x-panel-body {
 	background-color: transparent !important;
 	border: none !important; 
@@ -79,6 +86,9 @@
 }
 .icoAddRecord{
 	background-image: url(../ui_icons/add_record.png) !important;
+}
+.icoDash{
+	background-image: url(../ui_icons/facilities.png) !important;
 }
 .newMessage{
 	background-image: url(../ui_icons/new_message.png) !important;

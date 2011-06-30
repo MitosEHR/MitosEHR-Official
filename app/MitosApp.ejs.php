@@ -144,12 +144,14 @@ Ext.onReady(function() {
 			app.Navigation = new Ext.create('Ext.tree.TreePanel',{
 				region		: 'center',
 				bodyPadding : '5 0',
+                cls         : 'nav_tree',
 				hideHeaders	: true,
 				useArrows	: true,
 				rootVisible	: false,
 				border      : false,
 				store		: app.storeTree,
 				split		: true,
+                iconCls : 'icoListOptions',
 				width		: <?php echo $_SESSION["global_settings"]["gbl_nav_area_width"]; ?>,
 				root		: {
 					nodeType	: 'async',
