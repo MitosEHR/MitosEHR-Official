@@ -284,7 +284,7 @@ Ext.onReady(function(){
             // PageBody 	- List of items to display [form1, grid1, grid2]
             //***********************************************************************************
             new Ext.create('Ext.mitos.RenderPanel', {
-                pageTitle: '<?php i18n('Calendar Test'); ?>',
+                pageTitle: '<?php i18n('Appointments Calendar'); ?>',
                 pageLayout: 'border',
                 pageBody: [this.leftCol, this.calendar ]
             });

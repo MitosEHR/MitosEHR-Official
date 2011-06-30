@@ -146,12 +146,11 @@ Ext.onReady(function() {
 				bodyPadding : '5 0',
                 cls         : 'nav_tree',
 				hideHeaders	: true,
-				useArrows	: true,
+				//useArrows	: true, 
 				rootVisible	: false,
 				border      : false,
 				store		: app.storeTree,
 				split		: true,
-                iconCls : 'icoListOptions',
 				width		: <?php echo $_SESSION["global_settings"]["gbl_nav_area_width"]; ?>,
 				root		: {
 					nodeType	: 'async',
@@ -248,8 +247,10 @@ Ext.onReady(function() {
 			// Load the selected menu item into the main application panel
 			// *************************************************************************************
 			app.Navigation.on('itemclick', function(dv, record, item, index, n){
-				app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/' + record.data.hrefTarget, scripts: true});
-			});
+                if(record.data.hrefTarget){
+				    app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/' + record.data.hrefTarget, scripts: true});
+                }
+            });
 			
 			// *************************************************************************************
 			// Panel for the live search

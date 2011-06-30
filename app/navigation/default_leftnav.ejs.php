@@ -22,13 +22,13 @@ $buff = "[" . chr(13);
 // -------------------------------------
 // Dashboard
 // -------------------------------------
-$buff .= '{ "text":"' . i18n('Dashboard', 'r') . '", "leaf":true, "cls":"file", iconCls:"icoDash", "hrefTarget":"dashboard/dashboard.ejs.php"},' . chr(13);
-$buff .= '{"text":"' . i18n('Calendar', 'r') . '", "leaf":true, "cls":"file", iconCls:"icoCalendar", "hrefTarget":"calendar/calendar.ejs.php"},' . chr(13);
-$buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", iconCls:"mail", "hrefTarget":"messages/messages.ejs.php"},' . chr(13);
+$buff .= '{ "text":"' . i18n('Dashboard', 'r') . '", "leaf":true, "cls":"file", "iconCls":"icoDash", "hrefTarget":"dashboard/dashboard.ejs.php"},' . chr(13);
+$buff .= '{"text":"' . i18n('Calendar', 'r') . '", "leaf":true, "cls":"file", "iconCls":"icoCalendar", "hrefTarget":"calendar/calendar.ejs.php"},' . chr(13);
+$buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "iconCls":"mail", "hrefTarget":"messages/messages.ejs.php"},' . chr(13);
 // -------------------------------------
 // Patient
 // -------------------------------------
-$buff .= '{"text":"' . i18n('Patient - TODO', 'r') . '", "cls":"folder", "expanded": true,' . chr(13);
+$buff .= '{"text":"' . i18n('Patient - TODO', 'r') . '", "cls":"folder", "expanded": "true",' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
 	$buff .= '{"text":"' . i18n('New Patient', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/new/new_patient.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Patient Summary', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/summary/summary.ejs.php"},' . chr(13);
@@ -45,7 +45,7 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 // Administration
 // -------------------------------------
-$buff .= '{"text":"' . i18n('Administration', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
+$buff .= '{"text":"' . i18n('Administration', 'r') . '", "cls":"folder", "expanded": "true", ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
 	$buff .= '{"text":"' . i18n('Global Settings', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"administration/globals/globals.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Facilities', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"administration/facilities/facilities.ejs.php"},' . chr(13);
@@ -60,7 +60,7 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 // Administration
 // -------------------------------------
-$buff .= '{"text":"' . i18n('Miscellaneous', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
+$buff .= '{"text":"' . i18n('Miscellaneous', 'r') . '", "cls":"folder", "expanded": "true", ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
     $buff .= '{"text":"' . i18n('Web Search', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"miscellaneous/websearch/websearch.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Address Book', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"miscellaneous/addressbook/addressbook.ejs.php"},' . chr(13);
@@ -71,7 +71,7 @@ $buff .= ']},' . chr(13);
 // -------------------------------------
 // Test Folder
 // -------------------------------------
-$buff .= '{"text":"' . i18n('Test Area', 'r') . '", "cls":"folder", "expanded": true, ' . chr(13);
+$buff .= '{"text":"' . i18n('Test Area', 'r') . '", "cls":"folder", "expanded": "true", ' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
 
 
