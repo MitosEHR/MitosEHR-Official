@@ -156,7 +156,14 @@ Ext.onReady(function() {
 					nodeType	: 'async',
 					draggable	: false,
 					id			: 'source'
-				}
+				},
+                listeners:{
+                    itemclick:function(dv, record, item, index, node, event, n){
+                        if(record.data.hrefTarget){
+                            app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/' + record.data.hrefTarget, scripts: true});
+                        }
+                    }
+                }
 			});
 			
 			// *************************************************************************************
@@ -236,22 +243,13 @@ Ext.onReady(function() {
         				frame: true,
             			text: '<?php i18n("MithosEHR Support"); ?>',
             			iconCls: 'icoHelp',
-						handler : function(){ 
+						handler : function(){
                             showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
 						}
         			},'-']
     			}]
 			});
-			
-			// *************************************************************************************
-			// Load the selected menu item into the main application panel
-			// *************************************************************************************
-			app.Navigation.on('itemclick', function(dv, record, item, index, n){
-                if(record.data.hrefTarget){
-				    app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/' + record.data.hrefTarget, scripts: true});
-                }
-            });
-			
+
 			// *************************************************************************************
 			// Panel for the live search
 			// *************************************************************************************
@@ -272,7 +270,8 @@ Ext.onReady(function() {
                                         url: Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
                                         success: function(response, opts){
                                             var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
-                                            app.patientButton.setText( newPatientBtn );
+                                            //app.patientButton.setText( newPatientBtn );
+                                            app.patientButton.update( {name:post.get('patient_name'), info:'('+post.get('pid')+')'} );
                                             app.patientButton.enable();
                                         }
                                     });
@@ -306,12 +305,31 @@ Ext.onReady(function() {
 					border	:	false
 				},
 					app.patientButton = new Ext.create('Ext.Button', {
-						text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
+						//text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
 						scale	: 'large',
 						style 	: 'float:left',
 						margin	: '0 0 0 5px',
 						disabled: true,
 						minWidth: 190,
+                        listeners:{
+                            afterrender:function(){
+                                this.update({name:'No Patient Selected', info:'(record number)'})
+                            }
+                        },
+                        tpl: Ext.create('Ext.XTemplate',
+                            '<div class="patient_btn">',
+                                '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
+                                '<div class="patient_btn_info">',
+                                    '<div class="patient_btn_name">{name}</div>',
+                                    '<div class="patient_btn_record">{info}</div>',
+                                '</div>',
+                            '</div>',
+                            {
+                            defaultValue: function(v){
+                                return v ? v : 'No Patient Selected';
+                            }
+                        }
+                        ),
 						menu 	: Ext.create('Ext.menu.Menu', {
 							items: [{
 								text:'<?php i18n("New Encounter"); ?>',

@@ -84,6 +84,32 @@ cursor: pointer !important;
 .search_body li{
     list-style: circle !important;
 }
+
+.patient_btn_img {
+    float: left;
+    height: 32px;
+    width: 32px;
+
+}
+.patient_btn_img img{
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #999999;
+}
+.patient_btn_info {
+    color: #666666;
+    float: left;
+    font-size: 13px;
+    text-align: center;
+    padding: 0 10px;
+    min-width: 150px;
+
+}
+.patient_btn_name {
+    font-weight: bold;
+}
+
 body#login{
 	background-image:url(login_bg.png) !important;
 	background-position: bottom;
