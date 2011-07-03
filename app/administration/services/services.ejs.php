@@ -24,13 +24,17 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.RenderPanel'
-		],
+			'Ext.mitos.RenderPanel',
+            'Ext.mitos.TitlesComboBox',
+            'Ext.mitos.CodesComboBox'
+        ],
 		initComponent: function(){
             var page = this;
             var rowPos;
             var currRec;
-            page.storeOnotes = new Ext.create('Ext.mitos.CRUDStore',{
+            /** @namespace Ext.QuickTips */
+            Ext.QuickTips.init();
+            page.storeServices = new Ext.create('Ext.mitos.CRUDStore',{
                 fields: [
                     {name: 'id',      		    type: 'int'},
                     {name: 'code_text',         type: 'string'},
@@ -47,7 +51,7 @@ Ext.onReady(function(){
                     {name: 'active',            type: 'int'},
                     {name: 'reportable',        type: 'int'}
                 ],
-                model		: 'modelService',
+                model		: 'ModelService',
                 idProperty	: 'id',
                 noCache     : false,
                 read      	: 'app/administration/services/data_read.ejs.php',
@@ -73,7 +77,7 @@ Ext.onReady(function(){
 			    }
                 return val;
             }
-            page.servicesFormPanel = Ext.create('Ext.form.FormPanel', {
+            page.servicesFormPanel = new Ext.create('Ext.form.FormPanel', {
                 region		: 'north',
                 frame 		: true,
                 height      : 150,
@@ -97,7 +101,7 @@ Ext.onReady(function(){
                     msgTarget : 'under',
                     items: [
                         { width: 70, xtype: 'displayfield', value: '<?php i18n('Type'); ?>: '},
-                          new Ext.create('Ext.mitos.CodeTypesComboBox'),
+                          new Ext.create('Ext.mitos.CodesComboBox',{width: 100 }),
                         { width: 15, xtype: 'displayfield', value: '<?php i18n('Code'); ?>: '},
                         { width: 130, xtype: 'textfield', name: 'code' },
                         { width: 30, xtype: 'displayfield', value: '<?php i18n('Modifier'); ?>: '},
@@ -145,10 +149,10 @@ Ext.onReady(function(){
                                     record.set( 'activity', '1' );
                                 } else { // Add
                                     var obj = eval( '(' + Ext.JSON.encode(form.getValues()) + ')' );
-                                    page.storeOnotes.add( obj );
+                                    page.storeServices.add( obj );
                                 }
-                                page.storeOnotes.sync();	// Save the record to the dataStore
-                                page.storeOnotes.load({params:{show: 'active' }});
+                                page.storeServices.sync();	// Save the record to the dataStore
+                                page.storeServices.load({params:{show: 'active' }});
                                 page.servicesFormPanel.getForm().reset();
                             }
                         }),'-',{
@@ -167,12 +171,12 @@ Ext.onReady(function(){
             });
             page.servicesGrid = new Ext.create('Ext.mitos.GridPanel', {
                 region		: 'center',
-                store       : page.storeOnotes,
+                store       : page.storeServices,
                 listeners	: {
                     itemclick: {
                         fn: function(DataView, record, item, rowIndex, e){
                             page.servicesFormPanel.getForm().reset();
-                            var rec = page.storeOnotes.getAt(rowIndex);
+                            var rec = page.storeServices.getAt(rowIndex);
                             page.cmdSave.setText('<?php i18n('Update'); ?>');
                             page.cmdSave.enable();
                             page.servicesFormPanel.getForm().loadRecord(rec);
@@ -189,16 +193,17 @@ Ext.onReady(function(){
                     { width: 60,  header: '<?php i18n('Active'); ?>',      sortable: true, dataIndex: 'active',     renderer:bool },
                     { width: 70, header: '<?php i18n('Reportable'); ?>',   sortable: true, dataIndex: 'reportable', renderer:bool },
                     { flex: 1,    header: '<?php i18n('Description'); ?>', sortable: true, dataIndex: 'code_text' },
-                    { width: 100, header: '<?php i18n('Standard'); ?>',    sortable: true, dataIndex: '' }
+                    { width: 100, header: '<?php i18n('Standard'); ?>',    sortable: true, dataIndex: 'none' }
                 ],
-                tbar: Ext.create('Ext.PagingToolbar', {
-                    store: page.storeOnotes,
+                tbar: new Ext.create('Ext.PagingToolbar', {
+                    store: page.storeServices,
                     displayInfo: true,
                     emptyMsg: "<?php i18n('No Office Notes to display'); ?>",
-                    plugins: Ext.create('Ext.ux.SlidingPager', {}),
+                    plugins: new Ext.create('Ext.ux.SlidingPager', {}),
                     items: [
                         '-',
-                        new Ext.create('Ext.mitos.CodeTypesComboBox', {
+                        new Ext.create('Ext.mitos.CodesComboBox', {
+                            width: 100,
                             listeners	: {
                                 afterrender: function(){
 
@@ -211,7 +216,7 @@ Ext.onReady(function(){
                         new Ext.create('Ext.form.field.Text',{
                             emptyText:'Search',
                             handler: function(){
-                                
+
                             }
                         }),'-',
                         page.cmdShowAll = new Ext.create('Ext.Button', {
