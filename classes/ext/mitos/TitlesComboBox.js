@@ -27,7 +27,7 @@ Ext.define('Ext.mitos.TitlesComboBox',{
 			proxy		: {
 				type		: 'ajax',
 				url			: 'lib/layoutEngine/listOptions.json.php',
-				extraParams	: {"filter": "title"},
+				extraParams	: {"filter": "titles"},
 				reader	: {
 					type			: 'json',
 					idProperty		: 'option_id',
