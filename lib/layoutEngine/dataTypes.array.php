@@ -23,7 +23,8 @@ $dataTypes_json = array(
 	array("id" 	=> "31", "type"  => i18n("Static Text", 'r')), 			// Done
 	array("id" 	=> "32", "type"  => i18n("Smoking Status", 'r')),
 	array("id" 	=> "33", "type"  => i18n("Race and Ethnicity", 'r')),
-	array("id" 	=> "34", "type"  => i18n("Line Break", "r"))
+	
+	array("id" 	=> "40", "type"  => i18n("Field Container", "r"))
 );
 
 $dataTypes = array(
@@ -49,7 +50,9 @@ $dataTypes = array(
 	"31" => i18n("Static Text", 'r'),
 	"32" => i18n("Smoking Status", 'r'),
 	"33" => i18n("Race and Ethnicity", 'r'),
-	"34" => i18n("Line Break", "r")
+	"34" => i18n("Line Break", "r"),
+	
+	"40" => i18n("Field Container", "r")
 );
 	
 //---------------------------------------------------------------------------------------
@@ -79,7 +82,9 @@ $dataTypes_Reverse = array(
 	i18n("Static Text", 'r') 		=> "31",
 	i18n("Smoking Status", 'r') 	=> "32",
 	i18n("Race and Ethnicity", 'r') => "33",
-	i18n("Line Break", "r") 		=> "34"
+	i18n("Line Break", "r") 		=> "34",
+	
+	i18n("Field Container", "r") => "40"
 );
 
 ?>
