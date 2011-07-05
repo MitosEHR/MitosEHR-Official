@@ -48,8 +48,8 @@ Ext.onReady(function(){
                     {name: 'related_code',      type: 'string'},
                     {name: 'taxrates',          type: 'string'},
                     {name: 'cyp_factor',        type: 'string'},
-                    {name: 'active',            type: 'int'},
-                    {name: 'reportable',        type: 'int'}
+                    {name: 'active',            type: 'string'},
+                    {name: 'reportable',        type: 'string'}
                 ],
                 model		: 'ModelService',
                 idProperty	: 'id',
@@ -70,11 +70,11 @@ Ext.onReady(function(){
 			    return val;
 			}
             function bool(val){
-            if (val == '0') {
-			        return '<img src="ui_icons/no.gif" />';
-			    } else if(val == '1') {
-			        return '<img src="ui_icons/yes.gif" />';
-			    }
+                if (val == 0) {
+                    return '<img src="ui_icons/no.gif" />';
+                } else if(val == 1) {
+                    return '<img src="ui_icons/yes.gif" />';
+                }
                 return val;
             }
             page.servicesFormPanel = new Ext.create('Ext.form.FormPanel', {

@@ -83,7 +83,7 @@ switch ($_GET['task']) {
 	  foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
 	    $count++;
 	    $buff .= '{';
-	    $buff .= ' "ct_id": "' . dataEncode( $urow['ct_id'] ) . '",';
+	    $buff .= ' "ct_id": '.$urow['ct_id'].',';
 	    $buff .= ' "ct_key": "' . dataEncode( $urow['ct_key'] ) . '"},' . chr(13);
 	  }
 	  $buff = substr($buff, 0, -2); // Delete the last comma.

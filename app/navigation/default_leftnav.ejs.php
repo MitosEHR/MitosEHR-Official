@@ -28,19 +28,31 @@ $buff .= '{ "text":"' . i18n('Messages', 'r') . '", "leaf":true, "cls":"file", "
 // -------------------------------------
 // Patient
 // -------------------------------------
-$buff .= '{"text":"' . i18n('Patient - TODO', 'r') . '", "cls":"folder", "expanded": "true",' . chr(13);
+$buff .= '{"text":"' . i18n('Patient', 'r') . '", "cls":"folder", "expanded": "true",' . chr(13);
 	$buff .= '"children": [' . chr(13); // ^ Folder
 	$buff .= '{"text":"' . i18n('New Patient', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/new/new_patient.ejs.php"},' . chr(13);
 	$buff .= '{"text":"' . i18n('Patient Summary', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/summary/summary.ejs.php"},' . chr(13);
 	// -------------------------------------
 	// Patient
 	// -------------------------------------
-	$buff .= '{"text":"' . i18n('Visits - TODO', 'r') . '", "cls":"folder", ' . chr(13);
+	$buff .= '{"text":"' . i18n('Visits', 'r') . '", "cls":"folder", "expanded": "true",' . chr(13);
 		$buff .= '"children": [' . chr(13); // ^ Folder
-		$buff .= '{"text":"' . i18n('Create Visit - TODO', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visit/create.ejs.php"},' . chr(13);
-		$buff .= '{"text":"' . i18n('Current Visit - TODO', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visit/current.ejs.php"},' . chr(13);
-		$buff .= '{"text":"' . i18n('Visit History - TODO', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visit/history.ejs.php"}' . chr(13);
-	$buff .= ']}' . chr(13);
+		$buff .= '{"text":"' . i18n('Create Visit', 'r') .  '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visits/visit_create/visit_create.ejs.php"},' . chr(13);
+		$buff .= '{"text":"' . i18n('Current Visit', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visits/visit_current/visit_current.ejs.php"},' . chr(13);
+		$buff .= '{"text":"' . i18n('Visit History', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visits/visit_history/visit_history.ejs.php"}' . chr(13);
+	$buff .= ']},' . chr(13);
+$buff .= ']},' . chr(13);
+
+// -------------------------------------
+// Fees
+// -------------------------------------
+$buff .= '{"text":"' . i18n('Fees', 'r') . '", "cls":"folder", "expanded": "true",' . chr(13);
+	$buff .= '"children": [' . chr(13); // ^ Folder
+	$buff .= '{"text":"' . i18n('Billing', 'r') .   '", "leaf":true, "cls":"file", "hrefTarget":"fees/billing/billing.ejs.php"},' . chr(13);
+	$buff .= '{"text":"' . i18n('Checkout', 'r') .  '", "leaf":true, "cls":"file", "hrefTarget":"fees/checkout/chackout.ejs.php"},' . chr(13);
+    $buff .= '{"text":"' . i18n('Fees Sheet', 'r') .'", "leaf":true, "cls":"file", "hrefTarget":"fees/fees_sheet/fees_sheet.ejs.php"},' . chr(13);
+    $buff .= '{"text":"' . i18n('Payments', 'r') .  '", "leaf":true, "cls":"file", "hrefTarget":"fees/payments/payments.ejs.php"},' . chr(13);
+
 $buff .= ']},' . chr(13);
 // -------------------------------------
 // Administration

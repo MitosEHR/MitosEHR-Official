@@ -1,7 +1,7 @@
 Ext.define('Ext.mitos.CodesComboBox',{
 	extend      : 'Ext.form.ComboBox',
     alias       : 'mitos.codescombobox',
-    name        : 'title',
+    name        : 'code_type',
     editable    : false,
     displayField: 'ct_key',
     valueField  : 'ct_id',
@@ -41,6 +41,6 @@ Ext.define('Ext.mitos.CodesComboBox',{
     	Ext.apply(this, {
     		store: me.storeTypes
 		});
-		me.callParent();
+		me.callParent(arguments);
 	} // end initComponent
 });
