@@ -78,6 +78,9 @@
 .icoFilter{
 	background-image: url(../ui_icons/icoFilter.png) !important;
 }
+.icoEye{
+	background-image: url(../ui_icons/eye.png) !important;
+}
 .icoAddressBook{
 	background-image: url(../ui_icons/address_book.png) !important;
 }

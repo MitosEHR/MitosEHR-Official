@@ -96,7 +96,7 @@ Ext.onReady(function(){
             // PageBody 	- List of items to display [form1, grid1, grid2]
             //***********************************************************************************
             new Ext.create('Ext.mitos.RenderPanel', {
-                pageTitle   : '<?php echo $_SESSION['patient']['name']; i18n(' (Summary)'); ?>',
+                pageTitle   : '<?php echo $_SESSION['patient']['name'].' '; i18n('(Summary)'); ?>',
                 pageLayout: 'border',
                 pageBody: [page.SummaryLeft, page.SummaryBody]
             });

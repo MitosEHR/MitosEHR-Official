@@ -37,7 +37,7 @@ $buff .= '{"text":"' . i18n('Patient', 'r') . '", "cls":"folder", "expanded": "t
 	// -------------------------------------
 	$buff .= '{"text":"' . i18n('Visits', 'r') . '", "cls":"folder", "expanded": "true",' . chr(13);
 		$buff .= '"children": [' . chr(13); // ^ Folder
-		$buff .= '{"text":"' . i18n('Create Visit', 'r') .  '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visits/visit_create/visit_create.ejs.php"},' . chr(13);
+		$buff .= '{"text":"' . i18n('Create Visit', 'r') .  '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visits/visit.ejs.php"},' . chr(13);
 		$buff .= '{"text":"' . i18n('Current Visit', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visits/visit_current/visit_current.ejs.php"},' . chr(13);
 		$buff .= '{"text":"' . i18n('Visit History', 'r') . '", "leaf":true, "cls":"file", "hrefTarget":"patient_file/visits/visit_history/visit_history.ejs.php"}' . chr(13);
 	$buff .= ']},' . chr(13);
