@@ -85,6 +85,8 @@ $test_folder = array( 'text' => i18n('Test', 'r'), 'cls' => 'folder', 'expanded'
 // $admin_folder['expanded']    = $_SESSION['nav']['admin_folder']['expanded'];
 // $misc_folder['expanded']     = $_SESSION['nav']['misc_folder']['expanded'];
 
+
+// TODO: ACL will determine which folders will be push to $nav array. IMPORTANT!
 // *************************************************************************************
 // Lets push all the folders into $nav and print json return
 // *************************************************************************************
