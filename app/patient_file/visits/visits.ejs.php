@@ -57,25 +57,75 @@ Ext.onReady(function(){
             //******************************************************************
             page.currentVisitPanel = Ext.panel.Panel({
                 region:'center',
-                items:[],
+                layout: 'card',
+                deferredRender:true,
+                activeItem: 0,
+                defaults: {
+                    bodyStyle: 'padding:15px'
+                },
+                items: [{
+                    title: 'Step 1',
+                    html: '<h1>Welcome to new visit Wizard!</h1><p>Step 1 of 6</p>'
+                },{
+                    title: 'Step 2',
+                    html: '<h1>Wizard Cont.</h1><p>Step 2 of 6</p>'
+                },{
+                    title: 'Step 3',
+                    html: '<h1>Wizard Cont.</h1><p>Step 3 of 6</p>'
+                },{
+                    title: 'Step 4',
+                    html: '<h1>Wizard Cont.</h1><p>Step 4 of 6</p>'
+                },{
+                    title: 'Step 5',
+                    html: '<h1>Wizard Cont.</h1><p>Step 5 of 6</p>'
+                },{
+                    title: 'Step 6',
+                    html: '<h1>Congratulations!</h1><p>Step 6 of 6 - Complete</p>'
+                }],
                 dockedItems:[{
                     xtype: 'toolbar',
                     dock: 'top',
                     items:[
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Save"); ?>',
-                            iconCls   	: 'save',
-                            disabled	: true,
-                            handler   : function(){
-
+                            text      	: '<?php i18n("Step 1"); ?>',
+                            iconCls   	: '',
+                            handler: function(btn) {
+                                btn.up("panel").getLayout().setActiveItem(0);
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Reset Form"); ?>',
-                            iconCls   	: 'save',
-                            disabled	: true,
-                            handler   	: function(){
-
+                            text      	: '<?php i18n("Step 2"); ?>',
+                            iconCls   	: '',
+                            handler: function(btn) {
+                                btn.up("panel").getLayout().setActiveItem(1);
+                            }
+                        }),'-',
+                        new Ext.create('Ext.Button', {
+                            text      	: '<?php i18n("Step 3"); ?>',
+                            iconCls   	: '',
+                            handler: function(btn) {
+                                btn.up("panel").getLayout().setActiveItem(2);
+                            }
+                        }),'-',
+                        new Ext.create('Ext.Button', {
+                            text      	: '<?php i18n("Step 4"); ?>',
+                            iconCls   	: '',
+                            handler: function(btn) {
+                                btn.up("panel").getLayout().setActiveItem(3);
+                            }
+                        }),'-',
+                        new Ext.create('Ext.Button', {
+                            text      	: '<?php i18n("Step 5"); ?>',
+                            iconCls   	: '',
+                            handler: function(btn) {
+                                btn.up("panel").getLayout().setActiveItem(4);
+                            }
+                        }),'-',
+                        new Ext.create('Ext.Button', {
+                            text      	: '<?php i18n("Step 6"); ?>',
+                            iconCls   	: '',
+                            handler: function(btn) {
+                                btn.up("panel").getLayout().setActiveItem(5);
                             }
                         }),'->',
                         new Ext.create('Ext.Button', {
@@ -107,6 +157,27 @@ Ext.onReady(function(){
                             }
                         })
                     ]
+                },{
+                    xtype: 'toolbar',
+                    dock: 'bottom',
+                    items:[
+                        new Ext.create('Ext.Button', {
+                            text      	: '<?php i18n("Save"); ?>',
+                            iconCls   	: 'save',
+                            disabled	: true,
+                            handler   : function(){
+
+                            }
+                        }),'-',
+                        new Ext.create('Ext.Button', {
+                            text      	: '<?php i18n("Reset Form"); ?>',
+                            iconCls   	: 'save',
+                            disabled	: true,
+                            handler   	: function(){
+
+                            }
+                        })
+                    ]
                 }]
             });
 
@@ -118,7 +189,7 @@ Ext.onReady(function(){
                 hidden          : true,
                 margin          : '3 0 0 0',
                 region	        : 'south',
-                height          : 400,
+                height          : 200,
                 store           : page.historyStore,
                 columns : [
                     { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
