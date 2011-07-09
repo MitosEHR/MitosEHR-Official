@@ -50,91 +50,129 @@ Ext.onReady(function(){
                 autoLoad	: false
             });
 
+            page.createPanel = new Ext.panel.Panel({
+                title:'<?php i18n("Create New Visit"); ?>',
+                html: '<h1>Create new Visit form placeholder!</h1>'
+            });
 
+            page.MiscBillingOptionsPanel = new Ext.panel.Panel({
+                title:'<?php i18n("Misc. Billing Options HCFA"); ?>',
+                html: '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
+            });
+
+            page.procedurePanel = new Ext.panel.Panel({
+                title:'<?php i18n("Procedure Order"); ?>',
+                html: '<h1>Procedure Order form placeholder!</h1>'
+            });
+
+            page.reviewSysPanel = new Ext.panel.Panel({
+                title:'<?php i18n("Review of Systems"); ?>',
+                html: '<h1>Review of Systems form placeholder!</h1>'
+            });
+
+            page.reviewSysCkPanel = new Ext.panel.Panel({
+                title:'<?php i18n("Review of Systems Checks"); ?>',
+                html: '<h1>Review of Systems Checks form placeholder!</h1>'
+            });
+
+            page.soapPanel = new Ext.panel.Panel({
+                title:'<?php i18n("SOAP"); ?>',
+                html: '<h1>SOAP form placeholder!</h1>'
+            });
+
+            page.speechDicPanel = new Ext.panel.Panel({
+                title:'<?php i18n("Speech Dictation"); ?>',
+                html: '<h1>Speech Dictation form placeholder!</h1>'
+            });
+
+            page.vitalsPanel = new Ext.panel.Panel({
+                title:'<?php i18n("Vitals"); ?>',
+                html: '<h1>Vitals form placeholder!</h1>'
+            });
 
             //******************************************************************
             // Visit Form
             //******************************************************************
-            page.currentVisitPanel = Ext.panel.Panel({
+            page.currentVisitPanel = new Ext.panel.Panel({
                 region:'center',
                 layout: 'card',
-                deferredRender:true,
                 activeItem: 0,
                 defaults: {
                     bodyStyle: 'padding:15px'
                 },
-                items: [{
-                    title: 'Step 1',
-                    html: '<h1>Welcome to new visit Wizard!</h1><p>Step 1 of 6</p>'
-                },{
-                    title: 'Step 2',
-                    html: '<h1>Wizard Cont.</h1><p>Step 2 of 6</p>'
-                },{
-                    title: 'Step 3',
-                    html: '<h1>Wizard Cont.</h1><p>Step 3 of 6</p>'
-                },{
-                    title: 'Step 4',
-                    html: '<h1>Wizard Cont.</h1><p>Step 4 of 6</p>'
-                },{
-                    title: 'Step 5',
-                    html: '<h1>Wizard Cont.</h1><p>Step 5 of 6</p>'
-                },{
-                    title: 'Step 6',
-                    html: '<h1>Congratulations!</h1><p>Step 6 of 6 - Complete</p>'
-                }],
+                items: [
+                    page.MiscBillingOptionsPanel,
+                    page.procedurePanel,
+                    page.reviewSysPanel,
+                    page.reviewSysCkPanel,
+                    page.soapPanel,
+                    page.speechDicPanel,
+                    page.vitalsPanel
+                ],
                 dockedItems:[{
                     xtype: 'toolbar',
                     dock: 'top',
                     items:[
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Step 1"); ?>',
+                            text      	: '<?php i18n("Misc. Billing Options HCFA"); ?>',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(0);
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Step 2"); ?>',
+                            text      	: '<?php i18n("Procedure Order"); ?>',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(1);
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Step 3"); ?>',
+                            text      	: '<?php i18n("Review of Sys"); ?>',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(2);
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Step 4"); ?>',
+                            text      	: '<?php i18n("Review of Sys Cks"); ?>',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(3);
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Step 5"); ?>',
+                            text      	: '<?php i18n("SOAP"); ?>',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(4);
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Step 6"); ?>',
+                            text      	: '<?php i18n("Speech Dictation"); ?>',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(5);
+                            }
+                        }),'-',
+                        new Ext.create('Ext.Button', {
+                            text      	: '<?php i18n("Vitals"); ?>',
+                            iconCls   	: '',
+                            handler: function(btn) {
+                                btn.up("panel").getLayout().setActiveItem(6);
                             }
                         }),'->',
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Create New Visit"); ?>',
                             iconCls   	: 'icoAddRecord',
-                            handler   	: function(){
+                            handler   	: function(btn){
+                                page.currentVisitPanel.add(page.createPanel);
+                                btn.up("panel").getLayout().setActiveItem(7);
                                 page.historyGrid.hide();
                                 page.showHist.show();
                                 page.hideHist.hide();
+                                this.disable();
+
                             }
                         }),'-',
                         page.showHist = new Ext.create('Ext.Button', {
