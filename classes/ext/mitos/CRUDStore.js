@@ -11,9 +11,10 @@ Ext.define('Ext.mitos.CRUDStore',{
 //  *******************************************
 	constructor:function(config){
 		
-		if (!Ext.ModelManager.isRegistered( config.model )){
-			Ext.define( config.model, {extend:"Ext.data.Model", extraParams: config.extraParams, groupField: config.groupField, fields: config.fields, idProperty: config.idProperty });
-		}
+		// This will delete the recordModel
+		var m = config.model;
+		delete m;
+		Ext.define( config.model, {extend:"Ext.data.Model", extraParams: config.extraParams, groupField: config.groupField, fields: config.fields, idProperty: config.idProperty });
 		
 		if(config.autoLoad == null){config.autoLoad = true}
 		
