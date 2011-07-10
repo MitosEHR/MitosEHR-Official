@@ -1,11 +1,11 @@
 <?php 
 //******************************************************************************
-// new.ejs.php
-// New Patient Entry Form
+// ofice_notes.ejs.php
+// office Notes Page
 // v0.0.1
 // 
 // Author: Ernest Rodriguez
-// Modified: GI Technologies, 2011
+// Modified:
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************

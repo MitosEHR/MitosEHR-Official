@@ -1,12 +1,12 @@
 <?php 
 //******************************************************************************
-// new.ejs.php
-// New Patient Entry Form
+// visits.ejs.php
+// Visits Forms
 // v0.0.1
 // 
-// Author: Ernest Rodriguez
-// Modified: GI Technologies, 2011
-// 
+// Author: Ernesto J. Rodriguez
+// Modified:
+//
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 session_name ( "MitosEHR" );
@@ -49,47 +49,41 @@ Ext.onReady(function(){
               //destroy		: <-- delete not allow -->
                 autoLoad	: false
             });
-
+            //******************************************************************
+            // Panels/Forms...
+            //******************************************************************
             page.createPanel = new Ext.panel.Panel({
                 title:'<?php i18n("Create New Visit"); ?>',
                 html: '<h1>Create new Visit form placeholder!</h1>'
             });
-
             page.MiscBillingOptionsPanel = new Ext.panel.Panel({
                 title:'<?php i18n("Misc. Billing Options HCFA"); ?>',
                 html: '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
             });
-
             page.procedurePanel = new Ext.panel.Panel({
                 title:'<?php i18n("Procedure Order"); ?>',
                 html: '<h1>Procedure Order form placeholder!</h1>'
             });
-
             page.reviewSysPanel = new Ext.panel.Panel({
                 title:'<?php i18n("Review of Systems"); ?>',
                 html: '<h1>Review of Systems form placeholder!</h1>'
             });
-
             page.reviewSysCkPanel = new Ext.panel.Panel({
                 title:'<?php i18n("Review of Systems Checks"); ?>',
                 html: '<h1>Review of Systems Checks form placeholder!</h1>'
             });
-
             page.soapPanel = new Ext.panel.Panel({
                 title:'<?php i18n("SOAP"); ?>',
                 html: '<h1>SOAP form placeholder!</h1>'
             });
-
             page.speechDicPanel = new Ext.panel.Panel({
                 title:'<?php i18n("Speech Dictation"); ?>',
                 html: '<h1>Speech Dictation form placeholder!</h1>'
             });
-
             page.vitalsPanel = new Ext.panel.Panel({
                 title:'<?php i18n("Vitals"); ?>',
                 html: '<h1>Vitals form placeholder!</h1>'
             });
-
             //******************************************************************
             // Visit Form
             //******************************************************************
@@ -98,7 +92,9 @@ Ext.onReady(function(){
                 layout: 'card',
                 activeItem: 0,
                 defaults: {
-                    bodyStyle: 'padding:15px'
+                    bodyStyle   : 'padding:15px',
+                    border      : false,
+                    bodyBorder  : false
                 },
                 items: [
                     page.MiscBillingOptionsPanel,
@@ -218,7 +214,6 @@ Ext.onReady(function(){
                     ]
                 }]
             });
-
             //******************************************************************
             // Visit History Grid
             //******************************************************************
@@ -237,7 +232,6 @@ Ext.onReady(function(){
                     { flex: 1,    header: '<?php i18n('Provider'); ?>', sortable: true, dataIndex: 'body' },
                     { flex: 1,    header: '<?php i18n('Billing'); ?>',  sortable: true, dataIndex: 'body' },
                     { flex: 1,    header: '<?php i18n('Insurance'); ?>',sortable: true, dataIndex: 'body' }
-
                 ],
                 listeners	: {
                     itemclick: function(){
@@ -245,7 +239,6 @@ Ext.onReady(function(){
                     }
                 }
             });
-
             Ext.create('Ext.mitos.RenderPanel', {
                 pageTitle: '<?php echo $_SESSION['patient']['name'].' - ';  i18n('(Visits)'); ?>',
                 pageLayout: 'border',
