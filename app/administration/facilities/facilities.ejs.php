@@ -22,8 +22,9 @@ include_once($_SESSION['site']['root']."/classes/I18n.class.php");
 $_SESSION['site']['flops'] = 0;
 ?>
 <script type="text/javascript">
+delete Ext.mitos.Panel;
 Ext.onReady(function() {
-	Ext.define('Ext.mitos.FacilitiesPanel',{
+	Ext.define('Ext.mitos.Panel',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
@@ -379,7 +380,7 @@ Ext.onReady(function() {
 		
 	}); //ens FacilitiesPanel class
 
-    Ext.create('Ext.mitos.FacilitiesPanel');
+    Ext.create('Ext.mitos.Panel');
     
 }); // End ExtJS
 

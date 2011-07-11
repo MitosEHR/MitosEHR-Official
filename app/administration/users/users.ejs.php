@@ -18,8 +18,9 @@ include_once($_SESSION['site']['root']."/classes/I18n.class.php");
 //******************************************************************************
 $_SESSION['site']['flops'] = 0; ?>
 <script type="text/javascript">
+delete Ext.mitos.Page;
 Ext.onReady(function(){
-	Ext.define('Ext.mitos.UserPage',{
+	Ext.define('Ext.mitos.Page',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
@@ -284,6 +285,6 @@ Ext.onReady(function(){
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens UserPage class
-    Ext.create('Ext.mitos.UserPage');
+    Ext.create('Ext.mitos.Page');
 }); // End ExtJS
 </script>

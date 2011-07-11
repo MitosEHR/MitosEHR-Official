@@ -33,8 +33,9 @@ $_SESSION['site']['flops'] = 0;
 ?>
 
 <script type="text/javascript">
+delete Ext.mitos.Panel;
 Ext.onReady(function(){
-	Ext.define('Ext.mitos.PatientPanel',{
+	Ext.define('Ext.mitos.Panel',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
@@ -105,7 +106,7 @@ Ext.onReady(function(){
 		} // end of initComponent
 		
 	}); //ens PatientPanel class
-    Ext.create('Ext.mitos.PatientPanel');
+    Ext.create('Ext.mitos.Panel');
     
 }); // End ExtJS
 

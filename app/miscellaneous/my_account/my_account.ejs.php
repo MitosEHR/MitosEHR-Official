@@ -22,8 +22,9 @@ $_SESSION['site']['flops'] = 0;
 
 ?>
 <script type="text/javascript">
+delete Ext.mitos.Page;
 Ext.onReady(function(){
-    Ext.define('Ext.mitos.myAccountPage',{
+    Ext.define('Ext.mitos.Page',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
@@ -294,7 +295,7 @@ Ext.onReady(function(){
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens oNotesPage class
-    Ext.create('Ext.mitos.myAccountPage');
+    Ext.create('Ext.mitos.Page');
 }); // End ExtJS
 </script>
 

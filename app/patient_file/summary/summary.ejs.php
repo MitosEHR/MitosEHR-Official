@@ -20,8 +20,9 @@ include_once($_SESSION['site']['root']."/classes/I18n.class.php");
 $_SESSION['site']['flops'] = 0;
 ?>
 <script type="text/javascript">
+delete Ext.mitos.Page;
 Ext.onReady(function(){
-	Ext.define('Ext.mitos.PatientSummaryPage',{
+	Ext.define('Ext.mitos.Page',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.*',
@@ -103,6 +104,6 @@ Ext.onReady(function(){
             page.callParent(arguments);
         } /// end initComponent
     }); // end PatientSummaryPage class
-    Ext.create('Ext.mitos.PatientSummaryPage');
+    Ext.create('Ext.mitos.Page');
 }); // end ExtJS
 </script>
