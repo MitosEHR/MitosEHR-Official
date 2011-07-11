@@ -112,13 +112,22 @@ Ext.onReady(function(){
                     items:[
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Misc. Billing Options HCFA"); ?>',
+                            enableToggle: true,
+                            toggleGroup : '1',
                             iconCls   	: '',
+                            listeners	: {
+                                afterrender: function(){
+                                    this.toggle(true);
+                                }
+                            },
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(0);
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Procedure Order"); ?>',
+                            enableToggle: true,
+                            toggleGroup : '1',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(1);
@@ -126,6 +135,8 @@ Ext.onReady(function(){
                         }),'-',
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Review of Sys"); ?>',
+                            enableToggle: true,
+                            toggleGroup : '1',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(2);
@@ -133,6 +144,8 @@ Ext.onReady(function(){
                         }),'-',
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Review of Sys Cks"); ?>',
+                            enableToggle: true,
+                            toggleGroup : '1',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(3);
@@ -140,6 +153,8 @@ Ext.onReady(function(){
                         }),'-',
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("SOAP"); ?>',
+                            enableToggle: true,
+                            toggleGroup : '1',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(4);
@@ -147,6 +162,8 @@ Ext.onReady(function(){
                         }),'-',
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Speech Dictation"); ?>',
+                            enableToggle: true,
+                            toggleGroup : '1',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(5);
@@ -154,6 +171,8 @@ Ext.onReady(function(){
                         }),'-',
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Vitals"); ?>',
+                            enableToggle: true,
+                            toggleGroup : '1',
                             iconCls   	: '',
                             handler: function(btn) {
                                 btn.up("panel").getLayout().setActiveItem(6);
@@ -161,6 +180,8 @@ Ext.onReady(function(){
                         }),'->',
                         new Ext.create('Ext.Button', {
                             text      	: '<?php i18n("Create New Visit"); ?>',
+                            enableToggle: true,
+                            toggleGroup : '1',
                             iconCls   	: 'icoAddRecord',
                             handler   	: function(btn){
                                 page.currentVisitPanel.add(page.createPanel);
