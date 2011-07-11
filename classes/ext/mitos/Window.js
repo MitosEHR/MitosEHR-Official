@@ -10,11 +10,9 @@ Ext.define('Ext.mitos.Window',{
 	renderTo	: document.body,
     initComponent: function(){	
     	var me = this;
-
     	Ext.apply(this, {
 
 		});
 		me.callParent(arguments);
-		
 	} // end initComponent
 });
