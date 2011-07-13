@@ -70,7 +70,7 @@ if (file_exists($fileConf)){
 	$mitos_db = new dbHelper();
 	$err = $mitos_db->getError();
 	if (!is_array($err)){
-		echo '{ "success": false, "errors": { "reason": "For some reason, I can\'t connect to the database."}';
+		echo '{ "success": false, "errors": { "reason": "For some reason, I can\'t connect to the database."}}';
 		return;
 	}
 	// Do not stop here!, continue with the rest of the code.
