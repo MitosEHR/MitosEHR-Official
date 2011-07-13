@@ -28,6 +28,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title><?php echo $_SESSION['global_settings']['mitosehr_name'] ?></title>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+<script type="text/javascript" src="repo/swfobject.js"></script>
 <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/Extensible.js"></script>
@@ -70,6 +71,7 @@ Ext.require([
     'Ext.mitos.FormPanel',
     'Ext.mitos.RenderPanel',
     'Ext.mitos.ManagedIframe',
+    'Ext.mitos.PhotoIdWindow',
     'Ext.mitos.SaveCancelWindow',
     'Ext.mitos.LivePatientSearch',
     'Ext.mitos.AuthorizationsComboBox',
