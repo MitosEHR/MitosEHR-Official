@@ -1,60 +1,84 @@
+-- phpMyAdmin SQL Dump
+-- version 3.3.9
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Jul 14, 2011 at 01:28 PM
+-- Server version: 5.5.8
+-- PHP Version: 5.3.5
+
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+
 CREATE TABLE IF NOT EXISTS `acl_permissions` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `perm_key` varchar(30) character set latin1 NOT NULL,
-  `perm_name` varchar(30) character set latin1 NOT NULL,
-  PRIMARY KEY  (`id`),
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `perm_key` varchar(30) CHARACTER SET latin1 NOT NULL,
+  `perm_name` varchar(30) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `permKey` (`perm_key`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+
 
 INSERT INTO `acl_permissions` (`id`, `perm_key`, `perm_name`) VALUES
-(9, 'admin_roles', 'Administer Roles'),
-(10, 'admin_users', 'Administer Users'),
+(9, 'Administer Roles', 'Administer Roles'),
+(10, 'Administer Users', 'Administer Users'),
 (11, 'Administer Facilities', 'Administer Facilities'),
 (12, 'Administer Lists', 'Administer Lists');
 
+
 CREATE TABLE IF NOT EXISTS `acl_roles` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `role_name` varchar(20) character set latin1 NOT NULL,
-  PRIMARY KEY  (`id`),
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(20) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `roleName` (`role_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
+
+--
+-- Dumping data for table `acl_roles`
+--
 
 INSERT INTO `acl_roles` (`id`, `role_name`) VALUES
 (5, 'Administrator'),
 (6, 'Doctor');
 
+
 CREATE TABLE IF NOT EXISTS `acl_role_perms` (
-  `id` bigint(20) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) NOT NULL,
   `perm_id` bigint(20) NOT NULL,
-  `value` tinyint(1) NOT NULL default '0',
+  `value` tinyint(1) NOT NULL DEFAULT '0',
   `add_date` datetime NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `roleID_2` (`role_id`,`perm_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=173 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=184 ;
+
 
 INSERT INTO `acl_role_perms` (`id`, `role_id`, `perm_id`, `value`, `add_date`) VALUES
-(46, 6, 11, 1, '2011-03-04 00:00:00'),
-(45, 6, 10, 1, '2011-03-04 00:00:00'),
-(44, 6, 9, 1, '2011-03-04 00:00:00'),
-(42, 5, 12, 2, '2011-03-03 00:00:00'),
-(41, 5, 11, 2, '2011-03-03 00:00:00'),
-(40, 5, 10, 2, '2011-03-03 00:00:00'),
-(39, 5, 9, 2, '2011-03-03 00:00:00'),
-(47, 6, 12, 1, '2011-03-04 00:00:00');
+(46, 6, 11, 2, '2011-03-04 00:00:00'),
+(45, 6, 10, 2, '2011-03-04 00:00:00'),
+(44, 6, 9, 2, '2011-03-04 00:00:00'),
+(42, 5, 12, 3, '2011-03-03 00:00:00'),
+(41, 5, 11, 3, '2011-03-03 00:00:00'),
+(40, 5, 10, 3, '2011-03-03 00:00:00'),
+(39, 5, 9, 3, '2011-03-03 00:00:00'),
+(47, 6, 12, 2, '2011-03-04 00:00:00');
+
 
 CREATE TABLE IF NOT EXISTS `acl_user_perms` (
-  `id` bigint(20) unsigned zerofill NOT NULL auto_increment,
+  `id` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `perm_id` bigint(20) NOT NULL,
-  `value` tinyint(1) NOT NULL default '0',
+  `value` tinyint(1) NOT NULL DEFAULT '0',
   `add_date` datetime NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `userID` (`user_id`,`perm_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
 
 CREATE TABLE IF NOT EXISTS `acl_user_roles` (
   `user_id` bigint(20) NOT NULL,
@@ -63,63 +87,61 @@ CREATE TABLE IF NOT EXISTS `acl_user_roles` (
   UNIQUE KEY `userID` (`user_id`,`role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE IF NOT EXISTS `addresses` (
-  `id` int(11) NOT NULL default '0',
-  `line1` varchar(255) default NULL,
-  `line2` varchar(255) default NULL,
-  `city` varchar(255) default NULL,
-  `state` varchar(35) default NULL,
-  `zip` varchar(10) default NULL,
-  `plus_four` varchar(4) default NULL,
-  `country` varchar(255) default NULL,
-  `foreign_id` int(11) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `line1` varchar(255) DEFAULT NULL,
+  `line2` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(35) DEFAULT NULL,
+  `zip` varchar(10) DEFAULT NULL,
+  `plus_four` varchar(4) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `foreign_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `foreign_id` (`foreign_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+
 
 INSERT INTO `addresses` (`id`, `line1`, `line2`, `city`, `state`, `zip`, `plus_four`, `country`, `foreign_id`) VALUES
-(3, 'Calle Metropolis', 'Numero 301', '00999', NULL, NULL, NULL, 'USA', 2),
-(7, 'Calle Metropolis', 'Numero 301', '00999', 'PR', '00987', NULL, 'USA', 6);
+(16, 'Calle Luna', '#C10', 'San JUan', 'PR', '00924', '', '', 2),
+(15, 'Calle 23', '# 2101', 'Caolina', 'PR', '00988', '', '', 1);
 
 CREATE TABLE IF NOT EXISTS `array` (
-  `array_key` varchar(255) default NULL,
+  `array_key` varchar(255) DEFAULT NULL,
   `array_value` longtext
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE IF NOT EXISTS `ar_activity` (
   `pid` int(11) NOT NULL,
   `encounter` int(11) NOT NULL,
-  `sequence_no` int(10) unsigned NOT NULL auto_increment,
+  `sequence_no` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(9) NOT NULL COMMENT 'empty means claim level',
-  `modifier` varchar(5) NOT NULL default '',
+  `modifier` varchar(5) NOT NULL DEFAULT '',
   `payer_type` int(11) NOT NULL COMMENT '0=pt, 1=ins1, 2=ins2, etc',
   `post_time` datetime NOT NULL,
   `post_user` int(11) NOT NULL COMMENT 'references users.id',
   `session_id` int(10) unsigned NOT NULL COMMENT 'references ar_session.session_id',
-  `memo` varchar(255) NOT NULL default '' COMMENT 'adjustment reasons go here',
-  `pay_amount` decimal(12,2) NOT NULL default '0.00' COMMENT 'either pay or adj will always be 0',
-  `adj_amount` decimal(12,2) NOT NULL default '0.00',
+  `memo` varchar(255) NOT NULL DEFAULT '' COMMENT 'adjustment reasons go here',
+  `pay_amount` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT 'either pay or adj will always be 0',
+  `adj_amount` decimal(12,2) NOT NULL DEFAULT '0.00',
   `modified_time` datetime NOT NULL,
   `follow_up` char(1) NOT NULL,
   `follow_up_note` text NOT NULL,
   `account_code` varchar(15) NOT NULL,
-  PRIMARY KEY  (`pid`,`encounter`,`sequence_no`),
+  PRIMARY KEY (`pid`,`encounter`,`sequence_no`),
   KEY `session_id` (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `ar_session` (
-  `session_id` int(10) unsigned NOT NULL auto_increment,
+  `session_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `payer_id` int(11) NOT NULL COMMENT '0=pt else references insurance_companies.id',
   `user_id` int(11) NOT NULL COMMENT 'references users.id for session owner',
-  `closed` tinyint(1) NOT NULL default '0' COMMENT '0=no, 1=yes',
-  `reference` varchar(255) NOT NULL default '' COMMENT 'check or EOB number',
-  `check_date` date default NULL,
-  `deposit_date` date default NULL,
-  `pay_total` decimal(12,2) NOT NULL default '0.00',
-  `created_time` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `closed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=no, 1=yes',
+  `reference` varchar(255) NOT NULL DEFAULT '' COMMENT 'check or EOB number',
+  `check_date` date DEFAULT NULL,
+  `deposit_date` date DEFAULT NULL,
+  `pay_total` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_time` datetime NOT NULL,
   `global_amount` decimal(12,2) NOT NULL,
   `payment_type` varchar(50) NOT NULL,
@@ -128,14 +150,13 @@ CREATE TABLE IF NOT EXISTS `ar_session` (
   `post_to_date` date NOT NULL,
   `patient_id` int(11) NOT NULL,
   `payment_method` varchar(25) NOT NULL,
-  PRIMARY KEY  (`session_id`),
+  PRIMARY KEY (`session_id`),
   KEY `user_closed` (`user_id`,`closed`),
   KEY `deposit_date` (`deposit_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `automatic_notification` (
-  `notification_id` int(5) NOT NULL auto_increment,
+  `notification_id` int(5) NOT NULL AUTO_INCREMENT,
   `sms_gateway_type` varchar(255) NOT NULL,
   `next_app_date` date NOT NULL,
   `next_app_time` varchar(10) NOT NULL,
@@ -143,66 +164,117 @@ CREATE TABLE IF NOT EXISTS `automatic_notification` (
   `message` text NOT NULL,
   `email_sender` varchar(100) NOT NULL,
   `email_subject` varchar(100) NOT NULL,
-  `type` enum('SMS','Email') NOT NULL default 'SMS',
+  `type` enum('SMS','Email') NOT NULL DEFAULT 'SMS',
   `notification_sent_date` datetime NOT NULL,
-  PRIMARY KEY  (`notification_id`)
+  PRIMARY KEY (`notification_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `automatic_notification` (`notification_id`, `sms_gateway_type`, `next_app_date`, `next_app_time`, `provider_name`, `message`, `email_sender`, `email_subject`, `type`, `notification_sent_date`) VALUES
 (1, 'CLICKATELL', '0000-00-00', ':', 'EMR GROUP 1 .. SMS', 'Welcome to EMR GROUP 1.. SMS', '', '', 'SMS', '0000-00-00 00:00:00'),
 (2, '', '2007-10-02', '05:50', 'EMR GROUP', 'Welcome to EMR GROUP . Email', 'EMR Group', 'Welcome to EMR GROUP', 'Email', '2007-09-30 00:00:00');
 
+
 CREATE TABLE IF NOT EXISTS `batchcom` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `patient_id` int(11) NOT NULL default '0',
-  `sent_by` bigint(20) NOT NULL default '0',
-  `msg_type` varchar(60) default NULL,
-  `msg_subject` varchar(255) default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) NOT NULL DEFAULT '0',
+  `sent_by` bigint(20) NOT NULL DEFAULT '0',
+  `msg_type` varchar(60) DEFAULT NULL,
+  `msg_subject` varchar(255) DEFAULT NULL,
   `msg_text` mediumtext,
-  `msg_date_sent` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`)
+  `msg_date_sent` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `billing` (
-  `id` int(11) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `code_type` varchar(7) default NULL,
-  `code` varchar(9) default NULL,
-  `pid` int(11) default NULL,
-  `provider_id` int(11) default NULL,
-  `user` int(11) default NULL,
-  `groupname` varchar(255) default NULL,
-  `authorized` tinyint(1) default NULL,
-  `encounter` int(11) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `code_type` varchar(7) DEFAULT NULL,
+  `code` varchar(9) DEFAULT NULL,
+  `pid` int(11) DEFAULT NULL,
+  `provider_id` int(11) DEFAULT NULL,
+  `user` int(11) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `authorized` tinyint(1) DEFAULT NULL,
+  `encounter` int(11) DEFAULT NULL,
   `code_text` longtext,
-  `billed` tinyint(1) default NULL,
-  `activity` tinyint(1) default NULL,
-  `payer_id` int(11) default NULL,
-  `bill_process` tinyint(2) NOT NULL default '0',
-  `bill_date` datetime default NULL,
-  `process_date` datetime default NULL,
-  `process_file` varchar(255) default NULL,
-  `modifier` varchar(5) default NULL,
-  `units` tinyint(3) default NULL,
-  `fee` decimal(12,2) default NULL,
-  `justify` varchar(255) default NULL,
-  `target` varchar(30) default NULL,
-  `x12_partner_id` int(11) default NULL,
-  `ndc_info` varchar(255) default NULL,
-  PRIMARY KEY  (`id`),
+  `billed` tinyint(1) DEFAULT NULL,
+  `activity` tinyint(1) DEFAULT NULL,
+  `payer_id` int(11) DEFAULT NULL,
+  `bill_process` tinyint(2) NOT NULL DEFAULT '0',
+  `bill_date` datetime DEFAULT NULL,
+  `process_date` datetime DEFAULT NULL,
+  `process_file` varchar(255) DEFAULT NULL,
+  `modifier` varchar(5) DEFAULT NULL,
+  `units` tinyint(3) DEFAULT NULL,
+  `fee` decimal(12,2) DEFAULT NULL,
+  `justify` varchar(255) DEFAULT NULL,
+  `target` varchar(30) DEFAULT NULL,
+  `x12_partner_id` int(11) DEFAULT NULL,
+  `ndc_info` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
+CREATE TABLE IF NOT EXISTS `calendar_categories` (
+  `catid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `catname` varchar(100) DEFAULT NULL,
+  `catcolor` varchar(50) DEFAULT NULL,
+  `catdesc` text,
+  `duration` bigint(20) NOT NULL DEFAULT '0',
+  `cattype` int(11) NOT NULL COMMENT 'Used in grouping categories',
+  PRIMARY KEY (`catid`),
+  KEY `basic_cat` (`catname`,`catcolor`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+
+INSERT INTO `calendar_categories` (`catid`, `catname`, `catcolor`, `catdesc`, `duration`, `cattype`) VALUES
+(5, 'Office Visit', '#FFFFCC', 'Normal Office Visit', 900, 0),
+(4, 'Vacation', '#EFEFEF', 'Reserved for use to define Scheduled Vacation Time', 0, 1),
+(1, 'No Show', '#DDDDDD', 'Reserved to define when an event did not occur as specified.', 0, 0),
+(2, 'In Office', '#99CCFF', 'Reserved todefine when a provider may haveavailable appointments after.', 0, 1),
+(3, 'Out Of Office', '#99FFFF', 'Reserved to define when a provider may not have available appointments after.', 0, 1),
+(8, 'Lunch', '#FFFF33', 'Lunch', 3600, 1),
+(9, 'Established Patient', '#CCFF33', '', 900, 0),
+(10, 'New Patient', '#CCFFFF', '', 1800, 0),
+(11, 'Reserved', '#FF7777', 'Reserved', 900, 1);
+
+
+CREATE TABLE IF NOT EXISTS `calendar_events` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT 'User Id ',
+  `category` int(11) DEFAULT NULL COMMENT 'Ty of calendar category',
+  `facility` int(11) DEFAULT NULL COMMENT 'faccility id',
+  `billing_facillity` int(11) DEFAULT NULL COMMENT 'billing facility id',
+  `patient_id` int(11) DEFAULT NULL COMMENT 'patient id (pid)',
+  `title` varchar(255) DEFAULT NULL COMMENT 'We are using the patient fullname as the evnet title',
+  `status` varchar(255) DEFAULT NULL COMMENT 'event status',
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  `rrule` varchar(255) DEFAULT NULL COMMENT 'repeatable eventevnet',
+  `loc` varchar(255) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `ad` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+
+
+INSERT INTO `calendar_events` (`id`, `user_id`, `category`, `facility`, `billing_facillity`, `patient_id`, `title`, `status`, `start`, `end`, `rrule`, `loc`, `notes`, `url`, `ad`) VALUES
+(30, 2, 5, 3, 3, 10, 'Miker, Sara', '-', '2011-07-14 03:00:00', '2011-07-14 04:30:00', '', '', '', '', ''),
+(31, 1, 10, 3, 3, 15, 'Weekasd, Adriana', '<', '2011-07-14 03:00:00', '2011-07-14 04:00:00', '', '', 'none', '', ''),
+(32, 1, 1, 3, 3, 5, 'Rodriguez, Ernestito Juan', '', '2011-07-14 04:00:00', '2011-07-14 05:00:00', '', '', 'asjd', '', ''),
+(33, 2, 10, 3, 3, 8, 'Rodriguez, Idalis', '-', '2011-07-14 02:00:00', '2011-07-14 03:00:00', '', '', 'No notes', '', '');
+
+
 CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(11) NOT NULL default '0',
-  `name` varchar(255) default NULL,
-  `value` varchar(255) default NULL,
-  `parent` int(11) NOT NULL default '0',
-  `lft` int(11) NOT NULL default '0',
-  `rght` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `parent` int(11) NOT NULL DEFAULT '0',
+  `lft` int(11) NOT NULL DEFAULT '0',
+  `rght` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `parent` (`parent`),
   KEY `lft` (`lft`,`rght`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -219,81 +291,83 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`) VALUES
 (9, 'Living Will', '', 6, 16, 17),
 (10, 'Patient Photograph', '', 4, 8, 9);
 
+
 CREATE TABLE IF NOT EXISTS `categories_seq` (
-  `id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `categories_seq` (`id`) VALUES
 (10);
 
 CREATE TABLE IF NOT EXISTS `categories_to_documents` (
-  `category_id` int(11) NOT NULL default '0',
-  `document_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`category_id`,`document_id`)
+  `category_id` int(11) NOT NULL DEFAULT '0',
+  `document_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`category_id`,`document_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `chart_tracker` (
   `ct_pid` int(11) NOT NULL,
   `ct_when` datetime NOT NULL,
-  `ct_userid` bigint(20) NOT NULL default '0',
-  `ct_location` varchar(31) NOT NULL default '',
-  PRIMARY KEY  (`ct_pid`,`ct_when`)
+  `ct_userid` bigint(20) NOT NULL DEFAULT '0',
+  `ct_location` varchar(31) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ct_pid`,`ct_when`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `claims` (
   `patient_id` int(11) NOT NULL,
   `encounter_id` int(11) NOT NULL,
-  `version` int(10) unsigned NOT NULL auto_increment,
-  `payer_id` int(11) NOT NULL default '0',
-  `status` tinyint(2) NOT NULL default '0',
-  `payer_type` tinyint(4) NOT NULL default '0',
-  `bill_process` tinyint(2) NOT NULL default '0',
-  `bill_time` datetime default NULL,
-  `process_time` datetime default NULL,
-  `process_file` varchar(255) default NULL,
-  `target` varchar(30) default NULL,
-  `x12_partner_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`patient_id`,`encounter_id`,`version`)
+  `version` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `payer_id` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(2) NOT NULL DEFAULT '0',
+  `payer_type` tinyint(4) NOT NULL DEFAULT '0',
+  `bill_process` tinyint(2) NOT NULL DEFAULT '0',
+  `bill_time` datetime DEFAULT NULL,
+  `process_time` datetime DEFAULT NULL,
+  `process_file` varchar(255) DEFAULT NULL,
+  `target` varchar(30) DEFAULT NULL,
+  `x12_partner_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`patient_id`,`encounter_id`,`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 
 CREATE TABLE IF NOT EXISTS `codes` (
-  `id` int(11) NOT NULL auto_increment,
-  `code_text` varchar(255) NOT NULL default '',
-  `code_text_short` varchar(24) NOT NULL default '',
-  `code` varchar(10) NOT NULL default '',
-  `code_type` tinyint(2) default NULL,
-  `modifier` varchar(5) NOT NULL default '',
-  `units` tinyint(3) default NULL,
-  `fee` decimal(12,2) default NULL,
-  `superbill` varchar(31) NOT NULL default '',
-  `related_code` varchar(255) NOT NULL default '',
-  `taxrates` varchar(255) NOT NULL default '',
-  `cyp_factor` float NOT NULL default '0' COMMENT 'quantity representing a years supply',
-  `active` tinyint(1) default '1' COMMENT '0 = inactive, 1 = active',
-  `reportable` tinyint(1) default '0' COMMENT '0 = non-reportable, 1 = reportable',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code_text` varchar(255) NOT NULL DEFAULT '',
+  `code_text_short` varchar(24) NOT NULL DEFAULT '',
+  `code` varchar(10) NOT NULL DEFAULT '',
+  `code_type` tinyint(2) DEFAULT NULL,
+  `modifier` varchar(5) NOT NULL DEFAULT '',
+  `units` tinyint(3) DEFAULT NULL,
+  `fee` decimal(12,2) DEFAULT NULL,
+  `superbill` varchar(31) NOT NULL DEFAULT '',
+  `related_code` varchar(255) NOT NULL DEFAULT '',
+  `taxrates` varchar(255) NOT NULL DEFAULT '',
+  `cyp_factor` float NOT NULL DEFAULT '0' COMMENT 'quantity representing a years supply',
+  `active` tinyint(1) DEFAULT '1' COMMENT '0 = inactive, 1 = active',
+  `reportable` tinyint(1) DEFAULT '0' COMMENT '0 = non-reportable, 1 = reportable',
+  PRIMARY KEY (`id`),
   KEY `code` (`code`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14316 ;
 
 
 CREATE TABLE IF NOT EXISTS `code_types` (
   `ct_key` varchar(15) NOT NULL COMMENT 'short alphanumeric name',
   `ct_id` int(11) NOT NULL COMMENT 'numeric identifier',
-  `ct_seq` int(11) NOT NULL default '0' COMMENT 'sort order',
-  `ct_mod` int(11) NOT NULL default '0' COMMENT 'length of modifier field',
-  `ct_just` varchar(15) NOT NULL default '' COMMENT 'ct_key of justify type, if any',
-  `ct_mask` varchar(9) NOT NULL default '' COMMENT 'formatting mask for code values',
-  `ct_fee` tinyint(1) NOT NULL default '0' COMMENT '1 if fees are used',
-  `ct_rel` tinyint(1) NOT NULL default '0' COMMENT '1 if can relate to other code types',
-  `ct_nofs` tinyint(1) NOT NULL default '0' COMMENT '1 if to be hidden in the fee sheet',
-  `ct_diag` tinyint(1) NOT NULL default '0' COMMENT '1 if this is a diagnosis type',
-  PRIMARY KEY  (`ct_key`),
+  `ct_seq` int(11) NOT NULL DEFAULT '0' COMMENT 'sort order',
+  `ct_mod` int(11) NOT NULL DEFAULT '0' COMMENT 'length of modifier field',
+  `ct_just` varchar(15) NOT NULL DEFAULT '' COMMENT 'ct_key of justify type, if any',
+  `ct_mask` varchar(9) NOT NULL DEFAULT '' COMMENT 'formatting mask for code values',
+  `ct_fee` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 if fees are used',
+  `ct_rel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 if can relate to other code types',
+  `ct_nofs` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 if to be hidden in the fee sheet',
+  `ct_diag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 if this is a diagnosis type',
+  PRIMARY KEY (`ct_key`),
   UNIQUE KEY `ct_id` (`ct_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`) VALUES
 ('ICD9', 2, 1, 2, '', '', 0, 0, 0, 1),
@@ -301,40 +375,41 @@ INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_
 ('HCPCS', 3, 3, 2, 'ICD9', '', 1, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `config` (
-  `id` int(11) NOT NULL default '0',
-  `name` varchar(255) default NULL,
-  `value` varchar(255) default NULL,
-  `parent` int(11) NOT NULL default '0',
-  `lft` int(11) NOT NULL default '0',
-  `rght` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `parent` int(11) NOT NULL DEFAULT '0',
+  `lft` int(11) NOT NULL DEFAULT '0',
+  `rght` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `parent` (`parent`),
   KEY `lft` (`lft`,`rght`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE IF NOT EXISTS `config_seq` (
-  `id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `config_seq` (`id`) VALUES
 (0);
 
+
 CREATE TABLE IF NOT EXISTS `documents` (
-  `id` int(11) NOT NULL default '0',
-  `type` enum('file_url','blob','web_url') default NULL,
-  `size` int(11) default NULL,
-  `date` datetime default NULL,
-  `url` varchar(255) default NULL,
-  `mimetype` varchar(255) default NULL,
-  `pages` int(11) default NULL,
-  `owner` int(11) default NULL,
-  `revision` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `foreign_id` int(11) default NULL,
-  `docdate` date default NULL,
-  `list_id` bigint(20) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL DEFAULT '0',
+  `type` enum('file_url','blob','web_url') DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `mimetype` varchar(255) DEFAULT NULL,
+  `pages` int(11) DEFAULT NULL,
+  `owner` int(11) DEFAULT NULL,
+  `revision` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `foreign_id` int(11) DEFAULT NULL,
+  `docdate` date DEFAULT NULL,
+  `list_id` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `revision` (`revision`),
   KEY `foreign_id` (`foreign_id`),
   KEY `owner` (`owner`)
@@ -342,162 +417,170 @@ CREATE TABLE IF NOT EXISTS `documents` (
 
 
 CREATE TABLE IF NOT EXISTS `drugs` (
-  `drug_id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) NOT NULL default '',
-  `ndc_number` varchar(20) NOT NULL default '',
-  `on_order` int(11) NOT NULL default '0',
-  `reorder_point` int(11) NOT NULL default '0',
-  `last_notify` date NOT NULL default '0000-00-00',
+  `drug_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `ndc_number` varchar(20) NOT NULL DEFAULT '',
+  `on_order` int(11) NOT NULL DEFAULT '0',
+  `reorder_point` int(11) NOT NULL DEFAULT '0',
+  `last_notify` date NOT NULL DEFAULT '0000-00-00',
   `reactions` text,
-  `form` int(3) NOT NULL default '0',
-  `size` float unsigned NOT NULL default '0',
-  `unit` int(11) NOT NULL default '0',
-  `route` int(11) NOT NULL default '0',
-  `substitute` int(11) NOT NULL default '0',
-  `related_code` varchar(255) NOT NULL default '' COMMENT 'may reference a related codes.code',
-  `cyp_factor` float NOT NULL default '0' COMMENT 'quantity representing a years supply',
-  `active` tinyint(1) default '1' COMMENT '0 = inactive, 1 = active',
-  `allow_combining` tinyint(1) NOT NULL default '0' COMMENT '1 = allow filling an order from multiple lots',
-  `allow_multiple` tinyint(1) NOT NULL default '1' COMMENT '1 = allow multiple lots at one warehouse',
-  PRIMARY KEY  (`drug_id`)
+  `form` int(3) NOT NULL DEFAULT '0',
+  `size` float unsigned NOT NULL DEFAULT '0',
+  `unit` int(11) NOT NULL DEFAULT '0',
+  `route` int(11) NOT NULL DEFAULT '0',
+  `substitute` int(11) NOT NULL DEFAULT '0',
+  `related_code` varchar(255) NOT NULL DEFAULT '' COMMENT 'may reference a related codes.code',
+  `cyp_factor` float NOT NULL DEFAULT '0' COMMENT 'quantity representing a years supply',
+  `active` tinyint(1) DEFAULT '1' COMMENT '0 = inactive, 1 = active',
+  `allow_combining` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = allow filling an order from multiple lots',
+  `allow_multiple` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 = allow multiple lots at one warehouse',
+  PRIMARY KEY (`drug_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `drug_inventory` (
-  `inventory_id` int(11) NOT NULL auto_increment,
+  `inventory_id` int(11) NOT NULL AUTO_INCREMENT,
   `drug_id` int(11) NOT NULL,
-  `lot_number` varchar(20) default NULL,
-  `expiration` date default NULL,
-  `manufacturer` varchar(255) default NULL,
-  `on_hand` int(11) NOT NULL default '0',
-  `warehouse_id` varchar(31) NOT NULL default '',
-  `vendor_id` bigint(20) NOT NULL default '0',
-  `last_notify` date NOT NULL default '0000-00-00',
-  `destroy_date` date default NULL,
-  `destroy_method` varchar(255) default NULL,
-  `destroy_witness` varchar(255) default NULL,
-  `destroy_notes` varchar(255) default NULL,
-  PRIMARY KEY  (`inventory_id`)
+  `lot_number` varchar(20) DEFAULT NULL,
+  `expiration` date DEFAULT NULL,
+  `manufacturer` varchar(255) DEFAULT NULL,
+  `on_hand` int(11) NOT NULL DEFAULT '0',
+  `warehouse_id` varchar(31) NOT NULL DEFAULT '',
+  `vendor_id` bigint(20) NOT NULL DEFAULT '0',
+  `last_notify` date NOT NULL DEFAULT '0000-00-00',
+  `destroy_date` date DEFAULT NULL,
+  `destroy_method` varchar(255) DEFAULT NULL,
+  `destroy_witness` varchar(255) DEFAULT NULL,
+  `destroy_notes` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`inventory_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `drug_sales` (
-  `sale_id` int(11) NOT NULL auto_increment,
+  `sale_id` int(11) NOT NULL AUTO_INCREMENT,
   `drug_id` int(11) NOT NULL,
   `inventory_id` int(11) NOT NULL,
-  `prescription_id` int(11) NOT NULL default '0',
-  `pid` int(11) NOT NULL default '0',
-  `encounter` int(11) NOT NULL default '0',
-  `user` varchar(255) default NULL,
+  `prescription_id` int(11) NOT NULL DEFAULT '0',
+  `pid` int(11) NOT NULL DEFAULT '0',
+  `encounter` int(11) NOT NULL DEFAULT '0',
+  `user` varchar(255) DEFAULT NULL,
   `sale_date` date NOT NULL,
-  `quantity` int(11) NOT NULL default '0',
-  `fee` decimal(12,2) NOT NULL default '0.00',
-  `billed` tinyint(1) NOT NULL default '0' COMMENT 'indicates if the sale is posted to accounting',
-  `xfer_inventory_id` int(11) NOT NULL default '0',
-  `distributor_id` bigint(20) NOT NULL default '0' COMMENT 'references users.id',
-  `notes` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`sale_id`)
+  `quantity` int(11) NOT NULL DEFAULT '0',
+  `fee` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `billed` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'indicates if the sale is posted to accounting',
+  `xfer_inventory_id` int(11) NOT NULL DEFAULT '0',
+  `distributor_id` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references users.id',
+  `notes` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`sale_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `drug_templates` (
   `drug_id` int(11) NOT NULL,
-  `selector` varchar(255) NOT NULL default '',
-  `dosage` varchar(10) default NULL,
-  `period` int(11) NOT NULL default '0',
-  `quantity` int(11) NOT NULL default '0',
-  `refills` int(11) NOT NULL default '0',
-  `taxrates` varchar(255) default NULL,
-  PRIMARY KEY  (`drug_id`,`selector`)
+  `selector` varchar(255) NOT NULL DEFAULT '',
+  `dosage` varchar(10) DEFAULT NULL,
+  `period` int(11) NOT NULL DEFAULT '0',
+  `quantity` int(11) NOT NULL DEFAULT '0',
+  `refills` int(11) NOT NULL DEFAULT '0',
+  `taxrates` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`drug_id`,`selector`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `eligibility_response` (
-  `response_id` bigint(20) NOT NULL auto_increment,
-  `response_description` varchar(255) default NULL,
-  `response_status` enum('A','D') NOT NULL default 'A',
-  `response_vendor_id` bigint(20) default NULL,
-  `response_create_date` date default NULL,
-  `response_modify_date` date default NULL,
-  PRIMARY KEY  (`response_id`)
+  `response_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `response_description` varchar(255) DEFAULT NULL,
+  `response_status` enum('A','D') NOT NULL DEFAULT 'A',
+  `response_vendor_id` bigint(20) DEFAULT NULL,
+  `response_create_date` date DEFAULT NULL,
+  `response_modify_date` date DEFAULT NULL,
+  PRIMARY KEY (`response_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `eligibility_verification` (
-  `verification_id` bigint(20) NOT NULL auto_increment,
-  `response_id` bigint(20) default NULL,
-  `insurance_id` bigint(20) default NULL,
-  `eligibility_check_date` datetime default NULL,
-  `copay` int(11) default NULL,
-  `deductible` int(11) default NULL,
-  `deductiblemet` enum('Y','N') default 'Y',
-  `create_date` date default NULL,
-  PRIMARY KEY  (`verification_id`),
+  `verification_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `response_id` bigint(20) DEFAULT NULL,
+  `insurance_id` bigint(20) DEFAULT NULL,
+  `eligibility_check_date` datetime DEFAULT NULL,
+  `copay` int(11) DEFAULT NULL,
+  `deductible` int(11) DEFAULT NULL,
+  `deductiblemet` enum('Y','N') DEFAULT 'Y',
+  `create_date` date DEFAULT NULL,
+  PRIMARY KEY (`verification_id`),
   KEY `insurance_id` (`insurance_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `employer_data` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `name` varchar(255) default NULL,
-  `street` varchar(255) default NULL,
-  `postal_code` varchar(255) default NULL,
-  `city` varchar(255) default NULL,
-  `state` varchar(255) default NULL,
-  `country` varchar(255) default NULL,
-  `date` datetime default NULL,
-  `pid` bigint(20) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `postal_code` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `pid` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
 
 INSERT INTO `employer_data` (`id`, `name`, `street`, `postal_code`, `city`, `state`, `country`, `date`, `pid`) VALUES
 (1, '', '', '', '', '', '', '2011-01-23 18:13:42', 1),
 (2, '', '', '', '', '', '', '2011-01-23 18:15:01', 2);
 
+
+
 CREATE TABLE IF NOT EXISTS `extended_log` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `event` varchar(255) default NULL,
-  `user` varchar(255) default NULL,
-  `recipient` varchar(255) default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `event` varchar(255) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `recipient` varchar(255) DEFAULT NULL,
   `description` longtext,
-  `patient_id` bigint(20) default NULL,
-  PRIMARY KEY  (`id`)
+  `patient_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `facility` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) default NULL,
-  `phone` varchar(30) default NULL,
-  `fax` varchar(30) default NULL,
-  `street` varchar(255) default NULL,
-  `city` varchar(255) default NULL,
-  `state` varchar(50) default NULL,
-  `postal_code` varchar(11) default NULL,
-  `country_code` varchar(10) default NULL,
-  `federal_ein` varchar(15) default NULL,
-  `service_location` tinyint(1) NOT NULL default '1',
-  `billing_location` tinyint(1) NOT NULL default '0',
-  `accepts_assignment` tinyint(1) NOT NULL default '0',
-  `pos_code` tinyint(4) default NULL,
-  `x12_sender_id` varchar(25) default NULL,
-  `attn` varchar(65) default NULL,
-  `domain_identifier` varchar(60) default NULL,
-  `facility_npi` varchar(15) default NULL,
-  `tax_id_type` varchar(31) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `fax` varchar(30) DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(50) DEFAULT NULL,
+  `postal_code` varchar(11) DEFAULT NULL,
+  `country_code` varchar(10) DEFAULT NULL,
+  `federal_ein` varchar(15) DEFAULT NULL,
+  `service_location` tinyint(1) NOT NULL DEFAULT '1',
+  `billing_location` tinyint(1) NOT NULL DEFAULT '0',
+  `accepts_assignment` tinyint(1) NOT NULL DEFAULT '0',
+  `pos_code` tinyint(4) DEFAULT NULL,
+  `x12_sender_id` varchar(25) DEFAULT NULL,
+  `attn` varchar(65) DEFAULT NULL,
+  `domain_identifier` varchar(60) DEFAULT NULL,
+  `facility_npi` varchar(15) DEFAULT NULL,
+  `tax_id_type` varchar(31) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+
 
 INSERT INTO `facility` (`id`, `name`, `phone`, `fax`, `street`, `city`, `state`, `postal_code`, `country_code`, `federal_ein`, `service_location`, `billing_location`, `accepts_assignment`, `pos_code`, `x12_sender_id`, `attn`, `domain_identifier`, `facility_npi`, `tax_id_type`) VALUES
-(3, 'Gino Clinic', '000-000-0000', '000-000-0000', '', '', '', '', '', '', 1, 1, 1, 0, '', '', '', '546353253', 'EI');
+(3, 'Your Clinic''s', '000-000-0000', '000-000-0000', '', '', '', '', '', '', 1, 1, 1, 0, '', '', '', '546353253', 'EI');
+
+
 
 CREATE TABLE IF NOT EXISTS `fee_sheet_options` (
-  `fs_category` varchar(63) default NULL,
-  `fs_option` varchar(63) default NULL,
-  `fs_codes` varchar(255) default NULL
+  `fs_category` varchar(63) DEFAULT NULL,
+  `fs_option` varchar(63) DEFAULT NULL,
+  `fs_codes` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 
 INSERT INTO `fee_sheet_options` (`fs_category`, `fs_option`, `fs_codes`) VALUES
 ('1New Patient', '1Brief', 'CPT4|99201|'),
@@ -511,407 +594,408 @@ INSERT INTO `fee_sheet_options` (`fs_category`, `fs_option`, `fs_codes`) VALUES
 ('2Established Patient', '4Extended', 'CPT4|99214|'),
 ('2Established Patient', '5Comprehensive', 'CPT4|99215|');
 
+
 CREATE TABLE IF NOT EXISTS `forms` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `encounter` bigint(20) default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `encounter` bigint(20) DEFAULT NULL,
   `form_name` longtext,
-  `form_id` bigint(20) default NULL,
-  `pid` bigint(20) default NULL,
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `authorized` tinyint(4) default NULL,
-  `deleted` tinyint(4) NOT NULL default '0' COMMENT 'flag indicates form has been deleted',
+  `form_id` bigint(20) DEFAULT NULL,
+  `pid` bigint(20) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `authorized` tinyint(4) DEFAULT NULL,
+  `deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'flag indicates form has been deleted',
   `formdir` longtext,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `form_dictation` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `pid` bigint(20) default NULL,
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `authorized` tinyint(4) default NULL,
-  `activity` tinyint(4) default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `pid` bigint(20) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `authorized` tinyint(4) DEFAULT NULL,
+  `activity` tinyint(4) DEFAULT NULL,
   `dictation` longtext,
   `additional_notes` longtext,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `form_encounter` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
   `reason` longtext,
   `facility` longtext,
-  `facility_id` int(11) NOT NULL default '0',
-  `pid` bigint(20) default NULL,
-  `encounter` bigint(20) default NULL,
-  `onset_date` datetime default NULL,
-  `sensitivity` varchar(30) default NULL,
+  `facility_id` int(11) NOT NULL DEFAULT '0',
+  `pid` bigint(20) DEFAULT NULL,
+  `encounter` bigint(20) DEFAULT NULL,
+  `onset_date` datetime DEFAULT NULL,
+  `sensitivity` varchar(30) DEFAULT NULL,
   `billing_note` text,
-  `pc_catid` int(11) NOT NULL default '5' COMMENT 'event category from openemr_postcalendar_categories',
-  `last_level_billed` int(11) NOT NULL default '0' COMMENT '0=none, 1=ins1, 2=ins2, etc',
-  `last_level_closed` int(11) NOT NULL default '0' COMMENT '0=none, 1=ins1, 2=ins2, etc',
-  `last_stmt_date` date default NULL,
-  `stmt_count` int(11) NOT NULL default '0',
-  `provider_id` int(11) default '0' COMMENT 'default and main provider for this visit',
-  `supervisor_id` int(11) default '0' COMMENT 'supervising provider, if any, for this visit',
-  `invoice_refno` varchar(31) NOT NULL default '',
-  `referral_source` varchar(31) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `pc_catid` int(11) NOT NULL DEFAULT '5' COMMENT 'event category from openemr_postcalendar_categories',
+  `last_level_billed` int(11) NOT NULL DEFAULT '0' COMMENT '0=none, 1=ins1, 2=ins2, etc',
+  `last_level_closed` int(11) NOT NULL DEFAULT '0' COMMENT '0=none, 1=ins1, 2=ins2, etc',
+  `last_stmt_date` date DEFAULT NULL,
+  `stmt_count` int(11) NOT NULL DEFAULT '0',
+  `provider_id` int(11) DEFAULT '0' COMMENT 'default and main provider for this visit',
+  `supervisor_id` int(11) DEFAULT '0' COMMENT 'supervising provider, if any, for this visit',
+  `invoice_refno` varchar(31) NOT NULL DEFAULT '',
+  `referral_source` varchar(31) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `form_misc_billing_options` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `pid` bigint(20) default NULL,
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `authorized` tinyint(4) default NULL,
-  `activity` tinyint(4) default NULL,
-  `employment_related` tinyint(1) default NULL,
-  `auto_accident` tinyint(1) default NULL,
-  `accident_state` varchar(2) default NULL,
-  `other_accident` tinyint(1) default NULL,
-  `outside_lab` tinyint(1) default NULL,
-  `lab_amount` decimal(5,2) default NULL,
-  `is_unable_to_work` tinyint(1) default NULL,
-  `off_work_from` date default NULL,
-  `off_work_to` date default NULL,
-  `is_hospitalized` tinyint(1) default NULL,
-  `hospitalization_date_from` date default NULL,
-  `hospitalization_date_to` date default NULL,
-  `medicaid_resubmission_code` varchar(10) default NULL,
-  `medicaid_original_reference` varchar(15) default NULL,
-  `prior_auth_number` varchar(20) default NULL,
-  `comments` varchar(255) default NULL,
-  `replacement_claim` tinyint(1) default '0',
-  PRIMARY KEY  (`id`)
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `pid` bigint(20) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `authorized` tinyint(4) DEFAULT NULL,
+  `activity` tinyint(4) DEFAULT NULL,
+  `employment_related` tinyint(1) DEFAULT NULL,
+  `auto_accident` tinyint(1) DEFAULT NULL,
+  `accident_state` varchar(2) DEFAULT NULL,
+  `other_accident` tinyint(1) DEFAULT NULL,
+  `outside_lab` tinyint(1) DEFAULT NULL,
+  `lab_amount` decimal(5,2) DEFAULT NULL,
+  `is_unable_to_work` tinyint(1) DEFAULT NULL,
+  `off_work_from` date DEFAULT NULL,
+  `off_work_to` date DEFAULT NULL,
+  `is_hospitalized` tinyint(1) DEFAULT NULL,
+  `hospitalization_date_from` date DEFAULT NULL,
+  `hospitalization_date_to` date DEFAULT NULL,
+  `medicaid_resubmission_code` varchar(10) DEFAULT NULL,
+  `medicaid_original_reference` varchar(15) DEFAULT NULL,
+  `prior_auth_number` varchar(20) DEFAULT NULL,
+  `comments` varchar(255) DEFAULT NULL,
+  `replacement_claim` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `form_reviewofs` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `pid` bigint(20) default NULL,
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `authorized` tinyint(4) default NULL,
-  `activity` tinyint(4) default NULL,
-  `fever` varchar(5) default NULL,
-  `chills` varchar(5) default NULL,
-  `night_sweats` varchar(5) default NULL,
-  `weight_loss` varchar(5) default NULL,
-  `poor_appetite` varchar(5) default NULL,
-  `insomnia` varchar(5) default NULL,
-  `fatigued` varchar(5) default NULL,
-  `depressed` varchar(5) default NULL,
-  `hyperactive` varchar(5) default NULL,
-  `exposure_to_foreign_countries` varchar(5) default NULL,
-  `cataracts` varchar(5) default NULL,
-  `cataract_surgery` varchar(5) default NULL,
-  `glaucoma` varchar(5) default NULL,
-  `double_vision` varchar(5) default NULL,
-  `blurred_vision` varchar(5) default NULL,
-  `poor_hearing` varchar(5) default NULL,
-  `headaches` varchar(5) default NULL,
-  `ringing_in_ears` varchar(5) default NULL,
-  `bloody_nose` varchar(5) default NULL,
-  `sinusitis` varchar(5) default NULL,
-  `sinus_surgery` varchar(5) default NULL,
-  `dry_mouth` varchar(5) default NULL,
-  `strep_throat` varchar(5) default NULL,
-  `tonsillectomy` varchar(5) default NULL,
-  `swollen_lymph_nodes` varchar(5) default NULL,
-  `throat_cancer` varchar(5) default NULL,
-  `throat_cancer_surgery` varchar(5) default NULL,
-  `heart_attack` varchar(5) default NULL,
-  `irregular_heart_beat` varchar(5) default NULL,
-  `chest_pains` varchar(5) default NULL,
-  `shortness_of_breath` varchar(5) default NULL,
-  `high_blood_pressure` varchar(5) default NULL,
-  `heart_failure` varchar(5) default NULL,
-  `poor_circulation` varchar(5) default NULL,
-  `vascular_surgery` varchar(5) default NULL,
-  `cardiac_catheterization` varchar(5) default NULL,
-  `coronary_artery_bypass` varchar(5) default NULL,
-  `heart_transplant` varchar(5) default NULL,
-  `stress_test` varchar(5) default NULL,
-  `emphysema` varchar(5) default NULL,
-  `chronic_bronchitis` varchar(5) default NULL,
-  `interstitial_lung_disease` varchar(5) default NULL,
-  `shortness_of_breath_2` varchar(5) default NULL,
-  `lung_cancer` varchar(5) default NULL,
-  `lung_cancer_surgery` varchar(5) default NULL,
-  `pheumothorax` varchar(5) default NULL,
-  `stomach_pains` varchar(5) default NULL,
-  `peptic_ulcer_disease` varchar(5) default NULL,
-  `gastritis` varchar(5) default NULL,
-  `endoscopy` varchar(5) default NULL,
-  `polyps` varchar(5) default NULL,
-  `colonoscopy` varchar(5) default NULL,
-  `colon_cancer` varchar(5) default NULL,
-  `colon_cancer_surgery` varchar(5) default NULL,
-  `ulcerative_colitis` varchar(5) default NULL,
-  `crohns_disease` varchar(5) default NULL,
-  `appendectomy` varchar(5) default NULL,
-  `divirticulitis` varchar(5) default NULL,
-  `divirticulitis_surgery` varchar(5) default NULL,
-  `gall_stones` varchar(5) default NULL,
-  `cholecystectomy` varchar(5) default NULL,
-  `hepatitis` varchar(5) default NULL,
-  `cirrhosis_of_the_liver` varchar(5) default NULL,
-  `splenectomy` varchar(5) default NULL,
-  `kidney_failure` varchar(5) default NULL,
-  `kidney_stones` varchar(5) default NULL,
-  `kidney_cancer` varchar(5) default NULL,
-  `kidney_infections` varchar(5) default NULL,
-  `bladder_infections` varchar(5) default NULL,
-  `bladder_cancer` varchar(5) default NULL,
-  `prostate_problems` varchar(5) default NULL,
-  `prostate_cancer` varchar(5) default NULL,
-  `kidney_transplant` varchar(5) default NULL,
-  `sexually_transmitted_disease` varchar(5) default NULL,
-  `burning_with_urination` varchar(5) default NULL,
-  `discharge_from_urethra` varchar(5) default NULL,
-  `rashes` varchar(5) default NULL,
-  `infections` varchar(5) default NULL,
-  `ulcerations` varchar(5) default NULL,
-  `pemphigus` varchar(5) default NULL,
-  `herpes` varchar(5) default NULL,
-  `osetoarthritis` varchar(5) default NULL,
-  `rheumotoid_arthritis` varchar(5) default NULL,
-  `lupus` varchar(5) default NULL,
-  `ankylosing_sondlilitis` varchar(5) default NULL,
-  `swollen_joints` varchar(5) default NULL,
-  `stiff_joints` varchar(5) default NULL,
-  `broken_bones` varchar(5) default NULL,
-  `neck_problems` varchar(5) default NULL,
-  `back_problems` varchar(5) default NULL,
-  `back_surgery` varchar(5) default NULL,
-  `scoliosis` varchar(5) default NULL,
-  `herniated_disc` varchar(5) default NULL,
-  `shoulder_problems` varchar(5) default NULL,
-  `elbow_problems` varchar(5) default NULL,
-  `wrist_problems` varchar(5) default NULL,
-  `hand_problems` varchar(5) default NULL,
-  `hip_problems` varchar(5) default NULL,
-  `knee_problems` varchar(5) default NULL,
-  `ankle_problems` varchar(5) default NULL,
-  `foot_problems` varchar(5) default NULL,
-  `insulin_dependent_diabetes` varchar(5) default NULL,
-  `noninsulin_dependent_diabetes` varchar(5) default NULL,
-  `hypothyroidism` varchar(5) default NULL,
-  `hyperthyroidism` varchar(5) default NULL,
-  `cushing_syndrom` varchar(5) default NULL,
-  `addison_syndrom` varchar(5) default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `pid` bigint(20) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `authorized` tinyint(4) DEFAULT NULL,
+  `activity` tinyint(4) DEFAULT NULL,
+  `fever` varchar(5) DEFAULT NULL,
+  `chills` varchar(5) DEFAULT NULL,
+  `night_sweats` varchar(5) DEFAULT NULL,
+  `weight_loss` varchar(5) DEFAULT NULL,
+  `poor_appetite` varchar(5) DEFAULT NULL,
+  `insomnia` varchar(5) DEFAULT NULL,
+  `fatigued` varchar(5) DEFAULT NULL,
+  `depressed` varchar(5) DEFAULT NULL,
+  `hyperactive` varchar(5) DEFAULT NULL,
+  `exposure_to_foreign_countries` varchar(5) DEFAULT NULL,
+  `cataracts` varchar(5) DEFAULT NULL,
+  `cataract_surgery` varchar(5) DEFAULT NULL,
+  `glaucoma` varchar(5) DEFAULT NULL,
+  `double_vision` varchar(5) DEFAULT NULL,
+  `blurred_vision` varchar(5) DEFAULT NULL,
+  `poor_hearing` varchar(5) DEFAULT NULL,
+  `headaches` varchar(5) DEFAULT NULL,
+  `ringing_in_ears` varchar(5) DEFAULT NULL,
+  `bloody_nose` varchar(5) DEFAULT NULL,
+  `sinusitis` varchar(5) DEFAULT NULL,
+  `sinus_surgery` varchar(5) DEFAULT NULL,
+  `dry_mouth` varchar(5) DEFAULT NULL,
+  `strep_throat` varchar(5) DEFAULT NULL,
+  `tonsillectomy` varchar(5) DEFAULT NULL,
+  `swollen_lymph_nodes` varchar(5) DEFAULT NULL,
+  `throat_cancer` varchar(5) DEFAULT NULL,
+  `throat_cancer_surgery` varchar(5) DEFAULT NULL,
+  `heart_attack` varchar(5) DEFAULT NULL,
+  `irregular_heart_beat` varchar(5) DEFAULT NULL,
+  `chest_pains` varchar(5) DEFAULT NULL,
+  `shortness_of_breath` varchar(5) DEFAULT NULL,
+  `high_blood_pressure` varchar(5) DEFAULT NULL,
+  `heart_failure` varchar(5) DEFAULT NULL,
+  `poor_circulation` varchar(5) DEFAULT NULL,
+  `vascular_surgery` varchar(5) DEFAULT NULL,
+  `cardiac_catheterization` varchar(5) DEFAULT NULL,
+  `coronary_artery_bypass` varchar(5) DEFAULT NULL,
+  `heart_transplant` varchar(5) DEFAULT NULL,
+  `stress_test` varchar(5) DEFAULT NULL,
+  `emphysema` varchar(5) DEFAULT NULL,
+  `chronic_bronchitis` varchar(5) DEFAULT NULL,
+  `interstitial_lung_disease` varchar(5) DEFAULT NULL,
+  `shortness_of_breath_2` varchar(5) DEFAULT NULL,
+  `lung_cancer` varchar(5) DEFAULT NULL,
+  `lung_cancer_surgery` varchar(5) DEFAULT NULL,
+  `pheumothorax` varchar(5) DEFAULT NULL,
+  `stomach_pains` varchar(5) DEFAULT NULL,
+  `peptic_ulcer_disease` varchar(5) DEFAULT NULL,
+  `gastritis` varchar(5) DEFAULT NULL,
+  `endoscopy` varchar(5) DEFAULT NULL,
+  `polyps` varchar(5) DEFAULT NULL,
+  `colonoscopy` varchar(5) DEFAULT NULL,
+  `colon_cancer` varchar(5) DEFAULT NULL,
+  `colon_cancer_surgery` varchar(5) DEFAULT NULL,
+  `ulcerative_colitis` varchar(5) DEFAULT NULL,
+  `crohns_disease` varchar(5) DEFAULT NULL,
+  `appendectomy` varchar(5) DEFAULT NULL,
+  `divirticulitis` varchar(5) DEFAULT NULL,
+  `divirticulitis_surgery` varchar(5) DEFAULT NULL,
+  `gall_stones` varchar(5) DEFAULT NULL,
+  `cholecystectomy` varchar(5) DEFAULT NULL,
+  `hepatitis` varchar(5) DEFAULT NULL,
+  `cirrhosis_of_the_liver` varchar(5) DEFAULT NULL,
+  `splenectomy` varchar(5) DEFAULT NULL,
+  `kidney_failure` varchar(5) DEFAULT NULL,
+  `kidney_stones` varchar(5) DEFAULT NULL,
+  `kidney_cancer` varchar(5) DEFAULT NULL,
+  `kidney_infections` varchar(5) DEFAULT NULL,
+  `bladder_infections` varchar(5) DEFAULT NULL,
+  `bladder_cancer` varchar(5) DEFAULT NULL,
+  `prostate_problems` varchar(5) DEFAULT NULL,
+  `prostate_cancer` varchar(5) DEFAULT NULL,
+  `kidney_transplant` varchar(5) DEFAULT NULL,
+  `sexually_transmitted_disease` varchar(5) DEFAULT NULL,
+  `burning_with_urination` varchar(5) DEFAULT NULL,
+  `discharge_from_urethra` varchar(5) DEFAULT NULL,
+  `rashes` varchar(5) DEFAULT NULL,
+  `infections` varchar(5) DEFAULT NULL,
+  `ulcerations` varchar(5) DEFAULT NULL,
+  `pemphigus` varchar(5) DEFAULT NULL,
+  `herpes` varchar(5) DEFAULT NULL,
+  `osetoarthritis` varchar(5) DEFAULT NULL,
+  `rheumotoid_arthritis` varchar(5) DEFAULT NULL,
+  `lupus` varchar(5) DEFAULT NULL,
+  `ankylosing_sondlilitis` varchar(5) DEFAULT NULL,
+  `swollen_joints` varchar(5) DEFAULT NULL,
+  `stiff_joints` varchar(5) DEFAULT NULL,
+  `broken_bones` varchar(5) DEFAULT NULL,
+  `neck_problems` varchar(5) DEFAULT NULL,
+  `back_problems` varchar(5) DEFAULT NULL,
+  `back_surgery` varchar(5) DEFAULT NULL,
+  `scoliosis` varchar(5) DEFAULT NULL,
+  `herniated_disc` varchar(5) DEFAULT NULL,
+  `shoulder_problems` varchar(5) DEFAULT NULL,
+  `elbow_problems` varchar(5) DEFAULT NULL,
+  `wrist_problems` varchar(5) DEFAULT NULL,
+  `hand_problems` varchar(5) DEFAULT NULL,
+  `hip_problems` varchar(5) DEFAULT NULL,
+  `knee_problems` varchar(5) DEFAULT NULL,
+  `ankle_problems` varchar(5) DEFAULT NULL,
+  `foot_problems` varchar(5) DEFAULT NULL,
+  `insulin_dependent_diabetes` varchar(5) DEFAULT NULL,
+  `noninsulin_dependent_diabetes` varchar(5) DEFAULT NULL,
+  `hypothyroidism` varchar(5) DEFAULT NULL,
+  `hyperthyroidism` varchar(5) DEFAULT NULL,
+  `cushing_syndrom` varchar(5) DEFAULT NULL,
+  `addison_syndrom` varchar(5) DEFAULT NULL,
   `additional_notes` longtext,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `form_ros` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
-  `activity` int(11) NOT NULL default '1',
-  `date` datetime default NULL,
-  `weight_change` varchar(3) default NULL,
-  `weakness` varchar(3) default NULL,
-  `fatigue` varchar(3) default NULL,
-  `anorexia` varchar(3) default NULL,
-  `fever` varchar(3) default NULL,
-  `chills` varchar(3) default NULL,
-  `night_sweats` varchar(3) default NULL,
-  `insomnia` varchar(3) default NULL,
-  `irritability` varchar(3) default NULL,
-  `heat_or_cold` varchar(3) default NULL,
-  `intolerance` varchar(3) default NULL,
-  `change_in_vision` varchar(3) default NULL,
-  `glaucoma_history` varchar(3) default NULL,
-  `eye_pain` varchar(3) default NULL,
-  `irritation` varchar(3) default NULL,
-  `redness` varchar(3) default NULL,
-  `excessive_tearing` varchar(3) default NULL,
-  `double_vision` varchar(3) default NULL,
-  `blind_spots` varchar(3) default NULL,
-  `photophobia` varchar(3) default NULL,
-  `hearing_loss` varchar(3) default NULL,
-  `discharge` varchar(3) default NULL,
-  `pain` varchar(3) default NULL,
-  `vertigo` varchar(3) default NULL,
-  `tinnitus` varchar(3) default NULL,
-  `frequent_colds` varchar(3) default NULL,
-  `sore_throat` varchar(3) default NULL,
-  `sinus_problems` varchar(3) default NULL,
-  `post_nasal_drip` varchar(3) default NULL,
-  `nosebleed` varchar(3) default NULL,
-  `snoring` varchar(3) default NULL,
-  `apnea` varchar(3) default NULL,
-  `breast_mass` varchar(3) default NULL,
-  `breast_discharge` varchar(3) default NULL,
-  `biopsy` varchar(3) default NULL,
-  `abnormal_mammogram` varchar(3) default NULL,
-  `cough` varchar(3) default NULL,
-  `sputum` varchar(3) default NULL,
-  `shortness_of_breath` varchar(3) default NULL,
-  `wheezing` varchar(3) default NULL,
-  `hemoptsyis` varchar(3) default NULL,
-  `asthma` varchar(3) default NULL,
-  `copd` varchar(3) default NULL,
-  `chest_pain` varchar(3) default NULL,
-  `palpitation` varchar(3) default NULL,
-  `syncope` varchar(3) default NULL,
-  `pnd` varchar(3) default NULL,
-  `doe` varchar(3) default NULL,
-  `orthopnea` varchar(3) default NULL,
-  `peripheal` varchar(3) default NULL,
-  `edema` varchar(3) default NULL,
-  `legpain_cramping` varchar(3) default NULL,
-  `history_murmur` varchar(3) default NULL,
-  `arrythmia` varchar(3) default NULL,
-  `heart_problem` varchar(3) default NULL,
-  `dysphagia` varchar(3) default NULL,
-  `heartburn` varchar(3) default NULL,
-  `bloating` varchar(3) default NULL,
-  `belching` varchar(3) default NULL,
-  `flatulence` varchar(3) default NULL,
-  `nausea` varchar(3) default NULL,
-  `vomiting` varchar(3) default NULL,
-  `hematemesis` varchar(3) default NULL,
-  `gastro_pain` varchar(3) default NULL,
-  `food_intolerance` varchar(3) default NULL,
-  `hepatitis` varchar(3) default NULL,
-  `jaundice` varchar(3) default NULL,
-  `hematochezia` varchar(3) default NULL,
-  `changed_bowel` varchar(3) default NULL,
-  `diarrhea` varchar(3) default NULL,
-  `constipation` varchar(3) default NULL,
-  `polyuria` varchar(3) default NULL,
-  `polydypsia` varchar(3) default NULL,
-  `dysuria` varchar(3) default NULL,
-  `hematuria` varchar(3) default NULL,
-  `frequency` varchar(3) default NULL,
-  `urgency` varchar(3) default NULL,
-  `incontinence` varchar(3) default NULL,
-  `renal_stones` varchar(3) default NULL,
-  `utis` varchar(3) default NULL,
-  `hesitancy` varchar(3) default NULL,
-  `dribbling` varchar(3) default NULL,
-  `stream` varchar(3) default NULL,
-  `nocturia` varchar(3) default NULL,
-  `erections` varchar(3) default NULL,
-  `ejaculations` varchar(3) default NULL,
-  `g` varchar(3) default NULL,
-  `p` varchar(3) default NULL,
-  `ap` varchar(3) default NULL,
-  `lc` varchar(3) default NULL,
-  `mearche` varchar(3) default NULL,
-  `menopause` varchar(3) default NULL,
-  `lmp` varchar(3) default NULL,
-  `f_frequency` varchar(3) default NULL,
-  `f_flow` varchar(3) default NULL,
-  `f_symptoms` varchar(3) default NULL,
-  `abnormal_hair_growth` varchar(3) default NULL,
-  `f_hirsutism` varchar(3) default NULL,
-  `joint_pain` varchar(3) default NULL,
-  `swelling` varchar(3) default NULL,
-  `m_redness` varchar(3) default NULL,
-  `m_warm` varchar(3) default NULL,
-  `m_stiffness` varchar(3) default NULL,
-  `muscle` varchar(3) default NULL,
-  `m_aches` varchar(3) default NULL,
-  `fms` varchar(3) default NULL,
-  `arthritis` varchar(3) default NULL,
-  `loc` varchar(3) default NULL,
-  `seizures` varchar(3) default NULL,
-  `stroke` varchar(3) default NULL,
-  `tia` varchar(3) default NULL,
-  `n_numbness` varchar(3) default NULL,
-  `n_weakness` varchar(3) default NULL,
-  `paralysis` varchar(3) default NULL,
-  `intellectual_decline` varchar(3) default NULL,
-  `memory_problems` varchar(3) default NULL,
-  `dementia` varchar(3) default NULL,
-  `n_headache` varchar(3) default NULL,
-  `s_cancer` varchar(3) default NULL,
-  `psoriasis` varchar(3) default NULL,
-  `s_acne` varchar(3) default NULL,
-  `s_other` varchar(3) default NULL,
-  `s_disease` varchar(3) default NULL,
-  `p_diagnosis` varchar(3) default NULL,
-  `p_medication` varchar(3) default NULL,
-  `depression` varchar(3) default NULL,
-  `anxiety` varchar(3) default NULL,
-  `social_difficulties` varchar(3) default NULL,
-  `thyroid_problems` varchar(3) default NULL,
-  `diabetes` varchar(3) default NULL,
-  `abnormal_blood` varchar(3) default NULL,
-  `anemia` varchar(3) default NULL,
-  `fh_blood_problems` varchar(3) default NULL,
-  `bleeding_problems` varchar(3) default NULL,
-  `allergies` varchar(3) default NULL,
-  `frequent_illness` varchar(3) default NULL,
-  `hiv` varchar(3) default NULL,
-  `hai_status` varchar(3) default NULL,
-  PRIMARY KEY  (`id`)
+  `activity` int(11) NOT NULL DEFAULT '1',
+  `date` datetime DEFAULT NULL,
+  `weight_change` varchar(3) DEFAULT NULL,
+  `weakness` varchar(3) DEFAULT NULL,
+  `fatigue` varchar(3) DEFAULT NULL,
+  `anorexia` varchar(3) DEFAULT NULL,
+  `fever` varchar(3) DEFAULT NULL,
+  `chills` varchar(3) DEFAULT NULL,
+  `night_sweats` varchar(3) DEFAULT NULL,
+  `insomnia` varchar(3) DEFAULT NULL,
+  `irritability` varchar(3) DEFAULT NULL,
+  `heat_or_cold` varchar(3) DEFAULT NULL,
+  `intolerance` varchar(3) DEFAULT NULL,
+  `change_in_vision` varchar(3) DEFAULT NULL,
+  `glaucoma_history` varchar(3) DEFAULT NULL,
+  `eye_pain` varchar(3) DEFAULT NULL,
+  `irritation` varchar(3) DEFAULT NULL,
+  `redness` varchar(3) DEFAULT NULL,
+  `excessive_tearing` varchar(3) DEFAULT NULL,
+  `double_vision` varchar(3) DEFAULT NULL,
+  `blind_spots` varchar(3) DEFAULT NULL,
+  `photophobia` varchar(3) DEFAULT NULL,
+  `hearing_loss` varchar(3) DEFAULT NULL,
+  `discharge` varchar(3) DEFAULT NULL,
+  `pain` varchar(3) DEFAULT NULL,
+  `vertigo` varchar(3) DEFAULT NULL,
+  `tinnitus` varchar(3) DEFAULT NULL,
+  `frequent_colds` varchar(3) DEFAULT NULL,
+  `sore_throat` varchar(3) DEFAULT NULL,
+  `sinus_problems` varchar(3) DEFAULT NULL,
+  `post_nasal_drip` varchar(3) DEFAULT NULL,
+  `nosebleed` varchar(3) DEFAULT NULL,
+  `snoring` varchar(3) DEFAULT NULL,
+  `apnea` varchar(3) DEFAULT NULL,
+  `breast_mass` varchar(3) DEFAULT NULL,
+  `breast_discharge` varchar(3) DEFAULT NULL,
+  `biopsy` varchar(3) DEFAULT NULL,
+  `abnormal_mammogram` varchar(3) DEFAULT NULL,
+  `cough` varchar(3) DEFAULT NULL,
+  `sputum` varchar(3) DEFAULT NULL,
+  `shortness_of_breath` varchar(3) DEFAULT NULL,
+  `wheezing` varchar(3) DEFAULT NULL,
+  `hemoptsyis` varchar(3) DEFAULT NULL,
+  `asthma` varchar(3) DEFAULT NULL,
+  `copd` varchar(3) DEFAULT NULL,
+  `chest_pain` varchar(3) DEFAULT NULL,
+  `palpitation` varchar(3) DEFAULT NULL,
+  `syncope` varchar(3) DEFAULT NULL,
+  `pnd` varchar(3) DEFAULT NULL,
+  `doe` varchar(3) DEFAULT NULL,
+  `orthopnea` varchar(3) DEFAULT NULL,
+  `peripheal` varchar(3) DEFAULT NULL,
+  `edema` varchar(3) DEFAULT NULL,
+  `legpain_cramping` varchar(3) DEFAULT NULL,
+  `history_murmur` varchar(3) DEFAULT NULL,
+  `arrythmia` varchar(3) DEFAULT NULL,
+  `heart_problem` varchar(3) DEFAULT NULL,
+  `dysphagia` varchar(3) DEFAULT NULL,
+  `heartburn` varchar(3) DEFAULT NULL,
+  `bloating` varchar(3) DEFAULT NULL,
+  `belching` varchar(3) DEFAULT NULL,
+  `flatulence` varchar(3) DEFAULT NULL,
+  `nausea` varchar(3) DEFAULT NULL,
+  `vomiting` varchar(3) DEFAULT NULL,
+  `hematemesis` varchar(3) DEFAULT NULL,
+  `gastro_pain` varchar(3) DEFAULT NULL,
+  `food_intolerance` varchar(3) DEFAULT NULL,
+  `hepatitis` varchar(3) DEFAULT NULL,
+  `jaundice` varchar(3) DEFAULT NULL,
+  `hematochezia` varchar(3) DEFAULT NULL,
+  `changed_bowel` varchar(3) DEFAULT NULL,
+  `diarrhea` varchar(3) DEFAULT NULL,
+  `constipation` varchar(3) DEFAULT NULL,
+  `polyuria` varchar(3) DEFAULT NULL,
+  `polydypsia` varchar(3) DEFAULT NULL,
+  `dysuria` varchar(3) DEFAULT NULL,
+  `hematuria` varchar(3) DEFAULT NULL,
+  `frequency` varchar(3) DEFAULT NULL,
+  `urgency` varchar(3) DEFAULT NULL,
+  `incontinence` varchar(3) DEFAULT NULL,
+  `renal_stones` varchar(3) DEFAULT NULL,
+  `utis` varchar(3) DEFAULT NULL,
+  `hesitancy` varchar(3) DEFAULT NULL,
+  `dribbling` varchar(3) DEFAULT NULL,
+  `stream` varchar(3) DEFAULT NULL,
+  `nocturia` varchar(3) DEFAULT NULL,
+  `erections` varchar(3) DEFAULT NULL,
+  `ejaculations` varchar(3) DEFAULT NULL,
+  `g` varchar(3) DEFAULT NULL,
+  `p` varchar(3) DEFAULT NULL,
+  `ap` varchar(3) DEFAULT NULL,
+  `lc` varchar(3) DEFAULT NULL,
+  `mearche` varchar(3) DEFAULT NULL,
+  `menopause` varchar(3) DEFAULT NULL,
+  `lmp` varchar(3) DEFAULT NULL,
+  `f_frequency` varchar(3) DEFAULT NULL,
+  `f_flow` varchar(3) DEFAULT NULL,
+  `f_symptoms` varchar(3) DEFAULT NULL,
+  `abnormal_hair_growth` varchar(3) DEFAULT NULL,
+  `f_hirsutism` varchar(3) DEFAULT NULL,
+  `joint_pain` varchar(3) DEFAULT NULL,
+  `swelling` varchar(3) DEFAULT NULL,
+  `m_redness` varchar(3) DEFAULT NULL,
+  `m_warm` varchar(3) DEFAULT NULL,
+  `m_stiffness` varchar(3) DEFAULT NULL,
+  `muscle` varchar(3) DEFAULT NULL,
+  `m_aches` varchar(3) DEFAULT NULL,
+  `fms` varchar(3) DEFAULT NULL,
+  `arthritis` varchar(3) DEFAULT NULL,
+  `loc` varchar(3) DEFAULT NULL,
+  `seizures` varchar(3) DEFAULT NULL,
+  `stroke` varchar(3) DEFAULT NULL,
+  `tia` varchar(3) DEFAULT NULL,
+  `n_numbness` varchar(3) DEFAULT NULL,
+  `n_weakness` varchar(3) DEFAULT NULL,
+  `paralysis` varchar(3) DEFAULT NULL,
+  `intellectual_decline` varchar(3) DEFAULT NULL,
+  `memory_problems` varchar(3) DEFAULT NULL,
+  `dementia` varchar(3) DEFAULT NULL,
+  `n_headache` varchar(3) DEFAULT NULL,
+  `s_cancer` varchar(3) DEFAULT NULL,
+  `psoriasis` varchar(3) DEFAULT NULL,
+  `s_acne` varchar(3) DEFAULT NULL,
+  `s_other` varchar(3) DEFAULT NULL,
+  `s_disease` varchar(3) DEFAULT NULL,
+  `p_diagnosis` varchar(3) DEFAULT NULL,
+  `p_medication` varchar(3) DEFAULT NULL,
+  `depression` varchar(3) DEFAULT NULL,
+  `anxiety` varchar(3) DEFAULT NULL,
+  `social_difficulties` varchar(3) DEFAULT NULL,
+  `thyroid_problems` varchar(3) DEFAULT NULL,
+  `diabetes` varchar(3) DEFAULT NULL,
+  `abnormal_blood` varchar(3) DEFAULT NULL,
+  `anemia` varchar(3) DEFAULT NULL,
+  `fh_blood_problems` varchar(3) DEFAULT NULL,
+  `bleeding_problems` varchar(3) DEFAULT NULL,
+  `allergies` varchar(3) DEFAULT NULL,
+  `frequent_illness` varchar(3) DEFAULT NULL,
+  `hiv` varchar(3) DEFAULT NULL,
+  `hai_status` varchar(3) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `form_soap` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `pid` bigint(20) default '0',
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `authorized` tinyint(4) default '0',
-  `activity` tinyint(4) default '0',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `pid` bigint(20) DEFAULT '0',
+  `user` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `authorized` tinyint(4) DEFAULT '0',
+  `activity` tinyint(4) DEFAULT '0',
   `subjective` text,
   `objective` text,
   `assessment` text,
   `plan` text,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `form_vitals` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `pid` bigint(20) default '0',
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `authorized` tinyint(4) default '0',
-  `activity` tinyint(4) default '0',
-  `bps` varchar(40) default NULL,
-  `bpd` varchar(40) default NULL,
-  `weight` float(5,2) default '0.00',
-  `height` float(5,2) default '0.00',
-  `temperature` float(5,2) default '0.00',
-  `temp_method` varchar(255) default NULL,
-  `pulse` float(5,2) default '0.00',
-  `respiration` float(5,2) default '0.00',
-  `note` varchar(255) default NULL,
-  `BMI` float(4,1) default '0.0',
-  `BMI_status` varchar(255) default NULL,
-  `waist_circ` float(5,2) default '0.00',
-  `head_circ` float(4,2) default '0.00',
-  `oxygen_saturation` float(5,2) default '0.00',
-  PRIMARY KEY  (`id`)
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `pid` bigint(20) DEFAULT '0',
+  `user` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `authorized` tinyint(4) DEFAULT '0',
+  `activity` tinyint(4) DEFAULT '0',
+  `bps` varchar(40) DEFAULT NULL,
+  `bpd` varchar(40) DEFAULT NULL,
+  `weight` float(5,2) DEFAULT '0.00',
+  `height` float(5,2) DEFAULT '0.00',
+  `temperature` float(5,2) DEFAULT '0.00',
+  `temp_method` varchar(255) DEFAULT NULL,
+  `pulse` float(5,2) DEFAULT '0.00',
+  `respiration` float(5,2) DEFAULT '0.00',
+  `note` varchar(255) DEFAULT NULL,
+  `BMI` float(4,1) DEFAULT '0.0',
+  `BMI_status` varchar(255) DEFAULT NULL,
+  `waist_circ` float(5,2) DEFAULT '0.00',
+  `head_circ` float(4,2) DEFAULT '0.00',
+  `oxygen_saturation` float(5,2) DEFAULT '0.00',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `geo_country_reference` (
-  `countries_id` int(5) NOT NULL auto_increment,
-  `countries_name` varchar(64) default NULL,
-  `countries_iso_code_2` char(2) NOT NULL default '',
-  `countries_iso_code_3` char(3) NOT NULL default '',
-  PRIMARY KEY  (`countries_id`),
+  `countries_id` int(5) NOT NULL AUTO_INCREMENT,
+  `countries_name` varchar(64) DEFAULT NULL,
+  `countries_iso_code_2` char(2) NOT NULL DEFAULT '',
+  `countries_iso_code_3` char(3) NOT NULL DEFAULT '',
+  PRIMARY KEY (`countries_id`),
   KEY `IDX_COUNTRIES_NAME` (`countries_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=240 ;
+
 
 INSERT INTO `geo_country_reference` (`countries_id`, `countries_name`, `countries_iso_code_2`, `countries_iso_code_3`) VALUES
 (1, 'Afghanistan', 'AF', 'AFG'),
@@ -1154,13 +1238,15 @@ INSERT INTO `geo_country_reference` (`countries_id`, `countries_name`, `countrie
 (238, 'Zambia', 'ZM', 'ZMB'),
 (239, 'Zimbabwe', 'ZW', 'ZWE');
 
+
 CREATE TABLE IF NOT EXISTS `geo_zone_reference` (
-  `zone_id` int(5) NOT NULL auto_increment,
-  `zone_country_id` int(5) NOT NULL default '0',
-  `zone_code` varchar(5) default NULL,
-  `zone_name` varchar(32) default NULL,
-  PRIMARY KEY  (`zone_id`)
+  `zone_id` int(5) NOT NULL AUTO_INCREMENT,
+  `zone_country_id` int(5) NOT NULL DEFAULT '0',
+  `zone_code` varchar(5) DEFAULT NULL,
+  `zone_name` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=83 ;
+
 
 INSERT INTO `geo_zone_reference` (`zone_id`, `zone_country_id`, `zone_code`, `zone_name`) VALUES
 (1, 223, 'AL', 'Alabama'),
@@ -1246,26 +1332,28 @@ INSERT INTO `geo_zone_reference` (`zone_id`, `zone_country_id`, `zone_code`, `zo
 (81, 61, 'ACT', 'Australian Capital Territory'),
 (82, 61, 'VIC', 'Victoria');
 
+
 CREATE TABLE IF NOT EXISTS `globals` (
   `gl_name` varchar(63) NOT NULL,
-  `gl_index` int(11) NOT NULL default '0',
-  `gl_value` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`gl_name`,`gl_index`)
+  `gl_index` int(11) NOT NULL DEFAULT '0',
+  `gl_value` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`gl_name`,`gl_index`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
 INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
-('default_top_pane', 0, 'main_info.php'),
-('concurrent_layout', 0, '2'),
-('css_header', 0, 'style_default.css'),
-('gbl_nav_area_width', 0, '210'),
-('openemr_name', 0, 'OpenEMR'),
+('default_top_pane', 0, 'app/calendar/calendar.ejs.php'),
+('concurrent_layout', 0, 'west'),
+('css_header', 0, 'ext-all-gray.css'),
+('gbl_nav_area_width', 0, '200'),
+('mitosehr_name', 0, 'MitosEHR :: Open Source'),
 ('full_new_patient_form', 0, '1'),
 ('patient_search_results_style', 0, '0'),
-('simplified_demographics', 0, ''),
+('simplified_demographics', 0, 'on'),
 ('simplified_prescriptions', 0, ''),
 ('simplified_copay', 0, ''),
 ('use_charges_panel', 0, ''),
-('online_support_link', 0, 'http://sourceforge.net/projects/openemr/support'),
+('online_support_link', 0, 'http://mitosehr.org/projects/mitosehr001'),
 ('language_default', 0, ''),
 ('language_menu_showall', 0, 'on'),
 ('translate_layout', 0, 'on'),
@@ -1366,32 +1454,37 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('hylafax_basedir', 0, '/var/spool/fax'),
 ('hylafax_enscript', 0, 'enscript -M Letter -B -e^ --margins=36:36:36:36'),
 ('enable_scanner', 0, ''),
-('scanner_output_directory', 0, '/mnt/scan_docs');
+('scanner_output_directory', 0, '/mnt/scan_docs'),
+('fullname', 0, '0');
+
 
 CREATE TABLE IF NOT EXISTS `gprelations` (
   `type1` int(2) NOT NULL,
   `id1` bigint(20) NOT NULL,
   `type2` int(2) NOT NULL,
   `id2` bigint(20) NOT NULL,
-  PRIMARY KEY  (`type1`,`id1`,`type2`,`id2`),
+  PRIMARY KEY (`type1`,`id1`,`type2`,`id2`),
   KEY `key2` (`type2`,`id2`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='general purpose relations';
 
 
 CREATE TABLE IF NOT EXISTS `groups` (
-  `id` bigint(20) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` longtext,
   `user` longtext,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
 
 INSERT INTO `groups` (`id`, `name`, `user`) VALUES
 (1, 'Default', 'admin'),
 (2, 'Default', 'ernesto'),
 (3, 'Default', 'vela1606');
 
+
+
 CREATE TABLE IF NOT EXISTS `history_data` (
-  `id` bigint(20) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `coffee` longtext,
   `tobacco` longtext,
   `alcohol` longtext,
@@ -1401,22 +1494,22 @@ CREATE TABLE IF NOT EXISTS `history_data` (
   `counseling` longtext,
   `hazardous_activities` longtext,
   `recreational_drugs` longtext,
-  `last_breast_exam` varchar(255) default NULL,
-  `last_mammogram` varchar(255) default NULL,
-  `last_gynocological_exam` varchar(255) default NULL,
-  `last_rectal_exam` varchar(255) default NULL,
-  `last_prostate_exam` varchar(255) default NULL,
-  `last_physical_exam` varchar(255) default NULL,
-  `last_sigmoidoscopy_colonoscopy` varchar(255) default NULL,
-  `last_ecg` varchar(255) default NULL,
-  `last_cardiac_echo` varchar(255) default NULL,
-  `last_retinal` varchar(255) default NULL,
-  `last_fluvax` varchar(255) default NULL,
-  `last_pneuvax` varchar(255) default NULL,
-  `last_ldl` varchar(255) default NULL,
-  `last_hemoglobin` varchar(255) default NULL,
-  `last_psa` varchar(255) default NULL,
-  `last_exam_results` varchar(255) default NULL,
+  `last_breast_exam` varchar(255) DEFAULT NULL,
+  `last_mammogram` varchar(255) DEFAULT NULL,
+  `last_gynocological_exam` varchar(255) DEFAULT NULL,
+  `last_rectal_exam` varchar(255) DEFAULT NULL,
+  `last_prostate_exam` varchar(255) DEFAULT NULL,
+  `last_physical_exam` varchar(255) DEFAULT NULL,
+  `last_sigmoidoscopy_colonoscopy` varchar(255) DEFAULT NULL,
+  `last_ecg` varchar(255) DEFAULT NULL,
+  `last_cardiac_echo` varchar(255) DEFAULT NULL,
+  `last_retinal` varchar(255) DEFAULT NULL,
+  `last_fluvax` varchar(255) DEFAULT NULL,
+  `last_pneuvax` varchar(255) DEFAULT NULL,
+  `last_ldl` varchar(255) DEFAULT NULL,
+  `last_hemoglobin` varchar(255) DEFAULT NULL,
+  `last_psa` varchar(255) DEFAULT NULL,
+  `last_exam_results` varchar(255) DEFAULT NULL,
   `history_mother` longtext,
   `history_father` longtext,
   `history_siblings` longtext,
@@ -1431,126 +1524,131 @@ CREATE TABLE IF NOT EXISTS `history_data` (
   `relatives_epilepsy` longtext,
   `relatives_mental_illness` longtext,
   `relatives_suicide` longtext,
-  `cataract_surgery` datetime default NULL,
-  `tonsillectomy` datetime default NULL,
-  `cholecystestomy` datetime default NULL,
-  `heart_surgery` datetime default NULL,
-  `hysterectomy` datetime default NULL,
-  `hernia_repair` datetime default NULL,
-  `hip_replacement` datetime default NULL,
-  `knee_replacement` datetime default NULL,
-  `appendectomy` datetime default NULL,
-  `date` datetime default NULL,
-  `pid` bigint(20) NOT NULL default '0',
-  `name_1` varchar(255) default NULL,
-  `value_1` varchar(255) default NULL,
-  `name_2` varchar(255) default NULL,
-  `value_2` varchar(255) default NULL,
+  `cataract_surgery` datetime DEFAULT NULL,
+  `tonsillectomy` datetime DEFAULT NULL,
+  `cholecystestomy` datetime DEFAULT NULL,
+  `heart_surgery` datetime DEFAULT NULL,
+  `hysterectomy` datetime DEFAULT NULL,
+  `hernia_repair` datetime DEFAULT NULL,
+  `hip_replacement` datetime DEFAULT NULL,
+  `knee_replacement` datetime DEFAULT NULL,
+  `appendectomy` datetime DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `pid` bigint(20) NOT NULL DEFAULT '0',
+  `name_1` varchar(255) DEFAULT NULL,
+  `value_1` varchar(255) DEFAULT NULL,
+  `name_2` varchar(255) DEFAULT NULL,
+  `value_2` varchar(255) DEFAULT NULL,
   `additional_history` text,
   `exams` text NOT NULL,
-  `usertext11` varchar(255) NOT NULL default '',
-  `usertext12` varchar(255) NOT NULL default '',
-  `usertext13` varchar(255) NOT NULL default '',
-  `usertext14` varchar(255) NOT NULL default '',
-  `usertext15` varchar(255) NOT NULL default '',
-  `usertext16` varchar(255) NOT NULL default '',
-  `usertext17` varchar(255) NOT NULL default '',
-  `usertext18` varchar(255) NOT NULL default '',
-  `usertext19` varchar(255) NOT NULL default '',
-  `usertext20` varchar(255) NOT NULL default '',
-  `usertext21` varchar(255) NOT NULL default '',
-  `usertext22` varchar(255) NOT NULL default '',
-  `usertext23` varchar(255) NOT NULL default '',
-  `usertext24` varchar(255) NOT NULL default '',
-  `usertext25` varchar(255) NOT NULL default '',
-  `usertext26` varchar(255) NOT NULL default '',
-  `usertext27` varchar(255) NOT NULL default '',
-  `usertext28` varchar(255) NOT NULL default '',
-  `usertext29` varchar(255) NOT NULL default '',
-  `usertext30` varchar(255) NOT NULL default '',
-  `userdate11` date default NULL,
-  `userdate12` date default NULL,
-  `userdate13` date default NULL,
-  `userdate14` date default NULL,
-  `userdate15` date default NULL,
+  `usertext11` varchar(255) NOT NULL DEFAULT '',
+  `usertext12` varchar(255) NOT NULL DEFAULT '',
+  `usertext13` varchar(255) NOT NULL DEFAULT '',
+  `usertext14` varchar(255) NOT NULL DEFAULT '',
+  `usertext15` varchar(255) NOT NULL DEFAULT '',
+  `usertext16` varchar(255) NOT NULL DEFAULT '',
+  `usertext17` varchar(255) NOT NULL DEFAULT '',
+  `usertext18` varchar(255) NOT NULL DEFAULT '',
+  `usertext19` varchar(255) NOT NULL DEFAULT '',
+  `usertext20` varchar(255) NOT NULL DEFAULT '',
+  `usertext21` varchar(255) NOT NULL DEFAULT '',
+  `usertext22` varchar(255) NOT NULL DEFAULT '',
+  `usertext23` varchar(255) NOT NULL DEFAULT '',
+  `usertext24` varchar(255) NOT NULL DEFAULT '',
+  `usertext25` varchar(255) NOT NULL DEFAULT '',
+  `usertext26` varchar(255) NOT NULL DEFAULT '',
+  `usertext27` varchar(255) NOT NULL DEFAULT '',
+  `usertext28` varchar(255) NOT NULL DEFAULT '',
+  `usertext29` varchar(255) NOT NULL DEFAULT '',
+  `usertext30` varchar(255) NOT NULL DEFAULT '',
+  `userdate11` date DEFAULT NULL,
+  `userdate12` date DEFAULT NULL,
+  `userdate13` date DEFAULT NULL,
+  `userdate14` date DEFAULT NULL,
+  `userdate15` date DEFAULT NULL,
   `userarea11` text NOT NULL,
   `userarea12` text NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
 
 INSERT INTO `history_data` (`id`, `coffee`, `tobacco`, `alcohol`, `sleep_patterns`, `exercise_patterns`, `seatbelt_use`, `counseling`, `hazardous_activities`, `recreational_drugs`, `last_breast_exam`, `last_mammogram`, `last_gynocological_exam`, `last_rectal_exam`, `last_prostate_exam`, `last_physical_exam`, `last_sigmoidoscopy_colonoscopy`, `last_ecg`, `last_cardiac_echo`, `last_retinal`, `last_fluvax`, `last_pneuvax`, `last_ldl`, `last_hemoglobin`, `last_psa`, `last_exam_results`, `history_mother`, `history_father`, `history_siblings`, `history_offspring`, `history_spouse`, `relatives_cancer`, `relatives_tuberculosis`, `relatives_diabetes`, `relatives_high_blood_pressure`, `relatives_heart_problems`, `relatives_stroke`, `relatives_epilepsy`, `relatives_mental_illness`, `relatives_suicide`, `cataract_surgery`, `tonsillectomy`, `cholecystestomy`, `heart_surgery`, `hysterectomy`, `hernia_repair`, `hip_replacement`, `knee_replacement`, `appendectomy`, `date`, `pid`, `name_1`, `value_1`, `name_2`, `value_2`, `additional_history`, `exams`, `usertext11`, `usertext12`, `usertext13`, `usertext14`, `usertext15`, `usertext16`, `usertext17`, `usertext18`, `usertext19`, `usertext20`, `usertext21`, `usertext22`, `usertext23`, `usertext24`, `usertext25`, `usertext26`, `usertext27`, `usertext28`, `usertext29`, `usertext30`, `userdate11`, `userdate12`, `userdate13`, `userdate14`, `userdate15`, `userarea11`, `userarea12`) VALUES
 (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-01-23 18:13:42', 1, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', ''),
 (2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-01-23 18:15:01', 2, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '');
 
+
 CREATE TABLE IF NOT EXISTS `immunizations` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `patient_id` int(11) default NULL,
-  `administered_date` date default NULL,
-  `immunization_id` int(11) default NULL,
-  `manufacturer` varchar(100) default NULL,
-  `lot_number` varchar(50) default NULL,
-  `administered_by_id` bigint(20) default NULL,
-  `administered_by` varchar(255) default NULL COMMENT 'Alternative to administered_by_id',
-  `education_date` date default NULL,
-  `vis_date` date default NULL COMMENT 'Date of VIS Statement',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) DEFAULT NULL,
+  `administered_date` date DEFAULT NULL,
+  `immunization_id` int(11) DEFAULT NULL,
+  `manufacturer` varchar(100) DEFAULT NULL,
+  `lot_number` varchar(50) DEFAULT NULL,
+  `administered_by_id` bigint(20) DEFAULT NULL,
+  `administered_by` varchar(255) DEFAULT NULL COMMENT 'Alternative to administered_by_id',
+  `education_date` date DEFAULT NULL,
+  `vis_date` date DEFAULT NULL COMMENT 'Date of VIS Statement',
   `note` text,
-  `create_date` datetime default NULL,
-  `update_date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `created_by` bigint(20) default NULL,
-  `updated_by` bigint(20) default NULL,
-  PRIMARY KEY  (`id`)
+  `create_date` datetime DEFAULT NULL,
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_by` bigint(20) DEFAULT NULL,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `insurance_companies` (
-  `id` int(11) NOT NULL default '0',
-  `name` varchar(255) default NULL,
-  `attn` varchar(255) default NULL,
-  `cms_id` varchar(15) default NULL,
-  `freeb_type` tinyint(2) default NULL,
-  `x12_receiver_id` varchar(25) default NULL,
-  `x12_default_partner_id` int(11) default NULL,
-  `alt_cms_id` varchar(15) NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `attn` varchar(255) DEFAULT NULL,
+  `cms_id` varchar(15) DEFAULT NULL,
+  `freeb_type` tinyint(2) DEFAULT NULL,
+  `x12_receiver_id` varchar(25) DEFAULT NULL,
+  `x12_default_partner_id` int(11) DEFAULT NULL,
+  `alt_cms_id` varchar(15) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
 INSERT INTO `insurance_companies` (`id`, `name`, `attn`, `cms_id`, `freeb_type`, `x12_receiver_id`, `x12_default_partner_id`, `alt_cms_id`) VALUES
-(6, 'SSS', 'Fulana de Tal', '1234567', 11, NULL, NULL, '');
+(2, 'SSS', '', '123456', 0, '', 0, '');
+
 
 CREATE TABLE IF NOT EXISTS `insurance_data` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `type` enum('primary','secondary','tertiary') default NULL,
-  `provider` varchar(255) default NULL,
-  `plan_name` varchar(255) default NULL,
-  `policy_number` varchar(255) default NULL,
-  `group_number` varchar(255) default NULL,
-  `subscriber_lname` varchar(255) default NULL,
-  `subscriber_mname` varchar(255) default NULL,
-  `subscriber_fname` varchar(255) default NULL,
-  `subscriber_relationship` varchar(255) default NULL,
-  `subscriber_ss` varchar(255) default NULL,
-  `subscriber_DOB` date default NULL,
-  `subscriber_street` varchar(255) default NULL,
-  `subscriber_postal_code` varchar(255) default NULL,
-  `subscriber_city` varchar(255) default NULL,
-  `subscriber_state` varchar(255) default NULL,
-  `subscriber_country` varchar(255) default NULL,
-  `subscriber_phone` varchar(255) default NULL,
-  `subscriber_employer` varchar(255) default NULL,
-  `subscriber_employer_street` varchar(255) default NULL,
-  `subscriber_employer_postal_code` varchar(255) default NULL,
-  `subscriber_employer_state` varchar(255) default NULL,
-  `subscriber_employer_country` varchar(255) default NULL,
-  `subscriber_employer_city` varchar(255) default NULL,
-  `copay` varchar(255) default NULL,
-  `date` date NOT NULL default '0000-00-00',
-  `pid` bigint(20) NOT NULL default '0',
-  `subscriber_sex` varchar(25) default NULL,
-  `accept_assignment` varchar(5) NOT NULL default 'TRUE',
-  PRIMARY KEY  (`id`),
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` enum('primary','secondary','tertiary') DEFAULT NULL,
+  `provider` varchar(255) DEFAULT NULL,
+  `plan_name` varchar(255) DEFAULT NULL,
+  `policy_number` varchar(255) DEFAULT NULL,
+  `group_number` varchar(255) DEFAULT NULL,
+  `subscriber_lname` varchar(255) DEFAULT NULL,
+  `subscriber_mname` varchar(255) DEFAULT NULL,
+  `subscriber_fname` varchar(255) DEFAULT NULL,
+  `subscriber_relationship` varchar(255) DEFAULT NULL,
+  `subscriber_ss` varchar(255) DEFAULT NULL,
+  `subscriber_DOB` date DEFAULT NULL,
+  `subscriber_street` varchar(255) DEFAULT NULL,
+  `subscriber_postal_code` varchar(255) DEFAULT NULL,
+  `subscriber_city` varchar(255) DEFAULT NULL,
+  `subscriber_state` varchar(255) DEFAULT NULL,
+  `subscriber_country` varchar(255) DEFAULT NULL,
+  `subscriber_phone` varchar(255) DEFAULT NULL,
+  `subscriber_employer` varchar(255) DEFAULT NULL,
+  `subscriber_employer_street` varchar(255) DEFAULT NULL,
+  `subscriber_employer_postal_code` varchar(255) DEFAULT NULL,
+  `subscriber_employer_state` varchar(255) DEFAULT NULL,
+  `subscriber_employer_country` varchar(255) DEFAULT NULL,
+  `subscriber_employer_city` varchar(255) DEFAULT NULL,
+  `copay` varchar(255) DEFAULT NULL,
+  `date` date NOT NULL DEFAULT '0000-00-00',
+  `pid` bigint(20) NOT NULL DEFAULT '0',
+  `subscriber_sex` varchar(25) DEFAULT NULL,
+  `accept_assignment` varchar(5) NOT NULL DEFAULT 'TRUE',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `pid_type_date` (`pid`,`type`,`date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
 
 INSERT INTO `insurance_data` (`id`, `type`, `provider`, `plan_name`, `policy_number`, `group_number`, `subscriber_lname`, `subscriber_mname`, `subscriber_fname`, `subscriber_relationship`, `subscriber_ss`, `subscriber_DOB`, `subscriber_street`, `subscriber_postal_code`, `subscriber_city`, `subscriber_state`, `subscriber_country`, `subscriber_phone`, `subscriber_employer`, `subscriber_employer_street`, `subscriber_employer_postal_code`, `subscriber_employer_state`, `subscriber_employer_country`, `subscriber_employer_city`, `copay`, `date`, `pid`, `subscriber_sex`, `accept_assignment`) VALUES
 (1, 'primary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 1, '', 'TRUE'),
@@ -1560,26 +1658,27 @@ INSERT INTO `insurance_data` (`id`, `type`, `provider`, `plan_name`, `policy_num
 (5, 'secondary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 2, '', 'TRUE'),
 (6, 'tertiary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 2, '', 'TRUE');
 
+
 CREATE TABLE IF NOT EXISTS `insurance_numbers` (
-  `id` int(11) NOT NULL default '0',
-  `provider_id` int(11) NOT NULL default '0',
-  `insurance_company_id` int(11) default NULL,
-  `provider_number` varchar(20) default NULL,
-  `rendering_provider_number` varchar(20) default NULL,
-  `group_number` varchar(20) default NULL,
-  `provider_number_type` varchar(4) default NULL,
-  `rendering_provider_number_type` varchar(4) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL DEFAULT '0',
+  `provider_id` int(11) NOT NULL DEFAULT '0',
+  `insurance_company_id` int(11) DEFAULT NULL,
+  `provider_number` varchar(20) DEFAULT NULL,
+  `rendering_provider_number` varchar(20) DEFAULT NULL,
+  `group_number` varchar(20) DEFAULT NULL,
+  `provider_number_type` varchar(4) DEFAULT NULL,
+  `rendering_provider_number_type` varchar(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `integration_mapping` (
-  `id` int(11) NOT NULL default '0',
-  `foreign_id` int(11) NOT NULL default '0',
-  `foreign_table` varchar(125) default NULL,
-  `local_id` int(11) NOT NULL default '0',
-  `local_table` varchar(125) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL DEFAULT '0',
+  `foreign_id` int(11) NOT NULL DEFAULT '0',
+  `foreign_table` varchar(125) DEFAULT NULL,
+  `local_id` int(11) NOT NULL DEFAULT '0',
+  `local_table` varchar(125) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `foreign_id` (`foreign_id`,`foreign_table`,`local_id`,`local_table`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1589,42 +1688,45 @@ CREATE TABLE IF NOT EXISTS `issue_encounter` (
   `list_id` int(11) NOT NULL,
   `encounter` int(11) NOT NULL,
   `resolved` tinyint(1) NOT NULL,
-  PRIMARY KEY  (`pid`,`list_id`,`encounter`)
+  PRIMARY KEY (`pid`,`list_id`,`encounter`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `lang_constants` (
-  `cons_id` int(11) NOT NULL auto_increment,
-  `constant_name` varchar(255) character set utf8 collate utf8_bin default NULL,
+  `cons_id` int(11) NOT NULL AUTO_INCREMENT,
+  `constant_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   UNIQUE KEY `cons_id` (`cons_id`),
   KEY `constant_name` (`constant_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4369 ;
 
 
+
 CREATE TABLE IF NOT EXISTS `lang_custom` (
-  `lang_description` varchar(100) NOT NULL default '',
-  `lang_code` char(2) NOT NULL default '',
-  `constant_name` varchar(255) NOT NULL default '',
+  `lang_description` varchar(100) NOT NULL DEFAULT '',
+  `lang_code` char(2) NOT NULL DEFAULT '',
+  `constant_name` varchar(255) NOT NULL DEFAULT '',
   `definition` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `lang_definitions` (
-  `def_id` int(11) NOT NULL auto_increment,
-  `cons_id` int(11) NOT NULL default '0',
-  `lang_id` int(11) NOT NULL default '0',
+  `def_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cons_id` int(11) NOT NULL DEFAULT '0',
+  `lang_id` int(11) NOT NULL DEFAULT '0',
   `definition` mediumtext,
   UNIQUE KEY `def_id` (`def_id`),
   KEY `cons_id` (`cons_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40165 ;
 
 
+
 CREATE TABLE IF NOT EXISTS `lang_languages` (
-  `lang_id` int(11) NOT NULL auto_increment,
-  `lang_code` char(2) NOT NULL default '',
-  `lang_description` varchar(100) default NULL,
+  `lang_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lang_code` char(2) NOT NULL DEFAULT '',
+  `lang_description` varchar(100) DEFAULT NULL,
   UNIQUE KEY `lang_id` (`lang_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+
 
 INSERT INTO `lang_languages` (`lang_id`, `lang_code`, `lang_description`) VALUES
 (1, 'en', 'English (Standard)'),
@@ -1650,201 +1752,205 @@ INSERT INTO `lang_languages` (`lang_id`, `lang_code`, `lang_description`) VALUES
 (21, 'tr', 'Turkish'),
 (22, 'dd', 'dummy');
 
-CREATE TABLE IF NOT EXISTS `layout_options` (
-  `form_id` varchar(31) NOT NULL default '',
-  `field_id` varchar(31) NOT NULL default '',
-  `group_name` varchar(31) NOT NULL default '',
-  `title` varchar(63) NOT NULL default '',
-  `seq` int(11) NOT NULL default '0',
-  `data_type` tinyint(3) NOT NULL default '0',
-  `uor` tinyint(1) NOT NULL default '1',
-  `fld_length` int(11) NOT NULL default '15',
-  `max_length` int(11) NOT NULL default '0',
-  `list_id` varchar(31) NOT NULL default '',
-  `titlecols` tinyint(3) NOT NULL default '1',
-  `datacols` tinyint(3) NOT NULL default '1',
-  `default_value` varchar(255) NOT NULL default '',
-  `edit_options` varchar(36) NOT NULL default '',
-  `description` text,
-  PRIMARY KEY  (`form_id`,`field_id`,`seq`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `layout_options` (`form_id`, `field_id`, `group_name`, `title`, `seq`, `data_type`, `uor`, `fld_length`, `max_length`, `list_id`, `titlecols`, `datacols`, `default_value`, `edit_options`, `description`) VALUES
-('DEM', 'title', '1Who', 'Name', 1, 1, 1, 0, 0, 'titles', 1, 1, '', 'N', 'Title'),
-('DEM', 'fname', '1Who', '', 2, 2, 2, 10, 63, '', 0, 0, '', 'CD', 'First Name'),
-('DEM', 'mname', '1Who', '', 3, 2, 1, 2, 63, '', 0, 0, '', 'C', 'Middle Name'),
-('DEM', 'lname', '1Who', '', 4, 2, 2, 10, 63, '', 0, 0, '', 'CD', 'Last Name'),
-('DEM', 'pubpid', '1Who', 'External ID', 5, 2, 1, 10, 15, '', 1, 1, '', 'ND', 'External identifier'),
-('DEM', 'DOB', '1Who', 'DOB', 6, 4, 2, 10, 10, '', 1, 1, '', 'D', 'Date of Birth'),
-('DEM', 'sex', '1Who', 'Sex', 7, 1, 2, 0, 0, 'sex', 1, 1, '', 'N', 'Sex'),
-('DEM', 'ss', '1Who', 'S.S.', 8, 2, 1, 11, 11, '', 1, 1, '', '', 'Social Security Number'),
-('DEM', 'drivers_license', '1Who', 'License/ID', 9, 2, 1, 15, 63, '', 1, 1, '', '', 'Drivers License or State ID'),
-('DEM', 'status', '1Who', 'Marital Status', 10, 1, 1, 0, 0, 'marital', 1, 3, '', '', 'Marital Status'),
-('DEM', 'genericname1', '1Who', 'User Defined', 11, 2, 1, 15, 63, '', 1, 3, '', '', 'User Defined Field'),
-('DEM', 'genericval1', '1Who', '', 12, 2, 1, 15, 63, '', 0, 0, '', '', 'User Defined Field'),
-('DEM', 'genericname2', '1Who', '', 13, 2, 1, 15, 63, '', 0, 0, '', '', 'User Defined Field'),
-('DEM', 'genericval2', '1Who', '', 14, 2, 1, 15, 63, '', 0, 0, '', '', 'User Defined Field'),
-('DEM', 'squad', '1Who', 'Squad', 15, 13, 0, 0, 0, '', 1, 3, '', '', 'Squad Membership'),
-('DEM', 'pricelevel', '1Who', 'Price Level', 16, 1, 0, 0, 0, 'pricelevel', 1, 1, '', '', 'Discount Level'),
-('DEM', 'street', '2Contact', 'Address', 1, 2, 1, 25, 63, '', 1, 1, '', 'C', 'Street and Number'),
-('DEM', 'city', '2Contact', 'City', 2, 2, 1, 15, 63, '', 1, 1, '', 'C', 'City Name'),
-('DEM', 'state', '2Contact', 'State', 3, 26, 1, 0, 0, 'state', 1, 1, '', '', 'State/Locality'),
-('DEM', 'postal_code', '2Contact', 'Postal Code', 4, 2, 1, 6, 63, '', 1, 1, '', '', 'Postal Code'),
-('DEM', 'country_code', '2Contact', 'Country', 5, 26, 1, 0, 0, 'country', 1, 1, '', '', 'Country'),
-('DEM', 'mothersname', '2Contact', 'Mother''s Name', 6, 2, 1, 20, 63, '', 1, 1, '', '', ''),
-('DEM', 'guardiansname', '2Contact', 'Guardian''s Name', 7, 2, 1, 20, 63, '', 1, 1, '', '', ''),
-('DEM', 'contact_relationship', '2Contact', 'Emergency Contact', 8, 2, 1, 10, 63, '', 1, 1, '', 'C', 'Emergency Contact Person'),
-('DEM', 'phone_contact', '2Contact', 'Emergency Phone', 9, 2, 1, 20, 63, '', 1, 1, '', 'P', 'Emergency Contact Phone Number'),
-('DEM', 'phone_home', '2Contact', 'Home Phone', 10, 2, 1, 20, 63, '', 1, 1, '', 'P', 'Home Phone Number'),
-('DEM', 'phone_biz', '2Contact', 'Work Phone', 11, 2, 1, 20, 63, '', 1, 1, '', 'P', 'Work Phone Number'),
-('DEM', 'phone_cell', '2Contact', 'Mobile Phone', 12, 2, 1, 20, 63, '', 1, 1, '', 'P', 'Cell Phone Number'),
-('DEM', 'email', '2Contact', 'Contact Email', 13, 2, 1, 30, 95, '', 1, 1, '', '', 'Contact Email Address'),
-('DEM', 'providerID', '3Choices', 'Provider', 1, 11, 1, 0, 0, '', 1, 3, '', '', 'Referring Provider'),
-('DEM', 'pharmacy_id', '3Choices', 'Pharmacy', 2, 12, 1, 0, 0, '', 1, 3, '', '', 'Preferred Pharmacy'),
-('DEM', 'hipaa_notice', '3Choices', 'HIPAA Notice Received', 3, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Did you receive a copy of the HIPAA Notice?'),
-('DEM', 'hipaa_voice', '3Choices', 'Allow Voice Message', 4, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Allow telephone messages?'),
-('DEM', 'hipaa_message', '3Choices', 'Leave Message With', 5, 2, 1, 20, 63, '', 1, 1, '', '', 'With whom may we leave a message?'),
-('DEM', 'hipaa_mail', '3Choices', 'Allow Mail Message', 6, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Allow email messages?'),
-('DEM', 'hipaa_allowsms', '3Choices', 'Allow SMS', 7, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Allow SMS (text messages)?'),
-('DEM', 'hipaa_allowemail', '3Choices', 'Allow Email', 8, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Allow Email?'),
-('DEM', 'allow_imm_reg_use', '3Choices', 'Allow Immunization Registry Use', 9, 1, 1, 0, 0, 'yesno', 1, 1, '', '', ''),
-('DEM', 'allow_imm_info_share', '3Choices', 'Allow Immunization Info Sharing', 10, 1, 1, 0, 0, 'yesno', 1, 1, '', '', ''),
-('DEM', 'allow_health_info_ex', '3Choices', 'Allow Health Information Exchange', 11, 1, 1, 0, 0, 'yesno', 1, 1, '', '', ''),
-('DEM', 'occupation', '4Employer', 'Occupation', 1, 2, 1, 20, 63, '', 1, 1, '', 'C', 'Occupation'),
-('DEM', 'em_name', '4Employer', 'Employer Name', 2, 2, 1, 20, 63, '', 1, 1, '', 'C', 'Employer Name'),
-('DEM', 'em_street', '4Employer', 'Employer Address', 3, 2, 1, 25, 63, '', 1, 1, '', 'C', 'Street and Number'),
-('DEM', 'em_city', '4Employer', 'City', 4, 2, 1, 15, 63, '', 1, 1, '', 'C', 'City Name'),
-('DEM', 'em_state', '4Employer', 'State', 5, 26, 1, 0, 0, 'state', 1, 1, '', '', 'State/Locality'),
-('DEM', 'em_postal_code', '4Employer', 'Postal Code', 6, 2, 1, 6, 63, '', 1, 1, '', '', 'Postal Code'),
-('DEM', 'em_country', '4Employer', 'Country', 7, 26, 1, 0, 0, 'country', 1, 1, '', '', 'Country'),
-('DEM', 'language', '5Stats', 'Language', 1, 26, 1, 0, 0, 'language', 1, 1, '', '', 'Preferred Language'),
-('DEM', 'ethnicity', '5Stats', 'Ethnicity', 2, 33, 1, 0, 0, 'ethnicity', 1, 1, '', '', 'Ethnicity'),
-('DEM', 'race', '5Stats', 'Race', 3, 33, 1, 0, 0, 'race', 1, 1, '', '', 'Race'),
-('DEM', 'financial_review', '5Stats', 'Financial Review Date', 4, 2, 1, 10, 10, '', 1, 1, '', 'D', 'Financial Review Date'),
-('DEM', 'family_size', '5Stats', 'Family Size', 4, 2, 1, 20, 63, '', 1, 1, '', '', 'Family Size'),
-('DEM', 'monthly_income', '5Stats', 'Monthly Income', 5, 2, 1, 20, 63, '', 1, 1, '', '', 'Monthly Income'),
-('DEM', 'homeless', '5Stats', 'Homeless, etc.', 6, 2, 1, 20, 63, '', 1, 1, '', '', 'Homeless or similar?'),
-('DEM', 'interpretter', '5Stats', 'Interpreter', 7, 2, 1, 20, 63, '', 1, 1, '', '', 'Interpreter needed?'),
-('DEM', 'migrantseasonal', '5Stats', 'Migrant/Seasonal', 8, 2, 1, 20, 63, '', 1, 1, '', '', 'Migrant or seasonal worker?'),
-('DEM', 'contrastart', '5Stats', 'Contraceptives Start', 9, 4, 0, 10, 10, '', 1, 1, '', '', 'Date contraceptive services initially provided'),
-('DEM', 'referral_source', '5Stats', 'Referral Source', 10, 26, 1, 0, 0, 'refsource', 1, 1, '', '', 'How did they hear about us'),
-('DEM', 'vfc', '5Stats', 'VFC', 12, 1, 1, 20, 0, 'eligibility', 1, 1, '', '', 'Eligibility status for Vaccine for Children supplied vaccine'),
-('DEM', 'usertext1', '6Misc', 'User Defined Text 1', 1, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined'),
-('DEM', 'usertext2', '6Misc', 'User Defined Text 2', 2, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined'),
-('DEM', 'usertext3', '6Misc', 'User Defined Text 3', 3, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined'),
-('DEM', 'usertext4', '6Misc', 'User Defined Text 4', 4, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined'),
-('DEM', 'usertext5', '6Misc', 'User Defined Text 5', 5, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined'),
-('DEM', 'usertext6', '6Misc', 'User Defined Text 6', 6, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined'),
-('DEM', 'usertext7', '6Misc', 'User Defined Text 7', 7, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined'),
-('DEM', 'usertext8', '6Misc', 'User Defined Text 8', 8, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined'),
-('DEM', 'userlist1', '6Misc', 'User Defined List 1', 9, 1, 0, 0, 0, 'userlist1', 1, 1, '', '', 'User Defined'),
-('DEM', 'userlist2', '6Misc', 'User Defined List 2', 10, 1, 0, 0, 0, 'userlist2', 1, 1, '', '', 'User Defined'),
-('DEM', 'userlist3', '6Misc', 'User Defined List 3', 11, 1, 0, 0, 0, 'userlist3', 1, 1, '', '', 'User Defined'),
-('DEM', 'userlist4', '6Misc', 'User Defined List 4', 12, 1, 0, 0, 0, 'userlist4', 1, 1, '', '', 'User Defined'),
-('DEM', 'userlist5', '6Misc', 'User Defined List 5', 13, 1, 0, 0, 0, 'userlist5', 1, 1, '', '', 'User Defined'),
-('DEM', 'userlist6', '6Misc', 'User Defined List 6', 14, 1, 0, 0, 0, 'userlist6', 1, 1, '', '', 'User Defined'),
-('DEM', 'userlist7', '6Misc', 'User Defined List 7', 15, 1, 0, 0, 0, 'userlist7', 1, 1, '', '', 'User Defined'),
-('DEM', 'regdate', '6Misc', 'Registration Date', 16, 4, 0, 10, 10, '', 1, 1, '', 'D', 'Start Date at This Clinic'),
-('REF', 'refer_date', '1Referral', 'Referral Date', 1, 4, 2, 0, 0, '', 1, 1, 'C', 'D', 'Date of referral'),
-('REF', 'refer_from', '1Referral', 'Refer By', 2, 10, 2, 0, 0, '', 1, 1, '', '', 'Referral By'),
-('REF', 'refer_external', '1Referral', 'External Referral', 3, 1, 1, 0, 0, 'boolean', 1, 1, '', '', 'External referral?'),
-('REF', 'refer_to', '1Referral', 'Refer To', 4, 14, 2, 0, 0, '', 1, 1, '', '', 'Referral To'),
-('REF', 'body', '1Referral', 'Reason', 5, 3, 2, 30, 3, '', 1, 1, '', '', 'Reason for referral'),
-('REF', 'refer_diag', '1Referral', 'Referrer Diagnosis', 6, 2, 1, 30, 255, '', 1, 1, '', 'X', 'Referrer diagnosis'),
-('REF', 'refer_risk_level', '1Referral', 'Risk Level', 7, 1, 1, 0, 0, 'risklevel', 1, 1, '', '', 'Level of urgency'),
-('REF', 'refer_vitals', '1Referral', 'Include Vitals', 8, 1, 1, 0, 0, 'boolean', 1, 1, '', '', 'Include vitals data?'),
-('REF', 'refer_related_code', '1Referral', 'Requested Service', 9, 15, 1, 30, 255, '', 1, 1, '', '', 'Billing Code for Requested Service'),
-('REF', 'reply_date', '2Counter-Referral', 'Reply Date', 10, 4, 1, 0, 0, '', 1, 1, '', 'D', 'Date of reply'),
-('REF', 'reply_from', '2Counter-Referral', 'Reply From', 11, 2, 1, 30, 255, '', 1, 1, '', '', 'Who replied?'),
-('REF', 'reply_init_diag', '2Counter-Referral', 'Presumed Diagnosis', 12, 2, 1, 30, 255, '', 1, 1, '', '', 'Presumed diagnosis by specialist'),
-('REF', 'reply_final_diag', '2Counter-Referral', 'Final Diagnosis', 13, 2, 1, 30, 255, '', 1, 1, '', '', 'Final diagnosis by specialist'),
-('REF', 'reply_documents', '2Counter-Referral', 'Documents', 14, 2, 1, 30, 255, '', 1, 1, '', '', 'Where may related scanned or paper documents be found?'),
-('REF', 'reply_findings', '2Counter-Referral', 'Findings', 15, 3, 1, 30, 3, '', 1, 1, '', '', 'Findings by specialist'),
-('REF', 'reply_services', '2Counter-Referral', 'Services Provided', 16, 3, 1, 30, 3, '', 1, 1, '', '', 'Service provided by specialist'),
-('REF', 'reply_recommend', '2Counter-Referral', 'Recommendations', 17, 3, 1, 30, 3, '', 1, 1, '', '', 'Recommendations by specialist'),
-('REF', 'reply_rx_refer', '2Counter-Referral', 'Prescriptions/Referrals', 18, 3, 1, 30, 3, '', 1, 1, '', '', 'Prescriptions and/or referrals by specialist'),
-('HIS', 'usertext11', '1General', 'Risk Factors', 1, 21, 1, 0, 0, 'riskfactors', 1, 1, '', '', 'Risk Factors'),
-('HIS', 'exams', '1General', 'Exams/Tests', 2, 23, 1, 0, 0, 'exams', 1, 1, '', '', 'Exam and test results'),
-('HIS', 'history_father', '2Family History', 'Father', 1, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'history_mother', '2Family History', 'Mother', 2, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'history_siblings', '2Family History', 'Siblings', 3, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'history_spouse', '2Family History', 'Spouse', 4, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'history_offspring', '2Family History', 'Offspring', 5, 2, 1, 20, 255, '', 1, 3, '', '', ''),
-('HIS', 'relatives_cancer', '3Relatives', 'Cancer', 1, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'relatives_tuberculosis', '3Relatives', 'Tuberculosis', 2, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'relatives_diabetes', '3Relatives', 'Diabetes', 3, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'relatives_high_blood_pressure', '3Relatives', 'High Blood Pressure', 4, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'relatives_heart_problems', '3Relatives', 'Heart Problems', 5, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'relatives_stroke', '3Relatives', 'Stroke', 6, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'relatives_epilepsy', '3Relatives', 'Epilepsy', 7, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'relatives_mental_illness', '3Relatives', 'Mental Illness', 8, 2, 1, 20, 255, '', 1, 1, '', '', ''),
-('HIS', 'relatives_suicide', '3Relatives', 'Suicide', 9, 2, 1, 20, 255, '', 1, 3, '', '', ''),
-('HIS', 'coffee', '4Lifestyle', 'Coffee', 2, 28, 1, 20, 255, '', 1, 3, '', '', 'Caffeine consumption'),
-('HIS', 'tobacco', '4Lifestyle', 'Tobacco', 1, 32, 1, 0, 255, 'smoking_status', 1, 3, '', '', 'Tobacco use'),
-('HIS', 'alcohol', '4Lifestyle', 'Alcohol', 3, 28, 1, 20, 255, '', 1, 3, '', '', 'Alcohol consumption'),
-('HIS', 'recreational_drugs', '4Lifestyle', 'Recreational Drugs', 4, 28, 1, 20, 255, '', 1, 3, '', '', 'Recreational drug use'),
-('HIS', 'counseling', '4Lifestyle', 'Counseling', 5, 28, 1, 20, 255, '', 1, 3, '', '', 'Counseling activities'),
-('HIS', 'exercise_patterns', '4Lifestyle', 'Exercise Patterns', 6, 28, 1, 20, 255, '', 1, 3, '', '', 'Exercise patterns'),
-('HIS', 'hazardous_activities', '4Lifestyle', 'Hazardous Activities', 7, 28, 1, 20, 255, '', 1, 3, '', '', 'Hazardous activities'),
-('HIS', 'sleep_patterns', '4Lifestyle', 'Sleep Patterns', 8, 2, 1, 20, 255, '', 1, 3, '', '', 'Sleep patterns'),
-('HIS', 'seatbelt_use', '4Lifestyle', 'Seatbelt Use', 9, 2, 1, 20, 255, '', 1, 3, '', '', 'Seatbelt use'),
-('HIS', 'name_1', '5Other', 'Name/Value', 1, 2, 1, 10, 255, '', 1, 1, '', '', 'Name 1'),
-('HIS', 'value_1', '5Other', '', 2, 2, 1, 10, 255, '', 0, 0, '', '', 'Value 1'),
-('HIS', 'name_2', '5Other', 'Name/Value', 3, 2, 1, 10, 255, '', 1, 1, '', '', 'Name 2'),
-('HIS', 'value_2', '5Other', '', 4, 2, 1, 10, 255, '', 0, 0, '', '', 'Value 2'),
-('HIS', 'additional_history', '5Other', 'Additional History', 5, 3, 1, 30, 3, '', 1, 3, '', '', 'Additional history notes'),
-('HIS', 'userarea11', '5Other', 'User Defined Area 11', 6, 3, 0, 30, 3, '', 1, 3, '', '', 'User Defined'),
-('HIS', 'userarea12', '5Other', 'User Defined Area 12', 7, 3, 0, 30, 3, '', 1, 3, '', '', 'User Defined');
+CREATE TABLE IF NOT EXISTS `layout_options` (
+  `item_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `form_id` varchar(31) NOT NULL DEFAULT '',
+  `field_id` varchar(31) NOT NULL DEFAULT '',
+  `group_name` varchar(31) NOT NULL DEFAULT '',
+  `title` varchar(63) NOT NULL DEFAULT '',
+  `seq` int(11) NOT NULL DEFAULT '0',
+  `data_type` tinyint(3) NOT NULL DEFAULT '0',
+  `uor` tinyint(1) NOT NULL DEFAULT '1',
+  `fld_length` int(11) NOT NULL DEFAULT '15',
+  `max_length` int(11) NOT NULL DEFAULT '0',
+  `list_id` varchar(31) NOT NULL DEFAULT '',
+  `titlecols` tinyint(3) NOT NULL DEFAULT '1',
+  `datacols` tinyint(3) NOT NULL DEFAULT '1',
+  `default_value` varchar(255) NOT NULL DEFAULT '',
+  `edit_options` varchar(36) NOT NULL DEFAULT '',
+  `description` text,
+  `group_order` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=129 ;
+
+
+
+INSERT INTO `layout_options` (`item_id`, `form_id`, `field_id`, `group_name`, `title`, `seq`, `data_type`, `uor`, `fld_length`, `max_length`, `list_id`, `titlecols`, `datacols`, `default_value`, `edit_options`, `description`, `group_order`) VALUES
+(1, 'Demographics', 'title', 'Who', 'Name', 1, 1, 1, 0, 0, 'titles', 1, 1, '', 'N', 'Title', 1),
+(2, 'Demographics', 'fname', 'Who', '', 2, 2, 2, 10, 63, '', 0, 0, '', 'CD', 'First Name', 1),
+(3, 'Demographics', 'mname', 'Who', '', 3, 2, 1, 2, 63, '', 0, 0, '', 'C', 'Middle Name', 1),
+(4, 'Demographics', 'lname', 'Who', '', 4, 2, 2, 10, 63, '', 0, 0, '', 'CD', 'Last Name', 1),
+(5, 'Demographics', 'pubpid', 'Who', 'External ID', 5, 2, 1, 10, 15, '', 1, 1, '', 'ND', 'External identifier', 1),
+(6, 'Demographics', 'DOB', 'Who', 'DOB', 6, 4, 2, 10, 10, '', 1, 1, '', 'D', 'Date of Birth', 1),
+(7, 'Demographics', 'sex', 'Who', 'Sex', 7, 2, 0, 0, 0, 'sex', 1, 1, '', 'N', 'Sex', 1),
+(8, 'Demographics', 'ss', 'Who', 'S.S.', 8, 2, 1, 11, 11, '', 1, 1, '', '', 'Social Security Number', 1),
+(9, 'Demographics', 'drivers_license', 'Who', 'License/ID', 9, 2, 1, 15, 63, '', 1, 1, '', '', 'Drivers License or State ID', 1),
+(10, 'Demographics', 'status', 'Who', 'Marital Status', 10, 1, 1, 0, 0, 'marital', 1, 3, '', '', 'Marital Status', 1),
+(11, 'Demographics', 'genericname1', 'Who', 'User Defined', 11, 2, 1, 15, 63, '', 1, 3, '', '', 'User Defined Field', 1),
+(12, 'Demographics', 'genericval1', 'Who', '', 12, 2, 1, 15, 63, '', 0, 0, '', '', 'User Defined Field', 1),
+(13, 'Demographics', 'genericname2', 'Who', '', 13, 2, 1, 15, 63, '', 0, 0, '', '', 'User Defined Field', 1),
+(14, 'Demographics', 'genericval2', 'Who', '', 14, 2, 1, 15, 63, '', 0, 0, '', '', 'User Defined Field', 1),
+(15, 'Demographics', 'squad', 'Who', 'Squad', 15, 13, 0, 0, 0, '', 1, 3, '', '', 'Squad Membership', 1),
+(16, 'Demographics', 'pricelevel', 'Who', 'Price Level', 16, 1, 0, 0, 0, 'pricelevel', 1, 1, '', '', 'Discount Level', 1),
+(17, 'Demographics', 'street', 'Contact', 'Address', 1, 2, 1, 25, 63, '', 1, 1, '', 'C', 'Street and Number', 2),
+(18, 'Demographics', 'city', 'Contact', 'City', 2, 2, 1, 15, 63, '', 1, 1, '', 'C', 'City Name', 2),
+(19, 'Demographics', 'state', 'Contact', 'State', 3, 26, 1, 0, 0, 'state', 1, 1, '', '', 'State/Locality', 2),
+(20, 'Demographics', 'postal_code', 'Contact', 'Postal Code', 4, 2, 1, 6, 63, '', 1, 1, '', '', 'Postal Code', 2),
+(21, 'Demographics', 'country_code', 'Contact', 'Country', 5, 26, 1, 0, 0, 'country', 1, 1, '', '', 'Country', 2),
+(22, 'Demographics', 'mothersname', 'Contact', 'Mother''s Name', 6, 2, 1, 20, 63, '', 1, 1, '', '', '', 2),
+(23, 'Demographics', 'guardiansname', 'Contact', 'Guardian''s Name', 7, 2, 1, 20, 63, '', 1, 1, '', '', '', 2),
+(24, 'Demographics', 'contact_relationship', 'Contact', 'Emergency Contact', 8, 2, 1, 10, 63, '', 1, 1, '', 'C', 'Emergency Contact Person', 2),
+(25, 'Demographics', 'phone_contact', 'Contact', 'Emergency Phone', 9, 2, 1, 20, 63, '', 1, 1, '', 'P', 'Emergency Contact Phone Number', 2),
+(26, 'Demographics', 'phone_home', 'Contact', 'Home Phone', 10, 2, 1, 20, 63, '', 1, 1, '', 'P', 'Home Phone Number', 2),
+(27, 'Demographics', 'phone_biz', 'Contact', 'Work Phone', 11, 2, 1, 20, 63, '', 1, 1, '', 'P', 'Work Phone Number', 2),
+(28, 'Demographics', 'phone_cell', 'Contact', 'Mobile Phone', 12, 2, 1, 20, 63, '', 1, 1, '', 'P', 'Cell Phone Number', 2),
+(29, 'Demographics', 'email', 'Contact', 'Contact Email', 13, 2, 1, 30, 95, '', 1, 1, '', '', 'Contact Email Address', 2),
+(30, 'Demographics', 'providerID', 'Choices', 'Provider', 1, 11, 1, 0, 0, '', 1, 3, '', '', 'Referring Provider', 3),
+(31, 'Demographics', 'pharmacy_id', 'Choices', 'Pharmacy', 2, 12, 1, 0, 0, '', 1, 3, '', '', 'Preferred Pharmacy', 3),
+(32, 'Demographics', 'hipaa_notice', 'Choices', 'HIPAA Notice Received', 3, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Did you receive a copy of the HIPAA Notice?', 3),
+(33, 'Demographics', 'hipaa_voice', 'Choices', 'Allow Voice Message', 4, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Allow telephone messages?', 3),
+(34, 'Demographics', 'hipaa_message', 'Choices', 'Leave Message With', 5, 2, 1, 20, 63, '', 1, 1, '', '', 'With whom may we leave a message?', 3),
+(35, 'Demographics', 'hipaa_mail', 'Choices', 'Allow Mail Message', 6, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Allow email messages?', 3),
+(36, 'Demographics', 'hipaa_allowsms', 'Choices', 'Allow SMS', 7, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Allow SMS (text messages)?', 3),
+(37, 'Demographics', 'hipaa_allowemail', 'Choices', 'Allow Email', 8, 1, 1, 0, 0, 'yesno', 1, 1, '', '', 'Allow Email?', 3),
+(38, 'Demographics', 'allow_imm_reg_use', 'Choices', 'Allow Immunization Registry Use', 9, 1, 1, 0, 0, 'yesno', 1, 1, '', '', '', 3),
+(39, 'Demographics', 'allow_imm_info_share', 'Choices', 'Allow Immunization Info Sharing', 10, 1, 1, 0, 0, 'yesno', 1, 1, '', '', '', 3),
+(40, 'Demographics', 'allow_health_info_ex', 'Choices', 'Allow Health Information Exchange', 11, 1, 1, 0, 0, 'yesno', 1, 1, '', '', '', 3),
+(41, 'Demographics', 'occupation', 'Employer', 'Occupation', 1, 2, 1, 20, 63, '', 1, 1, '', 'C', 'Occupation', 4),
+(42, 'Demographics', 'em_name', 'Employer', 'Employer Name', 2, 2, 1, 20, 63, '', 1, 1, '', 'C', 'Employer Name', 4),
+(43, 'Demographics', 'em_street', 'Employer', 'Employer Address', 3, 2, 1, 25, 63, '', 1, 1, '', 'C', 'Street and Number', 4),
+(44, 'Demographics', 'em_city', 'Employer', 'City', 4, 2, 1, 15, 63, '', 1, 1, '', 'C', 'City Name', 4),
+(45, 'Demographics', 'em_state', 'Employer', 'State', 5, 26, 1, 0, 0, 'state', 1, 1, '', '', 'State/Locality', 4),
+(46, 'Demographics', 'em_postal_code', 'Employer', 'Postal Code', 6, 2, 1, 6, 63, '', 1, 1, '', '', 'Postal Code', 4),
+(47, 'Demographics', 'em_country', 'Employer', 'Country', 7, 26, 1, 0, 0, 'country', 1, 1, '', '', 'Country', 4),
+(48, 'Demographics', 'language', 'Stats', 'Language', 1, 26, 1, 0, 0, 'language', 1, 1, '', '', 'Preferred Language', 5),
+(49, 'Demographics', 'ethnicity', 'Stats', 'Ethnicity', 2, 33, 1, 0, 0, 'ethnicity', 1, 1, '', '', 'Ethnicity', 5),
+(50, 'Demographics', 'race', 'Stats', 'Race', 3, 33, 1, 0, 0, 'race', 1, 1, '', '', 'Race', 5),
+(51, 'Demographics', 'financial_review', 'Stats', 'Financial Review Date', 4, 2, 1, 10, 10, '', 1, 1, '', 'D', 'Financial Review Date', 5),
+(52, 'Demographics', 'family_size', 'Stats', 'Family Size', 4, 2, 1, 20, 63, '', 1, 1, '', '', 'Family Size', 5),
+(53, 'Demographics', 'monthly_income', 'Stats', 'Monthly Income', 5, 2, 1, 20, 63, '', 1, 1, '', '', 'Monthly Income', 5),
+(54, 'Demographics', 'homeless', 'Stats', 'Homeless, etc.', 6, 2, 1, 20, 63, '', 1, 1, '', '', 'Homeless or similar?', 5),
+(55, 'Demographics', 'interpretter', 'Stats', 'Interpreter', 7, 2, 1, 20, 63, '', 1, 1, '', '', 'Interpreter needed?', 5),
+(56, 'Demographics', 'migrantseasonal', 'Stats', 'Migrant/Seasonal', 8, 2, 1, 20, 63, '', 1, 1, '', '', 'Migrant or seasonal worker?', 5),
+(57, 'Demographics', 'contrastart', 'Stats', 'Contraceptives Start', 9, 4, 0, 10, 10, '', 1, 1, '', '', 'Date contraceptive services initially provided', 5),
+(58, 'Demographics', 'referral_source', 'Stats', 'Referral Source', 10, 26, 1, 0, 0, 'refsource', 1, 1, '', '', 'How did they hear about us', 5),
+(59, 'Demographics', 'vfc', 'Stats', 'VFC', 12, 1, 1, 20, 0, 'eligibility', 1, 1, '', '', 'Eligibility status for Vaccine for Children supplied vaccine', 5),
+(60, 'Demographics', 'usertext1', 'Misc', 'User Defined Text 1', 1, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined', 6),
+(61, 'Demographics', 'usertext2', 'Misc', 'User Defined Text 2', 2, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined', 6),
+(62, 'Demographics', 'usertext3', 'Misc', 'User Defined Text 3', 3, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined', 6),
+(63, 'Demographics', 'usertext4', 'Misc', 'User Defined Text 4', 4, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined', 6),
+(64, 'Demographics', 'usertext5', 'Misc', 'User Defined Text 5', 5, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined', 6),
+(65, 'Demographics', 'usertext6', 'Misc', 'User Defined Text 6', 6, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined', 6),
+(66, 'Demographics', 'usertext7', 'Misc', 'User Defined Text 7', 7, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined', 6),
+(67, 'Demographics', 'usertext8', 'Misc', 'User Defined Text 8', 8, 2, 0, 10, 63, '', 1, 1, '', '', 'User Defined', 6),
+(68, 'Demographics', 'userlist1', 'Misc', 'User Defined List 1', 9, 1, 0, 0, 0, 'userlist1', 1, 1, '', '', 'User Defined', 6),
+(69, 'Demographics', 'userlist2', 'Misc', 'User Defined List 2', 10, 1, 0, 0, 0, 'userlist2', 1, 1, '', '', 'User Defined', 6),
+(70, 'Demographics', 'userlist3', 'Misc', 'User Defined List 3', 11, 1, 0, 0, 0, 'userlist3', 1, 1, '', '', 'User Defined', 6),
+(71, 'Demographics', 'userlist4', 'Misc', 'User Defined List 4', 12, 1, 0, 0, 0, 'userlist4', 1, 1, '', '', 'User Defined', 6),
+(72, 'Demographics', 'userlist5', 'Misc', 'User Defined List 5', 13, 1, 0, 0, 0, 'userlist5', 1, 1, '', '', 'User Defined', 6),
+(73, 'Demographics', 'userlist6', 'Misc', 'User Defined List 6', 14, 1, 0, 0, 0, 'userlist6', 1, 1, '', '', 'User Defined', 6),
+(74, 'Demographics', 'userlist7', 'Misc', 'User Defined List 7', 15, 1, 0, 0, 0, 'userlist7', 1, 1, '', '', 'User Defined', 6),
+(75, 'Demographics', 'regdate', 'Misc', 'Registration Date', 16, 4, 0, 10, 10, '', 1, 1, '', 'D', 'Start Date at This Clinic', 6),
+(76, 'Referrals', 'refer_date', 'Referral', 'Referral Date', 1, 4, 2, 0, 0, '', 1, 1, 'C', 'D', 'Date of referral', 1),
+(77, 'Referrals', 'refer_from', 'Referral', 'Refer By', 2, 10, 2, 0, 0, '', 1, 1, '', '', 'Referral By', 1),
+(78, 'Referrals', 'refer_external', 'Referral', 'External Referral', 3, 1, 1, 0, 0, 'boolean', 1, 1, '', '', 'External referral?', 1),
+(79, 'Referrals', 'refer_to', 'Referral', 'Refer To', 4, 14, 2, 0, 0, '', 1, 1, '', '', 'Referral To', 1),
+(80, 'Referrals', 'body', 'Referral', 'Reason', 5, 3, 2, 30, 3, '', 1, 1, '', '', 'Reason for referral', 1),
+(81, 'Referrals', 'refer_diag', 'Referral', 'Referrer Diagnosis', 6, 2, 1, 30, 255, '', 1, 1, '', 'X', 'Referrer diagnosis', 1),
+(82, 'Referrals', 'refer_risk_level', 'Referral', 'Risk Level', 7, 1, 1, 0, 0, 'risklevel', 1, 1, '', '', 'Level of urgency', 1),
+(83, 'Referrals', 'refer_vitals', 'Referral', 'Include Vitals', 8, 1, 1, 0, 0, 'boolean', 1, 1, '', '', 'Include vitals data?', 1),
+(84, 'Referrals', 'refer_related_code', 'Referral', 'Requested Service', 9, 15, 1, 30, 255, '', 1, 1, '', '', 'Billing Code for Requested Service', 1),
+(85, 'Referrals', 'reply_date', 'Counter-Referral', 'Reply Date', 10, 4, 1, 0, 0, '', 1, 1, '', 'D', 'Date of reply', 2),
+(86, 'Referrals', 'reply_from', 'Counter-Referral', 'Reply From', 11, 2, 1, 30, 255, '', 1, 1, '', '', 'Who replied?', 2),
+(87, 'Referrals', 'reply_init_diag', 'Counter-Referral', 'Presumed Diagnosis', 12, 2, 1, 30, 255, '', 1, 1, '', '', 'Presumed diagnosis by specialist', 2),
+(88, 'Referrals', 'reply_final_diag', 'Counter-Referral', 'Final Diagnosis', 13, 2, 1, 30, 255, '', 1, 1, '', '', 'Final diagnosis by specialist', 2),
+(89, 'Referrals', 'reply_documents', 'Counter-Referral', 'Documents', 14, 2, 1, 30, 255, '', 1, 1, '', '', 'Where may related scanned or paper documents be found?', 2),
+(90, 'Referrals', 'reply_findings', 'Counter-Referral', 'Findings', 15, 3, 1, 30, 3, '', 1, 1, '', '', 'Findings by specialist', 2),
+(91, 'Referrals', 'reply_services', 'Counter-Referral', 'Services Provided', 16, 3, 1, 30, 3, '', 1, 1, '', '', 'Service provided by specialist', 2),
+(92, 'Referrals', 'reply_recommend', 'Counter-Referral', 'Recommendations', 17, 3, 1, 30, 3, '', 1, 1, '', '', 'Recommendations by specialist', 2),
+(93, 'Referrals', 'reply_rx_refer', 'Counter-Referral', 'Prescriptions/Referrals', 18, 3, 1, 30, 3, '', 1, 1, '', '', 'Prescriptions and/or referrals by specialist', 2),
+(94, 'History', 'usertext11', 'General', 'Risk Factors', 1, 21, 1, 0, 0, 'riskfactors', 1, 1, '', '', 'Risk Factors', 1),
+(95, 'History', 'exams', 'General', 'Exams/Tests', 2, 23, 1, 0, 0, 'exams', 1, 1, '', '', 'Exam and test results', 1),
+(96, 'History', 'history_father', 'Family History', 'Father', 1, 2, 1, 20, 255, '', 1, 1, '', '', '', 2),
+(97, 'History', 'history_mother', 'Family History', 'Mother', 2, 2, 1, 20, 255, '', 1, 1, '', '', '', 2),
+(98, 'History', 'history_siblings', 'Family History', 'Siblings', 3, 2, 1, 20, 255, '', 1, 1, '', '', '', 2),
+(99, 'History', 'history_spouse', 'Family History', 'Spouse', 4, 2, 1, 20, 255, '', 1, 1, '', '', '', 2),
+(100, 'History', 'history_offspring', 'Family History', 'Offspring', 5, 2, 1, 20, 255, '', 1, 3, '', '', '', 2),
+(101, 'History', 'relatives_cancer', 'Relatives', 'Cancer', 1, 2, 1, 20, 255, '', 1, 1, '', '', '', 3),
+(102, 'History', 'relatives_tuberculosis', 'Relatives', 'Tuberculosis', 2, 2, 1, 20, 255, '', 1, 1, '', '', '', 3),
+(103, 'History', 'relatives_diabetes', 'Relatives', 'Diabetes', 3, 2, 1, 20, 255, '', 1, 1, '', '', '', 3),
+(104, 'History', 'relatives_high_blood_pressure', 'Relatives', 'High Blood Pressure', 4, 2, 1, 20, 255, '', 1, 1, '', '', '', 3),
+(105, 'History', 'relatives_heart_problems', 'Relatives', 'Heart Problems', 5, 2, 1, 20, 255, '', 1, 1, '', '', '', 3),
+(106, 'History', 'relatives_stroke', 'Relatives', 'Stroke', 6, 2, 1, 20, 255, '', 1, 1, '', '', '', 3),
+(107, 'History', 'relatives_epilepsy', 'Relatives', 'Epilepsy', 7, 2, 1, 20, 255, '', 1, 1, '', '', '', 3),
+(108, 'History', 'relatives_mental_illness', 'Relatives', 'Mental Illness', 8, 2, 1, 20, 255, '', 1, 1, '', '', '', 3),
+(109, 'History', 'relatives_suicide', 'Relatives', 'Suicide', 9, 2, 1, 20, 255, '', 1, 3, '', '', '', 3),
+(110, 'History', 'coffee', 'Lifestyle', 'Coffee', 2, 28, 1, 20, 255, '', 1, 3, '', '', 'Caffeine consumption', 4),
+(111, 'History', 'tobacco', 'Lifestyle', 'Tobacco', 1, 32, 1, 0, 255, 'smoking_status', 1, 3, '', '', 'Tobacco use', 4),
+(112, 'History', 'alcohol', 'Lifestyle', 'Alcohol', 3, 28, 1, 20, 255, '', 1, 3, '', '', 'Alcohol consumption', 4),
+(113, 'History', 'recreational_drugs', 'Lifestyle', 'Recreational Drugs', 4, 28, 1, 20, 255, '', 1, 3, '', '', 'Recreational drug use', 4),
+(114, 'History', 'counseling', 'Lifestyle', 'Counseling', 5, 28, 1, 20, 255, '', 1, 3, '', '', 'Counseling activities', 4),
+(115, 'History', 'exercise_patterns', 'Lifestyle', 'Exercise Patterns', 6, 28, 1, 20, 255, '', 1, 3, '', '', 'Exercise patterns', 4),
+(116, 'History', 'hazardous_activities', 'Lifestyle', 'Hazardous Activities', 7, 28, 1, 20, 255, '', 1, 3, '', '', 'Hazardous activities', 4),
+(117, 'History', 'sleep_patterns', 'Lifestyle', 'Sleep Patterns', 8, 2, 1, 20, 255, '', 1, 3, '', '', 'Sleep patterns', 4),
+(118, 'History', 'seatbelt_use', 'Lifestyle', 'Seatbelt Use', 9, 2, 1, 20, 255, '', 1, 3, '', '', 'Seatbelt use', 4),
+(119, 'History', 'name_1', 'Other', 'Name/Value', 1, 2, 1, 10, 255, '', 1, 1, '', '', 'Name 1', 5),
+(120, 'History', 'value_1', 'Other', '', 2, 2, 1, 10, 255, '', 0, 0, '', '', 'Value 1', 5),
+(121, 'History', 'name_2', 'Other', 'Name/Value', 3, 2, 1, 10, 255, '', 1, 1, '', '', 'Name 2', 5),
+(122, 'History', 'value_2', 'Other', '', 4, 2, 1, 10, 255, '', 0, 0, '', '', 'Value 2', 5),
+(123, 'History', 'additional_history', 'Other', 'Additional History', 5, 3, 1, 30, 3, '', 1, 3, '', '', 'Additional history notes', 5),
+(124, 'History', 'userarea11', 'Other', 'User Defined Area 11', 6, 3, 0, 30, 3, '', 1, 3, '', '', 'User Defined', 5),
+(125, 'History', 'userarea12', 'Other', 'User Defined Area 12', 7, 3, 0, 30, 3, '', 1, 3, '', '', 'User Defined', 5);
 
 CREATE TABLE IF NOT EXISTS `lbf_data` (
-  `form_id` int(11) NOT NULL auto_increment COMMENT 'references forms.form_id',
+  `form_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'references forms.form_id',
   `field_id` varchar(31) NOT NULL COMMENT 'references layout_options.field_id',
   `field_value` varchar(255) NOT NULL,
-  PRIMARY KEY  (`form_id`,`field_id`)
+  PRIMARY KEY (`form_id`,`field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='contains all data from layout-based forms' AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `lists` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `type` varchar(255) default NULL,
-  `title` varchar(255) default NULL,
-  `begdate` date default NULL,
-  `enddate` date default NULL,
-  `returndate` date default NULL,
-  `occurrence` int(11) default '0',
-  `classification` int(11) default '0',
-  `referredby` varchar(255) default NULL,
-  `extrainfo` varchar(255) default NULL,
-  `diagnosis` varchar(255) default NULL,
-  `activity` tinyint(4) default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `begdate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
+  `returndate` date DEFAULT NULL,
+  `occurrence` int(11) DEFAULT '0',
+  `classification` int(11) DEFAULT '0',
+  `referredby` varchar(255) DEFAULT NULL,
+  `extrainfo` varchar(255) DEFAULT NULL,
+  `diagnosis` varchar(255) DEFAULT NULL,
+  `activity` tinyint(4) DEFAULT NULL,
   `comments` longtext,
-  `pid` bigint(20) default NULL,
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `outcome` int(11) NOT NULL default '0',
-  `destination` varchar(255) default NULL,
-  `reinjury_id` bigint(20) NOT NULL default '0',
-  `injury_part` varchar(31) NOT NULL default '',
-  `injury_type` varchar(31) NOT NULL default '',
-  `injury_grade` varchar(31) NOT NULL default '',
-  `reaction` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  `pid` bigint(20) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `outcome` int(11) NOT NULL DEFAULT '0',
+  `destination` varchar(255) DEFAULT NULL,
+  `reinjury_id` bigint(20) NOT NULL DEFAULT '0',
+  `injury_part` varchar(31) NOT NULL DEFAULT '',
+  `injury_type` varchar(31) NOT NULL DEFAULT '',
+  `injury_grade` varchar(31) NOT NULL DEFAULT '',
+  `reaction` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `list_options` (
-  `id` int(11) NOT NULL auto_increment,
-  `list_id` varchar(31) NOT NULL default '',
-  `option_id` varchar(31) NOT NULL default '',
-  `title` varchar(255) NOT NULL default '',
-  `seq` int(11) NOT NULL default '0',
-  `is_default` tinyint(1) NOT NULL default '0',
-  `option_value` float NOT NULL default '0',
-  `mapping` varchar(31) NOT NULL default '',
-  `notes` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`,`list_id`,`option_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=541 ;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `list_id` varchar(31) NOT NULL DEFAULT '',
+  `option_id` varchar(31) NOT NULL DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `seq` int(11) NOT NULL DEFAULT '0',
+  `is_default` tinyint(1) NOT NULL DEFAULT '0',
+  `option_value` float NOT NULL DEFAULT '0',
+  `mapping` varchar(31) NOT NULL DEFAULT '',
+  `notes` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`,`list_id`,`option_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=548 ;
+
 
 INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`) VALUES
 (1, 'yesno', 'NO', 'NO', 1, 0, 0, '', ''),
@@ -2070,7 +2176,7 @@ INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_de
 (221, 'drug_route', '13', 'Both Ears', 13, 0, 0, '', ''),
 (222, 'drug_route', '14', 'Left Ear', 14, 0, 0, '', ''),
 (223, 'drug_route', '15', 'Right Ear', 15, 0, 0, '', ''),
-(224, 'drug_interval', '0', '', 0, 0, 0, '', ''),
+(543, '', 'family', 'Family', 0, 0, 0, '', ''),
 (225, 'drug_interval', '1', 'b.i.d.', 1, 0, 0, '', ''),
 (226, 'drug_interval', '2', 't.i.d.', 2, 0, 0, '', ''),
 (227, 'drug_interval', '3', 'q.i.d.', 3, 0, 0, '', ''),
@@ -2080,7 +2186,6 @@ INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_de
 (231, 'drug_interval', '7', 'q.6h', 7, 0, 0, '', ''),
 (232, 'drug_interval', '8', 'q.8h', 8, 0, 0, '', ''),
 (233, 'drug_interval', '9', 'q.d.', 9, 0, 0, '', ''),
-
 (234, 'drug_interval', '10', 'a.c.', 10, 0, 0, '', ''),
 (235, 'drug_interval', '11', 'p.c.', 11, 0, 0, '', ''),
 (236, 'drug_interval', '12', 'a.m.', 12, 0, 0, '', ''),
@@ -2387,32 +2492,36 @@ INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_de
 (537, 'lists', 'payment_date', 'Payment Date', 1, 0, 0, '', ''),
 (538, 'payment_date', 'date_val', 'Date', 10, 0, 0, '', ''),
 (539, 'payment_date', 'post_to_date', 'Post To Date', 20, 0, 0, '', ''),
-(540, 'payment_date', 'deposit_date', 'Deposit Date', 30, 0, 0, '', '');
+(540, 'payment_date', 'deposit_date', 'Deposit Date', 30, 0, 0, '', ''),
+(542, '', 'famali', 'Family', 0, 0, 0, '', ''),
+(544, '', 'fam', 'familiy', 0, 0, 0, '', ''),
+(545, '', 'famili', 'Family', 0, 0, 0, '', ''),
+(546, 'pricelevel', 'family', 'Family', 2, 0, 0, '', ''),
+(547, 'taxrate', 'ivu', 'IVU', 0, 0, 0, '', '');
 
 CREATE TABLE IF NOT EXISTS `log` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `event` varchar(255) default NULL,
-  `user` varchar(255) default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `event` varchar(255) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
   `facility` varchar(255) NOT NULL,
   `comments` longtext,
   `user_notes` longtext,
-  `patient_id` bigint(20) default NULL,
-  `success` tinyint(1) default '1',
+  `patient_id` bigint(20) DEFAULT NULL,
+  `success` tinyint(1) DEFAULT '1',
   `checksum` longtext,
-  `crt_user` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6165 ;
-
+  `crt_user` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15858 ;
 
 CREATE TABLE IF NOT EXISTS `notes` (
-  `id` int(11) NOT NULL default '0',
-  `foreign_id` int(11) NOT NULL default '0',
-  `note` varchar(255) default NULL,
-  `owner` int(11) default NULL,
-  `date` datetime default NULL,
-  `revision` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL DEFAULT '0',
+  `foreign_id` int(11) NOT NULL DEFAULT '0',
+  `note` varchar(255) DEFAULT NULL,
+  `owner` int(11) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `revision` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `foreign_id` (`owner`),
   KEY `foreign_id_2` (`foreign_id`),
   KEY `date` (`date`)
@@ -2420,9 +2529,9 @@ CREATE TABLE IF NOT EXISTS `notes` (
 
 
 CREATE TABLE IF NOT EXISTS `notification_log` (
-  `iLogId` int(11) NOT NULL auto_increment,
+  `iLogId` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(7) NOT NULL,
-  `pc_eid` int(11) unsigned default NULL,
+  `pc_eid` int(11) unsigned DEFAULT NULL,
   `sms_gateway_type` varchar(50) NOT NULL,
   `smsgateway_info` varchar(255) NOT NULL,
   `message` text NOT NULL,
@@ -2435,62 +2544,67 @@ CREATE TABLE IF NOT EXISTS `notification_log` (
   `pc_startTime` time NOT NULL,
   `pc_endTime` time NOT NULL,
   `dSentDateTime` datetime NOT NULL,
-  PRIMARY KEY  (`iLogId`)
+  PRIMARY KEY (`iLogId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `notification_settings` (
-  `SettingsId` int(3) NOT NULL auto_increment,
+  `SettingsId` int(3) NOT NULL AUTO_INCREMENT,
   `Send_SMS_Before_Hours` int(3) NOT NULL,
   `Send_Email_Before_Hours` int(3) NOT NULL,
   `SMS_gateway_username` varchar(100) NOT NULL,
   `SMS_gateway_password` varchar(100) NOT NULL,
   `SMS_gateway_apikey` varchar(100) NOT NULL,
   `type` varchar(50) NOT NULL,
-  PRIMARY KEY  (`SettingsId`)
+  PRIMARY KEY (`SettingsId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
 
 INSERT INTO `notification_settings` (`SettingsId`, `Send_SMS_Before_Hours`, `Send_Email_Before_Hours`, `SMS_gateway_username`, `SMS_gateway_password`, `SMS_gateway_apikey`, `type`) VALUES
 (1, 150, 150, 'sms username', 'sms password', 'sms api key', 'SMS/Email Settings');
 
+
 CREATE TABLE IF NOT EXISTS `onotes` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `body` longtext,
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `activity` tinyint(4) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `user` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `activity` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
 
 CREATE TABLE IF NOT EXISTS `openemr_modules` (
-  `pn_id` int(11) unsigned NOT NULL auto_increment,
-  `pn_name` varchar(64) default NULL,
-  `pn_type` int(6) NOT NULL default '0',
-  `pn_displayname` varchar(64) default NULL,
-  `pn_description` varchar(255) default NULL,
-  `pn_regid` int(11) unsigned NOT NULL default '0',
-  `pn_directory` varchar(64) default NULL,
-  `pn_version` varchar(10) default NULL,
-  `pn_admin_capable` tinyint(1) NOT NULL default '0',
-  `pn_user_capable` tinyint(1) NOT NULL default '0',
-  `pn_state` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`pn_id`)
+  `pn_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pn_name` varchar(64) DEFAULT NULL,
+  `pn_type` int(6) NOT NULL DEFAULT '0',
+  `pn_displayname` varchar(64) DEFAULT NULL,
+  `pn_description` varchar(255) DEFAULT NULL,
+  `pn_regid` int(11) unsigned NOT NULL DEFAULT '0',
+  `pn_directory` varchar(64) DEFAULT NULL,
+  `pn_version` varchar(10) DEFAULT NULL,
+  `pn_admin_capable` tinyint(1) NOT NULL DEFAULT '0',
+  `pn_user_capable` tinyint(1) NOT NULL DEFAULT '0',
+  `pn_state` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pn_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
 
 INSERT INTO `openemr_modules` (`pn_id`, `pn_name`, `pn_type`, `pn_displayname`, `pn_description`, `pn_regid`, `pn_directory`, `pn_version`, `pn_admin_capable`, `pn_user_capable`, `pn_state`) VALUES
 (46, 'PostCalendar', 2, 'PostCalendar', 'PostNuke Calendar Module', 0, 'PostCalendar', '4.0.0', 1, 1, 3);
 
+
+
 CREATE TABLE IF NOT EXISTS `openemr_module_vars` (
-  `pn_id` int(11) unsigned NOT NULL auto_increment,
-  `pn_modname` varchar(64) default NULL,
-  `pn_name` varchar(64) default NULL,
+  `pn_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pn_modname` varchar(64) DEFAULT NULL,
+  `pn_name` varchar(64) DEFAULT NULL,
   `pn_value` longtext,
-  PRIMARY KEY  (`pn_id`),
+  PRIMARY KEY (`pn_id`),
   KEY `pn_modname` (`pn_modname`),
   KEY `pn_name` (`pn_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=235 ;
+
 
 INSERT INTO `openemr_module_vars` (`pn_id`, `pn_modname`, `pn_name`, `pn_value`) VALUES
 (234, 'PostCalendar', 'pcNotifyEmail', ''),
@@ -2513,110 +2627,38 @@ INSERT INTO `openemr_module_vars` (`pn_id`, `pn_modname`, `pn_name`, `pn_value`)
 (217, 'PostCalendar', 'pcEventsOpenInNewWindow', '0'),
 (216, 'PostCalendar', 'pcTime24Hours', '0');
 
+
 CREATE TABLE IF NOT EXISTS `openemr_postcalendar_categories` (
-  `pc_catid` int(11) unsigned NOT NULL auto_increment,
-  `pc_catname` varchar(100) default NULL,
-  `pc_catcolor` varchar(50) default NULL,
+  `pc_catid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pc_catname` varchar(100) DEFAULT NULL,
+  `pc_catcolor` varchar(50) DEFAULT NULL,
   `pc_catdesc` text,
-  `pc_recurrtype` int(1) NOT NULL default '0',
-  `pc_enddate` date default NULL,
+  `pc_recurrtype` int(1) NOT NULL DEFAULT '0',
+  `pc_enddate` date DEFAULT NULL,
   `pc_recurrspec` text,
-  `pc_recurrfreq` int(3) NOT NULL default '0',
-  `pc_duration` bigint(20) NOT NULL default '0',
-  `pc_end_date_flag` tinyint(1) NOT NULL default '0',
-  `pc_end_date_type` int(2) default NULL,
-  `pc_end_date_freq` int(11) NOT NULL default '0',
-  `pc_end_all_day` tinyint(1) NOT NULL default '0',
-  `pc_dailylimit` int(2) NOT NULL default '0',
-  PRIMARY KEY  (`pc_catid`),
+  `pc_recurrfreq` int(3) NOT NULL DEFAULT '0',
+  `pc_duration` bigint(20) NOT NULL DEFAULT '0',
+  `pc_end_date_flag` tinyint(1) NOT NULL DEFAULT '0',
+  `pc_end_date_type` int(2) DEFAULT NULL,
+  `pc_end_date_freq` int(11) NOT NULL DEFAULT '0',
+  `pc_end_all_day` tinyint(1) NOT NULL DEFAULT '0',
+  `pc_dailylimit` int(2) NOT NULL DEFAULT '0',
+  `pc_cattype` int(11) NOT NULL COMMENT 'Used in grouping categories',
+  PRIMARY KEY (`pc_catid`),
   KEY `basic_cat` (`pc_catname`,`pc_catcolor`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
-INSERT INTO `openemr_postcalendar_categories` (`pc_catid`, `pc_catname`, `pc_catcolor`, `pc_catdesc`, `pc_recurrtype`, `pc_enddate`, `pc_recurrspec`, `pc_recurrfreq`, `pc_duration`, `pc_end_date_flag`, `pc_end_date_type`, `pc_end_date_freq`, `pc_end_all_day`, `pc_dailylimit`) VALUES
-(5, 'Office Visit', '#FFFFCC', 'Normal Office Visit', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0),
-(4, 'Vacation', '#EFEFEF', 'Reserved for use to define Scheduled Vacation Time', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 0, 0, 0, 1, 0),
-(1, 'No Show', '#DDDDDD', 'Reserved to define when an event did not occur as specified.', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 0, 0, 0, 0, 0),
-(2, 'In Office', '#99CCFF', 'Reserved todefine when a provider may haveavailable appointments after.', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 1, 3, 2, 0, 0),
-(3, 'Out Of Office', '#99FFFF', 'Reserved to define when a provider may not have available appointments after.', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 1, 3, 2, 0, 0),
-(8, 'Lunch', '#FFFF33', 'Lunch', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 3600, 0, 3, 2, 0, 0),
-(9, 'Established Patient', '#CCFF33', '', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0),
-(10, 'New Patient', '#CCFFFF', '', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 1800, 0, 0, 0, 0, 0),
-(11, 'Reserved', '#FF7777', 'Reserved', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 3, 2, 0, 0);
-
-CREATE TABLE IF NOT EXISTS `openemr_postcalendar_events` (
-  `pc_eid` int(11) unsigned NOT NULL auto_increment,
-  `pc_catid` int(11) NOT NULL default '0',
-  `pc_multiple` int(10) unsigned NOT NULL,
-  `pc_aid` varchar(30) default NULL,
-  `pc_pid` varchar(11) default NULL,
-  `pc_title` varchar(150) default NULL,
-  `pc_time` datetime default NULL,
-  `pc_hometext` text,
-  `pc_comments` int(11) default '0',
-  `pc_counter` mediumint(8) unsigned default '0',
-  `pc_topic` int(3) NOT NULL default '1',
-  `pc_informant` varchar(20) default NULL,
-  `pc_eventDate` date NOT NULL default '0000-00-00',
-  `pc_endDate` date NOT NULL default '0000-00-00',
-  `pc_duration` bigint(20) NOT NULL default '0',
-  `pc_recurrtype` int(1) NOT NULL default '0',
-  `pc_recurrspec` text,
-  `pc_recurrfreq` int(3) NOT NULL default '0',
-  `pc_startTime` time default NULL,
-  `pc_endTime` time default NULL,
-  `pc_alldayevent` int(1) NOT NULL default '0',
-  `pc_location` text,
-  `pc_conttel` varchar(50) default NULL,
-  `pc_contname` varchar(50) default NULL,
-  `pc_contemail` varchar(255) default NULL,
-  `pc_website` varchar(255) default NULL,
-  `pc_fee` varchar(50) default NULL,
-  `pc_eventstatus` int(11) NOT NULL default '0',
-  `pc_sharing` int(11) NOT NULL default '0',
-  `pc_language` varchar(30) default NULL,
-  `pc_apptstatus` varchar(15) NOT NULL default '-',
-  `pc_prefcatid` int(11) NOT NULL default '0',
-  `pc_facility` smallint(6) NOT NULL default '0' COMMENT 'facility id for this event',
-  `pc_sendalertsms` varchar(3) NOT NULL default 'NO',
-  `pc_sendalertemail` varchar(3) NOT NULL default 'NO',
-  PRIMARY KEY  (`pc_eid`),
-  KEY `basic_event` (`pc_catid`,`pc_aid`,`pc_eventDate`,`pc_endDate`,`pc_eventstatus`,`pc_sharing`,`pc_topic`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
-INSERT INTO `openemr_postcalendar_events` (`pc_eid`, `pc_catid`, `pc_multiple`, `pc_aid`, `pc_pid`, `pc_title`, `pc_time`, `pc_hometext`, `pc_comments`, `pc_counter`, `pc_topic`, `pc_informant`, `pc_eventDate`, `pc_endDate`, `pc_duration`, `pc_recurrtype`, `pc_recurrspec`, `pc_recurrfreq`, `pc_startTime`, `pc_endTime`, `pc_alldayevent`, `pc_location`, `pc_conttel`, `pc_contname`, `pc_contemail`, `pc_website`, `pc_fee`, `pc_eventstatus`, `pc_sharing`, `pc_language`, `pc_apptstatus`, `pc_prefcatid`, `pc_facility`, `pc_sendalertsms`, `pc_sendalertemail`) VALUES
-(3, 2, 0, '1', '', 'In Office', '2005-03-03 12:22:31', ':text:', 0, 0, 0, '1', '2005-03-03', '2007-03-03', 0, 1, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, '09:00:00', '09:00:00', 0, 'a:6:{s:14:"event_location";N;s:13:"event_street1";N;s:13:"event_street2";N;s:10:"event_city";N;s:11:"event_state";N;s:12:"event_postal";N;}', '', '', '', '', '', 1, 1, '', '-', 0, 0, 'NO', 'NO'),
-(5, 3, 0, '1', '', 'Out Of Office', '2005-03-03 12:22:52', ':text:', 0, 0, 0, '1', '2005-03-03', '2007-03-03', 0, 1, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, '17:00:00', '17:00:00', 0, 'a:6:{s:14:"event_location";N;s:13:"event_street1";N;s:13:"event_street2";N;s:10:"event_city";N;s:11:"event_state";N;s:12:"event_postal";N;}', '', '', '', '', '', 1, 1, '', '-', 0, 0, 'NO', 'NO'),
-(6, 8, 0, '1', '', 'Lunch', '2005-03-03 12:23:31', ':text:', 0, 0, 0, '1', '2005-03-03', '2007-03-03', 3600, 1, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, '12:00:00', '13:00:00', 0, 'a:6:{s:14:"event_location";N;s:13:"event_street1";N;s:13:"event_street2";N;s:10:"event_city";N;s:11:"event_state";N;s:12:"event_postal";N;}', '', '', '', '', '', 1, 1, '', '-', 0, 0, 'NO', 'NO');
-
-CREATE TABLE IF NOT EXISTS `openemr_postcalendar_limits` (
-  `pc_limitid` int(11) NOT NULL auto_increment,
-  `pc_catid` int(11) NOT NULL default '0',
-  `pc_starttime` time NOT NULL default '00:00:00',
-  `pc_endtime` time NOT NULL default '00:00:00',
-  `pc_limit` int(11) NOT NULL default '1',
-  PRIMARY KEY  (`pc_limitid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-CREATE TABLE IF NOT EXISTS `openemr_postcalendar_topics` (
-  `pc_catid` int(11) unsigned NOT NULL auto_increment,
-  `pc_catname` varchar(100) default NULL,
-  `pc_catcolor` varchar(50) default NULL,
-  `pc_catdesc` text,
-  PRIMARY KEY  (`pc_catid`),
-  KEY `basic_cat` (`pc_catname`,`pc_catcolor`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 
 CREATE TABLE IF NOT EXISTS `openemr_session_info` (
-  `pn_sessid` varchar(32) NOT NULL default '',
-  `pn_ipaddr` varchar(20) default NULL,
-  `pn_firstused` int(11) NOT NULL default '0',
-  `pn_lastused` int(11) NOT NULL default '0',
-  `pn_uid` int(11) NOT NULL default '0',
+  `pn_sessid` varchar(32) NOT NULL DEFAULT '',
+  `pn_ipaddr` varchar(20) DEFAULT NULL,
+  `pn_firstused` int(11) NOT NULL DEFAULT '0',
+  `pn_lastused` int(11) NOT NULL DEFAULT '0',
+  `pn_uid` int(11) NOT NULL DEFAULT '0',
   `pn_vars` blob,
-  PRIMARY KEY  (`pn_sessid`)
+  PRIMARY KEY (`pn_sessid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `openemr_session_info` (`pn_sessid`, `pn_ipaddr`, `pn_firstused`, `pn_lastused`, `pn_uid`, `pn_vars`) VALUES
 ('978d31441dccd350d406bfab98978f20', '127.0.0.1', 1109233952, 1109234177, 0, NULL),
@@ -2630,89 +2672,91 @@ INSERT INTO `openemr_session_info` (`pn_sessid`, `pn_ipaddr`, `pn_firstused`, `p
 ('b4aef8b062fe73a2c599ca8998297918', '::1', 1297985756, 1297985756, 0, NULL),
 ('e71415a75d0c8fde355e7d44712af648', '::1', 1298152068, 1298157864, 0, NULL);
 
+
 CREATE TABLE IF NOT EXISTS `patient_data` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `title` varchar(255) NOT NULL default '',
-  `language` varchar(255) NOT NULL default '',
-  `financial` varchar(255) NOT NULL default '',
-  `fname` varchar(255) NOT NULL default '',
-  `lname` varchar(255) NOT NULL default '',
-  `mname` varchar(255) NOT NULL default '',
-  `DOB` date default NULL,
-  `street` varchar(255) NOT NULL default '',
-  `postal_code` varchar(255) NOT NULL default '',
-  `city` varchar(255) NOT NULL default '',
-  `state` varchar(255) NOT NULL default '',
-  `country_code` varchar(255) NOT NULL default '',
-  `drivers_license` varchar(255) NOT NULL default '',
-  `ss` varchar(255) NOT NULL default '',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `language` varchar(255) NOT NULL DEFAULT '',
+  `financial` varchar(255) NOT NULL DEFAULT '',
+  `fname` varchar(255) NOT NULL DEFAULT '',
+  `lname` varchar(255) NOT NULL DEFAULT '',
+  `mname` varchar(255) NOT NULL DEFAULT '',
+  `DOB` date DEFAULT NULL,
+  `street` varchar(255) NOT NULL DEFAULT '',
+  `postal_code` varchar(255) NOT NULL DEFAULT '',
+  `city` varchar(255) NOT NULL DEFAULT '',
+  `state` varchar(255) NOT NULL DEFAULT '',
+  `country_code` varchar(255) NOT NULL DEFAULT '',
+  `drivers_license` varchar(255) NOT NULL DEFAULT '',
+  `ss` varchar(255) NOT NULL DEFAULT '',
   `occupation` longtext,
-  `phone_home` varchar(255) NOT NULL default '',
-  `phone_biz` varchar(255) NOT NULL default '',
-  `phone_contact` varchar(255) NOT NULL default '',
-  `phone_cell` varchar(255) NOT NULL default '',
-  `pharmacy_id` int(11) NOT NULL default '0',
-  `status` varchar(255) NOT NULL default '',
-  `contact_relationship` varchar(255) NOT NULL default '',
-  `date` datetime default NULL,
-  `sex` varchar(255) NOT NULL default '',
-  `referrer` varchar(255) NOT NULL default '',
-  `referrerID` varchar(255) NOT NULL default '',
-  `providerID` int(11) default NULL,
-  `email` varchar(255) NOT NULL default '',
-  `ethnoracial` varchar(255) NOT NULL default '',
-  `race` varchar(255) NOT NULL default '',
-  `ethnicity` varchar(255) NOT NULL default '',
-  `interpretter` varchar(255) NOT NULL default '',
-  `migrantseasonal` varchar(255) NOT NULL default '',
-  `family_size` varchar(255) NOT NULL default '',
-  `monthly_income` varchar(255) NOT NULL default '',
-  `homeless` varchar(255) NOT NULL default '',
-  `financial_review` datetime default NULL,
-  `pubpid` varchar(255) NOT NULL default '',
-  `pid` bigint(20) NOT NULL default '0',
-  `genericname1` varchar(255) NOT NULL default '',
-  `genericval1` varchar(255) NOT NULL default '',
-  `genericname2` varchar(255) NOT NULL default '',
-  `genericval2` varchar(255) NOT NULL default '',
-  `hipaa_mail` varchar(3) NOT NULL default '',
-  `hipaa_voice` varchar(3) NOT NULL default '',
-  `hipaa_notice` varchar(3) NOT NULL default '',
-  `hipaa_message` varchar(20) NOT NULL default '',
-  `hipaa_allowsms` varchar(3) NOT NULL default 'NO',
-  `hipaa_allowemail` varchar(3) NOT NULL default 'NO',
-  `squad` varchar(32) NOT NULL default '',
-  `fitness` int(11) NOT NULL default '0',
-  `referral_source` varchar(30) NOT NULL default '',
-  `usertext1` varchar(255) NOT NULL default '',
-  `usertext2` varchar(255) NOT NULL default '',
-  `usertext3` varchar(255) NOT NULL default '',
-  `usertext4` varchar(255) NOT NULL default '',
-  `usertext5` varchar(255) NOT NULL default '',
-  `usertext6` varchar(255) NOT NULL default '',
-  `usertext7` varchar(255) NOT NULL default '',
-  `usertext8` varchar(255) NOT NULL default '',
-  `userlist1` varchar(255) NOT NULL default '',
-  `userlist2` varchar(255) NOT NULL default '',
-  `userlist3` varchar(255) NOT NULL default '',
-  `userlist4` varchar(255) NOT NULL default '',
-  `userlist5` varchar(255) NOT NULL default '',
-  `userlist6` varchar(255) NOT NULL default '',
-  `userlist7` varchar(255) NOT NULL default '',
-  `pricelevel` varchar(255) NOT NULL default 'standard',
-  `regdate` date default NULL COMMENT 'Registration Date',
-  `contrastart` date default NULL COMMENT 'Date contraceptives initially used',
-  `completed_ad` varchar(3) NOT NULL default 'NO',
-  `ad_reviewed` date default NULL,
-  `vfc` varchar(255) NOT NULL default '',
-  `mothersname` varchar(255) NOT NULL default '',
-  `guardiansname` varchar(255) NOT NULL default '',
-  `allow_imm_reg_use` varchar(255) NOT NULL default '',
-  `allow_imm_info_share` varchar(255) NOT NULL default '',
-  `allow_health_info_ex` varchar(255) NOT NULL default '',
+  `phone_home` varchar(255) NOT NULL DEFAULT '',
+  `phone_biz` varchar(255) NOT NULL DEFAULT '',
+  `phone_contact` varchar(255) NOT NULL DEFAULT '',
+  `phone_cell` varchar(255) NOT NULL DEFAULT '',
+  `pharmacy_id` int(11) NOT NULL DEFAULT '0',
+  `status` varchar(255) NOT NULL DEFAULT '',
+  `contact_relationship` varchar(255) NOT NULL DEFAULT '',
+  `date` datetime DEFAULT NULL,
+  `sex` varchar(255) NOT NULL DEFAULT '',
+  `referrer` varchar(255) NOT NULL DEFAULT '',
+  `referrerID` varchar(255) NOT NULL DEFAULT '',
+  `providerID` int(11) DEFAULT NULL,
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `ethnoracial` varchar(255) NOT NULL DEFAULT '',
+  `race` varchar(255) NOT NULL DEFAULT '',
+  `ethnicity` varchar(255) NOT NULL DEFAULT '',
+  `interpretter` varchar(255) NOT NULL DEFAULT '',
+  `migrantseasonal` varchar(255) NOT NULL DEFAULT '',
+  `family_size` varchar(255) NOT NULL DEFAULT '',
+  `monthly_income` varchar(255) NOT NULL DEFAULT '',
+  `homeless` varchar(255) NOT NULL DEFAULT '',
+  `financial_review` datetime DEFAULT NULL,
+  `pubpid` varchar(255) NOT NULL DEFAULT '',
+  `pid` bigint(20) NOT NULL DEFAULT '0',
+  `genericname1` varchar(255) NOT NULL DEFAULT '',
+  `genericval1` varchar(255) NOT NULL DEFAULT '',
+  `genericname2` varchar(255) NOT NULL DEFAULT '',
+  `genericval2` varchar(255) NOT NULL DEFAULT '',
+  `hipaa_mail` varchar(3) NOT NULL DEFAULT '',
+  `hipaa_voice` varchar(3) NOT NULL DEFAULT '',
+  `hipaa_notice` varchar(3) NOT NULL DEFAULT '',
+  `hipaa_message` varchar(20) NOT NULL DEFAULT '',
+  `hipaa_allowsms` varchar(3) NOT NULL DEFAULT 'NO',
+  `hipaa_allowemail` varchar(3) NOT NULL DEFAULT 'NO',
+  `squad` varchar(32) NOT NULL DEFAULT '',
+  `fitness` int(11) NOT NULL DEFAULT '0',
+  `referral_source` varchar(30) NOT NULL DEFAULT '',
+  `usertext1` varchar(255) NOT NULL DEFAULT '',
+  `usertext2` varchar(255) NOT NULL DEFAULT '',
+  `usertext3` varchar(255) NOT NULL DEFAULT '',
+  `usertext4` varchar(255) NOT NULL DEFAULT '',
+  `usertext5` varchar(255) NOT NULL DEFAULT '',
+  `usertext6` varchar(255) NOT NULL DEFAULT '',
+  `usertext7` varchar(255) NOT NULL DEFAULT '',
+  `usertext8` varchar(255) NOT NULL DEFAULT '',
+  `userlist1` varchar(255) NOT NULL DEFAULT '',
+  `userlist2` varchar(255) NOT NULL DEFAULT '',
+  `userlist3` varchar(255) NOT NULL DEFAULT '',
+  `userlist4` varchar(255) NOT NULL DEFAULT '',
+  `userlist5` varchar(255) NOT NULL DEFAULT '',
+  `userlist6` varchar(255) NOT NULL DEFAULT '',
+  `userlist7` varchar(255) NOT NULL DEFAULT '',
+  `pricelevel` varchar(255) NOT NULL DEFAULT 'standard',
+  `regdate` date DEFAULT NULL COMMENT 'Registration Date',
+  `contrastart` date DEFAULT NULL COMMENT 'Date contraceptives initially used',
+  `completed_ad` varchar(3) NOT NULL DEFAULT 'NO',
+  `ad_reviewed` date DEFAULT NULL,
+  `vfc` varchar(255) NOT NULL DEFAULT '',
+  `mothersname` varchar(255) NOT NULL DEFAULT '',
+  `guardiansname` varchar(255) NOT NULL DEFAULT '',
+  `allow_imm_reg_use` varchar(255) NOT NULL DEFAULT '',
+  `allow_imm_info_share` varchar(255) NOT NULL DEFAULT '',
+  `allow_health_info_ex` varchar(255) NOT NULL DEFAULT '',
   UNIQUE KEY `pid` (`pid`),
   KEY `id` (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+
 
 INSERT INTO `patient_data` (`id`, `title`, `language`, `financial`, `fname`, `lname`, `mname`, `DOB`, `street`, `postal_code`, `city`, `state`, `country_code`, `drivers_license`, `ss`, `occupation`, `phone_home`, `phone_biz`, `phone_contact`, `phone_cell`, `pharmacy_id`, `status`, `contact_relationship`, `date`, `sex`, `referrer`, `referrerID`, `providerID`, `email`, `ethnoracial`, `race`, `ethnicity`, `interpretter`, `migrantseasonal`, `family_size`, `monthly_income`, `homeless`, `financial_review`, `pubpid`, `pid`, `genericname1`, `genericval1`, `genericname2`, `genericval2`, `hipaa_mail`, `hipaa_voice`, `hipaa_notice`, `hipaa_message`, `hipaa_allowsms`, `hipaa_allowemail`, `squad`, `fitness`, `referral_source`, `usertext1`, `usertext2`, `usertext3`, `usertext4`, `usertext5`, `usertext6`, `usertext7`, `usertext8`, `userlist1`, `userlist2`, `userlist3`, `userlist4`, `userlist5`, `userlist6`, `userlist7`, `pricelevel`, `regdate`, `contrastart`, `completed_ad`, `ad_reviewed`, `vfc`, `mothersname`, `guardiansname`, `allow_imm_reg_use`, `allow_imm_info_share`, `allow_health_info_ex`) VALUES
 (1, 'Mr.', '', '', 'Ulise', 'Acosta', 'U', '2011-01-02', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '2011-01-23 18:13:42', 'Male', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '1', 1, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', ''),
@@ -2737,58 +2781,62 @@ INSERT INTO `patient_data` (`id`, `title`, `language`, `financial`, `fname`, `ln
 (20, 'Mr.', '', '', 'Nelly', 'Bartolomei', 'Marie', '2011-01-03', '', '', '', '', '', '', '837372123', '', '', '', '', '', 0, '', '', '2011-01-23 18:15:01', 'Female', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '20', 20, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', '');
 
 CREATE TABLE IF NOT EXISTS `payments` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `pid` bigint(20) NOT NULL default '0',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) NOT NULL DEFAULT '0',
   `dtime` datetime NOT NULL,
-  `encounter` bigint(20) NOT NULL default '0',
-  `user` varchar(255) default NULL,
-  `method` varchar(255) default NULL,
-  `source` varchar(255) default NULL,
-  `amount1` decimal(12,2) NOT NULL default '0.00',
-  `amount2` decimal(12,2) NOT NULL default '0.00',
-  `posted1` decimal(12,2) NOT NULL default '0.00',
-  `posted2` decimal(12,2) NOT NULL default '0.00',
-  PRIMARY KEY  (`id`),
+  `encounter` bigint(20) NOT NULL DEFAULT '0',
+  `user` varchar(255) DEFAULT NULL,
+  `method` varchar(255) DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `amount1` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `amount2` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `posted1` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `posted2` decimal(12,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `pharmacies` (
-  `id` int(11) NOT NULL default '0',
-  `name` varchar(255) default NULL,
-  `transmit_method` int(11) NOT NULL default '1',
-  `email` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `transmit_method` int(11) NOT NULL DEFAULT '1',
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `pharmacies` (`id`, `name`, `transmit_method`, `email`) VALUES
-(2, 'benquil', 2, 'benquil@exmaple.com');
+(1, 'Farmaci Benquil', 2, 'vela@gmail.com');
+
 
 CREATE TABLE IF NOT EXISTS `phone_numbers` (
-  `id` int(11) NOT NULL default '0',
-  `country_code` varchar(5) default NULL,
-  `area_code` char(3) default NULL,
-  `prefix` char(3) default NULL,
-  `number` varchar(4) default NULL,
-  `type` int(11) default NULL,
-  `foreign_id` int(11) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_code` varchar(5) DEFAULT NULL,
+  `area_code` char(3) DEFAULT NULL,
+  `prefix` char(3) DEFAULT NULL,
+  `number` varchar(4) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `foreign_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `foreign_id` (`foreign_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+
 
 INSERT INTO `phone_numbers` (`id`, `country_code`, `area_code`, `prefix`, `number`, `type`, `foreign_id`) VALUES
-(4, '+1', '777', '777', '7777', 2, 2),
-(5, '+1', '888', '888', '8888', 5, 2),
-(8, '+1', '777', '777', '7777', 2, 6);
+(25, '', '444', '444', '4444', 5, 2),
+(24, '', '333', '333', '3333', 2, 2),
+(23, '', '222', '222', '2222', 5, 1),
+(22, '', '111', '111', '1111', 2, 1);
+
 
 CREATE TABLE IF NOT EXISTS `pma_bookmark` (
-  `id` int(11) NOT NULL auto_increment,
-  `dbase` varchar(255) default NULL,
-  `user` varchar(255) default NULL,
-  `label` varchar(255) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dbase` varchar(255) DEFAULT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `label` varchar(255) DEFAULT NULL,
   `query` text,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Bookmarks' AUTO_INCREMENT=10 ;
+
 
 INSERT INTO `pma_bookmark` (`id`, `dbase`, `user`, `label`, `query`) VALUES
 (2, 'openemr', 'openemr', 'Aggregate Race Statistics', 'SELECT ethnoracial as "Race/Ethnicity", count(*) as Count FROM  `patient_data` WHERE 1 group by ethnoracial'),
@@ -2796,216 +2844,215 @@ INSERT INTO `pma_bookmark` (`id`, `dbase`, `user`, `label`, `query`) VALUES
 (8, 'openemr', 'openemr', 'Count No Shows By Provider since Interval ago', 'SELECT concat( u.fname,  " ", u.lname )  AS  "Provider Name", u.id AS  "Provider ID", count(  DISTINCT ev.pc_eid )  AS  "Number of No Shows"/* , concat(DATE_FORMAT(NOW(),''%Y-%m-%d''), '' and '',DATE_FORMAT(DATE_ADD(now(), INTERVAL [VARIABLE]),''%Y-%m-%d'') ) as "Between Dates" */ FROM  `openemr_postcalendar_events`  AS ev LEFT  JOIN users AS u ON ev.pc_aid = u.id WHERE ev.pc_catid =1/* and ( ev.pc_eventDate >= DATE_SUB(now(), INTERVAL [VARIABLE]) )  */\r\nGROUP  BY u.id;'),
 (6, 'openemr', 'openemr', 'Appointments By Race/Ethnicity from today plus interval', 'SELECT  count(pd.ethnoracial) as "Number of Appointments", pd.ethnoracial AS  "Race/Ethnicity" /* , concat(DATE_FORMAT(NOW(),''%Y-%m-%d''), '' and '',DATE_FORMAT(DATE_ADD(now(), INTERVAL [VARIABLE]),''%Y-%m-%d'') ) as "Between Dates" */ FROM openemr_postcalendar_events AS ev LEFT  JOIN   `patient_data`  AS pd ON  pd.pid = ev.pc_pid where ev.pc_eventstatus=1 and ev.pc_catid = 5 and ev.pc_eventDate >= now()  /* and ( ev.pc_eventDate <= DATE_ADD(now(), INTERVAL [VARIABLE]) )  */ group by pd.ethnoracial');
 
+
 CREATE TABLE IF NOT EXISTS `pma_column_info` (
-  `id` int(5) unsigned NOT NULL auto_increment,
-  `db_name` varchar(64) default NULL,
-  `table_name` varchar(64) default NULL,
-  `column_name` varchar(64) default NULL,
-  `comment` varchar(255) default NULL,
-  `mimetype` varchar(255) default NULL,
-  `transformation` varchar(255) default NULL,
-  `transformation_options` varchar(255) default NULL,
-  PRIMARY KEY  (`id`),
+  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
+  `db_name` varchar(64) DEFAULT NULL,
+  `table_name` varchar(64) DEFAULT NULL,
+  `column_name` varchar(64) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `mimetype` varchar(255) DEFAULT NULL,
+  `transformation` varchar(255) DEFAULT NULL,
+  `transformation_options` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Column Information for phpMyAdmin' AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `pma_history` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `username` varchar(64) default NULL,
-  `db` varchar(64) default NULL,
-  `table` varchar(64) default NULL,
-  `timevalue` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) DEFAULT NULL,
+  `db` varchar(64) DEFAULT NULL,
+  `table` varchar(64) DEFAULT NULL,
+  `timevalue` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `sqlquery` text,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `username` (`username`,`db`,`table`,`timevalue`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='SQL history' AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `pma_pdf_pages` (
-  `db_name` varchar(64) default NULL,
-  `page_nr` int(10) unsigned NOT NULL auto_increment,
-  `page_descr` varchar(50) default NULL,
-  PRIMARY KEY  (`page_nr`),
+  `db_name` varchar(64) DEFAULT NULL,
+  `page_nr` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `page_descr` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`page_nr`),
   KEY `db_name` (`db_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='PDF Relationpages for PMA' AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `pma_relation` (
-  `master_db` varchar(64) NOT NULL default '',
-  `master_table` varchar(64) NOT NULL default '',
-  `master_field` varchar(64) NOT NULL default '',
-  `foreign_db` varchar(64) default NULL,
-  `foreign_table` varchar(64) default NULL,
-  `foreign_field` varchar(64) default NULL,
-  PRIMARY KEY  (`master_db`,`master_table`,`master_field`),
+  `master_db` varchar(64) NOT NULL DEFAULT '',
+  `master_table` varchar(64) NOT NULL DEFAULT '',
+  `master_field` varchar(64) NOT NULL DEFAULT '',
+  `foreign_db` varchar(64) DEFAULT NULL,
+  `foreign_table` varchar(64) DEFAULT NULL,
+  `foreign_field` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`master_db`,`master_table`,`master_field`),
   KEY `foreign_field` (`foreign_db`,`foreign_table`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Relation table';
 
-
 CREATE TABLE IF NOT EXISTS `pma_table_coords` (
-  `db_name` varchar(64) NOT NULL default '',
-  `table_name` varchar(64) NOT NULL default '',
-  `pdf_page_number` int(11) NOT NULL default '0',
-  `x` float unsigned NOT NULL default '0',
-  `y` float unsigned NOT NULL default '0',
-  PRIMARY KEY  (`db_name`,`table_name`,`pdf_page_number`)
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `table_name` varchar(64) NOT NULL DEFAULT '',
+  `pdf_page_number` int(11) NOT NULL DEFAULT '0',
+  `x` float unsigned NOT NULL DEFAULT '0',
+  `y` float unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`db_name`,`table_name`,`pdf_page_number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Table coordinates for phpMyAdmin PDF output';
 
-
 CREATE TABLE IF NOT EXISTS `pma_table_info` (
-  `db_name` varchar(64) NOT NULL default '',
-  `table_name` varchar(64) NOT NULL default '',
-  `display_field` varchar(64) default NULL,
-  PRIMARY KEY  (`db_name`,`table_name`)
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `table_name` varchar(64) NOT NULL DEFAULT '',
+  `display_field` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`db_name`,`table_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Table information for phpMyAdmin';
 
-
 CREATE TABLE IF NOT EXISTS `pnotes` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `body` longtext,
-  `pid` bigint(20) default NULL,
-  `user_id` int(11) default NULL,
-  `facility_id` int(11) default NULL,
-  `activity` tinyint(4) default NULL,
-  `authorized` tinyint(4) default NULL,
-  `assigned_to` varchar(255) default NULL,
-  `deleted` tinyint(4) default '0' COMMENT 'flag indicates note is deleted',
-  `message_status` varchar(20) NOT NULL default 'New',
-  `subject` varchar(254) default NULL,
-  `reply_id` int(11) default NULL,
+  `pid` bigint(20) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `facility_id` int(11) DEFAULT NULL,
+  `activity` tinyint(4) DEFAULT NULL,
+  `authorized` tinyint(4) DEFAULT NULL,
+  `assigned_to` varchar(255) DEFAULT NULL,
+  `deleted` tinyint(4) DEFAULT '0' COMMENT 'flag indicates note is deleted',
+  `message_status` varchar(20) NOT NULL DEFAULT 'New',
+  `subject` varchar(254) DEFAULT NULL,
+  `reply_id` int(11) DEFAULT NULL,
   `note_type` int(11) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
 
 INSERT INTO `pnotes` (`id`, `date`, `body`, `pid`, `user_id`, `facility_id`, `activity`, `authorized`, `assigned_to`, `deleted`, `message_status`, `subject`, `reply_id`, `note_type`) VALUES
-(1, '2011-05-19 10:24:40', 'Ã¢â‚¬â€¹Hello', 1, 1, 0, 0, 0, 'hrivera', 0, 'New', 'test', 0, 0),
-(2, '2011-05-25 22:25:06', 'Ã¢â‚¬â€¹', 13, 1, 0, 0, 0, 'hrivera', 0, 'New', 'Llco', 0, 0);
+(1, '2011-05-19 10:24:40', 'â€‹Hello', 1, 1, 0, 0, 0, 'hrivera', 0, 'New', 'test', 0, 0),
+(2, '2011-05-25 22:25:06', 'â€‹', 13, 1, 0, 0, 0, 'hrivera', 0, 'New', 'Llco', 0, 0),
+(3, '2011-05-31 01:17:06', 'â€‹', 10, 1, 0, 0, 0, 'vela1606', 1, 'New', 'Hello!', 0, 0),
+(4, '2011-05-31 01:19:20', 'â€‹', 10, 1, 0, 0, 0, 'vela1606', 0, 'New', 'Test!', 0, 0);
 
 CREATE TABLE IF NOT EXISTS `prescriptions` (
-  `id` int(11) NOT NULL auto_increment,
-  `patient_id` int(11) default NULL,
-  `filled_by_id` int(11) default NULL,
-  `pharmacy_id` int(11) default NULL,
-  `date_added` date default NULL,
-  `date_modified` date default NULL,
-  `provider_id` int(11) default NULL,
-  `start_date` date default NULL,
-  `drug` varchar(150) default NULL,
-  `drug_id` int(11) NOT NULL default '0',
-  `form` int(3) default NULL,
-  `dosage` varchar(100) default NULL,
-  `quantity` varchar(31) default NULL,
-  `size` float unsigned default NULL,
-  `unit` int(11) default NULL,
-  `route` int(11) default NULL,
-  `interval` int(11) default NULL,
-  `substitute` int(11) default NULL,
-  `refills` int(11) default NULL,
-  `per_refill` int(11) default NULL,
-  `filled_date` date default NULL,
-  `medication` int(11) default NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) DEFAULT NULL,
+  `filled_by_id` int(11) DEFAULT NULL,
+  `pharmacy_id` int(11) DEFAULT NULL,
+  `date_added` date DEFAULT NULL,
+  `date_modified` date DEFAULT NULL,
+  `provider_id` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `drug` varchar(150) DEFAULT NULL,
+  `drug_id` int(11) NOT NULL DEFAULT '0',
+  `form` int(3) DEFAULT NULL,
+  `dosage` varchar(100) DEFAULT NULL,
+  `quantity` varchar(31) DEFAULT NULL,
+  `size` float unsigned DEFAULT NULL,
+  `unit` int(11) DEFAULT NULL,
+  `route` int(11) DEFAULT NULL,
+  `interval` int(11) DEFAULT NULL,
+  `substitute` int(11) DEFAULT NULL,
+  `refills` int(11) DEFAULT NULL,
+  `per_refill` int(11) DEFAULT NULL,
+  `filled_date` date DEFAULT NULL,
+  `medication` int(11) DEFAULT NULL,
   `note` text,
-  `active` int(11) NOT NULL default '1',
-  PRIMARY KEY  (`id`)
+  `active` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `prices` (
-  `pr_id` varchar(11) NOT NULL default '',
-  `pr_selector` varchar(255) NOT NULL default '' COMMENT 'template selector for drugs, empty for codes',
-  `pr_level` varchar(31) NOT NULL default '',
-  `pr_price` decimal(12,2) NOT NULL default '0.00' COMMENT 'price in local currency',
-  PRIMARY KEY  (`pr_id`,`pr_selector`,`pr_level`)
+  `pr_id` varchar(11) NOT NULL DEFAULT '',
+  `pr_selector` varchar(255) NOT NULL DEFAULT '' COMMENT 'template selector for drugs, empty for codes',
+  `pr_level` varchar(31) NOT NULL DEFAULT '',
+  `pr_price` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT 'price in local currency',
+  PRIMARY KEY (`pr_id`,`pr_selector`,`pr_level`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `procedure_order` (
-  `procedure_order_id` bigint(20) NOT NULL auto_increment,
+  `procedure_order_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `procedure_type_id` bigint(20) NOT NULL COMMENT 'references procedure_type.procedure_type_id',
-  `provider_id` bigint(20) NOT NULL default '0' COMMENT 'references users.id',
+  `provider_id` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references users.id',
   `patient_id` bigint(20) NOT NULL COMMENT 'references patient_data.pid',
-  `encounter_id` bigint(20) NOT NULL default '0' COMMENT 'references form_encounter.encounter',
-  `date_collected` datetime default NULL COMMENT 'time specimen collected',
-  `date_ordered` date default NULL,
-  `order_priority` varchar(31) NOT NULL default '',
-  `order_status` varchar(31) NOT NULL default '' COMMENT 'pending,routed,complete,canceled',
+  `encounter_id` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references form_encounter.encounter',
+  `date_collected` datetime DEFAULT NULL COMMENT 'time specimen collected',
+  `date_ordered` date DEFAULT NULL,
+  `order_priority` varchar(31) NOT NULL DEFAULT '',
+  `order_status` varchar(31) NOT NULL DEFAULT '' COMMENT 'pending,routed,complete,canceled',
   `patient_instructions` text NOT NULL,
-  `activity` tinyint(1) NOT NULL default '1' COMMENT '0 if deleted',
+  `activity` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0 if deleted',
   `control_id` bigint(20) NOT NULL COMMENT 'This is the CONTROL ID that is sent back from lab',
-  PRIMARY KEY  (`procedure_order_id`),
+  PRIMARY KEY (`procedure_order_id`),
   KEY `datepid` (`date_ordered`,`patient_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `procedure_report` (
-  `procedure_report_id` bigint(20) NOT NULL auto_increment,
-  `procedure_order_id` bigint(20) default NULL COMMENT 'references procedure_order.procedure_order_id',
-  `date_collected` datetime default NULL,
-  `date_report` date default NULL,
-  `source` bigint(20) NOT NULL default '0' COMMENT 'references users.id, who entered this data',
-  `specimen_num` varchar(63) NOT NULL default '',
-  `report_status` varchar(31) NOT NULL default '' COMMENT 'received,complete,error',
-  `review_status` varchar(31) NOT NULL default 'received' COMMENT 'panding reivew status: received,reviewed',
-  PRIMARY KEY  (`procedure_report_id`),
+  `procedure_report_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `procedure_order_id` bigint(20) DEFAULT NULL COMMENT 'references procedure_order.procedure_order_id',
+  `date_collected` datetime DEFAULT NULL,
+  `date_report` date DEFAULT NULL,
+  `source` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references users.id, who entered this data',
+  `specimen_num` varchar(63) NOT NULL DEFAULT '',
+  `report_status` varchar(31) NOT NULL DEFAULT '' COMMENT 'received,complete,error',
+  `review_status` varchar(31) NOT NULL DEFAULT 'received' COMMENT 'panding reivew status: received,reviewed',
+  PRIMARY KEY (`procedure_report_id`),
   KEY `procedure_order_id` (`procedure_order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `procedure_result` (
-  `procedure_result_id` bigint(20) NOT NULL auto_increment,
+  `procedure_result_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `procedure_report_id` bigint(20) NOT NULL COMMENT 'references procedure_report.procedure_report_id',
   `procedure_type_id` bigint(20) NOT NULL COMMENT 'references procedure_type.procedure_type_id',
-  `date` datetime default NULL COMMENT 'lab-provided date specific to this result',
-  `facility` varchar(255) NOT NULL default '' COMMENT 'lab-provided testing facility ID',
-  `units` varchar(31) NOT NULL default '',
-  `result` varchar(255) NOT NULL default '',
-  `range` varchar(255) NOT NULL default '',
-  `abnormal` varchar(31) NOT NULL default '' COMMENT 'no,yes,high,low',
+  `date` datetime DEFAULT NULL COMMENT 'lab-provided date specific to this result',
+  `facility` varchar(255) NOT NULL DEFAULT '' COMMENT 'lab-provided testing facility ID',
+  `units` varchar(31) NOT NULL DEFAULT '',
+  `result` varchar(255) NOT NULL DEFAULT '',
+  `range` varchar(255) NOT NULL DEFAULT '',
+  `abnormal` varchar(31) NOT NULL DEFAULT '' COMMENT 'no,yes,high,low',
   `comments` text NOT NULL COMMENT 'comments from the lab',
-  `document_id` bigint(20) NOT NULL default '0' COMMENT 'references documents.id if this result is a document',
-  `result_status` varchar(31) NOT NULL default '' COMMENT 'preliminary, cannot be done, final, corrected, incompete...etc.',
-  PRIMARY KEY  (`procedure_result_id`),
+  `document_id` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references documents.id if this result is a document',
+  `result_status` varchar(31) NOT NULL DEFAULT '' COMMENT 'preliminary, cannot be done, final, corrected, incompete...etc.',
+  PRIMARY KEY (`procedure_result_id`),
   KEY `procedure_report_id` (`procedure_report_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `procedure_type` (
-  `procedure_type_id` bigint(20) NOT NULL auto_increment,
-  `parent` bigint(20) NOT NULL default '0' COMMENT 'references procedure_type.procedure_type_id',
-  `name` varchar(63) NOT NULL default '' COMMENT 'name for this category, procedure or result type',
-  `lab_id` bigint(20) NOT NULL default '0' COMMENT 'references users.id, 0 means default to parent',
-  `procedure_code` varchar(31) NOT NULL default '' COMMENT 'code identifying this procedure',
-  `procedure_type` varchar(31) NOT NULL default '' COMMENT 'see list proc_type',
-  `body_site` varchar(31) NOT NULL default '' COMMENT 'where to do injection, e.g. arm, buttok',
-  `specimen` varchar(31) NOT NULL default '' COMMENT 'blood, urine, saliva, etc.',
-  `route_admin` varchar(31) NOT NULL default '' COMMENT 'oral, injection',
-  `laterality` varchar(31) NOT NULL default '' COMMENT 'left, right, ...',
-  `description` varchar(255) NOT NULL default '' COMMENT 'descriptive text for procedure_code',
-  `standard_code` varchar(255) NOT NULL default '' COMMENT 'industry standard code type and code (e.g. CPT4:12345)',
-  `related_code` varchar(255) NOT NULL default '' COMMENT 'suggested code(s) for followup services if result is abnormal',
-  `units` varchar(31) NOT NULL default '' COMMENT 'default for procedure_result.units',
-  `range` varchar(255) NOT NULL default '' COMMENT 'default for procedure_result.range',
-  `seq` int(11) NOT NULL default '0' COMMENT 'sequence number for ordering',
-  PRIMARY KEY  (`procedure_type_id`),
+  `procedure_type_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `parent` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references procedure_type.procedure_type_id',
+  `name` varchar(63) NOT NULL DEFAULT '' COMMENT 'name for this category, procedure or result type',
+  `lab_id` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references users.id, 0 means default to parent',
+  `procedure_code` varchar(31) NOT NULL DEFAULT '' COMMENT 'code identifying this procedure',
+  `procedure_type` varchar(31) NOT NULL DEFAULT '' COMMENT 'see list proc_type',
+  `body_site` varchar(31) NOT NULL DEFAULT '' COMMENT 'where to do injection, e.g. arm, buttok',
+  `specimen` varchar(31) NOT NULL DEFAULT '' COMMENT 'blood, urine, saliva, etc.',
+  `route_admin` varchar(31) NOT NULL DEFAULT '' COMMENT 'oral, injection',
+  `laterality` varchar(31) NOT NULL DEFAULT '' COMMENT 'left, right, ...',
+  `description` varchar(255) NOT NULL DEFAULT '' COMMENT 'descriptive text for procedure_code',
+  `standard_code` varchar(255) NOT NULL DEFAULT '' COMMENT 'industry standard code type and code (e.g. CPT4:12345)',
+  `related_code` varchar(255) NOT NULL DEFAULT '' COMMENT 'suggested code(s) for followup services if result is abnormal',
+  `units` varchar(31) NOT NULL DEFAULT '' COMMENT 'default for procedure_result.units',
+  `range` varchar(255) NOT NULL DEFAULT '' COMMENT 'default for procedure_result.range',
+  `seq` int(11) NOT NULL DEFAULT '0' COMMENT 'sequence number for ordering',
+  PRIMARY KEY (`procedure_type_id`),
   KEY `parent` (`parent`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `registry` (
-  `name` varchar(255) default NULL,
-  `state` tinyint(4) default NULL,
-  `directory` varchar(255) default NULL,
-  `id` bigint(20) NOT NULL auto_increment,
-  `sql_run` tinyint(4) default NULL,
-  `unpackaged` tinyint(4) default NULL,
-  `date` datetime default NULL,
-  `priority` int(11) default '0',
-  `category` varchar(255) default NULL,
-  `nickname` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
+  `name` varchar(255) DEFAULT NULL,
+  `state` tinyint(4) DEFAULT NULL,
+  `directory` varchar(255) DEFAULT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sql_run` tinyint(4) DEFAULT NULL,
+  `unpackaged` tinyint(4) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `priority` int(11) DEFAULT '0',
+  `category` varchar(255) DEFAULT NULL,
+  `nickname` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+
 
 INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`) VALUES
 ('New Encounter Form', 1, 'newpatient', 1, 1, 1, '2003-09-14 15:16:45', 0, 'Administrative', ''),
@@ -3018,124 +3065,127 @@ INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackag
 ('Misc Billing Options HCFA', 1, 'misc_billing_options', 15, 1, 1, '2007-07-28 00:00:00', 0, 'Administrative', ''),
 ('Procedure Order', 1, 'procedure_order', 16, 1, 1, '2010-02-25 00:00:00', 0, 'Administrative', '');
 
+
 CREATE TABLE IF NOT EXISTS `sequences` (
-  `id` int(11) unsigned NOT NULL default '0'
+  `id` int(11) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `sequences` (`id`) VALUES
 (1);
 
+
 CREATE TABLE IF NOT EXISTS `syndromic_surveillance` (
-  `id` bigint(20) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `lists_id` bigint(20) NOT NULL,
   `submission_date` datetime NOT NULL,
-  `filename` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`),
+  `filename` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `lists_id` (`lists_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `transactions` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `title` varchar(255) NOT NULL default '',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `title` varchar(255) NOT NULL DEFAULT '',
   `body` longtext NOT NULL,
-  `pid` bigint(20) default NULL,
-  `user` varchar(255) NOT NULL default '',
-  `groupname` varchar(255) NOT NULL default '',
-  `authorized` tinyint(4) default NULL,
-  `refer_date` date default NULL,
-  `refer_from` int(11) NOT NULL default '0',
-  `refer_to` int(11) NOT NULL default '0',
-  `refer_diag` varchar(255) NOT NULL default '',
-  `refer_risk_level` varchar(255) NOT NULL default '',
-  `refer_vitals` tinyint(1) NOT NULL default '0',
-  `refer_external` tinyint(1) NOT NULL default '0',
-  `refer_related_code` varchar(255) NOT NULL default '',
-  `refer_reply_date` date default NULL,
-  `reply_date` date default NULL,
-  `reply_from` varchar(255) NOT NULL default '',
-  `reply_init_diag` varchar(255) NOT NULL default '',
-  `reply_final_diag` varchar(255) NOT NULL default '',
-  `reply_documents` varchar(255) NOT NULL default '',
+  `pid` bigint(20) DEFAULT NULL,
+  `user` varchar(255) NOT NULL DEFAULT '',
+  `groupname` varchar(255) NOT NULL DEFAULT '',
+  `authorized` tinyint(4) DEFAULT NULL,
+  `refer_date` date DEFAULT NULL,
+  `refer_from` int(11) NOT NULL DEFAULT '0',
+  `refer_to` int(11) NOT NULL DEFAULT '0',
+  `refer_diag` varchar(255) NOT NULL DEFAULT '',
+  `refer_risk_level` varchar(255) NOT NULL DEFAULT '',
+  `refer_vitals` tinyint(1) NOT NULL DEFAULT '0',
+  `refer_external` tinyint(1) NOT NULL DEFAULT '0',
+  `refer_related_code` varchar(255) NOT NULL DEFAULT '',
+  `refer_reply_date` date DEFAULT NULL,
+  `reply_date` date DEFAULT NULL,
+  `reply_from` varchar(255) NOT NULL DEFAULT '',
+  `reply_init_diag` varchar(255) NOT NULL DEFAULT '',
+  `reply_final_diag` varchar(255) NOT NULL DEFAULT '',
+  `reply_documents` varchar(255) NOT NULL DEFAULT '',
   `reply_findings` text NOT NULL,
   `reply_services` text NOT NULL,
   `reply_recommend` text NOT NULL,
   `reply_rx_refer` text NOT NULL,
-  `reply_related_code` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  `reply_related_code` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `username` varchar(255) default NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) DEFAULT NULL,
   `password` blob,
-  `authorized` tinyint(4) default NULL,
+  `authorized` tinyint(4) DEFAULT NULL,
   `info` longtext,
-  `source` tinyint(4) default NULL,
-  `fname` varchar(255) default NULL,
-  `mname` varchar(255) default NULL,
-  `lname` varchar(255) default NULL,
-  `federaltaxid` varchar(255) default NULL,
-  `federaldrugid` varchar(255) default NULL,
-  `upin` varchar(255) default NULL,
-  `facility` varchar(255) default NULL,
-  `facility_id` int(11) NOT NULL default '0',
-  `see_auth` int(11) NOT NULL default '1',
-  `active` tinyint(1) NOT NULL default '1',
-  `npi` varchar(15) default NULL,
-  `title` varchar(30) default NULL,
-  `specialty` varchar(255) default NULL,
-  `billname` varchar(255) default NULL,
-  `email` varchar(255) default NULL,
-  `url` varchar(255) default NULL,
-  `assistant` varchar(255) default NULL,
-  `organization` varchar(255) default NULL,
-  `valedictory` varchar(255) default NULL,
-  `street` varchar(60) default NULL,
-  `streetb` varchar(60) default NULL,
-  `city` varchar(30) default NULL,
-  `state` varchar(30) default NULL,
-  `zip` varchar(20) default NULL,
-  `street2` varchar(60) default NULL,
-  `streetb2` varchar(60) default NULL,
-  `city2` varchar(30) default NULL,
-  `state2` varchar(30) default NULL,
-  `zip2` varchar(20) default NULL,
-  `phone` varchar(30) default NULL,
-  `fax` varchar(30) default NULL,
-  `phonew1` varchar(30) default NULL,
-  `phonew2` varchar(30) default NULL,
-  `phonecell` varchar(30) default NULL,
+  `source` tinyint(4) DEFAULT NULL,
+  `fname` varchar(255) DEFAULT NULL,
+  `mname` varchar(255) DEFAULT NULL,
+  `lname` varchar(255) DEFAULT NULL,
+  `federaltaxid` varchar(255) DEFAULT NULL,
+  `federaldrugid` varchar(255) DEFAULT NULL,
+  `upin` varchar(255) DEFAULT NULL,
+  `facility` varchar(255) DEFAULT NULL,
+  `facility_id` int(11) NOT NULL DEFAULT '0',
+  `see_auth` int(11) NOT NULL DEFAULT '1',
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `npi` varchar(15) DEFAULT NULL,
+  `title` varchar(30) DEFAULT NULL,
+  `specialty` varchar(255) DEFAULT NULL,
+  `billname` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `assistant` varchar(255) DEFAULT NULL,
+  `organization` varchar(255) DEFAULT NULL,
+  `valedictory` varchar(255) DEFAULT NULL,
+  `street` varchar(60) DEFAULT NULL,
+  `streetb` varchar(60) DEFAULT NULL,
+  `city` varchar(30) DEFAULT NULL,
+  `state` varchar(30) DEFAULT NULL,
+  `zip` varchar(20) DEFAULT NULL,
+  `street2` varchar(60) DEFAULT NULL,
+  `streetb2` varchar(60) DEFAULT NULL,
+  `city2` varchar(30) DEFAULT NULL,
+  `state2` varchar(30) DEFAULT NULL,
+  `zip2` varchar(20) DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `fax` varchar(30) DEFAULT NULL,
+  `phonew1` varchar(30) DEFAULT NULL,
+  `phonew2` varchar(30) DEFAULT NULL,
+  `phonecell` varchar(30) DEFAULT NULL,
   `notes` text,
-  `cal_ui` tinyint(4) NOT NULL default '1',
-  `taxonomy` varchar(30) NOT NULL default '207Q00000X',
-  `ssi_relayhealth` varchar(64) default NULL,
-  `calendar` tinyint(1) NOT NULL default '0' COMMENT '1 = appears in calendar',
-  `abook_type` varchar(31) NOT NULL default '',
-  `pwd_expiration_date` date default NULL,
-  `pwd_history1` longtext,
-  `pwd_history2` longtext,
-  `default_warehouse` varchar(31) NOT NULL default '',
-  `irnpool` varchar(31) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80 ;
+  `cal_ui` tinyint(4) NOT NULL DEFAULT '1',
+  `taxonomy` varchar(30) NOT NULL DEFAULT '207Q00000X',
+  `ssi_relayhealth` varchar(64) DEFAULT NULL,
+  `calendar` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = appears in calendar',
+  `abook_type` varchar(31) NOT NULL DEFAULT '',
+  `pwd_expiration_date` date DEFAULT NULL,
+  `pwd_history1` blob NOT NULL,
+  `pwd_history2` blob NOT NULL,
+  `default_warehouse` varchar(31) NOT NULL DEFAULT '',
+  `irnpool` varchar(31) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=119 ;
+
 
 CREATE TABLE IF NOT EXISTS `users_facility` (
   `tablename` varchar(64) NOT NULL,
   `table_id` int(11) NOT NULL,
   `facility_id` int(11) NOT NULL,
-  PRIMARY KEY  (`tablename`,`table_id`,`facility_id`)
+  PRIMARY KEY (`tablename`,`table_id`,`facility_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='joins users or patient_data to facility table';
 
 
 CREATE TABLE IF NOT EXISTS `user_settings` (
-  `setting_user` bigint(20) NOT NULL default '0',
+  `setting_user` bigint(20) NOT NULL DEFAULT '0',
   `setting_label` varchar(63) NOT NULL,
-  `setting_value` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`setting_user`,`setting_label`)
+  `setting_value` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`setting_user`,`setting_label`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `user_settings` (`setting_user`, `setting_label`, `setting_value`) VALUES
 (0, 'allergy_ps_expand', '1'),
@@ -3157,29 +3207,30 @@ INSERT INTO `user_settings` (`setting_user`, `setting_label`, `setting_value`) V
 (1, 'gacl_protect', '1');
 
 CREATE TABLE IF NOT EXISTS `version` (
-  `v_major` int(11) NOT NULL default '0',
-  `v_minor` int(11) NOT NULL default '0',
-  `v_patch` int(11) NOT NULL default '0',
-  `v_tag` varchar(31) NOT NULL default '',
-  `v_database` int(11) NOT NULL default '0'
+  `v_major` int(11) NOT NULL DEFAULT '0',
+  `v_minor` int(11) NOT NULL DEFAULT '0',
+  `v_patch` int(11) NOT NULL DEFAULT '0',
+  `v_tag` varchar(31) NOT NULL DEFAULT '',
+  `v_database` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `version` (`v_major`, `v_minor`, `v_patch`, `v_tag`, `v_database`) VALUES
 (1, 0, 0, 'Vega', 1);
 
 CREATE TABLE IF NOT EXISTS `x12_partners` (
-  `id` int(11) NOT NULL default '0',
-  `name` varchar(255) default NULL,
-  `id_number` varchar(255) default NULL,
-  `x12_sender_id` varchar(255) default NULL,
-  `x12_receiver_id` varchar(255) default NULL,
-  `x12_version` varchar(255) default NULL,
-  `processing_format` enum('standard','medi-cal','cms','proxymed') default NULL,
-  `x12_isa05` char(2) NOT NULL default 'ZZ',
-  `x12_isa07` char(2) NOT NULL default 'ZZ',
-  `x12_isa14` char(1) NOT NULL default '0',
-  `x12_isa15` char(1) NOT NULL default 'P',
-  `x12_gs02` varchar(15) NOT NULL default '',
-  `x12_per06` varchar(80) NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  `id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `id_number` varchar(255) DEFAULT NULL,
+  `x12_sender_id` varchar(255) DEFAULT NULL,
+  `x12_receiver_id` varchar(255) DEFAULT NULL,
+  `x12_version` varchar(255) DEFAULT NULL,
+  `processing_format` enum('standard','medi-cal','cms','proxymed') DEFAULT NULL,
+  `x12_isa05` char(2) NOT NULL DEFAULT 'ZZ',
+  `x12_isa07` char(2) NOT NULL DEFAULT 'ZZ',
+  `x12_isa14` char(1) NOT NULL DEFAULT '0',
+  `x12_isa15` char(1) NOT NULL DEFAULT 'P',
+  `x12_gs02` varchar(15) NOT NULL DEFAULT '',
+  `x12_per06` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

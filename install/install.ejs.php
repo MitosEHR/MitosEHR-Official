@@ -83,6 +83,7 @@ Ext.onReady(function() {
 		id				: 'winCopyright',
 		width			: 800,
 		height			: 500,
+        y               : 130,
 		closeAction		: 'hide',
 		bodyStyle		: 'background-color: #ffffff; padding: 5px;',
 		modal			: false,
@@ -190,9 +191,6 @@ Ext.onReady(function() {
 			    	xtype: 'displayfield',
 		            value: '<span style="color:green;">* A Site can have multiples clinics.</span>'
                 },{
-			    	xtype: 'displayfield',
-		            value: '<span style="color:green;">* If dont want to use your clinic\'s name you can type "default"</span>'
-		        },{
 			    	xtype: 'displayfield',
 		            value: '<span style="color:green;">* Why "Site Name" and no "Clinic\' Name"?</span> Basically because you can have more than one installation using the same webserver. ei. Two physician that share the same office but no their patients.'
 		        },{
@@ -422,8 +420,8 @@ Ext.onReady(function() {
 	var winSiteSetup = new Ext.create('widget.window', {
 	    title		: 'MitosEHR Requirements',
 	    id			: 'winSiteSetup',
-	    closable	: true,
-        top:200,
+	    closable    : false,
+        y           : 130,
 	    width		: 600,
 		bodyPadding	: 2,
 		closeAction	: 'hide',
@@ -456,8 +454,8 @@ Ext.onReady(function() {
 	var winInstall = new Ext.create('widget.window', {
 	    title		: 'MitosEHR Installation',
 	    id			: 'winInstall',
-	    closable	: true,
-        top:200,
+	    closable	: false,
+        y           : 130,
 	    width		: 600,
 		bodyPadding	: 2,
 		closeAction	: 'hide',

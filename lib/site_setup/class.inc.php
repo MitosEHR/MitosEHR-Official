@@ -22,6 +22,7 @@ class SiteSetup {
 	private $sitesDir = 'sites';
 	private $dbPrefix;
 	private $AESkey;
+    private $newConf;
 	var $siteName;
 	var $connType;
 	var $dbUser;
@@ -232,18 +233,18 @@ class SiteSetup {
 		fwrite($handle, $this->newConf);
 		fclose($handle);
 		chmod($conf_file, 0644);
-		return;
 		if(!file_exists($conf_file)){
 			echo '{"success":false,"msg":"Error - The conf.php file for <b>'.$this->siteName.'</b> could not be created."}';
 			exit;
 		}
+        return;
 	}
 	
 	//*****************************************************************************************
 	// Create Admin User and AES Encrypted Password Using Site AESkey
 	//*****************************************************************************************
 	function adminUser(){
-		require_once("lib/phpAES/AES.class.php");
+		require_once("classes/AES.class.php");
 		$admin = $this->adminUser;
 		$aes = new AES($this->AESkey);
 		$ePass = $aes->encrypt($this->adminPass);
