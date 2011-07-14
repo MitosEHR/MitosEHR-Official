@@ -31,7 +31,6 @@ $layoutFactorer = new layoutEngine();
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 ?>
-<script type="text/javascript" src="repo/swfobject.js"></script>
 <script type="text/javascript">
 delete Ext.mitos.Panel;
 Ext.onReady(function(){
@@ -63,7 +62,7 @@ Ext.onReady(function(){
                         text: '<?php i18n("Capture Image", "e"); ?>',
         			    iconCls: 'save',
                         handler: function(){
-                            //TODO: handle the img!
+
                         }
                     }]
                 }

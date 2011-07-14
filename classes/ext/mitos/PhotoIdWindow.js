@@ -14,6 +14,10 @@ Ext.define('Ext.mitos.PhotoIdWindow', {
 		Ext.apply(this, {
 			items: {
                 xtype: 'flash',
+                flashParams: {
+                    allowScriptAccess   : 'always',
+                    quality             : 'high'
+                },
                 url: 'lib/webcam_control/camcanvas.swf'
             }
 	    });
