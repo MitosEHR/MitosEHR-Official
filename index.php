@@ -42,9 +42,9 @@ if(isset($_SESSION['user']['auth'])){
         //-----------------------------------------------------------
         // if mobile go to mobile app, else go to app
         //-----------------------------------------------------------
-        if ($mobile->isMobile()) {
+        if (!$mobile->isMobile()) {
 
-		    include_once("app_mobile/MitosApp.ejs.php");
+		    include_once("app_mobile/MitosApp2.ejs.php");
         }else{
             include_once("app/MitosApp.ejs.php");
         }
@@ -69,7 +69,7 @@ if(isset($_SESSION['user']['auth'])){
         //-----------------------------------------------------------
         // if mobile go to mobile app, else go to app
         //-----------------------------------------------------------
-        if ($mobile->isMobile()) {
+        if (!$mobile->isMobile()) {
             include_once("app_mobile/login/login.ejs.php");
         }else{
             include_once("app/login/login.ejs.php");
