@@ -1,4 +1,4 @@
-Ext.ns('sink', 'app_mobile/src/panels', 'Ext.ux');
+Ext.ns('MitsoMobile', 'app_mobile/panels', 'Ext.ux');
 
 Ext.ns('demos', 'demos.Data');
 
@@ -49,7 +49,7 @@ Ext.ux.UniversalUI = Ext.extend(Ext.Panel, {
         });
 
         this.navigationPanel = new Ext.NestedList({
-            store: sink.StructureStore,
+            store: MitsoMobile.StructureStore,
             useToolbar: Ext.is.Phone ? false : true,
             updateTitleText: false,
             dock: 'left',
@@ -213,13 +213,13 @@ Ext.ux.UniversalUI = Ext.extend(Ext.Panel, {
     }
 });
 
-sink.Main = {
+MitsoMobile.Main = {
     init : function() {
 
         this.ui = new Ext.ux.UniversalUI({
             title: Ext.is.Phone ? 'MitosEHR' : 'MitosEHR Tablet',
             useTitleAsBackText: false,
-            navigationItems: sink.Structure,
+            navigationItems: MitsoMobile.Structure,
             buttons: [{xtype: 'spacer'}],
             listeners: {
                 navigate : this.onNavigate,
@@ -229,17 +229,17 @@ sink.Main = {
     },
 
     onNavigate : function(ui, record) {
-        // function to run everytime the app navigates
+        // function to run everytime the MitsoMobile navigates
     }
 };
 
 Ext.setup({
-    tabletStartupScreen: 'app/mobile/resources/img/tablet_startup.png',
-    phoneStartupScreen: 'app/mobile/resources/img/phone_startup.png',
-    icon: 'app/mobile/resources/img/icon.png',
+    tabletStartupScreen: 'app_mobile/resources/img/tablet_startup.png',
+    phoneStartupScreen: 'app_mobile/resources/img/phone_startup.png',
+    icon: 'app_mobile/resources/img/icon.png',
     glossOnIcon: false,
 
     onReady: function() {
-        sink.Main.init();
+        MitsoMobile.Main.init();
     }
 });

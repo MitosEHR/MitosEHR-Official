@@ -210,10 +210,10 @@ demos.Simulator = new Ext.Panel({
             this.getRecorder().replay('main');
         },
         showToolbar: function() {
-            sink.Main.ui.addDocked(this.getToolbar());
+            MitsoMobile.Main.ui.addDocked(this.getToolbar());
         },
         hideToolbar: function() {
-            sink.Main.ui.removeDocked(this.getToolbar(), false);
+            MitsoMobile.Main.ui.removeDocked(this.getToolbar(), false);
         },
         getToolbar: function() {
             if (!this.toolbar) {

@@ -44,7 +44,7 @@ if(isset($_SESSION['user']['auth'])){
         //-----------------------------------------------------------
         if ($mobile->isMobile()) {
 
-		    include_once("app_mobile/MitosApp2.ejs.php");
+		    include_once("app_mobile/MitosApp.ejs.php");
         }else{
             include_once("app/MitosApp.ejs.php");
         }

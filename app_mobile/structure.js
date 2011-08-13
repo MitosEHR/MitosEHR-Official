@@ -1,4 +1,4 @@
-sink.Structure = [
+ MitsoMobile.Structure = [
     {
         text: 'Calendar Events',
         cls: 'launchscreen',
@@ -7,19 +7,19 @@ sink.Structure = [
             {
                 text: 'Today\'s App',
                 card: demos.TodaysAppointmentsList,
-                source: 'app_mobile/src/panels/todays_appointments_list.js',
+                source: 'app_mobile/panels/todays_appointments_list.js',
                 leaf: true
             },
             {
                 text: 'At the Clinic',
                 card: demos.PatientAtClinicList,
-                source: 'app_mobile/src/panels/patient_at_clinic_list.js',
+                source: 'app_mobile/panels/patient_at_clinic_list.js',
                 leaf: true
             },
             {
                 text: 'Schedules',
                 card: demos.List,
-                source: 'app_mobile/src/panels/list.js',
+                source: 'app_mobile/panels/list.js',
                 leaf: true
             }
         ]
@@ -27,15 +27,35 @@ sink.Structure = [
     {
         text: 'Patient Area',
         cls: 'launchscreen',
-        card: Ext.is.Phone ? false : demos.PatientsList,
-        source: 'app_mobile/src/panels/patients_list.js',
-        leaf: true
+        card: demos.PatientsList,
+        source: 'app_mobile/panels/patients_list.js',
+       //  leaf: true,
+                items: [
+            {
+                text: 'Select Patient',
+                card: demos.PatientsList,
+                source: 'app_mobile/panels/patients_list.js',
+                leaf: true
+            },
+            {
+                text: 'Encounters',
+                card: demos.PatientAtClinicList,
+                source: 'app_mobile/panels/patient_at_clinic_list.js',
+                leaf: true
+            },
+            {
+                text: 'Allergies',
+                card: demos.PatientAtClinicList,
+                source: 'app_mobile/panels/patient_at_clinic_list.js',
+                leaf: true
+            }
+        ]
     },
     {
         text: 'My Account',
         cls: 'launchscreen',
         card: demos.MyAccount,
-        source: 'app_mobile/src/panels/my_account.js',
+        source: 'app_mobile/panels/my_account.js',
         leaf: true
     },
     {
@@ -45,7 +65,7 @@ sink.Structure = [
             {
                 text: 'Themes',
                 card: demos.Themes,
-                source: 'app_mobile/src/panels/themes.js',
+                source: 'app_mobile/panels/themes.js',
                 leaf: true
             }
         ]
@@ -53,14 +73,14 @@ sink.Structure = [
 ];
 
 if (Ext.is.iOS || Ext.is.Desktop) {
-    sink.Structure.push({
+    MitsoMobile.Structure.push({
         text: 'MitosEHR Settings',
         cls: 'launchscreen',
         items:[
             {
                 text: 'Themes',
                 card: demos.Themes,
-                source: 'app_mobile/src/panels/themes.js',
+                source: 'app_mobile/panels/themes.js',
                 leaf: true
             }
         ]
@@ -77,10 +97,10 @@ Ext.regModel('Demo', {
     ]
 });
 
-sink.StructureStore = new Ext.data.TreeStore({
+MitsoMobile.StructureStore = new Ext.data.TreeStore({
     model: 'Demo',
     root: {
-        items: sink.Structure
+        items: MitsoMobile.Structure
     },
     proxy: {
         type: 'ajax',
