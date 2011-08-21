@@ -60,14 +60,18 @@ foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 			         ORDER BY layout_options.group_order, layout_options.seq");
     $fields = array();
     foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $field){
+        unset($field['group_name']);
+        // look for nested fields
+         $field['leaf'] = true;
+        //
         array_push($fields, $field);
     }
-    $group = array( 'children'=>$fields);
+    $group = array( 'group_name'=>$group['group_name'] , 'children'=>$fields);
 	array_push($rows, $group);
 }
 
 //echo "<pre>";
 //print_r(array('text'=>'.','children'=>$rows));
 //echo "</pre>";
-print(json_encode(array('text'=>'.','children'=>$rows)));
+print(json_encode($rows));
 ?>

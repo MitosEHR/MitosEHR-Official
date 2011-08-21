@@ -9,19 +9,15 @@
 // 
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
-
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
-
 include_once($_SESSION['site']['root']."/classes/I18n.class.php");
-
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 ?>
-
 <script type="text/javascript">
 delete Ext.mitos.Panel;
 Ext.onReady(function() {
@@ -74,16 +70,30 @@ Ext.onReady(function() {
                 model: 'layoutModel',
                 proxy: {
                     type: 'ajax',
-                    //the store will get the content from the .json file
                     api:{
-                       	read		: 'app/administration/layout/data_read2.ejs.php',
-                        create		: 'app/administration/layout/data_create.ejs.php',
-                        update      : 'app/administration/layout/data_update.ejs.php',
-                        destroy 	: 'app/administration/layout/data_destroy.ejs.php'
+                       	read		: 'app/administration/layout_test/data_read.ejs.php',
+                        create		: 'app/administration/layout_test/data_create.ejs.php',
+                        update      : 'app/administration/layout_test/data_update.ejs.php',
+                        destroy 	: 'app/administration/layout_test/data_destroy.ejs.php'
                     }
                 },
                 folderSort: true
             });
+
+            // *************************************************************************************
+			// Type combo options
+			// *************************************************************************************
+			panel.fieldTypesStore = Ext.create('Ext.mitos.CRUDStore',{
+				fields: [
+					{name: 'id',		type: 'string'},
+					{name: 'name',	    type: 'string'},
+					{name: 'value',	    type: 'string'}
+				],
+				model 		:'field_typesModel',
+				idProperty 	:'id',
+				read		: 'app/administration/layout_test/component_data.ejs.php',
+				extraParams	: {"task": "field_types"}
+			});
 
 			// *************************************************************************************
 			// Form List Record Structure & Store
@@ -95,7 +105,7 @@ Ext.onReady(function() {
 				],
 				model 		:'formlistModel',
 				idProperty 	:'id',
-				read		: 'app/administration/layout/component_data.ejs.php',
+				read		: 'app/administration/layout_test/component_data.ejs.php',
 				extraParams	: {"task": "form_list"}
 			});
 	
@@ -109,7 +119,7 @@ Ext.onReady(function() {
 				],
 				model 		:'uorModel',
 				idProperty 	:'id',
-				read		: 'app/administration/layout/component_data.ejs.php',
+				read		: 'app/administration/layout_test/component_data.ejs.php',
 				extraParams	: {"task": "uor"}
 			});
 	
@@ -123,7 +133,7 @@ Ext.onReady(function() {
 				],
 				model 		:'typeModel',
 				idProperty 	:'id',
-				read		: 'app/administration/layout/component_data.ejs.php',
+				read		: 'app/administration/layout_test/component_data.ejs.php',
 				extraParams	: {"task": "data_types"}
 			});
 	
@@ -139,7 +149,7 @@ Ext.onReady(function() {
 				],
 				model 		:'listoptionModel',
 				idProperty 	:'id',
-				read		: 'app/administration/layout/component_data.ejs.php',
+				read		: 'app/administration/layout_test/component_data.ejs.php',
 				extraParams	: {"task": "lists"}
 			});
 	
@@ -152,26 +162,191 @@ Ext.onReady(function() {
 				],
 				model 		:'whereModel',
 				idProperty 	:'group_name',
-				read		: 'app/administration/layout/component_data.ejs.php',
+				read		: 'app/administration/layout_test/component_data.ejs.php',
 				extraParams	: {"task": "groups", "form_id": form_id}
 			});
-	
+
+            // *************************************************************************************
+			// List Options Grid
+			// *************************************************************************************
+            panel.optionGrid = new Ext.create('Ext.grid.Panel', {
+				store		: panel.formlistStore,
+				region		: 'east',
+				frame		: true,
+                collapseMode:'mini',
+                split       : true,
+                hideCollapseTool :true,
+				width		: 200,
+				collapsible	: true,
+                collapsed   : true,
+		        columns		: [
+					{
+						hidden		: true,
+						sortable 	: true,
+						dataIndex	: 'id'
+            		},
+					{
+						text     : '<?php i18n("Name"); ?>',
+						flex     : 1,
+						sortable : true,
+						dataIndex: 'form_id'
+        		    },
+                    {
+						text     : '<?php i18n("Value"); ?>',
+						flex     : 1,
+						sortable : true,
+						dataIndex: 'form_id'
+        		    }
+				],
+				listeners: {
+					itemclick: {
+        		    	fn: function(DataView, record, item, rowIndex, e){
+            				panel.rowEditing.cancelEdit();
+							form_id = record.get('form_id');
+							panel.LayoutStore.load({params:{form_id: form_id }});
+							panel.whereStore.load({params:{task: 'groups', form_id: form_id} });
+							panel.layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
+        		    	}
+					}
+				}
+            });
+            
+
 			// *************************************************************************************
 			// User form
 			// *************************************************************************************
     		panel.whereForm = new Ext.create('Ext.mitos.FormPanel', {
-        		fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
-        		defaults: {
-            		anchor: '100%'
-        		},
+                region          : 'center',
+                frameHeader     : true,
+                title		    : 'Field Properties',
+                autoScroll      : true,
+                frame           : true,
+        		fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
+        		defaults        : { anchor:'100%' },
         		items: [{
-					xtype			: 'combo',
-					name			: 'where',
-					displayField	: 'group_name',
-					valueField		: 'group_name', 
-					editable		: false, 
-					store			: panel.whereStore, 
-					queryMode		: 'local'
+                    fieldLabel      : 'Title',
+                    xtype           : 'textfield',
+                    name            : 'title',
+                    itemId          : 'title',
+                    margin          : '5px 5px 5px 10px'
+                },{
+                    fieldLabel      : 'Type',
+                    xtype           : 'combo',
+                    name            : 'xtype',
+                    displayField	: 'name',
+                    valueField		: 'value',
+                    editable		: false,
+                    store			: panel.fieldTypesStore,
+                    queryMode		: 'local',
+                    margin          : '5px 5px 5px 10px',
+                    itemId          : 'xtype',
+                    listeners       : {
+                        select: function(combo, record){
+                            var type = record[0].data.value;
+
+                            if(type=='combobox'){
+                                panel.optionGrid.expand();
+                                panel.optionGrid.enable();
+                                panel.optionGrid.setTitle('Select List Options');
+                            }else{
+                                panel.optionGrid.collapse();
+                                panel.optionGrid.disable();
+                            }
+                        }
+                    }
+                },{
+                    xtype   : 'fieldset',
+                    title   : 'Aditional Properties',
+                    defaults        : { anchor:'100%' },
+                    items   : [{
+                        fieldLabel      : 'Name',
+                        xtype           : 'textfield',
+                        name            : 'name',
+                        name            : 'name'
+                    },{
+                        fieldLabel      : 'Child Of',
+                        xtype			: 'combo',
+                        name			: 'where',
+                        displayField	: 'group_name',
+                        valueField		: 'group_name',
+                        editable		: false,
+                        store			: panel.whereStore,
+                        queryMode		: 'local',
+                        itemId		    : 'combo'
+                    },{
+                        fieldLabel      : 'Width',
+                        xtype           : 'textfield',
+                        name            : 'width',
+                        itemId          : 'width',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Height',
+                        xtype           : 'textfield',
+                        name            : 'height',
+                        itemId          : 'height',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Flex',
+                        xtype           : 'textfield',
+                        name            : 'flex',
+                        name            : 'flex',
+                        hidden          : true
+                    },{
+
+                        fieldLabel      : 'Input Value',
+                        xtype           : 'textfield',
+                        name            : 'inputValue',
+                        name            : 'inputValue',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Label Width',
+                        xtype           : 'textfield',
+                        name            : 'labelWidth',
+                        itemId          : 'labelWidth',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Allow Blank',
+                        xtype           : 'textfield',
+                        name            : 'allowBlank',
+                        itemId          : 'allowBlank',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Value',
+                        xtype           : 'textfield',
+                        name            : 'value',
+                        itemId          : 'value',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Max Value',
+                        xtype           : 'textfield',
+                        name            : 'maxValue',
+                        itemId          : 'maxValue',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Min Value',
+                        xtype           : 'textfield',
+                        name            : 'minValue',
+                        itemId          : 'minValue',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Box Label',
+                        xtype           : 'textfield',
+                        name            : 'boxLabel',
+                        itemId          : 'boxLabel',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Grow',
+                        xtype           : 'textfield',
+                        name            : 'grow',
+                        itemId          : 'grow',
+                        hidden          : true
+                    },{
+                        fieldLabel      : 'Increment',
+                        xtype           : 'textfield',
+                        name            : 'increment',
+                        itemId          : 'increment',
+                        hidden          : true
+                    }]
         		}]
     		});
 	
@@ -179,10 +354,11 @@ Ext.onReady(function() {
 			// window - Add Field Window
 			// *************************************************************************************
 			panel.winAddField = Ext.create('Ext.mitos.Window', {
-				title		: '<?php i18n("Select a group to add the field."); ?>',
-				width		: 450,
-				height		: 100,
-				items		: [ panel.whereForm ],
+				title		: '<?php i18n("Add Form Field."); ?>',
+                layout      : 'border',
+                height      : 400,
+				width		: 550,
+				items		: [ panel.whereForm, panel.optionGrid ],
 				buttons:[{
 					text		:'<?php i18n("Add"); ?>',
 					name		: 'cmdSave',
@@ -209,7 +385,7 @@ Ext.onReady(function() {
 		            }
 				}]
 			});
-	
+
 			// *************************************************************************************
 			// Grouping - group_name
 			// *************************************************************************************
@@ -217,7 +393,7 @@ Ext.onReady(function() {
     			enableNoGroups: false,
         		groupHeaderTpl: '<?php i18n("Group"); ?>: {name} ({rows.length} <?php i18n("Field"); ?>{[values.rows.length > 1 ? "s" : ""]})'
     		});
-    
+
     		// *************************************************************************************
     		// RowEditor Plugin
     		// *************************************************************************************
@@ -242,194 +418,51 @@ Ext.onReady(function() {
    	    		border	: true,
   	    		frame	: true,
   	    		sortable: false,
-                collapsible: true,
                 useArrows: true,
                 rootVisible: false,
-  	    		multiSelect: true,
                 singleExpand: true,
-  	    		//plugins	: [panel.rowEditing],
    	    		title	: '<?php i18n("Field editor"); ?> (<?php i18n("Demographics"); ?>)',
         		columns	: [
 					{
                         xtype       : 'treecolumn',
-						name		: 'seq',
-						text     	: '<?php i18n("Order"); ?>',
+                        text     	: '<?php i18n("Field Group"); ?>',
 						sortable 	: false,
-						dataIndex	: 'seq',
-						width		: 40,
-						align		: 'center',
-        		    	editor		: {
-           					name: 'seq',
-		                	xtype: 'numberfield',
-   			            	allowBlank: false,
-       	    		    	minValue: 1,
-	            	    	maxValue: 100,
-	            	    	required: true
-        		    	}
-		            },
+						dataIndex	: 'group_name',
+						width		: 100,
+						align		: 'left'
+                    },
 					{
 						text     	: '<?php i18n("Data Type"); ?>',
 						sortable 	: false,
 						dataIndex	: 'data_type',
 						width		: 100,
-						align		: 'left',
-						editor		: {
-							name: 'data_type',
-							xtype: 'combo', 
-							displayField: 'type',
-							valueField: 'type', 
-							editable: false, 
-							store: panel.datatypesStore, 
-							queryMode: 'local'
-						}
-		            },
-					{
-						text     	: '<?php i18n("Group"); ?>',
-						sortable 	: false,
-						dataIndex	: 'group_name',
-						width		: 70,
-						align		: 'left',
-            			editor		: {
-		            		name: 'group_name',
-	    		            xtype: 'textfield',
-    	        		    allowBlank: false,
-    	        		    required: true
-		            	}
-        		    },
-					{
-						text     	: '<?php i18n("ID"); ?>',
-						sortable 	: false,
-						dataIndex	: 'field_id',
-						width		: 120,
-						align		: 'left',
-		            	editor		: {
-        		    		name: 'field_id',
-	            		    xtype: 'textfield',
-	            		    //------
-	            		    // @TODO@ Check why this thing is not working.
-	            		    //------
-	            		    //vtype: 'mysqlField',
-		    	            allowBlank: false,
-		    	            required: true
-        		    	}
+						align		: 'left'
 		            },
 					{
 						text     	: '<?php i18n("Label"); ?>',
 						sortable 	: false,
 						dataIndex	: 'title',
 						width		: 130,
-						align		: 'left',
-            			editor		: {
-		            		name: 'title',
-	    		            xtype: 'textfield'
-            			}
+						align		: 'left'
 		            },
-					{
-						text     	: '<?php i18n("UOR"); ?>',
-						sortable 	: false,
-						dataIndex	: 'uor',
-						width		: 50,
-						align		: 'center',
-						editor		:{
-							xtype: 'combo',
-							name: 'uor',
-							displayField: 'uor',
-							valueField: 'uor', 
-							editable: false, 
-							store: panel.uorStore, 
-							queryMode: 'local'
-						}
-        		    },
-					{
-						text     	: '<?php i18n("Size"); ?>',
-						sortable 	: false,
-						dataIndex	: 'max_length',
-						width		: 50,
-						align		: 'center',
-        		    	editor		: {
-            				name: 'max_length',
-			                xtype: 'numberfield',
-    			            minValue: 0,
-            			    maxValue: 255
-		            	}
-        		    },
-					{
-						text     	: '<?php i18n("List"); ?>',
-						sortable 	: false,
-						dataIndex	: 'listDesc',
-						width		: 100,
-						align		: 'center',
-						editor		: {
-							name: 'list_id',
-							xtype: 'combo', 
-							displayField: 'title',
-							valueField: 'title', 
-							editable: false, 
-							store: panel.listoptionStore, 
-							queryMode: 'local'
-						}
-		            },
-					{
-						text     	: '<?php i18n("Label Cols"); ?>',
-						sortable 	: false,
-						dataIndex	: 'titlecols',
-						width		: 80,
-						align		: 'center',
-            			editor		: {
-		            		name: 'titlecols',
-	    		            xtype: 'numberfield',
-    	        		    allowBlank: false,
-		        	        minValue: 0,
-        		    	    maxValue: 100
-            			}
-		            },
-					{
-						text     	: '<?php i18n("Data Cols"); ?>',
-						sortable 	: false,
-						dataIndex	: 'datacols',
-						width		: 80,
-						align		: 'center',
-        		    	editor		: {
-            				name: 'datacols',
-			                xtype: 'numberfield',
-    			            allowBlank: false,
-        	    		    minValue: 0,
-		            	    maxValue: 100
-        		    	}
-		            },
-					{
-						text     	: '<?php i18n("Options"); ?>',
-						sortable 	: false,
-						dataIndex	: 'edit_options',
-						width		: 80,
-						align		: 'center',
-        		    	editor		: {
-            				name: 'edit_options',
-			                xtype: 'textfield'
-        		    	}
-            		},
 					{
 						text     	: '<?php i18n("Description"); ?>',
 						sortable 	: false,
 						dataIndex	: 'description',
 						flex		: 1,
-						align		: 'left',
-		            	editor		: {
-        		    		name: 'description',
-	            		    xtype: 'textfield'
-        		    	}
+						align		: 'left'
 		            },
 					{ text: 'item_id', hidden: true, dataIndex: 'item_id' },
 					{ text: 'form_id', hidden: true, dataIndex: 'form_id' }
 				],
 				listeners: {
 					itemclick: {
-            			fn: function(DataView, record, item, rowIndex, e){ 
-		            		panel.rowEditing.cancelEdit();
-        		    		currRec = panel.LayoutStore.getAt(rowIndex);
-            				rowPos = rowIndex;
-            				panel.cmdDelete.enable();
-            			}
+            			//fn: function(DataView, record, item, rowIndex, e){
+		                //		panel.rowEditing.cancelEdit();
+        		    	//	currRec = panel.LayoutStore.getAt(rowIndex);
+            			//	rowPos = rowIndex;
+            			//	panel.cmdDelete.enable();
+            			//}
 					}
 				},
 				dockedItems: [{
@@ -442,6 +475,9 @@ Ext.onReady(function() {
 							iconCls: 'icoAddRecord',
 							handler: function(){
 								panel.rowEditing.cancelEdit();
+                                panel.whereForm.getForm().reset();
+                                panel.optionGrid.collapse();
+                                panel.optionGrid.disable();
 								panel.winAddField.show();
 							}
 						})
@@ -480,8 +516,9 @@ Ext.onReady(function() {
 				region		: 'east',
 				border		: true,
 				frame		: true,
+                margin      : '0 0 0 3px',
 				title		: '<?php i18n("Form list"); ?>',
-				width		: 100,
+				width		: 150,
 				collapsible	: true,
 		        columns		: [
 					{
@@ -524,9 +561,9 @@ Ext.onReady(function() {
 			panel.callParent(arguments);
 			
 		} // end of initComponent
-		
+
 	}); //ens LayoutPanel class
     Ext.create('Ext.mitos.Panel');
-    
+
 }); // End ExtJS
 </script>

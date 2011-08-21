@@ -45,7 +45,6 @@ $admin_folder = array( 'text' => i18n('Administration', 'r'), 'cls' => 'folder',
         array( 'text' => i18n('Services', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/services/services.ejs.php' ),
         array( 'text' => i18n('Roles', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/roles/roles.ejs.php' ),
         array( 'text' => i18n('Layouts', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/layout/layout.ejs.php' ),
-        array( 'text' => i18n('Layouts 2', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/layout/layout2.ejs.php' ),
         array( 'text' => i18n('Lists', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/lists/lists.ejs.php' ),
         array( 'text' => i18n('Event Log', 'r'),       'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/log/log.ejs.php' ),
     )
@@ -67,6 +66,8 @@ $misc_folder = array( 'text' => i18n('Miscellaneous', 'r'), 'cls' => 'folder', '
 // *************************************************************************************
 $test_folder = array( 'text' => i18n('Test', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
+        array( 'text' => i18n('Layouts', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/layout_test/layout.ejs.php' ),
+
     )
 );
 // *************************************************************************************
