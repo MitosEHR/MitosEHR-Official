@@ -104,6 +104,6 @@ Ext.onReady(function(){
             page.callParent(arguments);
         } /// end initComponent
     }); // end PatientSummaryPage class
-    Ext.create('Ext.mitos.Page');
+    MitosPanel = Ext.create('Ext.mitos.Page');
 }); // end ExtJS
 </script>

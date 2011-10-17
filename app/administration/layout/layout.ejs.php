@@ -513,7 +513,7 @@ Ext.onReady(function() {
 		} // end of initComponent
 		
 	}); //ens LayoutPanel class
-    Ext.create('Ext.mitos.Panel');
+    MitosPanel = Ext.create('Ext.mitos.Panel');
     
 }); // End ExtJS
 </script>

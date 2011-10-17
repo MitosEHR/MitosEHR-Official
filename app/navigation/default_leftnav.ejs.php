@@ -67,6 +67,7 @@ $misc_folder = array( 'text' => i18n('Miscellaneous', 'r'), 'cls' => 'folder', '
 $test_folder = array( 'text' => i18n('Test', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
         array( 'text' => i18n('Layouts', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/layout_test/layout.ejs.php' ),
+        array( 'text' => i18n('New Patient', 'r'),     'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'patient_file/new_test/new_patient.ejs.php' ),
 
     )
 );

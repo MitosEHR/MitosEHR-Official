@@ -300,6 +300,6 @@ Ext.onReady(function(){
             Ext.fly('app-msg').update('').addCls('x-hidden');
         }
     });
-    Ext.create('Ext.mitos.Calendar');
+    MitosPanel = Ext.create('Ext.mitos.Calendar');
 }); // End ExtJS
 </script>

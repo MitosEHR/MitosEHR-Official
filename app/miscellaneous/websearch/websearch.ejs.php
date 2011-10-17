@@ -164,7 +164,7 @@ Ext.onReady(function(){
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens UserPage class
-    Ext.create('Ext.mitos.Page');
+    MitosPanel = Ext.create('Ext.mitos.Page');
 }); // End ExtJS
 
 </script>

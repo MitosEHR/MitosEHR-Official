@@ -109,6 +109,10 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			var trp;
 			app = this;
+
+            app.save = function(){
+                alert('saved');
+            }
 			// *************************************************************************************
 			// Task Scheduler 
 			// This will run certain task at determined time.
@@ -162,6 +166,7 @@ Ext.onReady(function() {
                 listeners:{
                     itemclick:function(dv, record, item, index, node, event, n){
                         if(record.data.hrefTarget){
+
                             app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/' + record.data.hrefTarget, scripts: true});
                         }
                     }

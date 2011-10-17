@@ -465,7 +465,7 @@ Ext.onReady(function() {
 		} // end of initComponent
 		
 	}); //ens MessagesPanel class
-    Ext.create('Ext.mitos.Panel');
+    MitosPanel = Ext.create('Ext.mitos.Panel');
     
 }); // END EXTJS
 

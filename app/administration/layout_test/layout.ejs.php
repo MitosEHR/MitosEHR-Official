@@ -32,6 +32,7 @@ Ext.onReady(function() {
 		initComponent: function(){
 		
             /** @namespace Ext.QuickTips */
+            /** @namespace app */
             Ext.QuickTips.init();
             
             var panel = this;
@@ -208,7 +209,21 @@ Ext.onReady(function() {
 							panel.layoutGrid.setTitle('<?php i18n("Field editor"); ?> ('+form_id+')');
         		    	}
 					}
-				}
+				},
+                dockedItems: [{
+                    xtype:'toolbar',
+                    items:[{
+                        xtype			: 'combo',
+                        name			: 'where',
+                        displayField	: 'group_name',
+                        valueField		: 'group_name',
+                        editable		: false,
+                        store			: panel.whereStore,
+                        queryMode		: 'local',
+                        itemId		    : 'combo',
+                        width           : 185
+                    }]
+                }]
             });
             
 
@@ -228,7 +243,16 @@ Ext.onReady(function() {
                     xtype           : 'textfield',
                     name            : 'title',
                     itemId          : 'title',
-                    margin          : '5px 5px 5px 10px'
+                    margin          : '5px 5px 5px 10px',
+                    enableKeyEvents : true,
+                    listeners:{
+                        keyup: function(){
+                            var q = this.getValue();
+                            var f = panel.whereForm.getComponent('aditionalProperties').getComponent('name');
+                            f.setValue(q.toLowerCase().replace(" ","_"));
+
+                        }
+                    }
                 },{
                     fieldLabel      : 'Type',
                     xtype           : 'combo',
@@ -244,35 +268,94 @@ Ext.onReady(function() {
                         select: function(combo, record){
                             var type = record[0].data.value;
 
-                            if(type=='combobox'){
+                            if(type == 'combobox'){
+                                panel.optionGrid.setTitle('Select List Options');
                                 panel.optionGrid.expand();
                                 panel.optionGrid.enable();
-                                panel.optionGrid.setTitle('Select List Options');
-                            }else{
+                            } else {
                                 panel.optionGrid.collapse();
                                 panel.optionGrid.disable();
+                            }
+
+                            Array.prototype.find = function(searchStr) {
+                                var returnArray = false;
+                                for (i=0; i<this.length; i++) {
+                                    if (typeof(searchStr) == 'function') {
+                                        if (searchStr.test(this[i])) {
+                                            if (!returnArray) { returnArray = [] }
+                                                returnArray.push(i);
+                                            }
+                                        } else {
+                                            if (this[i]===searchStr) {
+                                                if (!returnArray) { returnArray = [] }
+                                            returnArray.push(i);
+                                        }
+                                    }
+                                }
+                                return returnArray;
+                            };
+
+                            var addProp = panel.whereForm.getComponent('aditionalProperties');
+                            var is = addProp.items.keys;
+
+                            function enableItems(itmes){
+                                for (var i=0; i<is.length; i++){
+                                    if ( !itmes.find(is[i]) ){
+                                        addProp.getComponent(is[i]).hide();
+                                    } else {
+                                        addProp.getComponent(is[i]).show();
+                                    }
+
+                                }
+                            }
+                            switch(type){
+                                case 'combobox':
+                                    enableItems(['name','width','allowBlank']);
+                                    break;
+                                case 'fieldset':
+                                    enableItems(['']);
+                                    break;
+                                case 'fieldcontainer':
+                                    enableItems(['']);
+                                    break;
+                                case 'textfield':
+                                    enableItems(['name','allowBlank']);
+                                    break;
+                                case 'textareafield':
+                                    enableItems(['name','allowBlank']);
+                                    break;
+                                case 'checkboxfield':
+                                    enableItems(['name','allowBlank']);
+                                    break;
+                                default:
+                                    enableItems(['name','allowBlank']);
+
+
                             }
                         }
                     }
                 },{
+                    fieldLabel      : 'Child Of',
+                    xtype			: 'combo',
+                    name			: 'where',
+                    displayField	: 'group_name',
+                    valueField		: 'group_name',
+                    editable		: false,
+                    store			: panel.whereStore,
+                    queryMode		: 'local',
+                    margin          : '5px 5px 5px 10px',
+                    itemId		    : 'combo'
+                },{
                     xtype   : 'fieldset',
+                    itemId  : 'aditionalProperties',
                     title   : 'Aditional Properties',
                     defaults        : { anchor:'100%' },
                     items   : [{
                         fieldLabel      : 'Name',
                         xtype           : 'textfield',
                         name            : 'name',
-                        name            : 'name'
-                    },{
-                        fieldLabel      : 'Child Of',
-                        xtype			: 'combo',
-                        name			: 'where',
-                        displayField	: 'group_name',
-                        valueField		: 'group_name',
-                        editable		: false,
-                        store			: panel.whereStore,
-                        queryMode		: 'local',
-                        itemId		    : 'combo'
+                        itemId          : 'name',
+                        hidden          : true
                     },{
                         fieldLabel      : 'Width',
                         xtype           : 'textfield',
@@ -287,16 +370,15 @@ Ext.onReady(function() {
                         hidden          : true
                     },{
                         fieldLabel      : 'Flex',
-                        xtype           : 'textfield',
+                        xtype           : 'checkbox',
                         name            : 'flex',
-                        name            : 'flex',
+                        itemId          : 'flex',
                         hidden          : true
                     },{
-
                         fieldLabel      : 'Input Value',
                         xtype           : 'textfield',
                         name            : 'inputValue',
-                        name            : 'inputValue',
+                        itemId          : 'inputValue',
                         hidden          : true
                     },{
                         fieldLabel      : 'Label Width',
@@ -306,7 +388,7 @@ Ext.onReady(function() {
                         hidden          : true
                     },{
                         fieldLabel      : 'Allow Blank',
-                        xtype           : 'textfield',
+                        xtype           : 'checkbox',
                         name            : 'allowBlank',
                         itemId          : 'allowBlank',
                         hidden          : true
@@ -336,7 +418,7 @@ Ext.onReady(function() {
                         hidden          : true
                     },{
                         fieldLabel      : 'Grow',
-                        xtype           : 'textfield',
+                        xtype           : 'checkbox',
                         name            : 'grow',
                         itemId          : 'grow',
                         hidden          : true
@@ -365,16 +447,7 @@ Ext.onReady(function() {
 					id			: 'cmdSave',
 					iconCls		: 'save',
             		handler: function(){
-						currRec = new layoutModel();								// Create a new record object based from the model
-						var fieldValues = panel.whereForm.getForm().getValues();	// Get the values from the FORM
-						currRec.set('group_name', fieldValues['where']);			// Set the hidden values of the record
-						currRec.set('form_id', form_id);							// Set the hidden values of the record
-						currRec.set('seq', 1);										// Set the seq value
-						currRec.set('titlecols', 0);
-						currRec.set('datacols', 0);
-						panel.LayoutStore.insert(0, currRec );						// Add the new record to the STORE
-						panel.winAddField.hide();									// Finally hide the dialog window
-						panel.rowEditing.startEdit(currRec, 0);						// inject the record to the GRID and start editing
+						app.save();
 					}
 				},'-',{
 					text:'<?php i18n("Close"); ?>',
@@ -469,9 +542,22 @@ Ext.onReady(function() {
 					xtype: 'toolbar',
 					dock: 'top',
 					items: [
-						panel.cmdDelete = new Ext.create('Ext.Button', {
+						panel.cmdAdd = new Ext.create('Ext.Button', {
 							name: 'cmdAddField',
 							text: '<?php i18n("Add field"); ?>',
+							iconCls: 'icoAddRecord',
+							handler: function(){
+								panel.rowEditing.cancelEdit();
+                                panel.whereForm.getForm().reset();
+                                panel.optionGrid.collapse();
+                                panel.optionGrid.disable();
+								panel.winAddField.show();
+							}
+						})
+					,'-',
+                        panel.cmdUpdate = new Ext.create('Ext.Button', {
+							name: 'cmdAddField',
+							text: '<?php i18n("Edit field"); ?>',
 							iconCls: 'icoAddRecord',
 							handler: function(){
 								panel.rowEditing.cancelEdit();
@@ -563,7 +649,7 @@ Ext.onReady(function() {
 		} // end of initComponent
 
 	}); //ens LayoutPanel class
-    Ext.create('Ext.mitos.Panel');
+    MitosPanel = Ext.create('Ext.mitos.Panel');
 
 }); // End ExtJS
 </script>

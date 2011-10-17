@@ -10,12 +10,23 @@ Ext.define('Ext.mitos.CRUDStore',{
 //  destroy 	:  url to data_destroy.eje.php
 //  *******************************************
 	constructor:function(config){
-		
+
 		// This will delete the recordModel
-		var m = config.model;
-		delete m;
-		Ext.define( config.model, {extend:"Ext.data.Model", extraParams: config.extraParams, groupField: config.groupField, fields: config.fields, idProperty: config.idProperty });
-		
+        //if (Ext.ModelManager.isRegistered(config.model)){
+        //    var model = Ext.ModelManager.getModel(config.model);
+        //    Ext.ModelManager.unregister(model);
+        //    delete model;
+        //}
+
+        if (!Ext.ModelManager.isRegistered(config.model)){
+		    Ext.define( config.model, {
+                extend      : "Ext.data.Model",
+                extraParams : config.extraParams,
+                groupField  : config.groupField,
+                fields      : config.fields,
+                idProperty  : config.idProperty
+            });
+        }
 		if(config.autoLoad == null){config.autoLoad = true}
 		
 		var config = {

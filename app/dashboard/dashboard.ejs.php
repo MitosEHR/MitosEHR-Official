@@ -117,6 +117,6 @@ Ext.onReady(function(){
         pageTitle: '<?php i18n('Dashboard'); ?>',
         pageBody: Ext.create('Ext.mitos.dashboard.DashboardPage')
     });
-    Ext.create('Ext.mitos.dashboard.DashboardPage');
+    MitosPanel = Ext.create('Ext.mitos.dashboard.DashboardPage');
 }); // End ExtJS
 </script>

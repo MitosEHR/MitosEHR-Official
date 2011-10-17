@@ -380,7 +380,7 @@ Ext.onReady(function() {
 		
 	}); //ens FacilitiesPanel class
 
-    Ext.create('Ext.mitos.Panel');
+    MitosPanel = Ext.create('Ext.mitos.Panel');
     
 }); // End ExtJS
 

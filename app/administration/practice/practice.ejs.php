@@ -899,6 +899,6 @@ Ext.onReady(function(){
             page.callParent(arguments);
 		} // end of initComponent
     }); // end of PracticePage
-    Ext.create('Ext.mitos.Page');
+    MitosPanel = Ext.create('Ext.mitos.Page');
 }); // End ExtJS
 </script>

@@ -21,10 +21,9 @@ session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 include_once($_SESSION['site']['root']."/classes/I18n.class.php");
-include_once($_SESSION['site']['root']."/lib/layoutEngine/layoutEngine.class.php");
+include_once($_SESSION['site']['root']."/lib/layoutEngine_test/layoutEngine.class.php");
 
 $mitos_db = new dbHelper();
-$layoutFactorer = new layoutEngine();
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -72,10 +71,10 @@ Ext.onReady(function(){
 			// Dynamically generate the screen layout.
 			// This is done, via PHP Language.
 			// *************************************************************************************
-			<?php 
-				$layoutFactorer->actionCU("C");
-				$layoutFactorer->renderForm("Demographics", "app/patient_file/new", "New Patient", 300, i18n("Save new patient", "r") ); 
-			?>
+			<?php
+                $classname = new layoutEngineTest();
+                $classname->renderForm("Demographics", "app/patient_file/new", "New Patient", 300, "Save new patient");
+            ?>
 			
 			// *************************************************************************************
 			// Attach the dockbar to the demographics form.

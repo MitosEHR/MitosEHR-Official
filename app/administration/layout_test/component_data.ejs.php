@@ -34,16 +34,16 @@ $mitos_db = new dbHelper();
 switch ($_GET['task']) {
 	case "field_types":
 		$field_types = array(
-			0 => array("id"=> 1,   "name" => "Fieldset",        "value" => "fieldset"),
-			1 => array("id"=> 2,   "name" => "Field Container", "value" => "fieldcontainer"),
-			2 => array("id"=> 3,   "name" => "Text Field",      "value" => "textfield"),
-			3 => array("id"=> 4,   "name" => "Text Area Field", "value" => "textareafield"),
-			4 => array("id"=> 5,   "name" => "Check Box Field", "value" => "checkboxfield"),
-			5 => array("id"=> 6,   "name" => "Slelect List",    "value" => "combobox"),
-			6 => array("id"=> 7,   "name" => "Radio Field",     "value" => "radiofield"),
-			7 => array("id"=> 8,   "name" => "Date Field",      "value" => "datefield"),
-			8 => array("id"=> 9,   "name" => "Time Field",      "value" => "timefield"),
-			9 => array("id"=> 10,  "name" => "Number Field",    "value" => "numberfield")
+			0 => array("id"=> 1,   "name" => "Fieldset",                "value" => "fieldset"),
+			1 => array("id"=> 2,   "name" => "Field Container",         "value" => "fieldcontainer"),
+			2 => array("id"=> 3,   "name" => "Text Field",              "value" => "textfield"),
+			3 => array("id"=> 4,   "name" => "TextArea Field",          "value" => "textareafield"),
+			4 => array("id"=> 5,   "name" => "CheckBox Field",          "value" => "checkboxfield"),
+			5 => array("id"=> 6,   "name" => "Slelect List / Combo Box","value" => "combobox"),
+			6 => array("id"=> 7,   "name" => "Radio Field",             "value" => "radiofield"),
+			7 => array("id"=> 8,   "name" => "Date Field",              "value" => "datefield"),
+			8 => array("id"=> 9,   "name" => "Time Field",              "value" => "timefield"),
+			9 => array("id"=> 10,  "name" => "Number Field",            "value" => "numberfield")
 		);
 		$totals = count($field_types);
 		print_r(json_encode(array('totals'=>$totals,'row'=>$field_types)));

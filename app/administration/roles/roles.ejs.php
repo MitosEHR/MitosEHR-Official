@@ -336,6 +336,6 @@ Ext.onReady(function(){
 		    });
 		}
 	}); // end roles class
-	Ext.create('Ext.mitos.Page');
+	MitosPanel = Ext.create('Ext.mitos.Page');
 }); // End ExtJS
 </script>
