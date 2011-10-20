@@ -113,10 +113,9 @@ Ext.onReady(function(){
 	        Ext.topAlert.msg('Message!',  portlet.title + ' was removed');
 	    }
 	}); //ens UserPage class
-	new Ext.create('Ext.mitos.RenderPanel', {
+	MitosPanel = Ext.create('Ext.mitos.RenderPanel', {
         pageTitle: '<?php i18n('Dashboard'); ?>',
         pageBody: Ext.create('Ext.mitos.dashboard.DashboardPage')
     });
-    MitosPanel = Ext.create('Ext.mitos.dashboard.DashboardPage');
 }); // End ExtJS
 </script>
