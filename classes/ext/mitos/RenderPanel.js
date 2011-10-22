@@ -2,7 +2,7 @@
 // Render panel
 //******************************************************************************
 Ext.define('Ext.mitos.RenderPanel', {
-    extend      : 'Ext.panel.Panel',
+    extend      : 'Ext.container.Container',
     alias       : 'widget.renderpanel',
     layout      : 'border',
     frame       : false,
