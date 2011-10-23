@@ -54,12 +54,26 @@ class layoutEngineTest extends dbHelper {
             // Push the Items into Items Array!
             array_push($this->items,$item);
         }
+        // DEBUGGING STUFF!!!!
         // echo '<pre>';
         // print_r($this->items);
+
         // *********************************************************************************************************
-        // Lets use json_decode to return all the fields
+        // Lets use json_decode and clear the doble quotes from properties
         // *********************************************************************************************************
-        return json_encode($this->items);
+        $rawStr = json_encode($this->items);
+        $reg = '([?!,|?{](\"(.*?)\")[:])';
+        preg_match_all ($reg,$rawStr,$rawItems );
+        $cleanItems = array();
+        foreach($rawItems[0] as $item){
+            array_push($cleanItems,str_replace('"','',$item) );
+        }
+        // DEBUGGING STUFF!!!!
+        //echo '<pre>';
+        //print_r($cleanItems);
+
+        $cleanStr = str_replace($rawItems[0],$cleanItems,$rawStr );
+        return $cleanStr;
     }
     // *************************************************************************************************************
     // Reclusive function to get all child items
