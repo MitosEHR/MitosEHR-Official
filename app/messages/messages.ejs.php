@@ -223,7 +223,7 @@ Ext.onReady(function() {
 						handler: function(){ panel.winPatients.show(); }
 					})
 				,
-					panel.assigned_to = new Ext.create('Ext.form.ComboBox', { 
+					panel.assigned_to = new Ext.create('Ext.form.ComboBox', {
 						name: 'assigned_to',
 						fieldLabel: '<?php i18n("To"); ?>',
 						editable: false,
@@ -450,7 +450,7 @@ Ext.onReady(function() {
 			}); // END GRID
 
 			//***********************************************************************************
-			// Top Render Panel 
+			// Top Render Panel
 			// This Panel needs only 3 arguments...
 			// PageTigle 	- Title of the current page
 			// PageLayout 	- default 'fit', define this argument if using other than the default value

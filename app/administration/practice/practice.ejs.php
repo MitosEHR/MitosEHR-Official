@@ -25,16 +25,9 @@ $_SESSION['site']['flops'] = 0;
 delete Ext.mitos.Page;
 Ext.onReady(function(){
     Ext.define('Ext.mitos.Page',{
-        extend:'Ext.panel.Panel',
-		uses:[
-			'Ext.mitos.CRUDStore',
-			'Ext.mitos.GridPanel',
-			'Ext.mitos.RenderPanel',
-			'Ext.mitos.TitlesComboBox',
-			'Ext.mitos.SaveCancelWindow',
-            'Ext.mitos.TransmitMedthodComboBox',
-            'Ext.mitos.InsurancePayerType'
-		],
+        extend      : 'Ext.mitos.RenderPanel',
+        pageTitle   : '<?php i18n('Practice Settings'); ?>',
+		uses        : [ 'Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel', 'Ext.mitos.TitlesComboBox', 'Ext.mitos.SaveCancelWindow', 'Ext.mitos.TransmitMedthodComboBox', 'Ext.mitos.InsurancePayerType' ],
         initComponent: function(){
             var page = this;
             var rowPos; // Stores the current Grid Row Position (int)
@@ -884,18 +877,7 @@ Ext.onReady(function(){
                     }]
                 }]
             });
-
-            // *************************************************************************************
-            // Top Render Panel
-            // This Panel needs only 3 arguments...
-            // PageTitle 	- Title of the current page
-            // PageLayout 	- default 'fit', define this argument if using other than the default value
-            // PageBody 	- List of items to display [form1, grid1, grid2]
-            // *************************************************************************************
-            new Ext.create('Ext.mitos.RenderPanel', {
-                pageTitle: '<?php i18n('Practice Settings'); ?>',
-                pageBody: [page.tabPanel]
-            });
+            page.pageBody = [ page.tabPanel ];
             page.callParent(arguments);
 		} // end of initComponent
     }); // end of PracticePage

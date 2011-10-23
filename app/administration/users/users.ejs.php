@@ -21,11 +21,11 @@ $_SESSION['site']['flops'] = 0; ?>
 delete Ext.mitos.Page;
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.Page',{
-		extend:'Ext.panel.Panel',
+        extend:'Ext.mitos.RenderPanel',
+        pageTitle: '<?php i18n('Users'); ?>',
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.RenderPanel',
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
 			'Ext.mitos.FacilitiesComboBox',
@@ -275,13 +275,7 @@ Ext.onReady(function(){
 	    		scope		: page,
 	    		idField		: 'id'
 			});
-			// *************************************************************************************
-			// Render Panel
-			// *************************************************************************************
-			new Ext.create('Ext.mitos.RenderPanel', {
-		        pageTitle: '<?php i18n('Users'); ?>',
-		        pageBody: [page.userGrid]
-		    });
+		    page.pageBody = [ page.userGrid ];
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens UserPage class

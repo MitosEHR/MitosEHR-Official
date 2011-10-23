@@ -34,25 +34,21 @@ $_SESSION['site']['flops'] = 0;
 delete Ext.mitos.Panel;
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.Panel',{
-		extend:'Ext.panel.Panel',
-		uses:[
-			'Ext.mitos.CRUDStore',
-			'Ext.mitos.RenderPanel',
-			'Ext.mitos.SaveCancelWindow',
-                'Ext.mitos.PhotoIdWindow'
-		],
+        extend      : 'Ext.mitos.RenderPanel',
+        pageTitle   : '<?php i18n("Patient Entry Form"); ?>',
+        border	    : true,
+        frame	    : true,
+		uses        : [ 'Ext.mitos.CRUDStore','Ext.mitos.SaveCancelWindow','Ext.mitos.PhotoIdWindow' ],
 		initComponent: function(){
-		
             /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
-            
             var panel = this;
 			var form_id = 'Demographics'; 	// Stores the current form group selected by the user.
 
 			// *************************************************************************************
             // Photo Ip Window and panel
             // *************************************************************************************
-            panel.patienPhotoId = new Ext.create('Ext.mitos.PhotoIdWindow',{
+            panel.patienPhotoId = Ext.create('Ext.mitos.PhotoIdWindow',{
                 title: '<?php i18n("Patient Photo Id", "e"); ?>',
                 dockedItems:{
                     xtype: 'toolbar',
@@ -75,7 +71,7 @@ Ext.onReady(function(){
                 $classname = new layoutEngineTest();
                 $classname->renderForm("Demographics", "app/patient_file/new", "New Patient", 300, "Save new patient");
             ?>
-			
+
 			// *************************************************************************************
 			// Attach the dockbar to the demographics form.
 			// *************************************************************************************
@@ -109,27 +105,10 @@ Ext.onReady(function(){
                     }
                 }]
     		});
-
-			// *************************************************************************************
-			// Top Render Panel 
-			// This Panel needs only 3 arguments...
-			// PageTigle 	- Title of the current page
-			// PageLayout 	- default 'fit', define this argument if using other than the default value
-			// PageBody 	- List of items to display [form1, grid1, grid2]
-			// *************************************************************************************
-    		new Ext.create('Ext.mitos.RenderPanel', {
-        		pageTitle: '<?php i18n("Patient Entry Form"); ?>',
-				border	: true,
-				frame	: true,
-        		pageBody: [panel.Demographics]
-    		});
+            panel.pageBody = [ panel.Demographics ];
 			panel.callParent(arguments);
-			
 		} // end of initComponent
-		
 	}); //ens PatientPanel class
     MitosPanel = Ext.create('Ext.mitos.Panel');
-    
 }); // End ExtJS
-
 </script>

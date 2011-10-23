@@ -21,11 +21,12 @@ $_SESSION['site']['flops'] = 0;
 delete Ext.mitos.Page;
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.Page',{
-		extend:'Ext.panel.Panel',
+        extend:'Ext.mitos.RenderPanel',
+        pageTitle: '<?php i18n('Services'); ?>',
+        pageLayout: 'border',
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.RenderPanel',
             'Ext.mitos.TitlesComboBox',
             'Ext.mitos.CodesComboBox'
         ],
@@ -231,11 +232,7 @@ Ext.onReady(function(){
                     ]
                 })
             }); // END GRID
-            new Ext.create('Ext.mitos.RenderPanel', {
-                pageTitle: '<?php i18n('Services'); ?>',
-                pageLayout: 'border',
-                pageBody: [page.servicesFormPanel,page.servicesGrid ]
-            });
+            page.pageBody = [ page.servicesFormPanel, page.servicesGrid ];
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens servicesPage class

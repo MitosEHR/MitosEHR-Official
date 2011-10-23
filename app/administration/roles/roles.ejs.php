@@ -23,11 +23,11 @@ $_SESSION['site']['flops'] = 0;
 delete Ext.mitos.Page;
 Ext.onReady(function(){
     Ext.define('Ext.mitos.Page',{
-		extend:'Ext.panel.Panel',
+        extend      : 'Ext.mitos.RenderPanel',
+        pageTitle   : '<?php i18n('Roles and Permissions'); ?>',
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
-			'Ext.mitos.RenderPanel',
 			'Ext.mitos.TitlesComboBox',
 			'Ext.mitos.SaveCancelWindow',
 			'Ext.mitos.FacilitiesComboBox',
@@ -330,10 +330,8 @@ Ext.onReady(function(){
                     ]
 				}]
 		    }); // END Facility Grid
-		    new Ext.create('Ext.mitos.RenderPanel', {
-		        pageTitle: '<?php i18n('Roles and Permissions'); ?>',
-		        pageBody: [page.rolesGrid]
-		    });
+		    page.pageBody = [ page.rolesGrid ];
+            page.callParent(arguments);
 		}
 	}); // end roles class
 	MitosPanel = Ext.create('Ext.mitos.Page');

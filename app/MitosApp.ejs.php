@@ -83,7 +83,7 @@ Ext.require([
 ]);
 Ext.onReady(function() {
 	Ext.define('Ext.mitos.MitosApp',{
-		extend:'Ext.panel.Panel',
+		extend:'Ext.container.Container',
 		uses:[
 			'Ext.grid.*',
 			'Ext.data.*',
@@ -137,7 +137,7 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Navigation Panel Tree Data
 			// *************************************************************************************
-			app.storeTree = new Ext.data.TreeStore({
+			app.storeTree = Ext.data.TreeStore({
 				proxy: {
 					type	: 'ajax',
 					url		: 'app/navigation/default_leftnav.ejs.php'
@@ -147,12 +147,11 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Navigation Panel
 			// *************************************************************************************
-			app.Navigation = new Ext.create('Ext.tree.TreePanel',{
+			app.Navigation = Ext.create('Ext.tree.TreePanel',{
 				region		: 'center',
 				bodyPadding : '5 0',
                 cls         : 'nav_tree',
 				hideHeaders	: true,
-				//useArrows	: true, 
 				rootVisible	: false,
 				border      : false,
 				store		: app.storeTree,
@@ -219,7 +218,7 @@ Ext.onReady(function() {
             function showMiframe(src){
                 app.winSupport.remove(app.miframe);
                 app.winSupport.add(
-                        app.miframe = new Ext.create('Ext.mitos.ManagedIframe',{
+                        app.miframe = Ext.create('Ext.mitos.ManagedIframe',{
                             src:src  
                         })
             );
@@ -267,7 +266,7 @@ Ext.onReady(function() {
 				style 		: 'float:left',
 				layout		: 'anchor',
 				items: [
-					app.liveSearch = new Ext.create('Ext.mitos.LivePatientSearch',{
+					app.liveSearch = Ext.create('Ext.mitos.LivePatientSearch',{
                         emptyText: '<?php i18n("Live Patient Search..."); ?>',
                         listeners: {
                             select: function(combo, selection) {
@@ -296,7 +295,7 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// header Panel
 			// *************************************************************************************
-			app.Header = Ext.create('Ext.Panel', {
+			app.Header = Ext.create('Ext.container.Container', {
 				region		: 'north',
 				height		: 44,
 				split		: false,
@@ -464,10 +463,7 @@ Ext.onReady(function() {
 			// panels above.
 			// *************************************************************************************
 			Ext.create('Ext.Viewport', {
-				layout: {
-					type	: 'border',
-					padding	: 2
-				},
+				layout      : { type: 'border', padding	: 2 },
 				defaults	: { split: true },
 				items		: [ app.Header, app.navColumn, app.MainApp, app.Footer ]
 			}); // End ViewPort

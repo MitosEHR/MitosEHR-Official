@@ -22,19 +22,14 @@ $_SESSION['site']['flops'] = 0;
 delete Ext.mitos.Panel;
 Ext.onReady(function() {
 	Ext.define('Ext.mitos.Panel',{
-		extend:'Ext.panel.Panel',
-		uses:[
-			'Ext.mitos.CRUDStore',
-			'Ext.mitos.GridPanel',
-			'Ext.mitos.RenderPanel',
-			'Ext.mitos.SaveCancelWindow'
-		],
+        extend      : 'Ext.mitos.RenderPanel',
+        pageTitle   : '<?php i18n("Layout Form Editor"); ?>',
+        pageLayout  : 'border',
+		uses        : ['Ext.mitos.CRUDStore','Ext.mitos.GridPanel','Ext.mitos.SaveCancelWindow'],
 		initComponent: function(){
-		
             /** @namespace Ext.QuickTips */
             /** @namespace app */
             Ext.QuickTips.init();
-            
             var panel = this;
 			var form_id = 'Demographics'; 	// Stores the current form group selected by the user.
 			var rowPos; 					// Stores the current Grid Row Position (int)
@@ -631,25 +626,10 @@ Ext.onReady(function() {
 					}
 				}
 		    }); // END LayoutChoose
-    
-			//***********************************************************************************
-			// Top Render Panel 
-			// This Panel needs only 3 arguments...
-			// PageTigle 	- Title of the current page
-			// PageLayout 	- default 'fit', define this argument if using other than the default value
-			// PageBody 	- List of items to display [foem1, grid1, grid2]
-			//***********************************************************************************
-    		new Ext.create('Ext.mitos.RenderPanel', {
-        		pageTitle: '<?php i18n("Layout Form Editor"); ?>',
-        		pageLayout: 'border',
-        		pageBody: [panel.layoutGrid, panel.chooseGrid]
-    		});
+            panel.pageBody = [ panel.layoutGrid, panel.chooseGrid ];
 			panel.callParent(arguments);
-			
 		} // end of initComponent
-
 	}); //ens LayoutPanel class
     MitosPanel = Ext.create('Ext.mitos.Panel');
-
 }); // End ExtJS
 </script>

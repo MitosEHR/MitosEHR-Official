@@ -25,11 +25,9 @@ $_SESSION['site']['flops'] = 0;
 delete Ext.mitos.Page;
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.Page',{
-		extend:'Ext.panel.Panel',
-		uses:[
-			'Ext.mitos.CRUDStore',
-			'Ext.mitos.RenderPanel'
-		],
+        extend      : 'Ext.mitos.RenderPanel',
+        pageTitle   : '<?php i18n('MitosEHR Global Settings'); ?>',
+		uses        : [ 'Ext.mitos.CRUDStore' ],
 		initComponent: function(){
             var page = this;
             // *************************************************************************************
@@ -179,7 +177,7 @@ Ext.onReady(function(){
                 idProperty: 'list_id'
             });
             }
-            page.selectListsStore = new Ext.data.Store({
+            page.selectListsStore = Ext.data.Store({
                 model		: 'selectLists',
                 proxy		: {
                     type	: 'ajax',
@@ -205,7 +203,7 @@ Ext.onReady(function(){
                 idProperty: 'lang_id'
             });
             }
-            page.language_defaultStore = new Ext.data.Store({
+            page.language_defaultStore = Ext.data.Store({
                 model		: 'Language',
                 proxy		: {
                     type	: 'ajax',
@@ -382,7 +380,7 @@ Ext.onReady(function(){
                 ['Option 6', 'Option 6'],
                 ['Option 7', 'Option 7']
             ];
-            page.dummyStore = new Ext.data.ArrayStore({
+            page.dummyStore = Ext.data.ArrayStore({
                 fields: ['title', 'option_id'],
                 data : Ext.data.dummy
             });
@@ -986,17 +984,7 @@ Ext.onReady(function(){
                     }]
                 }]
             });
-            //***********************************************************************************
-            // Top Render Panel
-            // This Panel needs only 3 arguments...
-            // PageTigle 	- Title of the current page
-            // PageLayout 	- default 'fit', define this argument if using other than the default value
-            // PageBody 	- List of items to display [foem1, grid1, grid2]
-            //***********************************************************************************
-            new Ext.create('Ext.mitos.RenderPanel', {
-                pageTitle: '<?php i18n('MitosEHR Global Settings'); ?>',
-                pageBody: [page.globalFormPanel]
-            });
+            page.pageBody = [ page.globalFormPanel ];
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens LogPage class

@@ -26,7 +26,7 @@ $_SESSION['site']['flops'] = 0;
 delete Ext.mitos.Panel;
 Ext.onReady(function() {
 	Ext.define('Ext.mitos.Panel',{
-		extend:'Ext.panel.Panel',
+        extend:'Ext.container.Container',
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',

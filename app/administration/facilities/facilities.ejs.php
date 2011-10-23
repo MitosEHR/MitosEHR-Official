@@ -25,13 +25,9 @@ $_SESSION['site']['flops'] = 0;
 delete Ext.mitos.Panel;
 Ext.onReady(function() {
 	Ext.define('Ext.mitos.Panel',{
-		extend:'Ext.panel.Panel',
-		uses:[
-			'Ext.mitos.CRUDStore',
-			'Ext.mitos.GridPanel',
-			'Ext.mitos.RenderPanel',
-			'Ext.mitos.SaveCancelWindow'
-		],
+        extend      : 'Ext.mitos.RenderPanel',
+        pageTitle   : '<?php i18n("Facilities"); ?>',
+		uses        : [ 'Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel', 'Ext.mitos.SaveCancelWindow' ],
 		initComponent: function(){
 		    /** @namespace Ext.QuickTips */
     		Ext.QuickTips.init();
@@ -104,7 +100,7 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// User form
 			// *************************************************************************************
-	    	panel.facilityForm = new Ext.create('Ext.mitos.FormPanel', {
+	    	panel.facilityForm = Ext.create('Ext.mitos.FormPanel', {
 		        fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
     		    defaultType: 'textfield',
         		defaults: { anchor: '100%' },
@@ -205,7 +201,7 @@ Ext.onReady(function() {
 				height		: 530,
 				items		: [ panel.facilityForm ],
 				buttons:[
-					panel.cmdSave = new Ext.create('Ext.Button', {
+					panel.cmdSave = Ext.create('Ext.Button', {
 						text		:'<?php i18n("Save"); ?>',
 						iconCls		: 'save',
     		    	    handler: function(){
@@ -241,7 +237,7 @@ Ext.onReady(function() {
 						}
 					})
 				,'-',
-					panel.cmdClose = new Ext.create('Ext.Button', {
+					panel.cmdClose = Ext.create('Ext.Button', {
 						text:'<?php i18n("Close"); ?>',
 						iconCls: 'delete',
 	    	        	handler: function(){
@@ -254,7 +250,7 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Facility Grid Panel
 			// *************************************************************************************
-			panel.FacilityGrid = new Ext.create('Ext.mitos.GridPanel', {
+			panel.FacilityGrid = Ext.create('Ext.mitos.GridPanel', {
 				store		: panel.FacilityStore,
 	    	    columns: [
 					{
@@ -362,26 +358,10 @@ Ext.onReady(function() {
 					]
 				}]
     		}); // END Facility Grid
-
-			//***********************************************************************************
-			// Top Render Panel 
-			// This Panel needs only 3 arguments...
-			// PageTigle 	- Title of the current page
-			// PageLayout 	- default 'fit', define this argument if using other than the default value
-			// PageBody 	- List of items to display [foem1, grid1, grid2]
-			//***********************************************************************************
-    		new Ext.create('Ext.mitos.RenderPanel', {
-        		pageTitle: '<?php i18n("Facilities"); ?>',
-	        	pageBody: [panel.FacilityGrid]
-	    	});
+	        panel.pageBody = [ panel.FacilityGrid ];
 			panel.callParent(arguments);
-				
-			} // end of initComponent
-		
+		} // end of initComponent
 	}); //ens FacilitiesPanel class
-
     MitosPanel = Ext.create('Ext.mitos.Panel');
-    
 }); // End ExtJS
-
 </script>

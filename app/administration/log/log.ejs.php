@@ -21,13 +21,9 @@ $_SESSION['site']['flops'] = 0; ?>
 delete Ext.mitos.Page;
 Ext.onReady(function(){
 	Ext.define('Ext.mitos.Page',{
-		extend:'Ext.panel.Panel',
-		uses:[
-			'Ext.mitos.CRUDStore',
-			'Ext.mitos.GridPanel',
-			'Ext.mitos.RenderPanel'
-		],
-
+        extend      : 'Ext.mitos.RenderPanel',
+		uses        : [ 'Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel' ],
+        pageTitle   : '<?php i18n('Event History Log'); ?>',
 		initComponent: function(){
             /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
@@ -58,7 +54,7 @@ Ext.onReady(function(){
 			// *************************************************************************************
 			// Create the GridPanel
 			// *************************************************************************************
-			page.logGrid = new Ext.create('Ext.mitos.GridPanel', {
+			page.logGrid = Ext.create('Ext.mitos.GridPanel', {
 				store : page.logStore,
 				columns: [
 					{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},
@@ -118,7 +114,7 @@ Ext.onReady(function(){
 			// *************************************************************************************
 			// Event Detail Form
 			// *************************************************************************************
-			page.frmLog = new Ext.form.FormPanel({
+			page.frmLog = Ext.form.FormPanel({
 				bodyStyle   : 'padding: 10px;',
 				autoWidth   : true,
 				border      : false,
@@ -143,7 +139,7 @@ Ext.onReady(function(){
 			// *************************************************************************************
 			// Event Detail Window
 			// *************************************************************************************
-            page.winLog = new Ext.window.Window({
+            page.winLog = Ext.window.Window({
                 width       : 500,
                 closeAction : 'hide',
                 items       : [page.frmLog],
@@ -154,13 +150,7 @@ Ext.onReady(function(){
                     }
                 }]
             });
-			// *************************************************************************************
-			// Render Panel
-			// *************************************************************************************
-			new Ext.create('Ext.mitos.RenderPanel', {
-		        pageTitle: '<?php i18n('Event History Log'); ?>',
-		        pageBody: [page.logGrid]
-		    });
+		    page.pageBody = [ page.logGrid ];
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens LogPage class

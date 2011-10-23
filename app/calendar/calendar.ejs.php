@@ -27,6 +27,7 @@ delete Ext.mitos.Calendar;
 Ext.onReady(function(){
     Ext.define('Ext.mitos.Calendar', {
         require:[
+            'Ext.mitos.RenderPanel',
             'Extensible.calendar.data.MemoryCalendarStore',
             'Extensible.calendar.data.EventStore',
             'Extensible.calendar.CalendarPanel',
@@ -53,7 +54,6 @@ Ext.onReady(function(){
                 autoLoad: true,
                 proxy: {
                     type: 'rest',
-                    //url: 'app/calendar/php/app.php/events',
                     api:{
                         read    : 'app/calendar/data_read.ejs.php',
                         create  : 'app/calendar/data_create.ejs.php',
@@ -105,7 +105,7 @@ Ext.onReady(function(){
                 }
             });
 
-            this.leftCol = new Ext.create('Ext.container.Container', {
+            this.leftCol = Ext.create('Ext.panel.Panel', {
                 id:'app-west',
                 region: 'west',
                 width: 179,
@@ -136,7 +136,6 @@ Ext.onReady(function(){
             this.calendar = Ext.create('Extensible.calendar.CalendarPanel', {
                 eventStore: this.eventStore,
                 calendarStore: this.calendarStore,
-                //title: 'Remote Calendar',
                 border: true,
                 id:'app-calendar',
                 region: 'center',
@@ -283,15 +282,15 @@ Ext.onReady(function(){
             // PageLayout 	- default 'fit', define this argument if using other than the default value
             // PageBody 	- List of items to display [form1, grid1, grid2]
             //***********************************************************************************
-            new Ext.create('Ext.mitos.RenderPanel', {
+            Ext.create('Ext.mitos.RenderPanel', {
                 pageTitle: '<?php i18n('Appointments Calendar'); ?>',
                 pageLayout: 'border',
-                pageBody: [this.leftCol, this.calendar ]
+                pageBody: [ this.leftCol, this.calendar ]
             });
 
 
         },
-        
+
         showMsg: function(msg){
             Ext.fly('app-msg').update(msg).removeCls('x-hidden');
         },
