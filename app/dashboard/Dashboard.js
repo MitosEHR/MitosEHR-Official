@@ -1,4 +1,3 @@
-<?php 
 //******************************************************************************
 // Users.ejs.php
 // Description: Users Screen
@@ -9,34 +8,24 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-session_name ( "MitosEHR" );
-session_start();
-session_cache_limiter('private');
-include_once($_SESSION['site']['root']."/classes/I18n.class.php");
-//******************************************************************************
-// Reset session count 10 secs = 1 Flop
-//******************************************************************************
-$_SESSION['site']['flops'] = 0; ?>
-<script type="text/javascript">
 Ext.require([
     'Ext.layout.container.*',
     'Ext.resizer.Splitter',
     'Ext.fx.target.Element',
     'Ext.fx.target.Component',
-    'Ext.window.Window',
-    'Ext.mitos.RenderPanel',
     'Ext.mitos.dashboard.Portlet',
     'Ext.mitos.dashboard.PortalColumn',
     'Ext.mitos.dashboard.PortalPanel',
     'Ext.mitos.dashboard.PortalDropZone',
     'Ext.mitos.dashboard.GridPortlet',
-    'Ext.mitos.dashboard.ChartPortlet', 
+    'Ext.mitos.dashboard.ChartPortlet',
     'Ext.mitos.dashboard.OnotesPortlet'
 ]);
-Ext.onReady(function(){
-	Ext.define('Ext.mitos.dashboard.DashboardPage',{
-        extend:'Ext.panel.Panel',
-		uses: ['Ext.mitos.dashboard.PortalPanel', 'Ext.mitos.dashboard.PortalColumn', 'Ext.mitos.dashboard.GridPortlet', 'Ext.mitos.dashboard.ChartPortlet'],
+	Ext.define('Ext.mitos.panel.dashboard.Dashboard',{
+        extend      : 'Ext.mitos.RenderPanel',
+        id          : 'panelDashboard',
+        pageTitle   : 'Dashboard',
+		uses        : ['Ext.mitos.dashboard.PortalPanel', 'Ext.mitos.dashboard.PortalColumn', 'Ext.mitos.dashboard.GridPortlet', 'Ext.mitos.dashboard.ChartPortlet'],
 	    getTools: function(){
 	        return [{
 	            xtype: 'tool',
@@ -53,10 +42,7 @@ Ext.onReady(function(){
 		initComponent: function(){
 			var content = '<div class="portlet-content">HELLO WORLD!</div>';
 			Ext.apply(this, {
-	            //id: 'app-viewport',
-	            layout: { type: 'fit' },
-	            border: false,
-	            items: [{
+	            pageBody: [{
                     id: 'app-portal',
                     xtype: 'portalpanel',
                     frame : true,
@@ -113,9 +99,3 @@ Ext.onReady(function(){
 	        Ext.topAlert.msg('Message!',  portlet.title + ' was removed');
 	    }
 	}); //ens UserPage class
-	MitosPanel = Ext.create('Ext.mitos.RenderPanel', {
-        pageTitle: '<?php i18n('Dashboard'); ?>',
-        pageBody: Ext.create('Ext.mitos.dashboard.DashboardPage')
-    });
-}); // End ExtJS
-</script>

@@ -6,7 +6,6 @@ Ext.define('Ext.mitos.Window',{
 	modal		: true,
 	resizable	: false,
 	autoScroll	: true,
-	closeAction	: 'hide',
 	renderTo	: document.body,
     initComponent: function(){	
     	var me = this;

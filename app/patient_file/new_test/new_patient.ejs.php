@@ -46,24 +46,6 @@ Ext.onReady(function(){
 			var form_id = 'Demographics'; 	// Stores the current form group selected by the user.
 
 			// *************************************************************************************
-            // Photo Ip Window and panel
-            // *************************************************************************************
-            panel.patienPhotoId = Ext.create('Ext.mitos.PhotoIdWindow',{
-                title: '<?php i18n("Patient Photo Id", "e"); ?>',
-                dockedItems:{
-                    xtype: 'toolbar',
-                    dock: 'bottom',
-                    items: [{
-                        text: '<?php i18n("Capture Image", "e"); ?>',
-        			    iconCls: 'save',
-                        handler: function(){
-
-                        }
-                    }]
-                }
-            });
-
-			// *************************************************************************************
 			// Dynamically generate the screen layout.
 			// This is done, via PHP Language.
 			// *************************************************************************************
@@ -101,13 +83,33 @@ Ext.onReady(function(){
         		},'->',{
                     text:'Take a Picture',
                     handler: function(){
-                        panel.patienPhotoId.show();
+                        panel.PhotoIdWindow();
                     }
                 }]
     		});
             panel.pageBody = [ panel.Demographics ];
 			panel.callParent(arguments);
-		} // end of initComponent
+		}, // end of initComponent
+
+        PhotoIdWindow:function(){
+            Ext.create('Ext.mitos.PhotoIdWindow',{
+                title       : '<?php i18n("Patient Photo Id", "e"); ?>',
+                loadMask    : true,
+                modal       : true,
+                dockedItems :{
+                    xtype       : 'toolbar',
+                    dock        : 'bottom',
+                    items:[{
+                        text    : '<?php i18n("Capture Image", "e"); ?>',
+                        iconCls : 'save',
+                        handler : function(){
+                            
+                        }
+                    }]
+                }
+            }).show()
+        }
+
 	}); //ens PatientPanel class
     MitosPanel = Ext.create('Ext.mitos.Panel');
 }); // End ExtJS

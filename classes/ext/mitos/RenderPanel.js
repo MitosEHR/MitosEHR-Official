@@ -7,7 +7,7 @@ Ext.define('Ext.mitos.RenderPanel', {
     layout      : 'border',
     frame       : false,
     border      : false,
-    id          : 'RenderPanel',
+    cls          : 'RenderPanel',
     pageLayout	: 'fit',
     pageBody    : [],
     pageTitle   : '',
@@ -15,18 +15,15 @@ Ext.define('Ext.mitos.RenderPanel', {
         TopRender = this;
         var me = this;
     	Ext.apply(me,{
-    		renderTo: app.MainApp.body,
-    		height	: app.MainApp.getHeight(),
-            width	: app.MainApp.getWidth(),
             items   : [{
-                id      : 'RenderPanel-header',
+                cls      : 'RenderPanel-header',
                 xtype   : 'container',
                 region  : 'north',
                 layout  : 'fit',
                 height  : 40,
                 html    : '<div class="dashboard_title">' + me.pageTitle + '</div>'
             },{
-                id      	: 'RenderPanel-body',
+                cls      	: 'RenderPanel-body',
                 xtype 		: 'panel',
                 region  	: 'center',
                 layout  	: this.pageLayout,

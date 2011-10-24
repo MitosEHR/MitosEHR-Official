@@ -32,6 +32,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
 <script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/Extensible.js"></script>
+<script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
 <!--test stuff-->
 <link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
 <!--end test stuff-->
@@ -39,10 +40,13 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <!--calendar css-->
 <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/resources/css/calendar.css" />
 <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/resources/css/calendar-colors.css" />
+<link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.css" />
+
 <!--ens calendar css-->
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="favicon.ico" >
+
 <script type="text/javascript">
 // *************************************************************************************
 // Set the path for the components, so the application can find them.
@@ -53,34 +57,12 @@ Ext.Loader.setConfig({
     paths			: {
         'Ext.ux'            : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/ux',
         'Ext.mitos'         : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/mitos',
+        'Ext.mitos.panel'   : 'app',
         'Extensible'        : 'lib/extensible-1.5.0-beta1/src',
         'Extensible.example': 'lib/extensible-1.5.0-beta1/examples'
     }
 });
-Ext.require([
-    'Ext.grid.*',
-    'Ext.data.*',
-    'Ext.util.*',
-    'Ext.state.*',
-    'Ext.toolbar.Paging',
-    'Ext.TaskManager.*',
-    'Ext.ux.SlidingPager',
-    'Ext.mitos.CRUDStore',
-    'Ext.mitos.Window',
-    'Ext.mitos.GridPanel',
-    'Ext.mitos.FormPanel',
-    'Ext.mitos.RenderPanel',
-    'Ext.mitos.ManagedIframe',
-    'Ext.mitos.PhotoIdWindow',
-    'Ext.mitos.SaveCancelWindow',
-    'Ext.mitos.LivePatientSearch',
-    'Ext.mitos.AuthorizationsComboBox',
-    'Extensible.calendar.CalendarPanel',
-    'Extensible.calendar.gadget.CalendarListPanel',
-    'Extensible.calendar.data.MemoryCalendarStore',
-    'Extensible.calendar.data.MemoryEventStore'
 
-]);
 Ext.onReady(function() {
 	Ext.define('Ext.mitos.MitosApp',{
 		extend:'Ext.container.Container',
@@ -110,9 +92,6 @@ Ext.onReady(function() {
 			var trp;
 			app = this;
 
-            app.save = function(){
-                alert('saved');
-            }
 			// *************************************************************************************
 			// Task Scheduler 
 			// This will run certain task at determined time.
@@ -165,8 +144,24 @@ Ext.onReady(function() {
                 listeners:{
                     itemclick:function(dv, record, item, index, node, event, n){
                         if(record.data.hrefTarget){
+                            var card    = record.data.hrefTarget;
+                            var layout  = app.MainPanel.getLayout();
+                            layout.setActiveItem(card);
 
-                            app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/' + record.data.hrefTarget, scripts: true});
+                            //var card    = record.data.hrefTarget;
+                            //var layout  = app.MainPanel.getLayout();
+                            //var first   = layout.getActiveItem();
+                            //var second  = Ext.getCmp(card);
+                            //first.getEl().slideOut('l', {
+                            //    duration: 200,
+                            //    callback: function() {
+                            //        layout.setActiveItem(second);
+                            //        second.hide();
+                            //        second.getEl().slideIn('r',{
+                            //            duration: 500,
+                            //        });
+                            //    }
+                            //});
                         }
                     }
                 }
@@ -395,26 +390,28 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Main Panel
 			// *************************************************************************************
-			app.MainApp = Ext.create('Ext.Panel', {
+			app.MainPanel = Ext.create('Ext.container.Container', {
 				id 				: 'MainApp',
 				region			: 'center',
+                layout          : 'card',
 				border			: true,
-				margins			: '0 0 0 0',
-				bodyPadding		: 0,
-				waitMsg			: '<?php i18n("Loading"); ?>',
-				waitMsgTarget	: true,
-				autoLoad		: {url: '<?php echo $_SESSION["global_settings"]["default_top_pane"]; ?>', scripts: true},
-				listeners		: {
-					resize 		: {
-						fn		: function(){
-							if( trp = Ext.getCmp('RenderPanel')){
-								var height = app.MainApp.getHeight();
-								var width = app.MainApp.getWidth();
-								trp.setSize( width , height );
-							}
-						}
-					}	
-				}
+				margins			: 0,
+				padding			: 0,
+                deferredRender  : true,
+                defaults        : { layout: 'fit', xtype:'container' },
+                items: [
+                    Ext.create('Ext.mitos.panel.dashboard.Dashboard'),
+                    //Ext.create('Ext.mitos.panel.calendar.Calendar'),
+                    Ext.create('Ext.mitos.panel.messages.Messages'),
+
+                    Ext.create('Ext.mitos.panel.patient_file.summary.Summary'),
+                    Ext.create('Ext.mitos.panel.patient_file.visits.Visits'),
+
+                    Ext.create('Ext.mitos.panel.fees.billing.Billing'),
+                    Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
+                    Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
+                    Ext.create('Ext.mitos.panel.fees.payments.Payments')
+                ]
 			}); // End MainApp
             // *************************************************************************************
 			// Footer Panel
@@ -465,7 +462,7 @@ Ext.onReady(function() {
 			Ext.create('Ext.Viewport', {
 				layout      : { type: 'border', padding	: 2 },
 				defaults	: { split: true },
-				items		: [ app.Header, app.navColumn, app.MainApp, app.Footer ]
+				items		: [ app.Header, app.navColumn, app.MainPanel, app.Footer ]
 			}); // End ViewPort
 			app.callParent(arguments);
 		} // end of initComponent

@@ -8,18 +8,18 @@ include_once($_SESSION['site']['root']."/classes/I18n.class.php");
 // Default Nav Data
 // *************************************************************************************
 $nav = array(
-    array( 'text' => i18n('Dashboard', 'r'), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoDash',      'hrefTarget' => 'dashboard/dashboard.ejs.php' ),
-    array( 'text' => i18n('Calendar', 'r'),  'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoCalendar',  'hrefTarget' => 'calendar/calendar.ejs.php' ),
-    array( 'text' => i18n('Messages', 'r'),  'leaf' => true, 'cls' => 'file', 'iconCls' => 'mail',         'hrefTarget' => 'messages/messages.ejs.php' ),
+    array( 'text' => i18n('Dashboard', 'r'), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoDash',      'hrefTarget' => 'panelDashboard' ),
+    array( 'text' => i18n('Calendar', 'r'),  'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoCalendar',  'hrefTarget' => 'panelCalendar' ),
+    array( 'text' => i18n('Messages', 'r'),  'leaf' => true, 'cls' => 'file', 'iconCls' => 'mail',         'hrefTarget' => 'panelMessages' ),
 );
 // *************************************************************************************
 // Patient Folder
 // *************************************************************************************
 $patient_folder = array( 'text' => i18n('Patient', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => i18n('New Patient', 'r'),     'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'patient_file/new/new_patient.ejs.php' ),
-        array( 'text' => i18n('Patient Summary', 'r'), 'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'patient_file/summary/summary.ejs.php' ),
-        array( 'text' => i18n('Visits', 'r'),   'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'patient_file/visits/visits.ejs.php' ),
+        array( 'text' => i18n('New Patient', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'patient_file/new/new_patient.ejs.php' ),
+        array( 'text' => i18n('Patient Summary', 'r'),  'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelSummary' ),
+        array( 'text' => i18n('Visits', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelVisits' ),
     )
 );
 // *************************************************************************************
@@ -27,10 +27,10 @@ $patient_folder = array( 'text' => i18n('Patient', 'r'), 'cls' => 'folder', 'exp
 // *************************************************************************************
 $fees_folder = array( 'text' => i18n('Fees', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => i18n('Billing', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'fees/billing/billing.ejs.php' ),
-        array( 'text' => i18n('Checkout', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'fees/checkout/checkout.ejs.php' ),
-        array( 'text' => i18n('Fees Sheet', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'fees/fees_sheet/fees_sheet.ejs.php' ),
-        array( 'text' => i18n('Payments', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'fees/payments/payments.ejs.php' ),
+        array( 'text' => i18n('Billing', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelBilling' ),
+        array( 'text' => i18n('Checkout', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelCheckout' ),
+        array( 'text' => i18n('Fees Sheet', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelFeesSheet' ),
+        array( 'text' => i18n('Payments', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelPayments' ),
     )
 );
 // *************************************************************************************

@@ -19,14 +19,15 @@
     background-color: #ccc;
     -webkit-border-radius: 3px;
 }
-#RenderPanel{
-background-color: #DFE8F6;
-padding: 5px !important;
+.RenderPanel{
+    background-color: #DFE8F6!important;
+    padding: 5px !important;
+    border: solid 1px #CCC;
 }
-#RenderPanel .x-panel-body{
+.RenderPanel .x-panel-body{
 	background-color: #fff !important;
 }
-#RenderPanel-header{
+.RenderPanel-header{
 	background-color: #DFE8F6;
     color: #596F8F;
     font-size: 22px;
@@ -34,7 +35,7 @@ padding: 5px !important;
     padding: 8px 15px;
     text-shadow: 0 1px 0 #fff;
 }
-#RenderPanel-body{
+.RenderPanel-body{
 	padding:5px;
 	background-color: #fff;
 	border-color: #D4CDCC;

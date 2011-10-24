@@ -7,7 +7,6 @@ Ext.define('Ext.mitos.PhotoIdWindow', {
     height      : 292,
     width       : 320,
     layout      : 'fit',
-    closeAction : 'hide',
     renderTo	: document.body,
     initComponent: function() {
         var me = this;
