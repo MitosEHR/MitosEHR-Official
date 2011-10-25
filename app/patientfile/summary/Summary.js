@@ -8,7 +8,7 @@
 //
 // MitosEHR (Electronic Health Records) 2011
 //**********************************************************************************
-Ext.define('Ext.mitos.panel.patient_file.summary.Summary',{
+Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
     extend          : 'Ext.mitos.RenderPanel',
     id              : 'panelSummary',
     pageTitle       : 'Summary',

@@ -35,7 +35,7 @@ $_SESSION['lang']['language'] = "English (Standard)";
 // Directory related variables
 //**********************************************************************
 $_SESSION['dir']['ext'] = "ext-4.0.7";
-$_SESSION['dir']['ext_cal'] = "extensible-1.5.0-beta1";
+$_SESSION['dir']['ext_cal'] = "extensible-1.5.0";
 $_SESSION['dir']['AES'] = "phpAES";
 $_SESSION['dir']['adoHelper'] = "dbHelper";
 $_SESSION['dir']['ext_classes'] = "classes/ext";

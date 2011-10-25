@@ -213,7 +213,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         // *************************************************************************************
         // User form
         // *************************************************************************************
-        panel.whereForm = new Ext.create('Ext.mitos.FormPanel', {
+        panel.whereForm = Ext.create('Ext.mitos.FormPanel', {
             region          : 'center',
             frameHeader     : true,
             title		    : 'Field Properties',
@@ -525,7 +525,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 xtype: 'toolbar',
                 dock: 'top',
                 items: [
-                    panel.cmdAdd = new Ext.create('Ext.Button', {
+                    panel.cmdAdd = Ext.create('Ext.Button', {
                         name: 'cmdAddField',
                         text: 'Add field',
                         iconCls: 'icoAddRecord',
@@ -538,7 +538,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                         }
                     })
                 ,'-',
-                    panel.cmdUpdate = new Ext.create('Ext.Button', {
+                    panel.cmdUpdate = Ext.create('Ext.Button', {
                         name: 'cmdAddField',
                         text: 'Edit field',
                         iconCls: 'icoAddRecord',
@@ -551,7 +551,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                         }
                     })
                 ,'-',
-                    panel.cmdDelete = new Ext.create('Ext.Button', {
+                    panel.cmdDelete = Ext.create('Ext.Button', {
                         name: 'cmdDelField',
                         text: 'Delete field',
                         iconCls: 'delete',

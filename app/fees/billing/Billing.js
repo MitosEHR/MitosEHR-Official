@@ -29,9 +29,9 @@ Ext.define('Ext.mitos.panel.fees.billing.Billing',{
             ],
             model		: 'modelBilling',
             idProperty	: 'id',
-            read      	: 'app/miscellaneous/office_notes/data_read.ejs.php',
-            create    	: 'app/miscellaneous/office_notes/data_create.ejs.php',
-            update    	: 'app/miscellaneous/office_notes/data_update.ejs.php',
+            read      	: 'app/miscellaneous//data_read.ejs.php',
+            create    	: 'app/miscellaneous//data_create.ejs.php',
+            update    	: 'app/miscellaneous//data_update.ejs.php',
           //destroy		: <-- delete not allow -->
             autoLoad	: false
         });

@@ -30,9 +30,9 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
             ],
             model		: 'modelBilling',
             idProperty	: 'id',
-            read      	: 'app/miscellaneous/office_notes/data_read.ejs.php',
-            create    	: 'app/miscellaneous/office_notes/data_create.ejs.php',
-            update    	: 'app/miscellaneous/office_notes/data_update.ejs.php',
+            read      	: 'app/miscellaneous/officenotes/data_read.ejs.php',
+            create    	: 'app/miscellaneous/officenotes/data_create.ejs.php',
+            update    	: 'app/miscellaneous/officenotes/data_update.ejs.php',
           //destroy		: <-- delete not allow -->
             autoLoad	: false
         });
@@ -49,21 +49,21 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
                     dock: 'top',
                     items: [
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Save"); ?>',
+                            text      	: 'Save',
                             iconCls   	: 'save',
                             handler   : function(){
 
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text		: '<?php i18n("Cancel"); ?>',
+                            text		: 'Cancel',
                             iconCls   	: 'save',
                             handler		: function(){
 
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text		: '<?php i18n("Allocate"); ?>',
+                            text		: 'Allocate',
                             iconCls   	: 'save',
                             handler		: function(){
 
@@ -78,14 +78,14 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
                     dock: 'top',
                     items: [
                         new Ext.create('Ext.Button', {
-                            text      	: '<?php i18n("Search"); ?>',
+                            text      	: 'Search',
                             iconCls   	: 'save',
                             handler   : function(){
                                 page.paymentGrid.show();
                             }
                         }),'-',
                         new Ext.create('Ext.Button', {
-                            text		: '<?php i18n("Reset"); ?>',
+                            text		: 'Reset',
                             iconCls   	: 'save',
                             handler		: function(){
                                 page.paymentGrid.hide();
@@ -100,7 +100,7 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
                     dock: 'top',
                     items: [
                         new Ext.create('Ext.Button', {
-                            text		: '<?php i18n("Proccess ERA File"); ?>',
+                            text		: 'Proccess ERA File',
                             iconCls   	: 'save',
                             handler		: function(){
 

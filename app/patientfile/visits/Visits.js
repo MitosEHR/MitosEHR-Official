@@ -9,7 +9,7 @@
 //
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-	Ext.define('Ext.mitos.panel.patient_file.visits.Visits',{
+	Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         extend      : 'Ext.mitos.RenderPanel',
         id          : 'panelVisits',
         pageTitle   : 'Visits',
@@ -31,9 +31,9 @@
                 ],
                 model		: 'modelOnotes',
                 idProperty	: 'id',
-                read      	: 'app/miscellaneous/office_notes/data_read.ejs.php',
-                create    	: 'app/miscellaneous/office_notes/data_create.ejs.php',
-                update    	: 'app/miscellaneous/office_notes/data_update.ejs.php',
+                read      	: 'app/miscellaneous/officenotes/data_read.ejs.php',
+                create    	: 'app/miscellaneous/officenotes/data_create.ejs.php',
+                update    	: 'app/miscellaneous/officenotes/data_update.ejs.php',
               //destroy		: <-- delete not allow -->
                 autoLoad	: false
             });
