@@ -17,7 +17,7 @@ $nav = array(
 // *************************************************************************************
 $patient_folder = array( 'text' => i18n('Patient', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => i18n('New Patient', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'patient_file/new/new_patient.ejs.php' ),
+        array( 'text' => i18n('New Patient', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelNewPatient' ),
         array( 'text' => i18n('Patient Summary', 'r'),  'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelSummary' ),
         array( 'text' => i18n('Visits', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelVisits' ),
     )
@@ -38,15 +38,15 @@ $fees_folder = array( 'text' => i18n('Fees', 'r'), 'cls' => 'folder', 'expanded'
 // *************************************************************************************
 $admin_folder = array( 'text' => i18n('Administration', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => i18n('Global Settings', 'r'), 'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/globals/globals.ejs.php' ),
-        array( 'text' => i18n('Facilities', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/facilities/facilities.ejs.php' ),
-        array( 'text' => i18n('Users', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/users/users.ejs.php' ),
-        array( 'text' => i18n('Practice', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/practice/practice.ejs.php' ),
-        array( 'text' => i18n('Services', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/services/services.ejs.php' ),
-        array( 'text' => i18n('Roles', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/roles/roles.ejs.php' ),
-        array( 'text' => i18n('Layouts', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/layout/layout.ejs.php' ),
-        array( 'text' => i18n('Lists', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/lists/lists.ejs.php' ),
-        array( 'text' => i18n('Event Log', 'r'),       'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/log/log.ejs.php' ),
+        array( 'text' => i18n('Global Settings', 'r'), 'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelGlobals' ),
+        array( 'text' => i18n('Facilities', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelFacilities' ),
+        array( 'text' => i18n('Users', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelUsers' ),
+        array( 'text' => i18n('Practice', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelPractice' ),
+        array( 'text' => i18n('Services', 'r'),        'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelServices' ),
+        array( 'text' => i18n('Roles', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelRoles' ),
+        array( 'text' => i18n('Layouts', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelLayout' ),
+        array( 'text' => i18n('Lists', 'r'),           'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelLists' ),
+        array( 'text' => i18n('Event Log', 'r'),       'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelLog' ),
     )
 );
 // *************************************************************************************
@@ -54,11 +54,11 @@ $admin_folder = array( 'text' => i18n('Administration', 'r'), 'cls' => 'folder',
 // *************************************************************************************
 $misc_folder = array( 'text' => i18n('Miscellaneous', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => i18n('Web Search', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'miscellaneous/websearch/websearch.ejs.php' ),
-        array( 'text' => i18n('Address Book', 'r'),    'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'miscellaneous/addressbook/addressbook.ejs.php' ),
-        array( 'text' => i18n('Office Notes', 'r'),    'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'miscellaneous/office_notes/office_notes.ejs.php' ),
-        array( 'text' => i18n('My Settings', 'r'),     'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'miscellaneous/my_settings/my_settings.ejs.php' ),
-        array( 'text' => i18n('My Account', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'miscellaneous/my_account/my_account.ejs.php' ),
+        array( 'text' => i18n('Web Search', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelWebsearch' ),
+        array( 'text' => i18n('Address Book', 'r'),    'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelAddressbook' ),
+        array( 'text' => i18n('Office Notes', 'r'),    'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelOfficeNotes' ),
+        array( 'text' => i18n('My Settings', 'r'),     'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelMySettings' ),
+        array( 'text' => i18n('My Account', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelMyAccount' ),
     )
 );
 // *************************************************************************************
@@ -66,8 +66,8 @@ $misc_folder = array( 'text' => i18n('Miscellaneous', 'r'), 'cls' => 'folder', '
 // *************************************************************************************
 $test_folder = array( 'text' => i18n('Test', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => i18n('Layouts', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'administration/layout_test/layout.ejs.php' ),
-        array( 'text' => i18n('New Patient', 'r'),     'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'patient_file/new_test/new_patient.ejs.php' ),
+        array( 'text' => i18n('Layouts', 'r'),         'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelLayout' ),
+        array( 'text' => i18n('New Patient', 'r'),     'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelNewPatient' ),
 
     )
 );

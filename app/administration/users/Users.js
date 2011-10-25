@@ -1,4 +1,3 @@
-<?php 
 //******************************************************************************
 // Users.ejs.php
 // Description: Users Screen
@@ -9,20 +8,10 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-session_name ( "MitosEHR" );
-session_start();
-session_cache_limiter('private');
-include_once($_SESSION['site']['root']."/classes/I18n.class.php");
-//******************************************************************************
-// Reset session count 10 secs = 1 Flop
-//******************************************************************************
-$_SESSION['site']['flops'] = 0; ?>
-<script type="text/javascript">
-delete Ext.mitos.Page;
-Ext.onReady(function(){
-	Ext.define('Ext.mitos.Page',{
-        extend:'Ext.mitos.RenderPanel',
-        pageTitle: '<?php i18n('Users'); ?>',
+	Ext.define('Ext.mitos.panel.administration.users.Users',{
+        extend      :'Ext.mitos.RenderPanel',
+        id          : 'panelUsers',
+        pageTitle   : 'Users',
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.GridPanel',
@@ -91,11 +80,11 @@ Ext.onReady(function(){
 				store : page.userStore,
 				columns: [
 					{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},
-			    	{ width: 100,  text: '<?php i18n("Username"); ?>', sortable: true, dataIndex: 'username' },
-			    	{ width: 200,  text: '<?php i18n("Name"); ?>', sortable: true, dataIndex: 'fullname' },
-			    	{ flex: 1,  text: '<?php i18n("Aditional info"); ?>', sortable: true, dataIndex: 'info' },
-			    	{ text: '<?php i18n("Active?"); ?>', sortable: true, dataIndex: 'active',renderer 	: authCk },
-			    	{ text: '<?php i18n("Authorized?"); ?>', sortable: true, dataIndex: 'authorized', renderer: authCk }
+			    	{ width: 100,  text: 'Username', sortable: true, dataIndex: 'username' },
+			    	{ width: 200,  text: 'Name', sortable: true, dataIndex: 'fullname' },
+			    	{ flex: 1,  text: 'Aditional info', sortable: true, dataIndex: 'info' },
+			    	{ text: 'Active?', sortable: true, dataIndex: 'active',renderer 	: authCk },
+			    	{ text: 'Authorized?', sortable: true, dataIndex: 'authorized', renderer: authCk }
 			  	],
 			  	listeners: {
 			   		// -----------------------------------------
@@ -134,32 +123,32 @@ Ext.onReady(function(){
 				  	dock: 'top',
 				  	items: [ 
 				  		new Ext.create('Ext.Button', {
-						    text      : '<?php i18n("Add User"); ?>',
+						    text      : 'Add User',
 						    iconCls   : 'icoAddressBook',
 						    handler   : function(){
 						    	page.frmUsers.getForm().reset(); // Clear the form
 						      	page.winUsers.show();
-							  	page.winUsers.setTitle('<?php i18n("Add User"); ?>'); 
+							  	page.winUsers.setTitle('Add User'); 
 						    }
 						}),'-',
 						page.cmdEdit = new Ext.create('Ext.Button', {
-						    text      : '<?php i18n("Edit User"); ?>',
+						    text      : 'Edit User',
 						    iconCls   : 'edit',
 						    disabled  : true,
 						    handler: function(){ 
-								page.winUsers.setTitle('<?php i18n("Add User"); ?>'); 
+								page.winUsers.setTitle('Add User'); 
 						    	page.winUsers.show();
 						    }
 						}),'-',
 						page.cmdDelete = new Ext.create('Ext.Button', {
-							text: '<?php i18n("Delete User"); ?>',
+							text: 'Delete User',
 							iconCls: 'delete',
 							disabled: true,
 							handler: function(){
 								Ext.Msg.show({
-									title: '<?php i18n('Please confirm...'); ?>', 
+									title: 'Please confirm...', 
 									icon: Ext.MessageBox.QUESTION,
-									msg:'<?php i18n('Are you sure to delete this User?'); ?>',
+									msg:'Are you sure to delete this User?',
 									buttons: Ext.Msg.YESNO,
 									fn:function(btn,msgGrid){
 										if(btn=='yes'){
@@ -191,9 +180,9 @@ Ext.onReady(function(){
 				      defaults: { hideLabel: true },
 				      msgTarget : 'under', 
 				      items: [
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Username'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Username: '},
 				        { width: 100, xtype: 'textfield',  name: 'username' },
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Password'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Password: '},
 				        { width: 105, xtype: 'textfield', name: 'password',  inputType: 'password' }
 				      ] 
 				    },{
@@ -201,7 +190,7 @@ Ext.onReady(function(){
 				      defaults: { hideLabel: true },
 				      msgTarget : 'under', 
 				      items: [
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('First, Middle, Last'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'First, Middle, Last: '},
 				          Ext.create('Ext.mitos.TitlesComboBox'),
 				        { width: 80,  xtype: 'textfield', name: 'fname' },
 				        { width: 65,  xtype: 'textfield', name: 'mname' },
@@ -212,9 +201,9 @@ Ext.onReady(function(){
 				      defaults: { hideLabel: true },
 				      msgTarget : 'under', 
 				      items: [
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Active?'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Active?: '},
 				        { width: 100, xtype: 'checkbox', name: 'active' },
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorized?'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Authorized?: '},
 				        { width: 105, xtype: 'checkbox', value: 'off', name: 'authorized' }
 				      ]  
 				    },{ 
@@ -222,54 +211,54 @@ Ext.onReady(function(){
 				      defaults: { hideLabel: true },
 				      msgTarget : 'under', 
 				      items: [
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Default Facility: '},
 				          Ext.create('Ext.mitos.FacilitiesComboBox', { width: 100 }),
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Authorizations: '},
 						  Ext.create('Ext.mitos.AuthorizationsComboBox', { width: 105 })
 				      ] 
 				    },{ 
 				      xtype: 'fieldcontainer',
 				      defaults: { hideLabel: true },
 				      items: [
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Access Control: '},
 				          Ext.create('Ext.mitos.RolesComboBox', {width: 100 }),
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Taxonomy: '},
 				        { width: 105, xtype: 'textfield', name: 'taxonomy' }
 				      ]
 				    },{ 
 				      xtype: 'fieldcontainer',
 				      defaults: { hideLabel: true },
 				      items: [
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Federal Tax ID'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Federal Tax ID: '},
 				        { width: 100, xtype: 'textfield',  name: 'federaltaxid' },
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('Fed Drug ID'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'Fed Drug ID: '},
 				        { width: 105, xtype: 'textfield', name: 'federaldrugid' }
 				      ]
 				    },{
 				      xtype: 'fieldcontainer',
 				      defaults: { hideLabel: true },
 				      items: [
-				       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('UPIN'); ?>: '},
+				       	{ width: 100, xtype: 'displayfield', value: 'UPIN: '},
 				        { width: 100, xtype: 'textfield',  name: 'upin' },
-				        { width: 100, xtype: 'displayfield', value: '<?php i18n('NPI'); ?>: '},
+				        { width: 100, xtype: 'displayfield', value: 'NPI: '},
 				        { width: 105, xtype: 'textfield', name: 'npi' }
 				      ]
 				    },{ 
 				      xtype: 'fieldcontainer',
 				      defaults: { hideLabel: true },
 				      items: [
-				       	{ width: 100, xtype: 'displayfield', value: '<?php i18n('Job Description'); ?>: '},
+				       	{ width: 100, xtype: 'displayfield', value: 'Job Description: '},
 				        { width: 315, xtype: 'textfield', name: 'specialty' }
 				      ]  
 				    },
-				    { width: 410, height: 50, xtype: 'textfield', name: 'info', emptyText: '<?php i18n('Additional Info'); ?>' }
+				    { width: 410, height: 50, xtype: 'textfield', name: 'info', emptyText: 'Additional Info' }
 				]
 			});
 			// *************************************************************************************
 			// User Add/Edit Window
 			// *************************************************************************************
 			page.winUsers = new Ext.create('Ext.mitos.SaveCancelWindow', {
-				title       : '<?php i18n('Add or Edit User'); ?>',
+				title       : 'Add or Edit User',
 	    		form		: page.frmUsers,
 	    		store		: page.userStore,
 	    		scope		: page,
@@ -279,6 +268,3 @@ Ext.onReady(function(){
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens UserPage class
-    MitosPanel = Ext.create('Ext.mitos.Page');
-}); // End ExtJS
-</script>

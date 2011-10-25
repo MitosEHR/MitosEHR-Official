@@ -32,23 +32,9 @@ $mitos_db = new dbHelper();
 // Verify if a $_GET['id'] has passed to select a facility.
 // and execute the apropriate SQL statement
 // **************************************************************************************
-$mitos_db->setSQL("SELECT 
-				layout_options.*, list_options.title AS listDesc
-			FROM
-  				layout_options
-			LEFT OUTER JOIN 
-				list_options
-			ON 
-				layout_options.list_id = list_options.option_id
-			WHERE
-  				layout_options.form_id = '". (($_REQUEST['form_id']) ? $_REQUEST['form_id'] : 'Demographics') . "'
-			ORDER BY
-  				layout_options.group_order, layout_options.seq");
-
-//---------------------------------------------------------------------------------------
-// catch the total records
-//---------------------------------------------------------------------------------------
-$total = $mitos_db->rowCount();
+$mitos_db->setSQL("SELECT DISTINCT group_name FROM layout_options
+			        WHERE form_id = '". (($_REQUEST['form_id']) ? $_REQUEST['form_id'] : 'Demographics') . "'
+			     ORDER BY group_order");
 
 //---------------------------------------------------------------------------------------
 // UOR
@@ -64,13 +50,28 @@ $uorTypes = array(
 //---------------------------------------------------------------------------------------
 $rows = array();
 foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
-	// Some parsing before output the data
-	$row['data_type'] = $dataTypes[ $row['data_type'] ];
-	$row['uor'] = $uorTypes[ $row['uor'] ];
-	array_push($rows, $row);
+    $group = array();
+	$group['group_name'] = $row['group_name'];
+    $mitos_db->setSQL("SELECT layout_options.*, list_options.title AS listDesc
+			             FROM layout_options
+			  LEFT OUTER JOIN list_options ON layout_options.list_id = list_options.option_id
+			            WHERE layout_options.form_id = '". (($_REQUEST['form_id']) ? $_REQUEST['form_id'] : 'Demographics') . "'
+			              AND layout_options.group_name = '".$row['group_name']."'
+			         ORDER BY layout_options.group_order, layout_options.seq");
+    $fields = array();
+    foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $field){
+        unset($field['group_name']);
+        // look for nested fields
+         $field['leaf'] = true;
+        //
+        array_push($fields, $field);
+    }
+    $group = array( 'group_name'=>$group['group_name'] , 'children'=>$fields);
+	array_push($rows, $group);
 }
-//---------------------------------------------------------------------------------------
-// here we are adding "totals" and the root "row" for sencha use 
-//---------------------------------------------------------------------------------------
-print(json_encode(array('totals'=>$total,'row'=>$rows)));
+
+//echo "<pre>";
+//print_r(array('text'=>'.','children'=>$rows));
+//echo "</pre>";
+print(json_encode($rows));
 ?>

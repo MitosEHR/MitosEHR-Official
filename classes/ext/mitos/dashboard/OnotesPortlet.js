@@ -12,7 +12,7 @@ Ext.define('Ext.mitos.dashboard.OnotesPortlet', {
 	    	pageSize	: 13,
 		    proxy		: {
 		    	type	: 'ajax',
-			    url		: 'app/miscellaneous/office_notes/data_read.ejs.php',
+			    url		: 'app/miscellaneous/officenotes/data_read.ejs.php',
 		   	 	reader: {
 		            type			: 'json',
 		            idProperty		: 'id',

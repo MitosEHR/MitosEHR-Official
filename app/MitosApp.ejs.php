@@ -71,17 +71,8 @@ Ext.onReady(function() {
 			'Ext.data.*',
 			'Ext.util.*',
 			'Ext.state.*',
-			'Ext.toolbar.Paging',
 			'Ext.TaskManager.*',
-			'Ext.ux.SlidingPager',
-		    'Ext.mitos.CRUDStore',
 		    'Ext.mitos.Window',
-    		'Ext.mitos.GridPanel',
-    		'Ext.mitos.FormPanel',
-    		'Ext.mitos.RenderPanel',
-    		'Ext.mitos.SaveCancelWindow',
-	    	'Ext.mitos.AuthorizationsComboBox',
-            'Ext.mitos.ManagedIframe'
 		],
 		initComponent: function(){
 	        /** @namespace Ext.QuickTips */
@@ -148,17 +139,19 @@ Ext.onReady(function() {
                             var layout  = app.MainPanel.getLayout();
                             layout.setActiveItem(card);
 
-                            //var card    = record.data.hrefTarget;
-                            //var layout  = app.MainPanel.getLayout();
+                            // ************** //
+                            // AMIMATION TEST //
+                            // ************** //
+
                             //var first   = layout.getActiveItem();
                             //var second  = Ext.getCmp(card);
-                            //first.getEl().slideOut('l', {
-                            //    duration: 200,
+                            //first.getEl().slideOut('r', {
+                            //    duration: 150,
                             //    callback: function() {
                             //        layout.setActiveItem(second);
-                            //        second.hide();
+                            //       second.hide();
                             //        second.getEl().slideIn('r',{
-                            //            duration: 500,
+                            //            duration: 150
                             //        });
                             //    }
                             //});
@@ -404,13 +397,32 @@ Ext.onReady(function() {
                     //Ext.create('Ext.mitos.panel.calendar.Calendar'),
                     Ext.create('Ext.mitos.panel.messages.Messages'),
 
+                    //Ext.create('Ext.mitos.panel.patient_file.new_test.NewPatient'),
                     Ext.create('Ext.mitos.panel.patient_file.summary.Summary'),
                     Ext.create('Ext.mitos.panel.patient_file.visits.Visits'),
 
                     Ext.create('Ext.mitos.panel.fees.billing.Billing'),
                     Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
                     Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
-                    Ext.create('Ext.mitos.panel.fees.payments.Payments')
+                    Ext.create('Ext.mitos.panel.fees.payments.Payments'),
+
+                    Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),
+                    Ext.create('Ext.mitos.panel.administration.globals.Globals'),
+                    Ext.create('Ext.mitos.panel.administration.layout.Layout'),
+                    //Ext.create('Ext.mitos.panel.administration.lists.Lists'),
+                    Ext.create('Ext.mitos.panel.administration.log.Log'),
+                    Ext.create('Ext.mitos.panel.administration.practice.Practice'),
+                    Ext.create('Ext.mitos.panel.administration.roles.Roles'),
+                    Ext.create('Ext.mitos.panel.administration.services.Services'),
+                    Ext.create('Ext.mitos.panel.administration.users.Users'),
+
+
+                    Ext.create('Ext.mitos.panel.miscellaneous.addressbook.Addressbook'),
+                    Ext.create('Ext.mitos.panel.miscellaneous.myaccount.MyAccount'),
+                    Ext.create('Ext.mitos.panel.miscellaneous.mysettings.MySettings'),
+                    Ext.create('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes'),
+                    Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
+                        
                 ]
 			}); // End MainApp
             // *************************************************************************************
