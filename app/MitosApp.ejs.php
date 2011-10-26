@@ -391,14 +391,14 @@ Ext.onReady(function() {
 						text:'<?php i18n("My account"); ?>',
                         iconCls		: 'icoArrow',
 						handler: function(){
-							app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/miscellaneous/my_account/my_account.ejs.php', scripts: true});
+							app.MainPanel.getLayout().setActiveItem('panelMyAccount');
 						}
 					},{
 						text:'<?php i18n("My settings"); ?>',
                         iconCls		: 'icoArrow',
 						handler: function(){
-							app.MainApp.body.load({loadMask: '<?php i18n("Loading", "e"); ?>',url: 'app/miscellaneous/my_settings/my_settings.ejs.php', scripts: true});
-						}
+                            app.MainPanel.getLayout().setActiveItem('panelMySettings');
+                        }
 					},{
 						text:'<?php i18n("Logout"); ?>',
                         iconCls		: 'icoArrow',
