@@ -58,7 +58,7 @@ if(isset($_SESSION['user']['auth'])){
 	//---------------------------------------------------------------
 	$count = 0;
 	$d = dir("sites/");
-	while (false !== ($entry = $d->read())) { if ( $entry != "." && $entry != ".."){ $count++; } }
+	while (false !== ($entry = $d->read())) { if ( $entry != "." && $entry != ".." && $entry != "README"){ $count++; } }
 	//---------------------------------------------------------------
 	// If no directory is found inside sites dir run the setup wizard,
 	// if a directory is found inside sites dir run the logon screen
