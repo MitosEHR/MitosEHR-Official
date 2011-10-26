@@ -103,9 +103,9 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                     id          : 'app-nav-picker',
                     cls         : 'ext-cal-nav-picker',
                     listeners: {
-                        'select'    : {
-                            fn: function(dp, dt) {
-                                this.calendar.setStartDate(dt);
+                        'select': {
+                            fn: function(dp, dt){
+                                Ext.getCmp('app-calendar').setStartDate(dt);
                             },
                             scope: this
                         }
@@ -115,7 +115,6 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                     store       : this.calendarStore,
                     collapsible : false,
                     border      : false,
-                    height      : 300,
                     width       : 178
                 }]
             },{
@@ -202,12 +201,9 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                         scope: this
                     },
                     'viewchange': {
-                        fn: function(p, vw, dateInfo) {
-                            if (this.editWin) {
-                                this.editWin.hide();
-                            }
-                            if (dateInfo) {
-                                //this.updateTitle(dateInfo.viewStart, dateInfo.viewEnd);
+                         fn: function(p, vw, dateInfo){
+                            if(dateInfo){
+                                this.updateTitle(dateInfo.viewStart, dateInfo.viewEnd);
                             }
                         },
                         scope: this
@@ -219,32 +215,40 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                         scope: this
                     },
                     'rangeselect': {
-                        fn: function(vw, dates, onComplete) {
+                        fn: function(vw, dates, onComplete){
                             this.clearMsg();
                         },
                         scope: this
                     },
                     'eventmove': {
-                        fn: function(vw, rec) {
+                        fn: function(vw, rec){
+                            var mappings = Extensible.calendar.data.EventMappings,
+                                time = rec.data[mappings.IsAllDay.name] ? '' : ' \\a\\t g:i a';
+
                             rec.commit();
-                            var time = rec.data[Extensible.calendar.data.EventMappings.IsAllDay.name] ? '' : ' \\a\\t g:i a';
-                            this.showMsg('Event ' + rec.data[Extensible.calendar.data.EventMappings.Title.name] + ' was moved to ' +
-                                Ext.Date.format(rec.data[Extensible.calendar.data.EventMappings.StartDate.name], ('F jS' + time)));
+
+                            this.showMsg('Event '+ rec.data[mappings.Title.name] +' was moved to '+
+                                Ext.Date.format(rec.data[mappings.StartDate.name], ('F jS'+time)));
                         },
                         scope: this
                     },
                     'eventresize': {
-                        fn: function(vw, rec) {
+                        fn: function(vw, rec){
                             rec.commit();
-                            this.showMsg('Event ' + rec.data[Extensible.calendar.data.EventMappings.Title.name] + ' was updated');
+                            this.showMsg('Event '+ rec.data[Extensible.calendar.data.EventMappings.Title.name] +' was updated');
+                        },
+                        scope: this
+                    },
+                    'eventdelete': {
+                        fn: function(win, rec){
+                            this.eventStore.remove(rec);
+                            this.showMsg('Event '+ rec.data[Extensible.calendar.data.EventMappings.Title.name] +' was deleted');
                         },
                         scope: this
                     },
                     'initdrag': {
-                        fn: function(vw) {
-                            if (this.editWin && this.editWin.isVisible()) {
-                                this.editWin.hide();
-                            }
+                        fn: function(vw){
+                            // do something when drag starts
                         },
                         scope: this
                     }
