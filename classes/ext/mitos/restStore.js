@@ -1,7 +1,7 @@
 //  *******************************************
 //  Required properties 
 //  *******************************************
-Ext.define('Ext.mitos.CRUDStore',{
+Ext.define('Ext.mitos.restStore',{
 	extend      : 'Ext.data.Store',
 //  idProperty	:  database table id
 //  read		:  url to data_read.eje.php
@@ -27,7 +27,7 @@ Ext.define('Ext.mitos.CRUDStore',{
                 idProperty  : config.idProperty
             });
         }
-		if(config.autoLoad == null){config.autoLoad = true}
+		if(config.autoLoad == null){config.autoLoad = false}
 		
 		var config = {
 			model		: config.model,
@@ -37,14 +37,9 @@ Ext.define('Ext.mitos.CRUDStore',{
 			remoteSort	: true,
 			groupField	: config.groupField,
 		    proxy		: {
-		    	type		: 'ajax',
+		    	type		: 'rest',
 		    	extraParams	: config.extraParams,
-				api		: {
-					read	: config.read,
-					create	: config.create,
-					update	: config.update,
-					destroy : config.destroy
-				},
+				url         : config.url,
 		        reader: {
 		            type			: 'json',
 		            idProperty		: config.idProperty,
@@ -55,7 +50,7 @@ Ext.define('Ext.mitos.CRUDStore',{
 					type	 		: 'json',
 					writeAllFields	: true,
 					allowSingle	 	: true,
-					encode	 		: true,
+					//encode	 		: true,
 					root	 		: 'row'
 				},
                 listeners: {
@@ -74,6 +69,6 @@ Ext.define('Ext.mitos.CRUDStore',{
             autoLoad: config.autoLoad
         };
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
-        Ext.mitos.CRUDStore.superclass.constructor.call(this, config);
+        Ext.mitos.restStore.superclass.constructor.call(this, config);
 	}
 });
