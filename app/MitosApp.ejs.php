@@ -73,6 +73,9 @@ Ext.Loader.setConfig({
 });
 
 Ext.onReady(function() {
+
+    Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
+
 	Ext.define('Ext.mitos.MitosApp',{
 		extend:'Ext.container.Container',
 		uses:[
@@ -136,6 +139,7 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			app.Navigation = Ext.create('Ext.tree.TreePanel',{
 				region		: 'center',
+                stateId     : 'Navigation',
 				bodyPadding : '5 0 0 0',
                 cls         : 'nav_tree',
 				hideHeaders	: true,
@@ -151,9 +155,13 @@ Ext.onReady(function() {
                 listeners:{
                     itemclick:function(dv, record, item, index, node, event, n){
                         if(record.data.hrefTarget){
+
                             var card    = record.data.hrefTarget;
                             var layout  = app.MainPanel.getLayout();
                             layout.setActiveItem(card);
+
+                            var currCard= Ext.getCmp(card);
+                            currCard.loadStores();
 
                             // ************** //
                             // AMIMATION TEST //
@@ -253,6 +261,7 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			app.navColumn = Ext.create('Ext.panel.Panel', {
 				title		: '<?php i18n("Navigation"); ?>',
+                stateId     : 'navColumn',
 				layout      : 'border',
 				width		: <?php echo $_SESSION["global_settings"]["gbl_nav_area_width"]; ?>,
 				region		: '<?php echo $_SESSION["global_settings"]["concurrent_layout"]; ?>',
@@ -431,10 +440,10 @@ Ext.onReady(function() {
                 items: [
                     Ext.create('Ext.mitos.panel.dashboard.Dashboard'),
                     Ext.create('Ext.mitos.panel.calendar.Calendar'),
-                    
 
                     Ext.create('Ext.mitos.panel.messages.Messages'),
 
+                        
                     Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                     Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                     Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),

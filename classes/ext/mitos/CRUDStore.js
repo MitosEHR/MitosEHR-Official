@@ -27,7 +27,7 @@ Ext.define('Ext.mitos.CRUDStore',{
                 idProperty  : config.idProperty
             });
         }
-		if(config.autoLoad == null){config.autoLoad = true}
+		if(config.autoLoad == null){config.autoLoad = false}
 		
 		var config = {
 			model		: config.model,
