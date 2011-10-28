@@ -259,6 +259,9 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
         this.callParent(arguments);
 
     },
+    loadStores:function(){
+      
+    },
 
     showMsg: function(msg){
         Ext.fly('app-msg').update(msg).removeCls('x-hidden');

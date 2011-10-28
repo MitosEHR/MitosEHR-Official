@@ -12,7 +12,6 @@ Ext.define('Ext.mitos.RenderPanel', {
     pageBody    : [],
     pageTitle   : '',
     initComponent: function(){
-        TopRender = this;
         var me = this;
     	Ext.apply(me,{
             items   : [{
