@@ -92,7 +92,7 @@ foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $myrow) {
 	$buff .= ' date: "'				. dataEncode( $myrow['date'] ) . '",';
 	$buff .= ' body: "'				. dataEncode( $myrow['body'] ) . '",';
 	$buff .= ' pid: "'				. dataEncode( $myrow['pid'] ) . '",';
-	$buff .= ' patient: "'			. $patient . '",';
+	$buff .= ' patient_name: "'	    . $patient . '",';
 	$buff .= ' user: "'				. $user . '",' ;
 	$buff .= ' facility_id: "'		. dataEncode( $myrow['facility_id'] ) . '",';
 	$buff .= ' subject: "'			. dataEncode( $myrow['subject'] ) . '",';

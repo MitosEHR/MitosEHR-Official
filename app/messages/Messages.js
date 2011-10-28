@@ -10,7 +10,8 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     pageTitle   : 'Messages',
     uses        : ['Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel', 'Ext.mitos.SaveCancelWindow','Ext.mitos.LivePatientSearch' ],
     initComponent: function(){
-        var me = this;
+        var me = this,
+        rowContent;
         // *************************************************************************************
         // Structure of the message record
         // creates a subclass of Ext.data.Record
@@ -23,7 +24,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 {name: 'body',				type: 'string'},
                 {name: 'curr_msg',			type: 'string'},
                 {name: 'pid',				type: 'string'},
-                {name: 'patient',			type: 'string'},
+                {name: 'patient_name',	    type: 'string'},
                 {name: 'user_id',			type: 'string'},
                 {name: 'user',				type: 'string'},
                 {name: 'subject',			type: 'string'},
@@ -124,7 +125,14 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     fieldLabel  : 'Patient',
                     hideLabel   : false,
                     emptyText   : 'No patient selected',
-                    name        : 'patient'
+                    name        : 'pid',
+                    itemId      : 'patientCombo'
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : 'Patient',
+                    name        : 'patient_name',
+                    itemId      : 'patientField',
+                    disabled    : true
                 },{
                     xtype       : 'combo',
                     name        : 'assigned_to',
@@ -223,13 +231,13 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             viewConfig 	: {forceFit: true, stripeRows : true},
             listeners: {
                 itemclick: function(DataView, record, item, rowIndex, e) {
-                    var form    = me.winMessage.down('form'),
+                    var form    = me.winMessage.down('form');
                     rowContent  = me.storeMsgs.getAt(rowIndex);
                     form.getForm().loadRecord(rowContent);
                     me.action('itemclick');
                 },
                 itemdblclick:  function(DataView, record, item, rowIndex, e) {
-                    var form    = me.winMessage.down('form'),
+                    var form    = me.winMessage.down('form');
                     rowContent  = me.storeMsgs.getAt(rowIndex);
                     form.getForm().loadRecord(rowContent);
                     form.getComponent('body').show();
@@ -242,7 +250,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 { header: 'user',       sortable: false, dataIndex: 'user',     hidden: true},
                 { header: 'Subject',    sortable: true,  dataIndex: 'subject',  flex  : 1 },
                 { header: 'From',       sortable: true,  dataIndex: 'user',     width : 200 },
-                { header: 'Patient',    sortable: true,  dataIndex: 'patient' },
+                { header: 'Patient',    sortable: true,  dataIndex: 'patient_name' },
                 { header: 'Type',       sortable: true,  dataIndex: 'note_type' },
                 { header: 'Date',       sortable: true,  dataIndex: 'date',     width : 150 },
                 { header: 'Status',     sortable: true,  dataIndex: 'message_status' }
@@ -315,20 +323,26 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         this.statusData.load();
     },
     action:function(action){
-        var win     = this.winMessage,
-        grid        = this.msgGrid.down('toolbar'),
-        form        = win.down('form'),
-        newbtn      = grid.getComponent('new'),
-        replybtn    = grid.getComponent('reply'),
-        deletebtn   = grid.getComponent('delete');
+        var win         = this.winMessage,
+        grid            = this.msgGrid.down('toolbar'),
+        form            = win.down('form'),
+        patientCombo    = form.getComponent('patientCombo'),
+        patientField    = form.getComponent('patientField'),
+        newbtn          = grid.getComponent('new'),
+        replybtn        = grid.getComponent('reply'),
+        deletebtn       = grid.getComponent('delete');
         switch(action){
             case 'new':
+                patientCombo.show();
+                patientField.hide();
                 newbtn.disable();
                 replybtn.disable();
                 deletebtn.disable();
                 win.show();
             break
             case 'reply':
+                patientCombo.hide();
+                patientField.show();
                 newbtn.disable();
                 replybtn.disable();
                 deletebtn.disable();
@@ -345,6 +359,8 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 deletebtn.enable();
             break;
             case 'itemdblclick':
+                patientCombo.hide();
+                patientField.show();
                 replybtn.enable();
                 deletebtn.enable();
                 win.show();
