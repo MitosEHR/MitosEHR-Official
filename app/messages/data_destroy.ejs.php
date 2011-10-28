@@ -35,9 +35,6 @@ session_cache_limiter('private');
 $_SESSION['site']['flops'] = 0;
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
-include_once($_SESSION['site']['root']."/classes/I18n.class.php");
-require_once($_SESSION['site']['root']."/classes/dataExchange.class.php");
-
 //------------------------------------------
 // Database class instance
 //------------------------------------------
@@ -46,13 +43,9 @@ $mitos_db = new dbHelper();
 // *************************************************************************************
 // Flag the message to delete
 // *************************************************************************************
-$data = json_decode ( $_POST['row'] );
-$sql = "UPDATE 
-			pnotes
-		SET
-			deleted = '1' " . "
-		WHERE
-			id='". $data[0]->id ."'";
+$data = json_decode ( $_POST['row'], true );
+$id = $data['id'];
+$sql = "UPDATE pnotes SET deleted = '1' WHERE id='$id'";
 
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
