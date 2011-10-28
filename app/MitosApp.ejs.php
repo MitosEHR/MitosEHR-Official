@@ -443,16 +443,13 @@ Ext.onReady(function() {
 
                     Ext.create('Ext.mitos.panel.messages.Messages'),
 
-                        
                     Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                     Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                     Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),
-
                     Ext.create('Ext.mitos.panel.fees.billing.Billing'),
                     Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
                     Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
                     Ext.create('Ext.mitos.panel.fees.payments.Payments'),
-
                     Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),
                     Ext.create('Ext.mitos.panel.administration.globals.Globals'),
                     Ext.create('Ext.mitos.panel.administration.layout.Layout'),
@@ -462,8 +459,6 @@ Ext.onReady(function() {
                     Ext.create('Ext.mitos.panel.administration.roles.Roles'),
                     Ext.create('Ext.mitos.panel.administration.services.Services'),
                     Ext.create('Ext.mitos.panel.administration.users.Users'),
-
-
                     Ext.create('Ext.mitos.panel.miscellaneous.addressbook.Addressbook'),
                     Ext.create('Ext.mitos.panel.miscellaneous.myaccount.MyAccount'),
                     Ext.create('Ext.mitos.panel.miscellaneous.mysettings.MySettings'),
