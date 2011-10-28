@@ -11,7 +11,6 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     uses        : ['Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel', 'Ext.mitos.SaveCancelWindow','Ext.mitos.LivePatientSearch' ],
     initComponent: function(){
         var me = this;
-        var rowContent;
         // *************************************************************************************
         // Structure of the message record
         // creates a subclass of Ext.data.Record
@@ -119,7 +118,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 xtype       : 'form',
                 frame		: false,
                 bodyStyle	: 'padding: 5px',
-                defaults	: {labelWidth: 75, anchor: '100%'},
+                defaults	: { labelWidth: 75, anchor: '100%' },
                 items: [{
                     xtype       : 'livepatientsearch',
                     fieldLabel  : 'Patient',
@@ -211,7 +210,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     me.action('close')
                 }
             }
-        });
+        }); // end me.winMessage
         // *************************************************************************************
         // Create the GridPanel
         // *************************************************************************************
@@ -223,16 +222,14 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             loadMask    : true,
             viewConfig 	: {forceFit: true, stripeRows : true},
             listeners: {
-                // Single click to select the record, and copy the variables
                 itemclick: function(DataView, record, item, rowIndex, e) {
-                    var form    = me.winMessage.down('form');
+                    var form    = me.winMessage.down('form'),
                     rowContent  = me.storeMsgs.getAt(rowIndex);
                     form.getForm().loadRecord(rowContent);
                     me.action('itemclick');
                 },
-                // Double click to select the record, and edit the record
                 itemdblclick:  function(DataView, record, item, rowIndex, e) {
-                    var form    = me.winMessage.down('form');
+                    var form    = me.winMessage.down('form'),
                     rowContent  = me.storeMsgs.getAt(rowIndex);
                     form.getForm().loadRecord(rowContent);
                     form.getComponent('body').show();
@@ -282,26 +279,32 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                         buttons: Ext.Msg.YESNO,
                         fn:function(btn){
                             if(btn=='yes'){
-                                this.delete(rowContent)
+                                var sm = me.msgGrid.getSelectionModel();
+                                me.delete(sm);
                             }
                         }
                     });
                 }
-            }] // END GRID TOP MENU
-        }); // END GRID
+            }] // end grid toolbar
+        }); // end me.msgGrid
         me.pageBody = [ me.msgGrid ];
         me.callParent(arguments);
     }, // end of initComponent
     save:function(form){
         var record = form.getRecord(),
-        values = form.getValues();
-        record.set(values);
+        values = form.getValues(),
+        store = this.storeMsgs;
+        if (values.id != ''){
+            record.set(values);
+        }else{
+            store.add(values);
+        }
         this.storeMsgs.sync();
         this.storeMsgs.load();
     },
-    delete:function(data){
-        this.storeMsgs.remove(data);
-        this.storeMsgs.save();
+    delete:function(sm){
+        this.storeMsgs.remove(sm.getSelection());
+        this.storeMsgs.sync();
         this.storeMsgs.load();
     },
     loadStores:function(){
@@ -313,14 +316,13 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     },
     action:function(action){
         var win     = this.winMessage,
-        form        = win.down('form'),
         grid        = this.msgGrid.down('toolbar'),
+        form        = win.down('form'),
         newbtn      = grid.getComponent('new'),
         replybtn    = grid.getComponent('reply'),
         deletebtn   = grid.getComponent('delete');
         switch(action){
             case 'new':
-                //me.assigned_to.enable();
                 newbtn.disable();
                 replybtn.disable();
                 deletebtn.disable();
@@ -349,4 +351,4 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             break
         }
     }
-}); //ens MessagesPanel class
+}); //end Ext.mitos.panel.messages.Messages
