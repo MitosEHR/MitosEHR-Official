@@ -124,10 +124,10 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     mode        : 'local',
                     valueField  : 'user',
                     displayField: 'full_name',
+                    allowBlank  : false,
                     store       : me.toData
                 },{
                     xtype       : 'combo',
-                    value       : 'Unassigned',
                     name        : 'note_type',
                     fieldLabel  : 'Type',
                     editable    : false,
@@ -137,7 +137,6 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     store       : me.typeData
                 },{
                     xtype       : 'combo',
-                    value       : 'New',
                     name        : 'message_status',
                     fieldLabel  : 'Status',
                     editable    : false,
@@ -153,11 +152,13 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     xtype       : 'textarea',
                     readOnly    : true,
                     name        : 'body',
-                    itemId      : 'body',
+                    itemId      : 'bodyMsg',
                     height      : 100
                 },{
                     xtype       : 'textarea',
                     name        : 'curr_msg',
+                    itemId      : 'currMsg',
+                    allowBlank  : false,
                     height      : 100
                 },{
                     xtype       : 'textfield',
@@ -169,7 +170,6 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     name        : 'pid'
                 },{
                     xtype       : 'textfield',
-                    id          : 'reply_id',
                     hidden      : true,
                     name        : 'reply_id'
                 }]
@@ -177,12 +177,22 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             bbar:[{
                 text		: 'Send',
                 iconCls		: 'save',
-                itemId      : 'send',
-                //disabled	: true,
+                itemId      : 'sendMsg',
                 handler: function() {
-                    var form = me.winMessage.down('form').getForm();
-                    me.save(form);
-                    me.action('close');
+                    var form    = me.winMessage.down('form').getForm();
+                    if(form.isValid()){
+                        me.onSave(form, me.storeMsgs);
+                        me.action('close');
+                    }
+                }
+            },'-',{
+                text		: 'Reply',
+                iconCls		: 'edit',
+                itemId      : 'replyMsg',
+                disabled	: true,
+                handler: function() {
+                    this.disable();
+                    me.action('reply');
                 }
             },'-',{
                 text        : 'Close',
@@ -209,19 +219,9 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             loadMask    : true,
             viewConfig 	: {forceFit: true, stripeRows : true},
             listeners: {
-                itemclick: function(DataView, record, item, rowIndex, e) {
-                    var form    = me.winMessage.down('form');
-                    rowContent  = me.storeMsgs.getAt(rowIndex);
-                    form.getForm().loadRecord(rowContent);
-                    me.action('itemclick');
-                },
-                itemdblclick:  function(DataView, record, item, rowIndex, e) {
-                    var form    = me.winMessage.down('form');
-                    rowContent  = me.storeMsgs.getAt(rowIndex);
-                    form.getForm().loadRecord(rowContent);
-                    form.getComponent('body').show();
-                    me.action('itemdblclick');
-                }
+                scope       : this,
+                itemclick   : this.onItemclick,
+                itemdblclick: this.onItemdblclick
             },
             columns: [
                 { header: 'noteid',     sortable: false, dataIndex: 'noteid',   hidden: true},
@@ -235,121 +235,128 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
 
             ],
             tbar: [{
-                id		: 'sendMsg',
                 text	: 'New message',
                 iconCls	: 'newMessage',
-                itemId  : 'new',
+                itemId  : 'newMsg',
                 handler: function(){
-                    var form = me.winMessage.down('form');
-                    form.getForm().reset();
-                    form.getComponent('body').hide();
+
                     me.action('new');
                }
             },'-',{
-                text	 : 'Reply message',
-                iconCls	 : 'edit',
-                disabled : true,
-                itemId   : 'reply',
-                handler  : function(){
-                    me.action('reply');
-                }
-            },'-',{
                 text        : 'Delete message',
                 iconCls		: 'delete',
-                itemId      : 'delete',
+                itemId      : 'deleteMsg',
                 disabled	: true,
-                handler: function(){
-
-                    Ext.Msg.show({
-                        title: 'Please confirm...',
-                        icon: Ext.MessageBox.QUESTION,
-                        msg:'Are you sure to delete this message?<br>From: ' + rowContent.get('user'),
-                        buttons: Ext.Msg.YESNO,
-                        fn:function(btn){
-                            if(btn=='yes'){
-                                var sm = me.msgGrid.getSelectionModel();
-                                me.delete(sm);
-                                me.action('delete');
-                            }
-                        }
-                    });
-
-                }
+                scope       : this,
+                handler     : this.onDelete
             }] // end grid toolbar
         }); // end me.msgGrid
         me.pageBody = [ me.msgGrid ];
         me.callParent(arguments);
     }, // end of initComponent
-    save:function(form){
-        var record = form.getRecord(),
-        values = form.getValues(),
-        store = this.storeMsgs;
-        if (values.id != ''){
-            record.set(values);
-        }else{
+    onSave:function(form, store){
+        var record      = form.getRecord(),
+            values      = form.getValues(),
+            storeIndex  = store.indexOf(record);
+
+        if (storeIndex == -1){
             store.add(values);
+
+        }else{
+            record.set(values);
         }
-        this.storeMsgs.sync();
-        this.storeMsgs.load();
+        store.sync();
+        store.load();
+        this.action('close');
     },
-    delete:function(sm){
-        this.storeMsgs.remove(sm.getSelection());
-        this.storeMsgs.sync();
-        this.storeMsgs.load();
+    onDelete:function(){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            icon    : Ext.MessageBox.QUESTION,
+            msg     :'Are you sure to delete this message?',
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn :function(btn){
+                if(btn=='yes'){
+                    var sm = this.msgGrid.getSelectionModel();
+                    this.storeMsgs.remove(sm.getSelection());
+                    this.storeMsgs.sync();
+                    this.storeMsgs.load();
+                    this.action('delete');
+                }
+            }
+        });
+    },
+    onItemclick: function(view, record) {
+        var form = this.winMessage.down('form');
+        form.getForm().loadRecord(record);
+        this.action('itemclick');
+    },
+    onItemdblclick: function(view, record) {
+        var form    = this.winMessage.down('form');
+        form.getForm().loadRecord(record);
+        form.getComponent('body').show();
+        this.action('itemdblclick');
     },
     loadStores:function(){
         this.storeMsgs.load();
     },
     action:function(action){
         var win         = this.winMessage,
-        grid            = this.msgGrid.down('toolbar'),
         sm              = this.msgGrid.getSelectionModel(),
+        gridTbar        = this.msgGrid.down('toolbar'),
+        winTbar         = win.down('toolbar'),
         form            = win.down('form'),
         patientCombo    = form.getComponent('patientCombo'),
         patientField    = form.getComponent('patientField'),
-        newbtn          = grid.getComponent('new'),
-        replybtn        = grid.getComponent('reply'),
-        deletebtn       = grid.getComponent('delete');
+        bodyMsg         = form.getComponent('bodyMsg'),
+        currMsg         = form.getComponent('currMsg'),
+        newbtn          = gridTbar.getComponent('newMsg'),
+        deletebtn       = gridTbar.getComponent('deleteMsg'),
+        replybtn        = winTbar.getComponent('replyMsg');
         switch(action){
             case 'new':
+                form.getForm().reset();
+                var model = Ext.ModelManager.getModel('Messages'),
+                newModel  = Ext.ModelManager.create({
+                    message_status  : 'New',
+                    note_type       : 'Unassigned'
+                }, model );
+                form.getForm().loadRecord(newModel);
+                
+                bodyMsg.hide();
+                currMsg.show();
+                replybtn.disable();
                 patientCombo.show();
                 patientField.hide();
-                newbtn.disable();
-                replybtn.disable();
-                deletebtn.disable();
                 win.show();
-                sm.deselectAll();
             break
             case 'reply':
+                currMsg.show();
                 patientCombo.hide();
                 patientField.show();
-                newbtn.disable();
-                replybtn.disable();
-                deletebtn.disable();
                 win.show();
                 sm.deselectAll();
             break;
             case 'delete':
                 newbtn.enable();
-                replybtn.disable();
                 deletebtn.disable();
                 sm.deselectAll();
             break;
             case 'close':
                 newbtn.enable();
-                replybtn.disable();
                 deletebtn.disable();
                 win.close();
                 sm.deselectAll();
             break;
             case 'itemclick':
-                replybtn.enable();
                 deletebtn.enable();
             break;
             case 'itemdblclick':
+                replybtn.enable();
+                currMsg.hide();
                 patientCombo.hide();
                 patientField.show();
-                replybtn.enable();
                 deletebtn.enable();
                 win.show();
                 sm.deselectAll();
