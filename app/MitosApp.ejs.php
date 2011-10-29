@@ -91,7 +91,8 @@ Ext.onReady(function() {
             'Extensible.calendar.data.MemoryCalendarStore',
             'Extensible.calendar.data.MemoryEventStore',
             'Extensible.example.calendar.data.Events',
-            'Extensible.example.calendar.data.Calendars'
+            'Extensible.example.calendar.data.Calendars',
+            'Ext.mitos.combo.*'
                 
 		],
 		initComponent: function(){
