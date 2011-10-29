@@ -8,14 +8,19 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelMessages',
     pageTitle   : 'Messages',
-    uses        : ['Ext.mitos.restStore', 'Ext.mitos.GridPanel', 'Ext.mitos.SaveCancelWindow','Ext.mitos.LivePatientSearch' ],
+    uses        : [
+        'Ext.mitos.restStore',
+        'Ext.mitos.GridPanel',
+        'Ext.mitos.SaveCancelWindow',
+        'Ext.mitos.LivePatientSearch',
+        'Ext.mitos.combo.MsgStatus',
+        'Ext.mitos.combo.MsgNoteType',
+        'Ext.mitos.combo.Users'
+    ],
     initComponent: function(){
-        var me = this,
-        rowContent;
+        var me = this;
         // *************************************************************************************
-        // Structure of the message record
-        // creates a subclass of Ext.data.Record
-        // This should be the structure of the database table
+        // Message Store
         // *************************************************************************************
         me.storeMsgs = Ext.create('Ext.mitos.restStore',{
             fields: [
@@ -41,52 +46,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             url		    : 'app/messages/data.php'
         });
         // *************************************************************************************
-        // Structure and load the data for cmb_toUsers
-        // AJAX -> component_data.ejs.php
-        // *************************************************************************************
-        me.toData = Ext.create('Ext.mitos.restStore',{
-            fields: [
-                {name: 'user',      type: 'string' },
-                {name: 'full_name', type: 'string' }
-            ],
-            model		: 'mUser',
-            idProperty	: 'id',
-            url		    : 'app/messages/component_data.ejs.php',
-            extraParams	: {"task": "users"},
-            autoLoad    : true
-        });
-        // *************************************************************************************
-        // Structure, data for cmb_Type
-        // AJAX -> component_data.ejs.php
-        // *************************************************************************************
-        me.typeData = Ext.create('Ext.mitos.restStore',{
-            fields: [
-                {name: 'option_id', type: 'string' },
-                {name: 'title',     type: 'string' }
-            ],
-            model		: 'mTypes',
-            idProperty	: 'option_id',
-            url		    : 'lib/layoutEngine/listOptions.json.php',
-            extraParams	: {"filter": "note_type"},
-            autoLoad    : true
-        });
-        // *************************************************************************************
-        // Structure, data for cmb_Status
-        // AJAX -> component_data.ejs.php
-        // *************************************************************************************
-        me.statusData = Ext.create('Ext.mitos.restStore',{
-            fields: [
-                {name: 'option_id', type: 'string' },
-                {name: 'title',     type: 'string' }
-            ],
-            model		: 'mStatus',
-            idProperty	: 'option_id',
-            url	    	: 'lib/layoutEngine/listOptions.json.php',
-            extraParams	: {"filter": "message_status"},
-            autoLoad    : true
-        });
-        // *************************************************************************************
-        // Message Window Dialog
+        // Message Window
         // *************************************************************************************
         me.winMessage = Ext.create('Ext.window.Window', {
             width		: 700,
@@ -116,34 +76,18 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     itemId      : 'patientField',
                     disabled    : true
                 },{
-                    xtype       : 'combo',
+                    xtype       : 'userscombo',
                     name        : 'assigned_to',
                     fieldLabel  : 'To',
-                    editable    : false,
-                    triggerAction: 'all',
-                    mode        : 'local',
-                    valueField  : 'user',
-                    displayField: 'full_name',
-                    allowBlank  : false,
-                    store       : me.toData
+                    allowBlank  : false
                 },{
-                    xtype       : 'combo',
+                    xtype       : 'msgnotetypecombo',
                     name        : 'note_type',
-                    fieldLabel  : 'Type',
-                    editable    : false,
-                    mode        : 'local',
-                    valueField  : 'option_id',
-                    displayField: 'option_id',
-                    store       : me.typeData
+                    fieldLabel  : 'Type'
                 },{
-                    xtype       : 'combo',
+                    xtype       : 'msgstatuscombo',
                     name        : 'message_status',
-                    fieldLabel  : 'Status',
-                    editable    : false,
-                    mode        : 'local',
-                    valueField  : 'option_id',
-                    displayField: 'title',
-                    store       : me.statusData
+                    fieldLabel  : 'Status'
                 },{
                     xtype       : 'textfield',
                     fieldLabel  : 'Subject',
@@ -207,9 +151,9 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     me.action('close')
                 }
             }
-        }); // end me.winMessage
+        });
         // *************************************************************************************
-        // Create the GridPanel
+        // Message GridPanel
         // *************************************************************************************
         me.msgGrid = Ext.create('Ext.grid.Panel', {
             store		: me.storeMsgs,
@@ -224,9 +168,9 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 itemdblclick: this.onItemdblclick
             },
             columns: [
-                { header: 'noteid',     sortable: false, dataIndex: 'noteid',   hidden: true},
-                { header: 'reply_id',   sortable: false, dataIndex: 'reply_id', hidden: true},
-                { header: 'user',       sortable: false, dataIndex: 'user',     hidden: true},
+                { header: 'noteid',     sortable: false, dataIndex: 'noteid',           hidden: true},
+                { header: 'reply_id',   sortable: false, dataIndex: 'reply_id',         hidden: true},
+                { header: 'user',       sortable: false, dataIndex: 'user',             hidden: true},
                 { header: 'Status',     sortable: true,  dataIndex: 'message_status',   width : 70 },
                 { header: 'From',       sortable: true,  dataIndex: 'user',             width : 200 },
                 { header: 'Patient',    sortable: true,  dataIndex: 'patient_name',     width : 200 },
@@ -249,11 +193,11 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 disabled	: true,
                 scope       : this,
                 handler     : this.onDelete
-            }] // end grid toolbar
-        }); // end me.msgGrid
+            }]
+        }); // End Message GridPanel
         me.pageBody = [ me.msgGrid ];
         me.callParent(arguments);
-    }, // end of initComponent
+    }, // End initComponent
     onSave:function(form, store){
         var record      = form.getRecord(),
             values      = form.getValues(),
@@ -293,9 +237,8 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         this.action('itemclick');
     },
     onItemdblclick: function(view, record) {
-        var form    = this.winMessage.down('form');
+        var form = this.winMessage.down('form');
         form.getForm().loadRecord(record);
-        form.getComponent('body').show();
         this.action('itemdblclick');
     },
     loadStores:function(){
@@ -354,6 +297,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             break;
             case 'itemdblclick':
                 replybtn.enable();
+                bodyMsg.show();
                 currMsg.hide();
                 patientCombo.hide();
                 patientField.show();
