@@ -1,7 +1,7 @@
 
 Ext.define('Ext.mitos.FormPanel',{
 	extend      : 'Ext.form.Panel',
-    alias       : 'mitos.formpanel',
+    alias       : 'widget.mitosformpanel',
     bodyStyle   : 'padding: 5px;',
 	autoWidth   : true,
 	border      : false,

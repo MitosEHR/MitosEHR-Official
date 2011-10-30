@@ -1,6 +1,6 @@
-Ext.define('Ext.mitos.InsurancePayerType',{
+Ext.define('Ext.mitos.combo.InsurancePayerType',{
 	extend      : 'Ext.form.ComboBox',
-    alias       : 'mitos.insurancepayertype',
+    alias       : 'widget.insurancepayertypecombo',
     initComponent: function(){	
     	var me = this;
     	
@@ -39,8 +39,6 @@ Ext.define('Ext.mitos.InsurancePayerType',{
                 {"id":"ZZ", "name":"Mutually Defined"}
 		    ]
 		});
-
-	
 
     	Ext.apply(this, {
     		name: 'freeb_type',
