@@ -40,8 +40,8 @@ switch($_SERVER['REQUEST_METHOD']){
         $total = $mitos_db->rowCount();
         $rows = array();
         foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
-            $row['patient_name']    =  fullname($row['patient_fname'],$row['patient_mname'],$row['patient_lname']);
-            $row['user']            =  fullname($row['username_fname'],$row['username_mname'],$row['username_lname']);
+            $row['patient_name']    = fullname($row['patient_fname'],$row['patient_mname'],$row['patient_lname']);
+            $row['user']            = fullname($row['username_fname'],$row['username_mname'],$row['username_lname']);
             array_push($rows, $row);
         }
         //------------------------------------------------------------------------------
