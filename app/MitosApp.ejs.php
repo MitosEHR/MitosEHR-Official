@@ -93,7 +93,9 @@ Ext.onReady(function() {
             'Extensible.example.calendar.data.Events',
             'Extensible.example.calendar.data.Calendars',
             'Ext.mitos.combo.*',
-            'Ext.mitos.combo.Languages'
+            'Ext.mitos.combo.Languages',
+            'Ext.mitos.combo.TransmitMedthod',
+            'Ext.mitos.combo.InsurancePayerType'
                 
 		],
 		initComponent: function(){
@@ -375,7 +377,7 @@ Ext.onReady(function() {
 							items: [{
 								text:'<?php i18n("New Encounter"); ?>',
                                 handler:function(){
-                                    
+
                                 }
 							},{
 								text:'<?php i18n("Past Encounter List"); ?>',
@@ -415,7 +417,7 @@ Ext.onReady(function() {
                         iconCls		: 'icoArrow',
 						handler: function(){
 							Ext.Msg.show({
-								title: '<?php i18n("Please confirm..."); ?>', 
+								title: '<?php i18n("Please confirm..."); ?>',
 								icon: Ext.MessageBox.QUESTION,
 								msg:'<?php i18n("Are you sure to quit MitosEHR?"); ?>',
 								buttons: Ext.Msg.YESNO,
@@ -455,8 +457,8 @@ Ext.onReady(function() {
                     Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
                     Ext.create('Ext.mitos.panel.administration.layout.Layout'),
                     //Ext.create('Ext.mitos.panel.administration.lists.Lists'),
-                    Ext.create('Ext.mitos.panel.administration.log.Log'),
-                    Ext.create('Ext.mitos.panel.administration.practice.Practice'),
+                    Ext.create('Ext.mitos.panel.administration.log.Log'),                   // done
+                    Ext.create('Ext.mitos.panel.administration.practice.Practice'),         // Working
                     Ext.create('Ext.mitos.panel.administration.roles.Roles'),
                     Ext.create('Ext.mitos.panel.administration.services.Services'),
                     Ext.create('Ext.mitos.panel.administration.users.Users'),
@@ -465,7 +467,7 @@ Ext.onReady(function() {
                     Ext.create('Ext.mitos.panel.miscellaneous.mysettings.MySettings'),
                     Ext.create('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes'),
                     Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
-                        
+
                 ]
 			}); // End MainApp
             // *************************************************************************************
