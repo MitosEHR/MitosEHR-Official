@@ -440,10 +440,9 @@ Ext.onReady(function() {
                 deferredRender  : true,
                 defaults        : { layout: 'fit', xtype:'container' },
                 items: [
-                    Ext.create('Ext.mitos.panel.dashboard.Dashboard'),
-                    Ext.create('Ext.mitos.panel.calendar.Calendar'),
-
-                    Ext.create('Ext.mitos.panel.messages.Messages'),
+                    Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done panels TODO
+                    Ext.create('Ext.mitos.panel.calendar.Calendar'),                        // done
+                    Ext.create('Ext.mitos.panel.messages.Messages'),                        // done
 
                     Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                     Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
@@ -453,7 +452,7 @@ Ext.onReady(function() {
                     Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
                     Ext.create('Ext.mitos.panel.fees.payments.Payments'),
                     Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),
-                    Ext.create('Ext.mitos.panel.administration.globals.Globals'),
+                    Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
                     Ext.create('Ext.mitos.panel.administration.layout.Layout'),
                     //Ext.create('Ext.mitos.panel.administration.lists.Lists'),
                     Ext.create('Ext.mitos.panel.administration.log.Log'),
