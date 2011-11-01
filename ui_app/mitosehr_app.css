@@ -190,3 +190,14 @@ body#login{
 #msg-div .msg p {
     margin: 0;
 }
+.winDelete{
+    background:none;
+    background-color:#ff3333!important
+}
+.winSave{
+    background:none;
+    background-color:#33cc00!important
+}
+.winDelete span{
+    color:#fff!important;
+}
