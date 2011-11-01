@@ -257,10 +257,9 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             ],
             listeners: {
                 itemdblclick: function(view, record){
-                    var title = 'Add or Edit Pharmacy';
                     currStore = me.pharmacyStore;
                     currModel = 'pharmacyModel';
-                    me.onItemdblclick( me.pharmacyItems, me.pharmacyStore, record, title );
+                    me.onItemdblclick( me.pharmacyItems, me.pharmacyStore, record, 'Edit Pharmacy' );
                 }
             }
         });
@@ -278,10 +277,9 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             ],
             listeners: {
                 itemdblclick: function(view, record){
-                    var title = 'Add or Edit Insurance';
                     currStore = me.insuranceStore;
                     currModel = 'insuranceModel';
-                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, title );
+                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, 'Edit Insurance' );
                 }
             }
         }); // END Insurance Grid
@@ -299,10 +297,9 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             viewConfig: { stripeRows: true },
             listeners: {
                 itemdblclick: function(view, record){
-                    var title = 'Add or Edit Insurance';
                     currStore = me.insuranceStore;
                     currModel = 'insuranceNumbersModel';
-                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, title );
+                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, 'Add or Edit Insurance' );
                 }
             }
         }); // END Insurance Numbers Grid
@@ -475,6 +472,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             },'-',{
                 text: 'Delete',
                 cls : 'winDelete',
+                itemId: 'delete',
                 scope: me,
                 handler: function(){
                     var form = me.win.down('form').getForm();
@@ -494,10 +492,11 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     }, // end of initComponent
 
     onNew:function(form, formItmes, model, title){
-        this.setWin(form, formItmes, title);
+        this.setForm(form, formItmes, title);
         form.getForm().reset();
         var newModel  = Ext.ModelManager.create({}, model );
         form.getForm().loadRecord(newModel);
+        this.action('new');
         this.win.show();
     },
 
@@ -536,11 +535,12 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
 
     onItemdblclick:function(formItmes, store, record, title){
         var form = this.win.down('form');
-        this.setWin(form, formItmes, title);
+        this.setForm(form, formItmes, title);
         form.getForm().loadRecord(record);
+        this.action('old')
         this.win.show();
     },
-    setWin:function(form, formItmes, title){
+    setForm:function(form, formItmes, title){
         form.removeAll();
         form.add(formItmes);
         form.doLayout();
@@ -550,8 +550,18 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         this.win.show();
     },
     action:function(action){
-        var form = this.win.down('form');
+        var win     = this.win,
+        form        = win.down('form'),
+        winTbar     = win.down('toolbar'),
+        deletebtn   = winTbar.getComponent('delete');
+
         switch(action){
+            case 'new':
+                deletebtn.disable();
+                break;
+            case 'old':
+                deletebtn.enable();
+                break;
             case 'close':
                 form.getForm().reset();
                 break;
