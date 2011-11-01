@@ -456,12 +456,12 @@ Ext.onReady(function() {
                     Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
                     Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
                     Ext.create('Ext.mitos.panel.fees.payments.Payments'),
-                    Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),
+                    Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // working
                     Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
                     Ext.create('Ext.mitos.panel.administration.layout.Layout'),
                     //Ext.create('Ext.mitos.panel.administration.lists.Lists'),
                     Ext.create('Ext.mitos.panel.administration.log.Log'),                   // done
-                    Ext.create('Ext.mitos.panel.administration.practice.Practice'),         // Working
+                    Ext.create('Ext.mitos.panel.administration.practice.Practice'),         // done
                     Ext.create('Ext.mitos.panel.administration.roles.Roles'),
                     Ext.create('Ext.mitos.panel.administration.services.Services'),
                     Ext.create('Ext.mitos.panel.administration.users.Users'),

@@ -329,7 +329,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             activeTab	: 0,
             frame		: true,
             border		: false,
-            defaults	:{ autoScroll:true },
+            defaults	:{ autoScroll:true, layout:'fit' },
             items:[{
                 title	:'Pharmacies',
                 frame	: false,
