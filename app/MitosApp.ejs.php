@@ -99,6 +99,7 @@ Ext.onReady(function() {
             'Ext.mitos.combo.InsurancePayerType',
                 
             'Ext.mitos.form.FormPanel',
+            'Ext.mitos.form.fields.Checkbox',
             'Ext.mitos.window.Window'
 
 		],

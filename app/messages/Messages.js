@@ -88,9 +88,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             width		: 700,
             title		: 'Compose Message',
             items		: [{
-                xtype       : 'form',
-                frame		: false,
-                bodyStyle	: 'padding: 5px',
+                xtype       : 'mitos.form',
                 defaults	: { labelWidth: 75, anchor: '100%' },
                 items: [{
                     xtype       : 'livepatientsearch',
