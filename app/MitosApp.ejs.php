@@ -92,11 +92,15 @@ Ext.onReady(function() {
             'Extensible.calendar.data.MemoryEventStore',
             'Extensible.example.calendar.data.Events',
             'Extensible.example.calendar.data.Calendars',
+
             'Ext.mitos.combo.*',
             'Ext.mitos.combo.Languages',
             'Ext.mitos.combo.TransmitMedthod',
-            'Ext.mitos.combo.InsurancePayerType'
+            'Ext.mitos.combo.InsurancePayerType',
                 
+            'Ext.mitos.form.FormPanel',
+            'Ext.mitos.window.Window'
+
 		],
 		initComponent: function(){
 	        /** @namespace Ext.QuickTips */
@@ -104,7 +108,6 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Global Variables
 			// *************************************************************************************
-			var trp;
 			app = this;
 
 			// *************************************************************************************

@@ -136,7 +136,6 @@ switch($_SERVER['REQUEST_METHOD']){
         $prec = $mitos_db->fetch();
         $mitos_db->setSQL("SELECT id FROM insurance_companies ORDER BY id DESC");
         $irec = $mitos_db->fetch();
-
         $new_id = max($prec['id'], $irec['id']) +1;
         // *************************************************************************************
         // Validate and pass the POST variables to an array
@@ -172,9 +171,9 @@ switch($_SERVER['REQUEST_METHOD']){
 
                 break;
         }
-        exit;
         $mitos_db->setSQL($sql);
         $ret = $mitos_db->execLog();
+
         // *************************************************************************************
         // Lets get the last Inserted ID  and use it to insert the address and phone/fax numbers
         // *************************************************************************************
@@ -205,19 +204,24 @@ switch($_SERVER['REQUEST_METHOD']){
         // *************************************************************************************
         $sql = $mitos_db->sqlBind($arow, "addresses", "I");
         $mitos_db->setSQL($sql);
-        $ret = $mitos_db->execOnly();
+        $mitos_db->execOnly();
         // *************************************************************************************
         // Lets Insert the phone number for the new pharmacy or insurance
         // *************************************************************************************
         $sql = $mitos_db->sqlBind($prow, "phone_numbers", "I");
         $mitos_db->setSQL($sql);
-        $ret = $mitos_db->execOnly();
+        $mitos_db->execOnly();
         // *************************************************************************************
         // Lets Insert the Fax number for the new pharmacy or insurance
         // *************************************************************************************
         $sql = $mitos_db->sqlBind($frow, "phone_numbers", "I");
         $mitos_db->setSQL($sql);
-        $ret = $mitos_db->execOnly();
+        $mitos_db->execOnly();
+        if ( $ret[2] ){
+            echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+        } else {
+            echo "{ success: true }";
+        }
     exit;
     case 'PUT':
         switch ($_GET['task']) {
@@ -297,21 +301,21 @@ switch($_SERVER['REQUEST_METHOD']){
         $mitos_db->setSQL($sql);
         $ret = $mitos_db->execLog();
 
-        if ( $ret != "" ){
+        if ( $ret[2] ){
             echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
         } else {
             echo "{ success: true }";
         }
         exit;
-    exit;
+        exit;
     case 'DELETE':
         $delete_id = $data['id'];
         switch ($_GET['task']) {
             case "pharmacy":
-                $sql = "DELETE FROM pharmacies WHERE id='" . $delete_id . "'";
+                $sql = "DELETE FROM pharmacies WHERE id='$delete_id' ";
                 break;
             case "insurance":
-                $sql = "DELETE FROM insurance_companies WHERE id='" . $delete_id . "'";
+                $sql = "DELETE FROM insurance_companies WHERE id='$delete_id'";
                 break;
             case "insuranceNumbers":
 
@@ -320,11 +324,9 @@ switch($_SERVER['REQUEST_METHOD']){
 
                 break;
         }
-        exit;
-            
         $mitos_db->setSQL($sql);
         $ret = $mitos_db->execLog();
-        if ( $ret == "" ){
+        if ( $ret[2] ){
             echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
         } else {
             echo "{ success: true }";
