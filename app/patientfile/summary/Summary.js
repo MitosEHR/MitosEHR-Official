@@ -70,5 +70,8 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
             }]
         }];
         this.callParent(arguments);
-    } // end initComponent
+    }, // end initComponent
+    loadStores:function(){
+
+    }
 }); // end Ext.mitos.Page class

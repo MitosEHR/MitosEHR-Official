@@ -22,5 +22,8 @@ Ext.define('Ext.mitos.panel.fees.fees_sheet.FeesSheet',{
 
         page.pageBody = [ ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    loadStores:function(){
+
+    }
 }); //ens oNotesPage class
