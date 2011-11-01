@@ -18,10 +18,14 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         'Ext.mitos.GridPanel',
         'Ext.mitos.TitlesComboBox',
         'Ext.mitos.combo.TransmitMedthod',
-        'Ext.mitos.combo.InsurancePayerType'
+        'Ext.mitos.combo.InsurancePayerType',
+        'Ext.mitos.form.FormPanel',
+        'Ext.mitos.window.Window'
     ],
     initComponent: function(){
         var me = this;
+        var currStore;
+        var currModel;
         // *************************************************************************************
         // Pharmacy Record Structure
         // *************************************************************************************
@@ -252,13 +256,10 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 { text: 'Default Method', flex: 1, sortable: true, dataIndex: 'transmit_method', renderer: transmit_method }
             ],
             listeners: {
-                itemclick: function(view, record){
-                    var title = 'Add or Edit Pharmacy';
-                    me.onItemclick( me.pharmacyItems, me.pharmacyStore, record, title );
-                },
                 itemdblclick: function(view, record){
-                    var title = 'Add or Edit Pharmacy';
-                    me.onItemdblclick( me.pharmacyItems, me.pharmacyStore, record, title );
+                    currStore = me.pharmacyStore;
+                    currModel = 'pharmacyModel';
+                    me.onItemdblclick( me.pharmacyItems, me.pharmacyStore, record, 'Edit Pharmacy' );
                 }
             }
         });
@@ -275,13 +276,10 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 { text: 'Default X12 Partner', flex: 1, width: 100, sortable: true, dataIndex: 'x12_default_partner_id' }
             ],
             listeners: {
-                itemclick: function(view, record){
-                    var title = 'Add or Edit Insurance';
-                    me.onItemclick( me.insuranceItems, me.insuranceStore, record, title );
-                },
                 itemdblclick: function(view, record){
-                    var title = 'Add or Edit Insurance';
-                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, title );
+                    currStore = me.insuranceStore;
+                    currModel = 'insuranceModel';
+                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, 'Edit Insurance' );
                 }
             }
         }); // END Insurance Grid
@@ -298,13 +296,10 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             ],
             viewConfig: { stripeRows: true },
             listeners: {
-                itemclick: function(view, record){
-                    var title = 'Add or Edit Insurance';
-                    me.onItemclick( me.insuranceItems, me.insuranceStore, record, title );
-                },
                 itemdblclick: function(view, record){
-                    var title = 'Add or Edit Insurance';
-                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, title );
+                    currStore = me.insuranceStore;
+                    currModel = 'insuranceNumbersModel';
+                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, 'Add or Edit Insurance' );
                 }
             }
         }); // END Insurance Numbers Grid
@@ -320,10 +315,6 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             ],
             viewConfig: { stripeRows: true },
             listeners: {
-                itemclick: function(view, record){
-                    var title = 'Add or Edit Insurance';
-                    me.onItemclick( me.insuranceItems, me.insuranceStore, record, title );
-                },
                 itemdblclick: function(view, record){
                     var title = 'Add or Edit Insurance';
                     me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, title );
@@ -338,7 +329,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             activeTab	: 0,
             frame		: true,
             border		: false,
-            defaults	:{ autoScroll:true },
+            defaults	:{ autoScroll:true, layout:'fit' },
             items:[{
                 title	:'Pharmacies',
                 frame	: false,
@@ -348,30 +339,15 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                     xtype: 'toolbar',
                     dock: 'top',
                     items: [{
-                        xtype: 'button',
-                        text      : 'Add a Pharmacy',
-                        iconCls   : 'save',
-                        handler   : function(){
-                            me.openWin();
-                        }
-                    },'-',{
-                        xtype: 'button',
-                        text        : 'View / Edit a Pharmacy',
-                        iconCls     : 'edit',
-                        itemId      : 'editPharmacy',
-                        disabled    : true,
-                        handler     : function(){
-                            me.openWin();
-                        }
-                    },'-',{
                         xtype       : 'button',
-                        text        : 'Delete a Pharmacy',
-                        iconCls     : 'delete',
-                        itemId      : 'deletePharmacy',
-                        disabled    : true,
-                        scope       : this,
-                        handler     : this.onDelete
-
+                        text        : 'Add a Pharmacy',
+                        iconCls     : 'save',
+                        handler: function(){
+                            var form    = me.win.down('form');
+                            currStore = me.pharmacyStore;
+                            currModel = 'pharmacyModel';
+                            me.onNew(form, me.pharmacyItems, currModel, 'Add New Pharmacy');
+                        }
                     }]
                 }]
             },{
@@ -386,26 +362,12 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                         xtype       : 'button',
                         text        : 'Add a Comapny',
                         iconCls     : 'save',
-                        handler     : function(){
-                            me.openWin();
+                        handler: function(){
+                            var form    = me.win.down('form');
+                            currStore = me.insuranceStore;
+                            currModel = 'insuranceModel';
+                            me.onNew(form, me.insuranceItems, currModel, 'Add New Insurance Company');
                         }
-                    },'-',{
-                        xtype: 'button',
-                        text        : 'View / Edit a Company',
-                        iconCls     : 'edit',
-                        itemId      : 'editInsurance',
-                        disabled    : true,
-                        handler     : function(){
-                            me.openWin();
-                        }
-                    },'-',{
-                        xtype       : 'button',
-                        text        : 'Delete a Company',
-                        iconCls     : 'delete',
-                        itemId      : 'deleteInsurance',
-                        disabled    : true,
-                        scope       : this,
-                        handler     : this.onDelete
                     }]
                 }]
             },{
@@ -425,9 +387,9 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                         xtype: 'button',
                         text      : 'Add New Partner',
                         iconCls   : 'save',
-                        handler   : function(){
-
-                            me.openWin();
+                        handler: function(){
+                            var form = me.win.down('form');
+                            me.onNew(form, currModel);
                         }
                     }]
                 }]
@@ -486,16 +448,11 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             }]
         });
         
-        me.win = Ext.create('Ext.window.Window', {
+        me.win = Ext.create('Ext.mitos.window.Window', {
             width       : 450,
-            autoHeight  : true,
-		    modal       : true,
-		    border	  	: true,
-		    autoScroll	: true,
-		    resizable   : false,
-		    closeAction : 'hide',
+
             items:[{
-                xtype:'mitosformpanel',
+                xtype:'mitosform',
                 defaults: { labelWidth: 89, anchor: '100%', layout: {
                         type: 'hbox',
                         defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
@@ -504,45 +461,61 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             }],
             buttons: [{
                 text: 'save',
+                cls : 'winSave',
                 handler: function(){
                     var form = me.win.down('form').getForm();
                     if (form.isValid()) {
-                        
+                        me.onSave(form, currStore)
                         me.action('close');
                     }
                 }
-            },{
-                text: 'cancel',
+            },'-',{
+                text: 'Delete',
+                cls : 'winDelete',
+                itemId: 'delete',
+                scope: me,
                 handler: function(){
+                    var form = me.win.down('form').getForm();
+                    me.onDelete(form, currStore);
+                }
+            }],
+            listeners:{
+                scope:me,
+                close:function(){
                     me.action('close');
                 }
-            }]
+            }
         }); // END WINDOW
 
         me.pageBody = [ me.praticePanel ];
         me.callParent(arguments);
     }, // end of initComponent
-    onItemclick: function(formItmes, store, record, title){
-        var form = this.win.down('form');
-        this.setWin(form, formItmes, title);
-        form.getForm().loadRecord(record);
-    },
-    onItemdblclick:function(formItmes, store, record, title){
-        var form = this.win.down('form');
-        this.setWin(form, formItmes, title);
-        form.getForm().loadRecord(record);
+
+    onNew:function(form, formItmes, model, title){
+        this.setForm(form, formItmes, title);
+        form.getForm().reset();
+        var newModel  = Ext.ModelManager.create({}, model );
+        form.getForm().loadRecord(newModel);
+        this.action('new');
         this.win.show();
     },
-    setWin:function(form, formItmes, title){
-        form.removeAll();
-        form.add(formItmes);
-        form.doLayout();
-        form.up('window').setTitle(title);
+
+    onSave:function(form, store){
+
+        var record      = form.getRecord(),
+            values      = form.getValues(),
+            storeIndex  = store.indexOf(record);
+        if (storeIndex == -1){
+            store.add(values);
+        }else{
+            record.set(values);
+        }
+        store.sync();
+        store.load();
+        this.win.close();
     },
-    openWin:function(){
-        this.win.show();
-    },
-    onDelete:function(){
+
+    onDelete:function(form, store){
         Ext.Msg.show({
             title   : 'Please confirm...',
             icon    : Ext.MessageBox.QUESTION,
@@ -551,15 +524,46 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             scope   : this,
             fn:function(btn){
                 if(btn=='yes'){
-
+                    var currentRec = form.getRecord();
+                    store.remove(currentRec);
+                    store.destroy();
+                    this.win.close();
                 }
             }
         });
     },
+
+    onItemdblclick:function(formItmes, store, record, title){
+        var form = this.win.down('form');
+        this.setForm(form, formItmes, title);
+        form.getForm().loadRecord(record);
+        this.action('old')
+        this.win.show();
+    },
+    setForm:function(form, formItmes, title){
+        form.removeAll();
+        form.add(formItmes);
+        form.doLayout();
+        form.up('window').setTitle(title);
+    },
+    openWin:function(){
+        this.win.show();
+    },
     action:function(action){
+        var win     = this.win,
+        form        = win.down('form'),
+        winTbar     = win.down('toolbar'),
+        deletebtn   = winTbar.getComponent('delete');
+
         switch(action){
+            case 'new':
+                deletebtn.disable();
+                break;
+            case 'old':
+                deletebtn.enable();
+                break;
             case 'close':
-                this.win.hide();
+                form.getForm().reset();
                 break;
         }
     },

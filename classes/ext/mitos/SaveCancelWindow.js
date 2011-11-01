@@ -3,15 +3,14 @@
 //******************************************************************************
 Ext.define('Ext.mitos.SaveCancelWindow', {
     extend      : 'Ext.window.Window',
-    alias       : 'widget.savecancelwindow',
-	width       : 520,
-    title       : 'New Save/Cancel Window',
-    renderTo    : document.body,
-	form 	    : '', //this is the form the save btn will be getting the data from
-	store	    : '', //this is the store we are using to store the data
-	scope		: '', //the scope of data store
-	idField     : '', //form id field, use to ck if the form is new an update
-    rowPos      : '', //rowPos value, use to update store
+    alias       : 'widget.mitoswindow',
+    width       : 500,
+    autoHeight  : true,
+    modal       : true,
+    border	  	: true,
+    autoScroll	: true,
+    resizable   : false,
+    closeAction : 'hide',
     initComponent: function() {
     	var win = this;
         var record;
