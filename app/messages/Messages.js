@@ -218,7 +218,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         store.load();
         this.winMessage.close();
     },
-    onDelete:function(){
+    onDelete:function(form, store){
         Ext.Msg.show({
             title   : 'Please confirm...',
             icon    : Ext.MessageBox.QUESTION,
@@ -227,10 +227,9 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             scope   : this,
             fn :function(btn){
                 if(btn=='yes'){
-                    var sm = this.msgGrid.getSelectionModel();
-                    this.storeMsgs.remove(sm.getSelection());
-                    this.storeMsgs.sync();
-                    this.storeMsgs.load();
+                    var currentRec = form.getRecord();
+                    store.remove(currentRec);
+                    store.destroy();
                     this.winMessage.close();
                 }
             }
