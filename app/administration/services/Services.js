@@ -13,18 +13,15 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     pageTitle   : 'Services',
     pageLayout  : 'border',
     uses:[
-        'Ext.mitos.CRUDStore',
+        'Ext.mitos.restStore',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.TitlesComboBox',
-        'Ext.mitos.CodesComboBox'
+        'Ext.mitos.combo.CodesTypes',
+        'Ext.mitos.combo.Titles'
     ],
     initComponent: function(){
-        var page = this;
-        var rowPos;
-        var currRec;
-        /** @namespace Ext.QuickTips */
-        Ext.QuickTips.init();
-        page.storeServices = new Ext.create('Ext.mitos.CRUDStore',{
+        var me = this;
+
+        me.storeServices = Ext.create('Ext.mitos.restStore',{
             fields: [
                 {name: 'id',      		    type: 'int'},
                 {name: 'code_text',         type: 'string'},
@@ -44,10 +41,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
             model		: 'ModelService',
             idProperty	: 'id',
             noCache     : false,
-            read      	: 'app/administration/services/data_read.ejs.php',
-            create    	: 'app/administration/services/data_create.ejs.php',
-            update    	: 'app/administration/services/data_update.ejs.php',
-            destroy		: 'app/administration/services/data_destroy.ejs.php'
+            url      	: 'app/administration/services/data.php'
         });
         function code_type(val) {
             if(val == '1') {
@@ -67,114 +61,10 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
             }
             return val;
         }
-        page.servicesFormPanel = new Ext.create('Ext.form.FormPanel', {
-            region		: 'north',
-            frame 		: true,
-            height      : 150,
-            margin		: '0 0 3 0',
-            layout      : 'anchor',
-            bodyBorder  : true,
-            bodyPadding : '10 10 0 10',
-            defaults: {
-                labelWidth: 90,
-                anchor: '100%',
-                layout: {
-                    type: 'hbox',
-                    defaultMargins: {top: 0, right: 25, bottom: 0, left: 0}
-                }
-            },
-            items		:[{
-                xtype: 'textfield', hidden: true, name: 'id'
-            },{
-                xtype: 'fieldcontainer',
-                defaults: { hideLabel: true },
-                msgTarget : 'under',
-                items: [
-                    { width: 70, xtype: 'displayfield', value: 'Type: '},
-                      new Ext.create('Ext.mitos.CodesComboBox',{width: 100 }),
-                    { width: 15, xtype: 'displayfield', value: 'Code: '},
-                    { width: 130, xtype: 'textfield', name: 'code' },
-                    { width: 30, xtype: 'displayfield', value: 'Modifier: '},
-                    { width: 100, xtype: 'textfield', name: 'mod' },
-                    { width: 30, xtype: 'displayfield', value: 'Active?: '},
-                    { width: 280, xtype: 'checkbox', name: 'active' }
-                ]
-            },{
-                xtype: 'fieldcontainer',
-                defaults: { hideLabel: true },
-                msgTarget : 'under',
-                items: [
-                    { width: 70, xtype: 'displayfield', value: 'Description: '},
-                    { width: 295, xtype: 'textfield', name: 'code_text' },
-                    { width: 30, xtype: 'displayfield', value: 'Category: '},
-                      new Ext.create('Ext.mitos.TitlesComboBox', {width: 100 }),
-                    { width: 55, xtype: 'displayfield', value: 'Reportable?: '},
-                    { width: 10, xtype: 'checkbox', name: 'reportable' }
-                ]
-            },{
-                xtype: 'fieldcontainer',
-                defaults: { hideLabel: true },
-                msgTarget : 'under',
-                items: [
-                    //<?php include_once ($_SESSION['site']['root']."/app/administration/services/fees_taxes.ejs.php") ?>
-                ]
-            }],
-            dockedItems: [{
-                xtype: 'toolbar',
-                dock: 'bottom',
-                items: [
-                    page.cmdSave = new Ext.create('Ext.Button', {
-                        text      	: 'Save',
-                        iconCls   	: 'save',
-                        disabled	: true,
-                        handler   : function(){
-                            var form = this.up('form').getForm();
-                            if (form.findField('id').getValue()){ // Update
-                                var record = page.storeOnotes.getAt(rowPos);
-                                var fieldValues = form.getValues();
-                                for (var k=0; k <= record.fields.getCount()-1; k++) {
-                                    var i = record.fields.get(k).name;
-                                    record.set( i, fieldValues[i] );
-                                }
-                                record.set( 'activity', '1' );
-                            } else { // Add
-                                var obj = eval( '(' + Ext.JSON.encode(form.getValues()) + ')' );
-                                page.storeServices.add( obj );
-                            }
-                            page.storeServices.sync();	// Save the record to the dataStore
-                            page.storeServices.load({params:{show: 'active' }});
-                            page.servicesFormPanel.getForm().reset();
-                        }
-                    }),'-',{
-                        text:'Reset',
-                        handler: function(){
-                            page.servicesFormPanel.getForm().reset();
-                            page.cmdSave.setText('Save');
-                            page.cmdSave.disable();
-                        }
-                    },'-',{
-                        text:'Not all fields are required for all codes or code types.',
-                        disabled:true
-                    }
-                ]
-            }]
-        });
-        page.servicesGrid = new Ext.create('Ext.mitos.GridPanel', {
+
+        me.servicesGrid = new Ext.create('Ext.mitos.GridPanel', {
             region		: 'center',
-            store       : page.storeServices,
-            listeners	: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        page.servicesFormPanel.getForm().reset();
-                        var rec = page.storeServices.getAt(rowIndex);
-                        page.cmdSave.setText('Update');
-                        page.cmdSave.enable();
-                        page.servicesFormPanel.getForm().loadRecord(rec);
-                        currRec = rec;
-                        rowPos = rowIndex;
-                    }
-                }
-            },
+            store       : me.storeServices,
             columns: [
                 { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
                 { width: 80,  header: 'Code Type',   sortable: true, dataIndex: 'code_type',  renderer:code_type },
@@ -185,42 +75,201 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
                 { flex: 1,    header: 'Description', sortable: true, dataIndex: 'code_text' },
                 { width: 100, header: 'Standard',    sortable: true, dataIndex: 'none' }
             ],
-            tbar: new Ext.create('Ext.PagingToolbar', {
-                store: page.storeServices,
-                displayInfo: true,
-                emptyMsg: "No Office Notes to display",
-                plugins: new Ext.create('Ext.ux.SlidingPager', {}),
-                items: [
-                    '-',
-                    new Ext.create('Ext.mitos.CodesComboBox', {
-                        width: 100,
-                        listeners	: {
-                            afterrender: function(){
-
-                            }
-                        },
-                        handler   	: function(){
-
+            listeners: {
+                scope: me,
+                itemclick: function(view, record){
+                    me.onItemclick( me.storeServices, record, 'Edit Service' );
+                }
+            },
+            tbar: Ext.create('Ext.PagingToolbar', {
+                store       :  me.storeServices,
+                displayInfo : true,
+                emptyMsg    : "No Office Notes to display",
+                plugins     : Ext.create('Ext.ux.SlidingPager', {}),
+                items: ['-',{
+                    xtype   :'mitos.codestypescombo',
+                    width   : 100,
+                    listeners: {
+                        select: function(combo, record){
+                            var code = record[0].data.ct_id;
+                            me.storeServices.load({ params:{ code: code } });
                         }
-                    }),'-',
-                    new Ext.create('Ext.form.field.Text',{
-                        emptyText:'Search',
-                        handler: function(){
+                    }
+                },'-',{
+                    xtype           : 'textfield',
+                    emptyText       : 'Search',
+                    enableKeyEvents : true,
+                    listeners: {
+                        keyup: function(){
+                            var query = this.getValue();
+                            me.storeServices.load({params:{ search:query }});
+                        },buffer:100
+                    }
+                },'-',{
+                    xtype       : 'button',
+                    text      	: 'Show All (Active / Deactivate)',
+                    iconCls   	: 'save',
+                    enableToggle: true,
+                    handler: function(){
 
-                        }
-                    }),'-',
-                    page.cmdShowAll = new Ext.create('Ext.Button', {
-                        text      	: 'Show All Active/Deactivate Codes',
-                        iconCls   	: 'save',
-                        enableToggle: true,
-                        handler   : function(){
-
-                        }
-                    })
-                ]
+                    }
+                }]
             })
         }); // END GRID
-        page.pageBody = [ page.servicesFormPanel, page.servicesGrid ];
-        page.callParent(arguments);
-    } // end of initComponent
+
+        me.servicesFormPanel = Ext.create('Ext.form.FormPanel', {
+            title       : 'Add Service',
+            region		: 'north',
+            collapsible : true,
+            collapsed   : true,
+            titleCollapse: true,
+            animCollapse: false,
+            collapseMode: 'header',
+            frame 		: true,
+            height      : 150,
+            margin		: '0 0 3 0',
+            layout      : 'anchor',
+            bodyBorder  : true,
+            bodyPadding : '10 10 0 10',
+            listeners:{
+                collapse:function(){
+                    me.action('close');
+                },
+                expand:function(){
+                    me.onNew(this,'ModelService');
+                }
+            },
+            defaults: {
+                labelWidth: 50,
+                anchor: '100%',
+                layout: {
+                    type: 'hbox',
+                    defaultMargins: {top: 0, right: 25, bottom: 0, left: 0}
+                }
+            },
+            items		:[{
+                xtype: 'textfield', hidden: true, name: 'id'
+            },{
+                xtype: 'fieldcontainer',
+                defaults: { labelWidth: 70 },
+                msgTarget : 'under',
+                items: [
+                    { width: 200, fieldLabel:'Type',        xtype: 'mitos.codestypescombo', name:'code_type' },
+                    { width: 155, fieldLabel:'Code',        xtype: 'textfield', name: 'code', labelWidth: 40 },
+                    { width: 200, fieldLabel:'Modifier',    xtype: 'textfield', name: 'mod' },
+                    { width: 280, fieldLabel:'Active?',     xtype: 'mitos.checkbox', name: 'active' }
+                ]
+            },{
+                xtype: 'fieldcontainer',
+                defaults: { labelWidth: 70 },
+                msgTarget : 'under',
+                items: [
+                    { width: 380, fieldLabel:'Description', xtype: 'textfield', name: 'code_text' },
+                    { width: 200, fieldLabel:'Category',    xtype: 'mitos.titlescombo', name:'title' }, // placeholder
+                    { width: 200, fieldLabel:'Reportable?', xtype: 'mitos.checkbox', name: 'reportable' }
+                ]
+            },{
+                xtype: 'fieldcontainer',
+                defaults: { labelWidth: 70 },
+                msgTarget : 'under',
+                items: [
+                    //<?php include_once ($_SESSION['site']['root']."/app/administration/services/fees_taxes.ejs.php") ?>
+                ]
+            }],
+            dockedItems: [{
+                xtype: 'toolbar',
+                dock: 'bottom',
+                items: [{
+                    text      	: 'Save',
+                    iconCls   	: 'save',
+                    handler   : function(){
+                        me.onSave(me.servicesFormPanel, me.storeServices);
+                    }
+                },'-',{
+                    text:'Reset / New',
+                    handler: function(){
+                        me.onNew(me.servicesFormPanel,'ModelService');
+                    }
+                },'-',{
+                    text:'Close / Cancel',
+                    handler: function(){
+                        var formPanel = this.up('form'),
+                        form = formPanel.getForm();
+                        formPanel.collapse();
+                        form.reset();
+                    }
+                },'->',{
+                    text:'Not all fields are required for all codes or code types.',
+                    disabled:true
+
+                }]
+            }]
+        });
+        
+        me.pageBody = [ me.servicesFormPanel, me.servicesGrid ];
+        me.callParent(arguments);
+    }, // end of initComponent
+
+    onNew:function(form, model){
+        form.getForm().reset();
+        var newModel  = Ext.ModelManager.create({}, model );
+        form.getForm().loadRecord(newModel);
+    },
+
+    onSave:function(panel, store){
+        var form        = panel.getForm(),
+            record      = form.getRecord(),
+            values      = form.getValues(),
+            storeIndex  = store.indexOf(record);
+        if (storeIndex == -1){
+            store.add(values);
+        }else{
+            record.set(values);
+        }
+        store.sync();
+        store.load();
+        store.on('load',function(){
+            panel.collapse();
+        });
+    },
+
+    onDelete:function(form, store){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            icon    : Ext.MessageBox.QUESTION,
+            msg     : 'Are you sure to delete this record?',
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn:function(btn){
+                if(btn=='yes'){
+                    var currentRec = form.getRecord();
+                    store.remove(currentRec);
+                    store.destroy();
+                    this.servicesFormPanel.collapse();
+                }
+            }
+        });
+    },
+
+    onItemclick:function(store, record, title){
+        var form = this.servicesFormPanel;
+        form.expand();
+        form.setTitle('Edit Service');
+        form.getForm().loadRecord(record);
+    },
+
+    action:function(action){
+        var formPanel = this.servicesFormPanel;
+
+        switch(action){
+
+            case 'close':
+                formPanel.setTitle('Add Service');
+                break;
+        }
+    },
+
+    loadStores:function(){
+        this.storeServices.load();
+    }
 }); //ens servicesPage class
