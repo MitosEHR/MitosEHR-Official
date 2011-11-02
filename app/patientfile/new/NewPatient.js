@@ -83,5 +83,8 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
                 form.doLayout();
             }
         })
-    } // end of getFormItems
+    }, // end of getFormItems
+    loadStores:function(){
+        
+    }
 }); //ens PatientPanel class

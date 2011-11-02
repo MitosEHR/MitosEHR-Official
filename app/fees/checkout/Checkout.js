@@ -19,5 +19,8 @@ Ext.define('Ext.mitos.panel.fees.checkout.Checkout',{
 
         page.pageBody =  [ ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    loadStores:function(){
+
+    }
 }); //ens oNotesPage class

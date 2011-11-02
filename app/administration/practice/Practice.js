@@ -161,7 +161,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                     { xtype: 'textfield',     width: 150, name: 'city' },
                     { xtype: 'displayfield',  width: 5,   value: ',' },
                     { xtype: 'textfield',     width: 50,  name: 'state' },
-                    { xtype: 'textfield',     width: 113, name: 'zip' }
+                    { xtype: 'textfield',     width: 103, name: 'zip' }
                 ]
             },
             { xtype: 'textfield', fieldLabel: 'Email', width: 100, name: 'email' },
@@ -209,7 +209,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                     { xtype: 'textfield',     width: 150, name: 'city' },
                     { xtype: 'displayfield',  width: 5,   value: ',' },
                     { xtype: 'textfield',     width: 50,  name: 'state' },
-                    { xtype: 'textfield',     width: 113, name: 'zip' }
+                    { xtype: 'textfield',     width: 103, name: 'zip' }
                 ]
             },
             { xtype: 'fieldcontainer',
@@ -303,7 +303,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 }
             }
         }); // END Insurance Numbers Grid
-        me.x12ParnersGrid = new Ext.create('Ext.mitos.GridPanel', {
+        me.x12ParnersGrid = Ext.create('Ext.mitos.GridPanel', {
             store		: me.x12PartnersStore,
             border		: false,
             frame		: false,
@@ -452,7 +452,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             width       : 450,
 
             items:[{
-                xtype:'mitosform',
+                xtype:'mitos.form',
                 defaults: { labelWidth: 89, anchor: '100%', layout: {
                         type: 'hbox',
                         defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
@@ -465,7 +465,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 handler: function(){
                     var form = me.win.down('form').getForm();
                     if (form.isValid()) {
-                        me.onSave(form, currStore)
+                        me.onSave(form, currStore);
                         me.action('close');
                     }
                 }
@@ -537,7 +537,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         var form = this.win.down('form');
         this.setForm(form, formItmes, title);
         form.getForm().loadRecord(record);
-        this.action('old')
+        this.action('old');
         this.win.show();
     },
     setForm:function(form, formItmes, title){

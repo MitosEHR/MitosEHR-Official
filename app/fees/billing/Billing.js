@@ -97,5 +97,8 @@ Ext.define('Ext.mitos.panel.fees.billing.Billing',{
         });
         page.pageBody = [ page.billingFormPanel, page.billingGrid ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    loadStores:function(){
+
+    }
 }); //ens oNotesPage class

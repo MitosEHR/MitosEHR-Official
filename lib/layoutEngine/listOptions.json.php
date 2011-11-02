@@ -22,7 +22,9 @@ session_cache_limiter('private');
 // **************************************************************************************
 // filter params passed by ExtJS Data Store
 // **************************************************************************************
-if(isset($_REQUEST)){$filter = $_REQUEST['filter'];}else{return;}
+//if(isset($_REQUEST)){
+    $filter = $_REQUEST['filter'];
+//}
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 
@@ -30,32 +32,22 @@ include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 // Reset session count 10 secs = 1 Flop
 // **************************************************************************************
 $_SESSION['site']['flops'] = 0;
-
+$lang = $_SESSION['lang']['code'];
 // **************************************************************************************
 // Database class instance
 // **************************************************************************************
 $mitos_db = new dbHelper();
 
 if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is English, do not translate
-		$mitos_db->setSQL("SELECT 
-								*
-							FROM 
-								list_options 
-							WHERE 
-								list_id = '".$filter."' 
-							ORDER BY seq");
+		$mitos_db->setSQL("SELECT * FROM list_options WHERE list_id = '$filter'	ORDER BY seq");
 } else {
 	// Use and sort by the translated list name.
-	$mitos_db->setSQL("SELECT 
-							*, 
-							IF(LENGTH(ld.definition),ld.definition,lo.title) AS title 
-						FROM list_options AS lo 
-							LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title 
-							LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '" . $_SESSION['lang']['code'] . "' 
-						WHERE 
-							lo.list_id = '".$filter."' 
-						ORDER BY 
-							IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
+	$mitos_db->setSQL("SELECT *, IF(LENGTH(ld.definition),ld.definition,lo.title) AS title
+						 FROM list_options AS lo
+				    LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title
+					LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '$lang'
+						WHERE lo.list_id = '$filter'
+					 ORDER BY IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
 }
 $total = $mitos_db->rowCount();
 $rows = array();

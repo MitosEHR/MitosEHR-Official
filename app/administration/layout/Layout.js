@@ -304,10 +304,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                             case 'textfield':
                                 enableItems(['name','allowBlank']);
                                 break;
-                            case 'textareafield':
+                            case 'textarea':
                                 enableItems(['name','allowBlank']);
                                 break;
-                            case 'checkboxfield':
+                            case 'mitos.checkbox':
                                 enableItems(['name','allowBlank']);
                                 break;
                             default:
