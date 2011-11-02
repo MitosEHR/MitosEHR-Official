@@ -124,7 +124,7 @@ class layoutEngineOld extends dbHelper {
 	// $initValue: The initial value of the field
 	//**********************************************************************
 	private function checkboxAdd($fieldName, $fieldLabel, $initValue){
-		$buff  = "{xtype: 'checkboxfield',";
+		$buff  = "{xtype: 'mitos.checkbox',";
 		$buff .= "fieldLabel: '".addslashes( trim($fieldLabel) )."',";
 		$buff .= "name: '".$fieldName."',";
 		$buff .= "inputValue: '".$initValue."'}";

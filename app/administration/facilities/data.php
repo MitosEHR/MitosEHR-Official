@@ -40,8 +40,8 @@ switch($_SERVER['REQUEST_METHOD']){
         $total = $mitos_db->rowCount();
         $rows = array();
         foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
-            $row['service_location']    = ($row['service_location'] == '1' ? 'on' : 'off');
-            $row['billing_location']    = ($row['billing_location'] == '1' ? 'on' : 'off');
+            $row['service_location']    = ($row['service_location']   == '1' ? 'on' : 'off');
+            $row['billing_location']    = ($row['billing_location']   == '1' ? 'on' : 'off');
             $row['accepts_assignment']  = ($row['accepts_assignment'] == '1' ? 'on' : 'off');
             if (strlen($row['pos_code']) <= 1){
                 $row['pos_code'] = '0'.$row['pos_code'];
@@ -57,9 +57,9 @@ switch($_SERVER['REQUEST_METHOD']){
         exit;
     case 'POST':
         unset($data['id']);
-        $data['service_location'] 	= ($data['service_location']    == 'on') ? 1 : 0;
-        $data['accepts_assignment'] = ($data['accepts_assignment']  == 'on') ? 1 : 0;
-        $data['billing_location'] 	= ($data['billing_location']    == 'on') ? 1 : 0;
+        $data['service_location'] 	= ($data['service_location']    == 'on' ? 1 : 0);
+        $data['accepts_assignment'] = ($data['accepts_assignment']  == 'on' ? 1 : 0);
+        $data['billing_location'] 	= ($data['billing_location']    == 'on' ? 1 : 0);
 
         $sql = $mitos_db->sqlBind($data, "facility", "I");
         $mitos_db->setSQL($sql);
@@ -73,9 +73,9 @@ switch($_SERVER['REQUEST_METHOD']){
     case 'PUT':
         $id = $data['id'];
         unset($data['id']);
-        $data['service_location'] 	= ($data['service_location']    == 'on') ? 1 : 0;
-        $data['accepts_assignment'] = ($data['accepts_assignment']  == 'on') ? 1 : 0;
-        $data['billing_location'] 	= ($data['billing_location']    == 'on') ? 1 : 0;
+        $data['service_location'] 	= ($data['service_location']    == 'on' ? 1 : 0);
+        $data['accepts_assignment'] = ($data['accepts_assignment']  == 'on' ? 1 : 0);
+        $data['billing_location'] 	= ($data['billing_location']    == 'on' ? 1 : 0);
 
 
         // *************************************************************************************

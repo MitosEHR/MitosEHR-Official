@@ -94,7 +94,15 @@ Ext.onReady(function() {
             'Extensible.example.calendar.data.Calendars',
 
             'Ext.mitos.combo.*',
+            'Ext.mitos.combo.Users',
+            'Ext.mitos.combo.Roles',
+            'Ext.mitos.combo.TaxId',
+            'Ext.mitos.combo.posCodes',
+            'Ext.mitos.combo.Titles',
+            'Ext.mitos.combo.CodesTypes',
             'Ext.mitos.combo.Languages',
+            'Ext.mitos.combo.Authorizations',
+            'Ext.mitos.combo.Facilities',
             'Ext.mitos.combo.TransmitMedthod',
             'Ext.mitos.combo.InsurancePayerType',
                 

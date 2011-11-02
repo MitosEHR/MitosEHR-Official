@@ -7,6 +7,6 @@
  */
 Ext.define('Ext.mitos.form.fields.Checkbox',{
     extend:'Ext.form.field.Checkbox',
-    alias:  'widget.mitos.checkboxfield',
+    alias:  'widget.mitos.checkbox',
     uncheckedValue: 'off'
 });
