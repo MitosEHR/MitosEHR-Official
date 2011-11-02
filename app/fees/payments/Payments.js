@@ -137,5 +137,8 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
         });
         page.pageBody = [ page.paymentTabPanel, page.paymentGrid] ;
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    loadStores:function(){
+
+    }
 }); //ens oNotesPage class

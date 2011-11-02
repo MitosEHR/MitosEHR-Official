@@ -1,6 +1,6 @@
 Ext.define('Ext.mitos.GridPanel',{
 	extend      : 'Ext.grid.GridPanel',
-    alias       : 'mitos.gridpanel',
+    alias       : 'widget.mitos.grid',
     autoHeight 	: true,
     border     	: true,
     frame		: true,

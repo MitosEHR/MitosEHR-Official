@@ -12,7 +12,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelGlobals',
     pageTitle   : 'MitosEHR Global Settings',
-    uses        : [ 'Ext.mitos.restStore', 'Ext.mitos.combo.Languages' ],
+    uses        : [ 'Ext.mitos.restStore', 'Ext.mitos.combo.Languages', 'Ext.mitos.form.fields.Checkbox' ],
     initComponent: function(){
         var me = this;
         // *************************************************************************************
@@ -279,7 +279,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
         //**************************************************************************
         // Global Form Panel
         //**************************************************************************
-        me.globalFormPanel = Ext.create('Ext.mitos.FormPanel', {
+        me.globalFormPanel = Ext.create('Ext.mitos.form.FormPanel', {
             frame			: true,
             border			: true,
             layout			: 'fit',
@@ -343,19 +343,19 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         editable	: false,
                         store		: me.patient_search_results_style_store
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Simplified Demographics',
                         name		: 'simplified_demographics'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Simplified Prescriptions',
                         name		: 'simplified_prescriptions'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Simplified Co-Pay',
                         name		: 'simplified_copay'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'User Charges Panel',
                         name		: 'use_charges_panel'
                     },{
@@ -380,7 +380,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'Default Language',
                         name		: 'language_default'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'All Language Allowed',
                         name		: 'language_menu_showall'
                     },{
@@ -389,32 +389,32 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         name		: 'lang_description2',  // ???????
                         multiSelect	: true
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Allow Debuging Language -??-',
                         name		: 'Loc4'  // ???????
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Layouts',
                         name		: 'translate_layout'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate List',
                         name		: 'translate_lists'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Access Control Roles',
                         name		: 'translate_gacl_groups'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Patient Note Titles',
                         name		: 'translate_form_titles'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Documents Categoies',
                         name		: 'translate_document_categories',
                         id			: 'translate_document_categories'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Appointment Categories',
                         name		: 'translate_appt_categories'
                     },{
@@ -426,7 +426,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         editable	: false,
                         store		: me.units_of_measurement_store
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Disable Old Metric Vitals Form',
                         name		: 'disable_deprecated_metrics_form'
                     },{
@@ -480,7 +480,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                     }]
                 },{
                     title:'Features',
-                    defaultType: 'checkbox',
+                    defaultType: 'mitos.checkbox',
                     items: [{
                         xtype		: 'combo',
                         fieldLabel	: 'Specific Application',
@@ -565,7 +565,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                     title:'Calendar',
                     defaultType: 'combo',
                     items: [{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Disable Calendar',
                         name		: 'Cal1'
                     },{
@@ -597,11 +597,11 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         editable	: false,
                         store		: me.dummyStore
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Provider See Entire Calendar',
                         name		: 'Cal6'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Auto-Create New Encounters',
                         name		: 'Cal7'
                     },{
@@ -619,7 +619,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'Idle Session Timeout Seconds',
                         name		: 'timeout'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Require Strong Passwords',
                         name		: 'secure_password',
                         displayField: 'title',
@@ -627,7 +627,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         editable	: false,
                         store		: me.dummyStore
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Require Unique Passwords',
                         name		: 'password_history'
                     },{
@@ -637,7 +637,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'Password Expiration Grace Period',
                         name		: 'password_grace_time'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Enable Clients SSL',
                         name		: 'is_client_ssl_enabled'
                     },{
@@ -697,7 +697,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                     }]
                 },{
                     title:'Loging',
-                    defaultType: 'checkbox',
+                    defaultType: 'mitos.checkbox',
                     items: [{
                         fieldLabel	: 'Enable Audit Logging',
                         name		: 'enable_auditlog'
@@ -769,7 +769,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'State Lsit',
                         name		: 'state_list'
                     },{
-                        xtype 		: 'checkbox',
+                        xtype 		: 'mitos.checkbox',
                         fieldLabel	: 'State List Widget Custom Fields',
                         name		: 'state_custom_addlist_widget'
                     },{
@@ -799,14 +799,14 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'patient Photo Category name',
                         name		: 'patient_photo_category_name'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Medicare Referrer is Renderer',
                         name		: 'MedicareReferrerIsRenderer'
                     },{
                         fieldLabel	: 'Final Close Date (yyy-mm-dd)',
                         name		: 'post_to_date_benchmark'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Enable Hylafax Support',
                         name		: 'enable_hylafax'
                     },{
@@ -819,7 +819,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'Halafax Enscript Command',
                         name		: 'hylafax_enscript'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Enable Scanner Support',
                         name		: 'enable_scanner'
                     },{
@@ -830,7 +830,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                     title:'Connectors',
                     defaultType: 'textfield',
                     items: [{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Enable Lab Exchange',
                         name		: 'Conn1'
                     },{

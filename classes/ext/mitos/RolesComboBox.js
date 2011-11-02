@@ -1,6 +1,6 @@
 Ext.define('Ext.mitos.RolesComboBox',{
 	extend      : 'Ext.form.ComboBox',
-    alias       : 'mitos.rolescombobox',
+    alias       : 'widget.mitos.rolescombobox',
     initComponent: function(){	
     	var me = this;
 
