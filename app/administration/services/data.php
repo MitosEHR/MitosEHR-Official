@@ -24,6 +24,24 @@ $limit      = (!$_REQUEST["limit"])? 30 : $_REQUEST["limit"];
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
+
+        // this handle the show Active / Inactive
+        if(!isset($_SESSION['filter']['service']['active'])){
+            $_SESSION['filter']['service']['active'] = '1';
+        }
+
+        if(isset($_REQUEST['active'])){
+            $_SESSION['filter']['service']['active'] = $_REQUEST['active'];
+        }
+
+        if($_SESSION['filter']['service']['active'] == '0'){
+            $active = '0';
+        } else {
+            $active = '1';
+        }
+
+
+        // this handle the search field query
         if(isset($_REQUEST['code']) || isset($_REQUEST['search'])){
             if(isset($_REQUEST['code'])){
                 $_SESSION['filter']['service']['code']   = $_REQUEST['code'];
@@ -37,10 +55,11 @@ switch($_SERVER['REQUEST_METHOD']){
 
             }
         }
+        // this handle the code select list request
         if(isset($_SESSION['filter']['service']['code']) || isset($_SESSION['filter']['service']['search'])){
-            $WHERE = ' WHERE ';
+            $and = ' AND ';
         } else {
-            $WHERE = '';
+            $and = '';
         }
         if(isset($_SESSION['filter']['service']['code']) && isset($_SESSION['filter']['service']['search'])){
             $AND = ' AND ';
@@ -54,10 +73,11 @@ switch($_SERVER['REQUEST_METHOD']){
           $q = $_SESSION['filter']['service']['search'];
           $search = "code LIKE '$q%' OR code_text LIKE '%$q%'";
         }
-            
-        $mitos_db->setSQL("SELECT id FROM codes $WHERE $code $AND $search");
+        // for debugging
+        //echo "SELECT id FROM codes WHERE active = '".$active."' ".$and."" .$code .$AND .$search .$SHOW;
+        $mitos_db->setSQL("SELECT id FROM codes WHERE active = '$active' $and $code $AND $search");
         $total = $mitos_db->rowCount();
-        $mitos_db->setSQL("SELECT * FROM codes $WHERE $code $AND $search ORDER BY code_type, code, code_text LIMIT $start,$limit");
+        $mitos_db->setSQL("SELECT * FROM codes WHERE active = '$active' $and $code $AND $search $SHOW ORDER BY code_type, code, code_text LIMIT $start,$limit");
         $rows = array();
         foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);

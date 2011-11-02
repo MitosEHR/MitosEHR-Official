@@ -107,11 +107,17 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
                     }
                 },'-',{
                     xtype       : 'button',
-                    text      	: 'Show All (Active / Deactivate)',
+                    text      	: 'Show Inactive Codes Only',
                     iconCls   	: 'save',
                     enableToggle: true,
-                    handler: function(){
-
+                    listeners:{
+                        toggle:function(btn, pressed){
+                             if (pressed){
+                                 me.storeServices.load({params:{ active:0 }});
+                             } else {
+                                 me.storeServices.load({params:{ active:1 }});
+                             }
+                        }
                     }
                 }]
             })
