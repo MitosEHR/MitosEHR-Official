@@ -33,6 +33,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
+<script type="text/javascript" src="classes/ext/mitos/OverRides.js"></script>
 <!--test stuff-->
 <link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
 <!--end test stuff-->
@@ -74,8 +75,6 @@ Ext.Loader.setConfig({
 
 Ext.onReady(function() {
 
-    Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
-
 	Ext.define('Ext.mitos.MitosApp',{
 		extend:'Ext.container.Container',
 		uses:[
@@ -112,6 +111,7 @@ Ext.onReady(function() {
 
 		],
 		initComponent: function(){
+
 	        /** @namespace Ext.QuickTips */
             Ext.QuickTips.init();
 			// *************************************************************************************
@@ -458,27 +458,30 @@ Ext.onReady(function() {
                     Ext.create('Ext.mitos.panel.calendar.Calendar'),                        // done
                     Ext.create('Ext.mitos.panel.messages.Messages'),                        // done
 
-                    Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
+                    //Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                     Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                     Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),
                     Ext.create('Ext.mitos.panel.fees.billing.Billing'),
                     Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
                     Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
                     Ext.create('Ext.mitos.panel.fees.payments.Payments'),
-                    Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // working
+
+
+                    Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // done
                     Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
-                    Ext.create('Ext.mitos.panel.administration.layout.Layout'),
+                    //Ext.create('Ext.mitos.panel.administration.layout.Layout'),
                     //Ext.create('Ext.mitos.panel.administration.lists.Lists'),
                     Ext.create('Ext.mitos.panel.administration.log.Log'),                   // done
                     Ext.create('Ext.mitos.panel.administration.practice.Practice'),         // done
-                    Ext.create('Ext.mitos.panel.administration.roles.Roles'),
-                    Ext.create('Ext.mitos.panel.administration.services.Services'),
+                    Ext.create('Ext.mitos.panel.administration.roles.Roles'),               // working
+                    Ext.create('Ext.mitos.panel.administration.services.Services'),         // done
                     Ext.create('Ext.mitos.panel.administration.users.Users'),
+
                     Ext.create('Ext.mitos.panel.miscellaneous.addressbook.Addressbook'),
                     Ext.create('Ext.mitos.panel.miscellaneous.myaccount.MyAccount'),
                     Ext.create('Ext.mitos.panel.miscellaneous.mysettings.MySettings'),
-                    Ext.create('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes'),
-                    Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
+                    Ext.create('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes')
+                    //Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
 
                 ]
 			}); // End MainApp
