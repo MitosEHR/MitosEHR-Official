@@ -33,7 +33,6 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
-<script type="text/javascript" src="classes/ext/mitos/OverRides.js"></script>
 <!--test stuff-->
 <link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
 <!--end test stuff-->
@@ -96,6 +95,7 @@ Ext.onReady(function() {
             'Ext.mitos.combo.Users',
             'Ext.mitos.combo.Roles',
             'Ext.mitos.combo.TaxId',
+            'Ext.mitos.combo.Lists',
             'Ext.mitos.combo.PermValues',
             'Ext.mitos.combo.posCodes',
             'Ext.mitos.combo.Titles',
@@ -471,12 +471,13 @@ Ext.onReady(function() {
                     Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // done
                     Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
                     //Ext.create('Ext.mitos.panel.administration.layout.Layout'),
-                    //Ext.create('Ext.mitos.panel.administration.lists.Lists'),
+                    Ext.create('Ext.mitos.panel.administration.lists.Lists'),               // working
+
                     Ext.create('Ext.mitos.panel.administration.log.Log'),                   // done
                     Ext.create('Ext.mitos.panel.administration.practice.Practice'),         // done
-                    Ext.create('Ext.mitos.panel.administration.roles.Roles'),               // working
+                    Ext.create('Ext.mitos.panel.administration.roles.Roles'),               // done
                     Ext.create('Ext.mitos.panel.administration.services.Services'),         // done
-                    Ext.create('Ext.mitos.panel.administration.users.Users'),
+                    Ext.create('Ext.mitos.panel.administration.users.Users'),               // done
 
                     Ext.create('Ext.mitos.panel.miscellaneous.addressbook.Addressbook'),
                     Ext.create('Ext.mitos.panel.miscellaneous.myaccount.MyAccount'),
