@@ -201,12 +201,21 @@ body#login{
 }
 .winDelete{
     background:none;
-    background-color:#ff3333!important
+    background-color:#FF9999!important
+}
+.winDelete:hover{
+    background:none;
+    background-image: none;
+    background-color:#ff6666!important
 }
 .winSave{
     background:none;
-    background-color:#33cc00!important
+    background-color:#66ff66!important
+}
+.winSave:hover{
+    background:none;
+    background-image: none;
+    background-color:#33ff00!important
 }
 .winDelete span{
-    color:#fff!important;
 }
