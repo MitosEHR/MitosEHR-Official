@@ -96,6 +96,7 @@ Ext.onReady(function() {
             'Ext.mitos.combo.Users',
             'Ext.mitos.combo.Roles',
             'Ext.mitos.combo.TaxId',
+            'Ext.mitos.combo.PermValues',
             'Ext.mitos.combo.posCodes',
             'Ext.mitos.combo.Titles',
             'Ext.mitos.combo.CodesTypes',

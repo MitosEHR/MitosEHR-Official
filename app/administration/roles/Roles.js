@@ -16,7 +16,8 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         'Ext.mitos.restStore',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.combo.Roles'
+        'Ext.mitos.combo.Roles',
+        'Ext.mitos.combo.PermValues'
     ],
     initComponent: function(){
 
@@ -47,27 +48,15 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
             url		    : 'app/administration/roles/data.php'
         });
 
-        // *************************************************************************************
-        // Federal EIN - TaxID Data Store
-        // *************************************************************************************
-        me.storePerms = new Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'value',	type: 'string'},
-                {name: 'perm',	type: 'string'}
-            ],
-            model		: 'permRecord',
-            idProperty	: 'value',
-            read		: 'app/administration/roles/component_data.ejs.php?task=perms'
-        });
         function permck(val) {
             if (val == 'No Access') {
-                return 'View <img src="ui_icons/no.gif" /> / Update <img src="ui_icons/no.gif" /> / Create <img src="ui_icons/no.gif" />';
+                return 'View <img src="ui_icons/no.gif" /> / Edit <img src="ui_icons/no.gif" /> / Delete <img src="ui_icons/no.gif" />';
             } else if(val == 'View') {
-                return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/no.gif" /> / Create <img src="ui_icons/no.gif" />';
-            } else if (val == 'View/Update'){
-                return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/yes.gif" /> / Create <img src="ui_icons/no.gif" />';
-            } else if (val == 'View/Update/Create'){
-                return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/yes.gif" /> / Create <img src="ui_icons/yes.gif" />';
+                return 'View <img src="ui_icons/yes.gif" /> / Edit <img src="ui_icons/no.gif" /> / Delete <img src="ui_icons/no.gif" />';
+            } else if (val == 'View/Edit'){
+                return 'View <img src="ui_icons/yes.gif" /> / Edit <img src="ui_icons/yes.gif" /> / Delete <img src="ui_icons/no.gif" />';
+            } else if (val == 'View/Edit/Delete'){
+                return 'View <img src="ui_icons/yes.gif" /> / Edit <img src="ui_icons/yes.gif" /> / Delete <img src="ui_icons/yes.gif" />';
             }
             return val;
         }
@@ -131,15 +120,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
                 dataIndex	: 'ac_perm',
                 renderer 	: permck,
                 flex     	: 1,
-                field: {
-                    xtype			: 'combo',
-                    triggerAction	: 'all',
-                    valueField		: 'value',
-                    displayField	: 'perm',
-                    editable		: false,
-                    queryMode		: 'local', 
-                    store			: me.storePerms
-                },
+                field       : { xtype:'mitos.permvaluescombo' },
                 lazyRender: true,
                 listClass: 'x-combo-list-small'
             }],
@@ -353,17 +334,8 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
 
     action:function(action){
         var win     = this.win,
-        form        = win.down('form'),
-        winTbar     = win.down('toolbar'),
-        deletebtn   = winTbar.getComponent('delete');
-
+        form        = win.down('form');
         switch(action){
-            case 'open':
-
-                break;
-            case 'old':
-                deletebtn.enable();
-                break;
             case 'close':
                 form.getForm().reset();
                 break;

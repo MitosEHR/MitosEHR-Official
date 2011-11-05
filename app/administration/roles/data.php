@@ -54,10 +54,10 @@ switch($_SERVER['REQUEST_METHOD']){
                     $row['ac_perm'] = 'View';
                 break;
                 case '2':
-                    $row['ac_perm'] = 'View/Update';
+                    $row['ac_perm'] = 'View/Edit';
                 break;
                 case '3':
-                    $row['ac_perm'] = 'View/Update/Create';
+                    $row['ac_perm'] = 'View/Edit/Delete';
                 break;
             }
             array_push($rows, $row);
