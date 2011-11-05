@@ -3,7 +3,7 @@ Ext.define('Ext.mitos.combo.Roles',{
     alias       : 'widget.mitos.rolescombo',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStore',{
+    	me.store = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id', type: 'int'},
 		        {name: 'role_name', type: 'string'}

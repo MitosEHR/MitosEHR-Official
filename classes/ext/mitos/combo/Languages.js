@@ -8,10 +8,10 @@
 Ext.define('Ext.mitos.combo.Languages',{
 	extend      : 'Ext.form.ComboBox',
     alias       : 'widget.languagescombo',
-    uses        : 'Ext.mitos.restStore',
+    uses        : 'Ext.mitos.restStoreModel',
     initComponent: function(){
     	var me = this;
-        me.store = Ext.create('Ext.mitos.restStore',{
+        me.store = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 { name: 'lang_id',		    type:'string' },
                 { name: 'lang_code',	    type:'string' },

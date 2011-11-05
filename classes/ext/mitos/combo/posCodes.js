@@ -8,10 +8,10 @@
 Ext.define('Ext.mitos.combo.posCodes',{
 	extend      : 'Ext.form.ComboBox',
     alias       : 'widget.mitos.poscodescombo',
-    uses        : 'Ext.mitos.restStore',
+    uses        : 'Ext.mitos.restStoreModel',
     initComponent: function(){
     	var me = this;
-        me.store = Ext.create('Ext.mitos.restStore',{
+        me.store = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'option_id', type: 'string' },
                 {name: 'title',     type: 'string' }

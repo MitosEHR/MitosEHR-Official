@@ -13,14 +13,14 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
     id          : 'panelUsers',
     pageTitle   : 'Users',
     uses:[
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel'
     ],
     initComponent: function(){
 
         var me = this;
         
-        me.userStore = Ext.create('Ext.mitos.restStore',{
+        me.userStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',                    type: 'int'},
                 {name: 'username',              type: 'string'},

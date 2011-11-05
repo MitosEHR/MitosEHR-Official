@@ -13,7 +13,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
     id          : 'panelRoles',
     pageTitle   : 'Roles and Permissions',
     uses:[
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
         'Ext.mitos.combo.Roles',
@@ -28,7 +28,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         //******************************************************************************
         // Roles Store
         //******************************************************************************
-        me.permStore = new Ext.create('Ext.mitos.restStore',{
+        me.permStore = new Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'roleID', 		type: 'int'},
                 {name: 'role_name', 	type: 'string'},

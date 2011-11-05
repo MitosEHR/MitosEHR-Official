@@ -3,7 +3,7 @@ Ext.define('Ext.mitos.combo.PermValues',{
     alias       : 'widget.mitos.permvaluescombo',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStore',{
+    	me.store = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'value',	type: 'string'},
                 {name: 'perm',	type: 'string'}

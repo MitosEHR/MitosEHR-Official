@@ -13,7 +13,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     id          : 'panelPractice',
     pageTitle   : 'Practice Settings',
     uses        : [
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
         'Ext.mitos.TitlesComboBox',
@@ -29,7 +29,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // Pharmacy Record Structure
         // *************************************************************************************
-        me.pharmacyStore = Ext.create('Ext.mitos.restStore', {
+        me.pharmacyStore = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 {name: 'id',					type: 'int'},
                 {name: 'name',					type: 'string'},
@@ -78,7 +78,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // Insurance Record Structure
         // *************************************************************************************
-        me.insuranceStore = Ext.create('Ext.mitos.restStore', {
+        me.insuranceStore = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 {name: 'id',						type: 'int'},
                 {name: 'name',						type: 'string'},
@@ -118,7 +118,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // Insurance Numbers Record Structure
         // *************************************************************************************
-        me.insuranceNumbersStore = Ext.create('Ext.mitos.restStore',{
+        me.insuranceNumbersStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',	type: 'int'},
                 {name: 'name',	type: 'string'}
@@ -131,7 +131,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // X12 Partners Record Structure
         // *************************************************************************************
-        me.x12PartnersStore = Ext.create('Ext.mitos.restStore',{
+        me.x12PartnersStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',	type: 'int'},
                 {name: 'name',	type: 'string'}

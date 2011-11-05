@@ -1,7 +1,7 @@
 //  *******************************************
 //  Required properties 
 //  *******************************************
-Ext.define('Ext.mitos.restStore',{
+Ext.define('Ext.mitos.restStoreModel',{
 	extend      : 'Ext.data.Store',
 //  idProperty	:  database table id
 //  read		:  url to data_read.eje.php
@@ -69,6 +69,6 @@ Ext.define('Ext.mitos.restStore',{
             autoLoad: config.autoLoad
         };
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
-        Ext.mitos.restStore.superclass.constructor.call(this, config);
+        Ext.mitos.restStoreModel.superclass.constructor.call(this, config);
 	}
 });

@@ -9,7 +9,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     id          : 'panelMessages',
     pageTitle   : 'Messages',
     uses        : [
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
         'Ext.mitos.window.Window',
         'Ext.mitos.SaveCancelWindow',
@@ -23,7 +23,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         // *************************************************************************************
         // Message Store
         // *************************************************************************************
-        me.storeMsgs = Ext.create('Ext.mitos.restStore',{
+        me.storeMsgs = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',				type: 'int'},
                 {name: 'date',				type: 'string'},

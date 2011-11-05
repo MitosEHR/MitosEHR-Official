@@ -13,7 +13,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     pageTitle   : 'Services',
     pageLayout  : 'border',
     uses:[
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
         'Ext.mitos.combo.CodesTypes',
         'Ext.mitos.combo.Titles'
@@ -21,7 +21,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     initComponent: function(){
         var me = this;
 
-        me.storeServices = Ext.create('Ext.mitos.restStore',{
+        me.storeServices = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',      		    type: 'int'},
                 {name: 'code_text',         type: 'string'},

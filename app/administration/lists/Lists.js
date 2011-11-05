@@ -13,7 +13,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
     id          : 'panelLists',
     pageTitle   : 'List Options',
     uses        : [
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
         'Ext.mitos.SaveCancelWindow',
         'Ext.mitos.FormPanel',
@@ -25,7 +25,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         me.currList = null;
         me.currTask = null; 
 
-        me.storeListsOption = Ext.create('Ext.mitos.restStore', {
+        me.storeListsOption = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 {name: 'id',			type: 'int'		},
                 {name: 'list_id', 		type: 'string'	},

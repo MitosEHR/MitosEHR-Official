@@ -3,7 +3,7 @@ Ext.define('Ext.mitos.combo.CodesTypes',{
     alias       : 'widget.mitos.codestypescombo',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStore',{
+    	me.store = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'ct_id', type: 'string'},
 			    {name: 'ct_key',     type: 'string'}

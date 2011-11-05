@@ -15,7 +15,7 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
     pageTitle   : 'Facilities',
     uses        : [
         'Ext.mitos.CRUDStore',
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
         'Ext.mitos.SaveCancelWindow'
     ],
@@ -26,7 +26,7 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
         // *************************************************************************************
         // Facility Record Structure
         // *************************************************************************************
-        me.FacilityStore = Ext.create('Ext.mitos.restStore',{
+        me.FacilityStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',					type: 'int'},
                 {name: 'name',					type: 'string'},
