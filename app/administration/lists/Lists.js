@@ -25,11 +25,6 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         me.currList = null;
         me.currTask = null; 
 
-        // *************************************************************************************
-        // Structure of the message record
-        // creates a subclass of Ext.data.Record
-        // This should be the structure of the database table
-        // *************************************************************************************
         me.storeListsOption = Ext.create('Ext.mitos.restStore', {
             fields: [
                 {name: 'id',			type: 'int'		},
@@ -47,16 +42,15 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             url	    	: 'app/administration/lists/data.php'
         });
 
-
         // *************************************************************************************
         // Create list Window Dialog
         // *************************************************************************************
         me.win = Ext.create('Ext.mitos.Window', {
             width: 400,
             title: 'Create List',
-            items: [{
-                xtype   :'mitos.form',
-                defaults: { labelWidth: 100, anchor: '100%' },
+            items:[{
+                xtype    : 'mitos.form',
+                defaults : { labelWidth: 100, anchor: '100%' },
                 items:[{
                     xtype       : 'textfield',
                     fieldLabel  : 'List Name',
@@ -96,10 +90,10 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         // RowEditor Class
         // *************************************************************************************
         me.rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
-            autoCancel  : false,
-            errorSummary: false,
-            listeners   : {
-                afteredit: function(){
+            autoCancel      : false,
+            errorSummary    : false,
+            listeners       : {
+                afteredit   : function(){
                     me.storeListsOption.sync();
                     me.storeListsOption.load({params:{list_id: me.currList }});
                 }
@@ -114,7 +108,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         me.listGrid = Ext.create('Ext.mitos.GridPanel', {
             store		: me.storeListsOption,
             plugins		: [me.rowEditing],
-            columns: [{
+            columns:[{
                 text        : 'ID',
                 width       : 100,
                 sortable    : true,
@@ -143,26 +137,26 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                 flex        : 1,
                 editor      : { allowBlank: false }
             }],
-            listeners: {
+            listeners:{
                 scope       : this,
                 itemclick   : me.onItemClick
             },
-            dockedItems : [{
-                xtype	: 'toolbar',
-                dock	: 'top',
-                items   : [{
-                    xtype	: 'button',
-                    text	: 'Create New Select List',
-                    iconCls	: 'icoListOptions',
-                    handler : function(){
+            dockedItems:[{
+                xtype	    : 'toolbar',
+                dock	    : 'top',
+                items:[{
+                    xtype	    : 'button',
+                    text	    : 'Create New Select List',
+                    iconCls	    : 'icoListOptions',
+                    handler     : function(){
                         me.currTask = 'list'
                         me.onNewList();
                     }
                 },'-',{
-                    text	: 'Delete Select List',
-                    iconCls	: 'delete',
-                    cls     : 'toolDelete',
-                    handler	: function(){
+                    text	    : 'Delete Select List',
+                    iconCls	    : 'delete',
+                    cls         : 'toolDelete',
+                    handler	    : function(){
                         me.currTask = 'list'
                         this.onDelete();
                     }
@@ -172,7 +166,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     name		: 'cmbList',
                     itemId      : 'cmbList',
                     labelWidth  : 60,
-                    handler: function(){
+                    handler     : function(){
                         me.rowEditing.cancelEdit();
                     },
                     listeners: {
@@ -181,25 +175,25 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     }
 
                 },'-',{
-                    text    : "Add User",  // ADD USER ??? WHAT IS THIS FOR ?????????????????????????????????????
-                    iconCls : 'icon-add',
-                    handler : function(){
+                    text        : "Add User",  // ADD USER ??? WHAT IS THIS FOR ?????????????????????????????????????
+                    iconCls     : 'icon-add',
+                    handler     : function(){
                         // add an empty record
                         //me.storeListsOption.insert(0, ListRecord({list_id:me.currList}));
                         //me.rowEditing.startEdit(0, 0);
                     }
                 },'->',{
-                    text    : 'Add record',
-                    iconCls : 'icoAddRecord',
-                    handler : function() {
+                    text        : 'Add Option',
+                    iconCls     : 'icoAddRecord',
+                    handler     : function() {
                         me.currTask = 'option'
                         me.onNewOption();
                     }
                 },'-',{
-                    text    : 'Delete record',
-                    iconCls : 'delete',
-                    cls     : 'toolDelete',
-                    handler : function(){
+                    text        : 'Delete Option',
+                    iconCls     : 'delete',
+                    cls         : 'toolDelete',
+                    handler     : function(){
                         me.currTask = 'option'
                         me.onDelete();
                     }
@@ -230,7 +224,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             msg     : 'Are you sure to delete this record?',
             buttons : Ext.Msg.YESNO,
             scope   : this,
-            fn:function(btn,msgGrid){
+            fn      : function(btn,msgGrid){
                 if(btn=='yes'){
                     //TODO
                 }
