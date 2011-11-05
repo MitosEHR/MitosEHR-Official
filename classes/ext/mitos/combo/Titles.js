@@ -17,7 +17,7 @@ Ext.define('Ext.mitos.combo.Titles',{
 
     	Ext.apply(this, {
             editable    : false,
-            mode        : 'local',
+            queryMode   : 'local',
             valueField  : 'option_id',
             displayField: 'title',
             emptyText   : 'Select',
