@@ -26,7 +26,7 @@ Ext.define('Ext.mitos.combo.Users',{
 
     	Ext.apply(this, {
             editable    : false,
-            mode        : 'local',
+            queryMode   : 'local',
             valueField  : 'user',
             displayField: 'full_name',
             store       : me.store

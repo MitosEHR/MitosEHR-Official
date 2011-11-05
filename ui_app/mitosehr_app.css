@@ -190,6 +190,15 @@ body#login{
 #msg-div .msg p {
     margin: 0;
 }
+.toolDelete {
+    background-color: #ffcccc ! important;
+    border: 1px solid #999999;
+}
+.toolDelete:hover {
+    background-color: #FF9999 ! important;
+    background-image: none;
+    border: 1px solid #999999;
+}
 .winDelete{
     background:none;
     background-color:#ff3333!important
