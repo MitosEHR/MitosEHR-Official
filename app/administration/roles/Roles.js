@@ -13,23 +13,22 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
     id          : 'panelRoles',
     pageTitle   : 'Roles and Permissions',
     uses:[
+        'Ext.mitos.restStore',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.TitlesComboBox',
-        'Ext.mitos.SaveCancelWindow',
-        'Ext.mitos.FacilitiesComboBox',
-        'Ext.mitos.AuthorizationsComboBox'
+        'Ext.mitos.combo.Roles',
+        'Ext.mitos.combo.PermValues'
     ],
     initComponent: function(){
-        var page = this;
-        var rowPos; // Stores the current Grid Row Position (int)
-        var currList; // Stores the current List Option (string)
-        var currRec; // Store the current record (Object)
-        var currPerm; //store the current permission (object)
+
+        var me = this;
+        me.currTask = null;
+        me.currRole = null;
+
         //******************************************************************************
         // Roles Store
         //******************************************************************************
-        page.permStore = new Ext.create('Ext.mitos.CRUDStore',{
+        me.permStore = new Ext.create('Ext.mitos.restStore',{
             fields: [
                 {name: 'roleID', 		type: 'int'},
                 {name: 'role_name', 	type: 'string'},
@@ -40,145 +39,70 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
                 {name: 'role_id', 		type: 'int'},
                 {name: 'perm_id', 		type: 'int'},
                 {name: 'value', 		type: 'string'},
-                {name: 'ac_perm', 		type: 'string'}
+                {name: 'ac_perm', 		type: 'string'},
+                {name: 'task', 		    type: 'string'}
+
             ],
             model		: 'PermissionList',
             idProperty	: 'permID',
-            read		: 'app/administration/roles/data_read.ejs.php',
-            create		: 'app/administration/roles/data_create.ejs.php?task=create_permission',
-            update		: 'app/administration/roles/data_update.ejs.php?task=update_role_perms',
-            destroy 	: 'app/administration/roles/data_destroy.ejs.php?task=delete_permission'
+            url		    : 'app/administration/roles/data.php'
         });
-        // ****************************************************************************
-        // Structure, data for Roles
-        // AJAX -> component_data.ejs.php
-        // ****************************************************************************
-        page.roleStore = new Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'id', type: 'int'},
-                {name: 'role_name', type: 'string'}
-            ],
-            model		: 'Roles',
-            idProperty	: 'id',
-            read		: 'app/administration/roles/component_data.ejs.php?task=roles',
-            create		: 'app/administration/roles/data_create.ejs.php?task=create_role',
-            update		: 'app/administration/roles/data_update.ejs.php?task=update_role',
-            destroy 	: 'app/administration/roles/data_destroy.ejs.php?task=delete_role'
-        });
-        //------------------------------------------------------------------------------
-        // When the data is loaded
-        // Select the first record
-        //------------------------------------------------------------------------------
-        page.roleStore.on('load',function(ds,records,o){
-            Ext.getCmp('cmbList').setValue(records[0].data.id);
-            currList = records[0].data.id; // Get first result for first grid data
-            page.permStore.load({params:{role_id: currList}}); // Filter the data store from the currList value
-        });
-        // *************************************************************************************
-        // Federal EIN - TaxID Data Store
-        // *************************************************************************************
-        page.storePerms = new Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'value',	type: 'string'},
-                {name: 'perm',	type: 'string'}
-            ],
-            model		: 'permRecord',
-            idProperty	: 'value',
-            read		: 'app/administration/roles/component_data.ejs.php?task=perms'
-        });
+
         function permck(val) {
             if (val == 'No Access') {
-                return 'View <img src="ui_icons/no.gif" /> / Update <img src="ui_icons/no.gif" /> / Create <img src="ui_icons/no.gif" />';
+                return 'View <img src="ui_icons/no.gif" /> / Edit <img src="ui_icons/no.gif" /> / Delete <img src="ui_icons/no.gif" />';
             } else if(val == 'View') {
-                return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/no.gif" /> / Create <img src="ui_icons/no.gif" />';
-            } else if (val == 'View/Update'){
-                return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/yes.gif" /> / Create <img src="ui_icons/no.gif" />';
-            } else if (val == 'View/Update/Create'){
-                return 'View <img src="ui_icons/yes.gif" /> / Update <img src="ui_icons/yes.gif" /> / Create <img src="ui_icons/yes.gif" />';
+                return 'View <img src="ui_icons/yes.gif" /> / Edit <img src="ui_icons/no.gif" /> / Delete <img src="ui_icons/no.gif" />';
+            } else if (val == 'View/Edit'){
+                return 'View <img src="ui_icons/yes.gif" /> / Edit <img src="ui_icons/yes.gif" /> / Delete <img src="ui_icons/no.gif" />';
+            } else if (val == 'View/Edit/Delete'){
+                return 'View <img src="ui_icons/yes.gif" /> / Edit <img src="ui_icons/yes.gif" /> / Delete <img src="ui_icons/yes.gif" />';
             }
             return val;
         }
         // ****************************************************************************
-        // Create the Role Form
+        // Role Form Itemes
         // ****************************************************************************
-        page.rolesForm = Ext.create('Ext.mitos.FormPanel', {
-            fieldDefaults: {
-                msgTarget	: 'side',
-                labelWidth	: 100
-            },
-            defaultType	: 'textfield',
-            defaults	: { anchor: '100%' },
-            items: [{
-                hidden: true, name: 'id'
-            },{
-                xtype		: 'textfield',
-                fieldLabel	: 'Role Name',
-                name		: 'role_name'
-            }]
-        });
+        me.rolesFormItems = [{
+            xtype		: 'textfield',
+            fieldLabel	: 'Role Name',
+            name		: 'role_name'
+        }];
         // ****************************************************************************
-        // Create the Permisions Form
+        // Permision Form Items
         // ****************************************************************************
-        page.permsForm = Ext.create('Ext.mitos.FormPanel', {
-            fieldDefaults: {
-                msgTarget	: 'side',
-                labelWidth	: 100
-            },
-            defaultType	: 'textfield',
-            defaults	: { anchor: '100%' },
-            items: [{ 
-                hidden: true, name: 'permID'
-            },{
-                xtype		: 'textfield',
-                fieldLabel	: 'Permission Name',
-                name		: 'perm_name'
-            },{
-                xtype		: 'textfield',
-                fieldLabel	: 'Permission Unique Name',
-                name		: 'perm_key'
-            }]
-        });
-        // ****************************************************************************
-        // Create the Window
-        // ****************************************************************************	
-        page.winRoles = Ext.create('Ext.mitos.SaveCancelWindow', {
-            width		: 450,
-            form		: page.rolesForm,
-            store		: page.roleStore,
-            scope		: page,
-            idField		: 'id'
-            
-        });
-        // ****************************************************************************
-        // Create the Window
-        // ****************************************************************************	
-        page.winPerms = Ext.create('Ext.mitos.SaveCancelWindow', {
-            form		: page.permsForm,
-            store		: page.permStore,
-            scope		: page,
-            idField		: 'permID'
-        });
+        me.permsFormItems = [{
+            xtype		: 'textfield',
+            fieldLabel	: 'Permission Name',
+            name		: 'perm_name'
+        },{
+            xtype		: 'textfield',
+            fieldLabel	: 'Permission Unique Name',
+            name		: 'perm_key'
+        }];
+
         // *************************************************************************************
         // RowEditor Class
         // *************************************************************************************
         //noinspection JSUnusedGlobalSymbols
-        page.rowEditing = Ext.create('Ext.grid.plugin.CellEditing', {
-            //clicksToEdit: 1,
+        me.rowEditing = Ext.create('Ext.grid.plugin.CellEditing', {
             saveText: 'Update',
             errorSummary: false,
             listeners: {
                 afteredit: function () {
-                    page.permStore.sync();
-                    page.permStore.load({params:{role_id: currList}});
+                    me.permStore.proxy.extraParams = {task:me.currTask};
+                    me.permStore.sync();
+                    me.permStore.proxy.extraParams = { };
+                    me.loadGrid();
                 }
             }
         });
         // ****************************************************************************
         // Create the GridPanel
         // ****************************************************************************
-        page.rolesGrid = Ext.create('Ext.mitos.GridPanel', {
-            store	: page.permStore,
-            plugins	: [page.rowEditing],
+        me.rolesGrid = Ext.create('Ext.mitos.GridPanel', {
+            store	: me.permStore,
+            plugins	: [me.rowEditing],
             columns	: [{
                 dataIndex: 'permID', 
                 hidden: true
@@ -196,128 +120,245 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
                 dataIndex	: 'ac_perm',
                 renderer 	: permck,
                 flex     	: 1,
-                field: {
-                    xtype			: 'combo',
-                    triggerAction	: 'all',
-                    valueField		: 'value',
-                    displayField	: 'perm',
-                    editable		: false,
-                    queryMode		: 'local', 
-                    store			: page.storePerms
-                },
+                field       : { xtype:'mitos.permvaluescombo' },
                 lazyRender: true,
                 listClass: 'x-combo-list-small'
             }],
-            viewConfig: { stripeRows: true },
             listeners: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){ 
-                        page.cmdDeletePerm.enable();
-                        currPerm = record.data.permID;
-                        currRec = page.permStore.getAt(rowIndex);
-                    }
-                }
+                scope:this,
+                itemclick: me.onItemclick
             },
             dockedItems: [{
                 xtype	: 'toolbar',
                 dock	: 'top',
-                items: [
-                    new Ext.create('Ext.Button', {
-                        text	: 'Add a Role',
-                        iconCls	:'icoAddRecord',
-                        handler	: function(){
-                            page.rolesForm.getForm().reset(); // Clear the form
-                            page.winRoles.show();
-                            page.winRoles.setTitle('Add a Role');
-                        }
-                    }),'-',
-                    new Ext.create('Ext.Button', {
-                        text	: 'Add a Permission',
-                        iconCls	:'icoAddRecord',
-                        handler	: function(){
-                            page.permsForm.getForm().reset(); // Clear the form
-                            page.winPerms.show();
-                            page.winPerms.setTitle('Add a Permission');
-                        }
-    
-                    }),'-','Select Role: ',{
-                        name			: 'cmbList',
-                        width			: 250,
-                        xtype			: 'combo',
-                        displayField	: 'role_name',
-                        id				: 'cmbList',
-                        mode			: 'local',
-                        triggerAction	: 'all',
-                        hiddenName		: 'id',
-                        valueField		: 'id',
-                        ref				: '../cmbList',
-                        iconCls			: 'icoListOptions',
-                        editable		: false,
-                        store			: page.roleStore,
-                        listeners: {
-                            select: function(combo, record){
-                                // Reload the data store to reflect the new selected list filter
-                                currList = record[0].data.id;
-                                page.permStore.load({params:{role_id: currList}});
-                            }
-                        }
-                    },'-',
-                    new Ext.create('Ext.Button', {
-                        text		: 'Edit a Role',
-                        iconCls		: 'edit',
-                        handler		: function(DataView, record, item, rowIndex, e){
-                            page.rolesForm.getForm().reset(); // Clear the form
-                            var rec = page.roleStore.getById(currList); // get the record from the store
-                            page.rolesForm.getForm().loadRecord(rec);
-                            page.winRoles.setTitle('Edit a Role');
-                            page.permStore.load({params:{role_id: currList}});
-                        }
-                    }),'-',
-                    new Ext.create('Ext.Button', {
-                        text		: 'Delete Role',
-                        iconCls		: 'delete',
-                        handler: function(){
-                            Ext.Msg.show({
-                                title	: 'Please confirm...',
-                                icon	: Ext.MessageBox.QUESTION,
-                                msg		:'Are you sure to delete this Role?',
-                                buttons	: Ext.Msg.YESNO,
-                                fn		:function(btn,msgGrid){
-                                        if(btn=='yes'){
-                                        var rec = page.roleStore.getById( currList ); // get the record from the store
-                                        page.roleStore.remove(rec);
-                                        page.roleStore.sync();
-                                        page.roleStore.load();
-                                    }
-                                }
-                            });
-                        }
-                    }),'-',
-                    page.cmdDeletePerm = new Ext.create('Ext.Button', {
-                        text		: 'Delete Permission',
-                        iconCls		: 'delete',
-                        disabled  	: true,
-                        handler: function(){
-                            Ext.Msg.show({
-                                title	: 'Please confirm...',
-                                icon	: Ext.MessageBox.QUESTION,
-                                msg		:'Are you sure to delete this Permission? You will delete this permission in all Roles',
-                                buttons	: Ext.Msg.YESNO,
-                                fn		:function(btn,msgGrid){
-                                        if(btn=='yes'){
-                                        var rec = permStore.getById( currPerm ); // get the record from the store
-                                        page.permStore.remove(rec);
-                                        page.permStore.sync();
-                                        page.permStore.load({params:{role_id: currList}});
-                                    }
-                                }
-                            });
-                        }
-                    })
+                items: [{
+                    xtype   : 'button',
+                    text	: 'Add a Role',
+                    iconCls	:'icoAddRecord',
+                    handler	: function(){
+                        var form = me.win.down('form');
+                        me.currTask = 'role';
+                        me.onNew(form, me.rolesFormItems, 'PermissionList', 'Add New Role' );
+                    }
+                },'-',{
+                    xtype       : 'button',
+                    text		: 'Edit a Role',
+                    iconCls		: 'edit',
+                    handler		: function(){
+                        var form = me.win.down('form');
+                        me.currTask = 'role';
+                        me.onEdit(form, me.rolesFormItems, 'PermissionList', 'Edit Role');
+                    }
+                },'-',{
+                    xtype           : 'mitos.rolescombo',
+                    name			: 'cmbList',
+                    width			: 250,
+                    iconCls			: 'icoListOptions',
+                    itemId          : 'roleCombo',
+                    listeners: {
+                        scope   : this,
+                        select  : me.onSelect,
+                        expand   : me.onExpand
+                    }
+
+                },'-',{
+                    xtype       : 'button',
+                    text		: 'Delete Role',
+                    iconCls		: 'delete',
+                    cls         : 'toolDelete',
+                    scope       : this,
+                    handler: function(){
+                        me.currTask = 'role';
+                        me.onDeleteRole();
+                    }
+                },'->',{
+                    xtype   : 'button',
+                    text	: 'Add a Permission',
+                    iconCls	:'icoAddRecord',
+                    handler	: function(){
+                        var form = me.win.down('form');
+                        me.currTask = 'perm';
+                        me.onNew(form, me.permsFormItems, 'PermissionList', 'Add New Permission');
+                    }
+                },'-',{
+                    xtype       : 'button',
+                    text		: 'Delete Permission',
+                    iconCls		: 'delete',
+                    cls         : 'toolDelete',
+                    itemId      : 'deletePerm',
+                    disabled  	: true,
+                    scope       : this,
+                    handler: function(){
+                        me.currTask = 'perm';
+                        me.onDeletePerm();
+                    }
+                }
                 ]
             }]
         }); // END Facility Grid
-        page.pageBody = [ page.rolesGrid ];
-        page.callParent(arguments);
+
+        me.win = Ext.create('Ext.mitos.window.Window', {
+            width : 450,
+            items:[{
+                xtype:'mitos.form',
+                fieldDefaults: {
+                    msgTarget	: 'side',
+                    labelWidth	: 150
+                },
+                defaultType	: 'textfield',
+                defaults	: { anchor: '100%' }
+            }],
+            buttons: [{
+                text: 'save',
+                cls : 'winSave',
+                handler: function(){
+                    var form = me.win.down('form').getForm();
+                    if (form.isValid()) {
+                        me.onSave(form, me.permStore);
+                        me.action('close');
+                    }
+                }
+            }],
+            listeners:{
+                scope:me,
+                close:function(){
+                    me.action('close');
+                }
+            }
+        }); // END WINDOW
+
+        me.pageBody = [ me.rolesGrid ];
+        me.callParent(arguments);
+    },
+
+    onNew:function(form, formItmes, model, title){
+        this.setForm(form, formItmes, title);
+        form.getForm().reset();
+        var newModel  = Ext.ModelManager.create({}, model );
+        form.getForm().loadRecord(newModel);
+        this.win.show();
+    },
+
+    onEdit:function(form, formItmes, model, title){
+        this.setForm(form, formItmes, title);
+        this.rolesGrid.getSelectionModel().select(0);
+        var s = this.rolesGrid.getSelectionModel().getSelection();
+        form.loadRecord(s[0]);
+        this.win.show();
+    },
+
+    onSave:function(form, store){
+        var record      = form.getRecord(),
+            values      = form.getValues(),
+            storeIndex  = store.indexOf(record);
+        if (storeIndex == -1){
+            store.add(values);
+        }else{
+            record.set(values);
+        }
+        store.proxy.extraParams = {task:this.currTask};
+        store.sync();
+        if(this.currTask = 'role'){
+            this.loadRoles();
+        }
+        this.win.close();
+        this.loadGrid();
+    },
+
+    onDeleteRole:function(){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            icon    : Ext.MessageBox.QUESTION,
+            msg     : 'Are you sure to delete this?',
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn:function(btn){
+                if(btn=='yes'){
+                    this.rowEditing.cancelEdit();
+                    this.rolesGrid.getSelectionModel().select(0);
+                    var s = this.rolesGrid.getSelectionModel().getSelection();
+                    this.permStore.proxy.extraParams = {task:this.currTask};
+                    this.permStore.remove(s[0],{});
+                    this.permStore.destroy()
+                    this.loadRoles();
+                    this.currRole = null;
+                    this.loadGrid();
+                }
+            }
+        });
+    },
+
+    onDeletePerm:function(){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            icon    : Ext.MessageBox.QUESTION,
+            msg     : 'Are you sure to delete this?',
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn:function(btn){
+                if(btn=='yes'){
+                    this.rowEditing.cancelEdit();
+                    var s = this.rolesGrid.getSelectionModel().getSelection();
+                    this.permStore.proxy.extraParams = {task:this.currTask};
+                    this.permStore.remove(s[0],{});
+                    this.permStore.destroy()
+                    this.rolesGrid.getSelectionModel().deselectAll()
+                }
+            }
+        });
+    },
+
+    onItemclick:function(){
+        var delPerm = this.rolesGrid.down('toolbar').getComponent('deletePerm');
+        this.currTask = 'perm';
+        delPerm.enable();
+    },
+
+    onSelect:function(combo, record){
+        this.currRole = record[0].data.id;
+        this.loadGrid();
+    },
+
+    onExpand:function(){
+        var combo = this.rolesGrid.down('toolbar').getComponent('roleCombo');
+        combo.picker.loadMask.destroy()
+    },
+
+    setForm:function(form, formItmes, title){
+        var win = form.up('window');
+        form.removeAll();
+        form.add(formItmes);
+        win.setTitle(title);
+        win.doLayout();
+    },
+
+    action:function(action){
+        var win     = this.win,
+        form        = win.down('form');
+        switch(action){
+            case 'close':
+                form.getForm().reset();
+                break;
+        }
+    },
+
+    loadRoles:function(){
+        var combo = this.rolesGrid.down('toolbar').getComponent('roleCombo'),
+        store = combo.getStore();
+        store.load();
+    },
+
+    loadGrid:function(){
+        var combo = this.rolesGrid.down('toolbar').getComponent('roleCombo'),
+        store = combo.getStore();
+        if(this.currRole == null){
+            this.currRole = store.getAt(0).data.id;
+            combo.setValue(this.currRole)
+        }
+        this.permStore.load({params:{role_id: this.currRole}});
+    },
+
+    loadStores:function(){
+        this.loadGrid();
     }
 }); // end roles class

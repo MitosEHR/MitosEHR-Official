@@ -14,7 +14,7 @@ Ext.define('Ext.mitos.combo.Authorizations',{
 
     	Ext.apply(this, {
             editable    : false,
-            mode        : 'local',
+            queryMode   : 'local',
             valueField  : 'id',
             displayField: 'name',
             emptyText   : 'Select',

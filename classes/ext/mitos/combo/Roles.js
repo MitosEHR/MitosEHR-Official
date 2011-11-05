@@ -8,7 +8,7 @@ Ext.define('Ext.mitos.combo.Roles',{
                 {name: 'id', type: 'int'},
 		        {name: 'role_name', type: 'string'}
             ],
-            model		: 'CodesTypes',
+            model		: 'RolesCombo',
             idProperty	: 'id',
             url	    	: 'classes/ext/mitos/data/components_data.ejs.php',
             extraParams	: { task:"roles"},
@@ -17,7 +17,7 @@ Ext.define('Ext.mitos.combo.Roles',{
 
     	Ext.apply(this, {
             editable    : false,
-            mode        : 'local',
+            queryMode   : 'local',
             valueField  : 'id',
             displayField: 'role_name',
             emptyText   : 'Select',

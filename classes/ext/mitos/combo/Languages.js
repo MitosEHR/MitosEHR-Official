@@ -26,7 +26,7 @@ Ext.define('Ext.mitos.combo.Languages',{
 
     	Ext.apply(this, {
             editable    : false,
-            mode        : 'local',
+            queryMode   : 'local',
             valueField  : 'lang_code',
             displayField: 'lang_description',
             emptyText   : 'Select',
