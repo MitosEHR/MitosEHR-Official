@@ -156,10 +156,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 margin          : '5px 5px 5px 10px',
                 itemId          : 'xtype',
                 listeners       : {
-                    select: function(combo, record){
+                    select: function(combo, record) {
                         var type = record[0].data.value;
 
-                        if(type == 'combobox'){
+                        if (type == 'combobox') {
                             me.selectListGrid.setTitle('Select List Options');
                             me.selectListGrid.expand();
                             me.selectListGrid.enable();
@@ -170,15 +170,19 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
                         Array.prototype.find = function(searchStr) {
                             var returnArray = false;
-                            for (var i=0; i<this.length; i++) {
+                            for (var i = 0; i < this.length; i++) {
                                 if (typeof(searchStr) == 'function') {
                                     if (searchStr.test(this[i])) {
-                                        if (!returnArray) { returnArray = [] }
-                                            returnArray.push(i);
+                                        if (!returnArray) {
+                                            returnArray = [];
                                         }
-                                    } else {
-                                        if (this[i]===searchStr) {
-                                            if (!returnArray) { returnArray = [] }
+                                        returnArray.push(i);
+                                    }
+                                } else {
+                                    if (this[i] === searchStr) {
+                                        if (!returnArray) {
+                                            returnArray = [];
+                                        }
                                         returnArray.push(i);
                                     }
                                 }
@@ -189,9 +193,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                         var addProp = me.fieldForm.getComponent('aditionalProperties');
                         var is = addProp.items.keys;
 
-                        function enableItems(itmes){
-                            for (var i=0; i<is.length; i++){
-                                if ( !itmes.find(is[i]) ){
+                        function enableItems(itmes) {
+                            for (var i = 0; i < is.length; i++) {
+                                if (!itmes.find(is[i])) {
                                     addProp.getComponent(is[i]).hide();
                                 } else {
                                     addProp.getComponent(is[i]).show();
@@ -199,29 +203,21 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
                             }
                         }
-                        switch(type){
-                            case 'combobox':
-                                enableItems(['name','width','allowBlank']);
-                                break;
-                            case 'fieldset':
-                                enableItems(['']);
-                                break;
-                            case 'fieldcontainer':
-                                enableItems(['']);
-                                break;
-                            case 'textfield':
-                                enableItems(['name','allowBlank']);
-                                break;
-                            case 'textarea':
-                                enableItems(['name','allowBlank']);
-                                break;
-                            case 'mitos.checkbox':
-                                enableItems(['name','allowBlank']);
-                                break;
-                            default:
-                                enableItems(['name','allowBlank']);
 
-
+                        if (type == 'combobox') {
+                            enableItems(['name','width','allowBlank']);
+                        } else if (type == 'fieldset') {
+                            enableItems(['']);
+                        } else if (type == 'fieldcontainer') {
+                            enableItems(['']);
+                        } else if (type == 'textfield') {
+                            enableItems(['name','allowBlank']);
+                        } else if (type == 'textarea') {
+                            enableItems(['name','allowBlank']);
+                        } else if (type == 'mitos.checkbox') {
+                            enableItems(['name','allowBlank']);
+                        } else {
+                            enableItems(['name','allowBlank']);
                         }
                     }
                 }
@@ -348,7 +344,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 }]
                 
             }]
-        })
+        });
         // *************************************************************************************
         // Layout fields Grid Panel
         // *************************************************************************************
@@ -437,7 +433,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
     loadFieldsGrid:function(){
         var sm = this.formsGrid.getSelectionModel();
-        if(this.currForm == null){
+        if(this.currForm === null){
             sm.select(0);
         }
         var form_id = sm.getSelection()[0].data.form_id;

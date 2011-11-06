@@ -1,3 +1,54 @@
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
 Ext.define('Extensible.example.calendar.data.Calendars', {
     constructor: function() {
         return {

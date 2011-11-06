@@ -149,7 +149,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     text	    : 'Create New Select List',
                     iconCls	    : 'icoListOptions',
                     handler     : function(){
-                        me.currTask = 'list'
+                        me.currTask = 'list';
                         me.onNewList();
                     }
                 },'-',{
@@ -157,7 +157,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     iconCls	    : 'delete',
                     cls         : 'toolDelete',
                     handler	    : function(){
-                        me.currTask = 'list'
+                        me.currTask = 'list';
                         this.onDelete();
                     }
                 },'-',{
@@ -186,7 +186,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     text        : 'Add Option',
                     iconCls     : 'icoAddRecord',
                     handler     : function() {
-                        me.currTask = 'option'
+                        me.currTask = 'option';
                         me.onNewOption();
                     }
                 },'-',{
@@ -194,7 +194,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     iconCls     : 'delete',
                     cls         : 'toolDelete',
                     handler     : function(){
-                        me.currTask = 'option'
+                        me.currTask = 'option';
                         me.onDelete();
                     }
                 }]
@@ -226,7 +226,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             scope   : this,
             fn      : function(btn,msgGrid){
                 if(btn=='yes'){
-                    //TODO
+                    alert('TODO');
                 }
             }
         });
@@ -244,9 +244,9 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
     loadGrid:function(){
         var combo = this.listGrid.down('toolbar').getComponent('cmbList'),
         store = combo.getStore();
-        if(this.currList == null){
+        if(this.currList === null){
             this.currList = store.getAt(0).data.option_id;
-            combo.setValue(this.currList)
+            combo.setValue(this.currList);
         }
         this.storeListsOption.load({params:{list_id: this.currList}});
     },

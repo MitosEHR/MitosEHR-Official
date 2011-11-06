@@ -183,7 +183,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             listeners:{
                 scope:me,
                 close: function(){
-                    me.action('close')
+                    me.action('close');
                 }
             }
         });
@@ -241,49 +241,44 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     loadStores:function(){
         this.storeMsgs.load();
     },
-    action:function(action){
-        var win         = this.winMessage,
-        sm              = this.msgGrid.getSelectionModel(),
-        gridTbar        = this.msgGrid.down('toolbar'),
-        winTbar         = win.down('toolbar'),
-        form            = win.down('form'),
-        patientCombo    = form.getComponent('patientCombo'),
-        patientField    = form.getComponent('patientField'),
-        bodyMsg         = form.getComponent('bodyMsg'),
-        currMsg         = form.getComponent('currMsg'),
-        newbtn          = gridTbar.getComponent('newMsg'),
-        deletebtn       = winTbar.getComponent('deleteMsg'),
-        replybtn        = winTbar.getComponent('replyMsg');
-        switch(action){
-            case 'new':
-                bodyMsg.hide();
-                currMsg.show();
-                replybtn.disable();
-                patientCombo.show();
-                patientField.hide();
-                win.show();
-            break;
-            case 'reply':
-                currMsg.show();
-                patientCombo.hide();
-                patientField.show();
-                replybtn.disable();
-            break;
-            case 'close':
-                form.getForm().reset();
-                newbtn.enable();
-                deletebtn.disable();
-                sm.deselectAll();
-            break;
-            case 'itemdblclick':
-                replybtn.enable();
-                bodyMsg.show();
-                currMsg.hide();
-                patientCombo.hide();
-                patientField.show();
-                deletebtn.enable();
-                win.show();
-            break;
+    action:function(action) {
+        var win = this.winMessage,
+            sm = this.msgGrid.getSelectionModel(),
+            gridTbar = this.msgGrid.down('toolbar'),
+            winTbar = win.down('toolbar'),
+            form = win.down('form'),
+            patientCombo = form.getComponent('patientCombo'),
+            patientField = form.getComponent('patientField'),
+            bodyMsg = form.getComponent('bodyMsg'),
+            currMsg = form.getComponent('currMsg'),
+            newbtn = gridTbar.getComponent('newMsg'),
+            deletebtn = winTbar.getComponent('deleteMsg'),
+            replybtn = winTbar.getComponent('replyMsg');
+        if (action == 'new') {
+            bodyMsg.hide();
+            currMsg.show();
+            replybtn.disable();
+            patientCombo.show();
+            patientField.hide();
+            win.show();
+        } else if (action == 'reply') {
+            currMsg.show();
+            patientCombo.hide();
+            patientField.show();
+            replybtn.disable();
+        } else if (action == 'close') {
+            form.getForm().reset();
+            newbtn.enable();
+            deletebtn.disable();
+            sm.deselectAll();
+        } else if (action == 'itemdblclick') {
+            replybtn.enable();
+            bodyMsg.show();
+            currMsg.hide();
+            patientCombo.hide();
+            patientField.show();
+            deletebtn.enable();
+            win.show();
         }
     }
 }); //end Ext.mitos.panel.messages.Messages

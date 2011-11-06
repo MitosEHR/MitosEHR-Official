@@ -1,3 +1,54 @@
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
 //******************************************************************************
 // layout.ejs.php
 // Description: Layout Screen Panel

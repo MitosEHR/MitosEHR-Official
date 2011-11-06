@@ -1,3 +1,54 @@
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
+/*!
+ * MitosEHR GPLv3
+ */
 Ext.define('Extensible.example.calendar.data.EventsCustom', {
     constructor: function() {
         var today = Ext.Date.clearTime(new Date),

@@ -549,22 +549,18 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     openWin:function(){
         this.win.show();
     },
-    action:function(action){
-        var win     = this.win,
-        form        = win.down('form'),
-        winTbar     = win.down('toolbar'),
-        deletebtn   = winTbar.getComponent('delete');
+    action:function(action) {
+        var win = this.win,
+            form = win.down('form'),
+            winTbar = win.down('toolbar'),
+            deletebtn = winTbar.getComponent('delete');
 
-        switch(action){
-            case 'new':
-                deletebtn.disable();
-                break;
-            case 'old':
-                deletebtn.enable();
-                break;
-            case 'close':
-                form.getForm().reset();
-                break;
+        if (action == 'new') {
+            deletebtn.disable();
+        } else if (action == 'old') {
+            deletebtn.enable();
+        } else if (action == 'close') {
+            form.getForm().reset();
         }
     },
     loadStores:function(){

@@ -112,8 +112,3 @@ Ext.define('Ext.mitos.panel.miscellaneous.mysettings.MySettings',{
         panel.callParent(arguments);
     }
 }); // End ExtJS
-
-
-
-
-

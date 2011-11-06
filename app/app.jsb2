@@ -1,0 +1,52 @@
+{
+    "projectName": "MitosEHR - Electronic Health Record",
+    "deployDir"  : "app",
+    "pkgs": [
+        {
+            "name": "All Classes Needed",
+            "file": "App.js",
+            "isDebug": false,
+            "compress": true,
+            "includeDeps":false,
+            "fileIncludes": [
+                {
+                    "path": "administration/facilities/",
+                    "text": "Facilities.js"
+                },
+                {
+                    "path": "administration/globals/",
+                    "text": "Globals.js"
+                },
+                {
+                    "path": "administration/layout/",
+                    "text": "Layout.js"
+                },
+                {
+                    "path": "administration/lists/",
+                    "text": "Lists.js"
+                },
+                {
+                    "path": "administration/log/",
+                    "text": "Log.js"
+                },
+                {
+                    "path": "administration/practice/",
+                    "text": "Practice.js"
+                },
+                {
+                    "path": "administration/roles/",
+                    "text": "Roles.js"
+                },
+                {
+                    "path": "administration/services/",
+                    "text": "Services.js"
+                },
+                {
+                    "path": "administration/users/",
+                    "text": "Users.js"
+                }
+            ]
+        }
+    ],
+    "resources": []
+}

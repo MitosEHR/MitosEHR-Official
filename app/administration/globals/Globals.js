@@ -852,7 +852,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         iconCls   : 'save',
                         handler   : function(){
                             var form = me.globalFormPanel.getForm();
-                            me.onSave(form, me.store)
+                            me.onSave(form, me.store);
                         }
                     }]
                 }]

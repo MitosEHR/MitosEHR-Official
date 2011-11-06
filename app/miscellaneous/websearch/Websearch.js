@@ -123,7 +123,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
                 itemclick:function(DataView, record, item, rowIndex, e){
                     page.viewPanel.expand();
                     rec = page.store.getAt(rowIndex);
-                    page.viewPanel.update(rec.data)
+                    page.viewPanel.update(rec.data);
                 }
             }
         }); // END GRID
@@ -142,8 +142,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
                     '<h4 class="search_source">Source: {source}</h4>',
                 '</div>',
                 '<div class="search_body">{FullSummary}</div>',
-                '</div>'
-             )
+                '</div>')
         });
 
         page.pageBody = [ page.searchPanel, page.onotesGrid, page.viewPanel ];

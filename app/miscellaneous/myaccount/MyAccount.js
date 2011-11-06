@@ -270,8 +270,3 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
         page.callParent(arguments);
     } // end of initComponent
 }); //ens oNotesPage class
-
-
-
-
-
