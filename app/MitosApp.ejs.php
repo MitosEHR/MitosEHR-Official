@@ -46,17 +46,9 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="favicon.ico" >
-<style type="text/css">
-.mitos-mask {
-    z-index:  300000;
-}
-.mitos-mask-msg {
-    z-index:300001;
-    left:   45%;
-    top:    50%;
-}
-</style>
+
 <script type="text/javascript">
+
 // *************************************************************************************
 // Set the path for the components, so the application can find them.
 // *************************************************************************************
@@ -73,7 +65,6 @@ Ext.Loader.setConfig({
 });
 
 Ext.onReady(function() {
-
 	Ext.define('Ext.mitos.MitosApp',{
 		extend:'Ext.container.Container',
 		uses:[
@@ -105,7 +96,7 @@ Ext.onReady(function() {
             'Ext.mitos.combo.Facilities',
             'Ext.mitos.combo.TransmitMedthod',
             'Ext.mitos.combo.InsurancePayerType',
-                
+
             'Ext.mitos.form.FormPanel',
             'Ext.mitos.form.fields.Checkbox',
             'Ext.mitos.window.Window'
@@ -113,18 +104,13 @@ Ext.onReady(function() {
 		],
 		initComponent: function(){
 
-	        /** @namespace Ext.QuickTips */
-            Ext.QuickTips.init();
-			// *************************************************************************************
-			// Global Variables
-			// *************************************************************************************
-			app = this;
+			var me = this;
 
 			// *************************************************************************************
-			// Task Scheduler 
+			// Task Scheduler
 			// This will run certain task at determined time.
 			// *************************************************************************************
-			app.checkSession = function(){
+			me.checkSession = function(){
 				Ext.Ajax.request({
 					url     : 'lib/authProcedures/chkAuth.inc.php',
 					success : function(response, opts){
@@ -132,29 +118,29 @@ Ext.onReady(function() {
 					}
 				});
 			};
-			
+
 			// *************************************************************************************
 			// TaskScheduler
 			// This will run all the procedures inside the checkSession
 			// *************************************************************************************
 			Ext.TaskManager.start({
-				run		    : app.checkSession,
+				run		    : me.checkSession,
 				interval    : 100000
 			});
 			// *************************************************************************************
 			// Navigation Panel Tree Data
 			// *************************************************************************************
-			app.storeTree = Ext.data.TreeStore({
+			me.storeTree = Ext.create('Ext.data.TreeStore',{
 				proxy: {
 					type	: 'ajax',
 					url		: 'app/navigation/default_leftnav.ejs.php'
 				}
 			});
-			
+
 			// *************************************************************************************
 			// Navigation Panel
 			// *************************************************************************************
-			app.Navigation = Ext.create('Ext.tree.TreePanel',{
+			me.Navigation = Ext.create('Ext.tree.TreePanel',{
 				region		: 'center',
                 stateId     : 'Navigation',
 				bodyPadding : '5 0 0 0',
@@ -162,7 +148,7 @@ Ext.onReady(function() {
 				hideHeaders	: true,
 				rootVisible	: false,
 				border      : false,
-				store		: app.storeTree,
+				store		: me.storeTree,
 				width		: <?php echo $_SESSION["global_settings"]["gbl_nav_area_width"]; ?>,
 				root		: {
 					nodeType	: 'async',
@@ -174,7 +160,7 @@ Ext.onReady(function() {
                         if(record.data.hrefTarget){
 
                             var card    = record.data.hrefTarget;
-                            var layout  = app.MainPanel.getLayout();
+                            var layout  = me.MainPanel.getLayout();
                             layout.setActiveItem(card);
 
                             var currCard= Ext.getCmp(card);
@@ -205,7 +191,7 @@ Ext.onReady(function() {
                             // *********** //
                             // Fade Out/In //
                             // *********** //
-                            
+
                             //first.getEl().fadeOut({
                             //    duration: 500,
                             //    callback: function() {
@@ -220,11 +206,11 @@ Ext.onReady(function() {
                     }
                 }
 			});
-			
+
 			// *************************************************************************************
 			// MitosEHR Support Page
 			// *************************************************************************************
-			app.winSupport = Ext.create('Ext.window.Window', {
+			me.winSupport = Ext.create('Ext.window.Window', {
 				width			: 1000,
 				height			: 650,
 				closeAction		: 'hide',
@@ -258,25 +244,25 @@ Ext.onReady(function() {
                         text:'Close',
                         iconCls:'close',
                         handler:function(){
-                            app.winSupport.hide();
+                            me.winSupport.hide();
                         }
                     }]
                 }
 			}); // End winSupport
 
             function showMiframe(src){
-                app.winSupport.remove(app.miframe);
-                app.winSupport.add(
-                        app.miframe = Ext.create('Ext.mitos.ManagedIframe',{
-                            src:src  
+                me.winSupport.remove(me.miframe);
+                me.winSupport.add(
+                        me.miframe = Ext.create('Ext.mitos.ManagedIframe',{
+                            src:src
                         })
             );
-                app.winSupport.show();
+                me.winSupport.show();
             }
 			// *************************************************************************************
 			// The panel definition for the the TreeMenu & the support button
 			// *************************************************************************************
-			app.navColumn = Ext.create('Ext.panel.Panel', {
+			me.navColumn = Ext.create('Ext.panel.Panel', {
 				title		: '<?php i18n("Navigation"); ?>',
                 stateId     : 'navColumn',
 				layout      : 'border',
@@ -284,7 +270,7 @@ Ext.onReady(function() {
 				region		: '<?php echo $_SESSION["global_settings"]["concurrent_layout"]; ?>',
 				split		: true,
 				collapsible	: true,
-				items		: [app.Navigation],
+				items		: [me.Navigation],
 				dockedItems: [{
         			xtype: 'toolbar',
         			dock: 'bottom',
@@ -309,14 +295,14 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Panel for the live search
 			// *************************************************************************************
-			app.searchPanel = Ext.create('Ext.panel.Panel', {
+			me.searchPanel = Ext.create('Ext.panel.Panel', {
 				width		: 400,
 				bodyPadding	: '8 11 5 11',
 				margin		: '0 5',
 				style 		: 'float:left',
 				layout		: 'anchor',
 				items: [
-					app.liveSearch = Ext.create('Ext.mitos.LivePatientSearch',{
+					me.liveSearch = Ext.create('Ext.mitos.LivePatientSearch',{
                         emptyText: '<?php i18n("Live Patient Search..."); ?>',
                         listeners: {
                             select: function(combo, selection) {
@@ -326,16 +312,16 @@ Ext.onReady(function() {
                                         url: Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
                                         success: function(response, opts){
                                             var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
-                                            //app.patientButton.setText( newPatientBtn );
-                                            app.patientButton.update( {name:post.get('patient_name'), info:'('+post.get('pid')+')'} );
-                                            app.patientButton.enable();
+                                            //me.patientButton.setText( newPatientBtn );
+                                            me.patientButton.update( {name:post.get('patient_name'), info:'('+post.get('pid')+')'} );
+                                            me.patientButton.enable();
                                         }
                                     });
                                     Ext.data.Request()
                                 }
                             },
                             blur: function(){
-                                app.liveSearch.reset();
+                                me.liveSearch.reset();
                             }
                         }
                     })
@@ -345,7 +331,7 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// header Panel
 			// *************************************************************************************
-			app.Header = Ext.create('Ext.container.Container', {
+			me.Header = Ext.create('Ext.container.Container', {
 				region		: 'north',
 				height		: 44,
 				split		: false,
@@ -360,7 +346,7 @@ Ext.onReady(function() {
 					style	: 'float:left',
 					border	:	false
 				},
-					app.patientButton = new Ext.create('Ext.Button', {
+					me.patientButton = new Ext.create('Ext.Button', {
 						//text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
 						scale	: 'large',
 						style 	: 'float:left',
@@ -405,7 +391,7 @@ Ext.onReady(function() {
 							}]
 						})
 					})
-				, app.searchPanel,
+				, me.searchPanel,
 				{
 					xtype		: 'button',
 					text		: '<?php echo $_SESSION["user"]["name"]; ?>',
@@ -417,13 +403,13 @@ Ext.onReady(function() {
 						text:'<?php i18n("My account"); ?>',
                         iconCls		: 'icoArrow',
 						handler: function(){
-							app.MainPanel.getLayout().setActiveItem('panelMyAccount');
+							me.MainPanel.getLayout().setActiveItem('panelMyAccount');
 						}
 					},{
 						text:'<?php i18n("My settings"); ?>',
                         iconCls		: 'icoArrow',
 						handler: function(){
-                            app.MainPanel.getLayout().setActiveItem('panelMySettings');
+                            me.MainPanel.getLayout().setActiveItem('panelMySettings');
                         }
 					},{
 						text:'<?php i18n("Logout"); ?>',
@@ -445,21 +431,17 @@ Ext.onReady(function() {
 			// *************************************************************************************
 			// Main Panel
 			// *************************************************************************************
-			app.MainPanel = Ext.create('Ext.container.Container', {
-				id 				: 'MainApp',
+			me.MainPanel = Ext.create('Ext.container.Container', {
 				region			: 'center',
                 layout          : 'card',
 				border			: true,
-				margins			: 0,
-				padding			: 0,
-                deferredRender  : true,
                 defaults        : { layout: 'fit', xtype:'container' },
                 items: [
                     Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done panels TODO
                     Ext.create('Ext.mitos.panel.calendar.Calendar'),                        // done
                     Ext.create('Ext.mitos.panel.messages.Messages'),                        // done
 
-                    //Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
+                    Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                     Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                     Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),
                     Ext.create('Ext.mitos.panel.fees.billing.Billing'),
@@ -470,7 +452,7 @@ Ext.onReady(function() {
 
                     Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // done
                     Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
-                    //Ext.create('Ext.mitos.panel.administration.layout.Layout'),
+                    Ext.create('Ext.mitos.panel.administration.layout.Layout'),             // working
                     Ext.create('Ext.mitos.panel.administration.lists.Lists'),               // working
 
                     Ext.create('Ext.mitos.panel.administration.log.Log'),                   // done
@@ -482,15 +464,15 @@ Ext.onReady(function() {
                     Ext.create('Ext.mitos.panel.miscellaneous.addressbook.Addressbook'),
                     Ext.create('Ext.mitos.panel.miscellaneous.myaccount.MyAccount'),
                     Ext.create('Ext.mitos.panel.miscellaneous.mysettings.MySettings'),
-                    Ext.create('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes')
-                    //Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
+                    Ext.create('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes'),
+                    Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
 
                 ]
 			}); // End MainApp
             // *************************************************************************************
 			// Footer Panel
 			// *************************************************************************************
-	        app.Footer = Ext.create('Ext.container.Container', {
+	        me.Footer = Ext.create('Ext.container.Container', {
                 height      : 30,
                 split       : false,
                 padding     : '3 0',
@@ -536,7 +518,7 @@ Ext.onReady(function() {
 			Ext.create('Ext.Viewport', {
 				layout      : { type: 'border', padding	: 2 },
 				defaults	: { split: true },
-				items		: [ app.Header, app.navColumn, app.MainPanel, app.Footer ],
+				items		: [ me.Header, me.navColumn, me.MainPanel, me.Footer ],
                 listeners:{
                     afterrender:function(){
                         Ext.get('mainapp-loading').remove();
@@ -544,7 +526,7 @@ Ext.onReady(function() {
                     }
                 }
 			}); // End ViewPort
-			app.callParent(arguments);
+			me.callParent(arguments);
 		} // end of initComponent
 	}); //end MitosApp class
     Ext.create('Ext.mitos.MitosApp');

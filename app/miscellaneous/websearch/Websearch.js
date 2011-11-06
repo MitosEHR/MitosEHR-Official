@@ -18,8 +18,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
         'Ext.mitos.GridPanel'
     ],
     initComponent: function(){
-        /** @namespace Ext.QuickTips */
-        Ext.QuickTips.init();
+
         var page = this;
         var search_type;
         var rec;
@@ -76,12 +75,12 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
                         page.searchField.reset();
                     }
                 }
-            },  page.searchField = Ext.form.field.Text({
-                    emptyText	: 'Web search...',
-                    enableKeyEvents: true,
-                    hideLabel	: true,
-                    anchor		: '100%',
-                    disabled     : true,
+            },  page.searchField = Ext.create('Ext.form.field.Text',{
+                    emptyText	    : 'Web search...',
+                    enableKeyEvents : true,
+                    hideLabel	    : true,
+                    anchor		    : '100%',
+                    disabled        : true,
                     listeners:{
                         keyup: function(){
                             var query = this.getValue();
@@ -104,10 +103,10 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
             region		: 'center',
             store       : page.store,
             viewConfig: {
-                deferEmptyText :false,
-                emptyText :'<p class="search_nothing_found" style="padding: 10px 0 0 20px; font-size: 24px">Nothing Found!</p>',
-                stripeRows: true,
-                loadingText: 'Searching...  Please Wait!'
+                deferEmptyText  : false,
+                emptyText       : '<p class="search_nothing_found" style="padding: 10px 0 0 20px; font-size: 24px">Nothing Found!</p>',
+                stripeRows      : true,
+                loadingText     : 'Searching...  Please Wait!'
             },
             columns: [
                 { flex: 1, header:'Search Results', sortable: true, dataIndex: 'title', renderer:page.searchRow  },
@@ -115,10 +114,10 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
                 { hidden: true, sortable: true, dataIndex: 'snippet' }
             ],
             tbar: Ext.create('Ext.PagingToolbar', {
-                store: page.store,
-                displayInfo: true,
-                emptyMsg: "Nothing to display",
-                plugins: Ext.create('Ext.ux.SlidingPager', {})
+                store       : page.store,
+                displayInfo : true,
+                emptyMsg    : "Nothing to display",
+                plugins     : Ext.create('Ext.ux.SlidingPager', {})
             }),
             listeners:{
                 itemclick:function(DataView, record, item, rowIndex, e){
@@ -129,13 +128,13 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
             }
         }); // END GRID
         page.viewPanel = Ext.create('Ext.panel.Panel', {
-            region: 'south',
-            height:500,
-            collapsible:true,
-            collapsed: true,
-            layout:'fit',
-            frame: true,
-            bodyBorder: true,
+            region      : 'south',
+            height      : 300,
+            collapsible : true,
+            collapsed   : true,
+            layout      : 'fit',
+            frame       : true,
+            bodyBorder  : true,
             tpl: Ext.create('Ext.XTemplate',
                 '<div class="search_container">',
                 '<div class="search_data">',

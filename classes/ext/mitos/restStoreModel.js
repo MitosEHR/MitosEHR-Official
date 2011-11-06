@@ -55,7 +55,7 @@ Ext.define('Ext.mitos.restStoreModel',{
 				},
                 listeners: {
                     exception: function(proxy, response){
-                        obj = Ext.JSON.decode(response.responseText);
+                        var obj = Ext.JSON.decode(response.responseText);
                         Ext.Msg.alert({
                                 title   : 'Oops!',
                                 msg     : obj.errors.reason,

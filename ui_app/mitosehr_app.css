@@ -5,6 +5,14 @@
 	font-family: 'Cuprum';
 	src: url('../ui_fonts/Cuprum.ttf');
 }
+.mitos-mask {
+    z-index:  300000;
+}
+.mitos-mask-msg {
+    z-index:300001;
+    left:   45%;
+    top:    50%;
+}
 ::-webkit-scrollbar {
     width: 4px;
     height: 10px;

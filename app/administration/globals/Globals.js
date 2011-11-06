@@ -284,7 +284,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
             border			: true,
             layout			: 'fit',
             autoScroll		: true,
-            padding			: 0,
+            bodyStyle       : 'padding: 0;',
             fieldDefaults	: { msgTarget: 'side', labelWidth: 220, width: 520 },
             defaults		: { anchor: '100%' },
             items: [{

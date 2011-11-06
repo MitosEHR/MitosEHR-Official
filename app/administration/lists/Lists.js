@@ -11,7 +11,7 @@
 Ext.define('Ext.mitos.panel.administration.lists.Lists',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLists',
-    pageTitle   : 'List Options',
+    pageTitle   : 'Select List Options',
     uses        : [
         'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
