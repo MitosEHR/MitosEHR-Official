@@ -1,5 +1,4 @@
 <?php
-
 /* MitosEHR Starter
  * 
  * Description: This will start the application, if no sites are found
@@ -8,10 +7,11 @@
  * the user and start the main application
  * 
  * Author: GI Technologies, 2011
- * Ver: 0.0.2
+ * modifed: Ernesto J Rodriguez, Nov 7, 2011
+ *
+ * Ver: 0.0.3
  * 
  */
-
 //-------------------------------------------------------------------
 // Startup the SESSION
 // This will change in the future. 
@@ -46,7 +46,7 @@ if(isset($_SESSION['user']['auth'])){
 
 		    include_once("app_mobile/MitosApp.ejs.php");
         }else{
-            include_once("app/MitosApp.ejs.php");
+            include_once("app/index.php");
         }
 	}
 //-------------------------------------------------------------------
@@ -76,4 +76,3 @@ if(isset($_SESSION['user']['auth'])){
         }
 	}
 }
-?>
