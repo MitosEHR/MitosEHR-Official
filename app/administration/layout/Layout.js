@@ -2,10 +2,10 @@
 // layout.ejs.php
 // Description: Layout Screen Panel
 // v0.0.1
-// 
+//
 // Author: GI Technologies, 2011
 // Modified: n/a
-// 
+//
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 Ext.define('Ext.mitos.panel.administration.layout.Layout',{
@@ -97,9 +97,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.selectListGrid = Ext.create('Ext.grid.Panel', {
             store		    : me.selectListoptionsStore,
             region		    : 'south',
-            frame		    : true,
+            frame		    : false,
             collapseMode    : 'mini',
             split           : true,
+            border           : true,
+            titleCollapse   : false,
             hideCollapseTool: true,
             width		    : 250,
             height          : 250,
@@ -108,12 +110,12 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             columns:[{
                 text        : 'Name',
                 flex        : 1,
-                sortable    : true,
+                sortable    : false,
                 dataIndex   : 'title'
             },{
                 text        : 'Value',
                 flex        : 1,
-                sortable    : true,
+                sortable    : false,
                 dataIndex   : 'option_id'
             }],
             dockedItems: [{
@@ -137,9 +139,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         // *************************************************************************************
         me.fieldForm = Ext.create('Ext.mitos.form.FormPanel', {
             region          : 'center',
-            frameHeader     : true,
+            //frameHeader     : true,
+            border:true,
             autoScroll      : true,
-            frame:true,
+            frame           : false,
             fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
             defaults        : { anchor:'100%' },
             items: [{
@@ -177,6 +180,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                             me.selectListGrid.expand();
                             me.selectListGrid.enable();
                         } else {
+                            me.selectListGrid.setTitle('');
                             me.selectListGrid.collapse();
                             me.selectListGrid.disable();
                         }
@@ -341,6 +345,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             width		: 350,
             region      : 'east',
             layout      : 'border',
+            bodyStyle   : 'background-color:#eeeeee!important',
             items       : [ me.fieldForm, me.selectListGrid ],
             dockedItems : [{
                 xtype   : 'toolbar',
@@ -354,6 +359,14 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     text    : 'Delete',
                     iconCls : 'delete',
                     cls     : 'toolDelete'
+                },'-','->',{
+                    text    : 'Form Preview',
+                    iconCls : 'icoPreview',
+                    enableToggle : true,
+                    listeners:{
+                        scope   : me,
+                        toggle  : me.onFormPreview
+                    }
                 }]
                 
             }]
@@ -419,8 +432,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             margin      : '0 0 2 0',
             title		: 'Form list',
             width		: 200,
+            hideHeaders:true,
             columns		: [{
-                text        : 'Name',
                 flex        : 1,
                 sortable    : true,
                 dataIndex   : 'form_id'
@@ -436,8 +449,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             region          : 'south',
             height          : 300,
             collapsible     : true,
-            titleCollapse   : true,
+            titleCollapse   : false,
+            hideCollapseTool: true,
             collapsed       : true,
+            border		    : true,
+            frame		    : true,
             collapseMode    : 'header',
             itmes:[{
 
@@ -460,6 +476,15 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         var option_id = record[0].data.option_id;
         console.log(record[0].data);
         this.selectListoptionsStore.load({params:{list_id: option_id}});
+
+    },
+
+    onFormPreview:function(btn,toggle){
+        if(toggle === true){
+            this.fromPreview.expand();
+        }else{
+            this.fromPreview.collapse();
+        }
 
     },
 
