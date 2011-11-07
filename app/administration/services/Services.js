@@ -54,9 +54,9 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
             return val;
         }
         function bool(val){
-            if (val === 0) {
+            if (val == '0') {
                 return '<img src="ui_icons/no.gif" />';
-            } else if(val === 1) {
+            } else if(val == '1') {
                 return '<img src="ui_icons/yes.gif" />';
             }
             return val;

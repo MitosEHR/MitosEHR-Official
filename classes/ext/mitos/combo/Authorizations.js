@@ -21,5 +21,5 @@ Ext.define('Ext.mitos.combo.Authorizations',{
             store       : me.store
 		});
 		me.callParent(arguments);
-	} 
+	}
 });

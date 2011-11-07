@@ -1,14 +1,18 @@
 {
     "projectName": "MitosEHR - Electronic Health Record",
-    "deployDir"  : "app",
+    "deployDir"  : "app/",
     "pkgs": [
         {
             "name": "All Classes Needed",
-            "file": "App.js",
+            "file": "Mitos.js",
             "isDebug": false,
             "compress": true,
             "includeDeps":false,
             "fileIncludes": [
+                {
+                    "path": "",
+                    "text": "MitosApp.js"
+                },
                 {
                     "path": "administration/facilities/",
                     "text": "Facilities.js"
