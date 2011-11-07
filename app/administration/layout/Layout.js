@@ -15,8 +15,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     pageLayout  : 'border',
     uses        : [
         'Ext.mitos.CRUDStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.SaveCancelWindow'
+        'Ext.mitos.window.Window'
     ],
     initComponent: function(){
         
@@ -78,11 +79,23 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             extraParams	: {"task": "form_list"}
         });
 
+        me.selectListoptionsStore = Ext.create('Ext.mitos.restStoreModel',{
+            fields: [
+                {name: 'id',		    type: 'string'},
+                {name: 'list_id',		type: 'string'},
+                {name: 'option_id',		type: 'string'},
+                {name: 'title',	        type: 'string'}
+            ],
+            model 		: 'formlistoptionsModel',
+            idProperty 	: 'id',
+            url	        : 'app/administration/layout/data.php',
+            extraParams	: {task: "options"}
+        });
         // *************************************************************************************
         // List Options Grid
         // *************************************************************************************
         me.selectListGrid = Ext.create('Ext.grid.Panel', {
-            store		    : me.selectListStore,
+            store		    : me.selectListoptionsStore,
             region		    : 'south',
             frame		    : true,
             collapseMode    : 'mini',
@@ -96,12 +109,12 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 text        : 'Name',
                 flex        : 1,
                 sortable    : true,
-                dataIndex   : 'form_id'
+                dataIndex   : 'title'
             },{
                 text        : 'Value',
                 flex        : 1,
                 sortable    : true,
-                dataIndex   : 'form_id'
+                dataIndex   : 'option_id'
             }],
             dockedItems: [{
                 xtype  : 'toolbar',
@@ -122,7 +135,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         // *************************************************************************************
         // User form
         // *************************************************************************************
-        me.fieldForm = Ext.create('Ext.mitos.FormPanel', {
+        me.fieldForm = Ext.create('Ext.mitos.form.FormPanel', {
             region          : 'center',
             frameHeader     : true,
             autoScroll      : true,
@@ -323,7 +336,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.formContainer = Ext.create('Ext.panel.Panel',{
             border		: true,
             frame		: true,
-            margin      : '0 0 0 2',
+            margin      : '0 0 2 0',
             title		: 'Field Configuration',
             width		: 350,
             region      : 'east',
@@ -351,6 +364,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.fieldsGrid = Ext.create('Ext.tree.Panel', {
             store	    : me.fieldsStore,
             region	    : 'center',
+            margin      : '0 2 2 2',
             border	    : true,
             frame	    : true,
             sortable    : false,
@@ -402,7 +416,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             region		: 'west',
             border		: true,
             frame		: true,
-            margin      : '0 2 0 0',
+            margin      : '0 0 2 0',
             title		: 'Form list',
             width		: 200,
             columns		: [{
@@ -416,7 +430,23 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 itemclick : me.onFormGriditemClick
             }
         }); // END LayoutChoose
-        me.pageBody = [ me.fieldsGrid, me.formsGrid ,me.formContainer];
+
+        me.fromPreview = Ext.create('Ext.panel.Panel',{
+            title           : 'Form Preview',
+            region          : 'south',
+            height          : 300,
+            collapsible     : true,
+            titleCollapse   : true,
+            collapsed       : true,
+            collapseMode    : 'header',
+            itmes:[{
+
+            }]
+        });
+
+
+
+        me.pageBody = [ me.fieldsGrid, me.formsGrid ,me.formContainer,me.fromPreview];
         me.callParent(arguments);
     },
 
@@ -426,8 +456,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         this.loadFieldsGrid();
     },
 
-    onSelectListSelect:function(){
-
+    onSelectListSelect:function(combo, record){
+        var option_id = record[0].data.option_id;
+        console.log(record[0].data);
+        this.selectListoptionsStore.load({params:{list_id: option_id}});
 
     },
 

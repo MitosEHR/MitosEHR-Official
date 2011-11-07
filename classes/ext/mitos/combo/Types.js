@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.TypesComboBox',{
+Ext.define('Ext.mitos.combo.Types',{
 	extend      : 'Ext.form.ComboBox',
     alias       : 'mitos.typescombobox',
     initComponent: function(){	
@@ -10,7 +10,7 @@ Ext.define('Ext.mitos.TypesComboBox',{
 		// *************************************************************************************
 		if (!Ext.ModelManager.isRegistered('Types')){
 			Ext.define("Types", {extend: "Ext.data.Model", fields: [
-				{name: 'option_id', type: 'string'},
+		        {name: 'option_id', type: 'string'},
 			    {name: 'title', type: 'string'}
 			],
 				idProperty: 'option_id'

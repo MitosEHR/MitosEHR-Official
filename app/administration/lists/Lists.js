@@ -15,9 +15,9 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
     uses        : [
         'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.SaveCancelWindow',
-        'Ext.mitos.FormPanel',
-        'Ext.mitos.Window'
+        'Ext.mitos.window.Window',
+        'Ext.mitos.form.FormPanel',
+        'Ext.mitos.window.Window'
     ],
     initComponent: function(){
 
@@ -45,7 +45,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         // *************************************************************************************
         // Create list Window Dialog
         // *************************************************************************************
-        me.win = Ext.create('Ext.mitos.Window', {
+        me.win = Ext.create('Ext.mitos.window.Window', {
             width: 400,
             title: 'Create List',
             items:[{

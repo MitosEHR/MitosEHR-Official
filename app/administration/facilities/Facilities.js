@@ -17,7 +17,7 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
         'Ext.mitos.CRUDStore',
         'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.SaveCancelWindow'
+        'Ext.mitos.window.Window'
     ],
     initComponent: function(){
 

@@ -5,7 +5,7 @@
  * Date: 10/29/11
  * Time: 4:45 PM
  */
-Ext.define('Ext.mitos.combo.MsgStattus',{
+Ext.define('Ext.mitos.combo.MsgStatus',{
 	extend      : 'Ext.form.ComboBox',
     alias       : 'widget.msgstatuscombo',
     uses        : 'Ext.mitos.restStoreModel',

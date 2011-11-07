@@ -16,7 +16,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         'Ext.mitos.restStoreModel',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.TitlesComboBox',
+        'Ext.mitos.combo.Titles',
         'Ext.mitos.combo.TransmitMedthod',
         'Ext.mitos.combo.InsurancePayerType',
         'Ext.mitos.form.FormPanel',

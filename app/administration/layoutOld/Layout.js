@@ -64,7 +64,7 @@ Ext.define('Ext.mitos.panel.administration.layoutOld.Layout',{
     id          : 'panelLayoutOld',
     pageTitle   : 'Layout Form Editor',
     pageLayout  : 'border',
-    uses        : ['Ext.mitos.CRUDStore','Ext.mitos.GridPanel','Ext.mitos.SaveCancelWindow'],
+    uses        : ['Ext.mitos.CRUDStore','Ext.mitos.GridPanel','Ext.mitos.window.Window'],
 
     initComponent: function(){
 
@@ -183,7 +183,7 @@ Ext.define('Ext.mitos.panel.administration.layoutOld.Layout',{
         // *************************************************************************************
         // User form
         // *************************************************************************************
-        panel.whereForm = new Ext.create('Ext.mitos.FormPanel', {
+        panel.whereForm = new Ext.create('Ext.mitos.form.FormPanel', {
             fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
             defaults: {
                 anchor: '100%'
@@ -202,7 +202,7 @@ Ext.define('Ext.mitos.panel.administration.layoutOld.Layout',{
         // *************************************************************************************
         // window - Add Field Window
         // *************************************************************************************
-        panel.winAddField = Ext.create('Ext.mitos.Window', {
+        panel.winAddField = Ext.create('Ext.mitos.window.Window', {
             title		: 'Select a group to add the field.',
             width		: 450,
             height		: 100,

@@ -6,7 +6,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.util.*',
         'Ext.state.*',
         'Ext.TaskManager.*',
-        'Ext.mitos.Window',
         'Ext.mitos.RenderPanel',
         'Extensible.calendar.CalendarPanel',
         'Extensible.calendar.gadget.CalendarListPanel',

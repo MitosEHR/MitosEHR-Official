@@ -2,7 +2,7 @@ To compile the Appilcation using JSBuilder2 from Sencha, just run this command
 java -jar JSBuilder2.jar --projectFile path-to\app.jsb2  --homeDir path-to-root-dir\
 
 Exmaple...
-java -jar JSBuilder2.jar --projectFile c:\wamp\www\MitosEHR\app\app.jsb2  --homeDir c:\wamp\www\MitoEHR\
+java -jar .\JSBuilder2.jar --projectFile C:\wamp\www\MitosEHR\app\app.jsb2 --homeDir C:\wamp\www\MitosEHR\
 
 Download JSBuilder2 go to, http://www.sencha.com/products/jsbuilder/download/jsbuilder-2.0.0
 

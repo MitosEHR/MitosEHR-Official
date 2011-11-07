@@ -1,9 +1,3 @@
-//----------------------------------------------------------------------------------------------------------------------
-// messages.ejs.php 
-// v0.0.5
-// Under GPLv3 License
-// Integrated by: GI Technologies & MitosEHR.org in 2011
-//----------------------------------------------------------------------------------------------------------------------
 Ext.define('Ext.mitos.panel.messages.Messages',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelMessages',
@@ -12,7 +6,6 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
         'Ext.mitos.window.Window',
-        'Ext.mitos.SaveCancelWindow',
         'Ext.mitos.LivePatientSearch',
         'Ext.mitos.combo.MsgStatus',
         'Ext.mitos.combo.MsgNoteType',

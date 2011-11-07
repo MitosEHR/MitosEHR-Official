@@ -26,13 +26,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title><?php echo $_SESSION['global_settings']['mitosehr_name'] ?></title>
-<script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
-<script type="text/javascript" src="lib/webcam_control/swfobject.js"></script>
-<script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
-<script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
-<script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
-<script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
-<!--test stuff-->
+    <!--test stuff-->
 <link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
 <!--end test stuff-->
 <link rel="stylesheet" type="text/css" href="themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
@@ -44,27 +38,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 <link rel="shortcut icon" href="favicon.ico" >
-<script type="text/javascript">
 
-// *************************************************************************************
-// Set the path for the components, so the application can find them.
-// *************************************************************************************
-Ext.Loader.setConfig({
-    enabled			: true,
-    disableCaching	: false,
-    paths			: {
-        'Ext.ux'            : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/ux',
-        'Ext.mitos'         : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/mitos',
-        'Ext.mitos.panel'   : 'app',
-        'Extensible'        : 'lib/extensible-1.5.0/src',
-        'Extensible.example': 'lib/extensible-1.5.0/examples'
-    }
-});
-
-Ext.onReady(function(){
-    Ext.create('Ext.mitos.panel.MitosApp');
-});
-</script>
 </head>
     <body>
         <div id="mainapp-loading-mask" class="x-mask mitos-mask"></div>
@@ -74,5 +48,32 @@ Ext.onReady(function(){
             </div>
         </div>
         <span id="app-msg" style="display:none;"></span>
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+        <script type="text/javascript" src="lib/webcam_control/swfobject.js"></script>
+        <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
+        <script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
+
+        <!--<script type="text/javascript" src="app/App.js"></script>-->
+        <script type="text/javascript">
+        // *************************************************************************************
+        // Set the path for the components, so the application can find them.
+        // *************************************************************************************
+        Ext.Loader.setConfig({
+            enabled			: true,
+            disableCaching	: false,
+            paths			: {
+                'Ext.ux'            : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/ux',
+                'Ext.mitos'         : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/mitos',
+                'Ext.mitos.panel'   : 'app',
+                'Extensible'        : 'lib/extensible-1.5.0/src',
+                'Extensible.example': 'lib/extensible-1.5.0/examples'
+            }
+        });
+        Ext.onReady(function(){
+            Ext.create('Ext.mitos.panel.MitosApp');
+        });
+        </script>
     </body>
 </html>

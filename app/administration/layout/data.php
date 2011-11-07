@@ -20,9 +20,33 @@ $data       = $foo['row'];
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
-        $formPanel = $_REQUEST["currForm"];
-        $fields = array();
+
+        if($_REQUEST['task'] == 'options'){
+            $currList = $_REQUEST["list_id"];
             
+            if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is English, do not translate
+                $mitos_db->setSQL("SELECT * FROM list_options WHERE list_id = '$currList' ORDER BY seq");
+            } else {
+                // Use and sort by the translated list name.
+                $mitos_db->setSQL("SELECT lo.id, lo.list_id, lo.option_id, IF(LENGTH(ld.definition),ld.definition,lo.title) AS title ,
+                                          lo.seq, lo.is_default, lo.option_value, lo.mapping, lo.notes
+                                     FROM list_options AS lo
+                                LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title
+                                LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '$lang_id'
+                                    WHERE lo.list_id = '$currList'
+                                 ORDER BY IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
+            }
+            $total = $mitos_db->rowCount();
+            $rows = array();
+            foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
+                array_push($rows, $row);
+            }
+            print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
+            
+        }else{
+            
+            $formPanel = $_REQUEST["currForm"];
+            $fields = array();
             function getChildItems($parent){
                 global $mitos_db;
                 $items = array();
@@ -72,7 +96,7 @@ switch($_SERVER['REQUEST_METHOD']){
             function getFileds($formPanel){
                 global $fields;
                 global $mitos_db;
-                
+
                 $mitos_db->setSQL("Select * FROM forms_layout WHERE name = '$formPanel'");
                 $foo    = $mitos_db->fetch(PDO::FETCH_ASSOC);
                 $fid    = $foo['id'];
@@ -101,8 +125,9 @@ switch($_SERVER['REQUEST_METHOD']){
                 }
                 return $fields;
             }
-        $tree = getFileds($formPanel);
-        print json_encode(array('text'=>'.','children'=>$tree));
+            $tree = getFileds($formPanel);
+            print json_encode(array('text'=>'.','children'=>$tree));
+        }
         exit; // END GET
     case 'POST':
 
