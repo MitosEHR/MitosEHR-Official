@@ -1,0 +1,254 @@
+{
+    "projectName": "MitosEHR - Electronic Health Record",
+    "deployDir"  : "app",
+    "pkgs": [
+        {
+            "name": "All Classes Needed",
+            "file": "App.js",
+            "isDebug": false,
+            "compress": true,
+            "includeDeps":false,
+            "fileIncludes": [
+                {
+                    "path": "../classes/ext/mitos/",
+                    "text": "RenderPanel.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/",
+                    "text": "GridPanel.js",
+                },
+                {
+                    "path": "../classes/ext/mitos/",
+                    "text": "CRUDStore.js"
+                },
+
+                {
+                    "path": "../classes/ext/mitos/",
+                    "text": "restStoreModel.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/",
+                    "text": "LivePatientSearch.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/",
+                    "text": "ManagedIframe.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/",
+                    "text": "PhotoIdWindow.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "Authorizations.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "CodesTypes.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "Facilities.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "InsurancePayerType.js"
+                }
+                ,
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "Languages.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "Lists.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "msgNoteType.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "MsgStatus.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "permValues.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "posCodes.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "Roles.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "TaxId.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "Titles.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "TransmitMedthod.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "Types.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/combo/",
+                    "text": "Users.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/form/fields/",
+                    "text": "Checkbox.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/form/",
+                    "text": "FormPanel.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/",
+                    "text": "CalStatusComboBox.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/window/",
+                    "text": "Window.js"
+                },
+                {
+                    "path": "../classes/ext/mitos/dashboard/",
+                    "text": "PortalPanel.js",
+                },
+                {
+                    "path": "../classes/ext/mitos/dashboard/",
+                    "text": "Portlet.js",
+                },
+                {
+                    "path": "../classes/ext/mitos/dashboard/",
+                    "text": "ChartPortlet.js",
+                },
+                {
+                    "path": "../classes/ext/mitos/dashboard/",
+                    "text": "GridPortlet.js",
+                },
+                {
+                    "path": "../classes/ext/mitos/dashboard/",
+                    "text": "OnotesPortlet.js",
+                },
+                {
+                    "path": "../classes/ext/mitos/dashboard/",
+                    "text": "PortalColumn.js",
+                },
+                {
+                    "path": "../classes/ext/mitos/dashboard/",
+                    "text": "PortalDropZone.js",
+                },
+                {
+                    "path": "administration/facilities/",
+                    "text": "Facilities.js"
+                },
+                {
+                    "path": "administration/globals/",
+                    "text": "Globals.js"
+                },
+                {
+                    "path": "administration/layout/",
+                    "text": "Layout.js"
+                },
+                {
+                    "path": "administration/lists/",
+                    "text": "Lists.js"
+                },
+                {
+                    "path": "administration/log/",
+                    "text": "Log.js"
+                },
+                {
+                    "path": "administration/practice/",
+                    "text": "Practice.js"
+                },
+                {
+                    "path": "administration/roles/",
+                    "text": "Roles.js"
+                },
+                {
+                    "path": "administration/services/",
+                    "text": "Services.js"
+                },
+                {
+                    "path": "administration/users/",
+                    "text": "Users.js"
+                },
+                {
+                    "path": "calendar/",
+                    "text": "Calendar.js"
+                },
+                {
+                    "path": "dashboard/",
+                    "text": "Dashboard.js"
+                },
+                {
+                    "path": "fees/billing/",
+                    "text": "Billing.js"
+                },
+                {
+                    "path": "fees/checkout/",
+                    "text": "Checkout.js"
+                },
+                {
+                    "path": "fees/fees_sheet/",
+                    "text": "FeesSheet.js"
+                },
+                {
+                    "path": "fees/payments/",
+                    "text": "Payments.js"
+                },
+                {
+                    "path": "messages/",
+                    "text": "Messages.js"
+                },
+                {
+                    "path": "miscellaneous/addressbook/",
+                    "text": "Addressbook.js"
+                },
+                {
+                    "path": "miscellaneous/myaccount/",
+                    "text": "MyAccount.js"
+                },
+                {
+                    "path": "miscellaneous/mysettings/",
+                    "text": "MySettings.js"
+                },
+                {
+                    "path": "miscellaneous/officenotes/",
+                    "text": "OfficeNotes.js"
+                },
+                {
+                    "path": "miscellaneous/websearch/",
+                    "text": "Websearch.js"
+                },
+                {
+                    "path": "patientfile/new/",
+                    "text": "NewPatient.js"
+                },
+                {
+                    "path": "patientfile/summary/",
+                    "text": "Summary.js"
+                },
+                {
+                    "path": "patientfile/visits/",
+                    "text": "Visits.js"
+                },
+                {
+                    "path": "",
+                    "text": "MitosApp.js"
+                }
+            ]
+        }
+    ],
+    "resources": []
+}

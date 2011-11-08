@@ -13,7 +13,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     pageTitle   : 'Services',
     pageLayout  : 'border',
     uses:[
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
         'Ext.mitos.combo.CodesTypes',
         'Ext.mitos.combo.Titles'
@@ -21,7 +21,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     initComponent: function(){
         var me = this;
 
-        me.storeServices = Ext.create('Ext.mitos.restStore',{
+        me.storeServices = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',      		    type: 'int'},
                 {name: 'code_text',         type: 'string'},
@@ -54,15 +54,15 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
             return val;
         }
         function bool(val){
-            if (val == 0) {
+            if (val == '0') {
                 return '<img src="ui_icons/no.gif" />';
-            } else if(val == 1) {
+            } else if(val == '1') {
                 return '<img src="ui_icons/yes.gif" />';
             }
             return val;
         }
 
-        me.servicesGrid = new Ext.create('Ext.mitos.GridPanel', {
+        me.servicesGrid = Ext.create('Ext.mitos.GridPanel', {
             region		: 'center',
             store       : me.storeServices,
             columns: [
@@ -257,7 +257,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
         });
     },
 
-    onItemclick:function(store, record, title){
+    onItemclick:function(store, record){
         var form = this.servicesFormPanel;
         form.expand();
         form.setTitle('Edit Service');
@@ -267,11 +267,8 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     action:function(action){
         var formPanel = this.servicesFormPanel;
 
-        switch(action){
-
-            case 'close':
-                formPanel.setTitle('Add Service');
-                break;
+        if(action == 'close'){
+            formPanel.setTitle('Add Service');
         }
     },
 

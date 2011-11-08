@@ -8,11 +8,11 @@
 Ext.define('Ext.mitos.combo.Users',{
 	extend      : 'Ext.form.ComboBox',
     alias       : 'widget.userscombo',
-    uses        : 'Ext.mitos.restStore',
+    uses        : 'Ext.mitos.restStoreModel',
     initComponent: function(){
     	var me = this;
 
-        me.store = Ext.create('Ext.mitos.restStore',{
+        me.store = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'user',      type: 'string' },
                 {name: 'full_name', type: 'string' }

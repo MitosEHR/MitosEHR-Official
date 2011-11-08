@@ -73,18 +73,14 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
             // NOT that your changes were actually persisted correctly in the back end. The 'write' event is the best
             // option for generically messaging after CRUD persistence has succeeded.
             listeners: {
-                'write': function(store, operation){
+                'write': function(store, operation) {
                     var title = Ext.value(operation.records[0].data[Extensible.calendar.data.EventMappings.Title.name], '(No title)');
-                    switch(operation.action){
-                        case 'create':
-                            Extensible.example.msg('Add', 'Added "' + title + '"');
-                            break;
-                        case 'update':
-                            Extensible.example.msg('Update', 'Updated "' + title + '"');
-                            break;
-                        case 'destroy':
-                            Extensible.example.msg('Delete', 'Deleted "' + title + '"');
-                            break;
+                    if (operation.action == 'create') {
+                        Extensible.example.msg('Add', 'Added "' + title + '"');
+                    } else if (operation.action == 'update') {
+                        Extensible.example.msg('Update', 'Updated "' + title + '"');
+                    } else if (operation.action == 'destroy') {
+                        Extensible.example.msg('Delete', 'Deleted "' + title + '"');
                     }
                 }
             }

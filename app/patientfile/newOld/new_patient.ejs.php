@@ -39,7 +39,7 @@ Ext.onReady(function(){
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.RenderPanel',
-			'Ext.mitos.SaveCancelWindow',
+			'Ext.mitos.window.Window',
                 'Ext.mitos.PhotoIdWindow'
 		],
 		initComponent: function(){

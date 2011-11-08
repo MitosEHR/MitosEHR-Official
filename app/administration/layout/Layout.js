@@ -2,10 +2,10 @@
 // layout.ejs.php
 // Description: Layout Screen Panel
 // v0.0.1
-// 
+//
 // Author: GI Technologies, 2011
 // Modified: n/a
-// 
+//
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 Ext.define('Ext.mitos.panel.administration.layout.Layout',{
@@ -13,61 +13,47 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     id          : 'panelLayout',
     pageTitle   : 'Layout Form Editor',
     pageLayout  : 'border',
-    uses        : ['Ext.mitos.CRUDStore','Ext.mitos.GridPanel','Ext.mitos.SaveCancelWindow'],
+    uses        : [
+        'Ext.mitos.CRUDStore',
+        'Ext.mitos.restStoreModel',
+        'Ext.mitos.GridPanel',
+        'Ext.mitos.window.Window'
+    ],
     initComponent: function(){
-        /** @namespace Ext.QuickTips */
-        /** @namespace app */
-        Ext.QuickTips.init();
-        var panel = this;
-        var form_id = 'Demographics'; 	// Stores the current form group selected by the user.
-        var rowPos; 					// Stores the current Grid Row Position (int)
-        var currRec; 					// A stored current record selected by the user.
+        
+        var me = this;
+        me.currForm = null;
 
         // *************************************************************************************
-        // Layout Record Structure
+        // Form Fileds TreeGrid Store
         // *************************************************************************************
         Ext.define('layoutModel', {
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'item_id',			type: 'int'},
+                {name: 'id',			    type: 'int'},
+                {name: 'text', 			    type: 'string'},
+                {name: 'xtype', 			type: 'string'},
                 {name: 'form_id',			type: 'string'},
-                {name: 'field_id',			type: 'string'},
-                {name: 'group_name',		type: 'string'},
-                {name: 'listDesc',			type: 'string'},
-                {name: 'title',				type: 'string'},
-                {name: 'seq',				type: 'int'},
-                {name: 'data_type',			type: 'string'},
-                {name: 'uor',				type: 'string'},
-                {name: 'fld_length',		type: 'string'},
-                {name: 'max_length',		type: 'string'},
-                {name: 'list_id',			type: 'string'},
-                {name: 'titlecols',			type: 'string'},
-                {name: 'datacols',			type: 'string'},
-                {name: 'default_value',		type: 'string'},
-                {name: 'edit_options',		type: 'string'},
-                {name: 'description',		type: 'string'},
-                {name: 'group_order',		type: 'string'}
+                {name: 'item_of',			type: 'string'},
+                {name: 'title',			    type: 'string'},
+                {name: 'fieldLabel',		type: 'string'},
+                {name: 'name',		        type: 'string'}
             ]
         });
 
-        panel.LayoutStore = Ext.create('Ext.data.TreeStore', {
+        me.fieldsStore = Ext.create('Ext.data.TreeStore', {
             model: 'layoutModel',
             proxy: {
-                type: 'ajax',
-                api:{
-                    read		: 'app/administration/layout/data_read.ejs.php',
-                    create		: 'app/administration/layout/data_create.ejs.php',
-                    update      : 'app/administration/layout/data_update.ejs.php',
-                    destroy 	: 'app/administration/layout/data_destroy.ejs.php'
-                }
+                type: 'rest',
+                url	: 'app/administration/layout/data.php'
             },
             folderSort: true
         });
 
         // *************************************************************************************
-        // Type combo options
+        // Xtype Combobox
         // *************************************************************************************
-        panel.fieldTypesStore = Ext.create('Ext.mitos.CRUDStore',{
+        me.fieldXTypesStore = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
                 {name: 'id',		type: 'string'},
                 {name: 'name',	    type: 'string'},
@@ -80,9 +66,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         });
 
         // *************************************************************************************
-        // Form List Record Structure & Store
+        // Select List (Comboboxes) Options...
         // *************************************************************************************
-        panel.formlistStore = Ext.create('Ext.mitos.CRUDStore',{
+        me.selectListStore = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
                 {name: 'id',		type: 'string'},
                 {name: 'form_id',	type: 'string'}
@@ -93,118 +79,56 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             extraParams	: {"task": "form_list"}
         });
 
-        // *************************************************************************************
-        // Form List Record Structure & Store
-        // *************************************************************************************
-        panel.uorStore = Ext.create('Ext.mitos.CRUDStore',{
+        me.selectListoptionsStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
-                {name: 'id',	type: 'string'},
-                {name: 'uor',	type: 'string'}
+                {name: 'id',		    type: 'string'},
+                {name: 'list_id',		type: 'string'},
+                {name: 'option_id',		type: 'string'},
+                {name: 'title',	        type: 'string'}
             ],
-            model 		:'uorModel',
-            idProperty 	:'id',
-            read		: 'app/administration/layout/component_data.ejs.php',
-            extraParams	: {"task": "uor"}
+            model 		: 'formlistoptionsModel',
+            idProperty 	: 'id',
+            url	        : 'app/administration/layout/data.php',
+            extraParams	: {task: "options"}
         });
-
-        // *************************************************************************************
-        // Data Types Record Structure & Store
-        // *************************************************************************************
-        panel.datatypesStore = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'id',	type: 'string'},
-                {name: 'type',	type: 'string'}
-            ],
-            model 		:'typeModel',
-            idProperty 	:'id',
-            read		: 'app/administration/layout/component_data.ejs.php',
-            extraParams	: {"task": "data_types"}
-        });
-
-        // *************************************************************************************
-        // List Options Record Structure & Store
-        // *************************************************************************************
-        panel.listoptionStore = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'id',		type: 'int'},
-                {name: 'title',		type: 'string'},
-                {name: 'list_id',	type: 'string'},
-                {name: 'option_id',	type: 'string'}
-            ],
-            model 		:'listoptionModel',
-            idProperty 	:'id',
-            read		: 'app/administration/layout/component_data.ejs.php',
-            extraParams	: {"task": "lists"}
-        });
-
-        // *************************************************************************************
-        // List Options Record Structure & Store
-        // *************************************************************************************
-        panel.whereStore = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'group_name',type: 'string'}
-            ],
-            model 		:'whereModel',
-            idProperty 	:'group_name',
-            read		: 'app/administration/layout/component_data.ejs.php',
-            extraParams	: {"task": "groups", "form_id": form_id}
-        });
-
         // *************************************************************************************
         // List Options Grid
         // *************************************************************************************
-        panel.optionGrid = new Ext.create('Ext.grid.Panel', {
-            store		: panel.formlistStore,
-            region		: 'east',
-            frame		: true,
-            collapseMode:'mini',
-            split       : true,
-            hideCollapseTool :true,
-            width		: 200,
-            collapsible	: true,
-            collapsed   : true,
-            columns		: [
-                {
-                    hidden		: true,
-                    sortable 	: true,
-                    dataIndex	: 'id'
-                },
-                {
-                    text     : 'Name',
-                    flex     : 1,
-                    sortable : true,
-                    dataIndex: 'form_id'
-                },
-                {
-                    text     : 'Value',
-                    flex     : 1,
-                    sortable : true,
-                    dataIndex: 'form_id'
-                }
-            ],
-            listeners: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        panel.rowEditing.cancelEdit();
-                        form_id = record.get('form_id');
-                        panel.LayoutStore.load({params:{form_id: form_id }});
-                        panel.whereStore.load({params:{task: 'groups', form_id: form_id} });
-                        panel.layoutGrid.setTitle('Field editor ('+form_id+')');
-                    }
-                }
-            },
+        me.selectListGrid = Ext.create('Ext.grid.Panel', {
+            store		    : me.selectListoptionsStore,
+            region		    : 'south',
+            frame		    : false,
+            collapseMode    : 'mini',
+            split           : true,
+            border           : true,
+            titleCollapse   : false,
+            hideCollapseTool: true,
+            width		    : 250,
+            height          : 250,
+            collapsible	    : true,
+            collapsed       : true,
+            columns:[{
+                text        : 'Name',
+                flex        : 1,
+                sortable    : false,
+                dataIndex   : 'title'
+            },{
+                text        : 'Value',
+                flex        : 1,
+                sortable    : false,
+                dataIndex   : 'option_id'
+            }],
             dockedItems: [{
-                xtype:'toolbar',
-                items:[{
-                    xtype			: 'combo',
-                    name			: 'where',
-                    displayField	: 'group_name',
-                    valueField		: 'group_name',
-                    editable		: false,
-                    store			: panel.whereStore,
-                    queryMode		: 'local',
-                    itemId		    : 'combo',
-                    width           : 185
+                xtype  : 'toolbar',
+                items  : [{
+                    xtype	    : 'mitos.listscombo',
+                    name		: 'cmbList',
+                    itemId      : 'cmbList',
+                    width       : 235,
+                    listeners:{
+                        scope   : this,
+                        select  : me.onSelectListSelect
+                    }
                 }]
             }]
         });
@@ -213,12 +137,12 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         // *************************************************************************************
         // User form
         // *************************************************************************************
-        panel.whereForm = Ext.create('Ext.mitos.FormPanel', {
+        me.fieldForm = Ext.create('Ext.mitos.form.FormPanel', {
             region          : 'center',
-            frameHeader     : true,
-            title		    : 'Field Properties',
+            //frameHeader     : true,
+            border:true,
             autoScroll      : true,
-            frame           : true,
+            frame           : false,
             fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
             defaults        : { anchor:'100%' },
             items: [{
@@ -230,9 +154,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 enableKeyEvents : true,
                 listeners:{
                     keyup: function(){
-                        var q = this.getValue();
-                        var f = panel.whereForm.getComponent('aditionalProperties').getComponent('name');
-                        f.setValue(q.toLowerCase().replace(" ","_"));
+                        //var q = this.getValue();
+                        //var f = me.fieldForm.getComponent('aditionalProperties').getComponent('name');
+                        //f.setValue(q.toLowerCase().replace(" ","_"));
 
                     }
                 }
@@ -243,34 +167,39 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 displayField	: 'name',
                 valueField		: 'value',
                 editable		: false,
-                store			: panel.fieldTypesStore,
+                store			: me.fieldXTypesStore,
                 queryMode		: 'local',
                 margin          : '5px 5px 5px 10px',
                 itemId          : 'xtype',
                 listeners       : {
-                    select: function(combo, record){
+                    select: function(combo, record) {
                         var type = record[0].data.value;
 
-                        if(type == 'combobox'){
-                            panel.optionGrid.setTitle('Select List Options');
-                            panel.optionGrid.expand();
-                            panel.optionGrid.enable();
+                        if (type == 'combobox') {
+                            me.selectListGrid.setTitle('Select List Options');
+                            me.selectListGrid.expand();
+                            me.selectListGrid.enable();
                         } else {
-                            panel.optionGrid.collapse();
-                            panel.optionGrid.disable();
+                            me.selectListGrid.setTitle('');
+                            me.selectListGrid.collapse();
+                            me.selectListGrid.disable();
                         }
 
                         Array.prototype.find = function(searchStr) {
                             var returnArray = false;
-                            for (i=0; i<this.length; i++) {
+                            for (var i = 0; i < this.length; i++) {
                                 if (typeof(searchStr) == 'function') {
                                     if (searchStr.test(this[i])) {
-                                        if (!returnArray) { returnArray = [] }
-                                            returnArray.push(i);
+                                        if (!returnArray) {
+                                            returnArray = [];
                                         }
-                                    } else {
-                                        if (this[i]===searchStr) {
-                                            if (!returnArray) { returnArray = [] }
+                                        returnArray.push(i);
+                                    }
+                                } else {
+                                    if (this[i] === searchStr) {
+                                        if (!returnArray) {
+                                            returnArray = [];
+                                        }
                                         returnArray.push(i);
                                     }
                                 }
@@ -278,12 +207,12 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                             return returnArray;
                         };
 
-                        var addProp = panel.whereForm.getComponent('aditionalProperties');
+                        var addProp = me.fieldForm.getComponent('aditionalProperties');
                         var is = addProp.items.keys;
 
-                        function enableItems(itmes){
-                            for (var i=0; i<is.length; i++){
-                                if ( !itmes.find(is[i]) ){
+                        function enableItems(itmes) {
+                            for (var i = 0; i < is.length; i++) {
+                                if (!itmes.find(is[i])) {
                                     addProp.getComponent(is[i]).hide();
                                 } else {
                                     addProp.getComponent(is[i]).show();
@@ -291,49 +220,41 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
                             }
                         }
-                        switch(type){
-                            case 'combobox':
-                                enableItems(['name','width','allowBlank']);
-                                break;
-                            case 'fieldset':
-                                enableItems(['']);
-                                break;
-                            case 'fieldcontainer':
-                                enableItems(['']);
-                                break;
-                            case 'textfield':
-                                enableItems(['name','allowBlank']);
-                                break;
-                            case 'textarea':
-                                enableItems(['name','allowBlank']);
-                                break;
-                            case 'mitos.checkbox':
-                                enableItems(['name','allowBlank']);
-                                break;
-                            default:
-                                enableItems(['name','allowBlank']);
 
-
+                        if (type == 'combobox') {
+                            enableItems(['name','width','allowBlank']);
+                        } else if (type == 'fieldset') {
+                            enableItems(['']);
+                        } else if (type == 'fieldcontainer') {
+                            enableItems(['']);
+                        } else if (type == 'textfield') {
+                            enableItems(['name','allowBlank']);
+                        } else if (type == 'textarea') {
+                            enableItems(['name','allowBlank']);
+                        } else if (type == 'mitos.checkbox') {
+                            enableItems(['name','allowBlank']);
+                        } else {
+                            enableItems(['name','allowBlank']);
                         }
                     }
                 }
             },{
-                fieldLabel      : 'Child Of',
-                xtype			: 'combo',
-                name			: 'where',
-                displayField	: 'group_name',
-                valueField		: 'group_name',
-                editable		: false,
-                store			: panel.whereStore,
-                queryMode		: 'local',
-                margin          : '5px 5px 5px 10px',
-                itemId		    : 'combo'
+                //fieldLabel      : 'Child Of',
+                //xtype			: 'combo',
+                //name			: 'where',
+                //displayField	: 'xtype',
+                //valueField		: 'id',
+                //editable		: false,
+                //store			: me.fieldsStore,
+                //queryMode		: 'local',
+                //margin          : '5px 5px 5px 10px',
+                //itemId		    : 'combo'
             },{
-                xtype   : 'fieldset',
-                itemId  : 'aditionalProperties',
-                title   : 'Aditional Properties',
-                defaults        : { anchor:'100%' },
-                items   : [{
+                xtype    : 'fieldset',
+                itemId   : 'aditionalProperties',
+                title    : 'Aditional Properties',
+                defaults : { anchor:'100%' },
+                items:[{
                     fieldLabel      : 'Name',
                     xtype           : 'textfield',
                     name            : 'name',
@@ -415,206 +336,170 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             }]
         });
 
-        // *************************************************************************************
-        // window - Add Field Window
-        // *************************************************************************************
-        panel.winAddField = Ext.create('Ext.mitos.Window', {
-            title		: 'Add Form Field.',
+
+        me.formContainer = Ext.create('Ext.panel.Panel',{
+            border		: true,
+            frame		: true,
+            margin      : '0 0 2 0',
+            title		: 'Field Configuration',
+            width		: 350,
+            region      : 'east',
             layout      : 'border',
-            height      : 400,
-            width		: 550,
-            items		: [ panel.whereForm, panel.optionGrid ],
-            buttons:[{
-                text		:'Add',
-                name		: 'cmdSave',
-                id			: 'cmdSave',
-                iconCls		: 'save',
-                handler: function(){
-                    app.save();
-                }
-            },'-',{
-                text:'Close',
-                iconCls: 'delete',
-                handler: function(){
-                    panel.rowEditing.cancelEdit();
-                    panel.winAddField.hide();
-                }
+            bodyStyle   : 'background-color:#eeeeee!important',
+            items       : [ me.fieldForm, me.selectListGrid ],
+            dockedItems : [{
+                xtype   : 'toolbar',
+                items   : [{
+                    text    : 'Save',
+                    iconCls : 'save'
+                },'-',{
+                    text    : 'Reset/New',
+                    iconCls : 'icoAddRecord'
+                },'-',{
+                    text    : 'Delete',
+                    iconCls : 'delete',
+                    cls     : 'toolDelete'
+                },'-','->',{
+                    text    : 'Form Preview',
+                    iconCls : 'icoPreview',
+                    enableToggle : true,
+                    listeners:{
+                        scope   : me,
+                        toggle  : me.onFormPreview
+                    }
+                }]
+                
             }]
         });
-
-        // *************************************************************************************
-        // Grouping - group_name
-        // *************************************************************************************
-        panel.groupingLayout = Ext.create('Ext.grid.feature.Grouping',{
-            enableNoGroups: false,
-            groupHeaderTpl: 'Group: {name} ({rows.length} Field{[values.rows.length > 1 ? "s" : ""]})'
-        });
-
-        // *************************************************************************************
-        // RowEditor Plugin
-        // *************************************************************************************
-        panel.rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
-            autoCancel: false,
-            errorSummary: false,
-            listeners:{
-                afteredit: function(){
-                    panel.LayoutStore.sync();
-                    panel.LayoutStore.load({params:{form_id: form_id }});
-                    panel.layoutGrid.setTitle('Field editor ('+form_id+')');
-                }
-            }
-        });
-
         // *************************************************************************************
         // Layout fields Grid Panel
         // *************************************************************************************
-        panel.layoutGrid = Ext.create('Ext.tree.Panel', {
-            store	: panel.LayoutStore,
-            region	: 'center',
-            border	: true,
-            frame	: true,
-            sortable: false,
-            useArrows: true,
-            rootVisible: false,
-            singleExpand: true,
-            title	: 'Field editor (Demographics)',
-            columns	: [
-                {
-                    xtype       : 'treecolumn',
-                    text     	: 'Field Group',
-                    sortable 	: false,
-                    dataIndex	: 'group_name',
-                    width		: 100,
-                    align		: 'left'
-                },
-                {
-                    text     	: 'Data Type',
-                    sortable 	: false,
-                    dataIndex	: 'data_type',
-                    width		: 100,
-                    align		: 'left'
-                },
-                {
-                    text     	: 'Label',
-                    sortable 	: false,
-                    dataIndex	: 'title',
-                    width		: 130,
-                    align		: 'left'
-                },
-                {
-                    text     	: 'Description',
-                    sortable 	: false,
-                    dataIndex	: 'description',
-                    flex		: 1,
-                    align		: 'left'
-                },
-                { text: 'item_id', hidden: true, dataIndex: 'item_id' },
-                { text: 'form_id', hidden: true, dataIndex: 'form_id' }
-            ],
+        me.fieldsGrid = Ext.create('Ext.tree.Panel', {
+            store	    : me.fieldsStore,
+            region	    : 'center',
+            margin      : '0 2 2 2',
+            border	    : true,
+            frame	    : true,
+            sortable    : false,
+            rootVisible : false,
+            title	    : 'Field editor (Demographics)',
+            columns:[{
+                xtype       : 'treecolumn',
+                text     	: 'Field Type',
+                sortable 	: false,
+                dataIndex	: 'xtype',
+                width		: 200,
+                align		: 'left'
+            },{
+                text     	: 'Title',
+                sortable 	: false,
+                dataIndex	: 'title',
+                width		: 100,
+                align		: 'left'
+            },{
+                text     	: 'Label',
+                sortable 	: false,
+                dataIndex	: 'fieldLabel',
+                width		: 100,
+                align		: 'left'
+            },{
+                text     	: 'name',
+                sortable 	: false,
+                dataIndex	: 'name',
+                flex		: 1,
+                align		: 'left'
+            }],
             listeners: {
-                itemclick: {
+                //itemclick: {
                     //fn: function(DataView, record, item, rowIndex, e){
-                    //		panel.rowEditing.cancelEdit();
-                    //	currRec = panel.LayoutStore.getAt(rowIndex);
+                    //		me.rowEditing.cancelEdit();
+                    //	currRec = me.fieldsStore.getAt(rowIndex);
                     //	rowPos = rowIndex;
-                    //	panel.cmdDelete.enable();
+                    //	me.cmdDelete.enable();
                     //}
-                }
-            },
-            dockedItems: [{
-                xtype: 'toolbar',
-                dock: 'top',
-                items: [
-                    panel.cmdAdd = Ext.create('Ext.Button', {
-                        name: 'cmdAddField',
-                        text: 'Add field',
-                        iconCls: 'icoAddRecord',
-                        handler: function(){
-                            panel.rowEditing.cancelEdit();
-                            panel.whereForm.getForm().reset();
-                            panel.optionGrid.collapse();
-                            panel.optionGrid.disable();
-                            panel.winAddField.show();
-                        }
-                    })
-                ,'-',
-                    panel.cmdUpdate = Ext.create('Ext.Button', {
-                        name: 'cmdAddField',
-                        text: 'Edit field',
-                        iconCls: 'icoAddRecord',
-                        handler: function(){
-                            panel.rowEditing.cancelEdit();
-                            panel.whereForm.getForm().reset();
-                            panel.optionGrid.collapse();
-                            panel.optionGrid.disable();
-                            panel.winAddField.show();
-                        }
-                    })
-                ,'-',
-                    panel.cmdDelete = Ext.create('Ext.Button', {
-                        name: 'cmdDelField',
-                        text: 'Delete field',
-                        iconCls: 'delete',
-                        disabled: true,
-                        handler: function(){
-                            panel.rowEditing.cancelEdit();
-                            Ext.Msg.show({
-                                title: 'Please confirm...',
-                                icon: Ext.MessageBox.QUESTION,
-                                msg:'Are you sure to delete this field?<br>WARNING: This will also detele the field and data on the table.',
-                                buttons: Ext.Msg.YESNO,
-                                fn:function(btn,msgGrid){
-                                    if(btn=='yes'){
-                                        panel.LayoutStore.remove( currRec );
-                                        panel.LayoutStore.sync();
-                                        panel.LayoutStore.load();
-                                    }
-                                }
-                            });
-                        }
-                    })
-                ]
-            }]
+                //}
+            }
         }); // END LayoutGrid Grid
 
         // *************************************************************************************
         // Panel to choose Layouts
         // *************************************************************************************
-        panel.chooseGrid = Ext.create('Ext.grid.Panel', {
-            store		: panel.formlistStore,
-            region		: 'east',
+        me.formsGrid = Ext.create('Ext.grid.Panel', {
+            store		: me.selectListStore,
+            region		: 'west',
             border		: true,
             frame		: true,
-            margin      : '0 0 0 3px',
+            margin      : '0 0 2 0',
             title		: 'Form list',
-            width		: 150,
-            collapsible	: true,
-            columns		: [
-                {
-                    hidden		: true,
-                    sortable 	: true,
-                    dataIndex	: 'id'
-                },
-                {
-                    text     : 'Name',
-                    flex     : 1,
-                    sortable : true,
-                    dataIndex: 'form_id'
-                }
-            ],
+            width		: 200,
+            hideHeaders:true,
+            columns		: [{
+                flex        : 1,
+                sortable    : true,
+                dataIndex   : 'form_id'
+            }],
             listeners: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        panel.rowEditing.cancelEdit();
-                        form_id = record.get('form_id');
-                        panel.LayoutStore.load({params:{form_id: form_id }});
-                        panel.whereStore.load({params:{task: 'groups', form_id: form_id} });
-                        panel.layoutGrid.setTitle('Field editor ('+form_id+')');
-                    }
-                }
+                scope     : this,
+                itemclick : me.onFormGriditemClick
             }
         }); // END LayoutChoose
-        panel.pageBody = [ panel.layoutGrid, panel.chooseGrid ];
-        panel.callParent(arguments);
-    } // end of initComponent
+
+        me.fromPreview = Ext.create('Ext.panel.Panel',{
+            title           : 'Form Preview',
+            region          : 'south',
+            height          : 300,
+            collapsible     : true,
+            titleCollapse   : false,
+            hideCollapseTool: true,
+            collapsed       : true,
+            border		    : true,
+            frame		    : true,
+            collapseMode    : 'header',
+            itmes:[{
+
+            }]
+        });
+
+
+
+        me.pageBody = [ me.fieldsGrid, me.formsGrid ,me.formContainer,me.fromPreview];
+        me.callParent(arguments);
+    },
+
+    onFormGriditemClick:function(DataView, record){
+        this.currForm = record.get('form_id');
+        this.fieldsGrid.setTitle('Field editor ('+this.currForm+')');
+        this.loadFieldsGrid();
+    },
+
+    onSelectListSelect:function(combo, record){
+        var option_id = record[0].data.option_id;
+        console.log(record[0].data);
+        this.selectListoptionsStore.load({params:{list_id: option_id}});
+
+    },
+
+    onFormPreview:function(btn,toggle){
+        if(toggle === true){
+            this.fromPreview.expand();
+        }else{
+            this.fromPreview.collapse();
+        }
+
+    },
+
+    loadFieldsGrid:function(){
+        var sm = this.formsGrid.getSelectionModel();
+        if(this.currForm === null){
+            sm.select(0);
+        }
+        var form_id = sm.getSelection()[0].data.form_id;
+        this.currForm = form_id;
+        this.fieldsStore.load({params:{currForm: form_id }});
+    },
+
+    loadStores:function(){
+        this.loadFieldsGrid();
+        
+    }
 }); //ens LayoutPanel class

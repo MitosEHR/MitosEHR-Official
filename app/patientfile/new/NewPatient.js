@@ -19,7 +19,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
     pageTitle   : 'Patient Entry Form',
     border	    : true,
     frame	    : true,
-    uses        : [ 'Ext.mitos.CRUDStore','Ext.mitos.SaveCancelWindow','Ext.mitos.PhotoIdWindow' ],
+    uses        : [ 'Ext.mitos.CRUDStore','Ext.mitos.window.Window','Ext.mitos.PhotoIdWindow' ],
     initComponent: function(){
         var me = this;
         me.formTitle      = 'Demographics';
@@ -72,7 +72,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
                     }
                 }]
             }
-        }).show()
+        }).show();
     }, // end of getPhotoIdWindow
     getFormItems: function(form){
         Ext.Ajax.request({
@@ -82,8 +82,9 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
                 form.add(eval(response.responseText));
                 form.doLayout();
             }
-        })
+        });
     }, // end of getFormItems
+
     loadStores:function(){
         
     }

@@ -13,14 +13,14 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
     id          : 'panelUsers',
     pageTitle   : 'Users',
     uses:[
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel'
     ],
     initComponent: function(){
 
         var me = this;
         
-        me.userStore = Ext.create('Ext.mitos.restStore',{
+        me.userStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',                    type: 'int'},
                 {name: 'username',              type: 'string'},
@@ -64,7 +64,7 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
         // *************************************************************************************
         // Create the GridPanel
         // *************************************************************************************
-        me.userGrid = new Ext.create('Ext.mitos.GridPanel', {
+        me.userGrid = Ext.create('Ext.mitos.GridPanel', {
             store : me.userStore,
             columns: [
                 { text: 'id', sortable: false, dataIndex: 'id', hidden: true},
@@ -282,22 +282,18 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
         this.win.show();
     },
 
-    action:function(action){
-        var win     = this.win,
-        form        = win.down('form'),
-        winTbar     = win.down('toolbar'),
-        deletebtn   = winTbar.getComponent('delete');
+    action:function(action) {
+        var win = this.win,
+            form = win.down('form'),
+            winTbar = win.down('toolbar'),
+            deletebtn = winTbar.getComponent('delete');
 
-        switch(action){
-            case 'new':
-                deletebtn.disable();
-                break;
-            case 'old':
-                deletebtn.enable();
-                break;
-            case 'close':
-                form.getForm().reset();
-                break;
+        if (action == 'new') {
+            deletebtn.disable();
+        } else if (action == 'old') {
+            deletebtn.enable();
+        } else if (action == 'close') {
+            form.getForm().reset();
         }
     },
 
