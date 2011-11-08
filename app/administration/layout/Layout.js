@@ -27,28 +27,49 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         // *************************************************************************************
         // Form Fileds TreeGrid Store
         // *************************************************************************************
-        Ext.define('layoutModel', {
+        Ext.define('layoutTreeModel', {
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'id',			    type: 'int'},
+                {name: 'id',			    type: 'string'},
+                {name: 'fid',			    type: 'string'},
                 {name: 'text', 			    type: 'string'},
                 {name: 'xtype', 			type: 'string'},
                 {name: 'form_id',			type: 'string'},
                 {name: 'item_of',			type: 'string'},
                 {name: 'title',			    type: 'string'},
                 {name: 'fieldLabel',		type: 'string'},
+                {name: 'labelWidth',		type: 'string'},
+                {name: 'hideLabel',		    type: 'string'},
+                {name: 'layout',		    type: 'string'},
+                {name: 'width',		        type: 'string'},
+                {name: 'height',		    type: 'string'},
+                {name: 'flex',		        type: 'string'},
+                {name: 'collapsible',		type: 'string'},
+                {name: 'checkboxToggle',	type: 'string'},
+                {name: 'collapsed',		    type: 'string'},
+                {name: 'inputValue',		type: 'string'},
+                {name: 'allowBlank',		type: 'string'},
+                {name: 'value',		        type: 'string'},
+                {name: 'maxValue',		    type: 'string'},
+                {name: 'minValue',		    type: 'string'},
+                {name: 'boxLabel',		    type: 'string'},
+                {name: 'grow',		        type: 'string'},
+                {name: 'increment',		    type: 'string'},
                 {name: 'name',		        type: 'string'}
-            ]
+            ],
+            idProperty: 'id'
         });
-
-        me.fieldsStore = Ext.create('Ext.data.TreeStore', {
-            model: 'layoutModel',
+        
+        me.treeStore = Ext.create('Ext.data.TreeStore', {
+            model: 'layoutTreeModel',
             proxy: {
                 type: 'rest',
-                url	: 'app/administration/layout/data.php'
+                url	: 'app/administration/layout/data.php',
+                extraParams	: { task: "treeRequest" }
             },
             folderSort: true
         });
+        
 
         // *************************************************************************************
         // Xtype Combobox
@@ -105,7 +126,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             model 		: 'formlistoptionsModel',
             idProperty 	: 'id',
             url	        : 'app/administration/layout/data.php',
-            extraParams	: {task: "options"}
+            extraParams	: {task: "optionsRequest"}
         });
         // *************************************************************************************
         // List Options Grid
@@ -155,14 +176,18 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         // *************************************************************************************
         me.fieldForm = Ext.create('Ext.mitos.form.FormPanel', {
             region          : 'center',
-            //frameHeader     : true,
-            border:true,
+            url	            : 'app/administration/layout/data.php?task=formRequest',
+            border          : true,
             autoScroll      : true,
             frame           : false,
             fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
             defaults        : { anchor:'100%' },
             items: [{
-
+                name            : 'id',
+                xtype           : 'textfield',
+                itemId          : 'id',
+                hidden          : true
+            },{
                 fieldLabel      : 'Type',
                 xtype           : 'combo',
                 name            : 'xtype',
@@ -336,7 +361,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 xtype   : 'toolbar',
                 items   : [{
                     text    : 'Save',
-                    iconCls : 'save'
+                    iconCls : 'save',
+                    scope   : me,
+                    handler : me.onSave
                 },'-',{
                     text    : 'New / Reset',
                     iconCls : 'icoAddRecord',
@@ -362,7 +389,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         // This is the fields associated with the current Form seleted
         // *************************************************************************************
         me.fieldsGrid = Ext.create('Ext.tree.Panel', {
-            store	    : me.fieldsStore,
+            store	    : me.treeStore,
             region	    : 'center',
             margin      : '0 2 2 2',
             border	    : true,
@@ -445,6 +472,27 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
         me.pageBody = [ me.fieldsGrid, me.formsGrid ,me.formContainer,me.fromPreview];
         me.callParent(arguments);
+    },
+
+    onSave:function(){
+        var form = this.fieldForm.getForm();
+
+        if (form.isValid()) {
+            form.submit({
+                scope   : this,
+                success : function() {
+                    form.reset();
+                    this.loadFieldsGrid();
+                }
+            });
+        }
+    },
+
+    onFormReset:function(){
+        var form = this.fieldForm.getForm(),
+        row = this.fieldsGrid.getSelectionModel();
+        row.deselectAll();
+        form.reset();
     },
 
     onFieldsGridClick:function(grid, record){
@@ -588,29 +636,24 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
     onFormPreview:function(btn,toggle){
         var form = this.fromPreview;
-        
+
         if(toggle === true){
+            form.el.mask();
             Ext.Ajax.request({
                 url     : 'lib/layoutEngine/layoutEngine.class.php',
                 params  : { form:this.currForm },
                 success : function(response){
                     form.add(eval(response.responseText));
                     form.doLayout();
+                    form.el.unmask();
                 }
             });
-            this.fromPreview.expand();
+            this.fromPreview.expand(false);
         }else{
-            this.fromPreview.collapse();
+            this.fromPreview.collapse(false);
             form.removeAll();
             form.doLayout();
         }
-    },
-
-    onFormReset:function(){
-        var form = this.fieldForm.getForm(),
-        row = this.fieldsGrid.getSelectionModel();
-        row.deselectAll();
-        form.reset();
     },
 
     loadFieldsGrid:function(){
@@ -620,7 +663,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         }
         var form_id = row.getSelection()[0].data.form_id;
         this.currForm = form_id;
-        this.fieldsStore.load({params:{currForm: form_id }});
+        this.treeStore.load({params:{currForm: form_id }});
         this.parentFieldsStore.load({params:{currForm: form_id }})
     },
 
