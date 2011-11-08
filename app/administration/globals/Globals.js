@@ -12,13 +12,13 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelGlobals',
     pageTitle   : 'MitosEHR Global Settings',
-    uses        : [ 'Ext.mitos.restStore', 'Ext.mitos.combo.Languages', 'Ext.mitos.form.fields.Checkbox' ],
+    uses        : [ 'Ext.mitos.restStoreModel', 'Ext.mitos.combo.Languages', 'Ext.mitos.form.fields.Checkbox' ],
     initComponent: function(){
         var me = this;
         // *************************************************************************************
         // Global Model and Data store
         // *************************************************************************************
-        me.store = Ext.create('Ext.mitos.restStore', {
+        me.store = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 { name: 'data_id',								type:'int' },
                 { name: 'fullname',						        type:'auto' },
@@ -284,7 +284,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
             border			: true,
             layout			: 'fit',
             autoScroll		: true,
-            padding			: 0,
+            bodyStyle       : 'padding: 0;',
             fieldDefaults	: { msgTarget: 'side', labelWidth: 220, width: 520 },
             defaults		: { anchor: '100%' },
             items: [{
@@ -852,7 +852,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         iconCls   : 'save',
                         handler   : function(){
                             var form = me.globalFormPanel.getForm();
-                            me.onSave(form, me.store)
+                            me.onSave(form, me.store);
                         }
                     }]
                 }]

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Extensible : Calendar Within a Window</title>
+    <link rel="stylesheet" type="text/css" href="../../../extjs/resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../resources/css/extensible-all.css" />
+
+    <script type="text/javascript" src="../../../extjs/ext-debug.js"></script>
+    <script type="text/javascript" src="../../src/Extensible.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.setConfig({
+            enabled: true,
+            paths: {
+                'Extensible': '../../src',
+                'Extensible.example': '../'
+            }
+        });
+    </script>
+    
+    <!-- Page-specific includes -->
+    <script type="text/javascript" src="window.js"></script>
+    
+    <!-- Shared example includes -->
+    <link rel="stylesheet" type="text/css" href="../examples.css" />
+    <script type="text/javascript" src="../examples.js"></script>
+</head>
+<body>
+    <div id="sample-overview">
+        <h1>Calendar Within a Window</h1>
+        <p>You can easily render a CalendarPanel into a fully floated, resizable Ext.Window.</p>
+        
+        <p class="view-src"><a target="_blank" href="window.js">View the source</a></p>
+    </div>
+    
+    <button id="cal-win">Launch Window</button>
+</body>
+</html>

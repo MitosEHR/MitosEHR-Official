@@ -72,6 +72,9 @@
 .icoClose{
     background-image: url(../ui_icons/no.gif) !important;
 }
+.icoPreview{
+    background-image: url(../ui_icons/preview.png) !important;
+}
 .icoGreen{
     background-image: url(../ui_icons/green.png) !important;
 }

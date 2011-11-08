@@ -5,6 +5,14 @@
 	font-family: 'Cuprum';
 	src: url('../ui_fonts/Cuprum.ttf');
 }
+.mitos-mask {
+    z-index:  300000;
+}
+.mitos-mask-msg {
+    z-index:300001;
+    left:   45%;
+    top:    50%;
+}
 ::-webkit-scrollbar {
     width: 4px;
     height: 10px;
@@ -191,21 +199,34 @@ body#login{
     margin: 0;
 }
 .toolDelete {
-    background-color: #ffcccc ! important;
+    background-color: #ff0033 ! important;
     border: 1px solid #999999;
 }
 .toolDelete:hover {
-    background-color: #FF9999 ! important;
+    background-color: #ff0033 ! important;
     background-image: none;
     border: 1px solid #999999;
 }
+.toolDelete span{
+    color: #fff!important;
+}
 .winDelete{
     background:none;
-    background-color:#ff3333!important
+    background-color:#ff0033!important
+}
+.winDelete:hover{
+    background:none;
+    background-image: none;
+    background-color: #ff0033 !important
 }
 .winSave{
     background:none;
-    background-color:#33cc00!important
+    background-color: #00ff00 !important
+}
+.winSave:hover{
+    background:none;
+    background-image: none;
+    background-color:#00ff00!important
 }
 .winDelete span{
     color:#fff!important;

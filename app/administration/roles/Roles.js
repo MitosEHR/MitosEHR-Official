@@ -13,7 +13,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
     id          : 'panelRoles',
     pageTitle   : 'Roles and Permissions',
     uses:[
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
         'Ext.mitos.combo.Roles',
@@ -28,7 +28,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         //******************************************************************************
         // Roles Store
         //******************************************************************************
-        me.permStore = new Ext.create('Ext.mitos.restStore',{
+        me.permStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'roleID', 		type: 'int'},
                 {name: 'role_name', 	type: 'string'},
@@ -258,7 +258,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         }
         store.proxy.extraParams = {task:this.currTask};
         store.sync();
-        if(this.currTask = 'role'){
+        if(this.currTask == 'role'){
             this.loadRoles();
         }
         this.win.close();
@@ -279,7 +279,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
                     var s = this.rolesGrid.getSelectionModel().getSelection();
                     this.permStore.proxy.extraParams = {task:this.currTask};
                     this.permStore.remove(s[0],{});
-                    this.permStore.destroy()
+                    this.permStore.destroy();
                     this.loadRoles();
                     this.currRole = null;
                     this.loadGrid();
@@ -301,8 +301,8 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
                     var s = this.rolesGrid.getSelectionModel().getSelection();
                     this.permStore.proxy.extraParams = {task:this.currTask};
                     this.permStore.remove(s[0],{});
-                    this.permStore.destroy()
-                    this.rolesGrid.getSelectionModel().deselectAll()
+                    this.permStore.destroy();
+                    this.rolesGrid.getSelectionModel().deselectAll();
                 }
             }
         });
@@ -321,7 +321,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
 
     onExpand:function(){
         var combo = this.rolesGrid.down('toolbar').getComponent('roleCombo');
-        combo.picker.loadMask.destroy()
+        combo.picker.loadMask.destroy();
     },
 
     setForm:function(form, formItmes, title){
@@ -332,13 +332,11 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         win.doLayout();
     },
 
-    action:function(action){
-        var win     = this.win,
-        form        = win.down('form');
-        switch(action){
-            case 'close':
-                form.getForm().reset();
-                break;
+    action:function(action) {
+        var win = this.win,
+            form = win.down('form');
+        if (action == 'close') {
+            form.getForm().reset();
         }
     },
 
@@ -351,9 +349,9 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
     loadGrid:function(){
         var combo = this.rolesGrid.down('toolbar').getComponent('roleCombo'),
         store = combo.getStore();
-        if(this.currRole == null){
+        if(this.currRole === null){
             this.currRole = store.getAt(0).data.id;
-            combo.setValue(this.currRole)
+            combo.setValue(this.currRole);
         }
         this.permStore.load({params:{role_id: this.currRole}});
     },

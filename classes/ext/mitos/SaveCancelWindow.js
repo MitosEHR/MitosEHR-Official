@@ -1,7 +1,7 @@
 //******************************************************************************
 // Render panel
 //******************************************************************************
-Ext.define('Ext.mitos.SaveCancelWindow', {
+Ext.define('Ext.mitos.window.Window', {
     extend      : 'Ext.window.Window',
     alias       : 'widget.mitoswindow',
     width       : 500,

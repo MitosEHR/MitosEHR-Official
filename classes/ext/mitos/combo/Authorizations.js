@@ -1,7 +1,7 @@
 Ext.define('Ext.mitos.combo.Authorizations',{
 	extend      : 'Ext.form.ComboBox',
     alias       : 'widget.mitos.authorizationscombo',
-    initComponent: function(){	
+    initComponent: function(){
     	var me = this;
     	me.store = Ext.create('Ext.data.Store', {
 		    fields: ['id', 'name'],
@@ -11,7 +11,6 @@ Ext.define('Ext.mitos.combo.Authorizations',{
 		        {"id":"3", "name":"Email"}
 		    ]
 		});
-
     	Ext.apply(this, {
             editable    : false,
             queryMode   : 'local',
@@ -20,6 +19,7 @@ Ext.define('Ext.mitos.combo.Authorizations',{
             emptyText   : 'Select',
             store       : me.store
 		});
+        
 		me.callParent(arguments);
-	} 
+	}
 });

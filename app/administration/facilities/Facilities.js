@@ -2,10 +2,10 @@
 // facilities.ejs.php
 // Description: Facilities Screen
 // v0.0.3
-// 
+//
 // Author: GI Technologies, 2011
 // Modified: n/a
-// 
+//
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 
@@ -15,9 +15,9 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
     pageTitle   : 'Facilities',
     uses        : [
         'Ext.mitos.CRUDStore',
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.SaveCancelWindow'
+        'Ext.mitos.window.Window'
     ],
     initComponent: function(){
 
@@ -26,7 +26,7 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
         // *************************************************************************************
         // Facility Record Structure
         // *************************************************************************************
-        me.FacilityStore = Ext.create('Ext.mitos.restStore',{
+        me.FacilityStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',					type: 'int'},
                 {name: 'name',					type: 'string'},
@@ -276,22 +276,18 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
         this.win.show();
     },
 
-    action:function(action){
-        var win     = this.win,
-        form        = win.down('form'),
-        winTbar     = win.down('toolbar'),
-        deletebtn   = winTbar.getComponent('delete');
+    action:function(action) {
+        var win = this.win,
+            form = win.down('form'),
+            winTbar = win.down('toolbar'),
+            deletebtn = winTbar.getComponent('delete');
 
-        switch(action){
-            case 'new':
-                deletebtn.disable();
-                break;
-            case 'old':
-                deletebtn.enable();
-                break;
-            case 'close':
-                form.getForm().reset();
-                break;
+        if (action == 'new') {
+            deletebtn.disable();
+        } else if (action == 'old') {
+            deletebtn.enable();
+        } else if (action == 'close') {
+            form.getForm().reset();
         }
     },
 

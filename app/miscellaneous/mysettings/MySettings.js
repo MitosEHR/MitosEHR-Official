@@ -22,7 +22,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.mysettings.MySettings',{
         // User Settings Form
         // Add or Edit purpose
         // *************************************************************************************
-        panel.uSettingsForm = new Ext.create('Ext.mitos.FormPanel', {
+        panel.uSettingsForm = Ext.create('Ext.mitos.form.FormPanel', {
             id          : 'uSettingsForm',
             bodyStyle   : 'padding: 10px;',
             cls			: 'form-white-bg',
@@ -112,8 +112,3 @@ Ext.define('Ext.mitos.panel.miscellaneous.mysettings.MySettings',{
         panel.callParent(arguments);
     }
 }); // End ExtJS
-
-
-
-
-

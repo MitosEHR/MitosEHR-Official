@@ -13,10 +13,10 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     id          : 'panelPractice',
     pageTitle   : 'Practice Settings',
     uses        : [
-        'Ext.mitos.restStore',
+        'Ext.mitos.restStoreModel',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.TitlesComboBox',
+        'Ext.mitos.combo.Titles',
         'Ext.mitos.combo.TransmitMedthod',
         'Ext.mitos.combo.InsurancePayerType',
         'Ext.mitos.form.FormPanel',
@@ -29,7 +29,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // Pharmacy Record Structure
         // *************************************************************************************
-        me.pharmacyStore = Ext.create('Ext.mitos.restStore', {
+        me.pharmacyStore = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 {name: 'id',					type: 'int'},
                 {name: 'name',					type: 'string'},
@@ -78,7 +78,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // Insurance Record Structure
         // *************************************************************************************
-        me.insuranceStore = Ext.create('Ext.mitos.restStore', {
+        me.insuranceStore = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 {name: 'id',						type: 'int'},
                 {name: 'name',						type: 'string'},
@@ -118,7 +118,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // Insurance Numbers Record Structure
         // *************************************************************************************
-        me.insuranceNumbersStore = Ext.create('Ext.mitos.restStore',{
+        me.insuranceNumbersStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',	type: 'int'},
                 {name: 'name',	type: 'string'}
@@ -131,7 +131,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // X12 Partners Record Structure
         // *************************************************************************************
-        me.x12PartnersStore = Ext.create('Ext.mitos.restStore',{
+        me.x12PartnersStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',	type: 'int'},
                 {name: 'name',	type: 'string'}
@@ -549,22 +549,18 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     openWin:function(){
         this.win.show();
     },
-    action:function(action){
-        var win     = this.win,
-        form        = win.down('form'),
-        winTbar     = win.down('toolbar'),
-        deletebtn   = winTbar.getComponent('delete');
+    action:function(action) {
+        var win = this.win,
+            form = win.down('form'),
+            winTbar = win.down('toolbar'),
+            deletebtn = winTbar.getComponent('delete');
 
-        switch(action){
-            case 'new':
-                deletebtn.disable();
-                break;
-            case 'old':
-                deletebtn.enable();
-                break;
-            case 'close':
-                form.getForm().reset();
-                break;
+        if (action == 'new') {
+            deletebtn.disable();
+        } else if (action == 'old') {
+            deletebtn.enable();
+        } else if (action == 'close') {
+            form.getForm().reset();
         }
     },
     loadStores:function(){

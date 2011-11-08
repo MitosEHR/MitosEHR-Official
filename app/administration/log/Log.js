@@ -11,11 +11,11 @@
 Ext.define('Ext.mitos.panel.administration.log.Log',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLog',
-    uses        : [ 'Ext.mitos.restStore', 'Ext.mitos.GridPanel' ],
+    uses        : [ 'Ext.mitos.restStoreModel', 'Ext.mitos.GridPanel' ],
     pageTitle   : 'Event History Log',
     initComponent: function(){
         var me = this;
-        me.logStore = Ext.create('Ext.mitos.restStore',{
+        me.logStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',             type: 'int'},
                 {name: 'date',           type: 'string'},

@@ -3,7 +3,7 @@ Ext.define('Ext.mitos.combo.Titles',{
     alias       : 'widget.mitos.titlescombo',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStore',{
+    	me.store = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'option_id', type: 'string'},
 			    {name: 'title',     type: 'string'}
