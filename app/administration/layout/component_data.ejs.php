@@ -47,7 +47,7 @@ switch ($_GET['task']) {
 		);
 		$totals = count($field_types);
 		print_r(json_encode(array('totals'=>$totals,'row'=>$field_types)));
-	break;
+	    break;
     case "field_properties":
 		$field_properties = array(
 			0  => array("id"=> 1,  "name" => "title",           "value" => "title"),
@@ -68,12 +68,39 @@ switch ($_GET['task']) {
 		);
 		$totals = count($field_properties);
 		print(json_encode(array('totals'=>$totals,'row'=>$field_properties)));
-	break;
+	    break;
 
+    case 'parent_fields':
+        $currForm = $_REQUEST['currForm'];
+        $mitos_db->setSQL("Select CONCAT(fo.ovalue, ' (',ff.xtype ,')' ) AS name, ff.id as value
+                             FROM forms_fields AS ff
+                        LEFT JOIN forms_field_options AS fo
+                               ON ff.id = fo.field_id
+                        LEFT JOIN forms_layout AS fl
+                               ON fl.id = ff.form_id
+                            WHERE fl.name   = '$currForm'
+                              AND (ff.xtype = 'fieldcontainer' OR ff.xtype = 'fieldset')
+                              AND (fo.oname = 'title' OR fo.oname = 'fieldLabel')");
+        $totals = $mitos_db->rowCount();
+		//---------------------------------------------------------------------------------------
+		// start the array
+		//---------------------------------------------------------------------------------------
+		$rows = array();
+        //echo '<pre>';
+        //print_r($mitos_db->execStatement(PDO::FETCH_ASSOC));
+        //exit;
+            array_push($rows, array('name' => 'None', 'value' => null));
+		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+		}
 
+		//---------------------------------------------------------------------------------------
+		// here we are adding "totals" and the root "row" for sencha use
+		//---------------------------------------------------------------------------------------
+		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
+           
 
-
-
+        break;
 	// *************************************************************************************
 	// Data for Form List
 	// *************************************************************************************
@@ -92,7 +119,7 @@ switch ($_GET['task']) {
 		// here we are adding "totals" and the root "row" for sencha use
 		//---------------------------------------------------------------------------------------
 		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
-	break;
+	    break;
 	
 	// *************************************************************************************
 	// Available Data Types for the Form Editor
@@ -100,7 +127,7 @@ switch ($_GET['task']) {
 	case "data_types":
 		$totals = count($dataTypes_json);
 		print(json_encode(array('totals'=>$totals,'row'=>$dataTypes_json)));
-	break;
+	    break;
 
 	//---------------------------------------------------------------------------------------
 	// UOR
@@ -113,7 +140,7 @@ switch ($_GET['task']) {
 		);
 		$totals = count($uorTypes);
 		print(json_encode(array('totals'=>$totals,'row'=>$uorTypes)));
-	break;
+	    break;
 	
 	// *************************************************************************************
 	// Returns the available groups in the selected form
@@ -127,7 +154,7 @@ switch ($_GET['task']) {
 			array_push($rows, $row);
 		}
 		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
-	break;
+	    break;
 	
 	// *************************************************************************************
 	// Available List for the available data types
@@ -176,7 +203,5 @@ switch ($_GET['task']) {
 		// here we are adding totals and the root row for sencha use
 		//---------------------------------------------------------------------------------------
 		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
-	break;
-
+	    break;
 }
-?>

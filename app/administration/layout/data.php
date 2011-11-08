@@ -103,7 +103,8 @@ switch($_SERVER['REQUEST_METHOD']){
                 // *********************************************************************************************************
                 // Get Parent Items
                 // *********************************************************************************************************
-                $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$fid'");
+
+                $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$fid' AND (item_of IS NULL OR item_of = '')");
                 $results = $mitos_db->execStatement(PDO::FETCH_ASSOC);
                 foreach($results as $item){
                     // *****************************************************************************************************
