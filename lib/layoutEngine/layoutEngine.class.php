@@ -31,7 +31,7 @@ class layoutEngine extends dbHelper {
         // *********************************************************************************************************
         // Get Parent Items
         // *********************************************************************************************************
-        $this->setSQL("Select * FROM forms_fields WHERE form_id = '$fid'");
+        $this->setSQL("Select * FROM forms_fields WHERE form_id = '$fid' AND item_of IS NULL");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
             // *****************************************************************************************************
             // Get Option for main parent item
