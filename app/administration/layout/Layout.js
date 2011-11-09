@@ -43,6 +43,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 {name: 'layout',		    type: 'string'},
                 {name: 'width',		        type: 'string'},
                 {name: 'height',		    type: 'string'},
+                {name: 'margin',		    type: 'string'},
                 {name: 'flex',		        type: 'string'},
                 {name: 'collapsible',		type: 'string'},
                 {name: 'checkboxToggle',	type: 'string'},
@@ -92,7 +93,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.selectListStore = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
                 {name: 'id',		type: 'string'},
-                {name: 'form_id',	type: 'string'}
+                {name: 'name',	    type: 'string'}
             ],
             model 		:'formlistModel',
             idProperty 	:'id',
@@ -188,6 +189,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 itemId          : 'id',
                 hidden          : true
             },{
+                name            : 'form_id',
+                xtype           : 'textfield',
+                itemId          : 'form_id',
+                hidden          : true
+            },{
                 fieldLabel      : 'Type',
                 xtype           : 'combo',
                 name            : 'xtype',
@@ -213,7 +219,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 queryMode		: 'local',
                 margin          : '5px 5px 5px 10px',
                 emptyText       : 'None',
-                itemId		    : 'parentFields'
+                itemId		    : 'parentFields',
+                listeners:{
+                    scope: me,
+                    expand   : me.onParentFieldsExpand
+                }
             },{
                 xtype    : 'fieldset',
                 itemId   : 'aditionalProperties',
@@ -263,12 +273,14 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     xtype           : 'textfield',
                     name            : 'width',
                     itemId          : 'width',
+                    emptyText       : 'ei. 5 for 5px',
                     hidden          : true
                 },{
                     fieldLabel      : 'Height',
                     xtype           : 'textfield',
                     name            : 'height',
                     itemId          : 'height',
+                    emptyText       : 'ei. 5 for 5px',
                     hidden          : true
                 },{
                     fieldLabel      : 'Flex',
@@ -293,6 +305,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     xtype           : 'checkbox',
                     name            : 'collapsed',
                     itemId          : 'collapsed',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Margin',
+                    xtype           : 'textfield',
+                    name            : 'margin',
+                    itemId          : 'margin',
+                    emptyText       : 'ei. 5 5 5 5',
                     hidden          : true
                 },{
                     fieldLabel      : 'Input Value',
@@ -444,7 +463,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             columns		: [{
                 flex        : 1,
                 sortable    : true,
-                dataIndex   : 'form_id'
+                dataIndex   : 'name'
             }],
             listeners: {
                 scope     : this,
@@ -453,7 +472,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         }); // END LayoutChoose
 
         me.fromPreview = Ext.create('Ext.panel.Panel',{
-            title           : 'Form Preview',
+            //title           : 'Form Preview',
             region          : 'south',
             height          : 300,
             collapsible     : true,
@@ -465,10 +484,18 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             collapseMode    : 'header',
             bodyStyle       : 'padding: 5px',
             layout          : 'anchor',
-            fieldDefaults   : {msgTarget:'side'}
+            fieldDefaults   : {msgTarget:'side'},
+            dockedItems:{
+                xtype:'toolbar',
+                items:['->',{
+                    text    : 'Reload Form',
+                    cls     : 'toolGreen',
+                    iconCls : 'icoReload',
+                    scope   : me,
+                    handler : me.previewFormRender
+                }]
+            }
         });
-
-
 
         me.pageBody = [ me.fieldsGrid, me.formsGrid ,me.formContainer,me.fromPreview];
         me.callParent(arguments);
@@ -479,6 +506,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
         if (form.isValid()) {
             form.submit({
+                submitEmptyText:false,
                 scope   : this,
                 success : function() {
                     form.reset();
@@ -493,6 +521,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         row = this.fieldsGrid.getSelectionModel();
         row.deselectAll();
         form.reset();
+        var model = Ext.ModelManager.getModel('layoutTreeModel'),
+        newModel  = Ext.ModelManager.create({
+            form_id  : this.currForm
+        }, model );
+        form.loadRecord(newModel);
     },
 
     onFieldsGridClick:function(grid, record){
@@ -501,8 +534,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     },
 
     onFormGriditemClick:function(DataView, record){
-        this.currForm = record.get('form_id');
-        this.fieldsGrid.setTitle('Field editor ('+this.currForm+')');
+        this.currForm = record.get('id');
+        this.fieldsGrid.setTitle('Field editor ('+record.get('name')+')');
         this.loadFieldsGrid();
     },
 
@@ -510,6 +543,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         var option_id = record[0].data.option_id;
         this.selectListoptionsStore.load({params:{list_id: option_id}});
 
+    },
+
+    onParentFieldsExpand:function(combo){
+        combo.picker.loadMask.destroy();
     },
 
     onXtypeChange:function(combo, value){
@@ -566,14 +603,16 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'title',
                 'collapsible',
                 'collapsed',
-                'checkboxToggle'
+                'checkboxToggle',
+                'margin'
             ]
         } else if (value == 'fieldcontainer') {
             items = [
                 'fieldLabel',
                 'labelWidth',
                 'hideLabel',
-                'layout'
+                'layout',
+                'margin'
             ];
 
         } else if (value == 'combobox' || value == 'mitos.checkbox') {
@@ -582,7 +621,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'width',
                 'fieldLabel',
                 'hideLabel',
-                'labelWidth'
+                'labelWidth',
+                'margin'
             ];
 
         } else if (value == 'textfield') {
@@ -592,7 +632,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'fieldLabel',
                 'hideLabel',
                 'labelWidth',
-                'allowBlank'
+                'allowBlank',
+                'margin'
             ];
 
 
@@ -605,7 +646,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'hideLabel',
                 'labelWidth',
                 'allowBlank',
-                'grow'
+                'grow',
+                'margin'
             ];
 
         } else if (value == 'numberfield') {
@@ -618,7 +660,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'increment',
                 'fieldLabel',
                 'labelWidth',
-                'hideLabel'
+                'hideLabel',
+                'margin'
             ];
 
         } else {
@@ -626,7 +669,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'name',
                 'fieldLabel',
                 'labelWidth',
-                'hideLabel'
+                'hideLabel',
+                'margin'
             ];
 
 
@@ -636,24 +680,28 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
     onFormPreview:function(btn,toggle){
         var form = this.fromPreview;
-
         if(toggle === true){
-            form.el.mask();
-            Ext.Ajax.request({
-                url     : 'lib/layoutEngine/layoutEngine.class.php',
-                params  : { form:this.currForm },
-                success : function(response){
-                    form.add(eval(response.responseText));
-                    form.doLayout();
-                    form.el.unmask();
-                }
-            });
+            this.previewFormRender();
             this.fromPreview.expand(false);
         }else{
             this.fromPreview.collapse(false);
-            form.removeAll();
-            form.doLayout();
         }
+    },
+
+    previewFormRender:function(){
+        var form = this.fromPreview;
+        form.el.mask();
+        form.removeAll();
+        Ext.Ajax.request({
+            url     : 'lib/layoutEngine/layoutEngine.class.php',
+            params  : { form:this.currForm },
+            success : function(response){
+                form.add(eval(response.responseText));
+                form.doLayout();
+                form.el.unmask();
+            }
+        });
+
     },
 
     loadFieldsGrid:function(){
@@ -661,10 +709,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         if(this.currForm === null){
             row.select(0);
         }
-        var form_id = row.getSelection()[0].data.form_id;
-        this.currForm = form_id;
-        this.treeStore.load({params:{currForm: form_id }});
-        this.parentFieldsStore.load({params:{currForm: form_id }})
+        this.currForm = row.getSelection()[0].data.id;
+        this.treeStore.load({params:{currForm: this.currForm }});
+        this.parentFieldsStore.load({params:{currForm: this.currForm }})
+        this.onFormReset();
     },
 
     loadStores:function(){

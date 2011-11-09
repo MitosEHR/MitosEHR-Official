@@ -81,6 +81,9 @@
 .icoFilter{
 	background-image: url(../ui_icons/icoFilter.png) !important;
 }
+.icoReload{
+	background-image: url(../ui_icons/reload.png) !important;
+}
 .icoEye{
 	background-image: url(../ui_icons/eye.png) !important;
 }
