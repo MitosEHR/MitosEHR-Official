@@ -60,7 +60,7 @@ Ext.define('Ext.mitos.CRUDStore',{
 				},
                 listeners: {
                     exception: function(proxy, response){
-                        obj = Ext.JSON.decode(response.responseText);
+                        var obj = Ext.JSON.decode(response.responseText);
                         Ext.Msg.alert({
                                 title   : 'Oops!',
                                 msg     : obj.errors.reason,

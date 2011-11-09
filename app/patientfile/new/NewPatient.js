@@ -32,9 +32,8 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
             layout          : 'anchor', height:300,
             fieldDefaults   : {msgTarget:'side'},
             listeners:{
-                afterrender : function(){
-                    me.getFormItems(this);
-                 }
+                scope:this,
+                afterrender : me.getFormItems
             },
             dockedItems : {
                 xtype   : 'toolbar',
@@ -78,14 +77,16 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
         Ext.Ajax.request({
             url     : 'lib/layoutEngine/layoutEngine.class.php',
             params  : {form:this.formToRender},
+            scope   : this,
             success : function(response, opts){
-                form.add(eval(response.responseText));
-                form.doLayout();
+                this.form.removeAll();
+                this.form.add(eval(response.responseText));
+                this.form.doLayout();
             }
         });
     }, // end of getFormItems
 
     loadStores:function(){
-        
+        this.getFormItems();
     }
 }); //ens PatientPanel class
