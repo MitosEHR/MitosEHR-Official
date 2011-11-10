@@ -47,6 +47,10 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 }elseif($_REQUEST['task'] == 'treeRequest'){
     $formPanel = $_REQUEST["currForm"];
     $fields = array();
+    /**
+     * @param $parent
+     * @return arrays
+     */
     function getChildItems($parent){
         global $mitos_db;
         $items = array();
@@ -66,14 +70,17 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
             if($item['children'] == null) {
                 unset($item['children']);
                 $item['leaf'] = true;
+            }else{
+                $item['expanded'] = true;
             }
             array_push($items,$item);
         }
         return $items;
     }
-    // *************************************************************************************************************
-    // Function to get items options/params
-    // *************************************************************************************************************
+    /**
+     * @param $item_id
+     * @return array
+     */
     function getItmesOptions($item_id){
         $foo = array();
         global  $mitos_db;
@@ -93,18 +100,17 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
         }
         return $foo;
     }
+    /**
+     * @param $formPanel
+     * @return array
+     */
     function getFileds($formPanel){
         global $fields;
         global $mitos_db;
-
-        $mitos_db->setSQL("Select * FROM forms_layout WHERE name = '$formPanel'");
-        $foo    = $mitos_db->fetch(PDO::FETCH_ASSOC);
-        $fid    = $foo['id'];
         // *********************************************************************************************************
         // Get Parent Items
         // *********************************************************************************************************
-
-        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$fid' AND (item_of IS NULL OR item_of = '')");
+        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '')");
         $results = $mitos_db->execStatement(PDO::FETCH_ASSOC);
         foreach($results as $item){
             // *****************************************************************************************************
@@ -121,6 +127,8 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
             if($item['children'] == null) {
                 unset($item['children']);
                 $item['leaf'] = true;
+            }else{
+                $item['expanded'] = true;
             }
             array_push($fields,$item);
         }
@@ -152,17 +160,154 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 
 }elseif($_REQUEST['task'] == 'formRequest'){
     if($_REQUEST['id'] == null){
+        /**
+         * This will handle the New item Request where fiels id is not set
+         * to handle the update please go to the "else" statement after
+         * this arond line 213
+         */
+        $field = array();
+        $data = $_POST;
 
-        //echo 'INSERT';
-        print '{"success":true}';
+        foreach($data as $option => $val){
+            /**
+             * unset all the empty vars
+             */
+            if($val == '') {
+                unset($data[$option]);
+            }
+            /**
+             * change the checkbox values form on/off => true/false (string)
+             */
+            if($val == 'on'){
+                $data[$option] = 'true';
+            }elseif($val == 'off'){
+                $data[$option] = 'false';
+            }
+        }
+        /**
+         * get the form_fields values and unset them from $data array
+         */
+        $field['form_id']   = $data['form_id'];
+        $field['xtype']     = $data['xtype'];
+        if(isset($data['item_of'])){
+            $field['item_of'] = $data['item_of'];
+            unset($data['item_of']);
+        }
+        if($data['xtype'] != 'fieldcontainer' && $data['xtype'] != 'fieldset' ){
+            if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
+        }
+        unset($data['form_id'],$data['xtype']);
+        /**
+         * Exec the new field sql statement and store the its ID
+         * in $field_id to then store its options
+         */
+        $sql = $mitos_db->sqlBind($field, "forms_fields", "I");
+        $mitos_db->setSQL($sql);
+        $ret = $mitos_db->execLog();
+        $field_id = $mitos_db->lastInsertId;
+        /**
+         * take each option and insert it in the orms_field_options
+         * table using $field_id
+         */
+        foreach($data as $key => $val){
+            $opt['field_id'] = $field_id;
+            $opt['oname']    = $key;
+            $opt['ovalue']   = $val;
+            $sql = $mitos_db->sqlBind($opt, "forms_field_options", "I");
+            $mitos_db->setSQL($sql);
+            $mitos_db->execOnly();
+        }
+        /**
+         * catch eny error
+         */
+        if ( $ret[2] ){
+            echo '{ "success": false, "errors": { "reason": "'. $ret[2] .'" }}';
+        } else {
+            echo '{ "success": true }';
+        }
+
     }else{
+        /**
+         * This will handle the UPDATE item Request where fiels id is set
+         */
+        $field = array();
+        $data = $_POST;
 
-        //echo 'UPDATE';
-        print '{"success":true}';
+        foreach($data as $option => $val){
+            /**
+             * unset all the empty vars
+             */
+            if($val == '') {
+                unset($data[$option]);
+            }
+            /**
+             * change the checkbox values form on/off => true/false (string)
+             */
+            if($val == 'on'){
+                $data[$option] = 'true';
+            }elseif($val == 'off'){
+                $data[$option] = 'false';
+            }
+        }
+        /**
+         * get the form_fields values and unset them from $data array
+         */
+        $id                 = $data['id'];
+        $field['form_id']   = $data['form_id'];
+        $field['xtype']     = $data['xtype'];
+        if(isset($data['item_of'])){
+            $field['item_of'] = $data['item_of'];
+            unset($data['item_of']);
+        }
+        if($field['xtype'] != 'fieldcontainer' && $field['xtype'] != 'fieldset' ){
+            if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
+        }
+        unset($data['form_id'],$data['xtype'],$data['id']);
+        /**
+         * Exec the new field sql statement and store the its ID
+         * in $field_id to then store its options
+         */
+        $sql = $mitos_db->sqlBind($field, "forms_fields", "U", "id='$id'");
+        $mitos_db->setSQL($sql);
+        $ret = $mitos_db->execLog();
+
+
+
+        $mitos_db->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
+        $ret = $mitos_db->execOnly();
+        /**
+         * take each option and insert it in the orms_field_options
+         * table using $field_id
+         */
+        foreach($data as $key => $val){
+            $opt['field_id'] = $id;
+            $opt['oname']    = $key;
+            $opt['ovalue']   = $val;
+            $sql = $mitos_db->sqlBind($opt, "forms_field_options", "I");
+            $mitos_db->setSQL($sql);
+            $mitos_db->execOnly();
+        }
+        /**
+         * catch eny error
+         */
+        if ( $ret[2] ){
+            echo '{ "success": false, "errors": { "reason": "'. $ret[2] .'" }}';
+        } else {
+            echo '{ "success": true }';
+        }
     }
 }elseif($_REQUEST['task'] == 'deleteRequest'){
+    $id = $_REQUEST['id'];
+    /**
+     * working!
+     */
 
-    //echo 'DELETE';
+    $mitos_db->setSQL("DELETE FROM forms_fields WHERE id='$id'");
+    $ret = $mitos_db->execOnly();
+    $mitos_db->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
+    $ret = $mitos_db->execOnly();
+
+    
     print '{"success":true}';
 }
  

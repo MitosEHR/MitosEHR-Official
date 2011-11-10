@@ -210,6 +210,16 @@ body#login{
 .toolDelete span{
     color: #fff!important;
 }
+.toolGreen {
+     background-color: #00ff00! important;
+     border: 1px solid #999999;
+}
+
+.toolGreen:hover {
+     background-color: #00cc00! important;
+     background-image: none;
+     border: 1px solid #999999;
+}
 .winDelete{
     background:none;
     background-color:#ff0033!important

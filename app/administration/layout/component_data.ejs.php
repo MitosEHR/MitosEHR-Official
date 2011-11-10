@@ -78,7 +78,7 @@ switch ($_GET['task']) {
                                ON ff.id = fo.field_id
                         LEFT JOIN forms_layout AS fl
                                ON fl.id = ff.form_id
-                            WHERE fl.name   = '$currForm'
+                            WHERE (fl.name   = '$currForm' OR fl.id   = '$currForm')
                               AND (ff.xtype = 'fieldcontainer' OR ff.xtype = 'fieldset')
                               AND (fo.oname = 'title' OR fo.oname = 'fieldLabel')");
         $totals = $mitos_db->rowCount();
@@ -105,14 +105,13 @@ switch ($_GET['task']) {
 	// Data for Form List
 	// *************************************************************************************
 	case "form_list":
-		$mitos_db->setSQL("SELECT DISTINCT form_id FROM layout_options");
+		$mitos_db->setSQL("SELECT * FROM forms_layout");
 		$totals = $mitos_db->rowCount();
 		//---------------------------------------------------------------------------------------
 		// start the array
 		//---------------------------------------------------------------------------------------
 		$rows = array();
 		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
-			$row['id'] = $row['form_id'];
 			array_push($rows, $row);
 		}
 		//---------------------------------------------------------------------------------------
