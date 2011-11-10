@@ -70,6 +70,8 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
             if($item['children'] == null) {
                 unset($item['children']);
                 $item['leaf'] = true;
+            }else{
+                $item['expanded'] = true;
             }
             array_push($items,$item);
         }
@@ -125,6 +127,8 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
             if($item['children'] == null) {
                 unset($item['children']);
                 $item['leaf'] = true;
+            }else{
+                $item['expanded'] = true;
             }
             array_push($fields,$item);
         }
@@ -189,7 +193,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
             $field['item_of'] = $data['item_of'];
             unset($data['item_of']);
         }
-        if($data['xtype'] != 'fieldcontainer' || $data['xtype'] != 'fieldset' ){
+        if($data['xtype'] != 'fieldcontainer' && $data['xtype'] != 'fieldset' ){
             if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
         }
         unset($data['form_id'],$data['xtype']);
@@ -255,7 +259,9 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
             $field['item_of'] = $data['item_of'];
             unset($data['item_of']);
         }
-        if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
+        if($field['xtype'] != 'fieldcontainer' && $field['xtype'] != 'fieldset' ){
+            if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
+        }
         unset($data['form_id'],$data['xtype'],$data['id']);
         /**
          * Exec the new field sql statement and store the its ID
