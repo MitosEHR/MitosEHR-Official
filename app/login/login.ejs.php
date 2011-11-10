@@ -134,7 +134,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 						// Failed to logon
 						failure:function(form, action){ 
 							if(action.failureType == 'server'){ 
-								obj = Ext.JSON.decode(action.response.responseText); 
+								var obj = Ext.JSON.decode(action.response.responseText);
 								Ext.topAlert.msg('Login Failed!', obj.errors.reason); 
 							}else{ 
 								Ext.topAlert.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
@@ -173,7 +173,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 						// Failed to logon
 						failure:function(form, action){ 
 							if(action.failureType == 'server'){ 
-								obj = Ext.JSON.decode(action.response.responseText); 
+								var obj = Ext.JSON.decode(action.response.responseText);
 								Ext.topAlert.msg('Login Failed!', obj.errors.reason); 
 							}else{ 
 								Ext.topAlert.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
@@ -202,7 +202,7 @@ var formLogin = Ext.create('Ext.form.FormPanel', {
 				// Failed to logon
 				failure:function(form, action){ 
 					if(action.failureType == 'server'){ 
-						obj = Ext.JSON.decode(action.response.responseText); 
+						var obj = Ext.JSON.decode(action.response.responseText);
 						Ext.topAlert.msg('Login Failed!', obj.errors.reason); 
 					}else{ 
 						Ext.topAlert.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
