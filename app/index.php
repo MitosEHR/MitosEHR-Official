@@ -62,7 +62,6 @@ Ext.Loader.setConfig({
         'Extensible.example': 'lib/extensible-1.5.0/examples'
     }
 });
-
 Ext.onReady(function(){
     Ext.create('Ext.mitos.panel.MitosApp');
 });
