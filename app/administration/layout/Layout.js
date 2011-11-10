@@ -479,7 +479,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         });
 
         me.fromPreview = Ext.create('Ext.panel.Panel',{
-            //title           : 'Form Preview',
+            //title           : '',
             region          : 'south',
             height          : 300,
             collapsible     : true,
@@ -492,16 +492,12 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             bodyStyle       : 'padding: 5px',
             layout          : 'anchor',
             fieldDefaults   : {msgTarget:'side'},
-            dockedItems:{
-                xtype:'toolbar',
-                items:['->',{
-                    text    : 'Reload Form',
-                    cls     : 'toolGreen',
-                    iconCls : 'icoReload',
-                    scope   : me,
-                    handler : me.previewFormRender
-                }]
-            }
+            tools: [{
+                itemId  : 'refresh',
+                type    : 'refresh',
+                scope   : me,
+                handler : me.previewFormRender
+            }]
         });
 
         me.pageBody = [ me.fieldsGrid, me.formsGrid ,me.formContainer,me.fromPreview];
