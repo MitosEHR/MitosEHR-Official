@@ -119,7 +119,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             extraParams	: { task: "parent_fields" }
         });
 
-
         me.selectListoptionsStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',		    type: 'string'},
@@ -132,9 +131,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             url	        : 'app/administration/layout/data.php',
             extraParams	: {task: "optionsRequest"}
         });
-        // *************************************************************************************
-        // List Options Grid
-        // *************************************************************************************
+
         me.selectListGrid = Ext.create('Ext.grid.Panel', {
             store		    : me.selectListoptionsStore,
             region		    : 'south',
@@ -174,10 +171,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             }]
         });
 
-
-        // *************************************************************************************
-        // User form
-        // *************************************************************************************
         me.fieldForm = Ext.create('Ext.mitos.form.FormPanel', {
             region          : 'center',
             url	            : 'app/administration/layout/data.php?task=formRequest',
@@ -202,6 +195,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 name            : 'xtype',
                 displayField	: 'name',
                 valueField		: 'value',
+                allowBlank      : false,
                 editable		: false,
                 store			: me.fieldXTypesStore,
                 queryMode		: 'local',
@@ -218,6 +212,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 displayField	: 'name',
                 valueField	    : 'value',
                 editable		: false,
+                hideTrigger:true,
                 store			: me.parentFieldsStore,
                 queryMode		: 'local',
                 margin          : '5px 5px 5px 10px',
@@ -380,7 +375,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             frame		: true,
             margin      : '0 0 2 0',
             title		: 'Field Configuration',
-            width		: 350,
+            width		: 390,
             region      : 'east',
             layout      : 'border',
             bodyStyle   : 'background-color:#eeeeee!important',
@@ -393,15 +388,24 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     scope   : me,
                     handler : me.onSave
                 },'-',{
-                    text    : 'New / Reset',
+                    text    : 'New',
                     iconCls : 'icoAddRecord',
                     scope   : me,
                     handler : me.onFormReset
                 },'-',{
+                    text    : 'Add Child',
+                    iconCls : 'icoAddRecord',
+                    itemId  : 'addChild',
+                    disabled: true,
+                    scope   : me,
+                    handler : me.onAddChild
+                },'-',{
                     text    : 'Delete',
                     iconCls : 'delete',
-                    cls     : 'toolDelete'
-                },'-','->',{
+                    cls     : 'toolDelete',
+                    scope   : me,
+                    handler : me.onDelete
+                },'-',{
                     text    : 'Form Preview',
                     iconCls : 'icoPreview',
                     enableToggle : true,
@@ -449,11 +453,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 scope: me,
                 itemclick: me.onFieldsGridClick
             }
-        }); // END LayoutGrid Grid
+        });
 
-        // *************************************************************************************
-        // This Grif dispay the forms throughout the patient file
-        // *************************************************************************************
         me.formsGrid = Ext.create('Ext.grid.Panel', {
             store		: me.selectListStore,
             region		: 'west',
@@ -475,7 +476,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 scope     : me,
                 itemclick : me.onFormGriditemClick
             }
-        }); // END LayoutChoose
+        });
 
         me.fromPreview = Ext.create('Ext.panel.Panel',{
             //title           : 'Form Preview',
@@ -524,6 +525,36 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         }
     },
     /**
+     * TODO: check database is field has database... if YES... cant delete!
+     */
+    onDelete:function(){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            icon    : Ext.MessageBox.QUESTION,
+            msg     : 'Are you sure to delete this field?',
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn:function(btn){
+                if(btn=='yes'){
+                    Ext.Ajax.request({
+                        scope:this,
+                        url: 'app/administration/layout/data.php',
+                        params: {
+                            id  : this.currField,
+                            task: 'deleteRequest'
+                        },
+                        success: function(){
+                            Ext.topAlert.msg('Delete!', 'Field deleted');
+                            this.currField = null;
+                            this.loadFieldsGrid();
+                            this.previewFormRender();
+                        }
+                    });
+                }
+            }
+        });
+    },
+    /**
      * This is to reset the Form and load
      * a new Model with the currFormm id
      */
@@ -540,13 +571,39 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     },
     /**
      *
+     * load a new model with the form_id and item_of values.
+     * This is the easy way to add a child to a fieldset or fieldcontainer.
+     */
+    onAddChild:function(){
+        var form = this.fieldForm.getForm(),
+        row = this.fieldsGrid.getSelectionModel();
+        row.deselectAll();
+        form.reset();
+        var model = Ext.ModelManager.getModel('layoutTreeModel'),
+        newModel  = Ext.ModelManager.create({
+            form_id  : this.currForm,
+            item_of  : this.currField
+        }, model );
+        form.loadRecord(newModel);
+    },
+    /**
+     *
+     * This will load the current field data to the form,
+     * set the currField, and enable the Add Child btn if
+     * the field allows child itmes (fieldset or fieldcontainer)
+     * 
      * @param grid
      * @param record
      */
     onFieldsGridClick:function(grid, record){
         var form = this.fieldForm.getForm();
         form.loadRecord(record);
-        this.currField = this.fieldsGrid.getSelectionModel().getLastSelected();
+        this.currField = record.data.id;
+        if(record.data.xtype == 'fieldset' || record.data.xtype == 'fieldcontainer'){
+            this.formContainer.down('toolbar').getComponent('addChild').enable();
+        }else{
+            this.formContainer.down('toolbar').getComponent('addChild').disable();
+        }
     },
     /**
      *
@@ -561,6 +618,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     },
     /**
      *
+     * This will load the Select List options. This Combobox shows only when
+     * a Type of Comboboc is selected
+     *
      * @param combo
      * @param record
      */
@@ -570,12 +630,17 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     },
     /**
      *
+     * This is to handle a error when loading a combobox store.
+     * 
      * @param combo
      */
     onParentFieldsExpand:function(combo){
         combo.picker.loadMask.destroy();
     },
     /**
+     *
+     * onXtypeChange will search the combo value and enable/disable
+     * the fields appropriate for the xtype selected
      *
      * @param combo
      * @param value
@@ -719,8 +784,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         }
         enableItems(items);
     },
-
     /**
+     *
+     * On toggle down/true expand the preview panel and re-render the form
      *
      * @param btn
      * @param toggle
@@ -733,7 +799,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             this.fromPreview.collapse(false);
         }
     },
-
+    /**
+     *
+     *  this function re-render the preview form
+     */
     previewFormRender:function(){
         var form = this.fromPreview;
         form.el.mask();
@@ -749,7 +818,15 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         });
 
     },
-
+    /**
+     *
+     *  re-load the fields grid (main TreeGrid)
+     *  check if a form is selected, if not the select the first choice
+     *  save the form id inside this.currForm and load the grid and the
+     *  parent filds of this form.
+     *
+     *  parentFieldsStore is use to create the child of select list
+     */
     loadFieldsGrid:function(){
         var row = this.formsGrid.getSelectionModel();
         if(this.currForm === null){
@@ -757,16 +834,20 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         }
         this.currForm = row.getLastSelected().data.id;
         /**
+         *
          * this.treeStore.setRootNode() is to manage a sencha bug
          * that removes the treeNotes when you load() the store.
+         *
          */
         this.treeStore.setRootNode();
         this.treeStore.load({params:{currForm: this.currForm }});
         this.parentFieldsStore.load({params:{currForm: this.currForm }});
     },
-
+    /**
+     *
+     * This function si called when the Navigation menu is click
+     */
     loadStores:function(){
         this.loadFieldsGrid();
-        
     }
 });
