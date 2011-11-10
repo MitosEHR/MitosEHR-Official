@@ -72,7 +72,7 @@ if(isset($_SESSION['user']['auth'])){
         if ($mobile->isMobile()) {
             include_once("app_mobile/login/login.ejs.php");
         }else{
-            include_once("app/login/login.ejs.php");
+            include_once("app/login/login.php");
         }
 	}
 }
