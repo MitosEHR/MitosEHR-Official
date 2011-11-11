@@ -590,7 +590,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
             },
             success: function(){
-
+                this.loadFieldsGrid();
+                this.previewFormRender();
+                this.onFormReset();
             }
         });
         //console.log(data.records[0].data.id);           //this id
