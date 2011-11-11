@@ -444,14 +444,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 }
             },
             columns:[{
-                text:'id',
-                dataIndex:'id',
-                width:30
-            },{
-                text:'pos',
-                dataIndex:'pos',
-                width:40
-            },{
                 xtype       : 'treecolumn',
                 text     	: 'Field Type',
                 sortable 	: false,
