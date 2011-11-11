@@ -90,7 +90,7 @@ switch ($_GET['task']) {
         //echo '<pre>';
         //print_r($mitos_db->execStatement(PDO::FETCH_ASSOC));
         //exit;
-            array_push($rows, array('name' => 'None', 'value' => null));
+            array_push($rows, array('name' => 'Root', 'value' => 0));
 		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);
 		}

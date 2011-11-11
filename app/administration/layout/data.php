@@ -54,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
     function getChildItems($parent){
         global $mitos_db;
         $items = array();
-        $mitos_db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos");
+        $mitos_db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos DESC");
         foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $item){
             // *****************************************************************************************************
             // Get option for Item
@@ -69,7 +69,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
             $item['children'] = getChildItems($item['id']);
             if($item['children'] == null) {
                 unset($item['children']);
-                $item['leaf'] = true;
+                if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
             }else{
                 $item['expanded'] = true;
             }
@@ -110,7 +110,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
         // *********************************************************************************************************
         // Get Parent Items
         // *********************************************************************************************************
-        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '') ORDER BY pos");
+        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '0') ORDER BY pos DESC");
         $results = $mitos_db->execStatement(PDO::FETCH_ASSOC);
         foreach($results as $item){
             // *****************************************************************************************************
@@ -126,7 +126,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
             $item['children'] = getChildItems($item['id']);
             if($item['children'] == null) {
                 unset($item['children']);
-                $item['leaf'] = true;
+                if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
             }else{
                 $item['expanded'] = true;
             }
