@@ -80,7 +80,8 @@ switch ($_GET['task']) {
                                ON fl.id = ff.form_id
                             WHERE (fl.name   = '$currForm' OR fl.id   = '$currForm')
                               AND (ff.xtype = 'fieldcontainer' OR ff.xtype = 'fieldset')
-                              AND (fo.oname = 'title' OR fo.oname = 'fieldLabel')");
+                              AND (fo.oname = 'title' OR fo.oname = 'fieldLabel')
+                         ORDER BY pos");
         $totals = $mitos_db->rowCount();
 		//---------------------------------------------------------------------------------------
 		// start the array

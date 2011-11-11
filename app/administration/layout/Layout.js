@@ -33,6 +33,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             fields: [
                 {name: 'id',			    type: 'string'},
                 {name: 'text', 			    type: 'string'},
+                {name: 'pos', 			    type: 'string'},
                 {name: 'xtype', 			type: 'string'},
                 {name: 'form_id',			type: 'string'},
                 {name: 'item_of',			type: 'string'},
@@ -183,6 +184,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 name            : 'id',
                 xtype           : 'textfield',
                 itemId          : 'id',
+                hidden          : true
+            },{
+                name            : 'pos',
+                xtype           : 'textfield',
+                itemId          : 'pos',
                 hidden          : true
             },{
                 name            : 'form_id',
@@ -429,7 +435,23 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             sortable    : false,
             rootVisible : false,
             title	    : 'Field editor (Demographics)',
+            viewConfig: {
+                plugins   : { ptype: 'treeviewdragdrop', allowParentInsert:true },
+
+                listeners : {
+                    scope : me,
+                    drop  : me.onDragDrop
+                }
+            },
             columns:[{
+                text:'id',
+                dataIndex:'id',
+                width:30
+            },{
+                text:'pos',
+                dataIndex:'pos',
+                width:40
+            },{
                 xtype       : 'treecolumn',
                 text     	: 'Field Type',
                 sortable 	: false,
@@ -549,6 +571,41 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 }
             }
         });
+    },
+    /**
+     *
+     * @param node
+     * @param data
+     * @param overModel
+     * @param dropPosition
+     */
+    onDragDrop:function(node,data,overModel){
+        var childItems = [];
+        Ext.each(overModel.parentNode.childNodes, function(childItem){
+            childItems.push(childItem.data.id);
+        });
+
+        Ext.Ajax.request({
+            scope : this,
+            url   : 'app/administration/layout/data.php',
+            params:{
+                task: 'sortRequest',
+                item: Ext.JSON.encode({
+                    id               : data.records[0].data.id,
+                    parentNode       : overModel.parentNode.data.id,
+                    parentNodeChilds : childItems
+                })
+
+            },
+            success: function(){
+
+            }
+        });
+        //console.log(data.records[0].data.id);           //this id
+        //console.log(overModel.parentNode.data.id);      //parent id
+        //console.log(overModel.parentNode.childNodes);   //child nodes
+        //console.log(overModel);
+        //console.log(dropPosition);
     },
     /**
      * This is to reset the Form and load

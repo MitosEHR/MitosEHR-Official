@@ -54,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
     function getChildItems($parent){
         global $mitos_db;
         $items = array();
-        $mitos_db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent'");
+        $mitos_db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos");
         foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $item){
             // *****************************************************************************************************
             // Get option for Item
@@ -110,7 +110,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
         // *********************************************************************************************************
         // Get Parent Items
         // *********************************************************************************************************
-        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '')");
+        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '') ORDER BY pos");
         $results = $mitos_db->execStatement(PDO::FETCH_ASSOC);
         foreach($results as $item){
             // *****************************************************************************************************
@@ -301,13 +301,33 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
     /**
      * working!
      */
-
     $mitos_db->setSQL("DELETE FROM forms_fields WHERE id='$id'");
     $ret = $mitos_db->execOnly();
     $mitos_db->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
     $ret = $mitos_db->execOnly();
-
-    
     print '{"success":true}';
+}elseif($_REQUEST['task'] == 'sortRequest'){
+
+    $data = json_decode($_REQUEST['item'], true);
+    $field =array();
+
+    $item       = $data['id'];
+    $parentItem = $data['parentNode'];
+    $childItems = $data['parentNodeChilds'];
+
+    $field['item_of'] = $parentItem;
+    $sql = $mitos_db->sqlBind($field, "forms_fields", "U", "id='$item'");
+    $mitos_db->setSQL($sql);
+    $mitos_db->execOnly();
+
+    $pos = 10;
+    foreach($childItems as $child){
+        $field['pos'] = $pos;
+        $sql = $mitos_db->sqlBind($field, "forms_fields", "U", "id='$child'");
+        $mitos_db->setSQL($sql);
+        $mitos_db->execOnly();
+        $pos = $pos + 10;
+    }
+
 }
  
