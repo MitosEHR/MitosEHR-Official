@@ -38,6 +38,8 @@ $data       = $foo['row'];
  *      }
  * }elseif($_REQUEST['task'] == 'deleteRequest'){
  *      ( DELETE ) <<------------------------------------// Delete Item
+ * }elseif($_REQUEST['task'] == 'sortRequest'){
+ *      ( UPDATE ) <<------------------------------------// Update the item pos and item_of
  * }
  *
  */
@@ -330,4 +332,3 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
     }
 
 }
- 
