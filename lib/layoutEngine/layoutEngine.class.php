@@ -41,7 +41,8 @@ class layoutEngine extends dbHelper {
                     LEFT JOIN forms_layout AS fl
                            ON ff.form_id = fl.id
                         WHERE (fl.name = '$formPanel' OR fl.id = '$formPanel')
-                          AND (ff.item_of IS NULL OR ff.item_of = '0')");
+                          AND (ff.item_of IS NULL OR ff.item_of = '0')
+                     ORDER BY pos DESC ");
         /**
          * for each field lets get...
          */
@@ -125,7 +126,7 @@ class layoutEngine extends dbHelper {
      */
     function getChildItems($parent){
         $items = array();
-        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent'");
+        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos DESC");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
 
             $opts = $this->getItmesOptions($item['id']);

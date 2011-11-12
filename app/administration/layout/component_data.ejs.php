@@ -80,7 +80,8 @@ switch ($_GET['task']) {
                                ON fl.id = ff.form_id
                             WHERE (fl.name   = '$currForm' OR fl.id   = '$currForm')
                               AND (ff.xtype = 'fieldcontainer' OR ff.xtype = 'fieldset')
-                              AND (fo.oname = 'title' OR fo.oname = 'fieldLabel')");
+                              AND (fo.oname = 'title' OR fo.oname = 'fieldLabel')
+                         ORDER BY pos");
         $totals = $mitos_db->rowCount();
 		//---------------------------------------------------------------------------------------
 		// start the array
@@ -89,7 +90,7 @@ switch ($_GET['task']) {
         //echo '<pre>';
         //print_r($mitos_db->execStatement(PDO::FETCH_ASSOC));
         //exit;
-            array_push($rows, array('name' => 'None', 'value' => null));
+            array_push($rows, array('name' => 'Root', 'value' => 0));
 		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);
 		}
