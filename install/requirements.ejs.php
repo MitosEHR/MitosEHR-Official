@@ -3,12 +3,10 @@ echo '[';
 //******************************************************
 // verified is already insyalled on server
 //******************************************************
-$d = dir('../sites/');
 $count = 0;
-while (false !== ($entry = $d->read())) {
-	if ( $entry != "." && $entry != ".." && $entry != "README") {
-		 $count++; 
-	} 
+foreach ($_SESSION['site']['sites'] as $site) {
+	$count++;
+
 }
 if ($count <= 0){
 	$count = 'Ok'; 
@@ -58,5 +56,3 @@ if (!ini_get('safe_mode')){
 echo '{"msg":"PHP safe maode off","status":"'.$safe_mode.'"}'; 
 
 echo ']';
-?>
-
