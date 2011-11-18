@@ -3,16 +3,19 @@ Ext.define('Ext.mitos.panel.login.Login',{
     initComponent:function(){
         var me = this;
         me.currSite = null;
-        
-        Ext.define("Sites", {extend: "Ext.data.Model", fields:
-            [
-            { type: 'int', name: 'site_id'},
-            { type: 'string', name: 'site'}
-            ]
+
+        Ext.define("Sites", {
+            extend: "Ext.data.Model",
+            fields: [{
+                type: 'int', name: 'site_id'
+            },{
+                type: 'string', name: 'site'
+            }]
         });
-        me.storeSites = new Ext.data.Store({
+        me.storeSites = Ext.create('Ext.data.Store',{
             model: 'Sites',
-            proxy: new Ext.data.AjaxProxy({
+            proxy:{
+                type: 'ajax',
                 url: 'app/login/component_data.ejs.php?task=sites',
                 reader: {
                     type: 'json',
@@ -20,18 +23,10 @@ Ext.define('Ext.mitos.panel.login.Login',{
                     totalProperty: 'results',
                     root: 'row'
                 }
-            }),
-            autoLoad: true
+            },
+            autoLoad: false
         });
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // This will be set in the global settings page... for now lets set the first site
-        me.storeSites.on('load',function(ds,records){
-            me.currSite = records[0].data.site;
-            me.formLogin.getComponent('choiseSite').setValue(me.currSite);
-        });
-        ////////////////////////////////////////////////////////////////////////////////////////
-
+        
         /**
          * The Copyright Notice Window
          */
@@ -97,8 +92,8 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 xtype           : 'combobox',
                 name            : 'choiseSite',
                 itemId          : 'choiseSite',
-                triggerAction   : 'all',
                 displayField    : 'site',
+                valueField      : 'site',
                 queryMode       : 'local',
                 fieldLabel      : 'Site',
                 store           : me.storeSites,
@@ -122,15 +117,9 @@ Ext.define('Ext.mitos.panel.login.Login',{
             },{
                 text    : 'Reset',
                 name    : 'btn_reset',
-                handler : function() {
-                    me.formLogin.getForm().reset();
-                }
-            }],
-            listeners:{
-                render: function(){
-                     me.formLogin.getComponent('authUser').focus(true, 10);
-                }
-            }
+                scope   : me,
+                handler : me.onFormReset
+            }]
         });
 
         /**
@@ -147,8 +136,14 @@ Ext.define('Ext.mitos.panel.login.Login',{
             draggable		: false,
             closable		: false,
             bodyStyle		: 'background: #ffffff;',
-            items			: [{ xtype: 'box', width: 483, height: 135, html: '<img src="ui_app/logon_header.png" />'}, me.formLogin ]
+            items			: [{ xtype: 'box', width: 483, height: 135, html: '<img src="ui_app/logon_header.png" />'}, me.formLogin ],
+            listeners:{
+                scope:me,
+                afterrender:me.onAfterrender
+            }
         }).show(); // End winLogon
+
+
 
     },
     /**
@@ -170,13 +165,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 }else{
                     Ext.topAlert.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText);
                 }
-                var form = this.formLogin.getForm();
-                form.reset();
-                var model = Ext.ModelManager.getModel('Sites'),
-                newModel  = Ext.ModelManager.create({
-                    choiseSite  : this.currSite
-                }, model );
-                form.loadRecord(newModel);
+                this.onFormReset();
             }
         })
     },
@@ -187,5 +176,32 @@ Ext.define('Ext.mitos.panel.login.Login',{
      */
     onSiteSelect:function(combo,value){
         this.currSite = value[0].data.site;
+    },
+
+    onFormReset:function(){
+        var form = this.formLogin.getForm();
+        form.reset();
+        var model = Ext.ModelManager.getModel('Sites'),
+        newModel  = Ext.ModelManager.create({
+            choiseSite  : this.currSite
+        }, model );
+        form.loadRecord(newModel);
+        this.formLogin.getComponent('authUser').focus();
+    },
+
+    onAfterrender:function(){
+        this.storeSites.load({
+            scope:this,
+            callback:function(records,operation,success){
+                if(success === true){
+                    this.currSite = records[0].data.site;
+                    this.formLogin.getComponent('choiseSite').setValue(this.currSite);
+                    this.formLogin.getComponent('authUser').focus();
+                }else{
+                    Ext.topAlert.msg('Opps!', 'Something went wrong...  No site found.');
+                }
+            }
+        });
+
     }
 }); // End App

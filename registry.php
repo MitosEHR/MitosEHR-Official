@@ -15,9 +15,9 @@
 // this returns the current folder and defined it as a root.
 $d = dir("sites/");
 while (false !== ($entry = $d->read())) {
-	if ( $entry != "." && $entry != ".."){ $confs[] = $entry . "/conf.php"; } 
-	if ( $entry != "." && $entry != ".." && $entry == "default" ){ $default = $entry; }
-	if ( $entry != "." && $entry != ".."){ $sites[] = $entry; }
+	if ( $entry != "." && $entry != ".." && $entry != "README"){ $confs[] = $entry . "/conf.php"; }
+	if ( $entry != "." && $entry != ".." && $entry == "default" && $entry != "README"){ $default = $entry; }
+	if ( $entry != "." && $entry != ".." && $entry != "README"){ $sites[] = $entry; }
 }
 $_SESSION['site']['self'] = $_SERVER['PHP_SELF'];
 $_SESSION['site']['sites'] = $sites;
