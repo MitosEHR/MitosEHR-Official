@@ -569,7 +569,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      * @param node
      * @param data
      * @param overModel
-     * @param dropPosition
      */
     onDragDrop:function(node,data,overModel){
         var childItems = [];
@@ -595,9 +594,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 this.onFormReset();
             }
         });
-        //console.log(data.records[0].data.id);           //this id
-        //console.log(overModel.parentNode.data.id);      //parent id
-        //console.log(overModel.parentNode.childNodes);   //child nodes
+        //console.log(data.records[0].data.id);           // this id
+        //console.log(overModel.parentNode.data.id);      // parent id
+        //console.log(overModel.parentNode.childNodes);   // child nodes
         //console.log(overModel);
         //console.log(dropPosition);
     },
