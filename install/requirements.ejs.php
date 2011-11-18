@@ -6,7 +6,7 @@ echo '[';
 $d = dir('../sites/');
 $count = 0;
 while (false !== ($entry = $d->read())) {
-	if ( $entry != "." && $entry != "..") {
+	if ( $entry != "." && $entry != ".." && $entry != "README") {
 		 $count++; 
 	} 
 }
