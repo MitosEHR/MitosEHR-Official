@@ -12,15 +12,9 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelCalendar',
     pageTitle   : 'Calendar Events',
-    require : [
-        'Extensible.calendar.CalendarPanel',
-        'Extensible.calendar.gadget.CalendarListPanel',
-        'Extensible.calendar.data.MemoryCalendarStore',
-        'Extensible.calendar.data.MemoryEventStore',
-        'Extensible.example.calendar.data.Events',
-        'Extensible.example.calendar.data.Calendars'
-    ],
-    initComponent : function() {
+
+    constructor : function() {
+
         this.calendarStore = Ext.create('Extensible.calendar.data.MemoryCalendarStore', {
             autoLoad: true,
             proxy: {
@@ -35,6 +29,7 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                 }
             }
         });
+        
         this.eventStore = Ext.create('Extensible.calendar.data.EventStore', {
             autoLoad: true,
             proxy: {
@@ -199,7 +194,7 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                     'viewchange': {
                          fn: function(p, vw, dateInfo){
                             if(dateInfo){
-                                this.updateTitle(dateInfo.viewStart, dateInfo.viewEnd);
+                                //this.updateTitle(dateInfo.viewStart, dateInfo.viewEnd);
                             }
                         },
                         scope: this
