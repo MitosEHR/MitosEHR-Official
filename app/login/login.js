@@ -97,7 +97,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 queryMode       : 'local',
                 fieldLabel      : 'Site',
                 store           : me.storeSites,
-                forceSelect     : true,
+                allowBlank      : false,
                 editable        : false,
                 listeners:{
                     scope: me,
@@ -150,26 +150,30 @@ Ext.define('Ext.mitos.panel.login.Login',{
      * Form Submit/Logon function
      */
     onSubmit:function(){
-        this.formLogin.getForm().submit({
-            method      : 'POST',
-            waitTitle   : 'Connecting',
-            waitMsg     : 'Sending credentials...',
-            scope: this,
-            success:function(){
-                window.location = 'index.php';
-            },
-            failure:function(form, action){
-                if(action.failureType == 'server'){
-                    var obj = Ext.JSON.decode(action.response.responseText);
-                    //this.msg('app-msg').update('Login Failed! '+ obj.errors.reason).removeCls('x-hidden');
-                    this.msg('Login Failed!', obj.errors.reason);
-                }else{
-                    //this.msg('app-msg').update('Warning! Authentication server is unreachable : ' + action.response.responseText).removeCls('x-hidden');
-                    this.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText);
+        var form = this.formLogin.getForm();
+        
+        if(form.isValid()){
+            form.submit({
+                method      : 'POST',
+                waitTitle   : 'Connecting',
+                waitMsg     : 'Sending credentials...',
+                scope: this,
+                success:function(){
+                    window.location = 'index.php';
+                },
+                failure:function(form, action){
+                    if(action.failureType == 'server'){
+                        var obj = Ext.JSON.decode(action.response.responseText);
+                        this.msg('Login Failed!', obj.errors.reason);
+                    }else{
+                        this.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText);
+                    }
+                    this.onFormReset();
                 }
-                this.onFormReset();
-            }
-        })
+            })
+        }else{
+            this.msg('Oops!', 'Username And Password are required.');
+        }
     },
     /**
      * gets the site combobox value and store it in currSite
@@ -206,7 +210,10 @@ Ext.define('Ext.mitos.panel.login.Login',{
         });
 
     },
-
+    /*
+     * @param title
+     * @param format
+     */
     msg: function(title, format){
         if(!this.msgCt){
             this.msgCt = Ext.core.DomHelper.insertFirst(document.body, {id:'msg-div'}, true);

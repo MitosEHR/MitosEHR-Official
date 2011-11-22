@@ -867,7 +867,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
         record.set(values);
         store.sync();
         store.load();
-        Ext.topAlert.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
+        this.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
     },
     loadStores:function(){
         this.store.load();
