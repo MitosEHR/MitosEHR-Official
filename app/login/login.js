@@ -26,7 +26,6 @@ Ext.define('Ext.mitos.panel.login.Login',{
             },
             autoLoad: false
         });
-        
         /**
          * The Copyright Notice Window
          */
@@ -44,14 +43,13 @@ Ext.define('Ext.mitos.panel.login.Login',{
             closable		: true,
             autoScroll		: true
         });
-
         /**
          * Form Layout [Login]
          */
         me.formLogin = Ext.create('Ext.form.FormPanel', {
             id				: 'formLogin',
             url				: 'lib/authProcedures/auth.inc.php',
-            bodyStyle		:'background: #ffffff; padding:5px 5px 0',
+            bodyStyle		: 'background: #ffffff; padding:5px 5px 0',
             defaultType		: 'textfield',
             waitMsgTarget	: true,
             frame			: false,
@@ -69,7 +67,11 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 minLength       : 3,
                 maxLength       : 25,
                 allowBlank      : false,
-                validationEvent : false
+                validationEvent : false,
+                listeners:{
+                    scope       : me,
+                    specialkey  : me.onEnter
+                }
             },{
                 xtype           : 'textfield',
                 blankText       : 'Enter your password',
@@ -82,11 +84,8 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 minLength       : 4,
                 maxLength       : 10,
                 listeners:{
-                    specialkey: function(field, e){
-                        if (e.getKey() == e.ENTER) {
-                           me.onSubmit();
-                        }
-                    }
+                    scope       : me,
+                    specialkey  : me.onEnter
                 }
             },{
                 xtype           : 'combobox',
@@ -100,13 +99,9 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 allowBlank      : false,
                 editable        : false,
                 listeners:{
-                    scope: me,
-                    specialkey: function(field, e){
-                        if (e.getKey() == e.ENTER) {
-                            me.onSubmit();
-                        }
-                    },
-                    select: me.onSiteSelect
+                    scope       : me,
+                    specialkey  : me.onEnter,
+                    select      : me.onSiteSelect
                 }
             }],
             buttons: [{
@@ -121,7 +116,6 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 handler : me.onFormReset
             }]
         });
-
         /**
          * The Logon Window
          */
@@ -141,17 +135,23 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 scope:me,
                 afterrender:me.onAfterrender
             }
-        }).show(); // End winLogon
-
-
-
+        }).show();
+    },
+    /**
+     * when keyboard ENTER key press
+     * @param field
+     * @param e
+     */
+    onEnter:function(field, e){
+        if (e.getKey() == e.ENTER) {
+           this.onSubmit();
+        }
     },
     /**
      * Form Submit/Logon function
      */
     onSubmit:function(){
         var form = this.formLogin.getForm();
-        
         if(form.isValid()){
             form.submit({
                 method      : 'POST',
@@ -183,7 +183,9 @@ Ext.define('Ext.mitos.panel.login.Login',{
     onSiteSelect:function(combo,value){
         this.currSite = value[0].data.site;
     },
-
+    /**
+     * form rest function
+     */
     onFormReset:function(){
         var form = this.formLogin.getForm();
         form.reset();
@@ -194,7 +196,9 @@ Ext.define('Ext.mitos.panel.login.Login',{
         form.loadRecord(newModel);
         this.formLogin.getComponent('authUser').focus();
     },
-
+    /**
+     * After form is render load store
+     */
     onAfterrender:function(){
         this.storeSites.load({
             scope:this,
@@ -210,11 +214,12 @@ Ext.define('Ext.mitos.panel.login.Login',{
         });
 
     },
-    /*
+    /**
+     *  animated msg alert
      * @param title
      * @param format
      */
-    msg: function(title, format){
+    msg:function(title, format){
         if(!this.msgCt){
             this.msgCt = Ext.core.DomHelper.insertFirst(document.body, {id:'msg-div'}, true);
         }
@@ -224,4 +229,4 @@ Ext.define('Ext.mitos.panel.login.Login',{
 
         m.slideIn('t').pause(3000).ghost('t', {remove:true});
     }
-}); // End App
+});
