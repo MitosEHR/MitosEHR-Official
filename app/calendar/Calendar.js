@@ -15,6 +15,8 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
 
     constructor : function() {
 
+        this.callParent(arguments);
+
         this.calendarStore = Ext.create('Extensible.calendar.data.MemoryCalendarStore', {
             autoLoad: true,
             proxy: {
@@ -68,14 +70,15 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
             // NOT that your changes were actually persisted correctly in the back end. The 'write' event is the best
             // option for generically messaging after CRUD persistence has succeeded.
             listeners: {
+                scope: this,
                 'write': function(store, operation) {
                     var title = Ext.value(operation.records[0].data[Extensible.calendar.data.EventMappings.Title.name], '(No title)');
                     if (operation.action == 'create') {
-                        Extensible.example.msg('Add', 'Added "' + title + '"');
+                        this.msg('Add', 'Added "' + title + '"');
                     } else if (operation.action == 'update') {
-                        Extensible.example.msg('Update', 'Updated "' + title + '"');
+                        this.msg('Update', 'Updated "' + title + '"');
                     } else if (operation.action == 'destroy') {
-                        Extensible.example.msg('Delete', 'Deleted "' + title + '"');
+                        this.msg('Delete', 'Deleted "' + title + '"');
                     }
                 }
             }
@@ -251,7 +254,7 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
 
     },
     loadStores:function(){
-      
+        Ext.getCmp('app-calendar').onActiveCard();
     },
 
     showMsg: function(msg){
