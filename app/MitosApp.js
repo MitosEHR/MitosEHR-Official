@@ -14,8 +14,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Extensible.calendar.gadget.CalendarListPanel',
         'Extensible.calendar.data.MemoryCalendarStore',
         'Extensible.calendar.data.MemoryEventStore',
-        'Extensible.example.calendar.data.Events',
-        'Extensible.example.calendar.data.Calendars',
 
         'Ext.mitos.combo.*',
         'Ext.mitos.combo.Users',
@@ -145,18 +143,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         // MitosEHR Support Page
         // *************************************************************************************
         me.winSupport = Ext.create('Ext.window.Window', {
-            width			: 1000,
-            height			: 650,
             closeAction		: 'hide',
             bodyStyle		: 'background-color: #ffffff; padding: 5px;',
-            modal			: false,
-            resizable		: true,
+            resizable		: false,
             title			: 'Support',
-            draggable		: true,
-            closable		: true,
-            maximizable		: true,
-            headerPosition	: 'right',
-            animateTarget	: 'support',
+            draggable		: false,
+            maximizable		: false,
+            animateTarget	: me.Footer,
             autoScroll		: true,
             maximized       : true,
             dockedItems:{
@@ -173,12 +166,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                     iconCls:'icoAddRecord',
                     handler:function(){
                         showMiframe('http://mitosehr.org/projects/mitosehr001/issues/new');
-                    }
-                },'->',{
-                    text:'Close',
-                    iconCls:'close',
-                    handler:function(){
-                        me.winSupport.hide();
                     }
                 }]
             }
