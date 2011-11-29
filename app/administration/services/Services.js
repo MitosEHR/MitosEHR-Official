@@ -131,7 +131,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
             titleCollapse: true,
             animCollapse: false,
             collapseMode: 'header',
-            frame 		: true,
+            //frame 		: true,
             height      : 150,
             margin		: '0 0 3 0',
             layout      : 'anchor',

@@ -1,11 +1,7 @@
 Ext.define('Ext.mitos.panel.MitosApp',{
     extend:'Ext.container.Container',
     uses:[
-        'Ext.grid.*',
-        'Ext.data.*',
-        'Ext.util.*',
-        'Ext.state.*',
-        'Ext.TaskManager.*',
+
         'Ext.mitos.RenderPanel',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.restStoreModel',
@@ -14,6 +10,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Extensible.calendar.gadget.CalendarListPanel',
         'Extensible.calendar.data.MemoryCalendarStore',
         'Extensible.calendar.data.MemoryEventStore',
+
+        'Ext.mitos.panel.*',
 
         'Ext.mitos.combo.*',
         'Ext.mitos.combo.Users',

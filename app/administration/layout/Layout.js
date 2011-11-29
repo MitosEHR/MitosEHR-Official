@@ -133,13 +133,12 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             extraParams	: {task: "optionsRequest"}
         });
 
-        me.selectListGrid = Ext.create('Ext.grid.Panel', {
+        me.selectListGrid = Ext.create('Ext.mitos.GridPanel', {
             store		    : me.selectListoptionsStore,
             region		    : 'south',
-            frame		    : false,
             collapseMode    : 'mini',
             split           : true,
-            border           : true,
+            border          : false,
             titleCollapse   : false,
             hideCollapseTool: true,
             width		    : 250,
@@ -175,9 +174,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.fieldForm = Ext.create('Ext.mitos.form.FormPanel', {
             region          : 'center',
             url	            : 'app/administration/layout/data.php?task=formRequest',
-            border          : true,
+            border          : false,
             autoScroll      : true,
-            frame           : false,
             fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
             defaults        : { anchor:'100%' },
             items: [{
@@ -378,13 +376,12 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
         me.formContainer = Ext.create('Ext.panel.Panel',{
             border		: true,
-            frame		: true,
-            margin      : '0 0 2 0',
+            split		: true,
             title		: 'Field Configuration',
             width		: 390,
             region      : 'east',
             layout      : 'border',
-            bodyStyle   : 'background-color:#eeeeee!important',
+            bodyStyle   : 'background-color:#fff!important',
             items       : [ me.fieldForm, me.selectListGrid ],
             dockedItems : [{
                 xtype   : 'toolbar',
@@ -429,9 +426,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.fieldsGrid = Ext.create('Ext.tree.Panel', {
             store	    : me.treeStore,
             region	    : 'center',
-            margin      : '0 2 2 2',
             border	    : true,
-            frame	    : true,
             sortable    : false,
             rootVisible : false,
             title	    : 'Field editor (Demographics)',
@@ -469,15 +464,14 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             }
         });
 
-        me.formsGrid = Ext.create('Ext.grid.Panel', {
+        me.formsGrid = Ext.create('Ext.mitos.GridPanel', {
             store		: me.selectListStore,
             region		: 'west',
             border		: true,
-            frame		: true,
-            margin      : '0 0 2 0',
+            split       : true,
             title		: 'Form list',
             width		: 200,
-            hideHeaders:true,
+            hideHeaders :true,
             columns		: [{
                 dataIndex   : 'id',
                 hidden      : true
@@ -493,7 +487,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         });
 
         me.fromPreview = Ext.create('Ext.panel.Panel',{
-            //title           : '',
             region          : 'south',
             height          : 300,
             collapsible     : true,
@@ -501,7 +494,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             hideCollapseTool: true,
             collapsed       : true,
             border		    : true,
-            frame		    : true,
+            split           : true,
             collapseMode    : 'header',
             bodyStyle       : 'padding: 5px',
             layout          : 'anchor',

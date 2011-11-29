@@ -280,8 +280,6 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
         // Global Form Panel
         //**************************************************************************
         me.globalFormPanel = Ext.create('Ext.mitos.form.FormPanel', {
-            frame			: true,
-            border			: true,
             layout			: 'fit',
             autoScroll		: true,
             bodyStyle       : 'padding: 0;',

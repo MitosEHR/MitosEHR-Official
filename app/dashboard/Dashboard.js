@@ -45,9 +45,7 @@ Ext.define('Ext.mitos.panel.dashboard.Dashboard',{
             pageBody: [{
                 id: 'app-portal',
                 xtype: 'portalpanel',
-                frame : true,
                 layout: 'fit',
-                border: true,
                 region: 'center',
                 items: [{
                     id: 'col-1',

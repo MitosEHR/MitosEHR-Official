@@ -27,7 +27,6 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
 
         me.form = Ext.create('Ext.form.Panel', {
             title           : me.formTitle,
-            frame           : true,
             bodyStyle       : 'padding: 5px',
             layout          : 'anchor', height:300,
             fieldDefaults   : {msgTarget:'side'},

@@ -41,7 +41,6 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
         //******************************************************************
         page.paymentTabPanel = new Ext.create('Ext.tab.Panel', {
             region:'center',
-            frame:true,
             items: [{
                 title: 'New Payment',
                 dockedItems: [{
