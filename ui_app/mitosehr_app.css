@@ -53,32 +53,11 @@
 .RenderPanel .x-panel-body .x-box-inner {
     
 }
-.message-view-header {
-    height:100pz;
+.message-form-header {
     background-color: #F1F1F1;
-    overflow: auto;
-    padding: 5 0;
     border-bottom: solid 1px #ccc;
 }
-.message-view-header p {
-    margin: 0;
-    padding: 0 5
-}
-.message-view-header p span {
-    width: 60px;
-    float:left;
-}
-.message-view-header-right {
-    float: left;
-    width: 50%;
-}
-.message-view-header-left {
-    float:left;
-    width: 50%;
-}
-.message-view-body {
-    padding: 5px;
-}
+
 .form-white-bg .x-panel-body {
 	background-color: #fff !important;
 	background-color: #fff !important;

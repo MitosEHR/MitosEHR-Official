@@ -50,12 +50,12 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             region      : 'center',
             border:true,
             viewConfig 	: {forceFit: true, stripeRows : true},
-            listeners: {
+            listeners:{
                 scope       : this,
                 itemclick   : this.onItemClick,
                 itemdblclick: this.onItemdblclick
             },
-            columns: [
+            columns:[
                 { header: 'noteid',     sortable: false, dataIndex: 'noteid',           hidden: true },
                 { header: 'reply_id',   sortable: false, dataIndex: 'reply_id',         hidden: true },
                 { header: 'user',       sortable: false, dataIndex: 'user',             hidden: true },
@@ -64,153 +64,15 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 { header: 'Patient',    sortable: true,  dataIndex: 'patient_name',     width : 200  },
                 { header: 'Subject',    sortable: true,  dataIndex: 'subject',          flex  : 1    },
                 { header: 'Type',       sortable: true,  dataIndex: 'note_type',        width : 100  }
-
             ],
-            tbar: [{
+            tbar:[{
                 text	: 'New message',
                 iconCls	: 'newMessage',
                 itemId  : 'newMsg',
                 handler : function(){
                     me.onNew();
                 }
-            }]
-        });
-        /**
-         *  Message Preview and Form panels
-         */
-        me.msgContainer = Ext.create('Ext.panel.Panel',{
-            region  : 'south',
-            //layout  : 'fit',
-            split   : true,
-            border  : true,
-            height  : 300,
-            tbar:[{
-                text:'Reply'
-            },{
-                text:'Foward'
-            },{
-                text:'Delete',
-                cls:'toolDelete'
-            }]
-        });
-        /**
-         * default item form msgContainer (this is the "no message selected" text)
-         * we are using css background style to display a pretty background image
-         * insted of using plain text
-         */
-        me.msgContainer.add({border:false,html:'<div class="noMsg"></div>'});
-        /**
-         * message preview panel using a custom template
-         */
-        me.msgPreView = Ext.create('Ext.panel.Panel',{
-            border: false,
-            tpl : Ext.create('Ext.XTemplate',
-                '<div class="message-view-container">'+
-                    '<div class="message-view-header">'+
-                        '<div class="message-view-header-left">'+
-                            '<p><span>From:</span> {user}</p>'+
-                            '<p><span>Patient:</span> {patient_name}</p>'+
-                            '<p><span>Subject:</span> {subject}</p>'+
-                        '</div>'+
-                        '<div class="message-view-header-right">'+
-                            '<p><span>Type:</span> {note_type}</p>'+
-                            '<p><span>Status:</span> {message_status}</p>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="message-view-body">{body}</div>'+
-                '</dic>'
-            )
-
-        });
-        /**
-         * to be replace....
-         * trying to remove all the windows and use panels to handle this
-         */
-        me.winMessage = Ext.create('Ext.mitos.window.Window', {
-            width		: 700,
-            title		: 'Compose Message',
-            items		: [{
-                xtype       : 'mitos.form',
-                defaults	: { labelWidth: 75, anchor: '100%' },
-                items: [{
-                    xtype       : 'livepatientsearch',
-                    fieldLabel  : 'Patient',
-                    hideLabel   : false,
-                    emptyText   : 'No patient selected',
-                    name        : 'pid',
-                    itemId      : 'patientCombo'
-                },{
-                    xtype       : 'textfield',
-                    fieldLabel  : 'Patient',
-                    name        : 'patient_name',
-                    itemId      : 'patientField',
-                    disabled    : true
-                },{
-                    xtype       : 'userscombo',
-                    name        : 'assigned_to',
-                    fieldLabel  : 'To',
-                    allowBlank  : false
-                },{
-                    xtype       : 'msgnotetypecombo',
-                    name        : 'note_type',
-                    fieldLabel  : 'Type'
-                },{
-                    xtype       : 'msgstatuscombo',
-                    name        : 'message_status',
-                    fieldLabel  : 'Status'
-                },{
-                    xtype       : 'textfield',
-                    fieldLabel  : 'Subject',
-                    name        : 'subject'
-                },{
-                    xtype       : 'htmleditor',
-                    readOnly    : true,
-                    name        : 'body',
-                    itemId      : 'bodyMsg',
-                    height      : 100
-                },{
-                    xtype       : 'htmleditor',
-                    name        : 'curr_msg',
-                    itemId      : 'currMsg',
-                    allowBlank  : false,
-                    height      : 100
-                },{
-                    xtype       : 'textfield',
-                    hidden      : true,
-                    name        : 'id'
-                },{
-                    xtype       : 'textfield',
-                    hidden      : true,
-                    name        : 'pid'
-                },{
-                    xtype       : 'textfield',
-                    hidden      : true,
-                    name        : 'reply_id'
-                }]
-            }],
-            buttons:[{
-                text		: 'Send',
-                iconCls		: 'save',
-                cls		    : 'winSave',
-                itemId      : 'sendMsg',
-                handler: function() {
-                    var form    = me.winMessage.down('form').getForm();
-                    if(form.isValid()){
-                        me.onSave(form, me.storeMsgs);
-                        me.winMessage.close();
-                    }else{
-                        me.action('reply');
-                    }
-                }
-            },'-',{
-                text		: 'Reply',
-                iconCls		: 'edit',
-                itemId      : 'replyMsg',
-                disabled	: true,
-                handler: function() {
-                    me.action('reply');
-                }
-            },'-',{
+            },'-','->','-',{
                 text        : 'Delete',
                 cls         : 'winDelete',
                 iconCls     : 'delete',
@@ -221,17 +83,142 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     var form    = me.winMessage.down('form').getForm();
                     me.onDelete(form, me.storeMsgs);
                 }
+            }]
+        });
+        /**
+        * Form to send and replay messages
+        */
+        me.msgForm = Ext.create('Ext.form.Panel', {
+            region       : 'south',
+            height       : 340,
+            fieldDefaults: { labelWidth: 60, margin:5, anchor: '100%' },
+            items:[{
+                xtype   : 'container',
+                cls     : 'message-form-header',
+                layout  : 'anchor',
+                items:[{
+                    xtype   : 'container',
+                    layout  : 'column',
+                    items:[{
+                        xtype       : 'container',
+                        layout      : 'anchor',
+                        columnWidth : .50,
+                        items:[{
+                            xtype       : 'livepatientsearch',
+                            fieldLabel  : 'Patient',
+                            emptyText   : 'No patient selected',
+                            itemId      : 'patientCombo',
+                            name        : 'pid',
+                            hideLabel   : false
+                        },{
+                            xtype       : 'textfield',
+                            fieldLabel  : 'Patient',
+                            itemId      : 'patientField',
+                            name        : 'patient_name',
+                            disabled    : true,
+                            hidden      : true
+                        },{
+                            xtype       : 'userscombo',
+                            name        : 'assigned_to',
+                            fieldLabel  : 'To',
+                            allowBlank  : false
+                        }]
+                    },{
+                        xtype       : 'container',
+                        layout      : 'anchor',
+                        columnWidth : .50,
+                        items:[{
+                            xtype       : 'msgnotetypecombo',
+                            name        : 'note_type',
+                            fieldLabel  : 'Type'
+                        },{
+                            xtype       : 'msgstatuscombo',
+                            name        : 'message_status',
+                            fieldLabel  : 'Status'
+                        }]
+                    }]
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : 'Subject',
+                    name        : 'subject',
+                    margin      : '0 5 5 5'
+                }]
+            },{
+                xtype       : 'htmleditor',
+                name        : 'body',
+                itemId      : 'bodyMsg',
+                height      : 214,
+                readOnly    : true,
+                hidden      : true,
+                listeners   : { scope:me,afterrender:me.fieldsRender }
+            },{
+                xtype       : 'htmleditor',
+                name        : 'curr_msg',
+                itemId      : 'currMsg',
+                height      : 214,
+                allowBlank  : false
+            },{
+                xtype       : 'textfield',
+                hidden      : true,
+                name        : 'id'
+            },{
+                xtype       : 'textfield',
+                hidden      : true,
+                name        : 'pid'
+            },{
+                xtype       : 'textfield',
+                hidden      : true,
+                name        : 'reply_id'
+            }],
+            bbar:[{
+                text		: 'Reply',
+                iconCls		: 'edit',
+                itemId      : 'replyMsg',
+                disabled	: true,
+                handler     : function(){
+                    me.action('reply');
+                }
+            },'-','->','-',{
+                text		: 'Send',
+                iconCls		: 'save',
+                cls		    : 'winSave',
+                itemId      : 'sendMsg',
+                handler: function(){
+                    var form    = me.winMessage.down('form').getForm();
+                    if(form.isValid()){
+                        me.onSave(form, me.storeMsgs);
+                        me.winMessage.close();
+                    }else{
+                        me.action('reply');
+                    }
+                }
+            },'-',{
+                text        : 'Delete',
+                cls         : 'winDelete',
+                iconCls     : 'delete',
+                itemId      : 'deleteMsg',
+                margin      : '0 3 0 0',
+                scope       : me,
+                disabled	: true,
+                handler: function(){
+                    var form    = me.winMessage.down('form').getForm();
+                    me.onDelete(form, me.storeMsgs);
+                }
             }],
             listeners:{
-                scope:me,
+                scope: me,
                 close: function(){
                     me.action('close');
                 }
             }
         });
-        me.pageBody = [ me.msgGrid, me.msgContainer ];
+ 
+        me.pageBody = [ me.msgGrid, me.msgForm ];
         me.callParent(arguments);
     }, // End initComponent
+    fieldsRender:function(){
+        this.msgForm.getComponent('bodyMsg').getToolbar().hide();
+    },
     /**
      * onNew will reset the form and load a new model
      * with message_status value set to New, and
@@ -312,7 +299,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
      * @param view
      * @param record
      */
-    onItemdblclick: function(view, record) {
+    onItemdblclick: function(view, record){
         var form = this.winMessage.down('form');
         form.getForm().loadRecord(record);
         this.action('old');
@@ -329,7 +316,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
      *
      * @param action
      */
-    action:function(action) {
+    action:function(action){
         var win          = this.winMessage,
             sm           = this.msgGrid.getSelectionModel(),
             gridTbar     = this.msgGrid.down('toolbar'),
