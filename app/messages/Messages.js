@@ -91,10 +91,12 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         me.msgForm = Ext.create('Ext.form.Panel', {
             region       : 'south',
             height       : 340,
+            //disabled:true,
             fieldDefaults: { labelWidth: 60, margin:5, anchor: '100%' },
             items:[{
                 xtype   : 'container',
                 cls     : 'message-form-header',
+                padding : '5 0',
                 layout  : 'anchor',
                 items:[{
                     xtype   : 'container',
@@ -147,15 +149,14 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 xtype       : 'htmleditor',
                 name        : 'body',
                 itemId      : 'bodyMsg',
-                height      : 214,
+                height      : 204,
                 readOnly    : true,
-                hidden      : true,
-                listeners   : { scope:me,afterrender:me.fieldsRender }
+                hidden      : true
             },{
                 xtype       : 'htmleditor',
                 name        : 'curr_msg',
                 itemId      : 'currMsg',
-                height      : 214,
+                height      : 204,
                 allowBlank  : false
             },{
                 xtype       : 'textfield',
@@ -184,7 +185,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 cls		    : 'winSave',
                 itemId      : 'sendMsg',
                 handler: function(){
-                    var form    = me.winMessage.down('form').getForm();
+                    var form = me.winMessage.down('form').getForm();
                     if(form.isValid()){
                         me.onSave(form, me.storeMsgs);
                         me.winMessage.close();
@@ -201,21 +202,20 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 scope       : me,
                 disabled	: true,
                 handler: function(){
-                    var form    = me.winMessage.down('form').getForm();
+                    var form = me.winMessage.down('form').getForm();
                     me.onDelete(form, me.storeMsgs);
                 }
             }],
             listeners:{
                 scope: me,
-                close: function(){
-                    me.action('close');
-                }
+                afterrender:me.fieldsRender
+                
             }
         });
- 
         me.pageBody = [ me.msgGrid, me.msgForm ];
         me.callParent(arguments);
     }, // End initComponent
+
     fieldsRender:function(){
         this.msgForm.getComponent('bodyMsg').getToolbar().hide();
     },
@@ -225,7 +225,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
      * note_type value set to Unassigned
      */
     onNew:function(){
-        var form = this.winMessage.down('form');
+        var form = this.msgForm;
         form.getForm().reset();
         var model = Ext.ModelManager.getModel('Messages'),
         newModel  = Ext.ModelManager.create({
@@ -270,7 +270,6 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     var currentRec = form.getRecord();
                     store.remove(currentRec);
                     store.destroy();
-                    this.msgPreView.body.update('<div class="noMsg"></div>');
                     this.winMessage.close();
                 }
             }
@@ -285,12 +284,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
      * @param record
      */
     onItemClick: function(view, record){
-
-        if(this.msgContainer.items.items[0] != this.msgPreView ){
-            this.msgContainer.remove(0);
-            this.msgContainer.add(this.msgPreView);
-        }
-        this.msgPreView.update(record.data);
+        this.msgForm.getForm().loadRecord(record);
     },
     /**
      * On item double clik load the new record to the form
@@ -337,7 +331,6 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             replybtn.disable();
             patientCombo.show();
             patientField.hide();
-            win.show();
         } else if (action == 'old') {
             replybtn.enable();
             bodyMsg.show();
@@ -345,7 +338,6 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             patientCombo.hide();
             patientField.show();
             deletebtn.enable();
-            win.show();
             bodyMsg.getToolbar().hide();
         } else if (action == 'reply') {
             currMsg.show();
