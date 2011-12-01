@@ -216,7 +216,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 displayField	: 'name',
                 valueField	    : 'value',
                 editable		: false,
-                hideTrigger:true,
+                hideTrigger     : true,
                 store			: me.parentFieldsStore,
                 queryMode		: 'local',
                 margin          : '5px 5px 5px 10px',
@@ -538,15 +538,15 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             buttons : Ext.Msg.YESNO,
             scope   : this,
             fn:function(btn){
-                if(btn=='yes'){
+                if (btn == 'yes') {
                     Ext.Ajax.request({
                         scope:this,
-                        url: 'app/administration/layout/data.php',
-                        params: {
-                            id  : this.currField,
-                            task: 'deleteRequest'
+                        url:'app/administration/layout/data.php',
+                        params:{
+                            id:this.currField,
+                            task:'deleteRequest'
                         },
-                        success: function(){
+                        success:function () {
                             Ext.topAlert.msg('Delete!', 'Field deleted');
                             this.currField = null;
                             this.loadFieldsGrid();
@@ -883,10 +883,12 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         this.parentFieldsStore.load({params:{currForm: this.currForm }});
     },
     /**
-     *
-     * This function si called when the Navigation menu is click
-     */
-    loadStores:function(){
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
         this.loadFieldsGrid();
     }
 });

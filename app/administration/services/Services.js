@@ -271,8 +271,13 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
             formPanel.setTitle('Add Service');
         }
     },
-
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
         this.storeServices.load();
     }
 }); //ens servicesPage class

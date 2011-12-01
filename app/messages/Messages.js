@@ -298,12 +298,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         form.getForm().loadRecord(record);
         this.action('old');
     },
-    /**
-     * This function its called from the the MitosApp.js 
-     */
-    loadStores:function(){
-        this.storeMsgs.load();
-    },
+
     /**
      * This function is use to disable/enabled and hide/show buttons and fields
      * according to the action
@@ -354,5 +349,14 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
 
 
         }
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
+       this.storeMsgs.load();
     }
 });

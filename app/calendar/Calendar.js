@@ -56,7 +56,7 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                 },
 
                 listeners: {
-                    exception: function(proxy, response, operation, options){
+                    exception: function(proxy, response){
                         var msg = response.message ? response.message : Ext.decode(response.responseText).message;
                         // ideally an app would provide a less intrusive message display
                         Ext.Msg.alert('Server Error', msg);
@@ -158,15 +158,15 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
 
                 listeners: {
                     'eventclick': {
-                        fn: function(vw, rec, el) {
+                        fn: function() {
                             this.clearMsg();
                         },
                         scope: this
                     },
-                    'eventover': function(vw, rec, el) {
+                    'eventover': function() {
                         //console.log('Entered evt rec='+rec.data[Extensible.calendar.data.EventMappings.Title.name]', view='+ vw.id +', el='+el.id);
                     },
-                    'eventout': function(vw, rec, el) {
+                    'eventout': function() {
                         //console.log('Leaving evt rec='+rec.data[Extensible.calendar.data.EventMappings.Title.name]+', view='+ vw.id +', el='+el.id);
                     },
                     'eventadd': {
@@ -181,15 +181,8 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                         },
                         scope: this
                     },
-                    'eventdelete': {
-                        fn: function(cp, rec) {
-                            //this.eventStore.remove(rec);
-                            this.showMsg('Event ' + rec.data[Extensible.calendar.data.EventMappings.Title.name] + ' was deleted');
-                        },
-                        scope: this
-                    },
                     'eventcancel': {
-                        fn: function(cp, rec) {
+                        fn: function() {
                             // edit canceled
                         },
                         scope: this
@@ -203,13 +196,13 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                         scope: this
                     },
                     'dayclick': {
-                        fn: function(vw, dt, ad, el) {
+                        fn: function() {
                             this.clearMsg();
                         },
                         scope: this
                     },
                     'rangeselect': {
-                        fn: function(vw, dates, onComplete){
+                        fn: function(){
                             this.clearMsg();
                         },
                         scope: this
@@ -241,7 +234,7 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                         scope: this
                     },
                     'initdrag': {
-                        fn: function(vw){
+                        fn: function(){
                             // do something when drag starts
                         },
                         scope: this
@@ -253,7 +246,13 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
         this.callParent(arguments);
 
     },
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
         Ext.getCmp('app-calendar').onActiveCard();
     },
 

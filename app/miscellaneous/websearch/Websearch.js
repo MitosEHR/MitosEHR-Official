@@ -98,7 +98,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
         page.searchRow = function(value, p, record){
             return Ext.String.format('<div class="topic"><span class="search_title">{0}</span><br><span class="search_source">{1}</span><br><span class="search_snippet" style="white-space: normal;">{2}</span></div>', value, record.get('source')||"Unknown", record.get('snippet')||"Unknown");
         };
-        page.onotesGrid = new Ext.create('Ext.mitos.GridPanel', {
+        page.onotesGrid = Ext.create('Ext.mitos.GridPanel', {
             margin      : '0 0 2 0',
             region		: 'center',
             store       : page.store,
@@ -120,7 +120,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
                 plugins     : Ext.create('Ext.ux.SlidingPager', {})
             }),
             listeners:{
-                itemclick:function(DataView, record, item, rowIndex, e){
+                itemclick:function(DataView, record, item, rowIndex){
                     page.viewPanel.expand();
                     rec = page.store.getAt(rowIndex);
                     page.viewPanel.update(rec.data);
@@ -147,5 +147,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.websearch.Websearch',{
 
         page.pageBody = [ page.searchPanel, page.onotesGrid, page.viewPanel ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
+
+    }
 }); //ens UserPage class

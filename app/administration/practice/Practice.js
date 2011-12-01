@@ -561,7 +561,13 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             form.getForm().reset();
         }
     },
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
         this.pharmacyStore.load();
         this.insuranceStore.load();
         this.insuranceNumbersStore.load();

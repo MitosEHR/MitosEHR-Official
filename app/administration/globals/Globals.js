@@ -867,7 +867,13 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
         store.load();
         this.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
     },
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
         this.store.load();
     }
 }); //ens LogPage class

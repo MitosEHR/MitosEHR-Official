@@ -16,7 +16,7 @@ Ext.define('Ext.mitos.panel.fees.billing.Billing',{
         //******************************************************************
         // Stores...
         //******************************************************************
-        page.billingStore = new Ext.create('Ext.mitos.CRUDStore',{
+        page.billingStore = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
                 {name: 'id',      		type: 'int'},
                 {name: 'date',          type: 'date', dateFormat: 'c'},
@@ -38,7 +38,7 @@ Ext.define('Ext.mitos.panel.fees.billing.Billing',{
         //******************************************************************
         // Grid...
         //******************************************************************
-        page.billingGrid = new Ext.create('Ext.mitos.GridPanel',{
+        page.billingGrid = Ext.create('Ext.mitos.GridPanel',{
             title           : 'Billing History',
             store           : page.billingStore,
             columns : [
@@ -59,7 +59,13 @@ Ext.define('Ext.mitos.panel.fees.billing.Billing',{
         page.pageBody = [  page.billingGrid ];
         page.callParent(arguments);
     }, // end of initComponent
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
 
     }
 }); //ens oNotesPage class
