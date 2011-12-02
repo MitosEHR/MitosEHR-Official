@@ -12,7 +12,6 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelCalendar',
     pageTitle   : 'Calendar Events',
-
     constructor : function() {
 
         this.callParent(arguments);
@@ -87,6 +86,7 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
         this.pageBody = [{
             xtype       : 'panel',
             layout      : 'border',
+            border      : true,
             items       : [{
                 id          :'app-west',
                 region      : 'west',
@@ -115,7 +115,7 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                 xtype           : 'extensible.calendarpanel',
                 eventStore      : this.eventStore,
                 calendarStore   : this.calendarStore,
-                border          : true,
+                border          : false,
                 id              : 'app-calendar',
                 region          : 'center',
                 activeItem      : 3, // month view
