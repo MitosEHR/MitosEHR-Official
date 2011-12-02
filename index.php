@@ -1,4 +1,5 @@
 <?php
+
 /* MitosEHR Starter
  * 
  * Description: This will start the application, if no sites are found
