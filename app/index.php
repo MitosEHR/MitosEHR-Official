@@ -3,13 +3,13 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* Main Screen Application
  *
  * Description: This is the main application, with all the panels
- * also this is the viewport of the application, this will call 
+ * also this is the viewport of the application, this will call
  * all the app->screen panels
  *
  * version 0.0.3
  * revision: N/A
  * author: GI Technologies, 2011
- * 
+ *
  */
 // Reset session count
 $_SESSION['site']['flops'] = 0;
@@ -62,8 +62,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
                 'Ext.ux'            : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/ux',
                 'Ext.mitos'         : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/mitos',
                 'Ext.mitos.panel'   : 'app',
-                'Extensible'        : 'lib/extensible-1.5.0/src',
-                'Extensible.example': 'lib/extensible-1.5.0/examples'
+                'Extensible'        : 'lib/extensible-1.5.0/src'
             }
         });
         Ext.onReady(function(){

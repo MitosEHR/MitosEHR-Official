@@ -15,9 +15,9 @@
 // this returns the current folder and defined it as a root.
 $d = dir("sites/");
 while (false !== ($entry = $d->read())) {
-	if ( $entry != "." && $entry != ".."){ $confs[] = $entry . "/conf.php"; } 
-	if ( $entry != "." && $entry != ".." && $entry == "default" ){ $default = $entry; }
-	if ( $entry != "." && $entry != ".."){ $sites[] = $entry; }
+	if ( $entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){ $confs[] = $entry . "/conf.php"; }
+	if ( $entry != "." && $entry != ".." && $entry == "default" && $entry != "README" && $entry != ".DS_Store"){ $default = $entry; }
+	if ( $entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){ $sites[] = $entry; }
 }
 $_SESSION['site']['self'] = $_SERVER['PHP_SELF'];
 $_SESSION['site']['sites'] = $sites;
@@ -53,5 +53,3 @@ $_SESSION['server']['OS'] = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "
 // Client related variables
 //**********************************************************************
 $_SESSION['client']['os'] = php_uname('s');
-
-?>

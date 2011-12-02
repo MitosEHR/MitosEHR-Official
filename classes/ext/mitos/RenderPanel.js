@@ -3,11 +3,12 @@
 //******************************************************************************
 Ext.define('Ext.mitos.RenderPanel', {
     extend      : 'Ext.container.Container',
+    mixins      : { app: 'Ext.mitos.panel.MitosApp'},
     alias       : 'widget.renderpanel',
+    cls         : 'RenderPanel',
     layout      : 'border',
     frame       : false,
     border      : false,
-    cls          : 'RenderPanel',
     pageLayout	: 'fit',
     pageBody    : [],
     pageTitle   : '',
@@ -22,15 +23,30 @@ Ext.define('Ext.mitos.RenderPanel', {
                 height  : 40,
                 html    : '<div class="dashboard_title">' + me.pageTitle + '</div>'
             },{
-                cls      	: 'RenderPanel-body',
-                xtype 		: 'panel',
-                region  	: 'center',
-                layout  	: this.pageLayout,
-                border  	: false,
-                defaults	: {frame:true, border:true, autoScroll:true},
-                items    	: me.pageBody
+                cls     : 'RenderPanel-body-container',
+                xtype   : 'container',
+                region  : 'center',
+                layout  : 'fit',
+                padding : 5,
+                items:[{
+                    cls      	: 'RenderPanel-body',
+                    xtype 		: 'panel',
+                    frame       : true,
+                    layout  	: this.pageLayout,
+                    border  	: false,
+                    defaults	: {frame:false, border:false, autoScroll:true},
+                    items    	: me.pageBody
+                    }]
             }]
         });
         me.callParent(arguments);
+    },
+
+    getMitosApp:function(){
+        return this.mixins.app.getMitosApp();
+    },
+
+    msg: function(title, format){
+        this.mixins.app.msg(title, format)
     }
 });

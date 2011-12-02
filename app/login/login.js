@@ -3,16 +3,19 @@ Ext.define('Ext.mitos.panel.login.Login',{
     initComponent:function(){
         var me = this;
         me.currSite = null;
-        
-        Ext.define("Sites", {extend: "Ext.data.Model", fields:
-            [
-            { type: 'int', name: 'site_id'},
-            { type: 'string', name: 'site'}
-            ]
+
+        Ext.define("Sites", {
+            extend: "Ext.data.Model",
+            fields: [{
+                type: 'int', name: 'site_id'
+            },{
+                type: 'string', name: 'site'
+            }]
         });
-        me.storeSites = new Ext.data.Store({
+        me.storeSites = Ext.create('Ext.data.Store',{
             model: 'Sites',
-            proxy: new Ext.data.AjaxProxy({
+            proxy:{
+                type: 'ajax',
                 url: 'app/login/component_data.ejs.php?task=sites',
                 reader: {
                     type: 'json',
@@ -20,18 +23,9 @@ Ext.define('Ext.mitos.panel.login.Login',{
                     totalProperty: 'results',
                     root: 'row'
                 }
-            }),
-            autoLoad: true
+            },
+            autoLoad: false
         });
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-        // This will be set in the global settings page... for now lets set the first site
-        me.storeSites.on('load',function(ds,records){
-            me.currSite = records[0].data.site;
-            me.formLogin.getComponent('choiseSite').setValue(me.currSite);
-        });
-        ////////////////////////////////////////////////////////////////////////////////////////
-
         /**
          * The Copyright Notice Window
          */
@@ -49,14 +43,13 @@ Ext.define('Ext.mitos.panel.login.Login',{
             closable		: true,
             autoScroll		: true
         });
-
         /**
          * Form Layout [Login]
          */
         me.formLogin = Ext.create('Ext.form.FormPanel', {
             id				: 'formLogin',
             url				: 'lib/authProcedures/auth.inc.php',
-            bodyStyle		:'background: #ffffff; padding:5px 5px 0',
+            bodyStyle		: 'background: #ffffff; padding:5px 5px 0',
             defaultType		: 'textfield',
             waitMsgTarget	: true,
             frame			: false,
@@ -74,7 +67,11 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 minLength       : 3,
                 maxLength       : 25,
                 allowBlank      : false,
-                validationEvent : false
+                validationEvent : false,
+                listeners:{
+                    scope       : me,
+                    specialkey  : me.onEnter
+                }
             },{
                 xtype           : 'textfield',
                 blankText       : 'Enter your password',
@@ -87,31 +84,24 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 minLength       : 4,
                 maxLength       : 10,
                 listeners:{
-                    specialkey: function(field, e){
-                        if (e.getKey() == e.ENTER) {
-                           me.onSubmit();
-                        }
-                    }
+                    scope       : me,
+                    specialkey  : me.onEnter
                 }
             },{
                 xtype           : 'combobox',
                 name            : 'choiseSite',
                 itemId          : 'choiseSite',
-                triggerAction   : 'all',
                 displayField    : 'site',
+                valueField      : 'site',
                 queryMode       : 'local',
                 fieldLabel      : 'Site',
                 store           : me.storeSites,
-                forceSelect     : true,
+                allowBlank      : false,
                 editable        : false,
                 listeners:{
-                    scope: me,
-                    specialkey: function(field, e){
-                        if (e.getKey() == e.ENTER) {
-                            me.onSubmit();
-                        }
-                    },
-                    select: me.onSiteSelect
+                    scope       : me,
+                    specialkey  : me.onEnter,
+                    select      : me.onSiteSelect
                 }
             }],
             buttons: [{
@@ -122,17 +112,10 @@ Ext.define('Ext.mitos.panel.login.Login',{
             },{
                 text    : 'Reset',
                 name    : 'btn_reset',
-                handler : function() {
-                    me.formLogin.getForm().reset();
-                }
-            }],
-            listeners:{
-                render: function(){
-                     me.formLogin.getComponent('authUser').focus(true, 10);
-                }
-            }
+                scope   : me,
+                handler : me.onFormReset
+            }]
         });
-
         /**
          * The Logon Window
          */
@@ -147,38 +130,50 @@ Ext.define('Ext.mitos.panel.login.Login',{
             draggable		: false,
             closable		: false,
             bodyStyle		: 'background: #ffffff;',
-            items			: [{ xtype: 'box', width: 483, height: 135, html: '<img src="ui_app/logon_header.png" />'}, me.formLogin ]
-        }).show(); // End winLogon
-
+            items			: [{ xtype: 'box', width: 483, height: 135, html: '<img src="ui_app/logon_header.png" />'}, me.formLogin ],
+            listeners:{
+                scope:me,
+                afterrender:me.onAfterrender
+            }
+        }).show();
+    },
+    /**
+     * when keyboard ENTER key press
+     * @param field
+     * @param e
+     */
+    onEnter:function(field, e){
+        if (e.getKey() == e.ENTER) {
+           this.onSubmit();
+        }
     },
     /**
      * Form Submit/Logon function
      */
     onSubmit:function(){
-        this.formLogin.getForm().submit({
-            method      : 'POST',
-            waitTitle   : 'Connecting',
-            waitMsg     : 'Sending credentials...',
-            scope: this,
-            success:function(){
-                window.location = 'index.php';
-            },
-            failure:function(form, action){
-                if(action.failureType == 'server'){
-                    var obj = Ext.JSON.decode(action.response.responseText);
-                    Ext.topAlert.msg('Login Failed!', obj.errors.reason);
-                }else{
-                    Ext.topAlert.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText);
+        var form = this.formLogin.getForm();
+        if(form.isValid()){
+            form.submit({
+                method      : 'POST',
+                waitTitle   : 'Connecting',
+                waitMsg     : 'Sending credentials...',
+                scope: this,
+                success:function(){
+                    window.location = 'index.php';
+                },
+                failure:function(form, action){
+                    if(action.failureType == 'server'){
+                        var obj = Ext.JSON.decode(action.response.responseText);
+                        this.msg('Login Failed!', obj.errors.reason);
+                    }else{
+                        this.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText);
+                    }
+                    this.onFormReset();
                 }
-                var form = this.formLogin.getForm();
-                form.reset();
-                var model = Ext.ModelManager.getModel('Sites'),
-                newModel  = Ext.ModelManager.create({
-                    choiseSite  : this.currSite
-                }, model );
-                form.loadRecord(newModel);
-            }
-        })
+            })
+        }else{
+            this.msg('Oops!', 'Username And Password are required.');
+        }
     },
     /**
      * gets the site combobox value and store it in currSite
@@ -187,5 +182,51 @@ Ext.define('Ext.mitos.panel.login.Login',{
      */
     onSiteSelect:function(combo,value){
         this.currSite = value[0].data.site;
+    },
+    /**
+     * form rest function
+     */
+    onFormReset:function(){
+        var form = this.formLogin.getForm();
+        form.reset();
+        var model = Ext.ModelManager.getModel('Sites'),
+        newModel  = Ext.ModelManager.create({
+            choiseSite  : this.currSite
+        }, model );
+        form.loadRecord(newModel);
+        this.formLogin.getComponent('authUser').focus();
+    },
+    /**
+     * After form is render load store
+     */
+    onAfterrender:function(){
+        this.storeSites.load({
+            scope:this,
+            callback:function(records,operation,success){
+                if(success === true){
+                    this.currSite = records[0].data.site;
+                    this.formLogin.getComponent('choiseSite').setValue(this.currSite);
+                    this.formLogin.getComponent('authUser').focus();
+                }else{
+                    this.msg('Opps! Something went wrong...',  'No site found.');
+                }
+            }
+        });
+
+    },
+    /**
+     *  animated msg alert
+     * @param title
+     * @param format
+     */
+    msg:function(title, format){
+        if(!this.msgCt){
+            this.msgCt = Ext.core.DomHelper.insertFirst(document.body, {id:'msg-div'}, true);
+        }
+        this.msgCt.alignTo(document, 't-t');
+        var s = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 1));
+        var m = Ext.core.DomHelper.append(this.msgCt, {html:'<div class="msg"><h3>' + title + '</h3><p>' + s + '</p></div>'}, true);
+
+        m.slideIn('t').pause(3000).ghost('t', {remove:true});
     }
-}); // End App
+});

@@ -110,5 +110,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.mysettings.MySettings',{
         });
         panel.pageBody = [panel.uSettingsForm];
         panel.callParent(arguments);
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
+
     }
 }); // End ExtJS

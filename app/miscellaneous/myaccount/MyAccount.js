@@ -63,7 +63,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
             var rec = page.storeUsers.getAt(0); // get the record from the store
             page.myAccountForm.getForm().loadRecord(rec);
         });
-        page.storeUsers.on('load',function(DataView, records, o){
+        page.storeUsers.on('load',function(){
             task.delay(200);
         });
         // *************************************************************************************
@@ -268,5 +268,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
         });
         page.pageBody = [ page.myAccountForm ];
         page.callParent(arguments);
-    } // end of initComponent
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
+
+    }
 }); //ens oNotesPage class

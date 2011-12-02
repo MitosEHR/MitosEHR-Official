@@ -108,9 +108,7 @@ Ext.define('Ext.mitos.panel.administration.log.Log',{
         me.pageBody = [ me.logGrid ];
         me.callParent(arguments);
     }, // end of initComponent
-    loadStores:function(){
-        this.logStore.load();
-    },
+
     onItemclick:function(view, record) {
         var form = this.winLog.down('form'),
         editBtn = this.logGrid.down('toolbar').getComponent('detail');
@@ -121,5 +119,14 @@ Ext.define('Ext.mitos.panel.administration.log.Log',{
         var form = this.winLog.down('form');
         form.getForm().loadRecord(record);
         this.winLog.show();
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
+        this.logStore.load();
     }
-}); //ens LogPage class
+});

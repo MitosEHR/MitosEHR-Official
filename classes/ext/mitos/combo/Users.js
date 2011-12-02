@@ -29,6 +29,7 @@ Ext.define('Ext.mitos.combo.Users',{
             queryMode   : 'local',
             valueField  : 'user',
             displayField: 'full_name',
+            emptyText   : 'Select',
             store       : me.store
 		});
 		me.callParent();
