@@ -13,7 +13,6 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>MitosEHR :: Installation</title>
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
-<script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
 <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
@@ -240,7 +239,7 @@ Ext.onReady(function() {
 		                name		: 'rootPass',
 		                id			: 'rootPass',
 		                inputType	: 'password', 
-		                allowBlank	: false
+		                allowBlank	: true
 		            },{
 		                fieldLabel	: 'SQL Server Host',
 		                name		: 'dbHost',
@@ -417,7 +416,7 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// The New Instalation Window 
 	// *************************************************************************************
-	var winSiteSetup = new Ext.create('widget.window', {
+	var winSiteSetup = Ext.create('widget.window', {
 	    title		: 'MitosEHR Requirements',
 	    id			: 'winSiteSetup',
 	    closable    : false,
@@ -451,7 +450,7 @@ Ext.onReady(function() {
 	// *************************************************************************************
 	// The New Instalation Window 
 	// *************************************************************************************
-	var winInstall = new Ext.create('widget.window', {
+	var winInstall = Ext.create('widget.window', {
 	    title		: 'MitosEHR Installation',
 	    id			: 'winInstall',
 	    closable	: false,
