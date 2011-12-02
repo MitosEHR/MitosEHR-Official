@@ -3,7 +3,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     id          : 'panelMessages',
     pageTitle   : 'Messages',
     pageLayout  : 'border',
-    defaults:{split: true},
+    defaults    : {split: true},
     uses        : [
         'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
@@ -14,6 +14,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         'Ext.mitos.combo.Users'
     ],
     initComponent: function(){
+
         var me = this;
         /**
          * Message Store
@@ -150,14 +151,15 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 name        : 'body',
                 itemId      : 'bodyMsg',
                 height      : 204,
-                readOnly    : true,
-                hidden      : true
+                readOnly    : true
+
             },{
                 xtype       : 'htmleditor',
                 name        : 'curr_msg',
                 itemId      : 'currMsg',
                 height      : 204,
-                allowBlank  : false
+                allowBlank  : false,
+                hidden      : true
             },{
                 xtype       : 'textfield',
                 hidden      : true,
@@ -202,8 +204,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 scope       : me,
                 disabled	: true,
                 handler: function(){
-                    var form = me.winMessage.down('form').getForm();
-                    me.onDelete(form, me.storeMsgs);
+                    //console.log(this.getMitosApp());
                 }
             }],
             listeners:{
@@ -214,6 +215,8 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         });
         me.pageBody = [ me.msgGrid, me.msgForm ];
         me.callParent(arguments);
+
+
     }, // End initComponent
 
     fieldsRender:function(){

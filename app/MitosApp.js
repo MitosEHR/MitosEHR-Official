@@ -468,6 +468,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         var m = Ext.core.DomHelper.append(this.msgCt, {html:'<div class="msg"><h3>' + title + '</h3><p>' + s + '</p></div>'}, true);
 
         m.slideIn('t').pause(3000).ghost('t', {remove:true});
+    },
+
+    getMitosApp:function(){
+        return this;
     }
 
 });
