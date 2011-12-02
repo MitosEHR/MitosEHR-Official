@@ -141,7 +141,7 @@ body#login{
 	background-attachment:fixed;
 	background-repeat:repeat-x !important;
 	background-color: #FFF;
-	margin: 0px;
+	margin: 0;
 }
 #bg_logo{
 	position: absolute;
@@ -197,11 +197,6 @@ body#login{
 #msg-div .msg p {
     margin: 0;
 }
-.noMsg {
-    width: 100%;
-    height: 100%;
-    background: url("noMsg.png") no-repeat center center;
-}
 .toolDelete {
     background-color: #ff0033 ! important;
     border: 1px solid #999999;
@@ -247,4 +242,7 @@ body#login{
 }
 #panelLayout .x-layout-split-bottom{
   background: none!important;
+}
+#app-calendar{
+    border-left: solid 1px #cccccc;
 }
