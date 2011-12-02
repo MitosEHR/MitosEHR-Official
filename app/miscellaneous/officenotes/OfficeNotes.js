@@ -22,7 +22,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
         var page = this;
         var rowPos;
         var currRec;
-        page.storeOnotes = new Ext.create('Ext.mitos.CRUDStore',{
+        page.storeOnotes = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
                 {name: 'id',      		type: 'int'},
                 {name: 'date',          type: 'date', dateFormat: 'c'},
@@ -71,7 +71,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                 xtype: 'toolbar',
                 dock: 'top',
                 items: [
-                    page.cmdSave = new Ext.create('Ext.Button', {
+                    page.cmdSave = Ext.create('Ext.Button', {
                         text      	: 'Save',
                         iconCls   	: 'save',
                         disabled	: true,
@@ -95,7 +95,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                             page.cmdHide.disable();
                         }
                     }),'-',
-                    page.cmdHide = new Ext.create('Ext.Button', {
+                    page.cmdHide = Ext.create('Ext.Button', {
                         text		: 'Hide This Note',
                         iconCls   	: 'save',
                         tooltip		: 'Hide Selected Office Note',
@@ -115,7 +115,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                             page.cmdHide.disable();
                         }
                     }),'-',
-                    page.cmdNew = new Ext.create('Ext.Button', {
+                    page.cmdNew = Ext.create('Ext.Button', {
                         text      	: 'Reset Form',
                         iconCls   	: 'save',
                         disabled	: true,
@@ -130,12 +130,12 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                 ]
             }]
         });
-        page.onotesGrid = new Ext.create('Ext.mitos.GridPanel', {
+        page.onotesGrid = Ext.create('Ext.mitos.GridPanel', {
             region		: 'center',
             store       : page.storeOnotes,
             listeners	: {
                 itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
+                    fn: function(DataView, record, item, rowIndex){
                         page.onotesFormPanel.getForm().reset();
                         var rec = page.storeOnotes.getAt(rowIndex);
                         page.cmdNew.enable();
@@ -160,7 +160,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                 emptyMsg: "No Office Notes to display",
                 plugins: Ext.create('Ext.ux.SlidingPager', {}),
                 items: [
-                    page.cmdShow = new Ext.create('Ext.Button', {
+                    page.cmdShow = Ext.create('Ext.Button', {
                         text      	: 'Show Only Active Notes',
                         iconCls   	: 'save',
                         enableToggle: true,
@@ -175,7 +175,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                             page.storeOnotes.load({params:{show: 'active' }});
                         }
                     }),'-',
-                    page.cmdShowAll = new Ext.create('Ext.Button', {
+                    page.cmdShowAll = Ext.create('Ext.Button', {
                         text      	: 'Show All Notes',
                         iconCls   	: 'save',
                         enableToggle: true,
@@ -189,5 +189,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
         }); // END GRID
         page.pageBody = [ page.onotesFormPanel,page.onotesGrid ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
+
+    }
 }); //ens oNotesPage class

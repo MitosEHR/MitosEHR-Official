@@ -21,7 +21,6 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
     ],
     initComponent: function(){
         var page = this;
-        var rowPos;
         var currRec;
         page.storeAddressbook = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
@@ -319,7 +318,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
                 // Single click to select the record
                 // -----------------------------------------
                 itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
+                    fn: function(DataView, record, item, rowIndex){
                         page.frmAddressbook.getForm().reset();
                         var rec = page.storeAddressbook.getAt(rowIndex);
                         page.cmdEdit.enable();
@@ -333,7 +332,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
                 // Double click to select the record, and edit the record
                 // -----------------------------------------
                 itemdblclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
+                    fn: function(DataView, record, item, rowIndex){
                         page.frmAddressbook.getForm().reset();
                         page.cmdEdit.enable();
                         var rec = page.storeAddressbook.getAt(rowIndex); // get the record from the store
@@ -390,7 +389,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
                                 icon: Ext.MessageBox.QUESTION,
                                 msg:'Are you sure to delete this Contact?',
                                 buttons: Ext.Msg.YESNO,
-                                fn:function(btn,msgGrid){
+                                fn:function(btn){
                                     if(btn=='yes'){
                                         page.storeAddressbook.remove( currRec );
                                         page.storeAddressbook.save();
@@ -417,5 +416,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
 
         page.pageBody = [ page.addressBookGrid ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
+
+    }
 }); //ens oNotesPage class

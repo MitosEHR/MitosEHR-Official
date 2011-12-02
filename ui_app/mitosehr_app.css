@@ -27,15 +27,16 @@
     background-color: #ccc;
     -webkit-border-radius: 3px;
 }
-.RenderPanel{
+.RenderPanel {
     background-color: #DFE8F6!important;
     padding: 5px !important;
     border: solid 1px #CCC;
 }
-.RenderPanel .x-panel-body{
+.RenderPanel .x-panel-body .x-box-inner x-panel{
 	background-color: #fff !important;
+    
 }
-.RenderPanel-header{
+.RenderPanel-header {
 	background-color: #DFE8F6;
     color: #596F8F;
     font-size: 22px;
@@ -43,19 +44,24 @@
     padding: 8px 15px;
     text-shadow: 0 1px 0 #fff;
 }
-.RenderPanel-body{
-	padding:5px;
+.RenderPanel-body-container {
 	background-color: #fff;
-	border-color: #D4CDCC;
+	/*border-color: #D4CDCC;
 	border-style: solid;
-	border-width:1px;
+	border-width:1px;*/
 }
+.RenderPanel .x-panel-body .x-box-inner {
+    
+}
+.message-form-header {
+    background-color: #F1F1F1;
+    border-bottom: solid 1px #ccc;
+}
+
 .form-white-bg .x-panel-body {
 	background-color: #fff !important;
 	background-color: #fff !important;
-	border-color: #D4CDCC !important;
-	border-style: solid !important;
-	border-width: 1px !important;
+    border: 1px solid #D4CDCC;
 }
 .x-grid-table .x-grid-row{
 cursor: pointer !important;
@@ -67,9 +73,7 @@ cursor: pointer !important;
 	font-family: "Cuprum";
 	font-size: 24px;
 	width: 100%;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	border-bottom-color: #ccc;
+    border-bottom: 1px dotted #ccc;
 }
 
 .search_title{
@@ -116,9 +120,7 @@ cursor: pointer !important;
 }
 .patient_btn_img img{
 
-    border-style: solid;
-    border-width: 1px;
-    border-color: #999999;
+    border: 1px solid #999999;
 }
 .patient_btn_info {
     color: #666666;
@@ -143,11 +145,8 @@ body#login{
 }
 #bg_logo{
 	position: absolute;
-	background-image:url(mitosehr_big_logo.png);
-	background-position: top center;
-	background-attachment:fixed;
-	background-repeat: no-repeat;
-	top: 0;
+    background: url(mitosehr_big_logo.png) no-repeat fixed top center;
+    top: 0;
 	left: 0;
 	width: 100%;
 	height: 196px;
@@ -198,6 +197,11 @@ body#login{
 #msg-div .msg p {
     margin: 0;
 }
+.noMsg {
+    width: 100%;
+    height: 100%;
+    background: url("noMsg.png") no-repeat center center;
+}
 .toolDelete {
     background-color: #ff0033 ! important;
     border: 1px solid #999999;
@@ -240,4 +244,7 @@ body#login{
 }
 .winDelete span{
     color:#fff!important;
+}
+#panelLayout .x-layout-split-bottom{
+  background: none!important;
 }

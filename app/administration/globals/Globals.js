@@ -280,8 +280,6 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
         // Global Form Panel
         //**************************************************************************
         me.globalFormPanel = Ext.create('Ext.mitos.form.FormPanel', {
-            frame			: true,
-            border			: true,
             layout			: 'fit',
             autoScroll		: true,
             bodyStyle       : 'padding: 0;',
@@ -867,9 +865,15 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
         record.set(values);
         store.sync();
         store.load();
-        Ext.topAlert.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
+        this.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
     },
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
         this.store.load();
     }
 }); //ens LogPage class

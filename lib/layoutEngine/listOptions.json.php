@@ -22,10 +22,9 @@ session_cache_limiter('private');
 // **************************************************************************************
 // filter params passed by ExtJS Data Store
 // **************************************************************************************
-//if(isset($_REQUEST)){
+if(isset($_REQUEST['filter'])){
     $filter = $_REQUEST['filter'];
-//}
-
+}
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 
 // **************************************************************************************
@@ -55,4 +54,3 @@ foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row) {
 	array_push($rows, $row);
 }
 print(json_encode(array('totals'=>$total,'row'=>$rows)));
-?>

@@ -19,7 +19,7 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
         //******************************************************************
         // Stores...
         //******************************************************************
-        page.paymentStore = new Ext.create('Ext.mitos.CRUDStore',{
+        page.paymentStore = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
                 {name: 'id',      		type: 'int'},
                 {name: 'date',          type: 'date', dateFormat: 'c'},
@@ -39,30 +39,29 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
         //******************************************************************
         // Payments Tab Panel
         //******************************************************************
-        page.paymentTabPanel = new Ext.create('Ext.tab.Panel', {
+        page.paymentTabPanel = Ext.create('Ext.tab.Panel', {
             region:'center',
-            frame:true,
             items: [{
                 title: 'New Payment',
                 dockedItems: [{
                     xtype: 'toolbar',
                     dock: 'top',
                     items: [
-                        new Ext.create('Ext.Button', {
+                        Ext.create('Ext.Button', {
                             text      	: 'Save',
                             iconCls   	: 'save',
                             handler   : function(){
 
                             }
                         }),'-',
-                        new Ext.create('Ext.Button', {
+                        Ext.create('Ext.Button', {
                             text		: 'Cancel',
                             iconCls   	: 'save',
                             handler		: function(){
 
                             }
                         }),'-',
-                        new Ext.create('Ext.Button', {
+                        Ext.create('Ext.Button', {
                             text		: 'Allocate',
                             iconCls   	: 'save',
                             handler		: function(){
@@ -77,14 +76,14 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
                     xtype: 'toolbar',
                     dock: 'top',
                     items: [
-                        new Ext.create('Ext.Button', {
+                        Ext.create('Ext.Button', {
                             text      	: 'Search',
                             iconCls   	: 'save',
                             handler   : function(){
                                 page.paymentGrid.show();
                             }
                         }),'-',
-                        new Ext.create('Ext.Button', {
+                        Ext.create('Ext.Button', {
                             text		: 'Reset',
                             iconCls   	: 'save',
                             handler		: function(){
@@ -99,7 +98,7 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
                     xtype: 'toolbar',
                     dock: 'top',
                     items: [
-                        new Ext.create('Ext.Button', {
+                        Ext.create('Ext.Button', {
                             text		: 'Proccess ERA File',
                             iconCls   	: 'save',
                             handler		: function(){
@@ -113,7 +112,7 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
         //******************************************************************
         // Payment history Grid
         //******************************************************************
-        page.paymentGrid = new Ext.create('Ext.mitos.GridPanel',{
+        page.paymentGrid = Ext.create('Ext.mitos.GridPanel',{
             title           : 'Payments Search Results',
             margin          : '3 0 0 0',
             height          : 300,
@@ -138,7 +137,13 @@ Ext.define('Ext.mitos.panel.fees.payments.Payments',{
         page.pageBody = [ page.paymentTabPanel, page.paymentGrid] ;
         page.callParent(arguments);
     }, // end of initComponent
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
 
     }
 }); //ens oNotesPage class

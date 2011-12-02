@@ -30,7 +30,7 @@ Ext.define('Ext.mitos.panel.dashboard.Dashboard',{
         return [{
             xtype: 'tool',
             type: 'gear',
-            handler: function(e, target, panelHeader, tool){
+            handler: function(e, target, panelHeader){
                 var portlet = panelHeader.ownerCt;
                 portlet.setLoading('Working...');
                 Ext.defer(function(){
@@ -45,9 +45,7 @@ Ext.define('Ext.mitos.panel.dashboard.Dashboard',{
             pageBody: [{
                 id: 'app-portal',
                 xtype: 'portalpanel',
-                frame : true,
                 layout: 'fit',
-                border: true,
                 region: 'center',
                 items: [{
                     id: 'col-1',
@@ -98,7 +96,13 @@ Ext.define('Ext.mitos.panel.dashboard.Dashboard',{
      onPortletClose: function(portlet) {
         Ext.topAlert.msg('Message!',  portlet.title + ' was removed');
     },
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
 
     }
 }); //ens UserPage class

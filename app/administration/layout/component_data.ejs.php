@@ -8,15 +8,11 @@
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
-
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
-include_once($_SESSION['site']['root']."/classes/I18n.class.php");
-include_once($_SESSION['site']['root']."/lib/layoutEngine/dataTypes.array.php");
-require_once($_SESSION['site']['root']."/classes/dataExchange.class.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop

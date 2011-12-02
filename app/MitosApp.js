@@ -1,20 +1,15 @@
 Ext.define('Ext.mitos.panel.MitosApp',{
-    extend:'Ext.container.Container',
+    extend:'Ext.Viewport',
     uses:[
-        'Ext.grid.*',
-        'Ext.data.*',
-        'Ext.util.*',
-        'Ext.state.*',
-        'Ext.TaskManager.*',
+
         'Ext.mitos.RenderPanel',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.restStoreModel',
+
         'Extensible.calendar.CalendarPanel',
         'Extensible.calendar.gadget.CalendarListPanel',
         'Extensible.calendar.data.MemoryCalendarStore',
         'Extensible.calendar.data.MemoryEventStore',
-        'Extensible.example.calendar.data.Events',
-        'Extensible.example.calendar.data.Calendars',
 
         'Ext.mitos.combo.*',
         'Ext.mitos.combo.Users',
@@ -33,7 +28,35 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
         'Ext.mitos.form.FormPanel',
         'Ext.mitos.form.fields.Checkbox',
-        'Ext.mitos.window.Window'
+        'Ext.mitos.window.Window',
+
+        'Ext.mitos.panel.dashboard.Dashboard',
+        'Ext.mitos.panel.calendar.Calendar',
+        'Ext.mitos.panel.messages.Messages',
+
+        'Ext.mitos.panel.patientfile.new.NewPatient',
+        'Ext.mitos.panel.patientfile.summary.Summary',
+        'Ext.mitos.panel.patientfile.visits.Visits',
+        'Ext.mitos.panel.fees.billing.Billing',
+        'Ext.mitos.panel.fees.checkout.Checkout',
+        'Ext.mitos.panel.fees.fees_sheet.FeesSheet',
+        'Ext.mitos.panel.fees.payments.Payments',
+
+        'Ext.mitos.panel.administration.facilities.Facilities',
+        'Ext.mitos.panel.administration.globals.Globals',
+        'Ext.mitos.panel.administration.layout.Layout',
+        'Ext.mitos.panel.administration.lists.Lists',
+        'Ext.mitos.panel.administration.log.Log',
+        'Ext.mitos.panel.administration.practice.Practice',
+        'Ext.mitos.panel.administration.roles.Roles',
+        'Ext.mitos.panel.administration.services.Services',
+        'Ext.mitos.panel.administration.users.Users',
+
+        'Ext.mitos.panel.miscellaneous.addressbook.Addressbook',
+        'Ext.mitos.panel.miscellaneous.myaccount.MyAccount',
+        'Ext.mitos.panel.miscellaneous.mysettings.MySettings',
+        'Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',
+        'Ext.mitos.panel.miscellaneous.websearch.Websearch'
 
     ],
     initComponent: function(){
@@ -97,7 +120,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                         layout.setActiveItem(card);
 
                         var currCard= Ext.getCmp(card);
-                        currCard.loadStores();
+                        currCard.onActive();
 
                         // ************** //
                         // AMIMATION TEST //
@@ -144,18 +167,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         // MitosEHR Support Page
         // *************************************************************************************
         me.winSupport = Ext.create('Ext.window.Window', {
-            width			: 1000,
-            height			: 650,
             closeAction		: 'hide',
             bodyStyle		: 'background-color: #ffffff; padding: 5px;',
-            modal			: false,
-            resizable		: true,
+            resizable		: false,
             title			: 'Support',
-            draggable		: true,
-            closable		: true,
-            maximizable		: true,
-            headerPosition	: 'right',
-            animateTarget	: 'support',
+            draggable		: false,
+            maximizable		: false,
+            animateTarget	: me.Footer,
             autoScroll		: true,
             maximized       : true,
             dockedItems:{
@@ -172,12 +190,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                     iconCls:'icoAddRecord',
                     handler:function(){
                         showMiframe('http://mitosehr.org/projects/mitosehr001/issues/new');
-                    }
-                },'->',{
-                    text:'Close',
-                    iconCls:'close',
-                    handler:function(){
-                        me.winSupport.hide();
                     }
                 }]
             }
@@ -272,16 +284,16 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 xtype	: 'container',
                 html	: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
                 style	: 'float:left',
-                border	:	false
+                border	: false
             },
                 me.patientButton = Ext.create('Ext.Button', {
-                    //text	: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
-                    scale	: 'large',
-                    style 	: 'float:left',
-                    margin	: '0 0 0 5px',
-                    disabled: true,
-                    minWidth: 190,
-                    listeners:{
+                    //text	`: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
+                    scale	 : 'large',
+                    style 	 : 'float:left',
+                    margin	 : '0 0 0 5px',
+                    disabled : true,
+                    minWidth : 190,
+                    listeners: {
                         afterrender:function(){
                             this.update({name:'No Patient Selected', info:'(record number)'});
                         }
@@ -298,8 +310,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                             return v ? v : 'No Patient Selected';
                         }
                     }),
-                    menu 	: Ext.create('Ext.menu.Menu', {
-                        items: [{
+                    menu: Ext.create('Ext.menu.Menu', {
+                        items:[{
                             text:'New Encounter',
                             handler:function(){
 
@@ -352,9 +364,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 }]
             }]
         }); // End Header
-        // *************************************************************************************
-        // Main Panel
-        // *************************************************************************************
+        /**
+         * MainPanel is where all the pages are display
+         */
         me.MainPanel = Ext.create('Ext.container.Container', {
             region			: 'center',
             layout          : 'card',
@@ -434,22 +446,32 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 }]
             }]
         });
-        // *************************************************************************************
-        // The main ViewPort
-        // Description: It will display all the previously declared
-        // panels above.
-        // *************************************************************************************
-        Ext.create('Ext.Viewport', {
-            layout      : { type: 'border', padding	: 2 },
-            defaults	: { split: true },
-            items		: [ me.Header, me.navColumn, me.MainPanel, me.Footer ],
-            listeners:{
-                afterrender:function(){
-                    Ext.get('mainapp-loading').remove();
-                    Ext.get('mainapp-loading-mask').fadeOut({remove:true});
-                }
+
+        me.layout    = { type:'border', padding:3 };
+        me.defaults	 = { split:true };
+        me.items     = [ me.Header, me.navColumn, me.MainPanel, me.Footer ];
+        me.listeners = {
+            afterrender:function(){
+                Ext.get('mainapp-loading').remove();
+                Ext.get('mainapp-loading-mask').fadeOut({remove:true});
             }
-        }); // End ViewPort
+        };
         me.callParent(arguments);
-    } // end of initComponent
-}); //end MitosApp class
+    }, // end of initComponent
+
+    msg: function(title, format){
+        if(!this.msgCt){
+            this.msgCt = Ext.core.DomHelper.insertFirst(document.body, {id:'msg-div'}, true);
+        }
+        this.msgCt.alignTo(document, 't-t');
+        var s = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 1));
+        var m = Ext.core.DomHelper.append(this.msgCt, {html:'<div class="msg"><h3>' + title + '</h3><p>' + s + '</p></div>'}, true);
+
+        m.slideIn('t').pause(3000).ghost('t', {remove:true});
+    },
+
+    getMitosApp:function(){
+        return this;
+    }
+
+});

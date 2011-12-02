@@ -224,7 +224,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             msg     : 'Are you sure to delete this record?',
             buttons : Ext.Msg.YESNO,
             scope   : this,
-            fn      : function(btn,msgGrid){
+            fn      : function(btn){
                 if(btn=='yes'){
                     alert('TODO');
                 }
@@ -232,7 +232,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         });
     },
 
-    onItemClick:function(view, record, item, rowIndex, element){
+    onItemClick:function(){
         //TODO
     },
 
@@ -250,8 +250,13 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         }
         this.storeListsOption.load({params:{list_id: this.currList}});
     },
-    
-    loadStores:function(){
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(){
         this.loadGrid();
     }
 });
