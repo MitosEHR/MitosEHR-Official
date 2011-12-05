@@ -20,7 +20,7 @@ $foo        = json_decode($rawData, true);
 $data       = $foo['row'];
 
 $start      = (!$_REQUEST["start"])? 0 : $_REQUEST["start"];
-$limit      = (!$_REQUEST["limit"])? 10 : $_REQUEST["limit"];
+$limit      = (!$_REQUEST["limit"])? 30 : $_REQUEST["limit"];
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
@@ -73,7 +73,7 @@ switch($_SERVER['REQUEST_METHOD']){
     exit;
     case 'PUT':
         $t                      = date('l jS \of F Y h:i:s A');
-        $row['body']            = 'On '.$t.' - '.$_SESSION['user']['name'].' - Wrote:<br><br>'.$data['curr_msg'].'<br><br>';
+        $row['body']            = 'On '.$t.' - <spam style="font-weight:bold">'.$_SESSION['user']['name'].'</spam> - Wrote:<br><br>'.$data['curr_msg'].'<br><br>';
         $row['user_id']         = $_SESSION['user']['id'];
         $row['facility_id']     = $_SESSION['site']['facility'];
         $row['activity']        = $data['activity'];
