@@ -51,7 +51,7 @@ switch($_SERVER['REQUEST_METHOD']){
     exit;
     case 'POST':
         $t                      = date('l jS \of F Y h:i:s A');
-        $row['body']            = $t.': '.$data['curr_msg'];
+        $row['body']            = 'On '.$t.' - '.$_SESSION['user']['name'].' - Wrote:<br><br>'.$data['curr_msg'];
         $row['pid']             = $data['pid'];
         $row['user_id']         = $_SESSION['user']['id'];
         $row['facility_id']     = $_SESSION['site']['facility'];
@@ -73,7 +73,7 @@ switch($_SERVER['REQUEST_METHOD']){
     exit;
     case 'PUT':
         $t                      = date('l jS \of F Y h:i:s A');
-        $row['body']            = $t.': '.$data['curr_msg'].PHP_EOL.$data['body'];
+        $row['body']            = 'On '.$t.' - '.$_SESSION['user']['name'].' - Wrote:<br><br>'.$data['curr_msg'].'<br><br>';
         $row['user_id']         = $_SESSION['user']['id'];
         $row['facility_id']     = $_SESSION['site']['facility'];
         $row['activity']        = $data['activity'];
