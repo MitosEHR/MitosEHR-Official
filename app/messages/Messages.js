@@ -143,11 +143,19 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                         items:[{
                             xtype       : 'msgnotetypecombo',
                             name        : 'note_type',
-                            fieldLabel  : 'Type'
+                            fieldLabel  : 'Type',
+                            listeners   : {
+                                scope   : me,
+                                select  : me.onChange
+                            }
                         },{
                             xtype       : 'msgstatuscombo',
                             name        : 'message_status',
-                            fieldLabel  : 'Status'
+                            fieldLabel  : 'Status',
+                            listeners   : {
+                                scope   : me,
+                                select  : me.onChange
+                            }
                         }]
                     }]
                 },{
@@ -196,9 +204,9 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 iconCls     : 'delete',
                 itemId      : 'deleteMsg',
                 margin      : '0 3 0 0',
-                scope       : me,
                 disabled	: true,
-                handler: me.onDelete
+                scope       : me,
+                handler     : me.onDelete
             }],
             listeners:{
                 scope: me,
@@ -282,6 +290,32 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 }
             }
         });
+    },
+    onChange:function(combo, record){
+        var form = combo.up('form').getForm();
+
+        if(form.isValid()){
+
+            var id = form.getRecord().data.id,
+            col = combo.name,
+            val = record[0].data.option_id;
+
+            Ext.Ajax.request({
+                url     : 'app/messages/data.php',
+                scope   : this,
+                params  : {
+                    id  : id,
+                    col : col,
+                    val : val,
+                    task: 'update'
+                },
+                success: function(){
+                    this.storeMsgs.load();
+                }
+            });
+
+        }
+
     },
     /**
      * On item click check if msgPreView is already inside the container.

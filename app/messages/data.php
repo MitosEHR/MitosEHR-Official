@@ -50,25 +50,39 @@ switch($_SERVER['REQUEST_METHOD']){
         print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
     exit;
     case 'POST':
-        $t                      = date('l jS \of F Y h:i:s A');
-        $row['body']            = 'On '.$t.' - <spam style="font-weight:bold">'.$_SESSION['user']['name'].'</spam> - Wrote:<br><br>'.$data['curr_msg'];
-        $row['pid']             = $data['pid'];
-        $row['user_id']         = $_SESSION['user']['id'];
-        $row['facility_id']     = $_SESSION['site']['facility'];
-        $row['activity']        = $data['activity'];
-        $row['authorized']      = $data['authorized'];
-        $row['assigned_to']     = $data['assigned_to'];
-        $row['message_status']  = $data['message_status'];
-        $row['subject']         = $data['subject'];
-        $row['reply_id']        = $data['reply_id'];
-        $row['note_type']       = $data['note_type'];
-        $sql = $mitos_db->sqlBind($row, "pnotes", "I");
-        $mitos_db->setSQL($sql);
-        $ret = $mitos_db->execLog();
-        if ( $ret[2] ){
-            echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
-        } else {
-            echo "{ success: true }";
+        if($_REQUEST['task'] == 'update'){
+
+            $row[$_REQUEST['col']] = $_REQUEST['val'];
+
+            $sql = $mitos_db->sqlBind($row, "pnotes", "U", "id='" . $_REQUEST['id'] . "'");
+            $mitos_db->setSQL($sql);
+            $ret = $mitos_db->execLog();
+            if ( $ret[2] ){
+                echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+            } else {
+                echo "{ success: true }";
+            }
+        }else{
+            $t                      = date('l jS \of F Y h:i:s A');
+            $row['body']            = 'On '.$t.' - <spam style="font-weight:bold">'.$_SESSION['user']['name'].'</spam> - Wrote:<br><br>'.$data['curr_msg'];
+            $row['pid']             = $data['pid'];
+            $row['user_id']         = $_SESSION['user']['id'];
+            $row['facility_id']     = $_SESSION['site']['facility'];
+            $row['activity']        = $data['activity'];
+            $row['authorized']      = $data['authorized'];
+            $row['assigned_to']     = $data['assigned_to'];
+            $row['message_status']  = $data['message_status'];
+            $row['subject']         = $data['subject'];
+            $row['reply_id']        = $data['reply_id'];
+            $row['note_type']       = $data['note_type'];
+            $sql = $mitos_db->sqlBind($row, "pnotes", "I");
+            $mitos_db->setSQL($sql);
+            $ret = $mitos_db->execLog();
+            if ( $ret[2] ){
+                echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+            } else {
+                echo "{ success: true }";
+            }
         }
     exit;
     case 'PUT':
