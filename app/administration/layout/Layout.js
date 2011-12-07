@@ -866,7 +866,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         form.el.mask();
         form.removeAll();
         Ext.Ajax.request({
-            url     : 'lib/layoutEngine/layoutEngine.class.php',
+            url     : 'classes/layoutEngine.class.php',
             params  : { form:this.currForm },
             success : function(response){
                 form.add(eval(response.responseText));

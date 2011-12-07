@@ -21,9 +21,6 @@ include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 class layoutEngine extends dbHelper {
     private $items = array();
     /**
-     * @param $formPanel
-     * @return string
-     *
      * We can get the form fields by form name or form if
      * example: getFileds('Demographics') or getFileds('1')
      * The logic of the function is to get the form parent field
@@ -31,6 +28,9 @@ class layoutEngine extends dbHelper {
      * Then.. use reg Expression to remove the double quotes from all
      * the options and leave the double quotes to all options values,
      * unless the value is a int or bool.
+     *
+     * @param $formPanel
+     * @return string
      */
     function getFileds($formPanel = null){
         /**
@@ -58,6 +58,18 @@ class layoutEngine extends dbHelper {
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;
             }
+
+
+            if($item['xtype'] == 'combobox'){
+                $item['displayField'] = 'name';
+                $item['valueField']   = 'value';
+                $item['queryMode']   = 'local';
+                $item['store']        = $this->getStore();
+            }
+
+
+
+
             /**
              * now lets get the the child items using the parent item ID parameter
              */
@@ -107,7 +119,16 @@ class layoutEngine extends dbHelper {
          * }]
          */
         $rawStr = json_encode($this->items);
-        $reg = '([?!,|?{](\"(.*?)\")[:])';
+        /**
+         * this reg expresion will select any string that...
+         *
+         * does not start with a comma or start with ] follow by any word soraunded with double quotes and ends with :
+         *
+         * or "Ext.create
+         *
+         * or }]})"
+         */
+        $reg = '([?!,|?{]+(\"(.*?)\")+[:]|"Ext.create|}\]}\)")';
         preg_match_all ($reg,$rawStr,$rawItems );
         $cleanItems = array();
         foreach($rawItems[0] as $item){
@@ -132,6 +153,15 @@ class layoutEngine extends dbHelper {
             $opts = $this->getItmesOptions($item['id']);
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;
+            }
+            /**
+             * If the item is a combo box lets create a store...
+             */
+            if($item['xtype'] == 'combobox'){
+                $item['displayField'] = 'name';
+                $item['valueField']   = 'value';
+                $item['queryMode']    = 'local';
+                $item['store']        = $this->getStore();
             }
             /**
              * this if what makes this function reclusive this function will keep
@@ -166,6 +196,14 @@ class layoutEngine extends dbHelper {
             $foo[$option['oname']] = $option['ovalue'];
         }
         return $foo;
+    }
+    /**
+     * The retun of this function is use for testing only
+     *
+     * @return string
+     */
+    function getStore(){
+        return "Ext.create('Ext.data.Store',{fields:['name','value'],data:[{name:'Option 1',value:'1'},{name:'Option 2',value:'2'},{name:'Option 3',value:'3'}]})";
     }
 
 }
