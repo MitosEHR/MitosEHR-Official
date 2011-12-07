@@ -63,7 +63,9 @@ class layoutEngine extends dbHelper {
             if($item['xtype'] == 'combobox'){
                 $item['displayField'] = 'name';
                 $item['valueField']   = 'value';
-                $item['queryMode']   = 'local';
+                $item['queryMode']    = 'local';
+                $item['editable']     = false;
+                $item['emptyText']    = 'Select';
                 $item['store']        = $this->getStore();
             }
 
@@ -161,6 +163,8 @@ class layoutEngine extends dbHelper {
                 $item['displayField'] = 'name';
                 $item['valueField']   = 'value';
                 $item['queryMode']    = 'local';
+                $item['editable']     = false;
+                $item['emptyText']    = 'Select';
                 $item['store']        = $this->getStore();
             }
             /**
