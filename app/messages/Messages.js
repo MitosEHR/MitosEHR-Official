@@ -131,10 +131,11 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                             readOnly    : true,
                             hidden      : true
                         },{
-                            xtype       : 'userscombo',
-                            name        : 'assigned_to',
-                            fieldLabel  : 'To',
-                            allowBlank  : false
+                            xtype           : 'userscombo',
+                            name            : 'assigned_to',
+                            fieldLabel      : 'To',
+                            validateOnChange: false,
+                            allowBlank      : false
                         }]
                     },{
                         xtype       : 'container',
@@ -172,12 +173,13 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 readOnly    : true
 
             },{
-                xtype       : 'htmleditor',
-                name        : 'curr_msg',
-                itemId      : 'currMsg',
-                height      : 204,
-                allowBlank  : false,
-                hidden      : true
+                xtype           : 'htmleditor',
+                name            : 'curr_msg',
+                itemId          : 'currMsg',
+                height          : 204,
+                allowBlank      : false,
+                validateOnChange: false,
+                hidden          : true
             },{
                 xtype       : 'textfield',
                 hidden      : true,
