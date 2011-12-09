@@ -115,7 +115,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     items:[{
                         xtype       : 'container',
                         layout      : 'anchor',
-                        columnWidth : .50,
+                        columnWidth : '.50',
                         items:[{
                             xtype       : 'livepatientsearch',
                             fieldLabel  : 'Patient',
@@ -140,7 +140,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     },{
                         xtype       : 'container',
                         layout      : 'anchor',
-                        columnWidth : .50,
+                        columnWidth : '.50',
                         items:[{
                             xtype       : 'msgnotetypecombo',
                             name        : 'note_type',
