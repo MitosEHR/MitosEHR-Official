@@ -58,8 +58,6 @@ class layoutEngine extends dbHelper {
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;
             }
-
-
             if($item['xtype'] == 'combobox'){
                 $item['displayField'] = 'name';
                 $item['valueField']   = 'value';
@@ -68,10 +66,6 @@ class layoutEngine extends dbHelper {
                 $item['emptyText']    = 'Select';
                 $item['store']        = $this->getStore();
             }
-
-
-
-
             /**
              * now lets get the the child items using the parent item ID parameter
              */
@@ -90,7 +84,6 @@ class layoutEngine extends dbHelper {
              */
             array_push($this->items,$item);
         }
-
         /**
          * in this new block of code we are goin to clean the json output using a reg expression
          * to remove the unnessesary double quotes fromthe properties, bools, and ints values.
@@ -129,15 +122,19 @@ class layoutEngine extends dbHelper {
          * or "Ext.create
          *
          * or }]})"
+         *
+         * Then replace remaining double quotes for single quotes <-- not required but...
+         * we do it because MitosEHR user single quotes to define strings.
+         *
          */
-        $reg = '([?!,|?{]+(\"(.*?)\")+[:]|"Ext.create|}\]}\)")';
+        $reg = '([,{]".*?":|"Ext\.create|}\]}\)")';
         preg_match_all ($reg,$rawStr,$rawItems );
         $cleanItems = array();
         foreach($rawItems[0] as $item){
             array_push($cleanItems,str_replace('"','',$item) );
         }
-        $cleanStr = str_replace($rawItems[0],$cleanItems,$rawStr );
-        return $cleanStr;
+        $itemsJsArray = str_replace('"','\'',str_replace($rawItems[0],$cleanItems,$rawStr ));
+        return $itemsJsArray;
     }
     /**
      * @param $parent
@@ -151,7 +148,6 @@ class layoutEngine extends dbHelper {
         $items = array();
         $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos DESC");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
-
             $opts = $this->getItmesOptions($item['id']);
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;
@@ -173,9 +169,7 @@ class layoutEngine extends dbHelper {
              */
             $item['items'] = $this->getChildItems($item['id']);
             if($item['items'] == null) unset($item['items']);
-
             unset($item['id'],$item['form_id'],$item['item_of']);
-
             array_push($items,$item);
         }
         return $items;
@@ -188,7 +182,6 @@ class layoutEngine extends dbHelper {
         $foo = array();
         $this->setSQL("Select * FROM forms_field_options WHERE field_id = '$item_id'");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $option){
-            
             if(is_numeric($option['ovalue'])){      // if the string is numeric intval() the value to remove the comas
                 $option['ovalue'] = intval($option['ovalue']);
             }elseif($option['ovalue'] == 'true'){   // if the sring is true let change the value to a bool
@@ -196,7 +189,6 @@ class layoutEngine extends dbHelper {
             }elseif($option['ovalue'] == 'false'){  // if the sring is false let change the value to a bool
                 $option['ovalue'] = false;
             }
-            
             $foo[$option['oname']] = $option['ovalue'];
         }
         return $foo;
@@ -209,7 +201,6 @@ class layoutEngine extends dbHelper {
     function getStore(){
         return "Ext.create('Ext.data.Store',{fields:['name','value'],data:[{name:'Option 1',value:'1'},{name:'Option 2',value:'2'},{name:'Option 3',value:'3'}]})";
     }
-
 }
 /**
  * make sure the $_REQUEST['form'] is set, then create an instance of
