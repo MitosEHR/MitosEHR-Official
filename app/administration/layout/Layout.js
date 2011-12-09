@@ -6,7 +6,7 @@
 // Author: GI Technologies, 2011
 // Modified: n/a
 //
-// MitosEHR (Eletronic Health Records) 2011
+// MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     extend      : 'Ext.mitos.RenderPanel',
@@ -24,7 +24,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.currField = null;
 
         // *************************************************************************************
-        // Form Fileds TreeGrid Store
+        // Form Fields TreeGrid Store
         // *************************************************************************************
         Ext.define('layoutTreeModel', {
             extend: 'Ext.data.Model',
@@ -140,7 +140,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             extraParams	: { task: 'optionsRequest' }
         });
         /**
-         * This grid only availabe if the field is a Combobox
+         * This grid only available if the field is a Combobox
          */
         me.selectListGrid = Ext.create('Ext.mitos.GridPanel', {
             store		    : me.selectListoptionsStore,
@@ -384,8 +384,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             }]
         });
         /**
-         * this container holds the form and the selectlist grid.
-         * remember that the selectlist grid only shows if
+         * this container holds the form and the select list grid.
+         * remember that the select list grid only shows if
          * the field xtype is a combobox
          */
         me.formContainer = Ext.create('Ext.panel.Panel',{
@@ -435,7 +435,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             }]
         });
         /**
-         * This is the fields associated with the current Form seleted
+         * This is the fields associated with the current Form selected
          */
         me.fieldsGrid = Ext.create('Ext.tree.Panel', {
             store	    : me.fieldsGridStore,
@@ -477,9 +477,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             }
         });
         /**
-         * Form grid will show the availble forms to modified.
+         * Form grid will show the available forms to modified.
          * the user will not have the options to create
-         * forms, just to modified the fileds of existing forms.
+         * forms, just to modified the fields of existing forms.
          */
         me.formsGrid = Ext.create('Ext.mitos.GridPanel', {
             title		: 'Form list',
@@ -499,7 +499,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             }],
             listeners: {
                 scope     : me,
-                itemclick : me.onFormGriditemClick
+                itemclick : me.onFormGridItemClick
             }
         });
         /**
@@ -615,7 +615,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     },
     /**
      * This is to reset the Form and load
-     * a new Model with the currFormm id
+     * a new Model with the currForm id
      */
     onFormReset:function(){
         var form = this.fieldForm.getForm(),
@@ -649,7 +649,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      *
      * This will load the current field data to the form,
      * set the currField, and enable the Add Child btn if
-     * the field allows child itmes (fieldset or fieldcontainer)
+     * the field allows child items (fieldset or fieldcontainer)
      * 
      * @param grid
      * @param record
@@ -669,7 +669,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      * @param DataView
      * @param record
      */
-    onFormGriditemClick:function(DataView, record){
+    onFormGridItemClick:function(DataView, record){
         this.currForm = record.get('id');
         this.fieldsGrid.setTitle('Field editor ('+record.get('name')+')');
         this.loadFieldsGrid();
@@ -678,7 +678,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
     /**
      *
      * This will load the Select List options. This Combobox shows only when
-     * a Type of Comboboc is selected
+     * a Type of Combobox is selected
      *
      * @param combo
      * @param record
@@ -744,11 +744,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
 
         /**
          *
-         * @param itmes
+         * @param items
          */
-        function enableItems(itmes) {
+        function enableItems(items) {
             for (var i = 0; i < is.length; i++) {
-                if (!itmes.find(is[i])) {
+                if (!items.find(is[i])) {
                     addProp.getComponent(is[i]).hide();
                     addProp.getComponent(is[i]).disable();
                 } else {
@@ -881,7 +881,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      *  re-load the fields grid (main TreeGrid)
      *  check if a form is selected, if not the select the first choice
      *  save the form id inside this.currForm and load the grid and the
-     *  parent filds of this form.
+     *  parent fields of this form.
      *
      *  parentFieldsStore is use to create the child of select list
      */

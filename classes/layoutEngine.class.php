@@ -2,7 +2,7 @@
 /* 
  * layoutEngine.class.php
  * 
- * @DESCRIPTION@: This class object will create dynamic ExtJS v4 form, previuosly created or edited 
+ * @DESCRIPTION@: This class object will create dynamic ExtJS v4 form, previously created or edited
  * from the Layout Form Editor. Gathering all it's data and parameters from the layout_options table. 
  * Most of the structural database table was originally created by OpenEMR developers.
  * 
@@ -11,7 +11,7 @@
  * 
  * version: 0.1.0
  * author: GI Technologies, 2011
- * modifed: Ernesto J Rodriguez
+ * modified: Ernesto J Rodriguez
  * 
  */
 session_name ( "MitosEHR" );
@@ -22,7 +22,7 @@ class layoutEngine extends dbHelper {
     private $items = array();
     /**
      * We can get the form fields by form name or form if
-     * example: getFileds('Demographics') or getFileds('1')
+     * example: getFields('Demographics') or getFields('1')
      * The logic of the function is to get the form parent field
      * and its options, then get the child items if any with it options.
      * Then.. use reg Expression to remove the double quotes from all
@@ -32,7 +32,7 @@ class layoutEngine extends dbHelper {
      * @param $formPanel
      * @return string
      */
-    function getFileds($formPanel = null){
+    function getFields($formPanel = null){
         /**
          * get the form parent fields
          */
@@ -49,9 +49,9 @@ class layoutEngine extends dbHelper {
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
             /**
              * get parent field options using the parent item ID parameter and catch
-             * the retun array in $opts.
+             * the return array in $opts.
              */
-            $opts = $this->getItmesOptions($item['id']);
+            $opts = $this->getItemsOptions($item['id']);
             /**
              * now take each option and add it to this $item array
              */
@@ -71,12 +71,12 @@ class layoutEngine extends dbHelper {
              */
             $item['items'] = $this->getChildItems($item['id']);
             /**
-             * lets check if this item has a child items. If not, the unset the $item['Itmes']
+             * lets check if this item has a child items. If not, the unset the $item['Items']
              * this way we make sure the we done return a items property
              */
             if($item['items'] == null) unset($item['items']);
             /**
-             * unset the stuff taht are not properties
+             * unset the stuff that are not properties
              */
             unset($item['id'],$item['form_id'],$item['item_of']);
             /**
@@ -85,8 +85,8 @@ class layoutEngine extends dbHelper {
             array_push($this->items,$item);
         }
         /**
-         * in this new block of code we are goin to clean the json output using a reg expression
-         * to remove the unnessesary double quotes fromthe properties, bools, and ints values.
+         * in this new block of code we are going to clean the json output using a reg expression
+         * to remove the unnecessary double quotes from the properties, bools, and ints values.
          * basically we start we this input..
          * [{
          *      "xtype":"fieldset",
@@ -113,9 +113,9 @@ class layoutEngine extends dbHelper {
          *       }]
          * }]
          *
-         * The regular expresion will select any string that...
+         * The regular expression will select any string that...
          *
-         * is soraunded by double quotes and follow by :   for example   "xtype":
+         * is surrounded by double quotes and follow by :   for example   "xtype":
          *
          * or "Ext.create
          *
@@ -144,14 +144,14 @@ class layoutEngine extends dbHelper {
      * @return array
      *
      * Here we use the parent id to get the child items and it options
-     * using basically the same logic of getFileds() function and returning
+     * using basically the same logic of getFields() function and returning
      * an array of child items
      */
     function getChildItems($parent){
         $items = array();
         $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos DESC");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
-            $opts = $this->getItmesOptions($item['id']);
+            $opts = $this->getItemsOptions($item['id']);
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;
             }
@@ -181,15 +181,15 @@ class layoutEngine extends dbHelper {
      * @param $item_id
      * @return array
      */
-    function getItmesOptions($item_id){
+    function getItemsOptions($item_id){
         $foo = array();
         $this->setSQL("Select * FROM forms_field_options WHERE field_id = '$item_id'");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $option){
             if(is_numeric($option['ovalue'])){      // if the string is numeric intval() the value to remove the comas
                 $option['ovalue'] = intval($option['ovalue']);
-            }elseif($option['ovalue'] == 'true'){   // if the sring is true let change the value to a bool
+            }elseif($option['ovalue'] == 'true'){   // if the string is true let change the value to a bool
                 $option['ovalue'] = true;
-            }elseif($option['ovalue'] == 'false'){  // if the sring is false let change the value to a bool
+            }elseif($option['ovalue'] == 'false'){  // if the string is false let change the value to a bool
                 $option['ovalue'] = false;
             }
             $foo[$option['oname']] = $option['ovalue'];
@@ -197,7 +197,7 @@ class layoutEngine extends dbHelper {
         return $foo;
     }
     /**
-     * The retun of this function is use for testing only
+     * The return of this function is use for testing only
      *
      * @return string
      */
@@ -207,9 +207,9 @@ class layoutEngine extends dbHelper {
 }
 /**
  * make sure the $_REQUEST['form'] is set, then create an instance of
- * layoutEngine class and recuest the fields
+ * layoutEngine class and request the fields
  */
 if(isset($_REQUEST['form'])){
-    $classname = new layoutEngine();
-    print $classname->getFileds($_REQUEST['form']);
+    $formFields = new layoutEngine();
+    print $formFields->getFields($_REQUEST['form']);
 }

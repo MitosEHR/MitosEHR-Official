@@ -270,8 +270,8 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     },
     /**
      *
-     * onDelete will show an alert msg to comfirm,
-     * delete the message and prepare the form for a new mesagge
+     * onDelete will show an alert msg to confirm,
+     * delete the message and prepare the form for a new message
      */
     onDelete:function(){
         var form  = this.msgForm.getForm(),
