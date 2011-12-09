@@ -100,40 +100,43 @@ class layoutEngine extends dbHelper {
          *       }]
          * }]
          *
-         * and get this output...
+         * and finish with this output...
          * [{
-         *      xtype:"fieldset",
-         *      title:"Who",
+         *      xtype:'fieldset',
+         *      title:'Who',
          *      collapsible:true,
          *      items:[{
-         *          xtype:"fieldcontainer",
-         *          fieldLabel:"Name",
-         *          layout:"hbox",
-         *          anchor:"100%",
+         *          xtype:'fieldcontainer',
+         *          fieldLabel:'Name',
+         *          layout:'hbox',
+         *          anchor:'100%',
          *       }]
          * }]
-         */
-        $rawStr = json_encode($this->items);
-        /**
-         * this reg expresion will select any string that...
          *
-         * does not start with a comma or start with ] follow by any word soraunded with double quotes and ends with :
+         * The regular expresion will select any string that...
+         *
+         * is soraunded by double quotes and follow by :   for example   "xtype":
          *
          * or "Ext.create
          *
          * or }]})"
          *
+         * Then remove the double quotes form that selection.
+         *
          * Then replace remaining double quotes for single quotes <-- not required but...
          * we do it because MitosEHR user single quotes to define strings.
-         *
          */
-        $reg = '([,{]".*?":|"Ext\.create|}\]}\)")';
-        preg_match_all ($reg,$rawStr,$rawItems );
+        $rawStr     = json_encode($this->items);
+        $regex      = '("\w*?":|"Ext\.create|}\]}\)")';
         $cleanItems = array();
+
+        preg_match_all( $regex, $rawStr, $rawItems );
+
         foreach($rawItems[0] as $item){
-            array_push($cleanItems,str_replace('"','',$item) );
+            array_push( $cleanItems, str_replace( '"', '', $item) );
         }
-        $itemsJsArray = str_replace('"','\'',str_replace($rawItems[0],$cleanItems,$rawStr ));
+
+        $itemsJsArray = str_replace( '"', '\'', str_replace( $rawItems[0], $cleanItems, $rawStr ));
         return $itemsJsArray;
     }
     /**
