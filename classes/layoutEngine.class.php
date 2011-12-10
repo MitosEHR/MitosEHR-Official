@@ -225,7 +225,10 @@ class layoutEngine extends dbHelper {
         $item['valueField']   = 'value';
         $item['queryMode']    = 'local';
         $item['editable']     = false;
-        $item['emptyText']    = 'Select';
+        if(!isset($item['emptyText'])){
+            $item['emptyText']    = 'Select';
+        }
+
         return $item;
     }
 }

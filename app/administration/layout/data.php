@@ -152,6 +152,10 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 
 }elseif($_REQUEST['task'] == 'formRequest'){
     if($_REQUEST['id'] == null){
+
+        // check database for fields ($_REQUEST['name'])
+
+
         /**
          * This will handle the New item Request where fiels id is not set
          * to handle the update please go to the "else" statement after

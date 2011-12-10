@@ -18,8 +18,8 @@ $confs = array();
 
 while (false !== ($entry = $d->read())) {
 	if ( $entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){ $confs[] = $entry . "/conf.php"; }
-	if ( $entry != "." && $entry != ".." && $entry == "default" && $entry != "README" && $entry != ".DS_Store"){ $default = $entry; }
-	if ( $entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){ $sites[] = $entry; }
+		if ( $entry != "." && $entry != ".." && $entry == "default" && $entry != "README" && $entry != ".DS_Store"){ $default = $entry; }
+		if ( $entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){ $sites[] = $entry; }
 }
 $_SESSION['site']['self']       = $_SERVER['PHP_SELF'];
 $_SESSION['site']['sites']      = $sites;
