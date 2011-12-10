@@ -28,11 +28,12 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
         me.form = Ext.create('Ext.form.Panel', {
             title           : me.formTitle,
             bodyStyle       : 'padding: 5px',
-            layout          : 'anchor', height:300,
-            fieldDefaults   : {msgTarget:'side'},
+            layout          : 'anchor',
+            height          : 300,
+            fieldDefaults   : { msgTarget:'side' },
             dockedItems:{
-                xtype: 'toolbar',
-                dock : 'top',
+                xtype   : 'toolbar',
+                dock    : 'top',
                 items:[{
                     text    : 'Save new patient',
                     iconCls : 'save',
@@ -80,7 +81,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
         var form = this.form;
         form.removeAll();
         Ext.Ajax.request({
-            url     : 'lib/layoutEngine/layoutEngine.class.php',
+            url     : 'classes/layoutEngine.class.php',
             params  : {form:this.formToRender},
             scope   : this,
             success : function(response){
