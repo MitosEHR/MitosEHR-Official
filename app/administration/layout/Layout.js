@@ -56,8 +56,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 {name: 'boxLabel',		    type: 'string'},
                 {name: 'grow',		        type: 'string'},
                 {name: 'increment',		    type: 'string'},
-                {name: 'name',		        type: 'string'}
-
+                {name: 'name',		        type: 'string'},
+                {name: 'list_id',		    type: 'string'}
             ],
             idProperty: 'id'
         });
@@ -164,19 +164,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 flex        : 1,
                 sortable    : false,
                 dataIndex   : 'option_id'
-            }],
-            dockedItems: [{
-                xtype  : 'toolbar',
-                items  : [{
-                    xtype	    : 'mitos.listscombo',
-                    name		: 'cmbList',
-                    itemId      : 'cmbList',
-                    width       : 235,
-                    listeners:{
-                        scope   : this,
-                        select  : me.onSelectListSelect
-                    }
-                }]
             }]
         });
         /**
@@ -380,6 +367,17 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     name            : 'increment',
                     itemId          : 'increment',
                     hidden          : true
+                },{
+                    fieldLabel      : 'List Options',
+                    xtype	        : 'mitos.listscombo',
+                    name		    : 'list_id',
+                    itemId          : 'list_id',
+                    hidden          : true,
+                    allowBlank      : false,
+                    listeners:{
+                        scope   : this,
+                        change  : me.onSelectListSelect
+                    }
                 }]
             }]
         });
@@ -588,7 +586,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         Ext.each(overModel.parentNode.childNodes, function(childItem){
             childItems.push(childItem.data.id);
         });
-
+        //noinspection JSUnusedGlobalSymbols
         Ext.Ajax.request({
             scope : this,
             url   : 'app/administration/layout/data.php',
@@ -607,9 +605,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 this.onFormReset();
             }
         });
-        //console.log(data.records[0].data.id);           // this id
+        //console.log(data.records[0].data.id);           // dragged id
         //console.log(overModel.parentNode.data.id);      // parent id
-        //console.log(overModel.parentNode.childNodes);   // child nodes
+        //console.log(childItems);   // child nodes
         //console.log(overModel);
         //console.log(dropPosition);
     },
@@ -673,7 +671,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         this.currForm = record.get('id');
         this.fieldsGrid.setTitle('Field editor ('+record.get('name')+')');
         this.loadFieldsGrid();
-
     },
     /**
      *
@@ -681,11 +678,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      * a Type of Combobox is selected
      *
      * @param combo
-     * @param record
+     * @param value
      */
-    onSelectListSelect:function(combo, record){
-        var option_id = record[0].data.option_id;
-        this.selectListoptionsStore.load({params:{list_id: option_id}});
+    onSelectListSelect:function(combo, value){
+        this.selectListoptionsStore.load({params:{list_id: value}});
     },
     /**
      *
@@ -775,8 +771,18 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'layout',
                 'margin'
             ];
-
-        } else if (value == 'combobox' || value == 'mitos.checkbox') {
+        } else if (value == 'combobox') {
+            items = [
+                'name',
+                'width',
+                'emptyText',
+                'fieldLabel',
+                'hideLabel',
+                'labelWidth',
+                'margin',
+                'list_id'
+            ];
+        } else if (value == 'mitos.checkbox') {
             items = [
                 'name',
                 'width',
@@ -786,7 +792,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'labelWidth',
                 'margin'
             ];
-
         } else if (value == 'textfield') {
             items = [
                 'name',
@@ -798,8 +803,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'allowBlank',
                 'margin'
             ];
-
-
         } else if (value == 'textarea') {
             items = [
                 'name',
@@ -813,7 +816,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'grow',
                 'margin'
             ];
-
         } else if (value == 'numberfield') {
             items = [
                 'name',
@@ -827,7 +829,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'hideLabel',
                 'margin'
             ];
-
         } else {
             items =[
                 'name',
@@ -837,8 +838,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'hideLabel',
                 'margin'
             ];
-
-
         }
         enableItems(items);
     },

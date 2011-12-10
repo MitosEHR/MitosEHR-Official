@@ -17,9 +17,10 @@
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
+/** @noinspection PhpIncludeInspection */
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+
 class layoutEngine extends dbHelper {
-    private $items = array();
     /**
      * We can get the form fields by form name or form if
      * example: getFields('Demographics') or getFields('1')
@@ -34,6 +35,10 @@ class layoutEngine extends dbHelper {
      */
     function getFields($formPanel = null){
         /**
+         * define $itmes as an array to pushh all the $item into.
+         */
+        $items = array();
+        /**
          * get the form parent fields
          */
         $this->setSQL("Select ff.*
@@ -42,14 +47,14 @@ class layoutEngine extends dbHelper {
                            ON ff.form_id = fl.id
                         WHERE (fl.name = '$formPanel' OR fl.id = '$formPanel')
                           AND (ff.item_of IS NULL OR ff.item_of = '0')
-                     ORDER BY pos DESC ");
+                     ORDER BY pos ASC ");
         /**
-         * for each field lets get...
+         * for each parent item lets get all the options and children items
          */
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
             /**
-             * get parent field options using the parent item ID parameter and catch
-             * the return array in $opts.
+             * get parent field options using the parent item "id" as parameter and
+             * store the return array in $opts.
              */
             $opts = $this->getItemsOptions($item['id']);
             /**
@@ -58,13 +63,10 @@ class layoutEngine extends dbHelper {
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;
             }
+
             if($item['xtype'] == 'combobox'){
-                $item['displayField'] = 'name';
-                $item['valueField']   = 'value';
-                $item['queryMode']    = 'local';
-                $item['editable']     = false;
-                $item['emptyText']    = 'Select';
-                $item['store']        = $this->getStore();
+                $item = $this->getComboDefaults($item);
+                $item['store'] = $this->getStore($item['list_id']);
             }
             /**
              * now lets get the the child items using the parent item ID parameter
@@ -82,7 +84,7 @@ class layoutEngine extends dbHelper {
             /**
              * push this item into the $items Array
              */
-            array_push($this->items,$item);
+            array_push($items,$item);
         }
         /**
          * in this new block of code we are going to clean the json output using a reg expression
@@ -126,8 +128,8 @@ class layoutEngine extends dbHelper {
          * Then replace remaining double quotes for single quotes <-- not required but...
          * we do it because MitosEHR user single quotes to define strings.
          */
-        $rawStr     = json_encode($this->items);
-        $regex      = '("\w*?":|"Ext\.create|}\]}\)")';
+        $rawStr     = json_encode($items);
+        $regex      = '("\w*?":|"Ext\.create|\)"\})';
         $cleanItems = array();
 
         preg_match_all( $regex, $rawStr, $rawItems );
@@ -149,7 +151,7 @@ class layoutEngine extends dbHelper {
      */
     function getChildItems($parent){
         $items = array();
-        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos DESC");
+        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
             $opts = $this->getItemsOptions($item['id']);
             foreach($opts as $opt => $val){
@@ -158,13 +160,10 @@ class layoutEngine extends dbHelper {
             /**
              * If the item is a combo box lets create a store...
              */
+
             if($item['xtype'] == 'combobox'){
-                $item['displayField'] = 'name';
-                $item['valueField']   = 'value';
-                $item['queryMode']    = 'local';
-                $item['editable']     = false;
-                $item['emptyText']    = 'Select';
-                $item['store']        = $this->getStore();
+                $item = $this->getComboDefaults($item);
+                $item['store'] = $this->getStore($item['list_id']);
             }
             /**
              * this if what makes this function reclusive this function will keep
@@ -196,13 +195,38 @@ class layoutEngine extends dbHelper {
         }
         return $foo;
     }
+
     /**
      * The return of this function is use for testing only
      *
+     * @param $list_id
      * @return string
      */
-    function getStore(){
-        return "Ext.create('Ext.data.Store',{fields:['name','value'],data:[{name:'Option 1',value:'1'},{name:'Option 2',value:'2'},{name:'Option 3',value:'3'}]})";
+    function getStore($list_id){
+        $this->setSQL("SELECT * FROM list_options WHERE list_id = '$list_id' ORDER BY seq");
+
+        $buff = "Ext.create('Ext.data.Store',{fields:['name','value'],data:[";
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+            $title = $item['title'];
+            $option_id =$item['option_id'];
+            $buff .= "{name:'$title',value:'$option_id'},";
+        }
+        $buff = rtrim($buff, ',');
+        $buff .= "]})";
+        return $buff;
+    }
+
+    /**
+     * @param $item
+     * @return array
+     */
+    function getComboDefaults($item){
+        $item['displayField'] = 'name';
+        $item['valueField']   = 'value';
+        $item['queryMode']    = 'local';
+        $item['editable']     = false;
+        $item['emptyText']    = 'Select';
+        return $item;
     }
 }
 /**

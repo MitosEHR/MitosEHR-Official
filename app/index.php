@@ -52,7 +52,6 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
         <script type="text/javascript" src="lib/webcam_control/swfobject.js"></script>
         <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
-        <script type="text/javascript" src="repo/global_functions/global_functions.js"></script>
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
 
