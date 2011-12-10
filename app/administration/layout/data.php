@@ -56,7 +56,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
     function getChildItems($parent){
         global $mitos_db;
         $items = array();
-        $mitos_db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos DESC");
+        $mitos_db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
         foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $item){
             // *****************************************************************************************************
             // Get option for Item
@@ -112,7 +112,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
         // *********************************************************************************************************
         // Get Parent Items
         // *********************************************************************************************************
-        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '0') ORDER BY pos DESC");
+        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC");
         $results = $mitos_db->execStatement(PDO::FETCH_ASSOC);
         foreach($results as $item){
             // *****************************************************************************************************
@@ -141,18 +141,8 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 }elseif($_REQUEST['task'] == 'optionsRequest'){
     $currList = $_REQUEST["list_id"];
 
-    if ($_SESSION['lang']['code'] == "en_US") { // If the selected language is English, do not translate
-        $mitos_db->setSQL("SELECT * FROM list_options WHERE list_id = '$currList' ORDER BY seq");
-    } else {
-        // Use and sort by the translated list name.
-        $mitos_db->setSQL("SELECT lo.id, lo.list_id, lo.option_id, IF(LENGTH(ld.definition),ld.definition,lo.title) AS title ,
-                                  lo.seq, lo.is_default, lo.option_value, lo.mapping, lo.notes
-                             FROM list_options AS lo
-                        LEFT JOIN lang_constants AS lc ON lc.constant_name = lo.title
-                        LEFT JOIN lang_definitions AS ld ON ld.cons_id = lc.cons_id AND ld.lang_id = '$lang_id'
-                            WHERE lo.list_id = '$currList'
-                         ORDER BY IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
-    }
+    $mitos_db->setSQL("SELECT * FROM list_options WHERE list_id = '$currList' ORDER BY seq");
+
     $total = $mitos_db->rowCount();
     $rows = array();
     foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
@@ -162,6 +152,10 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 
 }elseif($_REQUEST['task'] == 'formRequest'){
     if($_REQUEST['id'] == null){
+
+        // check database for fields ($_REQUEST['name'])
+
+
         /**
          * This will handle the New item Request where fiels id is not set
          * to handle the update please go to the "else" statement after

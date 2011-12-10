@@ -58,9 +58,9 @@ class dbHelper {
 	}
 		
 	//**********************************************************************
-	// Simple SQL Stament, with no Event LOG injection
+	// Simple SQL Statement, with no Event LOG injection
 	// $dbHelper->execStatement();
-	// return: Array of records, if error ocurred return the error instead
+	// return: Array of records, if error occurred return the error instead
 	// foreach (sqlStatement($sql) as $urow) {
 	//
 	// Author: GI Technologies, 2011
@@ -79,7 +79,7 @@ class dbHelper {
 	}
 	
 	//**********************************************************************
-	// Simple exec SQL Stament, with no Event LOG injection
+	// Simple exec SQL Statement, with no Event LOG injection
 	// return: Array of errors, if any.
 	//
 	// Author: GI Technologies, 2011
@@ -145,7 +145,7 @@ class dbHelper {
 	}
 	
 	//**********************************************************************
-	// Simple SQL Stament, with Event LOG injection
+	// Simple SQL Statement, with Event LOG injection
 	// $dbHelper->exeLog();
 	// return: Array of records + Inject the action on the event log
 	// The Log Injection is automatic 
@@ -158,7 +158,7 @@ class dbHelper {
 		//------------------------------------------------------------------
 		// Execute the sql statement
 		//------------------------------------------------------------------
-		$recordset = $this->conn->query( $this->sql_statement );
+		$this->conn->query( $this->sql_statement );
 
 		//------------------------------------------------------------------
 		// If the QUERY has INSERT, DELETE, ALTER then has to 
@@ -179,7 +179,7 @@ class dbHelper {
 			if (stristr($this->sql_statement, "UPDATE")) $eventLog = "Record update";
 			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
 			//------------------------------------------------------------------
-			// Prepare the SQL stament first, and then execute.
+			// Prepare the SQL statement first, and then execute.
 			//------------------------------------------------------------------
 			$stmt = $this->conn->prepare("INSERT 
 											INTO 
@@ -280,4 +280,3 @@ class dbHelper {
 		return $recordset->fetch(PDO::FETCH_ASSOC);
 	}	
 }
-?>

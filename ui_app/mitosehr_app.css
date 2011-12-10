@@ -53,9 +53,13 @@
 .RenderPanel .x-panel-body .x-box-inner {
     
 }
+.msgForm .x-panel-body {
+    border-top: none !important;
+}
 .message-form-header {
     background-color: #F1F1F1;
     border-bottom: solid 1px #ccc;
+    border-top-style: none !important;
 }
 
 .form-white-bg .x-panel-body {

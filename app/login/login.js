@@ -201,12 +201,19 @@ Ext.define('Ext.mitos.panel.login.Login',{
      */
     onAfterrender:function(){
         this.storeSites.load({
-            scope:this,
+            scope   :this,
             callback:function(records,operation,success){
                 if(success === true){
-                    this.currSite = records[0].data.site;
-                    this.formLogin.getComponent('choiseSite').setValue(this.currSite);
-                    this.formLogin.getComponent('authUser').focus();
+                    /**
+                     * Lets add a delay to make sure the page is fully render.
+                     * This is to compensate for slow browser.
+                     */
+                    Ext.Function.defer(function(){
+                        this.currSite = records[0].data.site;
+                        this.formLogin.getComponent('choiseSite').setValue(this.currSite);
+                        this.formLogin.getComponent('authUser').focus();
+                    },100,this);
+
                 }else{
                     this.msg('Opps! Something went wrong...',  'No site found.');
                 }
