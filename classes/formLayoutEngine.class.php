@@ -20,7 +20,7 @@ session_cache_limiter('private');
 /** @noinspection PhpIncludeInspection */
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 
-class layoutEngine extends dbHelper {
+class formLayoutEngine extends dbHelper {
     /**
      * We can get the form fields by form name or form if
      * example: getFields('Demographics') or getFields('1')
@@ -160,7 +160,6 @@ class layoutEngine extends dbHelper {
             /**
              * If the item is a combo box lets create a store...
              */
-
             if($item['xtype'] == 'combobox'){
                 $item = $this->getComboDefaults($item);
                 $item['store'] = $this->getStore($item['list_id']);
@@ -228,7 +227,6 @@ class layoutEngine extends dbHelper {
         if(!isset($item['emptyText'])){
             $item['emptyText']    = 'Select';
         }
-
         return $item;
     }
 }
@@ -237,6 +235,6 @@ class layoutEngine extends dbHelper {
  * layoutEngine class and request the fields
  */
 if(isset($_REQUEST['form'])){
-    $formFields = new layoutEngine();
+    $formFields = new formLayoutEngine();
     print $formFields->getFields($_REQUEST['form']);
 }

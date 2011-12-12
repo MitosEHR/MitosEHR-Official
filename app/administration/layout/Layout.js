@@ -541,6 +541,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 success : function() {
                     this.loadFieldsGrid();
                     this.previewFormRender();
+                },
+                failure: function(form, action) {
+                    Ext.Msg.alert('Failed', action.result.errors.reason);
                 }
             });
         }
@@ -549,6 +552,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      * TODO: check database is field has database... if YES... cant delete!
      */
     onDelete:function(){
+        var form = this.fieldForm.getForm(),
+        rec = form.getRecord();
+
         Ext.Msg.show({
             title   : 'Please confirm...',
             icon    : Ext.MessageBox.QUESTION,
@@ -561,14 +567,21 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                         scope   : this,
                         url     : 'app/administration/layout/data.php',
                         params:{
-                            id  : this.currField,
-                            task: 'deleteRequest'
+                            id      : rec.data.id,
+                            form_id : rec.data.form_id,
+                            col     : rec.data.name,
+                            task    : 'deleteRequest'
                         },
-                        success:function(){
-                            this.msg('Delete!', 'Field deleted');
-                            this.currField = null;
-                            this.loadFieldsGrid();
-                            this.previewFormRender();
+                        success:function(callback){
+                            var responseText = Ext.JSON.decode(callback.responseText);
+                            if(responseText.success){
+                                this.msg('Delete!', 'Field deleted');
+                                this.currField = null;
+                                this.loadFieldsGrid();
+                                this.previewFormRender();
+                            }else{
+                                Ext.Msg.alert('Failed', responseText.errors.reason);
+                            }
                         }
                     });
                 }
@@ -582,6 +595,10 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      * @param overModel
      */
     onDragDrop:function(node,data,overModel){
+        //console.log(node);
+        //console.log(data);
+        //console.log(overModel);
+
         var childItems = [];
         Ext.each(overModel.parentNode.childNodes, function(childItem){
             childItems.push(childItem.data.id);
@@ -607,7 +624,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         });
         //console.log(data.records[0].data.id);           // dragged id
         //console.log(overModel.parentNode.data.id);      // parent id
-        //console.log(childItems);   // child nodes
+        //console.log(childItems);                        // child nodes
         //console.log(overModel);
         //console.log(dropPosition);
     },
@@ -865,7 +882,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         form.el.mask();
         form.removeAll();
         Ext.Ajax.request({
-            url     : 'classes/layoutEngine.class.php',
+            url     : 'classes/formLayoutEngine.class.php',
             params  : { form:this.currForm },
             success : function(response){
                 form.add(eval(response.responseText));
