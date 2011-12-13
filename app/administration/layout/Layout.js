@@ -275,6 +275,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     allowBlank      : false,
                     hidden          : true
                 },{
+                    fieldLabel      : 'Input Value',
+                    xtype           : 'textfield',
+                    name            : 'inputValue',
+                    itemId          : 'inputValue',
+                    allowBlank      : false,
+                    hidden          : true
+                },{
                     fieldLabel      : 'Width',
                     xtype           : 'textfield',
                     name            : 'width',
@@ -318,12 +325,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     name            : 'margin',
                     itemId          : 'margin',
                     emptyText       : 'ei. 5 5 5 5',
-                    hidden          : true
-                },{
-                    fieldLabel      : 'Input Value',
-                    xtype           : 'textfield',
-                    name            : 'inputValue',
-                    itemId          : 'inputValue',
                     hidden          : true
                 },{
                     fieldLabel      : 'Is Required',
@@ -843,6 +844,16 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'labelWidth',
                 'hideLabel',
                 'margin'
+            ];
+        } else if (value == 'radiofield') {
+            items = [
+                'name',
+                'width',
+                'fieldLabel',
+                'labelWidth',
+                'hideLabel',
+                'margin',
+                'inputValue'
             ];
         } else {
             items =[
