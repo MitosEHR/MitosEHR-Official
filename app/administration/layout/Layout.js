@@ -543,7 +543,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     this.previewFormRender();
                 },
                 failure: function(form, action) {
-                    Ext.Msg.alert('Failed', action.result.errors.reason);
+                    Ext.Msg.alert('Opps!', action.result.errors.reason);
                 }
             });
         }
@@ -569,18 +569,19 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                         params:{
                             id      : rec.data.id,
                             form_id : rec.data.form_id,
-                            col     : rec.data.name,
+                            name    : rec.data.name,
+                            xtype   : rec.data.xtype,
                             task    : 'deleteRequest'
                         },
                         success:function(callback){
                             var responseText = Ext.JSON.decode(callback.responseText);
                             if(responseText.success){
-                                this.msg('Delete!', 'Field deleted');
+                                this.msg('Sweet!', 'Field deleted');
                                 this.currField = null;
                                 this.loadFieldsGrid();
                                 this.previewFormRender();
                             }else{
-                                Ext.Msg.alert('Failed', responseText.errors.reason);
+                                Ext.Msg.alert('Opps!', responseText.errors.reason);
                             }
                         }
                     });
@@ -595,10 +596,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      * @param overModel
      */
     onDragDrop:function(node,data,overModel){
-        //console.log(node);
-        //console.log(data);
-        //console.log(overModel);
-
         var childItems = [];
         Ext.each(overModel.parentNode.childNodes, function(childItem){
             childItems.push(childItem.data.id);
@@ -616,17 +613,18 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 })
 
             },
-            success: function(){
-                this.loadFieldsGrid();
-                this.previewFormRender();
-                this.onFormReset();
+            success:function(callback){
+                var responseText = Ext.JSON.decode(callback.responseText);
+                if(responseText.success){
+                    this.msg('Sweet!', 'Field Updated');
+                    this.loadFieldsGrid();
+                    this.previewFormRender();
+                    this.onFormReset();
+                }else{
+                    Ext.Msg.alert('Opps!', responseText.errors.reason);
+                }
             }
         });
-        //console.log(data.records[0].data.id);           // dragged id
-        //console.log(overModel.parentNode.data.id);      // parent id
-        //console.log(childItems);                        // child nodes
-        //console.log(overModel);
-        //console.log(dropPosition);
     },
     /**
      * This is to reset the Form and load
