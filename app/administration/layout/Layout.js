@@ -593,6 +593,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                                 this.currField = null;
                                 this.loadFieldsGrid();
                                 this.previewFormRender();
+                                this.onFormReset();
                             }else{
                                 Ext.Msg.alert('Opps!', responseText.errors.reason);
                             }
@@ -815,7 +816,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             items = [
                 'name',
                 'width',
-                'emptyText',
                 'fieldLabel',
                 'hideLabel',
                 'labelWidth',

@@ -49,12 +49,9 @@ class formLayoutBuilder extends dbHelper {
              * since now we know the column doesn't exist, lets create one for the new field
              */
             if(!$container){
-                if(!$this->fieldHasColumn() && ($data['xtype'] == 'radiofield' && !$this->fieldHasColumn() ) ){
-                    /**
-                     * TODO: the conf might change depending xtype for now VARCHAR is OK!
-                     */
-                    $conf = 'VARCHAR(255)';
-                    $this->insertColumn($conf);
+
+                if(!$this->fieldHasColumn()){
+                    $this->addColumn('VARCHAR(255)');
                 }
             }
             /**
@@ -65,18 +62,22 @@ class formLayoutBuilder extends dbHelper {
              */
             $data = $this->sinatizedData($data);
             /**
+             * if not xtype fieldcontainer and fieldset the add some
+             * defaul values.
+             */
+            $data = $this->setDefults($data);
+            /**
              * now lets start creating the field in the database
              */
             $field              = array();
             $field['form_id']   = $data['form_id'];
             $field['xtype']     = $data['xtype'];
+
             if(isset($data['item_of'])){
                 $field['item_of'] = $data['item_of'];
                 unset($data['item_of']);
             }
-            if($data['xtype'] != 'fieldcontainer' && $data['xtype'] != 'fieldset' ){
-                if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
-            }
+
             unset($data['form_id'],$data['xtype']);
             /**
              * Exec the new field sql statement and store the its ID
@@ -114,6 +115,11 @@ class formLayoutBuilder extends dbHelper {
          */
         $data = $this->sinatizedData($data);
         /**
+         * if not xtype fieldcontainer and fieldset the add some
+         * defaul values.
+         */
+        $data = $this->setDefults($data);
+        /**
          * Here we start the $field array and add a few
          * things from the $data array.
          *
@@ -135,13 +141,7 @@ class formLayoutBuilder extends dbHelper {
             $field['item_of'] = $data['item_of'];
             unset($data['item_of']);
         }
-        /**
-         * if not xtype fieldcontainer and fieldset the add some
-         * defaul values.
-         */
-        if($field['xtype'] != 'fieldcontainer' && $field['xtype'] != 'fieldset' ){
-            if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
-        }
+
         unset($data['form_id'],$data['xtype'],$data['id']);
         /**
          * Exec the new field sql statement and store the its ID
@@ -218,9 +218,7 @@ class formLayoutBuilder extends dbHelper {
          * column for this field
          */
         if(!$container && !$this->fieldHasBrother()){
-            $this->setSQL("ALTER TABLE $this->form_data_table DROP $this->col");
-            $ret = $this->execOnly();
-            $this->checkError($ret);
+            $this->dropColumn();
         }
         /**
          * remove field and field options
@@ -280,10 +278,33 @@ class formLayoutBuilder extends dbHelper {
      * @param $conf
      * @return mixed
      */
-    private function insertColumn($conf){
+    private function addColumn($conf){
+
         $this->setSQL("ALTER TABLE $this->form_data_table ADD $this->col $conf");
         $ret = $this->alterTable();
         $this->checkError($ret);
+
+        if(!$this->fieldHasColumn()) {
+            $ret[2] = 'Database column for this field could NOT be created.';
+            $this->checkError($ret);
+        }
+        return;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    private function dropColumn(){
+    
+        $this->setSQL("ALTER TABLE $this->form_data_table DROP $this->col");
+        $ret = $this->execOnly();
+        $this->checkError($ret);
+
+        if($this->fieldHasColumn()) {
+            $ret[2] = 'Database column for this field could NOT be removed.';
+            $this->checkError($ret);
+        }
         return;
     }
 
@@ -303,6 +324,16 @@ class formLayoutBuilder extends dbHelper {
             $this->checkError($ret);
         }
         return;
+    }
+    /**
+     * @param $data
+     * @return array
+     */
+    private function setDefults($data){
+        if($data['xtype'] != 'fieldcontainer' && $data['xtype'] != 'fieldset' ){
+            if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
+        }
+        return $data;
     }
 
     /**
@@ -348,7 +379,7 @@ class formLayoutBuilder extends dbHelper {
      * @return bool
      */
     private function fieldHasBrother(){
-        $this->setSQL("SELECT id FROM forms_field_options WHERE ovalue ='$this->col'");
+        $this->setSQL("SELECT id FROM forms_field_options WHERE oname = 'name' AND ovalue ='$this->col'");
         $this->execStatement(PDO::FETCH_ASSOC);
         $count = $this->rowCount();
         if($count >= 2 ) {
