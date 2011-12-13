@@ -48,6 +48,13 @@ class dbHelper {
 		}
 	}
 
+
+    function alterTable(){
+            $this->conn->query($this->sql_statement);
+            return $this->conn->errorInfo();
+        }
+
+
 	//**********************************************************************
 	// Set the SQL Statement
 	//
@@ -85,7 +92,7 @@ class dbHelper {
 	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function execOnly(){
-		$this->conn->query($this->sql_statement);
+        $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, "SELECT")){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}

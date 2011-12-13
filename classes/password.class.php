@@ -94,4 +94,3 @@ class password extends dbHelper {
         $this->savePassword();
     }
 }
-?>
