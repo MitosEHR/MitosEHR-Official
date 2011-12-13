@@ -351,6 +351,18 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     itemId          : 'minValue',
                     hidden          : true
                 },{
+                    fieldLabel      : 'Max Value',
+                    xtype           : 'timefield',
+                    name            : 'maxValue',
+                    itemId          : 'timeMaxValue',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Min Value',
+                    xtype           : 'timefield',
+                    name            : 'minValue',
+                    itemId          : 'timeMinValue',
+                    hidden          : true
+                },{
                     fieldLabel      : 'Box Label',
                     xtype           : 'textfield',
                     name            : 'boxLabel',
@@ -725,6 +737,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             this.selectListGrid.collapse();
             this.selectListGrid.disable();
         }
+
         /**
          * 
          * @param searchStr
@@ -751,9 +764,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             return returnArray;
         };
 
+
         var addProp = this.fieldForm.getComponent('aditionalProperties');
         var is = addProp.items.keys;
-
         /**
          *
          * @param items
@@ -839,6 +852,19 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'value',
                 'maxValue',
                 'minValue',
+                'increment',
+                'fieldLabel',
+                'labelWidth',
+                'hideLabel',
+                'margin'
+            ];
+        } else if (value == 'timefield') {
+            items = [
+                'name',
+                'width',
+                'value',
+                'timeMaxValue',
+                'timeMinValue',
                 'increment',
                 'fieldLabel',
                 'labelWidth',
