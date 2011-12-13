@@ -28,7 +28,12 @@ class formLayoutBuilder extends dbHelper {
     public function addField($data){
 
         $this->getFormDataTable($data['form_id']);
-        $this->col       = $data['name'];
+        $this->col  = $data['name'];
+        $container  = false;
+        /**
+         * lets defines what is a container for later use.
+         */
+        if( $data['xtype'] == 'fieldcontainer' || $data['xtype'] == 'fieldset' ) $container = true;
         /**
          * if getFieldDataCol returns true, means there is a colunm in the
          * current database form table. in that case we need to return that
@@ -37,36 +42,32 @@ class formLayoutBuilder extends dbHelper {
          * the the field is not getting duplicated or change the name property
          * to save the field data inside another column.
          */
-        if($this->fieldHasColumn()) {
+        if($this->fieldHasColumn() && $data['xtype'] != 'radiofield') {
             echo '{ "success": false, "errors": { "reason": "Field \"'.$this->col.'\" exist, please verify the form or change the Field \"name\" preoperty" }}';
         }else{
             /**
              * since now we know the column doesn't exist, lets create one for the new field
              */
-            $this->setSQL("ALTER TABLE $this->form_data_table ADD $this->col VARCHAR(255)");
-            $ret = $this->alterTable();
-            $this->checkError($ret);
-            /**
-             * now lets start creating the field in the database
-             */
-            $field = array();
-            foreach($data as $option => $val){
-                /**
-                 * unset all the empty vars
-                 */
-                if($val == '') unset($data[$option]);
-                /**
-                 * change the checkbox values form on/off => true/false (string)
-                 */
-                if($val == 'on'){
-                    $data[$option] = 'true';
-                }elseif($val == 'off'){
-                    $data[$option] = 'false';
+            if(!$container){
+                if(!$this->fieldHasColumn() && ($data['xtype'] == 'radiofield' && !$this->fieldHasColumn() ) ){
+                    /**
+                     * TODO: the conf might change depending xtype for now VARCHAR is OK!
+                     */
+                    $conf = 'VARCHAR(255)';
+                    $this->insertColumn($conf);
                 }
             }
             /**
-             * get the form_fields values and unset them from $data array
+             * sinatizedData check the data array and if
+             * the value is empty delete it form the array
+             * then checck the value and if is equal to "on"
+             * set it to true, and "off" set it to false
              */
+            $data = $this->sinatizedData($data);
+            /**
+             * now lets start creating the field in the database
+             */
+            $field              = array();
             $field['form_id']   = $data['form_id'];
             $field['xtype']     = $data['xtype'];
             if(isset($data['item_of'])){
@@ -87,18 +88,10 @@ class formLayoutBuilder extends dbHelper {
             $this->checkError($ret);
             $field_id = $this->lastInsertId;
             /**
-             * take each option and insert it in the orms_field_options
+             * take each option and insert it in the forms_field_options
              * table using $field_id
              */
-            foreach($data as $key => $val){
-                $opt['field_id'] = $field_id;
-                $opt['oname']    = $key;
-                $opt['ovalue']   = $val;
-                $sql = $this->sqlBind($opt, "forms_field_options", "I");
-                $this->setSQL($sql);
-                $ret = $this->execOnly();
-                $this->checkError($ret);
-            }
+            $this->insertOptions($data, $field_id);
 
             print '{"success":true}';
         }
@@ -114,19 +107,12 @@ class formLayoutBuilder extends dbHelper {
     public function updateField($data){
 
         /**
-         * here we first check the data array and if
+         * sinatizedData check the data array and if
          * the value is empty delete it form the array
          * then checck the value and if is equal to "on"
          * set it to true, and "off" set it to false
          */
-        foreach($data as $option => $val){
-            if($val == '') unset($data[$option]);
-            if($val == 'on'){
-                $data[$option] = 'true';
-            }elseif($val == 'off'){
-                $data[$option] = 'false';
-            }
-        }
+        $data = $this->sinatizedData($data);
         /**
          * Here we start the $field array and add a few
          * things from the $data array.
@@ -175,15 +161,7 @@ class formLayoutBuilder extends dbHelper {
          * take the remaining $data array and insert it in the
          * forms_field_options table one by one.
          */
-        foreach($data as $key => $val){
-            $opt['field_id'] = $id;
-            $opt['oname']    = $key;
-            $opt['ovalue']   = $val;
-            $sql = $this->sqlBind($opt, "forms_field_options", "I");
-            $this->setSQL($sql);
-            $this->execOnly();
-            $this->checkError($ret);
-        }
+        $this->insertOptions($data, $id);
 
         print '{"success": true }';
     }
@@ -239,7 +217,7 @@ class formLayoutBuilder extends dbHelper {
          * If the field is NOT a container the remove database
          * column for this field
          */
-        if(!$container){
+        if(!$container && !$this->fieldHasBrother()){
             $this->setSQL("ALTER TABLE $this->form_data_table DROP $this->col");
             $ret = $this->execOnly();
             $this->checkError($ret);
@@ -297,6 +275,36 @@ class formLayoutBuilder extends dbHelper {
         print '{"success":true}';
     }
 
+
+    /**
+     * @param $conf
+     * @return mixed
+     */
+    private function insertColumn($conf){
+        $this->setSQL("ALTER TABLE $this->form_data_table ADD $this->col $conf");
+        $ret = $this->alterTable();
+        $this->checkError($ret);
+        return;
+    }
+
+    /**
+     * @param $data
+     * @param $id
+     * @return mixed
+     */
+    private function insertOptions($data , $id){
+        foreach($data as $key => $val){
+            $opt['field_id'] = $id;
+            $opt['oname']    = $key;
+            $opt['ovalue']   = $val;
+            $sql = $this->sqlBind($opt, "forms_field_options", "I");
+            $this->setSQL($sql);
+            $ret = $this->execOnly();
+            $this->checkError($ret);
+        }
+        return;
+    }
+
     /**
      * @param $form_id
      * @return mixed
@@ -321,11 +329,29 @@ class formLayoutBuilder extends dbHelper {
         }
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     private function fieldHasChild($id){
         $this->setSQL("SELECT id FROM forms_fields WHERE item_of ='$id'");
         $this->execStatement(PDO::FETCH_ASSOC);
         $count = $this->rowCount();
         if($count >= 1 ) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    private function fieldHasBrother(){
+        $this->setSQL("SELECT id FROM forms_field_options WHERE ovalue ='$this->col'");
+        $this->execStatement(PDO::FETCH_ASSOC);
+        $count = $this->rowCount();
+        if($count >= 2 ) {
             return true;
         }else{
             return false;
@@ -343,6 +369,22 @@ class formLayoutBuilder extends dbHelper {
         }else{
             return false;
         }
+    }
+
+    /**
+     * @param $data
+     * @return array
+     */
+    private function sinatizedData($data){
+        foreach($data as $option => $val){
+            if($val == '') unset($data[$option]);
+            if($val == 'on'){
+                $data[$option] = 'true';
+            }elseif($val == 'off'){
+                $data[$option] = 'false';
+            }
+        }
+        return $data;
     }
 
     /**
