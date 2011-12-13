@@ -850,6 +850,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'name',
                 'width',
                 'value',
+                'emptyText',
                 'maxValue',
                 'minValue',
                 'increment',
@@ -863,6 +864,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'name',
                 'width',
                 'value',
+                'emptyText',
                 'timeMaxValue',
                 'timeMinValue',
                 'increment',
@@ -881,10 +883,21 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'margin',
                 'inputValue'
             ];
+        } else if (value == 'datefield') {
+            items = [
+                'name',
+                'width',
+                'emptyText',
+                'fieldLabel',
+                'labelWidth',
+                'hideLabel',
+                'margin'
+            ];
         } else {
             items =[
                 'name',
                 'width',
+                'emptyText',
                 'fieldLabel',
                 'labelWidth',
                 'hideLabel',
