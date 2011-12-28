@@ -13,9 +13,11 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <html>
 <head>
 <title>MitosEHR Logon Screen</title>
-<link rel="stylesheet" href="lib/touch-1.1.0/resources/css/sencha-touch.css" type="text/css">
-<script type="text/javascript" src="lib/touch-1.1.0/sencha-touch-debug.js"></script>
+<link rel="stylesheet" href="lib/touch-2.0.0-pr3/resources/css/sencha-touch.css" type="text/css">
+<script type="text/javascript" src="lib/touch-2.0.0-pr3/sencha-touch-all.js"></script>
 <script type="text/javascript">
+
+
 Ext.setup({
     icon: 'icon.png',
     tabletStartupScreen: 'tablet_startup.png',
@@ -52,58 +54,58 @@ Ext.setup({
         });                                                                                   //
         ////////////////////////////////////////////////////////////////////////////////////////
 
-        var formLogin = {
-            scroll: 'vertical',
-            url   : 'lib/authProcedures/auth.inc.php',
-            baseParams		: {auth: 'true'},
-            standardSubmit : false,
+        var formBase  = {
+            //scroll: 'vertical',
+            url             : 'lib/authProcedures/auth.inc.php',
+            baseParams		: { auth:'true' },
+            standardSubmit  : false,
             items: [{
                 xtype: 'fieldset',
                 title: 'MitosEHR Login Form',
                 instructions: 'Please enter your login info.',
                 defaults: {
-                    required: true,
-                    labelAlign: 'left',
-                    labelWidth: '40%'
+                    required    : true,
+                    labelAlign  : 'left',
+                    labelWidth  : '40%'
                 },
                 items: [{
-                    xtype: 'textfield',
-                    name: 'authUser',
-                    label: 'Username',
-                    useClearIcon: true,
-                    autoCapitalize : false
+                    xtype           : 'textfield',
+                    name            : 'authUser',
+                    label           : 'Username',
+                    clearIcon       : true,
+                    autoCapitalize  : false
                 },{
-                    xtype: 'passwordfield',
-                    name: 'authPass',
-                    label: 'Password',
-                    useClearIcon: false
+                    xtype           : 'passwordfield',
+                    name            : 'authPass',
+                    label           : 'Password',
+                    clearIcon       : false
+                },{
+                    xtype: 'selectfield',
+                    name: 'choiseSite',
+                    label: 'Site',
+                    typeAhead: true,
+                    emptyText:'Select Site',
+                    selectOnFocus:true,
+                    id:'choiseSite',
+                    //displayField:'site',
+                    //valueField:'site_id',
+                    //options: storeSites
+                    options: [{text: 'default',  value: 'default'}]
                 },
-                    new Ext.form.Select({
-                        name: 'choiseSite',
-                        label: 'Site',
-                        typeAhead: true,
-                        emptyText:'Select Site',
-                        selectOnFocus:true,
-                        id:'choiseSite',
-                        //displayField:'site',
-                        //valueField:'site_id',
-                        //options: storeSites
-                        options: [{text: 'default',  value: 'default'}]
-                    }),
-                    new Ext.Button({
+                    Ext.create('Ext.Button', {
                         text:'Login',
                         margin: '20 0',
                         ui  : 'confirm',
                         handler: function() {
-                            if(formLogin){
-                                form.updateRecord(formLogin, true);
+                            if(formBase){
+                                form.updateRecord(formBase, true);
                             }
                             form.submit({
                                 waitMsg : {message:'Submitting', cls : 'demos-loading'}
                             });
                         }
                     }),
-                    new Ext.Button({
+                    Ext.create('Ext.Button', {
                         text:'Reset',
                         margin: '20 0',
                         ui  : 'decline',
@@ -124,19 +126,27 @@ Ext.setup({
                 }
             }
         };
-        if (Ext.is.Phone) {
-            formLogin.fullscreen = true;
-        } else {
-            Ext.apply(formLogin, {
-                autoRender: true,
-                floating: true,
-                modal: true,
-                centered: true,
-                hideOnMaskTap: false
+        if (Ext.os.deviceType == 'Phone') {
+            Ext.apply(formBase, {
+                xtype: 'formpanel',
+                autoRender: true
             });
+
+            Ext.Viewport.add(formBase);
+        } else {
+            Ext.apply(formBase, {
+                autoRender   : true,
+                modal        : true,
+                hideOnMaskTap: false,
+                height       : 505,
+                width        : 480,
+                centered     : true,
+                fullscreen   : true
+            });
+
+            form = Ext.create('Ext.form.Panel', formBase);
+            form.show();
         }
-        form = new Ext.form.FormPanel(formLogin);
-        form.show();
     }
 });
 </script>
