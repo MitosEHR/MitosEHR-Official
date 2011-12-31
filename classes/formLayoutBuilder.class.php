@@ -14,9 +14,6 @@
  * modified: Ernesto J Rodriguez
  * 
  */
-/** @noinspection PhpIncludeInspection */
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
-
 class formLayoutBuilder extends dbHelper {
 
     private $form_data_table;
@@ -189,7 +186,7 @@ class formLayoutBuilder extends dbHelper {
              * for fieldcontainers and fieldsets lets make sure the
              * field does NOT have child items
              */
-            if($this->fieldHasChild($data['id'])) {
+            if($this->fieldHasChild($data['id'])){
                 echo '{ "success": false, "errors": { "reason": "This field has one or more child field(s). Please, remove or moved the child fields before removeing this field." }}';
                 exit;
             }

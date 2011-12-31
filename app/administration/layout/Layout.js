@@ -72,7 +72,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 url	        : 'app/administration/layout/data.php',
                 extraParams	: { task: "treeRequest" }
             },
-            folderSort: true
+            folderSort: false
         });
         /**
          * Xtype Combobox store
