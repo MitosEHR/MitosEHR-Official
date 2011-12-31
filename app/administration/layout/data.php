@@ -51,14 +51,14 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
 
 
     $formPanel = $_REQUEST["currForm"];
-    $fields = array();
+    //$fields = array();
 
     /**
      * @param $formPanel
      * @return array
      */
     function getFileds($formPanel){
-        global $fields;
+        $fields = array();
         global $mitos_db;
         $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC");
         $results = $mitos_db->execStatement(PDO::FETCH_ASSOC);
@@ -72,7 +72,11 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
                 unset($item['children']);
                 if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
             }else{
-                $item['expanded'] = true;
+                if($item['collapsed'] == 'collapsed'){
+                    $item['expanded'] = false;
+                }else{
+                    $item['expanded'] = true;
+                }
             }
             array_push($fields,$item);
         }
@@ -97,7 +101,11 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
                 unset($item['children']);
                 if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
             }else{
-                $item['expanded'] = true;
+                if($item['collapsed'] == 'true'){
+                    $item['expanded'] = false;
+                }else{
+                    $item['expanded'] = true;
+                }
             }
             array_push($items,$item);
         }
