@@ -49,6 +49,7 @@ switch($_SERVER['REQUEST_METHOD']){
         $data['password']   = $aes->encrypt($data['password']);
         $data['authorized'] = ($data['authorized'] == 'on' ? 1 : 0);
         $data['active']   	= ($data['active']     == 'on' ? 1 : 0);
+        $data['calendar']   = ($data['calendar']   == 'on' ? 1 : 0);
         if($data['taxonomy'] == ""){ unset($data['taxonomy']); }
 
         $sql = $mitos_db->sqlBind($data, "users", "I");
@@ -68,7 +69,7 @@ switch($_SERVER['REQUEST_METHOD']){
         $data['password']   = $aes->encrypt($data['password']);
         $data['authorized'] = ($data['authorized'] == 'on' ? 1 : 0);
         $data['active']   	= ($data['active']     == 'on' ? 1 : 0);
-
+        $data['calendar']   = ($data['calendar']   == 'on' ? 1 : 0);
         $sql = $mitos_db->sqlBind($data, "users", "U", "id='$id'");
         $mitos_db->setSQL($sql);
         $ret = $mitos_db->execLog();

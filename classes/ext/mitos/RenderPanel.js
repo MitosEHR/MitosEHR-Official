@@ -38,7 +38,7 @@ Ext.define('Ext.mitos.RenderPanel', {
                     items    	: me.pageBody
                     }]
             }]
-        });
+        },this);
         me.callParent(arguments);
     },
 
