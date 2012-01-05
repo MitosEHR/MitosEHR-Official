@@ -317,9 +317,9 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
      */
     encounterTimer:function(){
         var ms = Ext.Date.getElapsed(this.encounterTime,new Date()),
-        s = Math.round((ms/1000)%60),
-        m = Math.round((ms/(1000*60))%60),
-        h = Math.round((ms/(1000*60*60))%24);
+        s = Math.floor((ms/1000)%60),
+        m = Math.floor((ms/(1000*60))%60),
+        h = Math.floor((ms/(1000*60*60))%24);
         function twoDigit(d){
             return (d >= 10) ? d : '0'+d;
         }
