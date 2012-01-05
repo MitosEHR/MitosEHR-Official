@@ -27,6 +27,12 @@
     background-color: #ccc;
     -webkit-border-radius: 3px;
 }
+.timer {
+    float: right;
+    font-weight: bold;
+    width: 72px;
+    text-align: justify;
+}
 .RenderPanel {
     background-color: #DFE8F6!important;
     padding: 5px !important;

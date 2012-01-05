@@ -43,12 +43,13 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             title       : 'Create Visit',
             region      : 'north',
             height      : 300,
-            margin      : '0 0 3 0',
+            margin      : '0 0 2 0',
             bodyStyle   : 'padding:15px',
             hidden      : true,
             collapsible : true,
             collapsed   : true,
             animCollapse: true,
+            titleCollapse:true,
             hideCollapseTool: true,
             collapseMode: 'header',
             html        : '<h1>Create Encounter form placeholder!</h1>'
@@ -99,86 +100,47 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         /**
          * Encounter panel
          */
-        me.encounterPanel = Ext.create('Ext.panel.Panel',{
-            layout      : 'card',
-            region      : 'center',
-            activeItem  : 0,
-            defaults:{
-                bodyStyle   : 'padding:15px',
+        me.centerPanel = Ext.create('Ext.panel.Panel',{
+            region:'center',
+            layout:'hbox',
+            width: '100%',
+            items: [{
+                xtype       : 'tabpanel',
+                itemId      : 'encounter',
+                activeItem  : 0,
+                flex        : 1,
                 border      : false,
-                bodyBorder  : false,
-                layout      : 'fit'
-            },
-            items: [
-                me.MiscBillingOptionsPanel,
-                me.procedurePanel,
-                me.reviewSysPanel,
-                me.reviewSysCkPanel,
-                me.soapPanel,
-                me.speechDicPanel,
-                me.vitalsPanel
-            ],
-            tbar:[{
-                text      	: 'Misc. Billing Options HCFA',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                listeners	: {
-                    afterrender: function(){
-                        this.toggle(true);
-                    }
+                defaults:{
+                    bodyStyle   : 'padding:15px',
+                    border      : false,
+                    bodyBorder  : false,
+                    layout      : 'fit'
                 },
-                handler: function(btn) {
-                    me.encounterPanel.getLayout().setActiveItem(0);
-                }
-            },'-',{
-                text      	: 'Procedure Order',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                handler: function(btn) {
-                    me.encounterPanel.getLayout().setActiveItem(1);
-                }
-            },'-',{
-                text      	: 'Review of Sys',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                handler: function(btn) {
-                    me.encounterPanel.getLayout().setActiveItem(2);
-                }
-            },'-',{
-                text      	: 'Review of Sys Cks',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                handler: function(btn) {
-                    me.encounterPanel.getLayout().setActiveItem(3);
-                }
-            },'-',{
-                text      	: 'SOAP',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                handler: function(btn) {
-                    me.encounterPanel.getLayout().setActiveItem(4);
-                }
-            },'-',{
-                text      	: 'Speech Dictation',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                handler: function(btn) {
-                    me.encounterPanel.getLayout().setActiveItem(5);
-                }
-            },'-',{
-                text      	: 'Vitals',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                handler: function(btn) {
-                    me.encounterPanel.getLayout().setActiveItem(6);
-                }
+                items: [
+                    me.reviewSysPanel,
+                    me.reviewSysCkPanel,
+                    me.soapPanel,
+                    me.speechDicPanel,
+                    me.vitalsPanel
+                ]
+            },{
+                xtype       : 'tabpanel',
+                itemId      : 'administrative',
+                activeItem  : 0,
+                flex        : 1,
+                border      : false,
+                hidden      : true,
+                defaults:{
+                    bodyStyle   : 'padding:15px',
+                    border      : false,
+                    bodyBorder  : false,
+                    layout      : 'fit'
+                },
+                items: [
+                    me.MiscBillingOptionsPanel,
+                    me.procedurePanel
+                ]
+
             }],
             bbar:[{
                 text      	: 'Save',
@@ -197,6 +159,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             }]
         });
 
+
         //******************************************************************
         // Visit History Grid
         //******************************************************************
@@ -208,7 +171,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             animCollapse    : true,
             hideCollapseTool: true,
             collapseMode    : 'header',
-            margin          : '3 0 0 0',
+            margin          : '2 0 0 0',
             region	        : 'south',
             height          : 300,
             store           : me.historyStore,
@@ -228,7 +191,51 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             }
         });
 
-        me.pageBody = [ me.newEncounterPanel, me.encounterPanel, me.historyGrid ];
+        /**
+         * Progress Note
+         */
+        me.progressNote = Ext.create('Ext.panel.Panel',{
+            title       : 'Encounter Progress Note',
+            region      : 'east',
+            margin      : '0 0 0 2',
+            bodyStyle   : 'padding:15px',
+            width       : 500,
+            collapsible : true,
+            animCollapse: true,
+            html        : '<h2>Progress Note Placeholder</h2>',
+            listeners:{
+                scope       : this,
+                collapse    : me.progressNoteCollapseExpand,
+                expand      : me.progressNoteCollapseExpand
+            },
+            tbar:[{
+                text    : 'View (CCD)',
+                tooltip : 'View (Continuity of Care Document)',
+                handler : function(event, toolEl, panel){
+                    // refresh logic
+                }
+            },'-',{
+                text    : 'Print (CCD)',
+                tooltip : 'Print (Continuity of Care Document)',
+                handler : function(event, toolEl, panel){
+                    // refresh log
+
+                }
+            },'->',{
+                text    : 'Export (CCD)',
+                tooltip : 'Export (Continuity of Care Document)',
+                handler : function(event, toolEl, panel){
+                    // refresh log
+
+                }
+
+            }]
+
+
+        })
+
+        me.pageBody = [ me.newEncounterPanel, me.centerPanel, me.historyGrid, me.progressNote ];
+
         me.callParent(arguments);
 
         me.down('panel').addDocked([{
@@ -244,25 +251,27 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                         this.toggle(true);
                     }
                 },
-                handler: function(btn) {
-                    me.setToolbar('encounter');
+                handler: function() {
+                    me.setFormPanel('encounter');
                 }
             },'-',{
                 text      	: 'Administrative',
                 enableToggle: true,
                 toggleGroup : '1',
                 iconCls   	: '',
-                handler: function(btn) {
-                    me.setToolbar('administrative');
+                handler: function() {
+                    me.setFormPanel('administrative');
                 }
             },'->',{
                 text      	: 'New Encounter',
                 iconCls   	: 'icoAddRecord',
-                enableToggle: true,
-                listeners:{
-                    scope   : me,
-                    toggle  : me.newEncounter
-                }
+                scope       : me,
+                handler     : me.newEncounter
+            },'-',{
+                text      	: 'Close Encounter',
+                iconCls   	: 'icoAddRecord',
+                scope       : me,
+                handler     : me.closeEncounter
             },'-',{
                 text      	: 'Show Encounter History',
                 itemId      : 'encounterHistory',
@@ -278,23 +287,56 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
 
 
     /**
-     *
-     * @param btn
+     * This is the logic to create a new encounter
      */
-    newEncounter:function(btn, pressed){
-        if(pressed){
-            btn.up("toolbar").getComponent('encounterHistory').toggle(false);
-            btn.setText('Cancel New Encounter');
-            this.newEncounterPanel.setVisible(true);
-            this.newEncounterPanel.expand(true);
-            this.encounterPanel.doLayout();
-            this.encounterPanel.disable();
-        }else{
-            btn.setText('New Encounter');
-            this.newEncounterPanel.expand(false);
-            this.newEncounterPanel.setVisible(false);
-            this.encounterPanel.enable();
+    newEncounter:function(){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            msg     : 'Do you want to create a new encounter?',
+            icon    : Ext.MessageBox.QUESTION,
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn:function(btn){
+                if(btn=='yes'){
+                    this.encounterTime = new Date();
+                    this.timerTask = {
+                        scope:this,
+                        run: function(){
+                            this.encounterTimer();
+                        },
+                        interval: 1000 //1 second
+                    }
+                    Ext.TaskManager.start(this.timerTask);
+                }
+            }
+        });
+    },
+
+    /**
+     * function to
+     */
+    encounterTimer:function(){
+        var ms = Ext.Date.getElapsed(this.encounterTime,new Date()),
+        s = Math.round((ms/1000)%60),
+        m = Math.round((ms/(1000*60))%60),
+        h = Math.round((ms/(1000*60*60))%24);
+        function twoDigit(d){
+            return (d >= 10) ? d : '0'+d;
         }
+        var timer = twoDigit(h)+':'+twoDigit(m)+':'+twoDigit(s);
+        this.updateTitle('Encounter [patient name] - '+Ext.Date.format(this.encounterTime, 'F j, Y, g:i a')+'<span class="timer">'+timer+'</span>' );
+    },
+
+    closeEncounter:function(){
+
+        var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter:', function(btn, text){
+
+            if (btn == 'ok'){
+                Ext.TaskManager.stop(this.timerTask);
+            }
+        }, this);
+        var f = msg.textField.getInputId();
+        document.getElementById(f).type = 'password';
     },
 
     /**
@@ -307,7 +349,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             btn.setText('Hide Encounter History');
             this.historyGrid.setVisible(true);
             this.historyGrid.toggleCollapse();
-            this.encounterPanel.doLayout();
+            this.centerPanel.doLayout();
 
         }else{
             btn.setText('Show Encounter History');
@@ -316,76 +358,20 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         }
     },
 
-    setToolbar:function(type){
-        var toolbar = this.encounterPanel.down('toolbar')
-        toolbar.removeAll();
+    progressNoteCollapseExpand:function(){
+        this.centerPanel.doLayout();
+    },
+
+    setFormPanel:function(type){
+        var encounterPanel      = this.centerPanel.getComponent('encounter'),
+            administrativePanel = this.centerPanel.getComponent('administrative');
         if(type == 'encounter'){
-            toolbar.add([{
-                text      	: 'Review of Sys',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                scope       : this,
-                handler: function(btn) {
-                    this.encounterPanel.getLayout().setActiveItem(2);
-                }
-            },'-',{
-                text      	: 'Review of Sys Cks',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                scope       : this,
-                handler: function(btn) {
-                    this.encounterPanel.getLayout().setActiveItem(3);
-                }
-            },'-',{
-                text      	: 'SOAP',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                scope       : this,
-                handler: function(btn) {
-                    this.encounterPanel.getLayout().setActiveItem(4);
-                }
-            },'-',{
-                text      	: 'Speech Dictation',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                scope       : this,
-                handler: function(btn) {
-                    this.encounterPanel.getLayout().setActiveItem(5);
-                }
-            },'-',{
-                text      	: 'Vitals',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                scope       : this,
-                handler: function(btn) {
-                    this.encounterPanel.getLayout().setActiveItem(6);
-                }
-            }]);
+            administrativePanel.setVisible(false);
+            encounterPanel.setVisible(true);
         }else if(type == 'administrative'){
-            toolbar.add([{
-                text      	: 'Misc. Billing Options HCFA',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                scope       : this,
-                handler: function(btn) {
-                    this.encounterPanel.getLayout().setActiveItem(0);
-                }
-            },'-',{
-                text      	: 'Procedure Order',
-                enableToggle: true,
-                toggleGroup : '2',
-                iconCls   	: '',
-                scope       : this,
-                handler: function(btn) {
-                    this.encounterPanel.getLayout().setActiveItem(1);
-                }
-            }]);
+            encounterPanel.setVisible(false);
+            administrativePanel.setVisible(true);
+
         }
 
     },
