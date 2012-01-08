@@ -72,7 +72,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 url	        : 'app/administration/layout/data.php',
                 extraParams	: { task: "treeRequest" }
             },
-            folderSort: true
+            folderSort: false
         });
         /**
          * Xtype Combobox store
@@ -275,6 +275,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     allowBlank      : false,
                     hidden          : true
                 },{
+                    fieldLabel      : 'Input Value',
+                    xtype           : 'textfield',
+                    name            : 'inputValue',
+                    itemId          : 'inputValue',
+                    allowBlank      : false,
+                    hidden          : true
+                },{
                     fieldLabel      : 'Width',
                     xtype           : 'textfield',
                     name            : 'width',
@@ -320,12 +327,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     emptyText       : 'ei. 5 5 5 5',
                     hidden          : true
                 },{
-                    fieldLabel      : 'Input Value',
-                    xtype           : 'textfield',
-                    name            : 'inputValue',
-                    itemId          : 'inputValue',
-                    hidden          : true
-                },{
                     fieldLabel      : 'Is Required',
                     xtype           : 'checkbox',
                     name            : 'allowBlank',
@@ -348,6 +349,18 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     xtype           : 'textfield',
                     name            : 'minValue',
                     itemId          : 'minValue',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Max Value',
+                    xtype           : 'timefield',
+                    name            : 'maxValue',
+                    itemId          : 'timeMaxValue',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Min Value',
+                    xtype           : 'timefield',
+                    name            : 'minValue',
+                    itemId          : 'timeMinValue',
                     hidden          : true
                 },{
                     fieldLabel      : 'Box Label',
@@ -580,6 +593,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                                 this.currField = null;
                                 this.loadFieldsGrid();
                                 this.previewFormRender();
+                                this.onFormReset();
                             }else{
                                 Ext.Msg.alert('Opps!', responseText.errors.reason);
                             }
@@ -724,6 +738,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             this.selectListGrid.collapse();
             this.selectListGrid.disable();
         }
+
         /**
          * 
          * @param searchStr
@@ -750,9 +765,9 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             return returnArray;
         };
 
+
         var addProp = this.fieldForm.getComponent('aditionalProperties');
         var is = addProp.items.keys;
-
         /**
          *
          * @param items
@@ -801,7 +816,6 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             items = [
                 'name',
                 'width',
-                'emptyText',
                 'fieldLabel',
                 'hideLabel',
                 'labelWidth',
@@ -836,9 +850,44 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'name',
                 'width',
                 'value',
+                'emptyText',
                 'maxValue',
                 'minValue',
                 'increment',
+                'fieldLabel',
+                'labelWidth',
+                'hideLabel',
+                'margin'
+            ];
+        } else if (value == 'timefield') {
+            items = [
+                'name',
+                'width',
+                'value',
+                'emptyText',
+                'timeMaxValue',
+                'timeMinValue',
+                'increment',
+                'fieldLabel',
+                'labelWidth',
+                'hideLabel',
+                'margin'
+            ];
+        } else if (value == 'radiofield') {
+            items = [
+                'name',
+                'width',
+                'fieldLabel',
+                'labelWidth',
+                'hideLabel',
+                'margin',
+                'inputValue'
+            ];
+        } else if (value == 'datefield') {
+            items = [
+                'name',
+                'width',
+                'emptyText',
                 'fieldLabel',
                 'labelWidth',
                 'hideLabel',
@@ -848,6 +897,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             items =[
                 'name',
                 'width',
+                'emptyText',
                 'fieldLabel',
                 'labelWidth',
                 'hideLabel',

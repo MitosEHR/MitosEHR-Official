@@ -25,12 +25,11 @@ Ext.define('Ext.mitos.LivePatientSearch',{
                     }
                 },
                 fields: [
-                    {name: 'id', 			type: 'int'},
-                    {name: 'pid', 			type: 'int'},
-                    {name: 'pubpid', 		type: 'int'},
-                    {name: 'patient_name', 	type: 'string'},
-                    {name: 'patient_dob', 	type: 'string'},
-                    {name: 'patient_ss', 	type: 'string'}
+                    {name: 'pid', 		type: 'int'},
+                    {name: 'pubpid', 	type: 'int'},
+                    {name: 'fullname', 	type: 'string'},
+                    {name: 'DOB', 	    type: 'string'},
+                    {name: 'SS', 	    type: 'string'}
                 ]
             });
         }
@@ -44,7 +43,7 @@ Ext.define('Ext.mitos.LivePatientSearch',{
         
         Ext.apply(this, {
             store		: me.searchStore,
-            displayField: 'patient_name',
+            displayField: 'fullname',
             valueField  : 'pid',
             emptyText	: me.emptyText,
             typeAhead	: false,
@@ -58,11 +57,11 @@ Ext.define('Ext.mitos.LivePatientSearch',{
                 // Custom rendering template for each item
                 //---------------------------------------------------------------------
                 getInnerTpl: function() {
-                    return '<div class="search-item"><h3><span>{patient_name}</span>&nbsp;&nbsp;({pid})</h3>DOB:&nbsp;{patient_dob}&nbsp;SS:&nbsp;{patient_ss}</div>';
+                    return '<div class="search-item"><h3><span>{fullname}</span>&nbsp;&nbsp;({pid})</h3>DOB:&nbsp;{DOB}&nbsp;SS:&nbsp;{SS}</div>';
                 }
             },
             pageSize: 10
-        });
+        }, null);
 
         me.callParent();
     }
