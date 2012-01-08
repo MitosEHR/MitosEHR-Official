@@ -51,7 +51,18 @@
 .edit{
 	background-image: url(../ui_icons/edit.png) !important;
 }
-
+.icoPullChart{
+    background-image: url(../ui_icons/icoPullChart.png) !important;
+}
+.icoPushFor{
+    background-image: url(../ui_icons/icoPushFor.png) !important;
+}
+.icoDoctor{
+    background-image: url(../ui_icons/icoDoctor.png) !important;
+}
+.icoAddPatient{
+    background-image: url(../ui_icons/patient_add.png) !important;
+}
 .searchUsers{
 	background-image: url(../ui_icons/search-user.png) !important;
 }

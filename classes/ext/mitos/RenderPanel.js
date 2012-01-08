@@ -16,7 +16,8 @@ Ext.define('Ext.mitos.RenderPanel', {
         var me = this;
     	Ext.apply(me,{
             items   : [{
-                cls      : 'RenderPanel-header',
+                cls     : 'RenderPanel-header',
+                itemId  : 'RenderPanel-header',
                 xtype   : 'container',
                 region  : 'north',
                 layout  : 'fit',
@@ -38,8 +39,12 @@ Ext.define('Ext.mitos.RenderPanel', {
                     items    	: me.pageBody
                     }]
             }]
-        });
+        },this);
         me.callParent(arguments);
+    },
+
+    updateTitle:function(pageTitle){
+        this.getComponent('RenderPanel-header').update('<div class="dashboard_title">' + pageTitle + '</div>');
     },
 
     getMitosApp:function(){

@@ -21,7 +21,7 @@ Ext.define('Ext.mitos.combo.PermValues',{
             valueField	: 'value',
             displayField: 'perm',
             store       : me.store
-		});
+		}, null);
 		me.callParent(arguments);
 	} 
 });

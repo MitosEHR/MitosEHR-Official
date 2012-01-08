@@ -22,7 +22,7 @@ session_cache_limiter('private');
 // Load all the necessary libraries
 // **************************************************************************************
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
-include_once($_SESSION['site']['root']."/classes/dataExchange.class.php");
+include_once($_SESSION['site']['root']."/repo/global_functions/global_functions.php");
 
 // **************************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -63,49 +63,48 @@ switch ($_GET['task']) {
 		// ------------------------------------------------------------------------------
 		// sql statement to get total row without LIMIT
 		// ------------------------------------------------------------------------------
-		$mitos_db->setSQL("SELECT count(id) as total 
-							 FROM patient_data
+		$mitos_db->setSQL("SELECT count(pid) as total
+							 FROM form_data_demographics
 							WHERE fname LIKE '".$search."%'
 							   OR lname LIKE '".$search."%'
 							   OR mname LIKE '".$search."%'
 							   OR pid 	LIKE '".$search."%'
-							   OR ss 	LIKE '".$search."%'");
-		$urow  = $mitos_db->execStatement(PDO::FETCH_ASSOC);
-		$total = $urow[0]['total'];
+							   OR SS 	LIKE '%".$search."'");
+        $total = $mitos_db->rowCount();
 		// ------------------------------------------------------------------------------
 		// sql statement and json to get patients
 		// ------------------------------------------------------------------------------
-		$mitos_db->setSQL("SELECT id,pid,pubpid,fname,lname,mname,DOB,ss  
-							 FROM patient_data
+		$mitos_db->setSQL("SELECT pid,pubpid,fname,lname,mname,DOB,SS
+							 FROM form_data_demographics
 							WHERE fname LIKE '".$search."%'
 							   OR lname LIKE '".$search."%'
 							   OR mname LIKE '".$search."%'
 							   OR pid 	LIKE '".$search."%'
-							   OR ss 	LIKE '".$search."%'
+							   OR SS 	LIKE '%".$search."'
 							LIMIT ".$start.",".$limit);
-		$buff = '';
-		foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $urow) {
-		  	$buff .= '{';
-		  	$buff .= '"id":"'			.trim($urow['id']).'",';
-		  	$buff .= '"pid":"'			.trim($urow['pid']).'",';
-		  	$buff .= '"pubpid":"'		.trim($urow['pubpid']).'",';
-		  	$buff .= '"patient_name":"'	.dataEncode($urow['lname']).', '.dataEncode($urow['fname']).' '.dataEncode($urow['mname']).'",';
-			$buff .= '"patient_dob":"'	.dataEncode($urow['DOB']).'",';
-		  	$buff .= '"patient_ss":"'	.dataEncode($urow['ss']).'"},'.chr(13);
-		}
-		$buff = substr($buff, 0, -2); // Delete the last comma.
-		echo '{';
-		echo '"totals":"' . $total . '", ' . chr(13);
-		echo '"row": [' . chr(13);
-		echo $buff;
-		echo ']}' . chr(13);
+        $total = $mitos_db->rowCount();
+        $rows = array();
+        foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
+
+            $row['fullname'] = fullname($row['fname'],$row['mname'],$row['lname']);
+            unset($row['fname'],$row['mname'],$row['lname']);
+            array_push($rows, $row);
+        }
+
+        print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
 	break;
 	case 'set':
 		// ------------------------------------------------------------------------------
 		// Set $_SESSION vars for future use
 		// ------------------------------------------------------------------------------
-		$_SESSION['patient']['id'] 	 = $_REQUEST['pid'];
+		$_SESSION['patient']['pid'] 	 = $_REQUEST['pid'];
 		$_SESSION['patient']['name'] = $_REQUEST['pname'];
 	break;
+    case 'reset':
+        // ------------------------------------------------------------------------------
+        // Set $_SESSION vars for future use
+        // ------------------------------------------------------------------------------
+        $_SESSION['patient']['pid']	 = null;
+        $_SESSION['patient']['name'] = null;
+    break;
 }
-?>

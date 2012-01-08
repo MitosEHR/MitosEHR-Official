@@ -11,16 +11,19 @@
 Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
     extend          : 'Ext.mitos.RenderPanel',
     id              : 'panelSummary',
-    pageTitle       : 'Summary',
+    pageTitle       : 'Patient Summary',
     pageLayout      : 'border',
     initComponent   : function(){
-        this.pageBody = [{
+        var me = this;
+
+        me.pageBody = [{
+            xtype       : 'container',
             region      : 'east',
             width       : 300,
             bodyPadding : 0,
             frame       : false,
             border      : false,
-            defaults    : { margin:'0 0 5 5', bodyPadding:5, collapsible:true, titleCollapse:true },
+            defaults    : { margin:'0 0 5 0', bodyPadding:5, collapsible:true, titleCollapse:true },
             items: [{
                 title   : 'Clinical Reminders',
                 html    : 'Panel content!'
@@ -44,6 +47,7 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
                 html    : 'Panel content!'
             }]
         },{
+            xtype       : 'container',
             region      : 'center',
             bodyPadding : 0,
             frame       : false,
@@ -69,7 +73,51 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
                 html    : 'Panel content!'
             }]
         }];
-        this.callParent(arguments);
+
+        me.callParent(arguments);
+
+        me.down('panel').addDocked([{
+            xtype   : 'toolbar',
+            dock    : 'top',
+            items:[{
+                text      	: 'History',
+                iconCls   	: 'icoListOptions',
+                handler: function() {
+
+                }
+            },'-',{
+                text      	: 'Reports',
+                iconCls   	: 'icoListOptions',
+                handler: function() {
+
+                }
+            },'-',{
+                text      	: 'Documents',
+                iconCls   	: 'icoListOptions',
+                handler: function() {
+
+                }
+            },'-',{
+                text      	: 'Transactionstory',
+                iconCls   	: 'icoListOptions',
+                handler: function() {
+
+                }
+            },'-',{
+                text      	: 'Issues',
+                iconCls   	: 'icoListOptions',
+                handler: function() {
+
+                }
+            },'->',{
+                text      	: 'Edit Demographics',
+                iconCls   	: 'icoListOptions',
+                handler: function() {
+
+                }
+            }]
+        }]);
+
     }, // end initComponent
     /**
      * This function is called from MitosAPP.js when

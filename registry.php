@@ -44,8 +44,8 @@ $_SESSION['dir']['ext_classes'] = "classes/ext";
 /**
  * Patient Related Variables
  */
-$_SESSION['patient']['id']      = "";
-$_SESSION['patient']['name']    = "";
+$_SESSION['patient']['pid']     = null;
+$_SESSION['patient']['name']    = null;
  /**
  * Server related variables
  */

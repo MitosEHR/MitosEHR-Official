@@ -44,7 +44,7 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                 {name: 'specialty',             type: 'string'},
                 {name: 'cal_ui',                type: 'string'},
                 {name: 'taxonomy',              type: 'string'},
-                {name: 'calendar',              type: 'int'},
+                {name: 'calendar',              type: 'auto'},
                 {name: 'abook_type',            type: 'string'},
                 {name: 'default_warehouse',     type: 'string'}
             ],
@@ -68,11 +68,12 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
             store : me.userStore,
             columns: [
                 { text: 'id', sortable: false, dataIndex: 'id', hidden: true},
-                { width: 100,  text: 'Username', sortable: true, dataIndex: 'username' },
-                { width: 200,  text: 'Name', sortable: true, dataIndex: 'fullname' },
-                { flex: 1,  text: 'Aditional info', sortable: true, dataIndex: 'info' },
-                { text: 'Active?', sortable: true, dataIndex: 'active',renderer 	: authCk },
-                { text: 'Authorized?', sortable: true, dataIndex: 'authorized', renderer: authCk }
+                { width: 100,  text: 'Username',        sortable: true, dataIndex: 'username' },
+                { width: 200,  text: 'Name',            sortable: true, dataIndex: 'fullname' },
+                { flex: 1,     text: 'Aditional info',  sortable: true, dataIndex: 'info' },
+                { text: 'Active?',      sortable: true, dataIndex: 'active',    renderer: authCk },
+                { text: 'Authorized?',  sortable: true, dataIndex: 'authorized',renderer: authCk },
+                { text: 'Calendar?',    sortable: true, dataIndex: 'calendar',  renderer: authCk }
             ],
             listeners: {
                 scope: me,
@@ -104,7 +105,7 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                 xtype           : 'mitos.form',
                 fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
                 defaultType     : 'textfield',
-                hideLabels      : true,
+                //hideLabels      : true,
                 defaults        : { labelWidth: 89, anchor: '100%',
                     layout      : { type: 'hbox', defaultMargins: {top: 0, right: 5, bottom: 0, left: 0} }
                 },
@@ -134,13 +135,11 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                     ]
                 },{
                     xtype: 'fieldcontainer',
-                    defaults: { hideLabel: true },
                     msgTarget : 'under',
                     items: [
-                        { width: 100, xtype: 'displayfield', value: 'Active?: '},
-                        { width: 100, xtype: 'mitos.checkbox', name: 'active' },
-                        { width: 100, xtype: 'displayfield', value: 'Authorized?: '},
-                        { width: 105, xtype: 'mitos.checkbox', value: 'off', name: 'authorized' }
+                        { width: 150, xtype: 'mitos.checkbox',  fieldLabel: 'Active?',      name: 'active' },
+                        { width: 150, xtype: 'mitos.checkbox',  fieldLabel: 'Authorized?',  name: 'authorized' },
+                        { width: 150, xtype: 'mitos.checkbox',  fieldLabel: 'Calendar?',    name: 'calendar' }
                     ]
                 },{
                     xtype: 'fieldcontainer',
@@ -159,7 +158,7 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                         { width: 100, xtype: 'displayfield', value: 'Access Control: '},
                         { width: 100, xtype:'mitos.rolescombo', name:'role_name' }, // not implemented yet
                         { width: 100, xtype: 'displayfield', value: 'Taxonomy: '},
-                        { width: 105, xtype: 'textfield', name: 'taxonomy' }
+                        { width: 105, xtype: 'textfield',  name: 'taxonomy' }
                     ]
                 },{
                     xtype: 'fieldcontainer',

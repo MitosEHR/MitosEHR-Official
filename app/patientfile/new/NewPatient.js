@@ -27,9 +27,9 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
 
         me.form = Ext.create('Ext.form.Panel', {
             title           : me.formTitle,
+            url             : 'app/patientfile/new/data.php',
             bodyStyle       : 'padding: 5px',
             layout          : 'anchor',
-            height          : 300,
             fieldDefaults   : { msgTarget:'side' },
             dockedItems:{
                 xtype   : 'toolbar',
@@ -37,9 +37,8 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
                 items:[{
                     text    : 'Save new patient',
                     iconCls : 'save',
-                    handler : function(){
-
-                    }
+                    scope   : me,
+                    handler : me.onSave
                 },'->',{
                     text    : 'Take Patient Picture',
                     handler : function(){
@@ -51,6 +50,31 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
         me.pageBody = [ me.form ];
         me.callParent(arguments);
     },
+
+    onSave:function(){
+        var form = this.form.getForm();
+
+        this.form.add({
+            xtype   : 'textfield',
+            name    : 'date_created',
+            hidden  : true,
+            value   : Ext.Date.format(new Date(), 'Y-m-d H:i:s')
+        });
+
+        if (form.isValid()) {
+            form.submit({
+                submitEmptyText:false,
+                scope   : this,
+                success : function() {
+                    this.msg('Sweet!', 'Patient Created... TODO: Redirect to Patient Summary');
+                },
+                failure: function(form, action) {
+                    Ext.Msg.alert('Opps!', action.result.errors.reason);
+                }
+            });
+        }
+    },
+
     /**
      * This will show the window to take a picture
      */
