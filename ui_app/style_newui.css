@@ -51,11 +51,17 @@
 .edit{
 	background-image: url(../ui_icons/edit.png) !important;
 }
-.icoPullChart{
-    background-image: url(../ui_icons/icoPullChart.png) !important;
+.icoArrowUp{
+    background-image: url(../ui_icons/icoArrowUp.png) !important;
 }
-.icoPushFor{
-    background-image: url(../ui_icons/icoPushFor.png) !important;
+.icoArrowRight{
+    background-image: url(../ui_icons/icoArrowRight.png) !important;
+}
+.icoArrowRightSmall{
+	background-image: url(../ui_icons/arrow_right.png) !important;
+}
+.icoArrowDown{
+    background-image: url(../ui_icons/icoArrowDown.png) !important;
 }
 .icoDoctor{
     background-image: url(../ui_icons/icoDoctor.png) !important;
@@ -74,9 +80,7 @@
 .icoInjection{
 	background-image: url(../ui_icons/injection.png) !important;
 }
-.icoArrow{
-	background-image: url(../ui_icons/arrow.png) !important;
-}
+
 .icoCalendar{
 	background-image: url(../ui_icons/icoCalendar.png) !important;
 }
