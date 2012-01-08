@@ -62,48 +62,48 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         // Panels/Forms...
         //******************************************************************
         me.MiscBillingOptionsPanel = Ext.create('Ext.panel.Panel',{
-            border      : false,
-            title:'Misc. Billing Options HCFA',
-            html: '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
+            border  : false,
+            title   : 'Misc. Billing Options HCFA',
+            html    : '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
         });
         me.procedurePanel = Ext.create('Ext.panel.Panel',{
-            border      : false,
-            title:'Procedure Order',
-            html: '<h1>Procedure Order form placeholder!</h1>'
+            border  : false,
+            title   : 'Procedure Order',
+            html    : '<h1>Procedure Order form placeholder!</h1>'
         });
         me.reviewSysPanel = Ext.create('Ext.panel.Panel',{
-            border      : false,
-            title:'Review of Systems',
-            html: '<h1>Review of Systems form placeholder!</h1>'
+            border  : false,
+            title   : 'Review of Systems',
+            html    : '<h1>Review of Systems form placeholder!</h1>'
         });
         me.reviewSysCkPanel = Ext.create('Ext.panel.Panel',{
-            border      : false,
-            title:'Review of Systems Checks',
-            html: '<h1>Review of Systems Checks form placeholder!</h1>'
+            border  : false,
+            title   : 'Review of Systems Checks',
+            html    : '<h1>Review of Systems Checks form placeholder!</h1>'
         });
         me.soapPanel = Ext.create('Ext.panel.Panel',{
-            border      : false,
-            title:'SOAP',
-            html: '<h1>SOAP form placeholder!</h1>'
+            border  : false,
+            title   : 'SOAP',
+            html    : '<h1>SOAP form placeholder!</h1>'
         });
         me.speechDicPanel = Ext.create('Ext.panel.Panel',{
-            border      : false,
-            title:'Speech Dictation',
-            html: '<h1>Speech Dictation form placeholder!</h1>'
+            border  : false,
+            title   : 'Speech Dictation',
+            html    : '<h1>Speech Dictation form placeholder!</h1>'
         });
         me.vitalsPanel = Ext.create('Ext.panel.Panel',{
-            border      : false,
-            title:'Vitals',
-            html: '<h1>Vitals form placeholder!</h1>'
+            border  : false,
+            title   : 'Vitals',
+            html    : '<h1>Vitals form placeholder!</h1>'
         });
 
         /**
          * Encounter panel
          */
         me.centerPanel = Ext.create('Ext.panel.Panel',{
-            region:'center',
-            layout:'hbox',
-            width: '100%',
+            region  : 'center',
+            layout  : 'hbox',
+            width   : '100%',
             items: [{
                 xtype       : 'tabpanel',
                 itemId      : 'encounter',
@@ -146,7 +146,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 text      	: 'Save',
                 iconCls   	: 'save',
                 disabled	: true,
-                handler   : function(){
+                handler     : function(){
 
                 }
             },'-',{
@@ -185,9 +185,13 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 { flex: 1,    header: 'Insurance',sortable: true, dataIndex: 'body' }
             ],
             listeners	: {
-                itemclick: function(){
+                scope       : me,
+                itemclick   : function(){
 
-                }
+                },
+                expand      : me.historyExpanded,
+                collapse    : me.historyCollapsed
+
             }
         });
 
@@ -211,20 +215,20 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             tbar:[{
                 text    : 'View (CCD)',
                 tooltip : 'View (Continuity of Care Document)',
-                handler : function(event, toolEl, panel){
+                handler : function(){
                     // refresh logic
                 }
             },'-',{
                 text    : 'Print (CCD)',
                 tooltip : 'Print (Continuity of Care Document)',
-                handler : function(event, toolEl, panel){
+                handler : function(){
                     // refresh log
 
                 }
             },'->',{
                 text    : 'Export (CCD)',
                 tooltip : 'Export (Continuity of Care Document)',
-                handler : function(event, toolEl, panel){
+                handler : function(){
                     // refresh log
 
                 }
@@ -232,7 +236,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             }]
 
 
-        })
+        });
 
         me.pageBody = [ me.newEncounterPanel, me.centerPanel, me.historyGrid, me.progressNote ];
 
@@ -276,11 +280,8 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 text      	: 'Show Encounter History',
                 itemId      : 'encounterHistory',
                 iconCls   	: 'icoListOptions',
-                enableToggle: true,
-                listeners:{
-                    scope   : me,
-                    toggle  : me.historyToggle
-                }
+                scope       : me,
+                handler     : me.historyToggle
             }]
         }]);
     },
@@ -301,11 +302,11 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                     this.encounterTime = new Date();
                     this.timerTask = {
                         scope:this,
-                        run: function(){
+                        run:function () {
                             this.encounterTimer();
                         },
-                        interval: 1000 //1 second
-                    }
+                        interval:1000 //1 second
+                    };
                     Ext.TaskManager.start(this.timerTask);
                 }
             }
@@ -329,7 +330,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
 
     closeEncounter:function(){
 
-        var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter:', function(btn, text){
+        var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter:', function(btn, pass){
 
             if (btn == 'ok'){
                 Ext.TaskManager.stop(this.timerTask);
@@ -339,23 +340,37 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         document.getElementById(f).type = 'password';
     },
 
-    /**
-     *
-     * @param btn
-     * @param pressed
-     */
-    historyToggle:function(btn, pressed){
-        if(pressed){
-            btn.setText('Hide Encounter History');
-            this.historyGrid.setVisible(true);
-            this.historyGrid.toggleCollapse();
-            this.centerPanel.doLayout();
-
+    historyToggle:function(){
+        if(this.historyGrid.getState().collapsed){
+            this.showHistory();
         }else{
-            btn.setText('Show Encounter History');
+            this.hideHistory();
+        }
+    },
+
+    showHistory:function(){
+        if(this.historyGrid.getState().collapsed){
+            this.historyGrid.setVisible(true);
+            this.historyGrid.expand();
+            this.centerPanel.doLayout();
+        }
+    },
+
+    hideHistory:function(){
+        if(!this.historyGrid.getState().collapsed){
             this.historyGrid.toggleCollapse();
             this.historyGrid.setVisible(false);
+            this.centerPanel.doLayout();
         }
+
+    },
+
+    historyExpanded:function(){
+        this.down('panel').down('toolbar').getComponent('encounterHistory').setText('Hide Encounter History');
+    },
+
+    historyCollapsed:function(){
+        this.down('panel').down('toolbar').getComponent('encounterHistory').setText('Show Encounter History');
     },
 
     progressNoteCollapseExpand:function(){
@@ -373,7 +388,6 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             administrativePanel.setVisible(true);
 
         }
-
     },
 
     /**
@@ -383,6 +397,6 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
      * to call every this panel becomes active
      */
     onActive:function(){
-
+        this.showHistory();
     }
 }); //ens oNotesPage class

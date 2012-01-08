@@ -138,13 +138,15 @@ cursor: pointer !important;
     font-size: 13px;
     text-align: center;
     padding: 0 10px;
-    min-width: 150px;
 
 }
 .patient_btn_name {
     font-weight: bold;
 }
-
+.drButton .x-btn-inner{
+    font-size: 24px !important;
+    color: #666666;
+}
 body#login{
 	background-image:url(login_bg.png) !important;
 	background-position: bottom;

@@ -109,6 +109,12 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
                 handler: function() {
 
                 }
+            },'->',{
+                text      	: 'Edit Demographics',
+                iconCls   	: 'icoListOptions',
+                handler: function() {
+
+                }
             }]
         }]);
 

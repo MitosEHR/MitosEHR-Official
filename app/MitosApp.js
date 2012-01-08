@@ -63,30 +63,22 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
         var me = this;
 
-        // *************************************************************************************
-        // Task Scheduler
-        // This will run certain task at determined time.
-        // *************************************************************************************
-        me.checkSession = function(){
-            Ext.Ajax.request({
-                url     : 'lib/authProcedures/chkAuth.inc.php',
-                success : function(response){
-                    if(response.responseText == 'exit'){ window.location="lib/authProcedures/unauth.inc.php"; }
-                }
-            });
-        };
-
-        // *************************************************************************************
-        // TaskScheduler
-        // This will run all the procedures inside the checkSession
-        // *************************************************************************************
+        /**
+         * TaskScheduler
+         * This will run all the procedures inside the checkSession
+         */
         Ext.TaskManager.start({
-            run		    : me.checkSession,
-            interval    : 100000
+            run		    : function(){
+                me.checkSession();
+                me.checkPool();
+            },
+            interval    : 10000
         });
-        // *************************************************************************************
-        // Navigation Panel Tree Data
-        // *************************************************************************************
+
+
+        /**
+         * Navigation Panel Tree Data
+         */
         me.storeTree = Ext.create('Ext.data.TreeStore',{
             proxy: {
                 type	: 'ajax',
@@ -94,183 +86,111 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             }
         });
 
-        // *************************************************************************************
-        // Navigation Panel
-        // *************************************************************************************
-        me.Navigation = Ext.create('Ext.tree.TreePanel',{
-            region		: 'center',
-            stateId     : 'Navigation',
-            bodyPadding : '5 0 0 0',
-            cls         : 'nav_tree',
-            hideHeaders	: true,
-            rootVisible	: false,
-            border      : false,
-            store		: me.storeTree,
-            width		: 200,
-            root		: {
-                nodeType	: 'async',
-                draggable	: false
-            },
-            listeners:{
-                itemclick:function(dv, record){
-                    if(record.data.hrefTarget){
 
-                        var card    = record.data.hrefTarget;
-                        var layout  = me.MainPanel.getLayout();
-                        layout.setActiveItem(card);
-
-                        var currCard= Ext.getCmp(card);
-                        currCard.onActive();
-
-                        // ************** //
-                        // AMIMATION TEST //
-                        // ************** //
-
-                        //var first   = layout.getActiveItem();
-                        //var second  = Ext.getCmp(card);
-
-                        // ************* //
-                        // Slide Out/In  //
-                        // ************* //
-
-                        //first.getEl().slideOut('r', {
-                        //    duration: 150,
-                        //    callback: function() {
-                        //        layout.setActiveItem(second);
-                        //       second.hide();
-                        //        second.getEl().slideIn('r',{
-                        //            duration: 200
-                        //        });
-                        //    }
-                        //});
-
-                        // *********** //
-                        // Fade Out/In //
-                        // *********** //
-
-                        //first.getEl().fadeOut({
-                        //    duration: 500,
-                        //    callback: function() {
-                        //        layout.setActiveItem(second);
-                        //        second.hide();
-                        //       second.getEl().fadeIn({
-                        //            duration: 500
-                        //        });
-                        //    }
-                        //});
-                    }
-                }
-            }
-        });
-
-        // *************************************************************************************
-        // MitosEHR Support Page
-        // *************************************************************************************
+        /**
+         * MitosEHR Support Page
+         */
         me.winSupport = Ext.create('Ext.window.Window', {
+            title			: 'Support',
             closeAction		: 'hide',
             bodyStyle		: 'background-color: #ffffff; padding: 5px;',
+            animateTarget	: me.Footer,
             resizable		: false,
-            title			: 'Support',
             draggable		: false,
             maximizable		: false,
-            animateTarget	: me.Footer,
             autoScroll		: true,
             maximized       : true,
             dockedItems:{
-                xtype: 'toolbar',
-                dock: 'top',
+                xtype   : 'toolbar',
+                dock    : 'top',
                 items:['-',{
-                    text:'Issues/Bugs',
-                    iconCls:'list',
+                    text    : 'Issues/Bugs',
+                    iconCls : 'list',
+                    scope   : me,
                     handler:function(){
-                        showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
+                        me.showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
                     }
                 },'-',{
-                    text:'New Issue/Bug',
-                    iconCls:'icoAddRecord',
+                    text    : 'New Issue/Bug',
+                    iconCls : 'icoAddRecord',
+                    scope   : me,
                     handler:function(){
-                        showMiframe('http://mitosehr.org/projects/mitosehr001/issues/new');
+                        me.showMiframe('http://mitosehr.org/projects/mitosehr001/issues/new');
                     }
                 }]
             }
-        }); // End winSupport
+        });
 
-        function showMiframe(src){
-            me.winSupport.remove(me.miframe);
-            me.winSupport.add(me.miframe = Ext.create('Ext.mitos.ManagedIframe',{src:src}));
-            me.winSupport.show();
-        }
-        // *************************************************************************************
-        // The panel definition for the the TreeMenu & the support button
-        // *************************************************************************************
+
+        /**
+         * The panel definition for the the TreeMenu & the support button
+         */
         me.navColumn = Ext.create('Ext.panel.Panel', {
             title		: 'Navigation',
             stateId     : 'navColumn',
             layout      : 'border',
-            width		: 200,
             region		: 'west',
+            width		: 200,
             split		: true,
             collapsible	: true,
-            items		: [me.Navigation],
-            dockedItems: [{
-                xtype: 'toolbar',
-                dock: 'bottom',
-                padding: 5,
-                layout : {
+            items		: [{
+                xtype       : 'treepanel',
+                region		: 'center',
+                stateId     : 'Navigation',
+                bodyPadding : '5 0 0 0',
+                cls         : 'nav_tree',
+                hideHeaders	: true,
+                rootVisible	: false,
+                border      : false,
+                store		: me.storeTree,
+                width		: 200,
+                root		: {
+                    nodeType	: 'async',
+                    draggable	: false
+                },
+                listeners:{
+                    scope       : me,
+                    itemclick   : me.navNodeClicked
+                }
+            },{
+                xtype       : 'panel',
+                title       : 'Patient Pool Area',
+                layout      : 'vbox',
+                region      : 'south',
+                itemId      : 'poolArea',
+                bodyPadding : 5,
+
+                height      : 300,
+                collapsible : true,
+                border      : false
+            }],
+            dockedItems : [{
+                xtype   : 'toolbar',
+                dock    : 'bottom',
+                border  : true,
+                margin      : '3 0 0 0',
+                padding : 5,
+                layout  : {
                     type : 'hbox',
                     pack : 'center'
                 },
                 items: ['-',{
-                    xtype: 'button',
-                    frame: true,
-                    text: 'MithosEHR Support',
-                    iconCls: 'icoHelp',
+                    xtype   : 'button',
+                    frame   : true,
+                    text    : 'MithosEHR Support',
+                    iconCls : 'icoHelp',
+                    scope   : me,
                     handler : function(){
-                        showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
+                        me.showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
                     }
                 },'-']
             }]
         });
 
-        // *************************************************************************************
-        // Panel for the live search
-        // *************************************************************************************
-        me.searchPanel = Ext.create('Ext.panel.Panel', {
-            width		: 400,
-            bodyPadding	: '8 11 5 11',
-            margin		: '0 5',
-            style 		: 'float:left',
-            layout		: 'anchor',
-            items: [
-                me.liveSearch = Ext.create('Ext.mitos.LivePatientSearch',{
-                    emptyText: 'Live Patient Search...',
-                    listeners: {
-                        select: function(combo, selection) {
-                            var post = selection[0];
-                            if (post) {
-                                Ext.Ajax.request({
-                                    url: Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('patient_name') ),
-                                    success: function(){
-                                        //var newPatientBtn = Ext.String.format('<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left"><strong>{0}</strong><br>Record ({1})', post.get('patient_name'), post.get('pid'));
-                                        //me.patientButton.setText( newPatientBtn );
-                                        me.patientButton.update( {name:post.get('patient_name'), info:'('+post.get('pid')+')'} );
-                                        me.patientButton.enable();
-                                    }
-                                });
-                                Ext.data.Request();
-                            }
-                        },
-                        blur: function(){
-                            me.liveSearch.reset();
-                        }
-                    }
-                })
-            ]
-        }); // END Search for patient.
 
-        // *************************************************************************************
-        // header Panel
-        // *************************************************************************************
+        /**
+         * header Panel
+         */
         me.Header = Ext.create('Ext.container.Container', {
             region		: 'north',
             height		: 44,
@@ -285,85 +205,130 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 html	: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
                 style	: 'float:left',
                 border	: false
-            },
-                me.patientButton = Ext.create('Ext.Button', {
-                    //text	`: '<img src="ui_icons/32PatientFile.png" height="32" width="32" style="float:left">No Patient<br>Selected',
-                    scale	 : 'large',
-                    style 	 : 'float:left',
-                    margin	 : '0 0 0 5px',
-                    disabled : true,
-                    minWidth : 190,
-                    listeners: {
-                        afterrender:function(){
-                            this.update({name:'No Patient Selected', info:'(record number)'});
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 5px',
+                itemId  : 'patientButton',
+                minWidth: 190,
+                listeners: {
+                    scope       : me,
+                    afterrender : me.patientReset
+                },
+                tpl: Ext.create('Ext.XTemplate',
+                    '<div class="patient_btn">',
+                        '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
+                        '<div class="patient_btn_info">',
+                            '<div class="patient_btn_name">{name}</div>',
+                            '<div class="patient_btn_record">{info}</div>',
+                        '</div>',
+                    '</div>',{
+                    defaultValue: function(v){
+                        return (v) ? v : 'No Patient Selected';
+                    }
+                }),
+                menu: Ext.create('Ext.menu.Menu', {
+                    items:[{
+                        text    : 'New Encounter',
+                        scope   : me,
+                        handler : me.newEncounter
+                    },{
+                        text    : 'Past Encounter History',
+                        scope   : me,
+                        handler : function(){
+
                         }
-                    },
-                    tpl: Ext.create('Ext.XTemplate',
-                        '<div class="patient_btn">',
-                            '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
-                            '<div class="patient_btn_info">',
-                                '<div class="patient_btn_name">{name}</div>',
-                                '<div class="patient_btn_record">{info}</div>',
-                            '</div>',
-                        '</div>',{
-                        defaultValue: function(v){
-                            return v ? v : 'No Patient Selected';
+                    },{
+                        text    : 'Patient Notes',
+                        scope   : me,
+                        handler : function(){
+
                         }
-                    }),
-                    menu: Ext.create('Ext.menu.Menu', {
-                        items:[{
-                            text:'New Encounter',
-                            handler:function(){
-
-                            }
-                        },{
-                            text:'Past Encounter List',
-                            handler:function(){
-
-                            }
-                        },{
-                            text:'Patient Notes',
-                            handler:function(){
-
-                            }
-                        }]
-                    })
-                }),me.searchPanel,{
+                    }]
+                })
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                padding : 4,
+                itemId  : 'patientNewReset',
+                iconCls : 'icoAddPatient',
+                scope   : me,
+                handler : me.newPatient,
+                tooltip : 'Create a new patient'
+            },{
+                xtype       : 'panel',
+                width		: 300,
+                bodyPadding	: '8 11 5 11',
+                margin		: '0 0 0 3',
+                style 		: 'float:left',
+                layout		: 'anchor',
+                items: [{
+                    xtype       : 'livepatientsearch',
+                    emptyText   : 'Live Patient Search...',
+                    listeners   : {
+                        scope   : me,
+                        select  : me.liveSearchSelect,
+                        blur: function(combo){
+                            combo.reset();
+                        }
+                    }
+                }]
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                padding : 4,
+                itemId  : 'patientOpenCurrEncounter',
+                iconCls : 'icoPullChart',
+                scope   : me,
+                handler : me.newPatient,
+                tooltip : 'Open Patient Current Encounter'
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                padding : 4,
+                itemId  : 'patientPushFor',
+                iconCls : 'icoPushFor',
+                scope   : me,
+                handler : me.newPatient,
+                tooltip : 'Sent Current Patient To...'
+            },{
                 xtype		: 'button',
-                text		: '[ USER NAME TOKEN ]',
-                iconCls		: 'icoInjection',
+                text		: 'Dr. Smith',
+                scale	    : 'large',
+                iconCls		: 'icoDoctor',
                 iconAlign	: 'left',
+                cls         : 'drButton',
                 style 		: 'float:right',
-                margin		: '7 0 0 5',
+                margin		: '0 0 0 3',
                 menu: [{
-                    text:'My account',
-                    iconCls		: 'icoArrow',
-                    handler: function(){
+                    text    : 'My account',
+                    iconCls	: 'icoArrow',
+                    handler : function(){
                         me.MainPanel.getLayout().setActiveItem('panelMyAccount');
                     }
                 },{
-                    text:'My settings',
-                    iconCls		: 'icoArrow',
-                    handler: function(){
+                    text    : 'My settings',
+                    iconCls	: 'icoArrow',
+                    handler : function(){
                         me.MainPanel.getLayout().setActiveItem('panelMySettings');
                     }
                 },{
-                    text:'Logout',
-                    iconCls		: 'icoArrow',
-                    handler: function(){
-                        Ext.Msg.show({
-                            title: 'Please confirm...',
-                            icon: Ext.MessageBox.QUESTION,
-                            msg:'Are you sure to quit MitosEHR?',
-                            buttons: Ext.Msg.YESNO,
-                            fn:function(btn){
-                                if(btn=='yes'){ window.location = "lib/authProcedures/unauth.inc.php"; }
-                            }
-                        });
-                    }
+                    text    : 'Logout',
+                    iconCls	: 'icoArrow',
+                    scope   : me,
+                    handler : me.appLogout
                 }]
             }]
-        }); // End Header
+        });
+
+
         /**
          * MainPanel is where all the pages are display
          */
@@ -404,10 +369,12 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
 
             ]
-        }); // End MainApp
-        // *************************************************************************************
-        // Footer Panel
-        // *************************************************************************************
+        });
+
+
+        /**
+         * Footer Panel
+         */
         me.Footer = Ext.create('Ext.container.Container', {
             height      : 30,
             split       : false,
@@ -417,31 +384,36 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 xtype: 'toolbar',
                 dock: 'bottom',
                 items: [{
-                    text: 'Copyright (C) 2011 MitosEHR (Electronic Health Records) |:|  Open Source Software operating under GPLv3 ',
-                    iconCls: 'icoGreen',
-                    disabled:true,
+                    text    : 'Copyright (C) 2011 MitosEHR (Electronic Health Records) |:|  Open Source Software operating under GPLv3 ',
+                    iconCls : 'icoGreen',
+                    disabled: true,
+                    scope   : me,
                     handler : function(){
-                        showMiframe('http://mitosehr.org/projects/mitosehr001');
+                        me.showMiframe('http://mitosehr.org/projects/mitosehr001');
                     }
                 },'->',{
-                    text: 'news',
-                    handler: function(){
-                        showMiframe('http://mitosehr.org/projects/mitosehr001/news');
+                    text    : 'news',
+                    scope   : me,
+                    handler : function(){
+                        me.showMiframe('http://mitosehr.org/projects/mitosehr001/news');
                     }
                 },'-',{
-                    text: 'wiki',
-                    handler: function(){
-                        showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
+                    text    : 'wiki',
+                    scope   : me,
+                    handler : function(){
+                        me.showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
                     }
                 },'-',{
-                    text: 'issues',
-                    handler: function(){
-                        showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
+                    text    : 'issues',
+                    scope   : me,
+                    handler : function(){
+                        me.showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
                     }
                 },'-',{
-                    text: 'forums',
-                    handler: function(){
-                        showMiframe('http://mitosehr.org/projects/mitosehr001/boards');
+                    text    : 'forums',
+                    scope   : me,
+                    handler : function(){
+                        me.showMiframe('http://mitosehr.org/projects/mitosehr001/boards');
                     }
                 }]
             }]
@@ -450,14 +422,89 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         me.layout    = { type:'border', padding:3 };
         me.defaults	 = { split:true };
         me.items     = [ me.Header, me.navColumn, me.MainPanel, me.Footer ];
+
         me.listeners = {
-            afterrender:function(){
-                Ext.get('mainapp-loading').remove();
-                Ext.get('mainapp-loading-mask').fadeOut({remove:true});
-            }
+            afterrender: me.afterAppRender
         };
+
         me.callParent(arguments);
-    }, // end of initComponent
+    },
+
+    newPatient:function(){
+        var layout  = this.MainPanel.getLayout();
+        layout.setActiveItem('panelNewPatient');
+        this.patientReset();
+    },
+
+    newEncounter:function(){
+        var card        = 'panelVisits',
+            currPanel   = Ext.getCmp(card),
+            layout      = this.MainPanel.getLayout();
+
+        layout.setActiveItem(card);
+        currPanel.newEncounter();
+    },
+
+    navNodeClicked:function(dv, record){
+        if(record.data.hrefTarget){
+
+            var card    = record.data.hrefTarget;
+            var layout  = this.MainPanel.getLayout();
+            layout.setActiveItem(card);
+
+            var currCard= Ext.getCmp(card);
+            currCard.onActive();
+
+            if(card == 'panelNewPatient'){
+                this.patientReset();
+            }
+        }
+    },
+
+    liveSearchSelect:function(combo, selection) {
+        var post = selection[0],
+            btn  = this.Header.getComponent('patientButton');
+
+        if (post) {
+            Ext.Ajax.request({
+                scope   : this,
+                url     : Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('fullname') ),
+                success : function(){
+                    btn.update( {name:post.get('fullname'), info:'('+post.get('pid')+')'} );
+                    btn.enable();
+                }
+            });
+            Ext.data.Request();
+        }
+    },
+
+
+    patientReset:function(){
+        var btn =  this.Header.getComponent('patientButton');
+
+        Ext.Ajax.request({
+            url         : 'classes/patient_search.class.php?task=reset',
+            scope       : this,
+            success: function(){
+                btn.update({name:'No Patient Selected', info:'(record number)'});
+                btn.disable();
+            }
+        });
+    },
+
+
+    afterAppRender:function(){
+        Ext.get('mainapp-loading').remove();
+        Ext.get('mainapp-loading-mask').fadeOut({remove:true});
+    },
+
+
+    showMiframe:function(src){
+        this.winSupport.remove(this.miframe);
+        this.winSupport.add(this.miframe = Ext.create('Ext.mitos.ManagedIframe',{src:src}));
+        this.winSupport.show();
+    },
+
 
     msg: function(title, format){
         if(!this.msgCt){
@@ -469,6 +516,70 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
         m.slideIn('t').pause(3000).ghost('t', {remove:true});
     },
+
+
+    checkSession: function(){
+        Ext.Ajax.request({
+            url     : 'lib/authProcedures/chkAuth.inc.php',
+            success : function(response){
+                if(response.responseText == 'exit'){ window.location="lib/authProcedures/unauth.inc.php"; }
+            }
+        });
+    },
+
+
+    checkPool:function(){
+        var poolArea = this.navColumn.getComponent('poolArea'),
+            poolData = [{
+            pid:4587,
+            name:'Juan Pablo'
+        },{
+            pid:2342,
+            name:'Joe Smith'
+        }];
+
+        poolArea.removeAll();
+
+        Ext.each( poolData, function(patient, index, countriesItSelf){
+            var btn = poolArea.add({
+                xtype       : 'button',
+                text        : patient.name +' - ('+ patient.pid +')',
+                scale       : 'large',
+                margin      : '0 0 3 0',
+                width       : poolArea.getWidth()-10,
+                textAlign   : 'left',
+                tpl: Ext.create('Ext.XTemplate',
+                    '<div class="patient_btn">',
+                        '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
+                        '<div class="patient_btn_info">',
+                            '<div class="patient_btn_name">{name}</div>',
+                            '<div class="patient_btn_record">{info}</div>',
+                        '</div>',
+                    '</div>',{
+                    defaultValue: function(v){
+                        return (v) ? v : 'No Patient Selected';
+                    }
+                })
+            });
+            btn.update({name: patient.name, info:'('+patient.pid+')' });
+        });
+
+        poolArea.doLayout();
+    },
+
+
+    appLogout:function(){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            msg     : 'Are you sure to quit MitosEHR?',
+            icon    : Ext.MessageBox.QUESTION,
+            buttons : Ext.Msg.YESNO,
+            fn:function(btn){
+                if(btn=='yes'){ window.location = "lib/authProcedures/unauth.inc.php"; }
+            }
+        });
+    },
+
 
     getMitosApp:function(){
         return this;
