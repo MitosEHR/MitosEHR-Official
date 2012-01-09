@@ -117,7 +117,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                         layout      : 'anchor',
                         columnWidth : '.50',
                         items:[{
-                            xtype       : 'livepatientsearch',
+                            xtype       : 'patienlivetsearch',
                             fieldLabel  : 'Patient',
                             emptyText   : 'No patient selected',
                             itemId      : 'patientCombo',
