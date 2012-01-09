@@ -112,8 +112,9 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="app/miscellaneous/websearch/Websearch.js"></script>
 
         <script type="text/javascript">
+            var App;
             Ext.onReady(function(){
-                Ext.create('Ext.mitos.panel.MitosApp');
+                App = Ext.create('Ext.mitos.panel.MitosApp');
             });
         </script>
     </body>

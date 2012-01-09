@@ -62,7 +62,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     initComponent: function(){
 
         var me = this;
-
+        me.lastCard = null;
+        me.currPatient = null;
         /**
          * TaskScheduler
          * This will run all the procedures inside the checkSession
@@ -168,7 +169,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                         scope   : me,
                         handler : me.newEncounter
                     },{
-                        text    : 'Past Encounter History',
+                        text    : 'Encounter History',
+                        scope   : me,
+                        handler : me.encounterHistory
+                    },{
+                        text    : 'Patient Documents',
                         scope   : me,
                         handler : function(){
 
@@ -245,8 +250,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 style 		: 'float:left',
                 layout		: 'anchor',
                 items: [{
-                    xtype       : 'livepatientsearch',
-                    emptyText   : 'Live Patient Search...',
+                    xtype       : 'patienlivetsearch',
+                    emptyText   : 'Patient Live Search...',
                     listeners   : {
                         scope   : me,
                         select  : me.liveSearchSelect,
@@ -370,6 +375,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             region			: 'center',
             layout          : 'card',
             border			: true,
+            itemId          : 'MainPanel',
             defaults        : { layout: 'fit', xtype:'container' },
             items: [
                 Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done  TODO: panels
@@ -501,11 +507,22 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         currCard.closeEncounter();
     },
 
+    encounterHistory:function(){
+        var card     = 'panelVisits',
+            currCard = Ext.getCmp(card),
+            layout   = this.MainPanel.getLayout();
+
+        layout.setActiveItem(card);
+        currCard.onActive();
+    },
+
     navNodeClicked:function(dv, record){
         if(record.data.hrefTarget){
 
-            var card     = record.data.hrefTarget;
-            var layout   = this.MainPanel.getLayout();
+            var card      = record.data.hrefTarget,
+                layout    = this.MainPanel.getLayout();
+
+            this.lastCard = this.MainPanel.getLayout().getActiveItem();
             layout.setActiveItem(card);
 
             var currCard = Ext.getCmp(card);
@@ -517,6 +534,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         }
     },
 
+    goBack:function(){
+        var layout    = this.MainPanel.getLayout();
+        layout.setActiveItem(this.lastCard);
+    },
+
     liveSearchSelect:function(combo, selection) {
         var post = selection[0],
             btn  = this.Header.getComponent('patientButton');
@@ -526,6 +548,12 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 scope   : this,
                 url     : Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('fullname') ),
                 success : function(){
+
+                    this.currPatient = {
+                        pid : post.get('pid'),
+                        name: post.get('fullname')
+                    };
+
                     btn.update( {name:post.get('fullname'), info:'('+post.get('pid')+')'} );
                     btn.enable();
                 }
@@ -542,6 +570,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             url    : 'classes/patient_search.class.php?task=reset',
             scope  : this,
             success: function(){
+                this.currPatient = null;
                 btn.update({name:'No Patient Selected', info:'(record number)'});
                 btn.disable();
             }
@@ -623,7 +652,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         poolArea.doLayout();
     },
 
-
     appLogout:function(){
         Ext.Msg.show({
             title   : 'Please confirm...',
@@ -636,6 +664,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         });
     },
 
+    getCurrPatient:function(){
+        return this.currPatient;
+    },
 
     getMitosApp:function(){
         return this;

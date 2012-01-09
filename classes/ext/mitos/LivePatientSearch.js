@@ -7,7 +7,7 @@
  */
 Ext.define('Ext.mitos.LivePatientSearch',{
     extend      : 'Ext.form.ComboBox',
-    alias       : 'widget.livepatientsearch',
+    alias       : 'widget.patienlivetsearch',
     hideLabel	: true,
     initComponent: function(){
         var me = this;
