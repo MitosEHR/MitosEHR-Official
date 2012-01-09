@@ -118,7 +118,9 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
             }]
         }]);
 
-    }, // end initComponent
+    },
+
+
     /**
      * This function is called from MitosAPP.js when
      * this panel is selected in the navigation panel.
@@ -126,6 +128,13 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
      * to call every this panel becomes active
      */
     onActive:function(){
-
+        if(this.checkIfCurrPatient()){
+            var patient = this.getCurrPatient();
+            this.updateTitle( patient.name + ' (Patient Summary)');
+        }else{
+            this.currPatientError();
+            this.goBack();
+        }
     }
-}); // end Ext.mitos.Page class
+
+});

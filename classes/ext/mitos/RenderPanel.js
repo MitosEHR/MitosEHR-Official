@@ -3,7 +3,6 @@
 //******************************************************************************
 Ext.define('Ext.mitos.RenderPanel', {
     extend      : 'Ext.container.Container',
-    mixins      : { app: 'Ext.mitos.panel.MitosApp'},
     alias       : 'widget.renderpanel',
     cls         : 'RenderPanel',
     layout      : 'border',
@@ -47,11 +46,42 @@ Ext.define('Ext.mitos.RenderPanel', {
         this.getComponent('RenderPanel-header').update('<div class="dashboard_title">' + pageTitle + '</div>');
     },
 
+    goBack:function(){
+        App.goBack();
+    },
+
+    checkIfCurrPatient:function(){
+        if(App.getCurrPatient()){
+            return true;
+        }else{
+            return false;
+        }
+    },
+
+    patientInfoAlert:function(){
+        var patient = App.getCurrPatient();
+
+        Ext.Msg.alert('Status', 'Patient: ' + patient.name + ' (' + patient.pid + ')');
+    },
+
+    currPatientError:function(){
+        Ext.Msg.show({
+             title  : 'Oops! No Patient Selected',
+             msg    : 'Please select a patient using the <strong>"Patient Live Search"</strong> or <strong>"Patient Pool Area"</strong>',
+             buttons: Ext.Msg.OK,
+             icon   : Ext.Msg.ERROR
+        });
+    },
+
+    getCurrPatient:function(){
+        return App.getCurrPatient();
+    },
+
     getMitosApp:function(){
-        return this.mixins.app.getMitosApp();
+        return App.getMitosApp();
     },
 
     msg: function(title, format){
-        this.mixins.app.msg(title, format)
+        App.msg(title, format)
     }
 });

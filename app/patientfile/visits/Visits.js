@@ -325,7 +325,9 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             return (d >= 10) ? d : '0'+d;
         }
         var timer = twoDigit(h)+':'+twoDigit(m)+':'+twoDigit(s);
-        this.updateTitle('Encounter [patient name] - '+Ext.Date.format(this.encounterTime, 'F j, Y, g:i a')+'<span class="timer">'+timer+'</span>' );
+        var patient = this.getCurrPatient();
+
+        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.encounterTime, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
     },
 
     closeEncounter:function(){
@@ -397,6 +399,15 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
      * to call every this panel becomes active
      */
     onActive:function(){
-        this.showHistory();
+        if(this.checkIfCurrPatient()){
+            var patient = this.getCurrPatient();
+            this.updateTitle( patient.name + ' (Visits)');
+
+            this.showHistory();
+
+        }else{
+            this.currPatientError();
+            this.goBack();
+        }
     }
 }); //ens oNotesPage class

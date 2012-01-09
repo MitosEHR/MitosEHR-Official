@@ -62,7 +62,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     initComponent: function(){
 
         var me = this;
-
+        me.lastCard = null;
+        me.currPatient = null;
         /**
          * TaskScheduler
          * This will run all the procedures inside the checkSession
@@ -119,6 +120,185 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                     }
                 }]
             }
+        });
+
+
+        /**
+         * header Panel
+         */
+        me.Header = Ext.create('Ext.container.Container', {
+            region		: 'north',
+            height		: 44,
+            split		: false,
+            collapsible : false,
+            frame		: false,
+            border		: false,
+            bodyStyle	: 'background: transparent',
+            margins		: '0 0 0 0',
+            items		: [{
+                xtype	: 'container',
+                html	: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
+                style	: 'float:left',
+                border	: false
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 5',
+                itemId  : 'patientButton',
+                minWidth: 190,
+                listeners: {
+                    scope       : me,
+                    afterrender : me.patientReset
+                },
+                tpl: Ext.create('Ext.XTemplate',
+                    '<div class="patient_btn">',
+                        '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
+                        '<div class="patient_btn_info">',
+                            '<div class="patient_btn_name">{name}</div>',
+                            '<div class="patient_btn_record">{info}</div>',
+                        '</div>',
+                    '</div>',{
+                    defaultValue: function(v){
+                        return (v) ? v : 'No Patient Selected';
+                    }
+                }),
+                menu: Ext.create('Ext.menu.Menu', {
+                    items:[{
+                        text    : 'New Encounter',
+                        scope   : me,
+                        handler : me.newEncounter
+                    },{
+                        text    : 'Encounter History',
+                        scope   : me,
+                        handler : me.encounterHistory
+                    },{
+                        text    : 'Patient Documents',
+                        scope   : me,
+                        handler : function(){
+
+                        }
+                    },{
+                        text    : 'Patient Notes',
+                        scope   : me,
+                        handler : function(){
+
+                        }
+                    }]
+                })
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
+                itemId  : 'patientOpenCurrEncounter',
+                iconCls : 'icoArrowUp',
+                scope   : me,
+                handler : me.openCurrEncounter,
+                tooltip : 'Open Patient Current Encounter'
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
+                itemId  : 'patientPushFor',
+                iconCls : 'icoArrowRight',
+                scope   : me,
+                tooltip : 'Sent Current Patient To...',
+                arrowCls: 'none',
+                menu: [{
+                    text     : 'Front Office',
+                    iconCls	: 'icoArrowRight',
+                    handler : function(){
+
+                    }
+                },{
+                    text    : 'Triage',
+                    iconCls	: 'icoArrowRight',
+                    handler : function(){
+
+                    }
+                },{
+                    text    : 'Doctor',
+                    iconCls	: 'icoArrowRight',
+                    scope   : me,
+                    handler : function(){
+
+                    }
+                }]
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
+                itemId  : 'patientCloseCurrEncounter',
+                iconCls : 'icoArrowDown',
+                scope   : me,
+                handler : me.closeCurrEncounter,
+                tooltip : 'Close Patient Current Encounter'
+            },{
+                xtype       : 'panel',
+                width		: 300,
+                bodyPadding	: '8 11 5 11',
+                margin		: '0 0 0 3',
+                style 		: 'float:left',
+                layout		: 'anchor',
+                items: [{
+                    xtype       : 'patienlivetsearch',
+                    emptyText   : 'Patient Live Search...',
+                    listeners   : {
+                        scope   : me,
+                        select  : me.liveSearchSelect,
+                        blur: function(combo){
+                            combo.reset();
+                        }
+                    }
+                }]
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                padding : 4,
+                itemId  : 'patientNewReset',
+                iconCls : 'icoAddPatient',
+                scope   : me,
+                handler : me.newPatient,
+                tooltip : 'Create a new patient'
+            },{
+                xtype		: 'button',
+                text		: 'Dr. Smith',
+                scale	    : 'large',
+                iconCls		: 'icoDoctor',
+                iconAlign	: 'left',
+                cls         : 'drButton',
+                style 		: 'float:right',
+                margin		: '0 0 0 3',
+                menu: [{
+                    text    : 'My account',
+                    iconCls	: 'icoArrowRight',
+                    handler : function(){
+                        me.MainPanel.getLayout().setActiveItem('panelMyAccount');
+                    }
+                },{
+                    text    : 'My settings',
+                    iconCls	: 'icoArrowRight',
+                    handler : function(){
+                        me.MainPanel.getLayout().setActiveItem('panelMySettings');
+                    }
+                },{
+                    text    : 'Logout',
+                    iconCls	: 'icoArrowRight',
+                    scope   : me,
+                    handler : me.appLogout
+                }]
+            }]
         });
 
 
@@ -189,153 +369,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
 
         /**
-         * header Panel
-         */
-        me.Header = Ext.create('Ext.container.Container', {
-            region		: 'north',
-            height		: 44,
-            split		: false,
-            collapsible : false,
-            frame		: false,
-            border		: false,
-            bodyStyle	: 'background: transparent',
-            margins		: '0 0 0 0',
-            items		: [{
-                xtype	: 'container',
-                html	: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
-                style	: 'float:left',
-                border	: false
-            },{
-                xtype   : 'button',
-                scale	: 'large',
-                style 	: 'float:left',
-                margin	: '0 0 0 5px',
-                itemId  : 'patientButton',
-                minWidth: 190,
-                listeners: {
-                    scope       : me,
-                    afterrender : me.patientReset
-                },
-                tpl: Ext.create('Ext.XTemplate',
-                    '<div class="patient_btn">',
-                        '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
-                        '<div class="patient_btn_info">',
-                            '<div class="patient_btn_name">{name}</div>',
-                            '<div class="patient_btn_record">{info}</div>',
-                        '</div>',
-                    '</div>',{
-                    defaultValue: function(v){
-                        return (v) ? v : 'No Patient Selected';
-                    }
-                }),
-                menu: Ext.create('Ext.menu.Menu', {
-                    items:[{
-                        text    : 'New Encounter',
-                        scope   : me,
-                        handler : me.newEncounter
-                    },{
-                        text    : 'Past Encounter History',
-                        scope   : me,
-                        handler : function(){
-
-                        }
-                    },{
-                        text    : 'Patient Notes',
-                        scope   : me,
-                        handler : function(){
-
-                        }
-                    }]
-                })
-            },{
-                xtype   : 'button',
-                scale	: 'large',
-                style 	: 'float:left',
-                margin	: '0 0 0 3',
-                padding : 4,
-                itemId  : 'patientNewReset',
-                iconCls : 'icoAddPatient',
-                scope   : me,
-                handler : me.newPatient,
-                tooltip : 'Create a new patient'
-            },{
-                xtype       : 'panel',
-                width		: 300,
-                bodyPadding	: '8 11 5 11',
-                margin		: '0 0 0 3',
-                style 		: 'float:left',
-                layout		: 'anchor',
-                items: [{
-                    xtype       : 'livepatientsearch',
-                    emptyText   : 'Live Patient Search...',
-                    listeners   : {
-                        scope   : me,
-                        select  : me.liveSearchSelect,
-                        blur: function(combo){
-                            combo.reset();
-                        }
-                    }
-                }]
-            },{
-                xtype   : 'button',
-                scale	: 'large',
-                style 	: 'float:left',
-                margin	: '0 0 0 3',
-                padding : 4,
-                itemId  : 'patientOpenCurrEncounter',
-                iconCls : 'icoPullChart',
-                scope   : me,
-                handler : me.newPatient,
-                tooltip : 'Open Patient Current Encounter'
-            },{
-                xtype   : 'button',
-                scale	: 'large',
-                style 	: 'float:left',
-                margin	: '0 0 0 3',
-                padding : 4,
-                itemId  : 'patientPushFor',
-                iconCls : 'icoPushFor',
-                scope   : me,
-                handler : me.newPatient,
-                tooltip : 'Sent Current Patient To...'
-            },{
-                xtype		: 'button',
-                text		: 'Dr. Smith',
-                scale	    : 'large',
-                iconCls		: 'icoDoctor',
-                iconAlign	: 'left',
-                cls         : 'drButton',
-                style 		: 'float:right',
-                margin		: '0 0 0 3',
-                menu: [{
-                    text    : 'My account',
-                    iconCls	: 'icoArrow',
-                    handler : function(){
-                        me.MainPanel.getLayout().setActiveItem('panelMyAccount');
-                    }
-                },{
-                    text    : 'My settings',
-                    iconCls	: 'icoArrow',
-                    handler : function(){
-                        me.MainPanel.getLayout().setActiveItem('panelMySettings');
-                    }
-                },{
-                    text    : 'Logout',
-                    iconCls	: 'icoArrow',
-                    scope   : me,
-                    handler : me.appLogout
-                }]
-            }]
-        });
-
-
-        /**
          * MainPanel is where all the pages are display
          */
         me.MainPanel = Ext.create('Ext.container.Container', {
             region			: 'center',
             layout          : 'card',
             border			: true,
+            itemId          : 'MainPanel',
             defaults        : { layout: 'fit', xtype:'container' },
             items: [
                 Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done  TODO: panels
@@ -380,10 +420,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             split       : false,
             padding     : '3 0',
             region      : 'south',
-            items       : [{
-                xtype: 'toolbar',
-                dock: 'bottom',
-                items: [{
+            items:[{
+                xtype   : 'toolbar',
+                dock    : 'bottom',
+                items:[{
                     text    : 'Copyright (C) 2011 MitosEHR (Electronic Health Records) |:|  Open Source Software operating under GPLv3 ',
                     iconCls : 'icoGreen',
                     disabled: true,
@@ -431,34 +471,72 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
     newPatient:function(){
-        var layout  = this.MainPanel.getLayout();
-        layout.setActiveItem('panelNewPatient');
+        var card     = 'panelNewPatient',
+            currCard = Ext.getCmp(card),
+            layout   = this.MainPanel.getLayout();
+
+        layout.setActiveItem(card);
+        currCard.onActive();
         this.patientReset();
     },
 
     newEncounter:function(){
-        var card        = 'panelVisits',
-            currPanel   = Ext.getCmp(card),
-            layout      = this.MainPanel.getLayout();
+        var card     = 'panelVisits',
+            currCard = Ext.getCmp(card),
+            layout   = this.MainPanel.getLayout();
 
         layout.setActiveItem(card);
-        currPanel.newEncounter();
+        currCard.newEncounter();
+    },
+
+    openCurrEncounter:function(){
+        var card     = 'panelVisits',
+            currCard = Ext.getCmp(card),
+            layout   = this.MainPanel.getLayout();
+
+        layout.setActiveItem(card);
+        currCard.onActive();
+    },
+
+    closeCurrEncounter:function(){
+        var card     = 'panelVisits',
+            currCard = Ext.getCmp(card),
+            layout   = this.MainPanel.getLayout();
+
+        layout.setActiveItem(card);
+        currCard.closeEncounter();
+    },
+
+    encounterHistory:function(){
+        var card     = 'panelVisits',
+            currCard = Ext.getCmp(card),
+            layout   = this.MainPanel.getLayout();
+
+        layout.setActiveItem(card);
+        currCard.onActive();
     },
 
     navNodeClicked:function(dv, record){
         if(record.data.hrefTarget){
 
-            var card    = record.data.hrefTarget;
-            var layout  = this.MainPanel.getLayout();
+            var card      = record.data.hrefTarget,
+                layout    = this.MainPanel.getLayout();
+
+            this.lastCard = this.MainPanel.getLayout().getActiveItem();
             layout.setActiveItem(card);
 
-            var currCard= Ext.getCmp(card);
+            var currCard = Ext.getCmp(card);
             currCard.onActive();
 
             if(card == 'panelNewPatient'){
                 this.patientReset();
             }
         }
+    },
+
+    goBack:function(){
+        var layout    = this.MainPanel.getLayout();
+        layout.setActiveItem(this.lastCard);
     },
 
     liveSearchSelect:function(combo, selection) {
@@ -470,6 +548,12 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 scope   : this,
                 url     : Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('fullname') ),
                 success : function(){
+
+                    this.currPatient = {
+                        pid : post.get('pid'),
+                        name: post.get('fullname')
+                    };
+
                     btn.update( {name:post.get('fullname'), info:'('+post.get('pid')+')'} );
                     btn.enable();
                 }
@@ -483,9 +567,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         var btn =  this.Header.getComponent('patientButton');
 
         Ext.Ajax.request({
-            url         : 'classes/patient_search.class.php?task=reset',
-            scope       : this,
+            url    : 'classes/patient_search.class.php?task=reset',
+            scope  : this,
             success: function(){
+                this.currPatient = null;
                 btn.update({name:'No Patient Selected', info:'(record number)'});
                 btn.disable();
             }
@@ -567,7 +652,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         poolArea.doLayout();
     },
 
-
     appLogout:function(){
         Ext.Msg.show({
             title   : 'Please confirm...',
@@ -580,6 +664,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         });
     },
 
+    getCurrPatient:function(){
+        return this.currPatient;
+    },
 
     getMitosApp:function(){
         return this;
