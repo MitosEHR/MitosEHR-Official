@@ -16,6 +16,9 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
     uses        : ['Ext.mitos.restStoreModel','Ext.mitos.GridPanel'],
     initComponent: function(){
         var me = this;
+
+        me.historyMax = true;
+
         //******************************************************************
         // Stores...
         //******************************************************************
@@ -192,7 +195,24 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 expand      : me.historyExpanded,
                 collapse    : me.historyCollapsed
 
-            }
+            },
+            tools:[{
+                type    : 'refresh',
+                tooltip : 'Refresh form Data',
+                handler : function(event, toolEl, panel){
+                    // refresh logic
+                }
+            },{
+                type    : 'restore',
+                tooltip : 'Restore History Grid',
+                scope   : me,
+                handler : me.setHistoryMNorm
+            },{
+                type    : 'maximize',
+                tooltip : 'Maximaze History Grid',
+                scope   : me,
+                handler : me.setHistoryMax
+            }]
         });
 
         /**
@@ -351,11 +371,27 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
     },
 
     showHistory:function(){
-        if(this.historyGrid.getState().collapsed){
-            this.historyGrid.setVisible(true);
-            this.historyGrid.expand();
-            this.centerPanel.doLayout();
+        if(this.historyMax){
+            var ah = this.centerPanel.getHeight(),
+                bh = this.historyGrid.getHeight();
+            var height = ah + bh;
+        }else{
+            var height = 300;
         }
+        this.historyGrid.setVisible(true);
+        this.historyGrid.expand();
+        this.historyGrid.setHeight(height);
+        this.centerPanel.doLayout();
+    },
+
+    setHistoryMax:function(){
+        this.historyMax = true;
+        this.showHistory();
+    },
+
+    setHistoryMNorm:function(){
+        this.historyMax = false;
+        this.showHistory();
     },
 
     hideHistory:function(){
@@ -403,6 +439,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             var patient = this.getCurrPatient();
             this.updateTitle( patient.name + ' (Visits)');
 
+            // TODO: if Current ecounter dont show history
             this.showHistory();
 
         }else{
