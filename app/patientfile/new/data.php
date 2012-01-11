@@ -14,6 +14,7 @@ session_start();
 session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/repo/global_functions/global_functions.php");
 
 $_SESSION['site']['flops'] = 0;
 
@@ -30,10 +31,21 @@ foreach($data as $key => $val){
 $sql = $mitos_db->sqlBind($data, "form_data_demographics", "I");
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execLog();
+$pid = $mitos_db->lastInsertId;
+
+$mitos_db->setSQL("SELECT pid, fname, mname, lname
+                     FROM form_data_demographics
+                    WHERE pid = '$pid'");
+$rows = array();
+foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
+    $row['fullname'] = fullname($row['fname'],$row['mname'],$row['lname']);
+    array_push($rows, $row);
+}
+
 if ( $ret[2] ){
     echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
 } else {
-    echo "{ success: true }";
+    echo '{ "success": true, "patient": { "pid": "'.$row['pid'].'", fullname:"'.$row['fullname'].'" } }';
 }
 
 

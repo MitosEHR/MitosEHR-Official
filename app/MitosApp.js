@@ -489,6 +489,15 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         currCard.newEncounter();
     },
 
+    patientSummary:function(){
+        var card     = 'panelSummary',
+            currCard = Ext.getCmp(card),
+            layout   = this.MainPanel.getLayout();
+
+        layout.setActiveItem(card);
+        currCard.onActive();
+    },
+
     openCurrEncounter:function(){
         var card     = 'panelVisits',
             currCard = Ext.getCmp(card),
@@ -527,10 +536,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
             var currCard = Ext.getCmp(card);
             currCard.onActive();
-
-            if(card == 'panelNewPatient'){
-                this.patientReset();
-            }
         }
     },
 
@@ -663,6 +668,22 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             }
         });
     },
+
+    setCurrPatient:function(pid, fullname, callback){
+        var btn  = this.Header.getComponent('patientButton');
+
+        this.currPatient = {
+            pid : pid,
+            name: fullname
+        };
+
+        btn.update( {name:fullname, info:'(' + pid + ')'} );
+        btn.enable();
+
+        callback();
+    },
+
+
 
     getCurrPatient:function(){
         return this.currPatient;

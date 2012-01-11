@@ -168,9 +168,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         //******************************************************************
         me.historyGrid = Ext.create('Ext.mitos.GridPanel',{
             title           : 'Encounter History',
-            hidden          : true,
             collapsible     : true,
-            collapsed       : true,
             animCollapse    : true,
             hideCollapseTool: true,
             collapseMode    : 'header',
@@ -206,7 +204,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 type    : 'restore',
                 tooltip : 'Restore History Grid',
                 scope   : me,
-                handler : me.setHistoryMNorm
+                handler : me.setHistoryNorm
             },{
                 type    : 'maximize',
                 tooltip : 'Maximaze History Grid',
@@ -362,6 +360,14 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         document.getElementById(f).type = 'password';
     },
 
+    ckCurrEncounter:function(){
+        return false
+    },
+
+    getCurrEncounter:function(){
+
+    },
+
     historyToggle:function(){
         if(this.historyGrid.getState().collapsed){
             this.showHistory();
@@ -371,36 +377,28 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
     },
 
     showHistory:function(){
-        if(this.historyMax){
-            var ah = this.centerPanel.getHeight(),
-                bh = this.historyGrid.getHeight();
-            var height = ah + bh;
-        }else{
-            var height = 300;
-        }
         this.historyGrid.setVisible(true);
         this.historyGrid.expand();
-        this.historyGrid.setHeight(height);
         this.centerPanel.doLayout();
     },
 
     setHistoryMax:function(){
-        this.historyMax = true;
-        this.showHistory();
+        var ah = this.centerPanel.getHeight(),
+            bh = this.historyGrid.getHeight(),
+            height = ah + bh;
+        this.historyGrid.setHeight(height);
+        this.centerPanel.doLayout();
     },
 
-    setHistoryMNorm:function(){
-        this.historyMax = false;
-        this.showHistory();
+    setHistoryNorm:function(){
+        this.historyGrid.setHeight(300);
+        this.centerPanel.doLayout();
     },
 
     hideHistory:function(){
-        if(!this.historyGrid.getState().collapsed){
-            this.historyGrid.toggleCollapse();
-            this.historyGrid.setVisible(false);
-            this.centerPanel.doLayout();
-        }
-
+        this.historyGrid.toggleCollapse();
+        this.historyGrid.setVisible(false);
+        this.centerPanel.doLayout();
     },
 
     historyExpanded:function(){
@@ -438,10 +436,13 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         if(this.checkIfCurrPatient()){
             var patient = this.getCurrPatient();
             this.updateTitle( patient.name + ' (Visits)');
-
             // TODO: if Current ecounter dont show history
+            if(this.ckCurrEncounter){
+                this.setHistoryNorm();
+            }else{
+                this.setHistoryMax();
+            }
             this.showHistory();
-
         }else{
             this.currPatientError();
             this.goBack();

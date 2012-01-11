@@ -65,8 +65,20 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
             form.submit({
                 submitEmptyText:false,
                 scope   : this,
-                success : function() {
-                    this.msg('Sweet!', 'Patient Created... TODO: Redirect to Patient Summary');
+                success : function(forn, action){
+
+                    /** @namespace action.result.patient */
+                    /** @namespace action.result.patient.fullname */
+
+                    var pid      = action.result.patient.pid,
+                        fullname = action.result.patient.fullname;
+
+
+                    this.msg('Sweet!', 'Patient ' + fullname + ' Saved... ');
+                    this.getMitosApp().setCurrPatient( pid, fullname, function(){
+                        App.patientSummary();
+                    });
+
                 },
                 failure: function(form, action) {
                     Ext.Msg.alert('Opps!', action.result.errors.reason);
@@ -74,6 +86,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
             });
         }
     },
+
 
     /**
      * This will show the window to take a picture
@@ -96,19 +109,20 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
             }
         }).show();
     },
-    /**
-     * this function will add the form items to the form
-     */
-    getFormItems: function(){
-        var form = this.form;
-        form.removeAll();
-        Ext.Ajax.request({
-            url     : 'classes/formLayoutEngine.class.php',
-            params  : {form:this.formToRender},
+
+    confirmationWin:function(){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            msg     : 'Do you want to create a <strong>new patient</strong>?',
+            icon    : Ext.MessageBox.QUESTION,
+            buttons : Ext.Msg.YESNO,
             scope   : this,
-            success : function(response){
-                form.add(eval(response.responseText));
-                form.doLayout();
+            fn:function(btn){
+                if(btn=='yes'){
+                    this.getMitosApp().patientReset();
+                }else{
+                    this.goBack();
+                }
             }
         });
     },
@@ -119,6 +133,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
      * to call every this panel becomes active
      */
     onActive:function(){
-        this.getFormItems();
+        this.getFormItems( this.form, this.formToRender );
+        this.confirmationWin();
     }
 });
