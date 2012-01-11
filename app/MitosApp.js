@@ -381,6 +381,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done  TODO: panels
                 Ext.create('Ext.mitos.panel.calendar.Calendar'),                        // done
                 Ext.create('Ext.mitos.panel.messages.Messages'),                        // done
+                Ext.create('Ext.mitos.panel.search.PatientSearch'),                     //
 
                 Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                 Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),

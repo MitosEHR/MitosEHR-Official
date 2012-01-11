@@ -8,9 +8,10 @@ include_once($_SESSION['site']['root']."/classes/I18n.class.php");
 // Default Nav Data
 // *************************************************************************************
 $nav = array(
-    array( 'text' => i18n('Dashboard', 'r'), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoDash',      'hrefTarget' => 'panelDashboard' ),
-    array( 'text' => i18n('Calendar', 'r'),  'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoCalendar',  'hrefTarget' => 'panelCalendar' ),
-    array( 'text' => i18n('Messages', 'r'),  'leaf' => true, 'cls' => 'file', 'iconCls' => 'mail',         'hrefTarget' => 'panelMessages' ),
+    array( 'text' => i18n('Dashboard', 'r'),        'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoDash',      'hrefTarget' => 'panelDashboard' ),
+    array( 'text' => i18n('Calendar', 'r'),         'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoCalendar',  'hrefTarget' => 'panelCalendar' ),
+    array( 'text' => i18n('Messages', 'r'),         'leaf' => true, 'cls' => 'file', 'iconCls' => 'mail',         'hrefTarget' => 'panelMessages' ),
+    array( 'text' => i18n('Patient Search', 'r'),   'leaf' => true, 'cls' => 'file', 'iconCls' => 'searchUsers',  'hrefTarget' => 'panelPatientSearch' ),
 );
 // *************************************************************************************
 // Patient Folder
@@ -36,7 +37,7 @@ $fees_folder = array( 'text' => i18n('Fees', 'r'), 'cls' => 'folder', 'expanded'
 // *************************************************************************************
 // Administration Folder
 // *************************************************************************************
-$admin_folder = array( 'text' => i18n('Administration', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
+$admin_folder = array( 'text' => i18n('Administration', 'r'), 'cls' => 'folder', 'expanded' => false, 'children' =>
     array(
         array( 'text' => i18n('Global Settings', 'r'), 'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelGlobals' ),
         array( 'text' => i18n('Facilities', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelFacilities' ),
@@ -52,7 +53,7 @@ $admin_folder = array( 'text' => i18n('Administration', 'r'), 'cls' => 'folder',
 // *************************************************************************************
 // Miscellaneous Folder
 // *************************************************************************************
-$misc_folder = array( 'text' => i18n('Miscellaneous', 'r'), 'cls' => 'folder', 'expanded' => true, 'children' =>
+$misc_folder = array( 'text' => i18n('Miscellaneous', 'r'), 'cls' => 'folder', 'expanded' => false, 'children' =>
     array(
         array( 'text' => i18n('Web Search', 'r'),      'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelWebsearch' ),
         array( 'text' => i18n('Address Book', 'r'),    'leaf' => true, 'cls' => 'file', 'hrefTarget' => 'panelAddressbook' ),

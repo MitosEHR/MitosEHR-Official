@@ -113,6 +113,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="app/administration/users/Users.js"></script>
 
         <script type="text/javascript" src="app/messages/Messages.js"></script>
+        <script type="text/javascript" src="app/search/PatientSearch.js"></script>
 
         <script type="text/javascript" src="app/miscellaneous/addressbook/Addressbook.js"></script>
         <script type="text/javascript" src="app/miscellaneous/myaccount/MyAccount.js"></script>
