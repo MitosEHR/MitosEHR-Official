@@ -53,7 +53,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="lib/webcam_control/swfobject.js"></script>
         <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
-        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
+
 
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -67,6 +67,15 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
                 }
             });
         </script>
+
+
+
+        <script type="text/javascript" src="classes/ext/mitos/RenderPanel.js"></script>
+
+        <script type="text/javascript" src="app/dashboard/Dashboard.js"></script>
+        <script type="text/javascript" src="lib/extensible-1.5.0/src/calendar/data/EventStore.js"></script>
+        <script type="text/javascript" src="classes/ext/ux/SlidingPager.js"></script>
+
 
         <script type="text/javascript" src="classes/ext/mitos/GridPanel.js"></script>
         <script type="text/javascript" src="classes/ext/mitos/LivePatientSearch.js"></script>
@@ -110,6 +119,11 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="app/miscellaneous/mysettings/MySettings.js"></script>
         <script type="text/javascript" src="app/miscellaneous/officenotes/OfficeNotes.js"></script>
         <script type="text/javascript" src="app/miscellaneous/websearch/Websearch.js"></script>
+
+
+        <script type="text/javascript" src="app/MitosApp.js"></script>
+
+
 
         <script type="text/javascript">
             var App;
