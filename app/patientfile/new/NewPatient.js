@@ -76,8 +76,10 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
 
 
                     me.msg('Sweet!', 'Patient ' + fullname + ' Saved... ');
-                    me.getMitosApp().setCurrPatient( pid, fullname, function(){
-                        me.getMitosApp().patientSummary();
+                    me.getMitosApp().setCurrPatient( pid, fullname, function(success){
+                        if(success){
+                            me.getMitosApp().patientSummary();
+                        }
                     });
 
                 },

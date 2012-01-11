@@ -680,7 +680,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         btn.update( {name:fullname, info:'(' + pid + ')'} );
         btn.enable();
 
-        callback();
+        callback(true);
     },
 
 
