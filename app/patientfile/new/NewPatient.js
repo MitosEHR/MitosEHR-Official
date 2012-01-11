@@ -68,7 +68,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
                 scope   : me,
                 success : function(forn, action){
 
-                    /** @namespace action.result.patient */
+                    /** @namespace action.result.patient.pid */
                     /** @namespace action.result.patient.fullname */
 
                     var pid      = action.result.patient.pid,

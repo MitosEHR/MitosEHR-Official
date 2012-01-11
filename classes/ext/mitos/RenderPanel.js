@@ -82,7 +82,9 @@ Ext.define('Ext.mitos.RenderPanel', {
             success : function(response){
                 formPanel.add(eval(response.responseText));
                 formPanel.doLayout();
-                callback(true);
+                if(typeof callback == 'function'){
+                    callback(true);
+                }
             }
         });
     },
