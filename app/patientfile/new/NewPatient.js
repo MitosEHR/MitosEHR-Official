@@ -52,6 +52,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
     },
 
     onSave:function(){
+        var me = this;
         var form = this.form.getForm();
 
         this.form.add({
@@ -64,7 +65,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
         if (form.isValid()) {
             form.submit({
                 submitEmptyText:false,
-                scope   : this,
+                scope   : me,
                 success : function(forn, action){
 
                     /** @namespace action.result.patient */
@@ -74,9 +75,9 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
                         fullname = action.result.patient.fullname;
 
 
-                    this.msg('Sweet!', 'Patient ' + fullname + ' Saved... ');
-                    this.getMitosApp().setCurrPatient( pid, fullname, function(){
-                        App.patientSummary();
+                    me.msg('Sweet!', 'Patient ' + fullname + ' Saved... ');
+                    me.getMitosApp().setCurrPatient( pid, fullname, function(){
+                        me.getMitosApp().patientSummary();
                     });
 
                 },

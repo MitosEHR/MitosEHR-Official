@@ -145,6 +145,7 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
 
     getPatientData:function(){
 
+        console.log(this);
         var center = this.down('panel').getComponent('centerPanel'),
             demoFormPanel = center.getComponent('demoFormPanel');
 
@@ -196,23 +197,24 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
      * to call every this panel becomes active
      */
     onActive:function(){
+        var me = this;
 
         if(this.checkIfCurrPatient()){
-            var patient = this.getCurrPatient();
+            var patient = me.getCurrPatient();
             this.updateTitle( patient.name + ' - #' + patient.pid + ' (Patient Summary)');
 
-            var center = this.down('panel').getComponent('centerPanel'),
+            var center = me.down('panel').getComponent('centerPanel'),
                 demoFormPanel = center.getComponent('demoFormPanel');
 
-            this.getFormItems(demoFormPanel, 'Demographics');
-
-            Ext.Function.defer(function(){
-                this.getPatientData();
-            }, 300, this);
+            this.getFormItems(demoFormPanel, 'Demographics', function(success){
+                if(success){
+                    me.getPatientData();
+                }
+            });
 
         }else{
-            this.currPatientError();
-            this.goBack();
+            me.currPatientError();
+            me.goBack();
         }
     }
 
