@@ -109,7 +109,7 @@ Ext.define('Ext.mitos.panel.search.PatientSearch',{
     * place inside this function all the functions you want
     * to call every this panel becomes active
     */
-    onActive:function(){
-
+    onActive:function(callback){
+        callback(true);
     }
 }); //ens oNotesPage class

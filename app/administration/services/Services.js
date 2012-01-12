@@ -277,7 +277,8 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     * place inside this function all the functions you want
     * to call every this panel becomes active
     */
-    onActive:function(){
+    onActive:function(callback){
         this.storeServices.load();
+        callback(true);
     }
 }); //ens servicesPage class

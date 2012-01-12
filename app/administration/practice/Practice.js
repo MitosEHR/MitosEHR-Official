@@ -567,10 +567,11 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     * place inside this function all the functions you want
     * to call every this panel becomes active
     */
-    onActive:function(){
+    onActive:function(callback){
         this.pharmacyStore.load();
         this.insuranceStore.load();
         this.insuranceNumbersStore.load();
         this.x12PartnersStore.load();
+        callback(true);
     }
 }); // end of PracticePage
