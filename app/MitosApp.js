@@ -87,6 +87,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             proxy: {
                 type	: 'ajax',
                 url		: 'app/navigation/default_leftnav.ejs.php'
+            },
+            listeners:{
+                scope: me,
+                load : me.navNodeDefault
             }
         });
 
@@ -332,8 +336,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                     draggable	: false
                 },
                 listeners:{
-                    scope       : me,
-                    selectionchange   : me.navNodeSelected
+                    scope           : me,
+                    selectionchange : me.navNodeSelected
                 }
             },{
                 xtype       : 'panel',
@@ -475,42 +479,23 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
     newPatient:function(){
-        var card     = 'panelNewPatient',
-            currCardCmp = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCardCmp.onActive();
-        this.patientReset();
+        this.remoteNavNodeSelecte('panelNewPatient', function(){
+            this.currCardCmp.patientReset();
+        });
     },
 
     newEncounter:function(){
-        this.navColumn.selectPath('selectPath')
-
-        var card     = 'selectPath',
-            currCardCmp = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCardCmp.newEncounter();
+        this.remoteNavNodeSelecte('panelVisits', function(){
+            this.currCardCmp.newEncounter();
+        });
     },
 
     patientSummary:function(){
-        var card     = 'panelSummary',
-            currCardCmp = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCardCmp.onActive();
+        this.remoteNavNodeSelecte('panelSummary');
     },
 
     openCurrEncounter:function(){
-        var card     = 'panelVisits',
-            currCardCmp = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCardCmp.onActive();
+        this.remoteNavNodeSelecte('panelVisits');
     },
 
     closeCurrEncounter:function(){
@@ -532,6 +517,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
         sm.select(node);
         if(typeof callback == 'fuction') callback(true);
+    },
+
+    navNodeDefault:function(){
+        this.remoteNavNodeSelecte('panelDashboard');
     },
 
     navNodeSelected:function(model, selected){
