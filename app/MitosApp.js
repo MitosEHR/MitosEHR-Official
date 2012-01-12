@@ -62,7 +62,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     initComponent: function(){
 
         var me = this;
-        me.lastCard = null;
+
+        me.lastCardNode = null;
+        me.currCardCmp = null;
+
         me.currPatient = null;
         /**
          * TaskScheduler
@@ -330,7 +333,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 },
                 listeners:{
                     scope       : me,
-                    itemclick   : me.navNodeClicked
+                    selectionchange   : me.navNodeSelected
                 }
             },{
                 xtype       : 'panel',
@@ -473,76 +476,95 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
     newPatient:function(){
         var card     = 'panelNewPatient',
-            currCard = Ext.getCmp(card),
+            currCardCmp = Ext.getCmp(card),
             layout   = this.MainPanel.getLayout();
 
         layout.setActiveItem(card);
-        currCard.onActive();
+        currCardCmp.onActive();
         this.patientReset();
     },
 
     newEncounter:function(){
-        var card     = 'panelVisits',
-            currCard = Ext.getCmp(card),
+        this.navColumn.selectPath('selectPath')
+
+        var card     = 'selectPath',
+            currCardCmp = Ext.getCmp(card),
             layout   = this.MainPanel.getLayout();
 
         layout.setActiveItem(card);
-        currCard.newEncounter();
+        currCardCmp.newEncounter();
     },
 
     patientSummary:function(){
         var card     = 'panelSummary',
-            currCard = Ext.getCmp(card),
+            currCardCmp = Ext.getCmp(card),
             layout   = this.MainPanel.getLayout();
 
         layout.setActiveItem(card);
-        currCard.onActive();
+        currCardCmp.onActive();
     },
 
     openCurrEncounter:function(){
         var card     = 'panelVisits',
-            currCard = Ext.getCmp(card),
+            currCardCmp = Ext.getCmp(card),
             layout   = this.MainPanel.getLayout();
 
         layout.setActiveItem(card);
-        currCard.onActive();
+        currCardCmp.onActive();
     },
 
     closeCurrEncounter:function(){
-        var card     = 'panelVisits',
-            currCard = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCard.closeEncounter();
+        this.remoteNavNodeSelecte('panelVisits', function(){
+            this.currCardCmp.closeEncounter();
+        });
     },
 
     encounterHistory:function(){
-        var card     = 'panelVisits',
-            currCard = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCard.onActive();
+        this.remoteNavNodeSelecte('panelVisits');
     },
 
-    navNodeClicked:function(dv, record){
-        if(record.data.hrefTarget){
+    remoteNavNodeSelecte:function(id, callback){
+        var tree        = this.navColumn.down('treepanel'),
+            treeStore   = tree.getStore(),
+            sm          = tree.getSelectionModel(),
+            node        = treeStore.getNodeById(id);
 
-            var card      = record.data.hrefTarget,
-                layout    = this.MainPanel.getLayout();
 
-            this.lastCard = this.MainPanel.getLayout().getActiveItem();
+        sm.select(node);
+        if(typeof callback == 'fuction') callback(true);
+    },
+
+    navNodeSelected:function(model, selected){
+
+        var me = this;
+
+        if(selected[0].data.leaf){
+
+            var tree        = me.navColumn.down('treepanel'),
+                sm          = tree.getSelectionModel();
+
+            var card    = selected[0].data.id,
+                layout  = me.MainPanel.getLayout(),
+                cardCmp = Ext.getCmp(card);
+
+            this.currCardCmp = cardCmp;
+  
             layout.setActiveItem(card);
 
-            var currCard = Ext.getCmp(card);
-            currCard.onActive();
+            cardCmp.onActive(function(success){
+                if(success) {
+                    me.lastCardNode = sm.getLastSelected();
+                }else{
+                    me.goBack();
+                }
+            });
         }
     },
 
     goBack:function(){
-        var layout    = this.MainPanel.getLayout();
-        layout.setActiveItem(this.lastCard);
+        var tree        = this.navColumn.down('treepanel'),
+            sm          = tree.getSelectionModel();
+        sm.select(this.lastCardNode);
     },
 
     liveSearchSelect:function(combo, selection) {

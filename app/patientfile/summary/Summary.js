@@ -196,9 +196,8 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
      * place inside this function all the functions you want
      * to call every this panel becomes active
      */
-    onActive:function(){
+    onActive:function(callback){
         var me = this;
-
         if(this.checkIfCurrPatient()){
             var patient = me.getCurrPatient();
             this.updateTitle( patient.name + ' - #' + patient.pid + ' (Patient Summary)');
@@ -211,10 +210,11 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
                     me.getPatientData();
                 }
             });
-
+            callback(true);
         }else{
+
+            callback(false);
             me.currPatientError();
-            me.goBack();
         }
     }
 
