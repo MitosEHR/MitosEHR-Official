@@ -10,7 +10,7 @@ Ext.define('Ext.mitos.combo.Roles',{
             ],
             model		: 'RolesCombo',
             idProperty	: 'id',
-            url	    	: 'classes/ext/mitos/data/components_data.ejs.php',
+            url	    	: 'classes/ext/data/components_data.ejs.php',
             extraParams	: { task:"roles"},
             autoLoad    : true
         });
@@ -22,7 +22,7 @@ Ext.define('Ext.mitos.combo.Roles',{
             displayField: 'role_name',
             emptyText   : 'Select',
             store       : me.store
-		});
+		},null);
 		me.callParent(arguments);
 	} 
 });

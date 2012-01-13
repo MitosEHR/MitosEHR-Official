@@ -156,20 +156,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 minWidth: 190,
                 listeners: {
                     scope       : me,
-                    afterrender : me.patientReset
+                    afterrender : me.patientUnset
                 },
-                tpl: Ext.create('Ext.XTemplate',
-                    '<div class="patient_btn">',
-                        '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
-                        '<div class="patient_btn_info">',
-                            '<div class="patient_btn_name">{name}</div>',
-                            '<div class="patient_btn_record">{info}</div>',
-                        '</div>',
-                    '</div>',{
-                    defaultValue: function(v){
-                        return (v) ? v : 'No Patient Selected';
-                    }
-                }),
+                tpl : me.patientBtn(),
                 menu: Ext.create('Ext.menu.Menu', {
                     items:[{
                         text    : 'New Encounter',
@@ -480,7 +469,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
     newPatient:function(){
         this.remoteNavNodeSelecte('panelNewPatient', function(){
-            this.currCardCmp.patientReset();
+            this.currCardCmp.patientUnset();
         });
     },
 
@@ -563,7 +552,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         if (post) {
             Ext.Ajax.request({
                 scope   : this,
-                url     : Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('fullname') ),
+                url     : Ext.String.format('app/search/data.php?task=set&pid={0}', post.get('pid')),
                 success : function(){
 
                     this.currPatient = {
@@ -580,11 +569,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
 
-    patientReset:function(){
+    patientUnset:function(){
         var btn =  this.Header.getComponent('patientButton');
 
         Ext.Ajax.request({
-            url    : 'classes/patient_search.class.php?task=reset',
+            url    : 'app/search/data.php?task=reset',
             scope  : this,
             success: function(){
                 this.currPatient = null;
@@ -622,16 +611,17 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
     checkSession: function(){
         Ext.Ajax.request({
-            url     : 'lib/authProcedures/chkAuth.inc.php',
+            url     : 'app/login/data.php?task=ckAuth',
             success : function(response){
-                if(response.responseText == 'exit'){ window.location="lib/authProcedures/unauth.inc.php"; }
+                if(response.responseText == 'exit'){ window.location="app/login/data.php?task=unAuth"; }
             }
         });
     },
 
 
     checkPool:function(){
-        var poolArea = this.navColumn.getComponent('poolArea'),
+        var me       = this,
+            poolArea = me.navColumn.getComponent('poolArea'),
             poolData = [{
             pid:4587,
             name:'Juan Pablo'
@@ -650,23 +640,27 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 margin      : '0 0 3 0',
                 width       : poolArea.getWidth()-10,
                 textAlign   : 'left',
-                tpl: Ext.create('Ext.XTemplate',
-                    '<div class="patient_btn">',
-                        '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
-                        '<div class="patient_btn_info">',
-                            '<div class="patient_btn_name">{name}</div>',
-                            '<div class="patient_btn_record">{info}</div>',
-                        '</div>',
-                    '</div>',{
-                    defaultValue: function(v){
-                        return (v) ? v : 'No Patient Selected';
-                    }
-                })
+                tpl: me.patientBtn()
             });
             btn.update({name: patient.name, info:'('+patient.pid+')' });
         });
 
         poolArea.doLayout();
+    },
+
+    patientBtn:function(){
+      return new Ext.create('Ext.XTemplate',
+          '<div class="patient_btn">',
+              '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
+              '<div class="patient_btn_info">',
+                  '<div class="patient_btn_name">{name}</div>',
+                  '<div class="patient_btn_record">{info}</div>',
+              '</div>',
+          '</div>',{
+          defaultValue: function(v){
+              return (v) ? v : 'No Patient Selected';
+          }
+      })
     },
 
     appLogout:function(){
@@ -676,7 +670,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             icon    : Ext.MessageBox.QUESTION,
             buttons : Ext.Msg.YESNO,
             fn:function(btn){
-                if(btn=='yes'){ window.location = "lib/authProcedures/unauth.inc.php"; }
+                if(btn=='yes'){ window.location = "app/login/data.php?task=unAuth"; }
             }
         });
     },

@@ -136,7 +136,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
 
         this.confirmationWin(function(btn){
             if(btn=='yes'){
-                this.getMitosApp().patientReset();
+                App.patientUnset();
                 callback(true);
             }else{
                 callback(false);

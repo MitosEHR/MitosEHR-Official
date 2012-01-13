@@ -145,7 +145,6 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
 
     getPatientData:function(){
 
-        console.log(this);
         var center = this.down('panel').getComponent('centerPanel'),
             demoFormPanel = center.getComponent('demoFormPanel');
 

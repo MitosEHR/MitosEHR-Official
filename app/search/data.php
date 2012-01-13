@@ -1,37 +1,79 @@
-<?php
-//--------------------------------------------------------------------------------------------------------------------------
-// data_create.ejs.php
-// v0.0.2
-// Under GPLv3 License
-//
-// Integrated by: Ernesto Rodriguez in 2011
-//
-// Remember, this file is called via the Framework Store, this is the AJAX thing.
-//--------------------------------------------------------------------------------------------------------------------------
+<?php 
+// **************************************************************************************
+// patient_search.inc.php
+// Description: This file will contain all server side script to help 
+// the Patient Live Search
+// v0.0.1
+// 
+// Author: Ernesto J Rodriguez
+// Modified: n/a
+// 
+// MitosEHR (Electronic Health Records) 2011
+// **************************************************************************************
 
+// **************************************************************************************
+// Start MitosEHR session 
+// **************************************************************************************
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 
+// **************************************************************************************
+// Load all the necessary libraries
+// **************************************************************************************
+include_once($_SESSION['site']['root']."/classes/patient.class.php");
+
+$patient_class = new patient();
+
+// **************************************************************************************
+// Reset session count 10 secs = 1 Flop
+// **************************************************************************************
 $_SESSION['site']['flops'] = 0;
 
-$mitos_db = new dbHelper();
+// **************************************************************************************
+// Database class instance
+// **************************************************************************************
 
-$data = json_decode ( $_POST['row'], true );
+switch ($_GET['task']) {
+	case 'search':
+		// ------------------------------------------------------------------------------
+		// lets store start and limit requests in variables
+		// ------------------------------------------------------------------------------
+		$start 	= $_REQUEST["start"];
+		$limit 	= $_REQUEST["limit"];
+		// ------------------------------------------------------------------------------
+		// now lets see if this is a new request...
+		// every time you type a letter in the live search, the ExtJs will 
+		// send a new ['query'] reauest.
+		// ------------------------------------------------------------------------------
+		if($_REQUEST['query']) {
+			// --------------------------------------------------------------------------
+			// if it does exist (new request), store its value on $search and create 
+			// a $_SESSION value using $search value for future requests.
+			// --------------------------------------------------------------------------
+			$search = $_REQUEST['query']; 
+			$_SESSION['patient']['search'] = $search;
+		}else{
+			// --------------------------------------------------------------------------
+			// if it doesn't exist (old request/paging), then keep using session value
+			// to filter the sql request.
+			// --------------------------------------------------------------------------
+			$search = $_SESSION['patient']['search'];
+		};
+		// ------------------------------------------------------------------------------
+		// sql statement to get total row without LIMIT
+		// ------------------------------------------------------------------------------
+
+        $patients = $patient_class->patientLiveSearch($search,$start,$limit);
+
+        print_r(json_encode($patients));
 
 
-// *************************************************************************************
-// Finally that validated POST variables is inserted to the database
-// This one make the JOB of two, if it has an ID key run the UPDATE statement
-// if not run the INSERT statement
-// *************************************************************************************
-$sql = $mitos_db->sqlBind($row, "onotes", "U", "id='" . $data['id'] . "'");
-$mitos_db->setSQL($sql);
-$ret = $mitos_db->execLog();
-
-if ( $ret == "" ){
-	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
-} else {
-	echo "{ success: true }";
+	break;
+	case 'set':
+		$patient_class->currPatientSet($_REQUEST['pid']);
+	break;
+    case 'reset':
+        $patient_class->currPatientUnset();
+    break;
 }
