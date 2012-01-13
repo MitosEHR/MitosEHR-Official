@@ -301,7 +301,8 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
     * place inside this function all the functions you want
     * to call every this panel becomes active
     */
-    onActive:function(){
+    onActive:function(callback){
         this.userStore.load();
+        callback(true);
     }
 }); //ens UserPage class

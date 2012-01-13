@@ -361,7 +361,8 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
     * place inside this function all the functions you want
     * to call every this panel becomes active
     */
-    onActive:function(){
+    onActive:function(callback){
         this.loadGrid();
+        callback(true);
     }
 }); // end roles class

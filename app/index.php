@@ -53,7 +53,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="lib/webcam_control/swfobject.js"></script>
         <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
-        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
+
 
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -61,37 +61,46 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
                 disableCaching	: false,
                 paths			: {
                     'Ext.ux'            : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/ux',
-                    'Ext.mitos'         : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>/mitos',
+                    'Ext.mitos'         : '<?php echo $_SESSION["dir"]["ext_classes"]; ?>',
                     'Ext.mitos.panel'   : 'app',
                     'Extensible'        : 'lib/extensible-1.5.0/src'
                 }
             });
         </script>
 
-        <script type="text/javascript" src="classes/ext/mitos/GridPanel.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/LivePatientSearch.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/ManagedIframe.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/PhotoIdWindow.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/restStoreModel.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/CalCategoryComboBox.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/CalStatusComboBox.js"></script>
 
-        <script type="text/javascript" src="classes/ext/mitos/combo/Authorizations.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/CodesTypes.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/Facilities.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/InsurancePayerType.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/Languages.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/Lists.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/MsgNoteType.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/MsgStatus.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/PermValues.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/posCodes.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/Roles.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/TaxId.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/Titles.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/TransmitMedthod.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/Types.js"></script>
-        <script type="text/javascript" src="classes/ext/mitos/combo/Users.js"></script>
+
+        <script type="text/javascript" src="classes/ext/RenderPanel.js"></script>
+
+        <script type="text/javascript" src="app/dashboard/Dashboard.js"></script>
+        <script type="text/javascript" src="lib/extensible-1.5.0/src/calendar/data/EventStore.js"></script>
+        <script type="text/javascript" src="classes/ext/ux/SlidingPager.js"></script>
+
+
+        <script type="text/javascript" src="classes/ext/GridPanel.js"></script>
+        <script type="text/javascript" src="classes/ext/LivePatientSearch.js"></script>
+        <script type="text/javascript" src="classes/ext/ManagedIframe.js"></script>
+        <script type="text/javascript" src="classes/ext/PhotoIdWindow.js"></script>
+        <script type="text/javascript" src="classes/ext/restStoreModel.js"></script>
+        <script type="text/javascript" src="classes/ext/CalCategoryComboBox.js"></script>
+        <script type="text/javascript" src="classes/ext/CalStatusComboBox.js"></script>
+
+        <script type="text/javascript" src="classes/ext/combo/Authorizations.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/CodesTypes.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/Facilities.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/InsurancePayerType.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/Languages.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/Lists.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/MsgNoteType.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/MsgStatus.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/PermValues.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/posCodes.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/Roles.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/TaxId.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/Titles.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/TransmitMedthod.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/Types.js"></script>
+        <script type="text/javascript" src="classes/ext/combo/Users.js"></script>
 
         <script type="text/javascript" src="app/administration/facilities/Facilities.js"></script>
         <script type="text/javascript" src="app/administration/globals/Globals.js"></script>
@@ -104,12 +113,18 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="app/administration/users/Users.js"></script>
 
         <script type="text/javascript" src="app/messages/Messages.js"></script>
+        <script type="text/javascript" src="app/search/PatientSearch.js"></script>
 
         <script type="text/javascript" src="app/miscellaneous/addressbook/Addressbook.js"></script>
         <script type="text/javascript" src="app/miscellaneous/myaccount/MyAccount.js"></script>
         <script type="text/javascript" src="app/miscellaneous/mysettings/MySettings.js"></script>
         <script type="text/javascript" src="app/miscellaneous/officenotes/OfficeNotes.js"></script>
         <script type="text/javascript" src="app/miscellaneous/websearch/Websearch.js"></script>
+
+
+        <script type="text/javascript" src="app/MitosApp.js"></script>
+
+
 
         <script type="text/javascript">
             var App;

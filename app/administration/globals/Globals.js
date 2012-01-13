@@ -873,7 +873,8 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
     * place inside this function all the functions you want
     * to call every this panel becomes active
     */
-    onActive:function(){
+    onActive:function(callback){
         this.store.load();
+        callback(true);
     }
 }); //ens LogPage class

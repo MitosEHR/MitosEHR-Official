@@ -24,7 +24,7 @@ Ext.define('Ext.mitos.CalCategoryComboBox',{
 				model		: 'Categories',
 				proxy		: {
 					type	: 'ajax',
-					url			: 'classes/ext/mitos/data/components_data.ejs.php',
+					url			: 'classes/ext/data/components_data.ejs.php',
                     extraParams	: {"task": "calcategories"},
 					reader	: {
                         type			: 'json',
@@ -38,7 +38,7 @@ Ext.define('Ext.mitos.CalCategoryComboBox',{
 
     	Ext.apply(this, {
     		store: me.store
-		});
+		},null);
 		me.callParent();
 	} // end initComponent
 }); 

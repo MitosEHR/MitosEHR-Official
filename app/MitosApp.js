@@ -62,7 +62,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     initComponent: function(){
 
         var me = this;
-        me.lastCard = null;
+
+        me.lastCardNode = null;
+        me.currCardCmp = null;
+
         me.currPatient = null;
         /**
          * TaskScheduler
@@ -84,6 +87,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             proxy: {
                 type	: 'ajax',
                 url		: 'app/navigation/default_leftnav.ejs.php'
+            },
+            listeners:{
+                scope: me,
+                load : me.navNodeDefault
             }
         });
 
@@ -149,20 +156,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 minWidth: 190,
                 listeners: {
                     scope       : me,
-                    afterrender : me.patientReset
+                    afterrender : me.patientUnset
                 },
-                tpl: Ext.create('Ext.XTemplate',
-                    '<div class="patient_btn">',
-                        '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
-                        '<div class="patient_btn_info">',
-                            '<div class="patient_btn_name">{name}</div>',
-                            '<div class="patient_btn_record">{info}</div>',
-                        '</div>',
-                    '</div>',{
-                    defaultValue: function(v){
-                        return (v) ? v : 'No Patient Selected';
-                    }
-                }),
+                tpl : me.patientBtn(),
                 menu: Ext.create('Ext.menu.Menu', {
                     items:[{
                         text    : 'New Encounter',
@@ -329,8 +325,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                     draggable	: false
                 },
                 listeners:{
-                    scope       : me,
-                    itemclick   : me.navNodeClicked
+                    scope           : me,
+                    selectionchange : me.navNodeSelected
                 }
             },{
                 xtype       : 'panel',
@@ -381,6 +377,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done  TODO: panels
                 Ext.create('Ext.mitos.panel.calendar.Calendar'),                        // done
                 Ext.create('Ext.mitos.panel.messages.Messages'),                        // done
+                Ext.create('Ext.mitos.panel.search.PatientSearch'),                     //
 
                 Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                 Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
@@ -471,77 +468,81 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
     newPatient:function(){
-        var card     = 'panelNewPatient',
-            currCard = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCard.onActive();
-        this.patientReset();
+        this.remoteNavNodeSelecte('panelNewPatient', function(){
+            this.currCardCmp.patientUnset();
+        });
     },
 
     newEncounter:function(){
-        var card     = 'panelVisits',
-            currCard = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCard.newEncounter();
+        this.remoteNavNodeSelecte('panelVisits', function(){
+            this.currCardCmp.newEncounter();
+        });
     },
 
     patientSummary:function(){
-        var card     = 'panelSummary',
-            currCard = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCard.onActive();
+        this.remoteNavNodeSelecte('panelSummary');
     },
 
     openCurrEncounter:function(){
-        var card     = 'panelVisits',
-            currCard = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCard.onActive();
+        this.remoteNavNodeSelecte('panelVisits');
     },
 
     closeCurrEncounter:function(){
-        var card     = 'panelVisits',
-            currCard = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCard.closeEncounter();
+        this.remoteNavNodeSelecte('panelVisits', function(){
+            this.currCardCmp.closeEncounter();
+        });
     },
 
     encounterHistory:function(){
-        var card     = 'panelVisits',
-            currCard = Ext.getCmp(card),
-            layout   = this.MainPanel.getLayout();
-
-        layout.setActiveItem(card);
-        currCard.onActive();
+        this.remoteNavNodeSelecte('panelVisits');
     },
 
-    navNodeClicked:function(dv, record){
-        if(record.data.hrefTarget){
+    remoteNavNodeSelecte:function(id, callback){
+        var tree        = this.navColumn.down('treepanel'),
+            treeStore   = tree.getStore(),
+            sm          = tree.getSelectionModel(),
+            node        = treeStore.getNodeById(id);
 
-            var card      = record.data.hrefTarget,
-                layout    = this.MainPanel.getLayout();
 
-            this.lastCard = this.MainPanel.getLayout().getActiveItem();
+        sm.select(node);
+        if(typeof callback == 'fuction') callback(true);
+    },
+
+    navNodeDefault:function(){
+        this.remoteNavNodeSelecte('panelDashboard');
+    },
+
+    navNodeSelected:function(model, selected){
+
+        var me = this;
+
+        if(selected[0].data.leaf){
+
+            var tree        = me.navColumn.down('treepanel'),
+                sm          = tree.getSelectionModel();
+
+            var card    = selected[0].data.id,
+                layout  = me.MainPanel.getLayout(),
+                cardCmp = Ext.getCmp(card);
+
+            this.currCardCmp = cardCmp;
+  
             layout.setActiveItem(card);
 
-            var currCard = Ext.getCmp(card);
-            currCard.onActive();
+            cardCmp.onActive(function(success){
+                if(success) {
+                    me.lastCardNode = sm.getLastSelected();
+                }else{
+                    me.goBack();
+                }
+            });
         }
     },
 
     goBack:function(){
-        var layout    = this.MainPanel.getLayout();
-        layout.setActiveItem(this.lastCard);
+        var tree        = this.navColumn.down('treepanel'),
+            sm          = tree.getSelectionModel();
+        sm.select(this.lastCardNode);
     },
 
     liveSearchSelect:function(combo, selection) {
@@ -551,7 +552,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         if (post) {
             Ext.Ajax.request({
                 scope   : this,
-                url     : Ext.String.format('classes/patient_search.class.php?task=set&pid={0}&pname={1}',post.get('pid'),post.get('fullname') ),
+                url     : Ext.String.format('app/search/data.php?task=set&pid={0}', post.get('pid')),
                 success : function(){
 
                     this.currPatient = {
@@ -568,11 +569,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
 
-    patientReset:function(){
+    patientUnset:function(){
         var btn =  this.Header.getComponent('patientButton');
 
         Ext.Ajax.request({
-            url    : 'classes/patient_search.class.php?task=reset',
+            url    : 'app/search/data.php?task=reset',
             scope  : this,
             success: function(){
                 this.currPatient = null;
@@ -610,16 +611,17 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
     checkSession: function(){
         Ext.Ajax.request({
-            url     : 'lib/authProcedures/chkAuth.inc.php',
+            url     : 'app/login/data.php?task=ckAuth',
             success : function(response){
-                if(response.responseText == 'exit'){ window.location="lib/authProcedures/unauth.inc.php"; }
+                if(response.responseText == 'exit'){ window.location="app/login/data.php?task=unAuth"; }
             }
         });
     },
 
 
     checkPool:function(){
-        var poolArea = this.navColumn.getComponent('poolArea'),
+        var me       = this,
+            poolArea = me.navColumn.getComponent('poolArea'),
             poolData = [{
             pid:4587,
             name:'Juan Pablo'
@@ -638,23 +640,27 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 margin      : '0 0 3 0',
                 width       : poolArea.getWidth()-10,
                 textAlign   : 'left',
-                tpl: Ext.create('Ext.XTemplate',
-                    '<div class="patient_btn">',
-                        '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
-                        '<div class="patient_btn_info">',
-                            '<div class="patient_btn_name">{name}</div>',
-                            '<div class="patient_btn_record">{info}</div>',
-                        '</div>',
-                    '</div>',{
-                    defaultValue: function(v){
-                        return (v) ? v : 'No Patient Selected';
-                    }
-                })
+                tpl: me.patientBtn()
             });
             btn.update({name: patient.name, info:'('+patient.pid+')' });
         });
 
         poolArea.doLayout();
+    },
+
+    patientBtn:function(){
+      return new Ext.create('Ext.XTemplate',
+          '<div class="patient_btn">',
+              '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
+              '<div class="patient_btn_info">',
+                  '<div class="patient_btn_name">{name}</div>',
+                  '<div class="patient_btn_record">{info}</div>',
+              '</div>',
+          '</div>',{
+          defaultValue: function(v){
+              return (v) ? v : 'No Patient Selected';
+          }
+      })
     },
 
     appLogout:function(){
@@ -664,7 +670,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             icon    : Ext.MessageBox.QUESTION,
             buttons : Ext.Msg.YESNO,
             fn:function(btn){
-                if(btn=='yes'){ window.location = "lib/authProcedures/unauth.inc.php"; }
+                if(btn=='yes'){ window.location = "app/login/data.php?task=unAuth"; }
             }
         });
     },

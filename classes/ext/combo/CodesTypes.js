@@ -10,7 +10,7 @@ Ext.define('Ext.mitos.combo.CodesTypes',{
             ],
             model		: 'CodesTypes',
             idProperty	: 'option_id',
-            url	    	: 'classes/ext/mitos/data/components_data.ejs.php',
+            url	    	: 'classes/ext/data/components_data.ejs.php',
             extraParams	: { task:"codetypes"},
             autoLoad    : true
         });
@@ -22,7 +22,7 @@ Ext.define('Ext.mitos.combo.CodesTypes',{
             displayField: 'ct_key',
             emptyText   : 'Select',
             store       : me.store
-		});
+		}, null);
 		me.callParent(arguments);
 	} 
 });
