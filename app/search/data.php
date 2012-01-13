@@ -21,8 +21,9 @@ session_cache_limiter('private');
 // **************************************************************************************
 // Load all the necessary libraries
 // **************************************************************************************
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
-include_once($_SESSION['site']['root']."/repo/global_functions/global_functions.php");
+include_once($_SESSION['site']['root']."/classes/patient.class.php");
+
+$patient_class = new patient();
 
 // **************************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -32,7 +33,6 @@ $_SESSION['site']['flops'] = 0;
 // **************************************************************************************
 // Database class instance
 // **************************************************************************************
-$mitos_db = new dbHelper();
 
 switch ($_GET['task']) {
 	case 'search':
@@ -63,48 +63,17 @@ switch ($_GET['task']) {
 		// ------------------------------------------------------------------------------
 		// sql statement to get total row without LIMIT
 		// ------------------------------------------------------------------------------
-		$mitos_db->setSQL("SELECT count(pid) as total
-							 FROM form_data_demographics
-							WHERE fname LIKE '".$search."%'
-							   OR lname LIKE '".$search."%'
-							   OR mname LIKE '".$search."%'
-							   OR pid 	LIKE '".$search."%'
-							   OR SS 	LIKE '%".$search."'");
-        $total = $mitos_db->rowCount();
-		// ------------------------------------------------------------------------------
-		// sql statement and json to get patients
-		// ------------------------------------------------------------------------------
-		$mitos_db->setSQL("SELECT pid,pubpid,fname,lname,mname,DOB,SS
-							 FROM form_data_demographics
-							WHERE fname LIKE '".$search."%'
-							   OR lname LIKE '".$search."%'
-							   OR mname LIKE '".$search."%'
-							   OR pid 	LIKE '".$search."%'
-							   OR SS 	LIKE '%".$search."'
-							LIMIT ".$start.",".$limit);
-        $total = $mitos_db->rowCount();
-        $rows = array();
-        foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
 
-            $row['fullname'] = fullname($row['fname'],$row['mname'],$row['lname']);
-            unset($row['fname'],$row['mname'],$row['lname']);
-            array_push($rows, $row);
-        }
+        $patients = $patient_class->patientLiveSearch($search,$start,$limit);
 
-        print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
+        print_r(json_encode($patients));
+
+
 	break;
 	case 'set':
-		// ------------------------------------------------------------------------------
-		// Set $_SESSION vars for future use
-		// ------------------------------------------------------------------------------
-		$_SESSION['patient']['pid'] 	 = $_REQUEST['pid'];
-		$_SESSION['patient']['name'] = $_REQUEST['pname'];
+		$patient_class->currPatientSet($_REQUEST['pid']);
 	break;
     case 'reset':
-        // ------------------------------------------------------------------------------
-        // Set $_SESSION vars for future use
-        // ------------------------------------------------------------------------------
-        $_SESSION['patient']['pid']	 = null;
-        $_SESSION['patient']['name'] = null;
+        $patient_class->currPatientUnset();
     break;
 }

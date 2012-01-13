@@ -126,7 +126,8 @@ Ext.define('Ext.mitos.panel.administration.log.Log',{
     * place inside this function all the functions you want
     * to call every this panel becomes active
     */
-    onActive:function(){
+    onActive:function(callback){
         this.logStore.load();
+        callback(true);
     }
 });

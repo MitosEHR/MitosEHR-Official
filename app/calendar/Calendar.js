@@ -253,10 +253,12 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
     * place inside this function all the functions you want
     * to call every this panel becomes active
     */
-    onActive:function(){
+
+    onActive:function(callback){
         this.calendarStore.load();
         Ext.getCmp('app-calendar').onActiveCard();
         Ext.Function.defer(function(){Ext.getCmp('app-calendarlist').doLayout();}, 500, this);
+        callback(true);
     },
 
     showMsg: function(msg){

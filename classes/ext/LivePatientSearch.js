@@ -17,7 +17,7 @@ Ext.define('Ext.mitos.LivePatientSearch',{
                 extend: 'Ext.data.Model',
                 proxy: {
                     type	: 'ajax',
-                    url 	: 'classes/patient_search.class.php?task=search',
+                    url 	: 'app/search/data.php?task=search',
                     reader: {
                         type			: 'json',
                         root			: 'row',

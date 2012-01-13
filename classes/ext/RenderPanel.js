@@ -66,10 +66,14 @@ Ext.define('Ext.mitos.RenderPanel', {
 
     currPatientError:function(){
         Ext.Msg.show({
-             title  : 'Oops! No Patient Selected',
-             msg    : 'Please select a patient using the <strong>"Patient Live Search"</strong> or <strong>"Patient Pool Area"</strong>',
-             buttons: Ext.Msg.OK,
-             icon   : Ext.Msg.ERROR
+            title   : 'Oops! No Patient Selected',
+            msg     : 'Please select a patient using the <strong>"Patient Live Search"</strong> or <strong>"Patient Pool Area"</strong>',
+            scope   : this,
+            buttons : Ext.Msg.OK,
+            icon    : Ext.Msg.ERROR,
+            fn      : function(){
+                this.goBack();
+            }
         });
     },
 
@@ -82,7 +86,9 @@ Ext.define('Ext.mitos.RenderPanel', {
             success : function(response){
                 formPanel.add(eval(response.responseText));
                 formPanel.doLayout();
-                callback(true);
+                if(typeof callback == 'function'){
+                    callback(true);
+                }
             }
         });
     },

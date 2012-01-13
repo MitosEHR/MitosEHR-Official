@@ -61,11 +61,12 @@ class XMLParser
      */
     private $cleanTagNames;
 
-    
+
     /**
      * Constructor. Loads XML document.
      *
      * @param string $xml The string of the XML document
+     * @param bool $cleanTagNames
      * @return XMLParser
      */
     function __construct($xml = '', $cleanTagNames = true)
@@ -291,6 +292,7 @@ class XMLTag
      * @param array $attrs
      * @param int $parents
      * @param bool $cleanTagName
+     * @return \XMLTag
      */
     public function AddChild($name, $attrs, $parents, $cleanTagName = true)
     {    

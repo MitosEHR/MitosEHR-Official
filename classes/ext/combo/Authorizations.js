@@ -18,7 +18,7 @@ Ext.define('Ext.mitos.combo.Authorizations',{
             displayField: 'name',
             emptyText   : 'Select',
             store       : me.store
-		});
+		}, null);
         
 		me.callParent(arguments);
 	}

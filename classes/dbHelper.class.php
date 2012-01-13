@@ -40,7 +40,7 @@ class dbHelper {
 	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function __construct() {
-		error_reporting(0);
+		error_reporting(1);
 		try {
     		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
 		} catch (PDOException $e) {
@@ -238,7 +238,15 @@ class dbHelper {
 	function fetch(){
 		// Get all the records
 		$recordset = $this->conn->query( $this->sql_statement );
-		return $recordset->fetch(PDO::FETCH_ASSOC);
+
+        $err = $this->conn->errorInfo();
+
+        if(!$err[2]){
+            return $recordset->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return $err;
+        }
+
 	}
 	
 	//**********************************************************************

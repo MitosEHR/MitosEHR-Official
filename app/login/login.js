@@ -48,7 +48,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
          */
         me.formLogin = Ext.create('Ext.form.FormPanel', {
             id				: 'formLogin',
-            url				: 'lib/authProcedures/auth.inc.php',
+            url				: 'app/login/data.php?task=auth',
             bodyStyle		: 'background: #ffffff; padding:5px 5px 0',
             defaultType		: 'textfield',
             waitMsgTarget	: true,
@@ -159,7 +159,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 waitMsg     : 'Sending credentials...',
                 scope: this,
                 success:function(){
-                    window.location = 'index.php';
+                    window.location = './';
                 },
                 failure:function(form, action){
                     if(action.failureType == 'server'){

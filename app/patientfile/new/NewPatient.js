@@ -68,7 +68,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
                 scope   : me,
                 success : function(forn, action){
 
-                    /** @namespace action.result.patient */
+                    /** @namespace action.result.patient.pid */
                     /** @namespace action.result.patient.fullname */
 
                     var pid      = action.result.patient.pid,
@@ -113,7 +113,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
         }).show();
     },
 
-    confirmationWin:function(){
+    confirmationWin:function(callback){
         Ext.Msg.show({
             title   : 'Please confirm...',
             msg     : 'Do you want to create a <strong>new patient</strong>?',
@@ -121,11 +121,7 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
             buttons : Ext.Msg.YESNO,
             scope   : this,
             fn:function(btn){
-                if(btn=='yes'){
-                    this.getMitosApp().patientReset();
-                }else{
-                    this.goBack();
-                }
+                callback(btn);
             }
         });
     },
@@ -135,8 +131,16 @@ Ext.define('Ext.mitos.panel.patientfile.new.NewPatient',{
      * place inside this function all the functions you want
      * to call every this panel becomes active
      */
-    onActive:function(){
+    onActive:function(callback){
         this.getFormItems( this.form, this.formToRender );
-        this.confirmationWin();
+
+        this.confirmationWin(function(btn){
+            if(btn=='yes'){
+                App.patientUnset();
+                callback(true);
+            }else{
+                callback(false);
+            }
+        });
     }
 });

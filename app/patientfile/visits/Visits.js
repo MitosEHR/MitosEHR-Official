@@ -432,7 +432,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
      * place inside this function all the functions you want
      * to call every this panel becomes active
      */
-    onActive:function(){
+    onActive:function(callback){
         if(this.checkIfCurrPatient()){
             var patient = this.getCurrPatient();
             this.updateTitle( patient.name + ' (Visits)');
@@ -443,9 +443,10 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 this.setHistoryMax();
             }
             this.showHistory();
+            callback(true);
         }else{
+            callback(false);
             this.currPatientError();
-            this.goBack();
         }
     }
 }); //ens oNotesPage class
