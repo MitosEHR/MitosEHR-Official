@@ -28,7 +28,7 @@ class ACL {
     /**
      * @param string $user_id
      */
-	private function __constructor($user_id = '') {
+	private function __constructor($user_id = ''){
         $this->conn = new dbHelper();
 		if ($user_id != '') {
 			$this->user_id = floatval($user_id);  
@@ -42,34 +42,29 @@ class ACL {
     /**
      * @param string $user_id
      */
-	public function ACL($user_id='') {
+	public function ACL($user_id=''){
 		$this->__constructor($user_id);  
 	}
 
     /**
-     * @param string $format
+     * @internal param string $format
      * @return array
      */
-    public function getAllRoles($format = 'ids') {
-        $format = strtolower($format);
-        $strSQL = "SELECT * FROM acl_roles ORDER BY role_name ASC";
-        $this->conn->setSQL($strSQL);
-        $resp = array();
-        foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
-            if ($format == 'full'){
-                $resp[] = array("id" => $row['id'],"Name" => $row['role_name']);
-            } else {
-                $resp[] = $row['id'];
-            }
+    public function getAllRoles(){
+        $roles = array();
+        $this->conn->setSQL("SELECT * FROM acl_roles ORDER BY role_name ASC");
+        foreach ($this->conn->execStatement(PDO::FETCH_ASSOC) as $row) {
+            array_push($roles, $row);
         }
-        return $resp;
+        $total = $this->conn->rowCount();
+        return array('totals'=>$total,'row'=>$roles);
     }
 
     /**
      * @param string $format
      * @return array
      */
-    private function getAllPerms($format='ids'){
+    public function getAllPerms($format='ids'){
         $format = strtolower($format);
         $strSQL = "SELECT * FROM acl_permissions ORDER BY perm_name ASC";
         $this->conn->setSQL($strSQL);
@@ -84,10 +79,21 @@ class ACL {
         return $resp;
     }
 
+    public function getPermValues(){
+        $permsVals = array(
+            array('perm' => 'No Access',              'value' => '0'),
+            array('perm' => 'View',                   'value' => '1'),
+            array('perm' => 'View / Update',          'value' => '2'),
+            array('perm' => 'View / Update / Create', 'value' => '3')
+        );
+        return array('totals'=> 4, 'row'=>$permsVals);
+    }
+
+
     /**
      * @return array
      */
-	private function getuser_roles() {
+	private function getuser_roles(){
 
         $this->conn->setSQL("SELECT * FROM acl_user_roles WHERE user_id = '$this->user_id' ORDER BY add_date ASC");
 		$resp = array();
@@ -99,9 +105,9 @@ class ACL {
 	}
 
 
-	private function buildACL() {
+	private function buildACL(){
 		//first, get the rules for the user's role
-		if (count($this->user_roles) > 0) {
+		if (count($this->user_roles) > 0){
 			$this->perms = array_merge($this->perms,$this->getRolePerms($this->user_roles));
 		}
 		//then, get the individual user permissions
@@ -134,7 +140,7 @@ class ACL {
      * @param $role_id
      * @return mixed
      */
-	private function getRoleNameFromid($role_id)  {
+	private function getRoleNameFromid($role_id){
 		$strSQL = "SELECT role_name FROM acl_roles WHERE id = " . floatval($role_id) . " LIMIT 1";
 		$this->conn->setSQL($strSQL);
 		$row = $this->conn->execStatement(PDO::FETCH_ASSOC);
@@ -260,46 +266,55 @@ class ACL {
 /**
  * TEST AREA!
  */
-$pclass = new ACL();
-
-echo 'User Has Permition to View Administer_Roles? ';
-print $pclass->hasPermissionToView('Administer_Roles')? 'YES' : 'NO';
-echo '<br>';
-echo 'User Has Permition to Edit Administer_Roles? ';
-print $pclass->hasPermissionEdit('Administer_Roles')? 'YES' : 'NO';
-echo '<br>';
-echo 'User Has Permition to Delete Administer_Roles? ';
-print $pclass->hasPermissionDelete('Administer_Roles')? 'YES' : 'NO';
-echo '<br>';
-echo '<br>';
-echo 'User Has Permition to View Administer_Users1? ';
-print $pclass->hasPermissionToView('Administer_Users1')? 'YES' : 'NO';
-echo '<br>';
-echo 'User Has Permition to Edit Administer_Users1? ';
-print $pclass->hasPermissionEdit('Administer_Users1')? 'YES' : 'NO';
-echo '<br>';
-echo 'User Has Permition to Delete Administer_Users1? ';
-print $pclass->hasPermissionDelete('Administer_Users1')? 'YES' : 'NO';
-echo '<br>';
-echo '<br>';
-echo 'User Has Permition to View Administer_Facilities? ';
-print $pclass->hasPermissionToView('Administer_Facilities')? 'YES' : 'NO';
-echo '<br>';
-echo 'User Has Permition to Edit Administer_Facilities? ';
-print $pclass->hasPermissionEdit('Administer_Facilities')? 'YES' : 'NO';
-echo '<br>';
-echo 'User Has Permition to Delete Administer_Facilities? ';
-print $pclass->hasPermissionDelete('Administer_Facilities')? 'YES' : 'NO';
-echo '<br>';
-echo '<br>';
-echo 'User Has Permition to View Administer_Lists? ';
-print $pclass->hasPermissionToView('Administer_Lists')? 'YES' : 'NO';
-echo '<br>';
-echo 'User Has Permition to Edit Administer_Lists? ';
-print $pclass->hasPermissionEdit('Administer_Lists')? 'YES' : 'NO';
-echo '<br>';
-echo 'User Has Permition to Delete Administer_Lists? ';
-print $pclass->hasPermissionDelete('Administer_Lists')? 'YES' : 'NO';
-echo '<br>';
-echo '<br>';
-
+//$pclass = new ACL();
+//
+//echo 'User Has Permition to View Administer_Roles? ';
+//print $pclass->hasPermissionToView('Administer_Roles')? 'YES' : 'NO';
+//echo '<br>';
+//echo 'User Has Permition to Edit Administer_Roles? ';
+//print $pclass->hasPermissionEdit('Administer_Roles')? 'YES' : 'NO';
+//echo '<br>';
+//echo 'User Has Permition to Delete Administer_Roles? ';
+//print $pclass->hasPermissionDelete('Administer_Roles')? 'YES' : 'NO';
+//echo '<br>';
+//echo '<br>';
+//echo 'User Has Permition to View Administer_Users1? ';
+//print $pclass->hasPermissionToView('Administer_Users1')? 'YES' : 'NO';
+//echo '<br>';
+//echo 'User Has Permition to Edit Administer_Users1? ';
+//print $pclass->hasPermissionEdit('Administer_Users1')? 'YES' : 'NO';
+//echo '<br>';
+//echo 'User Has Permition to Delete Administer_Users1? ';
+//print $pclass->hasPermissionDelete('Administer_Users1')? 'YES' : 'NO';
+//echo '<br>';
+//echo '<br>';
+//echo 'User Has Permition to View Administer_Facilities? ';
+//print $pclass->hasPermissionToView('Administer_Facilities')? 'YES' : 'NO';
+//echo '<br>';
+//echo 'User Has Permition to Edit Administer_Facilities? ';
+//print $pclass->hasPermissionEdit('Administer_Facilities')? 'YES' : 'NO';
+//echo '<br>';
+//echo 'User Has Permition to Delete Administer_Facilities? ';
+//print $pclass->hasPermissionDelete('Administer_Facilities')? 'YES' : 'NO';
+//echo '<br>';
+//echo '<br>';
+//echo 'User Has Permition to View Administer_Lists? ';
+//print $pclass->hasPermissionToView('Administer_Lists')? 'YES' : 'NO';
+//echo '<br>';
+//echo 'User Has Permition to Edit Administer_Lists? ';
+//print $pclass->hasPermissionEdit('Administer_Lists')? 'YES' : 'NO';
+//echo '<br>';
+//echo 'User Has Permition to Delete Administer_Lists? ';
+//print $pclass->hasPermissionDelete('Administer_Lists')? 'YES' : 'NO';
+//echo '<br>';
+//echo '<br>';
+//echo 'perm values';
+//echo '<br>';
+//print_r(json_encode($pclass->getPermValues()));
+//echo '<br>';
+//echo '<br>';
+//echo 'all roles';
+//echo '<br>';
+//print_r(json_encode($pclass->getAllRoles()));
+//echo '<br>';
+//echo '<br>';

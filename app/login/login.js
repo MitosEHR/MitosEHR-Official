@@ -3,6 +3,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
     initComponent:function(){
         var me = this;
         me.currSite = null;
+        me.currLang = null;
 
         Ext.define("Sites", {
             extend: "Ext.data.Model",
@@ -25,6 +26,14 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 }
             },
             autoLoad: false
+        });
+
+        me.langStore = Ext.create('Ext.data.Store', {
+            fields:['name','value'],
+            data : [
+                {name: 'English (US)',  value: 'en_US'},
+                {name: 'Spanish',       value: 'es'}
+            ]
         });
         /**
          * The Copyright Notice Window
@@ -89,6 +98,22 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 }
             },{
                 xtype           : 'combobox',
+                name            : 'lang',
+                itemId          : 'lang',
+                displayField    : 'name',
+                valueField      : 'value',
+                queryMode       : 'local',
+                fieldLabel      : 'Default Language',
+                store           : me.langStore,
+                allowBlank      : false,
+                editable        : false,
+                listeners:{
+                    scope       : me,
+                    specialkey  : me.onEnter,
+                    select      : me.onLangSelect
+                }
+            },{
+                xtype           : 'combobox',
                 name            : 'choiseSite',
                 itemId          : 'choiseSite',
                 displayField    : 'site',
@@ -103,6 +128,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
                     specialkey  : me.onEnter,
                     select      : me.onSiteSelect
                 }
+
             }],
             buttons: [{
                 text    : 'Login',
@@ -122,7 +148,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
         me.winLogon = Ext.create('widget.window', {
             title			: 'MitosEHR Logon',
             width			: 495,
-            height			: 290,
+            height			: 320,
             closeAction		: 'hide',
             plain			: true,
             modal			: false,
@@ -183,6 +209,10 @@ Ext.define('Ext.mitos.panel.login.Login',{
     onSiteSelect:function(combo,value){
         this.currSite = value[0].data.site;
     },
+
+    onLangSelect:function(combo,value){
+        this.currLang = value[0].data.value;
+    },
     /**
      * form rest function
      */
@@ -191,7 +221,8 @@ Ext.define('Ext.mitos.panel.login.Login',{
         form.reset();
         var model = Ext.ModelManager.getModel('Sites'),
         newModel  = Ext.ModelManager.create({
-            choiseSite  : this.currSite
+            choiseSite  : this.currSite,
+            lang        : this.currLang
         }, model );
         form.loadRecord(newModel);
         this.formLogin.getComponent('authUser').focus();
@@ -211,6 +242,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
                     Ext.Function.defer(function(){
                         this.currSite = records[0].data.site;
                         this.formLogin.getComponent('choiseSite').setValue(this.currSite);
+                        this.formLogin.getComponent('lang').setValue('en_US');
                         this.formLogin.getComponent('authUser').focus();
                     },100,this);
 
