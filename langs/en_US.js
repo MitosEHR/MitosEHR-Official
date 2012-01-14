@@ -6,6 +6,8 @@
  * Time: 9:44 PM
  */
 lang = {
+    code                : 'en_US',
+
     ok                  : 'Ok',
     save                : 'Save',
     navigation          : 'Navigation',

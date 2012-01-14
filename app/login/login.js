@@ -103,7 +103,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 displayField    : 'name',
                 valueField      : 'value',
                 queryMode       : 'local',
-                fieldLabel      : 'Default Language',
+                fieldLabel      : 'Language',
                 store           : me.langStore,
                 allowBlank      : false,
                 editable        : false,
@@ -185,6 +185,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 waitMsg     : 'Sending credentials...',
                 scope: this,
                 success:function(){
+                    //window.open('./','MitosEHR', "status=0,toolbar=0,location=0");
                     window.location = './';
                 },
                 failure:function(form, action){

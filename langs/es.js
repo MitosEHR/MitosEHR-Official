@@ -6,6 +6,7 @@
  * Time: 9:44 PM
  */
 lang = {
+    code                : 'es',
     /**
      * General
      */

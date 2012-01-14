@@ -83,10 +83,18 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         /**
          * Navigation Panel Tree Data
          */
+        Ext.define('NavTreeModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                'text',
+                {name: 'disabled', type:'bool', defaultValue:false}
+            ]
+        });
         me.storeTree = Ext.create('Ext.data.TreeStore',{
+            model: 'NavTreeModel',
             proxy: {
                 type	: 'ajax',
-                url		: 'app/navigation/default_leftnav.ejs.php'
+                url		: 'app/navigation/nav_'+lang.code+'.php'
             },
             listeners:{
                 scope: me,
@@ -319,6 +327,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 border      : false,
                 store		: me.storeTree,
                 width		: 200,
+                plugins     : [{ptype:'nodedisabled'}],
                 root		: {
                     nodeType	: 'async',
                     draggable	: false

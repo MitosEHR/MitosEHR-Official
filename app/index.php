@@ -71,7 +71,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
             });
         </script>
 
-
+        <script type="text/javascript" src="classes/ext/NodeDisabled.js"></script>
 
         <script type="text/javascript" src="classes/ext/RenderPanel.js"></script>
 
