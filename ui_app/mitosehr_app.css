@@ -1,5 +1,13 @@
 @charset "utf-8";
 /* CSS Document */
+/* = disabled nodes
+
+----------------------------------------------- */
+.tree-node-disabled .x-grid-cell {
+    -moz-opacity: 0.5;
+    opacity:.5;
+    filter: alpha(opacity=50);
+}
 
 @font-face{
 	font-family: 'Cuprum';

@@ -17,6 +17,8 @@ if($_REQUEST['task'] == 'auth'){
 
     authProcedures::auth($_REQUEST['authUser'], $_REQUEST['authPass'],$_REQUEST['choiseSite']);
 
+    $_SESSION['lang']['code'] = $_REQUEST['lang'];
+
 } elseif($_REQUEST['task'] == 'unAuth'){
 
     authProcedures::unAuth();

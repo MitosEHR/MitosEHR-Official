@@ -28,7 +28,7 @@
 
 class dbHelper {
 	
-	private $sql_statement;
+	public  $sql_statement;
 	private $conn;
 	private $err;
 	public $lastInsertId;

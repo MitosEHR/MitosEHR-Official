@@ -83,10 +83,18 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         /**
          * Navigation Panel Tree Data
          */
+        Ext.define('NavTreeModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                'text',
+                {name: 'disabled', type:'bool', defaultValue:false}
+            ]
+        });
         me.storeTree = Ext.create('Ext.data.TreeStore',{
+            model: 'NavTreeModel',
             proxy: {
                 type	: 'ajax',
-                url		: 'app/navigation/default_leftnav.ejs.php'
+                url		: 'app/navigation/nav_'+lang.code+'.php'
             },
             listeners:{
                 scope: me,
@@ -112,14 +120,14 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 xtype   : 'toolbar',
                 dock    : 'top',
                 items:['-',{
-                    text    : 'Issues/Bugs',
+                    text    : lang.issuesBugs,
                     iconCls : 'list',
                     scope   : me,
                     handler:function(){
                         me.showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
                     }
                 },'-',{
-                    text    : 'New Issue/Bug',
+                    text    : lang.newIssueBug,
                     iconCls : 'icoAddRecord',
                     scope   : me,
                     handler:function(){
@@ -161,7 +169,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 tpl : me.patientBtn(),
                 menu: Ext.create('Ext.menu.Menu', {
                     items:[{
-                        text    : 'New Encounter',
+                        text    : lang.newEncounter,
                         scope   : me,
                         handler : me.newEncounter
                     },{
@@ -169,13 +177,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                         scope   : me,
                         handler : me.encounterHistory
                     },{
-                        text    : 'Patient Documents',
+                        text    : lang.patientDocuments,
                         scope   : me,
                         handler : function(){
 
                         }
                     },{
-                        text    : 'Patient Notes',
+                        text    : lang.patientNotes,
                         scope   : me,
                         handler : function(){
 
@@ -302,7 +310,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
          * The panel definition for the the TreeMenu & the support button
          */
         me.navColumn = Ext.create('Ext.panel.Panel', {
-            title		: 'Navigation',
+            title		: lang.navigation,
             stateId     : 'navColumn',
             layout      : 'border',
             region		: 'west',
@@ -312,7 +320,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             items		: [{
                 xtype       : 'treepanel',
                 region		: 'center',
-                stateId     : 'Navigation',
                 bodyPadding : '5 0 0 0',
                 cls         : 'nav_tree',
                 hideHeaders	: true,
@@ -320,6 +327,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 border      : false,
                 store		: me.storeTree,
                 width		: 200,
+                plugins     : [{ptype:'nodedisabled'}],
                 root		: {
                     nodeType	: 'async',
                     draggable	: false
@@ -330,7 +338,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 }
             },{
                 xtype       : 'panel',
-                title       : 'Patient Pool Area',
+                title       : lang.patientPoolArea,
                 layout      : 'vbox',
                 region      : 'south',
                 itemId      : 'poolArea',
@@ -353,7 +361,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 items: ['-',{
                     xtype   : 'button',
                     frame   : true,
-                    text    : 'MithosEHR Support',
+                    text    : 'MithosEHR '+lang.support,
                     iconCls : 'icoHelp',
                     scope   : me,
                     handler : function(){

@@ -174,7 +174,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             collapseMode    : 'header',
             margin          : '2 0 0 0',
             region	        : 'south',
-            height          : 300,
+            height          : 150,
             store           : me.historyStore,
             columns : [
                 { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
@@ -391,7 +391,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
     },
 
     setHistoryNorm:function(){
-        this.historyGrid.setHeight(300);
+        this.historyGrid.setHeight(150);
         this.centerPanel.doLayout();
     },
 
