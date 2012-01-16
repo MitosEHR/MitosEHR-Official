@@ -217,7 +217,7 @@ class ACL {
         $items = array();
         $perms = array();
         $roles = $this->getAllRoles();
-        $cattegories = array('General','Patient','Encounters','Billing','Reports','Administration','Miscellaneous');
+        $cattegories = array('Calendar','Patients','Encounters','Demographics','Documents','ePrescription','Administration','Miscellaneous');
         foreach($this->getAllPerms('full') as $perm){
             array_push($perms,$perm);
         }
@@ -232,7 +232,7 @@ class ACL {
                 'defaultType'   => 'mitos.checkbox',
                 'layout'        => 'hbox',
                 'defaults'      => array(
-                    'margin'    =>'0 60 0 0'
+                    'margin'    =>'0 50 0 0'
                 ),
                 'labelWidth'    => 200
              );
@@ -243,9 +243,12 @@ class ACL {
                     $row['fieldLabel'] = $perm['Name'];
                     $checkboxes = array();
                     foreach($roles['row'] as $role){
-                        $checkbox = array('name' => strtolower($perm['Key']).'_'.strtolower($role['role_name']));
+                        $checkbox = array('name' => strtolower($perm['Key']).'_'.strtolower(str_replace(' ','_',$role['role_name'])));
                         array_push($checkboxes,$checkbox);
                     }
+
+                    array_push($checkboxes,array('name' => strtolower($perm['Key']).'_'.strtolower('su'), 'checked' => true, 'disabled'=>true ));
+
                     $row['items'] = $checkboxes;
                     array_push($item['items'],$row);
                 }

@@ -46,13 +46,14 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         return [{
             xtype : 'container',
             html  : '<span class="roleHeader">'+
-                        '<spam class="perm">Permission</spam>' +
-                        '<spam class="role">Physician</spam>' +
-                        '<spam class="role">Clinician</spam>' +
-                        '<spam class="role">Front Desk</spam>' +
-                        '<spam class="role">Auditor</spam>' +
-                        '<spam class="role">Admin</spam>' +
-                    '</span>'
+                '<spam class="perm">Permission</spam>' +
+                '<spam class="role">Front Office</spam>' +
+                '<spam class="role">Auditors</spam>' +
+                '<spam class="role">Clinician</spam>' +
+                '<spam class="role">Physician</spam>' +
+                '<spam class="role">Adminstrators</spam>' +
+                '<spam class="role">Super User</spam>' +
+                '</span>'
         }]
     },
 
