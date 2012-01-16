@@ -91,7 +91,6 @@ class ACL {
 
 	}
 
-
 	private function buildACL(){
 		//first, get the rules for the user's role
 		if (count($this->user_roles) > 0){
@@ -210,23 +209,20 @@ class ACL {
 		}
 	}
 
-
     /**
      *
      * @return mixed
      */
     public function getRoleForm(){
+        $items = array();
         $perms = array();
         $roles = $this->getAllRoles();
         $cattegories = array('General','Patient','Encounters','Billing','Reports','Administration','Miscellaneous');
         foreach($this->getAllPerms('full') as $perm){
             array_push($perms,$perm);
         }
-        $items = array();
-
         foreach($cattegories as $cat){
             $item = array();
-
             $item['xtype']      = 'fieldset';
             $item['title']      = $cat;
             $item['layout']     = 'anchor';
@@ -241,31 +237,21 @@ class ACL {
                 'labelWidth'    => 200
              );
             $item['items']      = array();
-
             foreach($perms as $perm){
                 $row = null;
                 if(strtolower($perm['Cat']) == strtolower($item['title'])){
                     $row['fieldLabel'] = $perm['Name'];
-
                     $checkboxes = array();
                     foreach($roles['row'] as $role){
                         $checkbox = array('name' => strtolower($perm['Key']).'_'.strtolower($role['role_name']));
                         array_push($checkboxes,$checkbox);
                     }
                     $row['items'] = $checkboxes;
-
                     array_push($item['items'],$row);
                 }
             }
-
             array_push($items,$item);
         }
-
-        //print_r($items);
-        //print_r($cattegories);
-        //print_r($perms);
-        //print_r($roles['row']);
-
         $rawStr     = json_encode($items);
         $regex      = '("\w*?":|"Ext\.create|\)"\})';
         $cleanItems = array();
@@ -275,9 +261,7 @@ class ACL {
         }
         $itemsJsArray = str_replace( '"', '\'', str_replace( $rawItems[0], $cleanItems, $rawStr ));
         return $itemsJsArray;
-
     }
-
 }
 /**
  * TEST AREA!
@@ -288,7 +272,6 @@ class ACL {
 //
 //echo 'User Has Permition to View Administer_Roles? ';
 //print $pclass->hasPermission('Administer_Roles')? 'YES' : 'NO';
-
 //echo '<br>';
 //echo '<br>';
 //echo 'perm values';
