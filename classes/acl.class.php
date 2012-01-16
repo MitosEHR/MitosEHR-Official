@@ -1,7 +1,5 @@
 <?php
-session_name ( "MitosEHR" );
-session_start();
-session_cache_limiter('private');
+
 $_SESSION['site']['flops'] = 0;
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
@@ -52,7 +50,7 @@ class ACL {
      */
     public function getAllRoles(){
         $roles = array();
-        $this->conn->setSQL("SELECT * FROM acl_roles ORDER BY role_name ASC");
+        $this->conn->setSQL("SELECT * FROM acl_roles ORDER BY seq ASC");
         foreach ($this->conn->execStatement(PDO::FETCH_ASSOC) as $row) {
             array_push($roles, $row);
         }
@@ -66,29 +64,18 @@ class ACL {
      */
     public function getAllPerms($format='ids'){
         $format = strtolower($format);
-        $strSQL = "SELECT * FROM acl_permissions ORDER BY perm_name ASC";
+        $strSQL = "SELECT * FROM acl_permissions ORDER BY seq ASC";
         $this->conn->setSQL($strSQL);
         $resp = array();
         foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
             if ($format == 'full'){
-                $resp[$row['perm_key']] = array('id' => $row['id'], 'Name' => $row['perm_name'], 'Key' => $row['perm_key']);
+                $resp[$row['perm_key']] = array('id' => $row['id'], 'Name' => $row['perm_name'], 'Key' => $row['perm_key'], 'Cat' => $row['perm_cat']);
             } else {
                 $resp[] = $row['id'];
             }
         }
         return $resp;
     }
-
-    public function getPermValues(){
-        $permsVals = array(
-            array('perm' => 'No Access',              'value' => '0'),
-            array('perm' => 'View',                   'value' => '1'),
-            array('perm' => 'View / Update',          'value' => '2'),
-            array('perm' => 'View / Update / Create', 'value' => '3')
-        );
-        return array('totals'=> 4, 'row'=>$permsVals);
-    }
-
 
     /**
      * @return array
@@ -148,17 +135,6 @@ class ACL {
 	}
 
     /**
-     * @param $user_id
-     * @return mixed
-     */
-	private function getUsername($user_id){
-		$strSQL = "SELECT username FROM users WHERE id = " . floatval($user_id) . " LIMIT 1";
-		$this->conn->setSQL($strSQL);
-		$row = $this->conn->execStatement(PDO::FETCH_ASSOC);
-		return $row[0]['username'];
-	}
-
-    /**
      * @param $role
      * @return array
      */
@@ -173,8 +149,12 @@ class ACL {
 		foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
 			$pK = strtolower($this->getperm_keyFromid($row['perm_id']));
 			if ($pK == '') { continue; }
-
-			$perms[$pK] = array('perm' => $pK,'inheritted' => true,'value' => $row['value'],'Name' => $this->getperm_nameFromid($row['perm_id']),'id' => $row['perm_id']);
+            if ($row['value'] == '1') {
+                $hP = true;
+            } else {
+                $hP = false;
+            }
+			$perms[$pK] = array('perm' => $pK,'inheritted' => true,'value' => $hP,'Name' => $this->getperm_nameFromid($row['perm_id']),'id' => $row['perm_id']);
 		}
 		return $perms;
 	}
@@ -190,8 +170,12 @@ class ACL {
         foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
 			$pK = strtolower($this->getperm_keyFromid($row['perm_id']));
 			if ($pK == '') { continue; }
-
-			$perms[$pK] = array('perm' => $pK,'inheritted' => false,'value' => $row['value'],'Name' => $this->getperm_nameFromid($row['perm_id']),'id' => $row['perm_id']);
+            if ($row['value'] == '1') {
+                $hP = true;
+            } else {
+                $hP = false;
+            }
+			$perms[$pK] = array('perm' => $pK,'inheritted' => false,'value' => $hP,'Name' => $this->getperm_nameFromid($row['perm_id']),'id' => $row['perm_id']);
 		}
 	return $perms;
 	}
@@ -213,105 +197,101 @@ class ACL {
      * @param $perm_key
      * @return bool
      */
-	public function hasPermissionToView($perm_key){
+	public function hasPermission($perm_key){
 		$perm_key = strtolower($perm_key);
 		if (array_key_exists($perm_key,$this->perms)){
-			if ($this->perms[$perm_key]['value'] == '1' || $this->perms[$perm_key]['value'] == '2' || $this->perms[$perm_key]['value'] == '3'){
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-    /**
-     * function to ck if user has permition to VIEW and EDIT
-     *
-     * @param $perm_key
-     * @return bool
-     */
-	public function hasPermissionEdit($perm_key){
-		$perm_key = strtolower($perm_key);
-		if (array_key_exists($perm_key,$this->perms)){
-			if ($this->perms[$perm_key]['value'] == '2' || $this->perms[$perm_key]['value'] == '3'){
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
-    /**
-     * function to ck if user has permition to VIEW, EDIT and DELETE
-     *
-     * @param $perm_key
-     * @return bool
-     */
-    public function hasPermissionDelete($perm_key){
-        $perm_key = strtolower($perm_key);
-        if (array_key_exists($perm_key,$this->perms)){
-            if ($this->perms[$perm_key]['value'] == '3'){
+            if ($this->perms[$perm_key]['value'] === '1' || $this->perms[$perm_key]['value'] === true){
                 return true;
             } else {
                 return false;
             }
         } else {
             return false;
+		}
+	}
+
+
+    /**
+     *
+     * @return mixed
+     */
+    public function getRoleForm(){
+        $perms = array();
+        $roles = $this->getAllRoles();
+        $cattegories = array('General','Patient','Encounters','Billing','Reports','Administration','Miscellaneous');
+        foreach($this->getAllPerms('full') as $perm){
+            array_push($perms,$perm);
         }
+        $items = array();
+
+        foreach($cattegories as $cat){
+            $item = array();
+
+            $item['xtype']      = 'fieldset';
+            $item['title']      = $cat;
+            $item['layout']     = 'anchor';
+            $item['labelWidth'] = 100;
+            $item['defaults']   = array(
+                'xtype'         => 'fieldcontainer',
+                'defaultType'   => 'mitos.checkbox',
+                'layout'        => 'hbox',
+                'defaults'      => array(
+                    'margin'    =>'0 60 0 0'
+                ),
+                'labelWidth'    => 200
+             );
+            $item['items']      = array();
+
+            foreach($perms as $perm){
+                $row = null;
+                if(strtolower($perm['Cat']) == strtolower($item['title'])){
+                    $row['fieldLabel'] = $perm['Name'];
+
+                    $checkboxes = array();
+                    foreach($roles['row'] as $role){
+                        $checkbox = array('name' => strtolower($perm['Key']).'_'.strtolower($role['role_name']));
+                        array_push($checkboxes,$checkbox);
+                    }
+                    $row['items'] = $checkboxes;
+
+                    array_push($item['items'],$row);
+                }
+            }
+
+            array_push($items,$item);
+        }
+
+        //print_r($items);
+        //print_r($cattegories);
+        //print_r($perms);
+        //print_r($roles['row']);
+
+        $rawStr     = json_encode($items);
+        $regex      = '("\w*?":|"Ext\.create|\)"\})';
+        $cleanItems = array();
+        preg_match_all( $regex, $rawStr, $rawItems );
+        foreach($rawItems[0] as $item){
+            array_push( $cleanItems, str_replace( '"', '', $item) );
+        }
+        $itemsJsArray = str_replace( '"', '\'', str_replace( $rawItems[0], $cleanItems, $rawStr ));
+        return $itemsJsArray;
+
     }
+
 }
 /**
  * TEST AREA!
  */
 //$pclass = new ACL();
+//echo '<pre>';
+//$pclass->getRoleForm();
 //
 //echo 'User Has Permition to View Administer_Roles? ';
-//print $pclass->hasPermissionToView('Administer_Roles')? 'YES' : 'NO';
-//echo '<br>';
-//echo 'User Has Permition to Edit Administer_Roles? ';
-//print $pclass->hasPermissionEdit('Administer_Roles')? 'YES' : 'NO';
-//echo '<br>';
-//echo 'User Has Permition to Delete Administer_Roles? ';
-//print $pclass->hasPermissionDelete('Administer_Roles')? 'YES' : 'NO';
-//echo '<br>';
-//echo '<br>';
-//echo 'User Has Permition to View Administer_Users1? ';
-//print $pclass->hasPermissionToView('Administer_Users1')? 'YES' : 'NO';
-//echo '<br>';
-//echo 'User Has Permition to Edit Administer_Users1? ';
-//print $pclass->hasPermissionEdit('Administer_Users1')? 'YES' : 'NO';
-//echo '<br>';
-//echo 'User Has Permition to Delete Administer_Users1? ';
-//print $pclass->hasPermissionDelete('Administer_Users1')? 'YES' : 'NO';
-//echo '<br>';
-//echo '<br>';
-//echo 'User Has Permition to View Administer_Facilities? ';
-//print $pclass->hasPermissionToView('Administer_Facilities')? 'YES' : 'NO';
-//echo '<br>';
-//echo 'User Has Permition to Edit Administer_Facilities? ';
-//print $pclass->hasPermissionEdit('Administer_Facilities')? 'YES' : 'NO';
-//echo '<br>';
-//echo 'User Has Permition to Delete Administer_Facilities? ';
-//print $pclass->hasPermissionDelete('Administer_Facilities')? 'YES' : 'NO';
-//echo '<br>';
-//echo '<br>';
-//echo 'User Has Permition to View Administer_Lists? ';
-//print $pclass->hasPermissionToView('Administer_Lists')? 'YES' : 'NO';
-//echo '<br>';
-//echo 'User Has Permition to Edit Administer_Lists? ';
-//print $pclass->hasPermissionEdit('Administer_Lists')? 'YES' : 'NO';
-//echo '<br>';
-//echo 'User Has Permition to Delete Administer_Lists? ';
-//print $pclass->hasPermissionDelete('Administer_Lists')? 'YES' : 'NO';
+//print $pclass->hasPermission('Administer_Roles')? 'YES' : 'NO';
+
 //echo '<br>';
 //echo '<br>';
 //echo 'perm values';
-//echo '<br>';
-//print_r(json_encode($pclass->getPermValues()));
-//echo '<br>';
 //echo '<br>';
 //echo 'all roles';
 //echo '<br>';

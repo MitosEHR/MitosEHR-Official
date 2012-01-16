@@ -8,7 +8,20 @@
     opacity:.5;
     filter: alpha(opacity=50);
 }
+.roleHeader{
+    font-size: 14px;
+}
+.roleHeader .perm{
+    float       : left;
+    margin      : 5px 82px 10px 10px;
 
+}
+.roleHeader .role{
+    text-align  : center;
+    width       : 110px;
+    margin      : 5px 12px 10px 11px;
+    float       : left;
+}
 @font-face{
 	font-family: 'Cuprum';
 	src: url('../ui_fonts/Cuprum.ttf');

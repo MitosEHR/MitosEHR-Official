@@ -11,7 +11,9 @@ session_start();
 session_cache_limiter('private');
 $_SESSION['site']['flops'] = 0;
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/acl.class.php");
 
+$acl        = new ACL();
 $mitos_db   = new dbHelper();
 
 $rawData    = file_get_contents("php://input");
@@ -23,6 +25,10 @@ $limit      = (!$_REQUEST["limit"])? 10 : $_REQUEST["limit"];
 $rows       = array();
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
+        if($_REQUEST['task'] == 'form'){
+            print_r($acl->getRoleForm());
+            exit;
+        }
         // *************************************************************************************
         // Get the $_GET['role_id']
         // and execute the apropriate SQL statement

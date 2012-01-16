@@ -36,7 +36,7 @@ $fees_folder = array( 'text' => 'Cargos', 'cls' => 'folder', 'expanded' => true,
 // *************************************************************************************
 // Administration Folder
 // *************************************************************************************
-$admin_folder = array( 'text' => 'Administracion', 'cls' => 'folder', 'expanded' => false, 'children' =>
+$admin_folder = array( 'text' => 'Administracion', 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
         array( 'text' => 'Global Settings', 'leaf' => true, 'cls' => 'file', 'id' => 'panelGlobals' ),
         array( 'text' => 'Facilidades',     'leaf' => true, 'cls' => 'file', 'id' => 'panelFacilities' ),
