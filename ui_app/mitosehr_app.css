@@ -9,11 +9,11 @@
     filter: alpha(opacity=50);
 }
 .roleHeader{
-    font-size: 14px;
+    font-size: 14px!important;
 }
 .roleHeader .perm{
-    float       : left;
-    margin      : 5px 90px 10px 10px;
+    float       : left!important;
+    margin      : 5px 90px 10px 10px!important;
 
 }
 .roleHeader .role{
@@ -26,14 +26,25 @@
 	font-family: 'Cuprum';
 	src: url('../ui_fonts/Cuprum.ttf');
 }
+
+
+/* Mitos Loading Mask */
 .mitos-mask {
     z-index:  300000;
 }
 .mitos-mask-msg {
     z-index:300001;
+    background: url(mitosehr_loading.jpg) no-repeat white center top;
     left:   45%;
-    top:    50%;
+    top:    40%;
 }
+.mitos-mask-msg div {
+    background-color: transparent;
+    background-position: 5px 120px;
+    padding: 120px 10px 10px 26px;
+    margin: 0;
+}
+
 ::-webkit-scrollbar {
     width: 4px;
     height: 10px;

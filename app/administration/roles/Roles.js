@@ -45,15 +45,15 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
     getHeader:function(){
         return [{
             xtype : 'container',
-            html  : '<span class="roleHeader">'+
-                '<spam class="perm">Permission</spam>' +
-                '<spam class="role">Front Office</spam>' +
-                '<spam class="role">Auditors</spam>' +
-                '<spam class="role">Clinician</spam>' +
-                '<spam class="role">Physician</spam>' +
-                '<spam class="role">Adminstrators</spam>' +
-                '<spam class="role">Super User</spam>' +
-                '</span>'
+            html  : '<div class="roleHeader">' +
+                        '<span class="perm">Permission</span>' +
+                        '<span class="role">Front Office</span>' +
+                        '<span class="role">Auditors</span>' +
+                        '<span class="role">Clinician</span>' +
+                        '<span class="role">Physician</span>' +
+                        '<span class="role">Adminstrators</span>' +
+                        '<span class="role">Super User</span>' +
+                    '</div>'
         }]
     },
 
@@ -70,6 +70,9 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
     onActive:function(callback){
         var me   = this,
             form = me.form;
+
+        form.el.mask('Loading...');
+
         form.removeAll();
         Ext.Ajax.request({
             url     : 'app/administration/roles/data.php?task=form',
@@ -78,6 +81,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
                 form.add(me.getHeader());
                 form.add(eval(response.responseText));
                 form.doLayout();
+                form.el.unmask();
             }
         });
         callback(true);
