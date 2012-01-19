@@ -2,6 +2,10 @@
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
+
+include_once($_SESSION['site']['root']."/classes/acl.class.php");
+$ACL = new ACL();
+
 // *************************************************************************************
 // Renders the items of the navigation panel
 // Default Nav Data
@@ -36,7 +40,7 @@ $fees_folder = array( 'text' => 'Cargos', 'cls' => 'folder', 'expanded' => true,
 // *************************************************************************************
 // Administration Folder
 // *************************************************************************************
-$admin_folder = array( 'text' => 'Administracion', 'cls' => 'folder', 'expanded' => false, 'children' =>
+$admin_folder = array( 'text' => 'Administracion', 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
         array( 'text' => 'Global Settings', 'leaf' => true, 'cls' => 'file', 'id' => 'panelGlobals' ),
         array( 'text' => 'Facilidades',     'leaf' => true, 'cls' => 'file', 'id' => 'panelFacilities' ),
