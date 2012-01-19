@@ -1,25 +1,30 @@
 <?php
+
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
+
+include_once($_SESSION['site']['root']."/classes/acl.class.php");
+$ACL = new ACL();
+
 // *************************************************************************************
 // Renders the items of the navigation panel
 // Default Nav Data
 // *************************************************************************************
 $nav = array(
-    array( 'text' => 'Dashboard',        'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoDash',      'id' => 'panelDashboard' ),
-    array( 'text' => 'Calendar',         'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoCalendar',  'id' => 'panelCalendar' ),
-    array( 'text' => 'Messages',         'leaf' => true, 'cls' => 'file', 'iconCls' => 'mail',         'id' => 'panelMessages' ),
-    array( 'text' => 'Patient Search',   'leaf' => true, 'cls' => 'file', 'iconCls' => 'searchUsers',  'id' => 'panelPatientSearch' ),
+    array( 'text' => 'Dashboard',           'disabled'=> ($ACL->hasPermission('access_dashboard')? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoDash',      'id' => 'panelDashboard' ),
+    array( 'text' => 'Calendar',            'disabled'=> ($ACL->hasPermission('access_calendar') ? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoCalendar',  'id' => 'panelCalendar' ),
+    array( 'text' => 'Messages',            'disabled'=> ($ACL->hasPermission('access_messages') ? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'mail',         'id' => 'panelMessages' ),
+    array( 'text' => 'Patient Search',      'disabled'=> ($ACL->hasPermission('search_patient')  ? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'searchUsers',  'id' => 'panelPatientSearch' ),
 );
 // *************************************************************************************
 // Patient Folder
 // *************************************************************************************
 $patient_folder = array( 'text' => 'Patient', 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => 'New Patient',      'leaf' => true, 'cls' => 'file', 'id' => 'panelNewPatient' ),
-        array( 'text' => 'Patient Summary',  'leaf' => true, 'cls' => 'file', 'id' => 'panelSummary' ),
-        array( 'text' => 'Visits',           'leaf' => true, 'cls' => 'file', 'id' => 'panelVisits' ),
+        array( 'text' => 'New Patient',      'disabled'=> ($ACL->hasPermission('add_patient')  ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelNewPatient' ),
+        array( 'text' => 'Patient Summary',  'disabled'=> ($ACL->hasPermission('open_patient') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelSummary' ),
+        array( 'text' => 'Visits',           'disabled'=> ($ACL->hasPermission('open_patient') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelVisits' ),
     )
 );
 // *************************************************************************************
@@ -38,15 +43,15 @@ $fees_folder = array( 'text' => 'Fees', 'cls' => 'folder', 'expanded' => true, '
 // *************************************************************************************
 $admin_folder = array( 'text' => 'Administration', 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => 'Global Settings', 'leaf' => true, 'cls' => 'file', 'id' => 'panelGlobals' ),
-        array( 'text' => 'Facilities',      'leaf' => true, 'cls' => 'file', 'id' => 'panelFacilities' ),
-        array( 'text' => 'Users',           'leaf' => true, 'cls' => 'file', 'id' => 'panelUsers' ),
-        array( 'text' => 'Practice',        'leaf' => true, 'cls' => 'file', 'id' => 'panelPractice' ),
-        array( 'text' => 'Services',        'leaf' => true, 'cls' => 'file', 'id' => 'panelServices' ),
+        array( 'text' => 'Global Settings', 'disabled'=> ($ACL->hasPermission('access_gloabal_settings')? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelGlobals' ),
+        array( 'text' => 'Facilities',      'disabled'=> ($ACL->hasPermission('access_facilities')      ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelFacilities' ),
+        array( 'text' => 'Users',           'disabled'=> ($ACL->hasPermission('access_users')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelUsers' ),
+        array( 'text' => 'Practice',        'disabled'=> ($ACL->hasPermission('access_practice')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelPractice' ),
+        array( 'text' => 'Services',        'disabled'=> ($ACL->hasPermission('access_services')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelServices' ),
         array( 'text' => 'Roles',           'leaf' => true, 'cls' => 'file', 'id' => 'panelRoles' ),
-        array( 'text' => 'Layouts',         'leaf' => true, 'cls' => 'file', 'id' => 'panelLayout' ),
-        array( 'text' => 'Lists',           'leaf' => true, 'cls' => 'file', 'id' => 'panelLists' ),
-        array( 'text' => 'Event Log',       'leaf' => true, 'cls' => 'file', 'id' => 'panelLog' ),
+        array( 'text' => 'Layouts',         'disabled'=> ($ACL->hasPermission('access_layouts')         ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLayout' ),
+        array( 'text' => 'Lists',           'disabled'=> ($ACL->hasPermission('access_lists')          ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLists' ),
+        array( 'text' => 'Event Log',       'disabled'=> ($ACL->hasPermission('access_event_log')       ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLog' ),
     )
 );
 // *************************************************************************************

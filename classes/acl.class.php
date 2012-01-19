@@ -1,8 +1,9 @@
 <?php
-
-$_SESSION['site']['flops'] = 0;
-
+//session_name ( "MitosEHR" );
+//session_start();
+//session_cache_limiter('private');
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+
 
 class ACL {
 
@@ -13,7 +14,7 @@ class ACL {
     /**
      * @var int
      */
-    private $user_id = 0;
+    private $user_id;
     /**
      * @var array
      */
@@ -24,24 +25,14 @@ class ACL {
     private $conn;
 
     /**
-     * @param string $user_id
+     * @internal param string $user_id
+     * @param null $user_id
      */
-	private function __constructor($user_id = ''){
+	public function __construct($user_id = null){
         $this->conn = new dbHelper();
-		if ($user_id != '') {
-			$this->user_id = floatval($user_id);  
-		} else {  
-			$this->user_id = floatval($_SESSION['user']['id']);
-		}  
+        $this->user_id = ($user_id == null)? $_SESSION['user']['id'] : $user_id;
         $this->user_roles = $this->getuser_roles();
-		$this->buildACL();
-	}
-
-    /**
-     * @param string $user_id
-     */
-	public function ACL($user_id=''){
-		$this->__constructor($user_id);  
+        $this->buildACL();
 	}
 
     /**
@@ -106,7 +97,7 @@ class ACL {
      */
 	private function getperm_keyFromid($perm_id){
 		$strSQL = "SELECT perm_key FROM acl_permissions WHERE id = " . floatval($perm_id) . " LIMIT 1";
-		$this->conn->setSQL($strSQL);
+        $this->conn->setSQL($strSQL);
 		$row = $this->conn->execStatement(PDO::FETCH_ASSOC);
 		return $row[0]['perm_key'];
 	}
@@ -117,7 +108,7 @@ class ACL {
      */
 	private function getperm_nameFromid($perm_id){
 		$strSQL = "SELECT perm_name FROM acl_permissions WHERE id = " . floatval($perm_id) . " LIMIT 1";
-		$this->conn->setSQL($strSQL);
+        $this->conn->setSQL($strSQL);
 		$row = $this->conn->execStatement(PDO::FETCH_ASSOC);
 		return $row[0]['perm_name'];
 	}
@@ -128,7 +119,7 @@ class ACL {
      */
 	private function getRoleNameFromid($role_id){
 		$strSQL = "SELECT role_name FROM acl_roles WHERE id = " . floatval($role_id) . " LIMIT 1";
-		$this->conn->setSQL($strSQL);
+        $this->conn->setSQL($strSQL);
 		$row = $this->conn->execStatement(PDO::FETCH_ASSOC);
 		return $row[0]['role_name'];
 	}
@@ -143,7 +134,7 @@ class ACL {
 		} else {
 			$roleSQL = "SELECT * FROM acl_role_perms WHERE role_id = " . floatval($role) . " ORDER BY id ASC";
 		}
-		$this->conn->setSQL($roleSQL);
+        $this->conn->setSQL($roleSQL);
 		$perms = array();
 		foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
 			$pK = strtolower($this->getperm_keyFromid($row['perm_id']));
@@ -164,7 +155,7 @@ class ACL {
      */
 	private function getUserPerms($user_id){
 		$strSQL = "SELECT * FROM acl_user_perms WHERE user_id = " . floatval($user_id) . " ORDER BY add_date ASC";
-		$this->conn->setSQL($strSQL);
+        $this->conn->setSQL($strSQL);
 		$perms = array();
         foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
 			$pK = strtolower($this->getperm_keyFromid($row['perm_id']));
@@ -217,7 +208,7 @@ class ACL {
         $items = array();
         $perms = array();
         $roles = $this->getAllRoles();
-        $cattegories = array('Calendar','Patients','Encounters','Demographics','Documents','ePrescription','Administration','Miscellaneous');
+        $cattegories = array('General','Calendar','Patients','Encounters','Demographics','Documents','ePrescription','Administrators','Miscellaneous');
         foreach($this->getAllPerms('full') as $perm){
             array_push($perms,$perm);
         }
@@ -243,11 +234,11 @@ class ACL {
                     $row['fieldLabel'] = $perm['Name'];
                     $checkboxes = array();
                     foreach($roles['row'] as $role){
-                        $checkbox = array('name' => strtolower($perm['Key']).'_'.strtolower(str_replace(' ','_',$role['role_name'])));
+                        //TODO:  for development...  false : false
+                        $disable = false; //(strtolower($role['role_name']) == 'administrator')? false : false;
+                        $checkbox = array('name'=>strtolower($perm['Key']).'_'.strtolower(str_replace(' ','_',$role['role_name'])),'disabled'=>$disable );
                         array_push($checkboxes,$checkbox);
                     }
-
-                    array_push($checkboxes,array('name' => strtolower($perm['Key']).'_'.strtolower('su'), 'checked' => true, 'disabled'=>true ));
 
                     $row['items'] = $checkboxes;
                     array_push($item['items'],$row);
@@ -265,13 +256,78 @@ class ACL {
         $itemsJsArray = str_replace( '"', '\'', str_replace( $rawItems[0], $cleanItems, $rawStr ));
         return $itemsJsArray;
     }
+
+    private function saveRolePerm($role, $perm, $val){
+
+        $this->conn->setSQL("SELECT id FROM acl_roles WHERE role_key = '$role'");
+        $role = $this->conn->fetch();
+        $role_perms['role_id'] = $role['id'];
+
+        $this->conn->setSQL("SELECT id FROM acl_permissions WHERE perm_key = '$perm'");
+        $perms = $this->conn->fetch();
+        $role_perms['perm_id'] = $perms['id'];
+        $role_perms['value'] = $val;
+
+        $this->conn->setSQL("SELECT id FROM acl_role_perms WHERE 	role_id = '".$role_perms['role_id']."' AND perm_id = '".$role_perms['perm_id']."' ");
+        $role_perm = $this->conn->fetch();
+
+        if($role_perm['id'] != null){
+            $sql = $this->conn->sqlBind($role_perms, "acl_role_perms", "U", "id = '".$role_perm['id']."'");
+            $this->conn->setSQL($sql);
+            $this->conn->execLog();
+        }else{
+            $sql = $this->conn->sqlBind($role_perms, "acl_role_perms", "I");
+            $this->conn->setSQL($sql);
+            $this->conn->execLog();
+        }
+    }
+
+    public function saveRoles($data){
+        unset ($data['task']);
+        function parse_boolean($val) {
+            return ($val == 'on')? 1 : 0;
+        }
+
+
+        foreach($data as $key => $val){
+            $val = parse_boolean($val);
+            if(!strpos($key,'_front_office') === false){
+                $this->saveRolePerm('front_office',str_replace('_front_office','',$key), $val);
+            }elseif(!strpos($key,'_auditor') === false){
+                $this->saveRolePerm('auditor',str_replace('_auditor','',$key), $val);
+            }elseif(!strpos($key,'_clinician') === false){
+                $this->saveRolePerm('clinician',str_replace('_clinician','',$key), $val);
+            }elseif(!strpos($key,'_physician') === false){
+                $this->saveRolePerm('physician',str_replace('_physician','',$key), $val);
+            }elseif(!strpos($key,'_administrator') === false){
+                $this->saveRolePerm('administrator',str_replace('_administrator','',$key), $val);
+            }
+        }
+
+        return '{"success":true}';
+    }
+
+    public function getrolesFormData(){
+        //global $mitos_db;
+        $this->conn->setSQL("SELECT acl_roles.role_key, acl_permissions.perm_key, acl_role_perms.value
+                               FROM (acl_role_perms
+                          LEFT JOIN acl_roles ON acl_role_perms.role_id = acl_roles.id)
+                         RIGHT JOIN acl_permissions ON acl_role_perms.perm_id = acl_permissions.id
+                           ORDER BY role_name DESC");
+        $total = $this->conn->rowCount();
+        $rows = array();
+        foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
+            $rows[$row['perm_key'].'_'.$row['role_key']] = $row['value'];
+        }
+        return json_encode(array('totals'=>$total,'row'=>$rows));
+    }
 }
 /**
  * TEST AREA!
  */
 //$pclass = new ACL();
 //echo '<pre>';
-//$pclass->getRoleForm();
+//print_r($pclass->hasPermission('access_calendar')? 'yes':'no');
 //
 //echo 'User Has Permition to View Administer_Roles? ';
 //print $pclass->hasPermission('Administer_Roles')? 'YES' : 'NO';

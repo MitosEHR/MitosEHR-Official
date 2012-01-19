@@ -2,6 +2,10 @@
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
+
+include_once($_SESSION['site']['root']."/classes/acl.class.php");
+$ACL = new ACL();
+
 // *************************************************************************************
 // Renders the items of the navigation panel
 // Default Nav Data

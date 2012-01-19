@@ -24,13 +24,20 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         //******************************************************************************
 
         me.form = Ext.create('Ext.form.Panel',{
-            bodyPadding: 10,
+            url         : 'app/administration/roles/data.php?task=save',
+            bodyPadding : 10,
             items:[{
                 xtype       : 'fieldcontainer',
                 defaultType : 'mitos.checkbox',
                 layout      : 'hbox'
             }],
             tbar:[{
+                text    : 'Save',
+                iconCls : 'save',
+                scope   : me,
+                handler : me.onSave
+            }],
+            bbar:[{
                 text    : 'Save',
                 iconCls : 'save',
                 scope   : me,
@@ -52,13 +59,66 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
                         '<span class="role">Clinician</span>' +
                         '<span class="role">Physician</span>' +
                         '<span class="role">Adminstrators</span>' +
-                        '<span class="role">Super User</span>' +
                     '</div>'
         }]
     },
 
     onSave:function(){
+        var me = this,
+            form = me.form.getForm();
 
+        if (form.isValid()) {
+            form.submit({
+                success : function(form, action) {
+                    me.msg('Sweet!','Roles have been updated');
+                },
+                failure : function(form, action) {
+                    me.msg('Oops!','Something went wrong');
+                }
+            });
+        }
+    },
+
+
+    getFormData:function(){
+
+        var form = this.form;
+
+        var formFields = form.getForm().getFields(),
+            modelFields = [];
+
+        Ext.each(formFields.items, function(field){
+            modelFields.push({name:field.name, type:'auto'});
+        });
+
+        var model = Ext.define( form.itemId+'Model', {
+            extend: 'Ext.data.Model',
+            fields: modelFields,
+            proxy: {
+                type        : 'rest',
+                url         : 'app/administration/roles/data.php',
+                extraParams : {task:'data'},
+                reader: {
+                    type			: 'json',
+                    totalProperty	: 'totals',
+                    root			: 'row'
+                }
+            }
+        });
+
+        var store = Ext.create('Ext.data.Store', {
+            model: model
+        });
+
+        store.load({
+            scope   : this,
+            callback: function(records, operation, success){
+                if(success){
+                    form.getForm().loadRecord(records[0]);
+                    form.el.unmask();
+                }
+            }
+        });
     },
 
     /**
@@ -81,7 +141,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
                 form.add(me.getHeader());
                 form.add(eval(response.responseText));
                 form.doLayout();
-                form.el.unmask();
+                me.getFormData();
             }
         });
         callback(true);
