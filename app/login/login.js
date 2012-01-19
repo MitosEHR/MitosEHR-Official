@@ -242,8 +242,9 @@ Ext.define('Ext.mitos.panel.login.Login',{
                      */
                     Ext.Function.defer(function(){
                         this.currSite = records[0].data.site;
+                        this.currLang = 'en_US';
                         this.formLogin.getComponent('choiseSite').setValue(this.currSite);
-                        this.formLogin.getComponent('lang').setValue('en_US');
+                        this.formLogin.getComponent('lang').setValue(this.currLang);
                         this.formLogin.getComponent('authUser').focus();
                     },100,this);
 

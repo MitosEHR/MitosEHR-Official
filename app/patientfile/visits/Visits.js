@@ -221,7 +221,7 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             region      : 'east',
             margin      : '0 0 0 2',
             bodyStyle   : 'padding:15px',
-            width       : 500,
+            width       : 400,
             collapsible : true,
             animCollapse: true,
             html        : '<h2>Progress Note Placeholder</h2>',

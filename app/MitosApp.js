@@ -320,7 +320,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             items		: [{
                 xtype       : 'treepanel',
                 region		: 'center',
-                bodyPadding : '5 0 0 0',
+                //bodyPadding : '5 0 0 0',
                 cls         : 'nav_tree',
                 hideHeaders	: true,
                 rootVisible	: false,
@@ -382,14 +382,18 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             itemId          : 'MainPanel',
             defaults        : { layout: 'fit', xtype:'container' },
             items: [
+
                 Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done  TODO: panels
                 Ext.create('Ext.mitos.panel.calendar.Calendar'),                        // done
                 Ext.create('Ext.mitos.panel.messages.Messages'),                        // done
                 Ext.create('Ext.mitos.panel.search.PatientSearch'),                     //
 
+
                 Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                 Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                 Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),
+
+
                 Ext.create('Ext.mitos.panel.fees.billing.Billing'),
                 Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
                 Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
@@ -400,12 +404,12 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
                 Ext.create('Ext.mitos.panel.administration.layout.Layout'),             // working
                 Ext.create('Ext.mitos.panel.administration.lists.Lists'),               // working
-
                 Ext.create('Ext.mitos.panel.administration.log.Log'),                   // done
                 Ext.create('Ext.mitos.panel.administration.practice.Practice'),         // done
                 Ext.create('Ext.mitos.panel.administration.roles.Roles'),               // done
                 Ext.create('Ext.mitos.panel.administration.services.Services'),         // done
                 Ext.create('Ext.mitos.panel.administration.users.Users'),               // done
+
 
                 Ext.create('Ext.mitos.panel.miscellaneous.addressbook.Addressbook'),
                 Ext.create('Ext.mitos.panel.miscellaneous.myaccount.MyAccount'),
@@ -477,8 +481,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
     newPatient:function(){
         this.remoteNavNodeSelecte('panelNewPatient', function(){
-            this.currCardCmp.patientUnset();
+            this.patientUnset();
+
         });
+        console.log(this.currCardCmp);
     },
 
     newEncounter:function(){

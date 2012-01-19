@@ -10,9 +10,8 @@
  * will only create the form object with the fields names & dataStores configured on the layout_options table.
  * 
  * version: 0.1.0
- * author: GI Technologies, 2011
- * modified: Ernesto J Rodriguez
- * 
+ * author: Ernesto J Rodriguez
+ *
  */
 session_name ( "MitosEHR" );
 session_start();
