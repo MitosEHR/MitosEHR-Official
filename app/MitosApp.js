@@ -6,6 +6,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.CRUDStore',
         'Ext.mitos.restStoreModel',
 
+        'Ext.dd.DropZone',
+        'Ext.dd.DragZone',
+
         'Extensible.calendar.CalendarPanel',
         'Extensible.calendar.gadget.CalendarListPanel',
         'Extensible.calendar.data.MemoryCalendarStore',
@@ -77,7 +80,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         Ext.TaskManager.start({
             run		    : function(){
                 me.checkSession();
-                me.checkPool();
+                me.patientPoolStore.load();
             },
             interval    : 10000
         });
@@ -103,6 +106,16 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 scope: me,
                 load : me.navNodeDefault
             }
+        });
+
+        me.patientPoolStore = Ext.create('Ext.data.Store', {
+            fields: ['name', 'pid', 'pic'],
+            data : [
+                {"name":"Ernesto J Rodriguez",  "pid":"123", "pic":"ui_icons/user_32.png"},
+                {"name":"Juan Pablo",           "pid":"634", "pic":"ui_icons/user_32.png"},
+                {"name":"Joe Smith",            "pid":"867", "pic":"ui_icons/user_32.png"}
+                //...
+            ]
         });
 
 
@@ -344,12 +357,32 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 title       : lang.patientPoolArea,
                 layout      : 'vbox',
                 region      : 'south',
-                itemId      : 'poolArea',
                 bodyPadding : 5,
-
                 height      : 300,
                 collapsible : true,
-                border      : false
+                border      : false,
+                items:[{
+                    xtype   : 'dataview',
+                    cls     : 'patient-pool-view',
+                    tpl: '<tpl for=".">' +
+                            '<div class="patient-pool-btn x-btn x-btn-default-large">' +
+                                '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>' +
+                                '<div class="patient_btn_info">' +
+                                    '<div class="patient-name">{name}</div>' +
+                                    '<div class="patient-name">({pid})</div>' +
+                                '</div>' +
+                            '</div>' +
+                         '</tpl>',
+                    itemSelector: 'div.patient-pool-btn',
+                    overItemCls: 'patient-over',
+                    selectedItemClass: 'patient-selected',
+                    singleSelect: true,
+                    store: me.patientPoolStore,
+                    listeners: {
+                        scope   : me,
+                        render  : me.initializePatientDragZone
+                    }
+                }]
             }],
             dockedItems : [{
                 xtype   : 'toolbar',
@@ -421,7 +454,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes'),
                 Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
 
-            ]
+            ],
+            listeners:{
+                scope       : me,
+                afterrender : me.initializeHospitalDropZone
+            }
         });
 
 
@@ -502,7 +539,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
     openCurrEncounter:function(){
-        this.remoteNavNodeSelecte('panelVisits');
+        this.remoteNavNodeSelecte('panelEncounter');
     },
 
     closeCurrEncounter:function(){
@@ -637,48 +674,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
 
-    checkPool:function(){
-        var me       = this,
-            poolArea = me.navColumn.getComponent('poolArea'),
-            poolData = [{
-            pid:4587,
-            name:'Juan Pablo'
-        },{
-            pid:2342,
-            name:'Joe Smith'
-        }];
-
-        poolArea.removeAll();
-
-        Ext.each( poolData, function(patient, index, countriesItSelf){
-            var btn = poolArea.add({
-                xtype       : 'button',
-                text        : patient.name +' - ('+ patient.pid +')',
-                scale       : 'large',
-                margin      : '0 0 3 0',
-                width       : poolArea.getWidth()-10,
-                textAlign   : 'left',
-                tpl: me.patientBtn()
-            });
-            btn.update({name: patient.name, info:'('+patient.pid+')' });
-        });
-
-        poolArea.doLayout();
-    },
-
     patientBtn:function(){
-      return new Ext.create('Ext.XTemplate',
-          '<div class="patient_btn">',
-              '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
-              '<div class="patient_btn_info">',
-                  '<div class="patient_btn_name">{name}</div>',
-                  '<div class="patient_btn_record">{info}</div>',
-              '</div>',
-          '</div>',{
-          defaultValue: function(v){
-              return (v) ? v : 'No Patient Selected';
-          }
-      })
+        return new Ext.create('Ext.XTemplate',
+            '<div class="patient_btn">',
+                '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
+                '<div class="patient_btn_info">',
+                    '<div class="patient_btn_name">{name}</div>',
+                    '<div class="patient_btn_record">{info}</div>',
+                '</div>',
+            '</div>',{
+            defaultValue: function(v){
+                return (v) ? v : 'No Patient Selected';
+            }
+        })
     },
 
     appLogout:function(){
@@ -707,7 +715,71 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         callback(true);
     },
 
+    /**
+     *
+     * @param panel
+     */
+    initializePatientDragZone:function(panel) {
+        panel.dragZone = Ext.create('Ext.dd.DragZone', panel.getEl(), {
 
+            ddGroup:'patient',
+
+            // On receipt of a mousedown event, see if it is within a draggable element.
+            // Return a drag data object if so. The data object can contain arbitrary application
+            // data, but it should also contain a DOM element in the ddel property to provide
+            // a proxy to drag.
+            getDragData: function(e) {
+
+                App.MainPanel.el.mask('Drop Here To Open Current Encounter');
+
+                var sourceEl = e.getTarget(panel.itemSelector, 10), d;
+                if (sourceEl) {
+                    d = sourceEl.cloneNode(true);
+                    d.id = Ext.id();
+                    return panel.dragData = {
+                        sourceEl: sourceEl,
+                        repairXY: Ext.fly(sourceEl).getXY(),
+                        ddel: d,
+                        patientData: panel.getRecord(sourceEl).data
+                    };
+                }
+            },
+
+
+            // Provide coordinates for the proxy to slide back to on failed drag.
+            // This is the original XY coordinates of the draggable element.
+            getRepairXY: function() {
+
+                App.MainPanel.el.unmask();
+
+                return this.dragData.repairXY;
+            }
+        });
+    },
+
+    /**
+     *
+     * @param panel
+     */
+    initializeHospitalDropZone: function(panel) {
+        var me = this;
+        panel.dropZone = Ext.create('Ext.dd.DropZone', panel.getEl(), {
+
+            ddGroup:'patient',
+
+            notifyOver:function(source, e, data){
+                return Ext.dd.DropZone.prototype.dropAllowed;
+            },
+
+            notifyDrop:function(dd, e, data){
+                App.MainPanel.el.unmask();
+                me.setCurrPatient(data.patientData.pid,data.patientData.name,function(){
+                    me.openCurrEncounter();
+                });
+            }
+
+        });
+    },
 
     getCurrPatient:function(){
         return this.currPatient;
