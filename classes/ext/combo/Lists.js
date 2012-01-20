@@ -24,7 +24,7 @@ Ext.define('Ext.mitos.combo.Lists',{
             displayField: 'title',
             emptyText   : 'Select',
             store       : me.store
-		});
+		},null);
 		me.callParent(arguments);
 	} 
 });

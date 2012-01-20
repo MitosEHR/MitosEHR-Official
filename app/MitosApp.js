@@ -37,6 +37,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.panel.patientfile.new.NewPatient',
         'Ext.mitos.panel.patientfile.summary.Summary',
         'Ext.mitos.panel.patientfile.visits.Visits',
+        'Ext.mitos.panel.patientfile.encounter.Encounter',
+
+
         'Ext.mitos.panel.fees.billing.Billing',
         'Ext.mitos.panel.fees.checkout.Checkout',
         'Ext.mitos.panel.fees.fees_sheet.FeesSheet',
@@ -392,6 +395,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                 Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                 Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),
+                Ext.create('Ext.mitos.panel.patientfile.encounter.Encounter'),
 
 
                 Ext.create('Ext.mitos.panel.fees.billing.Billing'),

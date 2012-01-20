@@ -46,7 +46,7 @@ class formLayoutEngine extends dbHelper {
                            ON ff.form_id = fl.id
                         WHERE (fl.name = '$formPanel' OR fl.id = '$formPanel')
                           AND (ff.item_of IS NULL OR ff.item_of = '0')
-                     ORDER BY pos ASC ");
+                     ORDER BY pos ASC, ff.id ASC");
         /**
          * for each parent item lets get all the options and children items
          */
