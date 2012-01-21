@@ -30,6 +30,9 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         });
 
 
+
+
+
         // Panels/Forms...
         //****
         //******************************************************************
@@ -47,15 +50,17 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 { flex: 1,    header: 'Billing',        sortable: true, dataIndex: 'billing' },
                 { flex: 1,    header: 'Issurance',      sortable: true, dataIndex: 'inssurance' }
             ],
-
-
-
             listeners	: {
                 scope       : me,
                 itemclick   : me.gridItemClick,
                 itemdblclick: me.gridItemDblClick
 
-            }
+            },
+            tbar:['->',{
+                text    : 'New Encounter',
+                scope   : me,
+                handler : me.newEncounter
+            }]
         });
         me.pageBody = [me.historyGrid];
 
@@ -64,11 +69,16 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
 
     gridItemClick:function(){
 
+
     },
 
     gridItemDblClick:function(){
-        //this.currEncounter = true;
+
+
     },
+
+
+
 
     setFormPanel:function(type){
         var encounterPanel      = this.centerPanel.getComponent('encounter'),

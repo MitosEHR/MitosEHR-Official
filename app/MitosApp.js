@@ -168,7 +168,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             margins		: '0 0 0 0',
             items		: [{
                 xtype	: 'container',
-                html	: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
+                html	: '<img src="ui_app/app_logo.png" height="40" width="200" style="float:left">',
                 style	: 'float:left',
                 border	: false
             },{
@@ -177,7 +177,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 style 	: 'float:left',
                 margin	: '0 0 0 5',
                 itemId  : 'patientButton',
-                minWidth: 190,
                 listeners: {
                     scope       : me,
                     afterrender : me.patientUnset
@@ -187,7 +186,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                     items:[{
                         text    : lang.newEncounter,
                         scope   : me,
-                        handler : me.newEncounter
+                        handler : me.createNewEncounter
                     },{
                         text    : 'Encounter History',
                         scope   : me,
@@ -218,6 +217,18 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 scope   : me,
                 handler : me.openPatientVisits,
                 tooltip : 'Open Patient Visits History'
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
+                itemId  : 'patientCreateEncounter',
+                iconCls : 'icoClock',
+                scope   : me,
+                handler : me.createNewEncounter,
+                tooltip : 'Crate New Encounter'
             },{
                 xtype   : 'button',
                 scale	: 'large',
@@ -544,19 +555,27 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         me.callParent(arguments);
     },
 
+
     newPatient:function(){
-        this.remoteNavNodeSelecte('panelNewPatient', function(){
-            this.patientUnset();
+        var me = this;
+        me.remoteNavNodeSelecte('panelNewPatient', function(){
+            me.patientUnset();
 
         });
         console.log(this.currCardCmp);
     },
 
-    newEncounter:function(){
-        this.remoteNavNodeSelecte('panelVisits', function(){
-            this.currCardCmp.newEncounter();
+
+    createNewEncounter:function(){
+        var me = this;
+
+        me.remoteNavNodeSelecte('panelEncounter', function(success){
+            if(success){
+                me.currCardCmp.newEncounter();
+            }
         });
     },
+
 
     openPatientSummary:function(){
         this.remoteNavNodeSelecte('panelSummary');
@@ -575,11 +594,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
     },
 
-    closeCurrEncounter:function(){
-        this.remoteNavNodeSelecte('panelVisits', function(){
-            this.currCardCmp.closeEncounter();
-        });
-    },
 
     openPatientVisits:function(){
         this.remoteNavNodeSelecte('panelVisits');
@@ -591,9 +605,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             sm          = tree.getSelectionModel(),
             node        = treeStore.getNodeById(id);
 
-
         sm.select(node);
-        if(typeof callback == 'fuction') callback(true);
+        if(typeof callback == 'function') callback(true);
     },
 
     navNodeDefault:function(){
@@ -762,10 +775,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             // data, but it should also contain a DOM element in the ddel property to provide
             // a proxy to drag.
             getDragData: function(e) {
-
-                App.MainPanel.el.mask('Drop Here To Open Current Encounter');
-
                 var sourceEl = e.getTarget(panel.itemSelector, 10), d;
+
+                App.MainPanel.el.mask('Drop Here To Open <strong>"'+panel.getRecord(sourceEl).data.name+'"</strong> Current Encounter');
+
                 if (sourceEl) {
                     d = sourceEl.cloneNode(true);
                     d.id = Ext.id();

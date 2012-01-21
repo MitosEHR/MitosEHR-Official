@@ -17,8 +17,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
     initComponent: function(){
         var me = this;
 
-        me.currEncounter = false;
-
         //******************************************************************
         // Stores...
         //******************************************************************
@@ -38,26 +36,31 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         });
 
 
-
         /**
          * New Encounter Panel this panel is located hidden at
          * the top of the Visit panel and will slide down if
          * the "New Encounter" button is pressed.
          */
-        me.newEncounterPanel = Ext.create('Ext.panel.Panel',{
-            title       : 'Create Visit',
-            region      : 'north',
-            height      : 300,
-            margin      : '0 0 2 0',
-            bodyStyle   : 'padding:15px',
-            hidden      : true,
-            collapsible : true,
-            collapsed   : true,
-            animCollapse: true,
-            titleCollapse:true,
-            hideCollapseTool: true,
-            collapseMode: 'header',
-            html        : '<h1>Create Encounter form placeholder!</h1>'
+        me.newEncWin = Ext.create('Ext.window.Window', {
+            title       : 'New Encounter Form',
+            closeAction : 'hide',
+            modal       : true,
+            closable    : false,
+            items:[{
+                xtype   : 'form',
+                url     : 'app/patientfile/encounter/data.php',
+                border  : false,
+                bodyPadding : '10 10 0 10'
+            }],
+            buttons:[{
+                text    : 'Create Encounter',
+                scope   : me,
+                handler : me.saveNewEnc
+            },{
+                text    : 'Cancel',
+                handler : me.cancelNewEnc
+
+            }]
         });
 
 
@@ -208,13 +211,10 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     // refresh log
 
                 }
-
             }]
-
-
         });
 
-        me.pageBody = [ me.newEncounterPanel, me.centerPanel, me.progressNote ];
+        me.pageBody = [ me.centerPanel, me.progressNote ];
 
         me.callParent(arguments);
 
@@ -257,38 +257,53 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
     },
 
-
     /**
      * This is the logic to create a new encounter
      */
     newEncounter:function(){
-        Ext.Msg.show({
-            title   : 'Please confirm...',
-            msg     : 'Do you want to create a new encounter?',
-            icon    : Ext.MessageBox.QUESTION,
-            buttons : Ext.Msg.YESNO,
-            scope   : this,
-            fn:function(btn){
-                if(btn=='yes'){
-                    this.encounterTime = new Date();
-                    this.timerTask = {
-                        scope:this,
-                        run:function () {
-                            this.encounterTimer();
-                        },
-                        interval:1000 //1 second
-                    };
-                    Ext.TaskManager.start(this.timerTask);
-                }
-            }
+        var me = this;
+        this.getFormItems( me.newEncWin.down('form'), 'New Encounter',function(){
+            me.newEncWin.show();
         });
     },
 
+
+    saveNewEnc:function(btn){
+        this.startTimer(new Date());
+        btn.up('window').close();
+    },
+
+    cancelNewEnc:function(btn){
+        btn.up('window').close();
+        App.openPatientSummary();
+    },
+
+
+
+
+
     /**
-     * function to
+     * This will start the timer task
+     *
+     * @param date
      */
-    encounterTimer:function(){
-        var ms = Ext.Date.getElapsed(this.encounterTime,new Date()),
+    startTimer:function(start_date){
+        //this.encounterTime = date;
+        this.timerTask = {
+            scope:this,
+            run:function () {
+                this.encounterTimer(start_date);
+            },
+            interval:1000 //1 second
+        };
+        Ext.TaskManager.start(this.timerTask);
+    },
+
+    /**
+     * This will
+     */
+    encounterTimer:function(start_date){
+        var ms = Ext.Date.getElapsed(start_date,new Date()),
         s = Math.floor((ms/1000)%60),
         m = Math.floor((ms/(1000*60))%60),
         h = Math.floor((ms/(1000*60*60))%24);
@@ -298,11 +313,12 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         var timer = twoDigit(h)+':'+twoDigit(m)+':'+twoDigit(s);
         var patient = this.getCurrPatient();
 
-        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.encounterTime, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(start_date, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
     },
 
-    closeEncounter:function(){
 
+
+    closeEncounter:function(){
         var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter:', function(btn, pass){
 
             if (btn == 'ok'){
@@ -312,11 +328,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         var f = msg.textField.getInputId();
         document.getElementById(f).type = 'password';
     },
-
-    encounterSelected:function(){
-        this.currEncounter = true;
-    },
-
 
 
     progressNoteCollapseExpand:function(){

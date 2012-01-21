@@ -54,6 +54,9 @@
 .icoCheck{
     background-image: url(../ui_icons/icoCheck.png) !important;
 }
+.icoClock{
+    background-image: url(../ui_icons/icoClock.png) !important;
+}
 .icoBackClock{
     background-image: url(../ui_icons/icoBackClock.png) !important;
 }
