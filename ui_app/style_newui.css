@@ -51,6 +51,9 @@
 .edit{
 	background-image: url(../ui_icons/edit.png) !important;
 }
+.icoCheck{
+    background-image: url(../ui_icons/icoCheck.png) !important;
+}
 .icoBackClock{
     background-image: url(../ui_icons/icoBackClock.png) !important;
 }

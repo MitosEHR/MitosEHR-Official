@@ -275,6 +275,18 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 handler : me.stowPatientRecord,
                 tooltip : 'Stow Patient Record'
             },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
+                itemId  : 'patientCheckOut',
+                iconCls : 'icoCheck',
+                scope   : me,
+                handler : me.checkOutPatient,
+                tooltip : 'Check Out Patient'
+            },{
                 xtype       : 'panel',
                 width		: 300,
                 bodyPadding	: '8 11 5 11',
@@ -557,6 +569,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
     openCurrEncounter:function(){
         this.remoteNavNodeSelecte('panelEncounter');
+    },
+
+    checkOutPatient:function(){
+
     },
 
     closeCurrEncounter:function(){
