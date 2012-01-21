@@ -191,7 +191,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                     },{
                         text    : 'Encounter History',
                         scope   : me,
-                        handler : me.encounterHistory
+                        handler : me.openPatientVisits
                     },{
                         text    : lang.patientDocuments,
                         scope   : me,
@@ -213,11 +213,23 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 margin	: '0 0 0 3',
                 cls     : 'headerLargeBtn',
                 padding : 0,
+                itemId  : 'patientOpenVisits',
+                iconCls : 'icoBackClock',
+                scope   : me,
+                handler : me.openPatientVisits,
+                tooltip : 'Open Patient Visits History'
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
                 itemId  : 'patientOpenCurrEncounter',
                 iconCls : 'icoArrowUp',
                 scope   : me,
-                handler : me.openCurrEncounter,
-                tooltip : 'Open Patient Current Encounter'
+                handler : me.openPatientSummary,
+                tooltip : 'Open Patient Record (Summary)'
             },{
                 xtype   : 'button',
                 scale	: 'large',
@@ -228,7 +240,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 itemId  : 'patientPushFor',
                 iconCls : 'icoArrowRight',
                 scope   : me,
-                tooltip : 'Sent Current Patient To...',
+                tooltip : 'Sent Current Patient Record To...',
                 arrowCls: 'none',
                 menu: [{
                     text     : 'Front Office',
@@ -260,8 +272,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 itemId  : 'patientCloseCurrEncounter',
                 iconCls : 'icoArrowDown',
                 scope   : me,
-                handler : me.closeCurrEncounter,
-                tooltip : 'Close Patient Current Encounter'
+                handler : me.stowPatientRecord,
+                tooltip : 'Stow Patient Record'
             },{
                 xtype       : 'panel',
                 width		: 300,
@@ -534,8 +546,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         });
     },
 
-    patientSummary:function(){
+    openPatientSummary:function(){
         this.remoteNavNodeSelecte('panelSummary');
+    },
+
+    stowPatientRecord:function(){
+        this.patientUnset();
+        this.remoteNavNodeSelecte('panelDashboard');
     },
 
     openCurrEncounter:function(){
@@ -548,7 +565,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         });
     },
 
-    encounterHistory:function(){
+    openPatientVisits:function(){
         this.remoteNavNodeSelecte('panelVisits');
     },
 
