@@ -175,10 +175,8 @@ cursor: pointer !important;
     float: left;
     height: 32px;
     width: 32px;
-
 }
 .patient_btn_img img{
-
     border: 1px solid #999999;
 }
 .patient_btn_info {
@@ -196,6 +194,19 @@ cursor: pointer !important;
     font-size: 24px !important;
     color: #666666;
 }
+.patient-pool-btn{
+    width: 100%;
+    margin-bottom: 3px;
+}
+.patient-pool-btn .patient_btn_info{
+    float: none;
+    width: 100%;
+}
+.patient-pool-btn .patient_btn_info div{
+    padding-left: 32px;
+}
+
+
 body#login{
 	background-image:url(login_bg.png) !important;
 	background-position: bottom;

@@ -22,6 +22,7 @@ Ext.define('Ext.mitos.RenderPanel', {
                 layout  : 'fit',
                 height  : 40,
                 html    : '<div class="dashboard_title">' + me.pageTitle + '</div>'
+
             },{
                 cls     : 'RenderPanel-body-container',
                 xtype   : 'container',
@@ -93,6 +94,8 @@ Ext.define('Ext.mitos.RenderPanel', {
             }
         });
     },
+
+
 
     getCurrPatient:function(){
         return App.getCurrPatient();

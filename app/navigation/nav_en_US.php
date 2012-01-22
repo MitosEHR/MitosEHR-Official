@@ -22,9 +22,10 @@ $nav = array(
 // *************************************************************************************
 $patient_folder = array( 'text' => 'Patient', 'cls' => 'folder', 'expanded' => true, 'children' =>
     array(
-        array( 'text' => 'New Patient',      'disabled'=> ($ACL->hasPermission('add_patient')  ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelNewPatient' ),
-        array( 'text' => 'Patient Summary',  'disabled'=> ($ACL->hasPermission('open_patient') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelSummary' ),
-        array( 'text' => 'Visits',           'disabled'=> ($ACL->hasPermission('open_patient') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelVisits' ),
+        array( 'text' => 'New Patient',      'disabled'=> ($ACL->hasPermission('add_patient')       ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelNewPatient' ),
+        array( 'text' => 'Patient Summary',  'disabled'=> ($ACL->hasPermission('open_patient')      ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelSummary' ),
+        array( 'text' => 'Visits History',   'disabled'=> ($ACL->hasPermission('open_patient')      ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelVisits' ),
+        array( 'text' => 'Encounter',        'disabled'=> ($ACL->hasPermission('access_encounters') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelEncounter' ),
     )
 );
 // *************************************************************************************
@@ -48,9 +49,9 @@ $admin_folder = array( 'text' => 'Administration', 'cls' => 'folder', 'expanded'
         array( 'text' => 'Users',           'disabled'=> ($ACL->hasPermission('access_users')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelUsers' ),
         array( 'text' => 'Practice',        'disabled'=> ($ACL->hasPermission('access_practice')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelPractice' ),
         array( 'text' => 'Services',        'disabled'=> ($ACL->hasPermission('access_services')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelServices' ),
-        array( 'text' => 'Roles',           'leaf' => true, 'cls' => 'file', 'id' => 'panelRoles' ),
+        array( 'text' => 'Roles',           'disabled'=> ($ACL->hasPermission('access_roles')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelRoles' ),
         array( 'text' => 'Layouts',         'disabled'=> ($ACL->hasPermission('access_layouts')         ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLayout' ),
-        array( 'text' => 'Lists',           'disabled'=> ($ACL->hasPermission('access_lists')          ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLists' ),
+        array( 'text' => 'Lists',           'disabled'=> ($ACL->hasPermission('access_lists')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLists' ),
         array( 'text' => 'Event Log',       'disabled'=> ($ACL->hasPermission('access_event_log')       ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLog' ),
     )
 );

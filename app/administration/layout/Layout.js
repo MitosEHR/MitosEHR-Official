@@ -327,6 +327,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     emptyText       : 'ei. 5 5 5 5',
                     hidden          : true
                 },{
+                    fieldLabel      : 'Column Width',
+                    xtype           : 'textfield',
+                    name            : 'columnWidth',
+                    itemId          : 'columnWidth',
+                    emptyText       : 'ei. .5',
+                    hidden          : true
+                },{
                     fieldLabel      : 'Is Required',
                     xtype           : 'checkbox',
                     name            : 'allowBlank',
@@ -791,7 +798,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'collapsible',
                 'collapsed',
                 'checkboxToggle',
-                'margin'
+                'margin',
+                'columnWidth'
             ];
         } else if (value == 'fieldcontainer') {
             items = [
@@ -799,7 +807,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'labelWidth',
                 'hideLabel',
                 'layout',
-                'margin'
+                'margin',
+                'columnWidth'
             ];
         } else if (value == 'combobox') {
             items = [
@@ -832,7 +841,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'allowBlank',
                 'margin'
             ];
-        } else if (value == 'textarea') {
+        } else if (value == 'textareafield') {
             items = [
                 'name',
                 'width',
@@ -883,10 +892,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'margin',
                 'inputValue'
             ];
-        } else if (value == 'datefield') {
+        } else if (value == 'datefield' || value == 'mitos.datetime') {
             items = [
                 'name',
                 'width',
+                'value',
                 'emptyText',
                 'fieldLabel',
                 'labelWidth',
