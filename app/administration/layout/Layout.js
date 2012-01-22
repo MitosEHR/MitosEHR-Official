@@ -892,10 +892,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'margin',
                 'inputValue'
             ];
-        } else if (value == 'datefield') {
+        } else if (value == 'datefield' || value == 'mitos.datetime') {
             items = [
                 'name',
                 'width',
+                'value',
                 'emptyText',
                 'fieldLabel',
                 'labelWidth',

@@ -6,6 +6,12 @@
  * Date: 1/21/12
  * Time: 3:18 PM
  */
+if(!isset($_SESSION)){
+    session_name ("MitosEHR" );
+    session_start();
+    session_cache_limiter('private');
+}
+
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 
 class Person extends dbHelper {

@@ -35,13 +35,12 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             autoLoad	: false
         });
 
-
         /**
          * New Encounter Panel this panel is located hidden at
          * the top of the Visit panel and will slide down if
          * the "New Encounter" button is pressed.
          */
-        me.newEncWin = Ext.create('Ext.window.Window', {
+        me.newEncounterWindow = Ext.create('Ext.window.Window', {
             title       : 'New Encounter Form',
             closeAction : 'hide',
             modal       : true,
@@ -84,7 +83,21 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         me.reviewSysPanel = Ext.create('Ext.panel.Panel',{
             border  : false,
             title   : 'Review of Systems',
-            html    : '<h1>Review of Systems form placeholder!</h1>'
+            items:[{
+                xtype   : 'form',
+                url     : 'app/patientfile/encounter/data.php',
+                border  : false,
+                bodyPadding : '10 10 0 10',
+                items:[{
+                    xtype:'mitos.datetime',
+                    listeners:{
+                        afterrender:function(dt){
+                            console.log(dt);
+                            dt.setValue(new Date())
+                        }
+                    }
+                }]
+            }]
         });
         me.reviewSysCkPanel = Ext.create('Ext.panel.Panel',{
             border  : false,
@@ -257,20 +270,77 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
     },
 
+
     /**
      * This is the logic to create a new encounter
      */
     newEncounter:function(){
-        var me = this;
-        this.getFormItems( me.newEncWin.down('form'), 'New Encounter',function(){
-            me.newEncWin.show();
+        var me = this,
+            form = me.newEncounterWindow.down('form');
+
+        Ext.Ajax.request({
+            url     : 'app/patientfile/encounter/data.php',
+            params  : {task:'ckOpenEncounters'},
+            scope   : this,
+            success : function(response){
+                var success = eval('('+response.responseText+')').success
+                if(success){
+                    Ext.Msg.show({
+                        title:'Open Encountes Found',
+                        msg: 'Would you like to review the Open Ecounters? Click No if you would like to continue creating the New Encounter',
+                        buttons: Ext.Msg.YESNO,
+                        icon: Ext.Msg.QUESTION,
+                        fn:function(btn){
+                            if(btn == 'yes'){
+                                App.openPatientVisits();
+                            }else{
+                                me.showNewEncounterWindow();
+                            }
+                        }
+                    });
+                }else{
+                    me.showNewEncounterWindow();
+                }
+
+
+            }
+        });
+    },
+
+    showNewEncounterWindow:function(){
+        var me = this,
+            form = me.newEncounterWindow.down('form');
+
+        me.getFormItems( form, 'New Encounter', function(){
+            form.getForm().findField('start_date').setValue(new Date());
+            me.newEncounterWindow.show();
         });
     },
 
 
     saveNewEnc:function(btn){
-        this.startTimer(new Date());
-        btn.up('window').close();
+        var form = this.newEncounterWindow.down('form').getForm();
+
+        if (form.isValid()){
+
+            form.submit({
+                params: {
+                    task: 'newEncounter'
+                },
+                success: function(form, action) {
+                    btn.up('window').close();
+                    //Ext.Msg.alert('Success', '');
+                },
+                failure: function(form, action) {
+                    btn.up('window').close();
+                    //Ext.Msg.alert('Failed','');
+                }
+            });
+        }
+
+
+        //this.startTimer(new Date());
+
     },
 
     cancelNewEnc:function(btn){

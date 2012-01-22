@@ -6,6 +6,11 @@
  * Date: 1/13/12
  * Time: 7:10 AM
  */
+if(!isset($_SESSION)){
+    session_name ("MitosEHR" );
+    session_start();
+    session_cache_limiter('private');
+}
 
 include_once($_SESSION['site']['root']."/classes/Person.class.php");
 

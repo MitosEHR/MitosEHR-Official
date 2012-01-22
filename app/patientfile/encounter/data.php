@@ -12,5 +12,21 @@ session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/classes/Encounter.class.php");
 
-$ecn = new Encounter();
+$_SESSION['site']['flops'] = 0;
 
+
+$enc = new Encounter();
+
+if($_REQUEST['task'] == 'ckOpenEncounters'){
+
+    $enc->ckOpenEncounters();
+
+}
+
+
+if($_REQUEST['task'] == 'newEncounter'){
+
+    unset($_REQUEST['task']);
+    $enc->createEncounter($_REQUEST);
+
+}

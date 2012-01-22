@@ -106,6 +106,10 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="classes/ext/combo/Users.js"></script>
 
 
+        <script type="text/javascript" src="classes/ext/form/fields/Checkbox.js"></script>
+        <script type="text/javascript" src="classes/ext/form/fields/DateTime.js"></script>
+
+
         <script type="text/javascript" src="app/patientfile/visits/Visits.js"></script>
         <script type="text/javascript" src="app/patientfile/summary/Summary.js"></script>
         <script type="text/javascript" src="app/patientfile/encounter/Encounter.js"></script>
