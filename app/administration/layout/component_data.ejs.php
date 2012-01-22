@@ -37,6 +37,7 @@ switch ($_GET['task']) {
 			4 => array("id"=> 5,   "name" => "CheckBox Field",          "value" => "mitos.checkbox"),
 			5 => array("id"=> 6,   "name" => "Slelect List / Combo Box","value" => "combobox"),
 			6 => array("id"=> 7,   "name" => "Radio Field",             "value" => "radiofield"),
+			6 => array("id"=> 7,   "name" => "Date/Time Field",         "value" => "mitos.datetime"),
 			7 => array("id"=> 8,   "name" => "Date Field",              "value" => "datefield"),
 			8 => array("id"=> 9,   "name" => "Time Field",              "value" => "timefield"),
 			9 => array("id"=> 10,  "name" => "Number Field",            "value" => "numberfield")

@@ -60,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE'){
     function getFileds($formPanel){
         $fields = array();
         global $mitos_db;
-        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC");
+        $mitos_db->setSQL("Select * FROM forms_fields WHERE form_id = '$formPanel' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
         $results = $mitos_db->execStatement(PDO::FETCH_ASSOC);
         foreach($results as $item){
             $opts = getItmesOptions($item['id']);

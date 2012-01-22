@@ -6,34 +6,22 @@
  * Date: 1/13/12
  * Time: 7:10 AM
  */
+if(!isset($_SESSION)){
+    session_name ("MitosEHR" );
+    session_start();
+    session_cache_limiter('private');
+}
 
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/Person.class.php");
 
-class patient extends dbHelper {
+class Patient extends Person {
+
 
     /**
-     * @static
-     * @param $fname
-     * @param $mname
-     * @param $lname
-     * @return string
+     * @return mixed
      */
-    public static function fullname($fname, $mname, $lname){
-        if($_SESSION['global_settings'] && $_SESSION['global_settings']['fullname']){
-            switch($_SESSION['global_settings']['fullname']){
-                case '0':
-                    $fullname = $lname.', '.$fname.' '.$mname;
-                break;
-                case '1':
-                   $fullname = $fname.' '.$mname.' '.$lname;
-                break;
-            }
-        }else{
-            $fullname =  $lname.', '.$fname.' '.$mname;
-        }
-        $fullname = ($fullname == ',  ') ? '' : $fullname;
-
-        return $fullname;
+    protected function getCurrPid(){
+        return $_SESSION['patient']['pid'];
     }
 
     /**

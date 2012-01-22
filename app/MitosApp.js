@@ -6,6 +6,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.CRUDStore',
         'Ext.mitos.restStoreModel',
 
+        'Ext.dd.DropZone',
+        'Ext.dd.DragZone',
+
         'Extensible.calendar.CalendarPanel',
         'Extensible.calendar.gadget.CalendarListPanel',
         'Extensible.calendar.data.MemoryCalendarStore',
@@ -37,6 +40,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.panel.patientfile.new.NewPatient',
         'Ext.mitos.panel.patientfile.summary.Summary',
         'Ext.mitos.panel.patientfile.visits.Visits',
+        'Ext.mitos.panel.patientfile.encounter.Encounter',
+
+
         'Ext.mitos.panel.fees.billing.Billing',
         'Ext.mitos.panel.fees.checkout.Checkout',
         'Ext.mitos.panel.fees.fees_sheet.FeesSheet',
@@ -74,7 +80,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         Ext.TaskManager.start({
             run		    : function(){
                 me.checkSession();
-                me.checkPool();
+                me.patientPoolStore.load();
             },
             interval    : 10000
         });
@@ -100,6 +106,16 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 scope: me,
                 load : me.navNodeDefault
             }
+        });
+
+        me.patientPoolStore = Ext.create('Ext.data.Store', {
+            fields: ['name', 'pid', 'pic'],
+            data : [
+                {"name":"Ernesto J Rodriguez",  "pid":"123", "pic":"ui_icons/user_32.png"},
+                {"name":"Juan Pablo",           "pid":"634", "pic":"ui_icons/user_32.png"},
+                {"name":"Joe Smith",            "pid":"867", "pic":"ui_icons/user_32.png"}
+                //...
+            ]
         });
 
 
@@ -152,7 +168,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             margins		: '0 0 0 0',
             items		: [{
                 xtype	: 'container',
-                html	: '<a href="http://www.mitosehr.org/" style="float:left"><img src="ui_app/app_logo.png" height="40" width="200" style="float:left"></a>',
+                html	: '<img src="ui_app/app_logo.png" height="40" width="200" style="float:left">',
                 style	: 'float:left',
                 border	: false
             },{
@@ -161,7 +177,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 style 	: 'float:left',
                 margin	: '0 0 0 5',
                 itemId  : 'patientButton',
-                minWidth: 190,
                 listeners: {
                     scope       : me,
                     afterrender : me.patientUnset
@@ -171,11 +186,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                     items:[{
                         text    : lang.newEncounter,
                         scope   : me,
-                        handler : me.newEncounter
+                        handler : me.createNewEncounter
                     },{
                         text    : 'Encounter History',
                         scope   : me,
-                        handler : me.encounterHistory
+                        handler : me.openPatientVisits
                     },{
                         text    : lang.patientDocuments,
                         scope   : me,
@@ -197,11 +212,35 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 margin	: '0 0 0 3',
                 cls     : 'headerLargeBtn',
                 padding : 0,
+                itemId  : 'patientOpenVisits',
+                iconCls : 'icoBackClock',
+                scope   : me,
+                handler : me.openPatientVisits,
+                tooltip : 'Open Patient Visits History'
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
+                itemId  : 'patientCreateEncounter',
+                iconCls : 'icoClock',
+                scope   : me,
+                handler : me.createNewEncounter,
+                tooltip : 'Crate New Encounter'
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
                 itemId  : 'patientOpenCurrEncounter',
                 iconCls : 'icoArrowUp',
                 scope   : me,
-                handler : me.openCurrEncounter,
-                tooltip : 'Open Patient Current Encounter'
+                handler : me.openPatientSummary,
+                tooltip : 'Open Patient Record (Summary)'
             },{
                 xtype   : 'button',
                 scale	: 'large',
@@ -212,7 +251,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 itemId  : 'patientPushFor',
                 iconCls : 'icoArrowRight',
                 scope   : me,
-                tooltip : 'Sent Current Patient To...',
+                tooltip : 'Sent Current Patient Record To...',
                 arrowCls: 'none',
                 menu: [{
                     text     : 'Front Office',
@@ -244,8 +283,20 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 itemId  : 'patientCloseCurrEncounter',
                 iconCls : 'icoArrowDown',
                 scope   : me,
-                handler : me.closeCurrEncounter,
-                tooltip : 'Close Patient Current Encounter'
+                handler : me.stowPatientRecord,
+                tooltip : 'Stow Patient Record'
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn',
+                padding : 0,
+                itemId  : 'patientCheckOut',
+                iconCls : 'icoCheck',
+                scope   : me,
+                handler : me.checkOutPatient,
+                tooltip : 'Check Out Patient'
             },{
                 xtype       : 'panel',
                 width		: 300,
@@ -341,12 +392,32 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 title       : lang.patientPoolArea,
                 layout      : 'vbox',
                 region      : 'south',
-                itemId      : 'poolArea',
                 bodyPadding : 5,
-
                 height      : 300,
                 collapsible : true,
-                border      : false
+                border      : false,
+                items:[{
+                    xtype   : 'dataview',
+                    cls     : 'patient-pool-view',
+                    tpl: '<tpl for=".">' +
+                            '<div class="patient-pool-btn x-btn x-btn-default-large">' +
+                                '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>' +
+                                '<div class="patient_btn_info">' +
+                                    '<div class="patient-name">{name}</div>' +
+                                    '<div class="patient-name">({pid})</div>' +
+                                '</div>' +
+                            '</div>' +
+                         '</tpl>',
+                    itemSelector: 'div.patient-pool-btn',
+                    overItemCls: 'patient-over',
+                    selectedItemClass: 'patient-selected',
+                    singleSelect: true,
+                    store: me.patientPoolStore,
+                    listeners: {
+                        scope   : me,
+                        render  : me.initializePatientDragZone
+                    }
+                }]
             }],
             dockedItems : [{
                 xtype   : 'toolbar',
@@ -392,6 +463,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                 Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                 Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),
+                Ext.create('Ext.mitos.panel.patientfile.encounter.Encounter'),
 
 
                 Ext.create('Ext.mitos.panel.fees.billing.Billing'),
@@ -417,7 +489,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes'),
                 Ext.create('Ext.mitos.panel.miscellaneous.websearch.Websearch')
 
-            ]
+            ],
+            listeners:{
+                scope       : me,
+                afterrender : me.initializeHospitalDropZone
+            }
         });
 
 
@@ -479,35 +555,47 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         me.callParent(arguments);
     },
 
+
     newPatient:function(){
-        this.remoteNavNodeSelecte('panelNewPatient', function(){
-            this.patientUnset();
+        var me = this;
+        me.remoteNavNodeSelecte('panelNewPatient', function(){
+            me.patientUnset();
 
         });
         console.log(this.currCardCmp);
     },
 
-    newEncounter:function(){
-        this.remoteNavNodeSelecte('panelVisits', function(){
-            this.currCardCmp.newEncounter();
+
+    createNewEncounter:function(){
+        var me = this;
+
+        me.remoteNavNodeSelecte('panelEncounter', function(success){
+            if(success){
+                me.currCardCmp.newEncounter();
+            }
         });
     },
 
-    patientSummary:function(){
+
+    openPatientSummary:function(){
         this.remoteNavNodeSelecte('panelSummary');
     },
 
+    stowPatientRecord:function(){
+        this.patientUnset();
+        this.remoteNavNodeSelecte('panelDashboard');
+    },
+
     openCurrEncounter:function(){
-        this.remoteNavNodeSelecte('panelVisits');
+        this.remoteNavNodeSelecte('panelEncounter');
     },
 
-    closeCurrEncounter:function(){
-        this.remoteNavNodeSelecte('panelVisits', function(){
-            this.currCardCmp.closeEncounter();
-        });
+    checkOutPatient:function(){
+
     },
 
-    encounterHistory:function(){
+
+    openPatientVisits:function(){
         this.remoteNavNodeSelecte('panelVisits');
     },
 
@@ -517,9 +605,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             sm          = tree.getSelectionModel(),
             node        = treeStore.getNodeById(id);
 
-
         sm.select(node);
-        if(typeof callback == 'fuction') callback(true);
+        if(typeof callback == 'function') callback(true);
     },
 
     navNodeDefault:function(){
@@ -633,48 +720,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
 
-    checkPool:function(){
-        var me       = this,
-            poolArea = me.navColumn.getComponent('poolArea'),
-            poolData = [{
-            pid:4587,
-            name:'Juan Pablo'
-        },{
-            pid:2342,
-            name:'Joe Smith'
-        }];
-
-        poolArea.removeAll();
-
-        Ext.each( poolData, function(patient, index, countriesItSelf){
-            var btn = poolArea.add({
-                xtype       : 'button',
-                text        : patient.name +' - ('+ patient.pid +')',
-                scale       : 'large',
-                margin      : '0 0 3 0',
-                width       : poolArea.getWidth()-10,
-                textAlign   : 'left',
-                tpl: me.patientBtn()
-            });
-            btn.update({name: patient.name, info:'('+patient.pid+')' });
-        });
-
-        poolArea.doLayout();
-    },
-
     patientBtn:function(){
-      return new Ext.create('Ext.XTemplate',
-          '<div class="patient_btn">',
-              '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
-              '<div class="patient_btn_info">',
-                  '<div class="patient_btn_name">{name}</div>',
-                  '<div class="patient_btn_record">{info}</div>',
-              '</div>',
-          '</div>',{
-          defaultValue: function(v){
-              return (v) ? v : 'No Patient Selected';
-          }
-      })
+        return new Ext.create('Ext.XTemplate',
+            '<div class="patient_btn">',
+                '<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
+                '<div class="patient_btn_info">',
+                    '<div class="patient_btn_name">{name}</div>',
+                    '<div class="patient_btn_record">{info}</div>',
+                '</div>',
+            '</div>',{
+            defaultValue: function(v){
+                return (v) ? v : 'No Patient Selected';
+            }
+        })
     },
 
     appLogout:function(){
@@ -703,7 +761,71 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         callback(true);
     },
 
+    /**
+     *
+     * @param panel
+     */
+    initializePatientDragZone:function(panel) {
+        panel.dragZone = Ext.create('Ext.dd.DragZone', panel.getEl(), {
 
+            ddGroup:'patient',
+
+            // On receipt of a mousedown event, see if it is within a draggable element.
+            // Return a drag data object if so. The data object can contain arbitrary application
+            // data, but it should also contain a DOM element in the ddel property to provide
+            // a proxy to drag.
+            getDragData: function(e) {
+                var sourceEl = e.getTarget(panel.itemSelector, 10), d;
+
+                App.MainPanel.el.mask('Drop Here To Open <strong>"'+panel.getRecord(sourceEl).data.name+'"</strong> Current Encounter');
+
+                if (sourceEl) {
+                    d = sourceEl.cloneNode(true);
+                    d.id = Ext.id();
+                    return panel.dragData = {
+                        sourceEl: sourceEl,
+                        repairXY: Ext.fly(sourceEl).getXY(),
+                        ddel: d,
+                        patientData: panel.getRecord(sourceEl).data
+                    };
+                }
+            },
+
+
+            // Provide coordinates for the proxy to slide back to on failed drag.
+            // This is the original XY coordinates of the draggable element.
+            getRepairXY: function() {
+
+                App.MainPanel.el.unmask();
+
+                return this.dragData.repairXY;
+            }
+        });
+    },
+
+    /**
+     *
+     * @param panel
+     */
+    initializeHospitalDropZone: function(panel) {
+        var me = this;
+        panel.dropZone = Ext.create('Ext.dd.DropZone', panel.getEl(), {
+
+            ddGroup:'patient',
+
+            notifyOver:function(source, e, data){
+                return Ext.dd.DropZone.prototype.dropAllowed;
+            },
+
+            notifyDrop:function(dd, e, data){
+                App.MainPanel.el.unmask();
+                me.setCurrPatient(data.patientData.pid,data.patientData.name,function(){
+                    me.openCurrEncounter();
+                });
+            }
+
+        });
+    },
 
     getCurrPatient:function(){
         return this.currPatient;
