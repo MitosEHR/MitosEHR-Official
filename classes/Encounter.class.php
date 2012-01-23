@@ -57,6 +57,7 @@ class Encounter extends Patient{
     public function createEncounter($data){
         $data['pid'] = $this->getCurrPid();
         $data['open_uid'] = $_SESSION['user']['id'];
+
         $sql = $this->sqlBind($data, "form_data_encounter", "I");
         $this->setSQL($sql);
         $this->execLog();
