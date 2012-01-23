@@ -30,3 +30,10 @@ if($_REQUEST['task'] == 'newEncounter'){
     $enc->createEncounter($_REQUEST);
 
 }
+
+if($_REQUEST['task'] == 'closeEncounter'){
+
+    unset($_REQUEST['task']);
+    $enc->closeEncounter($_REQUEST);
+
+}

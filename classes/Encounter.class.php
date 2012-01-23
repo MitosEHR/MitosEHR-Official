@@ -13,6 +13,7 @@ if(!isset($_SESSION)){
 }
 
 include_once($_SESSION['site']['root']."/classes/Patient.class.php");
+include_once($_SESSION['site']['root']."/classes/AES.class.php");
 
 class Encounter extends Patient{
 
@@ -30,15 +31,12 @@ class Encounter extends Patient{
 
 
     public function getOpenEncounters($params){
-
-
         if(isset($params['sort'])){
             $sort = json_decode($params['sort']);
             $ORDER = 'ORDER BY ' . $sort[0]->property . ' ' . $sort[0]->direction;
         } else {
-            $ORDER = 'ORDER BY start_date ASC';
+            $ORDER = 'ORDER BY start_date DESC';
         }
-
         $pid =  $this->getCurrPid();
         $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' ".$ORDER);
         $total = $this->rowCount();
@@ -58,19 +56,30 @@ class Encounter extends Patient{
 
     public function createEncounter($data){
         $data['pid'] = $this->getCurrPid();
-        $data['uid'] = $_SESSION['user']['id'];
-
-        //print_r($data);
+        $data['open_uid'] = $_SESSION['user']['id'];
         $sql = $this->sqlBind($data, "form_data_encounter", "I");
         $this->setSQL($sql);
-        $ret = $this->execLog();
-
-
+        $this->execLog();
+        $eid = $this->lastInsertId;
+        print(json_encode(array('success'=>true,'encounter'=>array('eid'=>intval($eid), 'start_date'=>$data['start_date']))));
     }
 
-    private function closeEncounter(){
-
+    public function closeEncounter($data){
+        $aes    = new AES($_SESSION['site']['AESkey']);
+        $pass   = $aes->encrypt($data['signature']);
+        $eid    = $data['eid'];
+        $uid    = $_SESSION['user']['id'];
+        unset($data['eid'], $data['signature']);
+        $data['close_uid'] = $_SESSION['user']['id'];
+        $this->setSQL("SELECT username FROM users WHERE id = '$uid' AND password = '$pass' AND authorized = '1' LIMIT 1");
+        $count = $this->rowCount();
+        if($count != 0){
+            $sql = $this->sqlBind($data, "form_data_encounter", "U", "eid='".$eid."'");
+            $this->setSQL($sql);
+            $this->execLog();
+            print '{"success":true}';
+        }else{
+            print '{"success":false}';
+        }
     }
-
-
 }

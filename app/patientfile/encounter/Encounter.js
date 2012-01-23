@@ -17,23 +17,9 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
     initComponent: function(){
         var me = this;
 
-        //******************************************************************
-        // Stores...
-        //******************************************************************
-        me.historyStore = Ext.create('Ext.mitos.restStoreModel',{
-            fields: [
-                {name: 'id',      		type: 'int'},
-                {name: 'date',          type: 'date', dateFormat: 'c'},
-                {name: 'body',          type: 'string'},
-                {name: 'user',          type: 'string'},
-                {name: 'facility_id',   type: 'string'},
-                {name: 'activity',   	type: 'string'}
-            ],
-            model		: 'modelOnotes',
-            idProperty	: 'id',
-            url      	: 'app/miscellaneous/officenotes/data_read.ejs.php',
-            autoLoad	: false
-        });
+        me.currEncounterStartDate = null;
+        me.currEncounterEid = null;
+
 
         /**
          * New Encounter Panel this panel is located hidden at
@@ -47,7 +33,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             closable    : false,
             items:[{
                 xtype   : 'form',
-                url     : 'app/patientfile/encounter/data.php',
+                url     : 'app/patientfile/encounter/data.php?task=new',
                 border  : false,
                 bodyPadding : '10 10 0 10'
             }],
@@ -63,70 +49,61 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         });
 
 
-
-
-        //******************************************************************
-        // Panels/Forms...
-        //******************************************************************
+        /**
+         * Tap Panel panels and forms
+         */
         me.MiscBillingOptionsPanel = Ext.create('Ext.panel.Panel',{
             hidden  : true,
             border  : false,
+            action  : 'administrative',
             title   : 'Misc. Billing Options HCFA',
             html    : '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
         });
         me.procedurePanel = Ext.create('Ext.panel.Panel',{
             hidden  : true,
             border  : false,
+            action  : 'administrative',
             title   : 'Procedure Order',
             html    : '<h1>Procedure Order form placeholder!</h1>'
         });
         me.reviewSysPanel = Ext.create('Ext.panel.Panel',{
             border  : false,
+            action  : 'encounter',
             title   : 'Review of Systems',
-            items:[{
-                xtype   : 'form',
-                url     : 'app/patientfile/encounter/data.php',
-                border  : false,
-                bodyPadding : '10 10 0 10',
-                items:[{
-                    xtype:'mitos.datetime',
-                    listeners:{
-                        afterrender:function(dt){
-                            console.log(dt);
-                            dt.setValue(new Date())
-                        }
-                    }
-                }]
-            }]
+            html    : '<h1>Review of Systems form placeholder!</h1>'
         });
         me.reviewSysCkPanel = Ext.create('Ext.panel.Panel',{
             border  : false,
+            action  : 'encounter',
             title   : 'Review of Systems Checks',
             html    : '<h1>Review of Systems Checks form placeholder!</h1>'
         });
         me.soapPanel = Ext.create('Ext.panel.Panel',{
             border  : false,
             title   : 'SOAP',
+            action  : 'encounter',
             html    : '<h1>SOAP form placeholder!</h1>'
         });
         me.speechDicPanel = Ext.create('Ext.panel.Panel',{
             border  : false,
+            action  : 'encounter',
             title   : 'Speech Dictation',
             html    : '<h1>Speech Dictation form placeholder!</h1>'
         });
 
         me.vitalsPanel = Ext.create('Ext.panel.Panel', {
             title       : 'Vitals',
+            action      : 'encounter',
             border      : false,
             autoScroll  : true,
             layout      : 'hbox',
             items: [{
-                xtype:'form',
-                width:350,
-                border  : false,
-                url             : '',
-                layout          : 'anchor',
-                fieldDefaults   : { msgTarget:'side' }
+                xtype        : 'form',
+                width        : 350,
+                border       : false,
+                url          : '',
+                layout       : 'anchor',
+                fieldDefaults: { msgTarget:'side' }
 
             }],
             dockedItems:{
@@ -237,23 +214,21 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             items:[{
                 text      	: 'Encounter',
                 enableToggle: true,
+                pressed     : true,
                 toggleGroup : '1',
                 iconCls   	: '',
-                listeners	: {
-                    afterrender: function(){
-                        this.toggle(true);
-                    }
-                },
+                scope       : me,
                 handler: function() {
-                    me.setFormPanel('encounter');
+                    me.setTapPanel('encounter');
                 }
             },'-',{
                 text      	: 'Administrative',
                 enableToggle: true,
                 toggleGroup : '1',
                 iconCls   	: '',
+                scope       : me,
                 handler: function() {
-                    me.setFormPanel('administrative');
+                    me.setTapPanel('administrative');
                 }
             },'->',{
                 text      	: 'New Encounter',
@@ -283,13 +258,13 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             params  : {task:'ckOpenEncounters'},
             scope   : this,
             success : function(response){
-                var success = eval('('+response.responseText+')').success
+                var success = eval('('+response.responseText+')').success;
                 if(success){
                     Ext.Msg.show({
-                        title:'Oops! Open Encounters Found...',
-                        msg: 'Do you want to <strong>continue creating the New Encounters?</strong><br>"Click No to review Encounter History"',
-                        buttons: Ext.Msg.YESNO,
-                        icon: Ext.Msg.QUESTION,
+                        title   : 'Oops! Open Encounters Found...',
+                        msg     : 'Do you want to <strong>continue creating the New Encounters?</strong><br>"Click No to review Encounter History"',
+                        buttons : Ext.Msg.YESNO,
+                        icon    : Ext.Msg.QUESTION,
                         fn:function(btn){
                             if(btn == 'yes'){
                                 me.showNewEncounterWindow();
@@ -310,7 +285,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
     showNewEncounterWindow:function(){
         var me = this,
             form = me.newEncounterWindow.down('form');
-
         me.getFormItems( form, 'New Encounter', function(){
             form.getForm().findField('start_date').setValue(new Date());
             me.newEncounterWindow.show();
@@ -319,28 +293,27 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
 
     saveNewEnc:function(btn){
-        var form = this.newEncounterWindow.down('form').getForm();
+        var me = this,
+            form = me.newEncounterWindow.down('form').getForm();
 
         if (form.isValid()){
-
             form.submit({
                 params: {
                     task: 'newEncounter'
                 },
                 success: function(form, action) {
+                    me.currEncounterStartDate = me.parseDate(action.result.encounter.start_date);
+                    me.currEncounterEid = action.result.encounter.eid;
+                    me.startTimer();
                     btn.up('window').close();
-                    //Ext.Msg.alert('Success', '');
                 },
                 failure: function(form, action) {
+                    // TODO
                     btn.up('window').close();
-                    //Ext.Msg.alert('Failed','');
+
                 }
             });
         }
-
-
-        //this.startTimer(new Date());
-
     },
 
     cancelNewEnc:function(btn){
@@ -349,20 +322,24 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
     },
 
 
-
-
-
     /**
      * This will start the timer task
      *
      * @param date
      */
-    startTimer:function(start_date){
-        //this.encounterTime = date;
+    parseDate:function(date){
+        var t = date.split(/[- :]/);
+        return new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+    },
+
+    /**
+     * Start timer task...  runs every sec
+     */
+    startTimer:function(){
         this.timerTask = {
             scope:this,
             run:function () {
-                this.encounterTimer(start_date);
+                this.encounterTimer();
             },
             interval:1000 //1 second
         };
@@ -370,10 +347,10 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
     },
 
     /**
-     * This will
+     * This will update the timer every sec
      */
-    encounterTimer:function(start_date){
-        var ms = Ext.Date.getElapsed(start_date,new Date()),
+    encounterTimer:function(){
+        var ms = Ext.Date.getElapsed(this.currEncounterStartDate,new Date()),
         s = Math.floor((ms/1000)%60),
         m = Math.floor((ms/(1000*60))%60),
         h = Math.floor((ms/(1000*60*60))%24);
@@ -383,16 +360,52 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         var timer = twoDigit(h)+':'+twoDigit(m)+':'+twoDigit(s);
         var patient = this.getCurrPatient();
 
-        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(start_date, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
     },
 
+    openEncounter:function(eid){
 
 
+    },
+
+    /**
+     * Function to close the encounter..
+     * 1.
+     */
     closeEncounter:function(){
-        var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter:', function(btn, pass){
-
+        var me = this;
+        var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter with your password:', function(btn, signature){
             if (btn == 'ok'){
-                Ext.TaskManager.stop(this.timerTask);
+                Ext.Ajax.request({
+                    url     : 'app/patientfile/encounter/data.php',
+                    params  : {
+                        task        : 'closeEncounter',
+                        eid         : me.currEncounterEid,
+                        close_date  : Ext.Date.format(new Date(), 'Y-m-d H:i:s'),
+                        signature: signature },
+                    scope   : me,
+                    success : function(response){
+                        var success = eval('('+response.responseText+')').success
+                        if(success){
+                            // TODO: after close encounter logic
+                            Ext.TaskManager.stop(this.timerTask);
+                        }else{
+                            Ext.Msg.show({
+                                title:'Oops!',
+                                msg: 'Incorrect password',
+                                buttons: Ext.Msg.OKCANCEL,
+                                icon: Ext.Msg.ERROR,
+                                fn:function(btn){
+                                    if(btn == 'ok'){
+                                        me.closeEncounter();
+                                    }
+
+                                }
+                           });
+                        }
+                    }
+                });
+
             }
         }, this);
         var f = msg.textField.getInputId();
@@ -404,17 +417,15 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         this.centerPanel.doLayout();
     },
 
-    setFormPanel:function(type){
-        var encounterPanel      = this.centerPanel.getComponent('encounter'),
-            administrativePanel = this.centerPanel.getComponent('administrative');
-        if(type == 'encounter'){
-            administrativePanel.setVisible(false);
-            encounterPanel.setVisible(true);
-        }else if(type == 'administrative'){
-            encounterPanel.setVisible(false);
-            administrativePanel.setVisible(true);
-
-        }
+    setTapPanel:function(type){
+        var me = this;
+        me.centerPanel.getTabBar().items.each(function(t){
+            if(t.card.action ==  type){
+                t.show();
+            }else{
+                t.hide();
+            }
+        });
     },
 
     /**
@@ -425,9 +436,9 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
      */
     onActive:function(callback){
           var me = this;
-//        if(this.checkIfCurrPatient()){
-//            var patient = this.getCurrPatient();
-//            this.updateTitle( patient.name + ' (Visits)');
+        if(this.checkIfCurrPatient()){
+            var patient = this.getCurrPatient();
+            this.updateTitle( patient.name + ' (Visits)');
 
             this.getFormItems( me.vitalsPanel.down('form'), 'Vitals',function(){
                 me.vitalsPanel.doLayout();
@@ -435,9 +446,9 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
 
             callback(true);
-//        }else{
-//            callback(false);
-//            this.currPatientError();
-//        }
+        }else{
+            callback(false);
+            this.currPatientError();
+        }
     }
 }); //ens oNotesPage class

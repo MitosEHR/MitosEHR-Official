@@ -51,6 +51,9 @@
 .edit{
 	background-image: url(../ui_icons/edit.png) !important;
 }
+.icoEmer{
+    background-image: url(../ui_icons/icoEmer.png) !important;
+}
 .icoCheck{
     background-image: url(../ui_icons/icoCheck.png) !important;
 }

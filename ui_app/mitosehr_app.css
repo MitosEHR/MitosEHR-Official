@@ -108,6 +108,13 @@
     margin: 0!important;
     padding: 0!important;
 }
+.emerBtn .x-btn-icon {
+    background-position: center top!important;
+}
+.emerBtnOver .x-btn-icon {
+    background-position: center bottom!important;
+}
+
 .msgForm .x-panel-body {
     border-top: none !important;
 }

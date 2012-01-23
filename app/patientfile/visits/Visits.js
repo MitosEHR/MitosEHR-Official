@@ -134,15 +134,15 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
      * to call every this panel becomes active
      */
     onActive:function(callback){
-//        if(this.checkIfCurrPatient()){
-//
-//            var patient = this.getCurrPatient();
-//            this.updateTitle( patient.name + ' (Encounters)');
+        if(this.checkIfCurrPatient()){
+
+            var patient = this.getCurrPatient();
+            this.updateTitle( patient.name + ' (Encounters)');
             this.store.load();
             callback(true);
-//        }else{
-//            callback(false);
-//            this.currPatientError();
-//        }
+        }else{
+            callback(false);
+            this.currPatientError();
+        }
     }
 }); //ens oNotesPage class

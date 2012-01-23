@@ -108,6 +108,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             }
         });
 
+        /**
+         * This store will handle the patient pool area
+         */
         me.patientPoolStore = Ext.create('Ext.data.Store', {
             fields: ['name', 'pid', 'pic'],
             data : [
@@ -256,22 +259,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 menu: [{
                     text     : 'Front Office',
                     iconCls	: 'icoArrowRight',
-                    handler : function(){
-
-                    }
+                    action  : 'fronOffice',
+                    handler : me.sendPatientTo
                 },{
                     text    : 'Triage',
                     iconCls	: 'icoArrowRight',
-                    handler : function(){
-
-                    }
+                    action  : 'triage',
+                    handler : me.sendPatientTo
                 },{
                     text    : 'Doctor',
                     iconCls	: 'icoArrowRight',
+                    action  : 'doctor',
                     scope   : me,
-                    handler : function(){
-
-                    }
+                    handler : me.sendPatientTo
                 }]
             },{
                 xtype   : 'button',
@@ -327,6 +327,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 handler : me.newPatient,
                 tooltip : 'Create a new patient'
             },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn emerBtn',
+                overCls : 'emerBtnOver',
+                padding : 0,
+                itemId  : 'createEmergency',
+                iconCls : 'icoEmer',
+                scope   : me,
+                handler : me.createEmergency,
+                tooltip : 'Create New Ememercency'
+            },{
                 xtype		: 'button',
                 text		: 'Dr. Smith',
                 scale	    : 'large',
@@ -371,7 +384,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             items		: [{
                 xtype       : 'treepanel',
                 region		: 'center',
-                //bodyPadding : '5 0 0 0',
                 cls         : 'nav_tree',
                 hideHeaders	: true,
                 rootVisible	: false,
@@ -454,24 +466,34 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             defaults        : { layout: 'fit', xtype:'container' },
             items: [
 
+            /**
+             * General Area
+             */
                 Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done  TODO: panels
                 Ext.create('Ext.mitos.panel.calendar.Calendar'),                        // done
                 Ext.create('Ext.mitos.panel.messages.Messages'),                        // done
                 Ext.create('Ext.mitos.panel.search.PatientSearch'),                     //
 
-
+            /**
+             * Patient Area
+             */
                 Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                 Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                 Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),
                 Ext.create('Ext.mitos.panel.patientfile.encounter.Encounter'),
 
 
+            /**
+             * Fees Area
+             */
                 Ext.create('Ext.mitos.panel.fees.billing.Billing'),
                 Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
                 Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
                 Ext.create('Ext.mitos.panel.fees.payments.Payments'),
 
-
+            /**
+             * Administration Area
+             */
                 Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // done
                 Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
                 Ext.create('Ext.mitos.panel.administration.layout.Layout'),             // working
@@ -482,7 +504,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.administration.services.Services'),         // done
                 Ext.create('Ext.mitos.panel.administration.users.Users'),               // done
 
-
+            /**
+             * Miscellaneous
+             */
                 Ext.create('Ext.mitos.panel.miscellaneous.addressbook.Addressbook'),
                 Ext.create('Ext.mitos.panel.miscellaneous.myaccount.MyAccount'),
                 Ext.create('Ext.mitos.panel.miscellaneous.mysettings.MySettings'),
@@ -565,6 +589,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         console.log(this.currCardCmp);
     },
 
+    createEmergency:function(){
+        alert('Emergency Button Clicked');
+    },
 
     createNewEncounter:function(){
         var me = this;
@@ -574,6 +601,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 me.currCardCmp.newEncounter();
             }
         });
+    },
+
+    sendPatientTo:function(btn){
+        var area = btn.action
+        alert('TODO: Patient will be sent to '+area );
     },
 
 
@@ -663,6 +695,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
                     btn.update( {name:post.get('fullname'), info:'('+post.get('pid')+')'} );
                     btn.enable();
+
+                    this.openPatientSummary();
                 }
             });
             Ext.data.Request();
