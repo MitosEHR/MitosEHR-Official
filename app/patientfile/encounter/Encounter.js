@@ -286,15 +286,15 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 var success = eval('('+response.responseText+')').success
                 if(success){
                     Ext.Msg.show({
-                        title:'Open Encountes Found',
-                        msg: 'Would you like to review the Open Ecounters? Click No if you would like to continue creating the New Encounter',
+                        title:'Oops! Open Encounters Found...',
+                        msg: 'Do you want to <strong>continue creating the New Encounters?</strong><br>"Click No to review Encounter History"',
                         buttons: Ext.Msg.YESNO,
                         icon: Ext.Msg.QUESTION,
                         fn:function(btn){
                             if(btn == 'yes'){
-                                App.openPatientVisits();
-                            }else{
                                 me.showNewEncounterWindow();
+                            }else{
+                                App.openPatientVisits();
                             }
                         }
                     });

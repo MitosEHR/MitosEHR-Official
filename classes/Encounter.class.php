@@ -29,12 +29,22 @@ class Encounter extends Patient{
     }
 
 
-    public function getOpenEncounters(){
+    public function getOpenEncounters($params){
+
+
+        if(isset($params['sort'])){
+            $sort = json_decode($params['sort']);
+            $ORDER = 'ORDER BY ' . $sort[0]->property . ' ' . $sort[0]->direction;
+        } else {
+            $ORDER = 'ORDER BY start_date ASC';
+        }
+
         $pid =  $this->getCurrPid();
-        $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' AND close_date = NULL");
+        $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' ".$ORDER);
         $total = $this->rowCount();
         $rows = array();
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['status'] = ($row['close_date']== null)? 'open' : 'close';
         	array_push($rows, $row);
         }
         if($total >= 1){
@@ -50,7 +60,7 @@ class Encounter extends Patient{
         $data['pid'] = $this->getCurrPid();
         $data['uid'] = $_SESSION['user']['id'];
 
-        print_r($data);
+        //print_r($data);
         $sql = $this->sqlBind($data, "form_data_encounter", "I");
         $this->setSQL($sql);
         $ret = $this->execLog();

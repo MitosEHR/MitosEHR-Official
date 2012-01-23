@@ -42,7 +42,7 @@ Ext.define('Ext.ux.PreviewPlugin', {
                     Ext.apply(o, {
                         rowBody: data[bodyField],
                         rowBodyCls: section.previewExpanded ? '' : hideBodyCls
-                    });
+                    },null);
                     return o;
                 }
             },{
