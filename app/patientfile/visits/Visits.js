@@ -106,8 +106,8 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
 
     },
 
-    gridItemDblClick:function(){
-
+    gridItemDblClick:function(view, record){
+        App.openEncounter(record.data.eid);
     },
 
     createNewEncounter:function(){

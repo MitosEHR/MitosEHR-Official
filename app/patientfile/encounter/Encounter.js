@@ -21,6 +21,99 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         me.currEncounterEid = null;
 
 
+        Ext.define('EncounterModel', {
+            extend: 'Ext.data.Model',
+            proxy: {
+                type	    : 'ajax',
+                url 	    : 'app/patientfile/encounter/data.php?task=getEncounter',
+                extraParams : {eid:me.currEncounterEid},
+                reader: {
+                    type			: 'json',
+                    root			: 'ecountes'
+                }
+            },
+            fields: [
+                {name: 'eid', 		        type: 'int'},
+                {name: 'pid', 	            type: 'int'},
+                {name: 'open_uid', 	        type: 'string'},
+                {name: 'close_uid', 	    type: 'string'},
+                {name: 'brief_description', type: 'string'},
+                {name: 'visit_category', 	type: 'string'},
+                {name: 'facility', 	        type: 'string'},
+                {name: 'billing_facility', 	type: 'string'},
+                {name: 'sensitivity', 	    type: 'string'},
+                {name: 'start_date', 	    type: 'string'},
+                {name: 'close_date', 	    type: 'string'},
+                {name: 'onset_date', 	    type: 'string'}
+            ],
+           hasMany: {
+               associatedModel: 'VitalsModel',
+               name : 'getVitals',
+               associationKey:'eid',
+               autoLoad:true
+               //filterProperty: 'query'
+           }
+        });
+
+        Ext.define('VitalsModel', {
+            extend: 'Ext.data.Model',
+            proxy: {
+                type	    : 'ajax',
+                url 	    : 'app/patientfile/encounter/data.php?task=getVitals',
+                extraParams : {eid:me.currEncounterEid},
+                reader: {
+                    type			: 'json',
+                    root			: 'vitals'
+                }
+            },
+            fields: [
+               'id',
+               'pid',
+               'eid',
+               'uid',
+               'date',
+               'weight_lbs',
+               'weight_kg',
+               'height_in',
+               'height_cm',
+               'bp_systolic',
+               'bp_diastolic',
+               'pulse',
+               'respiration',
+               'temp_f',
+               'temp_c',
+               'temp_location',
+               'oxygen_saturation',
+               'head_circumference_in',
+               'head_circumference_cm',
+               'waist_circumference_in',
+               'waist_circumference_cm',
+               'bmi',
+               'bmi_status',
+               'other_notes'
+            ],
+            belongsTo: 'EncounterModel'
+        });
+
+
+        me.encounterStore = Ext.create('Ext.data.Store', {
+            pageSize	: 10,
+            model		: 'EncounterModel'
+        });
+
+        me.vitalsStore = Ext.create('Ext.data.Store', {
+            pageSize	: 10,
+            model		: 'VitalsModel'
+        });
+
+
+
+
+
+
+
+
+
         /**
          * New Encounter Panel this panel is located hidden at
          * the top of the Visit panel and will slide down if
@@ -99,12 +192,44 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             layout      : 'hbox',
             items: [{
                 xtype        : 'form',
-                width        : 350,
+                width        : 330,
                 border       : false,
                 url          : '',
                 layout       : 'anchor',
                 fieldDefaults: { msgTarget:'side' }
-
+            },{
+                xtype   : 'dataview',
+                layout  : 'hbox',
+                cls     : 'vitals-data',
+                tpl: '<tpl for=".">' +
+                        '<div class="column">' +
+                            '<div class="row">{date}</div>' +
+                            '<div class="row">{weight_lbs}</div>' +
+                            '<div class="row">{weight_kg}</div>' +
+                            '<div class="row">{height_in}</div>' +
+                            '<div class="row">{height_cm}</div>' +
+                            '<div class="row">{bp_systolic}</div>' +
+                            '<div class="row">{bp_diastolic}</div>' +
+                            '<div class="row">{pulse}</div>' +
+                            '<div class="row">{respiration}</div>' +
+                            '<div class="row">{temp_f}</div>' +
+                            '<div class="row">{temp_c}</div>' +
+                            '<div class="row">{temp_location}</div>' +
+                            '<div class="row">{oxygen_saturation}</div>' +
+                            '<div class="row">{head_circumference_in}</div>' +
+                            '<div class="row">{head_circumference_cm}</div>' +
+                            '<div class="row">{waist_circumference_in}</div>' +
+                            '<div class="row">{waist_circumference_cm}</div>' +
+                            '<div class="row">{bmi}</div>' +
+                            '<div class="row">{bmi_status}</div>' +
+                            '<div class="row">{other_notes}</div>' +
+                        '</div>' +
+                     '</tpl>',
+                itemSelector: 'div.patient-pool-btn',
+                overItemCls: 'patient-over',
+                selectedItemClass: 'patient-selected',
+                singleSelect: true,
+                store: me.vitalsStore
             }],
             dockedItems:{
                 xtype   : 'toolbar',
@@ -364,8 +489,9 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
     },
 
     openEncounter:function(eid){
-
-
+        alert('Will open encounter #'+eid);
+        this.encounterStore.load();
+        this.vitalsStore.load();
     },
 
     /**

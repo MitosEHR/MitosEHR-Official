@@ -30,7 +30,7 @@ class Encounter extends Patient{
     }
 
 
-    public function getOpenEncounters($params){
+    public function getEncounters($params){
         if(isset($params['sort'])){
             $sort = json_decode($params['sort']);
             $ORDER = 'ORDER BY ' . $sort[0]->property . ' ' . $sort[0]->direction;
@@ -53,7 +53,6 @@ class Encounter extends Patient{
     }
 
 
-
     public function createEncounter($data){
         $data['pid'] = $this->getCurrPid();
         $data['open_uid'] = $_SESSION['user']['id'];
@@ -63,6 +62,29 @@ class Encounter extends Patient{
         $this->execLog();
         $eid = $this->lastInsertId;
         print(json_encode(array('success'=>true,'encounter'=>array('eid'=>intval($eid), 'start_date'=>$data['start_date']))));
+    }
+
+    public function getEncounter($eid){
+
+
+    }
+
+    public function getVitals(){
+
+        $pid =  $this->getCurrPid();
+
+        $this->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid'");
+        $total = $this->rowCount();
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+        }
+        if($total >= 1){
+            print(json_encode(array('totals'=>$total,'vitals'=>$rows)));
+        }else{
+            echo '{"success": false}';
+        }
+
     }
 
     public function closeEncounter($data){

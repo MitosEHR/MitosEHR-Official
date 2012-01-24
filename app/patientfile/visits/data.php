@@ -17,4 +17,4 @@ $_SESSION['site']['flops'] = 0;
 
 $enc = new Encounter();
 
-$enc->getOpenEncounters($_REQUEST);
+$enc->getEncounters($_REQUEST);

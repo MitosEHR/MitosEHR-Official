@@ -1,5 +1,6 @@
 Ext.define('Ext.mitos.panel.MitosApp',{
     extend:'Ext.Viewport',
+    minWidth:1440,
     uses:[
 
         'Ext.mitos.RenderPanel',
@@ -180,34 +181,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 style 	: 'float:left',
                 margin	: '0 0 0 5',
                 itemId  : 'patientButton',
+                scope   : me,
+                handler : me.openPatientSummary,
                 listeners: {
                     scope       : me,
                     afterrender : me.patientUnset
                 },
-                tpl : me.patientBtn(),
-                menu: Ext.create('Ext.menu.Menu', {
-                    items:[{
-                        text    : lang.newEncounter,
-                        scope   : me,
-                        handler : me.createNewEncounter
-                    },{
-                        text    : 'Encounter History',
-                        scope   : me,
-                        handler : me.openPatientVisits
-                    },{
-                        text    : lang.patientDocuments,
-                        scope   : me,
-                        handler : function(){
-
-                        }
-                    },{
-                        text    : lang.patientNotes,
-                        scope   : me,
-                        handler : function(){
-
-                        }
-                    }]
-                })
+                tpl : me.patientBtn()
             },{
                 xtype   : 'button',
                 scale	: 'large',
@@ -232,18 +212,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 scope   : me,
                 handler : me.createNewEncounter,
                 tooltip : 'Crate New Encounter'
-            },{
-                xtype   : 'button',
-                scale	: 'large',
-                style 	: 'float:left',
-                margin	: '0 0 0 3',
-                cls     : 'headerLargeBtn',
-                padding : 0,
-                itemId  : 'patientOpenCurrEncounter',
-                iconCls : 'icoArrowUp',
-                scope   : me,
-                handler : me.openPatientSummary,
-                tooltip : 'Open Patient Record (Summary)'
             },{
                 xtype   : 'button',
                 scale	: 'large',
@@ -299,7 +267,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 tooltip : 'Check Out Patient'
             },{
                 xtype       : 'panel',
-                width		: 300,
+                width		: 260,
                 bodyPadding	: '8 11 5 11',
                 margin		: '0 0 0 3',
                 style 		: 'float:left',
@@ -622,10 +590,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         this.remoteNavNodeSelecte('panelEncounter');
     },
 
+    openEncounter:function(eid){
+        var me = this;
+
+        me.remoteNavNodeSelecte('panelEncounter', function(success){
+            if(success){
+                me.currCardCmp.openEncounter(eid);
+            }
+        });
+    },
+
     checkOutPatient:function(){
 
     },
-
 
     openPatientVisits:function(){
         this.remoteNavNodeSelecte('panelVisits');

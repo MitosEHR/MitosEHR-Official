@@ -28,6 +28,19 @@
 }
 
 
+.vitals-data .column {
+    float:left;
+    margin-right: 5px
+}
+
+.vitals-data .row{
+    height: 22px;
+    background-color: rgb(247, 247, 247);
+    padding:  0 5px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
 /* Mitos Loading Mask */
 .mitos-mask {
     z-index:  300000;
