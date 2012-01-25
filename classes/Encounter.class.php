@@ -73,10 +73,13 @@ class Encounter extends Patient{
 
         $pid =  $this->getCurrPid();
 
-        $this->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid'");
+        $this->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER BY date ASC");
         $total = $this->rowCount();
         $rows = array();
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['date'] = date('Y-m-d g:i a',strtotime ($row['date']));
+            $row['height_in'] = intval($row['height_in']);
+            $row['height_cn'] = intval($row['height_cn']);
             array_push($rows, $row);
         }
         if($total >= 1){

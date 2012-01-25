@@ -86,7 +86,7 @@ Ext.define('Ext.mitos.dashboard.ChartPortlet', {
                     }
                 }]
             }
-        });
+        },null);
 
         this.callParent(arguments);
     }

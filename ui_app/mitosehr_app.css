@@ -27,18 +27,16 @@
 	src: url('../ui_fonts/Cuprum.ttf');
 }
 
-
 .vitals-data .column {
-    float:left;
     margin-right: 5px
 }
-
 .vitals-data .row{
-    height: 22px;
+    font-size       : 12px;
+    height          : 22px;
     background-color: rgb(247, 247, 247);
-    padding:  0 5px;
-    margin-bottom: 5px;
-    text-align: center;
+    padding         : 2px 5px 0px;
+    margin-bottom   : 5px;
+    text-align      : center;
 }
 
 /* Mitos Loading Mask */

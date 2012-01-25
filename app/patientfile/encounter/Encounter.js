@@ -54,7 +54,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                //filterProperty: 'query'
            }
         });
-
         Ext.define('VitalsModel', {
             extend: 'Ext.data.Model',
             proxy: {
@@ -67,30 +66,12 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 }
             },
             fields: [
-               'id',
-               'pid',
-               'eid',
-               'uid',
-               'date',
-               'weight_lbs',
-               'weight_kg',
-               'height_in',
-               'height_cm',
-               'bp_systolic',
-               'bp_diastolic',
-               'pulse',
-               'respiration',
-               'temp_f',
-               'temp_c',
-               'temp_location',
-               'oxygen_saturation',
-               'head_circumference_in',
-               'head_circumference_cm',
-               'waist_circumference_in',
-               'waist_circumference_cm',
-               'bmi',
-               'bmi_status',
-               'other_notes'
+               'id', 'pid', 'eid', 'uid', 'date', 'weight_lbs', 'weight_kg',
+                {name:'height_in', type:'int'}, {name:'height_cm', type:'int'},
+               'bp_systolic', 'bp_diastolic', 'pulse', 'respiration', 'temp_f',
+               'temp_c', 'temp_location', 'oxygen_saturation', 'head_circumference_in',
+               'head_circumference_cm', 'waist_circumference_in', 'waist_circumference_cm',
+               'bmi', 'bmi_status', 'other_notes'
             ],
             belongsTo: 'EncounterModel'
         });
@@ -109,7 +90,85 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
 
 
+        me.growChartWindow = Ext.create('Ext.window.Window', {
+            width       : 900,
+            height      : 600,
+            minHeight   : 400,
+            minWidth    : 550,
+            closeAction : 'hide',
+            modal       : true,
+            maximizable : true,
+            title       : 'Line Chart',
+            layout      : 'fit',
+            tbar: [{
+                text: 'Reload Data',
+                handler: function() {
+                    me.vitalsStore.loadData();
+                }
+            }],
+            items: {
+                xtype: 'chart',
+                style: 'background:#fff',
+                animate: true,
+                store: me.vitalsStore,
+                shadow: true,
+                theme: 'Category1',
+                legend: {
+                    position: 'right'
+                },
+                axes: [{
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 100,
+                    position        : 'left',
+                    fields          : ['height_in'],
+                    title           : 'Hight (inches)',
+                    majorTickSteps  : 10,
+                    minorTickSteps  : 4,
+                    grid: {
+                        odd: {
+                            opacity: 1,
+                            fill: '#ddd',
+                            stroke: '#bbb',
+                            'stroke-width': 0.5
+                        }
+                    }
+                },{
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 250,
+                    position        : 'right',
+                    title           : 'Hight (centimeters)',
+                    majorTickSteps  : 10,
+                    minorTickSteps  : 4
 
+                },{
+                    title       : 'Date',
+                    type        : 'Time',
+                    position    : 'bottom',
+                    fields      : ['date'],
+                    dateFormat  : 'Y-m-d g:i a'
+
+                }],
+                series: [{
+                    type: 'line',
+                    axis    : 'left',
+                    xField  : 'date',
+                    yField  : 'height_in',
+                    highlight: {
+                        size: 10,
+                        radius: 10
+                    },
+                    markerConfig: {
+                        type    : 'cross',
+                        size    : 5,
+                        radius  : 5,
+                        'stroke-width': 0
+                    }
+
+                }]
+            }
+       });
 
 
 
@@ -187,44 +246,52 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         me.vitalsPanel = Ext.create('Ext.panel.Panel', {
             title       : 'Vitals',
             action      : 'encounter',
-            border      : false,
             autoScroll  : true,
-            layout      : 'hbox',
+            border      : false,
+            layout: {
+                type: 'table',
+                columns: 2
+            },
             items: [{
                 xtype        : 'form',
-                width        : 330,
+                columnWidth  : 330,
                 border       : false,
                 url          : '',
                 layout       : 'anchor',
                 fieldDefaults: { msgTarget:'side' }
             },{
                 xtype   : 'dataview',
-                layout  : 'hbox',
                 cls     : 'vitals-data',
-                tpl: '<tpl for=".">' +
-                        '<div class="column">' +
-                            '<div class="row">{date}</div>' +
-                            '<div class="row">{weight_lbs}</div>' +
-                            '<div class="row">{weight_kg}</div>' +
-                            '<div class="row">{height_in}</div>' +
-                            '<div class="row">{height_cm}</div>' +
-                            '<div class="row">{bp_systolic}</div>' +
-                            '<div class="row">{bp_diastolic}</div>' +
-                            '<div class="row">{pulse}</div>' +
-                            '<div class="row">{respiration}</div>' +
-                            '<div class="row">{temp_f}</div>' +
-                            '<div class="row">{temp_c}</div>' +
-                            '<div class="row">{temp_location}</div>' +
-                            '<div class="row">{oxygen_saturation}</div>' +
-                            '<div class="row">{head_circumference_in}</div>' +
-                            '<div class="row">{head_circumference_cm}</div>' +
-                            '<div class="row">{waist_circumference_in}</div>' +
-                            '<div class="row">{waist_circumference_cm}</div>' +
-                            '<div class="row">{bmi}</div>' +
-                            '<div class="row">{bmi_status}</div>' +
-                            '<div class="row">{other_notes}</div>' +
-                        '</div>' +
-                     '</tpl>',
+                tpl: '<table>' +
+                    '<tr>' +
+                        '<tpl for=".">' +
+                            '<td>' +
+                                '<div class="column">' +
+                                    '<div class="row" style="white-space: nowrap">{date}</div>' +
+                                    '<div class="row">{weight_lbs}</div>' +
+                                    '<div class="row">{weight_kg}</div>' +
+                                    '<div class="row">{height_in}</div>' +
+                                    '<div class="row">{height_cm}</div>' +
+                                    '<div class="row">{bp_systolic}</div>' +
+                                    '<div class="row">{bp_diastolic}</div>' +
+                                    '<div class="row">{pulse}</div>' +
+                                    '<div class="row">{respiration}</div>' +
+                                    '<div class="row">{temp_f}</div>' +
+                                    '<div class="row">{temp_c}</div>' +
+                                    '<div class="row">{temp_location}</div>' +
+                                    '<div class="row">{oxygen_saturation}</div>' +
+                                    '<div class="row">{head_circumference_in}</div>' +
+                                    '<div class="row">{head_circumference_cm}</div>' +
+                                    '<div class="row">{waist_circumference_in}</div>' +
+                                    '<div class="row">{waist_circumference_cm}</div>' +
+                                    '<div class="row">{bmi}</div>' +
+                                    '<div class="row">{bmi_status}</div>' +
+                                    '<div class="row">{other_notes}</div>' +
+                                '</div>' +
+                            '</td>' +
+                        '</tpl>' +
+                    '</tr>' +
+                 '</table>',
                 itemSelector: 'div.patient-pool-btn',
                 overItemCls: 'patient-over',
                 selectedItemClass: 'patient-selected',
@@ -235,11 +302,15 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 xtype   : 'toolbar',
                 dock    : 'top',
                 items:[{
-                   text    : 'Save Vitals',
-                   iconCls : 'save',
-                   scope   : me,
-                   handler : me.onSave
-
+                    text    : 'Save Vitals',
+                    iconCls : 'save',
+                    scope   : me,
+                    handler : me.onSave
+                },'->',{
+                    text    : 'Grow Chart',
+                    iconCls : 'icoChart',
+                    scope   : me,
+                    handler : me.onGrowChart
                 }]
             }
 
@@ -370,6 +441,9 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
     },
 
+    onGrowChart:function(){
+        this.growChartWindow.show();
+    },
 
     /**
      * This is the logic to create a new encounter
@@ -489,7 +563,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
     },
 
     openEncounter:function(eid){
-        alert('Will open encounter #'+eid);
+        console.log('Will open encounter #'+eid);
         this.encounterStore.load();
         this.vitalsStore.load();
     },

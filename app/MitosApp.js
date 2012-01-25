@@ -7,6 +7,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.CRUDStore',
         'Ext.mitos.restStoreModel',
 
+        'Ext.chart.*',
+        'Ext.fx.target.Sprite',
+
         'Ext.dd.DropZone',
         'Ext.dd.DragZone',
 
