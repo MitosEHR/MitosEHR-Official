@@ -66,7 +66,14 @@ class Encounter extends Patient{
 
     public function getEncounter($eid){
 
+        $this->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$eid'");
+        $encounter = $this->fetch(PDO::FETCH_ASSOC);
 
+        if($encounter != null){
+            print(json_encode(array('encounter'=>$encounter)));
+        }else{
+            echo '{"success": false}';
+        }
     }
 
     public function getVitals(){

@@ -25,7 +25,7 @@ if($_REQUEST['task'] == 'ckOpenEncounters'){
 
 if($_REQUEST['task'] == 'getEncounter'){
 
-    $enc->getEncounter($eid);
+    $enc->getEncounter($_REQUEST['eid']);
 }
 
 if($_REQUEST['task'] == 'getVitals'){

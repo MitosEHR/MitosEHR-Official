@@ -29,7 +29,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 extraParams : {eid:me.currEncounterEid},
                 reader: {
                     type			: 'json',
-                    root			: 'ecountes'
+                    root			: 'encounter'
                 }
             },
             fields: [
@@ -67,7 +67,8 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             },
             fields: [
                'id', 'pid', 'eid', 'uid', 'date', 'weight_lbs', 'weight_kg',
-                {name:'height_in', type:'int'}, {name:'height_cm', type:'int'},
+                {name:'height_in', type:'int'},
+                {name:'height_cm', type:'int'},
                'bp_systolic', 'bp_diastolic', 'pulse', 'respiration', 'temp_f',
                'temp_c', 'temp_location', 'oxygen_saturation', 'head_circumference_in',
                'head_circumference_cm', 'waist_circumference_in', 'waist_circumference_cm',
@@ -549,22 +550,49 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
      * This will update the timer every sec
      */
     encounterTimer:function(){
-        var ms = Ext.Date.getElapsed(this.currEncounterStartDate,new Date()),
+
+        var timer = this.timeElapsed(this.currEncounterStartDate,new Date()),
+            patient = this.getCurrPatient();
+
+        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+    },
+
+    timeElapsed:function(start, stop){
+        var ms = Ext.Date.getElapsed(start,stop),
         s = Math.floor((ms/1000)%60),
         m = Math.floor((ms/(1000*60))%60),
         h = Math.floor((ms/(1000*60*60))%24);
         function twoDigit(d){
             return (d >= 10) ? d : '0'+d;
         }
-        var timer = twoDigit(h)+':'+twoDigit(m)+':'+twoDigit(s);
-        var patient = this.getCurrPatient();
-
-        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+        return twoDigit(h)+':'+twoDigit(m)+':'+twoDigit(s);
     },
 
     openEncounter:function(eid){
-        console.log('Will open encounter #'+eid);
-        this.encounterStore.load();
+        var me = this;
+
+        me.currEncounterEid = eid;
+        me.encounterStore.getProxy().extraParams.eid = eid
+
+        me.encounterStore.load({
+            scope   : me,
+            callback: function(records, operation, success) {
+
+                var start_date = me.parseDate(records[0].data.start_date);
+                me.currEncounterStartDate = start_date;
+
+                if(records[0].data.stop_date != null){
+                    me.startTimer();
+                }else{
+                    var stop_date = me.parseDate(records[0].data.close_date),
+                        timer = me.timeElapsed(start_date,stop_date),
+                        patient = me.getCurrPatient();
+
+                    me.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+                }
+
+            }
+        });
         this.vitalsStore.load();
     },
 
