@@ -99,6 +99,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             closeAction : 'hide',
             modal       : true,
             maximizable : true,
+            //maximized   : true,
             title       : 'Line Chart',
             layout      : 'fit',
             tbar: [{
@@ -118,14 +119,14 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     position: 'right'
                 },
                 axes: [{
+                    title           : 'Height (inches)',
                     type            : 'Numeric',
                     minimum         : 0,
                     maximum         : 100,
                     position        : 'left',
                     fields          : ['height_in'],
-                    title           : 'Hight (inches)',
-                    majorTickSteps  : 10,
-                    minorTickSteps  : 4,
+                    majorTickSteps  : 100,
+                    minorTickSteps  : 1,
                     grid: {
                         odd: {
                             opacity: 1,
@@ -135,37 +136,58 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                         }
                     }
                 },{
+                    title           : 'Height (centimeters)',
                     type            : 'Numeric',
                     minimum         : 0,
                     maximum         : 250,
                     position        : 'right',
-                    title           : 'Hight (centimeters)',
-                    majorTickSteps  : 10,
-                    minorTickSteps  : 4
-
+                    majorTickSteps  : 125,
+                    minorTickSteps  : 1
                 },{
-                    title       : 'Date',
-                    type        : 'Time',
-                    position    : 'bottom',
-                    fields      : ['date'],
-                    dateFormat  : 'Y-m-d g:i a'
+                    title           : 'Age (Years)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 20,
+                    position        : 'bottom',
+                    fields          : ['years'],
+                    majorTickSteps  : 18,
+                    minorTickSteps  : 2
 
                 }],
                 series: [{
-                    type: 'line',
+                    title   : 'Actual Growth',
+                    type    : 'line',
                     axis    : 'left',
-                    xField  : 'date',
-                    yField  : 'height_in',
+                    xField  : 'years',
+                    yField  : 'hight_in',
                     highlight: {
-                        size: 10,
-                        radius: 10
+                        size    : 10,
+                        radius  : 10
                     },
                     markerConfig: {
-                        type    : 'cross',
+                        type    : 'circle',
                         size    : 5,
                         radius  : 5,
                         'stroke-width': 0
                     }
+                },{
+                    title   : 'Normal Growth',
+                    type: 'line',
+                    highlight: {
+                        size    : 5,
+                        radius  : 5
+                    },
+                    axis    : 'left',
+                    xField  : 'years',
+                    yField  : 'hight_in',
+                    smooth  : true,
+                    fill    : true
+//                    markerConfig: {
+//                        //type    : 'circle',
+//                        size    : 4,
+//                        radius  : 4,
+//                        'stroke-width': 0
+//                    }
 
                 }]
             }
@@ -247,6 +269,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         me.vitalsPanel = Ext.create('Ext.panel.Panel', {
             title       : 'Vitals',
             action      : 'encounter',
+            cls         : 'vitals-panel',
             autoScroll  : true,
             border      : false,
             layout: {
@@ -255,7 +278,8 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             },
             items: [{
                 xtype        : 'form',
-                columnWidth  : 330,
+                columnWidth  : 325,
+                width        : 325,
                 border       : false,
                 url          : '',
                 layout       : 'anchor',
@@ -308,7 +332,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     scope   : me,
                     handler : me.onSave
                 },'->',{
-                    text    : 'Grow Chart',
+                    text    : 'Growth Chart',
                     iconCls : 'icoChart',
                     scope   : me,
                     handler : me.onGrowChart
@@ -342,22 +366,22 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 me.speechDicPanel,
                 me.MiscBillingOptionsPanel,
                 me.procedurePanel
-            ],
-            bbar:[{
-                text      	: 'Save',
-                iconCls   	: 'save',
-                disabled	: true,
-                handler     : function(){
-
-                }
-            },'-',{
-                text      	: 'Reset Form',
-                iconCls   	: 'save',
-                disabled	: true,
-                handler   	: function(){
-
-                }
-            }]
+            ]
+//            bbar:[{
+//                text      	: 'Save',
+//                iconCls   	: 'save',
+//                disabled	: true,
+//                handler     : function(){
+//
+//                }
+//            },'-',{
+//                text      	: 'Reset Form',
+//                iconCls   	: 'save',
+//                disabled	: true,
+//                handler   	: function(){
+//
+//                }
+//            }]
         });
 
 
@@ -593,7 +617,12 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
             }
         });
-        this.vitalsStore.load();
+        this.vitalsStore.load({
+            scope   : me,
+            callback: function() {
+                me.vitalsPanel.down('form').doLayout();
+            }
+        });
     },
 
     /**

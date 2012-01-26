@@ -375,6 +375,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 title       : lang.patientPoolArea,
                 layout      : 'vbox',
                 region      : 'south',
+                itemId      : 'patientPoolArea',
                 bodyPadding : 5,
                 height      : 300,
                 collapsible : true,
@@ -422,7 +423,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                         me.showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
                     }
                 },'-']
-            }]
+            }],
+            listeners:{
+                scope:me,
+                beforecollapse: me.navCollapsed,
+                beforeexpand: me.navExpanded
+
+            }
         });
 
 
@@ -492,6 +499,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         });
 
 
+
         /**
          * Footer Panel
          */
@@ -501,6 +509,28 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             padding     : '3 0',
             region      : 'south',
             items:[{
+                xtype   : 'dataview',
+                margin  : '0 0 3 0',
+                hidden  : true,
+                cls     : 'patient-pool-view-footer x-toolbar x-toolbar-default x-box-layout-ct',
+                tpl: '<tpl for=".">' +
+                        '<div class="patient-pool-btn-small x-btn x-btn-default-small" style="float:left">' +
+                            '<div class="patient_btn_info">' +
+                                '<div class="patient-name">{name} ({pid})</div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px;" role="presentation" tabindex="-1"></div>'+
+                     '</tpl>',
+                itemSelector: 'div.patient-pool-btn-small',
+                overItemCls: 'patient-over',
+                selectedItemClass: 'patient-selected',
+                singleSelect: true,
+                store: me.patientPoolStore,
+                listeners: {
+                    scope   : me,
+                    render  : me.initializePatientDragZone
+                }
+            },{
                 xtype   : 'toolbar',
                 dock    : 'bottom',
                 items:[{
@@ -652,6 +682,26 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         }
     },
 
+    navCollapsed:function(){
+        var navView = this.navColumn.getComponent('patientPoolArea'),
+            foot    = this.Footer,
+            footView = foot.down('dataview');
+
+        navView.hide();
+        foot.setHeight(60);
+        footView.show();
+    },
+
+    navExpanded:function(){
+        var navView = this.navColumn.getComponent('patientPoolArea'),
+            foot    = this.Footer,
+            footView = foot.down('dataview');
+
+        navView.show();
+        foot.setHeight(30);
+        footView.hide();
+    },
+
     goBack:function(){
         var tree        = this.navColumn.down('treepanel'),
             sm          = tree.getSelectionModel();
@@ -702,6 +752,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     afterAppRender:function(){
         Ext.get('mainapp-loading').remove();
         Ext.get('mainapp-loading-mask').fadeOut({remove:true});
+
     },
 
 
