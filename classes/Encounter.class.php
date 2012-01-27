@@ -78,7 +78,7 @@ class Encounter extends Patient{
 
     public function getVitals(){
 
-        $pid =  $this->getCurrPid();
+        $pid =  $_SESSION['patient']['pid'];
 
         $this->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER BY date ASC");
         $total = $this->rowCount();
@@ -92,7 +92,7 @@ class Encounter extends Patient{
         if($total >= 1){
             print(json_encode(array('totals'=>$total,'vitals'=>$rows)));
         }else{
-            echo '{"success": false}';
+            echo '{"success": true}';
         }
 
     }

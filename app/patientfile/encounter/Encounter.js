@@ -92,20 +92,42 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
 
         me.growChartWindow = Ext.create('Ext.window.Window', {
-            width       : 900,
-            height      : 600,
+            width       : '90%',
+            height      : '90%',
             minHeight   : 400,
             minWidth    : 550,
             closeAction : 'hide',
             modal       : true,
             maximizable : true,
-            //maximized   : true,
             title       : 'Line Chart',
             layout      : 'fit',
-            tbar: [{
-                text: 'Reload Data',
+            tbar: ['->',{
+                text: 'Growth Chart',
                 handler: function() {
                     me.vitalsStore.loadData();
+                }
+            },'-',{
+                text: 'Head Circumference Chart',
+                handler: function() {
+                    me.vitalsStore.loadData();
+                }
+            },'-',{
+                text: 'Weight for Age',
+                handler: function() {
+                    me.vitalsStore.loadData();
+                }
+            },'-',{
+                text: 'Height for Age',
+                handler: function() {
+                    me.vitalsStore.loadData();
+                }
+            }],
+            tools:[{
+                type:'print',
+                tooltip: 'Print Chart',
+                // hidden:true,
+                handler: function(event, toolEl, panel){
+                    // refresh logic
                 }
             }],
             items: {
@@ -287,6 +309,8 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             },{
                 xtype   : 'dataview',
                 cls     : 'vitals-data',
+                loadMask: 'No Vitals Recorded',
+                loadMask: false,
                 tpl: '<table>' +
                     '<tr>' +
                         '<tpl for=".">' +
@@ -332,7 +356,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     scope   : me,
                     handler : me.onSave
                 },'->',{
-                    text    : 'Growth Chart',
+                    text    : 'Vector Charts',
                     iconCls : 'icoChart',
                     scope   : me,
                     handler : me.onGrowChart
@@ -620,7 +644,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         this.vitalsStore.load({
             scope   : me,
             callback: function() {
-                me.vitalsPanel.down('form').doLayout();
+                me.vitalsPanel.down('dataview').refresh();
             }
         });
     },
