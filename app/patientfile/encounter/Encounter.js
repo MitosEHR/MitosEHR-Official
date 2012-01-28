@@ -1,6 +1,6 @@
 //******************************************************************************
 // Encounter.ejs.php
-// Encounter Forms
+// Encounter Panel
 // v0.0.1
 // 
 // Author: Ernesto J. Rodriguez
@@ -19,6 +19,15 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
         me.currEncounterStartDate = null;
         me.currEncounterEid = null;
+
+        me.timerTask = {
+            scope:me,
+            run:function () {
+                me.encounterTimer();
+            },
+            interval:1000 //1 second
+        };
+
 
         Ext.define('EncounterModel', {
             extend: 'Ext.data.Model',
@@ -130,7 +139,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             tools:[{
                 type:'print',
                 tooltip: 'Print Chart',
-                handler: function(event, toolEl, panel){
+                handler: function(){
                     console.log(this.up('window').down('chart'));
                 }
             }],
@@ -538,7 +547,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             },{
                 xtype   : 'dataview',
                 cls     : 'vitals-data',
-                loadMask: 'No Vitals Recorded',
                 loadMask: false,
                 tpl: '<table>' +
                     '<tr>' +
@@ -620,21 +628,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 me.MiscBillingOptionsPanel,
                 me.procedurePanel
             ]
-//            bbar:[{
-//                text      	: 'Save',
-//                iconCls   	: 'save',
-//                disabled	: true,
-//                handler     : function(){
-//
-//                }
-//            },'-',{
-//                text      	: 'Reset Form',
-//                iconCls   	: 'save',
-//                disabled	: true,
-//                handler   	: function(){
-//
-//                }
-//            }]
         });
 
 
@@ -800,12 +793,13 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     task: 'newEncounter'
                 },
                 success: function(form, action) {
+                    /** @namespace action.result.encounter.start_date */
                     me.currEncounterStartDate = me.parseDate(action.result.encounter.start_date);
                     me.currEncounterEid = action.result.encounter.eid;
                     me.startTimer();
                     btn.up('window').close();
                 },
-                failure: function(form, action) {
+                failure: function() {
                     // TODO
                     btn.up('window').close();
 
@@ -834,13 +828,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
      * Start timer task...  runs every sec
      */
     startTimer:function(){
-        this.timerTask = {
-            scope:this,
-            run:function () {
-                this.encounterTimer();
-            },
-            interval:1000 //1 second
-        };
         Ext.TaskManager.start(this.timerTask);
     },
 
@@ -848,11 +835,10 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
      * This will update the timer every sec
      */
     encounterTimer:function(){
-
-        var timer = this.timeElapsed(this.currEncounterStartDate,new Date()),
-            patient = this.getCurrPatient();
-
-        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+        var me = this;
+        var timer = me.timeElapsed(me.currEncounterStartDate,new Date()),
+            patient = me.getCurrPatient();
+        me.updateTitle( patient.name+ ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
     },
 
     timeElapsed:function(start, stop){
@@ -868,27 +854,22 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
     openEncounter:function(eid){
         var me = this;
-
         me.currEncounterEid = eid;
-        me.encounterStore.getProxy().extraParams.eid = eid
-
+        me.encounterStore.getProxy().extraParams.eid = eid;
         me.encounterStore.load({
             scope   : me,
-            callback: function(records, operation, success) {
-
+            callback: function(records) {
                 var start_date = me.parseDate(records[0].data.start_date);
                 me.currEncounterStartDate = start_date;
-
-                if(records[0].data.stop_date != null){
+                if (records[0].data.close_date == '') {
                     me.startTimer();
-                }else{
+                } else {
+                    Ext.TaskManager.stop(me.timerTask);
                     var stop_date = me.parseDate(records[0].data.close_date),
-                        timer = me.timeElapsed(start_date,stop_date),
+                        timer = me.timeElapsed(start_date, stop_date),
                         patient = me.getCurrPatient();
-
-                    me.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+                    me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">' + timer + '</span>');
                 }
-
             }
         });
         this.vitalsStore.load({
@@ -916,7 +897,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                         signature: signature },
                     scope   : me,
                     success : function(response){
-                        var success = eval('('+response.responseText+')').success
+                        var success = eval('(' + response.responseText + ')').success;
                         if(success){
                             // TODO: after close encounter logic
                             Ext.TaskManager.stop(this.timerTask);
@@ -930,13 +911,11 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                                     if(btn == 'ok'){
                                         me.closeEncounter();
                                     }
-
                                 }
                            });
                         }
                     }
                 });
-
             }
         }, this);
         var f = msg.textField.getInputId();
@@ -982,4 +961,4 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             this.currPatientError();
         }
     }
-}); //ens oNotesPage class
+});
