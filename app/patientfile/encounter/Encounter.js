@@ -20,7 +20,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         me.currEncounterStartDate = null;
         me.currEncounterEid = null;
 
-
         Ext.define('EncounterModel', {
             extend: 'Ext.data.Model',
             proxy: {
@@ -47,10 +46,10 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 {name: 'onset_date', 	    type: 'string'}
             ],
            hasMany: {
-               associatedModel: 'VitalsModel',
-               name : 'getVitals',
-               associationKey:'eid',
-               autoLoad:true
+               associatedModel  : 'VitalsModel',
+               name             : 'getVitals',
+               associationKey   : 'eid',
+               autoLoad         : true
                //filterProperty: 'query'
            }
         });
@@ -59,7 +58,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             proxy: {
                 type	    : 'ajax',
                 url 	    : 'app/patientfile/encounter/data.php?task=getVitals',
-                extraParams : {eid:me.currEncounterEid},
+                extraParams : { eid:me.currEncounterEid },
                 reader: {
                     type			: 'json',
                     root			: 'vitals'
@@ -77,7 +76,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             belongsTo: 'EncounterModel'
         });
 
-
         me.encounterStore = Ext.create('Ext.data.Store', {
             pageSize	: 10,
             model		: 'EncounterModel'
@@ -88,55 +86,62 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             model		: 'VitalsModel'
         });
 
-
-
-
-        me.growChartWindow = Ext.create('Ext.window.Window', {
-            width       : '90%',
-            height      : '90%',
+        me.chartsWindow = Ext.create('Ext.window.Window', {
+            title       : 'Vector Chart',
+            layout      : 'card',
+            closeAction : 'hide',
+            width       : '70%',
+            height      : '70%',
             minHeight   : 400,
             minWidth    : 550,
-            closeAction : 'hide',
             modal       : true,
             maximizable : true,
-            title       : 'Line Chart',
-            layout      : 'fit',
+            maximized   : true,
             tbar: ['->',{
-                text: 'Growth Chart',
-                handler: function() {
-                    me.vitalsStore.loadData();
-                }
+                text        : 'Growth Chart',
+                action      : 'growChart',
+                pressed     : true,
+                enableToggle: true,
+                toggleGroup : 'charts',
+                scope       : me,
+                handler     : me.onChartSwitch
             },'-',{
-                text: 'Head Circumference Chart',
-                handler: function() {
-                    me.vitalsStore.loadData();
-                }
+                text        : 'Head Circumference Chart',
+                action      : 'headCirChart',
+                enableToggle: true,
+                toggleGroup : 'charts',
+                scope       : me,
+                handler     : me.onChartSwitch
             },'-',{
-                text: 'Weight for Age',
-                handler: function() {
-                    me.vitalsStore.loadData();
-                }
+                text        : 'Weight for Age',
+                action      : 'weightAge',
+                enableToggle: true,
+                toggleGroup : 'charts',
+                scope       : me,
+                handler     : me.onChartSwitch
             },'-',{
-                text: 'Height for Age',
-                handler: function() {
-                    me.vitalsStore.loadData();
-                }
-            }],
+                text        : 'Height for Age',
+                action      : 'heightAge',
+                enableToggle: true,
+                toggleGroup : 'charts',
+                scope       : me,
+                handler     : me.onChartSwitch
+            },'-'],
             tools:[{
                 type:'print',
                 tooltip: 'Print Chart',
-                // hidden:true,
                 handler: function(event, toolEl, panel){
-                    // refresh logic
+                    console.log(this.up('window').down('chart'));
                 }
             }],
-            items: {
-                xtype: 'chart',
-                style: 'background:#fff',
-                animate: true,
-                store: me.vitalsStore,
-                shadow: true,
-                theme: 'Category1',
+            items: [{
+                xtype   : 'chart',
+                style   : 'background:#fff',
+                store   : me.vitalsStore,
+                itemId  : 'growChart',
+                animate : true,
+                shadow  : true,
+                theme   : 'Category1',
                 legend: {
                     position: 'right'
                 },
@@ -151,10 +156,10 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     minorTickSteps  : 1,
                     grid: {
                         odd: {
-                            opacity: 1,
-                            fill: '#ddd',
-                            stroke: '#bbb',
-                            'stroke-width': 0.5
+                            opacity         : 1,
+                            fill            : '#ddd',
+                            stroke          : '#bbb',
+                            'stroke-width'  : 0.5
                         }
                     }
                 },{
@@ -204,15 +209,239 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     yField  : 'hight_in',
                     smooth  : true,
                     fill    : true
-//                    markerConfig: {
-//                        //type    : 'circle',
-//                        size    : 4,
-//                        radius  : 4,
-//                        'stroke-width': 0
-//                    }
-
                 }]
-            }
+            },{
+                xtype   : 'chart',
+                style   : 'background:#fff',
+                store   : this.vitalsStore,
+                itemId  : 'headCirChart',
+                animate : true,
+                shadow  : true,
+                hidden  : true,
+                theme   : 'Category1',
+                legend: {
+                    position: 'right'
+                },
+                axes: [{
+                    title           : 'Head Circumference (inches)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 100,
+                    position        : 'left',
+                    fields          : ['height_in'],
+                    majorTickSteps  : 100,
+                    minorTickSteps  : 1,
+                    grid: {
+                        odd: {
+                            opacity         : 1,
+                            fill            : '#ddd',
+                            stroke          : '#bbb',
+                            'stroke-width'  : 0.5
+                        }
+                    }
+                },{
+                    title           : 'Head Circumference (centimeters)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 250,
+                    position        : 'right',
+                    majorTickSteps  : 125,
+                    minorTickSteps  : 1
+                },{
+                    title           : 'Age (Years)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 20,
+                    position        : 'bottom',
+                    fields          : ['years'],
+                    majorTickSteps  : 18,
+                    minorTickSteps  : 2
+
+                }],
+                series: [{
+                    title   : 'Actual Growth',
+                    type    : 'line',
+                    axis    : 'left',
+                    xField  : 'years',
+                    yField  : 'hight_in',
+                    highlight: {
+                        size    : 10,
+                        radius  : 10
+                    },
+                    markerConfig: {
+                        type    : 'circle',
+                        size    : 5,
+                        radius  : 5,
+                        'stroke-width': 0
+                    }
+                },{
+                    title   : 'Normal Growth',
+                    type: 'line',
+                    highlight: {
+                        size    : 5,
+                        radius  : 5
+                    },
+                    axis    : 'left',
+                    xField  : 'years',
+                    yField  : 'hight_in',
+                    smooth  : true,
+                    fill    : true
+                }]
+            },{
+                xtype   : 'chart',
+                style   : 'background:#fff',
+                store   : this.vitalsStore,
+                itemId  : 'weightAge',
+                animate : true,
+                shadow  : true,
+                hidden  : true,
+                theme   : 'Category1',
+                legend: {
+                    position: 'right'
+                },
+                axes: [{
+                    title           : 'Weight (lbs)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 100,
+                    position        : 'left',
+                    fields          : ['height_in'],
+                    majorTickSteps  : 100,
+                    minorTickSteps  : 1,
+                    grid: {
+                        odd: {
+                            opacity         : 1,
+                            fill            : '#ddd',
+                            stroke          : '#bbb',
+                            'stroke-width'  : 0.5
+                        }
+                    }
+                },{
+                    title           : 'Weight (kg)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 250,
+                    position        : 'right',
+                    majorTickSteps  : 125,
+                    minorTickSteps  : 1
+                },{
+                    title           : 'Age (Years)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 20,
+                    position        : 'bottom',
+                    fields          : ['years'],
+                    majorTickSteps  : 18,
+                    minorTickSteps  : 2
+
+                }],
+                series: [{
+                    title   : 'Actual Growth',
+                    type    : 'line',
+                    axis    : 'left',
+                    xField  : 'years',
+                    yField  : 'hight_in',
+                    highlight: {
+                        size    : 10,
+                        radius  : 10
+                    },
+                    markerConfig: {
+                        type    : 'circle',
+                        size    : 5,
+                        radius  : 5,
+                        'stroke-width': 0
+                    }
+                },{
+                    title   : 'Normal Growth',
+                    type: 'line',
+                    highlight: {
+                        size    : 5,
+                        radius  : 5
+                    },
+                    axis    : 'left',
+                    xField  : 'years',
+                    yField  : 'hight_in',
+                    smooth  : true,
+                    fill    : true
+                }]
+            },{
+                xtype   : 'chart',
+                style   : 'background:#fff',
+                store   : this.vitalsStore,
+                itemId  : 'heightAge',
+                animate : true,
+                shadow  : true,
+                hidden  : true,
+                theme   : 'Category1',
+                legend: {
+                    position: 'right'
+                },
+                axes: [{
+                    title           : 'Height (inches)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 100,
+                    position        : 'left',
+                    fields          : ['height_in'],
+                    majorTickSteps  : 100,
+                    minorTickSteps  : 1,
+                    grid: {
+                        odd: {
+                            opacity         : 1,
+                            fill            : '#ddd',
+                            stroke          : '#bbb',
+                            'stroke-width'  : 0.5
+                        }
+                    }
+                },{
+                    title           : 'Height (centimeters)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 250,
+                    position        : 'right',
+                    majorTickSteps  : 125,
+                    minorTickSteps  : 1
+                },{
+                    title           : 'Age (Years)',
+                    type            : 'Numeric',
+                    minimum         : 0,
+                    maximum         : 20,
+                    position        : 'bottom',
+                    fields          : ['years'],
+                    majorTickSteps  : 18,
+                    minorTickSteps  : 2
+
+                }],
+                series: [{
+                    title   : 'Actual Growth',
+                    type    : 'line',
+                    axis    : 'left',
+                    xField  : 'years',
+                    yField  : 'hight_in',
+                    highlight: {
+                        size    : 10,
+                        radius  : 10
+                    },
+                    markerConfig: {
+                        type            : 'circle',
+                        size            : 5,
+                        radius          : 5,
+                        'stroke-width'  : 0
+                    }
+                },{
+                    title   : 'Normal Growth',
+                    type: 'line',
+                    highlight: {
+                        size    : 5,
+                        radius  : 5
+                    },
+                    axis    : 'left',
+                    xField  : 'years',
+                    yField  : 'hight_in',
+                    smooth  : true,
+                    fill    : true
+                }]
+            }]
        });
 
 
@@ -359,7 +588,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     text    : 'Vector Charts',
                     iconCls : 'icoChart',
                     scope   : me,
-                    handler : me.onGrowChart
+                    handler : me.onChartWindowtShow
                 }]
             }
 
@@ -490,9 +719,30 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
     },
 
-    onGrowChart:function(){
-        this.growChartWindow.show();
+
+    onChartWindowtShow:function(){
+        this.chartsWindow.show();
     },
+    
+    onChartSwitch:function(btn){
+        console.log(btn.action);
+        var win = this.chartsWindow,
+            layout  = win.getLayout();
+
+        if(btn.action == 'growChart'){
+            layout.setActiveItem(0);
+        }else if(btn.action == 'headCirChart'){
+            layout.setActiveItem(1);
+        }else if(btn.action == 'weightAge'){
+            layout.setActiveItem(2);
+        }else if(btn.action == 'heightAge'){
+            layout.setActiveItem(3);
+        }
+
+
+    },
+
+
 
     /**
      * This is the logic to create a new encounter
