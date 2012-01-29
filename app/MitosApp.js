@@ -513,13 +513,14 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 margin  : '0 0 3 0',
                 hidden  : true,
                 cls     : 'patient-pool-view-footer x-toolbar x-toolbar-default x-box-layout-ct',
-                tpl: '<tpl for=".">' +
+                tpl:'<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px;" role="presentation" tabindex="-1"></div>'+
+                    '<tpl for=".">' +
                         '<div class="patient-pool-btn-small x-btn x-btn-default-small" style="float:left">' +
                             '<div class="patient_btn_info">' +
                                 '<div class="patient-name">{name} ({pid})</div>' +
                             '</div>' +
                         '</div>' +
-                        '<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px;" role="presentation" tabindex="-1"></div>'+
+                        '<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px; margin-left:3px;" role="presentation" tabindex="-1"></div>'+
                      '</tpl>',
                 itemSelector: 'div.patient-pool-btn-small',
                 overItemCls: 'patient-over',

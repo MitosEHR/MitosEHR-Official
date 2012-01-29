@@ -43,6 +43,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 {name: 'layout',		    type: 'string'},
                 {name: 'width',		        type: 'string'},
                 {name: 'height',		    type: 'string'},
+                {name: 'anchor',		    type: 'string'},
                 {name: 'margin',		    type: 'string'},
                 {name: 'flex',		        type: 'string'},
                 {name: 'collapsible',		type: 'string'},
@@ -294,6 +295,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     name            : 'height',
                     itemId          : 'height',
                     emptyText       : 'ei. 5 for 5px',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Anchor',
+                    xtype           : 'textfield',
+                    name            : 'anchor',
+                    itemId          : 'anchor',
+                    emptyText       : 'ei. 100%',
                     hidden          : true
                 },{
                     fieldLabel      : 'Flex',
@@ -834,6 +842,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             items = [
                 'name',
                 'width',
+                'anchor',
                 'emptyText',
                 'fieldLabel',
                 'hideLabel',
@@ -845,6 +854,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             items = [
                 'name',
                 'width',
+                'anchor',
                 'height',
                 'emptyText',
                 'fieldLabel',

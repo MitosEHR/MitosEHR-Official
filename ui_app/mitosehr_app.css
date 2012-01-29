@@ -77,9 +77,15 @@
 }
 .timer {
     float: right;
-    font-weight: bold;
-    width: 72px;
-    text-align: justify;
+    margin-right: -10px;
+    width: 160px;
+}
+.day{
+    float:left;
+}
+.time {
+    float:right;
+    min-width: 70px;
 }
 .RenderPanel {
     background-color: #DFE8F6!important;

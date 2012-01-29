@@ -513,11 +513,11 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             title   : 'Review of Systems Checks',
             html    : '<h1>Review of Systems Checks form placeholder!</h1>'
         });
-        me.soapPanel = Ext.create('Ext.panel.Panel',{
+        me.soapPanel = Ext.create('Ext.form.Panel',{
             border  : false,
             title   : 'SOAP',
             action  : 'encounter',
-            html    : '<h1>SOAP form placeholder!</h1>'
+            fieldDefaults: { msgTarget:'side' }
         });
         me.speechDicPanel = Ext.create('Ext.panel.Panel',{
             border  : false,
@@ -836,20 +836,34 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
      */
     encounterTimer:function(){
         var me = this;
-        var timer = me.timeElapsed(me.currEncounterStartDate,new Date()),
+        var timer = me.timer(me.currEncounterStartDate,new Date()),
             patient = me.getCurrPatient();
-        me.updateTitle( patient.name+ ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+        me.updateTitle( patient.name+ ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Opened Encounter) <span class="timer">'+timer+'</span>' );
     },
 
-    timeElapsed:function(start, stop){
-        var ms = Ext.Date.getElapsed(start,stop),
-        s = Math.floor((ms/1000)%60),
-        m = Math.floor((ms/(1000*60))%60),
-        h = Math.floor((ms/(1000*60*60))%24);
+    timer:function(start, stop){
+        var ms = Ext.Date.getElapsed(start,stop), t,
+            sec = Math.floor(ms/1000);
         function twoDigit(d){
             return (d >= 10) ? d : '0'+d;
         }
-        return twoDigit(h)+':'+twoDigit(m)+':'+twoDigit(s);
+
+        var min = Math.floor(sec/60);
+        sec = sec % 60;
+        t = twoDigit(sec);
+
+        var hr = Math.floor(min/60);
+        min = min % 60;
+        t = twoDigit(min) + ":" + t;
+
+        var day = Math.floor(hr/24);
+        hr = hr % 24;
+        t = twoDigit(hr) + ":" + t;
+
+        //t = day + ":" + t
+
+        t = (day == 0 )? '<span class="time">'+t+'</span>' : '<span class="day">'+day+' day(s)</span><span class="time">'+t+'</span>';
+        return t;
     },
 
     openEncounter:function(eid){
@@ -866,9 +880,9 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 } else {
                     Ext.TaskManager.stop(me.timerTask);
                     var stop_date = me.parseDate(records[0].data.close_date),
-                        timer = me.timeElapsed(start_date, stop_date),
+                        timer = me.timer(start_date, stop_date),
                         patient = me.getCurrPatient();
-                    me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">' + timer + '</span>');
+                    me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
                 }
             }
         });
@@ -950,8 +964,12 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             var patient = this.getCurrPatient();
             this.updateTitle( patient.name + ' (Visits)');
 
-            this.getFormItems( me.vitalsPanel.down('form'), 'Vitals',function(){
+            this.getFormItems( me.vitalsPanel.down('form'), 'Vitals', function(){
                 me.vitalsPanel.doLayout();
+            });
+
+            this.getFormItems( me.soapPanel, 'SOAP', function(){
+                me.soapPanel.doLayout();
             });
 
 
