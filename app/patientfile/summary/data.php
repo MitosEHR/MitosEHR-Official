@@ -24,13 +24,11 @@ $limit      = (!$_REQUEST["limit"])? 30 : $_REQUEST["limit"];
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
 
-        if($_REQUEST['formData'] == 'demographicsData'){
-            $formData = 'form_data_demographics';
-        }
-        $pid = $_REQUEST['pid'];
+        $data_table = $_REQUEST['data_table'];
+        $pid        = $_REQUEST['pid'];
 
         $mitos_db->setSQL("SELECT *
-				             FROM $formData
+				             FROM $data_table
 				            WHERE pid = '$pid'");
         $total = $mitos_db->rowCount();
 

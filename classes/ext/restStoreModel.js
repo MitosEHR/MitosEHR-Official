@@ -3,12 +3,7 @@
 //  *******************************************
 Ext.define('Ext.mitos.restStoreModel',{
 	extend      : 'Ext.data.Store',
-//  idProperty	:  database table id
-//  read		:  url to data_read.eje.php
-//  create		:  url to data_create.eje.php
-//  update		:  url to data_update.eje.php
-//  destroy 	:  url to data_destroy.eje.php
-//  *******************************************
+
 	constructor:function(config){
 
 		// This will delete the recordModel

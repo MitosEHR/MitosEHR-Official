@@ -51,7 +51,7 @@ Ext.define('Ext.mitos.LivePatientSearch',{
             minChars	: 1,
             anchor		: '100%',
             listConfig: {
-                //loadingText	: 'Searching...',
+                loadingText	: 'Searching...',
                 //emptyText	: 'No matching posts found.',
                 //---------------------------------------------------------------------
                 // Custom rendering template for each item
