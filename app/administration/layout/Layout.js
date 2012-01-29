@@ -43,6 +43,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 {name: 'layout',		    type: 'string'},
                 {name: 'width',		        type: 'string'},
                 {name: 'height',		    type: 'string'},
+                {name: 'anchor',		    type: 'string'},
                 {name: 'margin',		    type: 'string'},
                 {name: 'flex',		        type: 'string'},
                 {name: 'collapsible',		type: 'string'},
@@ -55,6 +56,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 {name: 'minValue',		    type: 'string'},
                 {name: 'boxLabel',		    type: 'string'},
                 {name: 'grow',		        type: 'string'},
+                {name: 'growMin',	        type: 'string'},
+                {name: 'growMax',           type: 'string'},
                 {name: 'increment',		    type: 'string'},
                 {name: 'name',		        type: 'string'},
                 {name: 'list_id',		    type: 'string'}
@@ -296,6 +299,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     emptyText       : 'ei. 5 for 5px',
                     hidden          : true
                 },{
+                    fieldLabel      : 'Anchor',
+                    xtype           : 'textfield',
+                    name            : 'anchor',
+                    itemId          : 'anchor',
+                    emptyText       : 'ei. 100%',
+                    hidden          : true
+                },{
                     fieldLabel      : 'Flex',
                     xtype           : 'checkbox',
                     name            : 'flex',
@@ -380,6 +390,18 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     xtype           : 'checkbox',
                     name            : 'grow',
                     itemId          : 'grow',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Grow Min',
+                    xtype           : 'textfield',
+                    name            : 'growMin',
+                    itemId          : 'growMin',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Grow Max',
+                    xtype           : 'textfield',
+                    name            : 'growMax',
+                    itemId          : 'growMax',
                     hidden          : true
                 },{
                     fieldLabel      : 'Increment',
@@ -834,6 +856,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             items = [
                 'name',
                 'width',
+                'anchor',
                 'emptyText',
                 'fieldLabel',
                 'hideLabel',
@@ -845,6 +868,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             items = [
                 'name',
                 'width',
+                'anchor',
                 'height',
                 'emptyText',
                 'fieldLabel',
@@ -852,6 +876,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'labelWidth',
                 'allowBlank',
                 'grow',
+                'growMin',
+                'growMax',
                 'margin'
             ];
         } else if (value == 'numberfield') {

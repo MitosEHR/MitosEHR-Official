@@ -17,16 +17,28 @@ $_SESSION['site']['flops'] = 0;
 
 $enc = new Encounter();
 
+
 if($_REQUEST['task'] == 'ckOpenEncounters'){
-
     $enc->ckOpenEncounters();
-
 }
 
 
-if($_REQUEST['task'] == 'newEncounter'){
+if($_REQUEST['task'] == 'getEncounter'){
 
+    $enc->getEncounter($_REQUEST['eid']);
+}
+
+if($_REQUEST['task'] == 'getVitals'){
+    $enc->getVitals();
+}
+
+if($_REQUEST['task'] == 'newEncounter'){
     unset($_REQUEST['task']);
     $enc->createEncounter($_REQUEST);
+}
 
+
+if($_REQUEST['task'] == 'closeEncounter'){
+    unset($_REQUEST['task']);
+    $enc->closeEncounter($_REQUEST);
 }

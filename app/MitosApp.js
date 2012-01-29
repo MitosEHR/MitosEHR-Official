@@ -1,10 +1,14 @@
 Ext.define('Ext.mitos.panel.MitosApp',{
     extend:'Ext.Viewport',
+    minWidth:1440,
     uses:[
 
         'Ext.mitos.RenderPanel',
         'Ext.mitos.CRUDStore',
         'Ext.mitos.restStoreModel',
+
+        'Ext.chart.*',
+        'Ext.fx.target.Sprite',
 
         'Ext.dd.DropZone',
         'Ext.dd.DragZone',
@@ -108,6 +112,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             }
         });
 
+        /**
+         * This store will handle the patient pool area
+         */
         me.patientPoolStore = Ext.create('Ext.data.Store', {
             fields: ['name', 'pid', 'pic'],
             data : [
@@ -177,34 +184,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 style 	: 'float:left',
                 margin	: '0 0 0 5',
                 itemId  : 'patientButton',
+                scope   : me,
+                handler : me.openPatientSummary,
                 listeners: {
                     scope       : me,
                     afterrender : me.patientUnset
                 },
-                tpl : me.patientBtn(),
-                menu: Ext.create('Ext.menu.Menu', {
-                    items:[{
-                        text    : lang.newEncounter,
-                        scope   : me,
-                        handler : me.createNewEncounter
-                    },{
-                        text    : 'Encounter History',
-                        scope   : me,
-                        handler : me.openPatientVisits
-                    },{
-                        text    : lang.patientDocuments,
-                        scope   : me,
-                        handler : function(){
-
-                        }
-                    },{
-                        text    : lang.patientNotes,
-                        scope   : me,
-                        handler : function(){
-
-                        }
-                    }]
-                })
+                tpl : me.patientBtn()
             },{
                 xtype   : 'button',
                 scale	: 'large',
@@ -236,18 +222,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 margin	: '0 0 0 3',
                 cls     : 'headerLargeBtn',
                 padding : 0,
-                itemId  : 'patientOpenCurrEncounter',
-                iconCls : 'icoArrowUp',
-                scope   : me,
-                handler : me.openPatientSummary,
-                tooltip : 'Open Patient Record (Summary)'
-            },{
-                xtype   : 'button',
-                scale	: 'large',
-                style 	: 'float:left',
-                margin	: '0 0 0 3',
-                cls     : 'headerLargeBtn',
-                padding : 0,
                 itemId  : 'patientPushFor',
                 iconCls : 'icoArrowRight',
                 scope   : me,
@@ -256,22 +230,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 menu: [{
                     text     : 'Front Office',
                     iconCls	: 'icoArrowRight',
-                    handler : function(){
-
-                    }
+                    action  : 'fronOffice',
+                    handler : me.sendPatientTo
                 },{
                     text    : 'Triage',
                     iconCls	: 'icoArrowRight',
-                    handler : function(){
-
-                    }
+                    action  : 'triage',
+                    handler : me.sendPatientTo
                 },{
                     text    : 'Doctor',
                     iconCls	: 'icoArrowRight',
+                    action  : 'doctor',
                     scope   : me,
-                    handler : function(){
-
-                    }
+                    handler : me.sendPatientTo
                 }]
             },{
                 xtype   : 'button',
@@ -299,7 +270,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 tooltip : 'Check Out Patient'
             },{
                 xtype       : 'panel',
-                width		: 300,
+                width		: 260,
                 bodyPadding	: '8 11 5 11',
                 margin		: '0 0 0 3',
                 style 		: 'float:left',
@@ -326,6 +297,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 scope   : me,
                 handler : me.newPatient,
                 tooltip : 'Create a new patient'
+            },{
+                xtype   : 'button',
+                scale	: 'large',
+                style 	: 'float:left',
+                margin	: '0 0 0 3',
+                cls     : 'headerLargeBtn emerBtn',
+                overCls : 'emerBtnOver',
+                padding : 0,
+                itemId  : 'createEmergency',
+                iconCls : 'icoEmer',
+                scope   : me,
+                handler : me.createEmergency,
+                tooltip : 'Create New Ememercency'
             },{
                 xtype		: 'button',
                 text		: 'Dr. Smith',
@@ -371,7 +355,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             items		: [{
                 xtype       : 'treepanel',
                 region		: 'center',
-                //bodyPadding : '5 0 0 0',
                 cls         : 'nav_tree',
                 hideHeaders	: true,
                 rootVisible	: false,
@@ -392,6 +375,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 title       : lang.patientPoolArea,
                 layout      : 'vbox',
                 region      : 'south',
+                itemId      : 'patientPoolArea',
                 bodyPadding : 5,
                 height      : 300,
                 collapsible : true,
@@ -439,7 +423,13 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                         me.showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
                     }
                 },'-']
-            }]
+            }],
+            listeners:{
+                scope:me,
+                beforecollapse: me.navCollapsed,
+                beforeexpand: me.navExpanded
+
+            }
         });
 
 
@@ -454,24 +444,34 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             defaults        : { layout: 'fit', xtype:'container' },
             items: [
 
+            /**
+             * General Area
+             */
                 Ext.create('Ext.mitos.panel.dashboard.Dashboard'),                      // done  TODO: panels
                 Ext.create('Ext.mitos.panel.calendar.Calendar'),                        // done
                 Ext.create('Ext.mitos.panel.messages.Messages'),                        // done
                 Ext.create('Ext.mitos.panel.search.PatientSearch'),                     //
 
-
+            /**
+             * Patient Area
+             */
                 Ext.create('Ext.mitos.panel.patientfile.new.NewPatient'),
                 Ext.create('Ext.mitos.panel.patientfile.summary.Summary'),
                 Ext.create('Ext.mitos.panel.patientfile.visits.Visits'),
                 Ext.create('Ext.mitos.panel.patientfile.encounter.Encounter'),
 
 
+            /**
+             * Fees Area
+             */
                 Ext.create('Ext.mitos.panel.fees.billing.Billing'),
                 Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
                 Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
                 Ext.create('Ext.mitos.panel.fees.payments.Payments'),
 
-
+            /**
+             * Administration Area
+             */
                 Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // done
                 Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
                 Ext.create('Ext.mitos.panel.administration.layout.Layout'),             // working
@@ -482,7 +482,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.administration.services.Services'),         // done
                 Ext.create('Ext.mitos.panel.administration.users.Users'),               // done
 
-
+            /**
+             * Miscellaneous
+             */
                 Ext.create('Ext.mitos.panel.miscellaneous.addressbook.Addressbook'),
                 Ext.create('Ext.mitos.panel.miscellaneous.myaccount.MyAccount'),
                 Ext.create('Ext.mitos.panel.miscellaneous.mysettings.MySettings'),
@@ -497,6 +499,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         });
 
 
+
         /**
          * Footer Panel
          */
@@ -506,6 +509,29 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             padding     : '3 0',
             region      : 'south',
             items:[{
+                xtype   : 'dataview',
+                margin  : '0 0 3 0',
+                hidden  : true,
+                cls     : 'patient-pool-view-footer x-toolbar x-toolbar-default x-box-layout-ct',
+                tpl:'<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px;" role="presentation" tabindex="-1"></div>'+
+                    '<tpl for=".">' +
+                        '<div class="patient-pool-btn-small x-btn x-btn-default-small" style="float:left">' +
+                            '<div class="patient_btn_info">' +
+                                '<div class="patient-name">{name} ({pid})</div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px; margin-left:3px;" role="presentation" tabindex="-1"></div>'+
+                     '</tpl>',
+                itemSelector: 'div.patient-pool-btn-small',
+                overItemCls: 'patient-over',
+                selectedItemClass: 'patient-selected',
+                singleSelect: true,
+                store: me.patientPoolStore,
+                listeners: {
+                    scope   : me,
+                    render  : me.initializePatientDragZone
+                }
+            },{
                 xtype   : 'toolbar',
                 dock    : 'bottom',
                 items:[{
@@ -565,6 +591,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         console.log(this.currCardCmp);
     },
 
+    createEmergency:function(){
+        alert('Emergency Button Clicked');
+    },
 
     createNewEncounter:function(){
         var me = this;
@@ -574,6 +603,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 me.currCardCmp.newEncounter();
             }
         });
+    },
+
+    sendPatientTo:function(btn){
+        var area = btn.action
+        alert('TODO: Patient will be sent to '+area );
     },
 
 
@@ -590,10 +624,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         this.remoteNavNodeSelecte('panelEncounter');
     },
 
+    openEncounter:function(eid){
+        var me = this;
+
+        me.remoteNavNodeSelecte('panelEncounter', function(success){
+            if(success){
+                me.currCardCmp.openEncounter(eid);
+            }
+        });
+    },
+
     checkOutPatient:function(){
 
     },
-
 
     openPatientVisits:function(){
         this.remoteNavNodeSelecte('panelVisits');
@@ -640,6 +683,26 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         }
     },
 
+    navCollapsed:function(){
+        var navView = this.navColumn.getComponent('patientPoolArea'),
+            foot    = this.Footer,
+            footView = foot.down('dataview');
+
+        navView.hide();
+        foot.setHeight(60);
+        footView.show();
+    },
+
+    navExpanded:function(){
+        var navView = this.navColumn.getComponent('patientPoolArea'),
+            foot    = this.Footer,
+            footView = foot.down('dataview');
+
+        navView.show();
+        foot.setHeight(30);
+        footView.hide();
+    },
+
     goBack:function(){
         var tree        = this.navColumn.down('treepanel'),
             sm          = tree.getSelectionModel();
@@ -663,6 +726,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
                     btn.update( {name:post.get('fullname'), info:'('+post.get('pid')+')'} );
                     btn.enable();
+
+                    this.openPatientSummary();
                 }
             });
             Ext.data.Request();
@@ -688,6 +753,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     afterAppRender:function(){
         Ext.get('mainapp-loading').remove();
         Ext.get('mainapp-loading-mask').fadeOut({remove:true});
+
     },
 
 

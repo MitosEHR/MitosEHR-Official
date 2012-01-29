@@ -119,6 +119,9 @@ class dbHelper {
 	// unset($b_array['field']);
 	//**********************************************************************
 	function sqlBind($b_array, $table, $iu="I", $where){
+
+        unset($b_array['__utma'],$b_array['__utmz'],$b_array['MitosEHR']);
+
         $sql_r = '';
 		//------------------------------------------------------------------
 		// Step 1

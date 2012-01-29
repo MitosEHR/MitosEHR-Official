@@ -12,29 +12,39 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelVisits',
     pageTitle   : 'Visits History',
-    uses        : ['Ext.mitos.restStoreModel','Ext.mitos.GridPanel'],
+    uses        : ['Ext.mitos.restStoreModel','Ext.mitos.GridPanel','Ext.ux.PreviewPlugin'],
 
     initComponent: function(){
         var me = this;
 
-        me.store = Ext.create('Ext.data.Store', {
-            fields: ['date', 'reason', 'provider', 'close', 'billing','inssurance'],
-            data : [
-                {"date":"10/25/1978", "reason":"Cataarro", "provider":"Dr.Roddriguez", "close":"Yes", "billing":"Yes", "inssurance":"SSS"},
-                {"date":"10/25/1978", "reason":"Cataarro", "provider":"Dr.Roddriguez", "close":"Yes", "billing":"Yes", "inssurance":"SSS"},
-                {"date":"10/25/1978", "reason":"Cataarro", "provider":"Dr.Roddriguez", "close":"Yes", "billing":"Yes", "inssurance":"SSS"},
-                {"date":"10/25/1978", "reason":"Cataarro", "provider":"Dr.Roddriguez", "close":"Yes", "billing":"Yes", "inssurance":"SSS"},
-                {"date":"10/25/1978", "reason":"Cataarro", "provider":"Dr.Roddriguez", "close":"Yes", "billing":"Yes", "inssurance":"SSS"}
-                //...
-            ]
+        me.store = Ext.create('Ext.mitos.restStoreModel',{
+            fields: [
+                {name: 'eid',				type: 'int'},
+                {name: 'start_date',		type: 'date', dateFormat: 'c'},
+                {name: 'close_date',		type: 'date', dateFormat: 'c'},
+                {name: 'sensitivity',		type: 'string'},
+                {name: 'brief_description',	type: 'string'},
+                {name: 'visit_category',	type: 'string'},
+                {name: 'facility',			type: 'string'},
+                {name: 'billing_facility',	type: 'string'},
+                {name: 'sensitivity',		type: 'string'},
+                {name: 'provider',			type: 'string'},
+                {name: 'status',	            type: 'string'}
+            ],
+            model		: 'patientVisitsModel',
+            idProperty	: 'eid',
+            url		    : 'app/patientfile/visits/data.php'
         });
 
+        function open(val) {
+            if(val != null){
+                return '<img src="ui_icons/yes.gif" />';
+            }else{
+                return '<img src="ui_icons/no.gif" />';
+            }
+            return val;
+        }
 
-
-
-
-        // Panels/Forms...
-        //****
         //******************************************************************
         // Visit History Grid
         //******************************************************************
@@ -42,55 +52,65 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             title   : 'Encounter History',
             store   : me.store,
             columns: [
-                //{ header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-                { width: 150, header: 'Date',           sortable: true, dataIndex: 'date', renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s') },
-                { width: 150, header: 'Reason',         sortable: true, dataIndex: 'reason' },
-                { width: 150, header: 'Provider',       sortable: true, dataIndex: 'provider' },
-                { width: 150, header: 'Close Encounter',sortable: true, dataIndex: 'close' },
-                { flex: 1,    header: 'Billing',        sortable: true, dataIndex: 'billing' },
-                { flex: 1,    header: 'Issurance',      sortable: true, dataIndex: 'inssurance' }
+                { header: 'eid', sortable: false, dataIndex: 'eid', hidden: true},
+                { width: 150, header: 'Date',               sortable: true, dataIndex: 'start_date', renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s') },
+                { flex: 1,    header: 'Reason',             sortable: true, dataIndex: 'brief_description' },
+                { width: 180, header: 'Provider',           sortable: true, dataIndex: 'provider' },
+                { width: 120, header: 'facility',           sortable: true, dataIndex: 'facility' },
+                { width: 120, header: 'Billing Facility',   sortable: true, dataIndex: 'billing_facility' },
+                { width: 45, header: 'Close?',              sortable: true, dataIndex: 'close_date', renderer:open }
             ],
-            listeners	: {
-                scope       : me,
-                itemclick   : me.gridItemClick,
-                itemdblclick: me.gridItemDblClick
-
+            viewConfig: {
+                itemId: 'view',
+                plugins: [{
+                    pluginId        : 'preview',
+                    ptype           : 'preview',
+                    bodyField       : 'brief_description',
+                    previewExpanded : false
+                }],
+                listeners: {
+                    scope       : me,
+                    itemclick   : me.gridItemClick,
+                    itemdblclick: me.gridItemDblClick
+                }
             },
-            tbar:['->',{
-                text    : 'New Encounter',
-                scope   : me,
-                handler : me.newEncounter
-            }]
+            tbar: Ext.create('Ext.PagingToolbar', {
+                store       : me.store,
+                displayInfo : true,
+                emptyMsg    : 'No Encounters Found',
+                plugins     : Ext.create('Ext.ux.SlidingPager', {}),
+                items: [{
+                    iconCls         : '',
+                    text            : 'Show Details',
+                    enableToggle    : true,
+                    scope           : me,
+                    toggleHandler   : me.onDetailToggle
+                },'-',{
+                    text    : 'New Encounter',
+                    scope   : me,
+                    handler : me.createNewEncounter
+                }]
+            })
         });
         me.pageBody = [me.historyGrid];
 
         me.callParent(arguments);
     },
 
-    gridItemClick:function(){
-
-
+    onDetailToggle:function(btn, pressed) {
+        this.historyGrid.getComponent('view').getPlugin('preview').toggleExpanded(pressed);
     },
 
-    gridItemDblClick:function(){
-
-
+    gridItemClick:function(view){
+        view.getPlugin('preview').toggleRowExpanded();
     },
 
+    gridItemDblClick:function(view, record){
+        App.openEncounter(record.data.eid);
+    },
 
-
-
-    setFormPanel:function(type){
-        var encounterPanel      = this.centerPanel.getComponent('encounter'),
-            administrativePanel = this.centerPanel.getComponent('administrative');
-        if(type == 'encounter'){
-            administrativePanel.setVisible(false);
-            encounterPanel.setVisible(true);
-        }else if(type == 'administrative'){
-            encounterPanel.setVisible(false);
-            administrativePanel.setVisible(true);
-
-        }
+    createNewEncounter:function(){
+      App.createNewEncounter();
     },
 
     /**
@@ -100,15 +120,15 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
      * to call every this panel becomes active
      */
     onActive:function(callback){
-//        if(this.checkIfCurrPatient()){
-//
-//            var patient = this.getCurrPatient();
-//            this.updateTitle( patient.name + ' (Encounters)');
+        if(this.checkIfCurrPatient()){
 
+            var patient = this.getCurrPatient();
+            this.updateTitle( patient.name + ' (Encounters)');
+            this.store.load();
             callback(true);
-//        }else{
-//            callback(false);
-//            this.currPatientError();
-//        }
+        }else{
+            callback(false);
+            this.currPatientError();
+        }
     }
 }); //ens oNotesPage class

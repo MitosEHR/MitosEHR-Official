@@ -27,6 +27,17 @@
 	src: url('../ui_fonts/Cuprum.ttf');
 }
 
+.vitals-data .column {
+    margin-right: 5px
+}
+.vitals-data .row{
+    font-size       : 12px;
+    height          : 22px;
+    background-color: rgb(247, 247, 247);
+    padding         : 2px 5px 0px;
+    margin-bottom   : 5px;
+    text-align      : center;
+}
 
 /* Mitos Loading Mask */
 .mitos-mask {
@@ -46,8 +57,8 @@
 }
 
 ::-webkit-scrollbar {
-    width: 4px;
-    height: 10px;
+    width: 5px;
+    height: 7px;
     margin: 0;
 }
 ::-webkit-scrollbar-track-piece  {
@@ -59,11 +70,22 @@
     background-color: #ccc;
     -webkit-border-radius: 3px;
 }
+::-webkit-scrollbar-thumb:horizontal {
+    height: 50px;
+    background-color: #ccc;
+    -webkit-border-radius: 3px;
+}
 .timer {
     float: right;
-    font-weight: bold;
-    width: 72px;
-    text-align: justify;
+    margin-right: -10px;
+    width: 160px;
+}
+.day{
+    float:left;
+}
+.time {
+    float:right;
+    min-width: 70px;
 }
 .RenderPanel {
     background-color: #DFE8F6!important;
@@ -108,6 +130,13 @@
     margin: 0!important;
     padding: 0!important;
 }
+.emerBtn .x-btn-icon {
+    background-position: center top!important;
+}
+.emerBtnOver .x-btn-icon {
+    background-position: center bottom!important;
+}
+
 .msgForm .x-panel-body {
     border-top: none !important;
 }
@@ -197,6 +226,9 @@ cursor: pointer !important;
 .patient-pool-btn{
     width: 100%;
     margin-bottom: 3px;
+}
+.patient-pool-btn-small{
+
 }
 .patient-pool-btn .patient_btn_info{
     float: none;
