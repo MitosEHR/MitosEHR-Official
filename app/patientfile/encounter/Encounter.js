@@ -487,14 +487,14 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
         /**
          * Tap Panel panels and forms
          */
-        me.MiscBillingOptionsPanel = Ext.create('Ext.panel.Panel',{
+        me.MiscBillingOptionsPanel = Ext.create('Ext.form.Panel',{
             hidden  : true,
             border  : false,
             action  : 'administrative',
             title   : 'Misc. Billing Options HCFA',
             html    : '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
         });
-        me.procedurePanel = Ext.create('Ext.panel.Panel',{
+        me.procedurePanel = Ext.create('Ext.form.Panel',{
             hidden  : true,
             border  : false,
             action  : 'administrative',
@@ -507,29 +507,33 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
             title   : 'Review of Systems',
             html    : '<h1>Review of Systems form placeholder!</h1>'
         });
-        me.reviewSysCkPanel = Ext.create('Ext.panel.Panel',{
+        me.reviewSysCkPanel = Ext.create('Ext.form.Panel',{
             border  : false,
             action  : 'encounter',
             title   : 'Review of Systems Checks',
             html    : '<h1>Review of Systems Checks form placeholder!</h1>'
         });
+
         me.soapPanel = Ext.create('Ext.form.Panel',{
-            border  : false,
-            title   : 'SOAP',
-            action  : 'encounter',
+            autoScroll  : true,
+            border      : false,
+            title       : 'SOAP',
+            action      : 'encounter',
             fieldDefaults: { msgTarget:'side' }
         });
-        me.speechDicPanel = Ext.create('Ext.panel.Panel',{
-            border  : false,
-            action  : 'encounter',
-            title   : 'Speech Dictation',
-            html    : '<h1>Speech Dictation form placeholder!</h1>'
+        me.speechDicPanel = Ext.create('Ext.form.Panel',{
+            autoScroll  : true,
+            border      : false,
+            title       : 'Speech Dictation',
+            action      : 'encounter',
+            fieldDefaults: { msgTarget:'side' }
         });
 
         me.vitalsPanel = Ext.create('Ext.panel.Panel', {
             title       : 'Vitals',
             action      : 'encounter',
             cls         : 'vitals-panel',
+            bodyPadding : '5 10',
             autoScroll  : true,
             border      : false,
             layout: {
@@ -970,6 +974,10 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
 
             this.getFormItems( me.soapPanel, 'SOAP', function(){
                 me.soapPanel.doLayout();
+            });
+
+            this.getFormItems( me.speechDicPanel, 'Speech Dictation', function(){
+                me.speechDicPanel.doLayout();
             });
 
 

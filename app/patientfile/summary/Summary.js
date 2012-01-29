@@ -16,6 +16,33 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
     initComponent   : function(){
         var me = this;
 
+        Ext.define('SummaryVitalsModel', {
+            extend: 'Ext.data.Model',
+            proxy: {
+                type	    : 'ajax',
+                url 	    : 'app/patientfile/encounter/data.php?task=getVitals',
+                reader: {
+                    type			: 'json',
+                    root			: 'vitals'
+                }
+            },
+            fields: [
+               'id', 'pid', 'eid', 'uid', 'date', 'weight_lbs', 'weight_kg',
+                {name:'height_in', type:'int'},
+                {name:'height_cm', type:'int'},
+               'bp_systolic', 'bp_diastolic', 'pulse', 'respiration', 'temp_f',
+               'temp_c', 'temp_location', 'oxygen_saturation', 'head_circumference_in',
+               'head_circumference_cm', 'waist_circumference_in', 'waist_circumference_cm',
+               'bmi', 'bmi_status', 'other_notes'
+            ]
+        });
+
+
+        me.vitalsStore = Ext.create('Ext.data.Store', {
+            pageSize	: 10,
+            model		: 'SummaryVitalsModel'
+        });
+
         me.pageBody = [{
             xtype       : 'container',
             region      : 'east',
@@ -76,8 +103,48 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
                 title   : 'Disclosure',
                 html    : 'Panel content!'
             },{
-                title   : 'Vitals',
-                html    : 'Panel content!'
+                title       : 'Vitals',
+                autoScroll  : true,
+                items:{
+                    xtype   : 'dataview',
+                    cls     : 'vitals-data',
+                    loadMask: false,
+                    tpl: '<table>' +
+                        '<tr>' +
+                            '<tpl for=".">' +
+                                '<td>' +
+                                    '<div class="column">' +
+                                        '<div class="row" style="white-space: nowrap">{date}</div>' +
+                                        '<div class="row">{weight_lbs}</div>' +
+                                        '<div class="row">{weight_kg}</div>' +
+                                        '<div class="row">{height_in}</div>' +
+                                        '<div class="row">{height_cm}</div>' +
+                                        '<div class="row">{bp_systolic}</div>' +
+                                        '<div class="row">{bp_diastolic}</div>' +
+                                        '<div class="row">{pulse}</div>' +
+                                        '<div class="row">{respiration}</div>' +
+                                        '<div class="row">{temp_f}</div>' +
+                                        '<div class="row">{temp_c}</div>' +
+                                        '<div class="row">{temp_location}</div>' +
+                                        '<div class="row">{oxygen_saturation}</div>' +
+                                        '<div class="row">{head_circumference_in}</div>' +
+                                        '<div class="row">{head_circumference_cm}</div>' +
+                                        '<div class="row">{waist_circumference_in}</div>' +
+                                        '<div class="row">{waist_circumference_cm}</div>' +
+                                        '<div class="row">{bmi}</div>' +
+                                        '<div class="row">{bmi_status}</div>' +
+                                        '<div class="row">{other_notes}</div>' +
+                                    '</div>' +
+                                '</td>' +
+                            '</tpl>' +
+                        '</tr>' +
+                     '</table>',
+                    itemSelector: 'div.patient-pool-btn',
+                    overItemCls: 'patient-over',
+                    selectedItemClass: 'patient-selected',
+                    singleSelect: true,
+                    store: me.vitalsStore
+                }
             }]
         }];
 
@@ -143,28 +210,31 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
 
     },
 
-    getPatientData:function(){
+    getFormData:function(fornpanel){
 
-        var center = this.down('panel').getComponent('centerPanel'),
-            demoFormPanel = center.getComponent('demoFormPanel');
+        var me = this,
+            center = me.down('panel').getComponent('centerPanel'),
+            data_table;
+
+        if(fornpanel.itemId == 'demoFormPanel'){
+            data_table = 'form_data_demographics';
+        }
 
 
-        var formFields = demoFormPanel.getForm().getFields(),
+        var formFields = fornpanel.getForm().getFields(),
             modelFields = [];
-
 
         Ext.each(formFields.items, function(field){
             modelFields.push({name:field.name, type:'auto'});
         });
 
-
-        var model = Ext.define( demoFormPanel.itemId+'Model', {
+        var model = Ext.define( fornpanel.itemId+'Model', {
             extend: 'Ext.data.Model',
             fields: modelFields,
             proxy: {
                 type: 'rest',
                 url : 'app/patientfile/summary/data.php',
-                extraParams: {formData:'demographicsData',pid:this.getCurrPatient().pid},
+                extraParams: {data_table:data_table, pid:me.getCurrPatient().pid},
                 reader: {
                     type			: 'json',
                     totalProperty	: 'totals',
@@ -180,11 +250,17 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
 
 
         store.load({
-            scope   : this,
+            scope   : me,
             callback: function(records, operation, success){
-                demoFormPanel.getForm().loadRecord(records[0]);
+                fornpanel.getForm().loadRecord(records[0]);
             }
         });
+
+
+        /**
+         * load the vitals store to render the vitals data view
+         */
+        me.vitalsStore.load();
 
     },
 
@@ -206,7 +282,8 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
 
             this.getFormItems(demoFormPanel, 'Demographics', function(success){
                 if(success){
-                    me.getPatientData();
+                    me.getFormData(demoFormPanel);
+
                 }
             });
             callback(true);

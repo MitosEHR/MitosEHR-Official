@@ -113,19 +113,6 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
       App.createNewEncounter();
     },
 
-    setFormPanel:function(type){
-        var encounterPanel      = this.centerPanel.getComponent('encounter'),
-            administrativePanel = this.centerPanel.getComponent('administrative');
-        if(type == 'encounter'){
-            administrativePanel.setVisible(false);
-            encounterPanel.setVisible(true);
-        }else if(type == 'administrative'){
-            encounterPanel.setVisible(false);
-            administrativePanel.setVisible(true);
-
-        }
-    },
-
     /**
      * This function is called from MitosAPP.js when
      * this panel is selected in the navigation panel.
