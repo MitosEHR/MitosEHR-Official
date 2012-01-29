@@ -64,5 +64,25 @@ Ext.define('Ext.ux.PreviewPlugin', {
         var view = this.getCmp();
         this.previewExpanded = view.previewExpanded = expanded;
         view.refresh();
+    },
+
+    /**
+     * Expand Selected row and collapse all others
+     * @param index
+     */
+    toggleRowExpanded: function(){
+        var hideBodyCls = this.hideBodyCls,
+            view        = this.getCmp(),
+            rowIndex    = view.getStore().indexOf(view.getSelectionModel().getLastSelected()),
+            rows        = view.getNodes(),
+            row         = view.getNode(rowIndex);
+
+        if(!view.previewExpanded){
+            Ext.each(rows, function(row){
+                Ext.get(Ext.get(row).query('.x-grid-rowbody-tr')).addCls(hideBodyCls);
+            });
+            Ext.get(Ext.get(row).query('.x-grid-rowbody-tr')).removeCls(hideBodyCls);
+        }
     }
+
 });

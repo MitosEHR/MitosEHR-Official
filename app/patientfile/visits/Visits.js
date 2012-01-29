@@ -101,9 +101,8 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
         this.historyGrid.getComponent('view').getPlugin('preview').toggleExpanded(pressed);
     },
 
-
-    gridItemClick:function(){
-
+    gridItemClick:function(view){
+        view.getPlugin('preview').toggleRowExpanded();
     },
 
     gridItemDblClick:function(view, record){

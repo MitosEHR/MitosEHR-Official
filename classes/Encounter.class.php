@@ -45,11 +45,9 @@ class Encounter extends Patient{
             $row['status'] = ($row['close_date']== null)? 'open' : 'close';
         	array_push($rows, $row);
         }
-        if($total >= 1){
-            print(json_encode(array('totals'=>$total,'row'=>$rows)));
-        }else{
-            echo '{"success": false}';
-        }
+
+        print(json_encode(array('totals'=>$total,'row'=>$rows)));
+
     }
 
 
