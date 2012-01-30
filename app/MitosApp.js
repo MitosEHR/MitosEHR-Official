@@ -469,18 +469,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
                 Ext.create('Ext.mitos.panel.fees.payments.Payments'),
 
-            /**
-             * Administration Area
-             */
-                Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // done
-                Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
-                Ext.create('Ext.mitos.panel.administration.layout.Layout'),             // working
-                Ext.create('Ext.mitos.panel.administration.lists.Lists'),               // working
-                Ext.create('Ext.mitos.panel.administration.log.Log'),                   // done
-                Ext.create('Ext.mitos.panel.administration.practice.Practice'),         // done
-                Ext.create('Ext.mitos.panel.administration.roles.Roles'),               // done
-                Ext.create('Ext.mitos.panel.administration.services.Services'),         // done
-                Ext.create('Ext.mitos.panel.administration.users.Users'),               // done
+
+
 
             /**
              * Miscellaneous
@@ -498,6 +488,19 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             }
         });
 
+
+        /**
+         * Add Administration Area Panels
+         */
+        if(perm.access_gloabal_settings)me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.globals.Globals'));
+        if(perm.access_facilities)      me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.facilities.Facilities'));           // done
+        if(perm.access_users)           me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.users.Users'));
+        if(perm.access_practice)        me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.practice.Practice'));
+        if(perm.access_services)        me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.services.Services'));           // done
+        if(perm.access_roles)           me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.roles.Roles'));           // done
+        if(perm.access_layouts)         me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.layout.Layout'));           // done
+        if(perm.access_lists)           me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.lists.Lists'));           // done
+        if(perm.access_event_log)       me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.log.Log'));           // done
 
 
         /**

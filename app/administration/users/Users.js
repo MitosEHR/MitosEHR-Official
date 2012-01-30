@@ -46,7 +46,8 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                 {name: 'taxonomy',              type: 'string'},
                 {name: 'calendar',              type: 'auto'},
                 {name: 'abook_type',            type: 'string'},
-                {name: 'default_warehouse',     type: 'string'}
+                {name: 'default_warehouse',     type: 'string'},
+                {name: 'role_id',               type: 'int'}
             ],
             model 		:'userModel',
             idProperty 	:'id',
@@ -156,7 +157,7 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                     defaults: { hideLabel: true },
                     items: [
                         { width: 100, xtype: 'displayfield', value: 'Access Control: '},
-                        { width: 100, xtype:'mitos.rolescombo', name:'role_name' }, // not implemented yet
+                        { width: 100, xtype:'mitos.rolescombo', name:'role_id' }, // not implemented yet
                         { width: 100, xtype: 'displayfield', value: 'Taxonomy: '},
                         { width: 105, xtype: 'textfield',  name: 'taxonomy' }
                     ]
