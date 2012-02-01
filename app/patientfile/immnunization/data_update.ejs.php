@@ -13,7 +13,7 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once("../../../classes/dbHelper.class.php");
+include_once("../../../classes/dbHelper.php");
 include_once("../../../classes/I18n.class.php");
 require_once("../../../classes/dataExchange.class.php");
 

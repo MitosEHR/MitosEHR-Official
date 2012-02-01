@@ -3,16 +3,24 @@ Ext.define('Ext.mitos.combo.Titles',{
     alias       : 'widget.mitos.titlescombo',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('TitlesModel', {
+            extend: 'Ext.data.Model',
             fields: [
-                {name: 'option_id', type: 'string'},
-			    {name: 'title',     type: 'string'}
+                {name: 'option_id', type: 'string' },
+                {name: 'title',     type: 'string' }
             ],
-            model		: 'TitlesCombo',
-            idProperty	: 'option_id',
-            url	    	: 'lib/layoutEngine/listOptions.json.php',
-            extraParams	: { filter:"titles" },
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getTitles
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'TitlesModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
@@ -22,7 +30,7 @@ Ext.define('Ext.mitos.combo.Titles',{
             displayField: 'title',
             emptyText   : 'Select',
             store       : me.store
-		});
+		}, null);
 		me.callParent(arguments);
 	} 
 });

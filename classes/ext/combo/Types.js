@@ -8,30 +8,26 @@ Ext.define('Ext.mitos.combo.Types',{
 		// Structure, data for Types
 		// AJAX -> component_data.ejs.php
 		// *************************************************************************************
-		if (!Ext.ModelManager.isRegistered('Types')){
-			Ext.define("Types", {extend: "Ext.data.Model", fields: [
-		        {name: 'option_id', type: 'string'},
-			    {name: 'title', type: 'string'}
-			],
-				idProperty: 'option_id'
-			});
-			}
-			me.storeTypes = new Ext.data.Store({
-				model		: 'Types',
-				proxy		: {
-					type		: 'ajax',
-					url			: 'lib/layoutEngine/listOptions.json.php',
-					extraParams	: {"filter": "types"},
-					reader	: {
-						type			: 'json',
-						idProperty		: 'option_id',
-						totalProperty	: 'totals',
-						root			: 'row'
-					}
-				},
-				autoLoad: true
-			}); // End storeTypes
-	
+
+
+        Ext.define('TypesModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'option_id', type: 'string'},
+      			    {name: 'title', type: 'string'}
+            ],
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getTypes
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'TypesModel',
+            autoLoad: true
+        });
 
     	Ext.apply(this, {
     		name: 'abook_type', 
@@ -40,7 +36,7 @@ Ext.define('Ext.mitos.combo.Types',{
     		valueField: 'option_id',
     		queryMode: 'local',
     		store: me.storeTypes
-		});
+		}, null);
 		me.callParent(arguments);
 	} 
 });

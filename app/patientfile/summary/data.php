@@ -11,7 +11,7 @@ session_start();
 session_cache_limiter('private');
 $_SESSION['site']['flops'] = 0;
 
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 
 $mitos_db   = new dbHelper();
 

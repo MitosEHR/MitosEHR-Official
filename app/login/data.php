@@ -10,7 +10,7 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once($_SESSION['site']['root']."/classes/authProcedures.class.php");
+include_once($_SESSION['site']['root']."/classes/authProcedures.php");
 
 
 if($_REQUEST['task'] == 'auth'){

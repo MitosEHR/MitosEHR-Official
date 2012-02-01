@@ -3,16 +3,24 @@ Ext.define('Ext.mitos.combo.CodesTypes',{
     alias       : 'widget.mitos.codestypescombo',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('CodesTypesModel', {
+            extend: 'Ext.data.Model',
             fields: [
-                {name: 'ct_id', type: 'string'},
-			    {name: 'ct_key',     type: 'string'}
+                {name: 'ct_id',     type: 'string'},
+                {name: 'ct_key',    type: 'string'}
             ],
-            model		: 'CodesTypes',
-            idProperty	: 'option_id',
-            url	    	: 'classes/ext/data/components_data.ejs.php',
-            extraParams	: { task:"codetypes"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getCodeTypes
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'CodesTypesModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {

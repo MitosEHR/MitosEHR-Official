@@ -11,16 +11,24 @@ Ext.define('Ext.mitos.combo.MsgStatus',{
     uses        : 'Ext.mitos.restStoreModel',
     initComponent: function(){
     	var me = this;
-        me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('MsgStatusModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'option_id', type: 'string' },
                 {name: 'title',     type: 'string' }
             ],
-            model		: 'msgStatus',
-            idProperty	: 'option_id',
-            url	    	: 'lib/layoutEngine/listOptions.json.php',
-            extraParams	: { filter:"message_status"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getMessageStatus
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'MsgStatusModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
@@ -30,7 +38,7 @@ Ext.define('Ext.mitos.combo.MsgStatus',{
             displayField: 'title',
             emptyText   : 'Select',
             store       : me.store
-		});
+		},null);
 		me.callParent();
 	} // end initComponent
 });

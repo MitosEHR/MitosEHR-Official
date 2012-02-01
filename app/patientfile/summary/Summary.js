@@ -286,7 +286,7 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
 
                 }
             });
-            callback(true);
+
         }else{
 
             callback(false);

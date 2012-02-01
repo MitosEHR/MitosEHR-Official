@@ -70,62 +70,86 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.fieldsGridStore = Ext.create('Ext.data.TreeStore', {
             model       : 'layoutTreeModel',
             clearOnLoad : true,
-            proxy:{
-                type        : 'rest',
-                url	        : 'app/administration/layout/data.php',
-                extraParams	: { task: "treeRequest" }
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: formLayoutBuilder.getFormFieldsTree
+                }
             },
-            folderSort: false
+//            proxy:{
+//
+//                type        : 'rest',
+//                url	        : 'app/administration/layout/data.php',
+//                extraParams	: { task: "treeRequest" }
+//            },
+            folderSort: false,
+            autoLoad: false
         });
         /**
          * Xtype Combobox store
          */
-        me.fieldXTypesStore = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('XtypesComboModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',		type: 'string'},
                 {name: 'name',	    type: 'string'},
                 {name: 'value',	    type: 'string'}
             ],
-            model 		: 'field_typesModel',
-            idProperty 	: 'id',
-            url		    : 'app/administration/layout/component_data.ejs.php',
-            autoLoad    : true,
-            extraParams	: { task: 'field_types' }
-
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getFiledXtypes
+                }
+            }
+        });
+        me.fieldXTypesStore = Ext.create('Ext.data.Store', {
+            model: 'XtypesComboModel',
+            autoLoad: true
         });
 
         /**
          * Forms grid store (left grid)
          */
-        me.formsGridStore = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('FormsListModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',		type: 'string'},
                 {name: 'name',	    type: 'string'}
             ],
-            model 		: 'formlistModel',
-            idProperty 	: 'id',
-            url		    : 'app/administration/layout/component_data.ejs.php',
-            autoLoad    : true,
-            extraParams	: { task: 'form_list' }
-
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: formLayoutBuilder.getForms
+                }
+            }
+        });
+        me.formsGridStore = Ext.create('Ext.data.Store', {
+            model: 'FormsListModel',
+            autoLoad: true
         });
 
         /**
          * Field available on this form as parent items (fieldset / fieldcontainer )
          * use to get the "Child of" combobox data
          */
-        me.parentFieldsStore = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('ParentFieldsModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'name',		type: 'string'},
                 {name: 'value',	    type: 'string'}
             ],
-            model 		: 'parentFieldsModel',
-            idProperty 	: 'value',
-            url		    : 'app/administration/layout/component_data.ejs.php',
-            autoLoad    : true,
-            extraParams	: { task: 'parent_fields' }
-
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: formLayoutBuilder.getParentFields
+                }
+            }
         });
+        me.parentFieldsStore = Ext.create('Ext.data.Store', {
+            model: 'ParentFieldsModel',
+            autoLoad: true
+        });
+
         /**
          * This are the select lists available to use for comboboxes
          * this lists can be created an modified at "Lists" administration panel.

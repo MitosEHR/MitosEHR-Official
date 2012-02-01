@@ -3,14 +3,26 @@ Ext.define('Ext.mitos.combo.Authorizations',{
     alias       : 'widget.mitos.authorizationscombo',
     initComponent: function(){
     	var me = this;
-    	me.store = Ext.create('Ext.data.Store', {
-		    fields: ['id', 'name'],
-		    data : [
-		        {"id":"1", "name":"Print"},
-		        {"id":"2", "name":"Email"},
-		        {"id":"3", "name":"Email"}
-		    ]
-		});
+
+        Ext.define('AuthorizationsModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'id',    type: 'int'},
+                {name: 'name',  type: 'string'}
+            ],
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getAuthorizations
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'AuthorizationsModel',
+            autoLoad: true
+        });
+
     	Ext.apply(this, {
             editable    : false,
             queryMode   : 'local',
