@@ -1,4 +1,3 @@
-
 //******************************************************************************
 // visits.ejs.php
 // Visits Forms
@@ -9,247 +8,445 @@
 //
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-	Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
-        extend      : 'Ext.mitos.RenderPanel',
-        id          : 'panelVisits',
-        pageTitle   : 'Visits',
-        pageLayout  : 'border',
-		uses        : ['Ext.mitos.CRUDStore','Ext.mitos.GridPanel'],
-		initComponent: function(){
-            var page = this;
-            //******************************************************************
-            // Stores...
-            //******************************************************************
-            page.historyStore = Ext.create('Ext.mitos.CRUDStore',{
-                fields: [
-                    {name: 'id',      		type: 'int'},
-                    {name: 'date',          type: 'date', dateFormat: 'c'},
-                    {name: 'body',          type: 'string'},
-                    {name: 'user',          type: 'string'},
-                    {name: 'facility_id',   type: 'string'},
-                    {name: 'activity',   	type: 'string'}
-                ],
-                model		: 'modelOnotes',
-                idProperty	: 'id',
-                read      	: 'app/miscellaneous/officenotes/data_read.ejs.php',
-                create    	: 'app/miscellaneous/officenotes/data_create.ejs.php',
-                update    	: 'app/miscellaneous/officenotes/data_update.ejs.php',
-              //destroy		: <-- delete not allow -->
-                autoLoad	: false
-            });
-            //******************************************************************
-            // Panels/Forms...
-            //******************************************************************
-            page.createPanel = Ext.panel.Panel({
-                title:'Create Visit',
-                html: '<h1>Create Visit form placeholder!</h1>'
-            });
-            page.MiscBillingOptionsPanel = Ext.panel.Panel({
-                title:'Misc. Billing Options HCFA',
-                html: '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
-            });
-            page.procedurePanel = Ext.panel.Panel({
-                title:'Procedure Order',
-                html: '<h1>Procedure Order form placeholder!</h1>'
-            });
-            page.reviewSysPanel = Ext.panel.Panel({
-                title:'Review of Systems',
-                html: '<h1>Review of Systems form placeholder!</h1>'
-            });
-            page.reviewSysCkPanel = Ext.panel.Panel({
-                title:'Review of Systems Checks',
-                html: '<h1>Review of Systems Checks form placeholder!</h1>'
-            });
-            page.soapPanel = Ext.panel.Panel({
-                title:'SOAP',
-                html: '<h1>SOAP form placeholder!</h1>'
-            });
-            page.speechDicPanel = Ext.panel.Panel({
-                title:'Speech Dictation',
-                html: '<h1>Speech Dictation form placeholder!</h1>'
-            });
-            page.vitalsPanel = Ext.panel.Panel({
-                title:'Vitals',
-                html: '<h1>Vitals form placeholder!</h1>'
-            });
-            //******************************************************************
-            // Visit Form
-            //******************************************************************
-            page.currentVisitPanel = Ext.panel.Panel({
-                region:'center',
-                layout: 'card',
-                activeItem: 0,
-                defaults: {
+Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
+    extend      : 'Ext.mitos.RenderPanel',
+    id          : 'panelVisits',
+    pageTitle   : 'Visit',
+    pageLayout  : 'border',
+    uses        : ['Ext.mitos.restStoreModel','Ext.mitos.GridPanel'],
+    initComponent: function(){
+        var me = this;
+
+        me.historyMax = true;
+
+        //******************************************************************
+        // Stores...
+        //******************************************************************
+        me.historyStore = Ext.create('Ext.mitos.restStoreModel',{
+            fields: [
+                {name: 'id',      		type: 'int'},
+                {name: 'date',          type: 'date', dateFormat: 'c'},
+                {name: 'body',          type: 'string'},
+                {name: 'user',          type: 'string'},
+                {name: 'facility_id',   type: 'string'},
+                {name: 'activity',   	type: 'string'}
+            ],
+            model		: 'modelOnotes',
+            idProperty	: 'id',
+            url      	: 'app/miscellaneous/officenotes/data_read.ejs.php',
+            autoLoad	: false
+        });
+
+        /**
+         * New Encounter Panel this panel is located hidden at
+         * the top of the Visit panel and will slide down if
+         * the "New Encounter" button is pressed.
+         */
+        me.newEncounterPanel = Ext.create('Ext.panel.Panel',{
+            title       : 'Create Visit',
+            region      : 'north',
+            height      : 300,
+            margin      : '0 0 2 0',
+            bodyStyle   : 'padding:15px',
+            hidden      : true,
+            collapsible : true,
+            collapsed   : true,
+            animCollapse: true,
+            titleCollapse:true,
+            hideCollapseTool: true,
+            collapseMode: 'header',
+            html        : '<h1>Create Encounter form placeholder!</h1>'
+        });
+
+
+
+
+        //******************************************************************
+        // Panels/Forms...
+        //******************************************************************
+        me.MiscBillingOptionsPanel = Ext.create('Ext.panel.Panel',{
+            border  : false,
+            title   : 'Misc. Billing Options HCFA',
+            html    : '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
+        });
+        me.procedurePanel = Ext.create('Ext.panel.Panel',{
+            border  : false,
+            title   : 'Procedure Order',
+            html    : '<h1>Procedure Order form placeholder!</h1>'
+        });
+        me.reviewSysPanel = Ext.create('Ext.panel.Panel',{
+            border  : false,
+            title   : 'Review of Systems',
+            html    : '<h1>Review of Systems form placeholder!</h1>'
+        });
+        me.reviewSysCkPanel = Ext.create('Ext.panel.Panel',{
+            border  : false,
+            title   : 'Review of Systems Checks',
+            html    : '<h1>Review of Systems Checks form placeholder!</h1>'
+        });
+        me.soapPanel = Ext.create('Ext.panel.Panel',{
+            border  : false,
+            title   : 'SOAP',
+            html    : '<h1>SOAP form placeholder!</h1>'
+        });
+        me.speechDicPanel = Ext.create('Ext.panel.Panel',{
+            border  : false,
+            title   : 'Speech Dictation',
+            html    : '<h1>Speech Dictation form placeholder!</h1>'
+        });
+        me.vitalsPanel = Ext.create('Ext.panel.Panel',{
+            border  : false,
+            title   : 'Vitals',
+            html    : '<h1>Vitals form placeholder!</h1>'
+        });
+
+        /**
+         * Encounter panel
+         */
+        me.centerPanel = Ext.create('Ext.panel.Panel',{
+            region  : 'center',
+            layout  : 'hbox',
+            width   : '100%',
+            items: [{
+                xtype       : 'tabpanel',
+                itemId      : 'encounter',
+                activeItem  : 0,
+                flex        : 1,
+                border      : false,
+                defaults:{
                     bodyStyle   : 'padding:15px',
                     border      : false,
-                    bodyBorder  : false
+                    bodyBorder  : false,
+                    layout      : 'fit'
                 },
                 items: [
-                    page.MiscBillingOptionsPanel,
-                    page.procedurePanel,
-                    page.reviewSysPanel,
-                    page.reviewSysCkPanel,
-                    page.soapPanel,
-                    page.speechDicPanel,
-                    page.vitalsPanel
-                ],
-                dockedItems:[{
-                    xtype: 'toolbar',
-                    dock: 'top',
-                    items:[
-                        Ext.create('Ext.Button', {
-                            text      	: 'Misc. Billing Options HCFA',
-                            enableToggle: true,
-                            toggleGroup : '1',
-                            iconCls   	: '',
-                            listeners	: {
-                                afterrender: function(){
-                                    this.toggle(true);
-                                }
-                            },
-                            handler: function(btn) {
-                                btn.up("panel").getLayout().setActiveItem(0);
-                            }
-                        }),'-',
-                        Ext.create('Ext.Button', {
-                            text      	: 'Procedure Order',
-                            enableToggle: true,
-                            toggleGroup : '1',
-                            iconCls   	: '',
-                            handler: function(btn) {
-                                btn.up("panel").getLayout().setActiveItem(1);
-                            }
-                        }),'-',
-                        Ext.create('Ext.Button', {
-                            text      	: 'Review of Sys',
-                            enableToggle: true,
-                            toggleGroup : '1',
-                            iconCls   	: '',
-                            handler: function(btn) {
-                                btn.up("panel").getLayout().setActiveItem(2);
-                            }
-                        }),'-',
-                        Ext.create('Ext.Button', {
-                            text      	: 'Review of Sys Cks',
-                            enableToggle: true,
-                            toggleGroup : '1',
-                            iconCls   	: '',
-                            handler: function(btn) {
-                                btn.up("panel").getLayout().setActiveItem(3);
-                            }
-                        }),'-',
-                        Ext.create('Ext.Button', {
-                            text      	: 'SOAP',
-                            enableToggle: true,
-                            toggleGroup : '1',
-                            iconCls   	: '',
-                            handler: function(btn) {
-                                btn.up("panel").getLayout().setActiveItem(4);
-                            }
-                        }),'-',
-                        Ext.create('Ext.Button', {
-                            text      	: 'Speech Dictation',
-                            enableToggle: true,
-                            toggleGroup : '1',
-                            iconCls   	: '',
-                            handler: function(btn) {
-                                btn.up("panel").getLayout().setActiveItem(5);
-                            }
-                        }),'-',
-                        Ext.create('Ext.Button', {
-                            text      	: 'Vitals',
-                            enableToggle: true,
-                            toggleGroup : '1',
-                            iconCls   	: '',
-                            handler: function(btn) {
-                                btn.up("panel").getLayout().setActiveItem(6);
-                            }
-                        }),'->',
-                        Ext.create('Ext.Button', {
-                            text      	: 'New Visit',
-                            enableToggle: true,
-                            toggleGroup : '1',
-                            iconCls   	: 'icoAddRecord',
-                            handler   	: function(btn){
-                                page.currentVisitPanel.add(page.createPanel);
-                                btn.up("panel").getLayout().setActiveItem(7);
-                                page.historyGrid.hide();
-                                page.showHist.show();
-                                page.hideHist.hide();
-                                this.disable();
+                    me.reviewSysPanel,
+                    me.reviewSysCkPanel,
+                    me.soapPanel,
+                    me.speechDicPanel,
+                    me.vitalsPanel
+                ]
+            },{
+                xtype       : 'tabpanel',
+                itemId      : 'administrative',
+                activeItem  : 0,
+                flex        : 1,
+                border      : false,
+                hidden      : true,
+                defaults:{
+                    bodyStyle   : 'padding:15px',
+                    border      : false,
+                    bodyBorder  : false,
+                    layout      : 'fit'
+                },
+                items: [
+                    me.MiscBillingOptionsPanel,
+                    me.procedurePanel
+                ]
 
-                            }
-                        }),'-',
-                        page.showHist = Ext.create('Ext.Button', {
-                            text      	: 'Show Visits History',
-                            iconCls   	: 'icoListOptions',
-                            handler  : function(){
-                                page.historyGrid.show();
-                                page.hideHist.show();
-                                this.hide();
-                            }
-                        }),
-                        page.hideHist = Ext.create('Ext.Button', {
-                            text      	: 'Hide Visits History',
-                            iconCls   	: 'icoListOptions',
-                            hidden      : true,
-                            handler  : function(){
-                                page.historyGrid.hide();
-                                page.showHist.show();
-                                this.hide();
-                            }
-                        })
-                    ]
-                },{
-                    xtype: 'toolbar',
-                    dock: 'bottom',
-                    items:[
-                        Ext.create('Ext.Button', {
-                            text      	: 'Save',
-                            iconCls   	: 'save',
-                            disabled	: true,
-                            handler   : function(){
+            }],
+            bbar:[{
+                text      	: 'Save',
+                iconCls   	: 'save',
+                disabled	: true,
+                handler     : function(){
 
-                            }
-                        }),'-',
-                        Ext.create('Ext.Button', {
-                            text      	: 'Reset Form',
-                            iconCls   	: 'save',
-                            disabled	: true,
-                            handler   	: function(){
-
-                            }
-                        })
-                    ]
-                }]
-            });
-            //******************************************************************
-            // Visit History Grid
-            //******************************************************************
-            page.historyGrid = Ext.create('Ext.mitos.GridPanel',{
-                title           : 'Visit History',
-                hidden          : true,
-                margin          : '3 0 0 0',
-                region	        : 'south',
-                height          : 200,
-                store           : page.historyStore,
-                columns : [
-                    { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-                    { width: 150, header: 'Date',     sortable: true, dataIndex: 'date', renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s') },
-                    { width: 150, header: 'Issue',    sortable: true, dataIndex: 'user' },
-                    { flex: 1,    header: 'Reason',   sortable: true, dataIndex: 'body' },
-                    { flex: 1,    header: 'Provider', sortable: true, dataIndex: 'body' },
-                    { flex: 1,    header: 'Billing',  sortable: true, dataIndex: 'body' },
-                    { flex: 1,    header: 'Insurance',sortable: true, dataIndex: 'body' }
-                ],
-                listeners	: {
-                    itemclick: function(){
-
-                    }
                 }
-            });
+            },'-',{
+                text      	: 'Reset Form',
+                iconCls   	: 'save',
+                disabled	: true,
+                handler   	: function(){
 
-            page.pageBody = [ page.currentVisitPanel, page.historyGrid ];
-			page.callParent(arguments);
-		} // end of initComponent
-	}); //ens oNotesPage class
+                }
+            }]
+        });
+
+
+        //******************************************************************
+        // Visit History Grid
+        //******************************************************************
+        me.historyGrid = Ext.create('Ext.mitos.GridPanel',{
+            title           : 'Encounter History',
+            collapsible     : true,
+            animCollapse    : true,
+            hideCollapseTool: true,
+            collapseMode    : 'header',
+            margin          : '2 0 0 0',
+            region	        : 'south',
+            height          : 150,
+            store           : me.historyStore,
+            columns : [
+                { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
+                { width: 150, header: 'Date',     sortable: true, dataIndex: 'date', renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s') },
+                { width: 150, header: 'Issue',    sortable: true, dataIndex: 'user' },
+                { flex: 1,    header: 'Reason',   sortable: true, dataIndex: 'body' },
+                { flex: 1,    header: 'Provider', sortable: true, dataIndex: 'body' },
+                { flex: 1,    header: 'Billing',  sortable: true, dataIndex: 'body' },
+                { flex: 1,    header: 'Insurance',sortable: true, dataIndex: 'body' }
+            ],
+            listeners	: {
+                scope       : me,
+                itemclick   : function(){
+
+                },
+                expand      : me.historyExpanded,
+                collapse    : me.historyCollapsed
+
+            },
+            tools:[{
+                type    : 'refresh',
+                tooltip : 'Refresh form Data',
+                handler : function(event, toolEl, panel){
+                    // refresh logic
+                }
+            },{
+                type    : 'restore',
+                tooltip : 'Restore History Grid',
+                scope   : me,
+                handler : me.setHistoryNorm
+            },{
+                type    : 'maximize',
+                tooltip : 'Maximaze History Grid',
+                scope   : me,
+                handler : me.setHistoryMax
+            }]
+        });
+
+        /**
+         * Progress Note
+         */
+        me.progressNote = Ext.create('Ext.panel.Panel',{
+            title       : 'Encounter Progress Note',
+            region      : 'east',
+            margin      : '0 0 0 2',
+            bodyStyle   : 'padding:15px',
+            width       : 400,
+            collapsible : true,
+            animCollapse: true,
+            html        : '<h2>Progress Note Placeholder</h2>',
+            listeners:{
+                scope       : this,
+                collapse    : me.progressNoteCollapseExpand,
+                expand      : me.progressNoteCollapseExpand
+            },
+            tbar:[{
+                text    : 'View (CCD)',
+                tooltip : 'View (Continuity of Care Document)',
+                handler : function(){
+                    // refresh logic
+                }
+            },'-',{
+                text    : 'Print (CCD)',
+                tooltip : 'Print (Continuity of Care Document)',
+                handler : function(){
+                    // refresh log
+
+                }
+            },'->',{
+                text    : 'Export (CCD)',
+                tooltip : 'Export (Continuity of Care Document)',
+                handler : function(){
+                    // refresh log
+
+                }
+
+            }]
+
+
+        });
+
+        me.pageBody = [ me.newEncounterPanel, me.centerPanel, me.historyGrid, me.progressNote ];
+
+        me.callParent(arguments);
+
+        me.down('panel').addDocked([{
+            xtype   : 'toolbar',
+            dock    : 'top',
+            items:[{
+                text      	: 'Encounter',
+                enableToggle: true,
+                toggleGroup : '1',
+                iconCls   	: '',
+                listeners	: {
+                    afterrender: function(){
+                        this.toggle(true);
+                    }
+                },
+                handler: function() {
+                    me.setFormPanel('encounter');
+                }
+            },'-',{
+                text      	: 'Administrative',
+                enableToggle: true,
+                toggleGroup : '1',
+                iconCls   	: '',
+                handler: function() {
+                    me.setFormPanel('administrative');
+                }
+            },'->',{
+                text      	: 'New Encounter',
+                iconCls   	: 'icoAddRecord',
+                scope       : me,
+                handler     : me.newEncounter
+            },'-',{
+                text      	: 'Close Encounter',
+                iconCls   	: 'icoAddRecord',
+                scope       : me,
+                handler     : me.closeEncounter
+            },'-',{
+                text      	: 'Show Encounter History',
+                itemId      : 'encounterHistory',
+                iconCls   	: 'icoListOptions',
+                scope       : me,
+                handler     : me.historyToggle
+            }]
+        }]);
+    },
+
+
+    /**
+     * This is the logic to create a new encounter
+     */
+    newEncounter:function(){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            msg     : 'Do you want to create a new encounter?',
+            icon    : Ext.MessageBox.QUESTION,
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn:function(btn){
+                if(btn=='yes'){
+                    this.encounterTime = new Date();
+                    this.timerTask = {
+                        scope:this,
+                        run:function () {
+                            this.encounterTimer();
+                        },
+                        interval:1000 //1 second
+                    };
+                    Ext.TaskManager.start(this.timerTask);
+                }
+            }
+        });
+    },
+
+    /**
+     * function to
+     */
+    encounterTimer:function(){
+        var ms = Ext.Date.getElapsed(this.encounterTime,new Date()),
+        s = Math.floor((ms/1000)%60),
+        m = Math.floor((ms/(1000*60))%60),
+        h = Math.floor((ms/(1000*60*60))%24);
+        function twoDigit(d){
+            return (d >= 10) ? d : '0'+d;
+        }
+        var timer = twoDigit(h)+':'+twoDigit(m)+':'+twoDigit(s);
+        var patient = this.getCurrPatient();
+
+        this.updateTitle( patient.name+ ' - ' + Ext.Date.format(this.encounterTime, 'F j, Y, g:i a') + ' (Encounter)  <span class="timer">'+timer+'</span>' );
+    },
+
+    closeEncounter:function(){
+
+        var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter:', function(btn, pass){
+
+            if (btn == 'ok'){
+                Ext.TaskManager.stop(this.timerTask);
+            }
+        }, this);
+        var f = msg.textField.getInputId();
+        document.getElementById(f).type = 'password';
+    },
+
+    ckCurrEncounter:function(){
+        return false
+    },
+
+    getCurrEncounter:function(){
+
+    },
+
+    historyToggle:function(){
+        if(this.historyGrid.getState().collapsed){
+            this.showHistory();
+        }else{
+            this.hideHistory();
+        }
+    },
+
+    showHistory:function(){
+        this.historyGrid.setVisible(true);
+        this.historyGrid.expand();
+        this.centerPanel.doLayout();
+    },
+
+    setHistoryMax:function(){
+        var ah = this.centerPanel.getHeight(),
+            bh = this.historyGrid.getHeight(),
+            height = ah + bh;
+        this.historyGrid.setHeight(height);
+        this.centerPanel.doLayout();
+    },
+
+    setHistoryNorm:function(){
+        this.historyGrid.setHeight(150);
+        this.centerPanel.doLayout();
+    },
+
+    hideHistory:function(){
+        this.historyGrid.toggleCollapse();
+        this.historyGrid.setVisible(false);
+        this.centerPanel.doLayout();
+    },
+
+    historyExpanded:function(){
+        this.down('panel').down('toolbar').getComponent('encounterHistory').setText('Hide Encounter History');
+    },
+
+    historyCollapsed:function(){
+        this.down('panel').down('toolbar').getComponent('encounterHistory').setText('Show Encounter History');
+    },
+
+    progressNoteCollapseExpand:function(){
+        this.centerPanel.doLayout();
+    },
+
+    setFormPanel:function(type){
+        var encounterPanel      = this.centerPanel.getComponent('encounter'),
+            administrativePanel = this.centerPanel.getComponent('administrative');
+        if(type == 'encounter'){
+            administrativePanel.setVisible(false);
+            encounterPanel.setVisible(true);
+        }else if(type == 'administrative'){
+            encounterPanel.setVisible(false);
+            administrativePanel.setVisible(true);
+
+        }
+    },
+
+    /**
+     * This function is called from MitosAPP.js when
+     * this panel is selected in the navigation panel.
+     * place inside this function all the functions you want
+     * to call every this panel becomes active
+     */
+    onActive:function(callback){
+        if(this.checkIfCurrPatient()){
+            var patient = this.getCurrPatient();
+            this.updateTitle( patient.name + ' (Visits)');
+            // TODO: if Current ecounter dont show history
+            if(this.ckCurrEncounter){
+                this.setHistoryNorm();
+            }else{
+                this.setHistoryMax();
+            }
+            this.showHistory();
+            callback(true);
+        }else{
+            callback(false);
+            this.currPatientError();
+        }
+    }
+}); //ens oNotesPage class

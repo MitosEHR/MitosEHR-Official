@@ -8,15 +8,11 @@
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
-
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
-include_once($_SESSION['site']['root']."/classes/I18n.class.php");
-include_once($_SESSION['site']['root']."/lib/layoutEngine/dataTypes.array.php");
-require_once($_SESSION['site']['root']."/classes/dataExchange.class.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop
@@ -38,7 +34,7 @@ switch ($_GET['task']) {
 			1 => array("id"=> 2,   "name" => "Field Container",         "value" => "fieldcontainer"),
 			2 => array("id"=> 3,   "name" => "Text Field",              "value" => "textfield"),
 			3 => array("id"=> 4,   "name" => "TextArea Field",          "value" => "textareafield"),
-			4 => array("id"=> 5,   "name" => "CheckBox Field",          "value" => "checkboxfield"),
+			4 => array("id"=> 5,   "name" => "CheckBox Field",          "value" => "mitos.checkbox"),
 			5 => array("id"=> 6,   "name" => "Slelect List / Combo Box","value" => "combobox"),
 			6 => array("id"=> 7,   "name" => "Radio Field",             "value" => "radiofield"),
 			7 => array("id"=> 8,   "name" => "Date Field",              "value" => "datefield"),
@@ -47,7 +43,7 @@ switch ($_GET['task']) {
 		);
 		$totals = count($field_types);
 		print_r(json_encode(array('totals'=>$totals,'row'=>$field_types)));
-	break;
+	    break;
     case "field_properties":
 		$field_properties = array(
 			0  => array("id"=> 1,  "name" => "title",           "value" => "title"),
@@ -68,31 +64,58 @@ switch ($_GET['task']) {
 		);
 		$totals = count($field_properties);
 		print(json_encode(array('totals'=>$totals,'row'=>$field_properties)));
-	break;
+	    break;
 
+    case 'parent_fields':
+        $currForm = $_REQUEST['currForm'];
+        $mitos_db->setSQL("Select CONCAT(fo.ovalue, ' (',ff.xtype ,')' ) AS name, ff.id as value
+                             FROM forms_fields AS ff
+                        LEFT JOIN forms_field_options AS fo
+                               ON ff.id = fo.field_id
+                        LEFT JOIN forms_layout AS fl
+                               ON fl.id = ff.form_id
+                            WHERE (fl.name   = '$currForm' OR fl.id   = '$currForm')
+                              AND (ff.xtype = 'fieldcontainer' OR ff.xtype = 'fieldset')
+                              AND (fo.oname = 'title' OR fo.oname = 'fieldLabel')
+                         ORDER BY pos");
+        $totals = $mitos_db->rowCount();
+		//---------------------------------------------------------------------------------------
+		// start the array
+		//---------------------------------------------------------------------------------------
+		$rows = array();
+        //echo '<pre>';
+        //print_r($mitos_db->execStatement(PDO::FETCH_ASSOC));
+        //exit;
+            array_push($rows, array('name' => 'Root', 'value' => 0));
+		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+		}
 
+		//---------------------------------------------------------------------------------------
+		// here we are adding "totals" and the root "row" for sencha use
+		//---------------------------------------------------------------------------------------
+		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
+           
 
-
-
+        break;
 	// *************************************************************************************
 	// Data for Form List
 	// *************************************************************************************
 	case "form_list":
-		$mitos_db->setSQL("SELECT DISTINCT form_id FROM layout_options");
+		$mitos_db->setSQL("SELECT * FROM forms_layout");
 		$totals = $mitos_db->rowCount();
 		//---------------------------------------------------------------------------------------
 		// start the array
 		//---------------------------------------------------------------------------------------
 		$rows = array();
 		foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
-			$row['id'] = $row['form_id'];
 			array_push($rows, $row);
 		}
 		//---------------------------------------------------------------------------------------
 		// here we are adding "totals" and the root "row" for sencha use
 		//---------------------------------------------------------------------------------------
 		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
-	break;
+	    break;
 	
 	// *************************************************************************************
 	// Available Data Types for the Form Editor
@@ -100,7 +123,7 @@ switch ($_GET['task']) {
 	case "data_types":
 		$totals = count($dataTypes_json);
 		print(json_encode(array('totals'=>$totals,'row'=>$dataTypes_json)));
-	break;
+	    break;
 
 	//---------------------------------------------------------------------------------------
 	// UOR
@@ -113,7 +136,7 @@ switch ($_GET['task']) {
 		);
 		$totals = count($uorTypes);
 		print(json_encode(array('totals'=>$totals,'row'=>$uorTypes)));
-	break;
+	    break;
 	
 	// *************************************************************************************
 	// Returns the available groups in the selected form
@@ -127,7 +150,7 @@ switch ($_GET['task']) {
 			array_push($rows, $row);
 		}
 		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
-	break;
+	    break;
 	
 	// *************************************************************************************
 	// Available List for the available data types
@@ -176,7 +199,5 @@ switch ($_GET['task']) {
 		// here we are adding totals and the root row for sencha use
 		//---------------------------------------------------------------------------------------
 		print(json_encode(array('totals'=>$totals,'row'=>$rows)));
-	break;
-
+	    break;
 }
-?>

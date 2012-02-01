@@ -12,13 +12,13 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelGlobals',
     pageTitle   : 'MitosEHR Global Settings',
-    uses        : [ 'Ext.mitos.CRUDStore' ],
+    uses        : [ 'Ext.mitos.restStoreModel', 'Ext.mitos.combo.Languages', 'Ext.mitos.form.fields.Checkbox' ],
     initComponent: function(){
-        var page = this;
+        var me = this;
         // *************************************************************************************
         // Global Model and Data store
         // *************************************************************************************
-        page.globalStore = Ext.create('Ext.mitos.CRUDStore', {
+        me.store = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 { name: 'data_id',								type:'int' },
                 { name: 'fullname',						        type:'auto' },
@@ -136,71 +136,21 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                 { name: 'enable_scanner',						type:'auto' },
                 { name: 'scanner_output_directory',				type:'auto' }
             ],
-            model		: 'Globals',
+            model		: 'GlobalSettings',
             idProperty	: 'data_id',
-            read		: 'app/administration/globals/data_read.ejs.php',
-            update		: 'app/administration/globals/data_update.ejs.php'
+            url		    : 'app/administration/globals/data.php'
         });
         //------------------------------------------------------------------------------
         // When the data is loaded semd values to de form
         //------------------------------------------------------------------------------
-        page.globalStore.on('load',function(DataView, records, o){
-            var rec = page.globalStore.getById(1); // get the record from the store
-            page.globalFormPanel.getForm().loadRecord(rec);
+        me.store.on('load',function(){
+            var rec = me.store.getById(1); // get the record from the store
+            me.globalFormPanel.getForm().loadRecord(rec);
         });
         // *************************************************************************************
-        // Data Model for all selet lists
+        // DataStores for all static combos
         // *************************************************************************************
-        Ext.define("selectLists", {extend: "Ext.data.Model", fields: [
-                { name: 'list_id',		type:'string' },
-                { name: 'option_id',	type:'string' },
-                { name: 'title',		type:'string' },
-                { name: 'seq',			type:'int' },
-                { name: 'is_default',	type:'int' }
-            ],
-            idProperty: 'list_id'
-        });
-        page.selectListsStore = Ext.data.Store({
-            model		: 'selectLists',
-            proxy		: {
-                type	: 'ajax',
-                url		: 'app/administration/globals/component_data.ejs.php?task=selectLists',
-                reader: {
-                    type			: 'json',
-                    totalProperty	: 'totals',
-                    root			: 'row'
-                }
-            },
-            autoLoad: true
-        });
-
-        // *************************************************************************************
-        // Data Model for Languages select list
-        // *************************************************************************************
-        Ext.define("Language", {extend: "Ext.data.Model", fields: [
-                { name: 'lang_id',		type:'string' },
-                { name: 'lang_code',	type:'string' },
-                { name: 'lang_description',		type:'string' }
-            ],
-            idProperty: 'lang_id'
-        });
-        page.language_defaultStore = Ext.data.Store({
-            model		: 'Language',
-            proxy		: {
-                type	: 'ajax',
-                url		: 'app/administration/globals/component_data.ejs.php?task=langs',
-                reader: {
-                    type			: 'json',
-                    totalProperty	: 'totals',
-                    root			: 'row'
-                }
-            },
-            autoLoad: true
-        });
-        // *************************************************************************************
-        // Data Model for Main Screen
-        // *************************************************************************************
-        page.default_top_pane_store = Ext.create('Ext.data.Store', {
+        me.default_top_pane_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
                 {"title":"Dashboard",   "option_id":"app/dashboard/dashboard.ejs.php"},
@@ -208,75 +158,54 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                 {"title":"Messages",    "option_id":"app/messages/messages.ejs.php"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for Fullname Format
-        // *************************************************************************************
-        page.fullname_store = Ext.create('Ext.data.Store', {
+        me.fullname_store = Ext.create('Ext.data.Store', {
             fields: ['format', 'option_id'],
             data : [
-                {"format":"Last, First Middle", "option_id":"0"},
-                {"format":"First Middle Last", "option_id":"1"}
+                {"format":"Last, First Middle",     "option_id":"0"},
+                {"format":"First Middle Last",      "option_id":"1"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for Layout Styles
-        // *************************************************************************************
-        page.concurrent_layout_store = Ext.create('Ext.data.Store', {
+        me.concurrent_layout_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"Main Navigation Menu (left)", "option_id":"west"},
-                {"title":"Main Navigation Menu (right)", "option_id":"east"}
+                {"title":"Main Navigation Menu (left)",     "option_id":"west"},
+                {"title":"Main Navigation Menu (right)",    "option_id":"east"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for Themes
-        // *************************************************************************************
-        page.css_header_store = Ext.create('Ext.data.Store', {
+        me.css_header_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"Grey (default)", "option_id":"ext-all-gray.css"},
-                {"title":"Blue", "option_id":"ext-all.css"},
-                {"title":"Access", "option_id":"ext-all-access.css"}
+                {"title":"Grey (default)",  "option_id":"ext-all-gray.css"},
+                {"title":"Blue",            "option_id":"ext-all.css"},
+                {"title":"Access",          "option_id":"ext-all-access.css"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for new patient form
-        // *************************************************************************************
-        page.full_new_patient_form_store = Ext.create('Ext.data.Store', {
+        me.full_new_patient_form_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"Old-style static form without search or duplication check", "option_id":"0"},
-                {"title":"All demographics fields, with search and duplication check", "option_id":"1"},
-                {"title":"Mandatory or specified fields only, search and dup check", "option_id":"2"},
-                {"title":"Mandatory or specified fields only, dup check, no search", "option_id":"3"}
+                {"title":"Old-style static form without search or duplication check",   "option_id":"0"},
+                {"title":"All demographics fields, with search and duplication check",  "option_id":"1"},
+                {"title":"Mandatory or specified fields only, search and dup check",    "option_id":"2"},
+                {"title":"Mandatory or specified fields only, dup check, no search",    "option_id":"3"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for Patient Search results styes
-        // *************************************************************************************
-        page.patient_search_results_style_store = Ext.create('Ext.data.Store', {
+        me.patient_search_results_style_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"Encounter statistics", "option_id":"0"},
-                {"title":"Mandatory and specified fields", "option_id":"1"}
+                {"title":"Encounter statistics",            "option_id":"0"},
+                {"title":"Mandatory and specified fields",  "option_id":"1"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for
-        // *************************************************************************************
-        page.units_of_measurement_store = Ext.create('Ext.data.Store', {
+        me.units_of_measurement_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"Show both US and metric (main unit is US)", "option_id":"1"},
-                {"title":"Show both US and metric (main unit is metric)", "option_id":"2"},
+                {"title":"Show both US and metric (main unit is US)",       "option_id":"1"},
+                {"title":"Show both US and metric (main unit is metric)",   "option_id":"2"},
                 {"title":"Show US only", "option_id":"3"},
                 {"title":"Show metric only", "option_id":"4"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for date display format
-        // *************************************************************************************
-        page.date_display_format_store = Ext.create('Ext.data.Store', {
+        me.date_display_format_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
                 {"title":"YYYY-MM-DD", "option_id":"0"},
@@ -284,20 +213,14 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                 {"title":"DD/MM/YYYY", "option_id":"2"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for
-        // *************************************************************************************
-        page.time_display_format_store = Ext.create('Ext.data.Store', {
+        me.time_display_format_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
                 {"title":"24 hr", "option_id":"0"},
                 {"title":"12 hr", "option_id":"1"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for currency decimals
-        // *************************************************************************************
-        page.currency_decimals_store = Ext.create('Ext.data.Store', {
+        me.currency_decimals_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
                 {"title":"0", "option_id":"0"},
@@ -305,48 +228,36 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                 {"title":"2", "option_id":"2"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for currency decimal point
-        // *************************************************************************************
-        page.currency_dec_point_store = Ext.create('Ext.data.Store', {
+        me.currency_dec_point_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"Comma", "option_id":","},
-                {"title":"Period", "option_id":"."}
+                {"title":"Comma",   "option_id":","},
+                {"title":"Period",  "option_id":"."}
             ]
         });
-        // *************************************************************************************
-        // Data Model for thousands separator
-        // *************************************************************************************
-        page.currency_thousands_sep_store = Ext.create('Ext.data.Store', {
+        me.currency_thousands_sep_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"Comma", "option_id":","},
-                {"title":"Period", "option_id":"."},
-                {"title":"Space", "option_id":" "},
-                {"title":"None", "option_id":""}
+                {"title":"Comma",   "option_id":","},
+                {"title":"Period",  "option_id":"."},
+                {"title":"Space",   "option_id":" "},
+                {"title":"None",    "option_id":""}
             ]
         });
-        // *************************************************************************************
-        // Data Model for Email Method
-        // *************************************************************************************
-        page.EMAIL_METHOD_store = Ext.create('Ext.data.Store', {
+        me.EMAIL_METHOD_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"PHPMAIL", "option_id":"PHPMAIL"},
-                {"title":"SENDMAIL", "option_id":"SENDMAIL"},
-                {"title":"SMTP", "option_id":"SMTP"}
+                {"title":"PHPMAIL",     "option_id":"PHPMAIL"},
+                {"title":"SENDMAIL",    "option_id":"SENDMAIL"},
+                {"title":"SMTP",        "option_id":"SMTP"}
             ]
         });
-        // *************************************************************************************
-        // Data Model for State and Country types
-        // *************************************************************************************
-        page.state_country_data_type_store = Ext.create('Ext.data.Store', {
+        me.state_country_data_type_store = Ext.create('Ext.data.Store', {
             fields: ['title', 'option_id'],
             data : [
-                {"title":"Text field", "option_id":"2"},
-                {"title":"Single-selection list", "option_id":"1"},
-                {"title":"Single-selection list with ability to add to the list", "option_id":"26"}
+                {"title":"Text field",                                              "option_id":"2"},
+                {"title":"Single-selection list",                                   "option_id":"1"},
+                {"title":"Single-selection list with ability to add to the list",   "option_id":"26"}
             ]
         });
         //**************************************************************************
@@ -361,20 +272,17 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
             ['Option 6', 'Option 6'],
             ['Option 7', 'Option 7']
         ];
-        page.dummyStore = Ext.data.ArrayStore({
+        me.dummyStore = new Ext.data.ArrayStore({
             fields: ['title', 'option_id'],
             data : Ext.data.dummy
         });
         //**************************************************************************
         // Global Form Panel
         //**************************************************************************
-        page.globalFormPanel = Ext.create('Ext.mitos.FormPanel', {
-            id				: 'globalFormPanel',
-            frame			: true,
-            border			: true,
+        me.globalFormPanel = Ext.create('Ext.mitos.form.FormPanel', {
             layout			: 'fit',
             autoScroll		: true,
-            padding			: 0,
+            bodyStyle       : 'padding: 0;',
             fieldDefaults	: { msgTarget: 'side', labelWidth: 220, width: 520 },
             defaults		: { anchor: '100%' },
             items: [{
@@ -391,7 +299,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.default_top_pane_store
+                        store		: me.default_top_pane_store
                     },{
                         xtype		: 'combo',
                         fieldLabel	: 'Layout Style',
@@ -399,7 +307,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.concurrent_layout_store
+                        store		: me.concurrent_layout_store
                     },{
                         xtype		: 'combo',
                         fieldLabel	: 'Theme',
@@ -407,7 +315,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.css_header_store
+                        store		: me.css_header_store
                     },{
                         xtype		: 'textfield',
                         fieldLabel	: 'Navigation Area Width',
@@ -423,7 +331,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.full_new_patient_form_store
+                        store		: me.full_new_patient_form_store
                     },{
                         xtype		: 'combo',
                         fieldLabel	: 'Patient Search Resuls Style',
@@ -431,21 +339,21 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.patient_search_results_style_store
+                        store		: me.patient_search_results_style_store
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Simplified Demographics',
                         name		: 'simplified_demographics'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Simplified Prescriptions',
                         name		: 'simplified_prescriptions'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Simplified Co-Pay',
                         name		: 'simplified_copay'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'User Charges Panel',
                         name		: 'use_charges_panel'
                     },{
@@ -464,56 +372,47 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'format',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.fullname_store
+                        store		: me.fullname_store
                     },{
-                        xtype		: 'combo',
+                        xtype		: 'languagescombo',
                         fieldLabel	: 'Default Language',
-                        name		: 'language_default',
-                        displayField: 'lang_description',
-                        valueField	: 'option_id',
-                        editable	: false,
-                        store		: page.language_defaultStore
+                        name		: 'language_default'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'All Language Allowed',
                         name		: 'language_menu_showall'
                     },{
-                        xtype		: 'combo',
+                        xtype		: 'languagescombo',
                         fieldLabel	: 'Allowed Languages -??-',
                         name		: 'lang_description2',  // ???????
-                        id			: 'lang_description2',  // ???????
-                        displayField: 'lang_description',
-                        valueField	: 'lang_description',
-                        multiSelect	: true,
-                        editable	: false,
-                        store		: page.language_defaultStore
+                        multiSelect	: true
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Allow Debuging Language -??-',
                         name		: 'Loc4'  // ???????
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Layouts',
                         name		: 'translate_layout'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate List',
                         name		: 'translate_lists'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Access Control Roles',
                         name		: 'translate_gacl_groups'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Patient Note Titles',
                         name		: 'translate_form_titles'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Documents Categoies',
                         name		: 'translate_document_categories',
                         id			: 'translate_document_categories'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Translate Appointment Categories',
                         name		: 'translate_appt_categories'
                     },{
@@ -523,9 +422,9 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.units_of_measurement_store
+                        store		: me.units_of_measurement_store
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Disable Old Metric Vitals Form',
                         name		: 'disable_deprecated_metrics_form'
                     },{
@@ -539,7 +438,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.date_display_format_store
+                        store		: me.date_display_format_store
                     },{
                         xtype		: 'combo',
                         fieldLabel	: 'Time Display Format -??-',
@@ -547,7 +446,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.time_display_format_store
+                        store		: me.time_display_format_store
                     },{
                         xtype		: 'combo',
                         fieldLabel	: 'Currency Decimal Places',
@@ -555,7 +454,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.currency_decimals_store
+                        store		: me.currency_decimals_store
                     },{
                         xtype		: 'combo',
                         fieldLabel	: 'Currency Decimal Point Symbol',
@@ -563,7 +462,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.currency_dec_point_store
+                        store		: me.currency_dec_point_store
                     },{
                         xtype		: 'combo',
                         fieldLabel	: 'Currency Thousands Separator',
@@ -571,7 +470,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.currency_thousands_sep_store
+                        store		: me.currency_thousands_sep_store
                     },{
                         xtype		: 'textfield',
                         fieldLabel	: 'Currency Designator',
@@ -579,7 +478,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                     }]
                 },{
                     title:'Features',
-                    defaultType: 'checkbox',
+                    defaultType: 'mitos.checkbox',
                     items: [{
                         xtype		: 'combo',
                         fieldLabel	: 'Specific Application',
@@ -587,7 +486,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.dummyStore
+                        store		: me.dummyStore
                     },{
                         xtype		: 'combo',
                         fieldLabel	: 'Drugs and Prodructs',
@@ -595,7 +494,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.dummyStore
+                        store		: me.dummyStore
                     },{
                         fieldLabel	: 'Disable Chart Tracker',
                         name		: 'date_display_format'
@@ -664,7 +563,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                     title:'Calendar',
                     defaultType: 'combo',
                     items: [{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Disable Calendar',
                         name		: 'Cal1'
                     },{
@@ -673,34 +572,34 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.dummyStore
+                        store		: me.dummyStore
                     },{
                         fieldLabel	: 'Calendar Ending Hour',
                         name		: 'Cal3',
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.dummyStore
+                        store		: me.dummyStore
                     },{
                         fieldLabel	: 'Calendar Interval',
                         name		: 'Cal4',
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.dummyStore
+                        store		: me.dummyStore
                     },{
                         fieldLabel	: 'Appointment Display Style',
                         name		: 'Cal5',
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.dummyStore
+                        store		: me.dummyStore
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Provider See Entire Calendar',
                         name		: 'Cal6'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Auto-Create New Encounters',
                         name		: 'Cal7'
                     },{
@@ -709,7 +608,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.dummyStore
+                        store		: me.dummyStore
                     }]
                 },{
                     title:'Security',
@@ -718,15 +617,15 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'Idle Session Timeout Seconds',
                         name		: 'timeout'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Require Strong Passwords',
                         name		: 'secure_password',
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.dummyStore
+                        store		: me.dummyStore
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Require Unique Passwords',
                         name		: 'password_history'
                     },{
@@ -736,7 +635,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'Password Expiration Grace Period',
                         name		: 'password_grace_time'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Enable Clients SSL',
                         name		: 'is_client_ssl_enabled'
                     },{
@@ -765,7 +664,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.EMAIL_METHOD_store
+                        store		: me.EMAIL_METHOD_store
                     },{
                         fieldLabel	: 'SMPT Server Hostname',
                         name		: 'SMTP_HOST'
@@ -796,7 +695,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                     }]
                 },{
                     title:'Loging',
-                    defaultType: 'checkbox',
+                    defaultType: 'mitos.checkbox',
                     items: [{
                         fieldLabel	: 'Enable Audit Logging',
                         name		: 'enable_auditlog'
@@ -863,12 +762,12 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.state_country_data_type_store
+                        store		: me.state_country_data_type_store
                     },{
                         fieldLabel	: 'State Lsit',
                         name		: 'state_list'
                     },{
-                        xtype 		: 'checkbox',
+                        xtype 		: 'mitos.checkbox',
                         fieldLabel	: 'State List Widget Custom Fields',
                         name		: 'state_custom_addlist_widget'
                     },{
@@ -878,7 +777,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         displayField: 'title',
                         valueField	: 'option_id',
                         editable	: false,
-                        store		: page.state_country_data_type_store
+                        store		: me.state_country_data_type_store
                     },{
                         fieldLabel	: 'Country list',
                         name		: 'country_list'
@@ -898,14 +797,14 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'patient Photo Category name',
                         name		: 'patient_photo_category_name'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Medicare Referrer is Renderer',
                         name		: 'MedicareReferrerIsRenderer'
                     },{
                         fieldLabel	: 'Final Close Date (yyy-mm-dd)',
                         name		: 'post_to_date_benchmark'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Enable Hylafax Support',
                         name		: 'enable_hylafax'
                     },{
@@ -918,7 +817,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         fieldLabel	: 'Halafax Enscript Command',
                         name		: 'hylafax_enscript'
                     },{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Enable Scanner Support',
                         name		: 'enable_scanner'
                     },{
@@ -929,7 +828,7 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                     title:'Connectors',
                     defaultType: 'textfield',
                     items: [{
-                        xtype		: 'checkbox',
+                        xtype		: 'mitos.checkbox',
                         fieldLabel	: 'Enable Lab Exchange',
                         name		: 'Conn1'
                     },{
@@ -950,22 +849,32 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                         text      : 'Save Configuration',
                         iconCls   : 'save',
                         handler   : function(){
-                            var record = page.globalStore.getAt('0');
-                            var fieldValues = page.globalFormPanel.getForm().getValues();
-                            for (var k=0; k <= record.fields.getCount()-1; k++) {
-                                var i = record.fields.get(k).name;
-                                record.set( i, fieldValues[i] );
-                            }
-                            page.globalStore.sync();	// Save the record to the dataStore
-                            page.globalStore.load();	// Reload the dataSore from the database
-
-                            Ext.topAlert.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
+                            var form = me.globalFormPanel.getForm();
+                            me.onSave(form, me.store);
                         }
                     }]
                 }]
             }]
         });
-        page.pageBody = [ page.globalFormPanel ];
-        page.callParent(arguments);
-    } // end of initComponent
+        me.pageBody = [ me.globalFormPanel ];
+        me.callParent(arguments);
+    }, // end of initComponent
+    onSave:function(form, store){
+        var record      = form.getRecord(),
+            values      = form.getValues();
+        record.set(values);
+        store.sync();
+        store.load();
+        this.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(callback){
+        this.store.load();
+        callback(true);
+    }
 }); //ens LogPage class

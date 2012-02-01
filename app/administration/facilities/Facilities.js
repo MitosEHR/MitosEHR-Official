@@ -2,10 +2,10 @@
 // facilities.ejs.php
 // Description: Facilities Screen
 // v0.0.3
-// 
+//
 // Author: GI Technologies, 2011
 // Modified: n/a
-// 
+//
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
 
@@ -13,19 +13,20 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelFacilities',
     pageTitle   : 'Facilities',
-    uses        : [ 'Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel', 'Ext.mitos.SaveCancelWindow' ],
+    uses        : [
+        'Ext.mitos.CRUDStore',
+        'Ext.mitos.restStoreModel',
+        'Ext.mitos.GridPanel',
+        'Ext.mitos.window.Window'
+    ],
     initComponent: function(){
-        /** @namespace Ext.QuickTips */
-        Ext.QuickTips.init();
 
-        var panel = this;
-        var rowPos; // Stores the current Grid Row Position (int)
-        var currRec; // Store the current record (Object)
+        var me = this;
 
         // *************************************************************************************
         // Facility Record Structure
         // *************************************************************************************
-        panel.FacilityStore = Ext.create('Ext.mitos.CRUDStore',{
+        me.FacilityStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',					type: 'int'},
                 {name: 'name',					type: 'string'},
@@ -49,302 +50,254 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
             ],
             model 		:'facilityModel',
             idProperty 	:'id',
-            read		:'app/administration/facilities/data_read.ejs.php',
-            create		:'app/administration/facilities/data_create.ejs.php',
-            update		:'app/administration/facilities/data_update.ejs.php',
-            destroy		:'app/administration/facilities/data_destroy.ejs.php'
+            url		    :'app/administration/facilities/data.php'
         });
 
-        // *************************************************************************************
-        // POS Code Data Store
-        // *************************************************************************************
-        panel.storePOSCode = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'option_id',		type: 'string'},
-                {name: 'title',			type: 'string'}
-            ],
-                model 		:'posModel',
-                idProperty 	:'id',
-                read		:'app/administration/facilities/component_data.ejs.php',
-                extraParams	: {"task": "poscodes"}
-        });
-
-        // *************************************************************************************
-        // Federal EIN - TaxID Data Store
-        // *************************************************************************************
-        panel.storeTAXid = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'option_id',		type: 'string'},
-                {name: 'title',			type: 'string'}
-            ],
-                model 		:'taxidRecord',
-                idProperty 	:'id',
-                read		:'app/administration/facilities/component_data.ejs.php',
-                extraParams	: {"task": "taxid"}
-        });
-
-        // *************************************************************************************
-        // User form
-        // *************************************************************************************
-        panel.facilityForm = Ext.create('Ext.mitos.FormPanel', {
-            fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
-            defaultType: 'textfield',
-            defaults: { anchor: '100%' },
-            items: [{
-                fieldLabel: 'Name',
-                name: 'name',
-                allowBlank: false
-            },{
-                fieldLabel: 'Phone',
-                name: 'phone',
-                vtype: 'phoneNumber'
-            },{
-                fieldLabel: 'Fax',
-                name: 'fax',
-                vtype: 'phoneNumber'
-            },{
-                fieldLabel: 'Street',
-                name: 'street'
-            },{
-                fieldLabel: 'City',
-                name: 'city'
-            },{
-                fieldLabel: 'State',
-                name: 'state'
-            },{
-                fieldLabel: 'Postal Code',
-                name: 'postal_code',
-                vtype: 'postalCode'
-            },{
-                fieldLabel: 'Country Code',
-                name: 'country_code'
-            },{
-                xtype: 'fieldcontainer',
-                fieldLabel: 'Tax ID',
-                layout: 'hbox',
-                items: [
-                    panel.cmbTaxIdType = new Ext.create('Ext.form.ComboBox',{
-                        displayField: 'title',
-                        valueField: 'option_id',
-                        editable: false,
-                        store: panel.storeTAXid,
-                        queryMode: 'local',
-                        width: 50
-                    })
-                ,{
-                    xtype: 'textfield',
-                    name: 'federal_ein'
-                }]
-            },{
-                xtype: 'checkboxfield',
-                fieldLabel: 'Service Location',
-                name: 'service_location'
-            },{
-                xtype: 'checkboxfield',
-                fieldLabel: 'Billing Location',
-                name: 'billing_location'
-            },{
-                xtype: 'checkboxfield',
-                fieldLabel: 'Accepts assignment',
-                name: 'accepts_assignment'
-            },
-                panel.cmbposCode = new Ext.create('Ext.form.ComboBox',{
-                    fieldLabel: 'POS Code',
-                    displayField: 'title',
-                    valueField: 'option_id',
-                    editable: false,
-                    store: panel.storePOSCode,
-                    queryMode: 'local'
-                })
-            ,{
-                fieldLabel: 'Billing Attn',
-                name: 'attn'
-            },{
-                fieldLabel: 'CLIA Number',
-                name: 'domain_identifier'
-            },{
-                fieldLabel: 'Facility NPI',
-                name: 'facility_npi'
-            },{
-                name: 'id',
-                hidden: true
-            }],
-            listeners: {
-                beforeshow: {
-                    fn: function(){
-                        panel.cmbTaxIdType.setValue( panel.storeTAXid.getAt(0).data.option_id );
-                        panel.cmbposCode.setValue( panel.storePOSCode.getAt(0).data.option_id );
-                    }
-                }
-            }
-        });
-
-        // *************************************************************************************
-        // Window User Form
-        // *************************************************************************************
-        panel.winFacility = Ext.create('Ext.mitos.Window', {
-            width		: 450,
-            height		: 530,
-            items		: [ panel.facilityForm ],
-            buttons:[
-                panel.cmdSave = Ext.create('Ext.Button', {
-                    text		:'Save',
-                    iconCls		: 'save',
-                    handler: function(){
-                        //----------------------------------------------------------------
-                        // Check if it has to add or update
-                        // Update:
-                        // 1. Get the record from store,
-                        // 2. get the values from the form,
-                        // 3. copy all the
-                        // values from the form and push it into the store record.
-                        // Add: The re-formated record to the dataStore
-                        //----------------------------------------------------------------
-                            if (panel.facilityForm.getForm().findField('id').getValue()){ // Update
-                            var record = panel.FacilityStore.getAt(rowPos);
-                            var fieldValues = panel.facilityForm.getForm().getValues();
-                            var k, i;
-                            for ( k=0; k <= record.fields.getCount()-1; k++) {
-                                i = record.fields.get(k).name;
-                                record.set( i, fieldValues[i] );
-                            }
-                        } else { // Add
-                            //----------------------------------------------------------------
-                            // 1. Convert the form data into a JSON data Object
-                            // 2. Re-format the Object to be a valid record (UserRecord)
-                            // 3. Add the new record to the datastore
-                            //----------------------------------------------------------------
-                            var obj = eval( '(' + Ext.JSON.encode(panel.facilityForm.getForm().getValues()) + ')' );
-                            panel.FacilityStore.add( obj );
-                        }
-                        panel.winFacility.hide();		// Finally hide the dialog window
-                        panel.FacilityStore.sync();	// Save the record to the dataStore
-                        panel.FacilityStore.load();	// Reload the dataSore from the database
-                    }
-                })
-            ,'-',
-                panel.cmdClose = Ext.create('Ext.Button', {
-                    text:'Close',
-                    iconCls: 'delete',
-                    handler: function(){
-                        panel.winFacility.hide();
-                    }
-                })
-            ]
-        });
 
         // *************************************************************************************
         // Facility Grid Panel
         // *************************************************************************************
-        panel.FacilityGrid = Ext.create('Ext.mitos.GridPanel', {
-            store		: panel.FacilityStore,
-            columns: [
-                {
-                    text     : 'Name',
-                    flex     : 1,
-                    sortable : true,
-                    dataIndex: 'name'
-                },
-                {
-                    text     : 'Phone',
-                    width    : 100,
-                    sortable : true,
-                    dataIndex: 'phone'
-                },
-                {
-                    text     : 'Fax',
-                    width    : 100,
-                    sortable : true,
-                    dataIndex: 'fax'
-                },
-                {
-                    text     : 'City',
-                    width    : 100,
-                    sortable : true,
-                    dataIndex: 'city'
-                }
-            ],
+        me.FacilityGrid = Ext.create('Ext.mitos.GridPanel', {
+            store		: me.FacilityStore,
+            columns: [{
+                text     : 'Name',
+                flex     : 1,
+                sortable : true,
+                dataIndex: 'name'
+            },{
+                text     : 'Phone',
+                width    : 100,
+                sortable : true,
+                dataIndex: 'phone'
+            },{
+                text     : 'Fax',
+                width    : 100,
+                sortable : true,
+                dataIndex: 'fax'
+            },{
+                text     : 'City',
+                width    : 100,
+                sortable : true,
+                dataIndex: 'city'
+            }],
             // Slider bar or Pagin
             bbar: Ext.create('Ext.PagingToolbar', {
-                pageSize: 30,
-                store: panel.FacilityStore,
-                displayInfo: true,
-                plugins: Ext.create('Ext.ux.SlidingPager', {})
+                pageSize    : 30,
+                store       : me.FacilityStore,
+                displayInfo : true,
+                plugins     : Ext.create('Ext.ux.SlidingPager', {})
             }),
             listeners: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        panel.facilityForm.getForm().reset(); // Clear the form
-                        panel.cmdEdit.enable();
-                        panel.cmdDelete.enable();
-                        var rec = panel.FacilityStore.getAt(rowIndex);
-                        panel.facilityForm.getForm().loadRecord(rec);
-                        currRec = rec;
-                        rowPos = rowIndex;
-                    }
-                },
-                itemdblclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        panel.facilityForm.getForm().reset(); // Clear the form
-                        panel.cmdEdit.enable();
-                        panel.cmdDelete.enable();
-                        var rec = panel.FacilityStore.getAt(rowIndex);
-                        panel.facilityForm.getForm().loadRecord(rec);
-                        currRec = rec;
-                        rowPos = rowIndex;
-                        panel.winFacility.setTitle('Edit Facility');
-                        panel.winFacility.show();
-                    }
+                itemdblclick: function(view, record){
+                    me.onItemdblclick( me.FacilityStore, record, 'Edit Facility' );
                 }
             },
             dockedItems: [{
                 xtype: 'toolbar',
                 dock: 'top',
-                items: [
-                    panel.cmdAddFacility = new Ext.create('Ext.Button', {
-                        text: 'Add Facility',
-                        iconCls: 'icoAddRecord',
+                items: [{
+                        xtype       : 'button',
+                        text        : 'Add New Facility',
+                        iconCls     : 'save',
                         handler: function(){
-                            panel.facilityForm.getForm().reset(); // Clear the form
-                            panel.winFacility.show();
-                            panel.winFacility.setTitle('Add Facility');
+                            var form    = me.win.down('form');
+                            me.onNew(form, 'facilityModel', 'Add New Facility');
                         }
-                    })
-                ,'-',
-                    panel.cmdEdit = new Ext.create('Ext.Button', {
-                        text: 'Edit Facility',
-                        iconCls: 'edit',
-                        disabled: true,
-                        handler: function(){
-                            panel.winFacility.setTitle('Edit Facility');
-                            panel.winFacility.show();
-                        }
-                    })
-                ,'-',
-                    panel.cmdDelete = new Ext.create('Ext.Button', {
-                        text: 'Delete Facility',
-                        iconCls: 'delete',
-                        disabled: true,
-                        handler: function(){
-                            Ext.Msg.show({
-                                title: 'Please confirm...',
-                                icon: Ext.MessageBox.QUESTION,
-                                msg:'Are you sure to delete this Facility?',
-                                buttons: Ext.Msg.YESNO,
-                                fn:function(btn,msgGrid){
-                                    if(btn=='yes'){
-                                        panel.FacilityStore.remove( currRec );
-                                        panel.FacilityStore.save();
-                                        panel.FacilityStore.load();
-                                    }
-                                }
-                            });
-                        }
-                    })
-                ]
+                    }]
             }]
         }); // END Facility Grid
-        panel.pageBody = [ panel.FacilityGrid ];
-        panel.callParent(arguments);
-    } // end of initComponent
+
+        // *************************************************************************************
+        // Window User Form
+        // *************************************************************************************
+        me.win = Ext.create('Ext.mitos.window.Window', {
+            width : 600,
+            items:[{
+                xtype           : 'mitos.form',
+                fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
+                defaultType     : 'textfield',
+                defaults        : { anchor: '100%' },
+                items: [{
+                    fieldLabel  : 'Name',
+                    name        : 'name',
+                    allowBlank  : false
+                },{
+                    fieldLabel  : 'Phone',
+                    name        : 'phone',
+                    vtype       : 'phoneNumber'
+                },{
+                    fieldLabel  : 'Fax',
+                    name        : 'fax',
+                    vtype       : 'phoneNumber'
+                },{
+                    fieldLabel  : 'Street',
+                    name        : 'street'
+                },{
+                    fieldLabel  : 'City',
+                    name        : 'city'
+                },{
+                    fieldLabel  : 'State',
+                    name        : 'state'
+                },{
+                    fieldLabel  : 'Postal Code',
+                    name        : 'postal_code',
+                    vtype       : 'postalCode'
+                },{
+                    fieldLabel  : 'Country Code',
+                    name        : 'country_code'
+                },{
+                    xtype       : 'fieldcontainer',
+                    fieldLabel  : 'Tax ID',
+                    layout      : 'hbox',
+                    items: [{
+                        xtype   : 'mitos.taxidcombo',
+                        name    :'tax_id_type',
+                        width   : 50
+                    },{
+                        xtype   : 'textfield',
+                        name    : 'federal_ein'
+                    }]
+                },{
+                    xtype       : 'mitos.checkbox',
+                    fieldLabel  : 'Service Location',
+                    name        : 'service_location'
+                },{
+                    xtype       : 'mitos.checkbox',
+                    fieldLabel  : 'Billing Location',
+                    name        : 'billing_location'
+                },{
+                    xtype       : 'mitos.checkbox',
+                    fieldLabel  : 'Accepts assignment',
+                    name        : 'accepts_assignment'
+                },{
+                    xtype       : 'mitos.poscodescombo',
+                    fieldLabel  : 'POS Code',
+                    name        : 'pos_code'
+                },{
+                    fieldLabel  : 'Billing Attn',
+                    name        : 'attn'
+                },{
+                    fieldLabel  : 'CLIA Number',
+                    name        : 'domain_identifier'
+                },{
+                    fieldLabel  : 'Facility NPI',
+                    name        : 'facility_npi'
+                },{
+                    name        : 'id',
+                    hidden      : true
+                }]
+            }],
+            buttons : [{
+                text: 'save',
+                cls : 'winSave',
+                handler: function(){
+                    var form = me.win.down('form').getForm();
+                    if (form.isValid()) {
+                        me.onSave(form, me.FacilityStore);
+                        me.action('close');
+                    }
+                }
+            },'-',{
+                text    : 'Delete',
+                cls     : 'winDelete',
+                itemId  : 'delete',
+                scope   : me,
+                handler : function(){
+                    var form = me.win.down('form').getForm();
+                    me.onDelete(form, me.FacilityStore);
+                }
+            }],
+            listeners:{
+                scope: me,
+                close:function(){
+                    me.action('close');
+                }
+            }
+        }); // END WINDOW
+
+        me.pageBody = [ me.FacilityGrid ];
+        me.callParent(arguments);
+    }, // end of initComponent
+
+    onNew:function(form, model, title){
+        this.setForm(form, title);
+        form.getForm().reset();
+        var newModel  = Ext.ModelManager.create({}, model );
+        form.getForm().loadRecord(newModel);
+        this.action('new');
+        this.win.show();
+    },
+
+    onSave:function(form, store){
+        var record      = form.getRecord(),
+            values      = form.getValues(),
+            storeIndex  = store.indexOf(record);
+        if (storeIndex == -1){
+            store.add(values);
+        }else{
+            record.set(values);
+        }
+        store.sync();
+        store.load();
+        this.win.close();
+    },
+
+    onDelete:function(form, store){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            icon    : Ext.MessageBox.QUESTION,
+            msg     : 'Are you sure to delete this record?',
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn:function(btn){
+                if(btn=='yes'){
+                    var currentRec = form.getRecord();
+                    store.remove(currentRec);
+                    store.destroy();
+                    this.win.close();
+                }
+            }
+        });
+    },
+
+    onItemdblclick:function(store, record, title){
+        var form = this.win.down('form');
+        this.setForm(form, title);
+        form.getForm().loadRecord(record);
+        this.action('old');
+        this.win.show();
+    },
+
+    setForm:function(form, title){
+        form.up('window').setTitle(title);
+    },
+
+    openWin:function(){
+        this.win.show();
+    },
+
+    action:function(action) {
+        var win = this.win,
+            form = win.down('form'),
+            winTbar = win.down('toolbar'),
+            deletebtn = winTbar.getComponent('delete');
+
+        if (action == 'new') {
+            deletebtn.disable();
+        } else if (action == 'old') {
+            deletebtn.enable();
+        } else if (action == 'close') {
+            form.getForm().reset();
+        }
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(callback){
+        this.FacilityStore.load();
+        callback(true);
+    }
 }); //ens FacilitiesPanel class

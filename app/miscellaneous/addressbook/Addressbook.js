@@ -15,13 +15,12 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
     uses:[
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.TitlesComboBox',
-        'Ext.mitos.SaveCancelWindow',
-        'Ext.mitos.TypesComboBox'
+        'Ext.mitos.combo.Titles',
+        'Ext.mitos.window.Window',
+        'Ext.mitos.combo.Types'
     ],
     initComponent: function(){
         var page = this;
-        var rowPos;
         var currRec;
         page.storeAddressbook = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
@@ -88,7 +87,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
             destroy 	: 'app/miscellaneous/addressbook/data_destroy.ejs.php'
         });
         function localck(val) {
-            if (val != '' ) {
+            if (val !== '' ) {
                 return '<img src="ui_icons/yes.gif" />';
             }
             return val;
@@ -97,7 +96,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
         // Facility Form
         // Add or Edit purpose
         // *************************************************************************************
-        page.frmAddressbook = Ext.create('Ext.mitos.FormPanel', {
+        page.frmAddressbook = Ext.create('Ext.mitos.form.FormPanel', {
             hideLabels  : true,
             items: [{
                 xtype: 'textfield', hidden: true, name: 'id'
@@ -121,7 +120,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
                     msgTarget : 'under',
                     items: [
                         { width: 100, xtype: 'displayfield', value: 'Type: '},
-                          Ext.create('Ext.mitos.TypesComboBox', {width: 130 })
+                          Ext.create('Ext.mitos.combo.Types', {width: 130 })
                     ]
                 },{
                     xtype: 'fieldcontainer',
@@ -129,7 +128,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
                     msgTarget : 'under',
                     items: [
                         { width: 100, xtype: 'displayfield', value: 'First, Middle, Last: '},
-                          Ext.create('Ext.mitos.TitlesComboBox', {width: 50 }),
+                          Ext.create('Ext.mitos.combo.Titles', {width: 50 }),
                         { width: 130, xtype: 'textfield', name: 'fname' },
                         { width: 100, xtype: 'textfield', name: 'mname' },
                         { width: 280, xtype: 'textfield', name: 'lname' }
@@ -319,7 +318,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
                 // Single click to select the record
                 // -----------------------------------------
                 itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
+                    fn: function(DataView, record, item, rowIndex){
                         page.frmAddressbook.getForm().reset();
                         var rec = page.storeAddressbook.getAt(rowIndex);
                         page.cmdEdit.enable();
@@ -333,7 +332,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
                 // Double click to select the record, and edit the record
                 // -----------------------------------------
                 itemdblclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
+                    fn: function(DataView, record, item, rowIndex){
                         page.frmAddressbook.getForm().reset();
                         page.cmdEdit.enable();
                         var rec = page.storeAddressbook.getAt(rowIndex); // get the record from the store
@@ -390,7 +389,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
                                 icon: Ext.MessageBox.QUESTION,
                                 msg:'Are you sure to delete this Contact?',
                                 buttons: Ext.Msg.YESNO,
-                                fn:function(btn,msgGrid){
+                                fn:function(btn){
                                     if(btn=='yes'){
                                         page.storeAddressbook.remove( currRec );
                                         page.storeAddressbook.save();
@@ -406,7 +405,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
         // *************************************************************************************
         // Message Window Dialog
         // *************************************************************************************
-        page.winAddressbook = Ext.create('Ext.mitos.SaveCancelWindow', {
+        page.winAddressbook = Ext.create('Ext.mitos.window.Window', {
             width   : 755,
             title   : 'Add or Edit Contact',
             form    : page.frmAddressbook,
@@ -417,5 +416,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
 
         page.pageBody = [ page.addressBookGrid ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(callback){
+        callback(true);
+    }
 }); //ens oNotesPage class

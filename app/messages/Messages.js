@@ -1,43 +1,31 @@
-//----------------------------------------------------------------------------------------------------------------------
-// messages.ejs.php 
-// v0.0.5
-// Under GPLv3 License
-// Integrated by: GI Technologies & MitosEHR.org in 2011
-//----------------------------------------------------------------------------------------------------------------------
 Ext.define('Ext.mitos.panel.messages.Messages',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelMessages',
     pageTitle   : 'Messages',
-    uses        : ['Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel', 'Ext.mitos.SaveCancelWindow' ],
+    pageLayout  : 'border',
+    defaults    : {split: true},
+    uses        : [
+        'Ext.mitos.restStoreModel',
+        'Ext.mitos.GridPanel',
+        'Ext.mitos.LivePatientSearch',
+        'Ext.mitos.combo.MsgStatus',
+        'Ext.mitos.combo.MsgNoteType',
+        'Ext.mitos.combo.Users'
+    ],
     initComponent: function(){
 
-        /** @namespace Ext.QuickTips */
-        Ext.QuickTips.init();
-
-        // *************************************************************************************
-        // Global variables
-        // *************************************************************************************
-        var panel = this;
-        var rowContent;
-        var rowPos;
-        var body_content;
-        body_content = 'Nothing posted yet...';
-
-        // *************************************************************************************
-        // Structure of the message record
-        // creates a subclass of Ext.data.Record
-        //
-        // This should be the structure of the database table
-        //
-        // *************************************************************************************
-        panel.storeMsgs = Ext.create('Ext.mitos.CRUDStore',{
+        var me = this;
+        /**
+         * Message Store
+         */
+        me.storeMsgs = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',				type: 'int'},
                 {name: 'date',				type: 'string'},
                 {name: 'body',				type: 'string'},
                 {name: 'curr_msg',			type: 'string'},
                 {name: 'pid',				type: 'string'},
-                {name: 'patient',			type: 'string'},
+                {name: 'patient_name',	    type: 'string'},
                 {name: 'user_id',			type: 'string'},
                 {name: 'user',				type: 'string'},
                 {name: 'subject',			type: 'string'},
@@ -51,389 +39,354 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             ],
             model		: 'Messages',
             idProperty	: 'id',
-            read		: 'app/messages/data_read.ejs.php',
-            create		: 'app/messages/data_create.ejs.php',
-            update		: 'app/messages/data_update.ejs.php',
-            destroy 	: 'app/messages/data_destroy.ejs.php'
+            url		    : 'app/messages/data.php'
         });
 
-        // *************************************************************************************
-        // Structure and load the data for cmb_toUsers
-        // AJAX -> component_data.ejs.php
-        // *************************************************************************************
-        panel.storePat = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'id',    type: 'int'},
-                {name: 'name',  type: 'string'},
-                {name: 'phone', type: 'string'},
-                {name: 'ss',    type: 'string'},
-                {name: 'dob',   type: 'string'},
-                {name: 'pid',   type: 'string'}
-            ],
-            model		: 'Patients',
-            idProperty	: 'id',
-            read		: 'app/messages/component_data.ejs.php',
-            extraParams	: {"task": "patients"}
-        });// End storePat
-
-
-        // *************************************************************************************
-        // Structure and load the data for cmb_toUsers
-        // AJAX -> component_data.ejs.php
-        // *************************************************************************************
-        panel.toData = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'user',      type: 'string' },
-                {name: 'full_name', type: 'string' }
-            ],
-            model		: 'User',
-            idProperty	: 'id',
-            read		: 'app/messages/component_data.ejs.php',
-            extraParams	: {"task": "users"}
-        });// End toData
-
-        // *************************************************************************************
-        // Structure, data for cmb_Type
-        // AJAX -> component_data.ejs.php
-        // *************************************************************************************
-        panel.typeData = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'option_id', type: 'string' },
-                {name: 'title',     type: 'string' }
-            ],
-            model		: 'Types',
-            idProperty	: 'option_id',
-            read		: 'lib/layoutEngine/listOptions.json.php',
-            extraParams	: {"filter": "note_type"}
-        });// End typeData
-
-        // *************************************************************************************
-        // Structure, data for cmb_Status
-        // AJAX -> component_data.ejs.php
-        // *************************************************************************************
-        panel.statusData = Ext.create('Ext.mitos.CRUDStore',{
-            fields: [
-                {name: 'option_id', type: 'string' },
-                {name: 'title',     type: 'string' }
-            ],
-            model		: 'Status',
-            idProperty	: 'option_id',
-            read		: 'lib/layoutEngine/listOptions.json.php',
-            extraParams	: {"filter": "message_status"}
-        });// End statusData
-
-        // *************************************************************************************
-        // Patient Select Dialog
-        // *************************************************************************************
-        panel.winPatients = Ext.create('Ext.window.Window', {
-            width			: 900,
-            height			: 400,
-            border			: false,
-            modal			: true,
-            resizable		: true,
-            autoScroll		: true,
-            title		    : 'Patients',
-            closeAction		: 'hide',
-            renderTo		: document.body,
-            items: [{
-                    xtype		: 'grid',
-                    autoHeight	: true,
-                    store		: panel.storePat,
-                    frame		: false,
-                    viewConfig	: {forceFit: true, stripeRows: true}, // force the grid to the width of the containing panel
-                    listeners: {
-                        // Single click to select the record, and copy the variables
-                        itemclick: function(view, record, item, num, egrid, rowIndex, element) {
-                            rowContent = record;
-                            panel.patSelect.enable();
-                        }
-                    },
-                    columns: [
-                        {header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-                        { header: 'PID', sortable: true, dataIndex: 'pid' },
-                        { header: 'Name', flex: 1, sortable: true, dataIndex: 'name' },
-                        { header: 'Phone', sortable: true, dataIndex: 'phone'},
-                        { header: 'SS', sortable: true, dataIndex: 'ss' },
-                        { header: 'DOB', sortable: true, dataIndex: 'dob' }
-                    ]
-            }],
-            // Window Bottom Bar
-            dockedItems: [{
-                xtype: 'toolbar',
-                dock: 'bottom',
-                items: [
-                    panel.patSelect = Ext.create('Ext.Button', {
-                        text		:'Select',
-                        iconCls		: 'select',
-                        disabled	: true,
-                        handler: function() {
-                            panel.Patient.setText( rowContent.get('name') );
-                            panel.pid.setValue( rowContent.get('pid') );
-                            panel.cmdSend.enable();
-                            panel.winPatients.hide();
-                        }
-                    })
-                ,'-',
-                    panel.cmdClose = Ext.create('Ext.Button', {
-                        text		: 'Close',
-                        iconCls		: 'delete',
-                        handler		: function(){ panel.winPatients.hide(); }
-                    })
-                ]
-            }]
-        }); // END WINDOW
-
-        // *************************************************************************************
-        // Message Form
-        // *************************************************************************************
-        panel.formMessage = Ext.create('Ext.form.Panel', {
-            frame		: false,
-            bodyStyle	: 'padding: 5px',
-            defaults	: {labelWidth: 75, anchor: '100%'},
-            items: [
-                panel.Patient = Ext.create('Ext.Button', {
-                    text: 'Click to select patient...',
-                    fieldLabel: 'Patient',
-                    name: 'patient',
-                    height: 30,
-                    margin: '5px',
-                    handler: function(){ panel.winPatients.show(); }
-                })
-            ,
-                panel.assigned_to = Ext.create('Ext.form.ComboBox', {
-                    name: 'assigned_to',
-                    fieldLabel: 'To',
-                    editable: false,
-                    triggerAction: 'all',
-                    mode: 'local',
-                    valueField: 'user',
-                    hiddenName: 'assigned_to',
-                    displayField: 'full_name',
-                    store: panel.toData
-                })
-            ,{
-                xtype: 'combo',
-                value: 'Unassigned',
-                name: 'note_type',
-                fieldLabel: 'Type',
-                editable: false,
-                triggerAction: 'all',
-                mode: 'local',
-                valueField: 'option_id',
-                hiddenName: 'option_id',
-                displayField: 'title',
-                store: panel.typeData
-            },{
-                xtype: 'combo',
-                value: 'New',
-                name: 'message_status',
-                fieldLabel: 'Status',
-                editable: false,
-                triggerAction: 'all',
-                mode: 'local',
-                valueField: 'option_id',
-                hiddenName: 'title',
-                displayField: 'title',
-                store: panel.statusData
-            },{
-                xtype: 'textfield',
-                fieldLabel: 'Subject',
-                name: 'subject'
-            },
-                panel.body = Ext.create('Ext.form.HtmlEditor', {
-                    readOnly: true,
-                    name: 'body',
-                    height: 150
-                })
-            ,{
-                xtype: 'htmleditor',
-                name: 'curr_msg',
-                height: 200
-            },
-                panel.id = Ext.create('Ext.form.Text', {
-                    hidden: true,
-                    name: 'id'
-                })
-            ,
-                panel.pid = Ext.create('Ext.form.Text', {
-                    hidden: true,
-                    name: 'pid'
-                })
-            ,{
-                xtype: 'textfield',
-                id: 'reply_id',
-                hidden: true,
-                name: 'reply_id'
-            }]
-        });
-
-        // *************************************************************************************
-        // Message Window Dialog
-        // *************************************************************************************
-        panel.winMessage = Ext.create('Ext.window.Window', {
-            width		: 550,
-            autoHeight	: true,
-            modal		: true,
-            border		: false,
-            resizable	: false,
-            autoScroll	: true,
-            title		: 'Compose Message',
-            closeAction	: 'hide',
-            renderTo	: document.body,
-            items		: [panel.formMessage],
-            // Window Bottom Bar
-            bbar:[
-                panel.cmdSend = Ext.create('Ext.Button', {
-                    text		:'Send',
-                    iconCls		: 'save',
-                    disabled	: true,
-                    handler: function() {
-                        // The datastore object will save the data
-                        // as soon changes is detected on the datastore
-                        // It's a AJAX thing
-                        if(panel.id.getValue()){ // Update message
-                            var record = panel.storeMsgs.getAt(rowPos);
-                            var fieldValues = panel.formMessage.getForm().getValues();
-                            for ( k=0; k <= record.fields.getCount()-1; k++) {
-                                i = record.fields.get(k).name;
-                                record.set( i, fieldValues[i] );
-                            }
-                        } else {						// message
-                            //----------------------------------------------------------------
-                            // 1. Convert the form data into a JSON data Object
-                            // 2. Re-format the Object to be a valid record (UserRecord)
-                            // 3. Add the record to the datastore
-                            //----------------------------------------------------------------
-                            var obj = eval( '(' + Ext.JSON.encode(panel.formMessage.getForm().getValues()) + ')' );
-                            panel.storeMsgs.add( obj );
-                        }
-                        panel.winMessage.hide();	// Finally hide the dialog window
-                        panel.storeMsgs.sync();	// Save the record to the dataStore
-                        panel.storeMsgs.load();	// Reload the dataSore from the database
-                    }
-                })
-            ,'-',{
-                text:'Close',
-                iconCls: 'delete',
-                handler: function(){ panel.winMessage.hide(); }
-            }]
-        }); // END WINDOW
-
-        // *************************************************************************************
-        // Create the GridPanel
-        // *************************************************************************************
-        panel.msgGrid = Ext.create('Ext.grid.Panel', {
-            store		: panel.storeMsgs,
-            autoHeight 	: true,
-            border     	: true,
-            frame		: true,
-            loadMask    : true,
+        /**
+         * Message GridPanel
+         */
+        me.msgGrid = Ext.create('Ext.mitos.GridPanel', {
+            store		: me.storeMsgs,
+            region      : 'center',
+            border:true,
             viewConfig 	: {forceFit: true, stripeRows : true},
-            listeners: {
-                // Single click to select the record, and copy the variables
-                itemclick: function(DataView, record, item, rowIndex, e) {
-                    panel.formMessage.getForm().reset(); // Clear the form
-                    panel.editMsg.enable();
-                    panel.delMsg.enable();
-                    rowContent = panel.storeMsgs.getAt(rowIndex);
-                    panel.formMessage.getForm().loadRecord(rowContent);
-                    rowPos = rowIndex;
-                },
-                // Double click to select the record, and edit the record
-                itemdblclick:  function(DataView, record, item, rowIndex, e) {
-                    panel.formMessage.getForm().reset(); // Clear the form
-                    panel.editMsg.enable();
-                    panel.delMsg.enable();
-                    rowContent = panel.storeMsgs.getAt(rowIndex);
-                    panel.formMessage.getForm().loadRecord(rowContent);
-                    rowPos = rowIndex;
-                    panel.Patient.setText( rowContent.get('patient') );
-                    panel.Patient.disable();
-                    panel.assigned_to.disable();
-                    panel.cmdSend.enable();
-                    panel.body.setVisible(true);
-                    panel.winMessage.show();
-                }
+            listeners:{
+                scope       : this,
+                itemclick   : this.onItemClick
             },
-            columns: [
-                { header: 'noteid', sortable: false, dataIndex: 'noteid', hidden: true},
-                { header: 'reply_id', sortable: false, dataIndex: 'reply_id', hidden: true},
-                { header: 'user', sortable: false, dataIndex: 'user', hidden: true},
-                { flex: 1, header: 'Subject', sortable: true, dataIndex: 'subject' },
-                { width: 200, header: 'From', sortable: true, dataIndex: 'user' },
-                { header: 'Patient', sortable: true, dataIndex: 'patient' },
-                { header: 'Type', sortable: true, dataIndex: 'note_type' },
-                { width: 150, header: 'Date', sortable: true, dataIndex: 'date' },
-                { header: 'Status', sortable: true, dataIndex: 'message_status' }
+            columns:[
+                { header: 'noteid',     sortable: false, dataIndex: 'noteid',           hidden: true },
+                { header: 'reply_id',   sortable: false, dataIndex: 'reply_id',         hidden: true },
+                { header: 'user',       sortable: false, dataIndex: 'user',             hidden: true },
+                { header: 'Status',     sortable: true,  dataIndex: 'message_status',   width : 70   },
+                { header: 'From',       sortable: true,  dataIndex: 'user',             width : 200  },
+                { header: 'Patient',    sortable: true,  dataIndex: 'patient_name',     width : 200  },
+                { header: 'Subject',    sortable: true,  dataIndex: 'subject',          flex  : 1    },
+                { header: 'Type',       sortable: true,  dataIndex: 'note_type',        width : 100  }
             ],
-            // *************************************************************************************
-            // Grid Menu
-            // *************************************************************************************
-            tbar: [{
-                xtype	:'button',
-                id		: 'sendMsg',
-                text	: 'Send message", "e',
-                iconCls	: 'newMessage',
-                handler: function(){
-                    // Clear the rowContent variable
-                    panel.formMessage.getForm().reset(); // Clear the form
-                    panel.Patient.setText('Click to select patient...');
-                    panel.Patient.enable();
-                    panel.assigned_to.enable();
-                    panel.cmdSend.disable();
-                    panel.body.setVisible(false);
-                    panel.winMessage.show();
-                }
-            },'-',
-                panel.editMsg = Ext.create('Ext.Button', {
-                    text	   : 'Reply message',
-                    iconCls	 : 'edit',
-                    disabled : true,
-                    handler  : function(){
-                        // Set the buttons state
-                        panel.Patient.setText( rowContent.get('patient') );
-                        panel.Patient.disable();
-                        panel.assigned_to.disable();
-                        panel.cmdSend.enable();
-                        panel.body.setVisible(true);
-                        panel.winMessage.show();
-                    }
-                })
-            ,'-',
-                panel.delMsg = Ext.create('Ext.Button', {
-                    text		 : 'Delete message',
-                    iconCls		: 'delete',
+            tbar:Ext.create('Ext.PagingToolbar', {
+                store       :  me.storeMsgs,
+                displayInfo : true,
+                emptyMsg    : "No Office Notes to display",
+                plugins     : Ext.create('Ext.ux.SlidingPager', {}),
+                items:['-',{
+                    text        : 'Delete',
+                    cls         : 'winDelete',
+                    iconCls     : 'delete',
+                    itemId      : 'deleteMsg',
                     disabled	: true,
-                    handler: function(){
-                        Ext.Msg.show({
-                            title: 'Please confirm...", "e',
-                            icon: Ext.MessageBox.QUESTION,
-                            msg:'Are you sure to delete this message?<br>From: ' + rowContent.get('from'),
-                            buttons: Ext.Msg.YESNO,
-                            fn:function(btn){
-                                if(btn=='yes'){
-                                    // The datastore object will save the data
-                                    // as soon changes is detected on the datastore
-                                    // It's a Sencha AJAX thing
-                                    panel.storeMsgs.remove( rowContent );
-                                    panel.storeMsgs.save();
-                                    panel.storeMsgs.load();
-                                }
+                    scope       : me,
+                    handler     : me.onDelete
+                },'-']
+            }),
+            bbar:[{
+                text	: 'New message',
+                iconCls	: 'newMessage',
+                itemId  : 'newMsg',
+                handler : function(){
+                    me.onNew();
+                }
+            },'-',{
+                text		: 'Reply',
+                iconCls		: 'edit',
+                itemId      : 'replyMsg',
+                disabled	: true,
+                handler     : function(){
+                    me.action('reply');
+                }
+            },'-']
+        });
+        /**
+        * Form to send and replay messages
+        */
+        me.msgForm = Ext.create('Ext.form.Panel', {
+            region       : 'south',
+            height       : 340,
+            cls          : 'msgForm',
+            fieldDefaults: { labelWidth: 60, margin:5, anchor: '100%' },
+            items:[{
+                xtype   : 'container',
+                cls     : 'message-form-header',
+                padding : '5 0',
+                layout  : 'anchor',
+                items:[{
+                    xtype   : 'container',
+                    layout  : 'column',
+                    items:[{
+                        xtype       : 'container',
+                        layout      : 'anchor',
+                        columnWidth : '.50',
+                        items:[{
+                            xtype       : 'patienlivetsearch',
+                            fieldLabel  : 'Patient',
+                            emptyText   : 'No patient selected',
+                            itemId      : 'patientCombo',
+                            name        : 'pid',
+                            hideLabel   : false
+                        },{
+                            xtype       : 'textfield',
+                            fieldLabel  : 'Patient',
+                            itemId      : 'patientField',
+                            name        : 'patient_name',
+                            readOnly    : true,
+                            hidden      : true
+                        },{
+                            xtype           : 'userscombo',
+                            name            : 'assigned_to',
+                            fieldLabel      : 'To',
+                            validateOnChange: false,
+                            allowBlank      : false
+                        }]
+                    },{
+                        xtype       : 'container',
+                        layout      : 'anchor',
+                        columnWidth : '.50',
+                        items:[{
+                            xtype       : 'msgnotetypecombo',
+                            name        : 'note_type',
+                            fieldLabel  : 'Type',
+                            listeners   : {
+                                scope   : me,
+                                select  : me.onChange
                             }
-                        });
-                    }
-                })
-            ] // END GRID TOP MENU
-        }); // END GRID
+                        },{
+                            xtype       : 'msgstatuscombo',
+                            name        : 'message_status',
+                            fieldLabel  : 'Status',
+                            listeners   : {
+                                scope   : me,
+                                select  : me.onChange
+                            }
+                        }]
+                    }]
+                },{
+                    xtype       : 'textfield',
+                    fieldLabel  : 'Subject',
+                    name        : 'subject',
+                    margin      : '0 5 5 5'
+                }]
+            },{
+                xtype       : 'htmleditor',
+                name        : 'body',
+                itemId      : 'bodyMsg',
+                height      : 204,
+                readOnly    : true
 
-        //***********************************************************************************
-        // Top Render Panel
-        // This Panel needs only 3 arguments...
-        // PageTigle 	- Title of the current page
-        // PageLayout 	- default 'fit', define this argument if using other than the default value
-        // PageBody 	- List of items to display [foem1, grid1, grid2]
-        //***********************************************************************************
-        panel.pageBody = [ panel.msgGrid ];
-        panel.callParent(arguments);
-    } // end of initComponent
-}); //ens MessagesPanel class
+            },{
+                xtype           : 'htmleditor',
+                name            : 'curr_msg',
+                itemId          : 'currMsg',
+                height          : 204,
+                allowBlank      : false,
+                validateOnChange: false,
+                hidden          : true
+            },{
+                xtype       : 'textfield',
+                hidden      : true,
+                name        : 'id'
+            },{
+                xtype       : 'textfield',
+                hidden      : true,
+                name        : 'pid'
+            },{
+                xtype       : 'textfield',
+                hidden      : true,
+                name        : 'reply_id'
+            }],
+            bbar:[{
+                text		: 'Send',
+                iconCls		: 'save',
+                cls		    : 'winSave',
+                itemId      : 'sendMsg',
+                scope       : me,
+                handler     : me.onSend
+            },'-',{
+                text        : 'Delete',
+                cls         : 'winDelete',
+                iconCls     : 'delete',
+                itemId      : 'deleteMsg',
+                margin      : '0 3 0 0',
+                disabled	: true,
+                scope       : me,
+                handler     : me.onDelete
+            }],
+            listeners:{
+                scope: me,
+                afterrender:me.onFormRender
+                
+            }
+        });
+        me.pageBody = [ me.msgGrid, me.msgForm ];
+        me.callParent(arguments);
+
+
+    }, // End initComponent
+
+    onFormRender:function(){
+        this.msgForm.getComponent('bodyMsg').getToolbar().hide();
+        this.onNew();
+    },
+    /**
+     * onNew will reset the form and load a new model
+     * with message_status value set to New, and
+     * note_type value set to Unassigned
+     */
+    onNew:function(){
+        var form = this.msgForm;
+        form.getForm().reset();
+        var model = Ext.ModelManager.getModel('Messages'),
+        newModel  = Ext.ModelManager.create({
+            message_status  : 'New',
+            note_type       : 'Unassigned'
+        }, model );
+        form.getForm().loadRecord(newModel);
+        this.action('new');
+    },
+    /**
+     *
+     * @param btn
+     */
+    onSend:function(btn){
+        var form = btn.up('form').getForm(),
+        store = this.storeMsgs;
+
+        if(form.isValid()){
+            var record      = form.getRecord(),
+                values      = form.getValues(),
+                storeIndex  = store.indexOf(record);
+
+            if (storeIndex == -1){
+                store.add(values);
+            }else{
+                record.set(values);
+            }
+            store.sync();
+            store.load();
+            this.onNew();
+            this.msg('Sweet!','Message Sent');
+        }else{
+            this.msg('Oops!','Please, complete all required fields.');
+        }
+    },
+    /**
+     *
+     * onDelete will show an alert msg to confirm,
+     * delete the message and prepare the form for a new message
+     */
+    onDelete:function(){
+        var form  = this.msgForm.getForm(),
+        store = this.storeMsgs;
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            icon    : Ext.MessageBox.QUESTION,
+            msg     : 'Are you sure to delete this message?',
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn :function(btn){
+                if(btn=='yes'){
+                    var currentRec = form.getRecord();
+                    store.remove(currentRec);
+                    store.destroy();
+                    this.onNew();
+                    this.msg('Sweet!','Message Deleted');
+                }
+            }
+        });
+    },
+    onChange:function(combo, record){
+        var form = combo.up('form').getForm();
+
+        if(form.isValid()){
+
+            var id = form.getRecord().data.id,
+            col = combo.name,
+            val = record[0].data.option_id;
+
+            Ext.Ajax.request({
+                url     : 'app/messages/data.php',
+                scope   : this,
+                params  : {
+                    id  : id,
+                    col : col,
+                    val : val,
+                    task: 'update'
+                },
+                success: function(){
+                    this.storeMsgs.load();
+                }
+            });
+
+        }
+
+    },
+    /**
+     * On item click check if msgPreView is already inside the container.
+     * if not, remove the item inside the container, add msgPreView and update it with record data.
+     * if yes, just update the msgPreView with the new record data
+     *
+     * @param view
+     * @param record
+     */
+    onItemClick: function(view, record){
+        this.msgForm.getForm().loadRecord(record);
+        this.action('old');
+    },
+
+    /**
+     * This function is use to disable/enabled and hide/show buttons and fields
+     * according to the action
+     *
+     * @param action
+     */
+    action:function(action){
+        var sm           = this.msgGrid.getSelectionModel(),
+            form         = this.msgForm,
+            patientCombo = form.query('combo[itemId="patientCombo"]')[0],
+            patientField = form.query('textfield[itemId="patientField"]')[0],
+            bodyMsg      = form.getComponent('bodyMsg'),
+            currMsg      = form.getComponent('currMsg'),
+            deletebtn1   = this.query('button[itemId="deleteMsg"]')[0],
+            deletebtn2   = this.query('button[itemId="deleteMsg"]')[1],
+            replybtn     = this.query('button[itemId="replyMsg"]')[0],
+            sendbtn      = this.query('button[itemId="sendMsg"]')[0];
+        if (action == 'new') {
+            bodyMsg.hide();
+            currMsg.show();
+            patientCombo.show();
+            patientField.hide();
+            deletebtn1.disable();
+            deletebtn2.disable();
+            replybtn.disable();
+            sendbtn.enable();
+            sm.deselectAll();
+        } else if (action == 'old') {
+            bodyMsg.show();
+            currMsg.hide();
+            patientCombo.hide();
+            patientField.show();
+            deletebtn1.enable();
+            deletebtn2.enable();
+            replybtn.enable();
+            sendbtn.disable();
+            bodyMsg.getToolbar().hide();
+        } else if (action == 'reply') {
+            var msg = bodyMsg.getValue();
+            currMsg.setValue('<br><br><br><qoute style="margin-left: 10px; padding-left: 10px; border-left: solid 3px #cccccc; display: block;">'+msg+'</quote>');
+            bodyMsg.hide();
+            currMsg.show();
+            sendbtn.enable();
+            patientCombo.hide();
+            patientField.show();
+        }
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(callback){
+        this.storeMsgs.load();
+        callback(true);
+    }
+});

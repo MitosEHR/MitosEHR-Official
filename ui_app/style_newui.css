@@ -51,7 +51,24 @@
 .edit{
 	background-image: url(../ui_icons/edit.png) !important;
 }
-
+.icoArrowUp{
+    background-image: url(../ui_icons/icoArrowUp.png) !important;
+}
+.icoArrowRight{
+    background-image: url(../ui_icons/icoArrowRight.png) !important;
+}
+.icoArrowRightSmall{
+	background-image: url(../ui_icons/arrow_right.png) !important;
+}
+.icoArrowDown{
+    background-image: url(../ui_icons/icoArrowDown.png) !important;
+}
+.icoDoctor{
+    background-image: url(../ui_icons/icoDoctor.png) !important;
+}
+.icoAddPatient{
+    background-image: url(../ui_icons/patient_add.png) !important;
+}
 .searchUsers{
 	background-image: url(../ui_icons/search-user.png) !important;
 }
@@ -63,20 +80,24 @@
 .icoInjection{
 	background-image: url(../ui_icons/injection.png) !important;
 }
-.icoArrow{
-	background-image: url(../ui_icons/arrow.png) !important;
-}
+
 .icoCalendar{
 	background-image: url(../ui_icons/icoCalendar.png) !important;
 }
 .icoClose{
     background-image: url(../ui_icons/no.gif) !important;
 }
+.icoPreview{
+    background-image: url(../ui_icons/preview.png) !important;
+}
 .icoGreen{
     background-image: url(../ui_icons/green.png) !important;
 }
 .icoFilter{
 	background-image: url(../ui_icons/icoFilter.png) !important;
+}
+.icoReload{
+	background-image: url(../ui_icons/reload.png) !important;
 }
 .icoEye{
 	background-image: url(../ui_icons/eye.png) !important;

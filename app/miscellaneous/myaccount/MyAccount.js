@@ -15,10 +15,10 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
     uses:[
         'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.TitlesComboBox',
-        'Ext.mitos.SaveCancelWindow',
-        'Ext.mitos.FacilitiesComboBox',
-        'Ext.mitos.AuthorizationsComboBox'
+        'Ext.mitos.combo.Titles',
+        'Ext.mitos.window.Window',
+        'Ext.mitos.combo.Facilities',
+        'Ext.mitos.combo.Authorizations'
     ],
     initComponent: function(){
         var page = this;
@@ -63,14 +63,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
             var rec = page.storeUsers.getAt(0); // get the record from the store
             page.myAccountForm.getForm().loadRecord(rec);
         });
-        page.storeUsers.on('load',function(DataView, records, o){
+        page.storeUsers.on('load',function(){
             task.delay(200);
         });
         // *************************************************************************************
         // User Settings Form
         // Add or Edit purpose
         // *************************************************************************************
-        page.myAccountForm = Ext.create('Ext.mitos.FormPanel', {
+        page.myAccountForm = Ext.create('Ext.mitos.form.FormPanel', {
             cls			: 'form-white-bg',
             frame       : true,
             hideLabels  : true,
@@ -102,7 +102,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
                     msgTarget : 'under',
                     items: [
                         { width: 110, xtype: 'displayfield', value: 'First, Middle, Last: '},
-                          Ext.create('Ext.mitos.TitlesComboBox'),
+                          Ext.create('Ext.mitos.combo.Titles'),
                         { width: 105,  xtype: 'textfield', name: 'fname' },
                         { width: 100,  xtype: 'textfield', name: 'mname' },
                         { width: 175, xtype: 'textfield', name: 'lname' }
@@ -151,16 +151,16 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
                     msgTarget : 'under',
                     items: [
                         { width: 110, xtype: 'displayfield', value: 'Default Facility: '},
-                          Ext.create('Ext.mitos.FacilitiesComboBox', {width: 170 }),
+                          Ext.create('Ext.mitos.combo.Facilities', {width: 170 }),
                         { width: 100, xtype: 'displayfield', value: 'Authorizations: '},
-                          Ext.create('Ext.mitos.AuthorizationsComboBox', {width: 175 })
+                          Ext.create('Ext.mitos.combo.Authorizations', {width: 175 })
                     ]
                 },{
                     xtype: 'fieldcontainer',
                     defaults: { hideLabel: true },
                     items: [
                         { width: 110, xtype: 'displayfield', value: 'Access Control: '},
-                          Ext.create('Ext.mitos.RolesComboBox', {width: 170 }),
+                          Ext.create('Ext.mitos.combo.Roles', {width: 170 }),
                         { width: 100, xtype: 'displayfield', value: 'Taxonomy: '},
                         { width: 175, xtype: 'textfield', name: 'taxonomy' }
                     ]
@@ -258,7 +258,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
                 validateOnChange    : true
             }]
         });
-        page.winPass = Ext.create('Ext.mitos.SaveCancelWindow', {
+        page.winPass = Ext.create('Ext.mitos.window.Window', {
             width   : 420,
             title   :'Change you password',
             form    : page.formPass,
@@ -268,10 +268,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
         });
         page.pageBody = [ page.myAccountForm ];
         page.callParent(arguments);
-    } // end of initComponent
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(callback){
+        callback(true);
+    }
 }); //ens oNotesPage class
-
-
-
-
-

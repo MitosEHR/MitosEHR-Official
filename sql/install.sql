@@ -1,14 +1,5 @@
--- phpMyAdmin SQL Dump
--- version 3.3.9
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jul 14, 2011 at 01:28 PM
--- Server version: 5.5.8
--- PHP Version: 5.3.5
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
+SET time_zone = "+00:00";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,38 +7,41 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 
+DROP TABLE IF EXISTS `acl_permissions`;
 CREATE TABLE IF NOT EXISTS `acl_permissions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `perm_key` varchar(30) CHARACTER SET latin1 NOT NULL,
   `perm_name` varchar(30) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permKey` (`perm_key`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
 
 INSERT INTO `acl_permissions` (`id`, `perm_key`, `perm_name`) VALUES
 (9, 'Administer Roles', 'Administer Roles'),
-(10, 'Administer Users', 'Administer Users'),
+(10, 'Administer Users1', 'Administer Users1'),
 (11, 'Administer Facilities', 'Administer Facilities'),
-(12, 'Administer Lists', 'Administer Lists');
+(12, 'Administer Lists', 'Administer Lists'),
+(30, 'test', 'test'),
+(31, 'DeleteX', 'Dele'),
+(32, 'Role perm', 'Role perm');
 
-
+DROP TABLE IF EXISTS `acl_roles`;
 CREATE TABLE IF NOT EXISTS `acl_roles` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(20) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roleName` (`role_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
-
---
--- Dumping data for table `acl_roles`
---
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
 
 INSERT INTO `acl_roles` (`id`, `role_name`) VALUES
 (5, 'Administrator'),
-(6, 'Doctor');
+(6, 'Doctor'),
+(36, 'Demo'),
+(37, 'test'),
+(38, 'role X'),
+(39, 'Role');
 
-
+DROP TABLE IF EXISTS `acl_role_perms`;
 CREATE TABLE IF NOT EXISTS `acl_role_perms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) NOT NULL,
@@ -56,20 +50,53 @@ CREATE TABLE IF NOT EXISTS `acl_role_perms` (
   `add_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roleID_2` (`role_id`,`perm_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=184 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=207 ;
 
 INSERT INTO `acl_role_perms` (`id`, `role_id`, `perm_id`, `value`, `add_date`) VALUES
 (46, 6, 11, 2, '2011-03-04 00:00:00'),
 (45, 6, 10, 2, '2011-03-04 00:00:00'),
-(44, 6, 9, 2, '2011-03-04 00:00:00'),
+(44, 6, 9, 0, '2011-03-04 00:00:00'),
 (42, 5, 12, 3, '2011-03-03 00:00:00'),
 (41, 5, 11, 3, '2011-03-03 00:00:00'),
 (40, 5, 10, 3, '2011-03-03 00:00:00'),
 (39, 5, 9, 3, '2011-03-03 00:00:00'),
-(47, 6, 12, 2, '2011-03-04 00:00:00');
+(47, 6, 12, 3, '2011-03-04 00:00:00'),
+(173, 36, 9, 0, '0000-00-00 00:00:00'),
+(174, 36, 10, 0, '0000-00-00 00:00:00'),
+(175, 36, 11, 0, '0000-00-00 00:00:00'),
+(176, 36, 12, 0, '0000-00-00 00:00:00'),
+(177, 5, 30, 1, '0000-00-00 00:00:00'),
+(178, 6, 30, 0, '0000-00-00 00:00:00'),
+(179, 36, 30, 3, '0000-00-00 00:00:00'),
+(180, 37, 9, 0, '0000-00-00 00:00:00'),
+(181, 37, 10, 0, '0000-00-00 00:00:00'),
+(182, 37, 11, 0, '0000-00-00 00:00:00'),
+(183, 37, 12, 2, '0000-00-00 00:00:00'),
+(184, 37, 30, 0, '0000-00-00 00:00:00'),
+(185, 38, 9, 0, '0000-00-00 00:00:00'),
+(186, 38, 10, 0, '0000-00-00 00:00:00'),
+(187, 38, 11, 0, '0000-00-00 00:00:00'),
+(188, 38, 12, 0, '0000-00-00 00:00:00'),
+(189, 38, 30, 0, '0000-00-00 00:00:00'),
+(190, 5, 31, 0, '0000-00-00 00:00:00'),
+(191, 6, 31, 0, '0000-00-00 00:00:00'),
+(192, 36, 31, 0, '0000-00-00 00:00:00'),
+(193, 37, 31, 0, '0000-00-00 00:00:00'),
+(194, 38, 31, 0, '0000-00-00 00:00:00'),
+(195, 39, 9, 0, '0000-00-00 00:00:00'),
+(196, 39, 10, 0, '0000-00-00 00:00:00'),
+(197, 39, 11, 0, '0000-00-00 00:00:00'),
+(198, 39, 12, 0, '0000-00-00 00:00:00'),
+(199, 39, 30, 0, '0000-00-00 00:00:00'),
+(200, 39, 31, 0, '0000-00-00 00:00:00'),
+(201, 5, 32, 2, '0000-00-00 00:00:00'),
+(202, 6, 32, 0, '0000-00-00 00:00:00'),
+(203, 36, 32, 0, '0000-00-00 00:00:00'),
+(204, 37, 32, 0, '0000-00-00 00:00:00'),
+(205, 38, 32, 0, '0000-00-00 00:00:00'),
+(206, 39, 32, 0, '0000-00-00 00:00:00');
 
-
+DROP TABLE IF EXISTS `acl_user_perms`;
 CREATE TABLE IF NOT EXISTS `acl_user_perms` (
   `id` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
@@ -80,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `acl_user_perms` (
   UNIQUE KEY `userID` (`user_id`,`perm_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
+DROP TABLE IF EXISTS `acl_user_roles`;
 CREATE TABLE IF NOT EXISTS `acl_user_roles` (
   `user_id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL,
@@ -87,6 +115,7 @@ CREATE TABLE IF NOT EXISTS `acl_user_roles` (
   UNIQUE KEY `userID` (`user_id`,`role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `addresses`;
 CREATE TABLE IF NOT EXISTS `addresses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `line1` varchar(255) DEFAULT NULL,
@@ -99,18 +128,19 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   `foreign_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `foreign_id` (`foreign_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 INSERT INTO `addresses` (`id`, `line1`, `line2`, `city`, `state`, `zip`, `plus_four`, `country`, `foreign_id`) VALUES
-(16, 'Calle Luna', '#C10', 'San JUan', 'PR', '00924', '', '', 2),
-(15, 'Calle 23', '# 2101', 'Caolina', 'PR', '00988', '', '', 1);
+(3, 'Calle Metropolis', 'Numero 301', 'Calle', 'PR', '00987', '', '', 2),
+(8, 'Test add', 'Test Add 2', 'Oralnddo', 'FL', '33131', '', '', 7);
 
+DROP TABLE IF EXISTS `array`;
 CREATE TABLE IF NOT EXISTS `array` (
   `array_key` varchar(255) DEFAULT NULL,
   `array_value` longtext
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `ar_activity`;
 CREATE TABLE IF NOT EXISTS `ar_activity` (
   `pid` int(11) NOT NULL,
   `encounter` int(11) NOT NULL,
@@ -132,6 +162,7 @@ CREATE TABLE IF NOT EXISTS `ar_activity` (
   KEY `session_id` (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `ar_session`;
 CREATE TABLE IF NOT EXISTS `ar_session` (
   `session_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `payer_id` int(11) NOT NULL COMMENT '0=pt else references insurance_companies.id',
@@ -155,6 +186,7 @@ CREATE TABLE IF NOT EXISTS `ar_session` (
   KEY `deposit_date` (`deposit_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `automatic_notification`;
 CREATE TABLE IF NOT EXISTS `automatic_notification` (
   `notification_id` int(5) NOT NULL AUTO_INCREMENT,
   `sms_gateway_type` varchar(255) NOT NULL,
@@ -173,7 +205,7 @@ INSERT INTO `automatic_notification` (`notification_id`, `sms_gateway_type`, `ne
 (1, 'CLICKATELL', '0000-00-00', ':', 'EMR GROUP 1 .. SMS', 'Welcome to EMR GROUP 1.. SMS', '', '', 'SMS', '0000-00-00 00:00:00'),
 (2, '', '2007-10-02', '05:50', 'EMR GROUP', 'Welcome to EMR GROUP . Email', 'EMR Group', 'Welcome to EMR GROUP', 'Email', '2007-09-30 00:00:00');
 
-
+DROP TABLE IF EXISTS `batchcom`;
 CREATE TABLE IF NOT EXISTS `batchcom` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) NOT NULL DEFAULT '0',
@@ -185,6 +217,7 @@ CREATE TABLE IF NOT EXISTS `batchcom` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `billing`;
 CREATE TABLE IF NOT EXISTS `billing` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -215,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `billing` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `calendar_categories`;
 CREATE TABLE IF NOT EXISTS `calendar_categories` (
   `catid` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `catname` varchar(100) DEFAULT NULL,
@@ -226,7 +259,6 @@ CREATE TABLE IF NOT EXISTS `calendar_categories` (
   PRIMARY KEY (`catid`),
   KEY `basic_cat` (`catname`,`catcolor`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
-
 
 INSERT INTO `calendar_categories` (`catid`, `catname`, `catcolor`, `catdesc`, `duration`, `cattype`) VALUES
 (5, 'Office Visit', '#FFFFCC', 'Normal Office Visit', 900, 0),
@@ -239,7 +271,7 @@ INSERT INTO `calendar_categories` (`catid`, `catname`, `catcolor`, `catdesc`, `d
 (10, 'New Patient', '#CCFFFF', '', 1800, 0),
 (11, 'Reserved', '#FF7777', 'Reserved', 900, 1);
 
-
+DROP TABLE IF EXISTS `calendar_events`;
 CREATE TABLE IF NOT EXISTS `calendar_events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT 'User Id ',
@@ -257,16 +289,20 @@ CREATE TABLE IF NOT EXISTS `calendar_events` (
   `url` varchar(255) DEFAULT NULL,
   `ad` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 INSERT INTO `calendar_events` (`id`, `user_id`, `category`, `facility`, `billing_facillity`, `patient_id`, `title`, `status`, `start`, `end`, `rrule`, `loc`, `notes`, `url`, `ad`) VALUES
-(30, 2, 5, 3, 3, 10, 'Miker, Sara', '-', '2011-07-14 03:00:00', '2011-07-14 04:30:00', '', '', '', '', ''),
-(31, 1, 10, 3, 3, 15, 'Weekasd, Adriana', '<', '2011-07-14 03:00:00', '2011-07-14 04:00:00', '', '', 'none', '', ''),
-(32, 1, 1, 3, 3, 5, 'Rodriguez, Ernestito Juan', '', '2011-07-14 04:00:00', '2011-07-14 05:00:00', '', '', 'asjd', '', ''),
-(33, 2, 10, 3, 3, 8, 'Rodriguez, Idalis', '-', '2011-07-14 02:00:00', '2011-07-14 03:00:00', '', '', 'No notes', '', '');
+(30, 1, 1, 3, 3, 0, 'Miker, Sara', 'x', '2011-07-06 14:45:00', '2011-07-06 15:00:00', '', '', 'Extra Notes', '', ''),
+(31, 1, 0, 0, 0, 0, '', '', '2011-09-13 00:00:00', '2011-09-15 00:00:00', '', '', '', '', '1'),
+(34, 81, 2, 3, 3, 12, 'Miguelo  Guzman', '-', '2011-10-26 00:00:00', '2011-10-26 01:00:00', '', '', 'none', '', ''),
+(37, 81, 2, 3, 4, 0, '', '?', '2011-10-03 00:00:00', '2011-10-10 00:00:00', '', '', '', '', '1'),
+(38, 0, 0, 0, 0, 0, '', '', '2011-10-23 04:00:00', '2011-10-23 09:00:00', '', '', '', '', ''),
+(39, 81, 10, 4, 3, 0, '', '@', '2011-10-26 04:00:00', '2011-10-26 11:30:00', '', '', '', '', ''),
+(40, 81, 9, 4, 3, 9, 'Papo  Tetlin', '+', '2011-10-17 00:00:00', '2011-11-04 00:00:00', '', '', '', '', '1'),
+(41, 81, 5, 3, 3, 12, 'Miguelo  Guzman', '-', '2011-11-13 00:00:00', '2011-11-13 01:00:00', '', '', '', '', '1'),
+(43, 81, 5, 3, 3, 18, 'Osbaldo  Weekasd', '-', '2011-11-13 05:00:00', '2011-11-13 06:00:00', '', '', '', '', '');
 
-
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -291,23 +327,23 @@ INSERT INTO `categories` (`id`, `name`, `value`, `parent`, `lft`, `rght`) VALUES
 (9, 'Living Will', '', 6, 16, 17),
 (10, 'Patient Photograph', '', 4, 8, 9);
 
-
+DROP TABLE IF EXISTS `categories_seq`;
 CREATE TABLE IF NOT EXISTS `categories_seq` (
   `id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `categories_seq` (`id`) VALUES
 (10);
 
+DROP TABLE IF EXISTS `categories_to_documents`;
 CREATE TABLE IF NOT EXISTS `categories_to_documents` (
   `category_id` int(11) NOT NULL DEFAULT '0',
   `document_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`category_id`,`document_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `chart_tracker`;
 CREATE TABLE IF NOT EXISTS `chart_tracker` (
   `ct_pid` int(11) NOT NULL,
   `ct_when` datetime NOT NULL,
@@ -316,7 +352,7 @@ CREATE TABLE IF NOT EXISTS `chart_tracker` (
   PRIMARY KEY (`ct_pid`,`ct_when`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `claims`;
 CREATE TABLE IF NOT EXISTS `claims` (
   `patient_id` int(11) NOT NULL,
   `encounter_id` int(11) NOT NULL,
@@ -333,6 +369,7 @@ CREATE TABLE IF NOT EXISTS `claims` (
   PRIMARY KEY (`patient_id`,`encounter_id`,`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `codes`;
 CREATE TABLE IF NOT EXISTS `codes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code_text` varchar(255) NOT NULL DEFAULT '',
@@ -350,9 +387,9 @@ CREATE TABLE IF NOT EXISTS `codes` (
   `reportable` tinyint(1) DEFAULT '0' COMMENT '0 = non-reportable, 1 = reportable',
   PRIMARY KEY (`id`),
   KEY `code` (`code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14316 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14318 ;
 
-
+DROP TABLE IF EXISTS `code_types`;
 CREATE TABLE IF NOT EXISTS `code_types` (
   `ct_key` varchar(15) NOT NULL COMMENT 'short alphanumeric name',
   `ct_id` int(11) NOT NULL COMMENT 'numeric identifier',
@@ -368,12 +405,12 @@ CREATE TABLE IF NOT EXISTS `code_types` (
   UNIQUE KEY `ct_id` (`ct_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`) VALUES
 ('ICD9', 2, 1, 2, '', '', 0, 0, 0, 1),
 ('CPT4', 1, 2, 2, 'ICD9', '', 1, 0, 0, 0),
 ('HCPCS', 3, 3, 2, 'ICD9', '', 1, 0, 0, 0);
 
+DROP TABLE IF EXISTS `config`;
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -386,16 +423,16 @@ CREATE TABLE IF NOT EXISTS `config` (
   KEY `lft` (`lft`,`rght`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `config_seq`;
 CREATE TABLE IF NOT EXISTS `config_seq` (
   `id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `config_seq` (`id`) VALUES
 (0);
 
-
+DROP TABLE IF EXISTS `documents`;
 CREATE TABLE IF NOT EXISTS `documents` (
   `id` int(11) NOT NULL DEFAULT '0',
   `type` enum('file_url','blob','web_url') DEFAULT NULL,
@@ -415,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `documents` (
   KEY `owner` (`owner`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `drugs`;
 CREATE TABLE IF NOT EXISTS `drugs` (
   `drug_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -437,7 +474,7 @@ CREATE TABLE IF NOT EXISTS `drugs` (
   PRIMARY KEY (`drug_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `drug_inventory`;
 CREATE TABLE IF NOT EXISTS `drug_inventory` (
   `inventory_id` int(11) NOT NULL AUTO_INCREMENT,
   `drug_id` int(11) NOT NULL,
@@ -455,7 +492,7 @@ CREATE TABLE IF NOT EXISTS `drug_inventory` (
   PRIMARY KEY (`inventory_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `drug_sales`;
 CREATE TABLE IF NOT EXISTS `drug_sales` (
   `sale_id` int(11) NOT NULL AUTO_INCREMENT,
   `drug_id` int(11) NOT NULL,
@@ -474,7 +511,7 @@ CREATE TABLE IF NOT EXISTS `drug_sales` (
   PRIMARY KEY (`sale_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `drug_templates`;
 CREATE TABLE IF NOT EXISTS `drug_templates` (
   `drug_id` int(11) NOT NULL,
   `selector` varchar(255) NOT NULL DEFAULT '',
@@ -486,7 +523,7 @@ CREATE TABLE IF NOT EXISTS `drug_templates` (
   PRIMARY KEY (`drug_id`,`selector`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `eligibility_response`;
 CREATE TABLE IF NOT EXISTS `eligibility_response` (
   `response_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `response_description` varchar(255) DEFAULT NULL,
@@ -497,7 +534,7 @@ CREATE TABLE IF NOT EXISTS `eligibility_response` (
   PRIMARY KEY (`response_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `eligibility_verification`;
 CREATE TABLE IF NOT EXISTS `eligibility_verification` (
   `verification_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `response_id` bigint(20) DEFAULT NULL,
@@ -511,7 +548,7 @@ CREATE TABLE IF NOT EXISTS `eligibility_verification` (
   KEY `insurance_id` (`insurance_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `employer_data`;
 CREATE TABLE IF NOT EXISTS `employer_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -526,13 +563,11 @@ CREATE TABLE IF NOT EXISTS `employer_data` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-
 INSERT INTO `employer_data` (`id`, `name`, `street`, `postal_code`, `city`, `state`, `country`, `date`, `pid`) VALUES
 (1, '', '', '', '', '', '', '2011-01-23 18:13:42', 1),
 (2, '', '', '', '', '', '', '2011-01-23 18:15:01', 2);
 
-
-
+DROP TABLE IF EXISTS `extended_log`;
 CREATE TABLE IF NOT EXISTS `extended_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -544,7 +579,7 @@ CREATE TABLE IF NOT EXISTS `extended_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `facility`;
 CREATE TABLE IF NOT EXISTS `facility` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -566,21 +601,18 @@ CREATE TABLE IF NOT EXISTS `facility` (
   `facility_npi` varchar(15) DEFAULT NULL,
   `tax_id_type` varchar(31) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 INSERT INTO `facility` (`id`, `name`, `phone`, `fax`, `street`, `city`, `state`, `postal_code`, `country_code`, `federal_ein`, `service_location`, `billing_location`, `accepts_assignment`, `pos_code`, `x12_sender_id`, `attn`, `domain_identifier`, `facility_npi`, `tax_id_type`) VALUES
-(3, 'Your Clinic''s', '000-000-0000', '000-000-0000', '', '', '', '', '', '', 1, 1, 1, 0, '', '', '', '546353253', 'EI');
+(3, 'Gino Clinic', '000-000-0000', '000-000-0000', '', '', '', '', '', '', 1, 1, 1, 0, '', '', '', '546353253', 'EI'),
+(4, 'Hello', '', '', '', '', '', '', '', '', 1, 1, 1, 1, NULL, '', '', '', 'EI');
 
-
-
+DROP TABLE IF EXISTS `fee_sheet_options`;
 CREATE TABLE IF NOT EXISTS `fee_sheet_options` (
   `fs_category` varchar(63) DEFAULT NULL,
   `fs_option` varchar(63) DEFAULT NULL,
   `fs_codes` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 
 INSERT INTO `fee_sheet_options` (`fs_category`, `fs_option`, `fs_codes`) VALUES
 ('1New Patient', '1Brief', 'CPT4|99201|'),
@@ -594,7 +626,7 @@ INSERT INTO `fee_sheet_options` (`fs_category`, `fs_option`, `fs_codes`) VALUES
 ('2Established Patient', '4Extended', 'CPT4|99214|'),
 ('2Established Patient', '5Comprehensive', 'CPT4|99215|');
 
-
+DROP TABLE IF EXISTS `forms`;
 CREATE TABLE IF NOT EXISTS `forms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -610,7 +642,466 @@ CREATE TABLE IF NOT EXISTS `forms` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `forms_fields`;
+CREATE TABLE IF NOT EXISTS `forms_fields` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `form_id` bigint(11) DEFAULT NULL,
+  `xtype` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `item_of` bigint(11) DEFAULT NULL,
+  `pos` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_bin AUTO_INCREMENT=147 ;
 
+INSERT INTO `forms_fields` (`id`, `form_id`, `xtype`, `item_of`, `pos`) VALUES
+(101, 1, 'fieldcontainer', 95, 30),
+(102, 1, 'combobox', 101, 10),
+(95, 1, 'fieldset', 0, 10),
+(96, 1, 'fieldcontainer', 95, 20),
+(97, 1, 'combobox', 96, 10),
+(98, 1, 'textfield', 96, 20),
+(99, 1, 'textfield', 96, 30),
+(100, 1, 'textfield', 96, 40),
+(103, 1, 'datefield', 101, 20),
+(104, 1, 'combobox', 101, 40),
+(105, 1, 'textfield', 101, 30),
+(106, 1, 'textfield', 95, 10),
+(107, 1, 'textfield', 95, 40),
+(108, 1, 'fieldset', 0, 20),
+(109, 1, 'fieldcontainer', 108, 20),
+(110, 1, 'textfield', 109, 0),
+(111, 1, 'textfield', 114, 10),
+(112, 1, 'combobox', 114, 20),
+(113, 1, 'combobox', 114, 30),
+(114, 1, 'fieldcontainer', 108, 30),
+(115, 1, 'textfield', 108, 40),
+(116, 1, 'textfield', 108, 50),
+(117, 1, 'textfield', 108, 60),
+(119, 1, 'textfield', 108, 80),
+(118, 1, 'textfield', 108, 70),
+(120, 1, 'textfield', 108, 90),
+(121, 1, 'textfield', 108, 100),
+(122, 1, 'textfield', 108, 110),
+(123, 1, 'fieldset', 0, 30),
+(124, 1, 'combobox', 123, 10),
+(125, 1, 'combobox', 123, 20),
+(126, 1, 'combobox', 123, 40),
+(127, 1, 'textfield', 123, 30),
+(128, 1, 'fieldcontainer', 123, 50),
+(129, 1, 'mitos.checkbox', 128, 0),
+(130, 1, 'mitos.checkbox', 128, 0),
+(131, 1, 'fieldcontainer', 123, 60),
+(132, 1, 'mitos.checkbox', 131, 10),
+(133, 1, 'mitos.checkbox', 131, 20),
+(134, 1, 'mitos.checkbox', 128, 0),
+(135, 1, 'mitos.checkbox', 131, 30),
+(136, 1, 'mitos.checkbox', 128, 0),
+(137, 1, 'mitos.checkbox', 131, 40),
+(138, 1, 'fieldset', 0, 40),
+(139, 1, 'textfield', 138, 0),
+(140, 1, 'textfield', 138, 0),
+(141, 1, 'textfield', 138, 0),
+(142, 1, 'fieldcontainer', 138, 0),
+(143, 1, 'textfield', 142, 0),
+(144, 1, 'combobox', 142, 0),
+(145, 1, 'combobox', 142, 0),
+(146, 1, 'textfield', 142, 0);
+
+DROP TABLE IF EXISTS `forms_field_options`;
+CREATE TABLE IF NOT EXISTS `forms_field_options` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `field_id` bigint(11) NOT NULL,
+  `oname` varchar(255) DEFAULT NULL,
+  `ovalue` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1807 ;
+
+INSERT INTO `forms_field_options` (`id`, `field_id`, `oname`, `ovalue`) VALUES
+(1233, 110, 'margin', '0 5 0 0'),
+(1232, 110, 'width', '300'),
+(1196, 109, 'labelWidth', '120'),
+(1194, 109, 'pos', '0'),
+(1195, 109, 'fieldLabel', 'Address'),
+(1090, 107, 'name', 'drivers_license'),
+(1091, 107, 'width', '305'),
+(1092, 107, 'margin', '0 5 5 0'),
+(1089, 107, 'emptyText', 'Driver License'),
+(1088, 107, 'labelWidth', '120'),
+(1087, 107, 'fieldLabel', 'Driver Lic.'),
+(1086, 107, 'pos', '40'),
+(1070, 103, 'margin', '0 5 0 0'),
+(1062, 106, 'margin', '0 5 5 0'),
+(1061, 106, 'width', '305'),
+(1060, 106, 'name', 'pubpid'),
+(1059, 106, 'emptyText', 'External ID'),
+(1058, 106, 'labelWidth', '120'),
+(1057, 106, 'fieldLabel', 'External ID'),
+(1056, 106, 'pos', '10'),
+(1019, 101, 'layout', 'hbox'),
+(1011, 96, 'layout', 'hbox'),
+(1003, 105, 'margin', '0 5 0 0'),
+(1002, 105, 'width', '100'),
+(1001, 105, 'name', 'SS'),
+(1000, 105, 'emptyText', 'Social Security'),
+(999, 105, 'hideLabel', 'true'),
+(997, 105, 'pos', '30'),
+(998, 105, 'fieldLabel', 'Social Security'),
+(984, 104, 'list_id', 'marital'),
+(983, 104, 'margin', '0 5 0 0'),
+(1069, 103, 'width', '100'),
+(945, 102, 'list_id', 'sex'),
+(982, 104, 'width', '170'),
+(981, 104, 'name', 'marital_status'),
+(978, 104, 'fieldLabel', 'Marital Status'),
+(980, 104, 'emptyText', 'Marital Status'),
+(979, 104, 'hideLabel', 'true'),
+(977, 104, 'pos', '0'),
+(1068, 103, 'name', 'DOB'),
+(1067, 103, 'emptyText', 'DOB'),
+(1066, 103, 'hideLabel', 'true'),
+(1065, 103, 'labelWidth', '30'),
+(1064, 103, 'fieldLabel', 'DOB'),
+(1063, 103, 'pos', '0'),
+(944, 102, 'margin', '0 5 0 0'),
+(943, 102, 'width', '70'),
+(942, 102, 'name', 'sex'),
+(793, 100, 'allowBlank', 'true'),
+(941, 102, 'emptyText', 'Sex'),
+(940, 102, 'hideLabel', 'true'),
+(1017, 101, 'fieldLabel', 'Sex/DOB/S.S./Status'),
+(1018, 101, 'labelWidth', '120'),
+(1016, 101, 'pos', '50'),
+(939, 102, 'fieldLabel', 'Sex'),
+(938, 102, 'pos', '0'),
+(789, 100, 'emptyText', 'Last Name'),
+(792, 100, 'margin', '0 5 0 0'),
+(791, 100, 'width', '170'),
+(790, 100, 'name', 'lname'),
+(1802, 138, 'collapsible', 'true'),
+(1806, 95, 'collapsible', 'true'),
+(788, 100, 'hideLabel', 'true'),
+(787, 100, 'fieldLabel', 'Last Name'),
+(786, 100, 'pos', '0'),
+(778, 99, 'margin', '0 5 0 0'),
+(777, 99, 'width', '100'),
+(776, 99, 'name', 'mname'),
+(775, 99, 'emptyText', 'Middle Name'),
+(774, 99, 'hideLabel', 'true'),
+(1010, 96, 'labelWidth', '120'),
+(1009, 96, 'fieldLabel', 'Full Name'),
+(1008, 96, 'pos', '0'),
+(773, 99, 'fieldLabel', 'Middle Name'),
+(772, 98, 'allowBlank', 'true'),
+(771, 98, 'margin', '0 5 0 0'),
+(770, 98, 'width', '100'),
+(769, 98, 'name', 'fname'),
+(768, 98, 'emptyText', 'First Name'),
+(767, 98, 'hideLabel', 'true'),
+(766, 98, 'fieldLabel', 'First Name'),
+(765, 98, 'pos', '0'),
+(847, 97, 'list_id', 'titles'),
+(846, 97, 'margin', '0 5 0 0'),
+(845, 97, 'width', '70'),
+(844, 97, 'name', 'title'),
+(843, 97, 'emptyText', 'Title'),
+(842, 97, 'hideLabel', 'true'),
+(841, 97, 'fieldLabel', 'Title'),
+(840, 97, 'pos', '0'),
+(1231, 110, 'name', 'address'),
+(1230, 110, 'emptyText', 'Street'),
+(1228, 110, 'fieldLabel', 'Street'),
+(1229, 110, 'hideLabel', 'true'),
+(1205, 111, 'margin', '0 5 0 0'),
+(1204, 111, 'width', '80'),
+(1203, 111, 'name', 'city'),
+(1202, 111, 'emptyText', 'City'),
+(1201, 111, 'hideLabel', 'true'),
+(1200, 111, 'fieldLabel', 'City'),
+(1199, 111, 'pos', '0'),
+(1178, 112, 'margin', '0 5 0 0'),
+(1177, 112, 'width', '130'),
+(1176, 112, 'name', 'state'),
+(1175, 112, 'emptyText', 'State'),
+(1227, 110, 'pos', '0'),
+(1174, 112, 'hideLabel', 'true'),
+(1173, 112, 'fieldLabel', 'state'),
+(1172, 112, 'pos', '0'),
+(1179, 112, 'list_id', 'state'),
+(1191, 113, 'width', '70'),
+(1190, 113, 'name', 'country'),
+(1189, 113, 'emptyText', 'Country'),
+(1188, 113, 'hideLabel', 'true'),
+(1187, 113, 'fieldLabel', 'Country'),
+(1186, 113, 'pos', '0'),
+(1192, 113, 'margin', '0 5 0 0'),
+(1193, 113, 'list_id', 'country'),
+(1197, 109, 'layout', 'hbox'),
+(1211, 114, 'labelWidth', '120'),
+(1210, 114, 'fieldLabel', 'Address Cont.'),
+(1209, 114, 'pos', '0'),
+(1212, 114, 'layout', 'hbox'),
+(1305, 115, 'labelWidth', '120'),
+(1306, 115, 'emptyText', '000-000-0000'),
+(1308, 115, 'margin', '0 5 5 0'),
+(1313, 116, 'name', 'mobile_phone'),
+(1314, 116, 'margin', '0 5 5 0'),
+(1311, 116, 'labelWidth', '120'),
+(1307, 115, 'name', 'home_phone'),
+(1304, 115, 'fieldLabel', 'Home Phone'),
+(1312, 116, 'emptyText', '000-000-0000'),
+(1319, 117, 'name', 'work_phone'),
+(1318, 117, 'emptyText', '000-000-0000'),
+(1317, 117, 'labelWidth', '120'),
+(1793, 108, 'title', 'Contact'),
+(1428, 118, 'width', '350'),
+(1427, 118, 'name', 'email'),
+(1426, 118, 'emptyText', 'example@example.com'),
+(1303, 115, 'pos', '0'),
+(1310, 116, 'fieldLabel', 'Mobile Phone'),
+(1309, 116, 'pos', '0'),
+(1316, 117, 'fieldLabel', 'Work Phone'),
+(1315, 117, 'pos', '0'),
+(1425, 118, 'labelWidth', '120'),
+(1424, 118, 'fieldLabel', 'Email'),
+(1320, 117, 'margin', '0 5 5 0'),
+(1423, 118, 'pos', '0'),
+(1405, 119, 'margin', '0 5 5 0'),
+(1403, 119, 'name', 'mothers_name'),
+(1404, 119, 'width', '350'),
+(1402, 119, 'emptyText', 'Mother`s Name'),
+(1401, 119, 'labelWidth', '120'),
+(1400, 119, 'fieldLabel', 'Mother`s Name'),
+(1399, 119, 'pos', '0'),
+(1395, 120, 'emptyText', 'Guardian`s Name'),
+(1394, 120, 'labelWidth', '120'),
+(1393, 120, 'fieldLabel', 'Guardian`s Name'),
+(1392, 120, 'pos', '80'),
+(1396, 120, 'name', 'guardians_name'),
+(1397, 120, 'width', '350'),
+(1398, 120, 'margin', '0 5 5 0'),
+(1419, 121, 'emptyText', 'Emergency Contact Name'),
+(1418, 121, 'labelWidth', '120'),
+(1417, 121, 'fieldLabel', 'Emergency Contact'),
+(1416, 121, 'pos', '90'),
+(1411, 122, 'fieldLabel', 'Emergency Phone'),
+(1412, 122, 'labelWidth', '120'),
+(1413, 122, 'emptyText', '000-000-0000'),
+(1414, 122, 'name', 'emer_phone'),
+(1415, 122, 'margin', '0 5 5 0'),
+(1420, 121, 'name', 'emer_contact'),
+(1421, 121, 'width', '350'),
+(1422, 121, 'margin', '0 5 5 0'),
+(1429, 118, 'margin', '0 5 5 0'),
+(1805, 95, 'title', 'Who'),
+(1792, 108, 'pos', '20'),
+(1797, 123, 'title', 'Choices'),
+(1448, 124, 'name', 'provider'),
+(1447, 124, 'labelWidth', '120'),
+(1446, 124, 'fieldLabel', 'Provider'),
+(1445, 124, 'pos', '0'),
+(1449, 124, 'margin', '0 5 5 0'),
+(1450, 124, 'list_id', 'boolean'),
+(1798, 123, 'collapsible', 'true'),
+(1460, 125, 'labelWidth', '120'),
+(1459, 125, 'fieldLabel', 'Pharmacy'),
+(1458, 125, 'pos', '0'),
+(1461, 125, 'name', 'pharmacy'),
+(1462, 125, 'margin', '0 5 5 0'),
+(1463, 125, 'list_id', 'boolean'),
+(1472, 126, 'name', 'hipaa_notice'),
+(1471, 126, 'labelWidth', '120'),
+(1470, 126, 'fieldLabel', 'HIPAA Notice'),
+(1469, 126, 'pos', '0'),
+(1473, 126, 'margin', '0 5 5 0'),
+(1474, 126, 'list_id', 'boolean'),
+(1481, 127, 'labelWidth', '120'),
+(1480, 127, 'fieldLabel', 'Leave Message With'),
+(1479, 127, 'pos', '0'),
+(1482, 127, 'name', 'leave_msg'),
+(1483, 127, 'width', '350'),
+(1484, 127, 'margin', '0 5 5 0'),
+(1485, 128, 'fieldLabel', 'Allow line 1'),
+(1486, 128, 'hideLabel', 'true'),
+(1487, 128, 'layout', 'hbox'),
+(1511, 129, 'labelWidth', '120'),
+(1510, 129, 'fieldLabel', 'Allow Voice Msg'),
+(1509, 129, 'pos', '0'),
+(1515, 130, 'fieldLabel', 'Allow Mail Msg'),
+(1514, 130, 'pos', '0'),
+(1495, 131, 'fieldLabel', 'Allow line 2'),
+(1496, 131, 'hideLabel', 'true'),
+(1497, 131, 'layout', 'hbox'),
+(1521, 132, 'name', 'allow_sms'),
+(1520, 132, 'labelWidth', '120'),
+(1519, 132, 'fieldLabel', 'Allow SMS'),
+(1518, 132, 'pos', '0'),
+(1506, 133, 'fieldLabel', 'Allow Email'),
+(1507, 133, 'name', 'allow_email'),
+(1508, 133, 'margin', '0 5 0 0'),
+(1512, 129, 'name', 'allow_voice_msg'),
+(1513, 129, 'margin', '0 5 0 0'),
+(1516, 130, 'name', 'allow_mail_msg'),
+(1517, 130, 'margin', '0 5 0 0'),
+(1522, 132, 'margin', '0 5 0 0'),
+(1540, 134, 'margin', '0 5 0 0'),
+(1539, 134, 'name', 'allow_immunization_registry'),
+(1538, 134, 'labelWidth', '190'),
+(1537, 134, 'fieldLabel', 'Allow Immunization Registry Use'),
+(1536, 134, 'pos', '0'),
+(1541, 135, 'fieldLabel', 'Allow Immunization Info Sharing'),
+(1542, 135, 'labelWidth', '190'),
+(1543, 135, 'name', 'allow_immunization_info_sharing'),
+(1544, 135, 'margin', '0 5 0 0'),
+(1567, 136, 'margin', '0 5 0 0'),
+(1566, 136, 'name', 'allow_health_info_exchange'),
+(1565, 136, 'labelWidth', '200'),
+(1564, 136, 'fieldLabel', 'Allow Health Information Exchange'),
+(1563, 136, 'pos', '0'),
+(1579, 137, 'name', 'allow_patient_web_portal'),
+(1580, 137, 'margin', '0 5 0 0'),
+(1578, 137, 'labelWidth', '200'),
+(1577, 137, 'fieldLabel', 'Allow Patient Web Portal'),
+(1576, 137, 'pos', '40'),
+(1796, 123, 'pos', '30'),
+(1801, 138, 'title', 'Employer'),
+(1613, 139, 'margin', '0 5 5 0'),
+(1612, 139, 'width', '350'),
+(1611, 139, 'name', 'occupation'),
+(1610, 139, 'labelWidth', '120'),
+(1609, 139, 'fieldLabel', 'Occupation'),
+(1608, 139, 'pos', '0'),
+(1617, 140, 'name', 'employer_name'),
+(1616, 140, 'labelWidth', '120'),
+(1615, 140, 'fieldLabel', 'Employer Name'),
+(1614, 140, 'pos', '0'),
+(1618, 140, 'width', '350'),
+(1619, 140, 'margin', '0 5 5 0'),
+(1750, 141, 'margin', '0 5 5 0'),
+(1748, 141, 'name', 'employer_address'),
+(1749, 141, 'width', '520'),
+(1746, 141, 'fieldLabel', 'Employer Address'),
+(1747, 141, 'labelWidth', '120'),
+(1745, 141, 'pos', '0'),
+(1677, 142, 'layout', 'hbox'),
+(1676, 142, 'hideLabel', 'true'),
+(1675, 142, 'fieldLabel', 'Address Cont'),
+(1710, 143, 'name', 'employer_city'),
+(1709, 143, 'emptyText', 'City'),
+(1708, 143, 'hideLabel', 'true'),
+(1707, 143, 'fieldLabel', 'City'),
+(1718, 144, 'width', '130'),
+(1719, 144, 'margin', '0 5 5 0'),
+(1717, 144, 'name', 'employer_state'),
+(1716, 144, 'emptyText', 'State'),
+(1674, 142, 'pos', '0'),
+(1715, 144, 'hideLabel', 'true'),
+(1726, 145, 'width', '70'),
+(1727, 145, 'margin', '0 5 5 0'),
+(1725, 145, 'name', 'employer_country'),
+(1723, 145, 'hideLabel', 'true'),
+(1678, 142, 'margin', '0 0 0 125'),
+(1706, 143, 'pos', '0'),
+(1714, 144, 'fieldLabel', 'State'),
+(1713, 144, 'pos', '0'),
+(1724, 145, 'emptyText', 'Country'),
+(1722, 145, 'fieldLabel', 'Country'),
+(1721, 145, 'pos', '0'),
+(1711, 143, 'width', '80'),
+(1712, 143, 'margin', '0 5 5 0'),
+(1720, 144, 'list_id', 'state'),
+(1728, 145, 'list_id', 'country'),
+(1770, 146, 'width', '85'),
+(1771, 146, 'margin', '0 5 5 0'),
+(1769, 146, 'name', 'employer_postal_code'),
+(1768, 146, 'emptyText', 'Postal Code'),
+(1767, 146, 'hideLabel', 'true'),
+(1766, 146, 'fieldLabel', 'Postal Code'),
+(1765, 146, 'pos', '0'),
+(1800, 138, 'pos', '40'),
+(1794, 108, 'collapsible', 'true'),
+(1804, 95, 'pos', '10'),
+(1795, 108, 'collapsed', 'true'),
+(1799, 123, 'collapsed', 'true'),
+(1803, 138, 'collapsed', 'true');
+
+DROP TABLE IF EXISTS `forms_layout`;
+CREATE TABLE IF NOT EXISTS `forms_layout` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL COMMENT 'form title',
+  `form_data` varchar(255) NOT NULL COMMENT 'database table saving all the data for this form',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+INSERT INTO `forms_layout` (`id`, `name`, `form_data`) VALUES
+(1, 'Demographics', 'form_data_demographics'),
+(2, 'Referrals', 'form_data_referrals'),
+(3, 'History', 'form_data_history');
+
+DROP TABLE IF EXISTS `form_data_demographics`;
+CREATE TABLE IF NOT EXISTS `form_data_demographics` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) NOT NULL COMMENT 'Patient ID',
+  `date_created` date NOT NULL COMMENT 'date form saved for the first time',
+  `title` varchar(255) DEFAULT NULL,
+  `fname` varchar(255) DEFAULT NULL,
+  `mname` varchar(255) DEFAULT NULL,
+  `lname` varchar(255) DEFAULT NULL,
+  `sex` varchar(255) DEFAULT NULL,
+  `DOB` varchar(255) DEFAULT NULL,
+  `marital_status` varchar(255) DEFAULT NULL,
+  `SS` varchar(255) DEFAULT NULL,
+  `pubpid` varchar(255) DEFAULT NULL,
+  `drivers_license` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `home_phone` varchar(255) DEFAULT NULL,
+  `mobile_phone` varchar(255) DEFAULT NULL,
+  `work_phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `mothers_name` varchar(255) DEFAULT NULL,
+  `guardians_name` varchar(255) DEFAULT NULL,
+  `emer_contact` varchar(255) DEFAULT NULL,
+  `emer_phone` varchar(255) DEFAULT NULL,
+  `provider` varchar(255) DEFAULT NULL,
+  `pharmacy` varchar(255) DEFAULT NULL,
+  `hipaa_notice` varchar(255) DEFAULT NULL,
+  `allow_leave_msg` varchar(255) DEFAULT NULL,
+  `allow_voice_msg` varchar(255) DEFAULT NULL,
+  `allow_mail_msg` varchar(255) DEFAULT NULL,
+  `allow_sms` varchar(255) DEFAULT NULL,
+  `allow_email` varchar(255) DEFAULT NULL,
+  `allow_immunization_registry` varchar(255) DEFAULT NULL,
+  `allow_immunization_info_sharing` varchar(255) DEFAULT NULL,
+  `allow_health_info_exchange` varchar(255) DEFAULT NULL,
+  `allow_patient_web_portal` varchar(255) DEFAULT NULL,
+  `occupation` varchar(255) DEFAULT NULL,
+  `employer_name` varchar(255) DEFAULT NULL,
+  `employer_address` varchar(255) DEFAULT NULL,
+  `employer_city` varchar(255) DEFAULT NULL,
+  `employer_state` varchar(255) DEFAULT NULL,
+  `employer_country` varchar(255) DEFAULT NULL,
+  `employer_postal_code` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Table holds all the Demographics form data for all the patie' AUTO_INCREMENT=2 ;
+
+DROP TABLE IF EXISTS `form_data_history`;
+CREATE TABLE IF NOT EXISTS `form_data_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) NOT NULL COMMENT 'Patient ID',
+  `date_created` date NOT NULL COMMENT 'date form saved for the first time',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table holds all the History data for all the patients' AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `form_data_referrals`;
+CREATE TABLE IF NOT EXISTS `form_data_referrals` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) NOT NULL COMMENT 'Patient ID',
+  `date_created` date NOT NULL COMMENT 'date form saved for the first time',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table holds all the Referrals form data for all the patients' AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `form_dictation`;
 CREATE TABLE IF NOT EXISTS `form_dictation` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -624,7 +1115,7 @@ CREATE TABLE IF NOT EXISTS `form_dictation` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `form_encounter`;
 CREATE TABLE IF NOT EXISTS `form_encounter` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -649,7 +1140,7 @@ CREATE TABLE IF NOT EXISTS `form_encounter` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `form_misc_billing_options`;
 CREATE TABLE IF NOT EXISTS `form_misc_billing_options` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -678,7 +1169,7 @@ CREATE TABLE IF NOT EXISTS `form_misc_billing_options` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `form_reviewofs`;
 CREATE TABLE IF NOT EXISTS `form_reviewofs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -798,7 +1289,7 @@ CREATE TABLE IF NOT EXISTS `form_reviewofs` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `form_ros`;
 CREATE TABLE IF NOT EXISTS `form_ros` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
@@ -945,6 +1436,7 @@ CREATE TABLE IF NOT EXISTS `form_ros` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `form_soap`;
 CREATE TABLE IF NOT EXISTS `form_soap` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -960,7 +1452,7 @@ CREATE TABLE IF NOT EXISTS `form_soap` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `form_vitals`;
 CREATE TABLE IF NOT EXISTS `form_vitals` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -986,7 +1478,7 @@ CREATE TABLE IF NOT EXISTS `form_vitals` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `geo_country_reference`;
 CREATE TABLE IF NOT EXISTS `geo_country_reference` (
   `countries_id` int(5) NOT NULL AUTO_INCREMENT,
   `countries_name` varchar(64) DEFAULT NULL,
@@ -995,7 +1487,6 @@ CREATE TABLE IF NOT EXISTS `geo_country_reference` (
   PRIMARY KEY (`countries_id`),
   KEY `IDX_COUNTRIES_NAME` (`countries_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=240 ;
-
 
 INSERT INTO `geo_country_reference` (`countries_id`, `countries_name`, `countries_iso_code_2`, `countries_iso_code_3`) VALUES
 (1, 'Afghanistan', 'AF', 'AFG'),
@@ -1238,7 +1729,7 @@ INSERT INTO `geo_country_reference` (`countries_id`, `countries_name`, `countrie
 (238, 'Zambia', 'ZM', 'ZMB'),
 (239, 'Zimbabwe', 'ZW', 'ZWE');
 
-
+DROP TABLE IF EXISTS `geo_zone_reference`;
 CREATE TABLE IF NOT EXISTS `geo_zone_reference` (
   `zone_id` int(5) NOT NULL AUTO_INCREMENT,
   `zone_country_id` int(5) NOT NULL DEFAULT '0',
@@ -1246,7 +1737,6 @@ CREATE TABLE IF NOT EXISTS `geo_zone_reference` (
   `zone_name` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`zone_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=83 ;
-
 
 INSERT INTO `geo_zone_reference` (`zone_id`, `zone_country_id`, `zone_code`, `zone_name`) VALUES
 (1, 223, 'AL', 'Alabama'),
@@ -1332,7 +1822,7 @@ INSERT INTO `geo_zone_reference` (`zone_id`, `zone_country_id`, `zone_code`, `zo
 (81, 61, 'ACT', 'Australian Capital Territory'),
 (82, 61, 'VIC', 'Victoria');
 
-
+DROP TABLE IF EXISTS `globals`;
 CREATE TABLE IF NOT EXISTS `globals` (
   `gl_name` varchar(63) NOT NULL,
   `gl_index` int(11) NOT NULL DEFAULT '0',
@@ -1340,19 +1830,18 @@ CREATE TABLE IF NOT EXISTS `globals` (
   PRIMARY KEY (`gl_name`,`gl_index`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
-('default_top_pane', 0, 'app/calendar/calendar.ejs.php'),
+('default_top_pane', 0, 'app/dashboard/dashboard.ejs.php'),
 ('concurrent_layout', 0, 'west'),
 ('css_header', 0, 'ext-all-gray.css'),
 ('gbl_nav_area_width', 0, '200'),
-('mitosehr_name', 0, 'MitosEHR :: Open Source'),
+('mitosehr_name', 0, 'MitosEHR :: DEMO'),
 ('full_new_patient_form', 0, '1'),
 ('patient_search_results_style', 0, '0'),
-('simplified_demographics', 0, 'on'),
-('simplified_prescriptions', 0, ''),
-('simplified_copay', 0, ''),
-('use_charges_panel', 0, ''),
+('simplified_demographics', 0, 'off'),
+('simplified_prescriptions', 0, 'off'),
+('simplified_copay', 0, 'off'),
+('use_charges_panel', 0, 'off'),
 ('online_support_link', 0, 'http://mitosehr.org/projects/mitosehr001'),
 ('language_default', 0, ''),
 ('language_menu_showall', 0, 'on'),
@@ -1365,7 +1854,7 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('units_of_measurement', 0, '1'),
 ('disable_deprecated_metrics_form', 0, 'on'),
 ('phone_country_code', 0, '1'),
-('date_display_format', 0, ''),
+('date_display_format', 0, 'Array'),
 ('currency_decimals', 0, '2'),
 ('currency_dec_point', 0, '.'),
 ('currency_thousands_sep', 0, ','),
@@ -1374,24 +1863,24 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('inhouse_pharmacy', 0, ''),
 ('disable_chart_tracker', 0, ''),
 ('disable_phpmyadmin_link', 0, ''),
-('disable_immunizations', 0, ''),
-('disable_prescriptions', 0, ''),
-('omit_employers', 0, ''),
-('select_multi_providers', 0, ''),
+('disable_immunizations', 0, 'off'),
+('disable_prescriptions', 0, 'off'),
+('omit_employers', 0, 'off'),
+('select_multi_providers', 0, 'off'),
 ('disable_non_default_groups', 0, 'on'),
 ('ignore_pnotes_authorization', 0, 'on'),
-('support_encounter_claims', 0, ''),
-('advance_directives_warning', 0, ''),
-('configuration_import_export', 0, ''),
-('restrict_user_facility', 0, ''),
-('set_facility_cookie', 0, ''),
+('support_encounter_claims', 0, 'off'),
+('advance_directives_warning', 0, 'off'),
+('configuration_import_export', 0, 'off'),
+('restrict_user_facility', 0, 'off'),
+('set_facility_cookie', 0, 'off'),
 ('discount_by_money', 0, 'on'),
-('gbl_visit_referral_source', 0, ''),
+('gbl_visit_referral_source', 0, 'off'),
 ('gbl_mask_patient_id', 0, ''),
 ('gbl_mask_invoice_number', 0, ''),
 ('gbl_mask_product_id', 0, ''),
-('force_billing_widget_open', 0, ''),
-('activate_ccr_ccd_report', 0, ''),
+('force_billing_widget_open', 0, 'off'),
+('activate_ccr_ccd_report', 0, 'off'),
 ('disable_calendar', 0, ''),
 ('schedule_start', 0, ''),
 ('schedule_end', 0, ''),
@@ -1401,10 +1890,10 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('auto_create_new_encounters', 0, ''),
 ('timeout', 0, '7200'),
 ('secure_password', 0, 'on'),
-('password_history', 0, ''),
+('password_history', 0, 'off'),
 ('password_expiration_days', 0, '0'),
 ('password_grace_time', 0, '0'),
-('is_client_ssl_enabled', 0, ''),
+('is_client_ssl_enabled', 0, 'off'),
 ('certificate_authority_crt', 0, ''),
 ('certificate_authority_key', 0, ''),
 ('client_certificate_valid_in_days', 0, '365'),
@@ -1427,8 +1916,8 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('audit_events_security-administration', 0, ''),
 ('audit_events_backup', 0, 'on'),
 ('audit_events_other', 0, 'on'),
-('audit_events_query', 0, ''),
-('enable_atna_audit', 0, ''),
+('audit_events_query', 0, 'off'),
+('enable_atna_audit', 0, 'off'),
 ('atna_audit_host', 0, ''),
 ('atna_audit_port', 0, '6514'),
 ('atna_audit_localcert', 0, ''),
@@ -1447,17 +1936,17 @@ INSERT INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('default_new_encounter_form', 0, ''),
 ('patient_id_category_name', 0, 'Patient ID card'),
 ('patient_photo_category_name', 0, 'Patient Photograph'),
-('MedicareReferrerIsRenderer', 0, ''),
+('MedicareReferrerIsRenderer', 0, 'off'),
 ('post_to_date_benchmark', 0, '2011-01-13'),
-('enable_hylafax', 0, ''),
+('enable_hylafax', 0, 'off'),
 ('hylafax_server', 0, 'localhost'),
 ('hylafax_basedir', 0, '/var/spool/fax'),
 ('hylafax_enscript', 0, 'enscript -M Letter -B -e^ --margins=36:36:36:36'),
-('enable_scanner', 0, ''),
+('enable_scanner', 0, 'off'),
 ('scanner_output_directory', 0, '/mnt/scan_docs'),
-('fullname', 0, '0');
+('fullname', 0, '1');
 
-
+DROP TABLE IF EXISTS `gprelations`;
 CREATE TABLE IF NOT EXISTS `gprelations` (
   `type1` int(2) NOT NULL,
   `id1` bigint(20) NOT NULL,
@@ -1467,7 +1956,7 @@ CREATE TABLE IF NOT EXISTS `gprelations` (
   KEY `key2` (`type2`,`id2`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='general purpose relations';
 
-
+DROP TABLE IF EXISTS `groups`;
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` longtext,
@@ -1475,14 +1964,12 @@ CREATE TABLE IF NOT EXISTS `groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
-
 INSERT INTO `groups` (`id`, `name`, `user`) VALUES
 (1, 'Default', 'admin'),
 (2, 'Default', 'ernesto'),
 (3, 'Default', 'vela1606');
 
-
-
+DROP TABLE IF EXISTS `history_data`;
 CREATE TABLE IF NOT EXISTS `history_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `coffee` longtext,
@@ -1572,12 +2059,11 @@ CREATE TABLE IF NOT EXISTS `history_data` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-
 INSERT INTO `history_data` (`id`, `coffee`, `tobacco`, `alcohol`, `sleep_patterns`, `exercise_patterns`, `seatbelt_use`, `counseling`, `hazardous_activities`, `recreational_drugs`, `last_breast_exam`, `last_mammogram`, `last_gynocological_exam`, `last_rectal_exam`, `last_prostate_exam`, `last_physical_exam`, `last_sigmoidoscopy_colonoscopy`, `last_ecg`, `last_cardiac_echo`, `last_retinal`, `last_fluvax`, `last_pneuvax`, `last_ldl`, `last_hemoglobin`, `last_psa`, `last_exam_results`, `history_mother`, `history_father`, `history_siblings`, `history_offspring`, `history_spouse`, `relatives_cancer`, `relatives_tuberculosis`, `relatives_diabetes`, `relatives_high_blood_pressure`, `relatives_heart_problems`, `relatives_stroke`, `relatives_epilepsy`, `relatives_mental_illness`, `relatives_suicide`, `cataract_surgery`, `tonsillectomy`, `cholecystestomy`, `heart_surgery`, `hysterectomy`, `hernia_repair`, `hip_replacement`, `knee_replacement`, `appendectomy`, `date`, `pid`, `name_1`, `value_1`, `name_2`, `value_2`, `additional_history`, `exams`, `usertext11`, `usertext12`, `usertext13`, `usertext14`, `usertext15`, `usertext16`, `usertext17`, `usertext18`, `usertext19`, `usertext20`, `usertext21`, `usertext22`, `usertext23`, `usertext24`, `usertext25`, `usertext26`, `usertext27`, `usertext28`, `usertext29`, `usertext30`, `userdate11`, `userdate12`, `userdate13`, `userdate14`, `userdate15`, `userarea11`, `userarea12`) VALUES
 (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-01-23 18:13:42', 1, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', ''),
 (2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-01-23 18:15:01', 2, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '');
 
-
+DROP TABLE IF EXISTS `immunizations`;
 CREATE TABLE IF NOT EXISTS `immunizations` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) DEFAULT NULL,
@@ -1597,7 +2083,7 @@ CREATE TABLE IF NOT EXISTS `immunizations` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `insurance_companies`;
 CREATE TABLE IF NOT EXISTS `insurance_companies` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -1610,11 +2096,10 @@ CREATE TABLE IF NOT EXISTS `insurance_companies` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `insurance_companies` (`id`, `name`, `attn`, `cms_id`, `freeb_type`, `x12_receiver_id`, `x12_default_partner_id`, `alt_cms_id`) VALUES
-(2, 'SSS', '', '123456', 0, '', 0, '');
+(7, 'Orlando', '', '232323', 13, '', 0, '');
 
-
+DROP TABLE IF EXISTS `insurance_data`;
 CREATE TABLE IF NOT EXISTS `insurance_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` enum('primary','secondary','tertiary') DEFAULT NULL,
@@ -1649,7 +2134,6 @@ CREATE TABLE IF NOT EXISTS `insurance_data` (
   UNIQUE KEY `pid_type_date` (`pid`,`type`,`date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
-
 INSERT INTO `insurance_data` (`id`, `type`, `provider`, `plan_name`, `policy_number`, `group_number`, `subscriber_lname`, `subscriber_mname`, `subscriber_fname`, `subscriber_relationship`, `subscriber_ss`, `subscriber_DOB`, `subscriber_street`, `subscriber_postal_code`, `subscriber_city`, `subscriber_state`, `subscriber_country`, `subscriber_phone`, `subscriber_employer`, `subscriber_employer_street`, `subscriber_employer_postal_code`, `subscriber_employer_state`, `subscriber_employer_country`, `subscriber_employer_city`, `copay`, `date`, `pid`, `subscriber_sex`, `accept_assignment`) VALUES
 (1, 'primary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 1, '', 'TRUE'),
 (2, 'secondary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 1, '', 'TRUE'),
@@ -1658,7 +2142,7 @@ INSERT INTO `insurance_data` (`id`, `type`, `provider`, `plan_name`, `policy_num
 (5, 'secondary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 2, '', 'TRUE'),
 (6, 'tertiary', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 2, '', 'TRUE');
 
-
+DROP TABLE IF EXISTS `insurance_numbers`;
 CREATE TABLE IF NOT EXISTS `insurance_numbers` (
   `id` int(11) NOT NULL DEFAULT '0',
   `provider_id` int(11) NOT NULL DEFAULT '0',
@@ -1671,7 +2155,7 @@ CREATE TABLE IF NOT EXISTS `insurance_numbers` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `integration_mapping`;
 CREATE TABLE IF NOT EXISTS `integration_mapping` (
   `id` int(11) NOT NULL DEFAULT '0',
   `foreign_id` int(11) NOT NULL DEFAULT '0',
@@ -1682,7 +2166,7 @@ CREATE TABLE IF NOT EXISTS `integration_mapping` (
   UNIQUE KEY `foreign_id` (`foreign_id`,`foreign_table`,`local_id`,`local_table`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `issue_encounter`;
 CREATE TABLE IF NOT EXISTS `issue_encounter` (
   `pid` int(11) NOT NULL,
   `list_id` int(11) NOT NULL,
@@ -1691,7 +2175,7 @@ CREATE TABLE IF NOT EXISTS `issue_encounter` (
   PRIMARY KEY (`pid`,`list_id`,`encounter`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `lang_constants`;
 CREATE TABLE IF NOT EXISTS `lang_constants` (
   `cons_id` int(11) NOT NULL AUTO_INCREMENT,
   `constant_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
@@ -1700,7 +2184,7 @@ CREATE TABLE IF NOT EXISTS `lang_constants` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4369 ;
 
 
-
+DROP TABLE IF EXISTS `lang_custom`;
 CREATE TABLE IF NOT EXISTS `lang_custom` (
   `lang_description` varchar(100) NOT NULL DEFAULT '',
   `lang_code` char(2) NOT NULL DEFAULT '',
@@ -1708,7 +2192,7 @@ CREATE TABLE IF NOT EXISTS `lang_custom` (
   `definition` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `lang_definitions`;
 CREATE TABLE IF NOT EXISTS `lang_definitions` (
   `def_id` int(11) NOT NULL AUTO_INCREMENT,
   `cons_id` int(11) NOT NULL DEFAULT '0',
@@ -1720,13 +2204,13 @@ CREATE TABLE IF NOT EXISTS `lang_definitions` (
 
 
 
+DROP TABLE IF EXISTS `lang_languages`;
 CREATE TABLE IF NOT EXISTS `lang_languages` (
   `lang_id` int(11) NOT NULL AUTO_INCREMENT,
   `lang_code` char(2) NOT NULL DEFAULT '',
   `lang_description` varchar(100) DEFAULT NULL,
   UNIQUE KEY `lang_id` (`lang_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
-
 
 INSERT INTO `lang_languages` (`lang_id`, `lang_code`, `lang_description`) VALUES
 (1, 'en', 'English (Standard)'),
@@ -1752,7 +2236,7 @@ INSERT INTO `lang_languages` (`lang_id`, `lang_code`, `lang_description`) VALUES
 (21, 'tr', 'Turkish'),
 (22, 'dd', 'dummy');
 
-
+DROP TABLE IF EXISTS `layout_options`;
 CREATE TABLE IF NOT EXISTS `layout_options` (
   `item_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `form_id` varchar(31) NOT NULL DEFAULT '',
@@ -1772,9 +2256,7 @@ CREATE TABLE IF NOT EXISTS `layout_options` (
   `description` text,
   `group_order` int(11) DEFAULT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=129 ;
-
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=126 ;
 
 INSERT INTO `layout_options` (`item_id`, `form_id`, `field_id`, `group_name`, `title`, `seq`, `data_type`, `uor`, `fld_length`, `max_length`, `list_id`, `titlecols`, `datacols`, `default_value`, `edit_options`, `description`, `group_order`) VALUES
 (1, 'Demographics', 'title', 'Who', 'Name', 1, 1, 1, 0, 0, 'titles', 1, 1, '', 'N', 'Title', 1),
@@ -1903,6 +2385,7 @@ INSERT INTO `layout_options` (`item_id`, `form_id`, `field_id`, `group_name`, `t
 (124, 'History', 'userarea11', 'Other', 'User Defined Area 11', 6, 3, 0, 30, 3, '', 1, 3, '', '', 'User Defined', 5),
 (125, 'History', 'userarea12', 'Other', 'User Defined Area 12', 7, 3, 0, 30, 3, '', 1, 3, '', '', 'User Defined', 5);
 
+DROP TABLE IF EXISTS `lbf_data`;
 CREATE TABLE IF NOT EXISTS `lbf_data` (
   `form_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'references forms.form_id',
   `field_id` varchar(31) NOT NULL COMMENT 'references layout_options.field_id',
@@ -1910,6 +2393,7 @@ CREATE TABLE IF NOT EXISTS `lbf_data` (
   PRIMARY KEY (`form_id`,`field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='contains all data from layout-based forms' AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `lists`;
 CREATE TABLE IF NOT EXISTS `lists` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -1938,6 +2422,7 @@ CREATE TABLE IF NOT EXISTS `lists` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `list_options`;
 CREATE TABLE IF NOT EXISTS `list_options` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `list_id` varchar(31) NOT NULL DEFAULT '',
@@ -1949,8 +2434,7 @@ CREATE TABLE IF NOT EXISTS `list_options` (
   `mapping` varchar(31) NOT NULL DEFAULT '',
   `notes` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`,`list_id`,`option_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=548 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=541 ;
 
 INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`) VALUES
 (1, 'yesno', 'NO', 'NO', 1, 0, 0, '', ''),
@@ -2176,7 +2660,7 @@ INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_de
 (221, 'drug_route', '13', 'Both Ears', 13, 0, 0, '', ''),
 (222, 'drug_route', '14', 'Left Ear', 14, 0, 0, '', ''),
 (223, 'drug_route', '15', 'Right Ear', 15, 0, 0, '', ''),
-(543, '', 'family', 'Family', 0, 0, 0, '', ''),
+(224, 'drug_interval', '0', '', 0, 0, 0, '', ''),
 (225, 'drug_interval', '1', 'b.i.d.', 1, 0, 0, '', ''),
 (226, 'drug_interval', '2', 't.i.d.', 2, 0, 0, '', ''),
 (227, 'drug_interval', '3', 'q.i.d.', 3, 0, 0, '', ''),
@@ -2492,13 +2976,9 @@ INSERT INTO `list_options` (`id`, `list_id`, `option_id`, `title`, `seq`, `is_de
 (537, 'lists', 'payment_date', 'Payment Date', 1, 0, 0, '', ''),
 (538, 'payment_date', 'date_val', 'Date', 10, 0, 0, '', ''),
 (539, 'payment_date', 'post_to_date', 'Post To Date', 20, 0, 0, '', ''),
-(540, 'payment_date', 'deposit_date', 'Deposit Date', 30, 0, 0, '', ''),
-(542, '', 'famali', 'Family', 0, 0, 0, '', ''),
-(544, '', 'fam', 'familiy', 0, 0, 0, '', ''),
-(545, '', 'famili', 'Family', 0, 0, 0, '', ''),
-(546, 'pricelevel', 'family', 'Family', 2, 0, 0, '', ''),
-(547, 'taxrate', 'ivu', 'IVU', 0, 0, 0, '', '');
+(540, 'payment_date', 'deposit_date', 'Deposit Date', 30, 0, 0, '', '');
 
+DROP TABLE IF EXISTS `log`;
 CREATE TABLE IF NOT EXISTS `log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -2512,8 +2992,10 @@ CREATE TABLE IF NOT EXISTS `log` (
   `checksum` longtext,
   `crt_user` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15858 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8197 ;
 
+
+DROP TABLE IF EXISTS `notes`;
 CREATE TABLE IF NOT EXISTS `notes` (
   `id` int(11) NOT NULL DEFAULT '0',
   `foreign_id` int(11) NOT NULL DEFAULT '0',
@@ -2527,7 +3009,7 @@ CREATE TABLE IF NOT EXISTS `notes` (
   KEY `date` (`date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `notification_log`;
 CREATE TABLE IF NOT EXISTS `notification_log` (
   `iLogId` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(7) NOT NULL,
@@ -2547,7 +3029,7 @@ CREATE TABLE IF NOT EXISTS `notification_log` (
   PRIMARY KEY (`iLogId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `notification_settings`;
 CREATE TABLE IF NOT EXISTS `notification_settings` (
   `SettingsId` int(3) NOT NULL AUTO_INCREMENT,
   `Send_SMS_Before_Hours` int(3) NOT NULL,
@@ -2559,11 +3041,10 @@ CREATE TABLE IF NOT EXISTS `notification_settings` (
   PRIMARY KEY (`SettingsId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-
 INSERT INTO `notification_settings` (`SettingsId`, `Send_SMS_Before_Hours`, `Send_Email_Before_Hours`, `SMS_gateway_username`, `SMS_gateway_password`, `SMS_gateway_apikey`, `type`) VALUES
 (1, 150, 150, 'sms username', 'sms password', 'sms api key', 'SMS/Email Settings');
 
-
+DROP TABLE IF EXISTS `onotes`;
 CREATE TABLE IF NOT EXISTS `onotes` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -2572,9 +3053,16 @@ CREATE TABLE IF NOT EXISTS `onotes` (
   `groupname` varchar(255) DEFAULT NULL,
   `activity` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
+INSERT INTO `onotes` (`id`, `date`, `body`, `user`, `groupname`, `activity`) VALUES
+(18, '0000-00-00 00:00:00', 'fvsdfvdssgsds', 'Mr. Admin, Demo Demo', '', 1),
+(16, '0000-00-00 00:00:00', 'DahsBoard is running! Woot!!', 'Mr. Admin, Demo Demo', '', 1),
+(15, '2011-05-29 20:25:17', 'MitosEHR (Electronic Health Records) is a Open source Web-Based Software', 'Mr. Admin, Demo Demo', '', 1),
+(14, '2011-05-29 20:24:15', 'Welcome to MitosEHR...', 'Mr. Admin, Demo Demo', '', 1),
+(17, '0000-00-00 00:00:00', 'Android text! an de hello', 'Mr. Admin, Demo Demo', '', 0);
 
+DROP TABLE IF EXISTS `openemr_modules`;
 CREATE TABLE IF NOT EXISTS `openemr_modules` (
   `pn_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pn_name` varchar(64) DEFAULT NULL,
@@ -2593,8 +3081,7 @@ CREATE TABLE IF NOT EXISTS `openemr_modules` (
 INSERT INTO `openemr_modules` (`pn_id`, `pn_name`, `pn_type`, `pn_displayname`, `pn_description`, `pn_regid`, `pn_directory`, `pn_version`, `pn_admin_capable`, `pn_user_capable`, `pn_state`) VALUES
 (46, 'PostCalendar', 2, 'PostCalendar', 'PostNuke Calendar Module', 0, 'PostCalendar', '4.0.0', 1, 1, 3);
 
-
-
+DROP TABLE IF EXISTS `openemr_module_vars`;
 CREATE TABLE IF NOT EXISTS `openemr_module_vars` (
   `pn_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `pn_modname` varchar(64) DEFAULT NULL,
@@ -2604,7 +3091,6 @@ CREATE TABLE IF NOT EXISTS `openemr_module_vars` (
   KEY `pn_modname` (`pn_modname`),
   KEY `pn_name` (`pn_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=235 ;
-
 
 INSERT INTO `openemr_module_vars` (`pn_id`, `pn_modname`, `pn_name`, `pn_value`) VALUES
 (234, 'PostCalendar', 'pcNotifyEmail', ''),
@@ -2627,28 +3113,7 @@ INSERT INTO `openemr_module_vars` (`pn_id`, `pn_modname`, `pn_name`, `pn_value`)
 (217, 'PostCalendar', 'pcEventsOpenInNewWindow', '0'),
 (216, 'PostCalendar', 'pcTime24Hours', '0');
 
-
-CREATE TABLE IF NOT EXISTS `openemr_postcalendar_categories` (
-  `pc_catid` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `pc_catname` varchar(100) DEFAULT NULL,
-  `pc_catcolor` varchar(50) DEFAULT NULL,
-  `pc_catdesc` text,
-  `pc_recurrtype` int(1) NOT NULL DEFAULT '0',
-  `pc_enddate` date DEFAULT NULL,
-  `pc_recurrspec` text,
-  `pc_recurrfreq` int(3) NOT NULL DEFAULT '0',
-  `pc_duration` bigint(20) NOT NULL DEFAULT '0',
-  `pc_end_date_flag` tinyint(1) NOT NULL DEFAULT '0',
-  `pc_end_date_type` int(2) DEFAULT NULL,
-  `pc_end_date_freq` int(11) NOT NULL DEFAULT '0',
-  `pc_end_all_day` tinyint(1) NOT NULL DEFAULT '0',
-  `pc_dailylimit` int(2) NOT NULL DEFAULT '0',
-  `pc_cattype` int(11) NOT NULL COMMENT 'Used in grouping categories',
-  PRIMARY KEY (`pc_catid`),
-  KEY `basic_cat` (`pc_catname`,`pc_catcolor`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
-
-
+DROP TABLE IF EXISTS `openemr_session_info`;
 CREATE TABLE IF NOT EXISTS `openemr_session_info` (
   `pn_sessid` varchar(32) NOT NULL DEFAULT '',
   `pn_ipaddr` varchar(20) DEFAULT NULL,
@@ -2658,7 +3123,6 @@ CREATE TABLE IF NOT EXISTS `openemr_session_info` (
   `pn_vars` blob,
   PRIMARY KEY (`pn_sessid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 INSERT INTO `openemr_session_info` (`pn_sessid`, `pn_ipaddr`, `pn_firstused`, `pn_lastused`, `pn_uid`, `pn_vars`) VALUES
 ('978d31441dccd350d406bfab98978f20', '127.0.0.1', 1109233952, 1109234177, 0, NULL),
@@ -2672,7 +3136,7 @@ INSERT INTO `openemr_session_info` (`pn_sessid`, `pn_ipaddr`, `pn_firstused`, `p
 ('b4aef8b062fe73a2c599ca8998297918', '::1', 1297985756, 1297985756, 0, NULL),
 ('e71415a75d0c8fde355e7d44712af648', '::1', 1298152068, 1298157864, 0, NULL);
 
-
+DROP TABLE IF EXISTS `patient_data`;
 CREATE TABLE IF NOT EXISTS `patient_data` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
@@ -2757,7 +3221,6 @@ CREATE TABLE IF NOT EXISTS `patient_data` (
   KEY `id` (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
-
 INSERT INTO `patient_data` (`id`, `title`, `language`, `financial`, `fname`, `lname`, `mname`, `DOB`, `street`, `postal_code`, `city`, `state`, `country_code`, `drivers_license`, `ss`, `occupation`, `phone_home`, `phone_biz`, `phone_contact`, `phone_cell`, `pharmacy_id`, `status`, `contact_relationship`, `date`, `sex`, `referrer`, `referrerID`, `providerID`, `email`, `ethnoracial`, `race`, `ethnicity`, `interpretter`, `migrantseasonal`, `family_size`, `monthly_income`, `homeless`, `financial_review`, `pubpid`, `pid`, `genericname1`, `genericval1`, `genericname2`, `genericval2`, `hipaa_mail`, `hipaa_voice`, `hipaa_notice`, `hipaa_message`, `hipaa_allowsms`, `hipaa_allowemail`, `squad`, `fitness`, `referral_source`, `usertext1`, `usertext2`, `usertext3`, `usertext4`, `usertext5`, `usertext6`, `usertext7`, `usertext8`, `userlist1`, `userlist2`, `userlist3`, `userlist4`, `userlist5`, `userlist6`, `userlist7`, `pricelevel`, `regdate`, `contrastart`, `completed_ad`, `ad_reviewed`, `vfc`, `mothersname`, `guardiansname`, `allow_imm_reg_use`, `allow_imm_info_share`, `allow_health_info_ex`) VALUES
 (1, 'Mr.', '', '', 'Ulise', 'Acosta', 'U', '2011-01-02', '', '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '2011-01-23 18:13:42', 'Male', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '1', 1, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', ''),
 (2, '', '', '', 'Omarn', 'Weekasd', 'Asdwjk', '2011-01-03', '', '', '', '', '', '', '837372123', '', '', '', '', '', 0, '', '', '2011-01-23 18:15:01', 'Male', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '2', 2, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', ''),
@@ -2780,6 +3243,7 @@ INSERT INTO `patient_data` (`id`, `title`, `language`, `financial`, `fname`, `ln
 (19, 'Mr.', '', '', 'Michelle', 'Weekasd', '', '2011-01-03', '', '', '', '', '', '', '837372123', '', '', '', '', '', 0, '', '', '2011-01-23 18:15:01', 'Female', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '19', 19, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', ''),
 (20, 'Mr.', '', '', 'Nelly', 'Bartolomei', 'Marie', '2011-01-03', '', '', '', '', '', '', '837372123', '', '', '', '', '', 0, '', '', '2011-01-23 18:15:01', 'Female', '', '', 0, '', '', '', '', '', '', '', '', '', '0000-00-00 00:00:00', '20', 20, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'standard', NULL, NULL, 'NO', NULL, '', '', '', '', '', '');
 
+DROP TABLE IF EXISTS `payments`;
 CREATE TABLE IF NOT EXISTS `payments` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `pid` bigint(20) NOT NULL DEFAULT '0',
@@ -2796,6 +3260,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `pharmacies`;
 CREATE TABLE IF NOT EXISTS `pharmacies` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -2805,9 +3270,9 @@ CREATE TABLE IF NOT EXISTS `pharmacies` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `pharmacies` (`id`, `name`, `transmit_method`, `email`) VALUES
-(1, 'Farmaci Benquil', 2, 'vela@gmail.com');
+(2, 'Farmacy Demo', 2, 'user@exmaple.com');
 
-
+DROP TABLE IF EXISTS `phone_numbers`;
 CREATE TABLE IF NOT EXISTS `phone_numbers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `country_code` varchar(5) DEFAULT NULL,
@@ -2818,16 +3283,15 @@ CREATE TABLE IF NOT EXISTS `phone_numbers` (
   `foreign_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `foreign_id` (`foreign_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 INSERT INTO `phone_numbers` (`id`, `country_code`, `area_code`, `prefix`, `number`, `type`, `foreign_id`) VALUES
-(25, '', '444', '444', '4444', 5, 2),
-(24, '', '333', '333', '3333', 2, 2),
-(23, '', '222', '222', '2222', 5, 1),
-(22, '', '111', '111', '1111', 2, 1);
+(4, '+1', '777', '777', '7777', 2, 2),
+(5, '+1', '999', '999', '9999', 5, 2),
+(9, '', '111', '111', '1111', 2, 7),
+(10, '', '000', '000', '0000', 5, 7);
 
-
+DROP TABLE IF EXISTS `pma_bookmark`;
 CREATE TABLE IF NOT EXISTS `pma_bookmark` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dbase` varchar(255) DEFAULT NULL,
@@ -2837,14 +3301,13 @@ CREATE TABLE IF NOT EXISTS `pma_bookmark` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Bookmarks' AUTO_INCREMENT=10 ;
 
-
 INSERT INTO `pma_bookmark` (`id`, `dbase`, `user`, `label`, `query`) VALUES
 (2, 'openemr', 'openemr', 'Aggregate Race Statistics', 'SELECT ethnoracial as "Race/Ethnicity", count(*) as Count FROM  `patient_data` WHERE 1 group by ethnoracial'),
 (9, 'openemr', 'openemr', 'Search by Code', 'SELECT  b.code, concat(pd.fname," ", pd.lname) as "Patient Name", concat(u.fname," ", u.lname) as "Provider Name", en.reason as "Encounter Desc.", en.date\r\nFROM billing as b\r\nLEFT JOIN users AS u ON b.user = u.id\r\nLEFT JOIN patient_data as pd on b.pid = pd.pid\r\nLEFT JOIN form_encounter as en on b.encounter = en.encounter and b.pid = en.pid\r\nWHERE 1 /* and b.code like ''%[VARIABLE]%'' */ ORDER BY b.code'),
 (8, 'openemr', 'openemr', 'Count No Shows By Provider since Interval ago', 'SELECT concat( u.fname,  " ", u.lname )  AS  "Provider Name", u.id AS  "Provider ID", count(  DISTINCT ev.pc_eid )  AS  "Number of No Shows"/* , concat(DATE_FORMAT(NOW(),''%Y-%m-%d''), '' and '',DATE_FORMAT(DATE_ADD(now(), INTERVAL [VARIABLE]),''%Y-%m-%d'') ) as "Between Dates" */ FROM  `openemr_postcalendar_events`  AS ev LEFT  JOIN users AS u ON ev.pc_aid = u.id WHERE ev.pc_catid =1/* and ( ev.pc_eventDate >= DATE_SUB(now(), INTERVAL [VARIABLE]) )  */\r\nGROUP  BY u.id;'),
 (6, 'openemr', 'openemr', 'Appointments By Race/Ethnicity from today plus interval', 'SELECT  count(pd.ethnoracial) as "Number of Appointments", pd.ethnoracial AS  "Race/Ethnicity" /* , concat(DATE_FORMAT(NOW(),''%Y-%m-%d''), '' and '',DATE_FORMAT(DATE_ADD(now(), INTERVAL [VARIABLE]),''%Y-%m-%d'') ) as "Between Dates" */ FROM openemr_postcalendar_events AS ev LEFT  JOIN   `patient_data`  AS pd ON  pd.pid = ev.pc_pid where ev.pc_eventstatus=1 and ev.pc_catid = 5 and ev.pc_eventDate >= now()  /* and ( ev.pc_eventDate <= DATE_ADD(now(), INTERVAL [VARIABLE]) )  */ group by pd.ethnoracial');
 
-
+DROP TABLE IF EXISTS `pma_column_info`;
 CREATE TABLE IF NOT EXISTS `pma_column_info` (
   `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
   `db_name` varchar(64) DEFAULT NULL,
@@ -2858,6 +3321,7 @@ CREATE TABLE IF NOT EXISTS `pma_column_info` (
   UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Column Information for phpMyAdmin' AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `pma_history`;
 CREATE TABLE IF NOT EXISTS `pma_history` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(64) DEFAULT NULL,
@@ -2869,6 +3333,7 @@ CREATE TABLE IF NOT EXISTS `pma_history` (
   KEY `username` (`username`,`db`,`table`,`timevalue`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='SQL history' AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `pma_pdf_pages`;
 CREATE TABLE IF NOT EXISTS `pma_pdf_pages` (
   `db_name` varchar(64) DEFAULT NULL,
   `page_nr` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -2877,6 +3342,7 @@ CREATE TABLE IF NOT EXISTS `pma_pdf_pages` (
   KEY `db_name` (`db_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='PDF Relationpages for PMA' AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `pma_relation`;
 CREATE TABLE IF NOT EXISTS `pma_relation` (
   `master_db` varchar(64) NOT NULL DEFAULT '',
   `master_table` varchar(64) NOT NULL DEFAULT '',
@@ -2888,6 +3354,7 @@ CREATE TABLE IF NOT EXISTS `pma_relation` (
   KEY `foreign_field` (`foreign_db`,`foreign_table`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Relation table';
 
+DROP TABLE IF EXISTS `pma_table_coords`;
 CREATE TABLE IF NOT EXISTS `pma_table_coords` (
   `db_name` varchar(64) NOT NULL DEFAULT '',
   `table_name` varchar(64) NOT NULL DEFAULT '',
@@ -2897,6 +3364,7 @@ CREATE TABLE IF NOT EXISTS `pma_table_coords` (
   PRIMARY KEY (`db_name`,`table_name`,`pdf_page_number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Table coordinates for phpMyAdmin PDF output';
 
+DROP TABLE IF EXISTS `pma_table_info`;
 CREATE TABLE IF NOT EXISTS `pma_table_info` (
   `db_name` varchar(64) NOT NULL DEFAULT '',
   `table_name` varchar(64) NOT NULL DEFAULT '',
@@ -2904,6 +3372,7 @@ CREATE TABLE IF NOT EXISTS `pma_table_info` (
   PRIMARY KEY (`db_name`,`table_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Table information for phpMyAdmin';
 
+DROP TABLE IF EXISTS `pnotes`;
 CREATE TABLE IF NOT EXISTS `pnotes` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -2920,15 +3389,16 @@ CREATE TABLE IF NOT EXISTS `pnotes` (
   `reply_id` int(11) DEFAULT NULL,
   `note_type` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 INSERT INTO `pnotes` (`id`, `date`, `body`, `pid`, `user_id`, `facility_id`, `activity`, `authorized`, `assigned_to`, `deleted`, `message_status`, `subject`, `reply_id`, `note_type`) VALUES
-(1, '2011-05-19 10:24:40', 'â€‹Hello', 1, 1, 0, 0, 0, 'hrivera', 0, 'New', 'test', 0, 0),
-(2, '2011-05-25 22:25:06', 'â€‹', 13, 1, 0, 0, 0, 'hrivera', 0, 'New', 'Llco', 0, 0),
-(3, '2011-05-31 01:17:06', 'â€‹', 10, 1, 0, 0, 0, 'vela1606', 1, 'New', 'Hello!', 0, 0),
-(4, '2011-05-31 01:19:20', 'â€‹', 10, 1, 0, 0, 0, 'vela1606', 0, 'New', 'Test!', 0, 0);
+(1, '2011-05-19 14:24:40', 'Ã¢â‚¬â€¹Hello', 1, 1, 0, 0, 0, 'hrivera', 0, 'New', 'test', 0, 0),
+(2, '2011-05-26 02:25:06', 'Ã¢â‚¬â€¹', 13, 1, 0, 0, 0, 'hrivera', 0, 'New', 'Llco', 0, 0),
+(3, '2011-10-18 19:48:45', 'Ã¢â‚¬â€¹', 5, 81, 0, 0, 0, 'demo', 0, 'New', '13231213232', 0, 0),
+(4, '2011-10-21 04:41:19', 'Ã¢â‚¬â€¹', 10, 81, 0, 0, 0, 'demo', 1, 'New', '', 0, 0),
+(5, '2011-10-25 11:49:37', 'Ã¢â‚¬â€¹', 5, 81, 0, 0, 0, 'demo', 1, 'Forwarded', '', 0, 0);
 
+DROP TABLE IF EXISTS `prescriptions`;
 CREATE TABLE IF NOT EXISTS `prescriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) DEFAULT NULL,
@@ -2957,7 +3427,7 @@ CREATE TABLE IF NOT EXISTS `prescriptions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `prices`;
 CREATE TABLE IF NOT EXISTS `prices` (
   `pr_id` varchar(11) NOT NULL DEFAULT '',
   `pr_selector` varchar(255) NOT NULL DEFAULT '' COMMENT 'template selector for drugs, empty for codes',
@@ -2966,7 +3436,7 @@ CREATE TABLE IF NOT EXISTS `prices` (
   PRIMARY KEY (`pr_id`,`pr_selector`,`pr_level`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+DROP TABLE IF EXISTS `procedure_order`;
 CREATE TABLE IF NOT EXISTS `procedure_order` (
   `procedure_order_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `procedure_type_id` bigint(20) NOT NULL COMMENT 'references procedure_type.procedure_type_id',
@@ -2984,7 +3454,7 @@ CREATE TABLE IF NOT EXISTS `procedure_order` (
   KEY `datepid` (`date_ordered`,`patient_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `procedure_report`;
 CREATE TABLE IF NOT EXISTS `procedure_report` (
   `procedure_report_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `procedure_order_id` bigint(20) DEFAULT NULL COMMENT 'references procedure_order.procedure_order_id',
@@ -2998,7 +3468,7 @@ CREATE TABLE IF NOT EXISTS `procedure_report` (
   KEY `procedure_order_id` (`procedure_order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `procedure_result`;
 CREATE TABLE IF NOT EXISTS `procedure_result` (
   `procedure_result_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `procedure_report_id` bigint(20) NOT NULL COMMENT 'references procedure_report.procedure_report_id',
@@ -3016,7 +3486,7 @@ CREATE TABLE IF NOT EXISTS `procedure_result` (
   KEY `procedure_report_id` (`procedure_report_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `procedure_type`;
 CREATE TABLE IF NOT EXISTS `procedure_type` (
   `procedure_type_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `parent` bigint(20) NOT NULL DEFAULT '0' COMMENT 'references procedure_type.procedure_type_id',
@@ -3038,7 +3508,7 @@ CREATE TABLE IF NOT EXISTS `procedure_type` (
   KEY `parent` (`parent`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+DROP TABLE IF EXISTS `registry`;
 CREATE TABLE IF NOT EXISTS `registry` (
   `name` varchar(255) DEFAULT NULL,
   `state` tinyint(4) DEFAULT NULL,
@@ -3053,7 +3523,6 @@ CREATE TABLE IF NOT EXISTS `registry` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
-
 INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`) VALUES
 ('New Encounter Form', 1, 'newpatient', 1, 1, 1, '2003-09-14 15:16:45', 0, 'Administrative', ''),
 ('Review of Systems Checks', 1, 'reviewofs', 9, 1, 1, '2003-09-14 15:16:45', 0, 'Clinical', ''),
@@ -3065,16 +3534,15 @@ INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackag
 ('Misc Billing Options HCFA', 1, 'misc_billing_options', 15, 1, 1, '2007-07-28 00:00:00', 0, 'Administrative', ''),
 ('Procedure Order', 1, 'procedure_order', 16, 1, 1, '2010-02-25 00:00:00', 0, 'Administrative', '');
 
-
+DROP TABLE IF EXISTS `sequences`;
 CREATE TABLE IF NOT EXISTS `sequences` (
   `id` int(11) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `sequences` (`id`) VALUES
 (1);
 
-
+DROP TABLE IF EXISTS `syndromic_surveillance`;
 CREATE TABLE IF NOT EXISTS `syndromic_surveillance` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `lists_id` bigint(20) NOT NULL,
@@ -3084,6 +3552,7 @@ CREATE TABLE IF NOT EXISTS `syndromic_surveillance` (
   KEY `lists_id` (`lists_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
@@ -3115,6 +3584,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
@@ -3163,14 +3633,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `calendar` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = appears in calendar',
   `abook_type` varchar(31) NOT NULL DEFAULT '',
   `pwd_expiration_date` date DEFAULT NULL,
-  `pwd_history1` blob NOT NULL,
-  `pwd_history2` blob NOT NULL,
+  `pwd_history1` longtext,
+  `pwd_history2` longtext,
   `default_warehouse` varchar(31) NOT NULL DEFAULT '',
   `irnpool` varchar(31) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=119 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=85 ;
 
 
+DROP TABLE IF EXISTS `users_facility`;
 CREATE TABLE IF NOT EXISTS `users_facility` (
   `tablename` varchar(64) NOT NULL,
   `table_id` int(11) NOT NULL,
@@ -3178,14 +3649,13 @@ CREATE TABLE IF NOT EXISTS `users_facility` (
   PRIMARY KEY (`tablename`,`table_id`,`facility_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='joins users or patient_data to facility table';
 
-
+DROP TABLE IF EXISTS `user_settings`;
 CREATE TABLE IF NOT EXISTS `user_settings` (
   `setting_user` bigint(20) NOT NULL DEFAULT '0',
   `setting_label` varchar(63) NOT NULL,
   `setting_value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`setting_user`,`setting_label`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 INSERT INTO `user_settings` (`setting_user`, `setting_label`, `setting_value`) VALUES
 (0, 'allergy_ps_expand', '1'),
@@ -3206,6 +3676,7 @@ INSERT INTO `user_settings` (`setting_user`, `setting_label`, `setting_value`) V
 (0, 'gacl_protect', '0'),
 (1, 'gacl_protect', '1');
 
+DROP TABLE IF EXISTS `version`;
 CREATE TABLE IF NOT EXISTS `version` (
   `v_major` int(11) NOT NULL DEFAULT '0',
   `v_minor` int(11) NOT NULL DEFAULT '0',
@@ -3214,10 +3685,10 @@ CREATE TABLE IF NOT EXISTS `version` (
   `v_database` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `version` (`v_major`, `v_minor`, `v_patch`, `v_tag`, `v_database`) VALUES
 (1, 0, 0, 'Vega', 1);
 
+DROP TABLE IF EXISTS `x12_partners`;
 CREATE TABLE IF NOT EXISTS `x12_partners` (
   `id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) DEFAULT NULL,
@@ -3234,3 +3705,7 @@ CREATE TABLE IF NOT EXISTS `x12_partners` (
   `x12_per06` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -15,6 +15,7 @@ function fullname($fname, $mname, $lname){
     }else{
         $fullname =  $lname.', '.$fname.' '.$mname;
     }
+    $fullname = ($fullname == ',  ') ? '' : $fullname;
 return $fullname;
 }
 ?>

@@ -22,5 +22,14 @@ Ext.define('Ext.mitos.panel.fees.fees_sheet.FeesSheet',{
 
         page.pageBody = [ ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(callback){
+        callback(true);
+    }
 }); //ens oNotesPage class

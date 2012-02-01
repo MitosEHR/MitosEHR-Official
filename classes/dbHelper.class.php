@@ -28,7 +28,7 @@
 
 class dbHelper {
 	
-	private $sql_statement;
+	public  $sql_statement;
 	private $conn;
 	private $err;
 	public $lastInsertId;
@@ -48,6 +48,13 @@ class dbHelper {
 		}
 	}
 
+
+    function alterTable(){
+            $this->conn->query($this->sql_statement);
+            return $this->conn->errorInfo();
+        }
+
+
 	//**********************************************************************
 	// Set the SQL Statement
 	//
@@ -58,9 +65,9 @@ class dbHelper {
 	}
 		
 	//**********************************************************************
-	// Simple SQL Stament, with no Event LOG injection
+	// Simple SQL Statement, with no Event LOG injection
 	// $dbHelper->execStatement();
-	// return: Array of records, if error ocurred return the error instead
+	// return: Array of records, if error occurred return the error instead
 	// foreach (sqlStatement($sql) as $urow) {
 	//
 	// Author: GI Technologies, 2011
@@ -79,13 +86,13 @@ class dbHelper {
 	}
 	
 	//**********************************************************************
-	// Simple exec SQL Stament, with no Event LOG injection
+	// Simple exec SQL Statement, with no Event LOG injection
 	// return: Array of errors, if any.
 	//
 	// Author: GI Technologies, 2011
 	//**********************************************************************
 	function execOnly(){
-		$this->conn->query($this->sql_statement);
+        $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, "SELECT")){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}
@@ -145,7 +152,7 @@ class dbHelper {
 	}
 	
 	//**********************************************************************
-	// Simple SQL Stament, with Event LOG injection
+	// Simple SQL Statement, with Event LOG injection
 	// $dbHelper->exeLog();
 	// return: Array of records + Inject the action on the event log
 	// The Log Injection is automatic 
@@ -158,7 +165,7 @@ class dbHelper {
 		//------------------------------------------------------------------
 		// Execute the sql statement
 		//------------------------------------------------------------------
-		$recordset = $this->conn->query( $this->sql_statement );
+		$this->conn->query( $this->sql_statement );
 
 		//------------------------------------------------------------------
 		// If the QUERY has INSERT, DELETE, ALTER then has to 
@@ -179,7 +186,7 @@ class dbHelper {
 			if (stristr($this->sql_statement, "UPDATE")) $eventLog = "Record update";
 			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
 			//------------------------------------------------------------------
-			// Prepare the SQL stament first, and then execute.
+			// Prepare the SQL statement first, and then execute.
 			//------------------------------------------------------------------
 			$stmt = $this->conn->prepare("INSERT 
 											INTO 
@@ -231,7 +238,15 @@ class dbHelper {
 	function fetch(){
 		// Get all the records
 		$recordset = $this->conn->query( $this->sql_statement );
-		return $recordset->fetch(PDO::FETCH_ASSOC);
+
+        $err = $this->conn->errorInfo();
+
+        if(!$err[2]){
+            return $recordset->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return $err;
+        }
+
 	}
 	
 	//**********************************************************************
@@ -280,4 +295,3 @@ class dbHelper {
 		return $recordset->fetch(PDO::FETCH_ASSOC);
 	}	
 }
-?>

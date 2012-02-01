@@ -8,10 +8,11 @@
  * the user and start the main application
  * 
  * Author: GI Technologies, 2011
- * Ver: 0.0.2
+ * modifed: Ernesto J Rodriguez, Nov 7, 2011
+ *
+ * Ver: 0.0.3
  * 
  */
-
 //-------------------------------------------------------------------
 // Startup the SESSION
 // This will change in the future. 
@@ -44,9 +45,9 @@ if(isset($_SESSION['user']['auth'])){
         //-----------------------------------------------------------
         if ($mobile->isMobile()) {
 
-		    include_once("app_mobile/MitosApp.ejs.php");
+		    include_once("app_mobile/index.php");
         }else{
-            include_once("app/MitosApp.ejs.php");
+            include_once("app/index.php");
         }
 	}
 //-------------------------------------------------------------------
@@ -57,8 +58,8 @@ if(isset($_SESSION['user']['auth'])){
 	// Browse the site dir first
 	//---------------------------------------------------------------
 	$count = 0;
-	$d = dir("sites/");
-	while (false !== ($entry = $d->read())) { if ( $entry != "." && $entry != ".."){ $count++; } }
+
+	foreach ($_SESSION['site']['sites'] as $site){ $count++; }
 	//---------------------------------------------------------------
 	// If no directory is found inside sites dir run the setup wizard,
 	// if a directory is found inside sites dir run the logon screen
@@ -72,8 +73,7 @@ if(isset($_SESSION['user']['auth'])){
         if ($mobile->isMobile()) {
             include_once("app_mobile/login/login.ejs.php");
         }else{
-            include_once("app/login/login.ejs.php");
+            include_once("app/login/login.php");
         }
 	}
 }
-?>

@@ -12,16 +12,24 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelPractice',
     pageTitle   : 'Practice Settings',
-    uses        : [ 'Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel', 'Ext.mitos.TitlesComboBox', 'Ext.mitos.SaveCancelWindow', 'Ext.mitos.TransmitMedthodComboBox', 'Ext.mitos.InsurancePayerType' ],
+    uses        : [
+        'Ext.mitos.restStoreModel',
+        'Ext.mitos.CRUDStore',
+        'Ext.mitos.GridPanel',
+        'Ext.mitos.combo.Titles',
+        'Ext.mitos.combo.TransmitMedthod',
+        'Ext.mitos.combo.InsurancePayerType',
+        'Ext.mitos.form.FormPanel',
+        'Ext.mitos.window.Window'
+    ],
     initComponent: function(){
-        var page = this;
-        var rowPos; // Stores the current Grid Row Position (int)
-        var currRec; // Store the current record (Object)
-
+        var me = this;
+        var currStore;
+        var currModel;
         // *************************************************************************************
         // Pharmacy Record Structure
         // *************************************************************************************
-        page.pharmacyStore = Ext.create('Ext.mitos.CRUDStore', {
+        me.pharmacyStore = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 {name: 'id',					type: 'int'},
                 {name: 'name',					type: 'string'},
@@ -51,10 +59,8 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             ],
         model		: 'pharmacyModel',
         idProperty	: 'id',
-        read		: 'app/administration/practice/data_read.ejs.php?task=pharmacy',
-        create		: 'app/administration/practice/data_create.ejs.php?task=pharmacy',
-        update		: 'app/administration/practice/data_update.ejs.php?task=pharmacy',
-        destroy 	: 'app/administration/practice/data_destroy.ejs.php?task=pharmacy'
+        url		    : 'app/administration/practice/data.php',
+        extraParams : { task:"pharmacy"}
         });
         // -------------------------------------------------------------------------------------
         // render function for Default Method column in the Pharmacy grid
@@ -72,7 +78,7 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         // *************************************************************************************
         // Insurance Record Structure
         // *************************************************************************************
-        page.insuranceStore = Ext.create('Ext.mitos.CRUDStore', {
+        me.insuranceStore = Ext.create('Ext.mitos.restStoreModel', {
             fields: [
                 {name: 'id',						type: 'int'},
                 {name: 'name',						type: 'string'},
@@ -104,707 +110,286 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 {name: 'fax_number',				type: 'string'},
                 {name: 'fax_full',					type: 'string'}
             ],
-        model		: 'insuranceModel',
-        idProperty	: 'id',
-        read		: 'app/administration/practice/data_read.ejs.php?task=insurance',
-        create		: 'app/administration/practice/data_create.ejs.php?task=insurance',
-        update		: 'app/administration/practice/data_update.ejs.php?task=insurance',
-        destroy 	: 'app/administration/practice/data_destroy.ejs.php?task=insurance'
+            model		: 'insuranceModel',
+            idProperty	: 'id',
+            url		    : 'app/administration/practice/data.php',
+            extraParams : { task:"insurance"}
         });
-
         // *************************************************************************************
         // Insurance Numbers Record Structure
         // *************************************************************************************
-        var insuranceNumbersStore = new Ext.create('Ext.mitos.CRUDStore',{
+        me.insuranceNumbersStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',	type: 'int'},
                 {name: 'name',	type: 'string'}
             ],
-        model		: 'insuranceNumbersModel',
-        idProperty	: 'id',
-        read		: 'app/administration/practice/data_read.ejs.php',
-        create		: 'app/administration/practice/data_create.ejs.php',
-        update		: 'app/administration/practice/data_update.ejs.php',
-        destroy 	: 'app/administration/practice/data_destroy.ejs.php'
+            model		: 'insuranceNumbersModel',
+            idProperty	: 'id',
+            url		    : 'app/administration/practice/data.php',
+            extraParams : { task:"insuranceNumbers"}
         });
-
         // *************************************************************************************
         // X12 Partners Record Structure
         // *************************************************************************************
-        var x12PartnersStore = new Ext.create('Ext.mitos.CRUDStore',{
+        me.x12PartnersStore = Ext.create('Ext.mitos.restStoreModel',{
             fields: [
                 {name: 'id',	type: 'int'},
                 {name: 'name',	type: 'string'}
             ],
-        model		: 'x12PartnersModel',
-        idProperty	: 'id',
-        read		: 'app/administration/practice/data_read.ejs.php',
-        create		: 'app/administration/practice/data_create.ejs.php',
-        update		: 'app/administration/practice/data_update.ejs.php',
-        destroy 	: 'app/administration/practice/data_destroy.ejs.php'
+            model		: 'x12PartnersModel',
+            idProperty	: 'id',
+            url		    : 'app/administration/practice/data.php',
+            extraParams : { task:"x12Partners"}
         });
+        // *************************************************************************************
+        // From Items
+        // *************************************************************************************
+        me.pharmacyItems = [
+            { xtype: 'textfield', hidden: true, name: 'id' },
+            { xtype: 'textfield', hidden: true, name: 'phone_id' },
+            { xtype: 'textfield', hidden: true, name: 'fax_id' },
+            { xtype: 'textfield', hidden: true, name: 'address_id' },
+            { xtype: 'textfield', hidden: true, name: 'phone_country_code' },
+            { xtype: 'textfield', hidden: true, name: 'fax_country_code' },
+            { xtype: 'textfield', fieldLabel: 'Name', width: 100, name: 'name', allowBlank:false },
+            { xtype: 'textfield', fieldLabel: 'Address', width: 100, name: 'line1' },
+            { xtype: 'textfield', fieldLabel: 'Address (Cont)', width: 100, name: 'line2' },
+            { xtype: 'fieldcontainer',
+                defaults: { hideLabel: true },
+                items: [
+                    { xtype: 'displayfield',  width: 89,  value: 'City, State Zip' },
+                    { xtype: 'textfield',     width: 150, name: 'city' },
+                    { xtype: 'displayfield',  width: 5,   value: ',' },
+                    { xtype: 'textfield',     width: 50,  name: 'state' },
+                    { xtype: 'textfield',     width: 103, name: 'zip' }
+                ]
+            },
+            { xtype: 'textfield', fieldLabel: 'Email', width: 100, name: 'email' },
+            { xtype: 'fieldcontainer',
+                defaults: { hideLabel: true },
+                items: [
+                    { xtype: 'displayfield',  width: 89,  value: 'Phone' },
+                    { xtype: 'displayfield',  width: 5,   value: '(' },
+                    { xtype: 'textfield',     width: 40,  name: 'phone_area_code' },
+                    { xtype: 'displayfield',  width: 5,   value: ')' },
+                    { xtype: 'textfield',     width: 50,  name: 'phone_prefix' },
+                    { xtype: 'displayfield',  width: 5,   value: '-' },
+                    { xtype: 'textfield',     width: 70,  name: 'phone_number' }
+                ]
+            },
+            { xtype: 'fieldcontainer',
+                defaults: { hideLabel: true },
+                items: [
+                    { xtype: 'displayfield',  width: 89,  value: 'Fax' },
+                    { xtype: 'displayfield',  width: 5,   value: '(' },
+                    { xtype: 'textfield',     width: 40,  name: 'fax_area_code' },
+                    { xtype: 'displayfield',  width: 5,   value: ')' },
+                    { xtype: 'textfield',     width: 50,  name: 'fax_prefix' },
+                    { xtype: 'displayfield',  width: 5,   value: '-' },
+                    { xtype: 'textfield',     width: 70,  name: 'fax_number'
+                }]
+            },
+            { xtype: 'transmitmethodcombo', fieldLabel  : 'default Method', labelWidth  : 89 }
+        ];
 
-        // *************************************************************************************
-        // Pharmacy Form, Window, and Form
-        // *************************************************************************************
-        page.pharmacyForm = new Ext.create('Ext.mitos.FormPanel', {
-            defaults: {
-                labelWidth: 89,
-                anchor: '100%',
-                layout: {
-                    type: 'hbox',
-                    defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
-                }
+        me.insuranceItems = [
+            { xtype: 'textfield', hidden: true, name: 'id' },
+            { xtype: 'textfield', hidden: true, name: 'phone_id' },
+            { xtype: 'textfield', hidden: true, name: 'fax_id' },
+            { xtype: 'textfield', hidden: true, name: 'address_id' },
+            { xtype: 'textfield', hidden: true, name: 'phone_country_code' },
+            { xtype: 'textfield', hidden: true, name: 'fax_country_code' },
+            { xtype: 'textfield', fieldLabel: 'Name',width: 100, name: 'name', allowBlank:false },
+            { xtype: 'textfield', fieldLabel: 'Address', width: 100, name: 'line1' },
+            { xtype: 'textfield', fieldLabel: 'Address (Cont)', width: 100, name: 'line2' },
+            { xtype: 'fieldcontainer',
+                defaults: { hideLabel: true },
+                items: [
+                    { xtype: 'displayfield',  width: 89,  value: 'City, State Zip' },
+                    { xtype: 'textfield',     width: 150, name: 'city' },
+                    { xtype: 'displayfield',  width: 5,   value: ',' },
+                    { xtype: 'textfield',     width: 50,  name: 'state' },
+                    { xtype: 'textfield',     width: 103, name: 'zip' }
+                ]
             },
-            items: [{ // TODO: create fields for a few of this...
-                xtype: 'textfield', hidden: true, name: 'id'
-            },{ xtype: 'textfield', hidden: true, name: 'phone_id'
-            },{ xtype: 'textfield', hidden: true, name: 'fax_id'
-            },{ xtype: 'textfield', hidden: true, name: 'address_id'
-            },{ xtype: 'textfield', hidden: true, name: 'phone_country_code'
-            },{ xtype: 'textfield', hidden: true, name: 'fax_country_code'
-            },{
-                xtype       : 'textfield',
-                fieldLabel  : 'Name',
-                width       : 100,
-                name        : 'name'
-            },{
-                xtype       : 'textfield',
-                fieldLabel  : 'Address',
-                width       : 100,
-                name        : 'line1'
-            },{
-                xtype       : 'textfield',
-                fieldLabel  : 'Address (Cont)',
-                width       : 100,
-                name        : 'line2'
-            },{
-                xtype: 'fieldcontainer',
+            { xtype: 'fieldcontainer',
                 defaults: { hideLabel: true },
-                items: [{
-                    xtype   : 'displayfield',
-                    value   : 'City, State Zip',
-                    width   : 89
-                },{
-                    xtype   : 'textfield',
-                    width   : 150,
-                    name    : 'city'
-                },{
-                    xtype   : 'displayfield',
-                    value   : ',',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 50,
-                    name    : 'state'
-                },{
-                    xtype   : 'textfield',
-                    width   : 113,
-                    name    : 'zip'
-                }]
-            },{
-                xtype       : 'textfield',
-                fieldLabel  : 'Email',
-                width       : 100,
-                name        : 'email'
-            },{
-                xtype: 'fieldcontainer',
-                defaults: { hideLabel: true },
-                items: [{
-                    xtype   : 'displayfield',
-                    value   : 'Phone',
-                    width   : 89
-                },{
-                    xtype   : 'displayfield',
-                    value   : '(',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 40,
-                    name    : 'phone_area_code'
-                },{
-                    xtype   : 'displayfield',
-                    value   : ')',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 50,
-                    name    : 'phone_prefix'
-                },{
-                    xtype   : 'displayfield',
-                    value   : '-',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 70,
-                    name    : 'phone_number'
-                }]
-            },{
-                xtype: 'fieldcontainer',
-                defaults: { hideLabel: true },
-                items: [{
-                    xtype   : 'displayfield',
-                    value   : 'Fax',
-                    width   : 89
-                },{
-                    xtype   : 'displayfield',
-                    value   : '(',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 40,
-                    name    : 'fax_area_code'
-                },{
-                    xtype   : 'displayfield',
-                    value   : ')',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 50,
-                    name    : 'fax_prefix'
-                },{
-                    xtype   : 'displayfield',
-                    value   : '-',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 70,
-                    name    : 'fax_number'
+                items: [
+                    { xtype: 'displayfield',  width: 89,  value: 'Phone' },
+                    { xtype: 'displayfield',  width: 5,   value: '(' },
+                    { xtype: 'textfield',     width: 40,  name: 'phone_area_code' },
+                    { xtype: 'displayfield',  width: 5,   value: ')' },
+                    { xtype: 'textfield',     width: 50,  name: 'phone_prefix' },
+                    { xtype: 'displayfield',  width: 5,   value: '-' },
+                    { xtype: 'textfield',     width: 70,  name: 'phone_number'
                 }]
             },
-                new Ext.create('Ext.mitos.TransmitMedthodComboBox',{
-                    fieldLabel  : 'default Method',
-                    labelWidth  : 89
-                })
-            ]
-        }); // END FORM
-        page.winPharmacy = new Ext.create('Ext.mitos.SaveCancelWindow', {
-            width       : 450,
-            title       : 'Add or Edit Pharmacy',
-            form        : page.pharmacyForm,
-            store       : page.pharmacyStore,
-            scope       : page,
-            idField     : 'id'
-        }); // END WINDOW
-        page.pharmacyGrid = new Ext.create('Ext.mitos.GridPanel', {
-            store		: page.pharmacyStore,
+            { xtype: 'fieldcontainer',
+                defaults: { hideLabel: true },
+                items: [
+                    { xtype: 'displayfield',  width: 89,  value: 'Fax' },
+                    { xtype: 'displayfield',  width: 5,   value: '(' },
+                    { xtype: 'textfield',     width: 40,  name: 'fax_area_code' },
+                    { xtype: 'displayfield',  width: 5,   value: ')' },
+                    { xtype: 'textfield',     width: 50,  name: 'fax_prefix' },
+                    { xtype: 'displayfield',  width: 5,   value: '-' },
+                    { xtype: 'textfield',     width: 70,  name: 'fax_number' }
+                ]
+            },
+            { xtype: 'textfield', fieldLabel: 'CMS ID', width: 100, name: 'cms_id' },
+            { xtype:'insurancepayertypecombo', fieldLabel: 'Payer Type', labelWidth  : 89 },
+            { xtype: 'textfield', fieldLabel: 'X12 Partner', width: 100, name: 'x12_default_partner_id' }
+        ];
+        // *************************************************************************************
+        // Grids
+        // *************************************************************************************
+        me.pharmacyGrid = Ext.create('Ext.mitos.GridPanel', {
+            store		: me.pharmacyStore,
             border		: false,
             frame		: false,
-            columns: [{
-                text: 'id', sortable: false, dataIndex: 'id', hidden: true
-            },{
-                text     : 'Pharmacy Name',
-                width    : 150,
-                sortable : true,
-                dataIndex: 'name'
-            },{
-                text     : 'Address',
-                flex     : 1,
-                sortable : true,
-                dataIndex: 'address_full'
-            },{
-                text     : 'Phone',
-                width    : 120,
-                sortable : true,
-                dataIndex: 'phone_full'
-            },{
-                text     : 'Fax',
-                width    : 120,
-                sortable : true,
-                dataIndex: 'fax_full'
-            },{
-                text     : 'Default Method',
-                flex     : 1,
-                sortable : true,
-                dataIndex: 'transmit_method',
-                renderer : transmit_method
-            }],
+            columns: [
+                { text: 'id', sortable: false, dataIndex: 'id', hidden: true },
+                { text: 'Pharmacy Name', width: 150, sortable: true, dataIndex: 'name' },
+                { text: 'Address', flex: 1, sortable: true, dataIndex: 'address_full' },
+                { text: 'Phone', width: 120, sortable: true, dataIndex: 'phone_full' },
+                { text: 'Fax', width: 120, sortable: true, dataIndex: 'fax_full' },
+                { text: 'Default Method', flex: 1, sortable: true, dataIndex: 'transmit_method', renderer: transmit_method }
+            ],
             listeners: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        page.pharmacyForm.getForm().reset(); // Clear the form
-                        page.editPharmacy.enable();
-                        page.deletePharmacy.enable();
-                        var rec = page.pharmacyStore.getAt(rowIndex);
-                        page.pharmacyForm.getForm().loadRecord(rec);
-                        currRec = rec;
-                        page.rowPos = rowIndex;
-                    }
-                },
-                itemdblclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        page.pharmacyForm.getForm().reset(); // Clear the form
-                        page.editPharmacy.enable();
-                        page.deletePharmacy.enable();
-                        var rec = page.pharmacyStore.getAt(rowIndex);
-                        page.pharmacyForm.getForm().loadRecord(rec);
-                        currRec = rec;
-                        page.rowPos = rowIndex;
-                        page.winPharmacy.setTitle('Edit Pharmacy');
-                        page.winPharmacy.show();
-                    }
+                itemdblclick: function(view, record){
+                    currStore = me.pharmacyStore;
+                    currModel = 'pharmacyModel';
+                    me.onItemdblclick( me.pharmacyItems, me.pharmacyStore, record, 'Edit Pharmacy' );
                 }
             }
-        }); // END GRIDs
-
-        // *************************************************************************************
-        // Insurance Form, Window, and GRID
-        // *************************************************************************************
-        page.insuranceForm = new Ext.create('Ext.mitos.FormPanel', {
-            defaults: {
-                labelWidth: 89,
-                anchor: '100%',
-                layout: {
-                    type: 'hbox',
-                    defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
-                }
-            },
-            items: [{
-                xtype: 'textfield', hidden: true, name: 'id'
-            },{ xtype: 'textfield', hidden: true, name: 'phone_id'
-            },{ xtype: 'textfield', hidden: true, name: 'fax_id'
-            },{ xtype: 'textfield', hidden: true, name: 'address_id'
-            },{ xtype: 'textfield', hidden: true, name: 'phone_country_code'
-            },{ xtype: 'textfield', hidden: true, name: 'fax_country_code'
-            },{
-                xtype       : 'textfield',
-                fieldLabel  : 'Name',
-                width       : 100,
-                name        : 'name'
-            },{
-                xtype       : 'textfield',
-                fieldLabel  : 'Address',
-                width       : 100,
-                name        : 'line1'
-            },{
-                xtype       : 'textfield',
-                fieldLabel  : 'Address (Cont)',
-                width       : 100,
-                name        : 'line2'
-            },{
-                xtype: 'fieldcontainer',
-                defaults: { hideLabel: true },
-                items: [{
-                    xtype   : 'displayfield',
-                    value   : 'City, State Zip',
-                    width   : 89
-                },{
-                    xtype   : 'textfield',
-                    width   : 150,
-                    name    : 'city'
-                },{
-                    xtype   : 'displayfield',
-                    value   : ',',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 50,
-                    name    : 'state'
-                },{
-                    xtype   : 'textfield',
-                    width   : 113,
-                    name    : 'zip'
-                }]
-            },{
-               xtype: 'fieldcontainer',
-                defaults: { hideLabel: true },
-                items: [{
-                    xtype   : 'displayfield',
-                    value   : 'Phone',
-                    width   : 89
-                },{
-                    xtype   : 'displayfield',
-                    value   : '(',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 40,
-                    name    : 'phone_area_code'
-                },{
-                    xtype   : 'displayfield',
-                    value   : ')',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 50,
-                    name    : 'phone_prefix'
-                },{
-                    xtype   : 'displayfield',
-                    value   : '-',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 70,
-                    name    : 'phone_number'
-                }]
-            },{
-                xtype: 'fieldcontainer',
-                defaults: { hideLabel: true },
-                items: [{
-                    xtype   : 'displayfield',
-                    value   : 'Fax',
-                    width   : 89
-                },{
-                    xtype   : 'displayfield',
-                    value   : '(',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 40,
-                    name    : 'fax_area_code'
-                },{
-                    xtype   : 'displayfield',
-                    value   : ')',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 50,
-                    name    : 'fax_prefix'
-                },{
-                    xtype   : 'displayfield',
-                    value   : '-',
-                    width   : 5
-                },{
-                    xtype   : 'textfield',
-                    width   : 70,
-                    name    : 'fax_number'
-                }]
-            },{
-                xtype       : 'textfield',
-                fieldLabel  : 'CMS ID',
-                width       : 100,
-                name        : 'cms_id'
-            },
-                new Ext.create('Ext.mitos.InsurancePayerType',{
-                    fieldLabel  : 'Payer Type',
-                    labelWidth  : 89
-             }),{
-                xtype       : 'textfield',
-                fieldLabel  : 'X12 Partner',
-                width       : 100,
-                name        : 'x12_default_partner_id'
-            }]
-        }); // END FORM
-        page.winInsurance = new Ext.create('Ext.mitos.SaveCancelWindow',{
-            width       : 450,
-            title       : 'Add or Edit Insurance',
-            form        : page.insuranceForm,
-            store       : page.insuranceStore,
-            scope       : page,
-            idField     : 'id'
-        }); // END WINDOW
-        page.insuranceGrid = new Ext.create('Ext.mitos.GridPanel', {
-            store		: page.insuranceStore,
-            border		: false,
-            frame		: false,
-            columns: [{
-                text: 'id', sortable: false, dataIndex: 'id', hidden: true
-            },{
-                text     : 'Insurance Name',
-                width    : 150,
-                sortable : true,
-                dataIndex: 'name'
-            },{
-                text     : 'Address',
-                flex     : 1,
-                sortable : true,
-                dataIndex: 'address_full'
-            },{
-                text     : 'Phone',
-                width    : 120,
-                sortable : true,
-                dataIndex: 'phone_full'
-            },{
-                text     : 'Fax',
-                width    : 120,
-                sortable : true,
-                dataIndex: 'fax_full'
-            },{
-                text     : 'Default X12 Partner',
-                flex     : 1,
-                width    : 100,
-                sortable : true,
-                dataIndex: 'x12_default_partner_id'
-            }],
+        });
+        me.insuranceGrid = Ext.create('Ext.mitos.GridPanel', {
+            store: me.insuranceStore,
+            border: false,
+            frame: false,
+            columns: [
+                { text: 'id', sortable: false, dataIndex: 'id', hidden: true },
+                { text: 'Insurance Name', width: 150, sortable: true, dataIndex: 'name' },
+                { text: 'Address', flex: 1, sortable: true, dataIndex: 'address_full' },
+                { text: 'Phone', width: 120, sortable: true, dataIndex: 'phone_full' },
+                { text: 'Fax', width: 120, sortable: true, dataIndex: 'fax_full' },
+                { text: 'Default X12 Partner', flex: 1, width: 100, sortable: true, dataIndex: 'x12_default_partner_id' }
+            ],
             listeners: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        page.insuranceForm.getForm().reset(); // Clear the form
-                        page.editCompany.enable();
-                        page.deleteCompany.enable();
-                        var rec = page.insuranceStore.getAt(rowIndex);
-                        page.insuranceForm.getForm().loadRecord(rec);
-                        currRec = rec;
-                        page.rowPos = rowIndex;
-                    }
-                },
-                itemdblclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        page.insuranceForm.getForm().reset(); // Clear the form
-                        page.editCompany.enable();
-                        page.deleteCompany.enable();
-                        var rec = page.insuranceStore.getAt(rowIndex);
-                        page.insuranceForm.getForm().loadRecord(rec);
-                        currRec = rec;
-                        page.rowPos = rowIndex;
-                        page.winInsurance.setTitle('Edit Insurance');
-                        page.winInsurance.show();
-                    }
+                itemdblclick: function(view, record){
+                    currStore = me.insuranceStore;
+                    currModel = 'insuranceModel';
+                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, 'Edit Insurance' );
                 }
             }
         }); // END Insurance Grid
-
-
-        // *************************************************************************************
-        // Insurance Numbers Grid (Tab 2)
-        // *************************************************************************************
-        var InsuranceNumbersGrid = new Ext.create('Ext.grid.Panel', {
-            store		: insuranceNumbersStore,
+        me.InsuranceNumbersGrid = Ext.create('Ext.grid.Panel', {
+            store		: me.insuranceNumbersStore,
             border		: false,
             frame		: false,
-            columns: [{
-                text     : 'Name',
-                flex     : 1,
-                sortable : true,
-                dataIndex: 'name'
-            },{
-                width    : 100,
-                sortable : true,
-                dataIndex: 'address'
-            },{
-                text     : 'Provider #',
-                flex     : 1,
-                width    : 100,
-                sortable : true,
-                dataIndex: 'phone'
-            },{
-                text     : 'Rendering #',
-                flex     : 1,
-                width    : 100,
-                sortable : true,
-                dataIndex: 'phone'
-            },{
-                text     : 'Group #',
-                flex     : 1,
-                width    : 100,
-                sortable : true,
-                dataIndex: 'phone'
-            }],
+            columns: [
+                { text: 'Name', flex: 1, sortable: true, dataIndex: 'name' },
+                { width: 100, sortable: true, dataIndex: 'address' },
+                { text: 'Provider #', flex: 1, width: 100, sortable: true, dataIndex: 'phone' },
+                { text: 'Rendering #', flex: 1, width: 100, sortable: true, dataIndex: 'phone' },
+                { text: 'Group #', flex: 1, width: 100, sortable: true, dataIndex: 'phone' }
+            ],
             viewConfig: { stripeRows: true },
             listeners: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
-                        Ext.getCmp('cmdEdit').enable();
-                        Ext.getCmp('cmdDelete').enable();
-                        var rec = insuranceNumbersStore.getAt(rowIndex);
-                        Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
-                        currRec = rec;
-                        rowPos = rowIndex;
-                    }
-                },
-                itemdblclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        Ext.getCmp('pharmacyForm').getForm().reset(); // Clear the form
-                        Ext.getCmp('cmdEdit').enable();
-                        Ext.getCmp('cmdDelete').enable();
-                        var rec = insuranceNumbersStore.getAt(rowIndex);
-                        Ext.getCmp('pharmacyForm').getForm().loadRecord(rec);
-                        currRec = rec;
-                        rowPos = rowIndex;
-                        winPharmacy.setTitle('Edit Pharmacy');
-                        winPharmacy.show();
-                    }
+                itemdblclick: function(view, record){
+                    currStore = me.insuranceStore;
+                    currModel = 'insuranceNumbersModel';
+                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, 'Add or Edit Insurance' );
                 }
             }
         }); // END Insurance Numbers Grid
-
-        // *************************************************************************************
-        //  X12 Partners Grid (Tab 3)
-        // *************************************************************************************
-        var x12ParnersGrid = new Ext.create('Ext.mitos.GridPanel', {
-            store		: x12PartnersStore,
+        me.x12ParnersGrid = Ext.create('Ext.mitos.GridPanel', {
+            store		: me.x12PartnersStore,
             border		: false,
             frame		: false,
-            columns: [{
-                text     : 'Name',
-                flex     : 1,
-                sortable : true,
-                dataIndex: 'name'
-            },{
-                text     : 'Sender ID',
-                flex     : 1,
-                width    : 100,
-                sortable : true,
-                dataIndex: 'phone'
-            },{
-                text     : 'Receiver ID',
-                flex     : 1,
-                width    : 100,
-                sortable : true,
-                dataIndex: 'phone'
-            },{
-                text     : 'Version',
-                flex     : 1,
-                width    : 100,
-                sortable : true,
-                dataIndex: 'phone'
-            }],
+            columns: [
+                { text: 'Name', flex: 1, sortable: true, dataIndex: 'name' },
+                { text: 'Sender ID', flex: 1, width: 100, sortable: true, dataIndex: 'phone' },
+                { text: 'Receiver ID', flex: 1, width: 100, sortable: true, dataIndex: 'phone' },
+                { text: 'Version', flex: 1, width: 100, sortable: true, dataIndex: 'phone' }
+            ],
             viewConfig: { stripeRows: true },
             listeners: {
-                itemclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        Ext.getCmp('x12PartnersForm').getForm().reset(); // Clear the form
-                        Ext.getCmp('cmdEdit').enable();
-                        Ext.getCmp('cmdDelete').enable();
-                        var rec = x12PartnersStore.getAt(rowIndex);
-                        Ext.getCmp('x12PartnersForm').getForm().loadRecord(rec);
-                        currRec = rec;
-                        rowPos = rowIndex;
-                    }
-                },
-                itemdblclick: {
-                    fn: function(DataView, record, item, rowIndex, e){
-                        Ext.getCmp('x12PartnersForm').getForm().reset(); // Clear the form
-                        Ext.getCmp('cmdEdit').enable();
-                        Ext.getCmp('cmdDelete').enable();
-                        var rec = x12PartnersStore.getAt(rowIndex);
-                        Ext.getCmp('x12PartnersForm').getForm().loadRecord(rec);
-                        currRec = rec;
-                        rowPos = rowIndex;
-                        winX12Partners.setTitle('Edit X12 Partner');
-                        winX12Partners.show();
-                    }
+                itemdblclick: function(view, record){
+                    var title = 'Add or Edit Insurance';
+                    me.onItemdblclick( me.insuranceItems, me.insuranceStore, record, title );
                 }
             }
         }); // END Insurance Numbers Grid
-
-
 
         // *************************************************************************************
         // Tab Panel
         // *************************************************************************************
-        page.tabPanel = new Ext.create('Ext.tab.Panel', {
+        me.praticePanel = Ext.create('Ext.tab.Panel', {
             activeTab	: 0,
-            frame		: true,
-            border		: false,
-            defaults	:{ autoScroll:true },
+            defaults	:{ autoScroll:true, layout:'fit' },
             items:[{
                 title	:'Pharmacies',
                 frame	: false,
                 border	: true,
-                items	: [ page.pharmacyGrid ],
+                items	: [ me.pharmacyGrid ],
                 dockedItems: [{
                     xtype: 'toolbar',
                     dock: 'top',
-                    items: [
-                        page.addPharmacy = new Ext.create('Ext.Button', {
-                            text      : 'Add a Pharmacy',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                page.pharmacyForm.getForm().reset();
-                                page.winPharmacy.show();
-                            }
-                        }),'-',
-                        page.editPharmacy = new Ext.create('Ext.Button', {
-                            text      : 'View / Edit a Pharmacy',
-                            iconCls   : 'edit',
-                            disabled  : true,
-                            handler   : function(){
-                                page.winPharmacy.show();
-                            }
-                        }),'-',
-                        page.deletePharmacy = new Ext.create('Ext.Button', {
-                            text      : 'Delete a Pharmacy',
-                            iconCls   : 'delete',
-                            disabled  : true,
-                            handler   : function(){
-                                Ext.Msg.show({
-                                    title: 'Please confirm...',
-                                    icon: Ext.MessageBox.QUESTION,
-                                    msg:'Are you sure to delete this Pharmacy?',
-                                    buttons: Ext.Msg.YESNO,
-                                    fn:function(btn,msgGrid){
-                                        if(btn=='yes'){
-                                            page.pharmacyStore.remove( currRec );
-                                            page.pharmacyStore.sync();
-                                            page.pharmacyStore.load();
-                                        }
-                                    }
-                                });
-                            }
-                        })
-                    ]
+                    items: [{
+                        xtype       : 'button',
+                        text        : 'Add a Pharmacy',
+                        iconCls     : 'save',
+                        handler: function(){
+                            var form    = me.win.down('form');
+                            currStore = me.pharmacyStore;
+                            currModel = 'pharmacyModel';
+                            me.onNew(form, me.pharmacyItems, currModel, 'Add New Pharmacy');
+                        }
+                    }]
                 }]
             },{
                 title	:'Insurance Companies',
                 frame	: false,
                 border	: true,
-                items	: [ page.insuranceGrid ],
+                items	: [ me.insuranceGrid ],
                 dockedItems: [{
                     xtype: 'toolbar',
                     dock: 'top',
-                    items: [
-                        page.addCompany = new Ext.create('Ext.Button', {
-                            text      : 'Add a Comapny',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                page.insuranceForm.getForm().reset();
-                                page.winInsurance.show();
-                            }
-                        }),'-',
-                        page.editCompany = new Ext.create('Ext.Button', {
-                            text      : 'View / Edit a Company',
-                            iconCls   : 'edit',
-                            disabled  : true,
-                            handler   : function(){
-                                page.winInsurance.show();
-                            }
-                        }),'-',
-                        page.deleteCompany = new Ext.create('Ext.Button', {
-                            text      : 'Delete a Company',
-                            iconCls   : 'delete',
-                            disabled  : true,
-                            handler   : function(){
-                                Ext.Msg.show({
-                                    title: 'Please confirm...',
-                                    icon: Ext.MessageBox.QUESTION,
-                                    msg:'Are you sure to delete this Insurance Company?',
-                                    buttons: Ext.Msg.YESNO,
-                                    fn:function(btn,msgGrid){
-                                        if(btn=='yes'){
-                                            page.insuranceStore.remove( currRec );
-                                            page.insuranceStore.sync();
-                                            page.insuranceStore.load();
-                                        }
-                                    }
-                                });
-                            }
-                        })
-                    ]
+                    items: [{
+                        xtype       : 'button',
+                        text        : 'Add a Comapny',
+                        iconCls     : 'save',
+                        handler: function(){
+                            var form    = me.win.down('form');
+                            currStore = me.insuranceStore;
+                            currModel = 'insuranceModel';
+                            me.onNew(form, me.insuranceItems, currModel, 'Add New Insurance Company');
+                        }
+                    }]
                 }]
             },{
                 title	:'Insurance Numbers',
                 frame	: false,
                 border	: false,
-                items	: [InsuranceNumbersGrid ]
+                items	: [ me.InsuranceNumbersGrid ]
             },{
                 title	:'X12 Partners',
                 frame	: false,
                 border	: false,
-                items	: [ x12ParnersGrid ],
+                items	: [ me.x12ParnersGrid ],
                 dockedItems: [{
                     xtype: 'toolbar',
                     dock: 'top',
-                    items: [
-                        page.addPartner = new Ext.create('Ext.Button', {
-                            text      : 'Add New Partner',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                // TODO //
-                            }
-                        })
-                    ]
+                    items: [{
+                        xtype: 'button',
+                        text      : 'Add New Partner',
+                        iconCls   : 'save',
+                        handler: function(){
+                            var form = me.win.down('form');
+                            me.onNew(form, currModel);
+                        }
+                    }]
                 }]
             },{
                 title	:'Documents',
@@ -816,22 +401,21 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 dockedItems: [{
                     xtype: 'toolbar',
                     dock: 'bottom',
-                    items: [
-                        page.editCategory = new Ext.create('Ext.Button', {
-                            text      : 'Edit Category',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                // TODO //
-                            }
-                        }),'-',
-                        page.updateFiles = new Ext.create('Ext.Button', {
-                            text      : 'Update Files',
-                            iconCls   : 'save',
-                            handler   : function(){
-                                // TODO //
-                            }
-                        })
-                    ]
+                    items: [{
+                        xtype: 'button',
+                        text      : 'Edit Category',
+                        iconCls   : 'save',
+                        handler   : function(){
+                            me.openWin();
+                        }
+                    },'-',{
+                        xtype: 'button',
+                        text      : 'Update Files',
+                        iconCls   : 'save',
+                        handler   : function(){
+                            me.openWin();
+                        }
+                    }]
                 }]
             },{
                 title	:'HL7 Viewer',
@@ -843,26 +427,151 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 dockedItems: [{
                     xtype: 'toolbar',
                     dock: 'bottom',
-                    items: [
-                        page.clearHl7Data = new Ext.create('Ext.Button', {
+                    items: [{
+                        xtype: 'button',
                             text      : 'Clear HL7 Data',
                             iconCls   : 'save',
                             handler   : function(){
-                                // TODO //
+                                me.openWin();
                             }
-                        }),'-',
-                        page.parseHl7Data = new Ext.create('Ext.Button', {
+                    },'-',{
+                        xtype: 'button',
                             text      : 'Parse HL7',
                             iconCls   : 'save',
                             handler   : function(){
-                                // TODO //
+                                me.openWin();
                             }
-                        })
-                    ]
+                    }]
                 }]
             }]
         });
-        page.pageBody = [ page.tabPanel ];
-        page.callParent(arguments);
-    } // end of initComponent
+        
+        me.win = Ext.create('Ext.mitos.window.Window', {
+            width       : 450,
+
+            items:[{
+                xtype:'mitos.form',
+                defaults: { labelWidth: 89, anchor: '100%', layout: {
+                        type: 'hbox',
+                        defaultMargins: {top: 0, right: 5, bottom: 0, left: 0}
+                    }
+                }
+            }],
+            buttons: [{
+                text: 'save',
+                cls : 'winSave',
+                handler: function(){
+                    var form = me.win.down('form').getForm();
+                    if (form.isValid()) {
+                        me.onSave(form, currStore);
+                        me.action('close');
+                    }
+                }
+            },'-',{
+                text: 'Delete',
+                cls : 'winDelete',
+                itemId: 'delete',
+                scope: me,
+                handler: function(){
+                    var form = me.win.down('form').getForm();
+                    me.onDelete(form, currStore);
+                }
+            }],
+            listeners:{
+                scope:me,
+                close:function(){
+                    me.action('close');
+                }
+            }
+        }); // END WINDOW
+
+        me.pageBody = [ me.praticePanel ];
+        me.callParent(arguments);
+    }, // end of initComponent
+
+    onNew:function(form, formItmes, model, title){
+        this.setForm(form, formItmes, title);
+        form.getForm().reset();
+        var newModel  = Ext.ModelManager.create({}, model );
+        form.getForm().loadRecord(newModel);
+        this.action('new');
+        this.win.show();
+    },
+
+    onSave:function(form, store){
+
+        var record      = form.getRecord(),
+            values      = form.getValues(),
+            storeIndex  = store.indexOf(record);
+        if (storeIndex == -1){
+            store.add(values);
+        }else{
+            record.set(values);
+        }
+        store.sync();
+        store.load();
+        this.win.close();
+    },
+
+    onDelete:function(form, store){
+        Ext.Msg.show({
+            title   : 'Please confirm...',
+            icon    : Ext.MessageBox.QUESTION,
+            msg     : 'Are you sure to delete this?',
+            buttons : Ext.Msg.YESNO,
+            scope   : this,
+            fn:function(btn){
+                if(btn=='yes'){
+                    var currentRec = form.getRecord();
+                    store.remove(currentRec);
+                    store.destroy();
+                    this.win.close();
+                }
+            }
+        });
+    },
+
+    onItemdblclick:function(formItmes, store, record, title){
+        var form = this.win.down('form');
+        this.setForm(form, formItmes, title);
+        form.getForm().loadRecord(record);
+        this.action('old');
+        this.win.show();
+    },
+    setForm:function(form, formItmes, title){
+        form.removeAll();
+        form.add(formItmes);
+        form.doLayout();
+        form.up('window').setTitle(title);
+    },
+    openWin:function(){
+        this.win.show();
+    },
+    action:function(action) {
+        var win = this.win,
+            form = win.down('form'),
+            winTbar = win.down('toolbar'),
+            deletebtn = winTbar.getComponent('delete');
+
+        if (action == 'new') {
+            deletebtn.disable();
+        } else if (action == 'old') {
+            deletebtn.enable();
+        } else if (action == 'close') {
+            form.getForm().reset();
+        }
+    },
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(callback){
+        this.pharmacyStore.load();
+        this.insuranceStore.load();
+        this.insuranceNumbersStore.load();
+        this.x12PartnersStore.load();
+        callback(true);
+    }
 }); // end of PracticePage

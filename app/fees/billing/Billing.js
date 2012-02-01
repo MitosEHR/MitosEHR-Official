@@ -10,15 +10,13 @@ Ext.define('Ext.mitos.panel.fees.billing.Billing',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelBilling',
     pageTitle   : 'Billing',
-    pageLayout  : 'border',
-
     uses        : [ 'Ext.mitos.CRUDStore', 'Ext.mitos.GridPanel' ],
     initComponent: function(){
         var page = this;
         //******************************************************************
         // Stores...
         //******************************************************************
-        page.billingStore = new Ext.create('Ext.mitos.CRUDStore',{
+        page.billingStore = Ext.create('Ext.mitos.CRUDStore',{
             fields: [
                 {name: 'id',      		type: 'int'},
                 {name: 'date',          type: 'date', dateFormat: 'c'},
@@ -35,50 +33,13 @@ Ext.define('Ext.mitos.panel.fees.billing.Billing',{
           //destroy		: <-- delete not allow -->
             autoLoad	: false
         });
-        //******************************************************************
-        // Search Form...
-        //******************************************************************
-        page.billingFormPanel = Ext.create('Ext.form.FormPanel', {
-            title       : '<?php i18n("Search Criteria"); ?>',
-            region		: 'north',
-            frame 		: true,
-            height      : 100,
-            margin		: '0 0 3 0',
-            items		:[{
-                xtype: 'textfield', hidden: true, name: 'id'
-            },{
 
-            }],
-            dockedItems: [{
-                xtype: 'toolbar',
-                dock: 'bottom',
-                items: [
-                    new Ext.create('Ext.Button', {
-                        text      	: '<?php i18n("Search"); ?>',
-                        iconCls   	: 'save',
-                        handler   : function(){
-                            var form = this.up('form').getForm();
-                        }
-                    }),'-',
-                    new Ext.create('Ext.Button', {
-                        text		: '<?php i18n("Reset"); ?>',
-                        iconCls   	: 'save',
-                        tooltip		: '<?php i18n("Start a New Search"); ?>',
-                        handler		: function(){
-                            var form = this.up('form').getForm();
-                            form.reset();
-                        }
-                    })
-                ]
-            }]
-        });
+
         //******************************************************************
         // Grid...
         //******************************************************************
-        page.billingGrid = new Ext.create('Ext.mitos.GridPanel',{
+        page.billingGrid = Ext.create('Ext.mitos.GridPanel',{
             title           : 'Billing History',
-            margin          : '3 0 0 0',
-            region	        : 'center',
             store           : page.billingStore,
             columns : [
                 { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
@@ -95,7 +56,16 @@ Ext.define('Ext.mitos.panel.fees.billing.Billing',{
                 }
             }
         });
-        page.pageBody = [ page.billingFormPanel, page.billingGrid ];
+        page.pageBody = [  page.billingGrid ];
         page.callParent(arguments);
-    } // end of initComponent
+    }, // end of initComponent
+    /**
+    * This function is called from MitosAPP.js when
+    * this panel is selected in the navigation panel.
+    * place inside this function all the functions you want
+    * to call every this panel becomes active
+    */
+    onActive:function(callback){
+        callback(true);
+    }
 }); //ens oNotesPage class

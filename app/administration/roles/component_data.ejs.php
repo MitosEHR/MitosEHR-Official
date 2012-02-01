@@ -12,7 +12,7 @@ session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
 include_once($_SESSION['site']['root']."/classes/I18n.class.php");
-include_once($_SESSION['site']['root']."/lib/acl/class.inc.php");
+//include_once($_SESSION['site']['root']."/lib/acl/class.inc.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop

@@ -38,5 +38,3 @@ switch ($_GET['task']) {
 	break;
 	
 }
-
-?>
