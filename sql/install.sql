@@ -3932,7 +3932,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `default_warehouse` varchar(31) NOT NULL DEFAULT '',
   `irnpool` varchar(31) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=89 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `users_facility`;
 CREATE TABLE IF NOT EXISTS `users_facility` (
