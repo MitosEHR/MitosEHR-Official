@@ -918,7 +918,7 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                         var success = eval('(' + response.responseText + ')').success;
                         if(success){
                             // TODO: after close encounter logic
-                            Ext.TaskManager.stop(this.timerTask);
+                            Ext.TaskManager.stop(me.timerTask);
                         }else{
                             Ext.Msg.show({
                                 title:'Oops!',

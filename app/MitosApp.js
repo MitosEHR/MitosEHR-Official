@@ -86,7 +86,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 me.checkSession();
                 me.patientPoolStore.load();
             },
-            interval    : 10000
+            interval    : 1000
         });
 
 
@@ -469,18 +469,8 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
                 Ext.create('Ext.mitos.panel.fees.payments.Payments'),
 
-            /**
-             * Administration Area
-             */
-                Ext.create('Ext.mitos.panel.administration.facilities.Facilities'),     // done
-                Ext.create('Ext.mitos.panel.administration.globals.Globals'),           // done
-                Ext.create('Ext.mitos.panel.administration.layout.Layout'),             // working
-                Ext.create('Ext.mitos.panel.administration.lists.Lists'),               // working
-                Ext.create('Ext.mitos.panel.administration.log.Log'),                   // done
-                Ext.create('Ext.mitos.panel.administration.practice.Practice'),         // done
-                Ext.create('Ext.mitos.panel.administration.roles.Roles'),               // done
-                Ext.create('Ext.mitos.panel.administration.services.Services'),         // done
-                Ext.create('Ext.mitos.panel.administration.users.Users'),               // done
+
+
 
             /**
              * Miscellaneous
@@ -498,6 +488,37 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             }
         });
 
+
+        /**
+         * Add Administration Area Panels
+         */
+        if(perm.access_gloabal_settings){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.globals.Globals'));
+        }
+        if(perm.access_facilities){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.facilities.Facilities'));
+        }
+        if(perm.access_users){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.users.Users'));
+        }
+        if(perm.access_practice){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.practice.Practice'));
+        }
+        if(perm.access_services){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.services.Services'));
+        }
+        if(perm.access_roles){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.roles.Roles'));
+        }
+        if(perm.access_layouts){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.layout.Layout'));
+        }
+        if(perm.access_lists){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.lists.Lists'));
+        }
+        if(perm.access_event_log){
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.log.Log'));
+        }
 
 
         /**
@@ -606,7 +627,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
     sendPatientTo:function(btn){
-        var area = btn.action
+        var area = btn.action;
         alert('TODO: Patient will be sent to '+area );
     },
 
@@ -649,7 +670,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             node        = treeStore.getNodeById(id);
 
         sm.select(node);
-        if(typeof callback == 'function') callback(true);
+        if(typeof callback == 'function'){
+            callback(true);
+        }
     },
 
     navNodeDefault:function(){
@@ -670,7 +693,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 cardCmp = Ext.getCmp(card);
 
             this.currCardCmp = cardCmp;
-  
+
             layout.setActiveItem(card);
 
             cardCmp.onActive(function(success){
@@ -798,7 +821,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             defaultValue: function(v){
                 return (v) ? v : 'No Patient Selected';
             }
-        })
+        });
     },
 
     appLogout:function(){

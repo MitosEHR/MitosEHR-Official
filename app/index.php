@@ -54,9 +54,13 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
 
+
+
         <!-- Languages -->
         <script type="text/javascript" src="langs/<?php echo $_SESSION['lang']['code'] ?>.js"></script>
 
+        <!-- JS Registry -->
+        <script type="text/javascript" src="registry.js.php"></script>
 
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -69,6 +73,14 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
                     'Extensible'        : 'lib/extensible-1.5.0/src'
                 }
             });
+
+            window.onbeforeunload = function() {
+                Ext.Ajax.request({
+                    url     : 'app/login/data.php?task=unAuth'
+                });
+                alert('You have been logged off MitosEHR');
+
+            };
         </script>
 
         <script type="text/javascript" src="classes/ext/NodeDisabled.js"></script>

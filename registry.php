@@ -12,14 +12,25 @@
  *
  * this returns the current folder and defined it as a root.
  */
-$d = dir("sites/");
+$d = "sites/";
+if(!file_exists($d)){
+    mkdir($d, 0755);
+}
+$d = dir($d);
+
 $sites = array();
 $confs = array();
 
 while (false !== ($entry = $d->read())) {
-	if ( $entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){ $confs[] = $entry . "/conf.php"; }
-		if ( $entry != "." && $entry != ".." && $entry == "default" && $entry != "README" && $entry != ".DS_Store"){ $default = $entry; }
-		if ( $entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){ $sites[] = $entry; }
+	if($entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){
+        $confs[] = $entry . "/conf.php";
+    }
+    if($entry != "." && $entry != ".." && $entry == "default" && $entry != "README" && $entry != ".DS_Store"){
+        $default = $entry;
+    }
+    if($entry != "." && $entry != ".." && $entry != "README" && $entry != ".DS_Store"){
+        $sites[] = $entry;
+    }
 }
 $_SESSION['site']['self']       = $_SERVER['PHP_SELF'];
 $_SESSION['site']['sites']      = $sites;
@@ -28,9 +39,6 @@ $_SESSION['site']['sites_conf'] = $confs;
 $_SESSION['site']['root']       = str_replace('\\','/',dirname(__FILE__));
 $_SESSION['site']['url']        = "http://" . $_SERVER['HTTP_HOST'] . str_replace("/index.php", "", $_SERVER['PHP_SELF']);
 $_SESSION['site']['facility']   = 'default'; // THIS IS A TEMP VARIABLE
-
-
-
 /**
  * Directory related variables
  */
