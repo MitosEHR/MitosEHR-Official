@@ -80,18 +80,17 @@ Ext.define('Ext.mitos.RenderPanel', {
 
     getFormItems: function(formPanel ,formToRender, callback){
         formPanel.removeAll();
-        Ext.Ajax.request({
-            url     : 'classes/formLayoutEngine.class.php',
-            params  : {form:formToRender},
-            scope   : this,
-            success : function(response){
-                formPanel.add(eval(response.responseText));
-                formPanel.doLayout();
+        /**
+         * Ext.direct function
+         */
+        formLayoutEngine.getFields({formToRender:formToRender}, function(provider, response){
+            formPanel.add(eval(response.result));
+            formPanel.doLayout();
 
-                if(typeof callback == 'function'){
-                    callback(true);
-                }
+            if(typeof callback == 'function'){
+                callback(true);
             }
+
         });
     },
 

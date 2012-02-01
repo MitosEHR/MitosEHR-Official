@@ -14,13 +14,18 @@
  * modified: Ernesto J Rodriguez
  * 
  */
+if(!isset($_SESSION)){
+    session_name ("MitosEHR" );
+    session_start();
+    session_cache_limiter('private');
+}
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 class formLayoutBuilder extends dbHelper {
 
     private $form_data_table;
     private $col;
 
     public function addField($data){
-
         $this->getFormDataTable($data['form_id']);
         $this->col  = $data['name'];
         $container  = false;
@@ -92,7 +97,6 @@ class formLayoutBuilder extends dbHelper {
         }
     }
 
-
     /**
      * This function will update the fields and print
      * the success callback if no errors found alog the way
@@ -100,7 +104,6 @@ class formLayoutBuilder extends dbHelper {
      * @param $data
      */
     public function updateField($data){
-
         /**
          * sinatizedData check the data array and if
          * the value is empty delete it form the array
@@ -159,7 +162,6 @@ class formLayoutBuilder extends dbHelper {
 
         print '{"success": true }';
     }
-
 
     /**
      * This function will delete the field and print success is no
@@ -228,7 +230,6 @@ class formLayoutBuilder extends dbHelper {
         print '{"success":true}';
     }
 
-
     /**
      * This function sorts the fields when the drag and drop is use and
      * print success if no error found along the way.
@@ -266,7 +267,6 @@ class formLayoutBuilder extends dbHelper {
 
         print '{"success":true}';
     }
-
 
     /**
      * @param $conf
@@ -428,4 +428,108 @@ class formLayoutBuilder extends dbHelper {
             return;
         }
     }
+
+    public function getForms(){
+        $this->setSQL("SELECT * FROM forms_layout");
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+        }
+        return $rows;
+    }
+
+    public function getParentFields(stdClass $params){
+        $this->setSQL("Select CONCAT(fo.ovalue, ' (',ff.xtype ,')' ) AS name, ff.id as value
+                         FROM forms_fields AS ff
+                    LEFT JOIN forms_field_options AS fo
+                           ON ff.id = fo.field_id
+                    LEFT JOIN forms_layout AS fl
+                           ON fl.id = ff.form_id
+                        WHERE (fl.name  = '$params->currForm' OR fl.id    = '$params->currForm')
+                          AND (ff.xtype = 'fieldcontainer'    OR ff.xtype = 'fieldset')
+                          AND (fo.oname = 'title'             OR fo.oname = 'fieldLabel')
+                     ORDER BY pos");
+        $rows = array();
+        array_push($rows, array('name' => 'Root', 'value' => 0));
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+        }
+       return $rows;
+    }
+
+
+    public function getFormFieldsTree(stdClass $params){
+        $fields = array();
+
+        $this->setSQL("Select * FROM forms_fields WHERE form_id = '$params->currForm' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
+        $results = $this->execStatement(PDO::FETCH_ASSOC);
+        foreach($results as $item){
+            $opts = $this->getItmesOptions($item['id']);
+            foreach($opts as $opt => $val){
+                $item[$opt] = $val;
+            }
+            $item['children'] = $this->getChildItems($item['id']);
+            if($item['children'] == null) {
+                unset($item['children']);
+                if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
+            }else{
+                if($item['collapsed'] == 'collapsed'){
+                    $item['expanded'] = false;
+                }else{
+                    $item['expanded'] = true;
+                }
+            }
+            array_push($fields,$item);
+        }
+        return $fields;
+    }
+
+    /**
+     * @param $parent
+     * @return arrays
+     */
+    private function getChildItems($parent){
+        $items = array();
+        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+            $opts = $this->getItmesOptions($item['id']);
+            foreach($opts as $opt => $val){
+                $item[$opt] = $val;
+            }
+            $item['children'] = $this->getChildItems($item['id']);
+            if($item['children'] == null) {
+                unset($item['children']);
+                if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
+            }else{
+                if($item['collapsed'] == 'true'){
+                    $item['expanded'] = false;
+                }else{
+                    $item['expanded'] = true;
+                }
+            }
+            array_push($items,$item);
+        }
+        return $items;
+    }
+
+    /**
+     * @param $item_id
+     * @return array
+     */
+    private function getItmesOptions($item_id){
+        $foo = array();
+        $this->setSQL("Select * FROM forms_field_options WHERE field_id = '$item_id'");
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $option){
+            if(is_numeric($option['ovalue'])){      // if the string is numeric intval() the value to remove the comas
+                $option['ovalue'] = intval($option['ovalue']);
+            }elseif($option['ovalue'] == 'true'){   // if the sring is true let change the value to a bool
+                $option['ovalue'] = true;
+            }elseif($option['ovalue'] == 'false'){  // if the sring is false let change the value to a bool
+                $option['ovalue'] = false;
+            }
+            $foo[$option['oname']] = $option['ovalue'];
+        }
+        return $foo;
+    }
+
 }

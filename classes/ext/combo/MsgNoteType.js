@@ -11,16 +11,24 @@ Ext.define('Ext.mitos.combo.MsgNoteType',{
     uses        : 'Ext.mitos.restStoreModel',
     initComponent: function(){
     	var me = this;
-        me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('MsgNoteTypeModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'option_id', type: 'string' },
                 {name: 'title',     type: 'string' }
             ],
-            model		: 'msgNoteType',
-            idProperty	: 'option_id',
-            url	    	: 'lib/layoutEngine/listOptions.json.php',
-            extraParams	: { filter:"note_type"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getMsgNoteType
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'MsgNoteTypeModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
@@ -30,7 +38,7 @@ Ext.define('Ext.mitos.combo.MsgNoteType',{
             displayField: 'title',
             emptyText   : 'Select',
             store       : me.store
-		});
+		},null);
 		me.callParent();
 	} // end initComponent
 });

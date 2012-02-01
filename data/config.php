@@ -1,0 +1,137 @@
+<?php
+$API = array(
+
+    /**
+     * Form layout Engine Class
+     */
+    'formLayoutEngine'=>array(
+        'methods'=>array(
+            'getFields'=>array(
+                'len'=>1
+            )
+        )
+    ),
+    /**
+     * Form layout Builder Class
+     */
+    'formLayoutBuilder'=>array(
+        'methods'=>array(
+            'getFormDataTable'=>array(
+                'len'=>1
+            ),
+            'updateField'=>array(
+                'len'=>1
+            ),
+            'deleteField'=>array(
+                'len'=>1
+            ),
+            'sortFields'=>array(
+                'len'=>1
+            ),
+            'getForms'=>array(
+                'len'=>0
+            ),
+            'getParentFields'=>array(
+                'len'=>1
+            ),
+            'getFormFieldsTree'=>array(
+                'len'=>1
+            )
+        )
+    ),
+
+    /**
+     * Patient Class
+     */
+    'Patient'=>array(
+        'methods'=>array(
+            'patientLiveSearch'=>array(
+                'len'=>1
+            ),
+            'currPatientSet'=>array(
+            	'len'=>1
+            ),
+            'currPatientUnset'=>array(
+            	'len'=>0
+            )
+
+        )
+    ),
+
+    /**
+     * Authorization Procedures Class
+     */
+    'authProcedures'=>array(
+        'methods'=>array(
+            'auth'=>array(
+                'len'=>1
+            ),
+            'ckAuth'=>array(
+                'len'=>0
+            ),
+            'unAuth'=>array(
+                'len'=>0
+            )
+
+        )
+    ),
+
+    /**
+     * Comobo Boxes Data Class
+     */
+    'CombosData'=>array(
+        'methods'=>array(
+            'getUsers'=>array(
+                'len'=>0
+            ),
+            'getList'=>array(
+                'len'=>0
+            ),
+            'getMessageStatus'=>array(
+                'len'=>0
+            ),
+            'getTitles'=>array(
+                'len'=>0
+            ),
+            'getTypes'=>array(
+                'len'=>0
+            ),
+            'getMsgNoteType'=>array(
+                'len'=>0
+            ),
+            'getFacilities'=>array(
+                'len'=>0
+            ),
+            'getRoles'=>array(
+                'len'=>0
+            ),
+            'getCodeTypes'=>array(
+                'len'=>0
+            ),
+            'getCalendarCategories'=>array(
+                'len'=>0
+            ),
+            'getCalendarStatus'=>array(
+                'len'=>0
+            ),
+            'getAuthorizations'=>array(
+                'len'=>0
+            ),
+            'getSeeAuthorizations'=>array(
+                'len'=>0
+            ),
+            'getTaxIds'=>array(
+                'len'=>0
+            ),
+            'getFiledXtypes'=>array(
+                'len'=>0
+            ),
+            'getLanguages'=>array(
+                'len'=>0
+            ),
+            'getPosCodes'=>array(
+                'len'=>0
+            ),
+        )
+    )
+);

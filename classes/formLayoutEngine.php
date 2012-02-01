@@ -13,11 +13,14 @@
  * author: Ernesto J Rodriguez
  *
  */
-session_name ( "MitosEHR" );
-session_start();
-session_cache_limiter('private');
+if(!isset($_SESSION)){
+    session_name ( "MitosEHR" );
+    session_start();
+    session_cache_limiter('private');
+}
+
 /** @noinspection PhpIncludeInspection */
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 
 class formLayoutEngine extends dbHelper {
     /**
@@ -29,10 +32,11 @@ class formLayoutEngine extends dbHelper {
      * the options and leave the double quotes to all options values,
      * unless the value is a int or bool.
      *
-     * @param $formPanel
+     * @param \stdClass $params
+     * @internal param $formPanel
      * @return string
      */
-    function getFields($formPanel = null){
+    function getFields(stdClass $params){
         /**
          * define $itmes as an array to pushh all the $item into.
          */
@@ -44,7 +48,7 @@ class formLayoutEngine extends dbHelper {
                          FROM forms_fields AS ff
                     LEFT JOIN forms_layout AS fl
                            ON ff.form_id = fl.id
-                        WHERE (fl.name = '$formPanel' OR fl.id = '$formPanel')
+                        WHERE (fl.name = '$params->formToRender' OR fl.id = '$params->formToRender')
                           AND (ff.item_of IS NULL OR ff.item_of = '0')
                      ORDER BY pos ASC, ff.id ASC");
         /**
@@ -228,12 +232,4 @@ class formLayoutEngine extends dbHelper {
         }
         return $item;
     }
-}
-/**
- * make sure the $_REQUEST['form'] is set, then create an instance of
- * layoutEngine class and request the fields
- */
-if(isset($_REQUEST['form'])){
-    $formFields = new formLayoutEngine();
-    print $formFields->getFields($_REQUEST['form']);
 }

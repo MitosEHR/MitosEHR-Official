@@ -23,7 +23,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.combo.Roles',
         'Ext.mitos.combo.TaxId',
         'Ext.mitos.combo.Lists',
-        'Ext.mitos.combo.PermValues',
         'Ext.mitos.combo.posCodes',
         'Ext.mitos.combo.Titles',
         'Ext.mitos.combo.CodesTypes',
@@ -86,7 +85,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 me.checkSession();
                 me.patientPoolStore.load();
             },
-            interval    : 1000
+            interval    : 10000
         });
 
 
@@ -633,7 +632,17 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
 
     openPatientSummary:function(){
-        this.remoteNavNodeSelecte('panelSummary');
+        var me = this;
+
+        if(me.currCardCmp == Ext.getCmp('panelSummary')){
+            var same = true;
+        }
+
+        me.remoteNavNodeSelecte('panelSummary',function(){
+            if(same){
+                me.currCardCmp.onActive();
+            }
+        });
     },
 
     stowPatientRecord:function(){
@@ -733,43 +742,49 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
     liveSearchSelect:function(combo, selection) {
-        var post = selection[0],
-            btn  = this.Header.getComponent('patientButton');
+        var me   = this,
+            post = selection[0],
+            btn  = me.Header.getComponent('patientButton');
 
         if (post) {
-            Ext.Ajax.request({
-                scope   : this,
-                url     : Ext.String.format('app/search/data.php?task=set&pid={0}', post.get('pid')),
-                success : function(){
+            /**
+             * Ext.direct function
+             * @param pid int
+             */
+            Patient.currPatientSet({pid: post.get('pid')}, function(){
+                me.currPatient = {
+                    pid : post.get('pid'),
+                    name: post.get('fullname')
+                };
 
-                    this.currPatient = {
-                        pid : post.get('pid'),
-                        name: post.get('fullname')
-                    };
+                btn.update( {name:post.get('fullname'), info:'('+post.get('pid')+')'} );
+                btn.enable();
 
-                    btn.update( {name:post.get('fullname'), info:'('+post.get('pid')+')'} );
-                    btn.enable();
-
-                    this.openPatientSummary();
-                }
+                me.openPatientSummary();
             });
-            Ext.data.Request();
         }
     },
 
 
-    patientUnset:function(){
-        var btn =  this.Header.getComponent('patientButton');
+    setCurrPatient:function(pid, fullname, callback){
+        var btn  = this.Header.getComponent('patientButton');
 
-        Ext.Ajax.request({
-            url    : 'app/search/data.php?task=reset',
-            scope  : this,
-            success: function(){
-                this.currPatient = null;
-                btn.update({name:'No Patient Selected', info:'(record number)'});
-                btn.disable();
-            }
-        });
+        this.currPatient = {
+            pid : pid,
+            name: fullname
+        };
+
+        btn.update( {name:fullname, info:'(' + pid + ')'} );
+        btn.enable();
+
+        callback(true);
+    },
+
+    patientUnset:function(){
+        /**
+         * Ext.direct function
+         */
+        Patient.currPatientUnset();
     },
 
 
@@ -800,11 +815,15 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
 
     checkSession: function(){
-        Ext.Ajax.request({
-            url     : 'app/login/data.php?task=ckAuth',
-            success : function(response){
-                if(response.responseText == 'exit'){ window.location="app/login/data.php?task=unAuth"; }
-            }
+        /**
+         * Ext.direct functions
+         */
+        authProcedures.ckAuth(function(provider, response) {
+            if(!response.result.authorized){
+                authProcedures.unAuth(function(){
+                    window.location="./"
+                });
+            };
         });
     },
 
@@ -836,19 +855,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         });
     },
 
-    setCurrPatient:function(pid, fullname, callback){
-        var btn  = this.Header.getComponent('patientButton');
-
-        this.currPatient = {
-            pid : pid,
-            name: fullname
-        };
-
-        btn.update( {name:fullname, info:'(' + pid + ')'} );
-        btn.enable();
-
-        callback(true);
-    },
 
     /**
      *

@@ -22,7 +22,7 @@ Ext.define('Ext.mitos.combo.TransmitMedthod',{
     		queryMode: 'local',
     		emptyText:'Select', 
     		store: me.storeTrsmit
-		});
+		}, null);
 		me.callParent();
 	} // end initComponent
 });

@@ -8,7 +8,7 @@
 //
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //**********************************************************************************************************************
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 //--------------------------------------------------------------------------------
 // Database class instance
 //--------------------------------------------------------------------------------

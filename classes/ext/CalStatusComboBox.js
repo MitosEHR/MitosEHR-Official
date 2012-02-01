@@ -11,34 +11,28 @@ Ext.define('Ext.mitos.CalStatusComboBox',{
     initComponent: function(){	
     	var me = this;
 
-            if (!Ext.ModelManager.isRegistered('Titles')){
-                Ext.define("Titles", {extend: "Ext.data.Model",
-                    fields: [
-                        {name: 'option_id', type: 'string'},
-                        {name: 'title', type: 'string'}
-                    ],
-                    idProperty: 'option_id'
-                });
+        Ext.define('CalendarStatusModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'option_id', type: 'string'},
+                {name: 'title', type: 'string'}
+            ],
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getCalendarStatus
+                }
             }
-			me.store = new Ext.data.Store({
-				model		: 'Titles',
-				proxy		: {
-					type	: 'ajax',
-					url			: 'lib/layoutEngine/listOptions.json.php',
-                    extraParams	: {"filter": "apptstat"},
-					reader	: {
-                        type			: 'json',
-                        idProperty		: 'option_id',
-                        totalProperty	: 'totals',
-                        root			: 'row'
-					}
-				},
-				autoLoad: true
-			}); // end storeFacilities
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'CalendarStatusModel',
+            autoLoad: true
+        });
 
     	Ext.apply(this, {
     		store: me.store
-		});
+		},null);
 		me.callParent();
 	} // end initComponent
 }); 

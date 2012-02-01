@@ -12,7 +12,7 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 
 class Person extends dbHelper {
 
@@ -22,7 +22,7 @@ class Person extends dbHelper {
      * @param $lname
      * @return string
      */
-    protected function fullname($fname, $mname, $lname){
+    public static function fullname($fname, $mname, $lname){
         if($_SESSION['global_settings'] && $_SESSION['global_settings']['fullname']){
             switch($_SESSION['global_settings']['fullname']){
                 case '0':

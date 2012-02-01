@@ -12,7 +12,7 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once($_SESSION['site']['root']."/classes/Person.class.php");
+include_once($_SESSION['site']['root']."/classes/Person.php");
 
 class Patient extends Person {
 
@@ -25,14 +25,16 @@ class Patient extends Person {
     }
 
     /**
-     * @param $pid
+     * @param \stdClass $params
+     * @internal param $pid
      * @return mixed
      */
-    public function currPatientSet($pid){
-        $this->setSQL("SELECT fname,mname,lname FROM form_data_demographics WHERE pid = '$pid'");
+    public function currPatientSet(stdClass $params){
+
+        $this->setSQL("SELECT fname,mname,lname FROM form_data_demographics WHERE pid = '$params->pid'");
         $p = $this->fetch();
         $fullname = $this->fullname($p['fname'],$p['mname'],$p['lname']);
-        $_SESSION['patient']['pid']  = $pid;
+        $_SESSION['patient']['pid']  = $params->pid;
         $_SESSION['patient']['name'] = $fullname;
         return;
     }
@@ -47,38 +49,39 @@ class Patient extends Person {
     }
 
     /**
-     * @param $search
-     * @param $start
-     * @param $limit
+     * @param \stdClass $params
+     * @internal param $search
+     * @internal param $start
+     * @internal param $limit
      * @return array
      */
-    public function patientLiveSearch($search, $start, $limit){
+    public function patientLiveSearch(stdClass $params){
         $this->setSQL("SELECT count(pid) as total
                              FROM form_data_demographics
-                            WHERE fname LIKE '".$search."%'
-                               OR lname LIKE '".$search."%'
-                               OR mname LIKE '".$search."%'
-                               OR pid 	LIKE '".$search."%'
-                               OR SS 	LIKE '%".$search."'");
+                            WHERE fname LIKE '$params->query%'
+                               OR lname LIKE '$params->query%'
+                               OR mname LIKE '$params->query%'
+                               OR pid 	LIKE '$params->query%'
+                               OR SS 	LIKE '%$params->query'");
         $total = $this->rowCount();
         // ------------------------------------------------------------------------------
         // sql statement and json to get patients
         // ------------------------------------------------------------------------------
         $this->setSQL("SELECT pid,pubpid,fname,lname,mname,DOB,SS
                              FROM form_data_demographics
-                            WHERE fname LIKE '".$search."%'
-                               OR lname LIKE '".$search."%'
-                               OR mname LIKE '".$search."%'
-                               OR pid 	LIKE '".$search."%'
-                               OR SS 	LIKE '%".$search."'
-                            LIMIT ".$start.",".$limit);
+                            WHERE fname LIKE '$params->query%'
+                               OR lname LIKE '$params->query%'
+                               OR mname LIKE '$params->query%'
+                               OR pid 	LIKE '$params->query%'
+                               OR SS 	LIKE '%$params->query'
+                            LIMIT $params->start,$params->limit");
         $rows = array();
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
             $row['fullname'] = $this->fullname($row['fname'],$row['mname'],$row['lname']);
             unset($row['fname'],$row['mname'],$row['lname']);
             array_push($rows, $row);
         }
-        return array('totals'=>$total,'row'=>$rows);
+        return $rows;
     }
 
 }

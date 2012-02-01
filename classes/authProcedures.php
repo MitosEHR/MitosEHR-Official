@@ -6,7 +6,12 @@
  * Date: 1/13/12
  * Time: 8:41 AM
  */
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+if(!isset($_SESSION)){
+    session_name ("MitosEHR" );
+    session_start();
+    session_cache_limiter('private');
+}
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 include_once($_SESSION['site']['root']."/classes/AES.class.php");
 
 class authProcedures {
@@ -120,11 +125,8 @@ class authProcedures {
      * @return mixed
      */
     public static function unAuth(){
-        $return = $_SESSION['site']['url'];
         session_unset();
         session_destroy();
-
-        header("Location: $return");
         return;
     }
 
@@ -133,6 +135,7 @@ class authProcedures {
      * @return int
      */
     public static function ckAuth(){
+
         $_SESSION['site']['flops']++;
         //****************************************************************
         // If the session has passed 60 flops, with out any activity exit
@@ -140,8 +143,10 @@ class authProcedures {
         //
         // return an exit code
         //****************************************************************
-        if($_SESSION['site']['flops'] >= 180) {
-            return print "exit";
+        if($_SESSION['site']['flops'] < 180) {
+            return array('authorized' => true);
+        }else{
+            return array('authorized' => false);
         }
     }
 }

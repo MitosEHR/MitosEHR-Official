@@ -11,16 +11,24 @@ Ext.define('Ext.mitos.combo.TaxId',{
     uses        : 'Ext.mitos.restStoreModel',
     initComponent: function(){
     	var me = this;
-        me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('TaxIdsModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'option_id', type: 'string' },
                 {name: 'title',     type: 'string' }
             ],
-            model		: 'posCodes',
-            idProperty	: 'option_id',
-            url	    	: 'app/administration/facilities/component_data.ejs.php',
-            extraParams	: { task:"taxid"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getTaxIds
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'TaxIdsModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
@@ -30,7 +38,7 @@ Ext.define('Ext.mitos.combo.TaxId',{
             displayField: 'title',
             emptyText   : 'Select',
             store       : me.store
-		});
+		},null);
 		me.callParent();
 	} // end initComponent
 });
