@@ -11,7 +11,7 @@
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 include_once($_SESSION['site']['root']."/classes/password.class.php");
 require_once($_SESSION['site']['root']."/classes/AES.class.php");
 //-------------------------------------------

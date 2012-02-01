@@ -12,7 +12,7 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once($_SESSION['site']['root']."/classes/Patient.class.php");
+include_once($_SESSION['site']['root']."/classes/Patient.php");
 include_once($_SESSION['site']['root']."/classes/AES.class.php");
 
 class Encounter extends Patient{

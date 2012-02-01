@@ -24,7 +24,7 @@ session_cache_limiter('private');
 // **************************************************************************************
 if(isset($_REQUEST)){$filter = $_REQUEST['filter'];}else{return;}
 
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 
 // **************************************************************************************
 // Reset session count 10 secs = 1 Flop

@@ -18,7 +18,7 @@ $_SESSION['site']['flops'] = 0;
  * can work.
  */
 include_once($_SESSION['site']['root'].'/lib/compressor/compressor.inc.php');
-include_once($_SESSION['site']['root'].'/classes/dbHelper.class.php');
+include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
 include_once($_SESSION['site']['root'].'/repo/global_settings/global_settings.php');
 include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.php');
 ?>
@@ -74,14 +74,16 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
                 }
             });
 
-            window.onbeforeunload = function() {
-                Ext.Ajax.request({
-                    url     : 'app/login/data.php?task=unAuth'
-                });
-                alert('You have been logged off MitosEHR');
-
-            };
+//            window.onbeforeunload = function() {
+//                Ext.Ajax.request({
+//                    url     : 'app/login/data.php?task=unAuth'
+//                });
+//                alert('You have been logged off MitosEHR');
+//
+//            };
         </script>
+
+        <script src="data/api.php"></script>
 
         <script type="text/javascript" src="classes/ext/NodeDisabled.js"></script>
 
@@ -108,7 +110,6 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="classes/ext/combo/Lists.js"></script>
         <script type="text/javascript" src="classes/ext/combo/MsgNoteType.js"></script>
         <script type="text/javascript" src="classes/ext/combo/MsgStatus.js"></script>
-        <script type="text/javascript" src="classes/ext/combo/PermValues.js"></script>
         <script type="text/javascript" src="classes/ext/combo/posCodes.js"></script>
         <script type="text/javascript" src="classes/ext/combo/Roles.js"></script>
         <script type="text/javascript" src="classes/ext/combo/TaxId.js"></script>
@@ -154,9 +155,13 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 
         <script type="text/javascript">
             var App;
+            Ext.direct.Manager.addProvider(Ext.mitos.data.REMOTING_API);
+
             Ext.onReady(function(){
                 App = Ext.create('Ext.mitos.panel.MitosApp');
             });
         </script>
+
+
     </body>
 </html>

@@ -21,7 +21,7 @@ session_cache_limiter('private');
 // **************************************************************************************
 // Load all the necessary libraries
 // **************************************************************************************
-include_once($_SESSION['site']['root']."/classes/Patient.class.php");
+include_once($_SESSION['site']['root']."/classes/Patient.php");
 
 $patient_class = new Patient();
 

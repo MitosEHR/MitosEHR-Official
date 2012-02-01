@@ -5,7 +5,7 @@
 //
 // Author: Ernesto Rodriguez
 //*********************************************************************************************
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 class password extends dbHelper {
     private $password;
     private $h1Password;

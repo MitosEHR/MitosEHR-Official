@@ -3,16 +3,24 @@ Ext.define('Ext.mitos.combo.Facilities',{
     alias       : 'widget.mitos.facilitiescombo',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('FacilitiesComboModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id', type: 'int'},
 			    {name: 'name', type: 'string'}
             ],
-            model		: 'FacilitiesCombo',
-            idProperty	: 'id',
-            url	    	: 'classes/ext/data/components_data.ejs.php',
-            extraParams	: { task:"facilities"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getFacilities
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'FacilitiesComboModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {

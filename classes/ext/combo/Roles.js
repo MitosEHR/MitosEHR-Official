@@ -3,16 +3,24 @@ Ext.define('Ext.mitos.combo.Roles',{
     alias       : 'widget.mitos.rolescombo',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('RolesComboModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id', type: 'int'},
 		        {name: 'role_name', type: 'string'}
             ],
-            model		: 'RolesCombo',
-            idProperty	: 'id',
-            url	    	: 'classes/ext/data/components_data.ejs.php',
-            extraParams	: { task:"roles"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getRoles
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'RolesComboModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
