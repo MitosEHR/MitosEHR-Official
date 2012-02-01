@@ -40,7 +40,7 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 <link rel="shortcut icon" href="favicon.ico" >
 <!--<script type="text/javascript" src="app/App.js"></script>-->
 </head>
-    <body>
+    <body onbeforeunload ="unAuth()">
         <div id="mainapp-loading-mask" class="x-mask mitos-mask"></div>
         <div id="mainapp-x-mask-msg">
             <div id="mainapp-loading" class="x-mask-msg mitos-mask-msg">
@@ -73,6 +73,12 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
                     'Extensible'        : 'lib/extensible-1.5.0/src'
                 }
             });
+
+            function unAuth(){
+                window.location="app/login/data.php?task=unAuth";
+                alert('You have been logged off MitosEHR')
+
+            };
         </script>
 
         <script type="text/javascript" src="classes/ext/NodeDisabled.js"></script>
