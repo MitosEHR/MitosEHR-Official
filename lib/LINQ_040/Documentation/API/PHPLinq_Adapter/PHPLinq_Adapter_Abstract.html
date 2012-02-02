@@ -1,0 +1,2102 @@
+<html>
+<head>
+<title>Docs For Class PHPLinq_Adapter_Abstract</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">PHPLinq_Adapter</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                                        
+                              		  [ <a href="../classtrees_PHPLinq_Adapter.html" class="menu">class tree: PHPLinq_Adapter</a> ]
+		  [ <a href="../elementindex_PHPLinq_Adapter.html" class="menu">index: PHPLinq_Adapter</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+      <b>Packages:</b><br />
+              <a href="../li_PHPLinq.html">PHPLinq</a><br />
+              <a href="../li_PHPLinq_Adapter.html">PHPLinq_Adapter</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../PHPLinq_Adapter/_PHPLinq---Adapter---Abstract.php.html">		Abstract.php
+		</a><br>
+			<a href="../PHPLinq_Adapter/_PHPLinq---Adapter---Exception.php.html">		Exception.php
+		</a><br>
+			<a href="../PHPLinq_Adapter/_PHPLinq---Adapter---Pdo---Mssql.php.html">		Mssql.php
+		</a><br>
+			<a href="../PHPLinq_Adapter/_PHPLinq---Adapter---Pdo---Mysql.php.html">		Mysql.php
+		</a><br>
+			<a href="../PHPLinq_Adapter/_PHPLinq---Adapter---Mysqli.php.html">		Mysqli.php
+		</a><br>
+			<a href="../PHPLinq_Adapter/_PHPLinq---Adapter---Pdo---Sqlite.php.html">		Sqlite.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html">PHPLinq_Adapter_Abstract</a><br />
+	    		<a href="../PHPLinq_Adapter/PHPLinq_Adapter_Exception.html">PHPLinq_Adapter_Exception</a><br />
+	    		<a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html">PHPLinq_Adapter_Mysqli</a><br />
+	    		<a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html">PHPLinq_Adapter_Pdo_Mssql</a><br />
+	    		<a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html">PHPLinq_Adapter_Pdo_Mysql</a><br />
+	    		<a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html">PHPLinq_Adapter_Pdo_Sqlite</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Class: PHPLinq_Adapter_Abstract</h1>
+Source Location: /PHPLinq/Adapter/Abstract.php<br /><br />
+
+
+<table width="100%" border="0">
+<tr><td valign="top">
+
+<h3><a href="#class_details">Class Overview</a></h3>
+<pre></pre><br />
+<div class="description">PHPLinq_Adapter_Abstract</div><br /><br />
+<h4>Author(s):</h4>
+<ul>
+              </ul>
+
+
+
+
+      
+      
+
+<h4>Copyright:</h4>
+<ul>
+  <li>Copyright (c) 2008 - 2009 PHPLinq (http://www.codeplex.com/PHPLinq)</li>
+</ul>
+        
+</td>
+
+<td valign="top">
+<h3><a href="#class_vars">Variables</a></h3>
+<ul>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#var$_adapter">$_adapter</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#var$_functions">$_functions</a></li>
+  </ul>
+</td>
+
+
+<td valign="top">
+<h3><a href="#class_methods">Methods</a></h3>
+<ul>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#method__construct">__construct</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodabs">abs</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodaddslashes">addslashes</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodchr">chr</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodcount">count</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodcustom">custom</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodgetFunctions">getFunctions</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodlcfirst">lcfirst</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodltrim">ltrim</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodmax">max</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodmd5">md5</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodmin">min</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodoperand">operand</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodoperator">operator</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodord">ord</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodquote">quote</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodquoteIdentifier">quoteIdentifier</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodrand">rand</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodround">round</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodrtrim">rtrim</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodsha1">sha1</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodsoundex">soundex</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodstripos">stripos</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodstrlen">strlen</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodstrpos">strpos</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodstrtolower">strtolower</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodstrtoupper">strtoupper</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodstr_repeat">str_repeat</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodstr_replace">str_replace</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodsubstr">substr</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodtrim">trim</a></li>
+    <li><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methoducfirst">ucfirst</a></li>
+  </ul>
+</td>
+
+</tr></table>
+<hr />
+
+<table width="100%" border="0"><tr>
+
+
+<td valign="top">
+<h3>Child classes:</h3>
+<div class="tags">
+<dl>
+<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html">PHPLinq_Adapter_Mysqli</a></dt>
+	<dd>PHPLinq_Adapter_Mysqli</dd>
+</dl>
+<dl>
+<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html">PHPLinq_Adapter_Pdo_Mssql</a></dt>
+	<dd>PHPLinq_Adapter_Pdo_Mssql</dd>
+</dl>
+<dl>
+<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html">PHPLinq_Adapter_Pdo_Mysql</a></dt>
+	<dd>PHPLinq_Adapter_Pdo_Mysql</dd>
+</dl>
+<dl>
+<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html">PHPLinq_Adapter_Pdo_Sqlite</a></dt>
+	<dd>PHPLinq_Adapter_Pdo_Sqlite</dd>
+</dl>
+</div>
+</td>
+
+
+
+
+</tr></table>
+<hr />
+
+<a name="class_details"></a>
+<h3>Class Details</h3>
+<div class="tags">
+[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a43">43</a>]<br />
+PHPLinq_Adapter_Abstract<br /><br /><p>PHPLinq_Adapter_Abstract</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>copyright:</b>&nbsp;&nbsp;</td><td>Copyright (c) 2008 - 2009 PHPLinq (http://www.codeplex.com/PHPLinq)</td>
+  </tr>
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+</table>
+</div>
+</div><br /><br />
+<div class="top">[ <a href="#top">Top</a> ]</div><br />
+
+<hr />
+<a name="class_vars"></a>
+<h3>Class Variables</h3>
+<div class="tags">
+	<a name="var$_functions"></a>
+	<p></p>
+	<h4>static $_functions = <span class="value">array(
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'custom',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ord',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'chr',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'substr',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'strlen',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'count',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'max',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'min',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'abs',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'strtolower',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'strtoupper',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ltrim',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'rand',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'str_replace',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'round',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'rtrim',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'trim',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'strpos',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'stripos',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'lcfirst',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ucfirst',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'md5',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'sha1',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'soundex',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'addslashes',
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'str_repeat'
+<br>
+&nbsp;&nbsp;&nbsp;)</span></h4>
+	<p>[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a110">110</a>]</p>
+  List of functions<br /><br /><p>List of functions</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>array</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$_adapter"></a>
+	<p></p>
+	<h4>$_adapter = <span class="value">&nbsp;null</span></h4>
+	<p>[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a52">52</a>]</p>
+  Zend_Db_Adapter_Abstract<br /><br /><p>Zend_Db_Adapter_Abstract</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>protected</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>Zend_Db_Adapter_Abstract</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
+
+<hr />
+<a name="class_methods"></a>
+<h3>Class Methods</h3>
+<div class="tags">
+  <hr />
+	<a name="methodgetFunctions"></a>
+	<h3>static method getFunctions <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a144">144</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>static array; getFunctions(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Get list of functions<br /><br /><p>Get list of functions</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+
+  <hr />
+	<a name="method__construct"></a>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a59">59</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>PHPLinq_Adapter_Abstract __construct(
+[
+$adapter = null])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Constructor<br /><br /><p>Constructor</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#method__construct">PHPLinq_Adapter_Mysqli::__construct()</a></dt>
+		<dd>Constructor</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#method__construct">PHPLinq_Adapter_Pdo_Mssql::__construct()</a></dt>
+		<dd>Constructor</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#method__construct">PHPLinq_Adapter_Pdo_Mysql::__construct()</a></dt>
+		<dd>Constructor</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#method__construct">PHPLinq_Adapter_Pdo_Sqlite::__construct()</a></dt>
+		<dd>Constructor</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">Zend_Db_Adapter_Abstract&nbsp;&nbsp;</td>
+        <td><b>$adapter</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodabs"></a>
+	<h3>method abs <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a263">263</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string abs(
+mixed
+$number)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Absolute value<br /><br /><p>Absolute value</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodabs">PHPLinq_Adapter_Mysqli::abs()</a></dt>
+		<dd>Absolute value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodabs">PHPLinq_Adapter_Pdo_Mssql::abs()</a></dt>
+		<dd>Absolute value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodabs">PHPLinq_Adapter_Pdo_Mysql::abs()</a></dt>
+		<dd>Absolute value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodabs">PHPLinq_Adapter_Pdo_Sqlite::abs()</a></dt>
+		<dd>Absolute value</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$number</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodaddslashes"></a>
+	<h3>method addslashes <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a399">399</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string addslashes(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Quote string with slashes<br /><br /><p>Quote string with slashes</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodaddslashes">PHPLinq_Adapter_Mysqli::addslashes()</a></dt>
+		<dd>Quote string with slashes</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodaddslashes">PHPLinq_Adapter_Pdo_Mssql::addslashes()</a></dt>
+		<dd>Quote string with slashes</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodaddslashes">PHPLinq_Adapter_Pdo_Mysql::addslashes()</a></dt>
+		<dd>Quote string with slashes</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodaddslashes">PHPLinq_Adapter_Pdo_Sqlite::addslashes()</a></dt>
+		<dd>Quote string with slashes</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodchr"></a>
+	<h3>method chr <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a213">213</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string chr(
+string
+$string)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Return a specific character<br /><br /><p>Return a specific character</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodchr">PHPLinq_Adapter_Mysqli::chr()</a></dt>
+		<dd>Return a specific character</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodchr">PHPLinq_Adapter_Pdo_Mssql::chr()</a></dt>
+		<dd>Return a specific character</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodchr">PHPLinq_Adapter_Pdo_Mysql::chr()</a></dt>
+		<dd>Return a specific character</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodchr">PHPLinq_Adapter_Pdo_Sqlite::chr()</a></dt>
+		<dd>Return a specific character</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$string</b>&nbsp;&nbsp;</td>
+        <td>The ascii code</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodcount"></a>
+	<h3>method count <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a239">239</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string count(
+mixed
+$var)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Count elements in an array, or properties in an object<br /><br /><p>Count elements in an array, or properties in an object</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodcount">PHPLinq_Adapter_Mysqli::count()</a></dt>
+		<dd>Count elements in an array, or properties in an object</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodcount">PHPLinq_Adapter_Pdo_Mssql::count()</a></dt>
+		<dd>Count elements in an array, or properties in an object</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodcount">PHPLinq_Adapter_Pdo_Mysql::count()</a></dt>
+		<dd>Count elements in an array, or properties in an object</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodcount">PHPLinq_Adapter_Pdo_Sqlite::count()</a></dt>
+		<dd>Count elements in an array, or properties in an object</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$var</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodcustom"></a>
+	<h3>method custom <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a191">191</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void custom(
+array
+$function)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Execute a custom function (outside of PHPLinq_Adapter package).<br /><br /><p>Execute a custom function (outside of PHPLinq_Adapter package).</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$function</b>&nbsp;&nbsp;</td>
+        <td>Function to call</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodlcfirst"></a>
+	<h3>method lcfirst <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a357">357</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string lcfirst(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Make a string's first character lowercase<br /><br /><p>Make a string's first character lowercase</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodlcfirst">PHPLinq_Adapter_Mysqli::lcfirst()</a></dt>
+		<dd>Make a string's first character lowercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodlcfirst">PHPLinq_Adapter_Pdo_Mssql::lcfirst()</a></dt>
+		<dd>Make a string's first character lowercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodlcfirst">PHPLinq_Adapter_Pdo_Mysql::lcfirst()</a></dt>
+		<dd>Make a string's first character lowercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodlcfirst">PHPLinq_Adapter_Pdo_Sqlite::lcfirst()</a></dt>
+		<dd>Make a string's first character lowercase</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodltrim"></a>
+	<h3>method ltrim <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a287">287</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string ltrim(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Strip whitespace (or other characters) from the beginning of a string<br /><br /><p>Strip whitespace (or other characters) from the beginning of a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodltrim">PHPLinq_Adapter_Mysqli::ltrim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the beginning of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodltrim">PHPLinq_Adapter_Pdo_Mssql::ltrim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the beginning of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodltrim">PHPLinq_Adapter_Pdo_Mysql::ltrim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the beginning of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodltrim">PHPLinq_Adapter_Pdo_Sqlite::ltrim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the beginning of a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodmax"></a>
+	<h3>method max <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a247">247</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string max(
+mixed
+$values)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Find highest value<br /><br /><p>Find highest value</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodmax">PHPLinq_Adapter_Mysqli::max()</a></dt>
+		<dd>Find highest value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodmax">PHPLinq_Adapter_Pdo_Mssql::max()</a></dt>
+		<dd>Find highest value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodmax">PHPLinq_Adapter_Pdo_Mysql::max()</a></dt>
+		<dd>Find highest value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodmax">PHPLinq_Adapter_Pdo_Sqlite::max()</a></dt>
+		<dd>Find highest value</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$values</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodmd5"></a>
+	<h3>method md5 <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a374">374</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string md5(
+string
+$str, [boolean
+$raw_output = false])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Calculate the md5 hash of a string<br /><br /><p>Calculate the md5 hash of a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodmd5">PHPLinq_Adapter_Mysqli::md5()</a></dt>
+		<dd>Calculate the md5 hash of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodmd5">PHPLinq_Adapter_Pdo_Mssql::md5()</a></dt>
+		<dd>Calculate the md5 hash of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodmd5">PHPLinq_Adapter_Pdo_Mysql::md5()</a></dt>
+		<dd>Calculate the md5 hash of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodmd5">PHPLinq_Adapter_Pdo_Sqlite::md5()</a></dt>
+		<dd>Calculate the md5 hash of a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">boolean&nbsp;&nbsp;</td>
+        <td><b>$raw_output</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodmin"></a>
+	<h3>method min <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a255">255</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string min(
+mixed
+$values)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Find lowest value<br /><br /><p>Find lowest value</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodmin">PHPLinq_Adapter_Mysqli::min()</a></dt>
+		<dd>Find lowest value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodmin">PHPLinq_Adapter_Pdo_Mssql::min()</a></dt>
+		<dd>Find lowest value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodmin">PHPLinq_Adapter_Pdo_Mysql::min()</a></dt>
+		<dd>Find lowest value</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodmin">PHPLinq_Adapter_Pdo_Sqlite::min()</a></dt>
+		<dd>Find lowest value</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$values</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodoperand"></a>
+	<h3>method operand <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a178">178</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string operand(
+string
+$operand)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Convert operand<br /><br /><p>Convert operand</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$operand</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodoperator"></a>
+	<h3>method operator <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a154">154</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string operator(
+string
+$operator)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Convert operator<br /><br /><p>Convert operator</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodoperator">PHPLinq_Adapter_Mysqli::operator()</a></dt>
+		<dd>Convert operator</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodoperator">PHPLinq_Adapter_Pdo_Mssql::operator()</a></dt>
+		<dd>Convert operator</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodoperator">PHPLinq_Adapter_Pdo_Mysql::operator()</a></dt>
+		<dd>Convert operator</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodoperator">PHPLinq_Adapter_Pdo_Sqlite::operator()</a></dt>
+		<dd>Convert operator</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$operator</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodord"></a>
+	<h3>method ord <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a205">205</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string ord(
+string
+$string)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Return ASCII value of character<br /><br /><p>Return ASCII value of character</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodord">PHPLinq_Adapter_Mysqli::ord()</a></dt>
+		<dd>Return ASCII value of character</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodord">PHPLinq_Adapter_Pdo_Mssql::ord()</a></dt>
+		<dd>Return ASCII value of character</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodord">PHPLinq_Adapter_Pdo_Mysql::ord()</a></dt>
+		<dd>Return ASCII value of character</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodord">PHPLinq_Adapter_Pdo_Sqlite::ord()</a></dt>
+		<dd>Return ASCII value of character</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$string</b>&nbsp;&nbsp;</td>
+        <td>A character</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodquote"></a>
+	<h3>method quote <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a73">73</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>mixed quote(
+mixed
+$value, [mixed
+$type = null])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Safely quotes a value for an SQL statement.<br /><br /><p>Safely quotes a value for an SQL statement.
+ If an array is passed as the value, the array values are quoted and then returned as a comma-separated string.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>An SQL-safe quoted value (or string of separated values).</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$value</b>&nbsp;&nbsp;</td>
+        <td>The value to quote.</td>
+      </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$type</b>&nbsp;&nbsp;</td>
+        <td>OPTIONAL the SQL datatype name, or constant, or null.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodquoteIdentifier"></a>
+	<h3>method quoteIdentifier <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a100">100</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string quoteIdentifier(
+string|array|Zend_Db_Expr
+$ident, [boolean
+$auto = false])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Quotes an identifier.<br /><br /><p>Quotes an identifier.
+ Accepts a string representing a qualified indentifier. For Example: <ol><li><div class="src-line">&nbsp;<span class="src-var">$adapter</span><span class="src-sym">-&gt;</span><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodquoteIdentifier">quoteIdentifier</a><span class="src-sym">(</span><span class="src-str">'myschema.mytable'</span><span class="src-sym">)</span></div></li>
+</ol> Returns: &quot;myschema&quot;.&quot;mytable&quot;
+ Or, an array of one or more identifiers that may form a qualified identifier: <ol><li><div class="src-line">&nbsp;<span class="src-var">$adapter</span><span class="src-sym">-&gt;</span><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Abstract.html#methodquoteIdentifier">quoteIdentifier</a><span class="src-sym">(</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">'myschema'</span><span class="src-sym">,</span><span class="src-str">'my.table'</span><span class="src-sym">))</span></div></li>
+</ol> Returns: &quot;myschema&quot;.&quot;my.table&quot;
+ The actual quote character surrounding the identifiers may vary depending on the adapter.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>The quoted identifier.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string|array|Zend_Db_Expr&nbsp;&nbsp;</td>
+        <td><b>$ident</b>&nbsp;&nbsp;</td>
+        <td>The identifier.</td>
+      </tr>
+          <tr>
+        <td class="type">boolean&nbsp;&nbsp;</td>
+        <td><b>$auto</b>&nbsp;&nbsp;</td>
+        <td>If true, heed the AUTO_QUOTE_IDENTIFIERS config option.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodrand"></a>
+	<h3>method rand <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a294">294</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string rand(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Generate a random integer<br /><br /><p>Generate a random integer</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodrand">PHPLinq_Adapter_Mysqli::rand()</a></dt>
+		<dd>Generate a random integer</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodrand">PHPLinq_Adapter_Pdo_Mssql::rand()</a></dt>
+		<dd>Generate a random integer</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodrand">PHPLinq_Adapter_Pdo_Mysql::rand()</a></dt>
+		<dd>Generate a random integer</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodrand">PHPLinq_Adapter_Pdo_Sqlite::rand()</a></dt>
+		<dd>Generate a random integer</dd>
+	</dl>
+	</p>
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodround"></a>
+	<h3>method round <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a313">313</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string round(
+float
+$val, [int
+$precision = 0])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Rounds a float<br /><br /><p>Rounds a float</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodround">PHPLinq_Adapter_Mysqli::round()</a></dt>
+		<dd>Rounds a float</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodround">PHPLinq_Adapter_Pdo_Mssql::round()</a></dt>
+		<dd>Rounds a float</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodround">PHPLinq_Adapter_Pdo_Mysql::round()</a></dt>
+		<dd>Rounds a float</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodround">PHPLinq_Adapter_Pdo_Sqlite::round()</a></dt>
+		<dd>Rounds a float</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">float&nbsp;&nbsp;</td>
+        <td><b>$val</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$precision</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodrtrim"></a>
+	<h3>method rtrim <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a321">321</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string rtrim(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Strip whitespace (or other characters) from the end of a string<br /><br /><p>Strip whitespace (or other characters) from the end of a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodrtrim">PHPLinq_Adapter_Mysqli::rtrim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the end of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodrtrim">PHPLinq_Adapter_Pdo_Mssql::rtrim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the end of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodrtrim">PHPLinq_Adapter_Pdo_Mysql::rtrim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the end of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodrtrim">PHPLinq_Adapter_Pdo_Sqlite::rtrim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the end of a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsha1"></a>
+	<h3>method sha1 <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a383">383</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string sha1(
+string
+$str, [boolean
+$raw_output = false])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Calculate the sha1 hash of a string<br /><br /><p>Calculate the sha1 hash of a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodsha1">PHPLinq_Adapter_Mysqli::sha1()</a></dt>
+		<dd>Calculate the sha1 hash of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodsha1">PHPLinq_Adapter_Pdo_Mssql::sha1()</a></dt>
+		<dd>Calculate the sha1 hash of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodsha1">PHPLinq_Adapter_Pdo_Mysql::sha1()</a></dt>
+		<dd>Calculate the sha1 hash of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodsha1">PHPLinq_Adapter_Pdo_Sqlite::sha1()</a></dt>
+		<dd>Calculate the sha1 hash of a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">boolean&nbsp;&nbsp;</td>
+        <td><b>$raw_output</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsoundex"></a>
+	<h3>method soundex <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a391">391</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string soundex(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Calculate the soundex key of a string<br /><br /><p>Calculate the soundex key of a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodsoundex">PHPLinq_Adapter_Mysqli::soundex()</a></dt>
+		<dd>Calculate the soundex key of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodsoundex">PHPLinq_Adapter_Pdo_Mssql::soundex()</a></dt>
+		<dd>Calculate the soundex key of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodsoundex">PHPLinq_Adapter_Pdo_Mysql::soundex()</a></dt>
+		<dd>Calculate the soundex key of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodsoundex">PHPLinq_Adapter_Pdo_Sqlite::soundex()</a></dt>
+		<dd>Calculate the soundex key of a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstripos"></a>
+	<h3>method stripos <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a349">349</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string stripos(
+string
+$haystack, mixed
+$needle, [int
+$offset = 0])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Find position of first occurrence of a case-insensitive string<br /><br /><p>Find position of first occurrence of a case-insensitive string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodstripos">PHPLinq_Adapter_Mysqli::stripos()</a></dt>
+		<dd>Find position of first occurrence of a case-insensitive string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodstripos">PHPLinq_Adapter_Pdo_Mssql::stripos()</a></dt>
+		<dd>Find position of first occurrence of a case-insensitive string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodstripos">PHPLinq_Adapter_Pdo_Mysql::stripos()</a></dt>
+		<dd>Find position of first occurrence of a case-insensitive string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodstripos">PHPLinq_Adapter_Pdo_Sqlite::stripos()</a></dt>
+		<dd>Find position of first occurrence of a case-insensitive string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$haystack</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$needle</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$offset</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstrlen"></a>
+	<h3>method strlen <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a231">231</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string strlen(
+string
+$string)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Get string length<br /><br /><p>Get string length</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodstrlen">PHPLinq_Adapter_Mysqli::strlen()</a></dt>
+		<dd>Get string length</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodstrlen">PHPLinq_Adapter_Pdo_Mssql::strlen()</a></dt>
+		<dd>Get string length</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodstrlen">PHPLinq_Adapter_Pdo_Mysql::strlen()</a></dt>
+		<dd>Get string length</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodstrlen">PHPLinq_Adapter_Pdo_Sqlite::strlen()</a></dt>
+		<dd>Get string length</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$string</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstrpos"></a>
+	<h3>method strpos <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a339">339</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string strpos(
+string
+$haystack, mixed
+$needle, [int
+$offset = 0])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Find position of first occurrence of a string<br /><br /><p>Find position of first occurrence of a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodstrpos">PHPLinq_Adapter_Mysqli::strpos()</a></dt>
+		<dd>Find position of first occurrence of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodstrpos">PHPLinq_Adapter_Pdo_Mssql::strpos()</a></dt>
+		<dd>Find position of first occurrence of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodstrpos">PHPLinq_Adapter_Pdo_Mysql::strpos()</a></dt>
+		<dd>Find position of first occurrence of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodstrpos">PHPLinq_Adapter_Pdo_Sqlite::strpos()</a></dt>
+		<dd>Find position of first occurrence of a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$haystack</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$needle</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$offset</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstrtolower"></a>
+	<h3>method strtolower <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a271">271</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string strtolower(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Make a string lowercase<br /><br /><p>Make a string lowercase</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodstrtolower">PHPLinq_Adapter_Mysqli::strtolower()</a></dt>
+		<dd>Make a string lowercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodstrtolower">PHPLinq_Adapter_Pdo_Mssql::strtolower()</a></dt>
+		<dd>Make a string lowercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodstrtolower">PHPLinq_Adapter_Pdo_Mysql::strtolower()</a></dt>
+		<dd>Make a string lowercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodstrtolower">PHPLinq_Adapter_Pdo_Sqlite::strtolower()</a></dt>
+		<dd>Make a string lowercase</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstrtoupper"></a>
+	<h3>method strtoupper <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a279">279</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string strtoupper(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Make a string uppercase<br /><br /><p>Make a string uppercase</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodstrtoupper">PHPLinq_Adapter_Mysqli::strtoupper()</a></dt>
+		<dd>Make a string uppercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodstrtoupper">PHPLinq_Adapter_Pdo_Mssql::strtoupper()</a></dt>
+		<dd>Make a string uppercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodstrtoupper">PHPLinq_Adapter_Pdo_Mysql::strtoupper()</a></dt>
+		<dd>Make a string uppercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodstrtoupper">PHPLinq_Adapter_Pdo_Sqlite::strtoupper()</a></dt>
+		<dd>Make a string uppercase</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstr_repeat"></a>
+	<h3>method str_repeat <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a408">408</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string str_repeat(
+string
+$input, int
+$multiplier)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Repeat a string<br /><br /><p>Repeat a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodstr_repeat">PHPLinq_Adapter_Mysqli::str_repeat()</a></dt>
+		<dd>Repeat a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodstr_repeat">PHPLinq_Adapter_Pdo_Mssql::str_repeat()</a></dt>
+		<dd>Repeat a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodstr_repeat">PHPLinq_Adapter_Pdo_Mysql::str_repeat()</a></dt>
+		<dd>Repeat a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodstr_repeat">PHPLinq_Adapter_Pdo_Sqlite::str_repeat()</a></dt>
+		<dd>Repeat a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$input</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$multiplier</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodstr_replace"></a>
+	<h3>method str_replace <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a304">304</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string str_replace(
+mixed
+$search, mixed
+$replace, mixed
+$subject)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Replace all occurrences of the search string with the replacement string<br /><br /><p>Replace all occurrences of the search string with the replacement string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodstr_replace">PHPLinq_Adapter_Mysqli::str_replace()</a></dt>
+		<dd>Replace all occurrences of the search string with the replacement string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodstr_replace">PHPLinq_Adapter_Pdo_Mssql::str_replace()</a></dt>
+		<dd>Replace all occurrences of the search string with the replacement string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodstr_replace">PHPLinq_Adapter_Pdo_Mysql::str_replace()</a></dt>
+		<dd>Replace all occurrences of the search string with the replacement string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodstr_replace">PHPLinq_Adapter_Pdo_Sqlite::str_replace()</a></dt>
+		<dd>Replace all occurrences of the search string with the replacement string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$search</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$replace</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">mixed&nbsp;&nbsp;</td>
+        <td><b>$subject</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodsubstr"></a>
+	<h3>method substr <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a223">223</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string substr(
+string
+$string, int
+$start, [int
+$length = ''])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Return part of a string<br /><br /><p>Return part of a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodsubstr">PHPLinq_Adapter_Mysqli::substr()</a></dt>
+		<dd>Return part of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodsubstr">PHPLinq_Adapter_Pdo_Mssql::substr()</a></dt>
+		<dd>Return part of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodsubstr">PHPLinq_Adapter_Pdo_Mysql::substr()</a></dt>
+		<dd>Return part of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodsubstr">PHPLinq_Adapter_Pdo_Sqlite::substr()</a></dt>
+		<dd>Return part of a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$string</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$start</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$length</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodtrim"></a>
+	<h3>method trim <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a329">329</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string trim(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Strip whitespace (or other characters) from the beginning and end of a string<br /><br /><p>Strip whitespace (or other characters) from the beginning and end of a string</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methodtrim">PHPLinq_Adapter_Mysqli::trim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the beginning and end of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methodtrim">PHPLinq_Adapter_Pdo_Mssql::trim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the beginning and end of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methodtrim">PHPLinq_Adapter_Pdo_Mysql::trim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the beginning and end of a string</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methodtrim">PHPLinq_Adapter_Pdo_Sqlite::trim()</a></dt>
+		<dd>Strip whitespace (or other characters) from the beginning and end of a string</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methoducfirst"></a>
+	<h3>method ucfirst <span class="smalllinenumber">[line <a href="../__filesource/fsource_PHPLinq_Adapter__PHPLinqAdapterAbstract.php.html#a365">365</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string ucfirst(
+string
+$str)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Make a string's first character uppercase<br /><br /><p>Make a string's first character uppercase</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>abstract:</b>&nbsp;&nbsp;</td><td></td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Mysqli.html#methoducfirst">PHPLinq_Adapter_Mysqli::ucfirst()</a></dt>
+		<dd>Make a string's first character uppercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mssql.html#methoducfirst">PHPLinq_Adapter_Pdo_Mssql::ucfirst()</a></dt>
+		<dd>Make a string's first character uppercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Mysql.html#methoducfirst">PHPLinq_Adapter_Pdo_Mysql::ucfirst()</a></dt>
+		<dd>Make a string's first character uppercase</dd>
+	</dl>
+		<dl>
+	<dt><a href="../PHPLinq_Adapter/PHPLinq_Adapter_Pdo_Sqlite.html#methoducfirst">PHPLinq_Adapter_Pdo_Sqlite::ucfirst()</a></dt>
+		<dd>Make a string's first character uppercase</dd>
+	</dl>
+	</p>
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$str</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+</div><br />
+
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Tue, 27 Jan 2009 08:29:15 +0100 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
