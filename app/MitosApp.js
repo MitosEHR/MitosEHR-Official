@@ -102,8 +102,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         me.storeTree = Ext.create('Ext.data.TreeStore',{
             model: 'NavTreeModel',
             proxy: {
-                type	: 'ajax',
-                url		: 'app/navigation/nav_'+lang.code+'.php'
+                type: 'direct',
+                api: {
+                    read: Navigation.getNavigation
+                }
             },
             listeners:{
                 scope: me,
@@ -765,7 +767,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         }
     },
 
-
     setCurrPatient:function(pid, fullname, callback){
         var btn  = this.Header.getComponent('patientButton');
 
@@ -781,12 +782,14 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     },
 
     patientUnset:function(){
+        var btn  = this.Header.getComponent('patientButton');
         /**
          * Ext.direct function
          */
-        Patient.currPatientUnset();
+        Patient.currPatientUnset(function(){
+            btn.update( {name:'No Patient Selected', info:'( record )'} );
+        });
     },
-
 
     afterAppRender:function(){
         Ext.get('mainapp-loading').remove();
@@ -794,13 +797,11 @@ Ext.define('Ext.mitos.panel.MitosApp',{
 
     },
 
-
     showMiframe:function(src){
         this.winSupport.remove(this.miframe);
         this.winSupport.add(this.miframe = Ext.create('Ext.mitos.ManagedIframe',{src:src}));
         this.winSupport.show();
     },
-
 
     msg: function(title, format){
         if(!this.msgCt){
@@ -813,7 +814,6 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         m.slideIn('t').pause(3000).ghost('t', {remove:true});
     },
 
-
     checkSession: function(){
         /**
          * Ext.direct functions
@@ -823,10 +823,9 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 authProcedures.unAuth(function(){
                     window.location="./"
                 });
-            };
+            }
         });
     },
-
 
     patientBtn:function(){
         return new Ext.create('Ext.XTemplate',
@@ -905,20 +904,16 @@ Ext.define('Ext.mitos.panel.MitosApp',{
     initializeHospitalDropZone: function(panel) {
         var me = this;
         panel.dropZone = Ext.create('Ext.dd.DropZone', panel.getEl(), {
-
             ddGroup:'patient',
-
-            notifyOver:function(source, e, data){
+            notifyOver:function(){
                 return Ext.dd.DropZone.prototype.dropAllowed;
             },
-
             notifyDrop:function(dd, e, data){
                 App.MainPanel.el.unmask();
                 me.setCurrPatient(data.patientData.pid,data.patientData.name,function(){
                     me.openCurrEncounter();
                 });
             }
-
         });
     },
 

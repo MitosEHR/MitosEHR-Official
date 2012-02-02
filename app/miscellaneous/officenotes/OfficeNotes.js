@@ -14,15 +14,16 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
     pageTitle   : 'Office Notes',
     pageLayout  : 'border',
     uses:[
-        'Ext.mitos.CRUDStore',
         'Ext.mitos.GridPanel',
         'Ext.mitos.RenderPanel'
     ],
     initComponent: function(){
-        var page = this;
+        var me = this;
         var rowPos;
         var currRec;
-        page.storeOnotes = Ext.create('Ext.mitos.CRUDStore',{
+
+        Ext.define('OfficeNotesModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',      		type: 'int'},
                 {name: 'date',          type: 'date', dateFormat: 'c'},
@@ -31,15 +32,20 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                 {name: 'facility_id',   type: 'string'},
                 {name: 'activity',   	type: 'string'}
             ],
-            model		: 'modelOnotes',
-            idProperty	: 'id',
-            read      	: 'app/miscellaneous/officenotes/data_read.ejs.php',
-            create    	: 'app/miscellaneous/officenotes/data_create.ejs.php',
-            update    	: 'app/miscellaneous/officenotes/data_update.ejs.php',
-          //destroy		: <-- No need to delete Office Notes -->
-            autoLoad	: false
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : OfficeNotes.getOfficeNotes,
+                    create  : OfficeNotes.addOfficeNotes,
+                    update  : OfficeNotes.updateOfficeNotes
+                }
+            }
         });
-        page.onotesFormPanel = Ext.create('Ext.form.FormPanel', {
+        me.storeOnotes = Ext.create('Ext.data.Store', {
+            model: 'OfficeNotesModel',
+            autoLoad: true
+        });
+        me.onotesFormPanel = Ext.create('Ext.form.FormPanel', {
             id: 'onotesFormPanel',
             region		: 'north',
             frame 		: true,
@@ -57,12 +63,12 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                 emptyText: 'Type new note here...',
                 listeners: {
                     validitychange: function(){
-                        page.cmdNew.show();
+                        me.cmdNew.show();
                         if (this.isValid()) {
-                            page.cmdSave.enable();
-                            page.cmdNew.enable();
+                            me.cmdSave.enable();
+                            me.cmdNew.enable();
                         } else {
-                            page.cmdSave.disable();
+                            me.cmdSave.disable();
                         }
                     }
                 }
@@ -71,14 +77,14 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                 xtype: 'toolbar',
                 dock: 'top',
                 items: [
-                    page.cmdSave = Ext.create('Ext.Button', {
+                    me.cmdSave = Ext.create('Ext.Button', {
                         text      	: 'Save',
                         iconCls   	: 'save',
                         disabled	: true,
                         handler   : function(){
                             var form = this.up('form').getForm();
                             if (form.findField('id').getValue()){ // Update
-                                var record = page.storeOnotes.getAt(rowPos);
+                                var record = me.storeOnotes.getAt(rowPos);
                                 var fieldValues = form.getValues();
                                 for (var k=0; k <= record.fields.getCount()-1; k++) {
                                     var i = record.fields.get(k).name;
@@ -87,42 +93,42 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                                 record.set( 'activity', '1' );
                             } else { // Add
                                 var obj = eval( '(' + Ext.JSON.encode(form.getValues()) + ')' );
-                                page.storeOnotes.add( obj );
+                                me.storeOnotes.add( obj );
                             }
-                            page.storeOnotes.sync();	// Save the record to the dataStore
-                            page.storeOnotes.load({params:{show: 'active' }});
-                            page.onotesFormPanel.getForm().reset();
-                            page.cmdHide.disable();
+                            me.storeOnotes.sync();	// Save the record to the dataStore
+                            //me.storeOnotes.load({params:{show: 'active' }});
+                            me.onotesFormPanel.getForm().reset();
+                            me.cmdHide.disable();
                         }
                     }),'-',
-                    page.cmdHide = Ext.create('Ext.Button', {
+                    me.cmdHide = Ext.create('Ext.Button', {
                         text		: 'Hide This Note',
                         iconCls   	: 'save',
                         tooltip		: 'Hide Selected Office Note',
                         disabled	: true,
                         handler		: function(){
                             var form = this.up('form').getForm();
-                            var record = page.storeOnotes.getAt(rowPos);
+                            var record = me.storeOnotes.getAt(rowPos);
                             var fieldValues = form.getValues();
                             for (var k=0; k <= record.fields.getCount()-1; k++) {
                                 var i = record.fields.get(k).name;
                                 record.set( i, fieldValues[i] );
                             }
                             record.set( 'activity', '0' );
-                            page.storeOnotes.sync();	// Save the record to the dataStore
-                            page.storeOnotes.load({params:{show: 'active' }});	// Reload the dataSore from the database
-                            page.onotesFormPanel.getForm().reset();
-                            page.cmdHide.disable();
+                            me.storeOnotes.sync();	// Save the record to the dataStore
+                            me.storeOnotes.load({params:{show: 'active' }});	// Reload the dataSore from the database
+                            me.onotesFormPanel.getForm().reset();
+                            me.cmdHide.disable();
                         }
                     }),'-',
-                    page.cmdNew = Ext.create('Ext.Button', {
+                    me.cmdNew = Ext.create('Ext.Button', {
                         text      	: 'Reset Form',
                         iconCls   	: 'save',
                         disabled	: true,
                         handler   	: function(){
                             var form = this.up('form').getForm();
-                            page.cmdHide.disable();
-                            page.cmdSave.setText('Save');
+                            me.cmdHide.disable();
+                            me.cmdSave.setText('Save');
                             form.reset();
                             this.disable();
                         }
@@ -130,18 +136,18 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                 ]
             }]
         });
-        page.onotesGrid = Ext.create('Ext.mitos.GridPanel', {
+        me.onotesGrid = Ext.create('Ext.mitos.GridPanel', {
             region		: 'center',
-            store       : page.storeOnotes,
+            store       : me.storeOnotes,
             listeners	: {
                 itemclick: {
                     fn: function(DataView, record, item, rowIndex){
-                        page.onotesFormPanel.getForm().reset();
-                        var rec = page.storeOnotes.getAt(rowIndex);
-                        page.cmdNew.enable();
-                        page.cmdHide.enable();
-                        page.cmdSave.setText('Update');
-                        page.onotesFormPanel.getForm().loadRecord(rec);
+                        me.onotesFormPanel.getForm().reset();
+                        var rec = me.storeOnotes.getAt(rowIndex);
+                        me.cmdNew.enable();
+                        me.cmdHide.enable();
+                        me.cmdSave.setText('Update');
+                        me.onotesFormPanel.getForm().loadRecord(rec);
                         currRec = rec;
                         rowPos = rowIndex;
                     }
@@ -155,40 +161,40 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
 
             ],
             tbar: Ext.create('Ext.PagingToolbar', {
-                store: page.storeOnotes,
+                store: me.storeOnotes,
                 displayInfo: true,
                 emptyMsg: "No Office Notes to display",
                 plugins: Ext.create('Ext.ux.SlidingPager', {}),
                 items: [
-                    page.cmdShow = Ext.create('Ext.Button', {
+                    me.cmdShow = Ext.create('Ext.Button', {
                         text      	: 'Show Only Active Notes',
                         iconCls   	: 'save',
                         enableToggle: true,
                         listeners	: {
                             afterrender: function(){
                                 this.toggle(true);
-                                page.storeOnotes.load({params:{show: 'active' }});
+
                             }
                         },
                         handler   	: function(){
-                            page.cmdShowAll.toggle(false);
-                            page.storeOnotes.load({params:{show: 'active' }});
+                            me.cmdShowAll.toggle(false);
+                            me.storeOnotes.load({params:{show: 'active' }});
                         }
                     }),'-',
-                    page.cmdShowAll = Ext.create('Ext.Button', {
+                    me.cmdShowAll = Ext.create('Ext.Button', {
                         text      	: 'Show All Notes',
                         iconCls   	: 'save',
                         enableToggle: true,
                         handler   : function(){
-                            page.cmdShow.toggle(false);
-                            page.storeOnotes.load({params:{show: 'all' }});
+                            me.cmdShow.toggle(false);
+                            me.storeOnotes.load({params:{show: 'all' }});
                         }
                     })
                 ]
             })
         }); // END GRID
-        page.pageBody = [ page.onotesFormPanel,page.onotesGrid ];
-        page.callParent(arguments);
+        me.pageBody = [ me.onotesFormPanel,me.onotesGrid ];
+        me.callParent(arguments);
     }, // end of initComponent
     /**
     * This function is called from MitosAPP.js when
@@ -197,6 +203,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
     * to call every this panel becomes active
     */
     onActive:function(callback){
+        this.storeOnotes.load({params:{show: 'active' }});
         callback(true);
     }
 }); //ens oNotesPage class
