@@ -22,6 +22,7 @@ Ext.define('Ext.mitos.RenderPanel', {
                 layout  : 'fit',
                 height  : 40,
                 html    : '<div class="dashboard_title">' + me.pageTitle + '</div>'
+
             },{
                 cls     : 'RenderPanel-body-container',
                 xtype   : 'container',
@@ -79,20 +80,21 @@ Ext.define('Ext.mitos.RenderPanel', {
 
     getFormItems: function(formPanel ,formToRender, callback){
         formPanel.removeAll();
-        Ext.Ajax.request({
-            url     : 'classes/formLayoutEngine.class.php',
-            params  : {form:formToRender},
-            scope   : this,
-            success : function(response){
-                formPanel.add(eval(response.responseText));
-                formPanel.doLayout();
+        /**
+         * Ext.direct function
+         */
+        formLayoutEngine.getFields({formToRender:formToRender}, function(provider, response){
+            formPanel.add(eval(response.result));
+            formPanel.doLayout();
 
-                if(typeof callback == 'function'){
-                    callback(true);
-                }
+            if(typeof callback == 'function'){
+                callback(true);
             }
+
         });
     },
+
+
 
     getCurrPatient:function(){
         return App.getCurrPatient();

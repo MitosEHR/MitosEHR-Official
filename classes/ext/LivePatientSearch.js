@@ -12,37 +12,31 @@ Ext.define('Ext.mitos.LivePatientSearch',{
     initComponent: function(){
         var me = this;
         
-        if (!Ext.ModelManager.isRegistered('Post')){
-            Ext.define("Post", {
-                extend: 'Ext.data.Model',
-                proxy: {
-                    type	: 'ajax',
-                    url 	: 'app/search/data.php?task=search',
-                    reader: {
-                        type			: 'json',
-                        root			: 'row',
-                        totalProperty	: 'totals'
-                    }
-                },
-                fields: [
-                    {name: 'pid', 		type: 'int'},
-                    {name: 'pubpid', 	type: 'int'},
-                    {name: 'fullname', 	type: 'string'},
-                    {name: 'DOB', 	    type: 'string'},
-                    {name: 'SS', 	    type: 'string'}
-                ]
-            });
-        }
-        // *************************************************************************************
-        // Live Search data store
-        // *************************************************************************************
-        me.searchStore = Ext.create('Ext.data.Store', {
-            pageSize	: 10,
-            model		: 'Post'
+        Ext.define('patientLiveSearchModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'pid', 		type: 'int'},
+                {name: 'pubpid', 	type: 'int'},
+                {name: 'fullname', 	type: 'string'},
+                {name: 'DOB', 	    type: 'string'},
+                {name: 'SS', 	    type: 'string'}
+            ],
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: Patient.patientLiveSearch
+                }
+            }
         });
-        
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'patientLiveSearchModel',
+            pageSize	: 10,
+            autoLoad: false
+        });
+
         Ext.apply(this, {
-            store		: me.searchStore,
+            store		: me.store,
             displayField: 'fullname',
             valueField  : 'pid',
             emptyText	: me.emptyText,
@@ -51,7 +45,7 @@ Ext.define('Ext.mitos.LivePatientSearch',{
             minChars	: 1,
             anchor		: '100%',
             listConfig: {
-                //loadingText	: 'Searching...',
+                loadingText	: 'Searching...',
                 //emptyText	: 'No matching posts found.',
                 //---------------------------------------------------------------------
                 // Custom rendering template for each item

@@ -11,17 +11,24 @@ Ext.define('Ext.mitos.combo.Languages',{
     uses        : 'Ext.mitos.restStoreModel',
     initComponent: function(){
     	var me = this;
-        me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('LanguagesModel', {
+            extend: 'Ext.data.Model',
             fields: [
-                { name: 'lang_id',		    type:'string' },
                 { name: 'lang_code',	    type:'string' },
                 { name: 'lang_description', type:'string' }
             ],
-            model		: 'laguagesCB',
-            idProperty	: 'lang_id',
-            url		    : 'app/administration/globals/component_data.ejs.php',
-            extraParams	: { task:"langs"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getLanguages
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'LanguagesModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
@@ -31,7 +38,7 @@ Ext.define('Ext.mitos.combo.Languages',{
             displayField: 'lang_description',
             emptyText   : 'Select',
             store       : me.store
-		});
+		},null);
 		me.callParent();
-	} // end initComponent
+	}
 });

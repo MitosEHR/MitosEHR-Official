@@ -48,7 +48,7 @@ Ext.define('Ext.mitos.combo.InsurancePayerType',{
     		queryMode: 'local',
     		emptyText:'Select',
     		store: me.store
-		});
+		},null);
 		me.callParent();
 	} 
 });

@@ -51,6 +51,21 @@
 .edit{
 	background-image: url(../ui_icons/edit.png) !important;
 }
+.icoChart{
+    background-image: url(../ui_icons/icoChart.png) !important;
+}
+.icoEmer{
+    background-image: url(../ui_icons/icoEmer.png) !important;
+}
+.icoCheck{
+    background-image: url(../ui_icons/icoCheck.png) !important;
+}
+.icoClock{
+    background-image: url(../ui_icons/icoClock.png) !important;
+}
+.icoBackClock{
+    background-image: url(../ui_icons/icoBackClock.png) !important;
+}
 .icoArrowUp{
     background-image: url(../ui_icons/icoArrowUp.png) !important;
 }

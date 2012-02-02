@@ -5,16 +5,24 @@ Ext.define('Ext.mitos.combo.Lists',{
     iconCls		: 'icoListOptions',
     initComponent: function(){	
     	var me = this;
-    	me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('ListComboModel', {
+            extend: 'Ext.data.Model',
             fields: [
-                {name: 'option_id', type: 'string'},
-                {name: 'title',     type: 'string'}
+                {name: 'option_id', type: 'string' },
+                {name: 'title',     type: 'string' }
             ],
-            model		: 'ListModelCombo',
-            idProperty	: 'option_id',
-            url	    	: 'app/administration/lists/component_data.ejs.php',
-            extraParams	: { task:"list"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getList
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'ListComboModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
@@ -24,7 +32,7 @@ Ext.define('Ext.mitos.combo.Lists',{
             displayField: 'title',
             emptyText   : 'Select',
             store       : me.store
-		});
+		},null);
 		me.callParent(arguments);
 	} 
 });

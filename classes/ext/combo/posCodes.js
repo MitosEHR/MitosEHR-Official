@@ -11,26 +11,34 @@ Ext.define('Ext.mitos.combo.posCodes',{
     uses        : 'Ext.mitos.restStoreModel',
     initComponent: function(){
     	var me = this;
-        me.store = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('PosCodesModel', {
+            extend: 'Ext.data.Model',
             fields: [
-                {name: 'option_id', type: 'string' },
-                {name: 'title',     type: 'string' }
+                {name: 'code',  type: 'string' },
+                {name: 'title', type: 'string' }
             ],
-            model		: 'posCodes',
-            idProperty	: 'option_id',
-            url	    	: 'app/administration/facilities/component_data.ejs.php',
-            extraParams	: { task:"poscodes"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getPosCodes
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'PosCodesModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
             editable    : false,
             queryMode   : 'local',
-            valueField  : 'option_id',
+            valueField  : 'code',
             displayField: 'title',
             emptyText   : 'Select',
             store       : me.store
-		});
+		}, null);
 		me.callParent();
 	} // end initComponent
 });

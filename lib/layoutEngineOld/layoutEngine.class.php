@@ -13,7 +13,7 @@
  * author: GI Technologies, 2011
  * 
  */
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 class layoutEngineOld extends dbHelper {
 
 	private $cu;

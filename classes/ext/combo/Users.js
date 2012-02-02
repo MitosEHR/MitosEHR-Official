@@ -12,26 +12,33 @@ Ext.define('Ext.mitos.combo.Users',{
     initComponent: function(){
     	var me = this;
 
-        me.store = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('UsersComboModel', {
+            extend: 'Ext.data.Model',
             fields: [
-                {name: 'user',      type: 'string' },
-                {name: 'full_name', type: 'string' }
+                {name: 'id',      type: 'int' },
+                {name: 'name', type: 'string' }
             ],
-            model		: 'mUsers',
-            idProperty	: 'id',
-            url		    : 'app/messages/component_data.ejs.php',
-            extraParams	: { task : "users"},
-            autoLoad    : true
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getUsers
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'UsersComboModel',
+            autoLoad: true
         });
 
     	Ext.apply(this, {
             editable    : false,
             queryMode   : 'local',
-            valueField  : 'user',
-            displayField: 'full_name',
+            valueField  : 'id',
+            displayField: 'name',
             emptyText   : 'Select',
             store       : me.store
-		});
+		},null);
 		me.callParent();
 	} // end initComponent
 });

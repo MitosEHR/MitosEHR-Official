@@ -43,6 +43,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 {name: 'layout',		    type: 'string'},
                 {name: 'width',		        type: 'string'},
                 {name: 'height',		    type: 'string'},
+                {name: 'anchor',		    type: 'string'},
                 {name: 'margin',		    type: 'string'},
                 {name: 'flex',		        type: 'string'},
                 {name: 'collapsible',		type: 'string'},
@@ -55,6 +56,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 {name: 'minValue',		    type: 'string'},
                 {name: 'boxLabel',		    type: 'string'},
                 {name: 'grow',		        type: 'string'},
+                {name: 'growMin',	        type: 'string'},
+                {name: 'growMax',           type: 'string'},
                 {name: 'increment',		    type: 'string'},
                 {name: 'name',		        type: 'string'},
                 {name: 'list_id',		    type: 'string'}
@@ -67,62 +70,86 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
         me.fieldsGridStore = Ext.create('Ext.data.TreeStore', {
             model       : 'layoutTreeModel',
             clearOnLoad : true,
-            proxy:{
-                type        : 'rest',
-                url	        : 'app/administration/layout/data.php',
-                extraParams	: { task: "treeRequest" }
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: formLayoutBuilder.getFormFieldsTree
+                }
             },
-            folderSort: false
+//            proxy:{
+//
+//                type        : 'rest',
+//                url	        : 'app/administration/layout/data.php',
+//                extraParams	: { task: "treeRequest" }
+//            },
+            folderSort: false,
+            autoLoad: false
         });
         /**
          * Xtype Combobox store
          */
-        me.fieldXTypesStore = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('XtypesComboModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',		type: 'string'},
                 {name: 'name',	    type: 'string'},
                 {name: 'value',	    type: 'string'}
             ],
-            model 		: 'field_typesModel',
-            idProperty 	: 'id',
-            url		    : 'app/administration/layout/component_data.ejs.php',
-            autoLoad    : true,
-            extraParams	: { task: 'field_types' }
-
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getFiledXtypes
+                }
+            }
+        });
+        me.fieldXTypesStore = Ext.create('Ext.data.Store', {
+            model: 'XtypesComboModel',
+            autoLoad: true
         });
 
         /**
          * Forms grid store (left grid)
          */
-        me.formsGridStore = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('FormsListModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',		type: 'string'},
                 {name: 'name',	    type: 'string'}
             ],
-            model 		: 'formlistModel',
-            idProperty 	: 'id',
-            url		    : 'app/administration/layout/component_data.ejs.php',
-            autoLoad    : true,
-            extraParams	: { task: 'form_list' }
-
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: formLayoutBuilder.getForms
+                }
+            }
+        });
+        me.formsGridStore = Ext.create('Ext.data.Store', {
+            model: 'FormsListModel',
+            autoLoad: true
         });
 
         /**
          * Field available on this form as parent items (fieldset / fieldcontainer )
          * use to get the "Child of" combobox data
          */
-        me.parentFieldsStore = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('ParentFieldsModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'name',		type: 'string'},
                 {name: 'value',	    type: 'string'}
             ],
-            model 		: 'parentFieldsModel',
-            idProperty 	: 'value',
-            url		    : 'app/administration/layout/component_data.ejs.php',
-            autoLoad    : true,
-            extraParams	: { task: 'parent_fields' }
-
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: formLayoutBuilder.getParentFields
+                }
+            }
         });
+        me.parentFieldsStore = Ext.create('Ext.data.Store', {
+            model: 'ParentFieldsModel',
+            autoLoad: true
+        });
+
         /**
          * This are the select lists available to use for comboboxes
          * this lists can be created an modified at "Lists" administration panel.
@@ -296,6 +323,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     emptyText       : 'ei. 5 for 5px',
                     hidden          : true
                 },{
+                    fieldLabel      : 'Anchor',
+                    xtype           : 'textfield',
+                    name            : 'anchor',
+                    itemId          : 'anchor',
+                    emptyText       : 'ei. 100%',
+                    hidden          : true
+                },{
                     fieldLabel      : 'Flex',
                     xtype           : 'checkbox',
                     name            : 'flex',
@@ -325,6 +359,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     name            : 'margin',
                     itemId          : 'margin',
                     emptyText       : 'ei. 5 5 5 5',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Column Width',
+                    xtype           : 'textfield',
+                    name            : 'columnWidth',
+                    itemId          : 'columnWidth',
+                    emptyText       : 'ei. .5',
                     hidden          : true
                 },{
                     fieldLabel      : 'Is Required',
@@ -373,6 +414,18 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                     xtype           : 'checkbox',
                     name            : 'grow',
                     itemId          : 'grow',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Grow Min',
+                    xtype           : 'textfield',
+                    name            : 'growMin',
+                    itemId          : 'growMin',
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Grow Max',
+                    xtype           : 'textfield',
+                    name            : 'growMax',
+                    itemId          : 'growMax',
                     hidden          : true
                 },{
                     fieldLabel      : 'Increment',
@@ -791,7 +844,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'collapsible',
                 'collapsed',
                 'checkboxToggle',
-                'margin'
+                'margin',
+                'columnWidth'
             ];
         } else if (value == 'fieldcontainer') {
             items = [
@@ -799,7 +853,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'labelWidth',
                 'hideLabel',
                 'layout',
-                'margin'
+                'margin',
+                'columnWidth'
             ];
         } else if (value == 'combobox') {
             items = [
@@ -825,6 +880,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             items = [
                 'name',
                 'width',
+                'anchor',
                 'emptyText',
                 'fieldLabel',
                 'hideLabel',
@@ -832,10 +888,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'allowBlank',
                 'margin'
             ];
-        } else if (value == 'textarea') {
+        } else if (value == 'textareafield') {
             items = [
                 'name',
                 'width',
+                'anchor',
                 'height',
                 'emptyText',
                 'fieldLabel',
@@ -843,6 +900,8 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'labelWidth',
                 'allowBlank',
                 'grow',
+                'growMin',
+                'growMax',
                 'margin'
             ];
         } else if (value == 'numberfield') {
@@ -883,10 +942,11 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
                 'margin',
                 'inputValue'
             ];
-        } else if (value == 'datefield') {
+        } else if (value == 'datefield' || value == 'mitos.datetime') {
             items = [
                 'name',
                 'width',
+                'value',
                 'emptyText',
                 'fieldLabel',
                 'labelWidth',

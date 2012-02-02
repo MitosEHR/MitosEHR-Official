@@ -10,7 +10,7 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 $_SESSION['site']['flops'] = 0;
-include_once($_SESSION['site']['root']."/classes/dbHelper.class.php");
+include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 include_once($_SESSION['site']['root']."/classes/AES.class.php");
 include_once($_SESSION['site']['root']."/repo/global_functions/global_functions.php");
 
@@ -39,13 +39,20 @@ switch($_SERVER['REQUEST_METHOD']){
             $row['pwd_history1']= $aes->decrypt($row['pwd_history1']);
             $row['pwd_history2']= $aes->decrypt($row['pwd_history2']);
             $row['fullname']    = fullname($row['fname'],$row['mname'],$row['lname']);
+
+            $user_id = $row['id'];
+            $mitos_db->setSQL("SELECT role_id FROM acl_user_roles WHERE user_id = $user_id ");
+            $rec = $mitos_db->fetch();
+            $row['role_id'] = $rec['role_id'];
             array_push($rows, $row);
         }
         print_r(json_encode(array('totals'=>$total,'row'=>$rows)));
         exit;
     case 'POST':
-        unset($data['id']);
-        unset($data['fullname']);
+        $role['role_id'] = $data['role_id'];
+
+        unset($data['id'], $data['role_id'], $data['fullname']);
+
         $data['password']   = $aes->encrypt($data['password']);
         $data['authorized'] = ($data['authorized'] == 'on' ? 1 : 0);
         $data['active']   	= ($data['active']     == 'on' ? 1 : 0);
@@ -56,6 +63,13 @@ switch($_SERVER['REQUEST_METHOD']){
         $mitos_db->setSQL($sql);
         $ret = $mitos_db->execLog();
 
+
+        $role['user_id'] = $mitos_db->lastInsertId;
+
+        $sql = $mitos_db->sqlBind($role, "acl_user_roles", "I");
+            $mitos_db->setSQL($sql);
+        $ret = $mitos_db->execLog();
+
         if ($ret[2]){
             echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
         } else {
@@ -64,8 +78,14 @@ switch($_SERVER['REQUEST_METHOD']){
         exit;
     case 'PUT':
         $id = $data['id'];
-        unset($data['id']);
-        unset($data['fullname']);
+        $role['role_id'] = $data['role_id'];
+        unset($data['id'], $data['role_id'], $data['fullname']);
+
+        $sql = $mitos_db->sqlBind($role, "acl_user_roles", "U", "user_id='$id'");
+            $mitos_db->setSQL($sql);
+        $ret = $mitos_db->execLog();
+
+
         $data['password']   = $aes->encrypt($data['password']);
         $data['authorized'] = ($data['authorized'] == 'on' ? 1 : 0);
         $data['active']   	= ($data['active']     == 'on' ? 1 : 0);

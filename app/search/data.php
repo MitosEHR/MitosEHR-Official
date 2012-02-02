@@ -21,9 +21,9 @@ session_cache_limiter('private');
 // **************************************************************************************
 // Load all the necessary libraries
 // **************************************************************************************
-include_once($_SESSION['site']['root']."/classes/patient.class.php");
+include_once($_SESSION['site']['root']."/classes/Patient.php");
 
-$patient_class = new patient();
+$patient_class = new Patient();
 
 // **************************************************************************************
 // Reset session count 10 secs = 1 Flop

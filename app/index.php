@@ -18,7 +18,7 @@ $_SESSION['site']['flops'] = 0;
  * can work.
  */
 include_once($_SESSION['site']['root'].'/lib/compressor/compressor.inc.php');
-include_once($_SESSION['site']['root'].'/classes/dbHelper.class.php');
+include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
 include_once($_SESSION['site']['root'].'/repo/global_settings/global_settings.php');
 include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.php');
 ?>
@@ -54,9 +54,13 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
 
+
+
         <!-- Languages -->
         <script type="text/javascript" src="langs/<?php echo $_SESSION['lang']['code'] ?>.js"></script>
 
+        <!-- JS Registry -->
+        <script type="text/javascript" src="registry.js.php"></script>
 
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -69,7 +73,17 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
                     'Extensible'        : 'lib/extensible-1.5.0/src'
                 }
             });
+
+//            window.onbeforeunload = function() {
+//                Ext.Ajax.request({
+//                    url     : 'app/login/data.php?task=unAuth'
+//                });
+//                alert('You have been logged off MitosEHR');
+//
+//            };
         </script>
+
+        <script src="data/api.php"></script>
 
         <script type="text/javascript" src="classes/ext/NodeDisabled.js"></script>
 
@@ -96,7 +110,6 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="classes/ext/combo/Lists.js"></script>
         <script type="text/javascript" src="classes/ext/combo/MsgNoteType.js"></script>
         <script type="text/javascript" src="classes/ext/combo/MsgStatus.js"></script>
-        <script type="text/javascript" src="classes/ext/combo/PermValues.js"></script>
         <script type="text/javascript" src="classes/ext/combo/posCodes.js"></script>
         <script type="text/javascript" src="classes/ext/combo/Roles.js"></script>
         <script type="text/javascript" src="classes/ext/combo/TaxId.js"></script>
@@ -104,6 +117,17 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
         <script type="text/javascript" src="classes/ext/combo/TransmitMedthod.js"></script>
         <script type="text/javascript" src="classes/ext/combo/Types.js"></script>
         <script type="text/javascript" src="classes/ext/combo/Users.js"></script>
+
+
+        <script type="text/javascript" src="classes/ext/form/fields/Checkbox.js"></script>
+        <script type="text/javascript" src="classes/ext/form/fields/DateTime.js"></script>
+
+
+        <script type="text/javascript" src="app/patientfile/visits/Visits.js"></script>
+        <script type="text/javascript" src="app/patientfile/summary/Summary.js"></script>
+        <script type="text/javascript" src="app/patientfile/encounter/Encounter.js"></script>
+        <script type="text/javascript" src="app/patientfile/new/NewPatient.js"></script>
+
 
         <script type="text/javascript" src="app/administration/facilities/Facilities.js"></script>
         <script type="text/javascript" src="app/administration/globals/Globals.js"></script>
@@ -131,9 +155,13 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
 
         <script type="text/javascript">
             var App;
+            Ext.direct.Manager.addProvider(Ext.mitos.data.REMOTING_API);
+
             Ext.onReady(function(){
                 App = Ext.create('Ext.mitos.panel.MitosApp');
             });
         </script>
+
+
     </body>
 </html>
