@@ -1,6 +1,21 @@
 <?php
 $API = array(
-
+    /**
+    * Office Notes
+    */
+    'OfficeNotes'=>array(
+        'methods'=>array(
+           'getOfficeNotes'=>array(
+               'len'=>1
+           ),
+           'addOfficeNotes'=>array(
+               'len'=>1
+           ),
+           'updateOfficeNotes'=>array(
+               'len'=>1
+           )
+        )
+    ),
     /**
      * Form layout Engine Class
      */
@@ -133,5 +148,16 @@ $API = array(
                 'len'=>0
             ),
         )
+    ),
+    /**
+     * Form layout Engine Class
+     */
+    'Navigation'=>array(
+        'methods'=>array(
+            'getNavigation'=>array(
+                'len'=>1
+            )
+        )
     )
+
 );

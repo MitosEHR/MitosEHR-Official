@@ -8,33 +8,33 @@ Ext.define('Ext.mitos.dashboard.OnotesPortlet', {
      * @param {Object} val
      */
     initComponent: function(){
-		var OnotesSotore = new Ext.data.Store({
-	    	pageSize	: 13,
-		    proxy		: {
-		    	type	: 'ajax',
-			    url		: 'app/miscellaneous/officenotes/data_read.ejs.php',
-		   	 	reader: {
-		            type			: 'json',
-		            idProperty		: 'id',
-		            totalProperty	: 'totals',
-		            root			: 'row'
-		    	}
-		    },
-		    fields: [
-				{name: 'id',      		type: 'int'},
-				{name: 'date',          type: 'date', dateFormat: 'c'},
-				{name: 'body',          type: 'string'},
-				{name: 'user',          type: 'string'},
-				{name: 'facility_id',   type: 'string'},
-				{name: 'activity',   	type: 'string'}
-        	],
-		    autoLoad: true
-		});
+        var me = this;
+        Ext.define('OnotesPortletModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'id',      		type: 'int'},
+                {name: 'date',          type: 'date', dateFormat: 'c'},
+                {name: 'body',          type: 'string'},
+                {name: 'user',          type: 'string'},
+                {name: 'facility_id',   type: 'string'},
+                {name: 'activity',   	type: 'string'}
+            ],
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : OfficeNotes.getOfficeNotes
+                }
+            }
+        });
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'OnotesPortletModel',
+            autoLoad: true
+        });
 
         Ext.apply(this, {
             //height: 300,
             height: this.height,
-            store: OnotesSotore,
+            store: this.store,
             stripeRows: true,
             columnLines: true,
             columns: [{
@@ -49,7 +49,7 @@ Ext.define('Ext.mitos.dashboard.OnotesPortlet', {
                 dataIndex: 'body',
                 flex	 : 1
             }]
-        });
+        }, null);
 
         this.callParent(arguments);
     }
