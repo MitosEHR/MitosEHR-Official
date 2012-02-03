@@ -10,7 +10,7 @@ session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 
-include_once($_SESSION['site']['root']."/classes/Encounter.class.php");
+include_once($_SESSION['site']['root']."/classes/Encounter.php");
 
 $_SESSION['site']['flops'] = 0;
 

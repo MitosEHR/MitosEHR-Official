@@ -1,13 +1,20 @@
-//******************************************************************************
-// facilities.ejs.php
-// Description: Patient File ScreenS
-// v0.0.3
-//
-// Author: Ernesto J Rodriguez
-// Modified: n/a
-//
-// MitosEHR (Electronic Health Records) 2011
-//**********************************************************************************
+Messages.getMessages,Messages.getMessages,/**
+ * facilities.ejs.php
+ * Description: Patient File ScreenS
+ * v0.0.3
+ *
+ * Author: Ernesto J Rodriguez
+ * Modified: n/a
+ *
+ * MitosEHR (Electronic Health Records) 2011
+ *
+ * @namespace Calendar.getCalendars
+ * @namespace Calendar.getEvents
+ * @namespace Calendar.addEvent
+ * @namespace Calendar.updateEvent
+ * @namespace Calendar.deleteEvent
+ *
+ */
 Ext.define('Ext.mitos.panel.calendar.Calendar', {
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelCalendar',
@@ -19,9 +26,10 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
         this.calendarStore = Ext.create('Extensible.calendar.data.MemoryCalendarStore', {
             autoLoad: true,
             proxy: {
-                type: 'ajax',
-                url: 'app/calendar/data_read.ejs.php',
-                extraParams:{"task":"calendars"},
+                type: 'direct',
+                api:{
+                    read    : Calendar.getCalendars
+                },
                 noCache: false,
 
                 reader: {
@@ -34,14 +42,13 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
         this.eventStore = Ext.create('Extensible.calendar.data.EventStore', {
             autoLoad: true,
             proxy: {
-                type: 'rest',
+                type: 'direct',
                 api:{
-                    read    : 'app/calendar/data_read.ejs.php',
-                    create  : 'app/calendar/data_create.ejs.php',
-                    update  : 'app/calendar/data_update.ejs.php',
-                    destroy : 'app/calendar/data_destroy.ejs.php'
+                    read    : Calendar.getEvents,
+                    create  : Calendar.addEvent,
+                    update  : Calendar.updateEvent,
+                    destroy : Calendar.deleteEvent
                 },
-                extraParams:{"task":"events"},
                 noCache: false,
 
                 reader: {
@@ -123,12 +130,12 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
 
                 // Any generic view options that should be applied to all sub views:
                 viewConfig: {
-                    enableFx: false,
-                    //ddIncrement: 10, //only applies to DayView and subclasses, but convenient to put it here
-                    //viewStartHour: 8,
-                    //viewEndHour: 16,
+                    enableFx                : false,
+                    //ddIncrement           : 10, //only applies to DayView and subclasses, but convenient to put it here
+                    //viewStartHour         : 8,
+                    //viewEndHour           : 16,
                     //minEventDisplayMinutes: 15,
-                    showTime: false
+                    showTime                : false
                 },
 
                 // View options specific to a certain view (if the same options exist in viewConfig
@@ -144,18 +151,18 @@ Ext.define('Ext.mitos.panel.calendar.Calendar', {
                 },
 
                 // Some optional CalendarPanel configs to experiment with:
-                //readOnly: true,
-                //showDayView: false,
-                //showMultiDayView: true,
-                //showWeekView: false,
-                //showMultiWeekView: false,
-                //showMonthView: false,
-                //showNavBar: false,
-                //showTodayText: false,
-                //showTime: false,
-                //editModal: true,
-                enableEditDetails: false,
-                //title: 'My Calendar', // the header of the calendar, could be a subtitle for the app
+                //readOnly          : true,
+                //showDayView       : false,
+                //showMultiDayView  : true,
+                //showWeekView      : false,
+                //showMultiWeekView : false,
+                //showMonthView     : false,
+                //showNavBar        : false,
+                //showTodayText     : false,
+                //showTime          : false,
+                //editModal         : true,
+                enableEditDetails   : false,
+                //title             : 'My Calendar',
 
                 listeners: {
                     'eventclick': {

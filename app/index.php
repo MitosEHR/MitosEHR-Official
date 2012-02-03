@@ -13,6 +13,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
  */
 // Reset session count
 $_SESSION['site']['flops'] = 0;
+
 /*
  * Include the necessary libraries, so the web application
  * can work.
