@@ -32,7 +32,6 @@ class OfficeNotes extends dbHelper {
     public function updateOfficeNotes(stdClass $params){
 
         $data['user']       = $_SESSION['user']['name'];
-        $data['date']       = date('Y-m-d H:i:s');
         $data['body']       = $params->body;
         $data['groupname']  = $params->groupname;
         $data['activity']   = $params->activity;

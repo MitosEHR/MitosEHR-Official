@@ -84,4 +84,19 @@ class Patient extends Person {
         return $rows;
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
+    public function getPatientDemographicData(stdClass $params){
+        $pid = $_SESSION['patient']['pid'];
+        $this->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
+
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+        }
+        return $rows;
+
+    }
 }

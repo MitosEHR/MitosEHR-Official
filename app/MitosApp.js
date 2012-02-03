@@ -85,7 +85,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
                 me.checkSession();
                 me.patientPoolStore.load();
             },
-            interval    : 10000
+            interval    : 100000
         });
 
 

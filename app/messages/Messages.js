@@ -5,7 +5,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     pageLayout  : 'border',
     defaults    : {split: true},
     uses        : [
-        'Ext.mitos.restStoreModel',
+        //'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
         'Ext.mitos.LivePatientSearch',
         'Ext.mitos.combo.MsgStatus',
@@ -18,7 +18,8 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
         /**
          * Message Store
          */
-        me.storeMsgs = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('MessagesModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',				type: 'int'},
                 {name: 'date',				type: 'string'},
@@ -26,20 +27,31 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 {name: 'curr_msg',			type: 'string'},
                 {name: 'pid',				type: 'string'},
                 {name: 'patient_name',	    type: 'string'},
-                {name: 'user_id',			type: 'string'},
-                {name: 'user',				type: 'string'},
+                {name: 'from_user',			type: 'string'},
+                {name: 'to_user',			type: 'string'},
                 {name: 'subject',			type: 'string'},
                 {name: 'facility_id',		type: 'string'},
-                {name: 'activity',			type: 'string'},
                 {name: 'authorized',	  	type: 'string'},
-                {name: 'assigned_to',   	type: 'string'},
+                {name: 'to_id',   	        type: 'string'},
+                {name: 'from_id',  	        type: 'string'},
                 {name: 'message_status',	type: 'string'},
-                {name: 'reply_id',  		type: 'string'},
                 {name: 'note_type',			type: 'string'}
-            ],
-            model		: 'Messages',
-            idProperty	: 'id',
-            url		    : 'app/messages/data.php'
+            ]
+
+        });
+
+        me.storeMsgs = Ext.create('Ext.data.Store', {
+            model: 'MessagesModel',
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : Messages.getMessages,
+                    create  : Messages.sendNewMessage,
+                    update  : Messages.replyMessage,
+                    destroy : Messages.deleteMessage
+                }
+            },
+            autoLoad: false
         });
 
         /**
@@ -55,11 +67,9 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                 itemclick   : this.onItemClick
             },
             columns:[
-                { header: 'noteid',     sortable: false, dataIndex: 'noteid',           hidden: true },
-                { header: 'reply_id',   sortable: false, dataIndex: 'reply_id',         hidden: true },
-                { header: 'user',       sortable: false, dataIndex: 'user',             hidden: true },
                 { header: 'Status',     sortable: true,  dataIndex: 'message_status',   width : 70   },
-                { header: 'From',       sortable: true,  dataIndex: 'user',             width : 200  },
+                { header: 'From',       sortable: true,  dataIndex: 'from_user',        width : 200  },
+                { header: 'To',         sortable: true,  dataIndex: 'to_user',        width : 200  },
                 { header: 'Patient',    sortable: true,  dataIndex: 'patient_name',     width : 200  },
                 { header: 'Subject',    sortable: true,  dataIndex: 'subject',          flex  : 1    },
                 { header: 'Type',       sortable: true,  dataIndex: 'note_type',        width : 100  }
@@ -77,6 +87,28 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                     disabled	: true,
                     scope       : me,
                     handler     : me.onDelete
+                },'-',{
+                    text        : 'Inbox',
+                    action      : 'inbox',
+                    enableToggle: true,
+                    toggleGroup : 'message',
+                    pressed     : true,
+                    scope       : me,
+                    handler     : me.messagesType
+                },'-',{
+                    text        : 'Sent',
+                    action      : 'sent',
+                    enableToggle: true,
+                    toggleGroup : 'message',
+                    scope       : me,
+                    handler     : me.messagesType
+                },'-',{
+                    text        : 'Junk',
+                    action      : 'junk',
+                    enableToggle: true,
+                    toggleGroup : 'message',
+                    scope       : me,
+                    handler     : me.messagesType
                 },'-']
             }),
             bbar:[{
@@ -132,7 +164,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
                             hidden      : true
                         },{
                             xtype           : 'userscombo',
-                            name            : 'assigned_to',
+                            name            : 'to_id',
                             fieldLabel      : 'To',
                             validateOnChange: false,
                             allowBlank      : false
@@ -213,7 +245,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
             listeners:{
                 scope: me,
                 afterrender:me.onFormRender
-                
+
             }
         });
         me.pageBody = [ me.msgGrid, me.msgForm ];
@@ -221,6 +253,13 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
 
 
     }, // End initComponent
+
+    messagesType:function(btn){
+        this.updateTitle('Messages ('+btn.action+')');
+        this.storeMsgs.proxy.extraParams = {get:btn.action};
+        this.storeMsgs.load();
+
+    },
 
     onFormRender:function(){
         this.msgForm.getComponent('bodyMsg').getToolbar().hide();
@@ -234,7 +273,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     onNew:function(){
         var form = this.msgForm;
         form.getForm().reset();
-        var model = Ext.ModelManager.getModel('Messages'),
+        var model = Ext.ModelManager.getModel('MessagesModel'),
         newModel  = Ext.ModelManager.create({
             message_status  : 'New',
             note_type       : 'Unassigned'
@@ -328,6 +367,12 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
      * @param record
      */
     onItemClick: function(view, record){
+
+        record.data.to_id = record.data.from_id;
+
+        console.log(record);
+
+
         this.msgForm.getForm().loadRecord(record);
         this.action('old');
     },
@@ -386,6 +431,7 @@ Ext.define('Ext.mitos.panel.messages.Messages',{
     * to call every this panel becomes active
     */
     onActive:function(callback){
+        this.updateTitle('Messages (inbox)');
         this.storeMsgs.load();
         callback(true);
     }

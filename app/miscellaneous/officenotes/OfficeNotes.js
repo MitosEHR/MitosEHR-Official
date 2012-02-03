@@ -116,7 +116,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.officenotes.OfficeNotes',{
                             }
                             record.set( 'activity', '0' );
                             me.storeOnotes.sync();	// Save the record to the dataStore
-                            me.storeOnotes.load({params:{show: 'active' }});	// Reload the dataSore from the database
+                            //me.storeOnotes.load({params:{show: 'active' }});	// Reload the dataSore from the database
                             me.onotesFormPanel.getForm().reset();
                             me.cmdHide.disable();
                         }
