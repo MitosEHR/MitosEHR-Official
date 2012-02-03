@@ -17,7 +17,9 @@ include_once($_SESSION['site']['root']."/classes/AES.class.php");
 
 class Encounter extends Patient{
 
-
+    /**
+     * @return array
+     */
     public function ckOpenEncounters(){
         $pid =  $_SESSION['patient']['pid'];
         $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' AND close_date IS NULL");
@@ -29,28 +31,34 @@ class Encounter extends Patient{
         }
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
+    public function getEncounters(stdClass $params){
 
-    public function getEncounters($params){
-        if(isset($params['sort'])){
-            $sort = json_decode($params['sort']);
-            $ORDER = 'ORDER BY ' . $sort[0]->property . ' ' . $sort[0]->direction;
+        if(isset($params->sort)){
+            $ORDER = 'ORDER BY ' . $params->sort[0]->property . ' ' . $params->sort[0]->direction;
         } else {
             $ORDER = 'ORDER BY start_date DESC';
         }
-        $pid =  $this->getCurrPid();
+
+        $pid = $_SESSION['patient']['pid'];
         $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' ".$ORDER);
-        $total = $this->rowCount();
         $rows = array();
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
             $row['status'] = ($row['close_date']== null)? 'open' : 'close';
         	array_push($rows, $row);
         }
 
-        print(json_encode(array('totals'=>$total,'row'=>$rows)));
+        return $rows;
 
     }
 
-
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function createEncounter(stdClass $params){
 
         $params->pid        = $_SESSION['patient']['pid'];
@@ -65,6 +73,10 @@ class Encounter extends Patient{
         return array('success'=>true,'encounter'=>array('eid'=>intval($eid), 'start_date'=>$params->start_date));
     }
 
+    /**
+     * @param stdClass $params
+     * @return array|mixed
+     */
     public function getEncounter(stdClass $params){
 
         $this->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$params->eid'");
@@ -77,6 +89,9 @@ class Encounter extends Patient{
         }
     }
 
+    /**
+     * @return array
+     */
     public function getVitals(){
 
         $pid =  $_SESSION['patient']['pid'];
@@ -98,6 +113,10 @@ class Encounter extends Patient{
 
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function closeEncounter(stdClass $params){
         $aes    = new AES($_SESSION['site']['AESkey']);
         $pass   = $aes->encrypt($params->signature);

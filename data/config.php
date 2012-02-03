@@ -8,6 +8,9 @@ $API = array(
             'ckOpenEncounters'=>array(
                'len'=>0
             ),
+            'getEncounters'=>array(
+               'len'=>1
+            ),
             'getEncounter'=>array(
                'len'=>1
             ),
@@ -59,6 +62,43 @@ $API = array(
                 'len'=>1
             ),
             'replyMessage'=>array(
+                'len'=>1
+            ),
+            'updateMessage'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
+    * Facilities Functions
+    */
+    'Facilities'=>array(
+        'methods'=>array(
+            'getFacilities'=>array(
+               'len'=>1
+            ),
+            'addFacility'=>array(
+                'len'=>1
+            ),
+            'updateFacility'=>array(
+                'len'=>1
+            ),
+            'deleteFacility'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
+    * Globals Functions
+    */
+    'Globals'=>array(
+        'methods'=>array(
+            'getGlobals'=>array(
+               'len'=>0
+            ),
+            'updateGlobals'=>array(
                 'len'=>1
             )
         ),
@@ -134,6 +174,27 @@ $API = array(
             	'len'=>0
             ),
             'getPatientDemographicData'=>array(
+            	'len'=>1
+            )
+
+        )
+    ),
+
+    /**
+     * User Functions
+     */
+    'User'=>array(
+        'methods'=>array(
+            'getUsers'=>array(
+                'len'=>1
+            ),
+            'addUser'=>array(
+            	'len'=>1
+            ),
+            'updateUser'=>array(
+            	'len'=>1
+            ),
+            'chechPasswordHistory'=>array(
             	'len'=>1
             )
 

@@ -1,21 +1,23 @@
-//******************************************************************************
-// facilities.ejs.php
-// Description: Facilities Screen
-// v0.0.3
-//
-// Author: GI Technologies, 2011
-// Modified: n/a
-//
-// MitosEHR (Eletronic Health Records) 2011
-//******************************************************************************
-
+/**
+ * facilities.ejs.php
+ * Description: Facilities Screen
+ * v0.0.3
+ *
+ * Author: GI Technologies, 2011
+ * Modified: n/a
+ *
+ * MitosEHR (Eletronic Health Records) 2011
+ *
+ * @namespace  Facilities.getFacilities
+ * @namespace  Facilities.addFacility
+ * @namespace  Facilities.updateFacility
+ * @namespace  Facilities.deleteFacility
+ */
 Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelFacilities',
-    pageTitle   : 'Facilities',
+    pageTitle   : 'Facilities (Active)',
     uses        : [
-        'Ext.mitos.CRUDStore',
-        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
         'Ext.mitos.window.Window'
     ],
@@ -23,13 +25,12 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
 
         var me = this;
 
-        // *************************************************************************************
-        // Facility Record Structure
-        // *************************************************************************************
-        me.FacilityStore = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('facilityModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',					type: 'int'},
                 {name: 'name',					type: 'string'},
+                {name: 'active',				type: 'string'},
                 {name: 'phone',					type: 'string'},
                 {name: 'fax',					type: 'string'},
                 {name: 'street',				type: 'string'},
@@ -48,11 +49,21 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
                 {name: 'facility_npi',			type: 'string'},
                 {name: 'tax_id_type',			type: 'string'}
             ],
-            model 		:'facilityModel',
-            idProperty 	:'id',
-            url		    :'app/administration/facilities/data.php'
+            proxy: {
+                type: 'direct',
+                api:{
+                    read    : Facilities.getFacilities,
+                    create  : Facilities.addFacility,
+                    update  : Facilities.updateFacility,
+                    destroy : Facilities.deleteFacility
+                }
+            }
         });
 
+        me.FacilityStore = Ext.create('Ext.data.Store', {
+            model		: 'facilityModel',
+            remoteSort	: true
+        });
 
         // *************************************************************************************
         // Facility Grid Panel
@@ -80,31 +91,36 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
                 sortable : true,
                 dataIndex: 'city'
             }],
-            // Slider bar or Pagin
-            bbar: Ext.create('Ext.PagingToolbar', {
+            tbar: Ext.create('Ext.PagingToolbar', {
                 pageSize    : 30,
                 store       : me.FacilityStore,
                 displayInfo : true,
-                plugins     : Ext.create('Ext.ux.SlidingPager', {})
+                plugins     : Ext.create('Ext.ux.SlidingPager', {}),
+                items       : ['-',{
+                    text        : 'Add New Facility',
+                    iconCls     : 'save',
+                    handler: function(){
+                        var form    = me.win.down('form');
+                        me.onNew(form, 'facilityModel', 'Add New Facility');
+                    }
+                },'-',{
+                    text    : 'Show Active Facilities',
+                    action  : 'active',
+                    scope   : me,
+                    handler : me.filterFacilitiesby
+                },'-',{
+                    text    : 'Show Inactive Facilities',
+                    action  : 'inactive',
+                    scope   : me,
+                    handler : me.filterFacilitiesby
+                }]
+
             }),
             listeners: {
                 itemdblclick: function(view, record){
                     me.onItemdblclick( me.FacilityStore, record, 'Edit Facility' );
                 }
-            },
-            dockedItems: [{
-                xtype: 'toolbar',
-                dock: 'top',
-                items: [{
-                        xtype       : 'button',
-                        text        : 'Add New Facility',
-                        iconCls     : 'save',
-                        handler: function(){
-                            var form    = me.win.down('form');
-                            me.onNew(form, 'facilityModel', 'Add New Facility');
-                        }
-                    }]
-            }]
+            }
         }); // END Facility Grid
 
         // *************************************************************************************
@@ -159,6 +175,10 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
                     }]
                 },{
                     xtype       : 'mitos.checkbox',
+                    fieldLabel  : 'Active?',
+                    name        : 'active'
+                },{
+                    xtype       : 'mitos.checkbox',
                     fieldLabel  : 'Service Location',
                     name        : 'service_location'
                 },{
@@ -188,7 +208,7 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
                 }]
             }],
             buttons : [{
-                text: 'save',
+                text: 'Save',
                 cls : 'winSave',
                 handler: function(){
                     var form = me.win.down('form').getForm();
@@ -198,13 +218,10 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
                     }
                 }
             },'-',{
-                text    : 'Delete',
-                cls     : 'winDelete',
-                itemId  : 'delete',
+                text    : 'Cancel',
                 scope   : me,
-                handler : function(){
-                    var form = me.win.down('form').getForm();
-                    me.onDelete(form, me.FacilityStore);
+                handler : function(btn){
+                    btn.up('window').close();
                 }
             }],
             listeners:{
@@ -213,11 +230,17 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
                     me.action('close');
                 }
             }
-        }); // END WINDOW
+        });
 
         me.pageBody = [ me.FacilityGrid ];
         me.callParent(arguments);
-    }, // end of initComponent
+    },
+
+    filterFacilitiesby:function(btn){
+        this.updateTitle('Facilities ('+Ext.String.capitalize(btn.action)+')');
+        this.FacilityStore.proxy.extraParams = { active: btn.action == 'active' ? 1 : 0 };
+        this.FacilityStore.load();
+    },
 
     onNew:function(form, model, title){
         this.setForm(form, title);
@@ -242,24 +265,6 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
         this.win.close();
     },
 
-    onDelete:function(form, store){
-        Ext.Msg.show({
-            title   : 'Please confirm...',
-            icon    : Ext.MessageBox.QUESTION,
-            msg     : 'Are you sure to delete this record?',
-            buttons : Ext.Msg.YESNO,
-            scope   : this,
-            fn:function(btn){
-                if(btn=='yes'){
-                    var currentRec = form.getRecord();
-                    store.remove(currentRec);
-                    store.destroy();
-                    this.win.close();
-                }
-            }
-        });
-    },
-
     onItemdblclick:function(store, record, title){
         var form = this.win.down('form');
         this.setForm(form, title);
@@ -282,11 +287,7 @@ Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
             winTbar = win.down('toolbar'),
             deletebtn = winTbar.getComponent('delete');
 
-        if (action == 'new') {
-            deletebtn.disable();
-        } else if (action == 'old') {
-            deletebtn.enable();
-        } else if (action == 'close') {
+        if (action == 'close') {
             form.getForm().reset();
         }
     },

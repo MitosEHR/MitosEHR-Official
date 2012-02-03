@@ -1,26 +1,30 @@
-//******************************************************************************
-// Users.ejs.php
-// Description: Users Screen
-// v0.0.4
-// 
-// Author: Ernesto J Rodriguez
-// Modified: n/a
-// 
-// MitosEHR (Eletronic Health Records) 2011
-//******************************************************************************
+/**
+ * Users.ejs.php
+ * Description: Users Screen
+ * v0.0.4
+ *
+ * Author: Ernesto J Rodriguez
+ * Modified: n/a
+ *
+ * MitosEHR (Eletronic Health Records) 2011
+ *
+ * @namespace Globals.getGlobals
+ * @namespace Globals.updateGlobals
+ *
+ */
 Ext.define('Ext.mitos.panel.administration.globals.Globals',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelGlobals',
     pageTitle   : 'MitosEHR Global Settings',
-    uses        : [ 'Ext.mitos.restStoreModel', 'Ext.mitos.combo.Languages', 'Ext.mitos.form.fields.Checkbox' ],
+    uses        : [ 'Ext.mitos.combo.Languages', 'Ext.mitos.form.fields.Checkbox' ],
     initComponent: function(){
         var me = this;
         // *************************************************************************************
         // Global Model and Data store
         // *************************************************************************************
-        me.store = Ext.create('Ext.mitos.restStoreModel', {
+        Ext.define('GlobalSettingsModel', {
+            extend: 'Ext.data.Model',
             fields: [
-                { name: 'data_id',								type:'int' },
                 { name: 'fullname',						        type:'auto' },
                 { name: 'default_top_pane',						type:'auto' },
                 { name: 'concurrent_layout',					type:'auto' },
@@ -135,16 +139,25 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
                 { name: 'hylafax_enscript',						type:'auto' },
                 { name: 'enable_scanner',						type:'auto' },
                 { name: 'scanner_output_directory',				type:'auto' }
-            ],
-            model		: 'GlobalSettings',
-            idProperty	: 'data_id',
-            url		    : 'app/administration/globals/data.php'
+            ]
         });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'GlobalSettingsModel',
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : Globals.getGlobals
+                }
+            },
+            autoLoad: false
+        });
+
         //------------------------------------------------------------------------------
         // When the data is loaded semd values to de form
         //------------------------------------------------------------------------------
         me.store.on('load',function(){
-            var rec = me.store.getById(1); // get the record from the store
+            var rec = me.store.getAt(0); // get the record from the store
             me.globalFormPanel.getForm().loadRecord(rec);
         });
         // *************************************************************************************
@@ -263,18 +276,16 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
         //**************************************************************************
         // Dummy Store
         //**************************************************************************
-        Ext.namespace('Ext.data');
-        Ext.data.dummy = [
-            ['Option 1', 'Option 1'],
-            ['Option 2', 'Option 2'],
-            ['Option 3', 'Option 3'],
-            ['Option 5', 'Option 5'],
-            ['Option 6', 'Option 6'],
-            ['Option 7', 'Option 7']
-        ];
         me.dummyStore = new Ext.data.ArrayStore({
             fields: ['title', 'option_id'],
-            data : Ext.data.dummy
+            data : [
+                ['Option 1', 'Option 1'],
+                ['Option 2', 'Option 2'],
+                ['Option 3', 'Option 3'],
+                ['Option 5', 'Option 5'],
+                ['Option 6', 'Option 6'],
+                ['Option 7', 'Option 7']
+            ]
         });
         //**************************************************************************
         // Global Form Panel
@@ -862,9 +873,10 @@ Ext.define('Ext.mitos.panel.administration.globals.Globals',{
     onSave:function(form, store){
         var record      = form.getRecord(),
             values      = form.getValues();
-        record.set(values);
-        store.sync();
-        store.load();
+        Globals.updateGlobals(values, function(){
+            store.load();
+        });
+
         this.msg('New Global Configuration Saved', 'For some settings to take place you will have to refresh the application.');
     },
     /**
