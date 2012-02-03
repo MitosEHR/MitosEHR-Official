@@ -181,6 +181,27 @@ $API = array(
     ),
 
     /**
+     * User Functions
+     */
+    'User'=>array(
+        'methods'=>array(
+            'getUsers'=>array(
+                'len'=>1
+            ),
+            'addUser'=>array(
+            	'len'=>1
+            ),
+            'updateUser'=>array(
+            	'len'=>1
+            ),
+            'chechPasswordHistory'=>array(
+            	'len'=>1
+            )
+
+        )
+    ),
+
+    /**
      * Authorization Procedures Functions
      */
     'authProcedures'=>array(
