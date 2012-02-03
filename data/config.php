@@ -63,6 +63,43 @@ $API = array(
             ),
             'replyMessage'=>array(
                 'len'=>1
+            ),
+            'updateMessage'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
+    * Facilities Functions
+    */
+    'Facilities'=>array(
+        'methods'=>array(
+            'getFacilities'=>array(
+               'len'=>1
+            ),
+            'addFacility'=>array(
+                'len'=>1
+            ),
+            'updateFacility'=>array(
+                'len'=>1
+            ),
+            'deleteFacility'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
+    * Globals Functions
+    */
+    'Globals'=>array(
+        'methods'=>array(
+            'getGlobals'=>array(
+               'len'=>0
+            ),
+            'updateGlobals'=>array(
+                'len'=>1
             )
         ),
 

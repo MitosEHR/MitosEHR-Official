@@ -228,7 +228,7 @@ Ext.define('Ext.mitos.panel.miscellaneous.myaccount.MyAccount',{
             listeners:{
                 afterrender: {
                     fn: function(){
-                        page.storeUsers.load();
+                        //page.storeUsers.load();
                     }
                 }
             }

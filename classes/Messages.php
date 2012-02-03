@@ -15,8 +15,10 @@ include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 include_once($_SESSION['site']['root']."/classes/Person.php");
 class Messages extends dbHelper {
 
-
-
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function getMessages(stdClass $params){
         $currUser = $_SESSION['user']['id'];
 
@@ -24,7 +26,7 @@ class Messages extends dbHelper {
             $wherex = "pnotes.to_deleted = '0' AND users.id = '".$currUser."'";
         }elseif($params->get == 'sent'){
             $wherex = "pnotes.from_deleted = '0' AND pnotes.from_id = '".$currUser."'";
-        }elseif($params->get == 'junk'){
+        }elseif($params->get == 'trash'){
             $wherex = "pnotes.to_deleted = '1' OR pnotes.from_deleted = '1' AND users.id = '".$currUser."'";
         }else{
             $wherex = "pnotes.to_deleted = '0' AND users.id = '".$currUser."'";
@@ -59,6 +61,10 @@ class Messages extends dbHelper {
         return $rows;
     }
 
+    /**
+     * @param stdClass $params
+     * @return array|stdClass
+     */
     public function sendNewMessage(stdClass $params){
 
         $t                      = date('l jS \of F Y h:i:s A');
@@ -83,6 +89,10 @@ class Messages extends dbHelper {
         return $params;
     }
 
+    /**
+     * @param stdClass $params
+     * @return array|stdClass
+     */
     public function replyMessage(stdClass $params){
 
             $t                      = date('l jS \of F Y h:i:s A');
@@ -109,6 +119,10 @@ class Messages extends dbHelper {
         return $params;
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function deleteMessage(stdClass $params){
         $id         = $params->id;
         $currUser   = $_SESSION['user']['id'];
@@ -132,22 +146,22 @@ class Messages extends dbHelper {
         }
     }
 
-    public function updateMessage(){
+    /**
+     * @param stdClass $params
+     * @return array
+     */
+    public function updateMessage(stdClass $params){
 
-        $row[$_REQUEST['col']] = $_REQUEST['val'];
+        $row[$params->col] = $params->val;
 
-        $sql = $this->sqlBind($row, "pnotes", "U", "id='" . $_REQUEST['id'] . "'");
+        $sql = $this->sqlBind($row, "pnotes", "U", "id='" . $params->id . "'");
         $this->setSQL($sql);
         $ret = $this->execLog();
         if ( $ret[2] ){
-            echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+            return array('success' => false);
         } else {
-            echo "{ success: true }";
+            return array('success' => true);
         }
-
-
-
-
 
     }
 }

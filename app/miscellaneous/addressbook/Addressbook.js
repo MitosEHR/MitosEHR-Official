@@ -84,7 +84,8 @@ Ext.define('Ext.mitos.panel.miscellaneous.addressbook.Addressbook',{
             read      	: 'app/miscellaneous/addressbook/data_read.ejs.php',
             create    	: 'app/miscellaneous/addressbook/data_create.ejs.php',
             update    	: 'app/miscellaneous/addressbook/data_update.ejs.php',
-            destroy 	: 'app/miscellaneous/addressbook/data_destroy.ejs.php'
+            destroy 	: 'app/miscellaneous/addressbook/data_destroy.ejs.php',
+            autoLoad:false
         });
         function localck(val) {
             if (val !== '' ) {
