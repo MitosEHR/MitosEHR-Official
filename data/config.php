@@ -1,8 +1,87 @@
 <?php
 $API = array(
-
     /**
-     * Form layout Engine Class
+    * Encounter Functions
+    */
+    'Encounter'=>array(
+        'methods'=>array(
+            'ckOpenEncounters'=>array(
+               'len'=>0
+            ),
+            'getEncounter'=>array(
+               'len'=>1
+            ),
+            'getVitals'=>array(
+               'len'=>1
+            ),
+            'createEncounter'=>array(
+                'len'=>1
+            ),
+            'closeEncounter'=>array(
+               'len'=>1
+            )
+        )
+    ),
+    /**
+    * Calendar Functions
+    */
+    'Calendar'=>array(
+        'methods'=>array(
+            'getCalendars'=>array(
+               'len'=>0
+            ),
+            'getEvents'=>array(
+               'len'=>1
+            ),
+            'addEvent'=>array(
+               'len'=>1
+            ),
+            'updateEvent'=>array(
+               'len'=>1
+            ),
+            'deleteEvent'=>array(
+               'len'=>1
+            )
+        )
+    ),
+    /**
+    * Messages Functions
+    */
+    'Messages'=>array(
+        'methods'=>array(
+            'getMessages'=>array(
+               'len'=>1
+            ),
+            'deleteMessage'=>array(
+                'len'=>1
+            ),
+            'sendNewMessage'=>array(
+                'len'=>1
+            ),
+            'replyMessage'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
+    * Office Notes Functions
+    */
+    'OfficeNotes'=>array(
+        'methods'=>array(
+           'getOfficeNotes'=>array(
+               'len'=>1
+           ),
+           'addOfficeNotes'=>array(
+               'len'=>1
+           ),
+           'updateOfficeNotes'=>array(
+               'len'=>1
+           )
+        )
+    ),
+    /**
+     * Form layout Engine Functions
      */
     'formLayoutEngine'=>array(
         'methods'=>array(
@@ -12,7 +91,7 @@ $API = array(
         )
     ),
     /**
-     * Form layout Builder Class
+     * Form layout Builder Functions
      */
     'formLayoutBuilder'=>array(
         'methods'=>array(
@@ -41,7 +120,7 @@ $API = array(
     ),
 
     /**
-     * Patient Class
+     * Patient Functions
      */
     'Patient'=>array(
         'methods'=>array(
@@ -53,13 +132,16 @@ $API = array(
             ),
             'currPatientUnset'=>array(
             	'len'=>0
+            ),
+            'getPatientDemographicData'=>array(
+            	'len'=>1
             )
 
         )
     ),
 
     /**
-     * Authorization Procedures Class
+     * Authorization Procedures Functions
      */
     'authProcedures'=>array(
         'methods'=>array(
@@ -77,7 +159,7 @@ $API = array(
     ),
 
     /**
-     * Comobo Boxes Data Class
+     * Comobo Boxes Data Functions
      */
     'CombosData'=>array(
         'methods'=>array(
@@ -133,5 +215,16 @@ $API = array(
                 'len'=>0
             ),
         )
+    ),
+    /**
+     * Navigation Function
+     */
+    'Navigation'=>array(
+        'methods'=>array(
+            'getNavigation'=>array(
+                'len'=>1
+            )
+        )
     )
+
 );

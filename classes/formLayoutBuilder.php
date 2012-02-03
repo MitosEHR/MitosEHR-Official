@@ -429,6 +429,9 @@ class formLayoutBuilder extends dbHelper {
         }
     }
 
+    /**
+     * @return array
+     */
     public function getForms(){
         $this->setSQL("SELECT * FROM forms_layout");
         $rows = array();
@@ -438,6 +441,10 @@ class formLayoutBuilder extends dbHelper {
         return $rows;
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function getParentFields(stdClass $params){
         $this->setSQL("Select CONCAT(fo.ovalue, ' (',ff.xtype ,')' ) AS name, ff.id as value
                          FROM forms_fields AS ff
@@ -457,7 +464,10 @@ class formLayoutBuilder extends dbHelper {
        return $rows;
     }
 
-
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function getFormFieldsTree(stdClass $params){
         $fields = array();
 

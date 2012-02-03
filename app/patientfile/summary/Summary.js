@@ -1,13 +1,15 @@
-//******************************************************************************
-// summary.ejs.php
-// Description: Patient Summary
-// v0.0.1
-//
-// Author: Ernesto J Rodriguez
-// Modified: n/a
-//
-// MitosEHR (Electronic Health Records) 2011
-//**********************************************************************************
+/**
+ * summary.ejs.php
+ * Description: Patient Summary
+ * v0.0.1
+ *
+ * Author: Ernesto J Rodriguez
+ * Modified: n/a
+ *
+ * MitosEHR (Electronic Health Records) 2011
+ *
+ * @namespace Encounter.getVitals
+ */
 Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
     extend          : 'Ext.mitos.RenderPanel',
     id              : 'panelSummary',
@@ -18,14 +20,6 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
 
         Ext.define('SummaryVitalsModel', {
             extend: 'Ext.data.Model',
-            proxy: {
-                type	    : 'ajax',
-                url 	    : 'app/patientfile/encounter/data.php?task=getVitals',
-                reader: {
-                    type			: 'json',
-                    root			: 'vitals'
-                }
-            },
             fields: [
                'id', 'pid', 'eid', 'uid', 'date', 'weight_lbs', 'weight_kg',
                 {name:'height_in', type:'int'},
@@ -34,9 +28,18 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
                'temp_c', 'temp_location', 'oxygen_saturation', 'head_circumference_in',
                'head_circumference_cm', 'waist_circumference_in', 'waist_circumference_cm',
                'bmi', 'bmi_status', 'other_notes'
-            ]
+            ],
+            proxy: {
+                type	    : 'direct',
+                api:{
+                    read: Encounter.getVitals
+                },
+                reader: {
+                    type			: 'json',
+                    root			: 'encounter'
+                }
+            }
         });
-
 
         me.vitalsStore = Ext.create('Ext.data.Store', {
             pageSize	: 10,
@@ -214,10 +217,10 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
 
         var me = this,
             center = me.down('panel').getComponent('centerPanel'),
-            data_table;
+            fn;
 
         if(fornpanel.itemId == 'demoFormPanel'){
-            data_table = 'form_data_demographics';
+            fn = Patient.getPatientDemographicData;
         }
 
 
@@ -232,13 +235,9 @@ Ext.define('Ext.mitos.panel.patientfile.summary.Summary',{
             extend: 'Ext.data.Model',
             fields: modelFields,
             proxy: {
-                type: 'rest',
-                url : 'app/patientfile/summary/data.php',
-                extraParams: {data_table:data_table, pid:me.getCurrPatient().pid},
-                reader: {
-                    type			: 'json',
-                    totalProperty	: 'totals',
-                    root			: 'row'
+                type: 'direct',
+                api:{
+                    read: fn
                 }
             }
         });

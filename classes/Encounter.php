@@ -19,13 +19,13 @@ class Encounter extends Patient{
 
 
     public function ckOpenEncounters(){
-        $pid =  $this->getCurrPid();
+        $pid =  $_SESSION['patient']['pid'];
         $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' AND close_date IS NULL");
         $total = $this->rowCount();
         if($total >= 1){
-            echo '{"success": true}';
+            return array('encounter' => true);
         }else{
-            echo '{"success": false}';
+            return array('encounter' => false);
         }
     }
 
@@ -51,24 +51,27 @@ class Encounter extends Patient{
     }
 
 
-    public function createEncounter($data){
-        $data['pid'] = $this->getCurrPid();
-        $data['open_uid'] = $_SESSION['user']['id'];
+    public function createEncounter(stdClass $params){
+
+        $params->pid        = $_SESSION['patient']['pid'];
+        $params->open_uid   = $_SESSION['user']['id'];
+
+        $data = get_object_vars($params);
 
         $sql = $this->sqlBind($data, "form_data_encounter", "I");
         $this->setSQL($sql);
         $this->execLog();
         $eid = $this->lastInsertId;
-        print(json_encode(array('success'=>true,'encounter'=>array('eid'=>intval($eid), 'start_date'=>$data['start_date']))));
+        return array('success'=>true,'encounter'=>array('eid'=>intval($eid), 'start_date'=>$params->start_date));
     }
 
-    public function getEncounter($eid){
+    public function getEncounter(stdClass $params){
 
-        $this->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$eid'");
+        $this->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$params->eid'");
         $encounter = $this->fetch(PDO::FETCH_ASSOC);
 
         if($encounter != null){
-            print(json_encode(array('encounter'=>$encounter)));
+            return $encounter;
         }else{
             echo '{"success": false}';
         }
@@ -88,29 +91,31 @@ class Encounter extends Patient{
             array_push($rows, $row);
         }
         if($total >= 1){
-            print(json_encode(array('totals'=>$total,'vitals'=>$rows)));
+            return $rows;
         }else{
             echo '{"success": true}';
         }
 
     }
 
-    public function closeEncounter($data){
+    public function closeEncounter(stdClass $params){
         $aes    = new AES($_SESSION['site']['AESkey']);
-        $pass   = $aes->encrypt($data['signature']);
-        $eid    = $data['eid'];
+        $pass   = $aes->encrypt($params->signature);
+
         $uid    = $_SESSION['user']['id'];
-        unset($data['eid'], $data['signature']);
+
+        $data['close_date'] = $params->close_date;
         $data['close_uid'] = $_SESSION['user']['id'];
+
         $this->setSQL("SELECT username FROM users WHERE id = '$uid' AND password = '$pass' AND authorized = '1' LIMIT 1");
         $count = $this->rowCount();
         if($count != 0){
-            $sql = $this->sqlBind($data, "form_data_encounter", "U", "eid='".$eid."'");
+            $sql = $this->sqlBind($data, "form_data_encounter", "U", "eid='".$params->eid."'");
             $this->setSQL($sql);
             $this->execLog();
-            print '{"success":true}';
+            return array('success'=> true);
         }else{
-            print '{"success":false}';
+            return array('success'=> false);
         }
     }
 }
