@@ -8,6 +8,9 @@ $API = array(
             'ckOpenEncounters'=>array(
                'len'=>0
             ),
+            'getEncounters'=>array(
+               'len'=>1
+            ),
             'getEncounter'=>array(
                'len'=>1
             ),

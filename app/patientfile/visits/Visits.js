@@ -1,13 +1,14 @@
-//******************************************************************************
-// visits.ejs.php
-// Visits Forms
-// v0.0.1
-// 
-// Author: Ernesto J. Rodriguez
-// Modified:
-//
-// MitosEHR (Electronic Health Records) 2011
-//******************************************************************************
+/**
+ * visits.ejs.php
+ * Visits List
+ * v0.0.1
+ *
+ * Author: Ernesto J. Rodriguez
+ * Modified:
+ *
+ * MitosEHR (Electronic Health Records) 2011
+ * @namespace Encounter.getEncounters
+ */
 Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelVisits',
@@ -17,7 +18,8 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
     initComponent: function(){
         var me = this;
 
-        me.store = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('patientVisitsModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'eid',				type: 'int'},
                 {name: 'start_date',		type: 'date', dateFormat: 'c'},
@@ -29,11 +31,20 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 {name: 'billing_facility',	type: 'string'},
                 {name: 'sensitivity',		type: 'string'},
                 {name: 'provider',			type: 'string'},
-                {name: 'status',	            type: 'string'}
+                {name: 'status',	        type: 'string'}
             ],
+            proxy: {
+                type: 'direct',
+                api:{
+                    read: Encounter.getEncounters
+                }
+            }
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            pageSize	: 10,
             model		: 'patientVisitsModel',
-            idProperty	: 'eid',
-            url		    : 'app/patientfile/visits/data.php'
+            remoteSort	: true
         });
 
         function open(val) {
@@ -55,8 +66,8 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
                 { header: 'eid', sortable: false, dataIndex: 'eid', hidden: true},
                 { width: 150, header: 'Date',               sortable: true, dataIndex: 'start_date', renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s') },
                 { flex: 1,    header: 'Reason',             sortable: true, dataIndex: 'brief_description' },
-                { width: 180, header: 'Provider',           sortable: true, dataIndex: 'provider' },
-                { width: 120, header: 'facility',           sortable: true, dataIndex: 'facility' },
+                { width: 180, header: 'Provider',           sortable: false, dataIndex: 'provider' },
+                { width: 120, header: 'facility',           sortable: false, dataIndex: 'facility' },
                 { width: 120, header: 'Billing Facility',   sortable: true, dataIndex: 'billing_facility' },
                 { width: 45, header: 'Close?',              sortable: true, dataIndex: 'close_date', renderer:open }
             ],
@@ -131,4 +142,4 @@ Ext.define('Ext.mitos.panel.patientfile.visits.Visits',{
             this.currPatientError();
         }
     }
-}); //ens oNotesPage class
+});
