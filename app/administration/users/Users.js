@@ -1,13 +1,18 @@
-//******************************************************************************
-// Users.ejs.php
-// Description: Users Screen
-// v0.0.4
-// 
-// Author: Ernesto J Rodriguez
-// Modified: n/a
-// 
-// MitosEHR (Electronic Health Records) 2011
-//******************************************************************************
+/**
+ * Users.ejs.php
+ * Description: Users Screen
+ * v0.0.4
+ *
+ * Author: Ernesto J Rodriguez (Certun)
+ * Modified: n/a
+ *
+ * MitosEHR (Electronic Health Records) 2011
+ *
+ * @namespace User.getUsers
+ * @namespace User.addUser
+ * @namespace User.updateUser
+ * @namespace User.chechPasswordHistory
+ */
 Ext.define('Ext.mitos.panel.administration.users.Users',{
     extend      :'Ext.mitos.RenderPanel',
     id          : 'panelUsers',
@@ -19,8 +24,9 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
     initComponent: function(){
 
         var me = this;
-        
-        me.userStore = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('UserModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',                    type: 'int'},
                 {name: 'username',              type: 'string'},
@@ -48,10 +54,21 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                 {name: 'abook_type',            type: 'string'},
                 {name: 'default_warehouse',     type: 'string'},
                 {name: 'role_id',               type: 'int'}
-            ],
-            model 		:'userModel',
-            idProperty 	:'id',
-            url		    :'app/administration/users/data.php'
+            ]
+
+        });
+
+        me.userStore = Ext.create('Ext.data.Store', {
+            model: 'UserModel',
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : User.getUsers,
+                    create  : User.addUser,
+                    update  : User.updateUser
+                }
+            },
+            autoLoad: false
         });
 
         function authCk(val) {
@@ -91,7 +108,7 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                     iconCls     : 'save',
                     handler: function(){
                         var form    = me.win.down('form');
-                        me.onNew(form, 'userModel', 'Add New User');
+                        me.onNew(form, 'UserModel', 'Add New User');
                     }
                 }]
             }]
@@ -195,23 +212,20 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
                 }]
             }],
             buttons : [{
-                text: 'save',
+                text: 'Save',
                 cls : 'winSave',
                 handler: function(){
                     var form = me.win.down('form').getForm();
                     if (form.isValid()) {
                         me.onSave(form, me.userStore);
-                        me.action('close');
+
                     }
                 }
             },'-',{
-                text    : 'Delete',
-                cls     : 'winDelete',
-                itemId  : 'delete',
+                text    : 'Cancel',
                 scope   : me,
-                handler : function(){
-                    var form = me.win.down('form').getForm();
-                    me.onDelete(form, me.userStore);
+                handler : function(btn){
+                    btn.up('wiindow').close();
                 }
             }],
             listeners:{
@@ -235,6 +249,25 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
     },
 
     onSave:function(form, store){
+        var me = this,
+            password = form.findField('password').getValue(),
+            user_id = form.findField('id').getValue();
+
+        if(password != ''){
+            User.chechPasswordHistory({password:password,user_id:user_id}, function(provider, response){
+                if(response.result.error){
+                    Ext.Msg.alert('Opps!', 'This password is currently in used, or has been used before.<br>Please use a different password.');
+                }else{
+                    me.save(form, store);
+                }
+            });
+        }else{
+            me.save(form, store);
+        }
+
+    },
+
+    save:function(form, store){
         var record      = form.getRecord(),
             values      = form.getValues(),
             storeIndex  = store.indexOf(record);
@@ -248,23 +281,6 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
         this.win.close();
     },
 
-    onDelete:function(form, store){
-        Ext.Msg.show({
-            title   : 'Please confirm...',
-            icon    : Ext.MessageBox.QUESTION,
-            msg     : 'Are you sure to delete this record?',
-            buttons : Ext.Msg.YESNO,
-            scope   : this,
-            fn:function(btn){
-                if(btn=='yes'){
-                    var currentRec = form.getRecord();
-                    store.remove(currentRec);
-                    store.destroy();
-                    this.win.close();
-                }
-            }
-        });
-    },
 
     onItemdblclick:function(store, record, title){
         var form = this.win.down('form');
@@ -285,14 +301,9 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
     action:function(action) {
         var win = this.win,
             form = win.down('form'),
-            winTbar = win.down('toolbar'),
-            deletebtn = winTbar.getComponent('delete');
+            winTbar = win.down('toolbar');
 
-        if (action == 'new') {
-            deletebtn.disable();
-        } else if (action == 'old') {
-            deletebtn.enable();
-        } else if (action == 'close') {
+        if (action == 'close') {
             form.getForm().reset();
         }
     },

@@ -8,6 +8,7 @@
  *
  * MitosEHR (Electronic Health Records) 2011
  *
+ * @namespace Encounter.getEncounter
  * @namespace Encounter.createEncounter
  * @namespace Encounter.ckOpenEncounters
  * @namespace Encounter.closeEncounter

@@ -1,5 +1,4 @@
 <?php
-if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* Main Screen Application
  *
  * Description: This is the main application, with all the panels
@@ -9,19 +8,21 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
  * version 0.0.3
  * revision: N/A
  * author: GI Technologies, 2011
+ * modified: Ernesto J Rodriguez (Certun)
  *
  */
-// Reset session count
+if(!defined('_MitosEXEC')) die('No direct access allowed.');
+/**
+ * Reset session flop count
+ */
 $_SESSION['site']['flops'] = 0;
 
 /*
- * Include the necessary libraries, so the web application
- * can work.
+ * Include Globals and run setGlobals static method to set the global settings
  */
-include_once($_SESSION['site']['root'].'/lib/compressor/compressor.inc.php');
-include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
-include_once($_SESSION['site']['root'].'/repo/global_settings/global_settings.php');
-include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.php');
+include_once($_SESSION['site']['root'].'/classes/Globals.php');
+Globals::setGlobals();
+
 ?>
 <html>
 <head>
@@ -74,14 +75,6 @@ include_once($_SESSION['site']['root'].'/repo/global_functions/global_functions.
                     'Extensible'        : 'lib/extensible-1.5.0/src'
                 }
             });
-
-//            window.onbeforeunload = function() {
-//                Ext.Ajax.request({
-//                    url     : 'app/login/data.php?task=unAuth'
-//                });
-//                alert('You have been logged off MitosEHR');
-//
-//            };
         </script>
 
         <script src="data/api.php"></script>
