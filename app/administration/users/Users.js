@@ -300,13 +300,13 @@ Ext.define('Ext.mitos.panel.administration.users.Users',{
 
     action:function(action) {
         var win = this.win,
-            form = win.down('form'),
-            winTbar = win.down('toolbar');
+            form = win.down('form');
 
         if (action == 'close') {
             form.getForm().reset();
         }
     },
+
     /**
     * This function is called from MitosAPP.js when
     * this panel is selected in the navigation panel.

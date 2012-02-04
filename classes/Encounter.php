@@ -13,7 +13,7 @@ if(!isset($_SESSION)){
 }
 
 include_once($_SESSION['site']['root']."/classes/Patient.php");
-include_once($_SESSION['site']['root']."/classes/AES.class.php");
+include_once($_SESSION['site']['root']."/classes/AES.php");
 
 class Encounter extends Patient{
 

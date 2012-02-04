@@ -14,7 +14,7 @@ session_start();
 session_cache_limiter('private');
 
 include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-require_once($_SESSION['site']['root']."/classes/AES.class.php");
+require_once($_SESSION['site']['root']."/classes/AES.php");
 include_once($_SESSION['site']['root']."/repo/global_functions/global_functions.php");
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop

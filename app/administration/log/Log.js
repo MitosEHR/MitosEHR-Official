@@ -1,13 +1,15 @@
-//******************************************************************************
-// Users.ejs.php
-// Description: Users Screen
-// v0.0.4
-//
-// Author: Ernesto J Rodriguez
-// Modified: n/a
-//
-// MitosEHR (Electronic Health Records) 2011
-//******************************************************************************
+/**
+ * Logs.ejs.php
+ * Description: Log Screen
+ * v0.0.4
+ *
+ * Author: Ernesto J Rodriguez
+ * Modified: n/a
+ *
+ * MitosEHR (Electronic Health Records) 2011
+ *
+ * @namespace Logs.getLogs
+ */
 Ext.define('Ext.mitos.panel.administration.log.Log',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLog',
@@ -15,7 +17,9 @@ Ext.define('Ext.mitos.panel.administration.log.Log',{
     pageTitle   : 'Event History Log',
     initComponent: function(){
         var me = this;
-        me.logStore = Ext.create('Ext.mitos.restStoreModel',{
+
+        Ext.define('LogsModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',             type: 'int'},
                 {name: 'date',           type: 'string'},
@@ -28,11 +32,25 @@ Ext.define('Ext.mitos.panel.administration.log.Log',{
                 {name: 'success',        type: 'int'},
                 {name: 'checksum',       type: 'string'},
                 {name: 'crt_user',       type: 'string'}
-            ],
-            model 		:'logModel',
-            idProperty 	:'id',
-            url		    :'app/administration/log/data.php'
+            ]
+
         });
+
+        me.logStore = Ext.create('Ext.data.Store', {
+            model: 'LogsModel',
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : Logs.getLogs
+                },
+                reader: {
+                    totalProperty	: 'totals',
+                    root			: 'rows'
+                }
+            },
+            autoLoad: false
+        });
+
         // *************************************************************************************
         // Create the GridPanel
         // *************************************************************************************

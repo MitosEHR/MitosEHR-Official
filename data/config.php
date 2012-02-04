@@ -286,6 +286,44 @@ $API = array(
                 'len'=>1
             )
         )
-    )
+    ),
 
+    /**
+     * Navigation Function
+     */
+    'Roles'=>array(
+        'methods'=>array(
+            'getRoleForm'=>array(
+                'len'=>1
+            ),
+            'getRolesData'=>array(
+                'len'=>0
+            ),
+            'saveRolesData'=>array(
+                'len'=>1
+            )
+        )
+    ),
+
+    /**
+     * Navigation Function
+     */
+    'ACL'=>array(
+        'methods'=>array(
+            'hasPermission'=>array(
+                'len'=>1
+            ),
+        )
+    ),
+
+    /**
+     * Navigation Function
+     */
+    'Logs'=>array(
+        'methods'=>array(
+            'getLogs'=>array(
+                'len'=>1
+            ),
+        )
+    )
 );

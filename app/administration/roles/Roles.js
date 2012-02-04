@@ -1,13 +1,17 @@
-//**********************************************************************************
-// roles.ejs.php
-// Description: Facilities Screen
-// v0.0.3
-// 
-// Author: Ernesto J Rodriguez
-// Modified: n/a
-// 
-// MitosEHR (Eletronic Health Records) 2011
-//**********************************************************************************
+/**
+ * roles.ejs.php
+ * Description: Facilities Screen
+ * v0.0.3
+ *
+ * Author: Ernesto J Rodriguez
+ * Modified: n/a
+ *
+ * MitosEHR (Eletronic Health Records) 2011
+ *
+ * @namespace Roles.getRoleForm
+ * @namespace Roles.saveRolesData
+ * @namespace Roles.getRolesData
+ */
 Ext.define('Ext.mitos.panel.administration.roles.Roles',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelRoles',
@@ -65,16 +69,19 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
 
     onSave:function(){
         var me = this,
-            form = me.form.getForm();
+            form = me.form.getForm(),
+            data = form.getValues();
+
 
         if (form.isValid()) {
-            form.submit({
-                success : function(form, action) {
+            Roles.saveRolesData(data, function(provider, response){
+                if(response.result.success){
                     me.msg('Sweet!','Roles have been updated');
-                },
-                failure : function(form, action) {
+
+                }else{
                     me.msg('Oops!','Something went wrong');
                 }
+
             });
         }
     },
@@ -95,13 +102,9 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
             extend: 'Ext.data.Model',
             fields: modelFields,
             proxy: {
-                type        : 'rest',
-                url         : 'app/administration/roles/data.php',
-                extraParams : {task:'data'},
-                reader: {
-                    type			: 'json',
-                    totalProperty	: 'totals',
-                    root			: 'row'
+                type        : 'direct',
+                api:{
+                    read: Roles.getRolesData
                 }
             }
         });
@@ -113,6 +116,7 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         store.load({
             scope   : this,
             callback: function(records, operation, success){
+
                 if(success){
                     form.getForm().loadRecord(records[0]);
                     form.el.unmask();
@@ -134,16 +138,14 @@ Ext.define('Ext.mitos.panel.administration.roles.Roles',{
         form.el.mask('Loading...');
 
         form.removeAll();
-        Ext.Ajax.request({
-            url     : 'app/administration/roles/data.php?task=form',
-            scope   : me,
-            success : function(response){
-                form.add(me.getHeader());
-                form.add(eval(response.responseText));
-                form.doLayout();
-                me.getFormData();
-            }
+
+        Roles.getRoleForm(null, function(provider, response){
+            form.add(me.getHeader());
+            form.add(eval(response.result));
+            form.doLayout();
+            me.getFormData();
         });
+
         callback(true);
     }
 });
