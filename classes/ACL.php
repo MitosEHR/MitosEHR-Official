@@ -1,10 +1,19 @@
 <?php
-//session_name ( "MitosEHR" );
-//session_start();
-//session_cache_limiter('private');
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-
-
+if(!isset($_SESSION)){
+    session_name ("MitosEHR" );
+    session_start();
+    session_cache_limiter('private');
+}
+include_once("dbHelper.php");
+/**
+ * Access Control List (ACL).
+ *
+ * This class will handle all the permisions
+ * @author Ernesto J. Rodriguez (certun) <erodriguez@certun.com>
+ * @version 1.0
+ *
+ * @package default
+ */
 class ACL {
 
     /**
@@ -20,7 +29,7 @@ class ACL {
      */
     private $user_roles = array();
     /**
-     * @var
+     * @var dbHelper
      */
     protected $conn;
 
@@ -182,10 +191,17 @@ class ACL {
 	}
 
     /**
-     * function to ck if user has permition to VIEW
+     * Has Permission.
+     *
+     * This public function will return true if the user
+     * has permission to to the permission passed as
+     * an argument
+     *
      *
      * @param $perm_key
      * @return bool
+     *
+     * {@source }
      */
 	public function hasPermission($perm_key){
 		$perm_key = strtolower($perm_key);
@@ -199,6 +215,4 @@ class ACL {
             return false;
 		}
 	}
-
-
 }
