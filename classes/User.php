@@ -11,7 +11,7 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once($_SESSION['site']['root']."/classes/AES.class.php");
+include_once($_SESSION['site']['root']."/classes/AES.php");
 include_once($_SESSION['site']['root']."/classes/Person.php");
 class User extends Person {
 
@@ -158,6 +158,3 @@ class User extends Person {
 
     }
 }
-//$u = new User();
-//echo '<pre>';
-//print_r($u->changePassword('pass'));

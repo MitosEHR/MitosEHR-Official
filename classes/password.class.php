@@ -28,7 +28,7 @@ class password extends dbHelper {
     // Lets encrypt both old and new passwords
     //******************************************************************************************************************
     function aesPasswords(){
-        require_once($_SESSION['site']['root']."/classes/AES.class.php");
+        require_once($_SESSION['site']['root']."/classes/AES.php");
         $aes = new AES($_SESSION['site']['AESkey']);
         $this->oPassword = $aes->encrypt($this->oPassword);
         $this->nPassword = $aes->encrypt($this->nPassword);

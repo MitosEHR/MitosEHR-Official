@@ -3,7 +3,7 @@
 *  Author: Cody Phillips
 *  Company: Phillips Data
 *  Website: www.phpaes.com, www.phillipsdata.com
-*  File: AES.class.php
+*  File: AES.php
 *  October 1, 2007
 *
 *  This software is sold as-is without any warranties, expressed or implied,
