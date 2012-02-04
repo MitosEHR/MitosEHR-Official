@@ -244,7 +244,7 @@ class SiteSetup {
 	// Create Admin User and AES Encrypted Password Using Site AESkey
 	//*****************************************************************************************
 	function adminUser(){
-		require_once("classes/AES.class.php");
+		require_once("classes/AES.php");
 		$admin = $this->adminUser;
 		$aes = new AES($this->AESkey);
 		$ePass = $aes->encrypt($this->adminPass);

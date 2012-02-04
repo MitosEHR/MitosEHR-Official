@@ -986,17 +986,13 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
      *  this function re-render the preview form
      */
     previewFormRender:function(){
-        var form = this.fromPreview;
+        var me   = this,
+            form = this.fromPreview;
+
         form.el.mask();
-        form.removeAll();
-        Ext.Ajax.request({
-            url     : 'classes/formLayoutEngine.class.php',
-            params  : { form:this.currForm },
-            success : function(response){
-                form.add(eval(response.responseText));
-                form.doLayout();
-                form.el.unmask();
-            }
+        this.getFormItems( form, me.currForm, function(){
+            form.doLayout();
+            form.el.unmask();
         });
 
     },

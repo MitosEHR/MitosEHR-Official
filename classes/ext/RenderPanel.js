@@ -1,6 +1,8 @@
-//******************************************************************************
-// Render panel
-//******************************************************************************
+/**
+ * Render panel
+ *
+ * @namespace formLayoutEngine.getFields
+ */
 Ext.define('Ext.mitos.RenderPanel', {
     extend      : 'Ext.container.Container',
     alias       : 'widget.renderpanel',
