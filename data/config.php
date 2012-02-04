@@ -315,4 +315,15 @@ $API = array(
             ),
         )
     ),
+
+    /**
+     * Navigation Function
+     */
+    'Logs'=>array(
+        'methods'=>array(
+            'getLogs'=>array(
+                'len'=>1
+            ),
+        )
+    )
 );
