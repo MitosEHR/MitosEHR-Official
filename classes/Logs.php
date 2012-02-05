@@ -11,11 +11,7 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
-require_once 'PHPLinq/LinqToObjects.php';
-
+include_once('dbhelper.php');
 class Logs extends dbHelper {
 
     public function getLogs(stdClass $params){
@@ -23,9 +19,9 @@ class Logs extends dbHelper {
         $this->setSQL("SELECT * FROM log ORDER BY id DESC");
         $rows   = $this->execStatement(PDO::FETCH_CLASS);
         $total  = count($rows);
-        $result = from('$row')->in($rows)->skip($params->start)->take($params->limit)->select('$row');
+        $rows = $this->filertByStartLimit($rows,$params);
 
-        return array('totals'=>$total ,'rows'=>$result);
+        return array('totals'=>$total ,'rows'=>$rows);
 
     }
 }

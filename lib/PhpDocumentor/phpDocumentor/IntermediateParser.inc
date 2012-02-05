@@ -1803,6 +1803,7 @@ class phpDocumentor_IntermediateParser
      * @see $converters
      * @see $pages
      * @see Convert()
+     * @param string $title
      */
     function Output ($title = "Generated Documentation")
     {

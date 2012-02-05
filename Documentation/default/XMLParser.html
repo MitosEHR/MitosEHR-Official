@@ -1,324 +1,235 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-	<title>Docs For Class XMLParser</title>
-	<link rel="stylesheet" type="text/css" id="layout" href="../media/layout.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="../media/style.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../media/print.css" media="print">
-</head>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class XMLParser</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+						<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class XMLParser</h2>
 
-<body>
-<div id="header">
-	<div id="navLinks">
-        
-                                    
-                            	        [ <a href="../classtrees_default.html">Class Tree: default</a> ]
-            [ <a href="../elementindex_default.html">Index: default</a> ]
-        		[ <a href="../elementindex.html">All elements</a> ]		
-	</div>
-	<div id="packagePosition">
-		<div id="packageTitle2">default</div>
-		<div id="packageTitle">default</div>
-		<div id="elementPath"> &middot; </div>
-	</div>
-</div>
-
-<div id="nav" class="small">
-	<div id="packages">
-		Packages:
-					<p><a href="../li_default.html">default</a></p>
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">XML Parser Class (php5)</p>
+<p class="description"><p>Parses an XML document into an object structure much like the SimpleXML extension.</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Adam A. Flynn &lt;<a href="mailto:adamaflynn@criticaldevelopment.net">adamaflynn@criticaldevelopment.net</a>&gt;</li>
+				<li><span class="field">version:</span> 1.3.0</li>
+				<li><span class="field">copyright:</span> Copyright (c) 2005-2007, Adam A. Flynn</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_XMLParser.class.php.html">/XMLParser.class.php</a> (line <span class="field">26</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
 			</div>
+</div>
 
-				<div id="index">
-			<div id="files">
-								Files:<br>
-								<a href="../default/_ACL.php.html">		ACL.php
-		</a><br>
-			<a href="../default/_AES.php.html">		AES.php
-		</a><br>
-			<a href="../default/_authProcedures.php.html">		authProcedures.php
-		</a><br>
-			<a href="../default/_Calendar.php.html">		Calendar.php
-		</a><br>
-			<a href="../default/_CombosData.php.html">		CombosData.php
-		</a><br>
-			<a href="../default/_ext---data---components_data.ejs.php.html">		components_data.ejs.php
-		</a><br>
-			<a href="../default/_dataExchange.class.php.html">		dataExchange.class.php
-		</a><br>
-			<a href="../default/_dbHelper.php.html">		dbHelper.php
-		</a><br>
-			<a href="../default/_Encounter.php.html">		Encounter.php
-		</a><br>
-			<a href="../default/_Facilities.php.html">		Facilities.php
-		</a><br>
-			<a href="../default/_formLayoutBuilder.php.html">		formLayoutBuilder.php
-		</a><br>
-			<a href="../default/_formLayoutEngine.php.html">		formLayoutEngine.php
-		</a><br>
-			<a href="../default/_Globals.php.html">		Globals.php
-		</a><br>
-			<a href="../default/_I18n.class.php.html">		I18n.class.php
-		</a><br>
-			<a href="../default/_Logs.php.html">		Logs.php
-		</a><br>
-			<a href="../default/_Messages.php.html">		Messages.php
-		</a><br>
-			<a href="../default/_Mobile_Detect.php.html">		Mobile_Detect.php
-		</a><br>
-			<a href="../default/_Navigation.php.html">		Navigation.php
-		</a><br>
-			<a href="../default/_OfficeNotes.php.html">		OfficeNotes.php
-		</a><br>
-			<a href="../default/_password.class.php.html">		password.class.php
-		</a><br>
-			<a href="../default/_Patient.php.html">		Patient.php
-		</a><br>
-			<a href="../default/_Person.php.html">		Person.php
-		</a><br>
-			<a href="../default/_Roles.php.html">		Roles.php
-		</a><br>
-			<a href="../default/_User.php.html">		User.php
-		</a><br>
-			<a href="../default/_XMLParser.class.php.html">		XMLParser.class.php
-		</a><br>
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																								<div class="var-title">
+					<span class="var-type">object</span>
+					<a href="#$document" title="details" class="var-name">$document</a>
 				</div>
-			<div id="interfaces">
-							</div>
-			<div id="classes">
-				Classes:<br>
-								<a href="../default/ACL.html">		ACL
-		</a><br>
-			<a href="../default/AES.html">		AES
-		</a><br>
-			<a href="../default/authProcedures.html">		authProcedures
-		</a><br>
-			<a href="../default/Calendar.html">		Calendar
-		</a><br>
-			<a href="../default/CombosData.html">		CombosData
-		</a><br>
-			<a href="../default/dbHelper.html">		dbHelper
-		</a><br>
-			<a href="../default/Encounter.html">		Encounter
-		</a><br>
-			<a href="../default/Facilities.html">		Facilities
-		</a><br>
-			<a href="../default/formLayoutBuilder.html">		formLayoutBuilder
-		</a><br>
-			<a href="../default/formLayoutEngine.html">		formLayoutEngine
-		</a><br>
-			<a href="../default/Globals.html">		Globals
-		</a><br>
-			<a href="../default/Logs.html">		Logs
-		</a><br>
-			<a href="../default/Messages.html">		Messages
-		</a><br>
-			<a href="../default/Mobile_Detect.html">		Mobile_Detect
-		</a><br>
-			<a href="../default/Navigation.html">		Navigation
-		</a><br>
-			<a href="../default/OfficeNotes.html">		OfficeNotes
-		</a><br>
-			<a href="../default/password.html">		password
-		</a><br>
-			<a href="../default/Patient.html">		Patient
-		</a><br>
-			<a href="../default/Person.html">		Person
-		</a><br>
-			<a href="../default/Roles.html">		Roles
-		</a><br>
-			<a href="../default/User.html">		User
-		</a><br>
-			<a href="../default/XMLParser.html">		XMLParser
-		</a><br>
-			<a href="../default/XMLTag.html">		XMLTag
-		</a><br>
-				</div>
+											</div>
 		</div>
 	</div>
 
-<div id="body">
-	    		<h1>Class: XMLParser</h1>
-	<p style="margin: 0px;">Source Location: /XMLParser.class.php</p>
-	
-
-<div class="leftcol">
-	<h3><a href="#class_details">Class Overview</a> <span class="smalllinenumber">[line 26]</span></h3>
-	<div id="classTree"><pre></pre>
-</div>
-	<div class="small">
-	<p>XML Parser Class (php5)</p>
-		<h4>Author(s):</h4>
-	<ul>
-								<li>Adam A. Flynn &lt;<a href="mailto:adamaflynn@criticaldevelopment.net">adamaflynn@criticaldevelopment.net</a>&gt;</li>
-																</ul>
-	<h4>Version:</h4>
-	<ul>
-													<li>1.3.0</li>
-											</ul>
-
-	<h4>Copyright:</h4>
-	<ul>
-																		<li>Copyright (c) 2005-2007, Adam A. Flynn</li>
-						</li>
-	</div>
-</div>
-
-<div class="middlecol">
-	<h3><a href="#class_vars">Variables</a></h3>
-	<ul class="small">
-				<li><a href="../default/XMLParser.html#var$document">$document</a></li>
-			</ul>
-	<h3><a href="#class_consts">Constants</a></h3>
-	<ul class="small">
-			</ul>
-</div>
-<div class="rightcol">
-	<h3><a href="#class_methods">Methods</a></h3>
-	<ul class="small">
-				<li><a href="../default/XMLParser.html#method__construct">__construct</a></li>
-				<li><a href="../default/XMLParser.html#methodGenerateXML">GenerateXML</a></li>
-				<li><a href="../default/XMLParser.html#methodParse">Parse</a></li>
-			</ul>
-</div>
-
-<div id="content">
-<hr>
-	<div class="contents">
-	</div>
-
-	<div class="leftCol">
-    	<h2>Inherited Variables</h2>
-		<h2>Inherited Constants</h2>
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
 		</div>
-
-	<div class="rightCol">
-	<h2>Inherited Methods</h2>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																						
+				<div class="method-definition">
+											<span class="method-result"><a href="../default/XMLParser.html">XMLParser</a></span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$xml</span> = <span class="var-default">''</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$cleanTagNames</span> = <span class="var-default">true</span>])
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#GenerateXML" title="details" class="method-name">GenerateXML</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#Parse" title="details" class="method-name">Parse</a>
+										()
+									</div>
+											</div>
 		</div>
-	<br clear="all">
-	<hr>
+	</div>		
 
-	<a name="class_details"></a>
-	<h2>Class Details</h2>
-	<p align="center"><strong>XML Parser Class (php5)
-</strong></p>
-<p>Parses an XML document into an object structure much like the SimpleXML extension.</p><h4>Tags:</h4>
-<ul>
-	<li><b>author</b> - Adam A. Flynn &lt;<a href="mailto:adamaflynn@criticaldevelopment.net">adamaflynn@criticaldevelopment.net</a>&gt;</li>
-	<li><b>version</b> - 1.3.0</li>
-	<li><b>copyright</b> - Copyright (c) 2005-2007, Adam A. Flynn</li>
-</ul>
-	<p class="small" style="color: #334B66;">[ <a href="#top">Top</a> ]</p>
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+<a name="var$document" id="$document"><!-- --></A>
+<div class="oddrow">
 
-	<hr>
-	<a name="class_vars"></a>
-	<h2>Class Variables</h2>
-		<a name="var$document"></a>
-	<p></p>
-	<h4>$document</h4>
-	<div class="indent">
-		<p class="linenumber">[line 47]</p>
-		<p align="center"><strong>Document tag
-</strong></p>
-<h4>Tags:</h4>
-<ul>
-	<li><b>access</b> - public</li>
-</ul>
-		<p><b>Type:</b> object</p>
-		<p><b>Overrides:</b> </p>
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">object</span>
+			<span class="var-name">$document</span>
+						(line <span class="line-number">47</span>)
+		</span>
 	</div>
-	<p class="top">[ <a href="#top">Top</a> ]</p>
 
-	<hr>
-	<a name="class_methods"></a>
-	<h2>Class Methods</h2>
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Document tag</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
 	
-	<a name="method__construct"></a>
-	<p></p>
-	<h3>__construct</h3>
-	<div class="indent">
-		<p>
-		<code><a href="../default/XMLParser.html">XMLParser</a> __construct(
-[string
-$xml = ''], [bool
-$cleanTagNames = true])</code>
-		</p>
 	
-		<p class="linenumber">[line 72]</p>
-		<p align="center"><strong>Constructor. Loads XML document.
-</strong></p>
 		
-	
-	<h4>Parameters:</h4>
-	<ul>
-			<li>
-		<span class="type">string</span>
-		<b>$xml</b> 
-		- 
-		The string of the XML document</li>
-			<li>
-		<span class="type">bool</span>
-		<b>$cleanTagNames</b> 
-		- 
-		</li>
-		</ul>
-	</div>
-	<p class="top">[ <a href="#top">Top</a> ]</p>
-	<a name="methodGenerateXML"></a>
-	<p></p>
-	<h3>GenerateXML</h3>
-	<div class="indent">
-		<p>
-		<code>string GenerateXML(
-)</code>
-		</p>
-	
-		<p class="linenumber">[line 123]</p>
-		<p align="center"><strong>Gets the XML output of the PHP structure within $this-&gt;document
-</strong></p>
-<h4>Tags:</h4>
-<ul>
-	<li><b>access</b> - public</li>
-</ul>
 		
-	
-	<h4>Parameters:</h4>
-	<ul>
-		</ul>
-	</div>
-	<p class="top">[ <a href="#top">Top</a> ]</p>
-	<a name="methodParse"></a>
-	<p></p>
-	<h3>Parse</h3>
-	<div class="indent">
-		<p>
-		<code>void Parse(
-)</code>
-		</p>
-	
-		<p class="linenumber">[line 87]</p>
-		<p align="center"><strong>Initiates and runs PHP's XML parser
-</strong></p>
-<h4>Tags:</h4>
-<ul>
-	<li><b>access</b> - public</li>
-</ul>
-		
-	
-	<h4>Parameters:</h4>
-	<ul>
-		</ul>
-	</div>
-	<p class="top">[ <a href="#top">Top</a> ]</p>
 
-	<hr>
-	<a name="class_consts"></a>
-	<h2>Class Constants</h2>
-	</div>
-	<div id="credit">
-		<hr>
-		Documentation generated on Sat, 04 Feb 2012 15:53:53 +0000 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
-	</div>
 </div>
-</body>
-</html>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">72</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Constructor. Loads XML document.</p>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../default/XMLParser.html">XMLParser</a></span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$xml</span> = <span class="var-default">''</span>], [<span class="var-type">bool</span>&nbsp;<span class="var-name">$cleanTagNames</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$xml</span><span class="var-description">: The string of the XML document</span>			</li>
+					<li>
+				<span class="var-type">bool</span>
+				<span class="var-name">$cleanTagNames</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodGenerateXML" id="GenerateXML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">GenerateXML</span> (line <span class="line-number">123</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the XML output of the PHP structure within $this-&gt;document</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			GenerateXML
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodParse" id="Parse"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Parse</span> (line <span class="line-number">87</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Initiates and runs PHP's XML parser</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			Parse
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Sun, 05 Feb 2012 19:34:47 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

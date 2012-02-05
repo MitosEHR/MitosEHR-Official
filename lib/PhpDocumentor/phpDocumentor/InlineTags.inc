@@ -481,6 +481,7 @@ class parserSourceInlineTag extends parserInlineTag
     function Convert(&$c)
     {
         if (is_string($this->source)) {
+
             return $this->stringConvert($c);
         }
         return $this->arrayConvert($c);
@@ -864,7 +865,7 @@ class parserIdInlineTag extends parserInlineTag
      * @var string
      */
     var $id;
-    
+
     /**
      * constructor
      *
@@ -872,7 +873,7 @@ class parserIdInlineTag extends parserInlineTag
      * @param string $package    package name
      * @param string $subpackage subpackage name
      * @param string $tutorial   tutorial name
-     * @param string $id         section/subsection name
+     * @param bool|string $id section/subsection name
      */
     function parserIdInlineTag($category,$package,$subpackage,$tutorial,$id = false)
     {
