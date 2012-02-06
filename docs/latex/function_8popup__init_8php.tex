@@ -1,0 +1,51 @@
+\hypertarget{function_8popup__init_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/function.popup\-\_\-init.\-php \-File \-Reference}
+\label{function_8popup__init_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-popup\-\_\-init.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-popup\-\_\-init.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{function_8popup__init_8php_a1cbb62ac7dbb989328668339cb3eb806}{smarty\-\_\-function\-\_\-popup\-\_\-init} (\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{function_8popup__init_8php_a1cbb62ac7dbb989328668339cb3eb806}{\index{function.\-popup\-\_\-init.\-php@{function.\-popup\-\_\-init.\-php}!smarty\-\_\-function\-\_\-popup\-\_\-init@{smarty\-\_\-function\-\_\-popup\-\_\-init}}
+\index{smarty\-\_\-function\-\_\-popup\-\_\-init@{smarty\-\_\-function\-\_\-popup\-\_\-init}!function.popup_init.php@{function.\-popup\-\_\-init.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-popup\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-popup\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{function_8popup__init_8php_a1cbb62ac7dbb989328668339cb3eb806}
+\hyperlink{class_smarty}{\-Smarty} \{popup\-\_\-init\} function plugin
+
+\-Type\-: function\par
+ \-Name\-: popup\-\_\-init\par
+ \-Purpose\-: initialize overlib \hyperlink{}{\{popup\-\_\-init\} (\-Smarty online manual)  array  \-Smarty  string }
+
+\-Definition at line 21 of file function.\-popup\-\_\-init.\-php.
+
+
+\begin{DoxyCode}
+{
+        $zindex = 1000;
+        
+    if (!empty($params['zindex'])) {
+                $zindex = $params['zindex'];
+        }
+        
+    if (!empty($params['src'])) {
+        return '<div id="overDiv" style="position:absolute; visibility:hidden;
+       z-index:'.$zindex.';"></div>' . "\n"
+         . '<script type="text/javascript" language="JavaScript" src="'.$params
+      ['src'].'"></script>' . "\n";
+    } else {
+        $smarty->trigger_error("popup_init: missing src parameter");
+    }
+}
+\end{DoxyCode}

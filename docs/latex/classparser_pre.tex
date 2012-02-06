@@ -1,0 +1,59 @@
+\hypertarget{classparser_pre}{\section{parser\-Pre \-Class \-Reference}
+\label{classparser_pre}\index{parser\-Pre@{parser\-Pre}}
+}
+\-Inheritance diagram for parser\-Pre\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classparser_pre}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_pre_ad6c06bea9d11cc1c362b592306cfa707}{\-Convert} (\&\$c)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 127 of file \-Desc\-H\-T\-M\-L.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_pre_ad6c06bea9d11cc1c362b592306cfa707}{\index{parser\-Pre@{parser\-Pre}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserPre@{parser\-Pre}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_pre_ad6c06bea9d11cc1c362b592306cfa707}
+performs the conversion of code tags
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the converter object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string the converted pre block  \hyperlink{class_converter_a94ba8968fdf93aced6fd0b712860315d}{\-Converter\-::\-Preserve\-White\-Space()} 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000033}{\-Todo}]\-C\-S cleanup -\/ rename method to convert() \end{DoxyRefDesc}
+
+
+\-Definition at line 138 of file \-Desc\-H\-T\-M\-L.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $c->PreserveWhiteSpace(rtrim(ltrim(parent::Convert($c,
+            false, false), "\n\r")));
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_desc_h_t_m_l_8inc}{\-Desc\-H\-T\-M\-L.\-inc}\end{DoxyCompactItemize}

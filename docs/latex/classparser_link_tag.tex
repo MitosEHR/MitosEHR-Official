@@ -1,0 +1,85 @@
+\hypertarget{classparser_link_tag}{\section{parser\-Link\-Tag \-Class \-Reference}
+\label{classparser_link_tag}\index{parser\-Link\-Tag@{parser\-Link\-Tag}}
+}
+\-Inheritance diagram for parser\-Link\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.000000cm]{classparser_link_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_link_tag_a38be69c8e2ce158a0172299119d69633}{parser\-Link\-Tag} (\$link)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_link_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\$keyword} = 'link'
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 657 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_link_tag_a38be69c8e2ce158a0172299119d69633}{\index{parser\-Link\-Tag@{parser\-Link\-Tag}!parser\-Link\-Tag@{parser\-Link\-Tag}}
+\index{parser\-Link\-Tag@{parser\-Link\-Tag}!parserLinkTag@{parser\-Link\-Tag}}
+\subsubsection[{parser\-Link\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Link\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{link}
+\end{DoxyParamCaption}
+)}}\label{classparser_link_tag_a38be69c8e2ce158a0172299119d69633}
+sets up the link tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$link} & \-U\-R\-L to link to (might also contain the \-U\-R\-L's description text) \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 672 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $start = $val = $link->getString();
+        if (strpos($val, ' ')) {
+            $val   = explode(' ', $val);
+            $start = array_shift($val);
+            $val   = join($val, ' ');
+        }
+        $a = new parserLinkInlineTag($start, $val);
+        $b = new parserStringWithInlineTags;
+        $b->add($a);
+        $this->value = $b;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_link_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\index{parser\-Link\-Tag@{parser\-Link\-Tag}!\$keyword@{\$keyword}}
+\index{\$keyword@{\$keyword}!parserLinkTag@{parser\-Link\-Tag}}
+\subsubsection[{\$keyword}]{\setlength{\rightskip}{0pt plus 5cm}\$keyword = 'link'}}\label{classparser_link_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}
+
+
+\-Reimplemented from \hyperlink{classparser_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-Tag}.
+
+
+
+\-Reimplemented in \hyperlink{classparser_tutorial_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-Tutorial\-Tag}, \hyperlink{classparser_used_by_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-Used\-By\-Tag}, \hyperlink{classparser_uses_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-Uses\-Tag}, \hyperlink{classparser_license_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-License\-Tag}, and \hyperlink{classparser_see_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-See\-Tag}.
+
+
+
+\-Definition at line 663 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_doc_block_tags_8inc}{\-Doc\-Block\-Tags.\-inc}\end{DoxyCompactItemize}

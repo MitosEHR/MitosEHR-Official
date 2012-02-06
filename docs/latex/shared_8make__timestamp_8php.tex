@@ -1,0 +1,63 @@
+\hypertarget{shared_8make__timestamp_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/shared.make\-\_\-timestamp.\-php \-File \-Reference}
+\label{shared_8make__timestamp_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/shared.\-make\-\_\-timestamp.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/shared.\-make\-\_\-timestamp.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{shared_8make__timestamp_8php_a219776015e8c473c0cc5a50c0c40bdc2}{smarty\-\_\-make\-\_\-timestamp} (\$string)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{shared_8make__timestamp_8php_a219776015e8c473c0cc5a50c0c40bdc2}{\index{shared.\-make\-\_\-timestamp.\-php@{shared.\-make\-\_\-timestamp.\-php}!smarty\-\_\-make\-\_\-timestamp@{smarty\-\_\-make\-\_\-timestamp}}
+\index{smarty\-\_\-make\-\_\-timestamp@{smarty\-\_\-make\-\_\-timestamp}!shared.make_timestamp.php@{shared.\-make\-\_\-timestamp.\-php}}
+\subsubsection[{smarty\-\_\-make\-\_\-timestamp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-make\-\_\-timestamp} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string}
+\end{DoxyParamCaption}
+)}}\label{shared_8make__timestamp_8php_a219776015e8c473c0cc5a50c0c40bdc2}
+\-Function\-: smarty\-\_\-make\-\_\-timestamp\par
+ \-Purpose\-: used by other smarty functions to make a timestamp from a string. 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 16 of file shared.\-make\-\_\-timestamp.\-php.
+
+
+\begin{DoxyCode}
+{
+    if(empty($string)) {
+        $string = "now";
+    }
+    $time = strtotime($string);
+    if (is_numeric($time) && $time != -1)
+        return $time;
+
+    // is mysql timestamp format of YYYYMMDDHHMMSS?
+    if (preg_match('/^\d{14}$/', $string)) {
+        $time = mktime(substr($string,8,2),substr($string,10,2),substr($string,
+      12,2),
+               substr($string,4,2),substr($string,6,2),substr($string,0,4));
+
+        return $time;
+    }
+
+    // couldn't recognize it, try to return a time
+    $time = (int) $string;
+    if ($time > 0)
+        return $time;
+    else
+        return time();
+}
+\end{DoxyCode}

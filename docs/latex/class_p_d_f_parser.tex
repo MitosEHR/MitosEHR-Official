@@ -1,0 +1,719 @@
+\hypertarget{class_p_d_f_parser}{\section{\-P\-D\-F\-Parser \-Class \-Reference}
+\label{class_p_d_f_parser}\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}}
+}
+\-Inheritance diagram for \-P\-D\-F\-Parser\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_p_d_f_parser}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_p_d_f_parser_ae0fcb585e11a6ac55ccd400e8ac59b66}{\-P\-D\-F\-Parser} ()
+\item 
+\hyperlink{class_p_d_f_parser_afdebe29038ca472f726d00f6f3b75403}{parse} (\$parse\-\_\-data, \$fontdir, \&\$pdf, \$debug=false)
+\item 
+\hyperlink{class_p_d_f_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{default\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{class_p_d_f_parser_ad3a98ba296d8830bdc01c33dd66ddb56}{handle\-New\-Page} (\$word, \$pevent)
+\item 
+\hyperlink{class_p_d_f_parser_a7073ba7c2860a6243439f0bc465cd501}{handle\-Text} (\$word, \$pevent)
+\item 
+\hyperlink{class_p_d_f_parser_ae166fed7242eb96d8af55dac47d08d1c}{handle\-Font} (\$word, \$pevent)
+\item 
+\hyperlink{class_p_d_f_parser_a56b0deed1b246a7c1aedaba90389846f}{handle\-P\-D\-F\-Function} (\$word, \$pevent)
+\item 
+\hyperlink{class_p_d_f_parser_a4ad7b667ad443261db90739f55f1c682}{handle\-Content} (\$word, \$pevent)
+\item 
+\hyperlink{class_p_d_f_parser_abe4d21ebe5f9d4088e7be4271603cd5e}{setup\-States} ()
+\item 
+\hyperlink{class_p_d_f_parser_a9cc8a14f4bce21f0058f33036a2eb460}{get\-Parser\-Event\-Name} (\$value)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_p_d_f_parser_a430675102684e9ab820c7622678832b0}{\$event\-Handlers}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 68 of file \-Parser\-P\-D\-F.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_p_d_f_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!default\-Handler@{default\-Handler}}
+\index{default\-Handler@{default\-Handler}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{default\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf default\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}
+\#@+ \hyperlink{class_event}{\-Event} \-Handlers 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & token \\
+\hline
+{\em integer} & event constant  private \\
+\hline
+\end{DoxyParams}
+
+
+\-Reimplemented from \hyperlink{class_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{\-Parser}.
+
+
+
+\-Definition at line 177 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) return;
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_a9cc8a14f4bce21f0058f33036a2eb460}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!get\-Parser\-Event\-Name@{get\-Parser\-Event\-Name}}
+\index{get\-Parser\-Event\-Name@{get\-Parser\-Event\-Name}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{get\-Parser\-Event\-Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Parser\-Event\-Name} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_a9cc8a14f4bce21f0058f33036a2eb460}
+\-Return the name of the parser event 
+\begin{DoxyParams}{\-Parameters}
+{\em integer} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Reimplemented from \hyperlink{class_parser_a9cc8a14f4bce21f0058f33036a2eb460}{\-Parser}.
+
+
+
+\-Definition at line 549 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $lookup = array(
+            PARSER_EVENT_NOEVENTS         => "PARSER_EVENT_NOEVENTS",
+            PARSER_EVENT_QUOTE        => "PARSER_EVENT_QUOTE",
+            PHPDOCUMENTOR_PDF_EVENT_TEXT        => "
+      PHPDOCUMENTOR_PDF_EVENT_TEXT",
+            PHPDOCUMENTOR_PDF_EVENT_CONTENT        => "
+      PHPDOCUMENTOR_PDF_EVENT_CONTENT",
+            PHPDOCUMENTOR_PDF_EVENT_FONT    => "PHPDOCUMENTOR_PDF_EVENT_FONT",
+            PHPDOCUMENTOR_PDF_EVENT_PDFFUNCTION    => "
+      PHPDOCUMENTOR_PDF_EVENT_PDFFUNCTION",
+        );
+        if (isset($lookup[$value]))
+        return $lookup[$value];
+        else return $value;
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_a4ad7b667ad443261db90739f55f1c682}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!handle\-Content@{handle\-Content}}
+\index{handle\-Content@{handle\-Content}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{handle\-Content}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Content} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_a4ad7b667ad443261db90739f55f1c682}
+\-Adds content to the $<$text$>$ tag 
+
+\-Definition at line 450 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($e = $this->checkEventPush($word, $pevent))
+        {
+            if ($e == PHPDOCUMENTOR_PDF_EVENT_FONT)
+            { // flush content
+                if (!isset($this->p_vars['content'])) return;
+                $this->p_vars['pdf']->_ezText($this->p_vars['content'],$this->
+      p_vars['text_size'],$this->p_vars['options']);
+                unset($this->p_vars['content']);
+            }
+            return;
+        }
+        if ($this->checkEventPop($word, $pevent))
+        {
+            $this->wp->backupPos($word);
+            if (!isset($this->p_vars['content'])) return;
+            $this->p_vars['pdf']->_ezText($this->p_vars['content'],$this->
+      p_vars['text_size'],$this->p_vars['options']);
+            unset($this->p_vars['content']);
+        } else
+        {
+            if (!isset($this->p_vars['content'])) $this->p_vars['content'] = ''
+      ;
+            if (isset($this->p_vars['quote_data']))
+            {
+                $this->p_vars['content'] .= $this->p_vars['quote_data'];
+                unset($this->p_vars['quote_data']);
+            }
+            $this->p_vars['content'] .= $word;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_ae166fed7242eb96d8af55dac47d08d1c}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!handle\-Font@{handle\-Font}}
+\index{handle\-Font@{handle\-Font}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{handle\-Font}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Font} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_ae166fed7242eb96d8af55dac47d08d1c}
+handles $<$font$>$$<$/font$>$  \-Parser\-P\-D\-F.\-cls\-::tags.\-font 
+
+\-Definition at line 271 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $e = $this->checkEventPush($word, $pevent);
+        $e1 = $this->checkEventPop($word, $pevent);
+        if ($e == PARSER_EVENT_QUOTE) return;
+        if ($this->p_vars['last_word'] == '<font')
+        {
+            // set up flags
+            $this->p_flags['paramval'] = false;
+            $this->p_vars['curparam'] = false;
+            unset($this->p_vars['quote_data']);
+        }
+        if (!$this->p_flags['paramval'])
+        {
+            if ($e || $e1) return;
+            if ($word == '=')
+            {
+                //debug('set paramval '.$this->p_vars['curparam']);
+                $this->p_flags['paramval'] = true;
+                return;
+            }
+            $this->p_vars['curparam'] = trim($word);
+        } else
+        {
+            if ($this->p_vars['last_pevent'] == PARSER_EVENT_QUOTE)
+            {
+                if ($this->p_vars['curparam'] == 'face')
+                {
+                    //debug('set face to '.$this->p_vars['font_dir'] .
+       $this->p_vars['quote_data'] . '.afm');
+                    $this->p_vars['pdf']->selectFont($this->p_vars['font_dir'] 
+      . $this->p_vars['quote_data'] . '.afm');
+                    $this->p_flags['paramval'] = false;
+                    $this->p_vars['curparam'] = false;
+                    unset($this->p_vars['quote_data']);
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_ad3a98ba296d8830bdc01c33dd66ddb56}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!handle\-New\-Page@{handle\-New\-Page}}
+\index{handle\-New\-Page@{handle\-New\-Page}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{handle\-New\-Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-New\-Page} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_ad3a98ba296d8830bdc01c33dd66ddb56}
+\-Handles $<$newpage$>$  \-Parser\-P\-D\-F.\-cls\-::tags.\-newpage 
+
+\-Definition at line 186 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->p_vars['event_stack']->popEvent();
+        $this->p_vars['pdf']->ezNewPage($this->_debug);
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_a56b0deed1b246a7c1aedaba90389846f}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!handle\-P\-D\-F\-Function@{handle\-P\-D\-F\-Function}}
+\index{handle\-P\-D\-F\-Function@{handle\-P\-D\-F\-Function}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{handle\-P\-D\-F\-Function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-P\-D\-F\-Function} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_a56b0deed1b246a7c1aedaba90389846f}
+handles $<$pdffunction$>$  \-Parser\-P\-D\-F.\-cls\-::tags.\-pdffunction 
+
+\-Definition at line 313 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $e = $this->checkEventPush($word, $pevent);
+        $e1 = $this->checkEventPop($word, $pevent);
+        if ($e == PARSER_EVENT_QUOTE) return;
+        if ($this->p_vars['last_word'] == '<pdffunction:')
+        {
+            // set up flags
+            $this->p_flags['paramval'] = $this->p_flags['curparam'] = false;
+            $this->p_flags['returnval'] = false;
+            $this->p_vars['funcname'] = trim($word);
+//            debug("funcname is $word");
+            $this->p_vars['options'] = array();
+            unset($this->p_vars['quote_data']);
+            if ($e1) addErrorDie(PDERROR_PDFFUNCTION_NO_FUNC);
+        }
+        if (!$this->p_flags['paramval'])
+        {
+            if ($e1)
+            { // call function, no parameters
+                $func = $this->p_vars['funcname'];
+                if (!$func) addErrorDie(PDERROR_PDFFUNCTION_NO_FUNC);
+                if (method_exists($this->p_vars['pdf'],$func))
+                {
+                    if (count($this->p_vars['options']))
+                    {
+//                        fancy_debug("calling function
+       $func",$this->p_vars['options']);
+                        $a = call_user_func_array(array(&$this->p_vars['pdf'],
+      $func), $this->p_vars['options']);
+                    } else
+                    {
+//                        debug("calling function $func");
+                        $a = $this->p_vars['pdf']->$func();
+                    }
+                    if ($this->p_flags['returnval'])
+                    {
+//                        debug("setting returnvar
+       ".$this->p_vars['return_varname']);
+                        $this->tempvars[$this->p_vars['return_varname']] = $a;
+                    }
+                } else
+                {
+                    addWarning(PDERROR_PDF_METHOD_DOESNT_EXIST,$func);
+                }
+                return;
+            }
+            if ($e) return;
+            if ($word == '=')
+            {
+//                debug('set paramval '.$this->p_vars['curparam']);
+                $this->p_flags['paramval'] = true;
+                return;
+            }
+            $this->p_vars['curparam'] = trim($word);
+        } else
+        {
+            if ($this->p_vars['last_word'] == '=')
+            { // check to see if we should use a tempvar from a previous return
+                if (substr(trim($word),0,1) == '$')
+                {
+                    if (substr(trim($word),0,7) == '$this->')
+                    { // this is a pdf var
+                        $a = substr(trim($word),7);
+                        $a = $this->p_vars['pdf']->$a;
+    //                    debug("set option to $word");
+                        $this->p_vars['options'][] = $a;
+                        $this->p_flags['paramval'] = false;
+                        unset($this->p_vars['quote_data']);
+                    } else
+                    { // this is a tempvar
+                        if (!isset($this->tempvars[substr(trim($word),1)]))
+                        {
+                            addErrorDie(PDERROR_PDF_TEMPVAR_DOESNT_EXIST,
+      $this->p_vars['funcname'],trim($word),trim($word));
+                        }
+                        $a = $this->tempvars[substr(trim($word),1)];
+    //                    debug("set option to $word");
+                        $this->p_vars['options'][] = $a;
+                        $this->p_flags['paramval'] = false;
+                        unset($this->p_vars['quote_data']);
+                    }
+                }
+            } else
+            {
+                if ($this->p_vars['last_pevent'] == PARSER_EVENT_QUOTE)
+                {
+                    if ($this->p_vars['quote_data'] === (string)(int)$this->
+      p_vars['quote_data'])
+                    {
+                        $this->p_vars['quote_data'] = (int)$this->p_vars['
+      quote_data'];
+                    }
+                    if ($this->p_vars['curparam'] == 'return')
+                    {
+//                        debug("param is return");
+                        $this->p_vars['return_varname'] = $this->p_vars['
+      quote_data'];
+                        $this->p_flags['returnval'] = true;
+                    } else
+                    {
+//                        fancy_debug("set option to
+       arg",$this->p_vars['quote_data']);
+                        $this->p_vars['options'][] = $this->p_vars['quote_data'
+      ];
+                    }
+                    $this->p_flags['paramval'] = false;
+                    unset($this->p_vars['quote_data']);
+                }
+            }
+            if ($e1)
+            { // call function, with parameters
+                $func = $this->p_vars['funcname'];
+                if (method_exists($this->p_vars['pdf'],$func))
+                {
+                    if (count($this->p_vars['options']))
+                    {
+//                        fancy_debug("calling function
+       $func",$this->p_vars['options']);
+                        if ($func == 'ezImage') {
+                            // set padding to 5, width to 0, resize to none
+                            $this->p_vars['options'][] = 5;
+                            $this->p_vars['options'][] = 0;
+                            $this->p_vars['options'][] = 'none';
+                        }
+                        $a = call_user_func_array(array(&$this->p_vars['pdf'],
+      $func), $this->p_vars['options']);
+                    } else
+                    {
+//                        debug("calling function $func");
+                        $a = $this->p_vars['pdf']->$func();
+                    }
+                    if ($this->p_flags['returnval'])
+                    {
+//                        debug("setting returnvar
+       ".$this->p_vars['return_varname']);
+                        $this->tempvars[$this->p_vars['return_varname']] = $a;
+                    }
+                } else
+                {
+                    addWarning(PDERROR_PDF_METHOD_DOESNT_EXIST,$func);
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_a7073ba7c2860a6243439f0bc465cd501}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!handle\-Text@{handle\-Text}}
+\index{handle\-Text@{handle\-Text}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{handle\-Text}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Text} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_a7073ba7c2860a6243439f0bc465cd501}
+\-Handles $<$text$>$$<$/text$>$  \-Parser\-P\-D\-F.\-cls\-::tags.\-text 
+
+\-Definition at line 196 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $e = $this->checkEventPush($word, $pevent);
+        $e1 = $this->checkEventPop($word, $pevent);
+        if ($e == PARSER_EVENT_QUOTE) return;
+        if ($e1)
+        {
+            $this->p_flags['textcolor'] = false;
+            if (($a = $this->p_vars['savecolor']) != $this->p_vars['pdf']->
+      getColor())
+            {
+                $this->p_vars['pdf']->setColor($a['r'],$a['g'],$a['b']);
+            }
+        }
+        if ($this->p_vars['last_word'] == '<text')
+        {
+            // set up flags
+            $this->p_flags['paramval'] = false;
+            $this->p_flags['textcolor'] = false;
+            $this->p_vars['curparam'] = false;
+            $this->p_vars['savecolor'] = $this->p_vars['pdf']->getColor();
+            $this->p_vars['options'] = array();
+            unset($this->p_vars['quote_data']);
+        }
+        if (!$this->p_flags['paramval'])
+        {
+            if ($e || $e1) return;
+            if ($word == '=')
+            {
+//                debug('set paramval '.$this->p_vars['curparam']);
+                $this->p_flags['paramval'] = true;
+                return;
+            }
+            $this->p_vars['curparam'] = trim($word);
+        } else
+        {
+            if ($this->p_vars['last_pevent'] == PARSER_EVENT_QUOTE)
+            {
+                if ($this->p_vars['curparam'] == 'size')
+                {
+                    $this->p_vars['text_size'] = (int)$this->p_vars['quote_data
+      '];
+                    $this->p_flags['paramval'] = false;
+                    $this->p_vars['curparam'] = false;
+                    if (!$e && !$e1)
+                    {
+                        $this->p_vars['curparam'] = trim($word);
+                    }
+                    unset($this->p_vars['quote_data']);
+                } elseif ($this->p_vars['curparam'] == 'color')
+                {
+                    if ($a = $this->p_vars['pdf']->validHTMLColor($this->p_vars
+      ['quote_data']))
+                    {
+                        $this->p_flags['textcolor'] = true;
+                        $this->p_vars['pdf']->setHTMLColor($a);
+                    }
+                } else
+                {
+                    if ($this->p_vars['quote_data'] === (string)(int)$this->
+      p_vars['quote_data']) $this->p_vars['quote_data'] = (int)$this->p_vars['quote_data'
+      ];
+//                    debug('added '.$this->p_vars['curparam'].' =
+       '.$this->p_vars['quote_data']);
+                    $this->p_vars['options'][$this->p_vars['curparam']] = 
+      $this->p_vars['quote_data'];
+                    $this->p_flags['paramval'] = false;
+                    $this->p_vars['curparam'] = false;
+                    if (!$e && !$e1)
+                    {
+                        $this->p_vars['curparam'] = trim($word);
+                    }
+                    unset($this->p_vars['quote_data']);
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_afdebe29038ca472f726d00f6f3b75403}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!parse@{parse}}
+\index{parse@{parse}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse} (
+\begin{DoxyParamCaption}
+\item[{\$}]{parse\-\_\-data, }
+\item[{\$}]{fontdir, }
+\item[{\&\$}]{pdf, }
+\item[{\$}]{debug = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_afdebe29038ca472f726d00f6f3b75403}
+\-Parse text for \hyperlink{class_p_d_f_parser}{\-P\-D\-F\-Parser} \-X\-M\-L tags, and add the text to the \-P\-D\-F file
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em string} & text to parse for \hyperlink{class_p_d_f_parser}{\-P\-D\-F\-Parser} \-X\-M\-L tags \\
+\hline
+{\em string} & full path to the font directory \\
+\hline
+{\em phpdocpdf} & \\
+\hline
+{\em boolean} & determines whether output is saved in a variable or added directly to the output  integer used for recursion limiting if a handler for an event is not found \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+bool 
+\end{DoxyReturn}
+
+
+\-Definition at line 105 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        static $endrecur = 0;
+        $this->_debug = $debug;
+
+        // initialize variables so E_ALL error_reporting doesn't complain
+        $pevent = 0;
+        $word = 0;
+        $this->p_vars['event_stack'] = new EventStack;
+        $this->p_flags['reset_quote_data'] = true;
+        $this->p_vars['options'] = false;
+        $this->p_vars['font_dir'] = $fontdir;
+        $this->p_vars['text_size'] = false;
+        $this->p_vars['pdf'] = &$pdf;
+
+        $this->wp->setup($parse_data);
+        $this->wp->setWhitespace(true);
+
+        do
+        {
+            $lpevent = $pevent;
+            $pevent = $this->p_vars['event_stack']->getEvent();
+            if ($lpevent != $pevent)
+            {
+                $this->p_vars['last_pevent'] = $lpevent;
+            }
+
+            if ($this->p_vars['last_pevent'] != $pevent)
+            {
+                // its a new event so the word parser needs to be reconfigured 
+                $this->configWordParser($pevent);
+            }
+
+
+            $this->p_vars['last_word'] = $word;
+            $word = $this->wp->getWord();
+
+            if (PHPDOCUMENTOR_DEBUG == true)
+            {
+                echo "----------------\n";
+                echo "LAST: |" . $this->p_vars['last_word'] . "|\n";
+//                echo "INDEX: ".$this->p_vars['curpar']."\n";
+                echo "PEVENT: " . $this->getParserEventName($pevent) . "\n";
+                echo "LASTPEVENT: " . $this->getParserEventName($this->p_vars['
+      last_pevent']) . "\n";
+                echo $this->wp->getPos() . " WORD: |".$word."|\n\n";
+            }
+            if (isset($this->eventHandlers[$pevent]))
+            {
+                $handle = $this->eventHandlers[$pevent];
+                $this->$handle($word, $pevent);
+            } else
+            {
+                debug('WARNING: possible error, no ParserPDFParser handler for
+       event number '.$pevent);
+                if ($endrecur++ == 25)
+                {
+                    die("FATAL ERROR, recursion limit reached");
+                }
+            }
+        } while (!($word === false));
+        if (false) {
+            $fp = fopen("C:/Documents and Settings/Owner/Desktop/pdfsource.txt"
+      , "a");
+            fwrite($fp, $this->wp->data);
+            fclose($fp);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_ae0fcb585e11a6ac55ccd400e8ac59b66}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}}
+\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{\-P\-D\-F\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-P\-D\-F\-Parser} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_ae0fcb585e11a6ac55ccd400e8ac59b66}
+\-Sets up the wordparser for this class 
+
+\-Definition at line 89 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->wp = new WordParser;
+        $this->setupStates();
+    }
+\end{DoxyCode}
+\hypertarget{class_p_d_f_parser_abe4d21ebe5f9d4088e7be4271603cd5e}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!setup\-States@{setup\-States}}
+\index{setup\-States@{setup\-States}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{setup\-States}]{\setlength{\rightskip}{0pt plus 5cm}{\bf setup\-States} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_p_d_f_parser_abe4d21ebe5f9d4088e7be4271603cd5e}
+\#@-\/ setup the parser tokens, and the push\-Event/pop\-Event arrays \begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_parser_a72ead29e4317fbc4335fd3ba764e8b59}{\$tokens}, \hyperlink{class_parser_afa3ebd7022a716d664b6e3bae77e0e4c}{\$push\-Event}, \hyperlink{class_parser_a12bfa5a88d0884472fa0aa48d7b48ab7}{\$pop\-Event} 
+\end{DoxySeeAlso}
+
+
+\-Reimplemented from \hyperlink{class_parser_abe4d21ebe5f9d4088e7be4271603cd5e}{\-Parser}.
+
+
+
+\-Definition at line 485 of file \-Parser\-P\-D\-F.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->tokens[STATE_NOEVENTS]            = array("<text","<font","
+      <newpage />","<newpage/>",'<pdffunction:','"');
+        $this->tokens[PHPDOCUMENTOR_PDF_STATE_TEXT]    = array(">","=",'"',"
+      </text>");
+        $this->tokens[PHPDOCUMENTOR_PDF_STATE_FONT] = array("/>","=",'"');
+        $this->tokens[PHPDOCUMENTOR_PDF_STATE_CONTENT]    = array("<font",'
+      <pdffunction:',"</text>");
+        $this->tokens[PHPDOCUMENTOR_PDF_STATE_PDFFUNCTION]    = array('"',"/>",
+      "="," ");
+        $this->tokens[STATE_QUOTE]            = array("\\\"","\\\\","\"");
+        $this->tokens[STATE_ESCAPE]            = false;// this tells the word
+       parser to just cycle
+
+        // For each event word to event mapings
+        $this->pushEvent[PARSER_EVENT_QUOTE] = 
+            array(
+                "\\"    => PARSER_EVENT_ESCAPE
+            );
+        $this->popEvent[PARSER_EVENT_QUOTE] = array("\"");
+##########################
+        $this->pushEvent[PARSER_EVENT_NOEVENTS] = 
+            array(
+                "<text"    => PHPDOCUMENTOR_PDF_EVENT_TEXT,
+                "<font"    => PHPDOCUMENTOR_PDF_EVENT_FONT,
+                "<newpage />" => PHPDOCUMENTOR_PDF_EVENT_NEWPAGE,
+                "<newpage/>" => PHPDOCUMENTOR_PDF_EVENT_NEWPAGE,
+                "<pdffunction:" => PHPDOCUMENTOR_PDF_EVENT_PDFFUNCTION,
+                '"' => PARSER_EVENT_QUOTE,
+            );
+##########################
+        $this->pushEvent[PHPDOCUMENTOR_PDF_EVENT_TEXT] =
+            array(
+                '"' => PARSER_EVENT_QUOTE,
+                '>' => PHPDOCUMENTOR_PDF_EVENT_CONTENT,
+            );
+         
+        $this->popEvent[PHPDOCUMENTOR_PDF_EVENT_TEXT] = array("</text>");
+##########################
+        $this->pushEvent[PHPDOCUMENTOR_PDF_EVENT_FONT] =
+            array(
+                '"' => PARSER_EVENT_QUOTE,
+            );
+         
+        $this->popEvent[PHPDOCUMENTOR_PDF_EVENT_FONT] = array("/>");
+##########################
+        $this->pushEvent[PHPDOCUMENTOR_PDF_EVENT_PDFFUNCTION] =
+            array(
+                '"' => PARSER_EVENT_QUOTE,
+            );
+        
+        $this->popEvent[PHPDOCUMENTOR_PDF_EVENT_PDFFUNCTION] = array("/>");
+##########################
+        $this->pushEvent[PHPDOCUMENTOR_PDF_EVENT_CONTENT] =
+            array(
+                "<font"    => PHPDOCUMENTOR_PDF_EVENT_FONT,
+                "<newpage />" => PHPDOCUMENTOR_PDF_EVENT_NEWPAGE,
+                "<newpage/>" => PHPDOCUMENTOR_PDF_EVENT_NEWPAGE,
+                "<pdffunction:" => PHPDOCUMENTOR_PDF_EVENT_PDFFUNCTION,
+            );
+        
+        $this->popEvent[PHPDOCUMENTOR_PDF_EVENT_CONTENT] = array("</text>");
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_p_d_f_parser_a430675102684e9ab820c7622678832b0}{\index{\-P\-D\-F\-Parser@{\-P\-D\-F\-Parser}!\$event\-Handlers@{\$event\-Handlers}}
+\index{\$event\-Handlers@{\$event\-Handlers}!PDFParser@{\-P\-D\-F\-Parser}}
+\subsubsection[{\$event\-Handlers}]{\setlength{\rightskip}{0pt plus 5cm}\$event\-Handlers}}\label{class_p_d_f_parser_a430675102684e9ab820c7622678832b0}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ array(
+            PHPDOCUMENTOR_PDF_EVENT_TEXT => 'handleText',
+            PHPDOCUMENTOR_PDF_EVENT_FONT => 'handleFont',
+            PHPDOCUMENTOR_PDF_EVENT_NEWPAGE => 'handleNewPage',
+            PARSER_EVENT_QUOTE => 'handleQuote',
+            PARSER_EVENT_NOEVENTS => 'defaultHandler',
+            PHPDOCUMENTOR_PDF_EVENT_CONTENT => 'handleContent',
+            PHPDOCUMENTOR_PDF_EVENT_PDFFUNCTION => 'handlePDFfunction',
+            )
+\end{DoxyCode}
+lookup table for event handler methods \begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_parser_a20139dbf0050f44b70e34bf32d89d7e4}{\-Parser\-::parse()} 
+\end{DoxySeeAlso}
+
+
+\-Reimplemented from \hyperlink{class_parser_a430675102684e9ab820c7622678832b0}{\-Parser}.
+
+
+
+\-Definition at line 76 of file \-Parser\-P\-D\-F.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converters/\-P\-D\-F/default/\hyperlink{_parser_p_d_f_8inc}{\-Parser\-P\-D\-F.\-inc}\end{DoxyCompactItemize}

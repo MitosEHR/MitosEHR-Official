@@ -1,0 +1,51 @@
+\hypertarget{shared_8escape__special__chars_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/shared.escape\-\_\-special\-\_\-chars.\-php \-File \-Reference}
+\label{shared_8escape__special__chars_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/shared.\-escape\-\_\-special\-\_\-chars.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/shared.\-escape\-\_\-special\-\_\-chars.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{shared_8escape__special__chars_8php_ad843cf793ce9443c5af46ebfc4544f16}{smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars} (\$string)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{shared_8escape__special__chars_8php_ad843cf793ce9443c5af46ebfc4544f16}{\index{shared.\-escape\-\_\-special\-\_\-chars.\-php@{shared.\-escape\-\_\-special\-\_\-chars.\-php}!smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars@{smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars}}
+\index{smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars@{smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars}!shared.escape_special_chars.php@{shared.\-escape\-\_\-special\-\_\-chars.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string}
+\end{DoxyParamCaption}
+)}}\label{shared_8escape__special__chars_8php_ad843cf793ce9443c5af46ebfc4544f16}
+escape\-\_\-special\-\_\-chars common function
+
+\-Function\-: smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars\par
+ \-Purpose\-: used by other smarty functions to escape special chars except for already escaped ones 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 18 of file shared.\-escape\-\_\-special\-\_\-chars.\-php.
+
+
+\begin{DoxyCode}
+{
+        if(!is_array($string))  {
+                $string = preg_replace('!&(#?\w+);!', '%%%SMARTY_START%%%\\
+      1%%%SMARTY_END%%%', $string);
+                $string = htmlspecialchars($string);
+                $string = str_replace(array('%%%SMARTY_START%%%','
+      %%%SMARTY_END%%%'), array('&',';'), $string);
+        }
+        return $string; 
+}
+\end{DoxyCode}

@@ -1,0 +1,42 @@
+\hypertarget{modifier_8count__words_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/modifier.count\-\_\-words.\-php \-File \-Reference}
+\label{modifier_8count__words_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-count\-\_\-words.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-count\-\_\-words.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{modifier_8count__words_8php_aa3741a4dcd626f2005f70000f9005ae7}{smarty\-\_\-modifier\-\_\-count\-\_\-words} (\$string)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{modifier_8count__words_8php_aa3741a4dcd626f2005f70000f9005ae7}{\index{modifier.\-count\-\_\-words.\-php@{modifier.\-count\-\_\-words.\-php}!smarty\-\_\-modifier\-\_\-count\-\_\-words@{smarty\-\_\-modifier\-\_\-count\-\_\-words}}
+\index{smarty\-\_\-modifier\-\_\-count\-\_\-words@{smarty\-\_\-modifier\-\_\-count\-\_\-words}!modifier.count_words.php@{modifier.\-count\-\_\-words.\-php}}
+\subsubsection[{smarty\-\_\-modifier\-\_\-count\-\_\-words}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-modifier\-\_\-count\-\_\-words} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string}
+\end{DoxyParamCaption}
+)}}\label{modifier_8count__words_8php_aa3741a4dcd626f2005f70000f9005ae7}
+\hyperlink{class_smarty}{\-Smarty} count\-\_\-words modifier plugin
+
+\-Type\-: modifier\par
+ \-Name\-: count\-\_\-words\par
+ \-Purpose\-: count the number of words in a text \hyperlink{}{count\-\_\-words (\-Smarty online manual)  string  integer }
+
+\-Definition at line 20 of file modifier.\-count\-\_\-words.\-php.
+
+
+\begin{DoxyCode}
+{
+    // split text by ' ',\r,\n,\f,\t
+    $split_array = preg_split('/\s+/',$string);
+    // count matches that contain alphanumerics
+    $word_count = preg_grep('/[a-zA-Z0-9\\x80-\\xff]/', $split_array);
+
+    return count($word_count);
+}
+\end{DoxyCode}

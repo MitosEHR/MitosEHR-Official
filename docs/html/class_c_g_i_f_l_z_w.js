@@ -1,0 +1,26 @@
+var class_c_g_i_f_l_z_w =
+[
+    [ "CGIFLZW", "class_c_g_i_f_l_z_w.html#ae545184dc7a3b360dff91990ab8e98b5", null ],
+    [ "deCompress", "class_c_g_i_f_l_z_w.html#aa8d24756560b0631fb11e153222af61f", null ],
+    [ "GetCode", "class_c_g_i_f_l_z_w.html#a931a87434564617c0d0bc0bd850ce5e1", null ],
+    [ "LZWCommand", "class_c_g_i_f_l_z_w.html#ad511416dc517ff4cf4d91b57176c3d13", null ],
+    [ "$Buf", "class_c_g_i_f_l_z_w.html#ac277f177d33aa72d96f815d666102c2d", null ],
+    [ "$ClearCode", "class_c_g_i_f_l_z_w.html#aa60a54399281ea06e41d5e5b31c67b10", null ],
+    [ "$CodeSize", "class_c_g_i_f_l_z_w.html#a1dab473004b0c5e0c23f4062f6564e2c", null ],
+    [ "$CurBit", "class_c_g_i_f_l_z_w.html#a58d4a0652a9b7a6711ca225d5cb69148", null ],
+    [ "$Done", "class_c_g_i_f_l_z_w.html#ac34b357749c164306da31f8d8cf04864", null ],
+    [ "$EndCode", "class_c_g_i_f_l_z_w.html#af4668432a1df8ba9875cee1f4b32359d", null ],
+    [ "$FirstCode", "class_c_g_i_f_l_z_w.html#a41cf783b0e7dcbb54e0fbcbf162817db", null ],
+    [ "$Fresh", "class_c_g_i_f_l_z_w.html#a620c521e6daef6a87b72e2816ba809fa", null ],
+    [ "$LastBit", "class_c_g_i_f_l_z_w.html#a88ba4821aecd26b957e9c3217cba7392", null ],
+    [ "$LastByte", "class_c_g_i_f_l_z_w.html#af76dc867120a1e953942179dd45b877f", null ],
+    [ "$MAX_LZW_BITS", "class_c_g_i_f_l_z_w.html#a881d5405e02095f174faf98b497022fc", null ],
+    [ "$MaxCode", "class_c_g_i_f_l_z_w.html#a474cbbba5a21c60ad740f1ac22b74875", null ],
+    [ "$MaxCodeSize", "class_c_g_i_f_l_z_w.html#ae66010f0834a599faa1be34f17a0a736", null ],
+    [ "$Next", "class_c_g_i_f_l_z_w.html#a49b04707c85d624de6900e2691e9c8d1", null ],
+    [ "$OldCode", "class_c_g_i_f_l_z_w.html#aea43fbe54b0fc542d1779e224c924059", null ],
+    [ "$SetCodeSize", "class_c_g_i_f_l_z_w.html#aa75321356d6efcba0ab0efb8359f6956", null ],
+    [ "$sp", "class_c_g_i_f_l_z_w.html#a0a4d69189b5c6ce87f2739cd82ead174", null ],
+    [ "$Stack", "class_c_g_i_f_l_z_w.html#a0750a39f339d1c04fa8974737eebbd49", null ],
+    [ "$Vals", "class_c_g_i_f_l_z_w.html#af5465bb9c32cba44ec0e1125fd64c5de", null ]
+];

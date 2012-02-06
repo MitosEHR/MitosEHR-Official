@@ -73,7 +73,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             proxy: {
                 type: 'direct',
                 api: {
-                    read: formLayoutBuilder.getFormFieldsTree
+                    read: FormLayoutBuilder.getFormFieldsTree
                 }
             },
 //            proxy:{
@@ -119,7 +119,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             proxy: {
                 type: 'direct',
                 api: {
-                    read: formLayoutBuilder.getForms
+                    read: FormLayoutBuilder.getForms
                 }
             }
         });
@@ -141,7 +141,7 @@ Ext.define('Ext.mitos.panel.administration.layout.Layout',{
             proxy: {
                 type: 'direct',
                 api: {
-                    read: formLayoutBuilder.getParentFields
+                    read: FormLayoutBuilder.getParentFields
                 }
             }
         });

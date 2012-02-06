@@ -1,0 +1,538 @@
+\hypertarget{classx12parse__4010}{\section{x12parse\-\_\-4010 \-Class \-Reference}
+\label{classx12parse__4010}\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classx12parse__4010_a83c964e6cb221f88505d2ff119bdd641}{set\-Dicc} (\$xml\-Dicc)
+\item 
+\hyperlink{classx12parse__4010_ace453e85f1cfba709fc4cbcae9bbd8ff}{set\-X12} (\$x12)
+\item 
+\hyperlink{classx12parse__4010_afdf85651bb162c7b0993960a9c987584}{doc\-Type} ()
+\item 
+\hyperlink{classx12parse__4010_a8ca165bd1c22338f8e66fc83e4d22291}{doc\-Control\-Number} ()
+\item 
+\hyperlink{classx12parse__4010_ae29dd8ca5c5bfd894f4929e263f5027a}{doc\-I\-S\-A} ()
+\item 
+\hyperlink{classx12parse__4010_a2caa4dcf32ee20e5efd0602345addfef}{doc\-G\-S} ()
+\item 
+\hyperlink{classx12parse__4010_a5e3231f83aa98d105346f4027dd4826f}{doc\-B\-H\-T} ()
+\item 
+\hyperlink{classx12parse__4010_aea59e05b79461e1bcf064f2484e29d18}{get\-Submitter} ()
+\item 
+\hyperlink{classx12parse__4010_accb00daf426085c20ac5581f66fa1bd7}{get\-Receiver} ()
+\item 
+\hyperlink{classx12parse__4010_a1ebef5e6d721d58af40e0252a6882c40}{get\-Billing\-Provider} ()
+\item 
+\hyperlink{classx12parse__4010_a0a074b2d3ba9c397036fe8b8be4f06dd}{get\-Total\-Claims} ()
+\item 
+\hyperlink{classx12parse__4010_aded8dd7a693f28c58fddfae7c6912842}{get\-Claims} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 17 of file x12\-\_\-parser.\-inc.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classx12parse__4010_a5e3231f83aa98d105346f4027dd4826f}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!doc\-B\-H\-T@{doc\-B\-H\-T}}
+\index{doc\-B\-H\-T@{doc\-B\-H\-T}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{doc\-B\-H\-T}]{\setlength{\rightskip}{0pt plus 5cm}{\bf doc\-B\-H\-T} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_a5e3231f83aa98d105346f4027dd4826f}
+
+
+\-Definition at line 138 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                         {
+                preg_match("/BHT.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("BHT", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+                
+                // Parsing Results...
+                $info['BHT_HSCODE'] = $arr[1];          //Hierarchical
+       Structure Code
+                $info['BHT_TSPCODE'] = $arr[2];         // Transaction Set
+       Purpose Code
+                $info['BHT_REFID'] = $arr[3];           // Reference
+       Identification
+                $info['BHT_DATE'] = $arr[4];            // Transaction Set
+       Creation Date
+                $info['BHT_TIME'] = $arr[5];            // Transaction Set
+       Creation Time
+                $info['BHT_TYPE_CODE'] = $arr[5];       // Transaction Type
+       Code
+                
+                preg_match("/REF\*87.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("REF", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+                
+                // Parsing Results...
+                $info['REF87_REFIDQ'] = $arr[1];        // Reference
+       Identification Qualifier
+                
+                // Reference Identification
+                if ( trim($arr[2]) == '004010X098A1' ){
+                        $info['REF87_ID'] = 'Production';
+                } elseif ( trim($arr[2]) == '004010X098DA1' ){
+                        $info['REF87_ID'] = 'Test';
+                }
+                
+                return $info;
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_a8ca165bd1c22338f8e66fc83e4d22291}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!doc\-Control\-Number@{doc\-Control\-Number}}
+\index{doc\-Control\-Number@{doc\-Control\-Number}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{doc\-Control\-Number}]{\setlength{\rightskip}{0pt plus 5cm}{\bf doc\-Control\-Number} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_a8ca165bd1c22338f8e66fc83e4d22291}
+
+
+\-Definition at line 74 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                                   {
+                preg_match("/ST.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("ST", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $ret = explode("*", $ret);
+                return $ret[2];
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_a2caa4dcf32ee20e5efd0602345addfef}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!doc\-G\-S@{doc\-G\-S}}
+\index{doc\-G\-S@{doc\-G\-S}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{doc\-G\-S}]{\setlength{\rightskip}{0pt plus 5cm}{\bf doc\-G\-S} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_a2caa4dcf32ee20e5efd0602345addfef}
+
+
+\-Definition at line 117 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                        {
+                preg_match("/GS.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("GS", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+                
+                // Parsing Results...
+                $info['GS_TRANSTYPE'] = $arr[1];        // Transfer Type
+                $info['GS_SENDER'] = $arr[2];           // Seder's Qualifier ID
+                $info['GS_RECEIVER'] = $arr[3];         // Receiver's Qualifier
+       ID
+                $info['GS_DATE'] = $arr[4];             // Date fo the document
+                $info['GS_TIME'] = $arr[5];             // Time
+                $info['GS_CONTROL'] = $arr[6];          // Control number
+                $info['GS_VERSION'] = $arr[8];          // Standard Version
+
+                return $info;
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_ae29dd8ca5c5bfd894f4929e263f5027a}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!doc\-I\-S\-A@{doc\-I\-S\-A}}
+\index{doc\-I\-S\-A@{doc\-I\-S\-A}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{doc\-I\-S\-A}]{\setlength{\rightskip}{0pt plus 5cm}{\bf doc\-I\-S\-A} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_ae29dd8ca5c5bfd894f4929e263f5027a}
+
+
+\-Definition at line 86 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                         {
+                preg_match("/ISA.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("ISA", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+                
+                // Parsing Results...
+                $info['ISA_AUTHINFO']   = $arr[1];              //
+       Authorization Information Qualifier
+                $info['ISA_AUTHNUM']    = $arr[2];              //
+       Authorization Number
+                $info['ISA_SECINFOQ']   = $arr[3];              // Security
+       Information Qualifier
+                $info['ISA_SECINFO']    = $arr[4];              // Security
+       Information
+                $info['ISA_SENDERIDQ']  = $arr[5];              // Interchange
+       Sender Id Qualifier
+                $info['ISA_SENDERID']   = $arr[6];              // Interchange
+       Send Id
+                $info['ISA_RECVIDQ']    = $arr[7];              // Interchange
+       Receiver Id Qualifier
+                $info['ISA_RECVID']     = $arr[8];              // Interchange
+       Receiver Id
+                $info['ISA_DATE']               = $arr[9];              //
+       Interchange Date
+                $info['ISA_TIME']               = $arr[10];     // Interchange
+       Time
+                $info['ISA_REPSEP']             = $arr[11];     // Repetition
+       Separator
+                $info['ISA_VERSION']    = $arr[12];     // Interchange Control
+       Version Number
+                $info['ISA_ISACONTROL'] = $arr[13];     // Interchange Control
+       Number
+                $info['ISA_ACKREQ']     = $arr[14];     // Acknowledgment
+       Requested
+                $info['ISA_ISAUSAGE']   = $arr[15];     // Interchange Usage
+       Indicator
+                $info['ISA_ELSEP']              = $arr[16];     // Component
+       Element Separator
+
+                return $info;
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_afdf85651bb162c7b0993960a9c987584}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!doc\-Type@{doc\-Type}}
+\index{doc\-Type@{doc\-Type}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{doc\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf doc\-Type} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_afdf85651bb162c7b0993960a9c987584}
+
+
+\-Definition at line 60 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                          {
+                preg_match("/ST.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("ST", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $ret = explode("*", $ret);
+                return $ret[1];
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_a1ebef5e6d721d58af40e0252a6882c40}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!get\-Billing\-Provider@{get\-Billing\-Provider}}
+\index{get\-Billing\-Provider@{get\-Billing\-Provider}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{get\-Billing\-Provider}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Billing\-Provider} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_a1ebef5e6d721d58af40e0252a6882c40}
+
+
+\-Definition at line 218 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                                     {
+                // Billing/Pay-to Provider Specialty Information
+                preg_match("/PRV.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("PRV", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+                
+                $info['PRO_PRVCODE']    = $arr[1];      // Provider Code
+                $info['PRO_REFIDQ']     = $arr[2];      // Reference
+       Identification Qualifier
+                $info['PRO_REFID']              = $arr[3];      // Reference
+       Identification
+                
+                // Contact Information
+                preg_match("/PER\*IC.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("PER", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+                
+                $info['PER_ENTIDCODE']  = $arr[1];      // Entity Identifier
+       Code
+                $info['PER_NAME']               = $arr[2];      // Name
+                $info['PER_COMMNUMQ']   = $this->getCodeDicc($this->XMLdicc->
+      document->per03[0]->tagChildren, $arr[3]); // Communication Number Qualifier
+                $info['PER_PHONE']              = $arr[4];      //
+       Communication Number
+                
+                // Used to identify the billing provider for this hierarchical
+       level
+                preg_match("/NM1\*85.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("NM1", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+
+                $info['NM185_ENTID']    = $arr[1];      // Entity
+       Identification Code
+                $info['NM185_ENTTYPE']  = $this->getCodeDicc($this->XMLdicc->
+      document->nm18502[0]->tagChildren, "n".$arr[2]);   // Entity Type Qualifier
+                $info['NM185_BILLPROV'] = $arr[3];      // Billing Provider
+       Name
+                $info['NM185_NAME']     = $arr[4];      // Name First
+                $info['NM185_MIDNAME']  = $arr[5];      // Name Middle
+                $info['NM185_RESERVED1']= $arr[6];      // Not Used
+                $info['NM185_NAMESUF']  = $arr[7];      // Name Suffix
+                $info['NM185_IDCODEQ']  = $arr[8];      // Identification Code
+       Qualifier
+                $info['NM185_IDCODE']   = $arr[9];      // Identification Code
+                
+                // Used to address information for the billing provider
+                preg_match("/N3.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("N3", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+
+                $info['N3_ADDRESS1']            = $arr[1];      // Address
+       Information
+                $info['N3_ADDRESS2']            = $arr[2];      // Address
+       Information
+                
+                // Used to report city, state, and zip code information for the
+       billing provider
+                preg_match("/N4.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("N4", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+
+                $info['N4_CITY']                = $arr[1];      // Provider
+       City
+                $info['N4_STATE']               = $arr[2];      // Provider
+       State
+                $info['N4_ZIPCODE']             = $arr[3];      // Provider Zip
+       Code
+                
+                // Employer's Indentification Number
+                preg_match("/REF\*EI.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("REF", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+                $info['REFEI_EMPLOYERID']               = $arr[2];              
+                
+                // Provider Commercial Number
+                preg_match("/REF\*G2.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("REF", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+                $info['REFG2_PROVIDERID']               = $arr[2];
+                
+                return $info;
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_aded8dd7a693f28c58fddfae7c6912842}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!get\-Claims@{get\-Claims}}
+\index{get\-Claims@{get\-Claims}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{get\-Claims}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Claims} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_aded8dd7a693f28c58fddfae7c6912842}
+
+
+\-Definition at line 671 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                            {
+                
+                // Get all the HL lines
+                $temp_hl = explode("~", $this->temp_buff); // Convert the x12
+       to an array
+                $start = 0;
+                foreach ($temp_hl as &$value) { // Delete those unnecesary
+       lines, we want to start at the claim records
+                        if ( substr($value, 0, 4) == "HL*2" ){ break; } else { 
+      unset($temp_hl[$start]); $start++; }
+                }
+
+                // Extract all the claims
+                $rec = -1;
+                
+                foreach ($temp_hl as $key => $value){
+                        if ($this->isHL($temp_hl[$key])){$rec++;} // Count the
+       records
+                        foreach ($this->extSBR($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extNM1IL($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extN3($temp_hl[$key]) as $key => $value
+      ){ $info[$rec][$key] = $value; }
+                        foreach ($this->extN4($temp_hl[$key]) as $key => $value
+      ){ $info[$rec][$key] = $value; }
+                        foreach ($this->extDMG($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extNM1PR($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extPAT($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extNM1QC($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extREFSY($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extCLM($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extAMTF5($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extREFEA($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extHI($temp_hl[$key]) as $key => $value
+      ){ $info[$rec][$key] = $value; }
+                        foreach ($this->extNM182($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extPRV($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extREFG2($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $value; }
+                        foreach ($this->extLX($temp_hl[$key]) as $key => $value
+      ){ $info[$rec][$key] = $this->extUnify($info[$rec][$key], $value); }
+                        foreach ($this->extSV1($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $this->extUnify($info[$rec][$key], $value); }
+                        foreach ($this->extDTP($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $this->extUnify($info[$rec][$key], $value); }
+                        foreach ($this->extREF6R($temp_hl[$key]) as $key => 
+      $value){ $info[$rec][$key] = $this->extUnify($info[$rec][$key], $value); }
+                }
+                return $info;
+                
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_accb00daf426085c20ac5581f66fa1bd7}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!get\-Receiver@{get\-Receiver}}
+\index{get\-Receiver@{get\-Receiver}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{get\-Receiver}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Receiver} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_accb00daf426085c20ac5581f66fa1bd7}
+
+
+\-Definition at line 195 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                              {
+                preg_match("/NM1\*40.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("NM1", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+
+                $info['NM140_ENTIDCODE']        = $arr[1];      // Entity
+       Identifier Code
+                $info['NM140_ENTTYPE']          = $arr[2];      // Entity Type
+       Qualifier
+                $info['NM140_SUBNAME']          = $arr[3];      // Submitter
+       Name
+                $info['NM140_SUBFIRST']         = $arr[4];      // First Name
+                $info['NM140_SUBLASTNAME']      = $arr[5];      // Middle Name
+                $info['NM140_RESERVED1']        = $arr[6];      // 
+                $info['NM140_RESERVED2']        = $arr[7];      // 
+                $info['NM140_IDCODEQ']          = $arr[8];      //
+       Identification Code Qualifier
+                $info['NM140_IDCODE']           = $arr[9];      //
+       Identification Code
+        
+                return $info;
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_aea59e05b79461e1bcf064f2484e29d18}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!get\-Submitter@{get\-Submitter}}
+\index{get\-Submitter@{get\-Submitter}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{get\-Submitter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Submitter} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_aea59e05b79461e1bcf064f2484e29d18}
+
+
+\-Definition at line 173 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                               {
+                preg_match("/NM1\*41.*?~/", $this->temp_buff, $matches);
+                $ret = str_replace("NM1", NULL, $matches[0]);
+                $ret = str_replace("~", NULL, $ret);
+                $arr = explode("*", $ret);
+
+                $info['NM141_ENTIDCODE']        = $arr[1];      // Entity
+       Identifier Code
+                $info['NM141_ENTTYPE']          = $arr[2];      // Entity Type
+       Qualifier
+                $info['NM141_SUBNAME']          = $arr[3];      // Submitter
+       Name
+                $info['NM141_SUBFIRST']         = $arr[4];      // First Name
+                $info['NM141_SUBLASTNAME']      = $arr[5];      // Middle Name
+                $info['NM141_RESERVED1']        = $arr[6];      // 
+                $info['NM141_RESERVED2']        = $arr[7];      // 
+                $info['NM141_IDCODEQ']          = $arr[8];      //
+       Identification Code Qualifier
+                $info['NM141_IDCODE']           = $arr[9];      //
+       Identification Code
+                
+                return $info;
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_a0a074b2d3ba9c397036fe8b8be4f06dd}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!get\-Total\-Claims@{get\-Total\-Claims}}
+\index{get\-Total\-Claims@{get\-Total\-Claims}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{get\-Total\-Claims}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Total\-Claims} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_a0a074b2d3ba9c397036fe8b8be4f06dd}
+
+
+\-Definition at line 659 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                                 {
+                preg_match_all('/CLM.*?~/', $this->temp_buff, $matches, 
+      PREG_PATTERN_ORDER);
+                $matches = $matches[0];
+                return count($matches); // Minus 1: Removes the provider
+        }
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_a83c964e6cb221f88505d2ff119bdd641}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!set\-Dicc@{set\-Dicc}}
+\index{set\-Dicc@{set\-Dicc}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{set\-Dicc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Dicc} (
+\begin{DoxyParamCaption}
+\item[{\$}]{xml\-Dicc}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_a83c964e6cb221f88505d2ff119bdd641}
+
+
+\-Definition at line 28 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+                $this->XMLdicc = $xmlDicc;
+        }       
+\end{DoxyCode}
+\hypertarget{classx12parse__4010_ace453e85f1cfba709fc4cbcae9bbd8ff}{\index{x12parse\-\_\-4010@{x12parse\-\_\-4010}!set\-X12@{set\-X12}}
+\index{set\-X12@{set\-X12}!x12parse_4010@{x12parse\-\_\-4010}}
+\subsubsection[{set\-X12}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-X12} (
+\begin{DoxyParamCaption}
+\item[{\$}]{x12}
+\end{DoxyParamCaption}
+)}}\label{classx12parse__4010_ace453e85f1cfba709fc4cbcae9bbd8ff}
+
+
+\-Definition at line 47 of file x12\-\_\-parser.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                             {
+                $this->temp_buff = $x12;
+                $x12_array = explode("~", $this->temp_buff); // Break the
+       document into a array
+                $s = explode("*", $x12_array[0]); 
+                $this->chr_div = $s[16]; // Extract the character separator
+        }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/x12\-\_\-manager/\hyperlink{x12__parser_8inc_8php}{x12\-\_\-parser.\-inc.\-php}\end{DoxyCompactItemize}

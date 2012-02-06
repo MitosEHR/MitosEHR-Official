@@ -22,7 +22,7 @@ if(!isset($_SESSION)){
 /** @noinspection PhpIncludeInspection */
 include_once($_SESSION['site']['root']."/classes/dbHelper.php");
 
-class formLayoutEngine extends dbHelper {
+class FormLayoutEngine extends dbHelper {
     /**
      * We can get the form fields by form name or form if
      * example: getFields('Demographics') or getFields('1')

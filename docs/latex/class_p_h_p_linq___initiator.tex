@@ -1,0 +1,143 @@
+\hypertarget{class_p_h_p_linq___initiator}{\section{\-P\-H\-P\-Linq\-\_\-\-Initiator \-Class \-Reference}
+\label{class_p_h_p_linq___initiator}\index{\-P\-H\-P\-Linq\-\_\-\-Initiator@{\-P\-H\-P\-Linq\-\_\-\-Initiator}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_p_h_p_linq___initiator_a928a5f42150b4e56d17aef568cfc5422}{\-\_\-\-\_\-construct} (\$name, \hyperlink{interface_p_h_p_linq___i_linq_provider}{\-P\-H\-P\-Linq\-\_\-\-I\-Linq\-Provider} \$parent\-Provider=null)
+\item 
+\hyperlink{class_p_h_p_linq___initiator_a91ece07609442e0e388f1115c21f2259}{in} (\$source)
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_p_h_p_linq___initiator_ae7a238b507c031f645cf50c96fe978ec}{register\-Provider} (\$class=null, \$reference=null)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 43 of file \-Initiator.\-php.
+
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_p_h_p_linq___initiator_a928a5f42150b4e56d17aef568cfc5422}{\index{\-P\-H\-P\-Linq\-\_\-\-Initiator@{\-P\-H\-P\-Linq\-\_\-\-Initiator}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!PHPLinq_Initiator@{\-P\-H\-P\-Linq\-\_\-\-Initiator}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-\-\_\-construct} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{{\bf \-P\-H\-P\-Linq\-\_\-\-I\-Linq\-Provider} \$}]{parent\-Provider = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___initiator_a928a5f42150b4e56d17aef568cfc5422}
+\-Create a new class instance
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \\
+\hline
+\hyperlink{interface_p_h_p_linq___i_linq_provider}{\-P\-H\-P\-Linq\-\_\-\-I\-Linq\-Provider} & {\em \$parent\-Provider} & \-Optional parent \hyperlink{interface_p_h_p_linq___i_linq_provider}{\-P\-H\-P\-Linq\-\_\-\-I\-Linq\-Provider} instance, used with join conditions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{class_p_h_p_linq___initiator}{\-P\-H\-P\-Linq\-\_\-\-Initiator} 
+\end{DoxyReturn}
+
+
+\-Definition at line 92 of file \-Initiator.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+                {
+                $this->_from = $name;
+                $this->_parentProvider = $parentProvider;
+                return $this;
+        }
+\end{DoxyCode}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_p_h_p_linq___initiator_a91ece07609442e0e388f1115c21f2259}{\index{\-P\-H\-P\-Linq\-\_\-\-Initiator@{\-P\-H\-P\-Linq\-\_\-\-Initiator}!in@{in}}
+\index{in@{in}!PHPLinq_Initiator@{\-P\-H\-P\-Linq\-\_\-\-Initiator}}
+\subsubsection[{in}]{\setlength{\rightskip}{0pt plus 5cm}{\bf in} (
+\begin{DoxyParamCaption}
+\item[{\$}]{source}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___initiator_a91ece07609442e0e388f1115c21f2259}
+\-Set source of data
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$source} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{interface_p_h_p_linq___i_linq_provider}{\-P\-H\-P\-Linq\-\_\-\-I\-Linq\-Provider} 
+\end{DoxyReturn}
+
+
+\-Definition at line 104 of file \-Initiator.\-php.
+
+
+\begin{DoxyCode}
+                                    {
+                // Search correct provider
+                foreach (self::$_registeredProviders as $provider) {
+                        if (call_user_func(array($provider, 'handles'), $source
+      )) {
+                                $returnValue = new $provider($this->_from, 
+      $this->_parentProvider);
+                                return $returnValue->in($source);
+                        }
+                }
+                
+                // No provider found...
+                throw new PHPLinq_Exception("No valid PHPLinq_ILinqProvider
+       found for the specified data source.");
+        }
+\end{DoxyCode}
+\hypertarget{class_p_h_p_linq___initiator_ae7a238b507c031f645cf50c96fe978ec}{\index{\-P\-H\-P\-Linq\-\_\-\-Initiator@{\-P\-H\-P\-Linq\-\_\-\-Initiator}!register\-Provider@{register\-Provider}}
+\index{register\-Provider@{register\-Provider}!PHPLinq_Initiator@{\-P\-H\-P\-Linq\-\_\-\-Initiator}}
+\subsubsection[{register\-Provider}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf register\-Provider} (
+\begin{DoxyParamCaption}
+\item[{\$}]{class = {\ttfamily null}, }
+\item[{\$}]{reference = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{class_p_h_p_linq___initiator_ae7a238b507c031f645cf50c96fe978ec}
+\-Register \hyperlink{interface_p_h_p_linq___i_linq_provider}{\-P\-H\-P\-Linq\-\_\-\-I\-Linq\-Provider} class
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$class} & \-Class name implementing \hyperlink{interface_p_h_p_linq___i_linq_provider}{\-P\-H\-P\-Linq\-\_\-\-I\-Linq\-Provider} \\
+\hline
+string & {\em \$reference} & \-Path reference (for inclusion) \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 57 of file \-Initiator.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+         {
+                if (!is_null($class) && $class != '') {
+                        // Require code
+                        if (is_null($reference) || $reference == '') {
+                                $reference = str_replace('_', '/', $class);
+                                $reference .= '.php';
+                        }
+                        require_once($reference);
+                        
+                        // Add registered PHPLinq_ILinqProvider
+                        self::$_registeredProviders[] = $class;
+                }
+        }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Classes/\-P\-H\-P\-Linq/\hyperlink{_initiator_8php}{\-Initiator.\-php}\end{DoxyCompactItemize}

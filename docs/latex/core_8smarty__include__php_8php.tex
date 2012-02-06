@@ -1,0 +1,73 @@
+\hypertarget{core_8smarty__include__php_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/core/core.smarty\-\_\-include\-\_\-php.\-php \-File \-Reference}
+\label{core_8smarty__include__php_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-smarty\-\_\-include\-\_\-php.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-smarty\-\_\-include\-\_\-php.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{core_8smarty__include__php_8php_ae0cd71a7a9e062700d60df9309c277b4}{smarty\-\_\-core\-\_\-smarty\-\_\-include\-\_\-php} (\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{core_8smarty__include__php_8php_ae0cd71a7a9e062700d60df9309c277b4}{\index{core.\-smarty\-\_\-include\-\_\-php.\-php@{core.\-smarty\-\_\-include\-\_\-php.\-php}!smarty\-\_\-core\-\_\-smarty\-\_\-include\-\_\-php@{smarty\-\_\-core\-\_\-smarty\-\_\-include\-\_\-php}}
+\index{smarty\-\_\-core\-\_\-smarty\-\_\-include\-\_\-php@{smarty\-\_\-core\-\_\-smarty\-\_\-include\-\_\-php}!core.smarty_include_php.php@{core.\-smarty\-\_\-include\-\_\-php.\-php}}
+\subsubsection[{smarty\-\_\-core\-\_\-smarty\-\_\-include\-\_\-php}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-core\-\_\-smarty\-\_\-include\-\_\-php} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{core_8smarty__include__php_8php_ae0cd71a7a9e062700d60df9309c277b4}
+called for included php files within templates
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$smarty\-\_\-file} & \\
+\hline
+string & {\em \$smarty\-\_\-assign} & variable to assign the included template's output into \\
+\hline
+boolean & {\em \$smarty\-\_\-once} & uses include\-\_\-once if this is true \\
+\hline
+array & {\em \$smarty\-\_\-include\-\_\-vars} & associative array of vars from \{include file=\char`\"{}blah\char`\"{} var=\$var\} \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 21 of file core.\-smarty\-\_\-include\-\_\-php.\-php.
+
+
+\begin{DoxyCode}
+{
+    $_params = array('resource_name' => $params['smarty_file']);
+    require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_php_resource.php');
+    smarty_core_get_php_resource($_params, $smarty);
+    $_smarty_resource_type = $_params['resource_type'];
+    $_smarty_php_resource = $_params['php_resource'];
+
+    if (!empty($params['smarty_assign'])) {
+        ob_start();
+        if ($_smarty_resource_type == 'file') {
+            $smarty->_include($_smarty_php_resource, $params['smarty_once'], 
+      $params['smarty_include_vars']);
+        } else {
+            $smarty->_eval($_smarty_php_resource, $params['smarty_include_vars'
+      ]);
+        }
+        $smarty->assign($params['smarty_assign'], ob_get_contents());
+        ob_end_clean();
+    } else {
+        if ($_smarty_resource_type == 'file') {
+            $smarty->_include($_smarty_php_resource, $params['smarty_once'], 
+      $params['smarty_include_vars']);
+        } else {
+            $smarty->_eval($_smarty_php_resource, $params['smarty_include_vars'
+      ]);
+        }
+    }
+}
+\end{DoxyCode}

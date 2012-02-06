@@ -1,0 +1,66 @@
+\hypertarget{core_8get__include__path_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/core/core.get\-\_\-include\-\_\-path.\-php \-File \-Reference}
+\label{core_8get__include__path_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-get\-\_\-include\-\_\-path.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-get\-\_\-include\-\_\-path.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{core_8get__include__path_8php_a0420062b2f204568487415679c070101}{smarty\-\_\-core\-\_\-get\-\_\-include\-\_\-path} (\&\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{core_8get__include__path_8php_a0420062b2f204568487415679c070101}{\index{core.\-get\-\_\-include\-\_\-path.\-php@{core.\-get\-\_\-include\-\_\-path.\-php}!smarty\-\_\-core\-\_\-get\-\_\-include\-\_\-path@{smarty\-\_\-core\-\_\-get\-\_\-include\-\_\-path}}
+\index{smarty\-\_\-core\-\_\-get\-\_\-include\-\_\-path@{smarty\-\_\-core\-\_\-get\-\_\-include\-\_\-path}!core.get_include_path.php@{core.\-get\-\_\-include\-\_\-path.\-php}}
+\subsubsection[{smarty\-\_\-core\-\_\-get\-\_\-include\-\_\-path}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-core\-\_\-get\-\_\-include\-\_\-path} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{core_8get__include__path_8php_a0420062b2f204568487415679c070101}
+\-Get path to file from include\-\_\-path
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$file\-\_\-path} & \\
+\hline
+string & {\em \$new\-\_\-file\-\_\-path} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean  array$|$null 
+\end{DoxyReturn}
+
+
+\-Definition at line 19 of file core.\-get\-\_\-include\-\_\-path.\-php.
+
+
+\begin{DoxyCode}
+{
+    static $_path_array = null;
+
+    if(!isset($_path_array)) {
+        $_ini_include_path = ini_get('include_path');
+
+        if(strstr($_ini_include_path,';')) {
+            // windows pathnames
+            $_path_array = explode(';',$_ini_include_path);
+        } else {
+            $_path_array = explode(':',$_ini_include_path);
+        }
+    }
+    foreach ($_path_array as $_include_path) {
+        if (file_exists($_include_path . DIRECTORY_SEPARATOR . $params['
+      file_path'])) {
+               $params['new_file_path'] = $_include_path . DIRECTORY_SEPARATOR 
+      . $params['file_path'];
+            return true;
+        }
+    }
+    return false;
+}
+\end{DoxyCode}

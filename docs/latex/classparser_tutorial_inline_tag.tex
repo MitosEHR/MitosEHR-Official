@@ -1,0 +1,143 @@
+\hypertarget{classparser_tutorial_inline_tag}{\section{parser\-Tutorial\-Inline\-Tag \-Class \-Reference}
+\label{classparser_tutorial_inline_tag}\index{parser\-Tutorial\-Inline\-Tag@{parser\-Tutorial\-Inline\-Tag}}
+}
+\-Inheritance diagram for parser\-Tutorial\-Inline\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classparser_tutorial_inline_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_tutorial_inline_tag_a33c0610d85253497b1f06907701e1e40}{parser\-Tutorial\-Inline\-Tag} (\$link, \$text)
+\item 
+\hyperlink{classparser_tutorial_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{\-Convert} (\&\$c)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 278 of file \-Inline\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_tutorial_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{\index{parser\-Tutorial\-Inline\-Tag@{parser\-Tutorial\-Inline\-Tag}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserTutorialInlineTag@{parser\-Tutorial\-Inline\-Tag}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_tutorial_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}
+convert part of the tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & converter used to change the abstract link into text for display\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed returns the converted link or false if not converted successfully 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000114}{\-Todo}]\-C\-S cleanup -\/ rename to convert for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Reimplemented from \hyperlink{classparser_link_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{parser\-Link\-Inline\-Tag}.
+
+
+
+\-Definition at line 302 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $descrip = false;
+        if (strpos($this->value, ',') === false) {
+            if (strpos(trim($this->value), ' ')) {
+                $v     = explode(' ', trim($this->value));
+                $value = $c->getTutorialLink($v[0]);
+                array_shift($v);
+                $descrip = join($v, ' ');
+            } else {
+                $value = $c->getTutorialLink($this->value);
+            }
+        } else {
+            $vals    = explode(',', $this->value);
+            $descrip = array();
+            foreach ($vals as $val) {
+                $val = trim($val);
+                if (strpos($val, ' ')) {
+                    $v       = explode(' ', $val);
+                    $value[] = $c->getTutorialLink($v[0]);
+                    array_shift($v);
+                    $descrip[] = join($v, ' ');
+                } else {
+                    $value[]   = $c->getTutorialLink($val);
+                    $descrip[] = false;
+                }
+            }
+        }
+        if (is_string($value)) {
+            return $value;
+        }
+        if (is_object($value)) {
+            return $c->returnSee($value, $descrip);
+        }
+        /* 
+         * getLink parsed a comma-delimited list of linked thingies, 
+         * add the commas back in
+         */
+        if (is_array($value)) {
+            $a = '';
+            foreach ($value as $i => $bub) {
+                if (!empty($a)) {
+                    $a .= ', ';
+                }
+                if (is_string($value[$i])) {
+                    $a .= $value[$i];
+                }
+                if (is_object($value[$i])) {
+                    $a .= $c->returnSee($value[$i], $descrip[$i]);
+                }
+            }
+            return $a;
+        }
+        return false;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_tutorial_inline_tag_a33c0610d85253497b1f06907701e1e40}{\index{parser\-Tutorial\-Inline\-Tag@{parser\-Tutorial\-Inline\-Tag}!parser\-Tutorial\-Inline\-Tag@{parser\-Tutorial\-Inline\-Tag}}
+\index{parser\-Tutorial\-Inline\-Tag@{parser\-Tutorial\-Inline\-Tag}!parserTutorialInlineTag@{parser\-Tutorial\-Inline\-Tag}}
+\subsubsection[{parser\-Tutorial\-Inline\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Tutorial\-Inline\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{link, }
+\item[{\$}]{text}
+\end{DoxyParamCaption}
+)}}\label{classparser_tutorial_inline_tag_a33c0610d85253497b1f06907701e1e40}
+constructor
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$link} & stored in \$value, see \hyperlink{classparser_base_a0f298096f322952a72a50f98a74c7b60}{parser\-Base\-::\$value} \\
+\hline
+string & {\em \$text} & see \hyperlink{classparser_link_inline_tag_a612656cf6a1a05abf6cbe4624ce38ef6}{\$linktext} \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 286 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        parserInlineTag::parserInlineTag('tutorial', $link);
+        $this->linktext = trim($text);
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_inline_tags_8inc}{\-Inline\-Tags.\-inc}\end{DoxyCompactItemize}

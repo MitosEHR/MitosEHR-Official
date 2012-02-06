@@ -1,0 +1,254 @@
+\hypertarget{classphp_documentor___highlight_word_parser}{\section{php\-Documentor\-\_\-\-Highlight\-Word\-Parser \-Class \-Reference}
+\label{classphp_documentor___highlight_word_parser}\index{php\-Documentor\-\_\-\-Highlight\-Word\-Parser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}}
+}
+\-Inheritance diagram for php\-Documentor\-\_\-\-Highlight\-Word\-Parser\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classphp_documentor___highlight_word_parser}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___highlight_word_parser_abbac814e49e76eae59fdd1b02a7150ca}{setup} (\&\$input, \&\$parser)
+\item 
+\hyperlink{classphp_documentor___highlight_word_parser_a79987ebb7bd54beb3affd49b9d65bde1}{print\-State} ()
+\item 
+\hyperlink{classphp_documentor___highlight_word_parser_a28f33aeda1185cf6afaddf8d0a5c10c7}{next\-Token} ()
+\item 
+\hyperlink{classphp_documentor___highlight_word_parser_aed2fad5b3be15693fc9b44b7b73af497}{get\-Word} ()
+\item 
+\hyperlink{classphp_documentor___highlight_word_parser_ac123290e173042dfaba5b34a38524b58}{backup\-Pos} (\$last\-\_\-token, \$is\-\_\-pos=false)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___highlight_word_parser_adbfd10e0d8d8ce86f1ee4e94ad658666}{\$\-\_\-list\-Line\-Nums} = array()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 69 of file \-Highlight\-Parser.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classphp_documentor___highlight_word_parser_ac123290e173042dfaba5b34a38524b58}{\index{php\-Documentor\-\_\-\-Highlight\-Word\-Parser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}!backup\-Pos@{backup\-Pos}}
+\index{backup\-Pos@{backup\-Pos}!phpDocumentor_HighlightWordParser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}}
+\subsubsection[{backup\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}{\bf backup\-Pos} (
+\begin{DoxyParamCaption}
+\item[{\$}]{last\-\_\-token, }
+\item[{\$}]{is\-\_\-pos = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_word_parser_ac123290e173042dfaba5b34a38524b58}
+back the word parser to the previous token as defined by \$last\-\_\-token
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array | string & {\em \$last\-\_\-token} & token, or output from \hyperlink{classphp_documentor___highlight_word_parser_a28f33aeda1185cf6afaddf8d0a5c10c7}{next\-Token()} \\
+\hline
+bool & {\em \$is\-\_\-pos} & if true, backup\-Pos interprets \$last\-\_\-token to be the position in the internal token array of the last token\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 172 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!$last_token) {
+            return;
+        }
+        if ($is_pos) {
+            $this->linenum = $last_token[0];
+            $this->pos     = $last_token[1];
+            return;
+        }
+        if ($last_token === false) {
+            return;
+        }
+
+        //fancy_debug('before', $this->linenum, $this->pos, 
+        //    token_name($this->_all[$this->linenum][$this->pos][0]),
+        //    htmlentities($this->_all[$this->linenum][$this->pos][1]),
+        //    $this->_all[$this->linenum]);
+
+        do {
+            $this->pos--;
+            if ($this->pos < 0) {
+                $this->linenum--;
+                if ($this->linenum < 0) {
+                    var_dump($last_token);
+                    break;
+                }
+                $this->pos = count($this->_all[$this->linenum]) - 1;
+            }
+        } while (!$this->tokenEquals($last_token, str_replace("\t", '    ', 
+            $this->_all[$this->linenum][$this->pos])));
+
+        //fancy_debug('after', $this->linenum, $this->pos,
+        //    token_name($this->_all[$this->linenum][$this->pos][0]),
+        //    htmlentities($this->_all[$this->linenum][$this->pos][1]));
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_word_parser_aed2fad5b3be15693fc9b44b7b73af497}{\index{php\-Documentor\-\_\-\-Highlight\-Word\-Parser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}!get\-Word@{get\-Word}}
+\index{get\-Word@{get\-Word}!phpDocumentor_HighlightWordParser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}}
+\subsubsection[{get\-Word}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Word} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_word_parser_aed2fad5b3be15693fc9b44b7b73af497}
+\-Retrieve the next token
+
+\begin{DoxyReturn}{\-Returns}
+array$|$string either array(\-P\-H\-P token constant, token) or string non-\/specific separator 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_word_parser_aed2fad5b3be15693fc9b44b7b73af497}{php\-Documentor\-T\-Word\-Parser}.
+
+
+
+\-Definition at line 147 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->_all[$this->linenum][$this->pos])) {
+            $this->linenum++;
+            $this->pos = 0;
+            if (!isset($this->_all[$this->linenum])) {
+                return false;
+            }
+            $this->_parser->newLineNum();
+            return $this->getWord();
+        }
+        $word = $this->_all[$this->linenum][$this->pos++];
+        return str_replace("\t", '    ', $word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_word_parser_a28f33aeda1185cf6afaddf8d0a5c10c7}{\index{php\-Documentor\-\_\-\-Highlight\-Word\-Parser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}!next\-Token@{next\-Token}}
+\index{next\-Token@{next\-Token}!phpDocumentor_HighlightWordParser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}}
+\subsubsection[{next\-Token}]{\setlength{\rightskip}{0pt plus 5cm}{\bf next\-Token} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_word_parser_a28f33aeda1185cf6afaddf8d0a5c10c7}
+\-Retrieve the position of the next token that will be parsed in the internal token array
+
+\begin{DoxyReturn}{\-Returns}
+array format\-: array(line number, position) 
+\end{DoxyReturn}
+
+
+\-Definition at line 127 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $linenum = $this->linenum;
+        $pos     = $this->pos;
+        if (!isset($this->_all[$this->linenum][$this->pos])) {
+            $linenum++;
+            $pos = 0;
+        }
+        if (!isset($this->_all[$linenum][$pos])) {
+            return false;
+        }
+        return array($linenum, $pos);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_word_parser_a79987ebb7bd54beb3affd49b9d65bde1}{\index{php\-Documentor\-\_\-\-Highlight\-Word\-Parser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}!print\-State@{print\-State}}
+\index{print\-State@{print\-State}!phpDocumentor_HighlightWordParser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}}
+\subsubsection[{print\-State}]{\setlength{\rightskip}{0pt plus 5cm}{\bf print\-State} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_word_parser_a79987ebb7bd54beb3affd49b9d65bde1}
+debugging function
+
+\begin{DoxyReturn}{\-Returns}
+void  private 
+\end{DoxyReturn}
+
+
+\-Definition at line 101 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $linenum = $this->linenum;
+        $pos     = $this->pos;
+        if (!isset($this->_all[$this->linenum][$this->pos])) {
+            $linenum++;
+            $pos = 0;
+        }
+        $details = '';
+        $token   = $this->_all[$linenum][$pos];
+        if (is_array($token)) {
+            $details = token_name($token[0]);
+            $token   = htmlspecialchars($token[1]);
+        } else {
+            $token = htmlspecialchars($token);
+        }
+        debug('Next Token ' . $this->linenum . '-' . $this->pos . ':' . 
+      $details);
+        var_dump($token);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_word_parser_abbac814e49e76eae59fdd1b02a7150ca}{\index{php\-Documentor\-\_\-\-Highlight\-Word\-Parser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}!setup@{setup}}
+\index{setup@{setup}!phpDocumentor_HighlightWordParser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf setup} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{input, }
+\item[{\&\$}]{parser}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_word_parser_abbac814e49e76eae59fdd1b02a7150ca}
+\-Initialize the parser object
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \&\$input} & the input \\
+\hline
+\hyperlink{classphp_documentor___highlight_parser}{php\-Documentor\-\_\-\-Highlight\-Parser} & {\em \&\$parser} & the parser\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 85 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_parser     = &$parser;
+        $this->data        = &$input;
+        $this->_all        = $input;
+        $this->_sourceline = 0;
+        $this->pos         = 0;
+        $this->linenum     = 0;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classphp_documentor___highlight_word_parser_adbfd10e0d8d8ce86f1ee4e94ad658666}{\index{php\-Documentor\-\_\-\-Highlight\-Word\-Parser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}!\$\-\_\-list\-Line\-Nums@{\$\-\_\-list\-Line\-Nums}}
+\index{\$\-\_\-list\-Line\-Nums@{\$\-\_\-list\-Line\-Nums}!phpDocumentor_HighlightWordParser@{php\-Documentor\-\_\-\-Highlight\-Word\-Parser}}
+\subsubsection[{\$\-\_\-list\-Line\-Nums}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-list\-Line\-Nums = array()}}\label{classphp_documentor___highlight_word_parser_adbfd10e0d8d8ce86f1ee4e94ad658666}
+
+
+\-Definition at line 76 of file \-Highlight\-Parser.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_highlight_parser_8inc}{\-Highlight\-Parser.\-inc}\end{DoxyCompactItemize}

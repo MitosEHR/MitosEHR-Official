@@ -1,0 +1,123 @@
+\hypertarget{class_event_stack}{\section{\-Event\-Stack \-Class \-Reference}
+\label{class_event_stack}\index{\-Event\-Stack@{\-Event\-Stack}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_event_stack_aef952d48875ed18c97da290b6d2cde37}{push\-Event} (\$event)
+\item 
+\hyperlink{class_event_stack_a2567373f99a5fd2d9428ee465389fff1}{pop\-Event} ()
+\item 
+\hyperlink{class_event_stack_a055bcb2a2b197f7d31e1dd99d9eb62f7}{get\-Event} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_event_stack_a6a0169b26b5301f906b1ec481b3f1eea}{\$stack} = array(\hyperlink{_parser_8inc_a52330179a1e2419bc88054046b89b0ec}{\-P\-A\-R\-S\-E\-R\-\_\-\-E\-V\-E\-N\-T\-\_\-\-N\-O\-E\-V\-E\-N\-T\-S})
+\item 
+\hyperlink{class_event_stack_a606c9dff2aade84f01338c3c4cd8016b}{\$num} = 0
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 52 of file \-Event\-Stack.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_event_stack_a055bcb2a2b197f7d31e1dd99d9eb62f7}{\index{\-Event\-Stack@{\-Event\-Stack}!get\-Event@{get\-Event}}
+\index{get\-Event@{get\-Event}!EventStack@{\-Event\-Stack}}
+\subsubsection[{get\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Event} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_event_stack_a055bcb2a2b197f7d31e1dd99d9eb62f7}
+\-Get the current event
+
+\begin{DoxyReturn}{\-Returns}
+int \-An event 
+\end{DoxyReturn}
+
+
+\-Definition at line 94 of file \-Event\-Stack.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->stack[$this->num];
+    }
+\end{DoxyCode}
+\hypertarget{class_event_stack_a2567373f99a5fd2d9428ee465389fff1}{\index{\-Event\-Stack@{\-Event\-Stack}!pop\-Event@{pop\-Event}}
+\index{pop\-Event@{pop\-Event}!EventStack@{\-Event\-Stack}}
+\subsubsection[{pop\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf pop\-Event} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_event_stack_a2567373f99a5fd2d9428ee465389fff1}
+\-Pop an event from the stack
+
+\begin{DoxyReturn}{\-Returns}
+int \-An event 
+\end{DoxyReturn}
+
+
+\-Definition at line 83 of file \-Event\-Stack.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->num--;
+        return array_pop($this->stack);
+    }
+\end{DoxyCode}
+\hypertarget{class_event_stack_aef952d48875ed18c97da290b6d2cde37}{\index{\-Event\-Stack@{\-Event\-Stack}!push\-Event@{push\-Event}}
+\index{push\-Event@{push\-Event}!EventStack@{\-Event\-Stack}}
+\subsubsection[{push\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf push\-Event} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event}
+\end{DoxyParamCaption}
+)}}\label{class_event_stack_aef952d48875ed18c97da290b6d2cde37}
+\-Push an event onto the stack
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+int & {\em \$event} & \-All events must be constants\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 73 of file \-Event\-Stack.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->num = array_push($this->stack, $event) - 1;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_event_stack_a606c9dff2aade84f01338c3c4cd8016b}{\index{\-Event\-Stack@{\-Event\-Stack}!\$num@{\$num}}
+\index{\$num@{\$num}!EventStack@{\-Event\-Stack}}
+\subsubsection[{\$num}]{\setlength{\rightskip}{0pt plus 5cm}\$num = 0}}\label{class_event_stack_a606c9dff2aade84f01338c3c4cd8016b}
+
+
+\-Definition at line 64 of file \-Event\-Stack.\-inc.
+
+\hypertarget{class_event_stack_a6a0169b26b5301f906b1ec481b3f1eea}{\index{\-Event\-Stack@{\-Event\-Stack}!\$stack@{\$stack}}
+\index{\$stack@{\$stack}!EventStack@{\-Event\-Stack}}
+\subsubsection[{\$stack}]{\setlength{\rightskip}{0pt plus 5cm}\$stack = array({\bf \-P\-A\-R\-S\-E\-R\-\_\-\-E\-V\-E\-N\-T\-\_\-\-N\-O\-E\-V\-E\-N\-T\-S})}}\label{class_event_stack_a6a0169b26b5301f906b1ec481b3f1eea}
+
+
+\-Definition at line 58 of file \-Event\-Stack.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_event_stack_8inc}{\-Event\-Stack.\-inc}\end{DoxyCompactItemize}

@@ -1,0 +1,130 @@
+\hypertarget{class_response}{\section{\-Response \-Class \-Reference}
+\label{class_response}\index{\-Response@{\-Response}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_response_a568ecdb0d73d2a870f33189739922a50}{\-\_\-\-\_\-construct} (\$params=array())
+\item 
+\hyperlink{class_response_a9371ec67835e9ae1d26f66c20e0a3192}{to\-\_\-json} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_response_a944564ee11ad329573548875b62a269e}{\$success}
+\item 
+\hyperlink{class_response_a6efc15b5a2314dd4b5aaa556a375c6d6}{\$data}
+\item 
+\hyperlink{class_response_abf17cb2dba2ed17cb28aa5f37deb5293}{\$message}
+\item 
+\hyperlink{class_response_ab24faf4aa647cdcee494fc48524ad4ff}{\$errors}
+\item 
+\hyperlink{class_response_a4450bdc73ff7cfb495cb4ec69c98fce8}{\$tid}
+\item 
+\hyperlink{class_response_a6983ad0ef833074b1af98e16d68ff4db}{\$trace}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-A simple \-J\-S\-O\-N \hyperlink{class_response}{\-Response} class. 
+
+\-Definition at line 6 of file response.\-php.
+
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_response_a568ecdb0d73d2a870f33189739922a50}{\index{\-Response@{\-Response}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!Response@{\-Response}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-\-\_\-construct} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}\label{class_response_a568ecdb0d73d2a870f33189739922a50}
+
+
+\-Definition at line 9 of file response.\-php.
+
+
+\begin{DoxyCode}
+                                                   {
+        $this->success  = isset($params["success"]) ? $params["success"] : 
+      false;
+        $this->message  = isset($params["message"]) ? $params["message"] : '';
+        $this->data     = isset($params["data"])    ? $params["data"]    : 
+      array();
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_response_a9371ec67835e9ae1d26f66c20e0a3192}{\index{\-Response@{\-Response}!to\-\_\-json@{to\-\_\-json}}
+\index{to\-\_\-json@{to\-\_\-json}!Response@{\-Response}}
+\subsubsection[{to\-\_\-json}]{\setlength{\rightskip}{0pt plus 5cm}{\bf to\-\_\-json} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_response_a9371ec67835e9ae1d26f66c20e0a3192}
+
+
+\-Definition at line 15 of file response.\-php.
+
+
+\begin{DoxyCode}
+                              {
+        return json_encode(array(
+            'success'   => $this->success,
+            'message'   => $this->message,
+            'data'      => $this->data
+        ));
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_response_a6efc15b5a2314dd4b5aaa556a375c6d6}{\index{\-Response@{\-Response}!\$data@{\$data}}
+\index{\$data@{\$data}!Response@{\-Response}}
+\subsubsection[{\$data}]{\setlength{\rightskip}{0pt plus 5cm}\$data}}\label{class_response_a6efc15b5a2314dd4b5aaa556a375c6d6}
+
+
+\-Definition at line 7 of file response.\-php.
+
+\hypertarget{class_response_ab24faf4aa647cdcee494fc48524ad4ff}{\index{\-Response@{\-Response}!\$errors@{\$errors}}
+\index{\$errors@{\$errors}!Response@{\-Response}}
+\subsubsection[{\$errors}]{\setlength{\rightskip}{0pt plus 5cm}\$errors}}\label{class_response_ab24faf4aa647cdcee494fc48524ad4ff}
+
+
+\-Definition at line 7 of file response.\-php.
+
+\hypertarget{class_response_abf17cb2dba2ed17cb28aa5f37deb5293}{\index{\-Response@{\-Response}!\$message@{\$message}}
+\index{\$message@{\$message}!Response@{\-Response}}
+\subsubsection[{\$message}]{\setlength{\rightskip}{0pt plus 5cm}\$message}}\label{class_response_abf17cb2dba2ed17cb28aa5f37deb5293}
+
+
+\-Definition at line 7 of file response.\-php.
+
+\hypertarget{class_response_a944564ee11ad329573548875b62a269e}{\index{\-Response@{\-Response}!\$success@{\$success}}
+\index{\$success@{\$success}!Response@{\-Response}}
+\subsubsection[{\$success}]{\setlength{\rightskip}{0pt plus 5cm}\$success}}\label{class_response_a944564ee11ad329573548875b62a269e}
+
+
+\-Definition at line 7 of file response.\-php.
+
+\hypertarget{class_response_a4450bdc73ff7cfb495cb4ec69c98fce8}{\index{\-Response@{\-Response}!\$tid@{\$tid}}
+\index{\$tid@{\$tid}!Response@{\-Response}}
+\subsubsection[{\$tid}]{\setlength{\rightskip}{0pt plus 5cm}\$tid}}\label{class_response_a4450bdc73ff7cfb495cb4ec69c98fce8}
+
+
+\-Definition at line 7 of file response.\-php.
+
+\hypertarget{class_response_a6983ad0ef833074b1af98e16d68ff4db}{\index{\-Response@{\-Response}!\$trace@{\$trace}}
+\index{\$trace@{\$trace}!Response@{\-Response}}
+\subsubsection[{\$trace}]{\setlength{\rightskip}{0pt plus 5cm}\$trace}}\label{class_response_a6983ad0ef833074b1af98e16d68ff4db}
+
+
+\-Definition at line 7 of file response.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/extensible-\/1.\-5.\-0/examples/calendar/remote/php/lib/\hyperlink{response_8php}{response.\-php}\end{DoxyCompactItemize}

@@ -1,0 +1,102 @@
+\hypertarget{function_8popup_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/function.popup.\-php \-File \-Reference}
+\label{function_8popup_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-popup.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-popup.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{function_8popup_8php_a03bfe5f23bff8145368fd585d7572f64}{smarty\-\_\-function\-\_\-popup} (\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{function_8popup_8php_a03bfe5f23bff8145368fd585d7572f64}{\index{function.\-popup.\-php@{function.\-popup.\-php}!smarty\-\_\-function\-\_\-popup@{smarty\-\_\-function\-\_\-popup}}
+\index{smarty\-\_\-function\-\_\-popup@{smarty\-\_\-function\-\_\-popup}!function.popup.php@{function.\-popup.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-popup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-popup} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{function_8popup_8php_a03bfe5f23bff8145368fd585d7572f64}
+\hyperlink{class_smarty}{\-Smarty} \{popup\} function plugin
+
+\-Type\-: function\par
+ \-Name\-: popup\par
+ \-Purpose\-: make text pop up in windows via overlib \hyperlink{}{\{popup\} (\-Smarty online manual)  array  \-Smarty  string }
+
+\-Definition at line 21 of file function.\-popup.\-php.
+
+
+\begin{DoxyCode}
+{
+    extract($params);
+
+    if (empty($text) && !isset($inarray) && empty($function)) {
+        $smarty->trigger_error("overlib: attribute 'text' or 'inarray' or
+       'function' required");
+        return false;
+    }
+
+    if (empty($trigger)) { $trigger = "onmouseover"; }
+
+    $retval = $trigger . '="return overlib(\''.preg_replace(array("!'!","![\r\n
+      ]!"),array("\'",'\r'),$text).'\'';
+    if ($sticky) { $retval .= ",STICKY"; }
+    if (!empty($caption)) { $retval .= ",CAPTION,'".str_replace("'","\'",
+      $caption)."'"; }
+    if (!empty($fgcolor)) { $retval .= ",FGCOLOR,'$fgcolor'"; }
+    if (!empty($bgcolor)) { $retval .= ",BGCOLOR,'$bgcolor'"; }
+    if (!empty($textcolor)) { $retval .= ",TEXTCOLOR,'$textcolor'"; }
+    if (!empty($capcolor)) { $retval .= ",CAPCOLOR,'$capcolor'"; }
+    if (!empty($closecolor)) { $retval .= ",CLOSECOLOR,'$closecolor'"; }
+    if (!empty($textfont)) { $retval .= ",TEXTFONT,'$textfont'"; }
+    if (!empty($captionfont)) { $retval .= ",CAPTIONFONT,'$captionfont'"; }
+    if (!empty($closefont)) { $retval .= ",CLOSEFONT,'$closefont'"; }
+    if (!empty($textsize)) { $retval .= ",TEXTSIZE,$textsize"; }
+    if (!empty($captionsize)) { $retval .= ",CAPTIONSIZE,$captionsize"; }
+    if (!empty($closesize)) { $retval .= ",CLOSESIZE,$closesize"; }
+    if (!empty($width)) { $retval .= ",WIDTH,$width"; }
+    if (!empty($height)) { $retval .= ",HEIGHT,$height"; }
+    if (!empty($left)) { $retval .= ",LEFT"; }
+    if (!empty($right)) { $retval .= ",RIGHT"; }
+    if (!empty($center)) { $retval .= ",CENTER"; }
+    if (!empty($above)) { $retval .= ",ABOVE"; }
+    if (!empty($below)) { $retval .= ",BELOW"; }
+    if (isset($border)) { $retval .= ",BORDER,$border"; }
+    if (isset($offsetx)) { $retval .= ",OFFSETX,$offsetx"; }
+    if (isset($offsety)) { $retval .= ",OFFSETY,$offsety"; }
+    if (!empty($fgbackground)) { $retval .= ",FGBACKGROUND,'$fgbackground'"; }
+    if (!empty($bgbackground)) { $retval .= ",BGBACKGROUND,'$bgbackground'"; }
+    if (!empty($closetext)) { $retval .= ",CLOSETEXT,'".str_replace("'","\'",
+      $closetext)."'"; }
+    if (!empty($noclose)) { $retval .= ",NOCLOSE"; }
+    if (!empty($status)) { $retval .= ",STATUS,'".str_replace("'","\'",$status)
+      ."'"; }
+    if (!empty($autostatus)) { $retval .= ",AUTOSTATUS"; }
+    if (!empty($autostatuscap)) { $retval .= ",AUTOSTATUSCAP"; }
+    if (isset($inarray)) { $retval .= ",INARRAY,'$inarray'"; }
+    if (isset($caparray)) { $retval .= ",CAPARRAY,'$caparray'"; }
+    if (!empty($capicon)) { $retval .= ",CAPICON,'$capicon'"; }
+    if (!empty($snapx)) { $retval .= ",SNAPX,$snapx"; }
+    if (!empty($snapy)) { $retval .= ",SNAPY,$snapy"; }
+    if (isset($fixx)) { $retval .= ",FIXX,$fixx"; }
+    if (isset($fixy)) { $retval .= ",FIXY,$fixy"; }
+    if (!empty($background)) { $retval .= ",BACKGROUND,'$background'"; }
+    if (!empty($padx)) { $retval .= ",PADX,$padx"; }
+    if (!empty($pady)) { $retval .= ",PADY,$pady"; }
+    if (!empty($fullhtml)) { $retval .= ",FULLHTML"; }
+    if (!empty($frame)) { $retval .= ",FRAME,'$frame'"; }
+    if (isset($timeout)) { $retval .= ",TIMEOUT,$timeout"; }
+    if (!empty($function)) { $retval .= ",FUNCTION,'$function'"; }
+    if (isset($delay)) { $retval .= ",DELAY,$delay"; }
+    if (!empty($hauto)) { $retval .= ",HAUTO"; }
+    if (!empty($vauto)) { $retval .= ",VAUTO"; }
+    $retval .= ');" onmouseout="nd();"';
+        
+        return $retval;
+}
+\end{DoxyCode}

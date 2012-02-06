@@ -20,7 +20,7 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-class formLayoutBuilder extends dbHelper {
+class FormLayoutBuilder extends dbHelper {
 
     private $form_data_table;
     private $col;
@@ -269,8 +269,15 @@ class formLayoutBuilder extends dbHelper {
     }
 
     /**
-     * @param $conf
-     * @return mixed
+     * @brief       Add a column to the form data table
+     * @details     Simple exec SQL Statement, with no Event LOG injection
+     *
+     * @author      Ernesto J Rodriguez (Certun) <erodriguez@certun.com>
+     * @version     Vega 1.0
+     * @copyright   Gnu Public License (GPLv3)
+     *
+     * @param       $conf
+     * @return      mixed
      */
     private function addColumn($conf){
 
@@ -287,7 +294,14 @@ class formLayoutBuilder extends dbHelper {
     }
 
     /**
-     * @return mixed
+     * @brief       drop a column to the form data table
+     * @details     Simple exec SQL Statement, with no Event LOG injection
+     *
+     * @author      Ernesto J Rodriguez (Certun) <erodriguez@certun.com>
+     * @version     Vega 1.0
+     * @copyright   Gnu Public License (GPLv3)
+     *
+     * @return      mixed
      */
     private function dropColumn(){
     

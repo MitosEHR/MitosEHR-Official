@@ -1,0 +1,131 @@
+\hypertarget{class_application_controller}{\section{\-Application\-Controller \-Class \-Reference}
+\label{class_application_controller}\index{\-Application\-Controller@{\-Application\-Controller}}
+}
+\-Inheritance diagram for \-Application\-Controller\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_application_controller}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_application_controller_aec484c18976d236f8ff24e190d80e1e4}{dispatch} (\$request)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_application_controller_abb35c8495a232b510389fa6d7b15d38a}{\$request}
+\item 
+\hyperlink{class_application_controller_ae97941710d863131c700f069b109991e}{\$id}
+\item 
+\hyperlink{class_application_controller_afe68e6fbe7acfbffc0af0c84a1996466}{\$params}
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_application_controller_a9219fb6823400903d8e2023e3ca62527}{dispatch\-Restful} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 5 of file application\-\_\-controller.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_application_controller_aec484c18976d236f8ff24e190d80e1e4}{\index{\-Application\-Controller@{\-Application\-Controller}!dispatch@{dispatch}}
+\index{dispatch@{dispatch}!ApplicationController@{\-Application\-Controller}}
+\subsubsection[{dispatch}]{\setlength{\rightskip}{0pt plus 5cm}{\bf dispatch} (
+\begin{DoxyParamCaption}
+\item[{\$}]{request}
+\end{DoxyParamCaption}
+)}}\label{class_application_controller_aec484c18976d236f8ff24e190d80e1e4}
+dispatch \-Dispatch request to appropriate controller-\/action by convention according to the \-H\-T\-T\-P method. 
+
+\-Definition at line 12 of file application\-\_\-controller.\-php.
+
+
+\begin{DoxyCode}
+                                       {
+        $this->request = $request;
+        $this->id = $request->id;
+        $this->params = $request->params;
+
+        // the client can pass 'fail=true' to force a server error response for
+       testing CUD (not R) actions
+        if ($request->fail && $request->method != 'GET') {
+                return '{"success":false,"message":"The remote action could not
+       be completed."}';
+        }
+        if ($request->isRestful()) {
+            return $this->dispatchRestful();
+        }
+        if ($request->action) {
+            return $this->{$request->action}();
+        }
+
+        // normal dispatch here.  discover action
+    }
+\end{DoxyCode}
+\hypertarget{class_application_controller_a9219fb6823400903d8e2023e3ca62527}{\index{\-Application\-Controller@{\-Application\-Controller}!dispatch\-Restful@{dispatch\-Restful}}
+\index{dispatch\-Restful@{dispatch\-Restful}!ApplicationController@{\-Application\-Controller}}
+\subsubsection[{dispatch\-Restful}]{\setlength{\rightskip}{0pt plus 5cm}{\bf dispatch\-Restful} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_application_controller_a9219fb6823400903d8e2023e3ca62527}
+
+
+\-Definition at line 31 of file application\-\_\-controller.\-php.
+
+
+\begin{DoxyCode}
+                                         {
+        switch ($this->request->method) {
+            case 'GET':
+                return $this->view();
+                break;
+            case 'POST':
+                return $this->create();
+                break;
+            case 'PUT':
+                return $this->update();
+                break;
+            case 'DELETE':
+                return $this->destroy();
+                break;
+        }
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_application_controller_ae97941710d863131c700f069b109991e}{\index{\-Application\-Controller@{\-Application\-Controller}!\$id@{\$id}}
+\index{\$id@{\$id}!ApplicationController@{\-Application\-Controller}}
+\subsubsection[{\$id}]{\setlength{\rightskip}{0pt plus 5cm}\$id}}\label{class_application_controller_ae97941710d863131c700f069b109991e}
+
+
+\-Definition at line 6 of file application\-\_\-controller.\-php.
+
+\hypertarget{class_application_controller_afe68e6fbe7acfbffc0af0c84a1996466}{\index{\-Application\-Controller@{\-Application\-Controller}!\$params@{\$params}}
+\index{\$params@{\$params}!ApplicationController@{\-Application\-Controller}}
+\subsubsection[{\$params}]{\setlength{\rightskip}{0pt plus 5cm}\$params}}\label{class_application_controller_afe68e6fbe7acfbffc0af0c84a1996466}
+
+
+\-Definition at line 6 of file application\-\_\-controller.\-php.
+
+\hypertarget{class_application_controller_abb35c8495a232b510389fa6d7b15d38a}{\index{\-Application\-Controller@{\-Application\-Controller}!\$request@{\$request}}
+\index{\$request@{\$request}!ApplicationController@{\-Application\-Controller}}
+\subsubsection[{\$request}]{\setlength{\rightskip}{0pt plus 5cm}\$request}}\label{class_application_controller_abb35c8495a232b510389fa6d7b15d38a}
+
+
+\-Definition at line 6 of file application\-\_\-controller.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/extensible-\/1.\-5.\-0/examples/calendar/remote/php/lib/\hyperlink{application__controller_8php}{application\-\_\-controller.\-php}\end{DoxyCompactItemize}

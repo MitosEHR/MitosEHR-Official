@@ -1,0 +1,73 @@
+\hypertarget{modifier_8debug__print__var_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/modifier.debug\-\_\-print\-\_\-var.\-php \-File \-Reference}
+\label{modifier_8debug__print__var_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-debug\-\_\-print\-\_\-var.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-debug\-\_\-print\-\_\-var.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{modifier_8debug__print__var_8php_a5bce0a958ecc559f553eda1de78db1be}{smarty\-\_\-modifier\-\_\-debug\-\_\-print\-\_\-var} (\$var, \$depth=0, \$length=40)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{modifier_8debug__print__var_8php_a5bce0a958ecc559f553eda1de78db1be}{\index{modifier.\-debug\-\_\-print\-\_\-var.\-php@{modifier.\-debug\-\_\-print\-\_\-var.\-php}!smarty\-\_\-modifier\-\_\-debug\-\_\-print\-\_\-var@{smarty\-\_\-modifier\-\_\-debug\-\_\-print\-\_\-var}}
+\index{smarty\-\_\-modifier\-\_\-debug\-\_\-print\-\_\-var@{smarty\-\_\-modifier\-\_\-debug\-\_\-print\-\_\-var}!modifier.debug_print_var.php@{modifier.\-debug\-\_\-print\-\_\-var.\-php}}
+\subsubsection[{smarty\-\_\-modifier\-\_\-debug\-\_\-print\-\_\-var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-modifier\-\_\-debug\-\_\-print\-\_\-var} (
+\begin{DoxyParamCaption}
+\item[{\$}]{var, }
+\item[{\$}]{depth = {\ttfamily 0}, }
+\item[{\$}]{length = {\ttfamily 40}}
+\end{DoxyParamCaption}
+)}}\label{modifier_8debug__print__var_8php_a5bce0a958ecc559f553eda1de78db1be}
+\hyperlink{class_smarty}{\-Smarty} debug\-\_\-print\-\_\-var modifier plugin
+
+\-Type\-: modifier\par
+ \-Name\-: debug\-\_\-print\-\_\-var\par
+ \-Purpose\-: formats variable contents for display in the console \hyperlink{}{debug\-\_\-print\-\_\-var (\-Smarty online manual)  array$|$object  integer  integer  string }
+
+\-Definition at line 22 of file modifier.\-debug\-\_\-print\-\_\-var.\-php.
+
+
+\begin{DoxyCode}
+{
+        $_replace = array("\n"=>'<i>&#92;n</i>', "\r"=>'<i>&#92;r</i>', "\t"=>'
+      <i>&#92;t</i>');
+    if (is_array($var)) {
+        $results = "<b>Array (".count($var).")</b>";
+        foreach ($var as $curr_key => $curr_val) {
+            $return = smarty_modifier_debug_print_var($curr_val, $depth+1, 
+      $length);
+            $results .= "<br>".str_repeat('&nbsp;', $depth*2)."<b>".strtr(
+      $curr_key, $_replace)."</b> =&gt; $return";
+        }
+        return $results;
+    } else if (is_object($var)) {
+        $object_vars = get_object_vars($var);
+        $results = "<b>".get_class($var)." Object (".count($object_vars).")</b>
+      ";
+        foreach ($object_vars as $curr_key => $curr_val) {
+            $return = smarty_modifier_debug_print_var($curr_val, $depth+1, 
+      $length);
+            $results .= "<br>".str_repeat('&nbsp;', $depth*2)."<b>$curr_key</b>
+       =&gt; $return";
+        }
+        return $results;
+    } else {
+        if (empty($var) && $var != "0") {
+            return '<i>empty</i>';
+        }
+        if (strlen($var) > $length ) {
+            $results = substr($var, 0, $length-3).'...';
+        } else {
+            $results = $var;
+        }
+        $results = htmlspecialchars($results);
+        $results = strtr($results, $_replace);
+        return $results;
+    }
+}
+\end{DoxyCode}

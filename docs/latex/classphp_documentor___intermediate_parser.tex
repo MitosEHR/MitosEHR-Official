@@ -1,0 +1,2521 @@
+\hypertarget{classphp_documentor___intermediate_parser}{\section{php\-Documentor\-\_\-\-Intermediate\-Parser \-Class \-Reference}
+\label{classphp_documentor___intermediate_parser}\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a75d4ab0a0ad45aec5e8badd106d0712a}{php\-Documentor\-\_\-\-Intermediate\-Parser} (\$title='\-Generated \-Documentation')
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ae91408e671f961dfc5833e51298fd981}{\-\_\-get\-Source\-Location} (\$sl, \$sourceloc)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a64426cb208ea4666580ae32e889e5363}{\-\_\-guess\-Package} (\$path, \$sourceloc)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a7d72c4075fba0eecb4419d0b25db3b1e}{handle\-Include} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ad0d088b5257089f9eda67af32ff89161}{handle\-Global} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a6774b93c9e6e887a177ac596f3fcdfae}{handle\-Package\-Page} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a7467009370c6e6274f666aa329d729bc}{handle\-Tutorial} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a43880024224e56cbe4951bc3f7128129}{handle\-Var} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_af32d820db1a8a2c30aa35de8dc80db28}{handle\-Const} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a30ce3810771b4b88663ecd22fee1a2ad}{handle\-Method} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_aa259ad80c83f18ef8ba951ad372a622d}{handle\-Function} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a48c4c3f8328e1a71a932f9c0a7b08db6}{handle\-Define} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a80452a620933e1cdf5e66a92bbbaa743}{handle\-Class} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a542acce45784b22cc6a875d6e4aae602}{handle\-Page} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ac67ef1d2950219672764fa969c3ed1bd}{handle\-Doc\-Block} (\$event, \$data)
+\end{DoxyCompactItemize}
+\begin{Indent}{\bf tag, which is used to rename the page.}\par
+{\em \-Process a \-Page-\/level \-Doc\-Block
+
+\-First, it checks for an  tag, and if found, calls \hyperlink{class_procedural_pages_abf3350e9945324342e85c412a1c4e91d}{\-Procedural\-Pages\-::ignore\-Page()}. \-An  tag in a page-\/level \-Doc\-Block will ignore all functions, defines, global variables, and includes. \-It will not ignore classes! \-The function next checks for an  private, and if -\/-\/parseprivate is off, performs the same actions as . \-Next, it checks for the \-This is also a \-P\-E\-A\-R compatibility issue, and may not be very useful in the long run. \-Documentation is best when it refers to real entities in the package, and not to aliases.  private }\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a525ab2ae42a9c0284d1cc606bc7c4331}{\-\_\-process\-Page\-Level\-Doc\-Block} (\$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a121660ec0da1190e14caf30f86510e98}{parse\-Package\-Page} (\$package, \$path)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a2315978686182f0bdb05425d81358b38}{\-Handle\-Event} (\$event, \$data)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ab71ba3f8c009cd81d404c70f324535bd}{add\-Page} (\$page, \$path)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ad879c3077fb3506e973595dd1edc1194}{add\-Page\-If\-Necessary} (\$path, \&\$class)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a6c3ec9384380512619f3b99da8a33442}{add\-Private\-Page} (\$page, \$path)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a472495aecca12ff9b77368f1b2bb0415}{add\-Element\-To\-Page} (\$\hyperlink{bug-904820_8php_aa94081298ab2dfd0f261cce6c203d9aa}{element}, \$path)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_af0d519d569dc73365f131f33d6f4abe7}{add\-Uses} (\$\hyperlink{bug-904820_8php_aa94081298ab2dfd0f261cce6c203d9aa}{element}, \$path)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ab04c97c21cd676a519fc09ebdd316e60}{\-\_\-setup\-Uses\-List} (\&\$converter)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a37f8a580494f3b63d9ac6811fdda3d1e}{\-Convert} (\$title, \$converter)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ae6d77de15c05ae0e233660d104450154}{fix\-Classes} ()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a3098d457ee2009cf8cc416c183b26284}{fix\-Proc\-Pages} ()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a116e673ec85d5b940b6f61aba5ffd307}{add\-Package\-Parent} (\&\$class)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_af3c436d15adbf6d92dfdc75633775be7}{add\-Converter} (\$output, \$name, \$template)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ab68c29852d8512dce6e543479b51e24a}{element\-Cmp} (\$\hyperlink{classa}{a}, \$b)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a951a61edd89ea0d6494a082d90b3566f}{\-Classelement\-Cmp} (\$\hyperlink{classa}{a}, \$b)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ab3487c5cde27ed9e93dc457c6ad0f4ef}{\-Output} (\$title=\char`\"{}\-Generated \-Documentation\char`\"{})
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a07611111094b2954729773f6436a0fe1}{set\-Target\-Dir} (\$dir)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a97d9600189aa312e697768b0e5d3656f}{set\-Template\-Base} (\$dir)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ad9d77a99fb9fffe2c0e593975eca6a69}{set\-Quiet\-Mode} (\$quiet\-Mode)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_aa5dcce4907fdc02d926acfa7afa7621b}{set\-Undocumented\-Element\-Warnings\-Mode} (\$undocumented\-Element\-Warnings)
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_acf68c83b31655d7d037b298d17eab48f}{set\-Parse\-Private} (\$parse)
+\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_acf48db609a946d13953d8060363fd1d3}{\$last}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a8fdfcc403cbf8d9b819dc762793d290a}{\$lasttype} = ''
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a5df82a7ff1e832b9b840f591e38533c4}{\$cur\-\_\-class} = ''
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a9a4a6fba2208984cabb3afacadf33919}{\$type} = ''
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a351b7c7ced5d5cd6ce87029cca64d150}{\$parse\-Private} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a91bc6a84d69355cf5bf3fcae3d97df26}{\$private\-\_\-class} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_aae33ae3051c6f350bb69a0631ade81d9}{\$target\-Dir}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ac13127aa22e272d4a47bc7577d7f4b2a}{\$template\-Base}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_acb916db0304b969918dbc0de762d45e0}{\$package\-\_\-pages} = array()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}{\$pages} = array()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_aca2dbbdf74f1847e4e2be72be9f5130e}{\$privatepages} = array()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_acf9ccb8aea606d86cfed6693a6349bc3}{\$package\-\_\-parents} = array()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ad46f1d4e924726751a32d205f64ccd80}{\$packagecategories} = array()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a2239e82b48c3085715b2bade1d08779c}{\$all\-\_\-packages} = array()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ae42e8e1aebbb7e9af6f8b463703e90a0}{\$packageoutput} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a43c58b8476d3252c39f474e1eb9169df}{\$event\-\_\-handlers}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a6efc15b5a2314dd4b5aaa556a375c6d6}{\$data}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a7b06630dd83a1912cca52476a5438f9e}{\$quiet\-Mode} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_aea3ee0e6b53ba278d457d0d8aafa952a}{\$undocumented\-Element\-Warnings} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a4212f1eca3e4faf764728d56bc13dfd3}{\$classes} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_acc83daf92678ef7dde6bebc5560eb91e}{\$proceduralpages} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a16c7db96cbf12e146fb962e69059975a}{\$converters} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_ada57e7bb7c152edad18fe2f166188691}{\$title} = ''
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_af050f1d6cfed92e5511909eba5754516}{\$uses} = array()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_afcf109f9936f33068c9cda5404751d8a}{\$db\-\_\-template}
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a98207a9960bf351c0d6feea077664b4f}{\$ric} = array()
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_a5ce561729506ba70ec45eb0eb5a52912}{\$\-\_\-last\-Doc\-Block\-Was\-Page\-Level} = false
+\item 
+\hyperlink{classphp_documentor___intermediate_parser_aa14373efd9d14ff22e99b91fbcf5e1a5}{\$\-\_\-old\-Page\-Level} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 60 of file \-Intermediate\-Parser.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classphp_documentor___intermediate_parser_ae91408e671f961dfc5833e51298fd981}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\-\_\-get\-Source\-Location@{\-\_\-get\-Source\-Location}}
+\index{\-\_\-get\-Source\-Location@{\-\_\-get\-Source\-Location}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\-\_\-get\-Source\-Location}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-get\-Source\-Location} (
+\begin{DoxyParamCaption}
+\item[{\$}]{sl, }
+\item[{\$}]{sourceloc}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ae91408e671f961dfc5833e51298fd981}
+\-Retrieve the relative path. \-If the path contains \char`\"{}pear/\char`\"{} it will be used as the base, otherwise the \-Program\-\_\-\-Root string will be used.  array uses '\-Program\-\_\-\-Root' option to replace it with '' for retrieving the source location of a file 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & path to file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\$source\-Location  private 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 344 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_options;
+        if (empty($sl)) return false;
+        $sl = str_replace('\\','/',$sl);
+        if (strpos($sl,'pear/'))
+        {
+            $sl = substr($sl,strpos($sl,'pear/') + 5);
+            if (dirname($sl) == '.')
+            {
+                return 'PEAR';
+            }
+            return dirname($sl);
+        } else
+        {
+            if (strpos(str_replace($_phpDocumentor_options['Program_Root'] . 
+      PATH_DELIMITER,'',$sourceloc),PATH_DELIMITER) === false)
+                return '';
+            return dirname(str_replace($_phpDocumentor_options['Program_Root'] 
+      . PATH_DELIMITER,'',$sourceloc));
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a64426cb208ea4666580ae32e889e5363}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\-\_\-guess\-Package@{\-\_\-guess\-Package}}
+\index{\-\_\-guess\-Package@{\-\_\-guess\-Package}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\-\_\-guess\-Package}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-guess\-Package} (
+\begin{DoxyParamCaption}
+\item[{\$}]{path, }
+\item[{\$}]{sourceloc}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a64426cb208ea4666580ae32e889e5363}
+\-Guess the package/subpackage based on subdirectory if the -\/-\/pear option
+
+\-A file in pear/dir/file.\-php will be in package \char`\"{}dir.\char`\"{} \-A file in pear/dir/subdir/file.\-php will be in package \char`\"{}dir,\char`\"{} subpackage \char`\"{}subdir.\char`\"{} 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & full path of file \\
+\hline
+{\em template-\/ready} & source location \-Program\-\_\-\-Root/dir/file.\-php  array uses the 'pear' option to determine whether to guess based on subdirectory  php\-Documentor.\-howto.\-pkg\-::using.\-command-\/line.\-pear \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 376 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        if (isset($_phpDocumentor_setting['pear']) && $_phpDocumentor_setting['
+      pear'])
+        {
+            $subpath = explode(PATH_DELIMITER, $this->_getSourceLocation($path,
+       $sourceloc));
+            if (!empty($subpath[0]))
+            { // can only have package and subpackage in this version
+                $package = $subpath[0];
+                $subpackage = '';
+                if (isset($subpath[1])) $subpackage = $subpath[1];
+                return array($package,$subpackage);
+            } else return array($this->package, $this->subpackage);
+        } else return array($this->package, $this->subpackage);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a525ab2ae42a9c0284d1cc606bc7c4331}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\-\_\-process\-Page\-Level\-Doc\-Block@{\-\_\-process\-Page\-Level\-Doc\-Block}}
+\index{\-\_\-process\-Page\-Level\-Doc\-Block@{\-\_\-process\-Page\-Level\-Doc\-Block}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\-\_\-process\-Page\-Level\-Doc\-Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-process\-Page\-Level\-Doc\-Block} (
+\begin{DoxyParamCaption}
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a525ab2ae42a9c0284d1cc606bc7c4331}
+
+
+\-Definition at line 1107 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        // can only have 1 package-level docblock, others are ignored
+        if (!$this->data->isClean())
+        {
+            return;
+        }
+        $this->data->clean = false;
+        $this->data->explicitDocBlock();
+        $data->canSource();
+        if (isset($_phpDocumentor_setting['source']) && $_phpDocumentor_setting
+      ['sourcecode'])
+        {
+            $data->addFileSource($this->data->parent->path, $this->data->parent
+      ->source);
+        }
+        if (!$data->getExplicitPackage())
+        {
+            list($data->package,$data->subpackage) = $this->_guessPackage(
+      $this->data->parent->getPath(), $this->data->parent->getSourceLocation('dummy'));
+            addWarning(PDERROR_NO_PACKAGE_TAG,'file',$this->data->parent->
+      getPath(),$this->last->package);
+        }
+        if (isset($this->packagecategories[$this->package])
+            && $this->packagecategories[$this->package] != $data->category)
+            addWarning(PDERROR_PACKAGECAT_SET,$this->package,
+                        $this->packagecategories[$this->package],
+                        $data->category);
+        $this->packagecategories[$this->package] = $data->category;
+        $this->category = $this->data->parent->category = $data->category;
+        $this->packagecategories[$this->package] = $this->category;
+        $this->subpackage = $this->data->parent->subpackage = $data->subpackage
+      ;
+        $this->data->setDocBlock($data);
+        if ($data->getKeyword('ignore'))
+        {
+            $this->proceduralpages->ignorePage($this->data->parent);
+            $this->private_page = true;
+            unset($this->last);
+            $this->privatepages[$this->data->parent->getPath()] = $this->data;
+            unset($this->pages[$this->data->parent->getPath()]);
+            return;
+        }
+        $this->package = $this->data->parent->package = $data->package;
+        $this->subpackage = $this->data->parent->subpackage = $data->subpackage
+      ;
+        $this->proceduralpages->addPagePackage($this->data->parent->getPath(),
+      $this->package,$this->subpackage);
+        if ($access = $data->getKeyword('access'))
+        {
+            if (is_object($access) && ($access->getString() == 'private') && (!
+      $this->parsePrivate))
+            {
+                $this->proceduralpages->ignorePage($this->data->parent);
+                $this->private_page = true;
+                unset($this->last);
+                $this->privatepages[$this->data->parent->getPath()] = $this->
+      data;
+                unset($this->pages[$this->data->parent->getPath()]);
+                return;
+            }
+        }
+        if ($data->getKeyword('name'))
+        {
+            $a = $data->getKeyword('name');
+            if (is_object($a)) $a = $a->value;
+            $this->data->parent->setFile($a);
+            $this->proceduralpages->setName($a);
+        }
+        $this->addPage($this->data->parent, $this->data->parent->getPath());
+        if ($this->package)
+        {
+            $this->parsePackagePage($this->package, $this->data->parent->
+      getPath());
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ab04c97c21cd676a519fc09ebdd316e60}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\-\_\-setup\-Uses\-List@{\-\_\-setup\-Uses\-List}}
+\index{\-\_\-setup\-Uses\-List@{\-\_\-setup\-Uses\-List}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\-\_\-setup\-Uses\-List}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-setup\-Uses\-List} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{converter}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ab04c97c21cd676a519fc09ebdd316e60}
+\-Add a \hyperlink{classparser_used_by_tag}{parser\-Used\-By\-Tag} link to every element referred to by  
+\begin{DoxyParams}{\-Parameters}
+{\em \hyperlink{class_converter}{\-Converter}} & temporary converter used to retrieve abstract links  \hyperlink{classphp_documentor___intermediate_parser_af0d519d569dc73365f131f33d6f4abe7}{php\-Documentor\-\_\-\-Intermediate\-Parser\-::add\-Uses()} indirectly, as \hyperlink{classphp_documentor___intermediate_parser_af0d519d569dc73365f131f33d6f4abe7}{add\-Uses()} sets up \$uses, which is iterated over here  \$pages sets up all  tags from here  private \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1563 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        ob_start();
+        $converter->_createPkgElements($this->pages);
+        ob_end_clean();
+        ksort($this->uses);
+        foreach($this->uses as $link => $elements)
+        {
+            foreach($elements as $element)
+            {
+                if ($element[0]->type == 'method' || $element[0]->type == 'var'
+       ||
+                    $element[0]->type == 'const')
+                {
+                    $converter->class = $element[0]->getClass();
+                }
+                if ($element[0]->type == 'class')
+                {
+                    $converter->class = $element[0]->getName();
+                }
+                $reallink = $converter->getLink($link,$element[0]->docblock->
+      package);
+                if (is_object($reallink))
+                {
+                    // add a used by tag to the docblock of the destination
+                    switch(phpDocumentor_get_class($reallink))
+                    {
+                        case 'pagelink' :
+                            $this->pages[$reallink->path]->docblock->addUsedBy(
+                                $element[0]->getLink($converter, false, true),
+                                $element[1]);
+                        break;
+                        case 'functionlink' :
+                        case 'definelink' :
+                        case 'globallink' :
+                        if (isset($this->pages[$reallink->path]))
+                        {
+                            for ($i=0;
+                                 $i<count($this->pages[$reallink->path]->
+      elements);
+                                 $i++) {
+                                if ($this->pages[$reallink->path]->elements[$i]
+      ->type ==
+                                      str_replace('link', '',
+                                      phpDocumentor_get_class($reallink)) &&
+                                      $this->pages[$reallink->path]->
+                                      elements[$i]->getName()
+                                      == $reallink->name) {
+                                    $this->pages[$reallink->path]->elements[$i]
+      ->
+                                    docblock->addUsedBy(
+                                        $element[0]->getLink($converter,false,
+      true),
+                                        $element[1]);
+//                                   debug('added @usedby to
+       '.str_replace('link','',phpDocumentor_get_class($reallink)).' '.$reallink->name);
+                                }
+                            }
+                        }
+                        break;
+                        case 'classlink' :
+                        case 'methodlink' :
+                        case 'varlink' :
+                        case 'constlink' :
+                        if (isset($this->pages[$reallink->path]))
+                        {
+                            for ($i=0;$i<count($this->pages[$reallink->path]->
+      classelements);$i++)
+                            {
+                                if ($this->pages[$reallink->path]->
+      classelements[$i]->type ==
+                                      str_replace('link','',
+      phpDocumentor_get_class($reallink)) &&
+                                      $this->pages[$reallink->path]->
+      classelements[$i]->getName() == $reallink->name &&
+                                      (!isset($reallink->class) ||
+                                      $this->pages[$reallink->path]->
+      classelements[$i]->getClass() == $reallink->class))
+                                {
+                                    $this->pages[$reallink->path]->
+      classelements[$i]->docblock->addUsedBy($element[0]->getLink($converter,false,true), $element
+      [1]);
+//                                   debug('added @usedby to
+       '.str_replace('link','',phpDocumentor_get_class($reallink)).' '.$reallink->name);
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_af3c436d15adbf6d92dfdc75633775be7}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!add\-Converter@{add\-Converter}}
+\index{add\-Converter@{add\-Converter}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{add\-Converter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Converter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{output, }
+\item[{\$}]{name, }
+\item[{\$}]{template}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_af3c436d15adbf6d92dfdc75633775be7}
+\-Add a converter name to use to the list of converters
+
+\-Sets up the \hyperlink{classphp_documentor___intermediate_parser_a16c7db96cbf12e146fb962e69059975a}{\$converters} array. \{ 
+
+\-Definition at line 1710 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->templateBase) {
+            $templateBase = str_replace('\\','/', $this->templateBase) . '
+      /Converters';
+        } else {
+            if ('@PEAR-DIR@' != '@'.'PEAR-DIR@') {
+                $templateBase = 'PhpDocumentor/phpDocumentor/Converters';
+            } else {
+                $templateBase = str_replace('\\','/',$GLOBALS['
+      _phpDocumentor_install_dir']) . '/phpDocumentor/Converters';
+            }
+        }
+        if (strpos($name,PATH_DELIMITER))
+        {
+            // include the parent template
+            $parent = explode(PATH_DELIMITER,$name);
+            $parent = $parent[0];
+            if (!class_exists($output . $parent . 'Converter')) {
+                $filename = $templateBase . '/' . $output . '/' . $parent . '/'
+       . $output
+                    . $parent . 'Converter.inc';
+                if (Io::isIncludeable($filename))
+                {
+                    include_once($filename);
+                }
+            }
+            if (!class_exists($output . $parent . 'Converter'))
+            {
+                addError(PDERROR_CONVERTER_NOT_FOUND,"parent Converter ".$output
+       . $parent . "Converter of child Converter ".$output . str_replace(
+      PATH_DELIMITER,'',$name) . "Converter");
+            }
+        }
+        $filename = $templateBase .
+             PATH_DELIMITER . $output . PATH_DELIMITER . $name . PATH_DELIMITER
+       . $output .
+             str_replace(PATH_DELIMITER, '', $name) . "Converter" . ".inc";
+        if (Io::isIncludeable($filename))
+        {
+            include_once($filename);
+        }
+        if (class_exists($output . str_replace(PATH_DELIMITER,'',$name) . '
+      Converter'))
+        {
+            $this->converters[$output][$output . str_replace(PATH_DELIMITER,'',
+      $name) . "Converter"][] = $template;
+        } else
+        {
+            addError(PDERROR_CONVERTER_NOT_FOUND,$output . str_replace(
+      PATH_DELIMITER,'',$name) . "Converter");
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a472495aecca12ff9b77368f1b2bb0415}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!add\-Element\-To\-Page@{add\-Element\-To\-Page}}
+\index{add\-Element\-To\-Page@{add\-Element\-To\-Page}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{add\-Element\-To\-Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Element\-To\-Page} (
+\begin{DoxyParamCaption}
+\item[{\$}]{element, }
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a472495aecca12ff9b77368f1b2bb0415}
+adds a processed descendant of \hyperlink{classparser_element}{parser\-Element} to the \hyperlink{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}{\$pages} array or \hyperlink{classphp_documentor___intermediate_parser_aca2dbbdf74f1847e4e2be72be9f5130e}{\$privatepages} array
+
+\-This function expects the page to exist in either \$pages or \$privatepages. \-It calls the \hyperlink{classparser_data_ab5f1a0d0aa831fc71d6e5dae4dbffea7}{parser\-Data\-::add\-Element()} method to add \$element to the page. 
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{classparser_element}{parser\-Element} & {\em \$element} & this will actually be a descendant of \hyperlink{classparser_element}{parser\-Element} \\
+\hline
+string & {\em \$path} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1476 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (isset($this->privatepages[$path]))
+        {
+            if (isset($this->pages[$path]))
+            {
+                if ($element->type == 'class' || $element->type == 'method'
+                    || $element->type == 'var' || $element->type == 'const')
+                {
+                    $this->pages[$path]->addElement($element);
+                } else
+                $this->privatepages[$path]->addElement($element);
+            } else
+            $this->privatepages[$path]->addElement($element);
+        } else
+        {
+            if (isset($this->pages[$path]))
+            {
+                $this->pages[$path]->addElement($element);
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a116e673ec85d5b940b6f61aba5ffd307}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!add\-Package\-Parent@{add\-Package\-Parent}}
+\index{add\-Package\-Parent@{add\-Package\-Parent}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{add\-Package\-Parent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Package\-Parent} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{class}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a116e673ec85d5b940b6f61aba5ffd307}
+\-If the parent class of \$class is in a different package, adds it to the \hyperlink{classphp_documentor___intermediate_parser_acf9ccb8aea606d86cfed6693a6349bc3}{\$package\-\_\-parents} array 
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{classparser_class}{parser\-Class} & {\em \&\$class} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1687 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!is_array($class->parent)) return;
+        $par = $this->classes->getClass($class->parent[1], $class->parent[0]);
+        if ($class->docblock->package == $par->docblock->package) return;
+        $this->package_parents[$class->docblock->package] = $par->docblock->
+      package;
+        if (!isset($this->package_parents[$par->docblock->package]) || !$this->
+      package_parents[$par->docblock->package]) $this->package_parents[$par->docblock
+      ->package] = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ab71ba3f8c009cd81d404c70f324535bd}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!add\-Page@{add\-Page}}
+\index{add\-Page@{add\-Page}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{add\-Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Page} (
+\begin{DoxyParamCaption}
+\item[{\$}]{page, }
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ab71ba3f8c009cd81d404c70f324535bd}
+\-Replaces the \hyperlink{classparser_page}{parser\-Page} represented by \$this-\/$>$pages\mbox{[}\$path\mbox{]} with \$page
+
+\-Called by \hyperlink{}{handle\-Doc\-Block()} and \hyperlink{class_procedural_pages_a6d4b1eff46ff8bd07e362a7c88c43da7}{\-Procedural\-Pages\-::setup\-Pages()}, this method first checks to see if the page has been added. \-If not, it assumes that the page has either been  or set with  private with -\/-\/parseprivate off, and returns \hyperlink{classphp_documentor___intermediate_parser_a6c3ec9384380512619f3b99da8a33442}{add\-Private\-Page()}. \-Otherwise, it sets the pages\mbox{[}\$path\mbox{]} to be the \hyperlink{classparser_page}{parser\-Page} \$page and sets the package and subpackage to that of \$page \begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}{\$pages} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \hyperlink{classparser_page}{parser\-Page}} & \\
+\hline
+{\em string} & full path to the file \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1370 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->pages[$path])) return $this->addPrivatePage($page, 
+      $path);
+        $this->pages[$path]->setParent($page);
+        if ($page->package != $GLOBALS['phpDocumentor_DefaultPackageName'])
+        {
+            if (!$this->pages[$path]->docblock)
+            {
+                $docblock = new parserDocBlock;
+                $docblock->package = $page->package;
+                $docblock->subpackage = $page->subpackage;
+                $this->pages[$path]->docblock = $docblock;
+            } else
+            {
+                $this->pages[$path]->docblock->package = $page->package;
+                $this->pages[$path]->docblock->subpackage = $page->subpackage;
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ad879c3077fb3506e973595dd1edc1194}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!add\-Page\-If\-Necessary@{add\-Page\-If\-Necessary}}
+\index{add\-Page\-If\-Necessary@{add\-Page\-If\-Necessary}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{add\-Page\-If\-Necessary}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Page\-If\-Necessary} (
+\begin{DoxyParamCaption}
+\item[{\$}]{path, }
+\item[{\&\$}]{class}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ad879c3077fb3506e973595dd1edc1194}
+add a new \hyperlink{classparser_page}{parser\-Page} to the \$pages array if none is found
+
+\-This method is used when a page has been  or marked with  private, and a public class is in the page (a class with no  private in its \-Doc\-Block). \-The method first creates a new page in the \hyperlink{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}{\$pages} array and then copies path information, and calls \hyperlink{classphp_documentor___intermediate_parser_ab71ba3f8c009cd81d404c70f324535bd}{add\-Page()} to set up packages 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & full path of page \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1400 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        if (!$this->parsePrivate)
+        {
+            if (!isset($this->pages[$path]))
+            {
+                $this->pages[$path] = new parserData;
+                $this->pages[$path]->docblock = new parserDocBlock;
+                $this->pages[$path]->docblock->package = $this->privatepages[
+      $path]->docblock->package;
+                $this->pages[$path]->docblock->subpackage = $this->privatepages
+      [$path]->docblock->subpackage;
+                $par = $this->privatepages[$path]->parent;
+                $this->pages[$path]->setParent($par);
+                $this->proceduralpages->addPage($par);
+            }
+        }
+        if (!empty($_phpDocumentor_setting['packageoutput']))
+            $packages = explode(',',$_phpDocumentor_setting['packageoutput']);
+        if (!empty($_phpDocumentor_setting['packageoutput']) &&
+            $this->pages[$path]->parent->package != $class->docblock->package 
+      &&
+            !in_array($this->pages[$path]->parent->package,$packages))
+        {
+            $this->pages[$path]->parent->package = $class->docblock->package;
+            $this->addPage($this->pages[$path]->parent, $path);
+            $this->proceduralpages->addPage($this->pages[$path]->parent);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a6c3ec9384380512619f3b99da8a33442}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!add\-Private\-Page@{add\-Private\-Page}}
+\index{add\-Private\-Page@{add\-Private\-Page}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{add\-Private\-Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Private\-Page} (
+\begin{DoxyParamCaption}
+\item[{\$}]{page, }
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a6c3ec9384380512619f3b99da8a33442}
+\-Adds a \hyperlink{classparser_page}{parser\-Page} element to the \hyperlink{classparser_data}{parser\-Data} element in \$this-\/$>$privatepages\mbox{[}\$path\mbox{]}
+
+\-Performs a similar function to add\-Page, but adds to the \hyperlink{}{\$private\-Pages} array 
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{classparser_page}{parser\-Page} & {\em \$page} & \\
+\hline
+string & {\em \$path} & full path to the page \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_ab71ba3f8c009cd81d404c70f324535bd}{add\-Page()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 1438 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        /*
+         * if privatepages is still empty,
+         * we need to initialize it with an empty
+         * path=>ParserData element, so that it has
+         * a top-level element... otherwise the setParent() call
+         * below will crap out.
+         */
+        if (count($this->privatepages) == 0) {
+            $this->privatepages[$path] = new ParserData();
+        }
+        $this->privatepages[$path]->setParent($page);
+        if (isset($page->package) && $page->package != $GLOBALS['
+      phpDocumentor_DefaultPackageName'])
+        {
+            if (!$this->privatepages[$path]->docblock)
+            {
+                $docblock = new parserDocBlock;
+                $docblock->package = $page->package;
+                $docblock->subpackage = $page->subpackage;
+                $this->privatepages[$path]->docblock = $docblock;
+            } else
+            {
+                $this->privatepages[$path]->docblock->package = $page->package;
+                $this->privatepages[$path]->docblock->subpackage = $page->
+      subpackage;
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_af0d519d569dc73365f131f33d6f4abe7}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!add\-Uses@{add\-Uses}}
+\index{add\-Uses@{add\-Uses}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{add\-Uses}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Uses} (
+\begin{DoxyParamCaption}
+\item[{\$}]{element, }
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_af0d519d569dc73365f131f33d6f4abe7}
+\-Add all the  tags from \$element to the \$uses array so that  virtual tags can be added  \hyperlink{classparser_uses_tag_a50a571908126fc3a550f24f0527660bd}{parser\-Uses\-Tag\-::get\-See\-Element()} used to initialize \hyperlink{classphp_documentor___intermediate_parser_af050f1d6cfed92e5511909eba5754516}{\$uses}  \hyperlink{classparser_uses_tag_a2e7bb35c71bf1824456ceb944cb7a845}{parser\-Uses\-Tag\-::get\-Description()} used to initialize \hyperlink{classphp_documentor___intermediate_parser_af050f1d6cfed92e5511909eba5754516}{\$uses} 
+\begin{DoxyParams}{\-Parameters}
+{\em \hyperlink{classparser_element}{parser\-Element}} & descendant of \hyperlink{classparser_element}{parser\-Element} \\
+\hline
+{\em string} & full path to the file \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1507 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (isset($element->type) && $element->type == 'page')
+        {
+            $element = $this->pages[$element->path];
+        }
+        if (!$this->parsePrivate && isset($element->docblock->hasaccess) && 
+      $element->docblock->hasaccess)
+        {
+            $a =  $element->docblock->getKeyword('access');
+            if (is_object($a) && $a->getString() == 'private') return;
+        }
+        if (isset($this->privatepages[$path]))
+        {
+            if (isset($this->pages[$path]))
+            {
+                $uses = $element->docblock->getKeyword('uses');
+                if ($uses)
+                {
+                    if (!is_array($uses)) $uses = array($uses);
+                    foreach($uses as $use)
+                    {
+                        if (!is_object($use)) continue;
+                        $el = $use->getSeeElement();
+                        $description = $use->getDescription();
+                        $this->uses[$el][] = array($element, $description);
+                    }
+                }
+            }
+        } else
+        {
+            if (isset($this->pages[$path]))
+            {
+                $uses = $element->docblock->getKeyword('uses');
+                if ($uses)
+                {
+                    if (!is_array($uses)) $uses = array($uses);
+                    foreach($uses as $use)
+                    {
+                        if (!is_object($use)) continue;
+                        $el = $use->getSeeElement();
+                        $description = $use->getDescription();
+                        $this->uses[$el][] = array($element, $description);
+                    }
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a951a61edd89ea0d6494a082d90b3566f}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\-Classelement\-Cmp@{\-Classelement\-Cmp}}
+\index{\-Classelement\-Cmp@{\-Classelement\-Cmp}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\-Classelement\-Cmp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Classelement\-Cmp} (
+\begin{DoxyParamCaption}
+\item[{\$}]{a, }
+\item[{\$}]{b}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a951a61edd89ea0d6494a082d90b3566f}
+does a natural case sort on two class elements (either \hyperlink{}{parser\-Method} or \hyperlink{classparser_var}{parser\-Var}
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$a} & \\
+\hline
+mixed & {\em \$b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+int 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+generate\-Element\-Index() 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 1777 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (phpDocumentor_get_class($a) == 'parserclass') $atest = $a->name; 
+      else $atest = $a->class;
+        if (phpDocumentor_get_class($b) == 'parserclass') $btest = $b->name; 
+      else $btest = $b->class;
+
+        if(($c = strnatcasecmp($atest, $btest)) != 0) return $c;
+        if (phpDocumentor_get_class($a) != 'parserclass') $atest .= $a->name;
+        if (phpDocumentor_get_class($b) != 'parserclass') $btest .= $b->name;
+        if (phpDocumentor_get_class($a) == 'parsermethod' && 
+      phpDocumentor_get_class($b) == 'parsermethod')
+        {
+            if ($a->isConstructor) return -1;
+            if ($b->isConstructor) return 1;
+            if ($a->isDestructor) return -1;
+            if ($b->isDestructor) return 1;
+        }
+        return strnatcasecmp($atest,$btest);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a37f8a580494f3b63d9ac6811fdda3d1e}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\$}]{title, }
+\item[{\$}]{converter}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a37f8a580494f3b63d9ac6811fdda3d1e}
+\-Interface to the \hyperlink{class_converter}{\-Converter}
+
+\-This function simply passes \hyperlink{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}{\$pages} and \hyperlink{}{package\-\_\-pages} to the walk() method, and then calls the \hyperlink{classphp_documentor___intermediate_parser_ab3487c5cde27ed9e93dc457c6ad0f4ef}{\-Output()} method. \-Note that \hyperlink{classphp_documentor___intermediate_parser_ab3487c5cde27ed9e93dc457c6ad0f4ef}{\-Output()} is not required to do anything, and in fact doesn't in \hyperlink{class_h_t_m_lframes_converter}{\-H\-T\-M\-Lframes\-Converter}.  \hyperlink{class_converter_a8266af4abd871087e8cba35324a77708}{\-Converter\-::walk()} passes \hyperlink{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}{\$pages} and \hyperlink{classphp_documentor___intermediate_parser_acb916db0304b969918dbc0de762d45e0}{\$package\-\_\-pages}  \hyperlink{class_converter_a60c576df680e4a308193baa027644a2f}{\-Converter\-::\-Output()} 
+
+\-Definition at line 1652 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $converter->walk($this->pages, $this->package_pages);
+        $converter->Output($title);
+        $converter->cleanup();
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ab68c29852d8512dce6e543479b51e24a}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!element\-Cmp@{element\-Cmp}}
+\index{element\-Cmp@{element\-Cmp}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{element\-Cmp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf element\-Cmp} (
+\begin{DoxyParamCaption}
+\item[{\$}]{a, }
+\item[{\$}]{b}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ab68c29852d8512dce6e543479b51e24a}
+does a natural case sort on two \hyperlink{classparser_element}{parser\-Element} descendants
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$a} & \\
+\hline
+mixed & {\em \$b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+int 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+generate\-Element\-Index() 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 1763 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return strnatcasecmp($a->getName(), $b->getName());
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ae6d77de15c05ae0e233660d104450154}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!fix\-Classes@{fix\-Classes}}
+\index{fix\-Classes@{fix\-Classes}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{fix\-Classes}]{\setlength{\rightskip}{0pt plus 5cm}{\bf fix\-Classes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ae6d77de15c05ae0e233660d104450154}
+\-Clean up classes
+
+\{\}  private  \hyperlink{class_classes_ac40576cb234b55a55191a4fa3b9ed9da}{\-Classes\-::\-Inherit()} passes \$this 
+
+\-Definition at line 1666 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->classes->Inherit($this);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a3098d457ee2009cf8cc416c183b26284}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!fix\-Proc\-Pages@{fix\-Proc\-Pages}}
+\index{fix\-Proc\-Pages@{fix\-Proc\-Pages}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{fix\-Proc\-Pages}]{\setlength{\rightskip}{0pt plus 5cm}{\bf fix\-Proc\-Pages} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a3098d457ee2009cf8cc416c183b26284}
+\-Clean up \-Procedural \-Pages \{\}  private  \hyperlink{class_procedural_pages_a6d4b1eff46ff8bd07e362a7c88c43da7}{\-Procedural\-Pages\-::setup\-Pages()} passes \$this 
+
+\-Definition at line 1677 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->proceduralpages->setupPages($this);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a80452a620933e1cdf5e66a92bbbaa743}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Class@{handle\-Class}}
+\index{handle\-Class@{handle\-Class}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Class}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Class} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a80452a620933e1cdf5e66a92bbbaa743}
+handles post-\/parsing of classes
+
+\-This function sets \hyperlink{classphp_documentor___intermediate_parser_a6efc15b5a2314dd4b5aaa556a375c6d6}{\$data}-\/$>$clean to false to tell the \hyperlink{classphp_documentor___intermediate_parser}{php\-Documentor\-\_\-\-Intermediate\-Parser} that a page-\/level \-Doc\-Block can't be found after this point on this page. \-It sets \hyperlink{classphp_documentor___intermediate_parser_a5df82a7ff1e832b9b840f591e38533c4}{\$cur\-\_\-class} to its name, and if an  tag is found in the \-Doc\-Block, it sets \hyperlink{classphp_documentor___intermediate_parser_a91bc6a84d69355cf5bf3fcae3d97df26}{\$private\-\_\-class} to true, to prevent post-\/parsing of any of the class's vars or methods. \-Then it checks for the existence of a package page for the class's package 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_class}{parser\-Class} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 905 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        if ($data->isInterface())
+        {
+            $objectType = 'interface';
+        }
+        else
+        {
+            $objectType = 'class';
+        }
+        if ($this->_lastDocBlockWasPageLevel)
+        {
+            if (!$this->_oldPageLevel)
+            {
+                addWarning(PDERROR_DOCBLOCK_GOES_CLASS, $data->getName());
+                $doc = new parserDocBlock;
+                $doc->category = $this->category;
+                $doc->package = $this->package;
+                $doc->subpackage = $this->subpackage;
+                if (isset($_phpDocumentor_setting['sourcecode']) &&
+                    $_phpDocumentor_setting['sourcecode']) {
+                    $doc->canSource();
+                    $doc->addFileSource($this->data->parent->path, $this->data
+      ->parent->source);
+                }
+                $this->data->setDocBlock($doc);
+                unset($doc);
+                if ($this->last) {
+                    $this->last->cantSource();
+                }
+            }
+        }
+        $this->_lastDocBlockWasPageLevel = false;
+        $this->data->clean = false;
+        if (empty($this->last))
+        {
+            if ($this->undocumentedElementWarnings)
+            {
+                addWarning(PDERROR_UNDOCUMENTED_ELEMENT,'Class',$data->getName(
+      ),'Class');
+            }
+            if (isset($this->db_template))
+            {
+                // use the docblock template
+                $this->last = phpDocumentor_clone($this->db_template);
+            }
+            else
+            {
+                // we don't have a docblock, create an empty one to get rid of
+       errors
+                $this->last = new parserDocblock();
+            }
+            list($this->last->package, $this->last->subpackage) = $this->
+      _guessPackage($this->data->parent->path, $this->data->parent->getSourceLocation
+      ('dummy'));
+            addWarning(PDERROR_NO_PACKAGE_TAG,$objectType,$data->getName(),
+      $this->last->package);
+        } else
+        {
+            if (!$this->last->getExplicitPackage())
+            {
+                list($this->last->package, $this->last->subpackage) = $this->
+      _guessPackage($this->data->parent->path, $this->data->parent->getSourceLocation
+      ('dummy'));
+                addWarning(PDERROR_NO_PACKAGE_TAG,$objectType,$data->getName(),
+      $this->last->package);
+            } else
+            {
+                if (isset($this->packagecategories[$this->package])
+                    && $this->packagecategories[$this->package] != $this->
+      category)
+                    addWarning(PDERROR_PACKAGECAT_SET,$this->package,
+                                $this->packagecategories[$this->package],
+                                $this->category);
+                $this->packagecategories[$this->package] = $this->category;
+            }
+        }
+        $this->last->updateModifiers($data->getModifiers());
+//        $this->last->setLineNumber($data->getLineNumber());
+        $data->setDocBlock($this->last);
+        $this->cur_class = $name = $data->getName();
+        if ($this->last->getKeyword('ignore'))
+        {
+            $this->private_class = true;
+            unset($this->last);
+            return;
+        }
+        $data->path = $this->data->parent->path;
+        $this->classes->addClass($data);
+        $this->private_class = false;
+        if ($this->last->package)
+        {
+            $this->parsePackagePage($this->last->package, $this->data->parent->
+      getPath());
+        }
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_af32d820db1a8a2c30aa35de8dc80db28}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Const@{handle\-Const}}
+\index{handle\-Const@{handle\-Const}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Const}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Const} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_af32d820db1a8a2c30aa35de8dc80db28}
+handles post-\/parsing of class constants
+
+\-This function aligns \$data's \$path var and packages to match the parent object 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_var}{parser\-Var} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 609 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        if ($this->private_class)
+        {
+            unset($this->last);
+            return;
+        }
+        if (empty($this->last))
+        {
+            if (isset($this->db_template))
+            {
+                // use the docblock template
+                $this->last = phpDocumentor_clone($this->db_template);
+            }
+            else
+            {
+                // we don't have a docblock, create an empty one to get rid of
+       errors
+                $this->last = new parserDocblock();
+            }
+        }
+//        $this->last->setLineNumber($data->getLineNumber());
+        $this->last->overridePackage($this->category,$this->package,$this->
+      subpackage,$data->getName(),'const');
+
+        if ($this->last->getKeyword('ignore'))
+        {
+            $this->last = false;
+            return;
+//           
+       addWarning(PDERROR_IGNORE_TAG_IGNORED,'var',$this->cur_class.'::'.$data->getName());
+        }
+        $data->setDocBlock($this->last);
+        $data->path = $this->data->parent->path;
+        $this->classes->addConst($data);
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a48c4c3f8328e1a71a932f9c0a7b08db6}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Define@{handle\-Define}}
+\index{handle\-Define@{handle\-Define}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Define}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Define} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a48c4c3f8328e1a71a932f9c0a7b08db6}
+handles post-\/parsing of defines
+
+\-This function sets \hyperlink{classphp_documentor___intermediate_parser_a6efc15b5a2314dd4b5aaa556a375c6d6}{\$data}-\/$>$clean to false to tell the \hyperlink{classphp_documentor___intermediate_parser}{php\-Documentor\-\_\-\-Intermediate\-Parser} that a page-\/level \-Doc\-Block can't be found after this point on this page. \-It then sets the package to be the same as the page and adds itself to the \hyperlink{class_procedural_pages}{\-Procedural\-Pages} class 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_define}{parser\-Define} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 849 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_lastDocBlockWasPageLevel)
+        {
+            addWarning(PDERROR_DOCBLOCK_CONFLICT, 'define', $data->getName());
+            if (!$this->_oldPageLevel)
+            {
+                unset($this->last);
+            }
+        }
+        $this->_lastDocBlockWasPageLevel = false;
+        $this->data->clean = false;
+        if ($this->private_page)
+        {
+            unset($this->last);
+            return;
+        }
+        if (empty($this->last))
+        {
+            if (isset($this->db_template))
+            {
+                // use the docblock template
+                $this->last = phpDocumentor_clone($this->db_template);
+            }
+            else
+            {
+                // we don't have a docblock, create an empty one to get rid of
+       errors
+                $this->last = new parserDocblock();
+            }
+        }
+//        $this->last->setLineNumber($data->getLineNumber());
+        if ($this->last->getKeyword('ignore'))
+        {
+            unset($this->last);
+            return;
+        }
+
+        $this->last->overridePackage($this->category,$this->package,$this->
+      subpackage,$data->getName(),'define');
+        $data->setDocBlock($this->last);
+        $this->proceduralpages->addDefine($data);
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ac67ef1d2950219672764fa969c3ed1bd}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Doc\-Block@{handle\-Doc\-Block}}
+\index{handle\-Doc\-Block@{handle\-Doc\-Block}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Doc\-Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Doc\-Block} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ac67ef1d2950219672764fa969c3ed1bd}
+
+
+\-Definition at line 1047 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $type = 'docblock';
+        $data->postProcess();
+        // Zend desc support
+        if ($tdesc = $data->getKeyword('desc'))
+        {
+            $data->setShortDesc($tdesc);
+            unset($data->tags['desc']);
+        }
+        $this->_lastDocBlockWasPageLevel = false;
+        // 1st docblock in file, check for @package
+        if ($this->data->isClean() && !isset($this->last))
+        {
+            if ($data->getExplicitPackage())
+            {
+                // new with 1.2.2:
+                // if the first docblock in a file
+                // contains a @package tag, then it is
+                // a page-level docblock
+                $this->_processPageLevelDocBlock($data);
+                $this->_lastDocBlockWasPageLevel = true;
+                $this->all_packages[$data->package] = 1;
+                $this->last = $data;
+                return;
+            }
+            $doc = new parserDocBlock;
+            $doc->category = $this->category;
+            $doc->package = $this->package;
+            $doc->subpackage = $this->subpackage;
+            $this->data->setDocBlock($doc);
+            $this->proceduralpages->addPagePackage($this->data->parent->getPath
+      (),$this->package,$this->subpackage);
+            unset($doc);
+        }
+        // 2nd docblock in a row, and it's at the top of the file, page-level
+       docblock
+        if ($this->lasttype == "docblock" && $this->data->isClean())
+        {
+            $this->_processPageLevelDocBlock($this->last);
+            $this->_oldPageLevel = true;
+            $this->_lastDocBlockWasPageLevel = false;
+        }
+        $this->all_packages[$data->package] = 1;
+        $this->last = $data;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a2315978686182f0bdb05425d81358b38}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\-Handle\-Event@{\-Handle\-Event}}
+\index{\-Handle\-Event@{\-Handle\-Event}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\-Handle\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Handle\-Event} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a2315978686182f0bdb05425d81358b38}
+called via \hyperlink{class_parser_a20139dbf0050f44b70e34bf32d89d7e4}{\-Parser\-::parse()} and \hyperlink{class_parser}{\-Parser}'s inherited method \hyperlink{class_publisher_a2fdf38edad335537a86c7bb35fec3106}{\-Publisher\-::publish\-Event()}
+
+\$event is one of the \-P\-H\-P\-D\-O\-C constants from \hyperlink{_parser_8inc}{\-Parser.\-inc}. \-If it is not \-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-E\-V\-E\-N\-T\-\_\-\-N\-E\-W\-S\-T\-A\-T\-E, then a function name is retrieved from the \hyperlink{classphp_documentor___intermediate_parser_a43c58b8476d3252c39f474e1eb9169df}{\$event\-\_\-handlers} array and called to handle the \$data 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & event number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+mixed & {\em \$data} & if \$event is \hyperlink{_parser_8inc_ad678db7d1bfd0a489ae21928265e4351}{\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-E\-V\-E\-N\-T\-\_\-\-N\-E\-W\-S\-T\-A\-T\-E}, \$data is a \hyperlink{}{\-P\-H\-P\-\_\-\-D\-O\-C\-\_\-\-E\-V\-E\-N\-T\-\_\-\-E\-N\-D\-\_\-\-P\-A\-G\-E} or \hyperlink{_parser_8inc_a2b19a1f2786c4d39b4e350fea2302db2}{\-S\-T\-A\-T\-E\-\_\-\-E\-N\-D\-\_\-\-C\-L\-A\-S\-S}, otherwise \$data is either a \hyperlink{classparser_doc_block}{parser\-Doc\-Block}, \hyperlink{classparser_page}{parser\-Page} or descendant of \hyperlink{classparser_element}{parser\-Element}  array we use 'sourcecode' to determine whether to highlight the source of the current file if it has no file-\/level docblock \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1227 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        global $phpDocumentor_DefaultPackageName, 
+      $phpDocumentor_DefaultCategoryName;
+        if (empty($this->packagecategories))
+        $this->packagecategories[$phpDocumentor_DefaultPackageName] = 
+      $phpDocumentor_DefaultCategoryName;
+        if ($event == PHPDOCUMENTOR_EVENT_NEWSTATE)
+        {
+            if ($data == STATE_END_CLASS)
+            {
+            } elseif ($data == PHPDOCUMENTOR_EVENT_END_PAGE)
+            {
+                if (!$this->private_page)
+                {
+                    $this->all_packages[$this->package] = 1;
+                    if (!$this->data->hasExplicitDocBlock())
+                    {
+                        $doc = $this->data->docblock;
+                        if (!$this->data->docblock)
+                        {
+                            $doc = new parserDocBlock;
+                        }
+                        if (isset($_phpDocumentor_setting['sourcecode']) &&
+                            $_phpDocumentor_setting['sourcecode'])
+                        {
+                            $doc->canSource();
+                            $doc->addFileSource($this->data->parent->path, 
+      $this->data->parent->source);
+                        }
+                        list($doc->package,$doc->subpackage) = $this->
+      _guessPackage($this->data->parent->getPath(), $this->data->parent->
+      getSourceLocation('dummy'));
+                        addWarning(PDERROR_NO_PAGE_LEVELDOCBLOCK,$this->data->
+      parent->getPath());
+                        $this->data->setDocBlock($doc);
+                        $this->proceduralpages->addPage($this->data->parent,
+      $doc->package,$doc->subpackage);
+                    }
+                    $this->pages[$this->data->parent->getPath()] = $this->data;
+                }
+                $this->private_page = false;
+                $this->private_class = false;
+                if (isset($this->db_template))
+                {
+                    addWarning(PDERROR_DB_TEMPLATE_UNTERMINATED);
+                }
+                unset($this->db_template);
+                unset($this->last);
+            } elseif ($data == PHPDOCUMENTOR_EVENT_END_DOCBLOCK_TEMPLATE)
+            {
+                unset($this->db_template);
+            }
+            //echo $this->state_lookup[$data] . "\n";
+            //echo $data."\n";
+        }
+         else
+        {
+            if ($event == PHPDOCUMENTOR_EVENT_README_INSTALL_CHANGELOG)
+            {
+                $this->ric[$data[0]] = $data[1];
+                return;
+            }
+            if ($event == PHPDOCUMENTOR_EVENT_DOCBLOCK_TEMPLATE)
+            {
+                $data->postProcess();
+                $this->db_template = $data;
+                $this->_lastDocBlockWasPageLevel = false;
+                // 2nd docblock in a row, and it's at the top of the file,
+       page-level docblock
+                if ($this->type == "docblock" && $this->data->isClean())
+                {
+                    // can only have 1 package-level docblock, others are
+       ignored
+                    $this->data->clean = false;
+                    if ($this->last->getKeyword('ignore'))
+                    {
+                        $this->proceduralpages->ignorePage($this->data->parent)
+      ;
+                        $this->private_page = true;
+                        unset($this->last);
+                        $this->privatepages[$this->data->parent->getPath()] = 
+      $this->data;
+                        unset($this->pages[$this->data->parent->getPath()]);
+                        return;
+                    }
+                    $this->data->setDocBlock($this->last);
+                    $this->package = $this->data->parent->package = $this->last
+      ->package;
+                    $this->subpackage = $this->data->parent->subpackage = 
+      $this->last->subpackage;
+                    $this->proceduralpages->addPagePackage($this->data->parent
+      ->getPath(),$this->package,$this->subpackage);
+                    if ($access = $this->last->getKeyword('access'))
+                    {
+                        if (is_object($access) && ($access->getString() == '
+      private') && (!$this->parsePrivate))
+                        {
+                            addWarning(PDERROR_PARSEPRIVATE, $this->data->
+      parent->getPath());
+                            $this->proceduralpages->ignorePage($this->data->
+      parent);
+                            $this->private_page = true;
+                            unset($this->last);
+                            $this->privatepages[$this->data->parent->getPath()]
+       = $this->data;
+                            unset($this->pages[$this->data->parent->getPath()])
+      ;
+                            return;
+                        }
+                    }
+                    if ($this->last->getKeyword('name'))
+                    {
+                        $a = $this->last->getKeyword('name');
+                        if (is_object($a)) $a = $a->value;
+                        $this->data->parent->setFile($a);
+                        $this->proceduralpages->setName($a);
+                    }
+                    $this->addPage($this->data->parent, $this->data->parent->
+      getPath());
+                    if ($this->package)
+                    {
+                        $this->parsePackagePage($this->package, $this->data->
+      parent->getPath());
+                    }
+                }
+                unset($this->last);
+            } else
+            {
+                $this->lasttype = $this->type;
+                $type = $data->getType();
+//                fancy_debug($type,$data);
+                if (($type != 'page') && ($type != 'docblock') && ($type != '
+      packagepage') && ($type != 'tutorial'))
+                {
+                    $data->setFile($this->data->parent->getFile());
+                }
+                $this->type = $type;
+                //echo $type . "\n";
+
+                if (isset($this->event_handlers[$type]))
+                {
+                    $handle = $this->event_handlers[$type];
+                    $this->$handle($event,$data);
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_aa259ad80c83f18ef8ba951ad372a622d}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Function@{handle\-Function}}
+\index{handle\-Function@{handle\-Function}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Function} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_aa259ad80c83f18ef8ba951ad372a622d}
+source\} tag, the source is added to its docblock, and then the \hyperlink{classparser_function}{parser\-Function} adds itself to the \hyperlink{class_procedural_pages}{\-Procedural\-Pages} class 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_function}{parser\-Function} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 763 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_lastDocBlockWasPageLevel)
+        {
+            addWarning(PDERROR_DOCBLOCK_CONFLICT, 'function', $data->getName())
+      ;
+            if (!$this->_oldPageLevel)
+            {
+                unset($this->last);
+            }
+        }
+        $this->_lastDocBlockWasPageLevel = false;
+        $this->data->clean = false;
+        if ($this->private_page)
+        {
+            unset($this->last);
+            return;
+        }
+
+        if (empty($this->last))
+        {
+            if (isset($this->db_template))
+            {
+                // use the docblock template
+                $this->last = phpDocumentor_clone($this->db_template);
+            }
+            else
+            {
+                // we don't have a docblock, create an empty one to get rid of
+       errors
+                $this->last = new parserDocblock();
+            }
+        }
+//        $this->last->setLineNumber($data->getLineNumber());
+        if ($this->last->getKeyword('ignore'))
+        {
+            unset($this->last);
+            return;
+        }
+        $this->last->overridePackage($this->category,$this->package,$this->
+      subpackage,$data->getName(),'function');
+
+        foreach($data->listParams() as $key => $param)
+        {
+            $update_params[$key] = $param;
+        }
+        foreach($data->listGlobals() as $param)
+        {
+            $update_globals[] = $param[1];
+        }
+        foreach($data->listStatics() as $param)
+        {
+            $update_statics[] = $param[0];
+        }
+        if (isset($update_params))
+        $this->last->updateParams($update_params);
+        if (isset($update_globals))
+        $this->last->updateGlobals($update_globals);
+        if (isset($update_statics))
+        $this->last->updateStatics($update_statics);
+        unset($update_params);
+        unset($update_globals);
+        unset($update_statics);
+
+        if ($data->hasSource())
+        {
+            $this->last->setSource($data->getSource());
+        }
+        if (count($this->last->params) == 1 && !count($data->listParams()))
+        {
+            // if the function has no parameters, and 1 @param, add it to the
+       list as optional, default value is description from @param
+            $pars = $this->last->listParams();
+            $data->addParam($pars[0]['var'],$pars[0]['data']->getString());
+        }
+        $data->setDocBlock($this->last);
+        $this->proceduralpages->addFunction($data);
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ad0d088b5257089f9eda67af32ff89161}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Global@{handle\-Global}}
+\index{handle\-Global@{handle\-Global}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Global}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Global} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ad0d088b5257089f9eda67af32ff89161}
+handles post-\/parsing of global variables
+
+\-This function sets \hyperlink{classphp_documentor___intermediate_parser_a6efc15b5a2314dd4b5aaa556a375c6d6}{\$data}-\/$>$clean to false to tell the \hyperlink{classphp_documentor___intermediate_parser}{php\-Documentor\-\_\-\-Intermediate\-Parser} that a page-\/level \-Doc\-Block can't be found after this point on this page. \-It then sets the package to be the same as the page, and adds itself to the \hyperlink{class_procedural_pages}{\-Procedural\-Pages} class 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_global}{parser\-Global} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 459 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_lastDocBlockWasPageLevel)
+        {
+            addWarning(PDERROR_DOCBLOCK_CONFLICT, 'global variable', $data->
+      getName());
+            if (!$this->_oldPageLevel)
+            {
+                unset($this->last);
+            }
+        }
+        $this->_lastDocBlockWasPageLevel = false;
+        $this->data->clean = false;
+        if ($this->private_page)
+        {
+            unset($this->last);
+            return;
+        }
+        if (empty($this->last))
+        {
+            if (isset($this->db_template))
+            {
+                // use the docblock template
+                $this->last = phpDocumentor_clone($this->db_template);
+            }
+            else
+            {
+                // we don't have a docblock, create an empty one to get rid of
+       errors
+                $this->last = new parserDocblock();
+            }
+        }
+//        $this->last->setLineNumber($data->getLineNumber());
+        if ($this->last->getKeyword('ignore'))
+        {
+            addWarning(PDERROR_IGNORE_TAG_IGNORED,'global variable - just don\'
+      t document the',$data->getName());
+            $this->last = false;
+            return;
+        }
+        $this->last->overridePackage($this->category,$this->package,$this->
+      subpackage,$data->getName(),'global');
+        $data->setDocBlock($this->last);
+        if ($data->docblock->getKeyword('name'))
+        {
+            $a = $data->docblock->getKeyword('name');
+            if (is_object($a)) $a = $a->value;
+            $data->setName($a);
+        }
+        $this->proceduralpages->addGlobal($data);
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a7d72c4075fba0eecb4419d0b25db3b1e}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Include@{handle\-Include}}
+\index{handle\-Include@{handle\-Include}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Include}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Include} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a7d72c4075fba0eecb4419d0b25db3b1e}
+handles post-\/parsing of include/require/include\-\_\-once/require\-\_\-once
+
+\-This function sets \hyperlink{classphp_documentor___intermediate_parser_a6efc15b5a2314dd4b5aaa556a375c6d6}{\$data}-\/$>$clean to false to tell the \hyperlink{classphp_documentor___intermediate_parser}{php\-Documentor\-\_\-\-Intermediate\-Parser} that a page-\/level \-Doc\-Block can't be found after this point on this page. \-It then sets the package to be the same as the page, and adds itself to the \hyperlink{class_procedural_pages}{\-Procedural\-Pages} class 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_include}{parser\-Include} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 403 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_lastDocBlockWasPageLevel)
+        {
+            addWarning(PDERROR_DOCBLOCK_CONFLICT, $data->getName(), $data->
+      getValue());
+            if (!$this->_oldPageLevel)
+            {
+                unset($this->last);
+            }
+        }
+        $this->_lastDocBlockWasPageLevel = false;
+        $this->data->clean = false;
+        // page was @ignored
+        if ($this->private_page)
+        {
+            unset($this->last);
+            return;
+        }
+        if (empty($this->last))
+        {
+            if (isset($this->db_template))
+            {
+                // use the docblock template
+                $this->last = phpDocumentor_clone($this->db_template);
+            }
+            else
+            {
+                // we don't have a docblock, create an empty one to get rid of
+       errors
+                $this->last = new parserDocblock();
+            }
+        }
+//        $this->last->setLineNumber($data->getLineNumber());
+        if ($this->last->getKeyword('ignore'))
+        {
+            $this->last = false;
+            return;
+//           
+       addWarning(PDERROR_IGNORE_TAG_IGNORED,'include',$data->getName().'('.$data->getValue().')');
+        }
+
+        $this->last->overridePackage($this->category,$this->package,$this->
+      subpackage,$data->getName(),'include');
+        $data->setDocBlock($this->last);
+        $this->proceduralpages->addInclude($data);
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a30ce3810771b4b88663ecd22fee1a2ad}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Method@{handle\-Method}}
+\index{handle\-Method@{handle\-Method}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Method}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Method} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a30ce3810771b4b88663ecd22fee1a2ad}
+source\} tag, the source is added to its docblock
+
+\-Finally, it adds the method to the \hyperlink{class_classes}{\-Classes} class. 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_method}{parser\-Method} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 659 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        if ($this->private_class)
+        {
+            unset($this->last);
+            return;
+        }
+
+        if (empty($this->last))
+        {
+                        if ($this->undocumentedElementWarnings)
+            {
+                addWarning(PDERROR_UNDOCUMENTED_ELEMENT,'Method',$data->getName
+      (),'method');
+            }
+            if (isset($this->db_template))
+            {
+                // use the docblock template
+                $this->last = phpDocumentor_clone($this->db_template);
+            }
+            else
+            {
+                // we don't have a docblock, create an empty one to get rid of
+       errors
+                $this->last = new parserDocblock();
+            }
+        }
+//        $this->last->setLineNumber($data->getLineNumber());
+        if ($this->last->getKeyword('ignore'))
+        {
+            $this->last = false;
+            return;
+//           
+       addWarning(PDERROR_IGNORE_TAG_IGNORED,'method',$this->cur_class.'::'.$data->getName());
+        }
+        $this->last->overridePackage($this->category,$this->package,$this->
+      subpackage,$data->getName(),'method');
+        if ($data->hasSource())
+        {
+            $this->last->setSource($data->getSource(), $data->getClass());
+        }
+        foreach($data->listParams() as $key => $param)
+        {
+            $update_params[$key] = $param;
+        }
+        foreach($data->listGlobals() as $param)
+        {
+            $update_globals[] = $param[1];
+        }
+        foreach($data->listStatics() as $param)
+        {
+            $update_statics[] = $param[0];
+        }
+        if (isset($update_params))
+        $this->last->updateParams($update_params);
+        if (isset($update_globals))
+        $this->last->updateGlobals($update_globals);
+        if (isset($update_statics))
+        $this->last->updateStatics($update_statics);
+        $this->last->updateModifiers($data->getModifiers());
+        unset($update_params);
+        unset($update_globals);
+        unset($update_statics);
+
+        if ($data->getName() == $this->cur_class) $data->setConstructor();
+        if ($data->getName() == '__construct') {
+            $data->setConstructor();
+        }
+        if ($data->getName() == '__destruct') {
+            $data->setDestructor();
+        }
+
+        if (isset($_phpDocumentor_setting['pear']) && $_phpDocumentor_setting['
+      pear'])
+        {
+            if (strpos($data->getName(), '_') === 0 && substr($data->getName(),
+       1) == $data->class)
+            { // is destructor
+                $data->setDestructor();
+            } elseif (strpos($data->getName(), '_') === 0 && !$this->last->
+      getKeyword('access'))
+            {
+                if (strpos($data->getName(), '__') !== 0) {
+                    addWarning(PDERROR_PRIVATE_ASSUMED,'method',$data->class.'
+      ::'.$data->getName().'()');
+                    $this->last->addKeyword('access','private');
+                    $data->setDocBlock($this->last);
+                }
+            }
+        }
+        $data->setDocBlock($this->last);
+        $data->path = $this->data->parent->path;
+        $this->classes->addMethod($data);
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a6774b93c9e6e887a177ac596f3fcdfae}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Package\-Page@{handle\-Package\-Page}}
+\index{handle\-Package\-Page@{handle\-Package\-Page}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Package\-Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Package\-Page} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a6774b93c9e6e887a177ac596f3fcdfae}
+handles post-\/parsing of \-Package-\/level documentation pages.
+
+sets the \hyperlink{classphp_documentor___intermediate_parser_acb916db0304b969918dbc0de762d45e0}{\$package\-\_\-pages}\mbox{[}\$data-\/$>$package\mbox{]} to \$data 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_package_page}{parser\-Package\-Page} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 515 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->package_pages[$data->package] = &$data;
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a542acce45784b22cc6a875d6e4aae602}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Page@{handle\-Page}}
+\index{handle\-Page@{handle\-Page}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Page} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a542acce45784b22cc6a875d6e4aae602}
+handles post-\/parsing of procedural pages
+
+this event is called at the start of a new page, before the \hyperlink{class_parser}{\-Parser} knows whether the page will contain any procedural pages or not 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} number from \hyperlink{_parser_8inc}{\-Parser.\-inc} \\
+\hline
+\hyperlink{classparser_page}{parser\-Page} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1001 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $type = 'page';
+        $this->private_page = false;
+        $this->data = new parserData;
+        $data->category = $this->category = $GLOBALS['
+      phpDocumentor_DefaultCategoryName'];
+        $this->package = $GLOBALS['phpDocumentor_DefaultPackageName'];
+        $this->subpackage = '';
+        $this->proceduralpages->addPage($data);
+        $this->data->setParent($data);
+        $this->pages[$data->getPath()] = $this->data;
+        $this->classes->nextFile($data->getPath());
+        $this->packageoutput = $data->getPackageOutput();
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a7467009370c6e6274f666aa329d729bc}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Tutorial@{handle\-Tutorial}}
+\index{handle\-Tutorial@{handle\-Tutorial}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Tutorial}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Tutorial} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a7467009370c6e6274f666aa329d729bc}
+handle post-\/parsing of \-Tutorials.
+
+\-This adds the parsed tutorial to the tutorial tree  \$tutorials sets the value of tutorials to parameter \$data 
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$event} & \hyperlink{class_event}{\-Event} \-Number \\
+\hline
+\hyperlink{classparser_tutorial}{parser\-Tutorial} & {\em \$data} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxySince}{\-Since}
+1.\-2 
+\end{DoxySince}
+
+
+\-Definition at line 530 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (isset($this->packagecategories[$data->package]))
+        {
+            $data->category = $this->packagecategories[$data->package];
+        } else
+        {
+            $data->category = $GLOBALS['phpDocumentor_DefaultCategoryName'];
+        }
+        $this->tutorials[$data->package][$data->subpackage][$data->
+      tutorial_type][$data->name] = $data;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a43880024224e56cbe4951bc3f7128129}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!handle\-Var@{handle\-Var}}
+\index{handle\-Var@{handle\-Var}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{handle\-Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Var} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a43880024224e56cbe4951bc3f7128129}
+
+
+\-Definition at line 550 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        if ($this->private_class)
+        {
+            unset($this->last);
+            return;
+        }
+        if (empty($this->last))
+        {
+            if (isset($this->db_template))
+            {
+                // use the docblock template
+                $this->last = phpDocumentor_clone($this->db_template);
+            }
+            else
+            {
+                // we don't have a docblock, create an empty one to get rid of
+       errors
+                $this->last = new parserDocblock();
+            }
+        }
+//        $this->last->setLineNumber($data->getLineNumber());
+        $this->last->overridePackage($this->category,$this->package,$this->
+      subpackage,$data->getName(),'var');
+        $this->last->updateModifiers($data->getModifiers());
+
+        if ($this->last->getKeyword('ignore'))
+        {
+            $this->last = false;
+            return;
+//           
+       addWarning(PDERROR_IGNORE_TAG_IGNORED,'var',$this->cur_class.'::'.$data->getName());
+        }
+        if (!$this->last->var)
+        {
+            $this->last->addVar('mixed',new parserStringWithInlineTags);
+        }
+
+        if (isset($_phpDocumentor_setting['pear']) && $_phpDocumentor_setting['
+      pear'])
+        {
+            if (strpos($data->getName(), '_') == 1 && !$this->last->getKeyword(
+      'access'))
+            {
+                addWarning(PDERROR_PRIVATE_ASSUMED,'class variable',$data->
+      class.'::'.$data->getName());
+                $this->last->addKeyword('access','private');
+                $data->setDocBlock($this->last);
+            }
+        }
+        $data->setDocBlock($this->last);
+        $data->path = $this->data->parent->path;
+        $this->classes->addVar($data);
+        $this->last = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ab3487c5cde27ed9e93dc457c6ad0f4ef}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\-Output@{\-Output}}
+\index{\-Output@{\-Output}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\-Output}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Output} (
+\begin{DoxyParamCaption}
+\item[{\$}]{title = {\ttfamily \char`\"{}\-Generated~\-Documentation\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ab3487c5cde27ed9e93dc457c6ad0f4ef}
+call this method once parsing has completed.
+
+\-This method calls the private methods fix\-Classes and fix\-Proc\-Pages, both of which adjust inheritance and package information based on complicated post-\/parsing rules described in \hyperlink{class_procedural_pages_a6d4b1eff46ff8bd07e362a7c88c43da7}{\-Procedural\-Pages\-::setup\-Pages()} and \hyperlink{class_classes_ac40576cb234b55a55191a4fa3b9ed9da}{\-Classes\-::\-Inherit()}. \-Then, it sorts elements of the \$pages array and calls \-Convert for each \hyperlink{class_converter}{\-Converter} in the \$converters array \begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_a16c7db96cbf12e146fb962e69059975a}{\$converters} 
+
+\hyperlink{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}{\$pages} 
+
+\hyperlink{classphp_documentor___intermediate_parser_a37f8a580494f3b63d9ac6811fdda3d1e}{\-Convert()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$title} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1808 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $GLOBALS['phpDocumentor_errors']->curfile = false;
+        $this->fixClasses();
+        $this->fixProcPages();
+//        var_dump($this->uses);
+//        exit;
+        phpDocumentor_out("\nSorting page elements...");
+        flush();
+        uasort($this->pages,'pagesort');
+        foreach($this->pages as $i => $page)
+        {
+            usort($this->pages[$i]->elements,array($this,'elementCmp'));
+            usort($this->pages[$i]->classelements,array($this,'ClasselementCmp'
+      ));
+        }
+        phpDocumentor_out("done\n");
+        flush();
+        $complicatedout = false;
+        if (is_array($this->converters))
+        {
+            if (count($this->converters) > 1)
+            {
+                $complicatedout = true;
+            }
+            phpDocumentor_out("Formatting @uses list...");
+            flush();
+            $a = new __dummyConverter($this->all_packages, $this->
+      package_parents, $this->classes, $this->proceduralpages, $this->packageoutput, $this->
+      parsePrivate, $this->quietMode, $this->targetDir , '', $this->title);
+            $this->_setupUsesList($a);
+            unset($a);
+            phpDocumentor_out("done\n\n");
+            flush();
+            foreach($this->converters as $converter => $blah)
+            {
+                if (is_array($blah))
+                {
+                    if (count($blah) > 1)
+                    {
+                        $complicatedout = true;
+                    }
+                    foreach($blah as $converter => $templates)
+                    {
+                        foreach($templates as $template)
+                        {
+                            $extraout = '';
+                            if ($complicatedout)
+                            {
+                                $extraout = SMART_PATH_DELIMITER . $converter;
+                            }
+                            if (count($templates) > 1)
+                            {
+                                $extraout .= SMART_PATH_DELIMITER . str_replace
+      (PATH_DELIMITER, SMART_PATH_DELIMITER, substr($template,0,strlen($template) - 1)
+      );
+                            }
+                            $a = new $converter($this->all_packages, $this->
+      package_parents, $this->classes, $this->proceduralpages, $this->packageoutput, 
+      $this->parsePrivate, $this->quietMode, $this->targetDir . $extraout, $template, 
+      $this->title);
+                            if (isset($this->templateBase))
+                            {
+                                $a->setTemplateBase($this->templateBase, 
+      $template);
+                            }
+                            $a->ric = $this->ric;
+                            $a->packagecategories = $this->packagecategories;
+                            if (isset($this->tutorials)) $a->setTutorials(
+      $this->tutorials);
+                            $this->Convert($title, $a);
+                            unset($a);
+                        }
+                    }
+                }
+            }
+        } else
+        {
+            addErrorDie(PDERROR_NO_CONVERTERS);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a121660ec0da1190e14caf30f86510e98}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!parse\-Package\-Page@{parse\-Package\-Page}}
+\index{parse\-Package\-Page@{parse\-Package\-Page}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{parse\-Package\-Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse\-Package\-Page} (
+\begin{DoxyParamCaption}
+\item[{\$}]{package, }
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a121660ec0da1190e14caf30f86510e98}
+\-Backward-\/compatibility only, use the new tutorials for more power  tutorials.\-pkg 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & package name of package file to parse \\
+\hline
+{\em string} & directory of file that contains package name \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1181 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->package_pages[$package]))
+        {
+            if (file_exists(dirname($path) . SMART_PATH_DELIMITER . $package . 
+      '.html'))
+            {
+                if ($this->quietMode === false)
+                {
+                    phpDocumentor_out("Reading package-level file ".$package . 
+      '.html');
+                          flush();
+                }
+                $fp = fopen(dirname($path) . SMART_PATH_DELIMITER . $package . 
+      '.html',"r");
+                $ret = fread($fp,filesize(dirname($path) . SMART_PATH_DELIMITER
+       . $package . '.html'));
+                fclose($fp);
+                unset($fp);
+                if ($this->quietMode === false)
+                {
+                    phpDocumentor_out(" -- Parsing File\n");
+                          flush();
+                }
+                $pageParser = new ppageParser;
+                $tempp = $this->package;
+                $lp = $this->last;
+                $pageParser->subscribe('*',$this);
+                $pageParser->parse($ret,false,$package);
+                $this->package = $tempp;
+                $this->last = $lp;
+                unset($tempp);
+                unset($pageParser);
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a75d4ab0a0ad45aec5e8badd106d0712a}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{php\-Documentor\-\_\-\-Intermediate\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf php\-Documentor\-\_\-\-Intermediate\-Parser} (
+\begin{DoxyParamCaption}
+\item[{\$}]{title = {\ttfamily '\-Generated~\-Documentation'}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a75d4ab0a0ad45aec5e8badd106d0712a}
+sets up basic data structures 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & \-Title of generated documentation, passed to \hyperlink{namespace_converters}{\-Converters} \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_ada57e7bb7c152edad18fe2f166188691}{\$title}, \hyperlink{classphp_documentor___intermediate_parser_a6efc15b5a2314dd4b5aaa556a375c6d6}{\$data}, \hyperlink{classphp_documentor___intermediate_parser_a4212f1eca3e4faf764728d56bc13dfd3}{\$classes}, \hyperlink{classphp_documentor___intermediate_parser_acc83daf92678ef7dde6bebc5560eb91e}{\$proceduralpages} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 326 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->title = $title;
+        $this->data = new parserData;
+        $this->classes = new Classes;
+        $this->proceduralpages = new ProceduralPages;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_acf68c83b31655d7d037b298d17eab48f}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!set\-Parse\-Private@{set\-Parse\-Private}}
+\index{set\-Parse\-Private@{set\-Parse\-Private}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{set\-Parse\-Private}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Parse\-Private} (
+\begin{DoxyParamCaption}
+\item[{\$}]{parse}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_acf68c83b31655d7d037b298d17eab48f}
+set display of elements marked with  private
+
+\-If set to true, elements will be displayed 
+\begin{DoxyParams}[1]{\-Parameters}
+bool & {\em \$parse} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1932 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->parsePrivate = $parse;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_ad9d77a99fb9fffe2c0e593975eca6a69}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!set\-Quiet\-Mode@{set\-Quiet\-Mode}}
+\index{set\-Quiet\-Mode@{set\-Quiet\-Mode}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{set\-Quiet\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Quiet\-Mode} (
+\begin{DoxyParamCaption}
+\item[{\$}]{quiet\-Mode}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_ad9d77a99fb9fffe2c0e593975eca6a69}
+set parsing information output mode (quiet or verbose)
+
+\-If set to false, no parsing information (parsing /php/file/thisfile.php, \-Converting etc.) will be displayed. \-Useful for cron jobs 
+\begin{DoxyParams}[1]{\-Parameters}
+bool & {\em \$quiet\-Mode} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1909 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->quietMode = $quietMode;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a07611111094b2954729773f6436a0fe1}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!set\-Target\-Dir@{set\-Target\-Dir}}
+\index{set\-Target\-Dir@{set\-Target\-Dir}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{set\-Target\-Dir}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Target\-Dir} (
+\begin{DoxyParamCaption}
+\item[{\$}]{dir}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a07611111094b2954729773f6436a0fe1}
+\-Sets the output directory
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$dir} & the output directory \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1885 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->targetDir = $dir;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_a97d9600189aa312e697768b0e5d3656f}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!set\-Template\-Base@{set\-Template\-Base}}
+\index{set\-Template\-Base@{set\-Template\-Base}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{set\-Template\-Base}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Template\-Base} (
+\begin{DoxyParamCaption}
+\item[{\$}]{dir}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_a97d9600189aa312e697768b0e5d3656f}
+\-Sets the template base directory
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$dir} & the template base directory  php\-Documentor.\-howto.\-pkg\-::using.\-command-\/line.\-templatebase \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1896 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->templateBase = $dir;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___intermediate_parser_aa5dcce4907fdc02d926acfa7afa7621b}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!set\-Undocumented\-Element\-Warnings\-Mode@{set\-Undocumented\-Element\-Warnings\-Mode}}
+\index{set\-Undocumented\-Element\-Warnings\-Mode@{set\-Undocumented\-Element\-Warnings\-Mode}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{set\-Undocumented\-Element\-Warnings\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Undocumented\-Element\-Warnings\-Mode} (
+\begin{DoxyParamCaption}
+\item[{\$}]{undocumented\-Element\-Warnings}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___intermediate_parser_aa5dcce4907fdc02d926acfa7afa7621b}
+show warnings for undocumented elements
+
+\-If set to false, no warnings will be shown for undocumented elements. \-Useful for identifying classes and methods that haven't yet been documented. 
+\begin{DoxyParams}[1]{\-Parameters}
+bool & {\em \$undocumented\-Element\-Warnings} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1921 of file \-Intermediate\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->undocumentedElementWarnings = $undocumentedElementWarnings;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classphp_documentor___intermediate_parser_a5ce561729506ba70ec45eb0eb5a52912}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$\-\_\-last\-Doc\-Block\-Was\-Page\-Level@{\$\-\_\-last\-Doc\-Block\-Was\-Page\-Level}}
+\index{\$\-\_\-last\-Doc\-Block\-Was\-Page\-Level@{\$\-\_\-last\-Doc\-Block\-Was\-Page\-Level}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$\-\_\-last\-Doc\-Block\-Was\-Page\-Level}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-last\-Doc\-Block\-Was\-Page\-Level = false}}\label{classphp_documentor___intermediate_parser_a5ce561729506ba70ec45eb0eb5a52912}
+
+
+\-Definition at line 311 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_aa14373efd9d14ff22e99b91fbcf5e1a5}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$\-\_\-old\-Page\-Level@{\$\-\_\-old\-Page\-Level}}
+\index{\$\-\_\-old\-Page\-Level@{\$\-\_\-old\-Page\-Level}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$\-\_\-old\-Page\-Level}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-old\-Page\-Level = false}}\label{classphp_documentor___intermediate_parser_aa14373efd9d14ff22e99b91fbcf5e1a5}
+
+
+\-Definition at line 319 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a2239e82b48c3085715b2bade1d08779c}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$all\-\_\-packages@{\$all\-\_\-packages}}
+\index{\$all\-\_\-packages@{\$all\-\_\-packages}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$all\-\_\-packages}]{\setlength{\rightskip}{0pt plus 5cm}\$all\-\_\-packages = array()}}\label{classphp_documentor___intermediate_parser_a2239e82b48c3085715b2bade1d08779c}
+
+
+\-Definition at line 186 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a4212f1eca3e4faf764728d56bc13dfd3}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$classes@{\$classes}}
+\index{\$classes@{\$classes}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$classes}]{\setlength{\rightskip}{0pt plus 5cm}\$classes = false}}\label{classphp_documentor___intermediate_parser_a4212f1eca3e4faf764728d56bc13dfd3}
+
+
+\-Definition at line 268 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a16c7db96cbf12e146fb962e69059975a}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$converters@{\$converters}}
+\index{\$converters@{\$converters}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$converters}]{\setlength{\rightskip}{0pt plus 5cm}\$converters = false}}\label{classphp_documentor___intermediate_parser_a16c7db96cbf12e146fb962e69059975a}
+
+
+\-Definition at line 287 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a5df82a7ff1e832b9b840f591e38533c4}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$cur\-\_\-class@{\$cur\-\_\-class}}
+\index{\$cur\-\_\-class@{\$cur\-\_\-class}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$cur\-\_\-class}]{\setlength{\rightskip}{0pt plus 5cm}\$cur\-\_\-class = ''}}\label{classphp_documentor___intermediate_parser_a5df82a7ff1e832b9b840f591e38533c4}
+
+
+\-Definition at line 88 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a6efc15b5a2314dd4b5aaa556a375c6d6}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$data@{\$data}}
+\index{\$data@{\$data}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$data}]{\setlength{\rightskip}{0pt plus 5cm}\$data}}\label{classphp_documentor___intermediate_parser_a6efc15b5a2314dd4b5aaa556a375c6d6}
+
+
+\-Definition at line 237 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_afcf109f9936f33068c9cda5404751d8a}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$db\-\_\-template@{\$db\-\_\-template}}
+\index{\$db\-\_\-template@{\$db\-\_\-template}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$db\-\_\-template}]{\setlength{\rightskip}{0pt plus 5cm}\$db\-\_\-template}}\label{classphp_documentor___intermediate_parser_afcf109f9936f33068c9cda5404751d8a}
+
+
+\-Definition at line 295 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a43c58b8476d3252c39f474e1eb9169df}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$event\-\_\-handlers@{\$event\-\_\-handlers}}
+\index{\$event\-\_\-handlers@{\$event\-\_\-handlers}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$event\-\_\-handlers}]{\setlength{\rightskip}{0pt plus 5cm}\$event\-\_\-handlers}}\label{classphp_documentor___intermediate_parser_a43c58b8476d3252c39f474e1eb9169df}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ array(
+            'docblock' => 'handleDocBlock',
+            'page' => 'handlePage',
+            'class' => 'handleClass',
+            'define' => 'handleDefine',
+            'function' => 'handleFunction',
+            'method' => 'handleMethod',
+            'var' => 'handleVar',
+            'const' => 'handleConst',
+            'packagepage' => 'handlePackagePage',
+            'include' => 'handleInclude',
+            'global' => 'handleGlobal',
+            'tutorial' => 'handleTutorial',
+            )
+\end{DoxyCode}
+the functions which handle output from the \hyperlink{class_parser}{\-Parser} \begin{DoxySeeAlso}{\-See also}
+handle\-Event(), \hyperlink{classphp_documentor___intermediate_parser_ac67ef1d2950219672764fa969c3ed1bd}{handle\-Doc\-Block()}, \hyperlink{classphp_documentor___intermediate_parser_a542acce45784b22cc6a875d6e4aae602}{handle\-Page()}, \hyperlink{classphp_documentor___intermediate_parser_a80452a620933e1cdf5e66a92bbbaa743}{handle\-Class()} 
+
+\hyperlink{classphp_documentor___intermediate_parser_a48c4c3f8328e1a71a932f9c0a7b08db6}{handle\-Define()}, \hyperlink{classphp_documentor___intermediate_parser_aa259ad80c83f18ef8ba951ad372a622d}{handle\-Function()}, \hyperlink{classphp_documentor___intermediate_parser_a30ce3810771b4b88663ecd22fee1a2ad}{handle\-Method()}, \hyperlink{classphp_documentor___intermediate_parser_a43880024224e56cbe4951bc3f7128129}{handle\-Var()} 
+
+\hyperlink{classphp_documentor___intermediate_parser_a6774b93c9e6e887a177ac596f3fcdfae}{handle\-Package\-Page()}, \hyperlink{classphp_documentor___intermediate_parser_a7d72c4075fba0eecb4419d0b25db3b1e}{handle\-Include()}, \hyperlink{classphp_documentor___intermediate_parser_a7467009370c6e6274f666aa329d729bc}{handle\-Tutorial()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 214 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_acf48db609a946d13953d8060363fd1d3}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$last@{\$last}}
+\index{\$last@{\$last}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$last}]{\setlength{\rightskip}{0pt plus 5cm}\$last}}\label{classphp_documentor___intermediate_parser_acf48db609a946d13953d8060363fd1d3}
+
+
+\-Definition at line 65 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a8fdfcc403cbf8d9b819dc762793d290a}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$lasttype@{\$lasttype}}
+\index{\$lasttype@{\$lasttype}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$lasttype}]{\setlength{\rightskip}{0pt plus 5cm}\$lasttype = ''}}\label{classphp_documentor___intermediate_parser_a8fdfcc403cbf8d9b819dc762793d290a}
+
+
+\-Definition at line 80 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_acb916db0304b969918dbc0de762d45e0}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$package\-\_\-pages@{\$package\-\_\-pages}}
+\index{\$package\-\_\-pages@{\$package\-\_\-pages}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$package\-\_\-pages}]{\setlength{\rightskip}{0pt plus 5cm}\$package\-\_\-pages = array()}}\label{classphp_documentor___intermediate_parser_acb916db0304b969918dbc0de762d45e0}
+
+
+\-Definition at line 133 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_acf9ccb8aea606d86cfed6693a6349bc3}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$package\-\_\-parents@{\$package\-\_\-parents}}
+\index{\$package\-\_\-parents@{\$package\-\_\-parents}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$package\-\_\-parents}]{\setlength{\rightskip}{0pt plus 5cm}\$package\-\_\-parents = array()}}\label{classphp_documentor___intermediate_parser_acf9ccb8aea606d86cfed6693a6349bc3}
+
+
+\-Definition at line 164 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_ad46f1d4e924726751a32d205f64ccd80}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$packagecategories@{\$packagecategories}}
+\index{\$packagecategories@{\$packagecategories}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$packagecategories}]{\setlength{\rightskip}{0pt plus 5cm}\$packagecategories = array()}}\label{classphp_documentor___intermediate_parser_ad46f1d4e924726751a32d205f64ccd80}
+
+
+\-Definition at line 173 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_ae42e8e1aebbb7e9af6f8b463703e90a0}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$packageoutput@{\$packageoutput}}
+\index{\$packageoutput@{\$packageoutput}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$packageoutput}]{\setlength{\rightskip}{0pt plus 5cm}\$packageoutput = false}}\label{classphp_documentor___intermediate_parser_ae42e8e1aebbb7e9af6f8b463703e90a0}
+
+
+\-Definition at line 206 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$pages@{\$pages}}
+\index{\$pages@{\$pages}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$pages}]{\setlength{\rightskip}{0pt plus 5cm}\$pages = array()}}\label{classphp_documentor___intermediate_parser_a263621399c53f2952c2329ee13ad8e4e}
+
+
+\-Definition at line 138 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a351b7c7ced5d5cd6ce87029cca64d150}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$parse\-Private@{\$parse\-Private}}
+\index{\$parse\-Private@{\$parse\-Private}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$parse\-Private}]{\setlength{\rightskip}{0pt plus 5cm}\$parse\-Private = false}}\label{classphp_documentor___intermediate_parser_a351b7c7ced5d5cd6ce87029cca64d150}
+
+
+\-Definition at line 106 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a91bc6a84d69355cf5bf3fcae3d97df26}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$private\-\_\-class@{\$private\-\_\-class}}
+\index{\$private\-\_\-class@{\$private\-\_\-class}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$private\-\_\-class}]{\setlength{\rightskip}{0pt plus 5cm}\$private\-\_\-class = false}}\label{classphp_documentor___intermediate_parser_a91bc6a84d69355cf5bf3fcae3d97df26}
+this variable is used to prevent parsing of elements with an  tag \begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_ae42e8e1aebbb7e9af6f8b463703e90a0}{\$packageoutput} 
+
+\hyperlink{classphp_documentor___intermediate_parser_a351b7c7ced5d5cd6ce87029cca64d150}{\$parse\-Private} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 113 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_aca2dbbdf74f1847e4e2be72be9f5130e}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$privatepages@{\$privatepages}}
+\index{\$privatepages@{\$privatepages}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$privatepages}]{\setlength{\rightskip}{0pt plus 5cm}\$privatepages = array()}}\label{classphp_documentor___intermediate_parser_aca2dbbdf74f1847e4e2be72be9f5130e}
+
+
+\-Definition at line 151 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_acc83daf92678ef7dde6bebc5560eb91e}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$proceduralpages@{\$proceduralpages}}
+\index{\$proceduralpages@{\$proceduralpages}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$proceduralpages}]{\setlength{\rightskip}{0pt plus 5cm}\$proceduralpages = false}}\label{classphp_documentor___intermediate_parser_acc83daf92678ef7dde6bebc5560eb91e}
+
+
+\-Definition at line 276 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a7b06630dd83a1912cca52476a5438f9e}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$quiet\-Mode@{\$quiet\-Mode}}
+\index{\$quiet\-Mode@{\$quiet\-Mode}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$quiet\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}\$quiet\-Mode = false}}\label{classphp_documentor___intermediate_parser_a7b06630dd83a1912cca52476a5438f9e}
+
+
+\-Definition at line 248 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a98207a9960bf351c0d6feea077664b4f}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$ric@{\$ric}}
+\index{\$ric@{\$ric}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$ric}]{\setlength{\rightskip}{0pt plus 5cm}\$ric = array()}}\label{classphp_documentor___intermediate_parser_a98207a9960bf351c0d6feea077664b4f}
+
+
+\-Definition at line 303 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_aae33ae3051c6f350bb69a0631ade81d9}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$target\-Dir@{\$target\-Dir}}
+\index{\$target\-Dir@{\$target\-Dir}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$target\-Dir}]{\setlength{\rightskip}{0pt plus 5cm}\$target\-Dir}}\label{classphp_documentor___intermediate_parser_aae33ae3051c6f350bb69a0631ade81d9}
+used to set the output directory \begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_a07611111094b2954729773f6436a0fe1}{set\-Target\-Dir()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 119 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_ac13127aa22e272d4a47bc7577d7f4b2a}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$template\-Base@{\$template\-Base}}
+\index{\$template\-Base@{\$template\-Base}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$template\-Base}]{\setlength{\rightskip}{0pt plus 5cm}\$template\-Base}}\label{classphp_documentor___intermediate_parser_ac13127aa22e272d4a47bc7577d7f4b2a}
+used to set the template base directory \begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_a97d9600189aa312e697768b0e5d3656f}{set\-Template\-Base()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 125 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_ada57e7bb7c152edad18fe2f166188691}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$title@{\$title}}
+\index{\$title@{\$title}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$title}]{\setlength{\rightskip}{0pt plus 5cm}\$title = ''}}\label{classphp_documentor___intermediate_parser_ada57e7bb7c152edad18fe2f166188691}
+
+
+\-Definition at line 291 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_a9a4a6fba2208984cabb3afacadf33919}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$type@{\$type}}
+\index{\$type@{\$type}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$type}]{\setlength{\rightskip}{0pt plus 5cm}\$type = ''}}\label{classphp_documentor___intermediate_parser_a9a4a6fba2208984cabb3afacadf33919}
+
+
+\-Definition at line 97 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_aea3ee0e6b53ba278d457d0d8aafa952a}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$undocumented\-Element\-Warnings@{\$undocumented\-Element\-Warnings}}
+\index{\$undocumented\-Element\-Warnings@{\$undocumented\-Element\-Warnings}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$undocumented\-Element\-Warnings}]{\setlength{\rightskip}{0pt plus 5cm}\$undocumented\-Element\-Warnings = false}}\label{classphp_documentor___intermediate_parser_aea3ee0e6b53ba278d457d0d8aafa952a}
+
+
+\-Definition at line 261 of file \-Intermediate\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___intermediate_parser_af050f1d6cfed92e5511909eba5754516}{\index{php\-Documentor\-\_\-\-Intermediate\-Parser@{php\-Documentor\-\_\-\-Intermediate\-Parser}!\$uses@{\$uses}}
+\index{\$uses@{\$uses}!phpDocumentor_IntermediateParser@{php\-Documentor\-\_\-\-Intermediate\-Parser}}
+\subsubsection[{\$uses}]{\setlength{\rightskip}{0pt plus 5cm}\$uses = array()}}\label{classphp_documentor___intermediate_parser_af050f1d6cfed92e5511909eba5754516}
+
+
+\-Definition at line 293 of file \-Intermediate\-Parser.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_intermediate_parser_8inc}{\-Intermediate\-Parser.\-inc}\end{DoxyCompactItemize}

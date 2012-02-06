@@ -1,0 +1,138 @@
+\hypertarget{classparser_const}{\section{parser\-Const \-Class \-Reference}
+\label{classparser_const}\index{parser\-Const@{parser\-Const}}
+}
+\-Inheritance diagram for parser\-Const\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classparser_const}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_const_aeefc8be39cadc920dbccdb735b5ff356}{parser\-Const} (\$class)
+\item 
+\hyperlink{classparser_const_a23ecbde357f7f6bde5a50f876334a74d}{get\-Class} ()
+\item 
+\hyperlink{classparser_const_a06461a82056b3b599f7011fdf0840877}{get\-Link} (\$c, \$text=false, \$returnobj=false)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_const_a9a4a6fba2208984cabb3afacadf33919}{\$type} = 'const'
+\item 
+\hyperlink{classparser_const_a252ba022809910ea710a068fc1bab657}{\$class} = ''
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 1578 of file \-Parser\-Elements.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_const_a23ecbde357f7f6bde5a50f876334a74d}{\index{parser\-Const@{parser\-Const}!get\-Class@{get\-Class}}
+\index{get\-Class@{get\-Class}!parserConst@{parser\-Const}}
+\subsubsection[{get\-Class}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Class} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_const_a23ecbde357f7f6bde5a50f876334a74d}
+\-Retrieve the class name \begin{DoxyReturn}{\-Returns}
+string \-Class name that this var belongs to 
+\end{DoxyReturn}
+
+
+\-Definition at line 1600 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->class;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_const_a06461a82056b3b599f7011fdf0840877}{\index{parser\-Const@{parser\-Const}!get\-Link@{get\-Link}}
+\index{get\-Link@{get\-Link}!parserConst@{parser\-Const}}
+\subsubsection[{get\-Link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Link} (
+\begin{DoxyParamCaption}
+\item[{\$}]{c, }
+\item[{\$}]{text = {\ttfamily false}, }
+\item[{\$}]{returnobj = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classparser_const_a06461a82056b3b599f7011fdf0840877}
+quick way to link to this element \begin{DoxyReturn}{\-Returns}
+mixed converter-\/specific link to this var 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \$c} & \\
+\hline
+string & {\em \$text} & text to display for the link or false for default text \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1611 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($returnobj)
+        {
+            return $c->getLink($this->class . '::'. $this->name, $this->
+      docblock->package);
+        }
+        return $c->getConstLink($this->name, $this->class, $this->docblock->
+      package, false, $text);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_const_aeefc8be39cadc920dbccdb735b5ff356}{\index{parser\-Const@{parser\-Const}!parser\-Const@{parser\-Const}}
+\index{parser\-Const@{parser\-Const}!parserConst@{parser\-Const}}
+\subsubsection[{parser\-Const}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Const} (
+\begin{DoxyParamCaption}
+\item[{\$}]{class}
+\end{DoxyParamCaption}
+)}}\label{classparser_const_aeefc8be39cadc920dbccdb735b5ff356}
+
+\begin{DoxyParams}{\-Parameters}
+{\em string} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1591 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->class = $class;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_const_a252ba022809910ea710a068fc1bab657}{\index{parser\-Const@{parser\-Const}!\$class@{\$class}}
+\index{\$class@{\$class}!parserConst@{parser\-Const}}
+\subsubsection[{\$class}]{\setlength{\rightskip}{0pt plus 5cm}\$class = ''}}\label{classparser_const_a252ba022809910ea710a068fc1bab657}
+
+
+\-Definition at line 1586 of file \-Parser\-Elements.\-inc.
+
+\hypertarget{classparser_const_a9a4a6fba2208984cabb3afacadf33919}{\index{parser\-Const@{parser\-Const}!\$type@{\$type}}
+\index{\$type@{\$type}!parserConst@{parser\-Const}}
+\subsubsection[{\$type}]{\setlength{\rightskip}{0pt plus 5cm}\$type = 'const'}}\label{classparser_const_a9a4a6fba2208984cabb3afacadf33919}
+
+
+\-Reimplemented from \hyperlink{classparser_base_a9a4a6fba2208984cabb3afacadf33919}{parser\-Base}.
+
+
+
+\-Definition at line 1584 of file \-Parser\-Elements.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_parser_elements_8inc}{\-Parser\-Elements.\-inc}\end{DoxyCompactItemize}

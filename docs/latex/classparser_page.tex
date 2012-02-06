@@ -1,0 +1,575 @@
+\hypertarget{classparser_page}{\section{parser\-Page \-Class \-Reference}
+\label{classparser_page}\index{parser\-Page@{parser\-Page}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_page_a7d633bbbe010cbd2a3c2cd94c848690d}{parser\-Page} ()
+\item 
+\hyperlink{classparser_page_a830b5c75df72b32396701bc563fbe3c7}{get\-Type} ()
+\item 
+\hyperlink{classparser_page_a55a8779d4a8f6d2bbec5e6fedf28ef7c}{set\-Source} (\$source)
+\end{DoxyCompactItemize}
+\begin{Indent}{\bf )}\par
+{\em \-Sets the name to display in documentation (can be an alias set with
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$file} & the file name\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+}\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_page_a786ea2bbab26bd4a0ecae24b253d17fe}{set\-File} (\$file)
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}{\bf alias,}\par
+{\em gets the file name
+
+\begin{DoxyReturn}{\-Returns}
+string$|$bool filename.\-ext or or \-F\-A\-L\-S\-E if it's not set 
+\end{DoxyReturn}
+}\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_page_adf61e733be7f62a3f4bedbe7d2e02ec2}{get\-File} ()
+\item 
+\hyperlink{classparser_page_a5d101758b135bd36ba8992cc3bb67a24}{set\-Path} (\$path)
+\item 
+\hyperlink{classparser_page_a30c5c67b2bf8e2e2ccc7e361faa20afe}{get\-Path} ()
+\item 
+\hyperlink{classparser_page_a4c66ea9f66526da5efd974f344ee8678}{set\-Package\-Output} (\$packages)
+\item 
+\hyperlink{classparser_page_a125686193fc1938a56e55de068052f48}{get\-Package\-Output} ()
+\item 
+\hyperlink{classparser_page_a2fe666694997d047711d7653eca2f132}{set\-Name} (\$name)
+\item 
+\hyperlink{classparser_page_a3d0963e68bb313b163a73f2803c64600}{get\-Name} ()
+\item 
+\hyperlink{classparser_page_a0c5c531746956b1d7e0133640e1c001b}{set\-Source\-Location} (\$source)
+\item 
+\hyperlink{classparser_page_a263e11db9579a5665a2ec25fbc9b2c9c}{get\-Source\-Location} (\$c, \$pearize=false)
+\item 
+\hyperlink{classparser_page_ad113436ddb2b580806c763c31c2b88c1}{get\-Parse\-Data} ()
+\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_page_a9a4a6fba2208984cabb3afacadf33919}{\$type} = 'page'
+\item 
+\hyperlink{classparser_page_ae97941710d863131c700f069b109991e}{\$id} = ''
+\item 
+\hyperlink{classparser_page_aa1bfbd27060176201b271918dff57e8f}{\$file} = ''
+\item 
+\hyperlink{classparser_page_a998b4c54041db5cd50185166322ad3ca}{\$source\-Location} = ''
+\item 
+\hyperlink{classparser_page_ab2fc40d43824ea3e1ce5d86dee0d763b}{\$name} = ''
+\item 
+\hyperlink{classparser_page_a76452cd63c66786618e7b83070d7a709}{\$orig\-Name} = ''
+\item 
+\hyperlink{classparser_page_a18b2a8d133fa7733bf34abcc6ca2ef5b}{\$category} = 'default'
+\item 
+\hyperlink{classparser_page_a365395516cc195292e97e09bc0d165ae}{\$package} = 'default'
+\item 
+\hyperlink{classparser_page_ac601dc8dc2a086b6381128cc9c7a3fc5}{\$subpackage} = ''
+\item 
+\hyperlink{classparser_page_a6a78577583114ac061a3fba3350fd4df}{\$parser\-Version} = \hyperlink{top_8php_a81d37434d16bfdfff23e418fa4f0e37e}{\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-V\-E\-R}
+\item 
+\hyperlink{classparser_page_a609cb081c0f2153634104dd84f3693f9}{\$mod\-Date} = ''
+\item 
+\hyperlink{classparser_page_a0a4baf0b22973c07685c3981f0d17fc4}{\$path} = ''
+\item 
+\hyperlink{classparser_page_a99a2b085f0a29bd5d799fdcbb63d261b}{\$source} = array()
+\item 
+\hyperlink{classparser_page_a62868ddf3244bfad64daf381e2c65f5a}{\$package\-Output} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 59 of file \-Parser\-Data.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_page_adf61e733be7f62a3f4bedbe7d2e02ec2}{\index{parser\-Page@{parser\-Page}!get\-File@{get\-File}}
+\index{get\-File@{get\-File}!parserPage@{parser\-Page}}
+\subsubsection[{get\-File}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-File} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_adf61e733be7f62a3f4bedbe7d2e02ec2}
+
+
+\-Definition at line 188 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->file)) {
+            return false;
+        }
+        return $this->file;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a3d0963e68bb313b163a73f2803c64600}{\index{parser\-Page@{parser\-Page}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!parserPage@{parser\-Page}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Name} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a3d0963e68bb313b163a73f2803c64600}
+gets the name
+
+\begin{DoxyReturn}{\-Returns}
+string phpdoc-\/safe name (only \-\_\-, numbers and letters), or \-F\-A\-L\-S\-E if it's not set 
+\end{DoxyReturn}
+
+
+\-Definition at line 273 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->name)) {
+            return false;
+        }
+        return $this->name;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a125686193fc1938a56e55de068052f48}{\index{parser\-Page@{parser\-Page}!get\-Package\-Output@{get\-Package\-Output}}
+\index{get\-Package\-Output@{get\-Package\-Output}!parserPage@{parser\-Page}}
+\subsubsection[{get\-Package\-Output}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Package\-Output} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a125686193fc1938a56e55de068052f48}
+gets the package output array
+
+\begin{DoxyReturn}{\-Returns}
+array array of packages (package1,package2,...) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_ae42e8e1aebbb7e9af6f8b463703e90a0}{php\-Documentor\-\_\-\-Intermediate\-Parser\-::\$packageoutput} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 247 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->packageOutput;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_ad113436ddb2b580806c763c31c2b88c1}{\index{parser\-Page@{parser\-Page}!get\-Parse\-Data@{get\-Parse\-Data}}
+\index{get\-Parse\-Data@{get\-Parse\-Data}!parserPage@{parser\-Page}}
+\subsubsection[{get\-Parse\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Parse\-Data} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_ad113436ddb2b580806c763c31c2b88c1}
+\-Not implemented in this version
+
+\begin{DoxyReturn}{\-Returns}
+bool tell the parser whether to parse the file, otherwise this function will retrieve the parsed data from external file 
+\end{DoxyReturn}
+
+
+\-Definition at line 333 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return true;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a30c5c67b2bf8e2e2ccc7e361faa20afe}{\index{parser\-Page@{parser\-Page}!get\-Path@{get\-Path}}
+\index{get\-Path@{get\-Path}!parserPage@{parser\-Page}}
+\subsubsection[{get\-Path}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Path} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a30c5c67b2bf8e2e2ccc7e361faa20afe}
+gets the path
+
+\begin{DoxyReturn}{\-Returns}
+string fully delimited path (\-O\-S-\/dependent format), or \-F\-A\-L\-S\-E if it's not set 
+\end{DoxyReturn}
+
+
+\-Definition at line 219 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->path)) {
+            return false;
+        }
+        return $this->path;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a263e11db9579a5665a2ec25fbc9b2c9c}{\index{parser\-Page@{parser\-Page}!get\-Source\-Location@{get\-Source\-Location}}
+\index{get\-Source\-Location@{get\-Source\-Location}!parserPage@{parser\-Page}}
+\subsubsection[{get\-Source\-Location}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Source\-Location} (
+\begin{DoxyParamCaption}
+\item[{\$}]{c, }
+\item[{\$}]{pearize = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a263e11db9579a5665a2ec25fbc9b2c9c}
+gets the source location
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \$c} & the output converter \\
+\hline
+bool & {\em \$pearize} & if this parameter is true, it will truncate the source location to the subdirectory of pear\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string path of this file relative to program root 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000144}{\-Todo}]determine if the str\-\_\-replace in the 'pear/' \-E\-L\-S\-E branch should be removed (see \-Documentation/tests/bug1574043.\-php). \-It does \-N\-O\-T exist in the similar function parser\-Class-\/$>$\hyperlink{classparser_page_a263e11db9579a5665a2ec25fbc9b2c9c}{get\-Source\-Location()} in \hyperlink{_parser_elements_8inc}{\-Parser\-Elements.\-inc}. \end{DoxyRefDesc}
+
+
+\-Definition at line 307 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_options;
+        if (!isset($this->sourceLocation)) {
+            $sl = false;   
+        } else {
+            $sl = $this->sourceLocation;
+            if ($pearize) {
+                if (strpos($sl, 'pear/')) {
+                    $sl = substr($sl, strpos($sl, 'pear/') + 5);
+                } else {
+                    $sl = str_replace($_phpDocumentor_options['Program_Root'] 
+                        . PATH_DELIMITER, '', $sl);
+                }
+            }
+        }
+        return $sl;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a830b5c75df72b32396701bc563fbe3c7}{\index{parser\-Page@{parser\-Page}!get\-Type@{get\-Type}}
+\index{get\-Type@{get\-Type}!parserPage@{parser\-Page}}
+\subsubsection[{get\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Type} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a830b5c75df72b32396701bc563fbe3c7}
+gets the tag type
+
+\begin{DoxyReturn}{\-Returns}
+string always \char`\"{}page\char`\"{} 
+\end{DoxyReturn}
+
+
+\-Definition at line 150 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return 'page';
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a7d633bbbe010cbd2a3c2cd94c848690d}{\index{parser\-Page@{parser\-Page}!parser\-Page@{parser\-Page}}
+\index{parser\-Page@{parser\-Page}!parserPage@{parser\-Page}}
+\subsubsection[{parser\-Page}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Page} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a7d633bbbe010cbd2a3c2cd94c848690d}
+sets package to default package
+
+string default package name 
+
+\-Definition at line 139 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $phpDocumentor_DefaultPackageName;
+        $this->package = $GLOBALS['phpDocumentor_DefaultPackageName'];
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a786ea2bbab26bd4a0ecae24b253d17fe}{\index{parser\-Page@{parser\-Page}!set\-File@{set\-File}}
+\index{set\-File@{set\-File}!parserPage@{parser\-Page}}
+\subsubsection[{set\-File}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-File} (
+\begin{DoxyParamCaption}
+\item[{\$}]{file}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a786ea2bbab26bd4a0ecae24b253d17fe}
+
+
+\-Definition at line 177 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->file = $file;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a2fe666694997d047711d7653eca2f132}{\index{parser\-Page@{parser\-Page}!set\-Name@{set\-Name}}
+\index{set\-Name@{set\-Name}!parserPage@{parser\-Page}}
+\subsubsection[{set\-Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Name} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a2fe666694997d047711d7653eca2f132}
+sets the name
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & phpdoc-\/safe name (only \-\_\-, numbers and letters) set by \hyperlink{class_parser_a20139dbf0050f44b70e34bf32d89d7e4}{\-Parser\-::parse()}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_parser_a20139dbf0050f44b70e34bf32d89d7e4}{\-Parser\-::parse()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 261 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->origName = $name;
+        $this->name     = $name;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a4c66ea9f66526da5efd974f344ee8678}{\index{parser\-Page@{parser\-Page}!set\-Package\-Output@{set\-Package\-Output}}
+\index{set\-Package\-Output@{set\-Package\-Output}!parserPage@{parser\-Page}}
+\subsubsection[{set\-Package\-Output}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Package\-Output} (
+\begin{DoxyParamCaption}
+\item[{\$}]{packages}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a4c66ea9f66526da5efd974f344ee8678}
+loads the package output array
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$packages} & array of packages to display in documentation (package1,package2,...)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___intermediate_parser_ae42e8e1aebbb7e9af6f8b463703e90a0}{php\-Documentor\-\_\-\-Intermediate\-Parser\-::\$packageoutput} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 236 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->packageOutput = $packages;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a5d101758b135bd36ba8992cc3bb67a24}{\index{parser\-Page@{parser\-Page}!set\-Path@{set\-Path}}
+\index{set\-Path@{set\-Path}!parserPage@{parser\-Page}}
+\subsubsection[{set\-Path}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Path} (
+\begin{DoxyParamCaption}
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a5d101758b135bd36ba8992cc3bb67a24}
+sets the path to the file
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$path} & full path to file\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 203 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        // look for special windows case
+        if (SMART_PATH_DELIMITER === '\\') {
+            $this->path = strtr($path, '/', '\\');
+        } else {
+            $this->path = $path;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a55a8779d4a8f6d2bbec5e6fedf28ef7c}{\index{parser\-Page@{parser\-Page}!set\-Source@{set\-Source}}
+\index{set\-Source@{set\-Source}!parserPage@{parser\-Page}}
+\subsubsection[{set\-Source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Source} (
+\begin{DoxyParamCaption}
+\item[{\$}]{source}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a55a8779d4a8f6d2bbec5e6fedf28ef7c}
+\-Sets the source code of the file for highlighting.
+
+\-P\-H\-P 4.\-3.\-0+ passes an array of tokenizer tokens by line number. \-P\-H\-P 4.\-2.\-3-\/ passes a string to be passed to \hyperlink{}{highlight\-\_\-string()}
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string | array & {\em \$source} & the token array/string\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 165 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->source = $source;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_page_a0c5c531746956b1d7e0133640e1c001b}{\index{parser\-Page@{parser\-Page}!set\-Source\-Location@{set\-Source\-Location}}
+\index{set\-Source\-Location@{set\-Source\-Location}!parserPage@{parser\-Page}}
+\subsubsection[{set\-Source\-Location}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Source\-Location} (
+\begin{DoxyParamCaption}
+\item[{\$}]{source}
+\end{DoxyParamCaption}
+)}}\label{classparser_page_a0c5c531746956b1d7e0133640e1c001b}
+sets the source location
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$source} & path of this file relative to program root\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 288 of file \-Parser\-Data.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->sourceLocation = $source;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_page_a18b2a8d133fa7733bf34abcc6ca2ef5b}{\index{parser\-Page@{parser\-Page}!\$category@{\$category}}
+\index{\$category@{\$category}!parserPage@{parser\-Page}}
+\subsubsection[{\$category}]{\setlength{\rightskip}{0pt plus 5cm}\$category = 'default'}}\label{classparser_page_a18b2a8d133fa7733bf34abcc6ca2ef5b}
+
+
+\-Definition at line 97 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_aa1bfbd27060176201b271918dff57e8f}{\index{parser\-Page@{parser\-Page}!\$file@{\$file}}
+\index{\$file@{\$file}!parserPage@{parser\-Page}}
+\subsubsection[{\$file}]{\setlength{\rightskip}{0pt plus 5cm}\$file = ''}}\label{classparser_page_aa1bfbd27060176201b271918dff57e8f}
+
+
+\-Definition at line 76 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_ae97941710d863131c700f069b109991e}{\index{parser\-Page@{parser\-Page}!\$id@{\$id}}
+\index{\$id@{\$id}!parserPage@{parser\-Page}}
+\subsubsection[{\$id}]{\setlength{\rightskip}{0pt plus 5cm}\$id = ''}}\label{classparser_page_ae97941710d863131c700f069b109991e}
+
+
+\-Definition at line 71 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a609cb081c0f2153634104dd84f3693f9}{\index{parser\-Page@{parser\-Page}!\$mod\-Date@{\$mod\-Date}}
+\index{\$mod\-Date@{\$mod\-Date}!parserPage@{parser\-Page}}
+\subsubsection[{\$mod\-Date}]{\setlength{\rightskip}{0pt plus 5cm}\$mod\-Date = ''}}\label{classparser_page_a609cb081c0f2153634104dd84f3693f9}
+
+
+\-Definition at line 115 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_ab2fc40d43824ea3e1ce5d86dee0d763b}{\index{parser\-Page@{parser\-Page}!\$name@{\$name}}
+\index{\$name@{\$name}!parserPage@{parser\-Page}}
+\subsubsection[{\$name}]{\setlength{\rightskip}{0pt plus 5cm}\$name = ''}}\label{classparser_page_ab2fc40d43824ea3e1ce5d86dee0d763b}
+
+
+\-Definition at line 86 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a76452cd63c66786618e7b83070d7a709}{\index{parser\-Page@{parser\-Page}!\$orig\-Name@{\$orig\-Name}}
+\index{\$orig\-Name@{\$orig\-Name}!parserPage@{parser\-Page}}
+\subsubsection[{\$orig\-Name}]{\setlength{\rightskip}{0pt plus 5cm}\$orig\-Name = ''}}\label{classparser_page_a76452cd63c66786618e7b83070d7a709}
+
+
+\-Definition at line 93 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a365395516cc195292e97e09bc0d165ae}{\index{parser\-Page@{parser\-Page}!\$package@{\$package}}
+\index{\$package@{\$package}!parserPage@{parser\-Page}}
+\subsubsection[{\$package}]{\setlength{\rightskip}{0pt plus 5cm}\$package = 'default'}}\label{classparser_page_a365395516cc195292e97e09bc0d165ae}
+
+
+\-Definition at line 101 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a62868ddf3244bfad64daf381e2c65f5a}{\index{parser\-Page@{parser\-Page}!\$package\-Output@{\$package\-Output}}
+\index{\$package\-Output@{\$package\-Output}!parserPage@{parser\-Page}}
+\subsubsection[{\$package\-Output}]{\setlength{\rightskip}{0pt plus 5cm}\$package\-Output = false}}\label{classparser_page_a62868ddf3244bfad64daf381e2c65f5a}
+
+
+\-Definition at line 132 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a6a78577583114ac061a3fba3350fd4df}{\index{parser\-Page@{parser\-Page}!\$parser\-Version@{\$parser\-Version}}
+\index{\$parser\-Version@{\$parser\-Version}!parserPage@{parser\-Page}}
+\subsubsection[{\$parser\-Version}]{\setlength{\rightskip}{0pt plus 5cm}\$parser\-Version = {\bf \-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-V\-E\-R}}}\label{classparser_page_a6a78577583114ac061a3fba3350fd4df}
+
+
+\-Definition at line 109 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a0a4baf0b22973c07685c3981f0d17fc4}{\index{parser\-Page@{parser\-Page}!\$path@{\$path}}
+\index{\$path@{\$path}!parserPage@{parser\-Page}}
+\subsubsection[{\$path}]{\setlength{\rightskip}{0pt plus 5cm}\$path = ''}}\label{classparser_page_a0a4baf0b22973c07685c3981f0d17fc4}
+
+
+\-Definition at line 119 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a99a2b085f0a29bd5d799fdcbb63d261b}{\index{parser\-Page@{parser\-Page}!\$source@{\$source}}
+\index{\$source@{\$source}!parserPage@{parser\-Page}}
+\subsubsection[{\$source}]{\setlength{\rightskip}{0pt plus 5cm}\$source = array()}}\label{classparser_page_a99a2b085f0a29bd5d799fdcbb63d261b}
+
+
+\-Definition at line 124 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a998b4c54041db5cd50185166322ad3ca}{\index{parser\-Page@{parser\-Page}!\$source\-Location@{\$source\-Location}}
+\index{\$source\-Location@{\$source\-Location}!parserPage@{parser\-Page}}
+\subsubsection[{\$source\-Location}]{\setlength{\rightskip}{0pt plus 5cm}\$source\-Location = ''}}\label{classparser_page_a998b4c54041db5cd50185166322ad3ca}
+
+
+\-Definition at line 81 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_ac601dc8dc2a086b6381128cc9c7a3fc5}{\index{parser\-Page@{parser\-Page}!\$subpackage@{\$subpackage}}
+\index{\$subpackage@{\$subpackage}!parserPage@{parser\-Page}}
+\subsubsection[{\$subpackage}]{\setlength{\rightskip}{0pt plus 5cm}\$subpackage = ''}}\label{classparser_page_ac601dc8dc2a086b6381128cc9c7a3fc5}
+
+
+\-Definition at line 105 of file \-Parser\-Data.\-inc.
+
+\hypertarget{classparser_page_a9a4a6fba2208984cabb3afacadf33919}{\index{parser\-Page@{parser\-Page}!\$type@{\$type}}
+\index{\$type@{\$type}!parserPage@{parser\-Page}}
+\subsubsection[{\$type}]{\setlength{\rightskip}{0pt plus 5cm}\$type = 'page'}}\label{classparser_page_a9a4a6fba2208984cabb3afacadf33919}
+
+
+\-Definition at line 66 of file \-Parser\-Data.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_parser_data_8inc}{\-Parser\-Data.\-inc}\end{DoxyCompactItemize}

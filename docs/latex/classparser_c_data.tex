@@ -1,0 +1,72 @@
+\hypertarget{classparser_c_data}{\section{parser\-C\-Data \-Class \-Reference}
+\label{classparser_c_data}\index{parser\-C\-Data@{parser\-C\-Data}}
+}
+\-Inheritance diagram for parser\-C\-Data\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classparser_c_data}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_c_data_a77af191d91c08203fe89824e3909a3f8}{\-Convert} (\&\$c, \$postprocess=true)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 72 of file \-Package\-Page\-Elements.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_c_data_a77af191d91c08203fe89824e3909a3f8}{\index{parser\-C\-Data@{parser\-C\-Data}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserCData@{parser\-C\-Data}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c, }
+\item[{\$}]{postprocess = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classparser_c_data_a77af191d91c08203fe89824e3909a3f8}
+calls the output conversion
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter \\
+\hline
+bool & {\em \$postprocess} & if postprocessing is needed\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string  \-Converter\-::get\-C\-Data() convert contents to text 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000136}{\-Todo}]\-C\-S cleanup -\/ rename to convert for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Definition at line 84 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $val = $this->value;
+        if ($postprocess) {
+            foreach ($this->value as $key => $value) {
+                if (is_string($value)) {
+                    $this->value[$key] = $c->getCData($value);
+                }
+            }
+        }
+        $this->cache = false;
+        $x           = parent::Convert($c, false);
+        $this->value = $val;
+        return $x;
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_package_page_elements_8inc}{\-Package\-Page\-Elements.\-inc}\end{DoxyCompactItemize}
