@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class CombosData</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+						<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class CombosData</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Database Helper Class.</p>
+<p class="description"><p>Description: A PDO helper for MitosEHR, contains custom function to manage the database  in MitosEHR. PDO is new in PHP v5</p><p>The PHP Data Objects (PDO) extension defines a lightweight,  consistent interface for accessing databases in PHP.  Each database driver that implements the PDO interface can expose database-specific  features as regular extension functions. Note that you cannot perform any database  functions using the PDO extension by itself;  you must use a database-specific PDO driver to access a database server.</p><p>PDO provides a data-access abstraction layer, which means that,  regardless of which database you're using, you use the same functions to issue queries  and fetch data. PDO does not provide a database abstraction; it doesn't rewrite  SQL or emulate missing features.  You should use a full-blown abstraction layer if you need that facility.</p><p>PDO ships with PHP 5.1, and is available as a PECL extension for PHP 5.0;  PDO requires the new OO features in the core of PHP 5, and so will not  run with earlier versions of PHP.</p><p>Author: GI Technologies, 2011</p></p>
+	<ul class="tags">
+				<li><span class="field">version:</span> 0.0.3</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_CombosData.php.html">/CombosData.php</a> (line <span class="field">17</span>)
+		</p>
+		
+				
+		<pre><a href="../default/dbHelper.html">dbHelper</a>
+   |
+   --CombosData</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-vars">Vars</a>
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																						
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthorizations" title="details" class="method-name">getAuthorizations</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCalendarCategories" title="details" class="method-name">getCalendarCategories</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCalendarStatus" title="details" class="method-name">getCalendarStatus</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCodeTypes" title="details" class="method-name">getCodeTypes</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getFacilities" title="details" class="method-name">getFacilities</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getFiledXtypes" title="details" class="method-name">getFiledXtypes</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getLanguages" title="details" class="method-name">getLanguages</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getList" title="details" class="method-name">getList</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getMessageStatus" title="details" class="method-name">getMessageStatus</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getMsgNoteType" title="details" class="method-name">getMsgNoteType</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getPosCodes" title="details" class="method-name">getPosCodes</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getRoles" title="details" class="method-name">getRoles</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getSeeAuthorizations" title="details" class="method-name">getSeeAuthorizations</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getTaxIds" title="details" class="method-name">getTaxIds</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getTitles" title="details" class="method-name">getTitles</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getTypes" title="details" class="method-name">getTypes</a>
+										()
+									</div>
+														
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getUsers" title="details" class="method-name">getUsers</a>
+										()
+									</div>
+											</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			
+							<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../default/dbHelper.html">dbHelper</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../default/dbHelper.html#var$lastInsertId">dbHelper::$lastInsertId</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../default/dbHelper.html#var$sql_statement">dbHelper::$sql_statement</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-vars">Vars</a>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodgetAuthorizations" id="getAuthorizations"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthorizations</span> (line <span class="line-number">135</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthorizations
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetCalendarCategories" id="getCalendarCategories"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCalendarCategories</span> (line <span class="line-number">115</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCalendarCategories
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetCalendarStatus" id="getCalendarStatus"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCalendarStatus</span> (line <span class="line-number">125</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCalendarStatus
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetCodeTypes" id="getCodeTypes"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCodeTypes</span> (line <span class="line-number">105</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCodeTypes
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetFacilities" id="getFacilities"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getFacilities</span> (line <span class="line-number">85</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getFacilities
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetFiledXtypes" id="getFiledXtypes"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getFiledXtypes</span> (line <span class="line-number">185</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getFiledXtypes
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetLanguages" id="getLanguages"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLanguages</span> (line <span class="line-number">201</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getLanguages
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetList" id="getList"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getList</span> (line <span class="line-number">35</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getList
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetMessageStatus" id="getMessageStatus"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getMessageStatus</span> (line <span class="line-number">45</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getMessageStatus
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetMsgNoteType" id="getMsgNoteType"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getMsgNoteType</span> (line <span class="line-number">75</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getMsgNoteType
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetPosCodes" id="getPosCodes"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getPosCodes</span> (line <span class="line-number">210</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getPosCodes
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetRoles" id="getRoles"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getRoles</span> (line <span class="line-number">95</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getRoles
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetSeeAuthorizations" id="getSeeAuthorizations"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getSeeAuthorizations</span> (line <span class="line-number">153</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getSeeAuthorizations
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetTaxIds" id="getTaxIds"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTaxIds</span> (line <span class="line-number">172</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getTaxIds
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetTitles" id="getTitles"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTitles</span> (line <span class="line-number">55</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getTitles
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetTypes" id="getTypes"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTypes</span> (line <span class="line-number">65</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getTypes
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetUsers" id="getUsers"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getUsers</span> (line <span class="line-number">19</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getUsers
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../default/dbHelper.html">dbHelper</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../default/dbHelper.html#method__construct">dbHelper::__construct()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodexecEvent">dbHelper::execEvent()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodexecLog">dbHelper::execLog()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodexecOnly">dbHelper::execOnly()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodexecStatement">dbHelper::execStatement()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodfetch">dbHelper::fetch()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodfilertByStartLimit">dbHelper::filertByStartLimit()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodgetError">dbHelper::getError()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodrowCount">dbHelper::rowCount()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodsetSQL">dbHelper::setSQL()</a></span><br>
+													<span class="method-name"><a href="../default/dbHelper.html#methodsqlBind">dbHelper::sqlBind()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Sun, 05 Feb 2012 19:34:46 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

@@ -1,7 +1,14 @@
 <?php
-
-/* db Helper v0.0.4 OOP
- * 
+if(!isset($_SESSION)){
+    session_name ("MitosEHR" );
+    session_start();
+    session_cache_limiter('private');
+}
+set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
+require_once 'PHPLinq/LinqToObjects.php';
+/**
+ * Database Helper Class.
+ *
  * Description: A PDO helper for MitosEHR, contains custom function to manage the database
  * in MitosEHR. PDO is new in PHP v5 
  * 
@@ -23,9 +30,11 @@
  * run with earlier versions of PHP.
  * 
  * Author: GI Technologies, 2011
- * Ver: 0.0.3
+ *
+ * @version 0.0.3
+ * @package default
+ *
  */
-
 class dbHelper {
 	
 	public  $sql_statement;
@@ -33,12 +42,13 @@ class dbHelper {
 	private $err;
 	public $lastInsertId;
 	
-	//**********************************************************************
-	// Connect to the database
-	// $db = new $dbHelper();
-	//
-	// Author: GI Technologies, 2011
-	//**********************************************************************
+
+    /**
+     * Connect to the database
+     * $db = new $dbHelper();
+     *
+     * Author: GI Technologies, 2011
+     */
 	function __construct() {
 		error_reporting(0);
 		try {
@@ -49,29 +59,57 @@ class dbHelper {
 	}
 
 
-    function alterTable(){
-            $this->conn->query($this->sql_statement);
-            return $this->conn->errorInfo();
-        }
+    /**
+     * Filter By Sart and Limit
+     *
+     * This Function will filter the $rows array by a start
+     * and Limit usin LinQ.
+     *
+     * <code>
+     * function filertByStartLimit($rows, $params){
+     *     $result = from('$row')->in($rows)->skip($params->start)
+     *                 ->take($params->limit)
+     *                 ->select('$row');
+     *     return $result;
+     * }
+     * </code>
+     *
+     * @param $rows
+     * @param $params
+     * @return mixed
+     */
+    function filertByStartLimit($rows, $params){
+        $result = from('$row')->in($rows)
+                  ->skip($params->start)
+                  ->take($params->limit)
+                  ->select('$row');
+        return $result;
+    }
 
 
-	//**********************************************************************
-	// Set the SQL Statement
-	//
-	// Author: GI Technologies, 2011
-	//**********************************************************************	
+    /**
+     * Set the SQL Statement
+     *
+     * Author: GI Technologies, 2011
+     *
+     * @param $sql
+     */
 	function setSQL($sql){
 		$this->sql_statement = $sql;
 	}
 		
-	//**********************************************************************
-	// Simple SQL Statement, with no Event LOG injection
-	// $dbHelper->execStatement();
-	// return: Array of records, if error occurred return the error instead
-	// foreach (sqlStatement($sql) as $urow) {
-	//
-	// Author: GI Technologies, 2011
-	//**********************************************************************
+
+    /**
+     * Simple SQL Statement, with no Event LOG injection
+     * $dbHelper->execStatement();
+     * return: Array of records, if error occurred return the error instead
+     * foreach (sqlStatement($sql) as $urow) {
+     *
+     * Author: GI Technologies, 2011
+     *
+     * @param int $fetchStyle
+     * @return array
+     */
 	function execStatement($fetchStyle = PDO::FETCH_BOTH){
 		$recordset = $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, "SELECT")){
@@ -85,12 +123,15 @@ class dbHelper {
 		}
 	}
 	
-	//**********************************************************************
-	// Simple exec SQL Statement, with no Event LOG injection
-	// return: Array of errors, if any.
-	//
-	// Author: GI Technologies, 2011
-	//**********************************************************************
+
+    /**
+     * Simple exec SQL Statement, with no Event LOG injection
+     * return: Array of errors, if any.
+     *
+     * Author: GI Technologies, 2011
+     *
+     * @return array
+     */
 	function execOnly(){
         $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, "SELECT")){
@@ -99,44 +140,50 @@ class dbHelper {
 		return $this->conn->errorInfo();
 	}
 	
-	//**********************************************************************
-	// sqlBind 
-	// This function builds a SQL Statement based on an array
-	// arguments to pass:
-	//
-	// $b_array - An array containing a key that has to be the exact field
-	// on the data base, and it's value
-	//
-	// $table - A valid database table to make the SQL statement
-	//
-	// $iu - Insert or Update parameter. This has to options
-	// i = Insert, u = Update
-	//
-	// $where - If in $iu = U is used you must pass a WHERE clause in the
-	// last parameter. ie: id='1', list_id='patient'
-	//
-	// NOTE: To eliminate fields that are not in the database you can use
-	// unset($b_array['field']);
-	//**********************************************************************
+	/**
+     * sqlBind
+     * This function builds a SQL Statement based on an array
+     * arguments to pass:
+     *
+     * $b_array - An array containing a key that has to be the exact field
+     * on the data base, and it's value
+     *
+     * table - A valid database table to make the SQL statement
+     *
+     * $iu - Insert or Update parameter. This has to options
+     * i = Insert, u = Update
+     *
+     * $where - If in $iu = U is used you must pass a WHERE clause in the
+     * last parameter. ie: id='1', list_id='patient'
+    *
+     * NOTE: To eliminate fields that are not in the database you can use
+     * unset($b_array['field']);
+     *
+     * @param $b_array
+     * @param $table
+     * @param string $iu
+     * @param $where
+     * @return string
+     */
 	function sqlBind($b_array, $table, $iu="I", $where){
 
         unset($b_array['__utma'],$b_array['__utmz'],$b_array['MitosEHR']);
 
         $sql_r = '';
-		//------------------------------------------------------------------
-		// Step 1
-		// Create the INSERT or UPDATE Clause
-		//------------------------------------------------------------------
+		/**
+         * Step 1
+         * Create the INSERT or UPDATE Clause
+         */
 		$iu = strtolower($iu);
 		if ($iu == "i"){
 			$sql_r = "INSERT INTO " . $table;
 		} elseif($iu == "u"){
 			$sql_r = "UPDATE " . $table;
 		}
-		//------------------------------------------------------------------
-		// Step 2
-		// Create the SET clause
-		//------------------------------------------------------------------
+		/**
+         * Step 2
+         * Create the SET clause
+         */
 		$sql_r .= " SET ";
 		foreach($b_array as $key => $value){
 			if($where <> ($key . "='" . addslashes($value) . "'") &&
@@ -146,58 +193,57 @@ class dbHelper {
 			}
 		}
 		$sql_r = substr($sql_r, 0, -2);
-		//------------------------------------------------------------------
-		// Step 3
-		// Create the WHERE clause, if applicable
-		//------------------------------------------------------------------
+		/**
+         * Step 3
+         * Create the WHERE clause, if applicable
+         */
 		if ($iu == "u"){ $sql_r .= " WHERE " . $where; }
 		return $sql_r;
 	}
-	
-	//**********************************************************************
-	// Simple SQL Statement, with Event LOG injection
-	// $dbHelper->exeLog();
-	// return: Array of records + Inject the action on the event log
-	// The Log Injection is automatic 
-	// It tries to detect an insert, delete, alter and log the event
-	//
-	// Author: GI Technologies, 2011
-	//**********************************************************************
+
+
+    /**
+     * Simple SQL Statement, with Event LOG injection
+     * $dbHelper->exeLog();
+     * return: Array of records + Inject the action on the event log
+     * The Log Injection is automatic
+     * It tries to detect an insert, delete, alter and log the event
+     *
+     * Author: GI Technologies, 2011
+     *
+     * @return array
+     */
 	function execLog(){
 		
-		//------------------------------------------------------------------
-		// Execute the sql statement
-		//------------------------------------------------------------------
+		/**
+		 * Execute the sql statement
+		 */
 		$this->conn->query( $this->sql_statement );
 
-		//------------------------------------------------------------------
-		// If the QUERY has INSERT, DELETE, ALTER then has to 
-		// insert the event to the database.
-		//------------------------------------------------------------------
-		if (stristr($this->sql_statement, "INSERT") || 
+		/**
+         * If the QUERY has INSERT, DELETE, ALTER then has to
+         * insert the event to the database.
+         */
+		if (stristr($this->sql_statement, "INSERT") ||
 			stristr($this->sql_statement, "DELETE") ||
 			stristr($this->sql_statement, "UPDATE") || 
 			stristr($this->sql_statement, "ALTER")){
 				
-				//------------------------------------------------------------------
-				// Check up the last insert id.
-				//------------------------------------------------------------------
+				/**
+                 * Check up the last insert id.
+                 */
 				$this->lastInsertId = $this->conn->lastInsertId();
 				
 			if (stristr($this->sql_statement, "INSERT")) { $eventLog = "Record insertion"; }
 			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
 			if (stristr($this->sql_statement, "UPDATE")) $eventLog = "Record update";
 			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
-			//------------------------------------------------------------------
-			// Prepare the SQL statement first, and then execute.
-			//------------------------------------------------------------------
-			$stmt = $this->conn->prepare("INSERT 
-											INTO 
-												log 
-												(date, facility, event, comments, user, patient_id, checksum) 
-											VALUES 
-												(:dtime, :facility, :event, :comments, :user, :patient_id, :checksum)");
-												
+			/**
+             * Prepare the SQL statement first, and then execute.
+             */
+            $sql = "INSERT INTO	log (date, facility, event, comments, user, patient_id, checksum)
+            		VALUES (:dtime, :facility, :event, :comments, :user, :patient_id, :checksum)";
+			$stmt = $this->conn->prepare($sql);
 			$stmt->bindParam(':dtime', date('Y-m-d H:i:s'), PDO::PARAM_STR);
             $stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
 			$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
@@ -210,13 +256,17 @@ class dbHelper {
 		return $this->conn->errorInfo();
 	}
 
-	//**********************************************************************
-	// Inject directly to the LOG
-	// $dbHelper->execEvent("Need to be audited!");
-	// return: N/A
-	//
-	// Author: GI Technologies, 2011
-	//**********************************************************************
+
+    /**
+     * Inject directly to the LOG
+     * $dbHelper->execEvent("Need to be audited!");
+     * return: N/A
+     *
+     * Author: GI Technologies, 2011
+     *
+     * @param $eventLog
+     * @return array
+     */
 	function execEvent($eventLog){
 	
 		// Prepare the SQL statement first, and then execute.
@@ -230,14 +280,17 @@ class dbHelper {
 		return $this->conn->errorInfo();
 	}
 
-	//**********************************************************************
-	// Fetch a recordset
-	// return: Only one record array
-	// $rec = $dbHelper->fetch($sql);
-	// if ($rec['username'] == ""){
-	//
-	// Author: GI Technologies, 2011
-	//**********************************************************************
+
+    /**
+     * Fetch a recordset
+     * return: Only one record array
+     * $rec = $dbHelper->fetch($sql);
+     * if ($rec['username'] == ""){
+     *
+     * Author: GI Technologies, 2011
+     *
+     * @return array|mixed
+     */
 	function fetch(){
 		// Get all the records
 		$recordset = $this->conn->query( $this->sql_statement );
@@ -252,16 +305,19 @@ class dbHelper {
 
 	}
 	
-	//**********************************************************************
-	// Fetch the last error.
-	// getError - Get the error for a statement, if any.
-	// 
-	// return: If there was a problem with the connection it will return 
-	// the error message, if the was not a connection problem, it will
-	// return a array with the code and message.
-	//
-	// Author: GI Technologies, 2011
-	//**********************************************************************
+
+    /**
+     * Fetch the last error.
+     * getError - Get the error for a statement, if any.
+     *
+     * return: If there was a problem with the connection it will return
+     * the error message, if the was not a connection problem, it will
+     * return a array with the code and message.
+     *
+     * Author: GI Technologies, 2011
+     *
+     * @return array|string
+     */
 	function getError(){
 		if (!$this->err){
 			return $this->conn->errorInfo();
@@ -270,14 +326,17 @@ class dbHelper {
 		}
 	}
 	
-	//**********************************************************************
-	// rowCount
-	// return: The number of rows in a table
-	// $rec = $dbHelper->rowCount();
-	// if ($rec['username'] == ""){
-	//
-	// Author: Ernesto Rodriguez
-	//**********************************************************************
+
+    /**
+     * rowCount
+     * return: The number of rows in a table
+     * $rec = $dbHelper->rowCount();
+     * if ($rec['username'] == "")
+     *
+     * Author: Ernesto Rodriguez
+     *
+     * @return int
+     */
 	function rowCount(){
 	
 		// Get all the records & count it.
@@ -285,16 +344,5 @@ class dbHelper {
 		return $recordset->rowCount();
 		
 	}
-	
-	//**********************************************************************
-	// Get last id from table
-	// Usage: $dbHelper->lastRowId('','')
-	//
-	// Author: Ernesto Rodriguez
-	//**********************************************************************
-	function lastRowId($table, $id_col){
-		// Get all the records & count it.
-		$recordset = $this->conn->query("SELECT " . $id_col . " FROM " . $table . "  ORDER BY " . $id_col . " DESC");
-		return $recordset->fetch(PDO::FETCH_ASSOC);
-	}	
+
 }

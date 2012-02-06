@@ -275,7 +275,7 @@ class formLayoutBuilder extends dbHelper {
     private function addColumn($conf){
 
         $this->setSQL("ALTER TABLE $this->form_data_table ADD $this->col $conf");
-        $ret = $this->alterTable();
+        $ret = $this->execOnly();
         $this->checkError($ret);
 
         if(!$this->fieldHasColumn()) {
