@@ -4,6 +4,9 @@
  * Date: 6/27/11
  * Time: 8:43 AM
  * To change this template use File | Settings | File Templates.
+ *
+ *
+ * @namespace Patient.patientLiveSearch
  */
 Ext.define('Ext.mitos.LivePatientSearch',{
     extend      : 'Ext.form.ComboBox',
@@ -25,6 +28,10 @@ Ext.define('Ext.mitos.LivePatientSearch',{
                 type: 'direct',
                 api: {
                     read: Patient.patientLiveSearch
+                },
+                reader: {
+                    totalProperty	: 'totals',
+                    root			: 'rows'
                 }
             }
         });

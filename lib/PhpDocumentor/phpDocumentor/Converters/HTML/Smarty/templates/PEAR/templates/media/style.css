@@ -1,0 +1,155 @@
+body
+{
+  color:              #000000;
+  background-color:   #ffffff;
+  background-image:   url("background.png");
+  background-repeat:  repeat-y;
+  font-family:        tahoma, verdana, arial, sans-serif;
+  font-size:          10pt;
+  margin:             0;
+  padding:            0;
+}
+
+a {
+  color: inherit;
+  background-color:   transparent;
+}
+
+a.menu
+{
+  color:              #ffffff;
+  background-color:   transparent;
+}
+
+td
+{
+  font-size:          10pt;
+  vertical-align:     top;
+}
+
+td.header_top
+{
+  background-image: url("pear.gif");
+  background-repeat: no-repeat;
+  color:              #ffffff;
+  background-color:   rgb(51,153,0);
+  font-size:          16pt;
+  font-weight:        bold;
+  text-align:         right;
+  padding:            10px;
+  height: 60px;
+}
+
+td.header_line
+{
+  color:              #ffffff;
+  background-color:   black;
+}
+
+td.header_menu
+{
+  color:              #ffffff;
+  background-color:   rgb(0,102,0);
+  font-size:          8pt;
+  text-align:         right;
+  padding:            2px;
+  padding-right:      5px;
+}
+
+td.menu
+{
+  padding:            2px;
+  padding-left:       5px;
+  width: 141px;
+}
+
+td.code_border
+{
+  color:              #000000;
+  background-color:   #c0c0c0;
+}
+
+td.code
+{
+  color:              #000000;
+  background-color:   #f0f0f0;
+}
+
+td.type {}
+
+div.credit
+{
+  font-size:          8pt;
+  text-align:         center;
+}
+
+div.package
+{
+  padding-left:       5px;
+}
+
+div.tags
+{
+  padding-left:       15px;
+}
+
+div.function
+{
+  padding-left:       15px;
+}
+
+div.top
+{
+  font-size:          8pt;
+}
+
+div.warning
+{
+  color:              #ff0000;
+  background-color:   transparent;
+}
+
+div.description
+{
+  padding-left:       15px;
+}
+
+hr
+{
+  height:             1px;
+  border-style:       solid;
+  border-color:       #c0c0c0;
+  margin-top:         10px;
+  margin-bottom:      10px;
+}
+
+span.smalllinenumber
+{
+  font-size:          8pt;
+}
+
+ul {
+	margin-left:		0px;
+	padding-left:		8px;
+}
+
+h1 {
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 140%;
+    font-weight: bold;
+    color: #006600;
+}
+
+h2 {
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 125%;
+    font-weight: bold;
+    color: #006600;
+}
+
+h3 {
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 110%;
+    font-weight: bold;
+    color: #006600;
+}

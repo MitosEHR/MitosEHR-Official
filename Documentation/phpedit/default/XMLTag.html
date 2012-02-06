@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs For Class XMLTag</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+  <script src="../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../media/images/plus.gif";
+	imgMinus.src = "../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><!-- Start of Class Data -->
+<h2>
+	Class XMLTag
+</h2> (line <span class="linenumber">223</span>)
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ));
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<pre>
+</pre>
+<p>
+	<b><i>Located in File: <a href="_XMLParser.class.php.html">/XMLParser.class.php</a></i></b><br>
+</p>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>XML Tag Object (php5)</h5>
+<div class="desc"><p>This object stores all of the direct children of itself in the $children array. They are also stored by  type as arrays. So, if, for example, this tag had 2 &lt;font&gt; tags as children, there would be a class member  called $font created as an array. $font[0] would be the first font tag, and $font[1] would be the second.</p><p>To loop through all of the direct children of this object, the $children member should be used.</p><p>To loop through all of the direct children of a specific tag for this object, it is probably easier  to use the arrays of the specific tag names, as explained above.</p></div>
+<ul>
+		<li><strong>author:</strong> - Adam A. Flynn &lt;<a href="mailto:adamaflynn@criticaldevelopment.net">adamaflynn@criticaldevelopment.net</a>&gt;</li>
+		<li><strong>version:</strong> - 1.3.0</li>
+		<li><strong>copyright:</strong> - Copyright (c) 2005-2007, Adam A. Flynn</li>
+	</ul>
+<br /><hr />
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+
+<h2 class="tab">Class Variables</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="var-title">
+    <span class="var-type">array</span>
+    <a href="#var$tagAttrs" title="details" class="property"><strong>$tagAttrs</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">array</span>
+    <a href="#var$tagChildren" title="details" class="property"><strong>$tagChildren</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">stat</span>
+    <a href="#var$tagData" title="details" class="property"><strong>$tagData</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">string</span>
+    <a href="#var$tagName" title="details" class="property"><strong>$tagName</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">int</span>
+    <a href="#var$tagParents" title="details" class="property"><strong>$tagParents</strong></a>
+</div>
+<hr />
+<a name="var$tagAttrs" id="var$tagAttrs"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$tagAttrs</strong> (line <span class="linenumber">230</span>)
+ </h4>
+<h4>Data type : array</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Array with the attributes of this XML tag</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$tagChildren" id="var$tagChildren"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$tagChildren</strong> (line <span class="linenumber">253</span>)
+ </h4>
+<h4>Data type : array</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Array of references to the objects of all direct children of this XML object</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$tagData" id="var$tagData"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$tagData</strong> (line <span class="linenumber">246</span>)
+ </h4>
+<h4>Data type : stat</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The data the tag contains</h5>
+<div class="desc"><p>So, if the tag doesn't contain child tags, and just contains a string, it would go here</p></div>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$tagName" id="var$tagName"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$tagName</strong> (line <span class="linenumber">237</span>)
+ </h4>
+<h4>Data type : string</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The name of the tag</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$tagParents" id="var$tagParents"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$tagParents</strong> (line <span class="linenumber">262</span>)
+ </h4>
+<h4>Data type : int</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The number of parents this XML object has (number of levels from this tag to the root tag)</h5>
+<div class="desc"><p>Used presently only to set the number of tabs when outputting XML</p></div>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+</div>
+<div class="tab-page" id="constantsTabpage">
+
+<h2 class="tab">Class Constants</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<hr />
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "constantsTabpage" ) );</script>
+</div>
+<div class="tab-page" id="tabPage2">
+<h2 class="tab">Method Detail</h2>
+<!-- ============ METHOD DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="method-summary">
+    <div class="method-definition">
+            <span class="method-result"><a href="../default/XMLTag.html">XMLTag</a></span>
+        <a href="#method__construct" title="details" class="method-name">__construct</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$attrs</span> = <span class="var-default">array()</span>], [<span class="var-type">int</span>&nbsp;<span class="var-name">$parents</span> = <span class="var-default">0</span>])
+        </div>
+    <div class="method-definition">
+            <span class="method-result">\XMLTag</span>
+        <a href="#methodAddChild" title="details" class="method-name">AddChild</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$attrs</span>, <span class="var-type">int</span>&nbsp;<span class="var-name">$parents</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$cleanTagName</span> = <span class="var-default">true</span>])
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodDelete" title="details" class="method-name">Delete</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$childName</span>, [<span class="var-type">int</span>&nbsp;<span class="var-name">$childIndex</span> = <span class="var-default">0</span>])
+        </div>
+    <div class="method-definition">
+            <span class="method-result">string</span>
+        <a href="#methodGetXML" title="details" class="method-name">GetXML</a>
+        ()
+        </div>
+</div>
+<hr />
+<A NAME='method_detail'></A>
+
+
+<a name="method__construct" id="method__construct"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/Constructor.gif" border="0" /> <strong class="method">Constructor __construct</strong> (line <span class="linenumber">272</span>)
+ </h4> 
+<h4><i><a href="../default/XMLTag.html">XMLTag</a></i> <strong>__construct(
+string
+$name, [array
+$attrs = array()], [int
+$parents = 0])</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Constructor, sets up all the default values</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $name</strong>: </li>
+			<li><strong>array $attrs</strong>: </li>
+			<li><strong>int $parents</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+		</ul>
+</div>
+<a name="methodAddChild" id="methodAddChild"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method AddChild</strong> (line <span class="linenumber">297</span>)
+ </h4> 
+<h4><i>\XMLTag</i> <strong>AddChild(
+string
+$name, array
+$attrs, int
+$parents, [bool
+$cleanTagName = true])</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Adds a direct child to this object</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $name</strong>: </li>
+			<li><strong>array $attrs</strong>: </li>
+			<li><strong>int $parents</strong>: </li>
+			<li><strong>bool $cleanTagName</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodDelete" id="methodDelete"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method Delete</strong> (line <span class="linenumber">395</span>)
+ </h4> 
+<h4><i>void</i> <strong>Delete(
+string
+$childName, [int
+$childIndex = 0])</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Deletes this tag's child with a name of $childName and an index  of $childIndex</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $childName</strong>: </li>
+			<li><strong>int $childIndex</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodGetXML" id="methodGetXML"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method GetXML</strong> (line <span class="linenumber">346</span>)
+ </h4> 
+<h4><i>string</i> <strong>GetXML(
+)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Returns the string of the XML document which would be generated from this object</h5>
+<div class="desc"><p>This function works recursively, so it gets the XML of itself and all of its children, which  in turn gets the XML of all their children, which in turn gets the XML of all thier children,  and so on. So, if you call GetXML from the document root object, it will return a string for  the XML of the entire document.</p><p>This function does not, however, return a DTD or an XML version/encoding tag. That should be  handled by XMLParser::GetXML()</p></div>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script></div>
+<div class="tab-page" id="iVars">
+<h2 class="tab">Inherited Variables</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iVars" ) );</script>
+<!-- =========== VAR INHERITED SUMMARY =========== -->
+<A NAME='var_inherited_summary'><!-- --></A>
+<h3>Inherited Class Variable Summary</h3>
+
+	</div>
+<div class="tab-page" id="iMethods">
+<h2 class="tab">Inherited Methods</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iMethods" ) );</script>
+<!-- =========== INHERITED METHOD SUMMARY =========== -->
+<A NAME='functions_inherited'><!-- --></A>
+<h3>Inherited Method Summary</h3>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Sat, 04 Feb 2012 23:27:09 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</div>
+</body>
+</html>

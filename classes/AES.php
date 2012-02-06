@@ -1,32 +1,45 @@
 <?php
 /*
-*  Author: Cody Phillips
-*  Company: Phillips Data
-*  Website: www.phpaes.com, www.phillipsdata.com
-*  File: AES.php
-*  October 1, 2007
-*
-*  This software is sold as-is without any warranties, expressed or implied,
-*  including but not limited to performance and/or merchantability. No
-*  warranty of fitness for a particular purpose is offered. This script can
-*  be used on as many servers as needed, as long as the servers are owned
-*  by the purchaser. (Contact us if you want to distribute it as part of
-*  another project) The purchaser cannot modify, rewrite, edit, or change any
-*  of this code and then resell it, which would be copyright infringement.
-*  This code can be modified for personal use only.
-*
-*  Comments, Questions? Contact the author at cody [at] wshost [dot] net
+ * Author: Cody Phillips
+ * Company: Phillips Data
+ * Website: www.phpaes.com, www.phillipsdata.com
+ * File: AES.php
+ * October 1, 2007
+ *
+ * This software is sold as-is without any warranties, expressed or implied,
+ * including but not limited to performance and/or merchantability. No
+ * warranty of fitness for a particular purpose is offered. This script can
+ * be used on as many servers as needed, as long as the servers are owned
+ * by the purchaser. (Contact us if you want to distribute it as part of
+ * another project) The purchaser cannot modify, rewrite, edit, or change any
+ * of this code and then resell it, which would be copyright infringement.
+ * This code can be modified for personal use only.
+ *
+ * Comments, Questions? Contact the author at cody [at] wshost [dot] net
+ *
+ * @package default
 */
 
 class AES {
-    // The number of 32-bit words comprising the plaintext and columns comrising the state matrix of an AES cipher.
+    /**
+     * The number of 32-bit words comprising the plaintext and columns comrising the state matrix of an AES cipher.
+     * @var int
+     */
     private static $Nb = 4;
-    // The number of 32-bit words comprising the cipher key in this AES cipher.
+    /**
+     * The number of 32-bit words comprising the cipher key in this AES cipher.
+     * @var float
+     */
     private $Nk;
-    // The number of rounds in this AES cipher.
+    /**
+     * The number of rounds in this AES cipher.
+     * @var float
+     */
     private $Nr;
-
-    // The S-Box substitution table.
+    /**
+     * The S-Box substitution table.
+     * @var array
+     */
     private static $sBox = array(
         0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
         0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
@@ -62,7 +75,10 @@ class AES {
         0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
     );
 
-    // The inverse S-Box substitution table.
+    /**
+     * The inverse S-Box substitution table.
+     * @var array
+     */
     private static $invSBox = array(
         0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38,
         0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
@@ -98,7 +114,10 @@ class AES {
         0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d
     );
 
-    // Log table based on 0xe5
+    /**
+     * Log table based on 0xe5
+     * @var array
+     */
     private static $ltable = array(
         0x00, 0xff, 0xc8, 0x08, 0x91, 0x10, 0xd0, 0x36,
         0x5a, 0x3e, 0xd8, 0x43, 0x99, 0x77, 0xfe, 0x18,
@@ -134,7 +153,10 @@ class AES {
         0x68, 0x1b, 0x64, 0x04, 0x06, 0xbf, 0x83, 0x38
     );
 
-    // Inverse log table
+    /**
+     * Inverse log table
+     * @var array
+     */
     private static $atable = array(
         0x01, 0xe5, 0x4c, 0xb5, 0xfb, 0x9f, 0xfc, 0x12,
         0x03, 0x34, 0xd4, 0xc4, 0x16, 0xba, 0x1f, 0x36,
@@ -170,15 +192,18 @@ class AES {
         0xaa, 0xcd, 0x9a, 0xa0, 0x75, 0x54, 0x0e, 0x01
     );
 
-    // The key schedule in this AES cipher.
+    /**
+     * The key schedule in this AES cipher.
+     * @var array
+     */
     private $w;
-    // The state matrix in this AES cipher with Nb columns and 4 rows
+    /**
+     * The state matrix in this AES cipher with Nb columns and 4 rows
+     * @var array
+     */
     private $s;
-    // Determines the lenght of key z
-    private $keyLength;
-
-
-    /** constructs an AES cipher using a specific key.
+    /**
+     * constructs an AES cipher using a specific key.
      * @param $z
      */
     public function __construct($z) {
@@ -195,12 +220,12 @@ class AES {
        $this->KeyExpansion($z); // places expanded key in w
     }
 
-    /** Encrypts an aribtrary length String.
-     * @params plaintext string
-     * @returns ciphertext string
-     *   Whenever possible you should stream your plaintext through the
-     *   encryptBlock() function directly, as the amount of time required
-     *   to encrypt is linear to the size of the ciphertext.
+    /**
+     * Encrypts an aribtrary length String.
+     *
+     * Whenever possible you should stream your plaintext through the
+     * encryptBlock() function directly, as the amount of time required
+     * to encrypt is linear to the size of the ciphertext.
      * @param $x
      * @return string
      */
@@ -224,12 +249,12 @@ class AES {
         return $y;
     }
 
-    /** Decrypts an aribtrary length String.
-     * @params ciphertext string
-     * @returns plaintext string
-     *   Whenever possible you should stream your ciphertext through the
-     *   decryptBlock() function directly, as the amount of time required
-     *   to decrypt is linear to the size of the ciphertext.
+    /**
+     * Decrypts an aribtrary length String.
+     *
+     * Whenever possible you should stream your ciphertext through the
+     * decryptBlock() function directly, as the amount of time required
+     * to decrypt is linear to the size of the ciphertext.
      * @param $y
      * @return string
      */
@@ -251,9 +276,9 @@ class AES {
         return $x;
     }
 
-    /** Encrypts the 16-byte plain text.
-     * @params 16-byte plaintext string
-     * @returns 16-byte ciphertext string
+    /**
+     * Encrypts the 16-byte plain text.
+     *
      * @param $x
      * @return string
      */
@@ -298,9 +323,8 @@ class AES {
         return $y;
     }
 
-    /** Decrypts the 16-byte cipher text.
-     * @params 16-byte ciphertext string
-     * @returns 16-byte plaintext string
+    /**
+     * Decrypts the 16-byte cipher text.
      * @param $y
      * @return string
      */
@@ -351,7 +375,8 @@ class AES {
         unset($this->s);
     }
 
-    /** makes a big key out of a small one
+    /**
+     * makes a big key out of a small one
      * @returns void
      * @param $z
      */
@@ -408,7 +433,8 @@ class AES {
         }
     }
 
-    /** adds the key schedule for a round to a state matrix.
+    /**
+     * adds the key schedule for a round to a state matrix.
      * @returns void
      * @param $round
      */
@@ -429,9 +455,10 @@ class AES {
         }
     }
 
-    /** unmixes each column of a state matrix.
-    *   @returns void
-    **/
+    /**
+     * unmixes each column of a state matrix.
+     * @returns void
+     */
     private function invMixColumns() {
         $s0 = $s1 = $s2 = $s3= '';
 
@@ -447,9 +474,10 @@ class AES {
         }
     }
 
-    /** applies an inverse cyclic shift to the last 3 rows of a state matrix.
-    *   @returns void
-    **/
+    /**
+     * applies an inverse cyclic shift to the last 3 rows of a state matrix.
+     *  @returns void
+     */
     private function invShiftRows() {
         $temp = "";
         for ($i=1; $i<4; $i++) {
@@ -460,18 +488,20 @@ class AES {
         }
     }
 
-    /** applies inverse S-Box substitution to each byte of a state matrix.
-    *   @returns void
-    **/
+    /**
+     * applies inverse S-Box substitution to each byte of a state matrix.
+     * @returns void
+     */
     private function invSubBytes() {
         for ($i=0; $i<4; $i++)
             for ($j=0; $j<self::$Nb; $j++)
                     $this->s[$i][$j] = self::$invSBox[$this->s[$i][$j]];
     }
 
-    /** mixes each column of a state matrix.
-    *   @returns void
-    **/
+    /**
+     * mixes each column of a state matrix.
+     * @returns void
+     */
     private function mixColumns() {
         $s0 = $s1 = $s2 = $s3= '';
 
@@ -486,9 +516,10 @@ class AES {
         }
     }
 
-    /** applies a cyclic shift to the last 3 rows of a state matrix.
-    *   @returns void
-    **/
+    /**
+     * applies a cyclic shift to the last 3 rows of a state matrix.
+     * @returns void
+     **/
     private function shiftRows() {
         $temp = "";
         for ($i=1; $i<4; $i++) {
@@ -498,9 +529,10 @@ class AES {
                 $this->s[$i][$j] = $temp[$j];
         }
     }
-    /** applies S-Box substitution to each byte of a state matrix.
-    *   @returns void
-    **/
+    /**
+     * applies S-Box substitution to each byte of a state matrix.
+     * @return void
+     */
     private function subBytes() {
 
         for ($i=0; $i<4; $i++) {
@@ -509,8 +541,9 @@ class AES {
         }
     }
 
-    /** multiplies two polynomials a(x), b(x) in GF(2^8) modulo the irreducible polynomial m(x) = x^8+x^4+x^3+x+1
-     * @returns 8-bit value
+    /**
+     * multiplies two polynomials a(x), b(x) in GF(2^8) modulo the irreducible polynomial m(x) = x^8+x^4+x^3+x+1
+     * @static
      * @param $a
      * @param $b
      * @return int
@@ -523,8 +556,8 @@ class AES {
         return ($a == 0 ? 0 : ($b == 0 ? 0 : $sum));
     }
 
-    /** applies a cyclic permutation to a 4-byte word.
-     * @returns 32-bit int
+    /**
+     * applies a cyclic permutation to a 4-byte word.
      * @param $w
      * @return int
      */
@@ -539,8 +572,8 @@ class AES {
         return $w;
     }
 
-    /** applies S-box substitution to each byte of a 4-byte word.
-     * @returns 32-bit int
+    /**
+     * applies S-box substitution to each byte of a 4-byte word.
      * @param $w
      * @return int
      */
@@ -561,8 +594,9 @@ class AES {
         return $w;
     }
 
-    /** reduces a 64-bit word to a 32-bit word
-     * @returns void
+    /**
+     * reduces a 64-bit word to a 32-bit word
+     * @return void
      * @param $w
      */
     private static function make32BitWord(&$w) {
