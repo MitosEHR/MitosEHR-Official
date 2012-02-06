@@ -1,0 +1,180 @@
+\hypertarget{class_record_warning}{\section{\-Record\-Warning \-Class \-Reference}
+\label{class_record_warning}\index{\-Record\-Warning@{\-Record\-Warning}}
+}
+\-Inheritance diagram for \-Record\-Warning\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_record_warning}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_record_warning_ae9acb2551e9b49db70d2164b5a903261}{\-Record\-Warning} (\$file, \$linenum, \$num)
+\item 
+\hyperlink{class_record_warning_ad513a6759fca8c9a559cc3a06b6db5ff}{output} (\$string=false)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_record_warning_a9a4a6fba2208984cabb3afacadf33919}{\$type} = 'php\-Documentor\-\_\-warning\-\_\-descrip'
+\item 
+\hyperlink{class_record_warning_aa1bfbd27060176201b271918dff57e8f}{\$file} = false
+\item 
+\hyperlink{class_record_warning_a597bef7e50a56c650cf17a1ed6bc5595}{\$linenum}
+\item 
+\hyperlink{class_record_warning_a6efc15b5a2314dd4b5aaa556a375c6d6}{\$data}
+\item 
+\hyperlink{class_record_warning_a606c9dff2aade84f01338c3c4cd8016b}{\$num}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 19 of file bug-\/562997.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_record_warning_ad513a6759fca8c9a559cc3a06b6db5ff}{\index{\-Record\-Warning@{\-Record\-Warning}!output@{output}}
+\index{output@{output}!RecordWarning@{\-Record\-Warning}}
+\subsubsection[{output}]{\setlength{\rightskip}{0pt plus 5cm}{\bf output} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_record_warning_ad513a6759fca8c9a559cc3a06b6db5ff}
+prints the warning
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$string} & the warning to print\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Reimplemented in \hyperlink{class_record_error_ad513a6759fca8c9a559cc3a06b6db5ff}{\-Record\-Error}.
+
+
+
+\-Definition at line 809 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($string) {
+            if ($this->file) {
+                return 
+                    "WARNING in $this->file on line $this->linenum: $this->data
+      \n";
+            } else {
+                return "WARNING: $this->data\n";
+            }
+        }
+        if ($this->file) {
+            phpDocumentor_out("WARNING in $this->file " .
+                "on line $this->linenum: $this->data\n");
+        } else {
+            phpDocumentor_out("WARNING: $this->data\n");
+        }
+        flush();
+    }
+\end{DoxyCode}
+\hypertarget{class_record_warning_ae9acb2551e9b49db70d2164b5a903261}{\index{\-Record\-Warning@{\-Record\-Warning}!\-Record\-Warning@{\-Record\-Warning}}
+\index{\-Record\-Warning@{\-Record\-Warning}!RecordWarning@{\-Record\-Warning}}
+\subsubsection[{\-Record\-Warning}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Record\-Warning} (
+\begin{DoxyParamCaption}
+\item[{\$}]{file, }
+\item[{\$}]{linenum, }
+\item[{\$}]{num}
+\end{DoxyParamCaption}
+)}}\label{class_record_warning_ae9acb2551e9b49db70d2164b5a903261}
+\-Constructor
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$file} & filename this error occurred in (\hyperlink{class_record_warning_aa1bfbd27060176201b271918dff57e8f}{\$file}) \\
+\hline
+integer & {\em \$linenum} & line number this error occurred on (\hyperlink{class_record_warning_a597bef7e50a56c650cf17a1ed6bc5595}{\$linenum}) \\
+\hline
+integer & {\em \$num} & \-Error number defined in \hyperlink{_errors_8inc}{\-Errors.\-inc} \\
+\hline
+string & {\em \$data,...} & variable number of strings, up to 4,\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000090}{\-Todo}]\-C\-S \-Cleanup -\/ do \-I need to add \$data to the method signature? to sprintf based on the error number \end{DoxyRefDesc}
+
+
+\-Definition at line 785 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->file    = $file;
+        $this->linenum = $linenum;
+        $a             = array('', '', '', '');
+        if (func_num_args()>3) {
+            for ($i=3;$i<func_num_args();$i++) {
+                $a[$i - 3] = func_get_arg($i);
+            }
+        }
+
+        $this->num  = $num;
+        $this->data = 
+            sprintf($GLOBALS[$this->type][$this->num], $a[0], $a[1], $a[2], $a[
+      3]);
+        $this->output();
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_record_warning_a6efc15b5a2314dd4b5aaa556a375c6d6}{\index{\-Record\-Warning@{\-Record\-Warning}!\$data@{\$data}}
+\index{\$data@{\$data}!RecordWarning@{\-Record\-Warning}}
+\subsubsection[{\$data}]{\setlength{\rightskip}{0pt plus 5cm}\$data}}\label{class_record_warning_a6efc15b5a2314dd4b5aaa556a375c6d6}
+
+
+\-Definition at line 767 of file \-Errors.\-inc.
+
+\hypertarget{class_record_warning_aa1bfbd27060176201b271918dff57e8f}{\index{\-Record\-Warning@{\-Record\-Warning}!\$file@{\$file}}
+\index{\$file@{\$file}!RecordWarning@{\-Record\-Warning}}
+\subsubsection[{\$file}]{\setlength{\rightskip}{0pt plus 5cm}\$file = false}}\label{class_record_warning_aa1bfbd27060176201b271918dff57e8f}
+
+
+\-Definition at line 757 of file \-Errors.\-inc.
+
+\hypertarget{class_record_warning_a597bef7e50a56c650cf17a1ed6bc5595}{\index{\-Record\-Warning@{\-Record\-Warning}!\$linenum@{\$linenum}}
+\index{\$linenum@{\$linenum}!RecordWarning@{\-Record\-Warning}}
+\subsubsection[{\$linenum}]{\setlength{\rightskip}{0pt plus 5cm}\$linenum}}\label{class_record_warning_a597bef7e50a56c650cf17a1ed6bc5595}
+
+
+\-Definition at line 762 of file \-Errors.\-inc.
+
+\hypertarget{class_record_warning_a606c9dff2aade84f01338c3c4cd8016b}{\index{\-Record\-Warning@{\-Record\-Warning}!\$num@{\$num}}
+\index{\$num@{\$num}!RecordWarning@{\-Record\-Warning}}
+\subsubsection[{\$num}]{\setlength{\rightskip}{0pt plus 5cm}\$num}}\label{class_record_warning_a606c9dff2aade84f01338c3c4cd8016b}
+
+
+\-Definition at line 773 of file \-Errors.\-inc.
+
+\hypertarget{class_record_warning_a9a4a6fba2208984cabb3afacadf33919}{\index{\-Record\-Warning@{\-Record\-Warning}!\$type@{\$type}}
+\index{\$type@{\$type}!RecordWarning@{\-Record\-Warning}}
+\subsubsection[{\$type}]{\setlength{\rightskip}{0pt plus 5cm}\$type = 'php\-Documentor\-\_\-warning\-\_\-descrip'}}\label{class_record_warning_a9a4a6fba2208984cabb3afacadf33919}
+
+
+\-Reimplemented in \hyperlink{class_record_error_a9a4a6fba2208984cabb3afacadf33919}{\-Record\-Error}.
+
+
+
+\-Definition at line 752 of file \-Errors.\-inc.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-Documentation/tests/\hyperlink{bug-562997_8php}{bug-\/562997.\-php}\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_errors_8inc}{\-Errors.\-inc}\end{DoxyCompactItemize}

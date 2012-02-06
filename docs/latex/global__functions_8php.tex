@@ -1,0 +1,44 @@
+\hypertarget{global__functions_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/repo/global\-\_\-functions/global\-\_\-functions.php \-File \-Reference}
+\label{global__functions_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/repo/global\-\_\-functions/global\-\_\-functions.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/repo/global\-\_\-functions/global\-\_\-functions.\-php}}
+}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{global__functions_8php_a7e4287be9754bf3dcdd378c875000eb0}{fullname} (\$fname, \$mname, \$lname)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{global__functions_8php_a7e4287be9754bf3dcdd378c875000eb0}{\index{global\-\_\-functions.\-php@{global\-\_\-functions.\-php}!fullname@{fullname}}
+\index{fullname@{fullname}!global_functions.php@{global\-\_\-functions.\-php}}
+\subsubsection[{fullname}]{\setlength{\rightskip}{0pt plus 5cm}{\bf fullname} (
+\begin{DoxyParamCaption}
+\item[{\$}]{fname, }
+\item[{\$}]{mname, }
+\item[{\$}]{lname}
+\end{DoxyParamCaption}
+)}}\label{global__functions_8php_a7e4287be9754bf3dcdd378c875000eb0}
+
+
+\-Definition at line 5 of file global\-\_\-functions.\-php.
+
+
+\begin{DoxyCode}
+                                         {
+    if($_SESSION['global_settings'] && $_SESSION['global_settings']['fullname']
+      ){
+        switch($_SESSION['global_settings']['fullname']){
+            case '0':
+                $fullname = $lname.', '.$fname.' '.$mname;
+            break;
+            case '1':
+               $fullname = $fname.' '.$mname.' '.$lname;
+            break;
+        }
+    }else{
+        $fullname =  $lname.', '.$fname.' '.$mname;
+    }
+    $fullname = ($fullname == ',  ') ? '' : $fullname;
+return $fullname;
+}
+\end{DoxyCode}

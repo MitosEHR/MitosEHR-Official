@@ -1,0 +1,350 @@
+\hypertarget{classparser_source_inline_tag}{\section{parser\-Source\-Inline\-Tag \-Class \-Reference}
+\label{classparser_source_inline_tag}\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}}
+}
+\-Inheritance diagram for parser\-Source\-Inline\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classparser_source_inline_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_source_inline_tag_aa78a3a6df4ff89162089c24698bb3c95}{parser\-Source\-Inline\-Tag} (\$value)
+\item 
+\hyperlink{classparser_source_inline_tag_a92d09a6e9b43c6fde4e695c0decc73cd}{\-Strlen} ()
+\item 
+\hyperlink{classparser_source_inline_tag_afde980915cc78c408e6ac75b662e631c}{get\-String} ()
+\item 
+\hyperlink{classparser_source_inline_tag_ae0f8c008fd80913cb81e2dc4ee0d6dc6}{set\-Source} (\$source, \$class=false)
+\item 
+\hyperlink{classparser_source_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{\-Convert} (\&\$c)
+\item 
+\hyperlink{classparser_source_inline_tag_ad6a7a831f5306b7129955f7bcdcb7173}{array\-Convert} (\&\$c)
+\item 
+\hyperlink{classparser_source_inline_tag_a529ef3472bff486827be8a9028d9ab96}{string\-Convert} (\&\$c)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_source_inline_tag_a7583c1b3912b7afa3f038eb353a6ad97}{\$inlinetype} = 'source'
+\item 
+\hyperlink{classparser_source_inline_tag_a50a00e7de77365e00b117e73aa82fb9b}{\$start} = 1
+\item 
+\hyperlink{classparser_source_inline_tag_ac2040b96cd66d4d79b1d9fe0027d2f9b}{\$end} = '$\ast$'
+\item 
+\hyperlink{classparser_source_inline_tag_a99a2b085f0a29bd5d799fdcbb63d261b}{\$source} = false
+\item 
+\hyperlink{classparser_source_inline_tag_a5f1220d251c517b8035d671cc55d7e68}{\$\-\_\-class}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 377 of file \-Inline\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_source_inline_tag_ad6a7a831f5306b7129955f7bcdcb7173}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!array\-Convert@{array\-Convert}}
+\index{array\-Convert@{array\-Convert}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{array\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf array\-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_source_inline_tag_ad6a7a831f5306b7129955f7bcdcb7173}
+converter helper used in \-P\-H\-P 4.\-3.\-0+
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string  \hyperlink{classphp_documentor___highlight_parser}{php\-Documentor\-\_\-\-Highlight\-Parser} \-Parses the tokenized source 
+\end{DoxyReturn}
+
+
+\-Reimplemented in \hyperlink{classparser_example_inline_tag_ad6a7a831f5306b7129955f7bcdcb7173}{parser\-Example\-Inline\-Tag}.
+
+
+
+\-Definition at line 498 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $source = $this->source;
+        if ($this->end != '*') {
+            $source = array_slice($this->source, 0, $this->end + $this->start -
+       1);
+        }
+        $start = $this->start - 1;
+        if ($start < 0) {
+            $start = 0;
+        }
+        return $c->ProgramExample($source, true, true, $this->_class, $start);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_source_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_source_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}
+convert the tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string  \hyperlink{classparser_source_inline_tag_a529ef3472bff486827be8a9028d9ab96}{string\-Convert()} in \-P\-H\-P 4.\-2.\-3-\/, this method is used to convert  \hyperlink{classparser_source_inline_tag_ad6a7a831f5306b7129955f7bcdcb7173}{array\-Convert()} in \-P\-H\-P 4.\-3.\-0+, this method is used to convert 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000115}{\-Todo}]\-C\-S cleanup -\/ rename to convert for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Definition at line 481 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (is_string($this->source)) {
+
+            return $this->stringConvert($c);
+        }
+        return $this->arrayConvert($c);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_source_inline_tag_afde980915cc78c408e6ac75b662e631c}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!get\-String@{get\-String}}
+\index{get\-String@{get\-String}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{get\-String}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_source_inline_tag_afde980915cc78c408e6ac75b662e631c}
+gets the source string
+
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classparser_inline_tag_afde980915cc78c408e6ac75b662e631c}{parser\-Inline\-Tag}.
+
+
+
+\-Definition at line 444 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return '{@source}';
+    }
+\end{DoxyCode}
+\hypertarget{classparser_source_inline_tag_aa78a3a6df4ff89162089c24698bb3c95}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}}
+\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{parser\-Source\-Inline\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Source\-Inline\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classparser_source_inline_tag_aa78a3a6df4ff89162089c24698bb3c95}
+\#@-\/ constructor
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$value} & format \char`\"{}start \mbox{[}end\mbox{]}\char`\"{}, where start and end are line numbers with the end line number optional \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 414 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        parserInlineTag::parserInlineTag('source', '');
+        preg_match('/^([0-9]+)\W([0-9]*)$/', trim($value), $match);
+        if (!count($match)) {
+            preg_match('/^([0-9]+)$/', trim($value), $match);
+            if (count($match)) {
+                $this->start = (int) $match[1];
+            }
+        } else {
+            $this->start = (int) $match[1];
+            $this->end   = (int) $match[2];
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_source_inline_tag_ae0f8c008fd80913cb81e2dc4ee0d6dc6}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!set\-Source@{set\-Source}}
+\index{set\-Source@{set\-Source}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{set\-Source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Source} (
+\begin{DoxyParamCaption}
+\item[{\$}]{source, }
+\item[{\$}]{class = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classparser_source_inline_tag_ae0f8c008fd80913cb81e2dc4ee0d6dc6}
+sets the source tag's value
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string | array & {\em \$source} & source code \\
+\hline
+string | bool & {\em \$class} & class name if this is a method, boolean in php 4.\-3.\-0, if this is a method this will be true\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Reimplemented in \hyperlink{classparser_example_inline_tag_ae0f8c008fd80913cb81e2dc4ee0d6dc6}{parser\-Example\-Inline\-Tag}.
+
+
+
+\-Definition at line 459 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (is_array($source)) {
+            $this->_class = $class;
+            $this->source = $source;
+        } else {
+            $source       = strstr($source, 'function');
+            $pos          = strrpos($source, '}');
+            $this->source = substr($source, 0, $pos + 1);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_source_inline_tag_a529ef3472bff486827be8a9028d9ab96}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!string\-Convert@{string\-Convert}}
+\index{string\-Convert@{string\-Convert}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{string\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf string\-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_source_inline_tag_a529ef3472bff486827be8a9028d9ab96}
+converter helper used in \-P\-H\-P 4.\-2.\-3-\/
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string  \hyperlink{class_converter_ab36840588a8c62493031b9f23c4918c5}{\-Converter\-::unmangle()} remove the extraneous stuff from \hyperlink{}{highlight\-\_\-string()} 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Deprecated}
+\item[\hyperlink{deprecated__deprecated000008}{\-Deprecated}]in favor of \-P\-H\-P 4.\-3.\-0+ \hyperlink{classparser_source_inline_tag_ad6a7a831f5306b7129955f7bcdcb7173}{array\-Convert()} \end{DoxyRefDesc}
+
+
+\-Definition at line 521 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $source = highlight_string('<?php ' . $this->source . ' ?>', true);
+        $source = '<code>' . substr($source, strlen('<code><font
+       color="#000000">
+<font color="#0000CC">&lt;?php&nbsp;</font>') - 1);
+        $source = str_replace('}&nbsp;</font><font color="#0000CC">?&gt;</font>
+      ',
+            '}</font></code>', $source);
+        if ($this->start || ($this->end != '*')) {
+            $source = explode('<br />', $source);
+            $start  = $this->start;
+            if ($this->end != '*') {
+                $source = array_slice($source, $start - 1, $this->end - $start 
+      + 1);
+            } else {
+                $source = array_slice($source, $start - 1);
+            }
+            $source = implode($source, '<br />');
+            if ($start > 0) {
+                $source = "<code>$source";
+            }
+            if ($this->end != '*') {
+                $source = "$source</code>";
+            }
+        }
+        $source = $c->unmangle($source, $this->source);
+        return $source;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_source_inline_tag_a92d09a6e9b43c6fde4e695c0decc73cd}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!\-Strlen@{\-Strlen}}
+\index{\-Strlen@{\-Strlen}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{\-Strlen}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Strlen} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_source_inline_tag_a92d09a6e9b43c6fde4e695c0decc73cd}
+source\} will not be blank, probably
+
+\begin{DoxyReturn}{\-Returns}
+int 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classparser_inline_tag_a92d09a6e9b43c6fde4e695c0decc73cd}{parser\-Inline\-Tag}.
+
+
+
+\-Definition at line 434 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return 1;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_source_inline_tag_a5f1220d251c517b8035d671cc55d7e68}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!\$\-\_\-class@{\$\-\_\-class}}
+\index{\$\-\_\-class@{\$\-\_\-class}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{\$\-\_\-class}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-class}}\label{classparser_source_inline_tag_a5f1220d251c517b8035d671cc55d7e68}
+
+
+\-Definition at line 404 of file \-Inline\-Tags.\-inc.
+
+\hypertarget{classparser_source_inline_tag_ac2040b96cd66d4d79b1d9fe0027d2f9b}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!\$end@{\$end}}
+\index{\$end@{\$end}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{\$end}]{\setlength{\rightskip}{0pt plus 5cm}\$end = '$\ast$'}}\label{classparser_source_inline_tag_ac2040b96cd66d4d79b1d9fe0027d2f9b}
+
+
+\-Definition at line 395 of file \-Inline\-Tags.\-inc.
+
+\hypertarget{classparser_source_inline_tag_a7583c1b3912b7afa3f038eb353a6ad97}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!\$inlinetype@{\$inlinetype}}
+\index{\$inlinetype@{\$inlinetype}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{\$inlinetype}]{\setlength{\rightskip}{0pt plus 5cm}\$inlinetype = 'source'}}\label{classparser_source_inline_tag_a7583c1b3912b7afa3f038eb353a6ad97}
+
+
+\-Reimplemented from \hyperlink{classparser_inline_tag_a7583c1b3912b7afa3f038eb353a6ad97}{parser\-Inline\-Tag}.
+
+
+
+\-Definition at line 383 of file \-Inline\-Tags.\-inc.
+
+\hypertarget{classparser_source_inline_tag_a99a2b085f0a29bd5d799fdcbb63d261b}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!\$source@{\$source}}
+\index{\$source@{\$source}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{\$source}]{\setlength{\rightskip}{0pt plus 5cm}\$source = false}}\label{classparser_source_inline_tag_a99a2b085f0a29bd5d799fdcbb63d261b}
+
+
+\-Definition at line 401 of file \-Inline\-Tags.\-inc.
+
+\hypertarget{classparser_source_inline_tag_a50a00e7de77365e00b117e73aa82fb9b}{\index{parser\-Source\-Inline\-Tag@{parser\-Source\-Inline\-Tag}!\$start@{\$start}}
+\index{\$start@{\$start}!parserSourceInlineTag@{parser\-Source\-Inline\-Tag}}
+\subsubsection[{\$start}]{\setlength{\rightskip}{0pt plus 5cm}\$start = 1}}\label{classparser_source_inline_tag_a50a00e7de77365e00b117e73aa82fb9b}
+
+
+\-Definition at line 389 of file \-Inline\-Tags.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_inline_tags_8inc}{\-Inline\-Tags.\-inc}\end{DoxyCompactItemize}

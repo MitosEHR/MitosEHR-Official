@@ -1,0 +1,112 @@
+\hypertarget{classparser_define}{\section{parser\-Define \-Class \-Reference}
+\label{classparser_define}\index{parser\-Define@{parser\-Define}}
+}
+\-Inheritance diagram for parser\-Define\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classparser_define}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_define_a06461a82056b3b599f7011fdf0840877}{get\-Link} (\$c, \$text=false, \$returnobj=false)
+\item 
+\hyperlink{classparser_define_a3c0cda054b642b0209ddc1d36f1c061e}{get\-Conflicts} (\&\$c)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_define_a9a4a6fba2208984cabb3afacadf33919}{\$type} = 'define'
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 1983 of file \-Parser\-Elements.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_define_a3c0cda054b642b0209ddc1d36f1c061e}{\index{parser\-Define@{parser\-Define}!get\-Conflicts@{get\-Conflicts}}
+\index{get\-Conflicts@{get\-Conflicts}!parserDefine@{parser\-Define}}
+\subsubsection[{get\-Conflicts}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Conflicts} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_define_a3c0cda054b642b0209ddc1d36f1c061e}
+\-Returns all defines in other packages that have the same name as this define \begin{DoxyReturn}{\-Returns}
+mixed false or an array \-Format\-: (package =$>$ \hyperlink{classparser_define}{parser\-Define} of conflicting defines) 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \hyperlink{class_converter}{\-Converter}} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 2011 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $a = $c->proceduralpages->getDefineConflicts($this->name);
+        unset($a[$this->docblock->package]);
+        return $a;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_define_a06461a82056b3b599f7011fdf0840877}{\index{parser\-Define@{parser\-Define}!get\-Link@{get\-Link}}
+\index{get\-Link@{get\-Link}!parserDefine@{parser\-Define}}
+\subsubsection[{get\-Link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Link} (
+\begin{DoxyParamCaption}
+\item[{\$}]{c, }
+\item[{\$}]{text = {\ttfamily false}, }
+\item[{\$}]{returnobj = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classparser_define_a06461a82056b3b599f7011fdf0840877}
+quick way to link to this element \begin{DoxyReturn}{\-Returns}
+mixed converter-\/specific link to this define 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \$c} & \\
+\hline
+string & {\em \$text} & text to display for the link or false for default text \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1997 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($returnobj)
+        {
+            return $c->getLink('constant ' . $this->name, $this->docblock->
+      package);
+        }
+        return $c->getDefineLink($this->name, $this->docblock->package, false, 
+      $text);
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_define_a9a4a6fba2208984cabb3afacadf33919}{\index{parser\-Define@{parser\-Define}!\$type@{\$type}}
+\index{\$type@{\$type}!parserDefine@{parser\-Define}}
+\subsubsection[{\$type}]{\setlength{\rightskip}{0pt plus 5cm}\$type = 'define'}}\label{classparser_define_a9a4a6fba2208984cabb3afacadf33919}
+
+
+\-Reimplemented from \hyperlink{classparser_base_a9a4a6fba2208984cabb3afacadf33919}{parser\-Base}.
+
+
+
+\-Definition at line 1989 of file \-Parser\-Elements.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_parser_elements_8inc}{\-Parser\-Elements.\-inc}\end{DoxyCompactItemize}

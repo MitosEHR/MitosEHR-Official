@@ -1,0 +1,172 @@
+\hypertarget{function_8html__options_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/function.html\-\_\-options.\-php \-File \-Reference}
+\label{function_8html__options_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-html\-\_\-options.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-html\-\_\-options.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{function_8html__options_8php_aa5e18ee3d2997b62ce20c9f9b6ec342b}{smarty\-\_\-function\-\_\-html\-\_\-options} (\$params, \&\$smarty)
+\item 
+\hyperlink{function_8html__options_8php_a586af13d7fee785275ac9cebaf083670}{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optoutput} (\$key, \$value, \$selected)
+\item 
+\hyperlink{function_8html__options_8php_a89bd11f6d60fc1ef8e083fd31656d6c8}{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optgroup} (\$key, \$values, \$selected)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{function_8html__options_8php_aa5e18ee3d2997b62ce20c9f9b6ec342b}{\index{function.\-html\-\_\-options.\-php@{function.\-html\-\_\-options.\-php}!smarty\-\_\-function\-\_\-html\-\_\-options@{smarty\-\_\-function\-\_\-html\-\_\-options}}
+\index{smarty\-\_\-function\-\_\-html\-\_\-options@{smarty\-\_\-function\-\_\-html\-\_\-options}!function.html_options.php@{function.\-html\-\_\-options.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-html\-\_\-options}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-html\-\_\-options} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{function_8html__options_8php_aa5e18ee3d2997b62ce20c9f9b6ec342b}
+\hyperlink{class_smarty}{\-Smarty} \{html\-\_\-options\} function plugin
+
+\-Type\-: function\par
+ \-Name\-: html\-\_\-options\par
+ \-Input\-:\par
+
+\begin{DoxyItemize}
+\item name (optional) -\/ string default \char`\"{}select\char`\"{}
+\item values (required if no options supplied) -\/ array
+\item options (required if no values supplied) -\/ associative array
+\item selected (optional) -\/ string default not set
+\item output (required if not options supplied) -\/ array \-Purpose\-: \-Prints the list of $<$option$>$ tags generated from the passed parameters \hyperlink{}{\{html\-\_\-image\} (\-Smarty online manual)  array  \-Smarty  string  smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars() }
+\end{DoxyItemize}
+
+\-Definition at line 29 of file function.\-html\-\_\-options.\-php.
+
+
+\begin{DoxyCode}
+{
+   require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
+  
+   $name = null;
+   $values = null;
+   $options = null;
+   $selected = array();
+   $output = null;
+
+   $extra = '';
+  
+        foreach($params as $_key => $_val) {    
+                switch($_key) {
+                        case 'name':
+                        $$_key = (string)$_val;
+                        break;
+
+                case 'options':
+                        $$_key = (array)$_val;
+                        break;
+
+                case 'selected':
+                case 'values':
+                case 'output':
+                        $$_key = array_values((array)$_val);      
+                        break;
+
+                default:
+                        if(!is_array($_val)) {
+                                $extra .= ' '.$_key.'="'.
+      smarty_function_escape_special_chars($_val).'"';
+                        } else {
+                                $smarty->trigger_error("html_options: extra
+       attribute '$_key' cannot be an array", E_USER_NOTICE);
+                        }
+                        break;                                  
+                }
+        }
+
+   if (!isset($options) && !isset($values))
+      return ''; /* raise error here? */
+
+   $_html_result = '';
+
+   if (is_array($options)) {
+
+      foreach ($options as $_key=>$_val)
+         $_html_result .= smarty_function_html_options_optoutput($_key, $_val, 
+      $selected);      
+    
+   } else {  
+
+      foreach ((array)$values as $_i=>$_key) {
+         $_val = isset($output[$_i]) ? $output[$_i] : '';
+         $_html_result .= smarty_function_html_options_optoutput($_key, $_val, 
+      $selected);      
+      }
+
+   }
+
+   if(!empty($name)) {
+      $_html_result = '<select name="' . $name . '"' . $extra . '>' . "\n" . 
+      $_html_result . '</select>' . "\n";
+   }
+
+   return $_html_result;
+
+}
+\end{DoxyCode}
+\hypertarget{function_8html__options_8php_a89bd11f6d60fc1ef8e083fd31656d6c8}{\index{function.\-html\-\_\-options.\-php@{function.\-html\-\_\-options.\-php}!smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optgroup@{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optgroup}}
+\index{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optgroup@{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optgroup}!function.html_options.php@{function.\-html\-\_\-options.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optgroup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optgroup} (
+\begin{DoxyParamCaption}
+\item[{\$}]{key, }
+\item[{\$}]{values, }
+\item[{\$}]{selected}
+\end{DoxyParamCaption}
+)}}\label{function_8html__options_8php_a89bd11f6d60fc1ef8e083fd31656d6c8}
+
+
+\-Definition at line 107 of file function.\-html\-\_\-options.\-php.
+
+
+\begin{DoxyCode}
+                                                                         {
+   $optgroup_html = '<optgroup label="' . smarty_function_escape_special_chars(
+      $key) . '">' . "\n";
+   foreach ($values as $key => $value) {
+      $optgroup_html .= smarty_function_html_options_optoutput($key, $value, 
+      $selected);
+   }
+   $optgroup_html .= "</optgroup>\n";
+   return $optgroup_html;
+}
+\end{DoxyCode}
+\hypertarget{function_8html__options_8php_a586af13d7fee785275ac9cebaf083670}{\index{function.\-html\-\_\-options.\-php@{function.\-html\-\_\-options.\-php}!smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optoutput@{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optoutput}}
+\index{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optoutput@{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optoutput}!function.html_options.php@{function.\-html\-\_\-options.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optoutput}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-html\-\_\-options\-\_\-optoutput} (
+\begin{DoxyParamCaption}
+\item[{\$}]{key, }
+\item[{\$}]{value, }
+\item[{\$}]{selected}
+\end{DoxyParamCaption}
+)}}\label{function_8html__options_8php_a586af13d7fee785275ac9cebaf083670}
+
+
+\-Definition at line 94 of file function.\-html\-\_\-options.\-php.
+
+
+\begin{DoxyCode}
+                                                                         {
+   if(!is_array($value)) {
+      $_html_result = '<option label="' . smarty_function_escape_special_chars(
+      $value) . '" value="' . 
+         smarty_function_escape_special_chars($key) . '"';
+      if (in_array($key, $selected))
+         $_html_result .= ' selected="selected"';
+      $_html_result .= '>' . smarty_function_escape_special_chars($value) . '
+      </option>' . "\n";
+   } else {
+      $_html_result = smarty_function_html_options_optgroup($key, $value, 
+      $selected);
+   }
+   return $_html_result;        
+}
+\end{DoxyCode}

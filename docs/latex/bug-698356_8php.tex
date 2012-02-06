@@ -1,0 +1,47 @@
+\hypertarget{bug-698356_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-Documentation/tests/bug-\/698356.php \-File \-Reference}
+\label{bug-698356_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-Documentation/tests/bug-\/698356.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-Documentation/tests/bug-\/698356.\-php}}
+}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{bug-698356_8php_a2b167e2c0cda8b2818347c65fbb9cf75}{bug698356\-\_\-\-Output} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{bug-698356_8php_a2b167e2c0cda8b2818347c65fbb9cf75}{\index{bug-\/698356.\-php@{bug-\/698356.\-php}!bug698356\-\_\-\-Output@{bug698356\-\_\-\-Output}}
+\index{bug698356\-\_\-\-Output@{bug698356\-\_\-\-Output}!bug-698356.php@{bug-\/698356.\-php}}
+\subsubsection[{bug698356\-\_\-\-Output}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bug698356\-\_\-\-Output} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{bug-698356_8php_a2b167e2c0cda8b2818347c65fbb9cf75}
+\-This is a test of bug 698356. \-Must be parsed with -\/pp on to test
+
+\{ \-Create the phpdoc.\-hhp, contents.\-hhc files needed by \-M\-S \-H\-T\-M\-L \-Help \-Compiler to create a \-C\-H\-M file
+
+\-The output function generates the table of contents (contents.\-hhc) and file list (phpdoc.\-hhp) files used to create a .\-C\-H\-M by the free \-M\-S \-H\-T\-M\-L \-Help compiler. \{ 
+
+\-Definition at line 26 of file bug-\/698356.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $templ = &$this->newSmarty();
+        $file = $this->base_dir . PATH_DELIMITER;
+        $file = str_replace('\\',PATH_DELIMITER,$file);
+        $file = str_replace('//',PATH_DELIMITER,$file);
+        $file = str_replace(PATH_DELIMITER,'\\',$file);
+        $templ->assign('files',$this->hhp_files);
+        $this->setTargetDir($this->base_dir);
+        Converter::writefile('phpdoc.hhp',$templ->fetch('hhp.tpl'));
+        $templ = &$this->newSmarty();
+        $templ->assign('toc',$this->generateTOC());
+        Converter::writefile('contents.hhc',$templ->fetch('contents.hhc.tpl'));
+        phpDocumentor_out("NOTE: to create the documentation.chm file, you must
+       now run Microsoft Help Workshop on phpdoc.hhp\n");
+        phpDocumentor_out("To get the free Microsoft Help Workshop, browse to:
+       http://www.microsoft.com/downloads/release.asp?releaseid=33071\n");
+        flush();
+    }
+\end{DoxyCode}

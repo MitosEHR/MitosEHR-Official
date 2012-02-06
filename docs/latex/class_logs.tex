@@ -1,0 +1,71 @@
+\hypertarget{class_logs}{\section{\-Logs \-Class \-Reference}
+\label{class_logs}\index{\-Logs@{\-Logs}}
+}
+\-Inheritance diagram for \-Logs\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_logs}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_logs_a9c20ffb4dc836181dd4dcb0fe3c8c5ee}{get\-Logs} (std\-Class \$params)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 19 of file \-Logs.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_logs_a9c20ffb4dc836181dd4dcb0fe3c8c5ee}{\index{\-Logs@{\-Logs}!get\-Logs@{get\-Logs}}
+\index{get\-Logs@{get\-Logs}!Logs@{\-Logs}}
+\subsubsection[{get\-Logs}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Logs} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_logs_a9c20ffb4dc836181dd4dcb0fe3c8c5ee}
+\-Get \hyperlink{class_logs}{\-Logs}
+
+\-This will return the total recods and the filtered record by \-Start and \-Limit params.
+
+{\ttfamily  public function get\-Logs(std\-Class \$params)\{}
+
+{\ttfamily  \$this-\/$>$set\-S\-Q\-L(\char`\"{}\-S\-E\-L\-E\-C\-T $\ast$ F\-R\-O\-M log O\-R\-D\-E\-R B\-Y id D\-E\-S\-C\char`\"{}); \$rows = \$this-\/$>$exec\-Statement(\-P\-D\-O\-::\-F\-E\-T\-C\-H\-\_\-\-C\-L\-A\-S\-S); \$total = count(\$rows); \$rows = \$this-\/$>$filert\-By\-Start\-Limit(\$rows,\$params); return array('totals'=$>$\$total ,'rows'=$>$\$rows);}
+
+{\ttfamily  \} }
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 42 of file \-Logs.\-php.
+
+
+\begin{DoxyCode}
+                                             {
+
+        $this->setSQL("SELECT * FROM log ORDER BY id DESC");
+        $rows   = $this->execStatement(PDO::FETCH_CLASS);
+        $total  = count($rows);
+        $rows = $this->filertByStartLimit($rows,$params);
+
+        return array('totals'=>$total ,'rows'=>$rows);
+
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{_logs_8php}{\-Logs.\-php}\end{DoxyCompactItemize}

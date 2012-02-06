@@ -1,0 +1,41 @@
+\hypertarget{_linq_to_zend_db_211-join_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Zend\-Db/11-\/join.php \-File \-Reference}
+\label{_linq_to_zend_db_211-join_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Zend\-Db/11-\/join.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Zend\-Db/11-\/join.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_p_h_p_linq}{\-P\-H\-P\-Linq}
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_linq_to_zend_db_211-join_8php_a112ef069ddc0454086e3d1e6d8d55d07}{\$result}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{_linq_to_zend_db_211-join_8php_a112ef069ddc0454086e3d1e6d8d55d07}{\index{\-Linq\-To\-Zend\-Db/11-\/join.\-php@{\-Linq\-To\-Zend\-Db/11-\/join.\-php}!\$result@{\$result}}
+\index{\$result@{\$result}!LinqToZendDb/11-join.php@{\-Linq\-To\-Zend\-Db/11-\/join.\-php}}
+\subsubsection[{\$result}]{\setlength{\rightskip}{0pt plus 5cm}\$result}}\label{_linq_to_zend_db_211-join_8php_a112ef069ddc0454086e3d1e6d8d55d07}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ from('$employee')->in($employeeTable)
+                        ->join('$department')->in($departmentTable)->on('
+      $employee, $department => $employee->DepartmentId == $department->Id')
+                        ->join('$manager')->in($employeeTable)->on('$employee,
+       $manager => $employee->ManagerId > 0 && $employee->ManagerId == $manager->Id')
+                        ->select('$employee = null, $department = null,
+       $manager = null => new {
+                                                        "Name" =>
+       $employee->Name,
+                                                        "Email" =>
+       $employee->Email,
+                                                        "Department" =>
+       $department,
+                                                        "Manager" => $manager
+                                          }')
+\end{DoxyCode}
+
+
+\-Definition at line 43 of file 11-\/join.\-php.
+

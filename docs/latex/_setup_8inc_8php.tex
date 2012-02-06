@@ -1,0 +1,130 @@
+\hypertarget{_setup_8inc_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Setup.inc.\-php \-File \-Reference}
+\label{_setup_8inc_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Setup.\-inc.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Setup.\-inc.\-php}}
+}
+\subsection*{\-Data \-Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classphp_documentor__setup}{php\-Documentor\-\_\-setup}
+\end{DoxyCompactItemize}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespacephp_documentor}{php\-Documentor}
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{Indent}{\bf \$php\-Documentor\-\_\-\-Default\-Package\-Name}\par
+{\em common settings default package name, set using -\/dn -\/-\/defaultpackagename  string \$\-G\-L\-O\-B\-A\-L\-S\mbox{[}'php\-Documentor\-\_\-\-Default\-Package\-Name'\mbox{]} }\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_setup_8inc_8php_a7ef1dde81166092f516ef631d2d7eac7}{\$\-G\-L\-O\-B\-A\-L\-S} \mbox{[}'php\-Documentor\-\_\-\-Default\-Package\-Name'\mbox{]} = 'default'
+\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{\$php\-Documentor\-\_\-\-Default\-Category\-Name}
+\label{_amgrp6b4ccbd1af7aab0b8239e46008a81f48}%
+ default package name, set using -\/dn -\/-\/defaultcategoryname  string \$\-G\-L\-O\-B\-A\-L\-S\mbox{[}'php\-Documentor\-\_\-\-Default\-Category\-Name'\mbox{]} \begin{DoxyCompactItemize}
+\item 
+\hyperlink{_setup_8inc_8php_a2fd65495adf64ec0ca1df0e502ee2e5d}{\$\-G\-L\-O\-B\-A\-L\-S} \mbox{[}'php\-Documentor\-\_\-\-Default\-Category\-Name'\mbox{]} = 'default'
+\item 
+\hyperlink{_setup_8inc_8php_a18f1b34ec71dc800860be557458ed117}{decide\-On\-Or\-Off} (\$value\-\_\-to\-\_\-guess= '\-N\-O \-V\-A\-L\-U\-E \-W\-A\-S \-P\-A\-S\-S\-E\-D')
+\item 
+\hyperlink{_setup_8inc_8php_a488e0736724c150e835e8a4226b664a8}{php\-Documentor\-\_\-out} (\$string)
+\item 
+\hyperlink{_setup_8inc_8php_ad0184337b31d13763ec8751feff4aabe}{if} (extension\-\_\-loaded('dom')\&\&(version\-\_\-compare(\-P\-H\-P\-\_\-\-V\-E\-R\-S\-I\-O\-N, '5.\-2.\-12', 'lt')$|$$|$version\-\_\-compare(\-P\-H\-P\-\_\-\-V\-E\-R\-S\-I\-O\-N, '5.\-3.\-0', 'eq')))
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{_setup_8inc_8php_a18f1b34ec71dc800860be557458ed117}{\index{\-Setup.\-inc.\-php@{\-Setup.\-inc.\-php}!decide\-On\-Or\-Off@{decide\-On\-Or\-Off}}
+\index{decide\-On\-Or\-Off@{decide\-On\-Or\-Off}!Setup.inc.php@{\-Setup.\-inc.\-php}}
+\subsubsection[{decide\-On\-Or\-Off}]{\setlength{\rightskip}{0pt plus 5cm}{\bf decide\-On\-Or\-Off} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value\-\_\-to\-\_\-guess = {\ttfamily '\-N\-O~\-V\-A\-L\-U\-E~\-W\-A\-S~\-P\-A\-S\-S\-E\-D'}}
+\end{DoxyParamCaption}
+)}}\label{_setup_8inc_8php_a18f1b34ec71dc800860be557458ed117}
+\-Fuzzy logic to interpret the boolean args' intent 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & the command-\/line option to analyze \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean our best guess of the value's boolean intent 
+\end{DoxyReturn}
+
+
+\-Definition at line 932 of file \-Setup.\-inc.\-php.
+
+
+\begin{DoxyCode}
+{
+    $these_probably_mean_yes = array(
+        '',             // "--hidden" with no value 
+        'on',           // "--hidden on"
+        'y', 'yes',     // "--hidden y"
+        'true',         // "--hidden true"
+        '1'             // "--hidden 1"
+    );
+    $best_guess = false;    // default to "false", "off", "no", "take a hike"
+
+    if (in_array(strtolower(trim($value_to_guess)), $these_probably_mean_yes))
+    {
+        $best_guess = true;
+    }
+    return $best_guess;
+}
+\end{DoxyCode}
+\hypertarget{_setup_8inc_8php_ad0184337b31d13763ec8751feff4aabe}{\index{\-Setup.\-inc.\-php@{\-Setup.\-inc.\-php}!if@{if}}
+\index{if@{if}!Setup.inc.php@{\-Setup.\-inc.\-php}}
+\subsubsection[{if}]{\setlength{\rightskip}{0pt plus 5cm}{\bf if} (
+\begin{DoxyParamCaption}
+\item[{extension\-\_\-loaded('dom')\&\&(version\-\_\-compare(\-P\-H\-P\-\_\-\-V\-E\-R\-S\-I\-O\-N, '5.\-2.\-12', 'lt')$|$$|$version\-\_\-compare(\-P\-H\-P\-\_\-\-V\-E\-R\-S\-I\-O\-N, '5.\-3.\-0', 'eq'))}]{}
+\end{DoxyParamCaption}
+)}}\label{_setup_8inc_8php_ad0184337b31d13763ec8751feff4aabe}
+
+
+\-Definition at line 986 of file \-Setup.\-inc.\-php.
+
+
+\begin{DoxyCode}
+  {
+    class DOMUserData {}
+}
+\end{DoxyCode}
+\hypertarget{_setup_8inc_8php_a488e0736724c150e835e8a4226b664a8}{\index{\-Setup.\-inc.\-php@{\-Setup.\-inc.\-php}!php\-Documentor\-\_\-out@{php\-Documentor\-\_\-out}}
+\index{php\-Documentor\-\_\-out@{php\-Documentor\-\_\-out}!Setup.inc.php@{\-Setup.\-inc.\-php}}
+\subsubsection[{php\-Documentor\-\_\-out}]{\setlength{\rightskip}{0pt plus 5cm}{\bf php\-Documentor\-\_\-out} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string}
+\end{DoxyParamCaption}
+)}}\label{_setup_8inc_8php_a488e0736724c150e835e8a4226b664a8}
+\-Print parse information if quiet setting is off 
+
+\-Definition at line 953 of file \-Setup.\-inc.\-php.
+
+
+\begin{DoxyCode}
+{
+    global $_phpDocumentor_setting;
+    if ((isset($_phpDocumentor_setting['quiet'])) ? !decideOnOrOff(
+      $_phpDocumentor_setting['quiet']) : true)
+    {
+        print $string;
+    }
+
+}
+\end{DoxyCode}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{_setup_8inc_8php_a7ef1dde81166092f516ef631d2d7eac7}{\index{\-Setup.\-inc.\-php@{\-Setup.\-inc.\-php}!\$\-G\-L\-O\-B\-A\-L\-S@{\$\-G\-L\-O\-B\-A\-L\-S}}
+\index{\$\-G\-L\-O\-B\-A\-L\-S@{\$\-G\-L\-O\-B\-A\-L\-S}!Setup.inc.php@{\-Setup.\-inc.\-php}}
+\subsubsection[{\$\-G\-L\-O\-B\-A\-L\-S}]{\setlength{\rightskip}{0pt plus 5cm}\$\-G\-L\-O\-B\-A\-L\-S\mbox{[}'php\-Documentor\-\_\-\-Default\-Package\-Name'\mbox{]} = 'default'}}\label{_setup_8inc_8php_a7ef1dde81166092f516ef631d2d7eac7}
+
+
+\-Definition at line 87 of file \-Setup.\-inc.\-php.
+
+\hypertarget{_setup_8inc_8php_a2fd65495adf64ec0ca1df0e502ee2e5d}{\index{\-Setup.\-inc.\-php@{\-Setup.\-inc.\-php}!\$\-G\-L\-O\-B\-A\-L\-S@{\$\-G\-L\-O\-B\-A\-L\-S}}
+\index{\$\-G\-L\-O\-B\-A\-L\-S@{\$\-G\-L\-O\-B\-A\-L\-S}!Setup.inc.php@{\-Setup.\-inc.\-php}}
+\subsubsection[{\$\-G\-L\-O\-B\-A\-L\-S}]{\setlength{\rightskip}{0pt plus 5cm}\$\-G\-L\-O\-B\-A\-L\-S\mbox{[}'php\-Documentor\-\_\-\-Default\-Category\-Name'\mbox{]} = 'default'}}\label{_setup_8inc_8php_a2fd65495adf64ec0ca1df0e502ee2e5d}
+
+
+\-Definition at line 94 of file \-Setup.\-inc.\-php.
+

@@ -1,0 +1,170 @@
+\hypertarget{classtests___highlight_parser_get_inline_tags_tests}{\section{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests \-Class \-Reference}
+\label{classtests___highlight_parser_get_inline_tags_tests}\index{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtests___highlight_parser_get_inline_tags_tests_a0b1684f30ad836be6b7de8bb953442f2}{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg} ()
+\item 
+\hyperlink{classtests___highlight_parser_get_inline_tags_tests_a33fd34fa76575b41982b0e71a205dd09}{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-False} ()
+\item 
+\hyperlink{classtests___highlight_parser_get_inline_tags_tests_a73645b22b8888183b1da746439e62f04}{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-True} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classtests___highlight_parser_get_inline_tags_tests_a36f43c36e6b3288e6bfb8244ce59073e}{main} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtests___highlight_parser_get_inline_tags_tests_a0bc688732d2b3b162ffebaf7812e78da}{set\-Up} ()
+\item 
+\hyperlink{classtests___highlight_parser_get_inline_tags_tests_a80fe3d17e658907fc75346a0ec9d6fc7}{tear\-Down} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 60 of file \-Highlight\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classtests___highlight_parser_get_inline_tags_tests_a36f43c36e6b3288e6bfb8244ce59073e}{\index{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}!main@{main}}
+\index{main@{main}!tests_HighlightParserGetInlineTagsTests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf main} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{classtests___highlight_parser_get_inline_tags_tests_a36f43c36e6b3288e6bfb8244ce59073e}
+\-Runs the test methods of this class.  public
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 81 of file \-Highlight\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("
+      tests_HighlightParserGetInlineTagsTests");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+\end{DoxyCode}
+\hypertarget{classtests___highlight_parser_get_inline_tags_tests_a0bc688732d2b3b162ffebaf7812e78da}{\index{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}!set\-Up@{set\-Up}}
+\index{set\-Up@{set\-Up}!tests_HighlightParserGetInlineTagsTests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{set\-Up}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Up} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classtests___highlight_parser_get_inline_tags_tests_a0bc688732d2b3b162ffebaf7812e78da}
+\-Sets up the fixture, for example, open a network connection. \-This method is called before a test is executed.  protected \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 94 of file \-Highlight\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                               {
+        $GLOBALS['_phpDocumentor_install_dir'] = PHPDOCUMENTOR_BASE;
+        $GLOBALS['_phpDocumentor_setting']['quiet'] = "on";
+
+        $this->ps = new phpDocumentor_setup();
+        $this->hp = new phpDocumentor_HighlightParser();
+    }
+\end{DoxyCode}
+\hypertarget{classtests___highlight_parser_get_inline_tags_tests_a80fe3d17e658907fc75346a0ec9d6fc7}{\index{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}!tear\-Down@{tear\-Down}}
+\index{tear\-Down@{tear\-Down}!tests_HighlightParserGetInlineTagsTests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{tear\-Down}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tear\-Down} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classtests___highlight_parser_get_inline_tags_tests_a80fe3d17e658907fc75346a0ec9d6fc7}
+\-Tears down the fixture, for example, close a network connection. \-This method is called after a test is executed.  protected \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 108 of file \-Highlight\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+        unset($this->hp);
+        unset($this->ps);
+    }
+\end{DoxyCode}
+\hypertarget{classtests___highlight_parser_get_inline_tags_tests_a0b1684f30ad836be6b7de8bb953442f2}{\index{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg@{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg}}
+\index{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg@{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg}!tests_HighlightParserGetInlineTagsTests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests___highlight_parser_get_inline_tags_tests_a0b1684f30ad836be6b7de8bb953442f2}
+\-N\-O\-W \-L\-I\-S\-T \-T\-H\-E \-T\-E\-S\-T \-C\-A\-S\-E\-S -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ normal, expected cases -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ demonstrate the correct behavior -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ \-Shows correct behavior when called with no actual value and no \$endinternal flag arg \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 131 of file \-Highlight\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                  {
+        $this->assertEquals('',$this->hp->getInlineTags(''));
+    }
+\end{DoxyCode}
+\hypertarget{classtests___highlight_parser_get_inline_tags_tests_a33fd34fa76575b41982b0e71a205dd09}{\index{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-False@{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-False}}
+\index{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-False@{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-False}!tests_HighlightParserGetInlineTagsTests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-False}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-False} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests___highlight_parser_get_inline_tags_tests_a33fd34fa76575b41982b0e71a205dd09}
+\-Shows correct behavior when called with no actual value and a \-F\-A\-L\-S\-E \$endinternal flag arg \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 139 of file \-Highlight\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                          {
+        $this->assertEquals('',$this->hp->getInlineTags('', false));
+    }
+\end{DoxyCode}
+\hypertarget{classtests___highlight_parser_get_inline_tags_tests_a73645b22b8888183b1da746439e62f04}{\index{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-True@{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-True}}
+\index{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-True@{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-True}!tests_HighlightParserGetInlineTagsTests@{tests\-\_\-\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-True}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-When\-Given\-One\-Empty\-Arg\-And\-True} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests___highlight_parser_get_inline_tags_tests_a73645b22b8888183b1da746439e62f04}
+\-Shows correct behavior when called with no actual value and a \-T\-R\-U\-E \$endinternal flag arg \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 147 of file \-Highlight\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                         {
+        $this->assertEquals('',$this->hp->getInlineTags('', true));
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/tests/\hyperlink{_highlight_parser_get_inline_tags_tests_8php}{\-Highlight\-Parser\-Get\-Inline\-Tags\-Tests.\-php}\end{DoxyCompactItemize}

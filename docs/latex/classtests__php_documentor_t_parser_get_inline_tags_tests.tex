@@ -1,0 +1,496 @@
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests}{\section{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests \-Class \-Reference}
+\label{classtests__php_documentor_t_parser_get_inline_tags_tests}\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_acfb8f14f3dedaba11ec8c7552065dba6}{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-On} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_a03dc6f1673d7df39b97e6ace6cef9a5b}{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-Off} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_a59f101202ac43701234cf5f53d9a87df}{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-On} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_aa3cee65ed2ae6e54b1fe9129cbb469b5}{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-Off} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_a58319bb42caedd8ff3b2ae673f705a32}{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-On} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_a2c64d1d17058bd2042afd24b456f2611}{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-Off} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_aeac14b8c6c751699bff48d10d65e791c}{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-On} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_a8f39adeba850a0bf2cc8dcd7a0c36df7}{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-Off} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_ad5f173df611142bc8d2f35d3beec2350}{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-On} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_aa54bba226d0bc02228fd001057689f43}{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-Off} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_a36f43c36e6b3288e6bfb8244ce59073e}{main} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_a0bc688732d2b3b162ffebaf7812e78da}{set\-Up} ()
+\item 
+\hyperlink{classtests__php_documentor_t_parser_get_inline_tags_tests_a80fe3d17e658907fc75346a0ec9d6fc7}{tear\-Down} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 60 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_a36f43c36e6b3288e6bfb8244ce59073e}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!main@{main}}
+\index{main@{main}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf main} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_a36f43c36e6b3288e6bfb8244ce59073e}
+\-Runs the test methods of this class.  public
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 87 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("
+      tests_phpDocumentorTParserGetInlineTagsTests");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_a0bc688732d2b3b162ffebaf7812e78da}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!set\-Up@{set\-Up}}
+\index{set\-Up@{set\-Up}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{set\-Up}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Up} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_a0bc688732d2b3b162ffebaf7812e78da}
+\-Sets up the fixture, for example, open a network connection. \-This method is called before a test is executed.  protected \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 100 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                               {
+        $GLOBALS['_phpDocumentor_install_dir'] = PHPDOCUMENTOR_BASE;
+        $GLOBALS['_phpDocumentor_setting']['quiet'] = "on";
+
+        $this->ps = new phpDocumentor_setup();
+        $this->ptp = new phpDocumentorTParser();
+        $this->pswit = new parserStringWithInlineTags();
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_a80fe3d17e658907fc75346a0ec9d6fc7}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!tear\-Down@{tear\-Down}}
+\index{tear\-Down@{tear\-Down}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{tear\-Down}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tear\-Down} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_a80fe3d17e658907fc75346a0ec9d6fc7}
+\-Tears down the fixture, for example, close a network connection. \-This method is called after a test is executed.  protected \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 115 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+        unset($this->pswit);
+        unset($this->ptp);
+        unset($this->ps);
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_aa3cee65ed2ae6e54b1fe9129cbb469b5}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-Off}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-Off}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-Off}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-Off} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_aa3cee65ed2ae6e54b1fe9129cbb469b5}
+\-Shows correct behavior for handling an inline example tag e.\-g. \{at-\/example path-\/to-\/file\}
+
+\-There should be \-N\-O difference in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 209 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                              {
+        // --parseprivate off
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "off";
+        $example_tag = "Here's an external example file at {@example
+       Bug-10871.php}\n";
+        $this->pswit = $this->ptp->getInlineTags($example_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "Here's an external example
+       file at ");
+        $this->assertEquals($this->pswit->value[1]->inlinetype, "example");
+        $this->assertEquals($this->pswit->value[1]->start, 1);
+        $this->assertEquals($this->pswit->value[1]->end, "*");
+        $this->assertEquals($this->pswit->value[1]->source, "");
+        $this->assertEquals($this->pswit->value[1]->_class, "");
+        $this->assertEquals($this->pswit->value[1]->type, "inlinetag");
+        $this->assertEquals($this->pswit->value[1]->value, "");
+        $this->assertEquals($this->pswit->value[1]->path, "");
+        $this->assertEquals($this->pswit->value[2], "\n");
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_a59f101202ac43701234cf5f53d9a87df}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-On}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-On}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-On}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Example\-When\-Parse\-Private\-On} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_a59f101202ac43701234cf5f53d9a87df}
+\-Shows correct behavior for handling an inline example tag e.\-g. \{at-\/example path-\/to-\/file\}
+
+\-There should be \-N\-O difference in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 183 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                             {
+        // --parseprivate on
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "on";
+        $example_tag = "Here's an external example file at {@example
+       Bug-10871.php}\n";
+        $this->pswit = $this->ptp->getInlineTags($example_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "Here's an external example
+       file at ");
+        $this->assertEquals($this->pswit->value[1]->inlinetype, "example");
+        $this->assertEquals($this->pswit->value[1]->start, 1);
+        $this->assertEquals($this->pswit->value[1]->end, "*");
+        $this->assertEquals($this->pswit->value[1]->source, "");
+        $this->assertEquals($this->pswit->value[1]->_class, "");
+        $this->assertEquals($this->pswit->value[1]->type, "inlinetag");
+        $this->assertEquals($this->pswit->value[1]->value, "");
+        $this->assertEquals($this->pswit->value[1]->path, "");
+        $this->assertEquals($this->pswit->value[2], "\n");
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_aa54bba226d0bc02228fd001057689f43}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-Off}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-Off}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-Off}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-Off} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_aa54bba226d0bc02228fd001057689f43}
+\-Shows correct behavior for handling an inline internal tag e.\-g. \{at-\/internal blah-\/blah-\/blah\}
+
+\-There \-S\-H\-O\-U\-L\-D be differences in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 347 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+      {
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "off";
+        $internal_tag = "{@internal Method name is not in camel caps format}}\n
+      ";
+        $this->pswit = $this->ptp->getInlineTags($internal_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "\n");
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_ad5f173df611142bc8d2f35d3beec2350}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-On}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-On}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-On}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Internal\-When\-Parse\-Private\-On} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_ad5f173df611142bc8d2f35d3beec2350}
+\-Shows correct behavior for handling an inline internal tag e.\-g. \{at-\/internal blah-\/blah-\/blah\}
+
+\-There \-S\-H\-O\-U\-L\-D be differences in results due to -\/-\/parseprivate flag
+
+\-This test demonstrates \-P\-E\-A\-R \-Bug \#10871
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 331 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                              {
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "on";
+        $internal_tag = "{@internal Method name is not in camel caps format}}\n
+      ";
+        $this->pswit = $this->ptp->getInlineTags($internal_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "Method name is not in
+       camel caps format\n");
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_a03dc6f1673d7df39b97e6ace6cef9a5b}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-Off}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-Off}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-Off}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-Off} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_a03dc6f1673d7df39b97e6ace6cef9a5b}
+\-Shows correct behavior for handling an inline link tag e.\-g. \{at-\/link \-U\-R\-L link-\/text\}
+
+\-There should be \-N\-O difference in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 162 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                           {
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "off";
+        $link_tag = "Here's an {@link http://www.phpdoc.org Inline Link to a
+       Hyperlink}\n";
+        $this->pswit = $this->ptp->getInlineTags($link_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "Here's an ");
+        $this->assertEquals($this->pswit->value[1]->linktext, "Inline Link to a
+       Hyperlink");
+        $this->assertEquals($this->pswit->value[1]->type, "inlinetag");
+        $this->assertEquals($this->pswit->value[1]->inlinetype, "link");
+        $this->assertEquals($this->pswit->value[1]->value, "
+      http://www.phpdoc.org");
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_acfb8f14f3dedaba11ec8c7552065dba6}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-On}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-On}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-On}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Link\-When\-Parse\-Private\-On} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_acfb8f14f3dedaba11ec8c7552065dba6}
+\-N\-O\-W \-L\-I\-S\-T \-T\-H\-E \-T\-E\-S\-T \-C\-A\-S\-E\-S -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ normal, expected cases -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ demonstrate the correct behavior -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ \-Shows correct behavior for handling an inline link tag e.\-g. \{at-\/link \-U\-R\-L link-\/text\}
+
+\-There should be \-N\-O difference in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 142 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                          {
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "on";
+        $link_tag = "Here's an {@link http://www.phpdoc.org Inline Link to a
+       Hyperlink}\n";
+        $this->pswit = $this->ptp->getInlineTags($link_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "Here's an ");
+        $this->assertEquals($this->pswit->value[1]->linktext, "Inline Link to a
+       Hyperlink");
+        $this->assertEquals($this->pswit->value[1]->type, "inlinetag");
+        $this->assertEquals($this->pswit->value[1]->inlinetype, "link");
+        $this->assertEquals($this->pswit->value[1]->value, "
+      http://www.phpdoc.org");
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_a2c64d1d17058bd2042afd24b456f2611}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-Off}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-Off}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-Off}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-Off} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_a2c64d1d17058bd2042afd24b456f2611}
+\-Shows correct behavior for handling an inline source tag e.\-g. \{at-\/source\}
+
+\-There should be \-N\-O difference in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 260 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                             {
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "off";
+        $source_tag = "Also, here's the actual code: {@source}\n";
+        $this->pswit = $this->ptp->getInlineTags($source_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "Also, here's the actual
+       code: ");
+        $this->assertEquals($this->pswit->value[1]->inlinetype, "source");
+        $this->assertEquals($this->pswit->value[1]->start, 1);
+        $this->assertEquals($this->pswit->value[1]->end, "*");
+        $this->assertEquals($this->pswit->value[1]->source, "");
+        $this->assertEquals($this->pswit->value[1]->_class, "");
+        $this->assertEquals($this->pswit->value[1]->type, "inlinetag");
+        $this->assertEquals($this->pswit->value[1]->value, "");
+        $this->assertEquals($this->pswit->value[2], "");
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_a58319bb42caedd8ff3b2ae673f705a32}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-On}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-On}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-On}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Source\-When\-Parse\-Private\-On} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_a58319bb42caedd8ff3b2ae673f705a32}
+\-Shows correct behavior for handling an inline source tag e.\-g. \{at-\/source\}
+
+\-There should be \-N\-O difference in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 236 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                            {
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "on";
+        $source_tag = "Also, here's the actual code: {@source}\n";
+        $this->pswit = $this->ptp->getInlineTags($source_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "Also, here's the actual
+       code: ");
+        $this->assertEquals($this->pswit->value[1]->inlinetype, "source");
+        $this->assertEquals($this->pswit->value[1]->start, 1);
+        $this->assertEquals($this->pswit->value[1]->end, "*");
+        $this->assertEquals($this->pswit->value[1]->source, "");
+        $this->assertEquals($this->pswit->value[1]->_class, "");
+        $this->assertEquals($this->pswit->value[1]->type, "inlinetag");
+        $this->assertEquals($this->pswit->value[1]->value, "");
+        $this->assertEquals($this->pswit->value[2], "");
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_a8f39adeba850a0bf2cc8dcd7a0c36df7}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-Off}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-Off@{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-Off}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-Off}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-Off} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_a8f39adeba850a0bf2cc8dcd7a0c36df7}
+\-Shows correct behavior for handling an inline tutorial tag e.\-g. \{at-\/tutorial path-\/to-\/pkgfile\}
+
+\-There should be \-N\-O difference in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 306 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+      {
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "off";
+        $tutorial_tag = "And a tutorial {@tutorial
+       userguide/tutorials/UserGuide/UserGuide.pkg}\n";
+        $this->pswit = $this->ptp->getInlineTags($tutorial_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "And a tutorial ");
+        $this->assertEquals($this->pswit->value[1]->linktext, "
+      userguide/tutorials/UserGuide/UserGuide.pkg");
+        $this->assertEquals($this->pswit->value[1]->type, "inlinetag");
+        $this->assertEquals($this->pswit->value[1]->inlinetype, "tutorial");
+        $this->assertEquals($this->pswit->value[1]->value, "
+      userguide/tutorials/UserGuide/UserGuide.pkg");
+        $this->assertEquals($this->pswit->value[2], "\n");
+
+    }
+\end{DoxyCode}
+\hypertarget{classtests__php_documentor_t_parser_get_inline_tags_tests_aeac14b8c6c751699bff48d10d65e791c}{\index{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}!test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-On}}
+\index{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-On@{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-On}!tests_phpDocumentorTParserGetInlineTagsTests@{tests\-\_\-php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-On}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-Inline\-Tutorial\-When\-Parse\-Private\-On} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests__php_documentor_t_parser_get_inline_tags_tests_aeac14b8c6c751699bff48d10d65e791c}
+\-Shows correct behavior for handling an inline tutorial tag e.\-g. \{at-\/tutorial path-\/to-\/pkgfile\}
+
+\-There should be \-N\-O difference in results due to -\/-\/parseprivate flag
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 285 of file php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                              {
+        $GLOBALS['_phpDocumentor_setting']['parseprivate'] = "on";
+        $tutorial_tag = "And a tutorial {@tutorial
+       userguide/tutorials/UserGuide/UserGuide.pkg}\n";
+        $this->pswit = $this->ptp->getInlineTags($tutorial_tag);
+        $this->assertEquals($this->pswit->type, "_string");
+        $this->assertEquals($this->pswit->cache, "");
+        $this->assertEquals($this->pswit->value[0], "And a tutorial ");
+        $this->assertEquals($this->pswit->value[1]->linktext, "
+      userguide/tutorials/UserGuide/UserGuide.pkg");
+        $this->assertEquals($this->pswit->value[1]->type, "inlinetag");
+        $this->assertEquals($this->pswit->value[1]->inlinetype, "tutorial");
+        $this->assertEquals($this->pswit->value[1]->value, "
+      userguide/tutorials/UserGuide/UserGuide.pkg");
+        $this->assertEquals($this->pswit->value[2], "\n");
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/tests/\hyperlink{php_documentor_t_parser_get_inline_tags_tests_8php}{php\-Documentor\-T\-Parser\-Get\-Inline\-Tags\-Tests.\-php}\end{DoxyCompactItemize}

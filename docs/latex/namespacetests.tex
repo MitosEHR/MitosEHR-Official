@@ -1,0 +1,64 @@
+\hypertarget{namespacetests}{\section{tests \-Namespace \-Reference}
+\label{namespacetests}\index{tests@{tests}}
+}
+
+
+\subsection{\-Detailed \-Description}
+blah  blahblah
+
+what happens here? testing bug 564135
+
+notparsed
+
+\-Base class for all output converters. \-A \hyperlink{class_converter}{\-Converter} takes output from the \hyperlink{class_parser}{\-Parser} and converts it to template-\/friendly output. \-A converter for the standard \hyperlink{namespacephp_documentor}{php\-Documentor} template, \hyperlink{}{\-H\-T\-M\-L\-Converter}, is provided with this release. \-Future releases will have support for other formats and templates, including \-Doc\-Book, \-X\-M\-L, and possibly other \-H\-T\-M\-L templates. \-The converter takes output directly from \hyperlink{}{\-New\-Render} and using \hyperlink{}{walk()} it \char`\"{}walks\char`\"{} over an array of \hyperlink{namespacephp_documentor}{php\-Documentor} elements, as represented by descendants of \hyperlink{classparser_element}{parser\-Element}
+
+a converter must define the abstract function \-Convert (an example is \hyperlink{}{\-H\-T\-M\-L\-Converter\-::\-Convert()}), a function that takes a passed object and uses it to generate structures for an output template, or directly generates output. \-Since all elements have their \-Doc\-Blocks linked directly, this allows for more logical parsing than earlier versions of \hyperlink{namespacephp_documentor}{php\-Documentor}.
+
+\-A \hyperlink{class_converter}{\-Converter} is passed several data structures in its constructor, all of which are optional in output and may be handled in any way the converter would like. \-These structures are arrays\-: 
+\begin{DoxyItemize}
+\item array of methods by class (see \hyperlink{}{\-New\-Render\-::\$methods}) 
+\item array of variables by class (see \hyperlink{}{\-New\-Render\-::\$vars}) 
+\item array of links to documented elements (see \hyperlink{}{\-New\-Render\-::\$links}) 
+\item array of class parents by name (see \hyperlink{}{\-New\-Render\-::\$classtree}) 
+\item array of class packages by classname (see \hyperlink{}{\-New\-Render\-::\$classpackages}) 
+\item array of packages to document (see \hyperlink{}{\-New\-Render\-::\$packageoutput}) 
+\item array of extended classes by parent classname (see \hyperlink{}{\-New\-Render\-::\$class\-\_\-children}) 
+\item array of all documented elements by name (see \hyperlink{}{\-New\-Render\-::\$elements}) 
+\item array of all documented elements by name, split by package (see \hyperlink{}{\-New\-Render\-::\$pkg\-\_\-elements}) 
+\item boolean option, set to true to parse all elements marked  private (see \hyperlink{}{\-New\-Render\-::\$parse\-Private}) 
+\item boolean option, set to true to stop informative output while parsing (good for cron jobs) (see \hyperlink{}{\-New\-Render\-::\$quiet\-Mode}) 
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classparser_doc_block}{parser\-Doc\-Block}, \hyperlink{classparser_include}{parser\-Include}, \hyperlink{classparser_page}{parser\-Page}, \hyperlink{classparser_class}{parser\-Class}, \hyperlink{classparser_define}{parser\-Define}, \hyperlink{classparser_function}{parser\-Function}, \hyperlink{classparser_method}{parser\-Method}, \hyperlink{classparser_var}{parser\-Var}
+
+\hyperlink{classb553607___parser}{b553607\-\_\-\-Parser}
+\end{DoxySeeAlso}
+\-Base \-Class
+
+test1
+
+\-Subclass in same subpackage
+
+test1
+
+\-Subclass in different subpackage
+
+\hyperlink{classtest2}{test2}
+
+bug is fixed. to test, remove this page-\/level docblock
+
+this page will not be shown in the package list and should be
+
+tests variable names with the word 'array' in them
+
+public
+
+page-\/level stuff \begin{DoxyAuthor}{\-Author}
+test @
+\end{DoxyAuthor}
+\-Class \hyperlink{class_club_base}{\-Club\-Base}
+
+\-Basisklasse, die \-Debugging-\/ und \-Error\-Handling/\-Logging-\/\-Funktionen liefert \-Alle komplexeren \-Klassen sollten von \hyperlink{class_club_base}{\-Club\-Base} abgeleitet werden.
+
+\hyperlink{}{\-S\-W\-R3.\-online-\/\-Edition   (),  \-Copyright (c) 2001 \-S\-W\-R3.\-online. \-All rights reserved.  \-Karsten \-Kraus $<$\href{mailto:kk@swr3.de}{\tt kk@swr3.\-de}$>$  private  \-This page returns a class with name \char`\"{}\%s\char`\"{}'.\char`\"{}$\backslash$n\char`\"{}, and shouldn't find class at all  inherited functions with  private should not be shown in inherited list of child  \-Global functions   \-Mark van \-Renswoude  26-\/03-\/2002 15\-:56  1.\-0  \-I'm a odd test case the @ sign is my friend @ at teh beggining of a line  tags demonstration, but this  tag is ignored  this is silly  this tag is parsed  \-Im a page level docblock  \-Unit \-Tests for the \-Highlight\-Parser-\/$>$get\-Inline\-Tags() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a2  \-Unit \-Testing of the \-Highlight\-Parser's get\-Inline\-Tags() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a2  \-Unit \-Tests for the \-Intermediate\-Parser-\/$>$add\-Private\-Page() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a2  \-Unit \-Testing of the \-Intermediate\-Parser's add\-Private\-Page() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a2  \-Unit \-Tests for the \-Parser\-Class-\/$>$get\-Source\-Location() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a1  todo 182.  \-Unit \-Testing of the \-Parser\-Class's get\-Source\-Location() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a1  \-Unit \-Tests for the \-Parser\-Page-\/$>$get\-Source\-Location() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a1  todo 184.  \-Unit \-Testing of the \-Parser\-Page's get\-Source\-Location() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a1  \-Unit \-Tests for the php\-Documentor\-\_\-setup-\/$>$clean\-Converter\-Name\-Piece() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-3.\-2  \-Unit \-Testing of the php\-Documentor\-\_\-setup's clean\-Converter\-Name\-Piece() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-3.\-2  \-Unit \-Tests for the php\-Documentor\-\_\-setup-\/$>$decide\-On\-Or\-Off() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-3.\-2  \-Unit \-Testing of the php\-Documentor\-\_\-setup's decide\-On\-Or\-Off() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-3.\-2  \-Unit \-Tests for the php\-Documentor\-T\-Parser-\/$>$get\-Inline\-Tags() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a2  \-Unit \-Testing of the php\-Documentor\-T\-Parser's get\-Inline\-Tags() method   \-Php\-Documentor\-Unit\-Tests  \-Chuck \-Burgess  1.\-4.\-0a2 }

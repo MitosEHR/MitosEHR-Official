@@ -1,0 +1,406 @@
+\hypertarget{classform_layout_builder}{\section{form\-Layout\-Builder \-Class \-Reference}
+\label{classform_layout_builder}\index{form\-Layout\-Builder@{form\-Layout\-Builder}}
+}
+\-Inheritance diagram for form\-Layout\-Builder\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classform_layout_builder}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classform_layout_builder_a09d2fcc356ffec482c2288ed3128f55d}{add\-Field} (\$data)
+\item 
+\hyperlink{classform_layout_builder_af1ac76169bfb7bbb995f000d5bb9ac2e}{update\-Field} (\$data)
+\item 
+\hyperlink{classform_layout_builder_a383f52a44383e21583989705ef0d630d}{delete\-Field} (\$data)
+\item 
+\hyperlink{classform_layout_builder_afcb5238ce6ce86f873765792f9f18ad8}{sort\-Fields} (\$data)
+\item 
+\hyperlink{classform_layout_builder_a9ff1809bc98bb7a1526eb4e035c1ffa8}{get\-Forms} ()
+\item 
+\hyperlink{classform_layout_builder_ad7d4c76349c0ed04f32ca58530ffd16b}{get\-Parent\-Fields} (std\-Class \$params)
+\item 
+\hyperlink{classform_layout_builder_ac89522e4c6cb3d293adce3bd72e91827}{get\-Form\-Fields\-Tree} (std\-Class \$params)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 23 of file form\-Layout\-Builder.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classform_layout_builder_a09d2fcc356ffec482c2288ed3128f55d}{\index{form\-Layout\-Builder@{form\-Layout\-Builder}!add\-Field@{add\-Field}}
+\index{add\-Field@{add\-Field}!formLayoutBuilder@{form\-Layout\-Builder}}
+\subsubsection[{add\-Field}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Field} (
+\begin{DoxyParamCaption}
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classform_layout_builder_a09d2fcc356ffec482c2288ed3128f55d}
+lets defines what is a container for later use.
+
+if get\-Field\-Data\-Col returns true, means there is a colunm in the current database form table. in that case we need to return that error leting the user know there is a duplicated field or duplicated name property. \-The user has 2 options, verify the form to make sure the the field is not getting duplicated or change the name property to save the field data inside another column.
+
+since now we know the column doesn't exist, lets create one for the new field
+
+sinatized\-Data check the data array and if the value is empty delete it form the array then checck the value and if is equal to \char`\"{}on\char`\"{} set it to true, and \char`\"{}off\char`\"{} set it to false
+
+if not xtype fieldcontainer and fieldset the add some defaul values.
+
+now lets start creating the field in the database
+
+\-Exec the new field sql statement and store the its \-I\-D in \$field\-\_\-id to then store its options
+
+take each option and insert it in the forms\-\_\-field\-\_\-options table using \$field\-\_\-id
+
+\-Definition at line 28 of file form\-Layout\-Builder.\-php.
+
+
+\begin{DoxyCode}
+                                   {
+        $this->getFormDataTable($data['form_id']);
+        $this->col  = $data['name'];
+        $container  = false;
+        if( $data['xtype'] == 'fieldcontainer' || $data['xtype'] == 'fieldset' 
+      ) $container = true;
+        if($this->fieldHasColumn() && $data['xtype'] != 'radiofield') {
+            echo '{ "success": false, "errors": { "reason": "Field \"'.$this->
+      col.'\" exist, please verify the form or change the Field \"name\" preoperty" }}'
+      ;
+        }else{
+            if(!$container){
+
+                if(!$this->fieldHasColumn()){
+                    $this->addColumn('VARCHAR(255)');
+                }
+            }
+            $data = $this->sinatizedData($data);
+            $data = $this->setDefults($data);
+            $field              = array();
+            $field['form_id']   = $data['form_id'];
+            $field['xtype']     = $data['xtype'];
+
+            if(isset($data['item_of'])){
+                $field['item_of'] = $data['item_of'];
+                unset($data['item_of']);
+            }
+
+            unset($data['form_id'],$data['xtype']);
+            $sql = $this->sqlBind($field, "forms_fields", "I");
+            $this->setSQL($sql);
+            $ret = $this->execLog();
+            $this->checkError($ret);
+            $field_id = $this->lastInsertId;
+            $this->insertOptions($data, $field_id);
+
+            print '{"success":true}';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classform_layout_builder_a383f52a44383e21583989705ef0d630d}{\index{form\-Layout\-Builder@{form\-Layout\-Builder}!delete\-Field@{delete\-Field}}
+\index{delete\-Field@{delete\-Field}!formLayoutBuilder@{form\-Layout\-Builder}}
+\subsubsection[{delete\-Field}]{\setlength{\rightskip}{0pt plus 5cm}{\bf delete\-Field} (
+\begin{DoxyParamCaption}
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classform_layout_builder_a383f52a44383e21583989705ef0d630d}
+\-This function will delete the field and print success is no error were found along the way.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \$data} & \\
+\hline
+\end{DoxyParams}
+lets defines what is a container for later use.
+
+check for all kind ao error combination and exit the script if error found. \-If not, then continue.
+
+for fieldcontainers and fieldsets lets make sure the field does \-N\-O\-T have child items
+
+for all other fields lats check that the item has a column in the database and that the column is empty the user can \-N\-O\-T delete field with data in it.
+
+\-If the field is \-N\-O\-T a container the remove database column for this field
+
+remove field and field options
+
+\-Definition at line 172 of file form\-Layout\-Builder.\-php.
+
+
+\begin{DoxyCode}
+                                      {
+
+        $this->getFormDataTable($data['form_id']);
+        $this->col = $data['name'];
+        $container = false;
+        if( $data['xtype'] == 'fieldcontainer' || $data['xtype'] == 'fieldset' 
+      ) $container = true;
+
+        if($container){
+            if($this->fieldHasChild($data['id'])){
+                echo '{ "success": false, "errors": { "reason": "This field has
+       one or more child field(s). Please, remove or moved the child fields before
+       removeing this field." }}';
+                exit;
+            }
+        }else{
+            if(!$this->fieldHasColumn()) {
+                echo '{ "success": false, "errors": { "reason": "This field
+       does NOT have a column in the database.<br> This is very odd... please cotact
+       Technical Support for help" }}';
+                exit;
+            }else{
+                if($this->filedInUsed()){
+                    echo '{ "success": false, "errors": { "reason": "Can NOT
+       delete this field. This field already has data store in the database." }}';
+                    exit;
+                }
+            }
+        }
+
+        if(!$container && !$this->fieldHasBrother()){
+            $this->dropColumn();
+        }
+        $id = $data['id'];
+        $this->setSQL("DELETE FROM forms_fields WHERE id='$id'");
+        $ret = $this->execOnly();
+        $this->checkError($ret);
+        $this->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
+        $ret = $this->execOnly();
+        $this->checkError($ret);
+
+        print '{"success":true}';
+    }
+\end{DoxyCode}
+\hypertarget{classform_layout_builder_ac89522e4c6cb3d293adce3bd72e91827}{\index{form\-Layout\-Builder@{form\-Layout\-Builder}!get\-Form\-Fields\-Tree@{get\-Form\-Fields\-Tree}}
+\index{get\-Form\-Fields\-Tree@{get\-Form\-Fields\-Tree}!formLayoutBuilder@{form\-Layout\-Builder}}
+\subsubsection[{get\-Form\-Fields\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Form\-Fields\-Tree} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{classform_layout_builder_ac89522e4c6cb3d293adce3bd72e91827}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 471 of file form\-Layout\-Builder.\-php.
+
+
+\begin{DoxyCode}
+                                                       {
+        $fields = array();
+
+        $this->setSQL("Select * FROM forms_fields WHERE form_id =
+       '$params->currForm' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
+        $results = $this->execStatement(PDO::FETCH_ASSOC);
+        foreach($results as $item){
+            $opts = $this->getItmesOptions($item['id']);
+            foreach($opts as $opt => $val){
+                $item[$opt] = $val;
+            }
+            $item['children'] = $this->getChildItems($item['id']);
+            if($item['children'] == null) {
+                unset($item['children']);
+                if($item['xtype'] != 'fieldset' && $item['xtype'] != '
+      fieldcontainer') $item['leaf'] = true;
+            }else{
+                if($item['collapsed'] == 'collapsed'){
+                    $item['expanded'] = false;
+                }else{
+                    $item['expanded'] = true;
+                }
+            }
+            array_push($fields,$item);
+        }
+        return $fields;
+    }
+\end{DoxyCode}
+\hypertarget{classform_layout_builder_a9ff1809bc98bb7a1526eb4e035c1ffa8}{\index{form\-Layout\-Builder@{form\-Layout\-Builder}!get\-Forms@{get\-Forms}}
+\index{get\-Forms@{get\-Forms}!formLayoutBuilder@{form\-Layout\-Builder}}
+\subsubsection[{get\-Forms}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Forms} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classform_layout_builder_a9ff1809bc98bb7a1526eb4e035c1ffa8}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 435 of file form\-Layout\-Builder.\-php.
+
+
+\begin{DoxyCode}
+                              {
+        $this->setSQL("SELECT * FROM forms_layout");
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+        }
+        return $rows;
+    }
+\end{DoxyCode}
+\hypertarget{classform_layout_builder_ad7d4c76349c0ed04f32ca58530ffd16b}{\index{form\-Layout\-Builder@{form\-Layout\-Builder}!get\-Parent\-Fields@{get\-Parent\-Fields}}
+\index{get\-Parent\-Fields@{get\-Parent\-Fields}!formLayoutBuilder@{form\-Layout\-Builder}}
+\subsubsection[{get\-Parent\-Fields}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Parent\-Fields} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{classform_layout_builder_ad7d4c76349c0ed04f32ca58530ffd16b}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 448 of file form\-Layout\-Builder.\-php.
+
+
+\begin{DoxyCode}
+                                                     {
+        $this->setSQL("Select CONCAT(fo.ovalue, ' (',ff.xtype ,')' ) AS name,
+       ff.id as value
+                         FROM forms_fields AS ff
+                    LEFT JOIN forms_field_options AS fo
+                           ON ff.id = fo.field_id
+                    LEFT JOIN forms_layout AS fl
+                           ON fl.id = ff.form_id
+                        WHERE (fl.name  = '$params->currForm' OR fl.id    =
+       '$params->currForm')
+                          AND (ff.xtype = 'fieldcontainer'    OR ff.xtype =
+       'fieldset')
+                          AND (fo.oname = 'title'             OR fo.oname =
+       'fieldLabel')
+                     ORDER BY pos");
+        $rows = array();
+        array_push($rows, array('name' => 'Root', 'value' => 0));
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+        }
+       return $rows;
+    }
+\end{DoxyCode}
+\hypertarget{classform_layout_builder_afcb5238ce6ce86f873765792f9f18ad8}{\index{form\-Layout\-Builder@{form\-Layout\-Builder}!sort\-Fields@{sort\-Fields}}
+\index{sort\-Fields@{sort\-Fields}!formLayoutBuilder@{form\-Layout\-Builder}}
+\subsubsection[{sort\-Fields}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sort\-Fields} (
+\begin{DoxyParamCaption}
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classform_layout_builder_afcb5238ce6ce86f873765792f9f18ad8}
+\-This function sorts the fields when the drag and drop is use and print success if no error found along the way.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \$data} & \\
+\hline
+\end{DoxyParams}
+set the field item\-\_\-of to the paretn id and run the sql to update the item item\-\_\-of column
+
+here we set the pos column value, starting from 10. after updating the item pos, we add 10 to \$pos and loop for each child item
+
+\-Definition at line 239 of file form\-Layout\-Builder.\-php.
+
+
+\begin{DoxyCode}
+                                     {
+        $pos        = 10;
+        $field      = array();
+        $item       = $data['id'];
+        $parentItem = $data['parentNode'];
+        $childItems = $data['parentNodeChilds'];
+        $field['item_of'] = $parentItem;
+        $sql = $this->sqlBind($field, "forms_fields", "U", "id='$item'");
+        $this->setSQL($sql);
+        $ret = $this->execOnly();
+        $this->checkError($ret);
+        foreach($childItems as $child){
+            $field['pos'] = $pos;
+            $sql = $this->sqlBind($field, "forms_fields", "U", "id='$child'");
+            $this->setSQL($sql);
+            $ret = $this->execOnly();
+            $this->checkError($ret);
+            $pos = $pos + 10;
+        }
+
+        print '{"success":true}';
+    }
+\end{DoxyCode}
+\hypertarget{classform_layout_builder_af1ac76169bfb7bbb995f000d5bb9ac2e}{\index{form\-Layout\-Builder@{form\-Layout\-Builder}!update\-Field@{update\-Field}}
+\index{update\-Field@{update\-Field}!formLayoutBuilder@{form\-Layout\-Builder}}
+\subsubsection[{update\-Field}]{\setlength{\rightskip}{0pt plus 5cm}{\bf update\-Field} (
+\begin{DoxyParamCaption}
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classform_layout_builder_af1ac76169bfb7bbb995f000d5bb9ac2e}
+\-This function will update the fields and print the success callback if no errors found alog the way
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \$data} & \\
+\hline
+\end{DoxyParams}
+sinatized\-Data check the data array and if the value is empty delete it form the array then checck the value and if is equal to \char`\"{}on\char`\"{} set it to true, and \char`\"{}off\char`\"{} set it to false
+
+if not xtype fieldcontainer and fieldset the add some defaul values.
+
+\-Here we start the \$field array and add a few things from the \$data array.
+
+\-The \$field arrray is use to update the forms\-\_\-fields table. with the new xtype, form\-\_\-id, item\-\_\-of.
+
+\-The \$data array is use later to update the forms\-\_\-field\-\_\-options table.
+
+if item\-\_\-of is not empty add it the the \$field array and remove it from the \$data array
+
+\-Exec the new field sql statement and store the its \-I\-D in \$field\-\_\-id to then store its options
+
+delete old field options
+
+take the remaining \$data array and insert it in the forms\-\_\-field\-\_\-options table one by one.
+
+\-Definition at line 106 of file form\-Layout\-Builder.\-php.
+
+
+\begin{DoxyCode}
+                                      {
+        $data = $this->sinatizedData($data);
+        $data = $this->setDefults($data);
+        $field              = array();
+        $id                 = $data['id'];
+        $field['form_id']   = $data['form_id'];
+        $field['xtype']     = $data['xtype'];
+        if(isset($data['item_of'])){
+            $field['item_of'] = $data['item_of'];
+            unset($data['item_of']);
+        }
+
+        unset($data['form_id'],$data['xtype'],$data['id']);
+        $sql = $this->sqlBind($field, "forms_fields", "U", "id='$id'");
+        $this->setSQL($sql);
+        $ret = $this->execLog();
+        $this->checkError($ret);
+        $this->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
+        $ret = $this->execOnly();
+        $this->checkError($ret);
+        $this->insertOptions($data, $id);
+
+        print '{"success": true }';
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{form_layout_builder_8php}{form\-Layout\-Builder.\-php}\end{DoxyCompactItemize}

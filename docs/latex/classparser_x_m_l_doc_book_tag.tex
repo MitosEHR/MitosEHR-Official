@@ -1,0 +1,632 @@
+\hypertarget{classparser_x_m_l_doc_book_tag}{\section{parser\-X\-M\-L\-Doc\-Book\-Tag \-Class \-Reference}
+\label{classparser_x_m_l_doc_book_tag}\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+}
+\-Inheritance diagram for parser\-X\-M\-L\-Doc\-Book\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classparser_x_m_l_doc_book_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a82914a103dc8d17dc8381487f3c2bc98}{parser\-X\-M\-L\-Doc\-Book\-Tag} (\$name)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a77af191d91c08203fe89824e3909a3f8}{\-Convert} (\&\$c, \$postprocess=true)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a26f8e60c07d4fce4491f4856748ef6cd}{start\-C\-Data} ()
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_af3c50d0a599c408fe22b6d45c11bf418}{end\-C\-Data} ()
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a93d5b8abee0c4fff3d07ed06079afa37}{get\-T\-O\-C} (\$state=false)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_ae0f7da094c337544a2fae3b4f1f38df0}{set\-T\-O\-C} (\$state, \$val)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a0a36ecc791001e97639775936db484ac}{add\-C\-Data} (\$word)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_af82ceb2e974a26f8ee432322ffe4117b}{add\-Attribute} (\$name, \$value)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a884ba9bb0d54bde7839e798db7964476}{set\-Title} (\$title)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a87313ad678fb2a2a8efb435cf0bdb9a0}{set\-Id} (\$id)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a5f29c3c193e2dd716e45c6ce61200586}{get\-Id} (\&\$c)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a6b53232fe8401fb4a0dc4868e9cb2d31}{has\-Title} ()
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_adfee3a45ef4afc9b8201e4afd230708c}{get\-Title} (\&\$c)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a81db4714e37e41027c2d1912a29b6c18}{get\-Subsection} (\&\$c, \$subsection)
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a263be36da0f80eea20685bae1dcc74c5}{add} (\$el)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_adc851f7a62250e75df0490c0280aef4c}{\$attributes} = array()
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_ab2fc40d43824ea3e1ce5d86dee0d763b}{\$name}
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a52a2df701187db389cd2b39ea67b2c1c}{\$\-\_\-cdata}
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a49d523a090a700a0689f154d79932063}{\$\-\_\-title}
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a64da16c4a1c7b2dc6784f6ef26341ed7}{\$\-\_\-id}
+\item 
+\hyperlink{classparser_x_m_l_doc_book_tag_a8117a7944266f3283fa6d3526d5b24dc}{\$\-\_\-description}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 122 of file \-Package\-Page\-Elements.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_x_m_l_doc_book_tag_a263be36da0f80eea20685bae1dcc74c5}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!add@{add}}
+\index{add@{add}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add} (
+\begin{DoxyParamCaption}
+\item[{\$}]{el}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a263be36da0f80eea20685bae1dcc74c5}
+\-Add contents to this tag.
+
+\-There are four kinds of data in a \-Doc\-Book tutorial\-: 1. {\bfseries tags} -\/ normal tags like $<$refentry$>$ 2. {\bfseries entities} -\/ normal entities like '' 3. {\bfseries $<$!\mbox{[}\-C\-D\-A\-T\-A\mbox{[}} -\/ character data that should not be interpreted, like $<$programlisting$>$ contents 4. {\bfseries text} -\/ normal non-\/markup text
+
+\-All four kinds of data are added here
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{classparser_entity}{parser\-Entity} | \hyperlink{classparser_c_data}{parser\-C\-Data} | \hyperlink{classparser_x_m_l_doc_book_tag}{parser\-X\-M\-L\-Doc\-Book\-Tag} | string & {\em \$el} & nested tag, entity, or text\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classparser_string_with_inline_tags_afe2f1d256f75c2888745dba33b07042b}{parser\-String\-With\-Inline\-Tags}.
+
+
+
+\-Definition at line 443 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (is_string($el)) {
+            return parent::add($el);
+        }
+        if (phpDocumentor_get_class($el) == 'parserxmldocbooktag') {
+            if ($el->name == 'title') {
+                $this->setTitle($el);
+            } else {
+                return parent::add($el);
+            }
+        } else {
+            return parent::add($el);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_af82ceb2e974a26f8ee432322ffe4117b}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!add\-Attribute@{add\-Attribute}}
+\index{add\-Attribute@{add\-Attribute}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{add\-Attribute}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Attribute} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_af82ceb2e974a26f8ee432322ffe4117b}
+\-Add an xml tag attribute name=\char`\"{}value\char`\"{} pair
+
+if the attribute is id, value must be a \hyperlink{classparser_id_inline_tag}{parser\-Id\-Inline\-Tag}
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & attribute name \\
+\hline
+string | \hyperlink{classparser_id_inline_tag}{parser\-Id\-Inline\-Tag} & {\em \$value} & value of attribute\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 271 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->attributes[$name] = $value;
+        if ($name == 'id') {
+            // fix 1153593
+            if (is_string($value)) {
+                addWarning(PDERROR_ID_MUST_BE_INLINE, $this->name, $value, 
+                    $this->name, $value);
+            } else {
+                $this->setId($value);
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a0a36ecc791001e97639775936db484ac}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!add\-C\-Data@{add\-C\-Data}}
+\index{add\-C\-Data@{add\-C\-Data}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{add\-C\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-C\-Data} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a0a36ecc791001e97639775936db484ac}
+add a word to \-C\-Data
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$word} & word to add\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 256 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_cdata->add($word);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a77af191d91c08203fe89824e3909a3f8}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c, }
+\item[{\$}]{postprocess = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a77af191d91c08203fe89824e3909a3f8}
+calls the output conversion
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter \\
+\hline
+bool & {\em \$postprocess} & if postprocessing is needed\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string  \hyperlink{class_converter_ab9ab0247549341b08f5893f99c64b3c1}{\-Converter\-::\-Translate\-Tag()} \-Calls this to enclose the contents of the \-Doc\-Book tag based on the values in template options.\-ini file 
+\end{DoxyReturn}
+
+
+\-Definition at line 180 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $value    = parent::Convert($c, $postprocess);
+        $simvalue = parent::Convert($c, false);
+        foreach ($this->attributes as $a => $v) {
+            $this->attributes[$a] = (is_string($v) ? $v : 
+                $v->Convert($c, $postprocess));
+        }
+        if (isset($this->_title)) {
+            list($this->attributes,$value) = $c->ConvertTitle($this->name, 
+                $this->attributes, $this->_title->Convert($c, $postprocess), 
+      $value);
+        }
+        return $c->TranslateTag($this->name, $this->attributes, $value, 
+      $simvalue);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_af3c50d0a599c408fe22b6d45c11bf418}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!end\-C\-Data@{end\-C\-Data}}
+\index{end\-C\-Data@{end\-C\-Data}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{end\-C\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf end\-C\-Data} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_af3c50d0a599c408fe22b6d45c11bf418}
+\-Adds \hyperlink{classparser_x_m_l_doc_book_tag_a52a2df701187db389cd2b39ea67b2c1c}{\$\-\_\-cdata} to \hyperlink{classparser_string_with_inline_tags_a0f298096f322952a72a50f98a74c7b60}{\$value}
+
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 211 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->value[] = $this->_cdata;
+        unset($this->_cdata);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a5f29c3c193e2dd716e45c6ce61200586}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!get\-Id@{get\-Id}}
+\index{get\-Id@{get\-Id}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{get\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Id} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a5f29c3c193e2dd716e45c6ce61200586}
+\-Return converter-\/specific formatting of \-I\-D.
+
+\-Passes \$c to \hyperlink{classparser_id_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{parser\-Id\-Inline\-Tag\-::\-Convert()}
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 323 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_id) {
+            return trim($this->_id->Convert($c));
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a81db4714e37e41027c2d1912a29b6c18}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!get\-Subsection@{get\-Subsection}}
+\index{get\-Subsection@{get\-Subsection}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{get\-Subsection}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Subsection} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c, }
+\item[{\$}]{subsection}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a81db4714e37e41027c2d1912a29b6c18}
+\-Retrieve the contents of a subsection
+
+\-This method uses the \$\-\_\-id members of nested docbook tags to retrieve the section defined by \$subsection
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter \\
+\hline
+string & {\em \$subsection} & converter-\/specific subsection\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+bool$|$string 
+\end{DoxyReturn}
+
+
+\-Definition at line 401 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!is_object($this->_id)) {
+            return false;
+        }
+        $search = phpDocumentor_clone($this->_id);
+        if (is_string($this->_id)) {
+            return false;
+        }
+        if (phpDocumentor_get_class($search) != 'parseridinlinetag') {
+            return false;
+        }
+        $search->id = $subsection;
+        foreach ($this->value as $el) {
+            if (phpDocumentor_get_class($el) == 'parserxmldocbooktag') {
+                if ($el->getId($c) == $search->Convert($c)) {
+                    return $el;
+                } elseif ($a = $el->getSubsection($c, $subsection)) {
+                    return $a;
+                }
+            }
+        }
+        return false;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_adfee3a45ef4afc9b8201e4afd230708c}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!get\-Title@{get\-Title}}
+\index{get\-Title@{get\-Title}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{get\-Title}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Title} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_adfee3a45ef4afc9b8201e4afd230708c}
+\-Retrieve \-Converter-\/specific formatting of the title of this element
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 347 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->name == 'refentry') {
+            foreach ($this->value as $tag) {
+                if (is_object($tag) && $tag->name == 'refnamediv') {
+                    return $tag->getTitle($c);
+                }
+            }
+        }
+        if ($this->name == 'refnamediv') {
+            foreach ($this->value as $tag) {
+                if (is_object($tag) && is_a($tag, 'parserXMLDocBookTag') 
+                    && $tag->name == 'refname') {
+                    $t = new parserStringWithInlineTags;
+                    foreach ($tag->value as $val) {
+                        $t->add($val);
+                    }
+                    $this->_title = $t;
+                }
+                if (is_object($tag) && is_a($tag, 'parserXMLDocBookTag') 
+                    && $tag->name == 'refpurpose') {
+                    $t = new parserStringWithInlineTags;
+                    foreach ($tag->value as $val) {
+                        $t->add($val);
+                    }
+                    $this->_description = $t;
+                }
+            }
+        }
+        if (isset($this->_title)) {
+            return $this->_title->Convert($c);
+        }
+        if (is_object($this->value[0]) && is_a($tag, 'parserXMLDocBookTag')) {
+            return $this->value[0]->getTitle($c);
+        }
+        if (isset($this->value[1])) {
+            if (is_object($this->value[1]) && is_a($tag, 'parserXMLDocBookTag')
+      ) {
+                return $this->value[1]->getTitle($c);
+            }
+        }
+        return '';
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a93d5b8abee0c4fff3d07ed06079afa37}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!get\-T\-O\-C@{get\-T\-O\-C}}
+\index{get\-T\-O\-C@{get\-T\-O\-C}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{get\-T\-O\-C}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-T\-O\-C} (
+\begin{DoxyParamCaption}
+\item[{\$}]{state = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a93d5b8abee0c4fff3d07ed06079afa37}
+toc\} tag in \$this-\/$>$value or false, if the next index value of \$this-\/$>$value is needed
+
+\begin{DoxyReturn}{\-Returns}
+int 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classparser_x_m_l_doc_book_tag_ae0f7da094c337544a2fae3b4f1f38df0}{set\-T\-O\-C()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 228 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($state !== false) {
+            return $this->value[$state];
+        }
+        return count($this->value);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a6b53232fe8401fb4a0dc4868e9cb2d31}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!has\-Title@{has\-Title}}
+\index{has\-Title@{has\-Title}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{has\-Title}]{\setlength{\rightskip}{0pt plus 5cm}{\bf has\-Title} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a6b53232fe8401fb4a0dc4868e9cb2d31}
+\-Determine whether the docbook element has a title
+
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 335 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return isset($this->_title);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a82914a103dc8d17dc8381487f3c2bc98}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{parser\-X\-M\-L\-Doc\-Book\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-X\-M\-L\-Doc\-Book\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a82914a103dc8d17dc8381487f3c2bc98}
+\#@-\/ sets up the tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & tag name\\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000137}{\-Todo}]\-C\-S cleanup -\/ rename to parser\-Xml\-Doc\-Book\-Tag for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Definition at line 165 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->name = $name;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a87313ad678fb2a2a8efb435cf0bdb9a0}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!set\-Id@{set\-Id}}
+\index{set\-Id@{set\-Id}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{set\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Id} (
+\begin{DoxyParamCaption}
+\item[{\$}]{id}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a87313ad678fb2a2a8efb435cf0bdb9a0}
+\-If the id attribute is present, this method will set its id
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{classparser_id_inline_tag}{parser\-Id\-Inline\-Tag} & {\em \$id} & the id value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 309 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_id = $id;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a884ba9bb0d54bde7839e798db7964476}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!set\-Title@{set\-Title}}
+\index{set\-Title@{set\-Title}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{set\-Title}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Title} (
+\begin{DoxyParamCaption}
+\item[{\$}]{title}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a884ba9bb0d54bde7839e798db7964476}
+\-Set the title of a \-Doc\-Book tag section.
+
+\-For most \-Doc\-Book tags, the title is represented with a $<$title$>$$<$/title$>$ tag pair. \-The $<$refentry$>$ top-\/level tag is a little different. \-Instead of using $<$title$>$$<$/title$>$, \hyperlink{namespacephp_documentor}{php\-Documentor} uses the contents of the $<$refname$>$ tag in the $<$refnamediv$>$ tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{classparser_x_m_l_doc_book_tag}{parser\-X\-M\-L\-Doc\-Book\-Tag} & {\em \$title} & the title element\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 297 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_title = $title;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_ae0f7da094c337544a2fae3b4f1f38df0}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!set\-T\-O\-C@{set\-T\-O\-C}}
+\index{set\-T\-O\-C@{set\-T\-O\-C}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{set\-T\-O\-C}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-T\-O\-C} (
+\begin{DoxyParamCaption}
+\item[{\$}]{state, }
+\item[{\$}]{val}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_ae0f7da094c337544a2fae3b4f1f38df0}
+sets the \-T\-O\-C value
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$state} & index of the \-T\-O\-C in \$this-\/$>$value \\
+\hline
+\hyperlink{classparser_toc_inline_tag}{parser\-Toc\-Inline\-Tag} & {\em \$val} & tag value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 244 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->value[$state] = $val;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_x_m_l_doc_book_tag_a26f8e60c07d4fce4491f4856748ef6cd}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!start\-C\-Data@{start\-C\-Data}}
+\index{start\-C\-Data@{start\-C\-Data}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{start\-C\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf start\-C\-Data} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_x_m_l_doc_book_tag_a26f8e60c07d4fce4491f4856748ef6cd}
+\-Begin a new \-C\-Data section
+
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classparser_x_m_l_doc_book_tag_a0a36ecc791001e97639775936db484ac}{add\-C\-Data()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 201 of file \-Package\-Page\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_cdata = new parserCData;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_x_m_l_doc_book_tag_a52a2df701187db389cd2b39ea67b2c1c}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!\$\-\_\-cdata@{\$\-\_\-cdata}}
+\index{\$\-\_\-cdata@{\$\-\_\-cdata}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{\$\-\_\-cdata}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-cdata}}\label{classparser_x_m_l_doc_book_tag_a52a2df701187db389cd2b39ea67b2c1c}
+
+
+\-Definition at line 142 of file \-Package\-Page\-Elements.\-inc.
+
+\hypertarget{classparser_x_m_l_doc_book_tag_a8117a7944266f3283fa6d3526d5b24dc}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!\$\-\_\-description@{\$\-\_\-description}}
+\index{\$\-\_\-description@{\$\-\_\-description}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{\$\-\_\-description}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-description}}\label{classparser_x_m_l_doc_book_tag_a8117a7944266f3283fa6d3526d5b24dc}
+
+
+\-Definition at line 155 of file \-Package\-Page\-Elements.\-inc.
+
+\hypertarget{classparser_x_m_l_doc_book_tag_a64da16c4a1c7b2dc6784f6ef26341ed7}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!\$\-\_\-id@{\$\-\_\-id}}
+\index{\$\-\_\-id@{\$\-\_\-id}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{\$\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-id}}\label{classparser_x_m_l_doc_book_tag_a64da16c4a1c7b2dc6784f6ef26341ed7}
+
+
+\-Definition at line 150 of file \-Package\-Page\-Elements.\-inc.
+
+\hypertarget{classparser_x_m_l_doc_book_tag_a49d523a090a700a0689f154d79932063}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!\$\-\_\-title@{\$\-\_\-title}}
+\index{\$\-\_\-title@{\$\-\_\-title}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{\$\-\_\-title}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-title}}\label{classparser_x_m_l_doc_book_tag_a49d523a090a700a0689f154d79932063}
+
+
+\-Definition at line 146 of file \-Package\-Page\-Elements.\-inc.
+
+\hypertarget{classparser_x_m_l_doc_book_tag_adc851f7a62250e75df0490c0280aef4c}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!\$attributes@{\$attributes}}
+\index{\$attributes@{\$attributes}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{\$attributes}]{\setlength{\rightskip}{0pt plus 5cm}\$attributes = array()}}\label{classparser_x_m_l_doc_book_tag_adc851f7a62250e75df0490c0280aef4c}
+
+
+\-Definition at line 130 of file \-Package\-Page\-Elements.\-inc.
+
+\hypertarget{classparser_x_m_l_doc_book_tag_ab2fc40d43824ea3e1ce5d86dee0d763b}{\index{parser\-X\-M\-L\-Doc\-Book\-Tag@{parser\-X\-M\-L\-Doc\-Book\-Tag}!\$name@{\$name}}
+\index{\$name@{\$name}!parserXMLDocBookTag@{parser\-X\-M\-L\-Doc\-Book\-Tag}}
+\subsubsection[{\$name}]{\setlength{\rightskip}{0pt plus 5cm}\$name}}\label{classparser_x_m_l_doc_book_tag_ab2fc40d43824ea3e1ce5d86dee0d763b}
+
+
+\-Definition at line 135 of file \-Package\-Page\-Elements.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_package_page_elements_8inc}{\-Package\-Page\-Elements.\-inc}\end{DoxyCompactItemize}

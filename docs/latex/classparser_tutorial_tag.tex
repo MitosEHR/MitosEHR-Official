@@ -1,0 +1,109 @@
+\hypertarget{classparser_tutorial_tag}{\section{parser\-Tutorial\-Tag \-Class \-Reference}
+\label{classparser_tutorial_tag}\index{parser\-Tutorial\-Tag@{parser\-Tutorial\-Tag}}
+}
+\-Inheritance diagram for parser\-Tutorial\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=6.000000cm]{classparser_tutorial_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_tutorial_tag_a31e57fd66b58b300f8a489aa1b9431f6}{\-Convert} (\&\$converter)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_tutorial_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\$keyword} = 'tutorial'
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 995 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_tutorial_tag_a31e57fd66b58b300f8a489aa1b9431f6}{\index{parser\-Tutorial\-Tag@{parser\-Tutorial\-Tag}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserTutorialTag@{parser\-Tutorial\-Tag}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{converter}
+\end{DoxyParamCaption}
+)}}\label{classparser_tutorial_tag_a31e57fd66b58b300f8a489aa1b9431f6}
+process this tag through the given output converter
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$converter} & the output converter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string$|$bool 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classparser_string_with_inline_tags_a0cd1d8e1e41d6daa6bcdfdb8ed60b35b}{parser\-String\-With\-Inline\-Tags\-::\-Convert()} 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000070}{\-Todo}]\-C\-S cleanup -\/ rename to convert for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Reimplemented from \hyperlink{classparser_see_tag_a31e57fd66b58b300f8a489aa1b9431f6}{parser\-See\-Tag}.
+
+
+
+\-Definition at line 1012 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $a = $converter->getTutorialLink(trim($this->value->Convert($converter)
+      ));
+        if (is_string($a)) {
+            return $a;
+        }
+        if (is_object($a)) {
+            return $converter->returnSee($a);
+        }
+        // getLink parsed a comma-delimited list of linked thingies, 
+        // add the commas back in
+        if (is_array($a)) {
+            $b = '';
+            foreach ($a as $i => $bub) {
+                if (!empty($b)) {
+                    $b .= ', ';
+                }
+                if (is_string($a[$i])) {
+                    $b .= $a[$i];
+                }
+                if (is_object($a[$i])) {
+                    $b .= $converter->returnSee($a[$i]);
+                }
+            }
+            return $b;
+        }
+        return false;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_tutorial_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\index{parser\-Tutorial\-Tag@{parser\-Tutorial\-Tag}!\$keyword@{\$keyword}}
+\index{\$keyword@{\$keyword}!parserTutorialTag@{parser\-Tutorial\-Tag}}
+\subsubsection[{\$keyword}]{\setlength{\rightskip}{0pt plus 5cm}\$keyword = 'tutorial'}}\label{classparser_tutorial_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}
+
+
+\-Reimplemented from \hyperlink{classparser_see_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-See\-Tag}.
+
+
+
+\-Definition at line 1001 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_doc_block_tags_8inc}{\-Doc\-Block\-Tags.\-inc}\end{DoxyCompactItemize}

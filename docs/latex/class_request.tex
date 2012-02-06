@@ -1,0 +1,210 @@
+\hypertarget{class_request}{\section{\-Request \-Class \-Reference}
+\label{class_request}\index{\-Request@{\-Request}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_request_a9162320adff1a1a4afd7f2372f753a3e}{\-\_\-\-\_\-construct} (\$params)
+\item 
+\hyperlink{class_request_ac90dbead0b4dc5c85a0bbb218cf271de}{is\-Restful} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_request_a9e55885b258b0f5bc40d258e52f41741}{\$restful}
+\item 
+\hyperlink{class_request_a12661b2fc0f57f97e30a1620889ce9c6}{\$method}
+\item 
+\hyperlink{class_request_a388ef7b1db5e6f728e63cee704ce6e23}{\$controller}
+\item 
+\hyperlink{class_request_aa698a3e72116e8e778be0e95d908ee30}{\$action}
+\item 
+\hyperlink{class_request_ae97941710d863131c700f069b109991e}{\$id}
+\item 
+\hyperlink{class_request_afe68e6fbe7acfbffc0af0c84a1996466}{\$params}
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_request_ade6cd60890b337f013ea22d935224e64}{parse\-Request} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 6 of file request.\-php.
+
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_request_a9162320adff1a1a4afd7f2372f753a3e}{\index{\-Request@{\-Request}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!Request@{\-Request}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-\-\_\-construct} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_request_a9162320adff1a1a4afd7f2372f753a3e}
+
+
+\-Definition at line 9 of file request.\-php.
+
+
+\begin{DoxyCode}
+                                         {
+        $this->restful = (isset($params["restful"])) ? $params["restful"] : 
+      false;
+        $this->method = $_SERVER["REQUEST_METHOD"];
+        $this->parseRequest();
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_request_ac90dbead0b4dc5c85a0bbb218cf271de}{\index{\-Request@{\-Request}!is\-Restful@{is\-Restful}}
+\index{is\-Restful@{is\-Restful}!Request@{\-Request}}
+\subsubsection[{is\-Restful}]{\setlength{\rightskip}{0pt plus 5cm}{\bf is\-Restful} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_request_ac90dbead0b4dc5c85a0bbb218cf271de}
+
+
+\-Definition at line 14 of file request.\-php.
+
+
+\begin{DoxyCode}
+                                {
+        return $this->restful;
+    }
+\end{DoxyCode}
+\hypertarget{class_request_ade6cd60890b337f013ea22d935224e64}{\index{\-Request@{\-Request}!parse\-Request@{parse\-Request}}
+\index{parse\-Request@{parse\-Request}!Request@{\-Request}}
+\subsubsection[{parse\-Request}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse\-Request} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_request_ade6cd60890b337f013ea22d935224e64}
+
+
+\-Definition at line 17 of file request.\-php.
+
+
+\begin{DoxyCode}
+                                      {
+        $this->fail = isset($_REQUEST['fail']) ? $_REQUEST['fail'] : false;
+        
+        if ($this->method == 'PUT') {   // <-- Have to jump through hoops to
+       get PUT data
+            $raw  = '';
+            $httpContent = fopen('php://input', 'r');
+            while ($kb = fread($httpContent, 1024)) {
+                $raw .= $kb;
+            }
+            fclose($httpContent);
+            $params = array();
+            parse_str($raw, $params);
+            
+            if (isset($params['data'])) {
+                $this->params = json_decode(stripslashes($params['data']));
+            } else {
+                $params = json_decode(stripslashes($raw));
+                $this->params = $params;
+            }
+        } else {
+            // grab JSON data if there...
+            $this->params = (isset($_REQUEST['data'])) ? json_decode(
+      stripslashes($_REQUEST['data'])) : null;
+            
+            if (isset($_REQUEST['data'])) {
+                $this->params = json_decode(stripslashes($_REQUEST['data']));
+            } else {
+                $raw  = '';
+                $httpContent = fopen('php://input', 'r');
+                while ($kb = fread($httpContent, 1024)) {
+                    $raw .= $kb;
+                }
+                $this->params = json_decode(stripslashes($raw));
+            }
+        }
+        
+        // Quickndirty PATH_INFO parser
+        //var_dump($_SERVER["PATH_INFO"]);
+        if (isset($_SERVER["PATH_INFO"])){
+            $cai = '/^\/([a-z]+\w)\/([a-z]+\w)\/([0-9]+)$/';  //
+       /controller/action/id
+            $ca =  '/^\/([a-z]+\w)\/([a-z]+)$/';              //
+       /controller/action
+            $ci = '/^\/([a-z]+\w)\/([0-9]+)$/';               // /controller/id
+            $c =  '/^\/([a-z]+\w)$/';                             //
+       /controller
+            $i =  '/^\/([0-9]+)$/';                             // /id
+            $matches = array();
+            if (preg_match($cai, $_SERVER["PATH_INFO"], $matches)) {
+                $this->controller = $matches[1];
+                $this->action = $matches[2];
+                $this->id = $matches[3];
+            } else if (preg_match($ca, $_SERVER["PATH_INFO"], $matches)) {
+                $this->controller = $matches[1];
+                $this->action = $matches[2];
+            } else if (preg_match($ci, $_SERVER["PATH_INFO"], $matches)) {
+                $this->controller = $matches[1];
+                $this->id = $matches[2];
+            } else if (preg_match($c, $_SERVER["PATH_INFO"], $matches)) {
+                $this->controller = $matches[1];
+            } else if (preg_match($i, $_SERVER["PATH_INFO"], $matches)) {
+                $this->id = $matches[1];
+            }
+        }
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_request_aa698a3e72116e8e778be0e95d908ee30}{\index{\-Request@{\-Request}!\$action@{\$action}}
+\index{\$action@{\$action}!Request@{\-Request}}
+\subsubsection[{\$action}]{\setlength{\rightskip}{0pt plus 5cm}\$action}}\label{class_request_aa698a3e72116e8e778be0e95d908ee30}
+
+
+\-Definition at line 7 of file request.\-php.
+
+\hypertarget{class_request_a388ef7b1db5e6f728e63cee704ce6e23}{\index{\-Request@{\-Request}!\$controller@{\$controller}}
+\index{\$controller@{\$controller}!Request@{\-Request}}
+\subsubsection[{\$controller}]{\setlength{\rightskip}{0pt plus 5cm}\$controller}}\label{class_request_a388ef7b1db5e6f728e63cee704ce6e23}
+
+
+\-Definition at line 7 of file request.\-php.
+
+\hypertarget{class_request_ae97941710d863131c700f069b109991e}{\index{\-Request@{\-Request}!\$id@{\$id}}
+\index{\$id@{\$id}!Request@{\-Request}}
+\subsubsection[{\$id}]{\setlength{\rightskip}{0pt plus 5cm}\$id}}\label{class_request_ae97941710d863131c700f069b109991e}
+
+
+\-Definition at line 7 of file request.\-php.
+
+\hypertarget{class_request_a12661b2fc0f57f97e30a1620889ce9c6}{\index{\-Request@{\-Request}!\$method@{\$method}}
+\index{\$method@{\$method}!Request@{\-Request}}
+\subsubsection[{\$method}]{\setlength{\rightskip}{0pt plus 5cm}\$method}}\label{class_request_a12661b2fc0f57f97e30a1620889ce9c6}
+
+
+\-Definition at line 7 of file request.\-php.
+
+\hypertarget{class_request_afe68e6fbe7acfbffc0af0c84a1996466}{\index{\-Request@{\-Request}!\$params@{\$params}}
+\index{\$params@{\$params}!Request@{\-Request}}
+\subsubsection[{\$params}]{\setlength{\rightskip}{0pt plus 5cm}\$params}}\label{class_request_afe68e6fbe7acfbffc0af0c84a1996466}
+
+
+\-Definition at line 7 of file request.\-php.
+
+\hypertarget{class_request_a9e55885b258b0f5bc40d258e52f41741}{\index{\-Request@{\-Request}!\$restful@{\$restful}}
+\index{\$restful@{\$restful}!Request@{\-Request}}
+\subsubsection[{\$restful}]{\setlength{\rightskip}{0pt plus 5cm}\$restful}}\label{class_request_a9e55885b258b0f5bc40d258e52f41741}
+
+
+\-Definition at line 7 of file request.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/extensible-\/1.\-5.\-0/examples/calendar/remote/php/lib/\hyperlink{request_8php}{request.\-php}\end{DoxyCompactItemize}

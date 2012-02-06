@@ -1,0 +1,208 @@
+\hypertarget{classparser_link_inline_tag}{\section{parser\-Link\-Inline\-Tag \-Class \-Reference}
+\label{classparser_link_inline_tag}\index{parser\-Link\-Inline\-Tag@{parser\-Link\-Inline\-Tag}}
+}
+\-Inheritance diagram for parser\-Link\-Inline\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classparser_link_inline_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_link_inline_tag_a99755c147902ded32c366b54b6f0a276}{parser\-Link\-Inline\-Tag} (\$link, \$text)
+\item 
+\hyperlink{classparser_link_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{\-Convert} (\&\$c)
+\item 
+\hyperlink{classparser_link_inline_tag_a079249f7f358ce69316bf82f42f6d853}{\-Convert\-Part} (\&\$c, \$value)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_link_inline_tag_a612656cf6a1a05abf6cbe4624ce38ef6}{\$linktext} = ''
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 142 of file \-Inline\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_link_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{\index{parser\-Link\-Inline\-Tag@{parser\-Link\-Inline\-Tag}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserLinkInlineTag@{parser\-Link\-Inline\-Tag}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_link_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}
+calls the output conversion
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & converter used to change the abstract link into text for display\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+false$|$string returns the converted link or false if not converted successfully 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000112}{\-Todo}]\-C\-S cleanup -\/ rename to convert for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Reimplemented in \hyperlink{classparser_tutorial_inline_tag_ad6c06bea9d11cc1c362b592306cfa707}{parser\-Tutorial\-Inline\-Tag}.
+
+
+
+\-Definition at line 179 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (is_array($this->value)) {
+            $ret = '';
+            foreach ($this->value as $text) {
+                if (!empty($ret)) {
+                    $ret .= ', ';
+                }
+                $ret .= $this->ConvertPart($c, trim($text));
+            }
+            return $ret;
+        } else {
+            return $this->ConvertPart($c, $this->value);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_link_inline_tag_a079249f7f358ce69316bf82f42f6d853}{\index{parser\-Link\-Inline\-Tag@{parser\-Link\-Inline\-Tag}!\-Convert\-Part@{\-Convert\-Part}}
+\index{\-Convert\-Part@{\-Convert\-Part}!parserLinkInlineTag@{parser\-Link\-Inline\-Tag}}
+\subsubsection[{\-Convert\-Part}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert\-Part} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classparser_link_inline_tag_a079249f7f358ce69316bf82f42f6d853}
+convert part of the tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter \\
+\hline
+string & {\em \$value} & the tag value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000113}{\-Todo}]\-C\-S cleanup -\/ rename to convert\-Part for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Definition at line 204 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (strpos($value, '://') || (strpos($value, 'mailto:') === 0)) {
+            if (strpos($value, ' ')) {
+                $value = explode(' ', $value);
+                $link  = array_shift($value);
+                $text  = join(' ', $value);
+            } else {
+                $link = $value;
+                $text = $this->linktext;
+            }
+            return $c->returnLink($link, htmlspecialchars($text));
+        } else {
+            $savevalue = $value;
+            $descrip   = false;
+            if (strpos(trim($value), ' ')) {
+                $v = preg_split('/\s/', trim($value));
+                if (in_array(strtolower($v[0]), array('object', 'function'))) {
+                    if (!isset($v[1]) 
+                        || (isset($v[1]) && strlen($v[1])
+                            && !in_array($v[1]{0}, array('$','&'))
+                            && $v[1] != '###commanana####'
+                        )
+                    ) {
+                        $vsave = $v[0];
+                        array_shift($v);
+                        $v[0] = $vsave . ' ' . $v[0];
+                    }
+                }
+                $value = $c->getLink($v[0]);
+                array_shift($v);
+                $descrip = join($v, ' ');
+                $descrip = str_replace('###commanana####', ',', $descrip);
+            } else {
+                $value = $c->getLink($value);
+            }
+            if (is_string($value)) {
+                // feature 564991
+                if (strpos($value, '://')) {
+                    // php function
+                    return $c->returnLink($value, $descrip ? $descrip : 
+                        str_replace('PHP_MANUAL#', '', $value));
+                }
+                return $value;
+            }
+            if (!$descrip) {
+                $descrip = $c->type_adjust($savevalue);
+            }
+            if (is_object($value)) {
+                return $c->returnSee($value, $descrip);
+            }
+            return $savevalue;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_link_inline_tag_a99755c147902ded32c366b54b6f0a276}{\index{parser\-Link\-Inline\-Tag@{parser\-Link\-Inline\-Tag}!parser\-Link\-Inline\-Tag@{parser\-Link\-Inline\-Tag}}
+\index{parser\-Link\-Inline\-Tag@{parser\-Link\-Inline\-Tag}!parserLinkInlineTag@{parser\-Link\-Inline\-Tag}}
+\subsubsection[{parser\-Link\-Inline\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Link\-Inline\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{link, }
+\item[{\$}]{text}
+\end{DoxyParamCaption}
+)}}\label{classparser_link_inline_tag_a99755c147902ded32c366b54b6f0a276}
+sets up the tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$link} & stored in \$value, see \hyperlink{classparser_base_a0f298096f322952a72a50f98a74c7b60}{parser\-Base\-::\$value} \\
+\hline
+string & {\em \$text} & see \hyperlink{classparser_link_inline_tag_a612656cf6a1a05abf6cbe4624ce38ef6}{\$linktext} \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 157 of file \-Inline\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (strpos($link, ',')) {
+            $link = explode(',', $link);
+            parserInlineTag::parserInlineTag('link', '');
+            $this->value = $link;
+        } else {
+            parserInlineTag::parserInlineTag('link', $link);
+        }
+        $this->linktext = trim($text);
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_link_inline_tag_a612656cf6a1a05abf6cbe4624ce38ef6}{\index{parser\-Link\-Inline\-Tag@{parser\-Link\-Inline\-Tag}!\$linktext@{\$linktext}}
+\index{\$linktext@{\$linktext}!parserLinkInlineTag@{parser\-Link\-Inline\-Tag}}
+\subsubsection[{\$linktext}]{\setlength{\rightskip}{0pt plus 5cm}\$linktext = ''}}\label{classparser_link_inline_tag_a612656cf6a1a05abf6cbe4624ce38ef6}
+
+
+\-Definition at line 149 of file \-Inline\-Tags.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_inline_tags_8inc}{\-Inline\-Tags.\-inc}\end{DoxyCompactItemize}

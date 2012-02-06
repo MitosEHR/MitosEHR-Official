@@ -1,0 +1,183 @@
+\hypertarget{class_patient}{\section{\-Patient \-Class \-Reference}
+\label{class_patient}\index{\-Patient@{\-Patient}}
+}
+\-Inheritance diagram for \-Patient\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_patient}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_patient_a61881e13afab7b713729f4000e7be366}{curr\-Patient\-Set} (std\-Class \$params)
+\item 
+\hyperlink{class_patient_a141a4228884369275f14b3b6a2ba047b}{curr\-Patient\-Unset} ()
+\item 
+\hyperlink{class_patient_a5da7543bb87e70c01a1a3b3180c712fc}{patient\-Live\-Search} (std\-Class \$params)
+\item 
+\hyperlink{class_patient_a603592cb352f8f8eeeb8d977b136b056}{get\-Patient\-Demographic\-Data} (std\-Class \$params)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_patient_ac4117c3ef6ed85a03718844b09041e11}{get\-Curr\-Pid} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 17 of file \-Patient.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_patient_a61881e13afab7b713729f4000e7be366}{\index{\-Patient@{\-Patient}!curr\-Patient\-Set@{curr\-Patient\-Set}}
+\index{curr\-Patient\-Set@{curr\-Patient\-Set}!Patient@{\-Patient}}
+\subsubsection[{curr\-Patient\-Set}]{\setlength{\rightskip}{0pt plus 5cm}{\bf curr\-Patient\-Set} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_patient_a61881e13afab7b713729f4000e7be366}
+
+\begin{DoxyParams}{\-Parameters}
+{\em $\backslash$std\-Class} & \$params \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 32 of file \-Patient.\-php.
+
+
+\begin{DoxyCode}
+                                                    {
+
+        $this->setSQL("SELECT fname,mname,lname FROM form_data_demographics
+       WHERE pid = '$params->pid'");
+        $p = $this->fetch();
+        $fullname = $this->fullname($p['fname'],$p['mname'],$p['lname']);
+        $_SESSION['patient']['pid']  = $params->pid;
+        $_SESSION['patient']['name'] = $fullname;
+        return;
+    }
+\end{DoxyCode}
+\hypertarget{class_patient_a141a4228884369275f14b3b6a2ba047b}{\index{\-Patient@{\-Patient}!curr\-Patient\-Unset@{curr\-Patient\-Unset}}
+\index{curr\-Patient\-Unset@{curr\-Patient\-Unset}!Patient@{\-Patient}}
+\subsubsection[{curr\-Patient\-Unset}]{\setlength{\rightskip}{0pt plus 5cm}{\bf curr\-Patient\-Unset} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_patient_a141a4228884369275f14b3b6a2ba047b}
+\begin{DoxyReturn}{\-Returns}
+mixed 
+\end{DoxyReturn}
+
+
+\-Definition at line 45 of file \-Patient.\-php.
+
+
+\begin{DoxyCode}
+                                      {
+        $_SESSION['patient']['pid']  = null;
+        $_SESSION['patient']['name'] = null;
+        return;
+    }
+\end{DoxyCode}
+\hypertarget{class_patient_ac4117c3ef6ed85a03718844b09041e11}{\index{\-Patient@{\-Patient}!get\-Curr\-Pid@{get\-Curr\-Pid}}
+\index{get\-Curr\-Pid@{get\-Curr\-Pid}!Patient@{\-Patient}}
+\subsubsection[{get\-Curr\-Pid}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Curr\-Pid} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_patient_ac4117c3ef6ed85a03718844b09041e11}
+\begin{DoxyReturn}{\-Returns}
+mixed 
+\end{DoxyReturn}
+
+
+\-Definition at line 23 of file \-Patient.\-php.
+
+
+\begin{DoxyCode}
+                                   {
+        return $_SESSION['patient']['pid'];
+    }
+\end{DoxyCode}
+\hypertarget{class_patient_a603592cb352f8f8eeeb8d977b136b056}{\index{\-Patient@{\-Patient}!get\-Patient\-Demographic\-Data@{get\-Patient\-Demographic\-Data}}
+\index{get\-Patient\-Demographic\-Data@{get\-Patient\-Demographic\-Data}!Patient@{\-Patient}}
+\subsubsection[{get\-Patient\-Demographic\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Patient\-Demographic\-Data} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_patient_a603592cb352f8f8eeeb8d977b136b056}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 81 of file \-Patient.\-php.
+
+
+\begin{DoxyCode}
+                                                               {
+        $pid = $_SESSION['patient']['pid'];
+        $this->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'"
+      );
+
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            array_push($rows, $row);
+        }
+        return $rows;
+
+    }
+\end{DoxyCode}
+\hypertarget{class_patient_a5da7543bb87e70c01a1a3b3180c712fc}{\index{\-Patient@{\-Patient}!patient\-Live\-Search@{patient\-Live\-Search}}
+\index{patient\-Live\-Search@{patient\-Live\-Search}!Patient@{\-Patient}}
+\subsubsection[{patient\-Live\-Search}]{\setlength{\rightskip}{0pt plus 5cm}{\bf patient\-Live\-Search} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_patient_a5da7543bb87e70c01a1a3b3180c712fc}
+
+\begin{DoxyParams}{\-Parameters}
+{\em $\backslash$std\-Class} & \$params \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 58 of file \-Patient.\-php.
+
+
+\begin{DoxyCode}
+                                                       {
+        $this->setSQL("SELECT pid,pubpid,fname,lname,mname,DOB,SS
+                             FROM form_data_demographics
+                            WHERE fname LIKE '$params->query%'
+                               OR lname LIKE '$params->query%'
+                               OR mname LIKE '$params->query%'
+                               OR pid   LIKE '$params->query%'
+                               OR SS    LIKE '%$params->query'");
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_CLASS) as $row){
+            $row->fullname = $this->fullname($row->fname,$row->mname,$row->
+      lname);
+            unset($row->fname,$row->mname,$row->lname);
+            array_push($rows, $row);
+        }
+        $total  = count($rows);
+        $rows = $this->filertByStartLimit($rows,$params);
+        return array('totals'=>$total ,'rows'=>$rows);
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{_patient_8php}{\-Patient.\-php}\end{DoxyCompactItemize}

@@ -1,0 +1,168 @@
+\hypertarget{classx12valid__837__4010}{\section{x12valid\-\_\-837\-\_\-4010 \-Class \-Reference}
+\label{classx12valid__837__4010}\index{x12valid\-\_\-837\-\_\-4010@{x12valid\-\_\-837\-\_\-4010}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classx12valid__837__4010_ace453e85f1cfba709fc4cbcae9bbd8ff}{set\-X12} (\$x12)
+\item 
+\hyperlink{classx12valid__837__4010_ac0d1221a542d8f0d74963600876c4b52}{get\-Reason} ()
+\item 
+\hyperlink{classx12valid__837__4010_a7aaeb469b1e73fe516d723710b446b84}{valid4010\-A} ()
+\item 
+\hyperlink{classx12valid__837__4010_a7872f3d4fa79889f3c05de1b1fa6a8b4}{tmp\-Show} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 17 of file x12\-\_\-validator.\-inc.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classx12valid__837__4010_ac0d1221a542d8f0d74963600876c4b52}{\index{x12valid\-\_\-837\-\_\-4010@{x12valid\-\_\-837\-\_\-4010}!get\-Reason@{get\-Reason}}
+\index{get\-Reason@{get\-Reason}!x12valid_837_4010@{x12valid\-\_\-837\-\_\-4010}}
+\subsubsection[{get\-Reason}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Reason} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12valid__837__4010_ac0d1221a542d8f0d74963600876c4b52}
+
+
+\-Definition at line 36 of file x12\-\_\-validator.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                            {
+                return $this->reason;
+        }
+\end{DoxyCode}
+\hypertarget{classx12valid__837__4010_ace453e85f1cfba709fc4cbcae9bbd8ff}{\index{x12valid\-\_\-837\-\_\-4010@{x12valid\-\_\-837\-\_\-4010}!set\-X12@{set\-X12}}
+\index{set\-X12@{set\-X12}!x12valid_837_4010@{x12valid\-\_\-837\-\_\-4010}}
+\subsubsection[{set\-X12}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-X12} (
+\begin{DoxyParamCaption}
+\item[{\$}]{x12}
+\end{DoxyParamCaption}
+)}}\label{classx12valid__837__4010_ace453e85f1cfba709fc4cbcae9bbd8ff}
+
+
+\-Definition at line 26 of file x12\-\_\-validator.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                             {
+                $this->temp_buff = $x12;
+                $x12_array = explode("~", $this->temp_buff); // Break the
+       document into a array
+                $s = explode("*", $x12_array[0]); 
+                $this->chr_div = $s[16]; // Extract the character separator
+        }
+\end{DoxyCode}
+\hypertarget{classx12valid__837__4010_a7872f3d4fa79889f3c05de1b1fa6a8b4}{\index{x12valid\-\_\-837\-\_\-4010@{x12valid\-\_\-837\-\_\-4010}!tmp\-Show@{tmp\-Show}}
+\index{tmp\-Show@{tmp\-Show}!x12valid_837_4010@{x12valid\-\_\-837\-\_\-4010}}
+\subsubsection[{tmp\-Show}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tmp\-Show} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12valid__837__4010_a7872f3d4fa79889f3c05de1b1fa6a8b4}
+
+
+\-Definition at line 728 of file x12\-\_\-validator.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                          {
+                $x12_array = explode("~", $this->temp_buff); // Break the
+       document into a array
+                
+                echo "<pre>";
+                print_r($x12_array);
+                echo "</pre>";
+        }
+\end{DoxyCode}
+\hypertarget{classx12valid__837__4010_a7aaeb469b1e73fe516d723710b446b84}{\index{x12valid\-\_\-837\-\_\-4010@{x12valid\-\_\-837\-\_\-4010}!valid4010\-A@{valid4010\-A}}
+\index{valid4010\-A@{valid4010\-A}!x12valid_837_4010@{x12valid\-\_\-837\-\_\-4010}}
+\subsubsection[{valid4010\-A}]{\setlength{\rightskip}{0pt plus 5cm}{\bf valid4010\-A} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classx12valid__837__4010_a7aaeb469b1e73fe516d723710b446b84}
+
+
+\-Definition at line 663 of file x12\-\_\-validator.\-inc.\-php.
+
+
+\begin{DoxyCode}
+                             {
+                
+                $x12_array = explode("~", $this->temp_buff); // Break the
+       document into a array
+
+                foreach($x12_array as $value){
+                        if(!$this->chkISA($value)){ return FALSE; }
+                        if(!$this->chkGS($value)){ return FALSE; }
+                        if(!$this->chkST($value)){ return FALSE; }
+                        if(!$this->chkBHT($value)){ return FALSE; }
+                        if(!$this->chkNM141($value)){ return FALSE; }
+                        if(!$this->chkPERIC($value)){ return FALSE; }
+                        if(!$this->chkNM140($value)){ return FALSE; }
+                        if(!$this->chkHL($value)){ return FALSE; }
+                        if(!$this->chkPRV($value)){ return FALSE; }
+                        if(!$this->chkCUR($value)){ return FALSE; }
+                        if(!$this->chkNM185($value)){ return FALSE; }
+                        if(!$this->chkN3($value)){ return FALSE; }
+                        if(!$this->chkN4($value)){ return FALSE; }
+                        if(!$this->chkREF($value)){ return FALSE; }
+                        if(!$this->chkPER($value)){ return FALSE; }
+                        if(!$this->chkNM187($value)){ return FALSE; }
+                        if(!$this->chkSBR($value)){ return FALSE; }
+                        if(!$this->chkNM1IL($value)){ return FALSE; }
+                        if(!$this->chkDMG($value)){ return FALSE; }
+                        if(!$this->chkNM1PR($value)){ return FALSE; }
+                        if(!$this->chkNM1QC($value)){ return FALSE; }
+                        if(!$this->chkCLM($value)){ return FALSE; }
+                        if(!$this->chkDTP($value)){ return FALSE; }
+                        if(!$this->chkPWK($value)){ return FALSE; }
+                        if(!$this->chkCN1($value)){ return FALSE; }
+                        if(!$this->chkAMT($value)){ return FALSE; }
+                        if(!$this->chkK3($value)){ return FALSE; }
+                        if(!$this->chkNTE($value)){ return FALSE; }
+                        if(!$this->chkCR1($value)){ return FALSE; }
+                        if(!$this->chkCR2($value)){ return FALSE; }
+                        if(!$this->chkCRC($value)){ return FALSE; }
+                        if(!$this->chkHI($value)){ return FALSE; }
+                        if(!$this->chkHCP($value)){ return FALSE; }
+                        if(!$this->chkCR7($value)){ return FALSE; }
+                        if(!$this->chkNM1DN($value)){ return FALSE; }
+                        if(!$this->chkNM182($value)){ return FALSE; }
+                        if(!$this->chkNM177($value)){ return FALSE; }
+                        if(!$this->chkCAS($value)){ return FALSE; }
+                        if(!$this->chkOI($value)){ return FALSE; }
+                        if(!$this->chkLX($value)){ return FALSE; }
+                        if(!$this->chkSV1($value)){ return FALSE; }
+                        if(!$this->chkSV7($value)){ return FALSE; }
+                        if(!$this->chkCR5($value)){ return FALSE; }
+                        if(!$this->chkQTY($value)){ return FALSE; }
+                        if(!$this->chkMEA($value)){ return FALSE; }
+                        if(!$this->chkPS1($value)){ return FALSE; }
+                        if(!$this->chkLIN($value)){ return FALSE; }
+                        if(!$this->chkCTP($value)){ return FALSE; }
+                        if(!$this->chkSVD($value)){ return FALSE; }
+                        if(!$this->chkLQ($value)){ return FALSE; }
+                        if(!$this->chkFRM($value)){ return FALSE; }
+                        if(!$this->chkSE($value)){ return FALSE; }
+                        if(!$this->chkGE($value)){ return FALSE; }
+                        if(!$this->chkIEA($value)){ return FALSE; }
+                }               
+                
+                // The document is perfect!
+                return TRUE;
+        }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/x12\-\_\-manager/\hyperlink{x12__validator_8inc_8php}{x12\-\_\-validator.\-inc.\-php}\end{DoxyCompactItemize}
