@@ -1,0 +1,37 @@
+\hypertarget{modifier_8count__sentences_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/modifier.count\-\_\-sentences.\-php \-File \-Reference}
+\label{modifier_8count__sentences_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-count\-\_\-sentences.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-count\-\_\-sentences.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{modifier_8count__sentences_8php_a18fdf462bbb7718aa0508ec1d7074c82}{smarty\-\_\-modifier\-\_\-count\-\_\-sentences} (\$string)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{modifier_8count__sentences_8php_a18fdf462bbb7718aa0508ec1d7074c82}{\index{modifier.\-count\-\_\-sentences.\-php@{modifier.\-count\-\_\-sentences.\-php}!smarty\-\_\-modifier\-\_\-count\-\_\-sentences@{smarty\-\_\-modifier\-\_\-count\-\_\-sentences}}
+\index{smarty\-\_\-modifier\-\_\-count\-\_\-sentences@{smarty\-\_\-modifier\-\_\-count\-\_\-sentences}!modifier.count_sentences.php@{modifier.\-count\-\_\-sentences.\-php}}
+\subsubsection[{smarty\-\_\-modifier\-\_\-count\-\_\-sentences}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-modifier\-\_\-count\-\_\-sentences} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string}
+\end{DoxyParamCaption}
+)}}\label{modifier_8count__sentences_8php_a18fdf462bbb7718aa0508ec1d7074c82}
+\hyperlink{class_smarty}{\-Smarty} count\-\_\-sentences modifier plugin
+
+\-Type\-: modifier\par
+ \-Name\-: count\-\_\-sentences \-Purpose\-: count the number of sentences in a text \hyperlink{}{count\-\_\-sentences (\-Smarty online manual)  string  integer }
+
+\-Definition at line 20 of file modifier.\-count\-\_\-sentences.\-php.
+
+
+\begin{DoxyCode}
+{
+    // find periods with a word before but not after.
+    return preg_match_all('/[^\s]\.(?!\w)/', $string, $match);
+}
+\end{DoxyCode}

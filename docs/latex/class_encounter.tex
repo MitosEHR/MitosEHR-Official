@@ -1,0 +1,262 @@
+\hypertarget{class_encounter}{\section{\-Encounter \-Class \-Reference}
+\label{class_encounter}\index{\-Encounter@{\-Encounter}}
+}
+\-Inheritance diagram for \-Encounter\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_encounter}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_encounter_aa7b6e3969071323059ec77927c3e2b36}{ck\-Open\-Encounters} ()
+\item 
+\hyperlink{class_encounter_a21d2f025e56226ee0c5d663717b2fff5}{get\-Encounters} (std\-Class \$params)
+\item 
+\hyperlink{class_encounter_a9f37391f1861b7b84c82c2e76104d1a6}{create\-Encounter} (std\-Class \$params)
+\item 
+\hyperlink{class_encounter_a91d2165845a1f166e5075f1cf772a810}{get\-Encounter} (std\-Class \$params)
+\item 
+\hyperlink{class_encounter_a966248ba3d079acaf63d43286208be70}{get\-Vitals} ()
+\item 
+\hyperlink{class_encounter_ae42ec61d6891ef4ec10b440461e7ab4b}{close\-Encounter} (std\-Class \$params)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 18 of file \-Encounter.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_encounter_aa7b6e3969071323059ec77927c3e2b36}{\index{\-Encounter@{\-Encounter}!ck\-Open\-Encounters@{ck\-Open\-Encounters}}
+\index{ck\-Open\-Encounters@{ck\-Open\-Encounters}!Encounter@{\-Encounter}}
+\subsubsection[{ck\-Open\-Encounters}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ck\-Open\-Encounters} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_encounter_aa7b6e3969071323059ec77927c3e2b36}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 23 of file \-Encounter.\-php.
+
+
+\begin{DoxyCode}
+                                      {
+        $pid =  $_SESSION['patient']['pid'];
+        $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' AND
+       close_date IS NULL");
+        $total = $this->rowCount();
+        if($total >= 1){
+            return array('encounter' => true);
+        }else{
+            return array('encounter' => false);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_encounter_ae42ec61d6891ef4ec10b440461e7ab4b}{\index{\-Encounter@{\-Encounter}!close\-Encounter@{close\-Encounter}}
+\index{close\-Encounter@{close\-Encounter}!Encounter@{\-Encounter}}
+\subsubsection[{close\-Encounter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf close\-Encounter} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_encounter_ae42ec61d6891ef4ec10b440461e7ab4b}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 120 of file \-Encounter.\-php.
+
+
+\begin{DoxyCode}
+                                                    {
+        $aes    = new AES($_SESSION['site']['AESkey']);
+        $pass   = $aes->encrypt($params->signature);
+
+        $uid    = $_SESSION['user']['id'];
+
+        $data['close_date'] = $params->close_date;
+        $data['close_uid'] = $_SESSION['user']['id'];
+
+        $this->setSQL("SELECT username FROM users WHERE id = '$uid' AND
+       password = '$pass' AND authorized = '1' LIMIT 1");
+        $count = $this->rowCount();
+        if($count != 0){
+            $sql = $this->sqlBind($data, "form_data_encounter", "U", "eid='".
+      $params->eid."'");
+            $this->setSQL($sql);
+            $this->execLog();
+            return array('success'=> true);
+        }else{
+            return array('success'=> false);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_encounter_a9f37391f1861b7b84c82c2e76104d1a6}{\index{\-Encounter@{\-Encounter}!create\-Encounter@{create\-Encounter}}
+\index{create\-Encounter@{create\-Encounter}!Encounter@{\-Encounter}}
+\subsubsection[{create\-Encounter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf create\-Encounter} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_encounter_a9f37391f1861b7b84c82c2e76104d1a6}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 62 of file \-Encounter.\-php.
+
+
+\begin{DoxyCode}
+                                                     {
+
+        $params->pid        = $_SESSION['patient']['pid'];
+        $params->open_uid   = $_SESSION['user']['id'];
+
+        $data = get_object_vars($params);
+
+        $sql = $this->sqlBind($data, "form_data_encounter", "I");
+        $this->setSQL($sql);
+        $this->execLog();
+        $eid = $this->lastInsertId;
+        return array('success'=>true,'encounter'=>array('eid'=>intval($eid), '
+      start_date'=>$params->start_date));
+    }
+\end{DoxyCode}
+\hypertarget{class_encounter_a91d2165845a1f166e5075f1cf772a810}{\index{\-Encounter@{\-Encounter}!get\-Encounter@{get\-Encounter}}
+\index{get\-Encounter@{get\-Encounter}!Encounter@{\-Encounter}}
+\subsubsection[{get\-Encounter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Encounter} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_encounter_a91d2165845a1f166e5075f1cf772a810}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array$|$mixed 
+\end{DoxyReturn}
+
+
+\-Definition at line 80 of file \-Encounter.\-php.
+
+
+\begin{DoxyCode}
+                                                  {
+
+        $this->setSQL("SELECT * FROM form_data_encounter WHERE eid =
+       '$params->eid'");
+        $encounter = $this->fetch(PDO::FETCH_ASSOC);
+
+        if($encounter != null){
+            return $encounter;
+        }else{
+            echo '{"success": false}';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_encounter_a21d2f025e56226ee0c5d663717b2fff5}{\index{\-Encounter@{\-Encounter}!get\-Encounters@{get\-Encounters}}
+\index{get\-Encounters@{get\-Encounters}!Encounter@{\-Encounter}}
+\subsubsection[{get\-Encounters}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Encounters} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_encounter_a21d2f025e56226ee0c5d663717b2fff5}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 38 of file \-Encounter.\-php.
+
+
+\begin{DoxyCode}
+                                                   {
+
+        if(isset($params->sort)){
+            $ORDER = 'ORDER BY ' . $params->sort[0]->property . ' ' . $params->
+      sort[0]->direction;
+        } else {
+            $ORDER = 'ORDER BY start_date DESC';
+        }
+
+        $pid = $_SESSION['patient']['pid'];
+        $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' ".
+      $ORDER);
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['status'] = ($row['close_date']== null)? 'open' : 'close';
+                array_push($rows, $row);
+        }
+
+        return $rows;
+
+    }
+\end{DoxyCode}
+\hypertarget{class_encounter_a966248ba3d079acaf63d43286208be70}{\index{\-Encounter@{\-Encounter}!get\-Vitals@{get\-Vitals}}
+\index{get\-Vitals@{get\-Vitals}!Encounter@{\-Encounter}}
+\subsubsection[{get\-Vitals}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Vitals} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_encounter_a966248ba3d079acaf63d43286208be70}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 95 of file \-Encounter.\-php.
+
+
+\begin{DoxyCode}
+                               {
+
+        $pid =  $_SESSION['patient']['pid'];
+
+        $this->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER
+       BY date ASC");
+        $total = $this->rowCount();
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['date'] = date('Y-m-d g:i a',strtotime ($row['date']));
+            $row['height_in'] = intval($row['height_in']);
+            $row['height_cn'] = intval($row['height_cn']);
+            array_push($rows, $row);
+        }
+        if($total >= 1){
+            return $rows;
+        }else{
+            echo '{"success": true}';
+        }
+
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{_encounter_8php}{\-Encounter.\-php}\end{DoxyCompactItemize}

@@ -1,0 +1,3138 @@
+\hypertarget{class_smarty}{\section{\-Smarty \-Class \-Reference}
+\label{class_smarty}\index{\-Smarty@{\-Smarty}}
+}
+\-Inheritance diagram for \-Smarty\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_smarty}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_smarty_a95e66b59b996781de0a0b95c83f1a5a7}{\-Smarty} ()
+\item 
+\hyperlink{class_smarty_a12150893d5c5bab121e248f450e727fa}{assign} (\$tpl\-\_\-var, \$value=null)
+\item 
+\hyperlink{class_smarty_aebc96e36370712d0c9e5896db76bd487}{assign\-\_\-by\-\_\-ref} (\$tpl\-\_\-var, \&\$value)
+\item 
+\hyperlink{class_smarty_a9870a97b08f66d2c1b19f3e54770cb29}{append} (\$tpl\-\_\-var, \$value=null, \$merge=false)
+\item 
+\hyperlink{class_smarty_a1a744cb1e3d6473ddcd531412c54f07e}{append\-\_\-by\-\_\-ref} (\$tpl\-\_\-var, \&\$value, \$merge=false)
+\item 
+\hyperlink{class_smarty_ad0188dcb261ac235ac70c141f2e6657e}{clear\-\_\-assign} (\$tpl\-\_\-var)
+\item 
+\hyperlink{class_smarty_aa933e1e9fb0b13f22101de4acbaf699c}{register\-\_\-function} (\$function, \$function\-\_\-impl, \$cacheable=true, \$cache\-\_\-attrs=null)
+\item 
+\hyperlink{class_smarty_ae73d72302d6bcf8a0b284654b2ecef15}{unregister\-\_\-function} (\$function)
+\item 
+\hyperlink{class_smarty_ad3e5b167a6483dbd669a736ee0000b9a}{register\-\_\-object} (\$object, \&\$object\-\_\-impl, \$allowed=array(), \$smarty\-\_\-args=true, \$block\-\_\-methods=array())
+\item 
+\hyperlink{class_smarty_a49288d1943e174bcb8e924a4b449d050}{unregister\-\_\-object} (\$object)
+\item 
+\hyperlink{class_smarty_a2a6564c20eaeecdddd192885f9d5a794}{register\-\_\-block} (\$block, \$block\-\_\-impl, \$cacheable=true, \$cache\-\_\-attrs=null)
+\item 
+\hyperlink{class_smarty_aa27d55eff4bc63b71da604fb1af362c9}{unregister\-\_\-block} (\$block)
+\item 
+\hyperlink{class_smarty_a4b141e0b9a699098e8986aca16e871ca}{register\-\_\-compiler\-\_\-function} (\$function, \$function\-\_\-impl, \$cacheable=true)
+\item 
+\hyperlink{class_smarty_a85920043d6bf2ee895a1dc3fa2c464ca}{unregister\-\_\-compiler\-\_\-function} (\$function)
+\item 
+\hyperlink{class_smarty_ac1483efc4d74e159c9ddb29b33fbfcc0}{register\-\_\-modifier} (\$modifier, \$modifier\-\_\-impl)
+\item 
+\hyperlink{class_smarty_aa0efdcad7fc5a36846e5e8bd8a455dd9}{unregister\-\_\-modifier} (\$modifier)
+\item 
+\hyperlink{class_smarty_a27683a72840c9401cde24eec57d493df}{register\-\_\-resource} (\$type, \$functions)
+\item 
+\hyperlink{class_smarty_a509d4408ce20f6def85118984b81a32e}{unregister\-\_\-resource} (\$type)
+\item 
+\hyperlink{class_smarty_afdd4dead058273890d629d207f236239}{register\-\_\-prefilter} (\$function)
+\item 
+\hyperlink{class_smarty_a8208fd226842f48de08ce37305295d64}{unregister\-\_\-prefilter} (\$function)
+\item 
+\hyperlink{class_smarty_a1eb31d2b852e5862a3d04284614d145b}{register\-\_\-postfilter} (\$function)
+\item 
+\hyperlink{class_smarty_a36d917f9b975efc48682198c705eb244}{unregister\-\_\-postfilter} (\$function)
+\item 
+\hyperlink{class_smarty_a54426aae9228293c47e05f4ceaacd516}{register\-\_\-outputfilter} (\$function)
+\item 
+\hyperlink{class_smarty_a8d7427d8dc5f3d71aeb3385b9aad3700}{unregister\-\_\-outputfilter} (\$function)
+\item 
+\hyperlink{class_smarty_ad642cca94486c492c56071fb32a3421c}{load\-\_\-filter} (\$type, \$name)
+\item 
+\hyperlink{class_smarty_a6b5412f074996dea92d89b32a13880d8}{clear\-\_\-cache} (\$tpl\-\_\-file=null, \$cache\-\_\-id=null, \$compile\-\_\-id=null, \$exp\-\_\-time=null)
+\item 
+\hyperlink{class_smarty_aaf1eab6e680746ae852abfc3814382fb}{clear\-\_\-all\-\_\-cache} (\$exp\-\_\-time=null)
+\item 
+\hyperlink{class_smarty_a70d12433755791c1383f394b6a41271d}{is\-\_\-cached} (\$tpl\-\_\-file, \$cache\-\_\-id=null, \$compile\-\_\-id=null)
+\item 
+\hyperlink{class_smarty_a47a576000a48c74fea66a209d7f0ac21}{clear\-\_\-all\-\_\-assign} ()
+\item 
+\hyperlink{class_smarty_a71153cdee03c4dcb864488b59442b162}{clear\-\_\-compiled\-\_\-tpl} (\$tpl\-\_\-file=null, \$compile\-\_\-id=null, \$exp\-\_\-time=null)
+\item 
+\hyperlink{class_smarty_abfade212562dbeff89ccf453c02f5a1b}{template\-\_\-exists} (\$tpl\-\_\-file)
+\item 
+\& \hyperlink{class_smarty_a0c15a4f13f37eaca8a6e8ed91ad77b23}{get\-\_\-template\-\_\-vars} (\$name=null)
+\item 
+\& \hyperlink{class_smarty_a2382294d36d8e557c475d66350844bfb}{get\-\_\-config\-\_\-vars} (\$name=null)
+\item 
+\hyperlink{class_smarty_aa4f8246510406271300bee84f9e1bce3}{trigger\-\_\-error} (\$error\-\_\-msg, \$error\-\_\-type=\-E\-\_\-\-U\-S\-E\-R\-\_\-\-W\-A\-R\-N\-I\-N\-G)
+\item 
+\hyperlink{class_smarty_a7318c22504478672906d321cba2bd713}{display} (\$resource\-\_\-name, \$cache\-\_\-id=null, \$compile\-\_\-id=null)
+\item 
+\hyperlink{class_smarty_acd45e8177ae9f297026ee9a0732e976c}{fetch} (\$resource\-\_\-name, \$cache\-\_\-id=null, \$compile\-\_\-id=null, \$\hyperlink{class_smarty_a7318c22504478672906d321cba2bd713}{display}=false)
+\item 
+\hyperlink{class_smarty_ad7beb1fcf478744bfcb4892884559c79}{config\-\_\-load} (\$file, \$section=null, \$scope= 'global')
+\item 
+\& \hyperlink{class_smarty_ae922fb129fc263df7c3f4b83880b199d}{get\-\_\-registered\-\_\-object} (\$name)
+\item 
+\hyperlink{class_smarty_a889e401c09b8d2612e43a50cb2a7dc04}{clear\-\_\-config} (\$var=null)
+\item 
+\hyperlink{class_smarty_aca3dac6a8fa20f5038e34af0c7f1c78b}{\-\_\-get\-\_\-plugin\-\_\-filepath} (\$type, \$name)
+\item 
+\hyperlink{class_smarty_a315bf9a64ca2baea77f8868804d847be}{\-\_\-is\-\_\-compiled} (\$resource\-\_\-name, \$compile\-\_\-path)
+\item 
+\hyperlink{class_smarty_af0c22913faf4ec5e6d8674c643c69cc5}{\-\_\-compile\-\_\-resource} (\$resource\-\_\-name, \$compile\-\_\-path)
+\item 
+\hyperlink{class_smarty_a9df9b14069c359f1f45416acc6d7d81f}{\-\_\-compile\-\_\-source} (\$resource\-\_\-name, \&\$source\-\_\-content, \&\$compiled\-\_\-content, \$cache\-\_\-include\-\_\-path=null)
+\item 
+\hyperlink{class_smarty_a8a89232edb42318063b90fee5f608ec0}{\-\_\-get\-\_\-compile\-\_\-path} (\$resource\-\_\-name)
+\item 
+\hyperlink{class_smarty_a0c3ac497dbe0e595d4f2a85f1168a219}{\-\_\-fetch\-\_\-resource\-\_\-info} (\&\$params)
+\item 
+\hyperlink{class_smarty_a3fd3782e935db8cbac33da3d735df988}{\-\_\-parse\-\_\-resource\-\_\-name} (\&\$params)
+\item 
+\hyperlink{class_smarty_aadef62274bb4693faadaa1bfbfddae6f}{\-\_\-run\-\_\-mod\-\_\-handler} ()
+\item 
+\hyperlink{class_smarty_a48d43e818f2469134f3202f1a4256917}{\-\_\-dequote} (\$string)
+\item 
+\hyperlink{class_smarty_a8c4016aac6db09073b41520c2e5faec5}{\-\_\-read\-\_\-file} (\$filename, \$start=null, \$lines=null)
+\item 
+\hyperlink{class_smarty_a3e145fee368d93f35313bcb7018c1a76}{\-\_\-get\-\_\-auto\-\_\-filename} (\$auto\-\_\-base, \$auto\-\_\-source=null, \$auto\-\_\-id=null)
+\item 
+\hyperlink{class_smarty_ab5aba685ce31a74ce598d75f623361dd}{\-\_\-unlink} (\$resource, \$exp\-\_\-time=null)
+\item 
+\hyperlink{class_smarty_ae59d86c80bb3e74dbe8831f7a0a0687c}{\-\_\-get\-\_\-auto\-\_\-id} (\$cache\-\_\-id=null, \$compile\-\_\-id=null)
+\item 
+\hyperlink{class_smarty_a069f86732ff92f739c488416e0958307}{\-\_\-trigger\-\_\-fatal\-\_\-error} (\$error\-\_\-msg, \$tpl\-\_\-file=null, \$tpl\-\_\-line=null, \$file=null, \$line=null, \$error\-\_\-type=\-E\-\_\-\-U\-S\-E\-R\-\_\-\-E\-R\-R\-O\-R)
+\item 
+\hyperlink{class_smarty_a7ee77f3dd4e8b79f3f070b20e890af00}{\-\_\-process\-\_\-compiled\-\_\-include\-\_\-callback} (\$match)
+\item 
+\hyperlink{class_smarty_a2636e88dc9c8c3876aa63720c7d6ac25}{\-\_\-smarty\-\_\-include} (\$params)
+\item 
+\& \hyperlink{class_smarty_accf8fe1e81964b9abae199964a229c5b}{\-\_\-smarty\-\_\-cache\-\_\-attrs} (\$cache\-\_\-serial, \$count)
+\item 
+\hyperlink{class_smarty_a9e571fe5ba948fca1a9b31ac69e24546}{\-\_\-include} (\$filename, \$once=false, \$params=null)
+\item 
+\hyperlink{class_smarty_a9b47d457e9e3d4d47a696d77dfa43e7f}{\-\_\-eval} (\$code, \$params=null)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_smarty_a9677af6792fd68e3968c8b7ff44f2b36}{\$template\-\_\-dir} = 'templates'
+\item 
+\hyperlink{class_smarty_a43c2cf2ae254b7b9c45079b63e453c4e}{\$compile\-\_\-dir} = 'templates\-\_\-c'
+\item 
+\hyperlink{class_smarty_abb77b9d3df110ff462474ee0feaa7859}{\$config\-\_\-dir} = 'configs'
+\item 
+\hyperlink{class_smarty_a5bd94212cee8bfa32df2bd9d443f30eb}{\$plugins\-\_\-dir} = array('plugins')
+\item 
+\hyperlink{class_smarty_a22d995c07dbbe5b426d4fda3931cfcca}{\$debugging} = false
+\item 
+\hyperlink{class_smarty_adbe83b13ba657998e0fb861b44ecfd59}{\$debug\-\_\-tpl} = ''
+\item 
+\hyperlink{class_smarty_a9b02ae21521c28e6eeb53bd58777aa7b}{\$debugging\-\_\-ctrl} = '\-N\-O\-N\-E'
+\item 
+\hyperlink{class_smarty_ab9662ea355e8e7c1f47ef0e568147512}{\$compile\-\_\-check} = true
+\item 
+\hyperlink{class_smarty_ac956f556d1b636556e96902d4d5377ff}{\$force\-\_\-compile} = false
+\item 
+\hyperlink{class_smarty_aa36073c4cda5c97981a5b99ca92208be}{\$caching} = 0
+\item 
+\hyperlink{class_smarty_a22a35efc9ca709527d49ff8bfe76db78}{\$cache\-\_\-dir} = 'cache'
+\item 
+\hyperlink{class_smarty_a5aaab753f75170fa670cbb602aa97119}{\$cache\-\_\-lifetime} = 3600
+\item 
+\hyperlink{class_smarty_a0734d0f7c5eea130baa18c0424ab07b0}{\$cache\-\_\-modified\-\_\-check} = false
+\item 
+\hyperlink{class_smarty_abb37c3c6b2bcb9a527c4139bffb7e6ca}{\$php\-\_\-handling} = \hyperlink{_smarty_8class_8php_ae3b4c1abf166f5bc090b8ffd8b7b986e}{\-S\-M\-A\-R\-T\-Y\-\_\-\-P\-H\-P\-\_\-\-P\-A\-S\-S\-T\-H\-R\-U}
+\item 
+\hyperlink{class_smarty_a7ef3408af92597c92305e22f79e67d61}{\$security} = false
+\item 
+\hyperlink{class_smarty_a7694029b12fccde3ffae27a1d1d7b5be}{\$secure\-\_\-dir} = array()
+\item 
+\hyperlink{class_smarty_a905ec38d7cf957e041a8ed941320e5af}{\$security\-\_\-settings}
+\item 
+\hyperlink{class_smarty_a4541edfa0e2dd6b0e4b1da10c14fa52c}{\$trusted\-\_\-dir} = array()
+\item 
+\hyperlink{class_smarty_a77e272b1cacbab4b26b4fe515e445178}{\$left\-\_\-delimiter} = '\{'
+\item 
+\hyperlink{class_smarty_ad3fe9ebfa998625e29836badfe1840bd}{\$right\-\_\-delimiter} = '\}'
+\item 
+\hyperlink{class_smarty_a03919f6e9cba8f50093023e78b0fc6aa}{\$request\-\_\-vars\-\_\-order} = \char`\"{}\-E\-G\-P\-C\-S\char`\"{}
+\item 
+\hyperlink{class_smarty_a639bdb97701da08b49252c5dbe667930}{\$request\-\_\-use\-\_\-auto\-\_\-globals} = false
+\item 
+\hyperlink{class_smarty_a4c29af6f98e3049de95861b01a7bb00d}{\$compile\-\_\-id} = null
+\item 
+\hyperlink{class_smarty_a9d2c3aa18168752d2a32b5aac08b25cd}{\$use\-\_\-sub\-\_\-dirs} = true
+\item 
+\hyperlink{class_smarty_a48ec112144d4921e3a31fb1a5526ad2f}{\$default\-\_\-modifiers} = array()
+\item 
+\hyperlink{class_smarty_a35cf3764fb77e481ca92ef131a35ca7e}{\$default\-\_\-resource\-\_\-type} = 'file'
+\item 
+\hyperlink{class_smarty_a212fee0b84704db751e24b434177a478}{\$cache\-\_\-handler\-\_\-func} = null
+\item 
+\hyperlink{class_smarty_a23220583cbe0636d93101b05d757d76e}{\$global\-\_\-assign} = array('\-H\-T\-T\-P\-\_\-\-S\-E\-R\-V\-E\-R\-\_\-\-V\-A\-R\-S' =$>$ array('\-S\-C\-R\-I\-P\-T\-\_\-\-N\-A\-M\-E'))
+\item 
+\hyperlink{class_smarty_a7b9e122920a6696307fca34a3e041a9a}{\$undefined} = null
+\item 
+\hyperlink{class_smarty_aca2078dde09728b223cdffe8209e6dcc}{\$autoload\-\_\-filters} = array()
+\item 
+\hyperlink{class_smarty_a728421c1493ea20b619459924184b06d}{\$config\-\_\-overwrite} = true
+\item 
+\hyperlink{class_smarty_ab3e274a6c3fd439b83380c17a71255bb}{\$config\-\_\-booleanize} = true
+\item 
+\hyperlink{class_smarty_add257cafa2cc7f2c68381f9bcc6f4d7b}{\$config\-\_\-read\-\_\-hidden} = false
+\item 
+\hyperlink{class_smarty_a4df07d516adb04c09b5f77b556d3b5bc}{\$config\-\_\-fix\-\_\-newlines} = true
+\item 
+\hyperlink{class_smarty_a9ff3231160bde6632ca8ad252918e3f0}{\$default\-\_\-template\-\_\-handler\-\_\-func} = ''
+\item 
+\hyperlink{class_smarty_a5912fff45f8fdf37cf48552ee9444323}{\$compiler\-\_\-file} = '\-Smarty\-\_\-\-Compiler.\-class.\-php'
+\item 
+\hyperlink{class_smarty_a7696818dcf593c5f9471d7f76ea2e645}{\$compiler\-\_\-class} = '\hyperlink{class_smarty___compiler}{\-Smarty\-\_\-\-Compiler}'
+\item 
+\hyperlink{class_smarty_a1ecdac7cb85b1aea3de21235de5db8d9}{\$config\-\_\-class} = '\hyperlink{class_config___file}{\-Config\-\_\-\-File}'
+\item 
+\hyperlink{class_smarty_a9936a2e534940a7b7e9c8b85b6966d83}{\$\-\_\-error\-\_\-msg} = false
+\item 
+\hyperlink{class_smarty_ac5b23df7404c26573f1d6efad81b9db9}{\$\-\_\-tpl\-\_\-vars} = array()
+\item 
+\hyperlink{class_smarty_a8b74cd5266386c9651f86d02b4bf3bc4}{\$\-\_\-smarty\-\_\-vars} = null
+\item 
+\hyperlink{class_smarty_a873245595639c46ba0a649d9d0abc018}{\$\-\_\-sections} = array()
+\item 
+\hyperlink{class_smarty_a1c8fbfed4c5eb0d511fe2d98bda8bc19}{\$\-\_\-foreach} = array()
+\item 
+\hyperlink{class_smarty_a8bc334635a0aa8e117a5e822ca71ee67}{\$\-\_\-tag\-\_\-stack} = array()
+\item 
+\hyperlink{class_smarty_a6c93acd86cae18c4630b272433b2e543}{\$\-\_\-conf\-\_\-obj} = null
+\item 
+\hyperlink{class_smarty_a4d4ad4af1600438042f93a4492f8dbbe}{\$\-\_\-config} = array(array('vars' =$>$ array(), 'files' =$>$ array()))
+\item 
+\hyperlink{class_smarty_a215c18c7e01e94ff276e0e7249bfd38d}{\$\-\_\-smarty\-\_\-md5} = 'f8d698aea36fcbead2b9d5359ffca76f'
+\item 
+\hyperlink{class_smarty_a01caaf3772469caf98e39064bf5d7d8f}{\$\-\_\-version} = '2.\-6.\-0'
+\item 
+\hyperlink{class_smarty_a6167b63640563df2374a677f4ed41641}{\$\-\_\-inclusion\-\_\-depth} = 0
+\item 
+\hyperlink{class_smarty_ac327b0792184db847b78cae7da804eba}{\$\-\_\-compile\-\_\-id} = null
+\item 
+\hyperlink{class_smarty_a39de745821c96537c5f36d79120e1413}{\$\-\_\-smarty\-\_\-debug\-\_\-id} = '\-S\-M\-A\-R\-T\-Y\-\_\-\-D\-E\-B\-U\-G'
+\item 
+\hyperlink{class_smarty_a751873e7923220e5351800cc29fef3b3}{\$\-\_\-smarty\-\_\-debug\-\_\-info} = array()
+\item 
+\hyperlink{class_smarty_acf32b5dd8fecc400d48e7452b5ec5640}{\$\-\_\-cache\-\_\-info} = array()
+\item 
+\hyperlink{class_smarty_affa1e29315f40fe30ea516c7e8f2430e}{\$\-\_\-file\-\_\-perms} = 0644
+\item 
+\hyperlink{class_smarty_a917cec287e9c00b1c188e4a815b279b2}{\$\-\_\-dir\-\_\-perms} = 0771
+\item 
+\hyperlink{class_smarty_a89d5e48a4a6c2e53471a755ff63acb69}{\$\-\_\-reg\-\_\-objects} = array()
+\item 
+\hyperlink{class_smarty_a5e55c6109989b57b8cd655f6ad56bb61}{\$\-\_\-plugins}
+\item 
+\hyperlink{class_smarty_a0a5b5d0884aa98c7f7135d3aba17f578}{\$\-\_\-cache\-\_\-serials} = array()
+\item 
+\hyperlink{class_smarty_a7f51c31864e6e5241313a2102dd32808}{\$\-\_\-cache\-\_\-include} = null
+\item 
+\hyperlink{class_smarty_a1fbc7764bc21f54adbe1ee17d9c72115}{\$\-\_\-cache\-\_\-including} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 73 of file \-Smarty.\-class.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_smarty_af0c22913faf4ec5e6d8674c643c69cc5}{\index{\-Smarty@{\-Smarty}!\-\_\-compile\-\_\-resource@{\-\_\-compile\-\_\-resource}}
+\index{\-\_\-compile\-\_\-resource@{\-\_\-compile\-\_\-resource}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-compile\-\_\-resource}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-compile\-\_\-resource} (
+\begin{DoxyParamCaption}
+\item[{\$}]{resource\-\_\-name, }
+\item[{\$}]{compile\-\_\-path}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_af0c22913faf4ec5e6d8674c643c69cc5}
+compile the template
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource\-\_\-name} & \\
+\hline
+string & {\em \$compile\-\_\-path} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 1446 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+
+        $_params = array('resource_name' => $resource_name);
+        if (!$this->_fetch_resource_info($_params)) {
+            return false;
+        }
+
+        $_source_content = $_params['source_content'];
+        $_resource_timestamp = $_params['resource_timestamp'];
+        $_cache_include    = substr($compile_path, 0, -4).'.inc';
+
+        if ($this->_compile_source($resource_name, $_source_content, 
+      $_compiled_content, $_cache_include)) {
+            // if a _cache_serial was set, we also have to write an
+       include-file:
+            if ($this->_cache_include_info) {
+                require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.write_compiled_include.php');
+                smarty_core_write_compiled_include(array_merge($this->
+      _cache_include_info, array('compiled_content'=>$_compiled_content)),  $this);
+            }
+
+            $_params = array('compile_path'=>$compile_path, 'compiled_content' 
+      => $_compiled_content, 'resource_timestamp' => $_resource_timestamp);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.write_compiled_resource.php');
+            smarty_core_write_compiled_resource($_params, $this);
+
+            return true;
+        } else {
+            $this->trigger_error($smarty_compiler->_error_msg);
+            return false;
+        }
+
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a9df9b14069c359f1f45416acc6d7d81f}{\index{\-Smarty@{\-Smarty}!\-\_\-compile\-\_\-source@{\-\_\-compile\-\_\-source}}
+\index{\-\_\-compile\-\_\-source@{\-\_\-compile\-\_\-source}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-compile\-\_\-source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-compile\-\_\-source} (
+\begin{DoxyParamCaption}
+\item[{\$}]{resource\-\_\-name, }
+\item[{\&\$}]{source\-\_\-content, }
+\item[{\&\$}]{compiled\-\_\-content, }
+\item[{\$}]{cache\-\_\-include\-\_\-path = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a9df9b14069c359f1f45416acc6d7d81f}
+compile the given source
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource\-\_\-name} & \\
+\hline
+string & {\em \$source\-\_\-content} & \\
+\hline
+string & {\em \$compiled\-\_\-content} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 1485 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (file_exists(SMARTY_DIR . $this->compiler_file)) {
+            require_once(SMARTY_DIR . $this->compiler_file);
+        } else {
+            // use include_path
+            require_once($this->compiler_file);
+        }
+
+
+        $smarty_compiler = new $this->compiler_class;
+
+        $smarty_compiler->template_dir      = $this->template_dir;
+        $smarty_compiler->compile_dir       = $this->compile_dir;
+        $smarty_compiler->plugins_dir       = $this->plugins_dir;
+        $smarty_compiler->config_dir        = $this->config_dir;
+        $smarty_compiler->force_compile     = $this->force_compile;
+        $smarty_compiler->caching           = $this->caching;
+        $smarty_compiler->php_handling      = $this->php_handling;
+        $smarty_compiler->left_delimiter    = $this->left_delimiter;
+        $smarty_compiler->right_delimiter   = $this->right_delimiter;
+        $smarty_compiler->_version          = $this->_version;
+        $smarty_compiler->security          = $this->security;
+        $smarty_compiler->secure_dir        = $this->secure_dir;
+        $smarty_compiler->security_settings = $this->security_settings;
+        $smarty_compiler->trusted_dir       = $this->trusted_dir;
+        $smarty_compiler->_reg_objects      = &$this->_reg_objects;
+        $smarty_compiler->_plugins          = &$this->_plugins;
+        $smarty_compiler->_tpl_vars         = &$this->_tpl_vars;
+        $smarty_compiler->default_modifiers = $this->default_modifiers;
+        $smarty_compiler->compile_id        = $this->_compile_id;
+        $smarty_compiler->_config            = $this->_config;
+        $smarty_compiler->request_use_auto_globals  = $this->
+      request_use_auto_globals;
+
+        $smarty_compiler->_cache_serial = null;
+        $smarty_compiler->_cache_include = $cache_include_path;
+
+
+        $_results = $smarty_compiler->_compile_file($resource_name, 
+      $source_content, $compiled_content);
+
+        if ($smarty_compiler->_cache_serial) {
+            $this->_cache_include_info = array(
+                'cache_serial'=>$smarty_compiler->_cache_serial
+                ,'plugins_code'=>$smarty_compiler->_plugins_code
+                ,'include_file_path' => $cache_include_path);
+
+        } else {
+            $this->_cache_include_info = null;
+
+        }
+
+        return $_results;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a48d43e818f2469134f3202f1a4256917}{\index{\-Smarty@{\-Smarty}!\-\_\-dequote@{\-\_\-dequote}}
+\index{\-\_\-dequote@{\-\_\-dequote}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-dequote}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-dequote} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a48d43e818f2469134f3202f1a4256917}
+\-Remove starting and ending quotes from the string
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$string} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 1732 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (($string{0} == "'" || $string{0} == '"') &&
+            $string{strlen($string)-1} == $string{0})
+            return substr($string, 1, -1);
+        else
+            return $string;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a9b47d457e9e3d4d47a696d77dfa43e7f}{\index{\-Smarty@{\-Smarty}!\-\_\-eval@{\-\_\-eval}}
+\index{\-\_\-eval@{\-\_\-eval}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-eval}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-eval} (
+\begin{DoxyParamCaption}
+\item[{\$}]{code, }
+\item[{\$}]{params = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a9b47d457e9e3d4d47a696d77dfa43e7f}
+wrapper for eval() retaining \$this \begin{DoxyReturn}{\-Returns}
+mixed 
+\end{DoxyReturn}
+
+
+\-Definition at line 2000 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        return eval($code);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a0c3ac497dbe0e595d4f2a85f1168a219}{\index{\-Smarty@{\-Smarty}!\-\_\-fetch\-\_\-resource\-\_\-info@{\-\_\-fetch\-\_\-resource\-\_\-info}}
+\index{\-\_\-fetch\-\_\-resource\-\_\-info@{\-\_\-fetch\-\_\-resource\-\_\-info}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-fetch\-\_\-resource\-\_\-info}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-fetch\-\_\-resource\-\_\-info} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a0c3ac497dbe0e595d4f2a85f1168a219}
+fetch the template info. \-Gets timestamp, and source if get\-\_\-source is true
+
+sets \$source\-\_\-content to the source of the template, and \$resource\-\_\-timestamp to its time stamp 
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource\-\_\-name} & \\
+\hline
+string & {\em \$source\-\_\-content} & \\
+\hline
+integer & {\em \$resource\-\_\-timestamp} & \\
+\hline
+boolean & {\em \$get\-\_\-source} & \\
+\hline
+boolean & {\em \$quiet} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 1565 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if(!isset($params['get_source'])) { $params['get_source'] = true; }
+        if(!isset($params['quiet'])) { $params['quiet'] = false; }
+
+        $_return = false;
+        $_params = array('resource_name' => $params['resource_name']) ;
+        if (isset($params['resource_base_path']))
+            $_params['resource_base_path'] = $params['resource_base_path'];
+
+        if ($this->_parse_resource_name($_params)) {
+            $_resource_type = $_params['resource_type'];
+            $_resource_name = $_params['resource_name'];
+            switch ($_resource_type) {
+                case 'file':
+                    if ($params['get_source']) {
+                        $params['source_content'] = $this->_read_file(
+      $_resource_name);
+                    }
+                    $params['resource_timestamp'] = filemtime($_resource_name);
+                    $_return = is_file($_resource_name);
+                    break;
+
+                default:
+                    // call resource functions to fetch the template source and
+       timestamp
+                    if ($params['get_source']) {
+                        $_source_return = isset($this->_plugins['resource'][
+      $_resource_type]) &&
+                            call_user_func_array($this->_plugins['resource'][
+      $_resource_type][0][0],
+                                                 array($_resource_name, &
+      $params['source_content'], &$this));
+                    } else {
+                        $_source_return = true;
+                    }
+
+                    $_timestamp_return = isset($this->_plugins['resource'][
+      $_resource_type]) &&
+                        call_user_func_array($this->_plugins['resource'][
+      $_resource_type][0][1],
+                                             array($_resource_name, &$params['
+      resource_timestamp'], &$this));
+
+                    $_return = $_source_return && $_timestamp_return;
+                    break;
+            }
+        }
+
+        if (!$_return) {
+            // see if we can get a template with the default template handler
+            if (!empty($this->default_template_handler_func)) {
+                if (!is_callable($this->default_template_handler_func)) {
+                    $this->trigger_error("default template handler function \"
+      $this->default_template_handler_func\" doesn't exist.");
+                } else {
+                    $_return = call_user_func_array(
+                        $this->default_template_handler_func,
+                        array($_params['resource_type'], $_params['
+      resource_name'], &$params['source_content'], &$params['resource_timestamp'], &$this));
+                }
+            }
+        }
+
+        if (!$_return) {
+            if (!$params['quiet']) {
+                $this->trigger_error('unable to read resource: "' . $params['
+      resource_name'] . '"');
+            }
+        } else if ($_return && $this->security) {
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.is_secure.php');
+            if (!smarty_core_is_secure($_params, $this)) {
+                if (!$params['quiet'])
+                    $this->trigger_error('(secure mode) accessing "' . $params[
+      'resource_name'] . '" is not allowed');
+                $params['source_content'] = null;
+                $params['resource_timestamp'] = null;
+                return false;
+            }
+        }
+        return $_return;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a3e145fee368d93f35313bcb7018c1a76}{\index{\-Smarty@{\-Smarty}!\-\_\-get\-\_\-auto\-\_\-filename@{\-\_\-get\-\_\-auto\-\_\-filename}}
+\index{\-\_\-get\-\_\-auto\-\_\-filename@{\-\_\-get\-\_\-auto\-\_\-filename}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-get\-\_\-auto\-\_\-filename}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-get\-\_\-auto\-\_\-filename} (
+\begin{DoxyParamCaption}
+\item[{\$}]{auto\-\_\-base, }
+\item[{\$}]{auto\-\_\-source = {\ttfamily null}, }
+\item[{\$}]{auto\-\_\-id = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a3e145fee368d93f35313bcb7018c1a76}
+get a concrete filename for automagically created content
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$auto\-\_\-base} & \\
+\hline
+string & {\em \$auto\-\_\-source} & \\
+\hline
+string & {\em \$auto\-\_\-id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string  string$|$null  string$|$null 
+\end{DoxyReturn}
+
+
+\-Definition at line 1796 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $_compile_dir_sep =  $this->use_sub_dirs ? DIRECTORY_SEPARATOR : '^';
+
+        if(@is_dir($auto_base)) {
+            $_return = $auto_base . DIRECTORY_SEPARATOR;
+        } else {
+            // auto_base not found, try include_path
+            $_params = array('file_path' => $auto_base);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_include_path.php');
+            smarty_core_get_include_path($_params, $this);
+            $_return = isset($_params['new_file_path']) ? $_params['
+      new_file_path'] . DIRECTORY_SEPARATOR : null;
+        }
+
+        if(isset($auto_id)) {
+            // make auto_id safe for directory names
+            $auto_id = str_replace('%7C',$_compile_dir_sep,(urlencode($auto_id)
+      ));
+            // split into separate directories
+            $_return .= $auto_id . $_compile_dir_sep;
+        }
+
+        if(isset($auto_source)) {
+            // make source name safe for filename
+            $_filename = urlencode(basename($auto_source));
+            $_crc32 = crc32($auto_source) . $_compile_dir_sep;
+            // prepend %% to avoid name conflicts with
+            // with $params['auto_id'] names
+            $_crc32 = '%%' . substr($_crc32,0,3) . $_compile_dir_sep . '%%' . 
+      $_crc32;
+            $_return .= $_crc32 . $_filename;
+        }
+
+        return $_return;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ae59d86c80bb3e74dbe8831f7a0a0687c}{\index{\-Smarty@{\-Smarty}!\-\_\-get\-\_\-auto\-\_\-id@{\-\_\-get\-\_\-auto\-\_\-id}}
+\index{\-\_\-get\-\_\-auto\-\_\-id@{\-\_\-get\-\_\-auto\-\_\-id}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-get\-\_\-auto\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-get\-\_\-auto\-\_\-id} (
+\begin{DoxyParamCaption}
+\item[{\$}]{cache\-\_\-id = {\ttfamily null}, }
+\item[{\$}]{compile\-\_\-id = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ae59d86c80bb3e74dbe8831f7a0a0687c}
+returns an auto\-\_\-id for auto-\/file-\/functions
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$cache\-\_\-id} & \\
+\hline
+string & {\em \$compile\-\_\-id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string$|$null 
+\end{DoxyReturn}
+
+
+\-Definition at line 1854 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+                                                            {
+    if (isset($cache_id))
+        return (isset($compile_id)) ? $cache_id . '|' . $compile_id  : 
+      $cache_id;
+    elseif(isset($compile_id))
+        return $compile_id;
+    else
+        return null;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a8a89232edb42318063b90fee5f608ec0}{\index{\-Smarty@{\-Smarty}!\-\_\-get\-\_\-compile\-\_\-path@{\-\_\-get\-\_\-compile\-\_\-path}}
+\index{\-\_\-get\-\_\-compile\-\_\-path@{\-\_\-get\-\_\-compile\-\_\-path}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-get\-\_\-compile\-\_\-path}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-get\-\_\-compile\-\_\-path} (
+\begin{DoxyParamCaption}
+\item[{\$}]{resource\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a8a89232edb42318063b90fee5f608ec0}
+\-Get the compile path for this resource
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource\-\_\-name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string results of \hyperlink{class_smarty_a3e145fee368d93f35313bcb7018c1a76}{\-\_\-get\-\_\-auto\-\_\-filename()} 
+\end{DoxyReturn}
+
+
+\-Definition at line 1545 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        return $this->_get_auto_filename($this->compile_dir, $resource_name,
+                                         $this->_compile_id) . '.php';
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_aca3dac6a8fa20f5038e34af0c7f1c78b}{\index{\-Smarty@{\-Smarty}!\-\_\-get\-\_\-plugin\-\_\-filepath@{\-\_\-get\-\_\-plugin\-\_\-filepath}}
+\index{\-\_\-get\-\_\-plugin\-\_\-filepath@{\-\_\-get\-\_\-plugin\-\_\-filepath}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-get\-\_\-plugin\-\_\-filepath}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-get\-\_\-plugin\-\_\-filepath} (
+\begin{DoxyParamCaption}
+\item[{\$}]{type, }
+\item[{\$}]{name}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_aca3dac6a8fa20f5038e34af0c7f1c78b}
+get filepath of requested plugin
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$type} & \\
+\hline
+string & {\em \$name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string$|$false 
+\end{DoxyReturn}
+
+
+\-Definition at line 1399 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $_params = array('type' => $type, 'name' => $name);
+        require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.assemble_plugin_filepath.php');
+        return smarty_core_assemble_plugin_filepath($_params, $this);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a9e571fe5ba948fca1a9b31ac69e24546}{\index{\-Smarty@{\-Smarty}!\-\_\-include@{\-\_\-include}}
+\index{\-\_\-include@{\-\_\-include}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-include}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-include} (
+\begin{DoxyParamCaption}
+\item[{\$}]{filename, }
+\item[{\$}]{once = {\ttfamily false}, }
+\item[{\$}]{params = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a9e571fe5ba948fca1a9b31ac69e24546}
+wrapper for include() retaining \$this \begin{DoxyReturn}{\-Returns}
+mixed 
+\end{DoxyReturn}
+
+
+\-Definition at line 1986 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($once) {
+            return include_once($filename);
+        } else {
+            return include($filename);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a315bf9a64ca2baea77f8868804d847be}{\index{\-Smarty@{\-Smarty}!\-\_\-is\-\_\-compiled@{\-\_\-is\-\_\-compiled}}
+\index{\-\_\-is\-\_\-compiled@{\-\_\-is\-\_\-compiled}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-is\-\_\-compiled}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-is\-\_\-compiled} (
+\begin{DoxyParamCaption}
+\item[{\$}]{resource\-\_\-name, }
+\item[{\$}]{compile\-\_\-path}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a315bf9a64ca2baea77f8868804d847be}
+test if resource needs compiling
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource\-\_\-name} & \\
+\hline
+string & {\em \$compile\-\_\-path} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 1413 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (!$this->force_compile && file_exists($compile_path)) {
+            if (!$this->compile_check) {
+                // no need to check compiled file
+                return true;
+            } else {
+                // get file source and timestamp
+                $_params = array('resource_name' => $resource_name, 'get_source
+      '=>false);
+                if (!$this->_fetch_resource_info($_params, $this)) {
+                    return false;
+                }
+                if ($_params['resource_timestamp'] <= filemtime($compile_path))
+       {
+                    // template not expired, no recompile
+                    return true;
+                } else {
+                    // compile template
+                    return false;
+                }
+            }
+        } else {
+            // compiled template does not exist, or forced compile
+            return false;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a3fd3782e935db8cbac33da3d735df988}{\index{\-Smarty@{\-Smarty}!\-\_\-parse\-\_\-resource\-\_\-name@{\-\_\-parse\-\_\-resource\-\_\-name}}
+\index{\-\_\-parse\-\_\-resource\-\_\-name@{\-\_\-parse\-\_\-resource\-\_\-name}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-parse\-\_\-resource\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-parse\-\_\-resource\-\_\-name} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a3fd3782e935db8cbac33da3d735df988}
+parse out the type and name from the resource
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource\-\_\-base\-\_\-path} & \\
+\hline
+string & {\em \$resource\-\_\-name} & \\
+\hline
+string & {\em \$resource\-\_\-type} & \\
+\hline
+string & {\em \$resource\-\_\-name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 1647 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+
+        // split tpl_path by the first colon
+        $_resource_name_parts = explode(':', $params['resource_name'], 2);
+
+        if (count($_resource_name_parts) == 1) {
+            // no resource type given
+            $params['resource_type'] = $this->default_resource_type;
+            $params['resource_name'] = $_resource_name_parts[0];
+        } else {
+            if(strlen($_resource_name_parts[0]) == 1) {
+                // 1 char is not resource type, but part of filepath
+                $params['resource_type'] = $this->default_resource_type;
+                $params['resource_name'] = $params['resource_name'];
+            } else {
+                $params['resource_type'] = $_resource_name_parts[0];
+                $params['resource_name'] = $_resource_name_parts[1];
+            }
+        }
+
+        if ($params['resource_type'] == 'file') {
+            if (!preg_match("/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/", $params['
+      resource_name'])) {
+                // relative pathname to $params['resource_base_path']
+                // use the first directory where the file is found
+                if (isset($params['resource_base_path'])) {
+                    $_resource_base_path = (array)$params['resource_base_path']
+      ;
+                } else {
+                    $_resource_base_path = (array)$this->template_dir;
+                    $_resource_base_path[] = '.';
+                }
+                foreach ($_resource_base_path as $_curr_path) {
+                    $_fullpath = $_curr_path . DIRECTORY_SEPARATOR . $params['
+      resource_name'];
+                    if (file_exists($_fullpath) && is_file($_fullpath)) {
+                        $params['resource_name'] = $_fullpath;
+                        return true;
+                    }
+                    // didn't find the file, try include_path
+                    $_params = array('file_path' => $_fullpath);
+                    require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_include_path.php');
+                    if(smarty_core_get_include_path($_params, $this)) {
+                        $params['resource_name'] = $_params['new_file_path'];
+                        return true;
+                    }
+                }
+                return false;
+            }
+        } elseif (empty($this->_plugins['resource'][$params['resource_type']]))
+       {
+            $_params = array('type' => $params['resource_type']);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.load_resource_plugin.php');
+            smarty_core_load_resource_plugin($_params, $this);
+        }
+
+        return true;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a7ee77f3dd4e8b79f3f070b20e890af00}{\index{\-Smarty@{\-Smarty}!\-\_\-process\-\_\-compiled\-\_\-include\-\_\-callback@{\-\_\-process\-\_\-compiled\-\_\-include\-\_\-callback}}
+\index{\-\_\-process\-\_\-compiled\-\_\-include\-\_\-callback@{\-\_\-process\-\_\-compiled\-\_\-include\-\_\-callback}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-process\-\_\-compiled\-\_\-include\-\_\-callback}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-process\-\_\-compiled\-\_\-include\-\_\-callback} (
+\begin{DoxyParamCaption}
+\item[{\$}]{match}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a7ee77f3dd4e8b79f3f070b20e890af00}
+callback function for preg\-\_\-replace, to call a non-\/cacheable block \begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 1894 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+                                                        {
+        $_func = '_smarty_tplfunc_'.$match[2].'_'.$match[3];
+        ob_start();
+        $_func($this);
+        $_ret = ob_get_contents();
+        ob_end_clean();
+        return $_ret;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a8c4016aac6db09073b41520c2e5faec5}{\index{\-Smarty@{\-Smarty}!\-\_\-read\-\_\-file@{\-\_\-read\-\_\-file}}
+\index{\-\_\-read\-\_\-file@{\-\_\-read\-\_\-file}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-read\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-read\-\_\-file} (
+\begin{DoxyParamCaption}
+\item[{\$}]{filename, }
+\item[{\$}]{start = {\ttfamily null}, }
+\item[{\$}]{lines = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a8c4016aac6db09073b41520c2e5faec5}
+read in a file from line \$start for \$lines. read the entire file if \$start and \$lines are null.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$filename} & \\
+\hline
+integer & {\em \$start} & \\
+\hline
+integer & {\em \$lines} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 1751 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (!($fd = @fopen($filename, 'r'))) {
+            return false;
+        }
+        flock($fd, LOCK_SH);
+        if ($start == null && $lines == null) {
+            // read the entire file
+            $contents = fread($fd, filesize($filename));
+        } else {
+            if ( $start > 1 ) {
+                // skip the first lines before $start
+                for ($loop=1; $loop < $start; $loop++) {
+                    fgets($fd, 65536);
+                }
+            }
+            if ( $lines == null ) {
+                // read the rest of the file
+                while (!feof($fd)) {
+                    $contents .= fgets($fd, 65536);
+                }
+            } else {
+                // read up to $lines lines
+                for ($loop=0; $loop < $lines; $loop++) {
+                    $contents .= fgets($fd, 65536);
+                    if (feof($fd)) {
+                        break;
+                    }
+                }
+            }
+        }
+        fclose($fd);
+        return $contents;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_aadef62274bb4693faadaa1bfbfddae6f}{\index{\-Smarty@{\-Smarty}!\-\_\-run\-\_\-mod\-\_\-handler@{\-\_\-run\-\_\-mod\-\_\-handler}}
+\index{\-\_\-run\-\_\-mod\-\_\-handler@{\-\_\-run\-\_\-mod\-\_\-handler}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-run\-\_\-mod\-\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-run\-\_\-mod\-\_\-handler} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_aadef62274bb4693faadaa1bfbfddae6f}
+\-Handle modifiers
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string | null & {\em \$modifier\-\_\-name} & \\
+\hline
+array | null & {\em \$map\-\_\-array} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string result of modifiers 
+\end{DoxyReturn}
+
+
+\-Definition at line 1711 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $_args = func_get_args();
+        list($_modifier_name, $_map_array) = array_splice($_args, 0, 2);
+        list($_func_name, $_tpl_file, $_tpl_line) =
+            $this->_plugins['modifier'][$_modifier_name];
+
+        $_var = $_args[0];
+        foreach ($_var as $_key => $_val) {
+            $_args[0] = $_val;
+            $_var[$_key] = call_user_func_array($_func_name, $_args);
+        }
+        return $_var;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_accf8fe1e81964b9abae199964a229c5b}{\index{\-Smarty@{\-Smarty}!\-\_\-smarty\-\_\-cache\-\_\-attrs@{\-\_\-smarty\-\_\-cache\-\_\-attrs}}
+\index{\-\_\-smarty\-\_\-cache\-\_\-attrs@{\-\_\-smarty\-\_\-cache\-\_\-attrs}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-smarty\-\_\-cache\-\_\-attrs}]{\setlength{\rightskip}{0pt plus 5cm}\& {\bf \-\_\-smarty\-\_\-cache\-\_\-attrs} (
+\begin{DoxyParamCaption}
+\item[{\$}]{cache\-\_\-serial, }
+\item[{\$}]{count}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_accf8fe1e81964b9abae199964a229c5b}
+get or set an array of cached attributes for function that is not cacheable \begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 1963 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+                                                         {
+        $_cache_attrs =& $this->_cache_info['cache_attrs'][$cache_serial][$count
+      ];
+
+        if ($this->_cache_including) {
+            /* return next set of cache_attrs */
+            $_return =& current($_cache_attrs);
+            next($_cache_attrs);
+            return $_return;
+
+        } else {
+            /* add a reference to a new set of cache_attrs */
+            $_cache_attrs[] = array();
+            return $_cache_attrs[count($_cache_attrs)-1];
+
+        }
+
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a2636e88dc9c8c3876aa63720c7d6ac25}{\index{\-Smarty@{\-Smarty}!\-\_\-smarty\-\_\-include@{\-\_\-smarty\-\_\-include}}
+\index{\-\_\-smarty\-\_\-include@{\-\_\-smarty\-\_\-include}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-smarty\-\_\-include}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-smarty\-\_\-include} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a2636e88dc9c8c3876aa63720c7d6ac25}
+called for included templates
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$\-\_\-smarty\-\_\-include\-\_\-tpl\-\_\-file} & \\
+\hline
+string & {\em \$\-\_\-smarty\-\_\-include\-\_\-vars} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1913 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->debugging) {
+            $_params = array();
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_microtime.php');
+            $debug_start_time = smarty_core_get_microtime($_params, $this);
+            $this->_smarty_debug_info[] = array('type'      => 'template',
+                                                  'filename'  => $params['
+      smarty_include_tpl_file'],
+                                                  'depth'     => ++$this->
+      _inclusion_depth);
+            $included_tpls_idx = count($this->_smarty_debug_info) - 1;
+        }
+
+        $this->_tpl_vars = array_merge($this->_tpl_vars, $params['
+      smarty_include_vars']);
+
+        // config vars are treated as local, so push a copy of the
+        // current ones onto the front of the stack
+        array_unshift($this->_config, $this->_config[0]);
+
+        $_smarty_compile_path = $this->_get_compile_path($params['
+      smarty_include_tpl_file']);
+
+
+        if ($this->_is_compiled($params['smarty_include_tpl_file'], 
+      $_smarty_compile_path)
+            || $this->_compile_resource($params['smarty_include_tpl_file'], 
+      $_smarty_compile_path))
+        {
+            include($_smarty_compile_path);
+        }
+
+        // pop the local vars off the front of the stack
+        array_shift($this->_config);
+
+        $this->_inclusion_depth--;
+
+        if ($this->debugging) {
+            // capture time for debugging info
+            $_params = array();
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_microtime.php');
+            $this->_smarty_debug_info[$included_tpls_idx]['exec_time'] = 
+      smarty_core_get_microtime($_params, $this) - $debug_start_time;
+        }
+
+        if ($this->caching) {
+            $this->_cache_info['template'][$params['smarty_include_tpl_file']] 
+      = true;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a069f86732ff92f739c488416e0958307}{\index{\-Smarty@{\-Smarty}!\-\_\-trigger\-\_\-fatal\-\_\-error@{\-\_\-trigger\-\_\-fatal\-\_\-error}}
+\index{\-\_\-trigger\-\_\-fatal\-\_\-error@{\-\_\-trigger\-\_\-fatal\-\_\-error}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-trigger\-\_\-fatal\-\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-trigger\-\_\-fatal\-\_\-error} (
+\begin{DoxyParamCaption}
+\item[{\$}]{error\-\_\-msg, }
+\item[{\$}]{tpl\-\_\-file = {\ttfamily null}, }
+\item[{\$}]{tpl\-\_\-line = {\ttfamily null}, }
+\item[{\$}]{file = {\ttfamily null}, }
+\item[{\$}]{line = {\ttfamily null}, }
+\item[{\$}]{error\-\_\-type = {\ttfamily \-E\-\_\-\-U\-S\-E\-R\-\_\-\-E\-R\-R\-O\-R}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a069f86732ff92f739c488416e0958307}
+trigger \hyperlink{class_smarty}{\-Smarty} plugin error
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$error\-\_\-msg} & \\
+\hline
+string & {\em \$tpl\-\_\-file} & \\
+\hline
+integer & {\em \$tpl\-\_\-line} & \\
+\hline
+string & {\em \$file} & \\
+\hline
+integer & {\em \$line} & \\
+\hline
+integer & {\em \$error\-\_\-type} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1873 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if(isset($file) && isset($line)) {
+            $info = ' ('.basename($file).", line $line)";
+        } else {
+            $info = null;
+        }
+        if (isset($tpl_line) && isset($tpl_file)) {
+            trigger_error("Smarty error: [in " . $tpl_file . " line " .
+                          $tpl_line . "]: $error_msg$info", $error_type);
+        } else {
+            trigger_error("Smarty error: $error_msg$info", $error_type);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ab5aba685ce31a74ce598d75f623361dd}{\index{\-Smarty@{\-Smarty}!\-\_\-unlink@{\-\_\-unlink}}
+\index{\-\_\-unlink@{\-\_\-unlink}!Smarty@{\-Smarty}}
+\subsubsection[{\-\_\-unlink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-unlink} (
+\begin{DoxyParamCaption}
+\item[{\$}]{resource, }
+\item[{\$}]{exp\-\_\-time = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ab5aba685ce31a74ce598d75f623361dd}
+unlink a file, possibly using expiration time
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource} & \\
+\hline
+integer & {\em \$exp\-\_\-time} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1836 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if(isset($exp_time)) {
+            if(time() - @filemtime($resource) >= $exp_time) {
+                return @unlink($resource);
+            }
+        } else {
+            return @unlink($resource);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a9870a97b08f66d2c1b19f3e54770cb29}{\index{\-Smarty@{\-Smarty}!append@{append}}
+\index{append@{append}!Smarty@{\-Smarty}}
+\subsubsection[{append}]{\setlength{\rightskip}{0pt plus 5cm}{\bf append} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-var, }
+\item[{\$}]{value = {\ttfamily null}, }
+\item[{\$}]{merge = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a9870a97b08f66d2c1b19f3e54770cb29}
+appends values to template variables
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array | string & {\em \$tpl\-\_\-var} & the template variable name(s) \\
+\hline
+mixed & {\em \$value} & the value to append \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 657 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (is_array($tpl_var)) {
+            // $tpl_var is an array, ignore $value
+            foreach ($tpl_var as $_key => $_val) {
+                if ($_key != '') {
+                    if(!@is_array($this->_tpl_vars[$_key])) {
+                        settype($this->_tpl_vars[$_key],'array');
+                    }
+                    if($merge && is_array($_val)) {
+                        foreach($_val as $_mkey => $_mval) {
+                            $this->_tpl_vars[$_key][$_mkey] = $_mval;
+                        }
+                    } else {
+                        $this->_tpl_vars[$_key][] = $_val;
+                    }
+                }
+            }
+        } else {
+            if ($tpl_var != '' && isset($value)) {
+                if(!@is_array($this->_tpl_vars[$tpl_var])) {
+                    settype($this->_tpl_vars[$tpl_var],'array');
+                }
+                if($merge && is_array($value)) {
+                    foreach($value as $_mkey => $_mval) {
+                        $this->_tpl_vars[$tpl_var][$_mkey] = $_mval;
+                    }
+                } else {
+                    $this->_tpl_vars[$tpl_var][] = $value;
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a1a744cb1e3d6473ddcd531412c54f07e}{\index{\-Smarty@{\-Smarty}!append\-\_\-by\-\_\-ref@{append\-\_\-by\-\_\-ref}}
+\index{append\-\_\-by\-\_\-ref@{append\-\_\-by\-\_\-ref}!Smarty@{\-Smarty}}
+\subsubsection[{append\-\_\-by\-\_\-ref}]{\setlength{\rightskip}{0pt plus 5cm}{\bf append\-\_\-by\-\_\-ref} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-var, }
+\item[{\&\$}]{value, }
+\item[{\$}]{merge = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a1a744cb1e3d6473ddcd531412c54f07e}
+appends values to template variables by reference
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$tpl\-\_\-var} & the template variable name \\
+\hline
+mixed & {\em \$value} & the referenced value to append \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 697 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($tpl_var != '' && isset($value)) {
+            if(!@is_array($this->_tpl_vars[$tpl_var])) {
+             settype($this->_tpl_vars[$tpl_var],'array');
+            }
+            if ($merge && is_array($value)) {
+                foreach($value as $_key => $_val) {
+                    $this->_tpl_vars[$tpl_var][$_key] = &$value[$_key];
+                }
+            } else {
+                $this->_tpl_vars[$tpl_var][] = &$value;
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a12150893d5c5bab121e248f450e727fa}{\index{\-Smarty@{\-Smarty}!assign@{assign}}
+\index{assign@{assign}!Smarty@{\-Smarty}}
+\subsubsection[{assign}]{\setlength{\rightskip}{0pt plus 5cm}{\bf assign} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-var, }
+\item[{\$}]{value = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a12150893d5c5bab121e248f450e727fa}
+assigns values to template variables
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array | string & {\em \$tpl\-\_\-var} & the template variable name(s) \\
+\hline
+mixed & {\em \$value} & the value to assign \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 625 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (is_array($tpl_var)){
+            foreach ($tpl_var as $key => $val) {
+                if ($key != '') {
+                    $this->_tpl_vars[$key] = $val;
+                }
+            }
+        } else {
+            if ($tpl_var != '')
+                $this->_tpl_vars[$tpl_var] = $value;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_aebc96e36370712d0c9e5896db76bd487}{\index{\-Smarty@{\-Smarty}!assign\-\_\-by\-\_\-ref@{assign\-\_\-by\-\_\-ref}}
+\index{assign\-\_\-by\-\_\-ref@{assign\-\_\-by\-\_\-ref}!Smarty@{\-Smarty}}
+\subsubsection[{assign\-\_\-by\-\_\-ref}]{\setlength{\rightskip}{0pt plus 5cm}{\bf assign\-\_\-by\-\_\-ref} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-var, }
+\item[{\&\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_aebc96e36370712d0c9e5896db76bd487}
+assigns values to template variables by reference
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$tpl\-\_\-var} & the template variable name \\
+\hline
+mixed & {\em \$value} & the referenced value to assign \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 645 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($tpl_var != '')
+            $this->_tpl_vars[$tpl_var] = &$value;
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a47a576000a48c74fea66a209d7f0ac21}{\index{\-Smarty@{\-Smarty}!clear\-\_\-all\-\_\-assign@{clear\-\_\-all\-\_\-assign}}
+\index{clear\-\_\-all\-\_\-assign@{clear\-\_\-all\-\_\-assign}!Smarty@{\-Smarty}}
+\subsubsection[{clear\-\_\-all\-\_\-assign}]{\setlength{\rightskip}{0pt plus 5cm}{\bf clear\-\_\-all\-\_\-assign} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a47a576000a48c74fea66a209d7f0ac21}
+clear all the assigned template variables. 
+
+\-Definition at line 1062 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->_tpl_vars = array();
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_aaf1eab6e680746ae852abfc3814382fb}{\index{\-Smarty@{\-Smarty}!clear\-\_\-all\-\_\-cache@{clear\-\_\-all\-\_\-cache}}
+\index{clear\-\_\-all\-\_\-cache@{clear\-\_\-all\-\_\-cache}!Smarty@{\-Smarty}}
+\subsubsection[{clear\-\_\-all\-\_\-cache}]{\setlength{\rightskip}{0pt plus 5cm}{\bf clear\-\_\-all\-\_\-cache} (
+\begin{DoxyParamCaption}
+\item[{\$}]{exp\-\_\-time = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_aaf1eab6e680746ae852abfc3814382fb}
+clear the entire contents of cache (all templates)
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$exp\-\_\-time} & expire time \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean results of \hyperlink{core_8rm__auto_8php_a72b382ce47f7275c407e80db88696130}{smarty\-\_\-core\-\_\-rm\-\_\-auto()} 
+\end{DoxyReturn}
+
+
+\-Definition at line 1015 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (!empty($this->cache_handler_func)) {
+            $dummy = null;
+            call_user_func_array($this->cache_handler_func,
+                           array('clear', &$this, &$dummy, null, null, null, 
+      $exp_time));
+        } else {
+            $_params = array('auto_base' => $this->cache_dir,
+                            'auto_source' => null,
+                            'auto_id' => null,
+                            'exp_time' => $exp_time);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.rm_auto.php');
+            return smarty_core_rm_auto($_params, $this);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ad0188dcb261ac235ac70c141f2e6657e}{\index{\-Smarty@{\-Smarty}!clear\-\_\-assign@{clear\-\_\-assign}}
+\index{clear\-\_\-assign@{clear\-\_\-assign}!Smarty@{\-Smarty}}
+\subsubsection[{clear\-\_\-assign}]{\setlength{\rightskip}{0pt plus 5cm}{\bf clear\-\_\-assign} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-var}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ad0188dcb261ac235ac70c141f2e6657e}
+clear the given assigned template variable.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$tpl\-\_\-var} & the template variable to clear \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 719 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (is_array($tpl_var))
+            foreach ($tpl_var as $curr_var)
+                unset($this->_tpl_vars[$curr_var]);
+        else
+            unset($this->_tpl_vars[$tpl_var]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a6b5412f074996dea92d89b32a13880d8}{\index{\-Smarty@{\-Smarty}!clear\-\_\-cache@{clear\-\_\-cache}}
+\index{clear\-\_\-cache@{clear\-\_\-cache}!Smarty@{\-Smarty}}
+\subsubsection[{clear\-\_\-cache}]{\setlength{\rightskip}{0pt plus 5cm}{\bf clear\-\_\-cache} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-file = {\ttfamily null}, }
+\item[{\$}]{cache\-\_\-id = {\ttfamily null}, }
+\item[{\$}]{compile\-\_\-id = {\ttfamily null}, }
+\item[{\$}]{exp\-\_\-time = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a6b5412f074996dea92d89b32a13880d8}
+clear cached content for the given template and cache id
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$tpl\-\_\-file} & name of template file \\
+\hline
+string & {\em \$cache\-\_\-id} & name of cache\-\_\-id \\
+\hline
+string & {\em \$compile\-\_\-id} & name of compile\-\_\-id \\
+\hline
+string & {\em \$exp\-\_\-time} & expiration time \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 983 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+
+        if (!isset($compile_id))
+            $compile_id = $this->compile_id;
+
+    if (!isset($tpl_file))
+        $compile_id = null;
+
+    $_auto_id = $this->_get_auto_id($cache_id, $compile_id);
+
+        if (!empty($this->cache_handler_func)) {
+            return call_user_func_array($this->cache_handler_func,
+                                  array('clear', &$this, &$dummy, $tpl_file, 
+      $cache_id, $compile_id, $exp_time));
+        } else {
+            $_params = array('auto_base' => $this->cache_dir,
+                            'auto_source' => $tpl_file,
+                            'auto_id' => $_auto_id,
+                            'exp_time' => $exp_time);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.rm_auto.php');
+            return smarty_core_rm_auto($_params, $this);
+        }
+
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a71153cdee03c4dcb864488b59442b162}{\index{\-Smarty@{\-Smarty}!clear\-\_\-compiled\-\_\-tpl@{clear\-\_\-compiled\-\_\-tpl}}
+\index{clear\-\_\-compiled\-\_\-tpl@{clear\-\_\-compiled\-\_\-tpl}!Smarty@{\-Smarty}}
+\subsubsection[{clear\-\_\-compiled\-\_\-tpl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf clear\-\_\-compiled\-\_\-tpl} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-file = {\ttfamily null}, }
+\item[{\$}]{compile\-\_\-id = {\ttfamily null}, }
+\item[{\$}]{exp\-\_\-time = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a71153cdee03c4dcb864488b59442b162}
+clears compiled version of specified template resource, or all compiled template files if one is not specified. \-This function is for advanced use only, not normally needed.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$tpl\-\_\-file} & \\
+\hline
+string & {\em \$compile\-\_\-id} & \\
+\hline
+string & {\em \$exp\-\_\-time} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean results of \hyperlink{core_8rm__auto_8php_a72b382ce47f7275c407e80db88696130}{smarty\-\_\-core\-\_\-rm\-\_\-auto()} 
+\end{DoxyReturn}
+
+
+\-Definition at line 1077 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($compile_id)) {
+            $compile_id = $this->compile_id;
+        }
+        $_params = array('auto_base' => $this->compile_dir,
+                        'auto_source' => $tpl_file,
+                        'auto_id' => $compile_id,
+                        'exp_time' => $exp_time,
+                        'extensions' => array('.inc', '.php'));
+        require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.rm_auto.php');
+        return smarty_core_rm_auto($_params, $this);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a889e401c09b8d2612e43a50cb2a7dc04}{\index{\-Smarty@{\-Smarty}!clear\-\_\-config@{clear\-\_\-config}}
+\index{clear\-\_\-config@{clear\-\_\-config}!Smarty@{\-Smarty}}
+\subsubsection[{clear\-\_\-config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf clear\-\_\-config} (
+\begin{DoxyParamCaption}
+\item[{\$}]{var = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a889e401c09b8d2612e43a50cb2a7dc04}
+clear configuration values
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$var} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1381 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if(!isset($var)) {
+            // clear all values
+            $this->_config = array(array('vars'  => array(),
+                                         'files' => array()));
+        } else {
+            unset($this->_config[0]['vars'][$var]);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ad7beb1fcf478744bfcb4892884559c79}{\index{\-Smarty@{\-Smarty}!config\-\_\-load@{config\-\_\-load}}
+\index{config\-\_\-load@{config\-\_\-load}!Smarty@{\-Smarty}}
+\subsubsection[{config\-\_\-load}]{\setlength{\rightskip}{0pt plus 5cm}{\bf config\-\_\-load} (
+\begin{DoxyParamCaption}
+\item[{\$}]{file, }
+\item[{\$}]{section = {\ttfamily null}, }
+\item[{\$}]{scope = {\ttfamily 'global'}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ad7beb1fcf478744bfcb4892884559c79}
+load configuration values
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$file} & \\
+\hline
+string & {\em \$section} & \\
+\hline
+string & {\em \$scope} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1354 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        require_once($this->_get_plugin_filepath('function', 'config_load'));
+        smarty_function_config_load(array('file' => $file, 'section' => 
+      $section, 'scope' => $scope), $this);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a7318c22504478672906d321cba2bd713}{\index{\-Smarty@{\-Smarty}!display@{display}}
+\index{display@{display}!Smarty@{\-Smarty}}
+\subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}{\bf display} (
+\begin{DoxyParamCaption}
+\item[{\$}]{resource\-\_\-name, }
+\item[{\$}]{cache\-\_\-id = {\ttfamily null}, }
+\item[{\$}]{compile\-\_\-id = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a7318c22504478672906d321cba2bd713}
+executes \& displays the template results
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource\-\_\-name} & \\
+\hline
+string & {\em \$cache\-\_\-id} & \\
+\hline
+string & {\em \$compile\-\_\-id} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1155 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->fetch($resource_name, $cache_id, $compile_id, true);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_acd45e8177ae9f297026ee9a0732e976c}{\index{\-Smarty@{\-Smarty}!fetch@{fetch}}
+\index{fetch@{fetch}!Smarty@{\-Smarty}}
+\subsubsection[{fetch}]{\setlength{\rightskip}{0pt plus 5cm}{\bf fetch} (
+\begin{DoxyParamCaption}
+\item[{\$}]{resource\-\_\-name, }
+\item[{\$}]{cache\-\_\-id = {\ttfamily null}, }
+\item[{\$}]{compile\-\_\-id = {\ttfamily null}, }
+\item[{\$}]{display = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_acd45e8177ae9f297026ee9a0732e976c}
+executes \& returns or displays the template results
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource\-\_\-name} & \\
+\hline
+string & {\em \$cache\-\_\-id} & \\
+\hline
+string & {\em \$compile\-\_\-id} & \\
+\hline
+boolean & {\em \$display} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1168 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        static $_cache_info = array();
+
+        $_smarty_old_error_level = $this->debugging ? error_reporting() : 
+      error_reporting(error_reporting() & ~E_NOTICE);
+
+        if (!$this->debugging && $this->debugging_ctrl == 'URL'
+               && @strstr($GLOBALS['HTTP_SERVER_VARS']['QUERY_STRING'], $this->
+      _smarty_debug_id)) {
+            // enable debugging from URL
+            $this->debugging = true;
+        }
+
+        if ($this->debugging) {
+            // capture time for debugging info
+            $_params = array();
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_microtime.php');
+            $_debug_start_time = smarty_core_get_microtime($_params, $this);
+            $this->_smarty_debug_info[] = array('type'      => 'template',
+                                                'filename'  => $resource_name,
+                                                'depth'     => 0);
+            $_included_tpls_idx = count($this->_smarty_debug_info) - 1;
+        }
+
+        if (!isset($compile_id)) {
+            $compile_id = $this->compile_id;
+        }
+
+        $this->_compile_id = $compile_id;
+        $this->_inclusion_depth = 0;
+
+        if ($this->caching) {
+            // save old cache_info, initialize cache_info
+            array_push($_cache_info, $this->_cache_info);
+            $this->_cache_info = array();
+            $_params = array(
+                'tpl_file' => $resource_name,
+                'cache_id' => $cache_id,
+                'compile_id' => $compile_id,
+                'results' => null
+            );
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.read_cache_file.php');
+            if (smarty_core_read_cache_file($_params, $this)) {
+                $_smarty_results = $_params['results'];
+                if (@count($this->_cache_info['insert_tags'])) {
+                    $_params = array('plugins' => $this->_cache_info['
+      insert_tags']);
+                    require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.load_plugins.php');
+                    smarty_core_load_plugins($_params, $this);
+                    $_params = array('results' => $_smarty_results);
+                    require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.process_cached_inserts.php');
+                    $_smarty_results = smarty_core_process_cached_inserts(
+      $_params, $this);
+                }
+                if (@count($this->_cache_info['cache_serials'])) {
+                    $_params = array('results' => $_smarty_results);
+                    require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.process_compiled_include.php');
+                    $_smarty_results = smarty_core_process_compiled_include(
+      $_params, $this);
+                }
+
+
+                if ($display) {
+                    if ($this->debugging)
+                    {
+                        // capture time for debugging info
+                        $_params = array();
+                        require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR 
+      . 'core.get_microtime.php');
+                        $this->_smarty_debug_info[$_included_tpls_idx]['
+      exec_time'] = smarty_core_get_microtime($_params, $this) - $_debug_start_time;
+                        require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR 
+      . 'core.display_debug_console.php');
+                        $_smarty_results .= smarty_core_display_debug_console(
+      $_params, $this);
+                    }
+                    if ($this->cache_modified_check) {
+                        $_last_modified_date = @substr($GLOBALS['
+      HTTP_SERVER_VARS']['HTTP_IF_MODIFIED_SINCE'], 0, strpos($GLOBALS['HTTP_SERVER_VARS']['
+      HTTP_IF_MODIFIED_SINCE'], 'GMT') + 3);
+                        $_gmt_mtime = gmdate('D, d M Y H:i:s', $this->
+      _cache_info['timestamp']).' GMT';
+                        if (@count($this->_cache_info['insert_tags']) == 0
+                            && !$this->_cache_serials
+                            && $_gmt_mtime == $_last_modified_date) {
+                            if (php_sapi_name()=='cgi')
+                                header("Status: 304 Not Modified");
+                            else
+                                header("HTTP/1.1 304 Not Modified");
+
+                        } else {
+                            header("Last-Modified: ".$_gmt_mtime);
+                            echo $_smarty_results;
+                        }
+                    } else {
+                            echo $_smarty_results;
+                    }
+                    error_reporting($_smarty_old_error_level);
+                    // restore initial cache_info
+                    $this->_cache_info = array_pop($_cache_info);
+                    return true;
+                } else {
+                    error_reporting($_smarty_old_error_level);
+                    // restore initial cache_info
+                    $this->_cache_info = array_pop($_cache_info);
+                    return $_smarty_results;
+                }
+            } else {
+                $this->_cache_info['template'][$resource_name] = true;
+                if ($this->cache_modified_check) {
+                    header("Last-Modified: ".gmdate('D, d M Y H:i:s', time()).'
+       GMT');
+                }
+            }
+        }
+
+        // load filters that are marked as autoload
+        if (count($this->autoload_filters)) {
+            foreach ($this->autoload_filters as $_filter_type => $_filters) {
+                foreach ($_filters as $_filter) {
+                    $this->load_filter($_filter_type, $_filter);
+                }
+            }
+        }
+
+        $_smarty_compile_path = $this->_get_compile_path($resource_name);
+
+        // if we just need to display the results, don't perform output
+        // buffering - for speed
+        $_cache_including = $this->_cache_including;
+        $this->_cache_including = false;
+        if ($display && !$this->caching && count($this->_plugins['outputfilter'
+      ]) == 0) {
+            if ($this->_is_compiled($resource_name, $_smarty_compile_path)
+                    || $this->_compile_resource($resource_name, 
+      $_smarty_compile_path))
+            {
+                include($_smarty_compile_path);
+            }
+        } else {
+            ob_start();
+            if ($this->_is_compiled($resource_name, $_smarty_compile_path)
+                    || $this->_compile_resource($resource_name, 
+      $_smarty_compile_path))
+            {
+                include($_smarty_compile_path);
+            }
+            $_smarty_results = ob_get_contents();
+            ob_end_clean();
+
+            foreach ((array)$this->_plugins['outputfilter'] as $_output_filter)
+       {
+                $_smarty_results = call_user_func_array($_output_filter[0], 
+      array($_smarty_results, &$this));
+            }
+        }
+
+        if ($this->caching) {
+            $_params = array('tpl_file' => $resource_name,
+                        'cache_id' => $cache_id,
+                        'compile_id' => $compile_id,
+                        'results' => $_smarty_results);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.write_cache_file.php');
+            smarty_core_write_cache_file($_params, $this);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.process_cached_inserts.php');
+            $_smarty_results = smarty_core_process_cached_inserts($_params, 
+      $this);
+
+            if ($this->_cache_serials) {
+                // strip nocache-tags from output
+                $_smarty_results = preg_replace('!(\{/?nocache\:[0-9a-f]{32}#\d
+      +\})!s'
+                                                ,''
+                                                ,$_smarty_results);
+            }
+            // restore initial cache_info
+            $this->_cache_info = array_pop($_cache_info);
+        }
+        $this->_cache_including = $_cache_including;
+
+        if ($display) {
+            if (isset($_smarty_results)) { echo $_smarty_results; }
+            if ($this->debugging) {
+                // capture time for debugging info
+                $_params = array();
+                require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_microtime.php');
+                $this->_smarty_debug_info[$_included_tpls_idx]['exec_time'] = (
+      smarty_core_get_microtime($_params, $this) - $_debug_start_time);
+                require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.display_debug_console.php');
+                echo smarty_core_display_debug_console($_params, $this);
+            }
+            error_reporting($_smarty_old_error_level);
+            return;
+        } else {
+            error_reporting($_smarty_old_error_level);
+            if (isset($_smarty_results)) { return $_smarty_results; }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a2382294d36d8e557c475d66350844bfb}{\index{\-Smarty@{\-Smarty}!get\-\_\-config\-\_\-vars@{get\-\_\-config\-\_\-vars}}
+\index{get\-\_\-config\-\_\-vars@{get\-\_\-config\-\_\-vars}!Smarty@{\-Smarty}}
+\subsubsection[{get\-\_\-config\-\_\-vars}]{\setlength{\rightskip}{0pt plus 5cm}\& {\bf get\-\_\-config\-\_\-vars} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a2382294d36d8e557c475d66350844bfb}
+\-Returns an array containing config variables
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \\
+\hline
+string & {\em \$type} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 1127 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if(!isset($name) && is_array($this->_config[0])) {
+            return $this->_config[0]['vars'];
+        } else if(isset($this->_config[0]['vars'][$name])) {
+            return $this->_config[0]['vars'][$name];
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ae922fb129fc263df7c3f4b83880b199d}{\index{\-Smarty@{\-Smarty}!get\-\_\-registered\-\_\-object@{get\-\_\-registered\-\_\-object}}
+\index{get\-\_\-registered\-\_\-object@{get\-\_\-registered\-\_\-object}!Smarty@{\-Smarty}}
+\subsubsection[{get\-\_\-registered\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}\& {\bf get\-\_\-registered\-\_\-object} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ae922fb129fc263df7c3f4b83880b199d}
+return a reference to a registered object
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+object 
+\end{DoxyReturn}
+
+
+\-Definition at line 1366 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+                                           {
+        if (!isset($this->_reg_objects[$name]))
+        $this->_trigger_fatal_error("'$name' is not a registered object");
+
+        if (!is_object($this->_reg_objects[$name][0]))
+        $this->_trigger_fatal_error("registered '$name' is not an object");
+
+        return $this->_reg_objects[$name][0];
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a0c15a4f13f37eaca8a6e8ed91ad77b23}{\index{\-Smarty@{\-Smarty}!get\-\_\-template\-\_\-vars@{get\-\_\-template\-\_\-vars}}
+\index{get\-\_\-template\-\_\-vars@{get\-\_\-template\-\_\-vars}!Smarty@{\-Smarty}}
+\subsubsection[{get\-\_\-template\-\_\-vars}]{\setlength{\rightskip}{0pt plus 5cm}\& {\bf get\-\_\-template\-\_\-vars} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a0c15a4f13f37eaca8a6e8ed91ad77b23}
+\-Returns an array containing template variables
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \\
+\hline
+string & {\em \$type} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 1110 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if(!isset($name)) {
+            return $this->_tpl_vars;
+        }
+        if(isset($this->_tpl_vars[$name])) {
+            return $this->_tpl_vars[$name];
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a70d12433755791c1383f394b6a41271d}{\index{\-Smarty@{\-Smarty}!is\-\_\-cached@{is\-\_\-cached}}
+\index{is\-\_\-cached@{is\-\_\-cached}!Smarty@{\-Smarty}}
+\subsubsection[{is\-\_\-cached}]{\setlength{\rightskip}{0pt plus 5cm}{\bf is\-\_\-cached} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-file, }
+\item[{\$}]{cache\-\_\-id = {\ttfamily null}, }
+\item[{\$}]{compile\-\_\-id = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a70d12433755791c1383f394b6a41271d}
+test to see if valid cache exists for this template
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$tpl\-\_\-file} & name of template file \\
+\hline
+string & {\em \$cache\-\_\-id} & \\
+\hline
+string & {\em \$compile\-\_\-id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string$|$false results of \hyperlink{}{\-\_\-read\-\_\-cache\-\_\-file()} 
+\end{DoxyReturn}
+
+
+\-Definition at line 1040 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (!$this->caching)
+            return false;
+
+        if (!isset($compile_id))
+            $compile_id = $this->compile_id;
+
+        $_params = array(
+            'tpl_file' => $tpl_file,
+            'cache_id' => $cache_id,
+            'compile_id' => $compile_id
+        );
+        require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.read_cache_file.php');
+        return smarty_core_read_cache_file($_params, $this);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ad642cca94486c492c56071fb32a3421c}{\index{\-Smarty@{\-Smarty}!load\-\_\-filter@{load\-\_\-filter}}
+\index{load\-\_\-filter@{load\-\_\-filter}!Smarty@{\-Smarty}}
+\subsubsection[{load\-\_\-filter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf load\-\_\-filter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{type, }
+\item[{\$}]{name}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ad642cca94486c492c56071fb32a3421c}
+load a filter of specified type and name
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$type} & filter type \\
+\hline
+string & {\em \$name} & filter name \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 957 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        switch ($type) {
+            case 'output':
+                $_params = array('plugins' => array(array($type . 'filter', 
+      $name, null, null, false)));
+                require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.load_plugins.php');
+                smarty_core_load_plugins($_params, $this);
+                break;
+
+            case 'pre':
+            case 'post':
+                if (!isset($this->_plugins[$type . 'filter'][$name]))
+                    $this->_plugins[$type . 'filter'][$name] = false;
+                break;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a2a6564c20eaeecdddd192885f9d5a794}{\index{\-Smarty@{\-Smarty}!register\-\_\-block@{register\-\_\-block}}
+\index{register\-\_\-block@{register\-\_\-block}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-block} (
+\begin{DoxyParamCaption}
+\item[{\$}]{block, }
+\item[{\$}]{block\-\_\-impl, }
+\item[{\$}]{cacheable = {\ttfamily true}, }
+\item[{\$}]{cache\-\_\-attrs = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a2a6564c20eaeecdddd192885f9d5a794}
+\-Registers block function to be used in templates
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$block} & name of template block \\
+\hline
+string & {\em \$block\-\_\-impl} & \-P\-H\-P function to register \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 786 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->_plugins['block'][$block] =
+            array($block_impl, null, null, false, $cacheable, $cache_attrs);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a4b141e0b9a699098e8986aca16e871ca}{\index{\-Smarty@{\-Smarty}!register\-\_\-compiler\-\_\-function@{register\-\_\-compiler\-\_\-function}}
+\index{register\-\_\-compiler\-\_\-function@{register\-\_\-compiler\-\_\-function}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-compiler\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-compiler\-\_\-function} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function, }
+\item[{\$}]{function\-\_\-impl, }
+\item[{\$}]{cacheable = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a4b141e0b9a699098e8986aca16e871ca}
+\-Registers compiler function
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of template function \\
+\hline
+string & {\em \$function\-\_\-impl} & name of \-P\-H\-P function to register \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 808 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->_plugins['compiler'][$function] =
+            array($function_impl, null, null, false, $cacheable);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_aa933e1e9fb0b13f22101de4acbaf699c}{\index{\-Smarty@{\-Smarty}!register\-\_\-function@{register\-\_\-function}}
+\index{register\-\_\-function@{register\-\_\-function}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-function} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function, }
+\item[{\$}]{function\-\_\-impl, }
+\item[{\$}]{cacheable = {\ttfamily true}, }
+\item[{\$}]{cache\-\_\-attrs = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_aa933e1e9fb0b13f22101de4acbaf699c}
+\-Registers custom function to be used in templates
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & the name of the template function \\
+\hline
+string & {\em \$function\-\_\-impl} & the name of the \-P\-H\-P function to register \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 735 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->_plugins['function'][$function] =
+            array($function_impl, null, null, false, $cacheable, $cache_attrs);
+
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ac1483efc4d74e159c9ddb29b33fbfcc0}{\index{\-Smarty@{\-Smarty}!register\-\_\-modifier@{register\-\_\-modifier}}
+\index{register\-\_\-modifier@{register\-\_\-modifier}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-modifier}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-modifier} (
+\begin{DoxyParamCaption}
+\item[{\$}]{modifier, }
+\item[{\$}]{modifier\-\_\-impl}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ac1483efc4d74e159c9ddb29b33fbfcc0}
+\-Registers modifier to be used in templates
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$modifier} & name of template modifier \\
+\hline
+string & {\em \$modifier\-\_\-impl} & name of \-P\-H\-P function to register \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 830 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->_plugins['modifier'][$modifier] =
+            array($modifier_impl, null, null, false);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ad3e5b167a6483dbd669a736ee0000b9a}{\index{\-Smarty@{\-Smarty}!register\-\_\-object@{register\-\_\-object}}
+\index{register\-\_\-object@{register\-\_\-object}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-object} (
+\begin{DoxyParamCaption}
+\item[{\$}]{object, }
+\item[{\&\$}]{object\-\_\-impl, }
+\item[{\$}]{allowed = {\ttfamily array()}, }
+\item[{\$}]{smarty\-\_\-args = {\ttfamily true}, }
+\item[{\$}]{block\-\_\-methods = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ad3e5b167a6483dbd669a736ee0000b9a}
+\-Registers object to be used in templates
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$object} & name of template object \\
+\hline
+object & {\em \&\$object\-\_\-impl} & the referenced \-P\-H\-P object to register \\
+\hline
+null | array & {\em \$allowed} & list of allowed methods (empty = all) \\
+\hline
+boolean & {\em \$smarty\-\_\-args} & smarty argument format, else traditional \\
+\hline
+null | array & {\em \$block\-\_\-functs} & list of methods that are block format \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 761 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        settype($allowed, 'array');
+        settype($smarty_args, 'boolean');
+        $this->_reg_objects[$object] =
+            array(&$object_impl, $allowed, $smarty_args, $block_methods);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a54426aae9228293c47e05f4ceaacd516}{\index{\-Smarty@{\-Smarty}!register\-\_\-outputfilter@{register\-\_\-outputfilter}}
+\index{register\-\_\-outputfilter@{register\-\_\-outputfilter}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-outputfilter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-outputfilter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a54426aae9228293c47e05f4ceaacd516}
+\-Registers an output filter function to apply to a template output
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of \-P\-H\-P function \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 934 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+    $_name = (is_array($function)) ? $function[1] : $function;
+        $this->_plugins['outputfilter'][$_name]
+            = array($function, null, null, false);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a1eb31d2b852e5862a3d04284614d145b}{\index{\-Smarty@{\-Smarty}!register\-\_\-postfilter@{register\-\_\-postfilter}}
+\index{register\-\_\-postfilter@{register\-\_\-postfilter}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-postfilter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-postfilter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a1eb31d2b852e5862a3d04284614d145b}
+\-Registers a postfilter function to apply to a compiled template after compilation
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of \-P\-H\-P function to register \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 911 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+    $_name = (is_array($function)) ? $function[1] : $function;
+        $this->_plugins['postfilter'][$_name]
+            = array($function, null, null, false);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_afdd4dead058273890d629d207f236239}{\index{\-Smarty@{\-Smarty}!register\-\_\-prefilter@{register\-\_\-prefilter}}
+\index{register\-\_\-prefilter@{register\-\_\-prefilter}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-prefilter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-prefilter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_afdd4dead058273890d629d207f236239}
+\-Registers a prefilter function to apply to a template before compiling
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of \-P\-H\-P function to register \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 888 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+    $_name = (is_array($function)) ? $function[1] : $function;
+        $this->_plugins['prefilter'][$_name]
+            = array($function, null, null, false);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a27683a72840c9401cde24eec57d493df}{\index{\-Smarty@{\-Smarty}!register\-\_\-resource@{register\-\_\-resource}}
+\index{register\-\_\-resource@{register\-\_\-resource}!Smarty@{\-Smarty}}
+\subsubsection[{register\-\_\-resource}]{\setlength{\rightskip}{0pt plus 5cm}{\bf register\-\_\-resource} (
+\begin{DoxyParamCaption}
+\item[{\$}]{type, }
+\item[{\$}]{functions}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a27683a72840c9401cde24eec57d493df}
+\-Registers a resource to fetch a template
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$type} & name of resource \\
+\hline
+array & {\em \$functions} & array of functions to handle resource \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 852 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (count($functions)==4) {
+            $this->_plugins['resource'][$type] =
+                array($functions, false);
+
+        } elseif (count($functions)==5) {
+            $this->_plugins['resource'][$type] =
+                array(array(array(&$functions[0], $functions[1])
+                            ,array(&$functions[0], $functions[2])
+                            ,array(&$functions[0], $functions[3])
+                            ,array(&$functions[0], $functions[4]))
+                      ,false);
+
+        } else {
+            $this->trigger_error("malformed function-list for '$type' in
+       register_resource");
+
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a95e66b59b996781de0a0b95c83f1a5a7}{\index{\-Smarty@{\-Smarty}!\-Smarty@{\-Smarty}}
+\index{\-Smarty@{\-Smarty}!Smarty@{\-Smarty}}
+\subsubsection[{\-Smarty}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Smarty} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a95e66b59b996781de0a0b95c83f1a5a7}
+\#@-\/ \-The class constructor.
+
+\$global\-\_\-assign uses \hyperlink{class_smarty_a12150893d5c5bab121e248f450e727fa}{assign()} to assign each corresponding value from \$\-G\-L\-O\-B\-A\-L\-S to the template vars 
+
+\-Definition at line 597 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        foreach ($this->global_assign as $key => $var_name) {
+            if (is_array($var_name)) {
+                foreach ($var_name as $var) {
+                    if (isset($GLOBALS[$key][$var])) {
+                        $this->assign($var, $GLOBALS[$key][$var]);
+                    } else {
+                        $this->assign($var, $this->undefined);
+                    }
+                }
+            } else {
+                if (isset($GLOBALS[$var_name])) {
+                    $this->assign($var_name, $GLOBALS[$var_name]);
+                } else {
+                    $this->assign($var_name, $this->undefined);
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_abfade212562dbeff89ccf453c02f5a1b}{\index{\-Smarty@{\-Smarty}!template\-\_\-exists@{template\-\_\-exists}}
+\index{template\-\_\-exists@{template\-\_\-exists}!Smarty@{\-Smarty}}
+\subsubsection[{template\-\_\-exists}]{\setlength{\rightskip}{0pt plus 5cm}{\bf template\-\_\-exists} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tpl\-\_\-file}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_abfade212562dbeff89ccf453c02f5a1b}
+\-Checks whether requested template exists.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$tpl\-\_\-file} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 1097 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $_params = array('resource_name' => $tpl_file, 'quiet'=>true, '
+      get_source'=>false);
+        return $this->_fetch_resource_info($_params);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_aa4f8246510406271300bee84f9e1bce3}{\index{\-Smarty@{\-Smarty}!trigger\-\_\-error@{trigger\-\_\-error}}
+\index{trigger\-\_\-error@{trigger\-\_\-error}!Smarty@{\-Smarty}}
+\subsubsection[{trigger\-\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf trigger\-\_\-error} (
+\begin{DoxyParamCaption}
+\item[{\$}]{error\-\_\-msg, }
+\item[{\$}]{error\-\_\-type = {\ttfamily \-E\-\_\-\-U\-S\-E\-R\-\_\-\-W\-A\-R\-N\-I\-N\-G}}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_aa4f8246510406271300bee84f9e1bce3}
+trigger \hyperlink{class_smarty}{\-Smarty} error
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$error\-\_\-msg} & \\
+\hline
+integer & {\em \$error\-\_\-type} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1142 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        trigger_error("Smarty error: $error_msg", $error_type);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_aa27d55eff4bc63b71da604fb1af362c9}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-block@{unregister\-\_\-block}}
+\index{unregister\-\_\-block@{unregister\-\_\-block}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-block} (
+\begin{DoxyParamCaption}
+\item[{\$}]{block}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_aa27d55eff4bc63b71da604fb1af362c9}
+\-Unregisters block function
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$block} & name of template function \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 797 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_plugins['block'][$block]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a85920043d6bf2ee895a1dc3fa2c464ca}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-compiler\-\_\-function@{unregister\-\_\-compiler\-\_\-function}}
+\index{unregister\-\_\-compiler\-\_\-function@{unregister\-\_\-compiler\-\_\-function}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-compiler\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-compiler\-\_\-function} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a85920043d6bf2ee895a1dc3fa2c464ca}
+\-Unregisters compiler function
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of template function \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 819 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_plugins['compiler'][$function]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_ae73d72302d6bcf8a0b284654b2ecef15}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-function@{unregister\-\_\-function}}
+\index{unregister\-\_\-function@{unregister\-\_\-function}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-function} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_ae73d72302d6bcf8a0b284654b2ecef15}
+\-Unregisters custom function
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of template function \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 747 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_plugins['function'][$function]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_aa0efdcad7fc5a36846e5e8bd8a455dd9}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-modifier@{unregister\-\_\-modifier}}
+\index{unregister\-\_\-modifier@{unregister\-\_\-modifier}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-modifier}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-modifier} (
+\begin{DoxyParamCaption}
+\item[{\$}]{modifier}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_aa0efdcad7fc5a36846e5e8bd8a455dd9}
+\-Unregisters modifier
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$modifier} & name of template modifier \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 841 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_plugins['modifier'][$modifier]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a49288d1943e174bcb8e924a4b449d050}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-object@{unregister\-\_\-object}}
+\index{unregister\-\_\-object@{unregister\-\_\-object}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-object} (
+\begin{DoxyParamCaption}
+\item[{\$}]{object}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a49288d1943e174bcb8e924a4b449d050}
+\-Unregisters object
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$object} & name of template object \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 774 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_reg_objects[$object]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a8d7427d8dc5f3d71aeb3385b9aad3700}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-outputfilter@{unregister\-\_\-outputfilter}}
+\index{unregister\-\_\-outputfilter@{unregister\-\_\-outputfilter}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-outputfilter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-outputfilter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a8d7427d8dc5f3d71aeb3385b9aad3700}
+\-Unregisters an outputfilter function
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of \-P\-H\-P function \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 946 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_plugins['outputfilter'][$function]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a36d917f9b975efc48682198c705eb244}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-postfilter@{unregister\-\_\-postfilter}}
+\index{unregister\-\_\-postfilter@{unregister\-\_\-postfilter}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-postfilter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-postfilter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a36d917f9b975efc48682198c705eb244}
+\-Unregisters a postfilter function
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of \-P\-H\-P function \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 923 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_plugins['postfilter'][$function]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a8208fd226842f48de08ce37305295d64}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-prefilter@{unregister\-\_\-prefilter}}
+\index{unregister\-\_\-prefilter@{unregister\-\_\-prefilter}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-prefilter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-prefilter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{function}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a8208fd226842f48de08ce37305295d64}
+\-Unregisters a prefilter function
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$function} & name of \-P\-H\-P function \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 900 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_plugins['prefilter'][$function]);
+    }
+\end{DoxyCode}
+\hypertarget{class_smarty_a509d4408ce20f6def85118984b81a32e}{\index{\-Smarty@{\-Smarty}!unregister\-\_\-resource@{unregister\-\_\-resource}}
+\index{unregister\-\_\-resource@{unregister\-\_\-resource}!Smarty@{\-Smarty}}
+\subsubsection[{unregister\-\_\-resource}]{\setlength{\rightskip}{0pt plus 5cm}{\bf unregister\-\_\-resource} (
+\begin{DoxyParamCaption}
+\item[{\$}]{type}
+\end{DoxyParamCaption}
+)}}\label{class_smarty_a509d4408ce20f6def85118984b81a32e}
+\-Unregisters a resource
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$type} & name of resource \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 877 of file \-Smarty.\-class.\-php.
+
+
+\begin{DoxyCode}
+    {
+        unset($this->_plugins['resource'][$type]);
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_smarty_a7f51c31864e6e5241313a2102dd32808}{\index{\-Smarty@{\-Smarty}!\$\-\_\-cache\-\_\-include@{\$\-\_\-cache\-\_\-include}}
+\index{\$\-\_\-cache\-\_\-include@{\$\-\_\-cache\-\_\-include}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-cache\-\_\-include}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-cache\-\_\-include = null}}\label{class_smarty_a7f51c31864e6e5241313a2102dd32808}
+
+
+\-Reimplemented in \hyperlink{class_smarty___compiler_a7f51c31864e6e5241313a2102dd32808}{\-Smarty\-\_\-\-Compiler}.
+
+
+
+\-Definition at line 580 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a1fbc7764bc21f54adbe1ee17d9c72115}{\index{\-Smarty@{\-Smarty}!\$\-\_\-cache\-\_\-including@{\$\-\_\-cache\-\_\-including}}
+\index{\$\-\_\-cache\-\_\-including@{\$\-\_\-cache\-\_\-including}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-cache\-\_\-including}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-cache\-\_\-including = false}}\label{class_smarty_a1fbc7764bc21f54adbe1ee17d9c72115}
+
+
+\-Definition at line 588 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_acf32b5dd8fecc400d48e7452b5ec5640}{\index{\-Smarty@{\-Smarty}!\$\-\_\-cache\-\_\-info@{\$\-\_\-cache\-\_\-info}}
+\index{\$\-\_\-cache\-\_\-info@{\$\-\_\-cache\-\_\-info}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-cache\-\_\-info}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-cache\-\_\-info = array()}}\label{class_smarty_acf32b5dd8fecc400d48e7452b5ec5640}
+
+
+\-Definition at line 528 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a0a5b5d0884aa98c7f7135d3aba17f578}{\index{\-Smarty@{\-Smarty}!\$\-\_\-cache\-\_\-serials@{\$\-\_\-cache\-\_\-serials}}
+\index{\$\-\_\-cache\-\_\-serials@{\$\-\_\-cache\-\_\-serials}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-cache\-\_\-serials}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-cache\-\_\-serials = array()}}\label{class_smarty_a0a5b5d0884aa98c7f7135d3aba17f578}
+
+
+\-Definition at line 573 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_ac327b0792184db847b78cae7da804eba}{\index{\-Smarty@{\-Smarty}!\$\-\_\-compile\-\_\-id@{\$\-\_\-compile\-\_\-id}}
+\index{\$\-\_\-compile\-\_\-id@{\$\-\_\-compile\-\_\-id}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-compile\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-compile\-\_\-id = null}}\label{class_smarty_ac327b0792184db847b78cae7da804eba}
+
+
+\-Definition at line 507 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a6c93acd86cae18c4630b272433b2e543}{\index{\-Smarty@{\-Smarty}!\$\-\_\-conf\-\_\-obj@{\$\-\_\-conf\-\_\-obj}}
+\index{\$\-\_\-conf\-\_\-obj@{\$\-\_\-conf\-\_\-obj}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-conf\-\_\-obj}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-conf\-\_\-obj = null}}\label{class_smarty_a6c93acd86cae18c4630b272433b2e543}
+
+
+\-Definition at line 472 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a4d4ad4af1600438042f93a4492f8dbbe}{\index{\-Smarty@{\-Smarty}!\$\-\_\-config@{\$\-\_\-config}}
+\index{\$\-\_\-config@{\$\-\_\-config}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-config}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-config = array(array('vars' =$>$ array(), 'files' =$>$ array()))}}\label{class_smarty_a4d4ad4af1600438042f93a4492f8dbbe}
+
+
+\-Definition at line 479 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a917cec287e9c00b1c188e4a815b279b2}{\index{\-Smarty@{\-Smarty}!\$\-\_\-dir\-\_\-perms@{\$\-\_\-dir\-\_\-perms}}
+\index{\$\-\_\-dir\-\_\-perms@{\$\-\_\-dir\-\_\-perms}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-dir\-\_\-perms}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-dir\-\_\-perms = 0771}}\label{class_smarty_a917cec287e9c00b1c188e4a815b279b2}
+
+
+\-Definition at line 542 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a9936a2e534940a7b7e9c8b85b6966d83}{\index{\-Smarty@{\-Smarty}!\$\-\_\-error\-\_\-msg@{\$\-\_\-error\-\_\-msg}}
+\index{\$\-\_\-error\-\_\-msg@{\$\-\_\-error\-\_\-msg}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-error\-\_\-msg}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-error\-\_\-msg = false}}\label{class_smarty_a9936a2e534940a7b7e9c8b85b6966d83}
+
+
+\-Definition at line 430 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_affa1e29315f40fe30ea516c7e8f2430e}{\index{\-Smarty@{\-Smarty}!\$\-\_\-file\-\_\-perms@{\$\-\_\-file\-\_\-perms}}
+\index{\$\-\_\-file\-\_\-perms@{\$\-\_\-file\-\_\-perms}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-file\-\_\-perms}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-file\-\_\-perms = 0644}}\label{class_smarty_affa1e29315f40fe30ea516c7e8f2430e}
+
+
+\-Definition at line 535 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a1c8fbfed4c5eb0d511fe2d98bda8bc19}{\index{\-Smarty@{\-Smarty}!\$\-\_\-foreach@{\$\-\_\-foreach}}
+\index{\$\-\_\-foreach@{\$\-\_\-foreach}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-foreach}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-foreach = array()}}\label{class_smarty_a1c8fbfed4c5eb0d511fe2d98bda8bc19}
+
+
+\-Definition at line 458 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a6167b63640563df2374a677f4ed41641}{\index{\-Smarty@{\-Smarty}!\$\-\_\-inclusion\-\_\-depth@{\$\-\_\-inclusion\-\_\-depth}}
+\index{\$\-\_\-inclusion\-\_\-depth@{\$\-\_\-inclusion\-\_\-depth}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-inclusion\-\_\-depth}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-inclusion\-\_\-depth = 0}}\label{class_smarty_a6167b63640563df2374a677f4ed41641}
+
+
+\-Definition at line 500 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a5e55c6109989b57b8cd655f6ad56bb61}{\index{\-Smarty@{\-Smarty}!\$\-\_\-plugins@{\$\-\_\-plugins}}
+\index{\$\-\_\-plugins@{\$\-\_\-plugins}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-plugins}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-plugins}}\label{class_smarty_a5e55c6109989b57b8cd655f6ad56bb61}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ array(
+                                       'modifier'      => array(),
+                                       'function'      => array(),
+                                       'block'         => array(),
+                                       'compiler'      => array(),
+                                       'prefilter'     => array(),
+                                       'postfilter'    => array(),
+                                       'outputfilter'  => array(),
+                                       'resource'      => array(),
+                                       'insert'        => array())
+\end{DoxyCode}
+
+
+\-Definition at line 556 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a89d5e48a4a6c2e53471a755ff63acb69}{\index{\-Smarty@{\-Smarty}!\$\-\_\-reg\-\_\-objects@{\$\-\_\-reg\-\_\-objects}}
+\index{\$\-\_\-reg\-\_\-objects@{\$\-\_\-reg\-\_\-objects}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-reg\-\_\-objects}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-reg\-\_\-objects = array()}}\label{class_smarty_a89d5e48a4a6c2e53471a755ff63acb69}
+
+
+\-Definition at line 549 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a873245595639c46ba0a649d9d0abc018}{\index{\-Smarty@{\-Smarty}!\$\-\_\-sections@{\$\-\_\-sections}}
+\index{\$\-\_\-sections@{\$\-\_\-sections}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-sections}]{\setlength{\rightskip}{0pt plus 5cm}\${\bf \-\_\-sections} = array()}}\label{class_smarty_a873245595639c46ba0a649d9d0abc018}
+
+
+\-Definition at line 451 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a39de745821c96537c5f36d79120e1413}{\index{\-Smarty@{\-Smarty}!\$\-\_\-smarty\-\_\-debug\-\_\-id@{\$\-\_\-smarty\-\_\-debug\-\_\-id}}
+\index{\$\-\_\-smarty\-\_\-debug\-\_\-id@{\$\-\_\-smarty\-\_\-debug\-\_\-id}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-smarty\-\_\-debug\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-smarty\-\_\-debug\-\_\-id = '\-S\-M\-A\-R\-T\-Y\-\_\-\-D\-E\-B\-U\-G'}}\label{class_smarty_a39de745821c96537c5f36d79120e1413}
+
+
+\-Definition at line 514 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a751873e7923220e5351800cc29fef3b3}{\index{\-Smarty@{\-Smarty}!\$\-\_\-smarty\-\_\-debug\-\_\-info@{\$\-\_\-smarty\-\_\-debug\-\_\-info}}
+\index{\$\-\_\-smarty\-\_\-debug\-\_\-info@{\$\-\_\-smarty\-\_\-debug\-\_\-info}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-smarty\-\_\-debug\-\_\-info}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-smarty\-\_\-debug\-\_\-info = array()}}\label{class_smarty_a751873e7923220e5351800cc29fef3b3}
+
+
+\-Definition at line 521 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a215c18c7e01e94ff276e0e7249bfd38d}{\index{\-Smarty@{\-Smarty}!\$\-\_\-smarty\-\_\-md5@{\$\-\_\-smarty\-\_\-md5}}
+\index{\$\-\_\-smarty\-\_\-md5@{\$\-\_\-smarty\-\_\-md5}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-smarty\-\_\-md5}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-smarty\-\_\-md5 = 'f8d698aea36fcbead2b9d5359ffca76f'}}\label{class_smarty_a215c18c7e01e94ff276e0e7249bfd38d}
+
+
+\-Definition at line 486 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a8b74cd5266386c9651f86d02b4bf3bc4}{\index{\-Smarty@{\-Smarty}!\$\-\_\-smarty\-\_\-vars@{\$\-\_\-smarty\-\_\-vars}}
+\index{\$\-\_\-smarty\-\_\-vars@{\$\-\_\-smarty\-\_\-vars}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-smarty\-\_\-vars}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-smarty\-\_\-vars = null}}\label{class_smarty_a8b74cd5266386c9651f86d02b4bf3bc4}
+
+
+\-Definition at line 444 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a8bc334635a0aa8e117a5e822ca71ee67}{\index{\-Smarty@{\-Smarty}!\$\-\_\-tag\-\_\-stack@{\$\-\_\-tag\-\_\-stack}}
+\index{\$\-\_\-tag\-\_\-stack@{\$\-\_\-tag\-\_\-stack}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-tag\-\_\-stack}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-tag\-\_\-stack = array()}}\label{class_smarty_a8bc334635a0aa8e117a5e822ca71ee67}
+
+
+\-Definition at line 465 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_ac5b23df7404c26573f1d6efad81b9db9}{\index{\-Smarty@{\-Smarty}!\$\-\_\-tpl\-\_\-vars@{\$\-\_\-tpl\-\_\-vars}}
+\index{\$\-\_\-tpl\-\_\-vars@{\$\-\_\-tpl\-\_\-vars}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-tpl\-\_\-vars}]{\setlength{\rightskip}{0pt plus 5cm}\${\bf \-\_\-tpl\-\_\-vars} = array()}}\label{class_smarty_ac5b23df7404c26573f1d6efad81b9db9}
+
+
+\-Definition at line 437 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a01caaf3772469caf98e39064bf5d7d8f}{\index{\-Smarty@{\-Smarty}!\$\-\_\-version@{\$\-\_\-version}}
+\index{\$\-\_\-version@{\$\-\_\-version}!Smarty@{\-Smarty}}
+\subsubsection[{\$\-\_\-version}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-version = '2.\-6.\-0'}}\label{class_smarty_a01caaf3772469caf98e39064bf5d7d8f}
+
+
+\-Definition at line 493 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_aca2078dde09728b223cdffe8209e6dcc}{\index{\-Smarty@{\-Smarty}!\$autoload\-\_\-filters@{\$autoload\-\_\-filters}}
+\index{\$autoload\-\_\-filters@{\$autoload\-\_\-filters}!Smarty@{\-Smarty}}
+\subsubsection[{\$autoload\-\_\-filters}]{\setlength{\rightskip}{0pt plus 5cm}\$autoload\-\_\-filters = array()}}\label{class_smarty_aca2078dde09728b223cdffe8209e6dcc}
+
+
+\-Definition at line 357 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a22a35efc9ca709527d49ff8bfe76db78}{\index{\-Smarty@{\-Smarty}!\$cache\-\_\-dir@{\$cache\-\_\-dir}}
+\index{\$cache\-\_\-dir@{\$cache\-\_\-dir}!Smarty@{\-Smarty}}
+\subsubsection[{\$cache\-\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}\$cache\-\_\-dir = 'cache'}}\label{class_smarty_a22a35efc9ca709527d49ff8bfe76db78}
+
+
+\-Definition at line 169 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a212fee0b84704db751e24b434177a478}{\index{\-Smarty@{\-Smarty}!\$cache\-\_\-handler\-\_\-func@{\$cache\-\_\-handler\-\_\-func}}
+\index{\$cache\-\_\-handler\-\_\-func@{\$cache\-\_\-handler\-\_\-func}!Smarty@{\-Smarty}}
+\subsubsection[{\$cache\-\_\-handler\-\_\-func}]{\setlength{\rightskip}{0pt plus 5cm}\$cache\-\_\-handler\-\_\-func = null}}\label{class_smarty_a212fee0b84704db751e24b434177a478}
+
+
+\-Definition at line 333 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a5aaab753f75170fa670cbb602aa97119}{\index{\-Smarty@{\-Smarty}!\$cache\-\_\-lifetime@{\$cache\-\_\-lifetime}}
+\index{\$cache\-\_\-lifetime@{\$cache\-\_\-lifetime}!Smarty@{\-Smarty}}
+\subsubsection[{\$cache\-\_\-lifetime}]{\setlength{\rightskip}{0pt plus 5cm}\$cache\-\_\-lifetime = 3600}}\label{class_smarty_a5aaab753f75170fa670cbb602aa97119}
+
+
+\-Definition at line 180 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a0734d0f7c5eea130baa18c0424ab07b0}{\index{\-Smarty@{\-Smarty}!\$cache\-\_\-modified\-\_\-check@{\$cache\-\_\-modified\-\_\-check}}
+\index{\$cache\-\_\-modified\-\_\-check@{\$cache\-\_\-modified\-\_\-check}!Smarty@{\-Smarty}}
+\subsubsection[{\$cache\-\_\-modified\-\_\-check}]{\setlength{\rightskip}{0pt plus 5cm}\$cache\-\_\-modified\-\_\-check = false}}\label{class_smarty_a0734d0f7c5eea130baa18c0424ab07b0}
+
+
+\-Definition at line 190 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_aa36073c4cda5c97981a5b99ca92208be}{\index{\-Smarty@{\-Smarty}!\$caching@{\$caching}}
+\index{\$caching@{\$caching}!Smarty@{\-Smarty}}
+\subsubsection[{\$caching}]{\setlength{\rightskip}{0pt plus 5cm}\$caching = 0}}\label{class_smarty_aa36073c4cda5c97981a5b99ca92208be}
+
+
+\-Definition at line 162 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_ab9662ea355e8e7c1f47ef0e568147512}{\index{\-Smarty@{\-Smarty}!\$compile\-\_\-check@{\$compile\-\_\-check}}
+\index{\$compile\-\_\-check@{\$compile\-\_\-check}!Smarty@{\-Smarty}}
+\subsubsection[{\$compile\-\_\-check}]{\setlength{\rightskip}{0pt plus 5cm}\$compile\-\_\-check = true}}\label{class_smarty_ab9662ea355e8e7c1f47ef0e568147512}
+
+
+\-Definition at line 143 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a43c2cf2ae254b7b9c45079b63e453c4e}{\index{\-Smarty@{\-Smarty}!\$compile\-\_\-dir@{\$compile\-\_\-dir}}
+\index{\$compile\-\_\-dir@{\$compile\-\_\-dir}!Smarty@{\-Smarty}}
+\subsubsection[{\$compile\-\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}\$compile\-\_\-dir = 'templates\-\_\-c'}}\label{class_smarty_a43c2cf2ae254b7b9c45079b63e453c4e}
+
+
+\-Definition at line 91 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a4c29af6f98e3049de95861b01a7bb00d}{\index{\-Smarty@{\-Smarty}!\$compile\-\_\-id@{\$compile\-\_\-id}}
+\index{\$compile\-\_\-id@{\$compile\-\_\-id}!Smarty@{\-Smarty}}
+\subsubsection[{\$compile\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}\$compile\-\_\-id = null}}\label{class_smarty_a4c29af6f98e3049de95861b01a7bb00d}
+
+
+\-Definition at line 293 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a7696818dcf593c5f9471d7f76ea2e645}{\index{\-Smarty@{\-Smarty}!\$compiler\-\_\-class@{\$compiler\-\_\-class}}
+\index{\$compiler\-\_\-class@{\$compiler\-\_\-class}!Smarty@{\-Smarty}}
+\subsubsection[{\$compiler\-\_\-class}]{\setlength{\rightskip}{0pt plus 5cm}\$compiler\-\_\-class = '{\bf \-Smarty\-\_\-\-Compiler}'}}\label{class_smarty_a7696818dcf593c5f9471d7f76ea2e645}
+
+
+\-Definition at line 411 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a5912fff45f8fdf37cf48552ee9444323}{\index{\-Smarty@{\-Smarty}!\$compiler\-\_\-file@{\$compiler\-\_\-file}}
+\index{\$compiler\-\_\-file@{\$compiler\-\_\-file}!Smarty@{\-Smarty}}
+\subsubsection[{\$compiler\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}\$compiler\-\_\-file = '\-Smarty\-\_\-\-Compiler.\-class.\-php'}}\label{class_smarty_a5912fff45f8fdf37cf48552ee9444323}
+
+
+\-Definition at line 404 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_ab3e274a6c3fd439b83380c17a71255bb}{\index{\-Smarty@{\-Smarty}!\$config\-\_\-booleanize@{\$config\-\_\-booleanize}}
+\index{\$config\-\_\-booleanize@{\$config\-\_\-booleanize}!Smarty@{\-Smarty}}
+\subsubsection[{\$config\-\_\-booleanize}]{\setlength{\rightskip}{0pt plus 5cm}\$config\-\_\-booleanize = true}}\label{class_smarty_ab3e274a6c3fd439b83380c17a71255bb}
+\-This tells whether or not to automatically booleanize config file variables. \-If enabled, then the strings \char`\"{}on\char`\"{}, \char`\"{}true\char`\"{}, and \char`\"{}yes\char`\"{} are treated as boolean true, and \char`\"{}off\char`\"{}, \char`\"{}false\char`\"{} and \char`\"{}no\char`\"{} are treated as boolean false. 
+
+\-Definition at line 373 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a1ecdac7cb85b1aea3de21235de5db8d9}{\index{\-Smarty@{\-Smarty}!\$config\-\_\-class@{\$config\-\_\-class}}
+\index{\$config\-\_\-class@{\$config\-\_\-class}!Smarty@{\-Smarty}}
+\subsubsection[{\$config\-\_\-class}]{\setlength{\rightskip}{0pt plus 5cm}\$config\-\_\-class = '{\bf \-Config\-\_\-\-File}'}}\label{class_smarty_a1ecdac7cb85b1aea3de21235de5db8d9}
+
+
+\-Definition at line 418 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_abb77b9d3df110ff462474ee0feaa7859}{\index{\-Smarty@{\-Smarty}!\$config\-\_\-dir@{\$config\-\_\-dir}}
+\index{\$config\-\_\-dir@{\$config\-\_\-dir}!Smarty@{\-Smarty}}
+\subsubsection[{\$config\-\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}\$config\-\_\-dir = 'configs'}}\label{class_smarty_abb77b9d3df110ff462474ee0feaa7859}
+
+
+\-Definition at line 98 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a4df07d516adb04c09b5f77b556d3b5bc}{\index{\-Smarty@{\-Smarty}!\$config\-\_\-fix\-\_\-newlines@{\$config\-\_\-fix\-\_\-newlines}}
+\index{\$config\-\_\-fix\-\_\-newlines@{\$config\-\_\-fix\-\_\-newlines}!Smarty@{\-Smarty}}
+\subsubsection[{\$config\-\_\-fix\-\_\-newlines}]{\setlength{\rightskip}{0pt plus 5cm}\$config\-\_\-fix\-\_\-newlines = true}}\label{class_smarty_a4df07d516adb04c09b5f77b556d3b5bc}
+\-This tells whether or not automatically fix newlines in config files. \-It basically converts  (mac) or \par
+ (dos) to \par
+ 
+
+\-Definition at line 387 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a728421c1493ea20b619459924184b06d}{\index{\-Smarty@{\-Smarty}!\$config\-\_\-overwrite@{\$config\-\_\-overwrite}}
+\index{\$config\-\_\-overwrite@{\$config\-\_\-overwrite}!Smarty@{\-Smarty}}
+\subsubsection[{\$config\-\_\-overwrite}]{\setlength{\rightskip}{0pt plus 5cm}\$config\-\_\-overwrite = true}}\label{class_smarty_a728421c1493ea20b619459924184b06d}
+\-This tells if config file vars of the same name overwrite each other or not. if disabled, same name variables are accumulated in an array. 
+
+\-Definition at line 366 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_add257cafa2cc7f2c68381f9bcc6f4d7b}{\index{\-Smarty@{\-Smarty}!\$config\-\_\-read\-\_\-hidden@{\$config\-\_\-read\-\_\-hidden}}
+\index{\$config\-\_\-read\-\_\-hidden@{\$config\-\_\-read\-\_\-hidden}!Smarty@{\-Smarty}}
+\subsubsection[{\$config\-\_\-read\-\_\-hidden}]{\setlength{\rightskip}{0pt plus 5cm}\$config\-\_\-read\-\_\-hidden = false}}\label{class_smarty_add257cafa2cc7f2c68381f9bcc6f4d7b}
+\-This tells whether hidden sections \mbox{[}.foobar\mbox{]} are readable from the tempalates or not. \-Normally you would never allow this since that is the point behind hidden sections\-: the application can access them, but the templates cannot. 
+
+\-Definition at line 381 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_adbe83b13ba657998e0fb861b44ecfd59}{\index{\-Smarty@{\-Smarty}!\$debug\-\_\-tpl@{\$debug\-\_\-tpl}}
+\index{\$debug\-\_\-tpl@{\$debug\-\_\-tpl}!Smarty@{\-Smarty}}
+\subsubsection[{\$debug\-\_\-tpl}]{\setlength{\rightskip}{0pt plus 5cm}\$debug\-\_\-tpl = ''}}\label{class_smarty_adbe83b13ba657998e0fb861b44ecfd59}
+
+
+\-Definition at line 122 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a22d995c07dbbe5b426d4fda3931cfcca}{\index{\-Smarty@{\-Smarty}!\$debugging@{\$debugging}}
+\index{\$debugging@{\$debugging}!Smarty@{\-Smarty}}
+\subsubsection[{\$debugging}]{\setlength{\rightskip}{0pt plus 5cm}\$debugging = false}}\label{class_smarty_a22d995c07dbbe5b426d4fda3931cfcca}
+
+
+\-Definition at line 114 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a9b02ae21521c28e6eeb53bd58777aa7b}{\index{\-Smarty@{\-Smarty}!\$debugging\-\_\-ctrl@{\$debugging\-\_\-ctrl}}
+\index{\$debugging\-\_\-ctrl@{\$debugging\-\_\-ctrl}!Smarty@{\-Smarty}}
+\subsubsection[{\$debugging\-\_\-ctrl}]{\setlength{\rightskip}{0pt plus 5cm}\$debugging\-\_\-ctrl = '\-N\-O\-N\-E'}}\label{class_smarty_a9b02ae21521c28e6eeb53bd58777aa7b}
+
+
+\-Definition at line 133 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a48ec112144d4921e3a31fb1a5526ad2f}{\index{\-Smarty@{\-Smarty}!\$default\-\_\-modifiers@{\$default\-\_\-modifiers}}
+\index{\$default\-\_\-modifiers@{\$default\-\_\-modifiers}!Smarty@{\-Smarty}}
+\subsubsection[{\$default\-\_\-modifiers}]{\setlength{\rightskip}{0pt plus 5cm}\$default\-\_\-modifiers = array()}}\label{class_smarty_a48ec112144d4921e3a31fb1a5526ad2f}
+
+
+\-Definition at line 312 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a35cf3764fb77e481ca92ef131a35ca7e}{\index{\-Smarty@{\-Smarty}!\$default\-\_\-resource\-\_\-type@{\$default\-\_\-resource\-\_\-type}}
+\index{\$default\-\_\-resource\-\_\-type@{\$default\-\_\-resource\-\_\-type}!Smarty@{\-Smarty}}
+\subsubsection[{\$default\-\_\-resource\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}\$default\-\_\-resource\-\_\-type = 'file'}}\label{class_smarty_a35cf3764fb77e481ca92ef131a35ca7e}
+
+
+\-Definition at line 326 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a9ff3231160bde6632ca8ad252918e3f0}{\index{\-Smarty@{\-Smarty}!\$default\-\_\-template\-\_\-handler\-\_\-func@{\$default\-\_\-template\-\_\-handler\-\_\-func}}
+\index{\$default\-\_\-template\-\_\-handler\-\_\-func@{\$default\-\_\-template\-\_\-handler\-\_\-func}!Smarty@{\-Smarty}}
+\subsubsection[{\$default\-\_\-template\-\_\-handler\-\_\-func}]{\setlength{\rightskip}{0pt plus 5cm}\$default\-\_\-template\-\_\-handler\-\_\-func = ''}}\label{class_smarty_a9ff3231160bde6632ca8ad252918e3f0}
+
+
+\-Definition at line 396 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_ac956f556d1b636556e96902d4d5377ff}{\index{\-Smarty@{\-Smarty}!\$force\-\_\-compile@{\$force\-\_\-compile}}
+\index{\$force\-\_\-compile@{\$force\-\_\-compile}!Smarty@{\-Smarty}}
+\subsubsection[{\$force\-\_\-compile}]{\setlength{\rightskip}{0pt plus 5cm}\$force\-\_\-compile = false}}\label{class_smarty_ac956f556d1b636556e96902d4d5377ff}
+
+
+\-Definition at line 151 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a23220583cbe0636d93101b05d757d76e}{\index{\-Smarty@{\-Smarty}!\$global\-\_\-assign@{\$global\-\_\-assign}}
+\index{\$global\-\_\-assign@{\$global\-\_\-assign}!Smarty@{\-Smarty}}
+\subsubsection[{\$global\-\_\-assign}]{\setlength{\rightskip}{0pt plus 5cm}\$global\-\_\-assign = array('\-H\-T\-T\-P\-\_\-\-S\-E\-R\-V\-E\-R\-\_\-\-V\-A\-R\-S' =$>$ array('\-S\-C\-R\-I\-P\-T\-\_\-\-N\-A\-M\-E'))}}\label{class_smarty_a23220583cbe0636d93101b05d757d76e}
+
+
+\-Definition at line 343 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a77e272b1cacbab4b26b4fe515e445178}{\index{\-Smarty@{\-Smarty}!\$left\-\_\-delimiter@{\$left\-\_\-delimiter}}
+\index{\$left\-\_\-delimiter@{\$left\-\_\-delimiter}!Smarty@{\-Smarty}}
+\subsubsection[{\$left\-\_\-delimiter}]{\setlength{\rightskip}{0pt plus 5cm}\$left\-\_\-delimiter = '\{'}}\label{class_smarty_a77e272b1cacbab4b26b4fe515e445178}
+
+
+\-Definition at line 257 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_abb37c3c6b2bcb9a527c4139bffb7e6ca}{\index{\-Smarty@{\-Smarty}!\$php\-\_\-handling@{\$php\-\_\-handling}}
+\index{\$php\-\_\-handling@{\$php\-\_\-handling}!Smarty@{\-Smarty}}
+\subsubsection[{\$php\-\_\-handling}]{\setlength{\rightskip}{0pt plus 5cm}\$php\-\_\-handling = {\bf \-S\-M\-A\-R\-T\-Y\-\_\-\-P\-H\-P\-\_\-\-P\-A\-S\-S\-T\-H\-R\-U}}}\label{class_smarty_abb37c3c6b2bcb9a527c4139bffb7e6ca}
+
+
+\-Definition at line 204 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a5bd94212cee8bfa32df2bd9d443f30eb}{\index{\-Smarty@{\-Smarty}!\$plugins\-\_\-dir@{\$plugins\-\_\-dir}}
+\index{\$plugins\-\_\-dir@{\$plugins\-\_\-dir}!Smarty@{\-Smarty}}
+\subsubsection[{\$plugins\-\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}\$plugins\-\_\-dir = array('plugins')}}\label{class_smarty_a5bd94212cee8bfa32df2bd9d443f30eb}
+
+
+\-Definition at line 105 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a639bdb97701da08b49252c5dbe667930}{\index{\-Smarty@{\-Smarty}!\$request\-\_\-use\-\_\-auto\-\_\-globals@{\$request\-\_\-use\-\_\-auto\-\_\-globals}}
+\index{\$request\-\_\-use\-\_\-auto\-\_\-globals@{\$request\-\_\-use\-\_\-auto\-\_\-globals}!Smarty@{\-Smarty}}
+\subsubsection[{\$request\-\_\-use\-\_\-auto\-\_\-globals}]{\setlength{\rightskip}{0pt plus 5cm}\$request\-\_\-use\-\_\-auto\-\_\-globals = false}}\label{class_smarty_a639bdb97701da08b49252c5dbe667930}
+
+
+\-Definition at line 283 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a03919f6e9cba8f50093023e78b0fc6aa}{\index{\-Smarty@{\-Smarty}!\$request\-\_\-vars\-\_\-order@{\$request\-\_\-vars\-\_\-order}}
+\index{\$request\-\_\-vars\-\_\-order@{\$request\-\_\-vars\-\_\-order}!Smarty@{\-Smarty}}
+\subsubsection[{\$request\-\_\-vars\-\_\-order}]{\setlength{\rightskip}{0pt plus 5cm}\$request\-\_\-vars\-\_\-order = \char`\"{}\-E\-G\-P\-C\-S\char`\"{}}}\label{class_smarty_a03919f6e9cba8f50093023e78b0fc6aa}
+
+
+\-Definition at line 273 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_ad3fe9ebfa998625e29836badfe1840bd}{\index{\-Smarty@{\-Smarty}!\$right\-\_\-delimiter@{\$right\-\_\-delimiter}}
+\index{\$right\-\_\-delimiter@{\$right\-\_\-delimiter}!Smarty@{\-Smarty}}
+\subsubsection[{\$right\-\_\-delimiter}]{\setlength{\rightskip}{0pt plus 5cm}\$right\-\_\-delimiter = '\}'}}\label{class_smarty_ad3fe9ebfa998625e29836badfe1840bd}
+
+
+\-Definition at line 264 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a7694029b12fccde3ffae27a1d1d7b5be}{\index{\-Smarty@{\-Smarty}!\$secure\-\_\-dir@{\$secure\-\_\-dir}}
+\index{\$secure\-\_\-dir@{\$secure\-\_\-dir}!Smarty@{\-Smarty}}
+\subsubsection[{\$secure\-\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}\$secure\-\_\-dir = array()}}\label{class_smarty_a7694029b12fccde3ffae27a1d1d7b5be}
+
+
+\-Definition at line 223 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a7ef3408af92597c92305e22f79e67d61}{\index{\-Smarty@{\-Smarty}!\$security@{\$security}}
+\index{\$security@{\$security}!Smarty@{\-Smarty}}
+\subsubsection[{\$security}]{\setlength{\rightskip}{0pt plus 5cm}\$security = false}}\label{class_smarty_a7ef3408af92597c92305e22f79e67d61}
+
+
+\-Definition at line 214 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a905ec38d7cf957e041a8ed941320e5af}{\index{\-Smarty@{\-Smarty}!\$security\-\_\-settings@{\$security\-\_\-settings}}
+\index{\$security\-\_\-settings@{\$security\-\_\-settings}!Smarty@{\-Smarty}}
+\subsubsection[{\$security\-\_\-settings}]{\setlength{\rightskip}{0pt plus 5cm}\$security\-\_\-settings}}\label{class_smarty_a905ec38d7cf957e041a8ed941320e5af}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ array(
+                                    'PHP_HANDLING'    => false,
+                                    'IF_FUNCS'        => array('array', 'list',
+                                                               'isset', 'empty'
+      ,
+                                                               'count', 'sizeof
+      ',
+                                                               'in_array', '
+      is_array',
+                                                               'true','false'),
+                                    'INCLUDE_ANY'     => false,
+                                    'PHP_TAGS'        => false,
+                                    'MODIFIER_FUNCS'  => array('count'),
+                                    'ALLOW_CONSTANTS' => false
+                                   )
+\end{DoxyCode}
+
+
+\-Definition at line 231 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a9677af6792fd68e3968c8b7ff44f2b36}{\index{\-Smarty@{\-Smarty}!\$template\-\_\-dir@{\$template\-\_\-dir}}
+\index{\$template\-\_\-dir@{\$template\-\_\-dir}!Smarty@{\-Smarty}}
+\subsubsection[{\$template\-\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}\$template\-\_\-dir = 'templates'}}\label{class_smarty_a9677af6792fd68e3968c8b7ff44f2b36}
+
+
+\-Definition at line 84 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a4541edfa0e2dd6b0e4b1da10c14fa52c}{\index{\-Smarty@{\-Smarty}!\$trusted\-\_\-dir@{\$trusted\-\_\-dir}}
+\index{\$trusted\-\_\-dir@{\$trusted\-\_\-dir}!Smarty@{\-Smarty}}
+\subsubsection[{\$trusted\-\_\-dir}]{\setlength{\rightskip}{0pt plus 5cm}\$trusted\-\_\-dir = array()}}\label{class_smarty_a4541edfa0e2dd6b0e4b1da10c14fa52c}
+
+
+\-Definition at line 250 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a7b9e122920a6696307fca34a3e041a9a}{\index{\-Smarty@{\-Smarty}!\$undefined@{\$undefined}}
+\index{\$undefined@{\$undefined}!Smarty@{\-Smarty}}
+\subsubsection[{\$undefined}]{\setlength{\rightskip}{0pt plus 5cm}\$undefined = null}}\label{class_smarty_a7b9e122920a6696307fca34a3e041a9a}
+
+
+\-Definition at line 350 of file \-Smarty.\-class.\-php.
+
+\hypertarget{class_smarty_a9d2c3aa18168752d2a32b5aac08b25cd}{\index{\-Smarty@{\-Smarty}!\$use\-\_\-sub\-\_\-dirs@{\$use\-\_\-sub\-\_\-dirs}}
+\index{\$use\-\_\-sub\-\_\-dirs@{\$use\-\_\-sub\-\_\-dirs}!Smarty@{\-Smarty}}
+\subsubsection[{\$use\-\_\-sub\-\_\-dirs}]{\setlength{\rightskip}{0pt plus 5cm}\$use\-\_\-sub\-\_\-dirs = true}}\label{class_smarty_a9d2c3aa18168752d2a32b5aac08b25cd}
+
+
+\-Definition at line 303 of file \-Smarty.\-class.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/\hyperlink{_smarty_8class_8php}{\-Smarty.\-class.\-php}\end{DoxyCompactItemize}

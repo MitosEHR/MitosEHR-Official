@@ -123,7 +123,7 @@ $API = array(
     /**
      * Form layout Engine Functions
      */
-    'formLayoutEngine'=>array(
+    'FormLayoutEngine'=>array(
         'methods'=>array(
             'getFields'=>array(
                 'len'=>1
@@ -133,7 +133,7 @@ $API = array(
     /**
      * Form layout Builder Functions
      */
-    'formLayoutBuilder'=>array(
+    'FormLayoutBuilder'=>array(
         'methods'=>array(
             'getFormDataTable'=>array(
                 'len'=>1

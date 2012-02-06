@@ -1,0 +1,44 @@
+\hypertarget{function_8debug_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/function.debug.\-php \-File \-Reference}
+\label{function_8debug_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-debug.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-debug.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{function_8debug_8php_a7f222af7f3c75859a70f8ed96a8ea64e}{smarty\-\_\-function\-\_\-debug} (\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{function_8debug_8php_a7f222af7f3c75859a70f8ed96a8ea64e}{\index{function.\-debug.\-php@{function.\-debug.\-php}!smarty\-\_\-function\-\_\-debug@{smarty\-\_\-function\-\_\-debug}}
+\index{smarty\-\_\-function\-\_\-debug@{smarty\-\_\-function\-\_\-debug}!function.debug.php@{function.\-debug.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-debug}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-debug} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{function_8debug_8php_a7f222af7f3c75859a70f8ed96a8ea64e}
+\hyperlink{class_smarty}{\-Smarty} \{debug\} function plugin
+
+\-Type\-: function\par
+ \-Name\-: debug\par
+ \-Date\-: \-July 1, 2002\par
+ \-Purpose\-: popup debug window \hyperlink{}{\{debug\} (\-Smarty online manual)  \-Monte \-Ohrt $<$\href{mailto:monte@ispi.net}{\tt monte@ispi.\-net}$>$  1.\-0  array  \-Smarty  string output from  \-Smarty\-::\-\_\-generate\-\_\-debug\-\_\-output()\} }
+
+\-Definition at line 24 of file function.\-debug.\-php.
+
+
+\begin{DoxyCode}
+{
+    if($params['output']) {
+        $smarty->assign('_smarty_debug_output',$params['output']);
+    }
+    require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.display_debug_console.php');
+    return smarty_core_display_debug_console(null, $smarty);
+}
+\end{DoxyCode}

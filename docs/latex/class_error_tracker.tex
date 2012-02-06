@@ -1,0 +1,388 @@
+\hypertarget{class_error_tracker}{\section{\-Error\-Tracker \-Class \-Reference}
+\label{class_error_tracker}\index{\-Error\-Tracker@{\-Error\-Tracker}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_error_tracker_a79c903933aea2ab2f363c94aeb74c171}{handle\-Event} (\$num, \$data)
+\item 
+\hyperlink{class_error_tracker_a0ed443a8eae207cb1cc1df9a377e4ab8}{add\-Warning} (\$num)
+\item 
+\hyperlink{class_error_tracker_a3a280f3829918777acb4ade45dc30f0c}{add\-Error} (\$num)
+\item 
+\hyperlink{class_error_tracker_a9345af0d3e0611560db17e1c7386c912}{add\-Error\-Return} (\$num)
+\item 
+\& \hyperlink{class_error_tracker_a73271fd4655a874af7741aaa8dd599ae}{return\-Warnings} ()
+\item 
+\& \hyperlink{class_error_tracker_a5e1b9101af2d8443601d0f7ad8f212c8}{return\-Errors} ()
+\item 
+\hyperlink{class_error_tracker_ad07d17ca630d76f4a595fd4c4afce74c}{errorsort} (\$\hyperlink{classa}{a}, \$b)
+\item 
+\hyperlink{class_error_tracker_a1e8aae47471887a441f1a6e1038b8628}{return\-Last\-Error} ()
+\item 
+\hyperlink{class_error_tracker_a07a71ca83f381191df99379f787e8d92}{return\-Last\-Warning} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_error_tracker_ab24faf4aa647cdcee494fc48524ad4ff}{\$errors} = array()
+\item 
+\hyperlink{class_error_tracker_a46209434b2ef1d7554dc5135de969432}{\$warnings} = array()
+\item 
+\hyperlink{class_error_tracker_a84352b4d740a45279b61228864b9b5e7}{\$curfile} = ''
+\item 
+\hyperlink{class_error_tracker_a597bef7e50a56c650cf17a1ed6bc5595}{\$linenum} = 0
+\item 
+\hyperlink{class_error_tracker_a23ed1c329afe91715e872afa5412dbdc}{\$lasterror} = false
+\item 
+\hyperlink{class_error_tracker_a51bd31003f4ad35205a62bcbff2eece9}{\$lastwarning} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 894 of file \-Errors.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_error_tracker_a3a280f3829918777acb4ade45dc30f0c}{\index{\-Error\-Tracker@{\-Error\-Tracker}!add\-Error@{add\-Error}}
+\index{add\-Error@{add\-Error}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{add\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Error} (
+\begin{DoxyParamCaption}
+\item[{\$}]{num}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_a3a280f3829918777acb4ade45dc30f0c}
+add a new error to the \hyperlink{class_error_tracker_ab24faf4aa647cdcee494fc48524ad4ff}{\$errors} array
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$num} & error number from \hyperlink{_errors_8inc}{\-Errors.\-inc} \\
+\hline
+string & {\em \$data,...} & up to 4 string parameters to sprintf() into the error string for error number \$num\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000092}{\-Todo}]\-C\-S \-Cleanup -\/ do \-I need to add \$data to the method signature? \end{DoxyRefDesc}
+
+
+\-Definition at line 993 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $a = array('', '', '', '');
+        if (func_num_args()>1) {
+            for ($i=1;$i<func_num_args();$i++) {
+                $a[$i - 1] = func_get_arg($i);
+            }
+        }
+        $this->errors[]  = new RecordError($this->curfile,
+            $this->linenum, $num, $a[0], $a[1], $a[2], $a[3]);
+        $this->lasterror = count($this->errors) - 1;
+    }
+\end{DoxyCode}
+\hypertarget{class_error_tracker_a9345af0d3e0611560db17e1c7386c912}{\index{\-Error\-Tracker@{\-Error\-Tracker}!add\-Error\-Return@{add\-Error\-Return}}
+\index{add\-Error\-Return@{add\-Error\-Return}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{add\-Error\-Return}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Error\-Return} (
+\begin{DoxyParamCaption}
+\item[{\$}]{num}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_a9345af0d3e0611560db17e1c7386c912}
+add a new error to the \hyperlink{class_error_tracker_ab24faf4aa647cdcee494fc48524ad4ff}{\$errors} array and returns the error string
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$num} & error number from \hyperlink{_errors_8inc}{\-Errors.\-inc} \\
+\hline
+string & {\em \$data,...} & up to 4 string parameters to sprintf() into the error string for error number \$num\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000093}{\-Todo}]\-C\-S \-Cleanup -\/ do \-I need to add \$data to the method signature? \end{DoxyRefDesc}
+
+
+\-Definition at line 1016 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $a = array('', '', '', '');
+        if (func_num_args()>1) {
+            for ($i=1;$i<func_num_args();$i++) {
+                $a[$i - 1] = func_get_arg($i);
+            }
+        }
+        $this->errors[]  = new RecordError($this->curfile,
+            $this->linenum, $num, $a[0], $a[1], $a[2], $a[3], false);
+        $this->lasterror = count($this->errors) - 1;
+    }
+\end{DoxyCode}
+\hypertarget{class_error_tracker_a0ed443a8eae207cb1cc1df9a377e4ab8}{\index{\-Error\-Tracker@{\-Error\-Tracker}!add\-Warning@{add\-Warning}}
+\index{add\-Warning@{add\-Warning}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{add\-Warning}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Warning} (
+\begin{DoxyParamCaption}
+\item[{\$}]{num}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_a0ed443a8eae207cb1cc1df9a377e4ab8}
+add a new warning to the \hyperlink{class_error_tracker_a46209434b2ef1d7554dc5135de969432}{\$warnings} array
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$num} & error number from \hyperlink{_errors_8inc}{\-Errors.\-inc} \\
+\hline
+string & {\em \$data,...} & up to 4 string parameters to sprintf() into the error string for error number \$num\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000091}{\-Todo}]\-C\-S \-Cleanup -\/ do \-I need to add \$data to the method signature? \end{DoxyRefDesc}
+
+
+\-Definition at line 970 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $a = array('', '', '', '');
+        if (func_num_args()>1) {
+            for ($i=1;$i<func_num_args();$i++) {
+                $a[$i - 1] = func_get_arg($i);
+            }
+        }
+        $this->warnings[]  = new RecordWarning($this->curfile, 
+            $this->linenum, $num, $a[0], $a[1], $a[2], $a[3]);
+        $this->lastwarning = count($this->warnings) - 1;
+    }
+\end{DoxyCode}
+\hypertarget{class_error_tracker_ad07d17ca630d76f4a595fd4c4afce74c}{\index{\-Error\-Tracker@{\-Error\-Tracker}!errorsort@{errorsort}}
+\index{errorsort@{errorsort}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{errorsort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf errorsort} (
+\begin{DoxyParamCaption}
+\item[{\$}]{a, }
+\item[{\$}]{b}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_ad07d17ca630d76f4a595fd4c4afce74c}
+sort two errors
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_record_error}{\-Record\-Error} | \hyperlink{class_record_warning}{\-Record\-Warning} & {\em \$a} & the first error/warning \\
+\hline
+\hyperlink{class_record_error}{\-Record\-Error} | \hyperlink{class_record_warning}{\-Record\-Warning} & {\em \$b} & the second error/warning\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+int  private 
+\end{DoxyReturn}
+
+
+\-Definition at line 1060 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!$a->file) return -1;
+        if (!$b->file) return 1;
+        if ($a->file == $b->file) {
+            if ($a->linenum == $b->linenum) return 0;
+            if ($a->linenum < $b->linenum) return -1;
+            return 1;
+        }
+        return strnatcasecmp($a->file, $b->file);
+    }
+\end{DoxyCode}
+\hypertarget{class_error_tracker_a79c903933aea2ab2f363c94aeb74c171}{\index{\-Error\-Tracker@{\-Error\-Tracker}!handle\-Event@{handle\-Event}}
+\index{handle\-Event@{handle\-Event}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{handle\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Event} (
+\begin{DoxyParamCaption}
+\item[{\$}]{num, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_a79c903933aea2ab2f363c94aeb74c171}
+\-This function subscribes to two events in the \hyperlink{class_parser}{\-Parser} in order to keep track of line number information and file name.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$num} & parser-\/passed event (see \hyperlink{}{\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-E\-V\-E\-N\-T\-\_\-\-N\-E\-W\-F\-I\-L\-E}) \\
+\hline
+mixed & {\em \$data} & either a line number if \$num is \-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-E\-V\-E\-N\-T\-\_\-\-N\-E\-W\-L\-I\-N\-E\-N\-U\-M or a file name if \$num is \-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-E\-V\-E\-N\-T\-\_\-\-N\-E\-W\-F\-I\-L\-E\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 940 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        switch($num) {
+        case PHPDOCUMENTOR_EVENT_NEWLINENUM :
+            $this->linenum = $data;
+            break;
+
+        case PHPDOCUMENTOR_EVENT_NEWFILE :
+            $this->linenum = 0;
+            $this->curfile = $data;
+            break;
+
+        case 1000000635 : // debugging
+            phpDocumentor_out($this->curfile . 
+                ' has ' . $this->linenum . ' lines' . "\n");
+            flush();
+            break;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_error_tracker_a5e1b9101af2d8443601d0f7ad8f212c8}{\index{\-Error\-Tracker@{\-Error\-Tracker}!return\-Errors@{return\-Errors}}
+\index{return\-Errors@{return\-Errors}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{return\-Errors}]{\setlength{\rightskip}{0pt plus 5cm}\& {\bf return\-Errors} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_a5e1b9101af2d8443601d0f7ad8f212c8}
+\-Get sorted array of all non-\/fatal errors in parsing/conversion
+
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 1045 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        usort($this->errors, array($this, "errorsort"));
+        return $this->errors;
+    }
+\end{DoxyCode}
+\hypertarget{class_error_tracker_a1e8aae47471887a441f1a6e1038b8628}{\index{\-Error\-Tracker@{\-Error\-Tracker}!return\-Last\-Error@{return\-Last\-Error}}
+\index{return\-Last\-Error@{return\-Last\-Error}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{return\-Last\-Error}]{\setlength{\rightskip}{0pt plus 5cm}{\bf return\-Last\-Error} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_a1e8aae47471887a441f1a6e1038b8628}
+\-Get the error message of the last error
+
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 1077 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->errors[$this->lasterror]->output(true);
+    }
+\end{DoxyCode}
+\hypertarget{class_error_tracker_a07a71ca83f381191df99379f787e8d92}{\index{\-Error\-Tracker@{\-Error\-Tracker}!return\-Last\-Warning@{return\-Last\-Warning}}
+\index{return\-Last\-Warning@{return\-Last\-Warning}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{return\-Last\-Warning}]{\setlength{\rightskip}{0pt plus 5cm}{\bf return\-Last\-Warning} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_a07a71ca83f381191df99379f787e8d92}
+\-Get the warning message of the last warning
+
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 1087 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->warnings[$this->lastwarning]->output(true);
+    }
+\end{DoxyCode}
+\hypertarget{class_error_tracker_a73271fd4655a874af7741aaa8dd599ae}{\index{\-Error\-Tracker@{\-Error\-Tracker}!return\-Warnings@{return\-Warnings}}
+\index{return\-Warnings@{return\-Warnings}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{return\-Warnings}]{\setlength{\rightskip}{0pt plus 5cm}\& {\bf return\-Warnings} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_error_tracker_a73271fd4655a874af7741aaa8dd599ae}
+\-Get sorted array of all warnings in parsing/conversion
+
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 1034 of file \-Errors.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        usort($this->warnings, array($this, "errorsort"));
+        return $this->warnings;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_error_tracker_a84352b4d740a45279b61228864b9b5e7}{\index{\-Error\-Tracker@{\-Error\-Tracker}!\$curfile@{\$curfile}}
+\index{\$curfile@{\$curfile}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{\$curfile}]{\setlength{\rightskip}{0pt plus 5cm}\$curfile = ''}}\label{class_error_tracker_a84352b4d740a45279b61228864b9b5e7}
+
+
+\-Definition at line 909 of file \-Errors.\-inc.
+
+\hypertarget{class_error_tracker_ab24faf4aa647cdcee494fc48524ad4ff}{\index{\-Error\-Tracker@{\-Error\-Tracker}!\$errors@{\$errors}}
+\index{\$errors@{\$errors}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{\$errors}]{\setlength{\rightskip}{0pt plus 5cm}\$errors = array()}}\label{class_error_tracker_ab24faf4aa647cdcee494fc48524ad4ff}
+
+
+\-Definition at line 900 of file \-Errors.\-inc.
+
+\hypertarget{class_error_tracker_a23ed1c329afe91715e872afa5412dbdc}{\index{\-Error\-Tracker@{\-Error\-Tracker}!\$lasterror@{\$lasterror}}
+\index{\$lasterror@{\$lasterror}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{\$lasterror}]{\setlength{\rightskip}{0pt plus 5cm}\$lasterror = false}}\label{class_error_tracker_a23ed1c329afe91715e872afa5412dbdc}
+
+
+\-Definition at line 919 of file \-Errors.\-inc.
+
+\hypertarget{class_error_tracker_a51bd31003f4ad35205a62bcbff2eece9}{\index{\-Error\-Tracker@{\-Error\-Tracker}!\$lastwarning@{\$lastwarning}}
+\index{\$lastwarning@{\$lastwarning}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{\$lastwarning}]{\setlength{\rightskip}{0pt plus 5cm}\$lastwarning = false}}\label{class_error_tracker_a51bd31003f4ad35205a62bcbff2eece9}
+
+
+\-Definition at line 925 of file \-Errors.\-inc.
+
+\hypertarget{class_error_tracker_a597bef7e50a56c650cf17a1ed6bc5595}{\index{\-Error\-Tracker@{\-Error\-Tracker}!\$linenum@{\$linenum}}
+\index{\$linenum@{\$linenum}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{\$linenum}]{\setlength{\rightskip}{0pt plus 5cm}\$linenum = 0}}\label{class_error_tracker_a597bef7e50a56c650cf17a1ed6bc5595}
+
+
+\-Definition at line 913 of file \-Errors.\-inc.
+
+\hypertarget{class_error_tracker_a46209434b2ef1d7554dc5135de969432}{\index{\-Error\-Tracker@{\-Error\-Tracker}!\$warnings@{\$warnings}}
+\index{\$warnings@{\$warnings}!ErrorTracker@{\-Error\-Tracker}}
+\subsubsection[{\$warnings}]{\setlength{\rightskip}{0pt plus 5cm}\$warnings = array()}}\label{class_error_tracker_a46209434b2ef1d7554dc5135de969432}
+
+
+\-Definition at line 905 of file \-Errors.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_errors_8inc}{\-Errors.\-inc}\end{DoxyCompactItemize}

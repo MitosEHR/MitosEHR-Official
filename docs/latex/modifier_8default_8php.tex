@@ -1,0 +1,41 @@
+\hypertarget{modifier_8default_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/modifier.default.\-php \-File \-Reference}
+\label{modifier_8default_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-default.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-default.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{modifier_8default_8php_ae4933150fd8ed8fdd6cce6870aae1613}{smarty\-\_\-modifier\-\_\-default} (\$string, \$default= '')
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{modifier_8default_8php_ae4933150fd8ed8fdd6cce6870aae1613}{\index{modifier.\-default.\-php@{modifier.\-default.\-php}!smarty\-\_\-modifier\-\_\-default@{smarty\-\_\-modifier\-\_\-default}}
+\index{smarty\-\_\-modifier\-\_\-default@{smarty\-\_\-modifier\-\_\-default}!modifier.default.php@{modifier.\-default.\-php}}
+\subsubsection[{smarty\-\_\-modifier\-\_\-default}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-modifier\-\_\-default} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string, }
+\item[{\$}]{default = {\ttfamily ''}}
+\end{DoxyParamCaption}
+)}}\label{modifier_8default_8php_ae4933150fd8ed8fdd6cce6870aae1613}
+\hyperlink{class_smarty}{\-Smarty} default modifier plugin
+
+\-Type\-: modifier\par
+ \-Name\-: default\par
+ \-Purpose\-: designate default value for empty variables \hyperlink{}{default (\-Smarty online manual)  string  string  string }
+
+\-Definition at line 21 of file modifier.\-default.\-php.
+
+
+\begin{DoxyCode}
+{
+    if (!isset($string) || $string === '')
+        return $default;
+    else
+        return $string;
+}
+\end{DoxyCode}

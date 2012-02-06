@@ -1,0 +1,596 @@
+\hypertarget{class_club_base}{\section{\-Club\-Base \-Class \-Reference}
+\label{class_club_base}\index{\-Club\-Base@{\-Club\-Base}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_club_base_a5f7e3fcfdf154c6ce3160dee29dc0cfc}{\-Club\-Base} ()
+\item 
+\hyperlink{class_club_base_ab98c8af3ebe6a93b077990142c6870b8}{get\-Property} (\$property, \$target= '', \$index=0, \$simplify=false)
+\item 
+\hyperlink{class_club_base_aac982cbdc597063ab18fca089529e760}{get\-All\-Properties} (\$simplify=false, \$exclude=array())
+\item 
+\hyperlink{class_club_base_a3bc07035afdc09ef24dd683bd04a8a70}{set\-Property} (\$property, \$value, \$target= '', \$index=0, \$force=false)
+\item 
+\hyperlink{class_club_base_a6d1d209ba105f7fa2c0a957765c426f1}{get\-Prop\-Type} (\$property, \$target=null, \$index=0)
+\item 
+\hyperlink{class_club_base_a486ff145bcdb40c2c95fa7e571094044}{print\-Flush} ()
+\item 
+\hyperlink{class_club_base_ae2ec414e416ccf308871485d6566a4ab}{print\-Var} (\$var, \$info= '')
+\item 
+\hyperlink{class_club_base_a5a13e7e61831425b5ed7569bbcbd56a5}{load\-Class} (\$classname, \$path= './', \$ext= '.class.\-inc', \$require=false)
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_club_base_a8f213a64645fcfa523f0cea44602e344}{set\-Debug} (\$level, \$hide=true, \$file= '', \$\hyperlink{tokenizer__test_8php_a3ad3a4240c0f97c7e85aff5c52a454d4}{print}=true, \$flush=false)
+\item 
+\hyperlink{class_club_base_a6e3dfe5812adeeafd256d9001d418a00}{\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G} (\$message, \$level=\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G\-\_\-\-I\-N\-F\-O)
+\item 
+\hyperlink{class_club_base_a569202f016e5285687d3be68677c24fd}{\-\_\-\-E\-R\-R\-O\-R} (\$message= 'unknown error', \$code=\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G\-\_\-\-E\-R\-R\-O\-R, \$mode=null, \$options=null, \$userinfo=null, \$error\-\_\-class=null)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_club_base_add71bcbd600129183162ddacf67bb83a}{\$\-\_\-b\-Debug\-Level} = -\/1
+\item 
+\hyperlink{class_club_base_ad7d93ce351d81c017e02c6f0298acd5d}{\$\-\_\-b\-Hide\-Debug} = true
+\item 
+\hyperlink{class_club_base_adb79a07a3a72f42e63e7158496181177}{\$\-\_\-s\-Log\-File} = ''
+\item 
+\hyperlink{class_club_base_ab74e25f90ff7b6bd6057691b4f37e1ac}{\$\-\_\-b\-Print\-Debug} = true
+\item 
+\hyperlink{class_club_base_ad948cd5f705e9a44794823715ba6b164}{\$\-\_\-b\-Print\-Flush} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 103 of file bug-\/561101.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_club_base_a569202f016e5285687d3be68677c24fd}{\index{\-Club\-Base@{\-Club\-Base}!\-\_\-\-E\-R\-R\-O\-R@{\-\_\-\-E\-R\-R\-O\-R}}
+\index{\-\_\-\-E\-R\-R\-O\-R@{\-\_\-\-E\-R\-R\-O\-R}!ClubBase@{\-Club\-Base}}
+\subsubsection[{\-\_\-\-E\-R\-R\-O\-R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-\-E\-R\-R\-O\-R} (
+\begin{DoxyParamCaption}
+\item[{\$}]{message = {\ttfamily 'unknown~error'}, }
+\item[{\$}]{code = {\ttfamily \-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G\-\_\-\-E\-R\-R\-O\-R}, }
+\item[{\$}]{mode = {\ttfamily null}, }
+\item[{\$}]{options = {\ttfamily null}, }
+\item[{\$}]{userinfo = {\ttfamily null}, }
+\item[{\$}]{error\-\_\-class = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{class_club_base_a569202f016e5285687d3be68677c24fd}
+\hyperlink{class_club_base_a569202f016e5285687d3be68677c24fd}{\-\_\-\-E\-R\-R\-O\-R()} \-Fehler registrieren und ggf. zur \-Debug-\/\-Ausgabe weiterleiten
+
+\-Dies muss erst noch implementiert werden ;-\/)) \begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000002}{\-Todo}]implement this\end{DoxyRefDesc}
+
+
+public  
+
+\-Definition at line 423 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $msg = ClubBase::isError($message) ? $message->getMessage() : $message;
+        (isset($this)) ? $this->_PHPDOCUMENTOR_DEBUG($msg, 
+      PHPDOCUMENTOR_DEBUG_ERROR) : ClubBase::_PHPDOCUMENTOR_DEBUG($msg, $code);
+        if(!isset($this) and empty($error_class)) $error_class = 'PEAR_Error';
+        return (isset($this))
+                    ? $this->raiseError($message, $code, $mode, $options, 
+      $userinfo)
+                    : ClubBase::raiseError($message, $code, $mode, $options, 
+      $userinfo, $error_class);
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_a6e3dfe5812adeeafd256d9001d418a00}{\index{\-Club\-Base@{\-Club\-Base}!\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G@{\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G}}
+\index{\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G@{\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G}!ClubBase@{\-Club\-Base}}
+\subsubsection[{\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G} (
+\begin{DoxyParamCaption}
+\item[{\$}]{message, }
+\item[{\$}]{level = {\ttfamily \-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G\-\_\-\-I\-N\-F\-O}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{class_club_base_a6e3dfe5812adeeafd256d9001d418a00}
+\hyperlink{class_club_base_a6e3dfe5812adeeafd256d9001d418a00}{\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G()} \-Debugmeldungen ausgeben
+
+\-Mit dieser \-Funktion koennen alle \-Klassen einheitlich \-Debug-\/\-Meldungnen ausgeben.
+
+public
+
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000001}{\-Todo}]die() bei \-Level -\/999 rausnehmen, wenn \-Error-\/\-Handling implmentiert\end{DoxyRefDesc}
+
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$message} & \-Meldungstext \\
+\hline
+integer & {\em \$level} & das \-Debuglevel der \-Meldung  array \-Globale \-Debugging-\/\-Einstellungen \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_club_base_add71bcbd600129183162ddacf67bb83a}{\$\-\_\-b\-Debug\-Level}, \hyperlink{class_club_base_ad7d93ce351d81c017e02c6f0298acd5d}{\$\-\_\-b\-Hide\-Debug}, \hyperlink{class_club_base_adb79a07a3a72f42e63e7158496181177}{\$\-\_\-s\-Log\-File}, \hyperlink{class_club_base_ab74e25f90ff7b6bd6057691b4f37e1ac}{\$\-\_\-b\-Print\-Debug} 
+
+\hyperlink{bug-561101_8php_af5d7017e9118ddafbf3e4cdefd32f92d}{\$\-\_\-\-Club\-Debug\-Options}, \-Club\-Base\-::set\-\_\-debug(), \hyperlink{class_club_base_a6e3dfe5812adeeafd256d9001d418a00}{\-Club\-Base\-::\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 375 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+      {
+        static $called = 0; ++$called;
+        global $_ClubDebugOptions;
+        $blevel = 0; $hide = true; $file = null; $print = false;
+        if(isset($_ClubDebugOptions['level'])) {
+                $blevel = $_ClubDebugOptions['level'];
+                $hide = $_ClubDebugOptions['hide'];
+                $file = $_ClubDebugOptions['file'];
+                $print = $_ClubDebugOptions['print'];
+                $flush = $_ClubDebugOptions['flush'];
+                
+        }
+        if(isset($this) and isset($this->_bDebugLevel) and $this->_bDebugLevel 
+      >= 0) {
+                        $blevel = $this->_bDebugLevel;
+                        $hide = $this->_bHideDebug;
+                        $file = $this->_sLogFile;
+                        $print = $this->_bPrintDebug;
+                        $flush = $this->_bPrintFlush;                   
+        }
+        $class = (isset($this)) ? phpDocumentor_get_class($this) ."($called) -"
+       : '';
+        if($level <= $blevel) {
+            $output = "$class $message ($level/$blevel)";
+            if($print) {
+                $output = ($hide) ? "<!-- " . $output : "<HR size='1'
+       noshade><PRE><B>" . $output;
+                $output .= ($hide) ? " -->\n" : "</PRE><HR size='1' noshade><B>
+      \n";
+                ($flush) ? ClubBase::printFlush($output) : print $output;
+            }
+            if(!empty($file)) {
+                $file = (!is_string($file)) ? CLUB_LOG_FILE : $file;
+                $log = &Log::singleton('file', $file);
+                $log->log($output, $level);
+            }
+        }
+        if($level === PHPDOCUMENTOR_DEBUG_FATAL) {
+            trigger_error($message, E_USER_ERROR);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_a5f7e3fcfdf154c6ce3160dee29dc0cfc}{\index{\-Club\-Base@{\-Club\-Base}!\-Club\-Base@{\-Club\-Base}}
+\index{\-Club\-Base@{\-Club\-Base}!ClubBase@{\-Club\-Base}}
+\subsubsection[{\-Club\-Base}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Club\-Base} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_club_base_a5f7e3fcfdf154c6ce3160dee29dc0cfc}
+\hyperlink{class_club_base_a5f7e3fcfdf154c6ce3160dee29dc0cfc}{\-Club\-Base()} \-Der \-Konstruktor
+
+\-Macht nicht viel mehr, als fuer alle abgeleiteten \-Klassen eine \-Debug-\/\-Meldung abzusetzten und \-P\-E\-A\-R-\/\-Funktionen einzubinden
+
+public 
+
+\-Definition at line 158 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                        {
+        $this->_PHPDOCUMENTOR_DEBUG("Initialisiere Klasse " . 
+      phpDocumentor_get_class($this), PHPDOCUMENTOR_DEBUG_CTRACE);
+        $this->PEAR();
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_aac982cbdc597063ab18fca089529e760}{\index{\-Club\-Base@{\-Club\-Base}!get\-All\-Properties@{get\-All\-Properties}}
+\index{get\-All\-Properties@{get\-All\-Properties}!ClubBase@{\-Club\-Base}}
+\subsubsection[{get\-All\-Properties}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-All\-Properties} (
+\begin{DoxyParamCaption}
+\item[{\$}]{simplify = {\ttfamily false}, }
+\item[{\$}]{exclude = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}\label{class_club_base_aac982cbdc597063ab18fca089529e760}
+\hyperlink{class_club_base_aac982cbdc597063ab18fca089529e760}{get\-All\-Properties()} \-Gibt die \-Wert aller \-Eigenschaften einer \-Klasse zurueck
+
+\-Es werden nur 'oeffentliche' \-Eigenschaften (ohne '\-\_\-' davor) zurueckgegeben/bearbeitet \-Wird ein optionales '\-Target' angegeben wird versucht den \-Werte eines \-Hashes auszulesen (z.\-B. \$class-\/$>$\$target\mbox{[}\$property\mbox{]}) bzw. zu schreiben
+
+public 
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$exclude} & diese \-Eigenschaften werden ignoriert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array \-Array mit den \-Namen der \-Eigenschaften als \-Schluesseln 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_club_base_ab98c8af3ebe6a93b077990142c6870b8}{get\-Property()}, \hyperlink{class_club_base_aac982cbdc597063ab18fca089529e760}{get\-All\-Properties()}, \hyperlink{class_club_base_a3bc07035afdc09ef24dd683bd04a8a70}{set\-Property()}, \hyperlink{class_club_base_a6d1d209ba105f7fa2c0a957765c426f1}{get\-Prop\-Type()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 216 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                                                                     {
+        if(isset($exclude) and !is_array($exclude)) $exclude = array($exclude);
+        $allvars = get_object_vars($this);
+        $props = array();
+            while(list($key, $val) = each($allvars)) {
+                if(!isset($key) or eregi('^_', $key) or in_array($key, $exclude
+      )) continue;
+                if(is_array($val)) {
+                if($simplify) {
+                    if(isset($val[0]) and count($val) < 2) $val = $val[0];
+                }
+            }
+            $props[$key] = $val;
+        }
+        return $props;
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_ab98c8af3ebe6a93b077990142c6870b8}{\index{\-Club\-Base@{\-Club\-Base}!get\-Property@{get\-Property}}
+\index{get\-Property@{get\-Property}!ClubBase@{\-Club\-Base}}
+\subsubsection[{get\-Property}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Property} (
+\begin{DoxyParamCaption}
+\item[{\$}]{property, }
+\item[{\$}]{target = {\ttfamily ''}, }
+\item[{\$}]{index = {\ttfamily 0}, }
+\item[{\$}]{simplify = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_club_base_ab98c8af3ebe6a93b077990142c6870b8}
+\hyperlink{class_club_base_ab98c8af3ebe6a93b077990142c6870b8}{get\-Property()} \-Gibt den \-Wert einer \-Eigenschaft zurueck
+
+\-Es werden nur 'oeffentliche' \-Eigenschaften (ohne '\-\_\-' davor) zurueckgegeben/bearbeitet \-Wird ein optionales '\-Target' angegeben wird versucht den \-Werte eines \-Hashes auszulesen (z.\-B. \$class-\/$>$\$target\mbox{[}\$property\mbox{]}) bzw. zu schreiben
+
+public 
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$property} & \-Name der \-Eigenschaft/\-Schluessel \\
+\hline
+string & {\em \$target} & \-Name des \-Targets \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed \-Wert der \-Eigenschaft/\-Schluessels 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_club_base_ab98c8af3ebe6a93b077990142c6870b8}{get\-Property()}, \hyperlink{class_club_base_aac982cbdc597063ab18fca089529e760}{get\-All\-Properties()}, \hyperlink{class_club_base_a3bc07035afdc09ef24dd683bd04a8a70}{set\-Property()}, \hyperlink{class_club_base_a6d1d209ba105f7fa2c0a957765c426f1}{get\-Prop\-Type()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 176 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+        {
+        $allvars = get_object_vars($this);
+        $prop = (empty($target)) ? $property : $target;
+        $key = (empty($target)) ? null : $property;
+        if(!in_array($prop, @array_keys($allvars))) {
+            // Fehlerbehandlung
+            return $this->_ERROR("Eigenschaft $prop gibt's net");
+        }
+        if(eregi('^_', $prop) or (isset($key) and eregi('^_', $key))) {
+            // Fehlerbehandlung
+            $this->_ERROR("Auf private Variablen darf nicht zugegriffen werden"
+      );
+        }
+        if(isset($key) and !in_array($key, array_keys($allvars[$prop]), true)) 
+      {
+            if(isset($allvars[$prop][$index])) {
+                if(in_array($key, @array_keys($allvars[$prop][$index]))) {
+                    return $allvars[$prop][$index][$key];
+                }
+            }
+            // Fehlerbehandlung
+            return $this->_ERROR("Eigenschaft $prop hat den Schluessel $key
+       nicht");
+        }
+        $val = (isset($key)) ? $allvars[$prop][$key] : $allvars[$prop];
+        if($simplify) {
+            if(isset($val[0]) and count($val) < 2) $val = $val[0];
+        }
+        return $val;
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_a6d1d209ba105f7fa2c0a957765c426f1}{\index{\-Club\-Base@{\-Club\-Base}!get\-Prop\-Type@{get\-Prop\-Type}}
+\index{get\-Prop\-Type@{get\-Prop\-Type}!ClubBase@{\-Club\-Base}}
+\subsubsection[{get\-Prop\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Prop\-Type} (
+\begin{DoxyParamCaption}
+\item[{\$}]{property, }
+\item[{\$}]{target = {\ttfamily null}, }
+\item[{\$}]{index = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_club_base_a6d1d209ba105f7fa2c0a957765c426f1}
+get\-Prop\-Type gibt den \-Datentyp eines \-Objekt-\/\-Eigenschaft zurueck.
+
+public  \hyperlink{class_club_base_ab98c8af3ebe6a93b077990142c6870b8}{get\-Property()}
+
+\begin{DoxyReturn}{\-Returns}
+string \-Datentyp der \-Eigenschaft 
+\end{DoxyReturn}
+
+
+\-Definition at line 271 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                                                                {
+        $val = $this->getProperty($property, $target, $index);
+        // Fehlerbehandlung
+        return gettype($val);
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_a5a13e7e61831425b5ed7569bbcbd56a5}{\index{\-Club\-Base@{\-Club\-Base}!load\-Class@{load\-Class}}
+\index{load\-Class@{load\-Class}!ClubBase@{\-Club\-Base}}
+\subsubsection[{load\-Class}]{\setlength{\rightskip}{0pt plus 5cm}{\bf load\-Class} (
+\begin{DoxyParamCaption}
+\item[{\$}]{classname, }
+\item[{\$}]{path = {\ttfamily './'}, }
+\item[{\$}]{ext = {\ttfamily '.class.inc'}, }
+\item[{\$}]{require = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_club_base_a5a13e7e61831425b5ed7569bbcbd56a5}
+
+
+\-Definition at line 333 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+               {
+        ClubBase::_PHPDOCUMENTOR_DEBUG("ClubBase::loadclass($path, $classname,
+       $ext)", PHPDOCUMENTOR_DEBUG_MTRACE);
+        if(empty($classname) or empty($ext))  {
+            return ClubBase::_ERROR("Fehlende Daten: (Pfad: $path, Klasse:
+       $classname, Ext.: $ext)");
+        }
+        if(!in_array(strtolower($classname), get_declared_classes())) {
+            ClubBase::_PHPDOCUMENTOR_DEBUG("Klasse '$classname' noch nicht
+       deklariert, lade neu...", PHPDOCUMENTOR_DEBUG_NOTICE);
+            $classfile = $path . $classname . $ext;
+            if(!file_exists($classfile) or !is_readable($classfile)) {
+                //Fehlerbehandlung
+                return ClubBase::_ERROR("Kann Klasse '$classfile' nicht laden")
+      ;
+            } elseif($require) {
+                if(!@require_once($classfile)) {
+                    //Fehlerbehandlung
+                    return ClubBase::_ERROR('Kann Command nicht includieren');
+                }
+            } elseif(!@include_once($classfile)) {
+                //Fehlerbehandlung
+                ClubBase::_ERROR("Kann Klasse '$classfile' nicht includieren");
+            }
+        } else {
+            ClubBase::_PHPDOCUMENTOR_DEBUG('Klasse schon deklariert.', 
+      PHPDOCUMENTOR_DEBUG_INTERNALS);
+        }
+        return true;
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_a486ff145bcdb40c2c95fa7e571094044}{\index{\-Club\-Base@{\-Club\-Base}!print\-Flush@{print\-Flush}}
+\index{print\-Flush@{print\-Flush}!ClubBase@{\-Club\-Base}}
+\subsubsection[{print\-Flush}]{\setlength{\rightskip}{0pt plus 5cm}{\bf print\-Flush} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_club_base_a486ff145bcdb40c2c95fa7e571094044}
+
+
+\-Definition at line 319 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                          {
+        $args = func_get_args();
+        if(empty($args)) $args = array(' ');
+        eval("printf(\"% 256s\", sprintf(\"" . implode("\", \"", $args) . "\"
+      ));");
+        flush();
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_ae2ec414e416ccf308871485d6566a4ab}{\index{\-Club\-Base@{\-Club\-Base}!print\-Var@{print\-Var}}
+\index{print\-Var@{print\-Var}!ClubBase@{\-Club\-Base}}
+\subsubsection[{print\-Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf print\-Var} (
+\begin{DoxyParamCaption}
+\item[{\$}]{var, }
+\item[{\$}]{info = {\ttfamily ''}}
+\end{DoxyParamCaption}
+)}}\label{class_club_base_ae2ec414e416ccf308871485d6566a4ab}
+
+
+\-Definition at line 326 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                                        {
+        if (ClubBase::isError(ClubBase::loadClass('var_dump', CLUB_CLASS_PATH))
+      ) return false;  
+        if (!empty($info)) print "<H2>$info</H2>";
+        Var_Dump::display($var);
+        return true;
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_a8f213a64645fcfa523f0cea44602e344}{\index{\-Club\-Base@{\-Club\-Base}!set\-Debug@{set\-Debug}}
+\index{set\-Debug@{set\-Debug}!ClubBase@{\-Club\-Base}}
+\subsubsection[{set\-Debug}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Debug} (
+\begin{DoxyParamCaption}
+\item[{\$}]{level, }
+\item[{\$}]{hide = {\ttfamily true}, }
+\item[{\$}]{file = {\ttfamily ''}, }
+\item[{\$}]{print = {\ttfamily true}, }
+\item[{\$}]{flush = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{class_club_base_a8f213a64645fcfa523f0cea44602e344}
+set\-\_\-debug() \-Debug-\/\-Level fuer die \-Klasse setzen
+
+\-Wird diese \-Methode statisch (\-Club\-Base\-::set\-\_\-debug()) aufgerufen, dann wird die globale \-Variable \$\-\_\-\-Club\-Debug\-Options gesetzt. \-Diese gilt fuer \-A\-L\-L\-E \-K\-L\-A\-S\-S\-E\-N, die keine eigenen \-Werte mit \$obj-\/$>$set\-\_\-debug() gestzt haben.
+
+public
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$level} & \-Level, bis zu dem \-Debugausgaben angezeigt werden \\
+\hline
+boolean & {\em \$hide} & \-Sollen \-Debugausgaben im \-H\-T\-M\-L in \-Kommentare gepackt werden? \\
+\hline
+string & {\em \$file} & \-Soll in eine \-Datei geschrieben werden (null = nein) \\
+\hline
+boolean & {\em \$print} & \-Sollen \-Kommentare in \-H\-T\-M\-L geschrieben werden, auch wenn schon in \-Datei geloggt wird?\\
+\hline
+\end{DoxyParams}
+array \-Globale \-Debugging-\/\-Einstellungen \begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_club_base_add71bcbd600129183162ddacf67bb83a}{\$\-\_\-b\-Debug\-Level}, \hyperlink{class_club_base_ad7d93ce351d81c017e02c6f0298acd5d}{\$\-\_\-b\-Hide\-Debug}, \hyperlink{class_club_base_adb79a07a3a72f42e63e7158496181177}{\$\-\_\-s\-Log\-File}, \hyperlink{class_club_base_ab74e25f90ff7b6bd6057691b4f37e1ac}{\$\-\_\-b\-Print\-Debug} 
+
+\hyperlink{bug-561101_8php_af5d7017e9118ddafbf3e4cdefd32f92d}{\$\-\_\-\-Club\-Debug\-Options}, \-Club\-Base\-::set\-\_\-debug(), \hyperlink{class_club_base_a6e3dfe5812adeeafd256d9001d418a00}{\-Club\-Base\-::\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 298 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+              {
+        if(!empty($file)) $file = (is_string($file)) ? $file : CLUB_LOG_FILE;
+        if(!isset($this)) {
+            global $_ClubDebugOptions;
+            $_ClubDebugOptions = array(
+                'level' => (integer)$level,
+                'hide' => (boolean)$hide,
+                'file' => (string)$file,
+                'print' => (boolean)$print,
+                'flush' => (boolean)$flush
+            );
+            return;
+        }
+        if($this->_bDebugLevel < 0) $this->_bDebugLevel = 0;
+        $this->_bDebugLevel = empty($level) ? !(boolean)$this->_bDebugLevel : (
+      integer)$level;
+        $this->_bHideDebug = (boolean)$hide;
+        $this->_sLogFile = (string)$file;
+        $this->_bPrintDebug = (boolean)$print;
+        $this->_bPrintFlush = (boolean)$flush;  
+    }
+\end{DoxyCode}
+\hypertarget{class_club_base_a3bc07035afdc09ef24dd683bd04a8a70}{\index{\-Club\-Base@{\-Club\-Base}!set\-Property@{set\-Property}}
+\index{set\-Property@{set\-Property}!ClubBase@{\-Club\-Base}}
+\subsubsection[{set\-Property}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Property} (
+\begin{DoxyParamCaption}
+\item[{\$}]{property, }
+\item[{\$}]{value, }
+\item[{\$}]{target = {\ttfamily ''}, }
+\item[{\$}]{index = {\ttfamily 0}, }
+\item[{\$}]{force = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_club_base_a3bc07035afdc09ef24dd683bd04a8a70}
+\hyperlink{class_club_base_a3bc07035afdc09ef24dd683bd04a8a70}{set\-Property()} \-Setzt den \-Wert einer \-Eigenschaft
+
+\hyperlink{class_club_base_ab98c8af3ebe6a93b077990142c6870b8}{get\-Property()}  public 
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$value} & \-Wert der der \-Eigenschaft zugewiesen werden soll \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed true im \-Erfolgsfall, sonst \-Fehler 
+\end{DoxyReturn}
+
+
+\-Definition at line 240 of file bug-\/561101.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+             {
+        $oldval = $this->getProperty($property, $target, $index);
+        // Fehlerbehandlung
+        if(isset($oldval) and (gettype($value) != gettype($oldval)) and !$force
+      ) {
+        // Fehlerbehandlung
+            return $this->_ERROR("Falscher Typ (" . gettype($value) . ") fuer
+       '$property' (" . gettype($oldval) . ")!");
+        } else {
+        if(!empty($target)) {
+            $temp = &$this->$target;
+            if(isset($temp[$property]) or $force) {
+                $temp[$property] = $value;
+            } elseif((isset($temp[$index]) and isset($temp[$index][$property]))
+      ) {
+                    $temp[$index][$property] = $value;
+            } else {
+                return $this->_ERROR("Eigenschaft $property gibt es nicht");
+            }
+        } else {
+            $this->$property = $value;
+        }
+            return true;
+        }
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_club_base_add71bcbd600129183162ddacf67bb83a}{\index{\-Club\-Base@{\-Club\-Base}!\$\-\_\-b\-Debug\-Level@{\$\-\_\-b\-Debug\-Level}}
+\index{\$\-\_\-b\-Debug\-Level@{\$\-\_\-b\-Debug\-Level}!ClubBase@{\-Club\-Base}}
+\subsubsection[{\$\-\_\-b\-Debug\-Level}]{\setlength{\rightskip}{0pt plus 5cm}integer \$\-\_\-b\-Debug\-Level = -\/1}}\label{class_club_base_add71bcbd600129183162ddacf67bb83a}
+\$\-\_\-b\-Debug\-Level \-Debug-\/\-Level
+
+\-Diese \-Variablen speichern die \-Debugging-\/\-Einstellungen innerhalb des \-Objekts. \-Sie ueberschreiben ggf. die \-Werte in \-\_\-\-Club\-Debug\-Options
+
+private
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{bug-561101_8php_af5d7017e9118ddafbf3e4cdefd32f92d}{\$\-\_\-\-Club\-Debug\-Options}, setdebug(), \hyperlink{class_club_base_a6e3dfe5812adeeafd256d9001d418a00}{\-\_\-\-P\-H\-P\-D\-O\-C\-U\-M\-E\-N\-T\-O\-R\-\_\-\-D\-E\-B\-U\-G()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 117 of file bug-\/561101.\-php.
+
+\hypertarget{class_club_base_ad7d93ce351d81c017e02c6f0298acd5d}{\index{\-Club\-Base@{\-Club\-Base}!\$\-\_\-b\-Hide\-Debug@{\$\-\_\-b\-Hide\-Debug}}
+\index{\$\-\_\-b\-Hide\-Debug@{\$\-\_\-b\-Hide\-Debug}!ClubBase@{\-Club\-Base}}
+\subsubsection[{\$\-\_\-b\-Hide\-Debug}]{\setlength{\rightskip}{0pt plus 5cm}boolean \$\-\_\-b\-Hide\-Debug = true}}\label{class_club_base_ad7d93ce351d81c017e02c6f0298acd5d}
+\$\-\_\-\-\_\-b\-Hide\-Debug \-Debugausgabe in \-H\-T\-Ml-\/\-Kommentare setzen?
+
+\-\_\-b\-Debug\-Level  private 
+
+\-Definition at line 126 of file bug-\/561101.\-php.
+
+\hypertarget{class_club_base_ab74e25f90ff7b6bd6057691b4f37e1ac}{\index{\-Club\-Base@{\-Club\-Base}!\$\-\_\-b\-Print\-Debug@{\$\-\_\-b\-Print\-Debug}}
+\index{\$\-\_\-b\-Print\-Debug@{\$\-\_\-b\-Print\-Debug}!ClubBase@{\-Club\-Base}}
+\subsubsection[{\$\-\_\-b\-Print\-Debug}]{\setlength{\rightskip}{0pt plus 5cm}boolean \$\-\_\-b\-Print\-Debug = true}}\label{class_club_base_ab74e25f90ff7b6bd6057691b4f37e1ac}
+\$\-\_\-b\-Print\-Debug \-Sollen \-Meldungen auch in \-H\-T\-M geschrieben werden, wenn sie in \-Datei geloggt werden?
+
+\-\_\-b\-Debug\-Level  private 
+
+\-Definition at line 144 of file bug-\/561101.\-php.
+
+\hypertarget{class_club_base_ad948cd5f705e9a44794823715ba6b164}{\index{\-Club\-Base@{\-Club\-Base}!\$\-\_\-b\-Print\-Flush@{\$\-\_\-b\-Print\-Flush}}
+\index{\$\-\_\-b\-Print\-Flush@{\$\-\_\-b\-Print\-Flush}!ClubBase@{\-Club\-Base}}
+\subsubsection[{\$\-\_\-b\-Print\-Flush}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-b\-Print\-Flush = false}}\label{class_club_base_ad948cd5f705e9a44794823715ba6b164}
+
+
+\-Definition at line 146 of file bug-\/561101.\-php.
+
+\hypertarget{class_club_base_adb79a07a3a72f42e63e7158496181177}{\index{\-Club\-Base@{\-Club\-Base}!\$\-\_\-s\-Log\-File@{\$\-\_\-s\-Log\-File}}
+\index{\$\-\_\-s\-Log\-File@{\$\-\_\-s\-Log\-File}!ClubBase@{\-Club\-Base}}
+\subsubsection[{\$\-\_\-s\-Log\-File}]{\setlength{\rightskip}{0pt plus 5cm}string \$\-\_\-s\-Log\-File = ''}}\label{class_club_base_adb79a07a3a72f42e63e7158496181177}
+\$\-\_\-s\-Log\-File \-Logfile, in der \-Debugmeldungen geschrieben werden
+
+\-\_\-b\-Debug\-Level  private 
+
+\-Definition at line 135 of file bug-\/561101.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-Documentation/tests/\hyperlink{bug-561101_8php}{bug-\/561101.\-php}\end{DoxyCompactItemize}

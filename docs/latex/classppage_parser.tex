@@ -1,0 +1,397 @@
+\hypertarget{classppage_parser}{\section{ppage\-Parser \-Class \-Reference}
+\label{classppage_parser}\index{ppage\-Parser@{ppage\-Parser}}
+}
+\-Inheritance diagram for ppage\-Parser\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classppage_parser}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classppage_parser_adc2413a5388f2e9d70c8a8007a58f0fa}{ppage\-Parser} ()
+\item 
+\hyperlink{classppage_parser_abe4d21ebe5f9d4088e7be4271603cd5e}{setup\-States} ()
+\item 
+\hyperlink{classppage_parser_ad973622c9582c6601c25cfac6157b1e0}{parse} (\&\$parse\-\_\-data, \$xml, \$package= 'default', \$subpackage= '', \$tutorial= '', \$category='default', \$path='')
+\item 
+\hyperlink{classppage_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{default\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classppage_parser_ae3644280a89428ea2a91213fb83d9027}{handle\-Inline\-Dockeyword} (\$word, \$pevent)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classppage_parser_a365395516cc195292e97e09bc0d165ae}{\$package} = false
+\item 
+\hyperlink{classppage_parser_ac601dc8dc2a086b6381128cc9c7a3fc5}{\$subpackage} = ''
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 3026 of file \-Parser.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classppage_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{\index{ppage\-Parser@{ppage\-Parser}!default\-Handler@{default\-Handler}}
+\index{default\-Handler@{default\-Handler}!ppageParser@{ppage\-Parser}}
+\subsubsection[{default\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf default\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classppage_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}
+\-Handles all non-\/inline tags
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em string} & token \\
+\hline
+{\em integer} & parser event \\
+\hline
+\end{DoxyParams}
+
+
+\-Reimplemented from \hyperlink{class_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{\-Parser}.
+
+
+
+\-Definition at line 3149 of file \-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!$this->checkEventPush( $word, $pevent))
+        {
+            if ($word) $this->p_vars['total']->add($word);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classppage_parser_ae3644280a89428ea2a91213fb83d9027}{\index{ppage\-Parser@{ppage\-Parser}!handle\-Inline\-Dockeyword@{handle\-Inline\-Dockeyword}}
+\index{handle\-Inline\-Dockeyword@{handle\-Inline\-Dockeyword}!ppageParser@{ppage\-Parser}}
+\subsubsection[{handle\-Inline\-Dockeyword}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Inline\-Dockeyword} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classppage_parser_ae3644280a89428ea2a91213fb83d9027}
+handler for \-I\-N\-L\-I\-N\-E\-\_\-\-D\-O\-C\-K\-E\-Y\-W\-O\-R\-D. this handler recognizes \{ tags\} like link, and parses them, replacing them directly in the text flow with their output. 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & token \\
+\hline
+{\em integer} & parser event \\
+\hline
+\end{DoxyParams}
+
+
+\-Reimplemented from \hyperlink{class_parser_ae3644280a89428ea2a91213fb83d9027}{\-Parser}.
+
+
+
+\-Definition at line 3165 of file \-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        //        echo $this->wp->getPos() . ": |$word|\n";
+
+        //        echo "docktype: $this->p_vars['inline_dockeyword_type']\n";
+        if (!isset($this->p_vars['inline_dockeyword_type'])) $this->p_vars['
+      inline_dockeyword_type'] = false;
+        if (!isset($this->p_vars['inline_dockeyword_data'])) $this->p_vars['
+      inline_dockeyword_data'] = '';
+        if (!$this->p_vars['inline_dockeyword_type'])
+        {
+            if (in_array($word,$this->allowableInlineTags))
+            {
+                $this->p_vars['inline_dockeyword_type'] = strtolower($word);
+                $this->p_vars['whitesp'] = $this->wp->returnWhiteSpace;
+                $this->wp->setWhiteSpace(true);
+            } else {
+                if ($word == '}')
+                $this->p_vars['total']->add('{@');
+                else
+                {
+                    $this->p_vars['total']->add('{@'.$word);
+                    $this->p_vars['event_stack']->popEvent();
+                }
+                $this->p_vars['inline_dockeyword_type'] = false;
+                $this->p_vars['inline_dockeyword_data'] = '';
+            }
+        } else
+        {
+            if ($word != "}")
+            {
+                $this->p_vars['inline_dockeyword_data'] .= $word;
+            }
+        }
+        if ($this->checkEventPop($word,$pevent))
+        {
+            $this->wp->setWhiteSpace($this->p_vars['whitesp']);
+            if ($this->p_vars['inline_dockeyword_type']=='link')
+            {
+                // support hyperlinks of any protocol
+                if (is_numeric(strpos($this->p_vars['inline_dockeyword_data'],'
+      ://')) || (strpos(trim($this->p_vars['inline_dockeyword_data']),'mailto:') === 0
+      ))
+                {
+                    // if there is more than 1 parameter, the stuff after the
+       space is the hyperlink text
+                    if (strpos(trim($this->p_vars['inline_dockeyword_data']),'
+       '))
+                    {
+                        $i1 = strpos(trim($this->p_vars['inline_dockeyword_data
+      ']),' ') + 1;
+                        $link = substr(trim($this->p_vars['
+      inline_dockeyword_data']),0,$i1 - 1);
+                        $text = substr(trim($this->p_vars['
+      inline_dockeyword_data']),$i1);
+                        $this->p_vars['inline_dockeyword_data'] = new 
+      parserLinkInlineTag($link,$text);
+//                        '<a href="'.$link.'">'.$text.'</a>';
+                    }
+                    else
+                    {
+                        $this->p_vars['inline_dockeyword_data'] = new 
+      parserLinkInlineTag($this->p_vars['inline_dockeyword_data'],$this->p_vars['
+      inline_dockeyword_data']);
+                    }
+//                    '<a
+       href="'.$this->p_vars['inline_dockeyword_data'].'">'.$this->p_vars['inline_dockeyword_data'].'</a>';
+                } else
+                {
+                    $testp = explode('#',$this->p_vars['inline_dockeyword_data'
+      ]);
+                    if (count($testp) - 1) $this->p_vars['
+      inline_dockeyword_data'] = $testp[1];
+                    $this->p_vars['inline_dockeyword_data'] = new 
+      parserLinkInlineTag($this->p_vars['inline_dockeyword_data'],$this->p_vars['
+      inline_dockeyword_data']);
+                }
+            }
+            if ($this->p_vars['inline_dockeyword_type']=='id')
+            {
+                $this->p_vars['inline_dockeyword_data'] = new parserIdInlineTag
+      ($this->category,$this->package,$this->subpackage,$this->p_vars['tutorial'],trim
+      ($this->p_vars['inline_dockeyword_data']));
+            }
+            if ($this->p_vars['inline_dockeyword_type'] == 'tutorial')
+            {
+                $this->p_vars['inline_dockeyword_data'] = new 
+      parserTutorialInlineTag($this->p_vars['inline_dockeyword_data'],$this->p_vars['
+      inline_dockeyword_data']);
+            }
+            if ($this->p_vars['inline_dockeyword_type'] == 'toc')
+            {
+                $this->p_vars['inline_dockeyword_data'] = new parserTocInlineTag
+      ();
+            }
+            if ($this->p_vars['inline_dockeyword_type'] == 'example')
+            {
+                $example =
+                    new parserExampleInlineTag($this->p_vars['
+      inline_dockeyword_data'], $this->_path, true);
+                $this->p_vars['total']->add($example->getProgramListing());
+            } else
+            {
+                $this->p_vars['total']->add($this->p_vars['
+      inline_dockeyword_data']);
+            }
+            $this->p_vars['inline_dockeyword_type'] = false;
+            $this->p_vars['inline_dockeyword_data'] = '';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classppage_parser_ad973622c9582c6601c25cfac6157b1e0}{\index{ppage\-Parser@{ppage\-Parser}!parse@{parse}}
+\index{parse@{parse}!ppageParser@{ppage\-Parser}}
+\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{parse\-\_\-data, }
+\item[{\$}]{xml, }
+\item[{\$}]{package = {\ttfamily 'default'}, }
+\item[{\$}]{subpackage = {\ttfamily ''}, }
+\item[{\$}]{tutorial = {\ttfamily ''}, }
+\item[{\$}]{category = {\ttfamily 'default'}, }
+\item[{\$}]{path = {\ttfamily ''}}
+\end{DoxyParamCaption}
+)}}\label{classppage_parser_ad973622c9582c6601c25cfac6157b1e0}
+\-Parse a new file
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$parse\-\_\-data} & \\
+\hline
+string & {\em \$package} & \\
+\hline
+int & {\em \$subpackage} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed false or parsed data 
+\end{DoxyReturn}
+
+
+\-Definition at line 3071 of file \-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->setupStates();
+        $this->p_vars['total'] = new parserPackagePage($package,$xml);
+        $this->p_vars['tutorial'] = $tutorial;
+        $this->_path = $path;
+        $this->category = $category;
+        $this->package = $package;
+        if (!isset($subpackage) || !$subpackage) $subpackage = '';
+        $this->subpackage = $subpackage;
+        if (strlen($parse_data) == 0)
+        {
+            return false;
+        }
+
+        // initialize variables so E_ALL error_reporting doesn't complain
+        $pevent = 0;
+        $word = 0;
+        $this->p_vars['event_stack'] = new EventStack;
+        // change this to a new ParserStringWithInlineTags, and change all
+       $total .= blah to $total->add(blah)
+        // then modify phpDocumentor_IntermediateParser->Convert to convert all
+       package pages (the package page handler in phpDocumentor_IntermediateParser
+       should
+        // save them all in a variable) to perform the linking.  then, remove
+       the legacy code from handleDocBlock
+        // and handleClass in Render.inc, and do a loop that converts each
+       package page, and passes it to handleEvent
+        // just like Converter::walk does with the other elements.  The only
+       other addition that might be good is a
+        // new descendant of parserElement parserPackagePage that contains the
+       data and stuff.  Hope this helps :)
+        $total = '';
+
+        $this->wp->setup($parse_data);
+
+        $this->p_flags['reset_quote_data'] = true;
+
+        do
+        {
+            $lpevent = $pevent;
+            $pevent = $this->p_vars['event_stack']->getEvent();
+            if ($lpevent != $pevent)
+            {
+                $this->p_vars['last_pevent'] = $lpevent;
+            }
+
+            if ($this->p_vars['last_pevent'] != $pevent)
+            {
+                // its a new event so the word parser needs to be reconfigured 
+                $this->configWordParser($pevent);
+            }
+
+            if (!$xml)
+            $this->publishEvent(PHPDOCUMENTOR_EVENT_NEWSTATE,($pevent + 100));
+
+
+            $this->p_vars['last_word'] = $word;
+            $word = $this->wp->getWord();
+
+            if (PHPDOCUMENTOR_DEBUG == true)
+            {
+                echo "LAST: |" . $this->p_vars['last_word'] . "|\n";
+                echo "PEVENT: " . $this->getParserEventName($pevent) . "\n";
+                echo $this->wp->getPos() . ": |$word|\n";
+            }
+            if (isset($this->eventHandlers[$pevent]))
+            {
+                $handle = $this->eventHandlers[$pevent];
+                $this->$handle($word, $pevent);
+            }
+        } while (!($word === false));
+        if (!$xml)
+        $this->PublishEvent(PHPDOCUMENTOR_EVENT_PACKAGEPAGE,$this->p_vars['
+      total']);
+        else
+        return $this->p_vars['total']->value;
+    }
+\end{DoxyCode}
+\hypertarget{classppage_parser_adc2413a5388f2e9d70c8a8007a58f0fa}{\index{ppage\-Parser@{ppage\-Parser}!ppage\-Parser@{ppage\-Parser}}
+\index{ppage\-Parser@{ppage\-Parser}!ppageParser@{ppage\-Parser}}
+\subsubsection[{ppage\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ppage\-Parser} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classppage_parser_adc2413a5388f2e9d70c8a8007a58f0fa}
+set up invariant \hyperlink{class_parser}{\-Parser} variables 
+
+\-Definition at line 3035 of file \-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        Parser::Parser();
+        $this->allowableInlineTags = $GLOBALS['
+      _phpDocumentor_inline_tutorial_tags_allowed'];
+        $this->eventHandlers = array();
+        $this->eventHandlers[PARSER_EVENT_NOEVENTS] = 'defaultHandler';
+        $this->eventHandlers[PARSER_EVENT_INLINE_DOCKEYWORD] = '
+      handleInlineDocKeyword';
+    }
+\end{DoxyCode}
+\hypertarget{classppage_parser_abe4d21ebe5f9d4088e7be4271603cd5e}{\index{ppage\-Parser@{ppage\-Parser}!setup\-States@{setup\-States}}
+\index{setup\-States@{setup\-States}!ppageParser@{ppage\-Parser}}
+\subsubsection[{setup\-States}]{\setlength{\rightskip}{0pt plus 5cm}{\bf setup\-States} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classppage_parser_abe4d21ebe5f9d4088e7be4271603cd5e}
+set up invariant \hyperlink{class_parser}{\-Parser} variables 
+
+\-Reimplemented from \hyperlink{class_parser_abe4d21ebe5f9d4088e7be4271603cd5e}{\-Parser}.
+
+
+
+\-Definition at line 3047 of file \-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->tokens[STATE_NOEVENTS]        = array("{@","}");
+        $this->tokens[STATE_INLINE_DOCKEYWORD]        = array("{@","}","\t"," "
+      );
+
+##########################
+
+        $this->pushEvent[PARSER_EVENT_NOEVENTS] = 
+            array(
+                "{@" => PARSER_EVENT_INLINE_DOCKEYWORD
+            );
+##########################
+
+        $this->popEvent[PARSER_EVENT_INLINE_DOCKEYWORD] = array("}");
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classppage_parser_a365395516cc195292e97e09bc0d165ae}{\index{ppage\-Parser@{ppage\-Parser}!\$package@{\$package}}
+\index{\$package@{\$package}!ppageParser@{ppage\-Parser}}
+\subsubsection[{\$package}]{\setlength{\rightskip}{0pt plus 5cm}\$package = false}}\label{classppage_parser_a365395516cc195292e97e09bc0d165ae}
+
+
+\-Definition at line 3029 of file \-Parser.\-inc.
+
+\hypertarget{classppage_parser_ac601dc8dc2a086b6381128cc9c7a3fc5}{\index{ppage\-Parser@{ppage\-Parser}!\$subpackage@{\$subpackage}}
+\index{\$subpackage@{\$subpackage}!ppageParser@{ppage\-Parser}}
+\subsubsection[{\$subpackage}]{\setlength{\rightskip}{0pt plus 5cm}\$subpackage = ''}}\label{classppage_parser_ac601dc8dc2a086b6381128cc9c7a3fc5}
+
+
+\-Definition at line 3031 of file \-Parser.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_parser_8inc}{\-Parser.\-inc}\end{DoxyCompactItemize}

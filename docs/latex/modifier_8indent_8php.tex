@@ -1,0 +1,39 @@
+\hypertarget{modifier_8indent_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/modifier.indent.\-php \-File \-Reference}
+\label{modifier_8indent_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-indent.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-indent.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{modifier_8indent_8php_a207c1e30571072697467fab4e70eae75}{smarty\-\_\-modifier\-\_\-indent} (\$string, \$chars=4, \$char=\char`\"{} \char`\"{})
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{modifier_8indent_8php_a207c1e30571072697467fab4e70eae75}{\index{modifier.\-indent.\-php@{modifier.\-indent.\-php}!smarty\-\_\-modifier\-\_\-indent@{smarty\-\_\-modifier\-\_\-indent}}
+\index{smarty\-\_\-modifier\-\_\-indent@{smarty\-\_\-modifier\-\_\-indent}!modifier.indent.php@{modifier.\-indent.\-php}}
+\subsubsection[{smarty\-\_\-modifier\-\_\-indent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-modifier\-\_\-indent} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string, }
+\item[{\$}]{chars = {\ttfamily 4}, }
+\item[{\$}]{char = {\ttfamily \char`\"{}~\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{modifier_8indent_8php_a207c1e30571072697467fab4e70eae75}
+\hyperlink{class_smarty}{\-Smarty} indent modifier plugin
+
+\-Type\-: modifier\par
+ \-Name\-: indent\par
+ \-Purpose\-: indent lines of text \hyperlink{}{indent (\-Smarty online manual)  string  integer  string  string }
+
+\-Definition at line 22 of file modifier.\-indent.\-php.
+
+
+\begin{DoxyCode}
+{
+        return preg_replace('!^!m',str_repeat($char,$chars),$string);
+}
+\end{DoxyCode}

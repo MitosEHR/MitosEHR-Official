@@ -1,0 +1,52 @@
+\hypertarget{modifier_8date__format_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/modifier.date\-\_\-format.\-php \-File \-Reference}
+\label{modifier_8date__format_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-date\-\_\-format.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-date\-\_\-format.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{modifier_8date__format_8php_a4d4303a718e61b3bdd8cc25b3471822a}{smarty\-\_\-modifier\-\_\-date\-\_\-format} (\$string, \$format=\char`\"{}\%b \%e, \%\-Y\char`\"{}, \$default\-\_\-date=null)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{modifier_8date__format_8php_a4d4303a718e61b3bdd8cc25b3471822a}{\index{modifier.\-date\-\_\-format.\-php@{modifier.\-date\-\_\-format.\-php}!smarty\-\_\-modifier\-\_\-date\-\_\-format@{smarty\-\_\-modifier\-\_\-date\-\_\-format}}
+\index{smarty\-\_\-modifier\-\_\-date\-\_\-format@{smarty\-\_\-modifier\-\_\-date\-\_\-format}!modifier.date_format.php@{modifier.\-date\-\_\-format.\-php}}
+\subsubsection[{smarty\-\_\-modifier\-\_\-date\-\_\-format}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-modifier\-\_\-date\-\_\-format} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string, }
+\item[{\$}]{format = {\ttfamily \char`\"{}\%b~\%e,~\%\-Y\char`\"{}}, }
+\item[{\$}]{default\-\_\-date = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{modifier_8date__format_8php_a4d4303a718e61b3bdd8cc25b3471822a}
+\-Include the \hyperlink{shared_8make__timestamp_8php}{shared.\-make\-\_\-timestamp.\-php} plugin \hyperlink{class_smarty}{\-Smarty} date\-\_\-format modifier plugin
+
+\-Type\-: modifier\par
+ \-Name\-: date\-\_\-format\par
+ \-Purpose\-: format datestamps via strftime\par
+ \-Input\-:\par
+
+\begin{DoxyItemize}
+\item string\-: input date string
+\item format\-: strftime format for output
+\item default\-\_\-date\-: default date if \$string is empty \hyperlink{}{date\-\_\-format (\-Smarty online manual)  string  string  string  string$|$void  smarty\-\_\-make\-\_\-timestamp() }
+\end{DoxyItemize}
+
+\-Definition at line 30 of file modifier.\-date\-\_\-format.\-php.
+
+
+\begin{DoxyCode}
+{
+        if($string != '') {
+        return strftime($format, smarty_make_timestamp($string));
+        } elseif (isset($default_date) && $default_date != '') {                
+        return strftime($format, smarty_make_timestamp($default_date));
+        } else {
+                return;
+        }
+}
+\end{DoxyCode}

@@ -1,0 +1,74 @@
+\hypertarget{core_8write__file_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/core/core.write\-\_\-file.\-php \-File \-Reference}
+\label{core_8write__file_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-write\-\_\-file.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-write\-\_\-file.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{core_8write__file_8php_a3bb0fa40cf3f425efe31f50463824aa0}{smarty\-\_\-core\-\_\-write\-\_\-file} (\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{core_8write__file_8php_a3bb0fa40cf3f425efe31f50463824aa0}{\index{core.\-write\-\_\-file.\-php@{core.\-write\-\_\-file.\-php}!smarty\-\_\-core\-\_\-write\-\_\-file@{smarty\-\_\-core\-\_\-write\-\_\-file}}
+\index{smarty\-\_\-core\-\_\-write\-\_\-file@{smarty\-\_\-core\-\_\-write\-\_\-file}!core.write_file.php@{core.\-write\-\_\-file.\-php}}
+\subsubsection[{smarty\-\_\-core\-\_\-write\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-core\-\_\-write\-\_\-file} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{core_8write__file_8php_a3bb0fa40cf3f425efe31f50463824aa0}
+write out a file to disk
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$filename} & \\
+\hline
+string & {\em \$contents} & \\
+\hline
+boolean & {\em \$create\-\_\-dirs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 16 of file core.\-write\-\_\-file.\-php.
+
+
+\begin{DoxyCode}
+{
+    $_dirname = dirname($params['filename']);
+
+    if ($params['create_dirs']) {
+        $_params = array('dir' => $_dirname);
+        require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.create_dir_structure.php');
+        smarty_core_create_dir_structure($_params, $smarty);
+    }
+
+    // write to tmp file, then rename it to avoid
+    // file locking race condition
+    $_tmp_file = $_dirname . DIRECTORY_SEPARATOR . uniqid('');
+
+    if (!($fd = @fopen($_tmp_file, 'w'))) {
+        $smarty->trigger_error("problem writing temporary file '$_tmp_file'");
+        return false;
+    }
+
+    fwrite($fd, $params['contents']);
+    fclose($fd);
+    if(file_exists($params['filename'])) {
+        @unlink($params['filename']);
+    }
+    @rename($_tmp_file, $params['filename']);
+    @chmod($params['filename'], $smarty->_file_perms);
+
+    return true;
+}
+\end{DoxyCode}

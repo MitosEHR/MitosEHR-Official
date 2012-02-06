@@ -1,0 +1,954 @@
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer}{\section{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer \-Class \-Reference}
+\label{classphp_documentor___x_m_l___beautifier___tokenizer}\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a685d75d5c506dac557f2d500673b3275}{parse\-String} (\$parse\-\_\-data)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_ae60ec962553bd725a37a2011a0b7583d}{normal\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_ab5c2fca9a6e7dfee650fb6c96cd1a4e4}{comment\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_ab9d9fe389010c144aa58c4913c51580f}{parse\-Pi\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a4b3b781995248ef67537bffcd2d46dd7}{parse\-X\-M\-L\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a1dfa9e97faa33a95fdd27a59669d269b}{realcdata\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a6c5ea26895bf27dd9be667dbe9b53614}{tag\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_ac11d7ab2ea73797e18a0a9c5073c085a}{closetag\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a8082b25515c71891e9cbd00a29b02ebc}{def\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_aca93ae59baadad268faadf6bb922a7f6}{attr\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a7074a025fb67fabb64838b6ab42473ee}{string\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a13d9333a7165c6408019b2c9f8830ef0}{entity\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a212920f9bd5da14bc9fa4f761b0344aa}{parse\-Cdata\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a99b5f06ff696bf81c5060660ad645bb9}{incdata\-Handler} (\$parser, \$cdata)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_ac7a074af52f39850d4757774cfedb0b1}{\-\_\-addoutput} (\$event)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a283368f67f931488905c6f3f84b1c549}{config\-Word\-Parser} (\$e)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a912ba83822697d200d7e2771166f6718}{check\-Event\-Push} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a9f5347fcba49d2192e689e417671ce18}{check\-Event\-Pop} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_aa78ac0cfd4a15cb88503eb96babffa87}{setup\-States} (\$parsedata)
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a4d271e14d997e2d3d96ddd24b920cafc}{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer} ()
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a9cc8a14f4bce21f0058f33036a2eb460}{get\-Parser\-Event\-Name} (\$value)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a2d2963f96f6b64bf9929de0d5fa5be81}{\$\-\_\-curthing}
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_aa0fa1fc72b8693f59aa85c52c3211730}{\$\-\_\-tag}
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a60ddc32384813e2973c74a4c17c8f3e9}{\$\-\_\-attrs}
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_ab1bd40c1128ec90e55ab793b2d4a5f3e}{\$\-\_\-attr}
+\item 
+\hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a430675102684e9ab820c7622678832b0}{\$event\-Handlers}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 50 of file \-Tokenizer.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_ac7a074af52f39850d4757774cfedb0b1}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!\-\_\-addoutput@{\-\_\-addoutput}}
+\index{\-\_\-addoutput@{\-\_\-addoutput}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{\-\_\-addoutput}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-addoutput} (
+\begin{DoxyParamCaption}
+\item[{\$}]{event}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_ac7a074af52f39850d4757774cfedb0b1}
+\#@+ \-Output \-Methods  private \-This method adds output to \hyperlink{}{\$\-\_\-line}
+
+\-If a string with variables like \char`\"{}\$test this\char`\"{} is present, then special handling is used to allow processing of the variable in context. \begin{DoxySeeAlso}{\-See also}
+\-\_\-flush\-\_\-save() 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 433 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $type =
+        array(
+            PHPDOC_XMLTOKEN_EVENT_NOEVENTS => '_handleXMLDefault',
+            PHPDOC_XMLTOKEN_EVENT_CLOSETAG => 'endHandler',
+            PHPDOC_XMLTOKEN_EVENT_ENTITY => 'entityrefHandler',
+            PHPDOC_XMLTOKEN_EVENT_DEF => '_handleXMLDefault',
+            PHPDOC_XMLTOKEN_EVENT_PI => 'parsePiHandler',
+            PHPDOC_XMLTOKEN_EVENT_XML => '_handleXMLDefault',
+            PHPDOC_XMLTOKEN_EVENT_OPENTAG => 'startHandler',
+            PHPDOC_XMLTOKEN_EVENT_COMMENT => '_handleXMLDefault',
+            PHPDOC_XMLTOKEN_EVENT_CDATA => 'cdataHandler',
+            PHPDOC_XMLTOKEN_EVENT_IN_CDATA => 'incdataHandler',
+        );
+        $method = $type[$event];
+        switch ($event) {
+            case PHPDOC_XMLTOKEN_EVENT_COMMENT :
+//                echo "comment: $this->_curthing\n";
+                $this->$method($this->_curthing);
+            break;
+            case PHPDOC_XMLTOKEN_EVENT_OPENTAG :
+//                echo "open tag: $this->_tag\n";
+//                var_dump($this->_attrs);
+                $this->$method(false, $this->_tag, $this->_attrs);
+            break;
+            case PHPDOC_XMLTOKEN_EVENT_CLOSETAG :
+//                echo "close tag: $this->_tag\n";
+                $this->$method(false, $this->_curthing);
+            break;
+            case PHPDOC_XMLTOKEN_EVENT_NOEVENTS :
+                if (!strlen($this->_curthing)) {
+                    return;
+                }
+//                echo "default: $this->_curthing\n";
+                $this->$method(false, $this->_curthing);
+            break;
+            case PHPDOC_XMLTOKEN_EVENT_DEF :
+//                echo "<!definition: $this->_curthing\n";
+                $this->$method(false, $this->_curthing);
+            break;
+            case PHPDOC_XMLTOKEN_EVENT_PI :
+//                echo "<?pi: $this->_curthing\n";
+//                echo "<?pi attrs: $this->_attrs\n";
+                $this->$method(false, $this->_curthing, $this->_attrs);
+            break;
+            case PHPDOC_XMLTOKEN_EVENT_XML :
+//                echo "<?xml: $this->_curthing\n";
+                $this->$method(false, $this->_curthing, $this->_attrs);
+            break;
+            case PHPDOC_XMLTOKEN_EVENT_CDATA :
+            case PHPDOC_XMLTOKEN_EVENT_IN_CDATA :
+//                echo "cdata: $this->_curthing\n";
+                $this->$method(false, $this->_curthing);
+            break;
+            case PHPDOC_XMLTOKEN_EVENT_ENTITY :
+//                echo "entity: $this->_curthing\n";
+                $this->$method(false, $this->_curthing, false, false, false);
+            break;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_aca93ae59baadad268faadf6bb922a7f6}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!attr\-Handler@{attr\-Handler}}
+\index{attr\-Handler@{attr\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{attr\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf attr\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_aca93ae59baadad268faadf6bb922a7f6}
+\-Most tokens only need highlighting, and this method handles them 
+
+\-Definition at line 330 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($e = $this->checkEventPush($word, $pevent)) {
+            return;
+        }
+        if (!isset($this->_attrs) || !is_array($this->_attrs)) {
+            $this->_attrs = array();
+        }
+        if (strpos($word, '=')) {
+            $this->_attrs[$this->_attr = trim(str_replace('=', '', $word))] = '
+      ';
+        }
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            return;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a9f5347fcba49d2192e689e417671ce18}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!check\-Event\-Pop@{check\-Event\-Pop}}
+\index{check\-Event\-Pop@{check\-Event\-Pop}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{check\-Event\-Pop}]{\setlength{\rightskip}{0pt plus 5cm}{\bf check\-Event\-Pop} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a9f5347fcba49d2192e689e417671ce18}
+this function checks whether parameter \$word is a token for popping the current event off of the \hyperlink{class_event}{\-Event} \-Stack. \begin{DoxyReturn}{\-Returns}
+mixed returns false, or the event number popped off of the stack 
+\end{DoxyReturn}
+
+
+\-Definition at line 535 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->popEvent[$pevent])) return false;
+        if (in_array(strtolower($word),$this->popEvent[$pevent]))
+        {
+            return $this->_event_stack->popEvent();
+        } else {
+            return false;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a912ba83822697d200d7e2771166f6718}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!check\-Event\-Push@{check\-Event\-Push}}
+\index{check\-Event\-Push@{check\-Event\-Push}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{check\-Event\-Push}]{\setlength{\rightskip}{0pt plus 5cm}{\bf check\-Event\-Push} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a912ba83822697d200d7e2771166f6718}
+this function checks whether parameter \$word is a token for pushing a new event onto the \hyperlink{class_event}{\-Event} \-Stack. \begin{DoxyReturn}{\-Returns}
+mixed returns false, or the event number 
+\end{DoxyReturn}
+
+
+\-Definition at line 513 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $e = false;
+        if (isset($this->pushEvent[$pevent]))
+        {
+            if (isset($this->pushEvent[$pevent][strtolower($word)]))
+            $e = $this->pushEvent[$pevent][strtolower($word)];
+        }
+        if ($e)
+        {
+            $this->_event_stack->pushEvent($e);
+            return $e;
+        } else {
+            return false;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_ac11d7ab2ea73797e18a0a9c5073c085a}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!closetag\-Handler@{closetag\-Handler}}
+\index{closetag\-Handler@{closetag\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{closetag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf closetag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_ac11d7ab2ea73797e18a0a9c5073c085a}
+handle $<$/tags$>$ 
+
+\-Definition at line 296 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            return;
+        }
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_tag = '';
+            return;
+        }
+        $this->_tag = trim(str_replace('</', '', $word));
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_ab5c2fca9a6e7dfee650fb6c96cd1a4e4}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!comment\-Handler@{comment\-Handler}}
+\index{comment\-Handler@{comment\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{comment\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf comment\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_ab5c2fca9a6e7dfee650fb6c96cd1a4e4}
+handle 
+
+\-Definition at line 199 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            return;
+        }
+        
+        $this->_curthing .= $word;
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_curthing = '';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a283368f67f931488905c6f3f84b1c549}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!config\-Word\-Parser@{config\-Word\-Parser}}
+\index{config\-Word\-Parser@{config\-Word\-Parser}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{config\-Word\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf config\-Word\-Parser} (
+\begin{DoxyParamCaption}
+\item[{\$}]{e}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a283368f67f931488905c6f3f84b1c549}
+\#@-\/ tell the parser's \hyperlink{class_word_parser}{\-Word\-Parser} \hyperlink{}{\$wp} to set up tokens to parse words by. tokens are word separators. \-In \-English, a space or punctuation are examples of tokens. \-In \-P\-H\-P, a token can be a ;, a parenthesis, or even the word \char`\"{}function\char`\"{} 
+\begin{DoxyParams}{\-Parameters}
+{\em \$value} & integer an event number \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_word_parser}{\-Word\-Parser} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 504 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->_wp->setSeperator($this->tokens[($e + 100)]);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a8082b25515c71891e9cbd00a29b02ebc}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!def\-Handler@{def\-Handler}}
+\index{def\-Handler@{def\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{def\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf def\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a8082b25515c71891e9cbd00a29b02ebc}
+handle $<$!def$>$ 
+
+\-Definition at line 313 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            return;
+        }
+        
+        $this->_curthing .= $word;
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_curthing = '';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a13d9333a7165c6408019b2c9f8830ef0}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!entity\-Handler@{entity\-Handler}}
+\index{entity\-Handler@{entity\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{entity\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf entity\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a13d9333a7165c6408019b2c9f8830ef0}
+handle  
+
+\-Definition at line 361 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_curthing = '';
+            return;
+        }
+        if (strlen($word) && $word{0} == '&') {
+            $word = substr($word, 1);
+        }
+        $this->_curthing .= $word;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a9cc8a14f4bce21f0058f33036a2eb460}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!get\-Parser\-Event\-Name@{get\-Parser\-Event\-Name}}
+\index{get\-Parser\-Event\-Name@{get\-Parser\-Event\-Name}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{get\-Parser\-Event\-Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Parser\-Event\-Name} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a9cc8a14f4bce21f0058f33036a2eb460}
+
+
+\-Definition at line 661 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {    
+        $lookup = array(
+            PHPDOC_XMLTOKEN_EVENT_NOEVENTS         => "
+      PHPDOC_XMLTOKEN_EVENT_NOEVENTS",
+            PHPDOC_XMLTOKEN_EVENT_PI         => "PHPDOC_XMLTOKEN_EVENT_PI",
+            PHPDOC_XMLTOKEN_EVENT_OPENTAG         => "
+      PHPDOC_XMLTOKEN_EVENT_OPENTAG",
+            PHPDOC_XMLTOKEN_EVENT_ATTRIBUTE         => "
+      PHPDOC_XMLTOKEN_EVENT_ATTRIBUTE",
+            PHPDOC_XMLTOKEN_EVENT_CLOSETAG         => "
+      PHPDOC_XMLTOKEN_EVENT_CLOSETAG",
+            PHPDOC_XMLTOKEN_EVENT_ENTITY         => "
+      PHPDOC_XMLTOKEN_EVENT_ENTITY",
+            PHPDOC_XMLTOKEN_EVENT_COMMENT         => "
+      PHPDOC_XMLTOKEN_EVENT_COMMENT",
+            PHPDOC_XMLTOKEN_EVENT_SINGLEQUOTE         => "
+      PHPDOC_XMLTOKEN_EVENT_SINGLEQUOTE",
+            PHPDOC_XMLTOKEN_EVENT_DOUBLEQUOTE         => "
+      PHPDOC_XMLTOKEN_EVENT_DOUBLEQUOTE",
+            PHPDOC_XMLTOKEN_EVENT_CDATA => 'PHPDOC_XMLTOKEN_EVENT_CDATA',
+            PHPDOC_XMLTOKEN_EVENT_DEF => 'PHPDOC_XMLTOKEN_EVENT_DEF',
+            PHPDOC_XMLTOKEN_EVENT_XML => 'PHPDOC_XMLTOKEN_EVENT_XML',
+            PHPDOC_XMLTOKEN_EVENT_IN_CDATA => 'PHPDOC_XMLTOKEN_EVENT_IN_CDATA',
+        );
+        if (isset($lookup[$value]))
+        return $lookup[$value];
+        else return $value;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a99b5f06ff696bf81c5060660ad645bb9}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!incdata\-Handler@{incdata\-Handler}}
+\index{incdata\-Handler@{incdata\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{incdata\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf incdata\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{parser, }
+\item[{\$}]{cdata}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a99b5f06ff696bf81c5060660ad645bb9}
+\#@-\/ \-Handler for real character data
+
+protected 
+\begin{DoxyParams}{\-Parameters}
+{\em object} & \-X\-M\-L parser object \\
+\hline
+{\em string} & \-C\-D\-A\-T\-A \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 408 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ((string)$cdata === '') {
+            return true;
+        }
+
+        $struct = array(
+                         "type"  => PHPDOC_BEAUTIFIER_CDATA,
+                         "data"  => $cdata,
+                         "depth" => $this->_depth
+                       );
+
+        $this->_appendToParent($struct);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_ae60ec962553bd725a37a2011a0b7583d}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!normal\-Handler@{normal\-Handler}}
+\index{normal\-Handler@{normal\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{normal\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf normal\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_ae60ec962553bd725a37a2011a0b7583d}
+\#@+ \hyperlink{class_event}{\-Event} \-Handlers
+
+\-All \hyperlink{class_event}{\-Event} \-Handlers use \hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a912ba83822697d200d7e2771166f6718}{check\-Event\-Push()} and \hyperlink{classphp_documentor___x_m_l___beautifier___tokenizer_a9f5347fcba49d2192e689e417671ce18}{check\-Event\-Pop()} to set up the event stack and parser state.  private 
+\begin{DoxyParams}{\-Parameters}
+{\em string$|$array} & token value \\
+\hline
+{\em integer} & parser event from \hyperlink{_parser_8inc}{\-Parser.\-inc} \-Most tokens only need highlighting, and this method handles them \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 180 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            $this->_addoutput($pevent);
+            $this->_curthing = '';
+            return;
+        }
+        $this->_curthing .= $word;
+        
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_curthing = '';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a212920f9bd5da14bc9fa4f761b0344aa}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!parse\-Cdata\-Handler@{parse\-Cdata\-Handler}}
+\index{parse\-Cdata\-Handler@{parse\-Cdata\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{parse\-Cdata\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse\-Cdata\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a212920f9bd5da14bc9fa4f761b0344aa}
+handle tag contents 
+
+\-Definition at line 377 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            if (strlen($this->_curthing)) {
+                $this->_addoutput($pevent);
+            }
+            $this->_curthing = '';
+            return;
+        }
+        if ($this->checkEventPop($word, $pevent)) {
+            if (strlen($this->_curthing)) {
+                $this->_addoutput($pevent);
+            }
+            $this->_curthing = '';
+            $this->_event_stack->pushEvent(PHPDOC_XMLTOKEN_EVENT_CLOSETAG);
+            return;
+        }
+        $this->_curthing .= $word;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_ab9d9fe389010c144aa58c4913c51580f}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!parse\-Pi\-Handler@{parse\-Pi\-Handler}}
+\index{parse\-Pi\-Handler@{parse\-Pi\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{parse\-Pi\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse\-Pi\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_ab9d9fe389010c144aa58c4913c51580f}
+handle $<$?\-Processor instructions?$>$ 
+
+\-Definition at line 216 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            return;
+        }
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_curthing = '';
+            $this->_attrs = null;
+            return;
+        }
+        if (!strlen($this->_curthing)) {
+            $this->_curthing .= str_replace('<?', '', $word);
+        } else {
+            if (!isset($this->_attrs) || !is_string($this->_attrs)) {
+                $this->_attrs = '';
+            }
+            $this->_attrs .= $word;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a685d75d5c506dac557f2d500673b3275}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!parse\-String@{parse\-String}}
+\index{parse\-String@{parse\-String}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{parse\-String}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse\-String} (
+\begin{DoxyParamCaption}
+\item[{\$}]{parse\-\_\-data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a685d75d5c506dac557f2d500673b3275}
+source linenum\}  integer used for recursion limiting if a handler for an event is not found \begin{DoxyReturn}{\-Returns}
+bool 
+\end{DoxyReturn}
+
+
+\-Definition at line 108 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        static $endrecur = 0;
+        $parse_data = str_replace(array("\r\n", "\t"), array("\n", '    '), 
+      $parse_data);
+        $this->setupStates($parse_data);
+
+        $this->configWordParser(PHPDOC_XMLTOKEN_EVENT_NOEVENTS);
+        // initialize variables so E_ALL error_reporting doesn't complain
+        $pevent = 0;
+        $word = 0;
+        $this->_curthing = '';
+
+        do
+        {
+            $lpevent = $pevent;
+            $pevent = $this->_event_stack->getEvent();
+            if ($lpevent != $pevent)
+            {
+                $this->_last_pevent = $lpevent;
+                $this->configWordParser($pevent);
+            }
+            $this->_wp->setWhitespace(true);
+
+            $dbg_linenum = $this->_wp->linenum;
+            $dbg_pos = $this->_wp->getPos();
+            $this->_pv_last_word = $word;
+            $this->_pv_curline = $this->_wp->linenum;
+            $word = $this->_wp->getWord();
+
+            if (PHPDOCUMENTOR_DEBUG == true)
+            {
+                echo "LAST: ";
+                echo "|" . $this->_pv_last_word;
+                echo "|\n";
+                echo "PEVENT: " . $this->getParserEventName($pevent) . "\n";
+                echo "LASTPEVENT: " . $this->getParserEventName($this->
+      _last_pevent) . "\n";
+//                echo "LINE: ".$this->_line."\n";
+//                echo "OUTPUT: ".$this->_output."\n";
+                echo $dbg_linenum.'-'.$dbg_pos . ": ";
+                echo '|'.htmlspecialchars($word);
+                echo "|\n";
+                echo "-------------------\n\n\n";
+                flush();
+            }
+            if (isset($this->eventHandlers[$pevent]))
+            {
+                $handle = $this->eventHandlers[$pevent];
+                $this->$handle($word, $pevent);
+            } else
+            {
+                echo ('WARNING: possible error, no handler for event number '.
+      $pevent);
+                if ($endrecur++ == 25)
+                {
+                    return $this->raiseError("FATAL ERROR, recursion limit
+       reached");
+                }
+            }
+        } while (!($word === false));
+        return true;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a4b3b781995248ef67537bffcd2d46dd7}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!parse\-X\-M\-L\-Handler@{parse\-X\-M\-L\-Handler}}
+\index{parse\-X\-M\-L\-Handler@{parse\-X\-M\-L\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{parse\-X\-M\-L\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse\-X\-M\-L\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a4b3b781995248ef67537bffcd2d46dd7}
+handle $<$?xml \-Processor instructions?$>$ 
+
+\-Definition at line 241 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            return;
+        }
+        
+        $this->_curthing .= $word;
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_curthing = '';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a4d271e14d997e2d3d96ddd24b920cafc}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a4d271e14d997e2d3d96ddd24b920cafc}
+\-Initialize the \hyperlink{}{, \$wordpush\-Event} arrays 
+
+\-Definition at line 570 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->tokens[STATE_XMLTOKEN_CDATA] =
+        $this->tokens[STATE_XMLTOKEN_NOEVENTS]        = array('<?xml', '<!--', 
+      '<![CDATA[', '<!', '</', '<?', '<');//, '&');
+        $this->tokens[STATE_XMLTOKEN_OPENTAG]        = array("\n","\t"," ", '>'
+      , '/>');
+        $this->tokens[STATE_XMLTOKEN_XML] =
+        $this->tokens[STATE_XMLTOKEN_PI]        = array("\n","\t"," ", '?>');
+        $this->tokens[STATE_XMLTOKEN_IN_CDATA]        = array(']]>');
+        $this->tokens[STATE_XMLTOKEN_CLOSETAG]        = array("\n",'>');
+        $this->tokens[STATE_XMLTOKEN_COMMENT]        = array("\n",'-->');
+        $this->tokens[STATE_XMLTOKEN_DEF]        = array("\n",']>','>');
+        $this->tokens[STATE_XMLTOKEN_ENTITY]        = array("\n",';');
+        $this->tokens[STATE_XMLTOKEN_ATTRIBUTE]        = array("\n",'"',"'",'>'
+      ,'/>');
+        $this->tokens[STATE_XMLTOKEN_DOUBLEQUOTE]        = array("\n",'"');
+        $this->tokens[STATE_XMLTOKEN_SINGLEQUOTE]        = array("\n","'");
+/**************************************************************/
+
+        $this->pushEvent[PHPDOC_XMLTOKEN_EVENT_NOEVENTS] = 
+            array(
+                '<' => PHPDOC_XMLTOKEN_EVENT_OPENTAG,
+                '<?' => PHPDOC_XMLTOKEN_EVENT_PI,
+                '<?xml' => PHPDOC_XMLTOKEN_EVENT_XML,
+                '</' => PHPDOC_XMLTOKEN_EVENT_CLOSETAG,
+//                '&' => PHPDOC_XMLTOKEN_EVENT_ENTITY,
+                '<![cdata[' => PHPDOC_XMLTOKEN_EVENT_IN_CDATA,
+                '<!--' => PHPDOC_XMLTOKEN_EVENT_COMMENT,
+                '<!' => PHPDOC_XMLTOKEN_EVENT_DEF,
+            );
+/**************************************************************/
+
+        $this->pushEvent[PHPDOC_XMLTOKEN_EVENT_OPENTAG] = 
+            array(
+                " " => PHPDOC_XMLTOKEN_EVENT_ATTRIBUTE,
+                "\n" => PHPDOC_XMLTOKEN_EVENT_ATTRIBUTE,
+            );
+/**************************************************************/
+
+        $this->pushEvent[PHPDOC_XMLTOKEN_EVENT_ATTRIBUTE] = 
+            array(
+                "'" => PHPDOC_XMLTOKEN_EVENT_SINGLEQUOTE,
+                '"' => PHPDOC_XMLTOKEN_EVENT_DOUBLEQUOTE,
+            );
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_IN_CDATA] = array(']]>');
+/**************************************************************/
+
+        $this->pushEvent[PHPDOC_XMLTOKEN_EVENT_CDATA] =
+            array(
+                '<' => PHPDOC_XMLTOKEN_EVENT_OPENTAG,
+                '<?' => PHPDOC_XMLTOKEN_EVENT_PI,
+//                '&' => PHPDOC_XMLTOKEN_EVENT_ENTITY,
+                '<!--' => PHPDOC_XMLTOKEN_EVENT_COMMENT,
+                '<!' => PHPDOC_XMLTOKEN_EVENT_DEF,
+                '<![cdata[' => PHPDOC_XMLTOKEN_EVENT_IN_CDATA,
+            );
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_XML] =
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_PI] = array('?>');
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_ENTITY] = array(';');
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_SINGLEQUOTE] = array("'");
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_DOUBLEQUOTE] = array('"');
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_OPENTAG] = array('>', '/>');
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_CLOSETAG] = array('>');
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_COMMENT] = array('-->');
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_DEF] = array('>',']>');
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_ATTRIBUTE] = array('>','/>');
+/**************************************************************/
+
+        $this->popEvent[PHPDOC_XMLTOKEN_EVENT_CDATA] = 
+            array('</');
+/**************************************************************/
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a1dfa9e97faa33a95fdd27a59669d269b}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!realcdata\-Handler@{realcdata\-Handler}}
+\index{realcdata\-Handler@{realcdata\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{realcdata\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf realcdata\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a1dfa9e97faa33a95fdd27a59669d269b}
+handle $<$!\mbox{[}\-C\-D\-A\-T\-A\mbox{[} unescaped text \mbox{]}\mbox{]}$>$ 
+
+\-Definition at line 258 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->_curthing .= $word;
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_curthing = '';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_aa78ac0cfd4a15cb88503eb96babffa87}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!setup\-States@{setup\-States}}
+\index{setup\-States@{setup\-States}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{setup\-States}]{\setlength{\rightskip}{0pt plus 5cm}{\bf setup\-States} (
+\begin{DoxyParamCaption}
+\item[{\$}]{parsedata}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_aa78ac0cfd4a15cb88503eb96babffa87}
+source\} tag's output 
+\begin{DoxyParams}{\-Parameters}
+{\em false$|$string} & name of class we are going to start from  \$\-\_\-wp sets to a new \hyperlink{classphp_documentor___highlight_word_parser}{php\-Documentor\-\_\-\-Highlight\-Word\-Parser} \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 553 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->_output = '';
+        $this->_line = '';
+        unset($this->_wp);
+        $this->_wp = new WordParser;
+        $this->_wp->setup($parsedata);
+        $this->_event_stack = @(new EventStack);
+        $this->_event_stack->popEvent();
+        $this->_event_stack->pushEvent(PHPDOC_XMLTOKEN_EVENT_NOEVENTS);
+        $this->_pv_linenum = null;
+        $this->_pv_next_word = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a7074a025fb67fabb64838b6ab42473ee}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!string\-Handler@{string\-Handler}}
+\index{string\-Handler@{string\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{string\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf string\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a7074a025fb67fabb64838b6ab42473ee}
+handle attribute values 
+
+\-Definition at line 350 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPop($word, $pevent)) {
+            return;
+        }
+        $this->_attrs[$this->_attr] = $word;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a6c5ea26895bf27dd9be667dbe9b53614}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!tag\-Handler@{tag\-Handler}}
+\index{tag\-Handler@{tag\-Handler}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a6c5ea26895bf27dd9be667dbe9b53614}
+handle $<$tags$>$ 
+
+\-Definition at line 270 of file \-Tokenizer.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_wp->backupPos($word);
+            $this->_curthing = '';
+            return;
+        }
+        
+        if ($word{0} == '<') {
+            $this->_tag = substr($word, 1);
+        }
+        
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_addoutput($pevent);
+            $this->_tag = null;
+            $this->_attrs = null;
+            if ($word == '>') {
+                $this->_event_stack->pushEvent(PHPDOC_XMLTOKEN_EVENT_CDATA);
+                return;
+            }
+        }
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_ab1bd40c1128ec90e55ab793b2d4a5f3e}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!\$\-\_\-attr@{\$\-\_\-attr}}
+\index{\$\-\_\-attr@{\$\-\_\-attr}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{\$\-\_\-attr}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-attr}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_ab1bd40c1128ec90e55ab793b2d4a5f3e}
+
+
+\-Definition at line 58 of file \-Tokenizer.\-php.
+
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a60ddc32384813e2973c74a4c17c8f3e9}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!\$\-\_\-attrs@{\$\-\_\-attrs}}
+\index{\$\-\_\-attrs@{\$\-\_\-attrs}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{\$\-\_\-attrs}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-attrs}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a60ddc32384813e2973c74a4c17c8f3e9}
+
+
+\-Definition at line 57 of file \-Tokenizer.\-php.
+
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a2d2963f96f6b64bf9929de0d5fa5be81}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!\$\-\_\-curthing@{\$\-\_\-curthing}}
+\index{\$\-\_\-curthing@{\$\-\_\-curthing}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{\$\-\_\-curthing}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-curthing}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a2d2963f96f6b64bf9929de0d5fa5be81}
+\#@+  private 
+
+\-Definition at line 55 of file \-Tokenizer.\-php.
+
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_aa0fa1fc72b8693f59aa85c52c3211730}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!\$\-\_\-tag@{\$\-\_\-tag}}
+\index{\$\-\_\-tag@{\$\-\_\-tag}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{\$\-\_\-tag}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-tag}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_aa0fa1fc72b8693f59aa85c52c3211730}
+
+
+\-Definition at line 56 of file \-Tokenizer.\-php.
+
+\hypertarget{classphp_documentor___x_m_l___beautifier___tokenizer_a430675102684e9ab820c7622678832b0}{\index{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}!\$event\-Handlers@{\$event\-Handlers}}
+\index{\$event\-Handlers@{\$event\-Handlers}!phpDocumentor_XML_Beautifier_Tokenizer@{php\-Documentor\-\_\-\-X\-M\-L\-\_\-\-Beautifier\-\_\-\-Tokenizer}}
+\subsubsection[{\$event\-Handlers}]{\setlength{\rightskip}{0pt plus 5cm}\$event\-Handlers}}\label{classphp_documentor___x_m_l___beautifier___tokenizer_a430675102684e9ab820c7622678832b0}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ array(
+                                PHPDOC_XMLTOKEN_EVENT_NOEVENTS => '
+      normalHandler',
+                                PHPDOC_XMLTOKEN_EVENT_XML => 'parseXMLHandler',
+                                PHPDOC_XMLTOKEN_EVENT_PI => 'parsePiHandler',
+                                PHPDOC_XMLTOKEN_EVENT_ATTRIBUTE => 'attrHandler
+      ',
+                                PHPDOC_XMLTOKEN_EVENT_OPENTAG => 'tagHandler',
+                                PHPDOC_XMLTOKEN_EVENT_IN_CDATA => '
+      realcdataHandler',
+                                PHPDOC_XMLTOKEN_EVENT_DEF => 'defHandler',
+                                PHPDOC_XMLTOKEN_EVENT_CLOSETAG => '
+      closetagHandler',
+                                PHPDOC_XMLTOKEN_EVENT_ENTITY => 'entityHandler'
+      ,
+                                PHPDOC_XMLTOKEN_EVENT_COMMENT => '
+      commentHandler',
+                                PHPDOC_XMLTOKEN_EVENT_SINGLEQUOTE => '
+      stringHandler',
+                                PHPDOC_XMLTOKEN_EVENT_DOUBLEQUOTE => '
+      stringHandler',
+                                PHPDOC_XMLTOKEN_EVENT_CDATA => '
+      parseCdataHandler',
+    )
+\end{DoxyCode}
+
+
+\-Definition at line 64 of file \-Tokenizer.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converters/\-X\-M\-L/\-Doc\-Book/peardoc2/\hyperlink{_tokenizer_8php}{\-Tokenizer.\-php}\end{DoxyCompactItemize}

@@ -1,0 +1,97 @@
+\hypertarget{bug-645588_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-Documentation/tests/bug-\/645588.php \-File \-Reference}
+\label{bug-645588_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-Documentation/tests/bug-\/645588.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-Documentation/tests/bug-\/645588.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespacetests}{tests}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{bug-645588_8php_a9e0e84927c694ec24b49c935ec367e2b}{global\-Set\-Var} (\$name, \$value)
+\item 
+\hyperlink{bug-645588_8php_a3018da486aee0ec05a738b0cc334f2f9}{global\-Get\-Var} (\$name)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{bug-645588_8php_a3018da486aee0ec05a738b0cc334f2f9}{\index{bug-\/645588.\-php@{bug-\/645588.\-php}!global\-Get\-Var@{global\-Get\-Var}}
+\index{global\-Get\-Var@{global\-Get\-Var}!bug-645588.php@{bug-\/645588.\-php}}
+\subsubsection[{global\-Get\-Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf global\-Get\-Var} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name}
+\end{DoxyParamCaption}
+)}}\label{bug-645588_8php_a3018da486aee0ec05a738b0cc334f2f9}
+\-Get a variable's value
+
+global\-Get\-Var returns the value of an internal variable. \-This variable must be previously assigned using either global\-Set\-Var, or an indirect setvar-\/tag in a loaded template.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & the name of the variable to return \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string the variable's value 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{bug-645588_8php_a9e0e84927c694ec24b49c935ec367e2b}{global\-Set\-Var()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 40 of file bug-\/645588.\-php.
+
+
+\begin{DoxyCode}
+{
+  global $variables;
+
+  if (isset($variables[$name]))
+  {
+    return $variables[$name];
+  }
+  else
+  {
+    return '';
+  }
+}
+\end{DoxyCode}
+\hypertarget{bug-645588_8php_a9e0e84927c694ec24b49c935ec367e2b}{\index{bug-\/645588.\-php@{bug-\/645588.\-php}!global\-Set\-Var@{global\-Set\-Var}}
+\index{global\-Set\-Var@{global\-Set\-Var}!bug-645588.php@{bug-\/645588.\-php}}
+\subsubsection[{global\-Set\-Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf global\-Set\-Var} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{bug-645588_8php_a9e0e84927c694ec24b49c935ec367e2b}
+\-Set a variable, used by the template engine but available to all scripts
+
+global\-Set\-Var sets an internal variable. \-This variable may later be retrieved using global\-Get\-Var, and is automagically available to templates using the getvar-\/tag.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & the name of the variable to set \\
+\hline
+string & {\em \$value} & new value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string an empty string to simplify the replacement of setvar-\/tags in the templates 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{bug-645588_8php_a3018da486aee0ec05a738b0cc334f2f9}{global\-Get\-Var()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 22 of file bug-\/645588.\-php.
+
+
+\begin{DoxyCode}
+{
+  global $variables;
+
+  $variables[$name] = $value;
+  return '';
+}
+\end{DoxyCode}

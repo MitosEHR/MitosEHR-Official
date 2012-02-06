@@ -1,0 +1,41 @@
+\hypertarget{modifier_8strip__tags_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/modifier.strip\-\_\-tags.\-php \-File \-Reference}
+\label{modifier_8strip__tags_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-strip\-\_\-tags.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-strip\-\_\-tags.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{modifier_8strip__tags_8php_a28e78b2218a9ba9d2b42adf0b58c6270}{smarty\-\_\-modifier\-\_\-strip\-\_\-tags} (\$string, \$replace\-\_\-with\-\_\-space=true)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{modifier_8strip__tags_8php_a28e78b2218a9ba9d2b42adf0b58c6270}{\index{modifier.\-strip\-\_\-tags.\-php@{modifier.\-strip\-\_\-tags.\-php}!smarty\-\_\-modifier\-\_\-strip\-\_\-tags@{smarty\-\_\-modifier\-\_\-strip\-\_\-tags}}
+\index{smarty\-\_\-modifier\-\_\-strip\-\_\-tags@{smarty\-\_\-modifier\-\_\-strip\-\_\-tags}!modifier.strip_tags.php@{modifier.\-strip\-\_\-tags.\-php}}
+\subsubsection[{smarty\-\_\-modifier\-\_\-strip\-\_\-tags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-modifier\-\_\-strip\-\_\-tags} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string, }
+\item[{\$}]{replace\-\_\-with\-\_\-space = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{modifier_8strip__tags_8php_a28e78b2218a9ba9d2b42adf0b58c6270}
+\hyperlink{class_smarty}{\-Smarty} strip\-\_\-tags modifier plugin
+
+\-Type\-: modifier\par
+ \-Name\-: strip\-\_\-tags\par
+ \-Purpose\-: strip html tags from text \hyperlink{}{strip\-\_\-tags (\-Smarty online manual)  string  boolean  string }
+
+\-Definition at line 21 of file modifier.\-strip\-\_\-tags.\-php.
+
+
+\begin{DoxyCode}
+{
+    if ($replace_with_space)
+        return preg_replace('!<[^>]*?>!', ' ', $string);
+    else
+        return strip_tags($string);
+}
+\end{DoxyCode}

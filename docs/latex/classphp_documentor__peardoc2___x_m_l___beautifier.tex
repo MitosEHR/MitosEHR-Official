@@ -1,0 +1,143 @@
+\hypertarget{classphp_documentor__peardoc2___x_m_l___beautifier}{\section{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier \-Class \-Reference}
+\label{classphp_documentor__peardoc2___x_m_l___beautifier}\index{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier@{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor__peardoc2___x_m_l___beautifier_a3ae1fce1ab940b447341beeb22029cd8}{format\-File} (\$file, \$new\-File=null, \$renderer=\char`\"{}\-Plain\char`\"{})
+\item 
+\hyperlink{classphp_documentor__peardoc2___x_m_l___beautifier_acc64037e6449ba475b9299683290373c}{format\-String} (\$string, \$renderer=\char`\"{}\-Plain\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 49 of file \-Beautifier.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classphp_documentor__peardoc2___x_m_l___beautifier_a3ae1fce1ab940b447341beeb22029cd8}{\index{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier@{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier}!format\-File@{format\-File}}
+\index{format\-File@{format\-File}!phpDocumentor_peardoc2_XML_Beautifier@{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier}}
+\subsubsection[{format\-File}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\-File} (
+\begin{DoxyParamCaption}
+\item[{\$}]{file, }
+\item[{\$}]{new\-File = {\ttfamily null}, }
+\item[{\$}]{renderer = {\ttfamily \char`\"{}\-Plain\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor__peardoc2___x_m_l___beautifier_a3ae1fce1ab940b447341beeb22029cd8}
+format a file or \-U\-R\-L
+
+public 
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$file} & filename \\
+\hline
+mixed & {\em \$new\-File} & filename for beautified \-X\-M\-L file (if none is given, the \-X\-M\-L string will be returned.) if you want overwrite the original file, use \-X\-M\-L\-\_\-\-B\-E\-A\-U\-T\-I\-F\-I\-E\-R\-\_\-\-O\-V\-E\-R\-W\-R\-I\-T\-E \\
+\hline
+string & {\em \$renderer} & \-Renderer to use, default is the plain xml renderer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed \-X\-M\-L string of no file should be written, true if file could be written 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \-P\-E\-A\-R\-\_\-\-Error} & \-\_\-load\-Renderer() to load the desired renderer \\
+\hline
+\end{DoxyExceptions}
+\-Split the document into tokens using the \-X\-M\-L\-\_\-\-Tokenizer
+
+\-Definition at line 63 of file \-Beautifier.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->apiVersion() != '1.0') {
+            return $this->raiseError('API version must be 1.0');
+        }
+        require_once dirname(__FILE__) . '/Tokenizer.php';
+        $tokenizer = new phpDocumentor_XML_Beautifier_Tokenizer();
+        
+        $tokens = $tokenizer->tokenize( $file, true );
+
+        if (PEAR::isError($tokens)) {
+            return $tokens;
+        }
+        
+        include_once dirname(__FILE__) . '/Plain.php';
+        $renderer = new PHPDoc_XML_Beautifier_Renderer_Plain($this->_options);
+        
+        $xml = $renderer->serialize($tokens);
+        
+        if ($newFile == null) {
+            return $xml;
+        }
+        
+        $fp = @fopen($newFile, "w");
+        if (!$fp) {
+            return PEAR::raiseError("Could not write to output file", 
+      XML_BEAUTIFIER_ERROR_NO_OUTPUT_FILE);
+        }
+        
+        flock($fp, LOCK_EX);
+        fwrite($fp, $xml);
+        flock($fp, LOCK_UN);
+        fclose($fp);
+        return true;    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor__peardoc2___x_m_l___beautifier_acc64037e6449ba475b9299683290373c}{\index{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier@{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier}!format\-String@{format\-String}}
+\index{format\-String@{format\-String}!phpDocumentor_peardoc2_XML_Beautifier@{php\-Documentor\-\_\-peardoc2\-\_\-\-X\-M\-L\-\_\-\-Beautifier}}
+\subsubsection[{format\-String}]{\setlength{\rightskip}{0pt plus 5cm}{\bf format\-String} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string, }
+\item[{\$}]{renderer = {\ttfamily \char`\"{}\-Plain\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor__peardoc2___x_m_l___beautifier_acc64037e6449ba475b9299683290373c}
+format an \-X\-M\-L string
+
+public 
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$string} & \-X\-M\-L \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string formatted \-X\-M\-L string 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \-P\-E\-A\-R\-\_\-\-Error} & \\
+\hline
+\end{DoxyExceptions}
+\-Split the document into tokens using the \-X\-M\-L\-\_\-\-Tokenizer
+
+\-Definition at line 109 of file \-Beautifier.\-php.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->apiVersion() != '1.0') {
+            return $this->raiseError('API version must be 1.0');
+        }
+        require_once dirname(__FILE__) . '/Tokenizer.php';
+        $tokenizer = new phpDocumentor_XML_Beautifier_Tokenizer();
+        
+        $tokens = $tokenizer->tokenize( $string, false );
+
+        if (PEAR::isError($tokens)) {
+            return $tokens;
+        }
+
+        include_once dirname(__FILE__) . '/Plain.php';
+        $renderer = new PHPDoc_XML_Beautifier_Renderer_Plain($this->_options);
+        
+        $xml = $renderer->serialize($tokens);
+        
+        return $xml;
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converters/\-X\-M\-L/\-Doc\-Book/peardoc2/\hyperlink{_beautifier_8php}{\-Beautifier.\-php}\end{DoxyCompactItemize}

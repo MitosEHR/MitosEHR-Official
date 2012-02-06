@@ -1,0 +1,105 @@
+\hypertarget{core_8run__insert__handler_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/core/core.run\-\_\-insert\-\_\-handler.\-php \-File \-Reference}
+\label{core_8run__insert__handler_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-run\-\_\-insert\-\_\-handler.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-run\-\_\-insert\-\_\-handler.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{core_8run__insert__handler_8php_a4fad51c09351b25dda3af10ba276e9ed}{smarty\-\_\-core\-\_\-run\-\_\-insert\-\_\-handler} (\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{core_8run__insert__handler_8php_a4fad51c09351b25dda3af10ba276e9ed}{\index{core.\-run\-\_\-insert\-\_\-handler.\-php@{core.\-run\-\_\-insert\-\_\-handler.\-php}!smarty\-\_\-core\-\_\-run\-\_\-insert\-\_\-handler@{smarty\-\_\-core\-\_\-run\-\_\-insert\-\_\-handler}}
+\index{smarty\-\_\-core\-\_\-run\-\_\-insert\-\_\-handler@{smarty\-\_\-core\-\_\-run\-\_\-insert\-\_\-handler}!core.run_insert_handler.php@{core.\-run\-\_\-insert\-\_\-handler.\-php}}
+\subsubsection[{smarty\-\_\-core\-\_\-run\-\_\-insert\-\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-core\-\_\-run\-\_\-insert\-\_\-handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{core_8run__insert__handler_8php_a4fad51c09351b25dda3af10ba276e9ed}
+\-Handle insert tags
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 14 of file core.\-run\-\_\-insert\-\_\-handler.\-php.
+
+
+\begin{DoxyCode}
+{
+
+    require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_microtime.php');
+    if ($smarty->debugging) {
+        $_params = array();
+        $_debug_start_time = smarty_core_get_microtime($_params, $smarty);
+    }
+
+    if ($smarty->caching) {
+        $_arg_string = serialize($params['args']);
+        $_name = $params['args']['name'];
+        if (!isset($smarty->_cache_info['insert_tags'][$_name])) {
+            $smarty->_cache_info['insert_tags'][$_name] = array('insert',
+                                                             $_name,
+                                                             $smarty->_plugins[
+      'insert'][$_name][1],
+                                                             $smarty->_plugins[
+      'insert'][$_name][2],
+                                                             !empty($params['
+      args']['script']) ? true : false);
+        }
+        return $smarty->_smarty_md5."{insert_cache $_arg_string}".$smarty->
+      _smarty_md5;
+    } else {
+        if (isset($params['args']['script'])) {
+            $_params = array('resource_name' => $smarty->_dequote($params['args
+      ']['script']));
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_php_resource.php');
+            if(!smarty_core_get_php_resource($_params, $smarty)) {
+                return false;
+            }
+
+            if ($_params['resource_type'] == 'file') {
+                $smarty->_include($_params['php_resource'], true);
+            } else {
+                $smarty->_eval($_params['php_resource']);
+            }
+            unset($params['args']['script']);
+        }
+
+        $_funcname = $smarty->_plugins['insert'][$params['args']['name']][0];
+        $_content = $_funcname($params['args'], $smarty);
+        if ($smarty->debugging) {
+            $_params = array();
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_microtime.php');
+            $smarty->_smarty_debug_info[] = array('type'      => 'insert',
+                                                'filename'  => 'insert_'.
+      $params['args']['name'],
+                                                'depth'     => $smarty->
+      _inclusion_depth,
+                                                'exec_time' => 
+      smarty_core_get_microtime($_params, $smarty) - $_debug_start_time);
+        }
+
+        if (!empty($params['args']["assign"])) {
+            $smarty->assign($params['args']["assign"], $_content);
+        } else {
+            return $_content;
+        }
+    }
+}
+\end{DoxyCode}

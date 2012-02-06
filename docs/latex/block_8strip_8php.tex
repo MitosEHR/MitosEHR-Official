@@ -1,0 +1,48 @@
+\hypertarget{block_8strip_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/block.strip.\-php \-File \-Reference}
+\label{block_8strip_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/block.\-strip.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/block.\-strip.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{block_8strip_8php_a8bbcc3546e6e51ac34b762f8b141d6d9}{smarty\-\_\-block\-\_\-strip} (\$params, \$content, \&\$this)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{block_8strip_8php_a8bbcc3546e6e51ac34b762f8b141d6d9}{\index{block.\-strip.\-php@{block.\-strip.\-php}!smarty\-\_\-block\-\_\-strip@{smarty\-\_\-block\-\_\-strip}}
+\index{smarty\-\_\-block\-\_\-strip@{smarty\-\_\-block\-\_\-strip}!block.strip.php@{block.\-strip.\-php}}
+\subsubsection[{smarty\-\_\-block\-\_\-strip}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-block\-\_\-strip} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\$}]{content, }
+\item[{\&\$}]{this}
+\end{DoxyParamCaption}
+)}}\label{block_8strip_8php_a8bbcc3546e6e51ac34b762f8b141d6d9}
+\hyperlink{class_smarty}{\-Smarty} \{strip\}\{/strip\} block plugin
+
+\-Type\-: block function\par
+ \-Name\-: strip\par
+ \-Purpose\-: strip unwanted white space from text\par
+ \hyperlink{}{\{strip\} (\-Smarty online manual)  array unused, no parameters for this block  string content of \{strip\}\{/strip\} tags  \-Smarty clever method emulation  string \$content stripped of whitespace }
+
+\-Definition at line 21 of file block.\-strip.\-php.
+
+
+\begin{DoxyCode}
+{
+        /* Reformat data between 'strip' and '/strip' tags, removing spaces,
+       tabs and newlines. */
+        $_strip_search = array(
+                "![\t ]+$|^[\t ]+!m", // remove leading/trailing space chars
+                '%[\r\n]+%m'); // remove CRs and newlines
+        $_strip_replace = array(
+                '',
+                '');
+        return preg_replace($_strip_search, $_strip_replace, $content);
+}
+\end{DoxyCode}

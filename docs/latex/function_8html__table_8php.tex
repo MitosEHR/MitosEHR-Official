@@ -1,0 +1,148 @@
+\hypertarget{function_8html__table_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/function.html\-\_\-table.\-php \-File \-Reference}
+\label{function_8html__table_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-html\-\_\-table.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-html\-\_\-table.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{function_8html__table_8php_a21f8a947811749cf309d3e41f04c791f}{smarty\-\_\-function\-\_\-html\-\_\-table} (\$params, \&\$smarty)
+\item 
+\hyperlink{function_8html__table_8php_a70c55afc0771e08cb17afa924fe64f44}{smarty\-\_\-function\-\_\-html\-\_\-table\-\_\-cycle} (\$name, \$var, \$no)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{function_8html__table_8php_a21f8a947811749cf309d3e41f04c791f}{\index{function.\-html\-\_\-table.\-php@{function.\-html\-\_\-table.\-php}!smarty\-\_\-function\-\_\-html\-\_\-table@{smarty\-\_\-function\-\_\-html\-\_\-table}}
+\index{smarty\-\_\-function\-\_\-html\-\_\-table@{smarty\-\_\-function\-\_\-html\-\_\-table}!function.html_table.php@{function.\-html\-\_\-table.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-html\-\_\-table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-html\-\_\-table} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{function_8html__table_8php_a21f8a947811749cf309d3e41f04c791f}
+\hyperlink{class_smarty}{\-Smarty} \{html\-\_\-table\} function plugin
+
+\-Type\-: function\par
+ \-Name\-: html\-\_\-table\par
+ \-Date\-: \-Feb 17, 2003\par
+ \-Purpose\-: make an html table from an array of data\par
+ \-Input\-:\par
+
+\begin{DoxyItemize}
+\item loop = array to loop through
+\item cols = number of columns
+\item rows = number of rows
+\item table\-\_\-attr = table attributes
+\item tr\-\_\-attr = table row attributes (arrays are cycled)
+\item td\-\_\-attr = table cell attributes (arrays are cycled)
+\item trailpad = value to pad trailing cells with
+\item vdir = vertical direction (default\-: \char`\"{}down\char`\"{}, means top-\/to-\/bottom)
+\item hdir = horizontal direction (default\-: \char`\"{}right\char`\"{}, means left-\/to-\/right)
+\item inner = inner loop (default \char`\"{}cols\char`\"{}\-: print \$loop line by line, \$loop will be printed column by column otherwise)
+\end{DoxyItemize}
+
+\-Examples\-: 
+\begin{DoxyPre}
+ \{table loop=$data\}
+ \{table loop=$data cols=4 tr\_attr='"bgcolor=red"'\}
+ \{table loop=$data cols=4 tr\_attr=$colors\}
+ \end{DoxyPre}
+ \begin{DoxyAuthor}{\-Author}
+\-Monte \-Ohrt $<$\href{mailto:monte@ispi.net}{\tt monte@ispi.\-net}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+1.\-0 \hyperlink{}{\{html\-\_\-table\} (\-Smarty online manual)  array  \-Smarty  string }
+\end{DoxyVersion}
+
+
+\-Definition at line 44 of file function.\-html\-\_\-table.\-php.
+
+
+\begin{DoxyCode}
+{
+    $table_attr = 'border="1"';
+    $tr_attr = '';
+    $td_attr = '';
+    $cols = 3;
+    $rows = 3;
+    $trailpad = '&nbsp;';
+    $vdir = 'down';
+    $hdir = 'right';
+    $inner = 'cols';
+
+    extract($params);
+
+    if (!isset($loop)) {
+        $smarty->trigger_error("html_table: missing 'loop' parameter");
+        return;
+    }
+
+    $loop_count = count($loop);
+    if (empty($params['rows'])) {
+        /* no rows specified */
+        $rows = ceil($loop_count/$cols);
+    } elseif (empty($params['cols'])) {
+        if (!empty($params['rows'])) {
+            /* no cols specified, but rows */
+            $cols = ceil($loop_count/$rows);
+        }
+    }
+
+    $output = "<table $table_attr>\n";
+
+    for ($r=0; $r<$rows; $r++) {
+        $output .= "<tr" . smarty_function_html_table_cycle('tr', $tr_attr, $r)
+       . ">\n";
+        $rx =  ($vdir == 'down') ? $r*$cols : ($rows-1-$r)*$cols;
+
+        for ($c=0; $c<$cols; $c++) {
+            $x =  ($hdir == 'right') ? $rx+$c : $rx+$cols-1-$c;
+            if ($inner!='cols') {
+                /* shuffle x to loop over rows*/
+                $x = floor($x/$cols) + ($x%$cols)*$rows;
+            }
+
+            if ($x<$loop_count) {
+                $output .= "<td" . smarty_function_html_table_cycle('td', 
+      $td_attr, $c) . ">" . $loop[$x] . "</td>\n";
+            } else {
+                $output .= "<td" . smarty_function_html_table_cycle('td', 
+      $td_attr, $c) . ">$trailpad</td>\n";
+            }
+        }
+        $output .= "</tr>\n";
+    }            
+    $output .= "</table>\n";
+    
+    return $output;
+}
+\end{DoxyCode}
+\hypertarget{function_8html__table_8php_a70c55afc0771e08cb17afa924fe64f44}{\index{function.\-html\-\_\-table.\-php@{function.\-html\-\_\-table.\-php}!smarty\-\_\-function\-\_\-html\-\_\-table\-\_\-cycle@{smarty\-\_\-function\-\_\-html\-\_\-table\-\_\-cycle}}
+\index{smarty\-\_\-function\-\_\-html\-\_\-table\-\_\-cycle@{smarty\-\_\-function\-\_\-html\-\_\-table\-\_\-cycle}!function.html_table.php@{function.\-html\-\_\-table.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-html\-\_\-table\-\_\-cycle}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-html\-\_\-table\-\_\-cycle} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{var, }
+\item[{\$}]{no}
+\end{DoxyParamCaption}
+)}}\label{function_8html__table_8php_a70c55afc0771e08cb17afa924fe64f44}
+
+
+\-Definition at line 100 of file function.\-html\-\_\-table.\-php.
+
+
+\begin{DoxyCode}
+                                                            {
+    if(!is_array($var)) {
+        $ret = $var;
+    } else {
+        $ret = $var[$no % count($var)];
+    }
+    
+    return ($ret) ? ' '.$ret : '';
+}
+\end{DoxyCode}

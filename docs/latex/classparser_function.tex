@@ -1,0 +1,667 @@
+\hypertarget{classparser_function}{\section{parser\-Function \-Class \-Reference}
+\label{classparser_function}\index{parser\-Function@{parser\-Function}}
+}
+\-Inheritance diagram for parser\-Function\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classparser_function}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_function_a5973657b3fd5aedaf316f04ed150611a}{add\-Param} (\$name, \$value, \$has\-\_\-default=true, \$typehint=null)
+\item 
+\hyperlink{classparser_function_a28efb4011054bf61c9a4ce017927784a}{add\-Source} (\$source)
+\item 
+\hyperlink{classparser_function_a48be422d378408248f760a11fd42f1f1}{has\-Source} ()
+\item 
+\hyperlink{classparser_function_a42fdd8313c99d9c5f80219c1e192b93a}{get\-Source} ()
+\item 
+\hyperlink{classparser_function_a06461a82056b3b599f7011fdf0840877}{get\-Link} (\$c, \$text=false, \$returnobj=false)
+\item 
+\hyperlink{classparser_function_a3c0cda054b642b0209ddc1d36f1c061e}{get\-Conflicts} (\&\$c)
+\item 
+\hyperlink{classparser_function_ab9f100d3765ec16e6e26ade999dc0662}{add\-Globals} (\$globals)
+\item 
+\hyperlink{classparser_function_a7e3125fc459d422b5cc248b0b4f88c4b}{add\-Statics} (\$static, \$vals)
+\item 
+\hyperlink{classparser_function_a53b156a8aad0362ed2f0f68c59b5fbe2}{get\-Param} (\$name)
+\item 
+\hyperlink{classparser_function_a977b9c1119e70af3b160ea33922b11d8}{list\-Params} ()
+\item 
+\hyperlink{classparser_function_a70c1fea95f617e9f1ade3583dbe42114}{list\-Globals} ()
+\item 
+\hyperlink{classparser_function_ac2fe894b4c580ab277c707b12caeb808}{list\-Statics} ()
+\item 
+\hyperlink{classparser_function_a10b62418ef39e9c343574c33dbe22035}{set\-Returns\-Reference} ()
+\item 
+\hyperlink{classparser_function_a1329acd7d6b6d19aabb38f04e1b29104}{get\-Returns\-Reference} ()
+\item 
+\hyperlink{classparser_function_a5ef78d1a821ab72d3d3cfb761df1b0fe}{get\-Function\-Call} ()
+\item 
+\hyperlink{classparser_function_a8990974e1e3504ebf1ec7568ba204d75}{get\-Intricate\-Function\-Call} (\$converter, \$paramtags)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_function_a9a4a6fba2208984cabb3afacadf33919}{\$type} = 'function'
+\item 
+\hyperlink{classparser_function_afe68e6fbe7acfbffc0af0c84a1996466}{\$params} = false
+\item 
+\hyperlink{classparser_function_ac008ac052b21c0b6428b9d320cd79ed4}{\$returnsreference} = false
+\item 
+\hyperlink{classparser_function_aab94a86ac6c11a08ea99c0662106ec1e}{\$globals} = false
+\item 
+\hyperlink{classparser_function_a6f9b86cb70b333ced9db7133842c4880}{\$statics} = false
+\item 
+\hyperlink{classparser_function_a99a2b085f0a29bd5d799fdcbb63d261b}{\$source} = ''
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 321 of file \-Parser\-Elements.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_function_ab9f100d3765ec16e6e26ade999dc0662}{\index{parser\-Function@{parser\-Function}!add\-Globals@{add\-Globals}}
+\index{add\-Globals@{add\-Globals}!parserFunction@{parser\-Function}}
+\subsubsection[{add\-Globals}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Globals} (
+\begin{DoxyParamCaption}
+\item[{\$}]{globals}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_ab9f100d3765ec16e6e26ade999dc0662}
+\-Add all \char`\"{}global \$var, \$var2\char`\"{} declarations to this function 
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$globals} & \-Format\-: array(globalname1, globalname2,....) \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 433 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->globals = $globals;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a5973657b3fd5aedaf316f04ed150611a}{\index{parser\-Function@{parser\-Function}!add\-Param@{add\-Param}}
+\index{add\-Param@{add\-Param}!parserFunction@{parser\-Function}}
+\subsubsection[{add\-Param}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Param} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value, }
+\item[{\$}]{has\-\_\-default = {\ttfamily true}, }
+\item[{\$}]{typehint = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a5973657b3fd5aedaf316f04ed150611a}
+
+\begin{DoxyParams}{\-Parameters}
+{\em string} & \\
+\hline
+{\em string} & default value parsed from function definition \\
+\hline
+{\em boolean} & indicates whether this parameter has a default value \\
+\hline
+{\em null$|$string} & class type hint \\
+\hline
+\end{DoxyParams}
+
+
+\-Reimplemented in \hyperlink{classparser_method_a5973657b3fd5aedaf316f04ed150611a}{parser\-Method}.
+
+
+
+\-Definition at line 366 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->params[$name] = array($value, $has_default);
+        if (isset($typehint))
+        {
+            $this->params[$name][2] = $typehint;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a28efb4011054bf61c9a4ce017927784a}{\index{parser\-Function@{parser\-Function}!add\-Source@{add\-Source}}
+\index{add\-Source@{add\-Source}!parserFunction@{parser\-Function}}
+\subsubsection[{add\-Source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Source} (
+\begin{DoxyParamCaption}
+\item[{\$}]{source}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a28efb4011054bf61c9a4ce017927784a}
+\-Set the source code. \-Always array in \-P\-H\-P 4.\-3.\-0+ 
+\begin{DoxyParams}{\-Parameters}
+{\em string$|$array} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 379 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->source = $source;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a7e3125fc459d422b5cc248b0b4f88c4b}{\index{parser\-Function@{parser\-Function}!add\-Statics@{add\-Statics}}
+\index{add\-Statics@{add\-Statics}!parserFunction@{parser\-Function}}
+\subsubsection[{add\-Statics}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Statics} (
+\begin{DoxyParamCaption}
+\item[{\$}]{static, }
+\item[{\$}]{vals}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a7e3125fc459d422b5cc248b0b4f88c4b}
+\-Add all \char`\"{}static \$var, \$var2 = 6\char`\"{} declarations to this function 
+\begin{DoxyParams}{\-Parameters}
+{\em array} & \-Format\-: array(varname1, varname2,...) \\
+\hline
+{\em array} & \-Format\-: array(default val of var 1, default val of var 2,...) if var 1 has no default, array(default val of var 2,...) \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 443 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (count($static))
+        {
+            $this->statics = array();
+            for($i=0;$i<count($static);$i++)
+            {
+                if (isset($static[$i]))
+                {
+                    $a = '';
+                    if (isset($vals[$i])) $a = $vals[$i];
+                    $this->statics[] = array('name' => $static[$i],'val' => $a)
+      ;
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a3c0cda054b642b0209ddc1d36f1c061e}{\index{parser\-Function@{parser\-Function}!get\-Conflicts@{get\-Conflicts}}
+\index{get\-Conflicts@{get\-Conflicts}!parserFunction@{parser\-Function}}
+\subsubsection[{get\-Conflicts}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Conflicts} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a3c0cda054b642b0209ddc1d36f1c061e}
+\-Returns all functions in other packages that have the same name as this function \begin{DoxyReturn}{\-Returns}
+mixed false or an array \-Format\-: (package =$>$ \hyperlink{classparser_function}{parser\-Function} of conflicting functions) 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \hyperlink{class_converter}{\-Converter}} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 422 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $a = $c->proceduralpages->getFuncConflicts($this->name);
+        unset($a[$this->docblock->package]);
+        return $a;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a5ef78d1a821ab72d3d3cfb761df1b0fe}{\index{parser\-Function@{parser\-Function}!get\-Function\-Call@{get\-Function\-Call}}
+\index{get\-Function\-Call@{get\-Function\-Call}!parserFunction@{parser\-Function}}
+\subsubsection[{get\-Function\-Call}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Function\-Call} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a5ef78d1a821ab72d3d3cfb761df1b0fe}
+\-Get a human-\/friendly description of the function call
+
+takes declaration like\-: {\ttfamily  /$\ast$$\ast$ \begin{DoxyReturn}{\-Returns}
+string ... \{rest of docblock\} function \&func(\$param1, \$param2 = 6, \$param3 = array('20',9 =$>$ \char`\"{}heroo\char`\"{})) \{...\}  and returns\-: string \&func( \$param1, \mbox{[}\$param2 = 6\mbox{]}, \mbox{[}\$param3 = array('20',9 =$>$ \char`\"{}heroo\char`\"{})\mbox{]} ) 
+
+string stylized function declaration 
+\end{DoxyReturn}
+}
+
+\-Reimplemented in \hyperlink{classparser_method_a5ef78d1a821ab72d3d3cfb761df1b0fe}{parser\-Method}.
+
+
+
+\-Definition at line 580 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $a = '';
+        if ($this->getReturnsReference()) $a = '&';
+        $function_call = $a.$this->getName() . " ( ";
+        $tmp = 0;
+        foreach($this->listParams() as $param)
+        {
+            if ($tmp == 0)
+            {
+                $tmp = 1;
+            } else {
+                $function_call .= ", ";
+            }
+            if ($param[1] !== false)
+            {
+                $function_call .= "[$param[0] = $param[1]]";
+            } else {
+                $function_call .= $param[0];
+            }
+            $update_params[] = $param[0];
+        }
+        $function_call .= " )";
+        return $function_call;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a8990974e1e3504ebf1ec7568ba204d75}{\index{parser\-Function@{parser\-Function}!get\-Intricate\-Function\-Call@{get\-Intricate\-Function\-Call}}
+\index{get\-Intricate\-Function\-Call@{get\-Intricate\-Function\-Call}!parserFunction@{parser\-Function}}
+\subsubsection[{get\-Intricate\-Function\-Call}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Intricate\-Function\-Call} (
+\begin{DoxyParamCaption}
+\item[{\$}]{converter, }
+\item[{\$}]{paramtags}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a8990974e1e3504ebf1ec7568ba204d75}
+\-Like \hyperlink{classparser_function_a5ef78d1a821ab72d3d3cfb761df1b0fe}{get\-Function\-Call()}, but has no \-English or pre-\/determined formatting.
+
+\-Much more flexible. \begin{DoxyReturn}{\-Returns}
+array \-Format\-: {\ttfamily  array('name' =$>$ function name, 'returnsref' =$>$ boolean if declared as \char`\"{}function \&name()\char`\"{} 'params' =$>$ array('type' =$>$ data type of parameter, 'description' =$>$ from }
+\end{DoxyReturn}
+
+\begin{DoxyParams}{\-Parameters}
+{\em tag,'name'} & {\ttfamily =$>$ variable name, 'default' =$>$ default value if any)) } \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classparser_function_a5ef78d1a821ab72d3d3cfb761df1b0fe}{get\-Function\-Call()} 
+\end{DoxySeeAlso}
+
+
+\-Reimplemented in \hyperlink{classparser_method_a8990974e1e3504ebf1ec7568ba204d75}{parser\-Method}.
+
+
+
+\-Definition at line 621 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $a = array();
+        if ($this->getReturnsReference()) $a['returnsref'] = true;
+        $a['name'] = $converter->type_adjust($this->getName());
+        $c = $this->listParams();
+        foreach($c as $param)
+        {
+            $b = array();
+            $b['type'] = 'mixed';
+            if (isset($paramtags[$param[0]]))
+            {
+                $b['type'] = $paramtags[$param[0]]['datatype'];
+                $b['description'] = $paramtags[$param[0]]['data'];
+                unset($paramtags[$param[0]]);
+            } elseif(isset($paramtags[substr($param[0],1)]))
+            {
+                $b['type'] = $paramtags[substr($param[0],1)]['datatype'];
+                $b['description'] = $paramtags[substr($param[0],1)]['data'];
+                unset($paramtags[substr($param[0],1)]);
+            }
+            if (isset($param[2]))
+            {
+                $link = $converter->getLink('object ' . $param[2]);
+                                if ($link && $link != 'object ' . $param[2]) {
+                    $link = $converter->returnSee($link, $param[2], true);
+                    $b['type'] = $link;
+                } else {
+                    $b['type'] = $param[2];
+                }
+            }
+            $b['name'] = $param[0];
+            $b['default'] = $converter->postProcess($param[1]);
+            $b['hasdefault'] = ($param[1] !== false);
+            $a['params'][] = $b;
+        }
+        // @param tags that don't correspond to actual parameters (like extra
+       function values)
+        if (count($paramtags))
+        {
+            foreach($paramtags as $param)
+            {
+                $b = array();
+                $b['type'] = $param['datatype'];
+                $b['description'] = $param['data'];
+                $b['name'] = $param['var'];
+                $b['default'] = '';
+                $b['hasdefault'] = false;
+                $a['params'][] = $b;
+            }
+        }
+        return $a;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a06461a82056b3b599f7011fdf0840877}{\index{parser\-Function@{parser\-Function}!get\-Link@{get\-Link}}
+\index{get\-Link@{get\-Link}!parserFunction@{parser\-Function}}
+\subsubsection[{get\-Link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Link} (
+\begin{DoxyParamCaption}
+\item[{\$}]{c, }
+\item[{\$}]{text = {\ttfamily false}, }
+\item[{\$}]{returnobj = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a06461a82056b3b599f7011fdf0840877}
+quick way to link to this element \begin{DoxyReturn}{\-Returns}
+mixed converter-\/specific link to this function 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \hyperlink{class_converter}{\-Converter}} & \\
+\hline
+{\em string} & text to display for the link or false for default text \\
+\hline
+\end{DoxyParams}
+
+
+\-Reimplemented in \hyperlink{classparser_method_a06461a82056b3b599f7011fdf0840877}{parser\-Method}.
+
+
+
+\-Definition at line 408 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($returnobj)
+        {
+            return $c->getLink('function ' . $this->name, $this->docblock->
+      package);
+        }
+        return $c->getFunctionLink($this->name, $this->docblock->package, $this
+      ->path, $text);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a53b156a8aad0362ed2f0f68c59b5fbe2}{\index{parser\-Function@{parser\-Function}!get\-Param@{get\-Param}}
+\index{get\-Param@{get\-Param}!parserFunction@{parser\-Function}}
+\subsubsection[{get\-Param}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Param} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a53b156a8aad0362ed2f0f68c59b5fbe2}
+\begin{DoxyReturn}{\-Returns}
+string default value of param \$name 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{\-Parameters}
+{\em string} & \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 464 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->params[$name])) return false;
+        $test = $this->params[$name];
+        if ($test[1])
+        {
+            return $this->params[$name];
+        } else
+        {
+            return false;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a1329acd7d6b6d19aabb38f04e1b29104}{\index{parser\-Function@{parser\-Function}!get\-Returns\-Reference@{get\-Returns\-Reference}}
+\index{get\-Returns\-Reference@{get\-Returns\-Reference}!parserFunction@{parser\-Function}}
+\subsubsection[{get\-Returns\-Reference}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Returns\-Reference} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a1329acd7d6b6d19aabb38f04e1b29104}
+\begin{DoxyReturn}{\-Returns}
+boolean returns value of \hyperlink{classparser_function_ac008ac052b21c0b6428b9d320cd79ed4}{\$returnsreference} 
+\end{DoxyReturn}
+
+
+\-Definition at line 561 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->returnsreference;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a42fdd8313c99d9c5f80219c1e192b93a}{\index{parser\-Function@{parser\-Function}!get\-Source@{get\-Source}}
+\index{get\-Source@{get\-Source}!parserFunction@{parser\-Function}}
+\subsubsection[{get\-Source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Source} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a42fdd8313c99d9c5f80219c1e192b93a}
+\begin{DoxyReturn}{\-Returns}
+string$|$array source code ready for highlighting 
+\end{DoxyReturn}
+
+
+\-Definition at line 397 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->source;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a48be422d378408248f760a11fd42f1f1}{\index{parser\-Function@{parser\-Function}!has\-Source@{has\-Source}}
+\index{has\-Source@{has\-Source}!parserFunction@{parser\-Function}}
+\subsubsection[{has\-Source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf has\-Source} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a48be422d378408248f760a11fd42f1f1}
+source\} \begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 388 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (is_array($this->source)) return true;
+        return strlen($this->source);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a70c1fea95f617e9f1ade3583dbe42114}{\index{parser\-Function@{parser\-Function}!list\-Globals@{list\-Globals}}
+\index{list\-Globals@{list\-Globals}!parserFunction@{parser\-Function}}
+\subsubsection[{list\-Globals}]{\setlength{\rightskip}{0pt plus 5cm}{\bf list\-Globals} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a70c1fea95f617e9f1ade3583dbe42114}
+\begin{DoxyReturn}{\-Returns}
+array format\-: array(array(index, globalname),...) 
+\end{DoxyReturn}
+
+
+\-Definition at line 515 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (isset($this->globals))
+        {
+            $ret = array();
+            if ($this->globals)
+            foreach($this->globals as $key => $val)
+            {
+                $ret[] = array($key,$val);
+            }
+            return $ret;
+        } else {
+            return array();
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a977b9c1119e70af3b160ea33922b11d8}{\index{parser\-Function@{parser\-Function}!list\-Params@{list\-Params}}
+\index{list\-Params@{list\-Params}!parserFunction@{parser\-Function}}
+\subsubsection[{list\-Params}]{\setlength{\rightskip}{0pt plus 5cm}{\bf list\-Params} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a977b9c1119e70af3b160ea33922b11d8}
+\begin{DoxyReturn}{\-Returns}
+array format\-: array(array(paramname, default value),...) 
+\end{DoxyReturn}
+
+
+\-Definition at line 480 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (isset($this->params))
+        {
+            $ret = array();
+            if ($this->params)
+            foreach($this->params as $key => $val)
+            {
+                if ($val[1])
+                {
+                    $arr = array($key,$val[0]);
+                    if (isset($val[2]))
+                    {
+                        $arr[2] = $val[2];
+                    }
+                    $ret[$key] = $arr;
+                } else
+                {
+                    $arr = array($key,false);
+                    if (isset($val[2]))
+                    {
+                        $arr[2] = $val[2];
+                    }
+                    $ret[$key] = $arr;
+                }
+            }
+            return $ret;
+        } else {
+            return array();
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_ac2fe894b4c580ab277c707b12caeb808}{\index{parser\-Function@{parser\-Function}!list\-Statics@{list\-Statics}}
+\index{list\-Statics@{list\-Statics}!parserFunction@{parser\-Function}}
+\subsubsection[{list\-Statics}]{\setlength{\rightskip}{0pt plus 5cm}{\bf list\-Statics} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_ac2fe894b4c580ab277c707b12caeb808}
+\begin{DoxyReturn}{\-Returns}
+array format\-: array(array(static var name, static var default value),...) 
+\end{DoxyReturn}
+
+
+\-Definition at line 534 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (isset($this->statics))
+        {
+            $ret = array();
+            if ($this->statics)
+            foreach($this->statics as $key => $val)
+            {
+                $ret[] = array($val['name'],$val['val']);
+            }
+            return $ret;
+        } else {
+            return array();
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_function_a10b62418ef39e9c343574c33dbe22035}{\index{parser\-Function@{parser\-Function}!set\-Returns\-Reference@{set\-Returns\-Reference}}
+\index{set\-Returns\-Reference@{set\-Returns\-Reference}!parserFunction@{parser\-Function}}
+\subsubsection[{set\-Returns\-Reference}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Returns\-Reference} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_function_a10b62418ef39e9c343574c33dbe22035}
+sets \hyperlink{classparser_function_ac008ac052b21c0b6428b9d320cd79ed4}{\$returnsreference} to true 
+
+\-Definition at line 553 of file \-Parser\-Elements.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->returnsreference = true;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_function_aab94a86ac6c11a08ea99c0662106ec1e}{\index{parser\-Function@{parser\-Function}!\$globals@{\$globals}}
+\index{\$globals@{\$globals}!parserFunction@{parser\-Function}}
+\subsubsection[{\$globals}]{\setlength{\rightskip}{0pt plus 5cm}\$globals = false}}\label{classparser_function_aab94a86ac6c11a08ea99c0662106ec1e}
+
+
+\-Definition at line 351 of file \-Parser\-Elements.\-inc.
+
+\hypertarget{classparser_function_afe68e6fbe7acfbffc0af0c84a1996466}{\index{parser\-Function@{parser\-Function}!\$params@{\$params}}
+\index{\$params@{\$params}!parserFunction@{parser\-Function}}
+\subsubsection[{\$params}]{\setlength{\rightskip}{0pt plus 5cm}\$params = false}}\label{classparser_function_afe68e6fbe7acfbffc0af0c84a1996466}
+
+
+\-Definition at line 335 of file \-Parser\-Elements.\-inc.
+
+\hypertarget{classparser_function_ac008ac052b21c0b6428b9d320cd79ed4}{\index{parser\-Function@{parser\-Function}!\$returnsreference@{\$returnsreference}}
+\index{\$returnsreference@{\$returnsreference}!parserFunction@{parser\-Function}}
+\subsubsection[{\$returnsreference}]{\setlength{\rightskip}{0pt plus 5cm}\$returnsreference = false}}\label{classparser_function_ac008ac052b21c0b6428b9d320cd79ed4}
+
+
+\-Definition at line 345 of file \-Parser\-Elements.\-inc.
+
+\hypertarget{classparser_function_a99a2b085f0a29bd5d799fdcbb63d261b}{\index{parser\-Function@{parser\-Function}!\$source@{\$source}}
+\index{\$source@{\$source}!parserFunction@{parser\-Function}}
+\subsubsection[{\$source}]{\setlength{\rightskip}{0pt plus 5cm}\$source = ''}}\label{classparser_function_a99a2b085f0a29bd5d799fdcbb63d261b}
+
+
+\-Definition at line 358 of file \-Parser\-Elements.\-inc.
+
+\hypertarget{classparser_function_a6f9b86cb70b333ced9db7133842c4880}{\index{parser\-Function@{parser\-Function}!\$statics@{\$statics}}
+\index{\$statics@{\$statics}!parserFunction@{parser\-Function}}
+\subsubsection[{\$statics}]{\setlength{\rightskip}{0pt plus 5cm}\$statics = false}}\label{classparser_function_a6f9b86cb70b333ced9db7133842c4880}
+
+
+\-Definition at line 356 of file \-Parser\-Elements.\-inc.
+
+\hypertarget{classparser_function_a9a4a6fba2208984cabb3afacadf33919}{\index{parser\-Function@{parser\-Function}!\$type@{\$type}}
+\index{\$type@{\$type}!parserFunction@{parser\-Function}}
+\subsubsection[{\$type}]{\setlength{\rightskip}{0pt plus 5cm}\$type = 'function'}}\label{classparser_function_a9a4a6fba2208984cabb3afacadf33919}
+
+
+\-Reimplemented from \hyperlink{classparser_base_a9a4a6fba2208984cabb3afacadf33919}{parser\-Base}.
+
+
+
+\-Reimplemented in \hyperlink{classparser_method_a9a4a6fba2208984cabb3afacadf33919}{parser\-Method}.
+
+
+
+\-Definition at line 327 of file \-Parser\-Elements.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_parser_elements_8inc}{\-Parser\-Elements.\-inc}\end{DoxyCompactItemize}

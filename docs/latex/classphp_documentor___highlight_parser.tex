@@ -1,0 +1,2864 @@
+\hypertarget{classphp_documentor___highlight_parser}{\section{php\-Documentor\-\_\-\-Highlight\-Parser \-Class \-Reference}
+\label{classphp_documentor___highlight_parser}\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+}
+\-Inheritance diagram for php\-Documentor\-\_\-\-Highlight\-Parser\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classphp_documentor___highlight_parser}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a0aa5ad6874d7cb5842fb75d9d9edd1cc}{new\-Line\-Num} ()
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a855be7133354603f9f7f33da66ec5a30}{set\-Line\-Num} (\$num)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_af2c58a5bc9af02e3e44df13fdae1d375}{parse} (\&\$parse\-\_\-data, \&\$converter, \$inlinesourceparse=false, \$class=false, \$linenum=false, \$filesourcepath=false)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{default\-Handler} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_aeea50ac4c19702902041fa4c7886efdd}{handle\-Func\-Global} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a4ba20cc549548714f50dafced3b6ec71}{handle\-Quote} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a9e564abb2302695638d5c1d3f2ff9acb}{handle\-Quote\-Var} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a1769290b6b18b684616582c0db6bd0dd}{handle\-Define} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a08a1dde387562480e8030e16e8472548}{handle\-Php\-Code} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a6dc39d8d613058ad93f476e91fdb7cf3}{handle\-Function} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ac0835c9fb454181bc476d01f2613e8ca}{handle\-Method} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_aabdf4a71f7610ba56a173ea10c5f541b}{handle\-Function\-Params} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a74750f3abb8dc11a29a566b51c414370}{handle\-Logic\-Block} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ac126f11f9681bc8d9757cb357afbb6c0}{handle\-Method\-Logic\-Block} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a6fda33f6258452df7d8cc06d9a44d8e4}{handle\-Class\-Member} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a20f0c871394d25d98cb94346b92b52ad}{handle\-Comment} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a3a3555968696bdaf66a627ebedc5e4aa}{handle\-Class} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a5e19ceeed570fa556cfa546f730a093d}{handle\-Var} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a38bc1e0a6586b0f2aac2cd0968db0bd3}{handle\-Doc\-Block} (\$word, \$pevent)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a6b80e02e8e975970e8c2bcae7938d152}{common\-Doc\-Block} ()
+\item 
+\hyperlink{classphp_documentor___highlight_parser_af7c8dd1dbec9f5a5ab7273e2ac9dac2f}{handle\-Desc} (\$desc)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_abb952ee2c4bdbf826958dafe271f6227}{handle\-Tags} (\$tags)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_aab47e31cb0248e99f46b9d534973af21}{get\-Inline\-Tags} (\$value, \$endinternal=false)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a73b963ce376aca18fd8dbebecad18d43}{handle\-Default\-Inline\-Tag} (\$name, \$value)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ad1c543277e68e7f8b4730f53748fad7b}{default\-Tag\-Handler} (\$name, \$value, \$coretag=false)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ac3ab9cb363f1efefcb852389328138c5}{core\-Tag\-Handler} (\$name, \$value)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a57e7f87881d9380b76f5cf7744dcc23f}{global\-Tag\-Handler} (\$name, \$value)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a18ae3c5d37ca12fd56051e21288881fe}{param\-Tag\-Handler} (\$name, \$value, \$checkforvar=true)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a7d4cd9c769f4ee284af7df08a8fc0beb}{staticvar\-Tag\-Handler} (\$name, \$value)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_aabc41000dbb16c9e2f3fc4750941906a}{var\-Tag\-Handler} (\$name, \$value)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a3f1393a72b540d3f62d3e84480e619d2}{return\-Tag\-Handler} (\$name, \$value)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a134c963747a4b65ebd261c6781b80ba5}{property\-Tag\-Handler} (\$name, \$value)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ab40a58f29c868700b19550679df95544}{retrieve\-Type} (\$value, \$state=0, \$checkforvar=false)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_aa588dca5ad3720650c920f06be4804c8}{\-\_\-retrieve\-Type} (\$value, \$state, \$checkforvar)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a38ffa698b86adeae050f35cab3c98e7b}{\-\_\-remove\-White\-Space} (\&\$value, \$index)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a5b861b5877e7969430612f504417bdf4}{\-\_\-link} (\$word)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a543ae0173d8f9778c985fe2f1bee5b03}{\-\_\-globallink} (\$word)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a25949e07b59c8d777b94bb6520f66300}{\-\_\-classlink} (\$word)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a6c2a487738d31e164ab6c0ddaa1df096}{\-\_\-methodlink} (\$word)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_abb4286c2e0e866198743632494d5d155}{\-\_\-varlink} (\$word, \$justastring=false)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a1acd6d7a8b8e29e7ddfa0f843399d65b}{\-\_\-addoutput} (\$word, \$preformatted=false)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ab5f77f783677a6c03a2cd7ae780bf3ac}{\-\_\-add\-Doc\-Blockoutput} (\$dbtype, \$word, \$preformatted=false)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_afb220b399efe46477cf6da0ae8712b68}{\-\_\-flush\-\_\-save} ()
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a5b6d9473f683f7db254c4ce70cddaef8}{config\-Word\-Parser} (\&\$data)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a08a9491bf69e824ffe31bd76920662b9}{setup\-States} (\$inlinesourceparse, \$class)
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ab781dbf4f5524e7e7bf97c37f198e33b}{php\-Documentor\-\_\-\-Highlight\-Parser} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a9d0ae9d0264ebd1aba5a9ca6c7385169}{\$\-\_\-output}
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a67c54106d6508a3fad8868fe68e1a264}{\$\-\_\-line}
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ab1905bb921f2d310a79457ffb9552f7b}{\$\-\_\-converter}
+\item 
+\hyperlink{classphp_documentor___highlight_parser_ae623f634db8825cbb896c2e0e2d03447}{\$\-\_\-filesourcepath}
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a430675102684e9ab820c7622678832b0}{\$event\-Handlers}
+\item 
+\hyperlink{classphp_documentor___highlight_parser_a29ffc8e33fce7331212a7636256a7678}{\$tag\-Handlers}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 226 of file \-Highlight\-Parser.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classphp_documentor___highlight_parser_ab5f77f783677a6c03a2cd7ae780bf3ac}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-add\-Doc\-Blockoutput@{\-\_\-add\-Doc\-Blockoutput}}
+\index{\-\_\-add\-Doc\-Blockoutput@{\-\_\-add\-Doc\-Blockoutput}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-add\-Doc\-Blockoutput}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-add\-Doc\-Blockoutput} (
+\begin{DoxyParamCaption}
+\item[{\$}]{dbtype, }
+\item[{\$}]{word, }
+\item[{\$}]{preformatted = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_ab5f77f783677a6c03a2cd7ae780bf3ac}
+\-Like \hyperlink{}{\-\_\-output()}, but for \-Doc\-Block highlighting
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$dbtype} & the docblock type \\
+\hline
+mixed & {\em \$word} & the string$|$array tag token and value \\
+\hline
+bool & {\em \$preformatted} & whether or not the \$word is already formatted\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 2188 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_pf_internal) {
+            $this->_line .= $this->_converter->highlightDocBlockSource('
+      internal',
+                $word, $preformatted);
+        } else {
+            $this->_line .= $this->_converter->highlightDocBlockSource($dbtype,
+                $word, $preformatted);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a1acd6d7a8b8e29e7ddfa0f843399d65b}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-addoutput@{\-\_\-addoutput}}
+\index{\-\_\-addoutput@{\-\_\-addoutput}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-addoutput}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-addoutput} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{preformatted = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a1acd6d7a8b8e29e7ddfa0f843399d65b}
+\#@-\/ \#@+ \-Output \-Methods  private \-This method adds output to \hyperlink{classphp_documentor___highlight_parser_a67c54106d6508a3fad8868fe68e1a264}{\$\-\_\-line}
+
+\-If a string with variables like \char`\"{}\$test this\char`\"{} is present, then special handling is used to allow processing of the variable in context.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$word} & the string$|$array tag token and value \\
+\hline
+bool & {\em \$preformatted} & whether or not the \$word is already formatted\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___highlight_parser_afb220b399efe46477cf6da0ae8712b68}{\-\_\-flush\-\_\-save()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 2146 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_pf_no_output_yet) {
+            return;
+        }
+        if ($this->_pf_quote_active) {
+            if (is_array($word)) {
+                $this->_save .= $this->_converter->highlightSource($word[0],
+                    $word[1]);
+            } else {
+                $this->_save .= $this->_converter->highlightSource(false,
+                    $word, true);
+            }
+        } else {
+            $this->_flush_save();
+            if (is_string($word) && trim($word) == '') {
+                $this->_line .= $this->_converter->postProcess($word);
+                return;
+            }
+            if (is_array($word) && trim($word[1]) == '') {
+                $this->_line .= $this->_converter->postProcess($word[1]);
+                return;
+            }
+            if (is_array($word)) {
+                $this->_line .= $this->_converter->highlightSource($word[0],
+                    $word[1], $preformatted);
+            } else {
+                $this->_line .= $this->_converter->highlightSource(false,
+                    $word, $preformatted);
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a25949e07b59c8d777b94bb6520f66300}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-classlink@{\-\_\-classlink}}
+\index{\-\_\-classlink@{\-\_\-classlink}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-classlink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-classlink} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a25949e07b59c8d777b94bb6520f66300}
+\-Works like \hyperlink{classphp_documentor___highlight_parser_a5b861b5877e7969430612f504417bdf4}{\-\_\-link()} except it only links to classes 
+
+\-Definition at line 2039 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        //debug("checking class " . $word[1]);
+        if (is_array($word) && $word[0] == T_STRING) {
+            $link = $this->_converter->getLink($word[1]);
+            if (is_object($link)) {
+                $this->_addoutput($this->_converter->returnSee($link,
+                    $word[1]), true);
+                return;
+            }
+        }
+        $this->_addoutput($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_afb220b399efe46477cf6da0ae8712b68}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-flush\-\_\-save@{\-\_\-flush\-\_\-save}}
+\index{\-\_\-flush\-\_\-save@{\-\_\-flush\-\_\-save}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-flush\-\_\-save}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-flush\-\_\-save} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_afb220b399efe46477cf6da0ae8712b68}
+\-Flush a saved string variable highlighting
+
+\{\}
+
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000101}{\-Todo}]\-C\-S cleanup -\/ rename to \-\_\-flush\-Save() for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Definition at line 2207 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!empty($this->_save)) {
+            $this->_save .= $this->_converter->flushHighlightCache();
+            // clear the existing cache, reset it to the old value
+            if (isset($this->_save_highlight_state)) {
+                $this->_converter->
+                    _setHighlightCache($this->_save_highlight_state[0],
+                         $this->_save_highlight_state[1]);
+            }
+            $this->_line .= $this->_converter->
+                highlightSource(T_CONSTANT_ENCAPSED_STRING, $this->_save, true)
+      ;
+            $this->_save  = '';
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a543ae0173d8f9778c985fe2f1bee5b03}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-globallink@{\-\_\-globallink}}
+\index{\-\_\-globallink@{\-\_\-globallink}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-globallink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-globallink} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a543ae0173d8f9778c985fe2f1bee5b03}
+\-Works like \hyperlink{classphp_documentor___highlight_parser_a5b861b5877e7969430612f504417bdf4}{\-\_\-link()} except it only links to global variables 
+
+\-Definition at line 2017 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!is_array($word)) {
+            return $this->_addoutput($word);
+        }
+        if ($word[0] != T_VARIABLE) {
+            return $this->_addoutput($word);
+        }
+        if (is_array($word) && $word[0] == T_VARIABLE) {
+            $link = $this->_converter->getLink('global ' . $word[1]);
+            if (is_object($link)) {
+                $this->_addoutput($this->_converter->returnSee($link,
+                    $word[1]), true);
+                return;
+            }
+        }
+        $this->_addoutput($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a5b861b5877e7969430612f504417bdf4}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-link@{\-\_\-link}}
+\index{\-\_\-link@{\-\_\-link}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-link} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a5b861b5877e7969430612f504417bdf4}
+\#@+ \-Link generation methods
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string | array & {\em \$word} & token to try to link\\
+\hline
+\end{DoxyParams}
+private \-Generate a link to documentation for an element
+
+\-This method tries to link to documentation for functions, methods, \-P\-H\-P functions, class names, and if found, adds the links to output instead of plain text 
+
+\-Definition at line 1976 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (is_array($word) && $word[0] == T_STRING) {
+            if ($this->_pf_colon_colon) {
+                $this->_pf_colon_colon = false;
+
+                $combo = $this->_pv_last_string[1] . '::' . $word[1] . '()';
+                //debug('testing ' . $combo);
+                $link = $this->_converter->getLink($combo);
+                if (is_object($link)) {
+                    $this->_addoutput($this->_converter->returnSee($link,
+                        $word[1]), true);
+                    return;
+                }
+                $this->_addoutput($word);
+                return;
+            }
+            $link = $this->_converter->getLink($word[1] . '()');
+            if (is_object($link)) {
+                $this->_addoutput($this->_converter->returnSee($link,
+                    $word[1]), true);
+                return;
+            } elseif (is_string($link) && strpos($link, 'ttp://')) {
+                $this->_addoutput($this->_converter->returnLink($link,
+                    $word[1]), true);
+                return;
+            } else {
+                $link = $this->_converter->getLink($word[1]);
+                if (is_object($link)) {
+                    $word[1] = $this->_converter->returnSee($link, $word[1]);
+                }
+                $this->_addoutput($word, true);
+                return;
+            }
+        }
+        $this->_addoutput($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a6c2a487738d31e164ab6c0ddaa1df096}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-methodlink@{\-\_\-methodlink}}
+\index{\-\_\-methodlink@{\-\_\-methodlink}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-methodlink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-methodlink} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a6c2a487738d31e164ab6c0ddaa1df096}
+\-Works like \hyperlink{classphp_documentor___highlight_parser_a5b861b5877e7969430612f504417bdf4}{\-\_\-link()} except it only links to methods 
+
+\-Definition at line 2056 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (is_array($word) && $word[0] == T_STRING) {
+            //debug("checking method " . $this->_pv_class . '::' . $word[1] .
+       '()');
+            if (isset($this->_pv_prev_var_type)) {
+                $link = $this->_converter->getLink($this->_pv_prev_var_type . '
+      ::' .
+                    $word[1] . '()');
+            } else {
+                $link = $this->_converter->getLink($this->_pv_class . '::' . 
+                    $word[1] . '()');
+            }
+            if (is_object($link)) {
+                $this->_addoutput($this->_converter->returnSee($link,
+                    $word[1]), true);
+                return;
+            }
+            if (isset($this->_pv_prev_var_type)) {
+                $this->_addoutput($word);
+                return;
+            }
+            //debug("checking method " . $word[1] . '()');
+            $link = $this->_converter->getLink($word[1] . '()');
+            if (is_object($link)) {
+                $this->_addoutput($this->_converter->returnSee($link,
+                    $word[1]), true);
+                return;
+            }
+        }
+        $this->_addoutput($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a38ffa698b86adeae050f35cab3c98e7b}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-remove\-White\-Space@{\-\_\-remove\-White\-Space}}
+\index{\-\_\-remove\-White\-Space@{\-\_\-remove\-White\-Space}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-remove\-White\-Space}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-remove\-White\-Space} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{value, }
+\item[{\$}]{index}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a38ffa698b86adeae050f35cab3c98e7b}
+captures trailing whitespace
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \&\$value} & array of string \\
+\hline
+int & {\em \$index} & index to seek non-\/whitespace to\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string whitespace  private 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a38ffa698b86adeae050f35cab3c98e7b}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1949 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $result = '';
+        if (count($value) > $index && empty($value[$index])) {
+            $found = false;
+            for ($i = $index; $i < count($value) && !strlen($value[$i]); $i++) 
+      {
+                $result .= ' ';
+            }
+            array_splice($value, $index, $i - $index);
+        }
+        return $result;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_aa588dca5ad3720650c920f06be4804c8}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-retrieve\-Type@{\-\_\-retrieve\-Type}}
+\index{\-\_\-retrieve\-Type@{\-\_\-retrieve\-Type}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-retrieve\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-retrieve\-Type} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value, }
+\item[{\$}]{state, }
+\item[{\$}]{checkforvar}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_aa588dca5ad3720650c920f06be4804c8}
+used by \hyperlink{classphp_documentor___highlight_parser_ab40a58f29c868700b19550679df95544}{retrieve\-Type()} in its work
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$value} & array of words that were separated by spaces \\
+\hline
+ & {\em 0$|$1} & \$state 0 = find the type, 1 = find the var, if present \\
+\hline
+bool & {\em \$checkforvar} & flag to determine whether to check for the end of a type is defined by a \$varname\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array  private 
+\end{DoxyReturn}
+
+
+\-Definition at line 1842 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $result   = array();
+        $result[] = $this->_removeWhiteSpace($value, 0);
+        if ($state == 0) {
+            if (!count($value)) {
+                return array(2, $result);
+            }
+            $types = '';
+            $index = 0;
+            if (trim($value[0]) == 'object') {
+                $result[] = array('tagphptype', $value[0] . ' ');
+                $types   .= array_shift($value).' ';
+                $result[] = $this->_removeWhiteSpace($value, 0);
+                if (!count($value)) {
+                    // was just passed "object"
+                    return array(2, $result);
+                }
+                if ($value[0]{0} == '$' || substr($value[0], 0, 2) == '&$') {
+                    // was just passed "object"
+                    // and the next thing is a variable name
+                    if ($checkforvar) {
+                        $result[] = array('tagvarname' , $value[0] . ' ');
+                        array_shift($value);
+                    }
+                    $result[] = array('desc', join(' ', $value));
+                    return array(2, $result);
+                }
+            }
+            $done = false;
+            $loop = -1;
+            do {
+                // this loop checks for type|type|type and for
+                // type|object classname|type|object classname2
+                if (strpos($value[0], '|')) {
+                    $temptypes = explode('|', $value[0]);
+                    while (count($temptypes)) {
+                        $type     = array_shift($temptypes);
+                        $result[] = array('tagphptype', $type);
+                        if (count($temptypes)) {
+                            $result[] = '|';
+                        }
+                    }
+                    if (trim($type) == 'object') {
+                        $result[] = array('tagphptype', $types . ' ');
+                        $result[] = $this->_removeWhiteSpace($value, 0);
+                    } else {
+                        $done = true;
+                    }
+                    array_shift($value);
+                    if (count($value) && strlen($value[0]) && isset ($value[0])
+       && 
+                        ($value[0]{0} == '$' || substr($value[0], 0, 2) == '&$'
+      )
+                    ) {
+                        // was just passed "object"
+                        // and the next thing is a variable name
+                        $result[] = array('tagvarname' , $value[0] . ' ');
+                        array_shift($value);
+                        $result[] = array('desc', join(' ', $value));
+                        return array(2, $result);
+                    }
+                } else {
+                    $result[] = array('tagphptype', $value[0] . ' ');
+                    array_shift($value);
+                    $done = true;
+                }
+                $loop++;
+            } while (!$done && count($value));
+            if ($loop) {
+                $result[] = ' ';
+            }
+            // still searching for type
+            if (!$done && !count($value)) {
+                return array(0, $result);
+            }
+            // still searching for var
+            if ($done && !count($value)) {
+                return array(1, $result);
+            }
+        }
+        $result[] = $this->_removeWhiteSpace($value, 0);
+        $state    = 1;
+        if ($checkforvar) {
+            if (count($value)) {
+                $state = 2;
+                if (substr($value[0], 0, 1) == '$' || 
+                    substr($value[0], 0, 2) == '&$'
+                ) {
+                    $result[] = array('tagvarname' , $value[0] . ' ');
+                    array_shift($value);
+                }
+            } else {
+                $state = 1;
+            }
+        }
+        $result[] = array('desc', join(' ', $value));
+        return array($state, $result);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_abb4286c2e0e866198743632494d5d155}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\-\_\-varlink@{\-\_\-varlink}}
+\index{\-\_\-varlink@{\-\_\-varlink}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\-\_\-varlink}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-varlink} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{justastring = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_abb4286c2e0e866198743632494d5d155}
+\-Works like \hyperlink{classphp_documentor___highlight_parser_a5b861b5877e7969430612f504417bdf4}{\-\_\-link()} except it only links to class variables
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+bool & {\em \$justastring} & true if the \$word is only a string \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 2092 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($justastring) {
+            $word[0] = T_VARIABLE;
+        }
+        if (is_array($word) && $word[0] == T_VARIABLE) {
+            $x = ($justastring ? '$' : '');
+            //debug("checking var " . $this->_pv_class . '::' . $x . $word[1]);
+            if (isset($this->_pv_prev_var_type)) {
+                //debug("checking var " . $this->_pv_prev_var_type . '::' .
+                //    $x . $word[1]);
+                $link = $this->_converter->getLink($this->_pv_prev_var_type . '
+      ::' .
+                    $x . $word[1]);
+            } else {
+                $link = $this->_converter->getLink($this->_pv_class . '::' . 
+                    $x . $word[1]);
+            }
+            if (is_object($link)) {
+                $this->_addoutput($this->_converter->returnSee($link,
+                    $word[1]), true);
+                return;
+            }
+            //debug("checking var " . $x . $word[1]);
+            if (isset($this->_pv_prev_var_type)) {
+                $this->_addoutput($word);
+                return;
+            }
+            $link = $this->_converter->getLink($x . $word[1]);
+            if (is_object($link)) {
+                $this->_addoutput($this->_converter->returnSee($link,
+                    $word[1]), true);
+                return;
+            }
+        }
+        $this->_addoutput($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a6b80e02e8e975970e8c2bcae7938d152}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!common\-Doc\-Block@{common\-Doc\-Block}}
+\index{common\-Doc\-Block@{common\-Doc\-Block}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{common\-Doc\-Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf common\-Doc\-Block} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a6b80e02e8e975970e8c2bcae7938d152}
+
+
+\-Definition at line 1339 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_event_stack->popEvent();
+        $lines = $this->_pv_db_lines;
+        $go    = count($this->_pv_db_lines);
+        for ($i=0; $i < $go; $i++) {
+            if (substr(trim($lines[$i]), 0, 2) == '*/' || 
+                substr(trim($lines[$i]), 0, 1) != '*' && 
+                substr(trim($lines[$i]), 0, 3) != '') !== false) {
+            $this->_wp->backupPos($this->_pv_next_word, true);
+        }
+        $this->_pf_docblock = $this->_pf_docblock_template = false;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a5b6d9473f683f7db254c4ce70cddaef8}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!config\-Word\-Parser@{config\-Word\-Parser}}
+\index{config\-Word\-Parser@{config\-Word\-Parser}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{config\-Word\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf config\-Word\-Parser} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{data}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a5b6d9473f683f7db254c4ce70cddaef8}
+\#@-\/ \-Give the word parser necessary data to begin a new parse
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \&\$data} & all tokens separated by line number\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a5b6d9473f683f7db254c4ce70cddaef8}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 2231 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_wp->setup($data, $this);
+        $this->_wp->setWhitespace(true);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_ac3ab9cb363f1efefcb852389328138c5}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!core\-Tag\-Handler@{core\-Tag\-Handler}}
+\index{core\-Tag\-Handler@{core\-Tag\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{core\-Tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf core\-Tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_ac3ab9cb363f1efefcb852389328138c5}
+main handler for \char`\"{}core\char`\"{} tags
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___highlight_parser_ad1c543277e68e7f8b4730f53748fad7b}{default\-Tag\-Handler()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 1662 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->defaultTagHandler($name, $value, true);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!default\-Handler@{default\-Handler}}
+\index{default\-Handler@{default\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{default\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf default\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}
+\#@+ \hyperlink{class_event}{\-Event} \-Handlers
+
+\-All \hyperlink{class_event}{\-Event} \-Handlers use \hyperlink{classphp_documentor_t_parser_a912ba83822697d200d7e2771166f6718}{check\-Event\-Push()} and \hyperlink{classphp_documentor_t_parser_a9f5347fcba49d2192e689e417671ce18}{check\-Event\-Pop()} to set up the event stack and parser state.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string | array & {\em \$word} & token value \\
+\hline
+int & {\em \$pevent} & parser event from \hyperlink{_parser_8inc}{\-Parser.\-inc}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void  private \-Most tokens only need highlighting, and this method handles them 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{class_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{\-Parser}.
+
+
+
+\-Definition at line 544 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_addoutput($word);
+        if ($this->checkEventPush($word, $pevent)) {
+            return;
+        }
+        $this->checkEventPop($word, $pevent);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_ad1c543277e68e7f8b4730f53748fad7b}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!default\-Tag\-Handler@{default\-Tag\-Handler}}
+\index{default\-Tag\-Handler@{default\-Tag\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{default\-Tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf default\-Tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value, }
+\item[{\$}]{coretag = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_ad1c543277e68e7f8b4730f53748fad7b}
+\#@+ \hyperlink{namespacephp_documentor}{php\-Documentor} \-Doc\-Block tag handlers
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & tag name \\
+\hline
+array & {\em \$value} & array of lines contained in the tag description\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void  private \-Handle normal tags
+\end{DoxyReturn}
+\-This handler adds to outpu all comment information before the tag begins as in \char`\"{} $\ast$ \char`\"{} before \char`\"{}@todo\char`\"{} in \char`\"{} $\ast$ @todo\char`\"{}
+
+\-Then, it highlights the tag as a regular or coretag based on \$coretag. \-Finally, it uses get\-Inline\-Tags to highlight the description
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+bool & {\em \$coretag} & whether this tag is a core tag or not\\
+\hline
+\end{DoxyParams}
+\hyperlink{classphp_documentor___highlight_parser_aab47e31cb0248e99f46b9d534973af21}{get\-Inline\-Tags()} highlight a tag description 
+
+\-Definition at line 1619 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $dbtype  = 'docblock';
+        $dbtype .= ($this->_pf_docblock ? '' : 'template');
+        foreach ($value as $line) {
+            $this->_addDocBlockoutput($dbtype, $line[0]);
+            if ($line[1] === false) {
+                if (trim($line[0]) != '*/') {
+                    $this->newLineNum();
+                    $this->_wp->linenum++;
+                }
+                continue;
+            }
+            $this->_addDocBlockoutput($dbtype, $line[1][0]);
+            $stored = '';
+            if (is_array($line[1][1])) {
+                foreach ($line[1][1] as $i => $tpart) {
+                    if ($tpart == '@' . $name && $i == 0) {
+                        $tagname = 'tag';
+                        if ($coretag) {
+                            $tagname = 'coretag';
+                        }
+                        $this->_addDocBlockoutput($tagname, '@' . $name);
+                        continue;
+                    }
+                    $stored .= ' ' . $tpart;
+                }
+            } else {
+                $stored = $line[1];
+            }
+            $this->getInlineTags($stored);
+            if (strpos($stored, '*/') === false) {
+                $this->newLineNum();
+                $this->_wp->linenum++;
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_aab47e31cb0248e99f46b9d534973af21}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!get\-Inline\-Tags@{get\-Inline\-Tags}}
+\index{get\-Inline\-Tags@{get\-Inline\-Tags}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{get\-Inline\-Tags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Inline\-Tags} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value, }
+\item[{\$}]{endinternal = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_aab47e31cb0248e99f46b9d534973af21}
+internal\}\} inline tag \{ tags.\-inlineinternal.\-pkg\} is highlighted differently to distinguish it from other inline tags.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$value} & the tag value \\
+\hline
+bool & {\em \$endinternal} & indicates the end of an \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1506 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!$value) {
+            return;
+        }
+        if ($this->_pf_internal && !$endinternal) {
+            if (strpos($value, '}}') !== false) {
+                $x = strrpos($value, '}}');
+                // add the rest of internal
+                $this->getInlineTags(substr($value, 0, $x + 3), true);
+                // strip internal from value
+                $value = substr($value, strrpos($value, '}}') + 1);
+                // turn off internal
+                $this->_pf_internal = false;
+            }
+        }
+        if (!$value) {
+            return;
+        }
+        $dbtype  = 'docblock';
+        $dbtype .= ($this->_pf_docblock ? '' : 'template');
+        $save    = $value;
+        $value   = explode('{@', $value);
+        $newval  = array();
+        // everything before the first {@ is normal text
+        $this->_addDocBlockoutput($dbtype, $value[0]);
+        for ($i=1; $i < count($value); $i++) {
+            if (substr($value[$i], 0, 1) == '}') {
+                $this->_addDocBlockoutput($dbtype, '{@}' . substr($value[$i], 1
+      ));
+            } else {
+                $save      = $value[$i];
+                $value[$i] = str_replace("\t", "    ", $value[$i]);
+                $value[$i] = explode(" ", $value[$i]);
+                $word      = array_shift($value[$i]);
+                $val       = join(' ', $value[$i]);
+                if ($word == 'internal') {
+                    $this->_pf_internal = true;
+                    $this->_addDocBlockoutput($dbtype, '{@internal ');
+                    $value[$i] = substr($save, strlen('internal') + 1);
+                    // strip internal and cycle as if it were normal text.
+                    $this->_addDocBlockoutput($dbtype, $value[$i]);
+                    continue;
+                }
+                if (in_array(str_replace('}', '', $word), $this->
+      allowableInlineTags)
+                ) {
+                    if (strpos($word, '}')) {
+                        $word = str_replace('}', '', $word);
+                        $val  = '} ' . $val;
+                    }
+                    $val = explode('}', $val);
+                    if (count($val) == 1) {
+                         //addError(PDERROR_UNTERMINATED_INLINE_TAG,
+                         //    $word, '', $save);
+                    }
+                    $rest = $val;
+                    $val  = array_shift($rest);
+                    if ($endinternal) {
+                        $rest = join('}', $rest);
+                    } else {
+                        $rest = join(' ', $rest);
+                    }
+                    if (isset($this->inlineTagHandlers[$word])) {
+                        $handle = $this->inlineTagHandlers[$word];
+                    } else {
+                        $handle = $this->inlineTagHandlers['*'];
+                    }
+                    $this->$handle($word, $val);
+                    $this->_addDocBlockoutput($dbtype, $rest);
+                } else {
+                    $val = $word . ' ' . $val;
+                    $this->_addDocBlockoutput($dbtype, '{@' . $val);
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a57e7f87881d9380b76f5cf7744dcc23f}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!global\-Tag\-Handler@{global\-Tag\-Handler}}
+\index{global\-Tag\-Handler@{global\-Tag\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{global\-Tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf global\-Tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a57e7f87881d9380b76f5cf7744dcc23f}
+\-Handles 
+
+\-This handler works like \hyperlink{classphp_documentor___highlight_parser_ad1c543277e68e7f8b4730f53748fad7b}{default\-Tag\-Handler()} except it highlights the type and variable (if present) in \char`\"{}@global type \$variable\char`\"{} or \char`\"{}@global type description\char`\"{} 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a57e7f87881d9380b76f5cf7744dcc23f}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1674 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->paramTagHandler($name, $value);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a3a3555968696bdaf66a627ebedc5e4aa}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Class@{handle\-Class}}
+\index{handle\-Class@{handle\-Class}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Class}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Class} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a3a3555968696bdaf66a627ebedc5e4aa}
+\-Handle class declarations
+
+\-Handles the initial declaration line\-:
+
+{\ttfamily class \-X}
+
+or
+
+{\ttfamily class \-X extends \-Y implements \-I}
+
+\hyperlink{classphp_documentor___highlight_parser_a25949e07b59c8d777b94bb6520f66300}{\-\_\-classlink()} to link to documentation for \-X and for \-Y class in \char`\"{}class X extends Y\char`\"{} 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a3a3555968696bdaf66a627ebedc5e4aa}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1172 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_pf_in_class = true;
+        $a                  = $this->checkEventPush($word, $pevent);
+
+        if (!isset($this->_pv_class) && is_array($word) && $word[0] == T_STRING
+      ) {
+            $this->_pv_class = $this->_converter->class = $word[1];
+            $this->_classlink($word);
+            return;
+        }
+        
+        if (is_array($word) && 
+            in_array($word[0], array(T_PRIVATE, T_PROTECTED, T_PUBLIC))
+        ) {
+            $starttok = $this->_wp->nextToken();
+            $test     = array(T_WHITESPACE);
+            while ($test && $test[0] == T_WHITESPACE) {
+                $tok  = $this->_wp->nextToken();
+                $test = $this->_wp->getWord();
+            } // while
+            
+            if (is_array($test) && $test[0] == T_VARIABLE) {
+                $this->_wp->backupPos($tok, true);
+                return;
+            }
+            $this->_wp->backupPos($starttok, true);
+        }
+        
+        if (@in_array($this->_pv_last_word[0], 
+            array(T_PRIVATE, T_PROTECTED, T_PUBLIC))
+        ) {
+            if (is_array($word) && $word[0] == T_VARIABLE) {
+                $this->_wp->backupPos($this->_pv_last_word);
+                $this->_event_stack->pushEvent(PARSER_EVENT_VAR);
+                return;
+            }
+        }
+
+        if ($this->_pf_extends_found && is_array($word) && $word[0] == T_STRING
+      ) {
+            $this->_classlink($word);
+            return;
+        }
+        if (is_array($word) && $word[0] == T_EXTENDS) {
+            $this->_pf_extends_found = true;
+        }
+        if ($a == PARSER_EVENT_DOCBLOCK) {
+            $this->_pf_no_output_yet = true;
+            $this->_pv_saveline      = $this->_wp->linenum + 1;
+            return;
+        }
+        $this->_addoutput($word);
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_pf_in_class = false;
+            unset($this->_pv_class);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a6fda33f6258452df7d8cc06d9a44d8e4}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Class\-Member@{handle\-Class\-Member}}
+\index{handle\-Class\-Member@{handle\-Class\-Member}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Class\-Member}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Class\-Member} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a6fda33f6258452df7d8cc06d9a44d8e4}
+
+
+\-Definition at line 955 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->_pv_lastvar) && !isset($this->_pv_prev_var_type)) {
+            //fancy_debug('returned from', $word, $this->_pv_prev_var_type);
+            $this->_pf_no_output_yet = false;
+            $this->_event_stack->popEvent();
+            return $this->defaultHandler($word, $pevent);
+        }
+        if (isset($this->_pv_cm_name)) {
+            $this->_pf_obj_op = false;
+            $name             = $this->_pv_cm_name;
+            unset($this->_pv_cm_name);
+            //debug('unset pvcmname');
+            $this->_event_stack->popEvent();
+            // control variable for _pv_prev_var_type
+            $setnow = false;
+            if ((isset($this->_pv_lastvar) && $this->_pv_lastvar[1] == '$this')
+       ||
+                isset($this->_pv_prev_var_type)
+            ) {
+                if (is_array($word) && $word[0] == T_WHITESPACE) {
+                    // preserve value of _pv_prev_var_type
+                    $setnow = true;
+                    $save   = $this->_wp->nextToken();
+                    $temp   = $this->_wp->getWord();
+                    $this->_wp->backupPos($save, true);
+                }
+                if ((is_string($word) && $word == '(') || (isset($temp) && 
+                    is_string($temp) && $temp == '(')
+                ) {
+                    // it's a function
+                    $this->_pf_no_output_yet = false;
+                    $this->_methodlink($name);
+                    unset($this->_pv_prev_var_type);
+                } else {
+                    // it's a variable
+                    //fancy_debug('name is ', $name);
+                    $this->_pf_no_output_yet = false;
+                    $this->_varlink($name, true);
+                    $templink = 
+                        $this->_converter->getLink('object ' . $this->_pv_class
+      );
+                    $class    = false;
+                    if (is_object($templink)) {
+                        $class = $this->_converter->classes
+                            ->getClass($templink->name, $templink->path);
+                    }
+                    if ($class) {
+                        $varname = $name;
+                        if (is_array($varname)) {
+                            $varname = $name[1];
+                        }
+                        if ($varname{0} != '$') {
+                            $varname = '$'.$varname;
+                        }
+                        $var = $class->getVar($this->_converter, $varname);
+                        
+                        if (is_object($var) && $var->docblock->var) {
+                            $type = $var->docblock->var->returnType;
+                        }
+                        if (isset($type)) {
+                            if (strpos($type, 'object') === false) {
+                                $type = 'object '.$type;
+                            }
+                            $type = $this->_converter->getLink($type);
+                            if (phpDocumentor_get_class($type) == 'classlink') 
+      {
+                                // the variable's type is a class, 
+                                // save it for future ->
+                                //fancy_debug('set prev_var_type!',
+       $type->name);
+                                $setnow                  = true;
+                                $this->_pv_prev_var_type = $type->name;
+                            } else {
+                                unset($this->_pv_prev_var_type);
+                            }
+                        } else {
+                            unset($this->_pv_prev_var_type);
+                        }
+                    } else {
+                        unset($this->_pv_prev_var_type);
+                    }
+                }
+            } else {
+                $this->_pf_no_output_yet = false;
+                // this does NewLinenum if necessary
+                $this->_wp->backupPos($word);
+                $this->_wp->getWord();
+                $this->_addoutput($name);
+            }
+            if (!$setnow) {
+                //debug('unset prevtype, no setnow');
+                unset($this->_pv_prev_var_type);
+            }
+            unset($this->_pv_lastvar);
+            $this->_pf_no_output_yet = false;
+            // this does NewLinenum if necessary
+            $this->_wp->backupPos($word);
+            $this->_wp->getWord();
+            if ($word[0] == T_OBJECT_OPERATOR) {
+                $this->_wp->backupPos($word);
+            } else {
+                $this->_addoutput($word);
+            }
+            return;
+        }
+        if (!$this->_pf_obj_op && is_array($this->_pv_last_word) && 
+            $this->_pv_last_word[0] == T_OBJECT_OPERATOR
+        ) {
+            if ((isset($this->_pv_lastvar) && $this->_pv_lastvar[1] == '$this')
+       ||
+                isset($this->_pv_prev_var_type)
+            ) {
+                $this->_pf_obj_op = true;
+            } else {
+                $this->_pf_no_output_yet = false;
+                // this does NewLinenum if necessary
+                $this->_wp->backupPos($word);
+                $this->_wp->getWord();
+                $this->_addoutput($word);
+                $this->_event_stack->popEvent();
+            }
+        }
+        if (is_array($word) && $word == T_WHITESPACE) {
+            $this->_pf_no_output_yet = false;
+            // this does NewLinenum if necessary
+            $this->_wp->backupPos($word);
+            $this->_wp->getWord();
+            $this->_addoutput($word);
+            return;
+        }
+        if ($this->_pf_obj_op) {
+            if (!(is_array($word) && ($word[0] == T_STRING || 
+                $word[0] == T_WHITESPACE))
+            ) {
+                unset($this->_pv_lastvar);
+                //debug('unset lastvar');
+                $this->_event_stack->popEvent();
+                $this->_pf_no_output_yet = false;
+                // this does NewLinenum if necessary
+                $this->_wp->backupPos($word);
+                $this->_wp->getWord();
+                $this->_addoutput($word);
+                return;
+            }
+            if ($word[0] == T_STRING) {
+                //fancy_debug('set pvcmname to', $word);
+                $this->_pv_cm_name = $word;
+            } else {
+                $this->_pf_no_output_yet = false;
+                // this does NewLinenum if necessary
+                $this->_wp->backupPos($word);
+                $this->_wp->getWord();
+                $this->_addoutput($word);
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a20f0c871394d25d98cb94346b92b52ad}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Comment@{handle\-Comment}}
+\index{handle\-Comment@{handle\-Comment}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Comment}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Comment} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a20f0c871394d25d98cb94346b92b52ad}
+\-Handles comments
+
+\-Comments are almost always single-\/line tokens, and so will be in the last word. \-This handler checks to see if the current token is in fact a comment, and if it isn't, it backs up and returns control to the parent event handler with that word. 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a20f0c871394d25d98cb94346b92b52ad}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1116 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $w = $this->_pv_last_word;
+        // don't perform this check if this is a normal comment.  Docblocks
+        // have the _pf_no_output_yet variable set to true
+        if ($this->_pf_no_output_yet && is_array($w) && 
+            (in_array($w[0], array(T_COMMENT, T_DOC_COMMENT)) && 
+            strpos($w[1], '') === strlen($word[1]) - 2) {
+            $this->_event_stack->popEvent();
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a73b963ce376aca18fd8dbebecad18d43}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Default\-Inline\-Tag@{handle\-Default\-Inline\-Tag}}
+\index{handle\-Default\-Inline\-Tag@{handle\-Default\-Inline\-Tag}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Default\-Inline\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Default\-Inline\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a73b963ce376aca18fd8dbebecad18d43}
+\-Handles all inline tags
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & the tag name \\
+\hline
+mixed & {\em \$value} & the tag value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void  private 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a73b963ce376aca18fd8dbebecad18d43}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1592 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_addDocBlockoutput('inlinetag', '{@' . $name . ' ' . $value . 
+      '}');
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a1769290b6b18b684616582c0db6bd0dd}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Define@{handle\-Define}}
+\index{handle\-Define@{handle\-Define}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Define}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Define} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a1769290b6b18b684616582c0db6bd0dd}
+\-Handles define() statements
+
+\-The only thing this handler cares about is retrieving the name of the define variable, and the end of the define statement, so after the name is found, it simply makes sure parentheses are matched as in this case\-:
+
+{\ttfamily  define(\char`\"{}test\char`\"{},array(\char`\"{}hello\char`\"{},6 =$>$ 4, 5 =$>$ array('there'))); }
+
+\-This handler and the \-D\-E\-F\-I\-N\-E\-\_\-\-P\-A\-R\-A\-M\-S\-\_\-\-P\-A\-R\-E\-N\-T\-H\-E\-S\-I\-S handler (which is just \hyperlink{classphp_documentor___highlight_parser_a4d5d6de1bd28d678fdca6e4d5e0076b0}{default\-Handler()} in this version, as nothing fancy is needed) work together to ensure proper parenthesis matching.
+
+\-If the define variable is documented, a link will be created to its documentation using the \hyperlink{class_converter}{\-Converter} passed. 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a1769290b6b18b684616582c0db6bd0dd}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 689 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        static $token_save;
+        if (!isset($token_save)) {
+            $token_save = array();
+        }
+        $e = $this->checkEventPush($word, $pevent);
+        if ($e && $e != PARSER_EVENT_DEFINE_PARAMS_PARENTHESIS) {
+            return;
+        }
+        
+        if (!isset($this->_pv_define_params_data)) {
+            $this->_pv_define_params_data = '';
+        }
+        
+        if ($this->checkEventPop($word, $pevent)) {
+            unset($token_save);
+            $this->_addoutput($word);
+        }
+        if ($this->_pf_definename_isset) {
+            $this->_addoutput($word);
+        } else {
+            if ($word != ",") {
+                $token_save[] = $word;
+                if (is_array($word)) {
+                    $word = $word[1];
+                }
+                $this->_pv_define_params_data .= $word;
+            } else {
+                if (substr($this->_pv_define_params_data, 0, 1) ==
+                    substr($this->_pv_define_params_data,
+                        strlen($this->_pv_define_params_data) - 1) &&
+                    in_array(substr($this->_pv_define_params_data, 0, 1), 
+                        array('"', "'"))
+                ) {
+                    // remove leading and ending quotation marks 
+                    // if there are only two
+                    $a = substr($this->_pv_define_params_data, 0, 1);
+                    $b = substr($this->_pv_define_params_data, 1, 
+                        strlen($this->_pv_define_params_data) - 2);
+                    if (strpos($b, $a) === false) {
+                        $this->_pv_define_params_data = $b;
+                    }
+                }
+                $this->_pf_definename_isset = true;
+
+                $link = $this->_converter->getLink($this->
+      _pv_define_params_data);
+                foreach ($token_save as $token) {
+                    if (is_object($link)) {
+                        if (is_array($token)) {
+                            $token = $token[1];
+                        }
+                        $this->_addoutput($this->_converter->returnSee($link,
+                            $token));
+                    } else {
+                        $this->_addoutput($save, $token);
+                    }
+                }
+                $this->_pv_define_params_data = '';
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_af7c8dd1dbec9f5a5ab7273e2ac9dac2f}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Desc@{handle\-Desc}}
+\index{handle\-Desc@{handle\-Desc}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Desc}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Desc} (
+\begin{DoxyParamCaption}
+\item[{\$}]{desc}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_af7c8dd1dbec9f5a5ab7273e2ac9dac2f}
+\-Handle the description area of a \-Doc\-Block
+
+\-This method simply finds inline tags and highlights them separately from the rest of the description.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$desc} & the description piece(s)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void  \hyperlink{classphp_documentor___highlight_parser_aab47e31cb0248e99f46b9d534973af21}{get\-Inline\-Tags()}  private 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_af7c8dd1dbec9f5a5ab7273e2ac9dac2f}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1418 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $dbtype  = 'docblock';
+        $dbtype .= ($this->_pf_docblock ? '' : 'template');
+        foreach ($desc as $line) {
+            $this->getInlineTags($line[0] . $line[1]);
+            if (strpos($line[0], '*/') === false &&
+                !(substr($line[0], 0, 2) == '/*' && 
+                strpos($line[1], '*/') !== false)
+            ) {
+                $this->newLineNum();
+                $this->_wp->linenum++;
+            }
+        }
+        if ($this->_pf_internal) {
+            $this->_pf_internal = false;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a38bc1e0a6586b0f2aac2cd0968db0bd3}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Doc\-Block@{handle\-Doc\-Block}}
+\index{handle\-Doc\-Block@{handle\-Doc\-Block}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Doc\-Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Doc\-Block} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a38bc1e0a6586b0f2aac2cd0968db0bd3}
+\-This handler is responsible for highlighting \-Doc\-Blocks
+
+handle\-Doc\-Block determines whether the docblock is normal or a template, and gathers all the lines of the docblock together before doing any processing
+
+\-As it is not possible to distinguish any comment token from a docblock token, this handler is also called for comments, and will pass control to \hyperlink{classphp_documentor___highlight_parser_a20f0c871394d25d98cb94346b92b52ad}{handle\-Comment()} if the comment is not a \-Doc\-Block
+
+\hyperlink{classphp_documentor___highlight_parser_a6b80e02e8e975970e8c2bcae7938d152}{common\-Doc\-Block()} once all lines of the \-Doc\-Block have been retrieved 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a38bc1e0a6586b0f2aac2cd0968db0bd3}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1268 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!($this->_pf_docblock || $this->_pf_docblock_template)) {
+            if (strpos($this->_pv_last_word[1], '') {
+            // stop using docblock template
+            $this->_pf_no_output_yet = false;
+            $this->_addDocBlockoutput('closetemplate', $last_word);
+            if ($this->_pv_next_word !== false) {
+                $this->_wp->backupPos($this->_pv_next_word, true);
+            }
+            $this->_event_stack->popEvent();
+            return;
+        }
+        if (!($this->_pf_docblock || $this->_pf_docblock_template)) {
+            $this->_pv_db_lines = array();
+            if (strpos($last_word, '/**#@+') === 0) {
+                // docblock template definition
+                $this->_pf_docblock_template = true;
+            } else {
+                $this->_pf_docblock = true;
+            }
+            $this->_pv_db_lines[] = $last_word;
+            if (strpos($last_word, '*/') !== false) {
+                $this->commonDocBlock();
+                return;
+            }
+            $this->_pv_db_lines[] = $word[1];
+            if (strpos($word[1], '*/') !== false) {
+                $this->commonDocBlock();
+            }
+        } else {
+            $this->_pv_db_lines[] = $word[1];
+        }
+        if (($this->_pf_docblock || $this->_pf_docblock_template) && 
+            (strpos($word[1], '*/') !== false)
+        ) {
+            $this->commonDocBlock();
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_aeea50ac4c19702902041fa4c7886efdd}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Func\-Global@{handle\-Func\-Global}}
+\index{handle\-Func\-Global@{handle\-Func\-Global}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Func\-Global}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Func\-Global} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_aeea50ac4c19702902041fa4c7886efdd}
+\-Handles global declarations in a function, like\-:
+
+{\ttfamily  function foobar() \{ global \$\-\_\-php\-Documentor\-\_\-setting; \} }
+
+\hyperlink{classphp_documentor___highlight_parser_a543ae0173d8f9778c985fe2f1bee5b03}{\-\_\-globallink()} instead of \hyperlink{classphp_documentor___highlight_parser_a1acd6d7a8b8e29e7ddfa0f843399d65b}{\-\_\-addoutput()}, to link to global variables if they are used in a function 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_aeea50ac4c19702902041fa4c7886efdd}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 566 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            return;
+        }
+        $this->_globallink($word);
+        $this->checkEventPop($word, $pevent);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a6dc39d8d613058ad93f476e91fdb7cf3}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Function@{handle\-Function}}
+\index{handle\-Function@{handle\-Function}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Function} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a6dc39d8d613058ad93f476e91fdb7cf3}
+\-Handle the function declaration header
+
+\-This handler only sees the \char`\"{}function name\char`\"{} portion of the function declaration. \-Handling of the function parameters is by \hyperlink{classphp_documentor___highlight_parser_aabdf4a71f7610ba56a173ea10c5f541b}{handle\-Function\-Params()}, and the function body is handled by \hyperlink{classphp_documentor___highlight_parser_a74750f3abb8dc11a29a566b51c414370}{handle\-Logic\-Block()} 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a6dc39d8d613058ad93f476e91fdb7cf3}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 796 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_addoutput($word);
+            return;
+        }
+        if ($this->checkEventPop($word, $pevent)) {
+            return;
+        }
+        $this->_link($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_aabdf4a71f7610ba56a173ea10c5f541b}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Function\-Params@{handle\-Function\-Params}}
+\index{handle\-Function\-Params@{handle\-Function\-Params}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Function\-Params}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Function\-Params} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_aabdf4a71f7610ba56a173ea10c5f541b}
+\-Handler for the stuff between ( and ) in a function declaration
+
+{\ttfamily  function handles(\$only,\$these,\$parameters)\{...\} } 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_aabdf4a71f7610ba56a173ea10c5f541b}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 838 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_addoutput($word);
+            return;
+        }
+        $this->_addoutput($word);
+        $this->checkEventPop($word, $pevent);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a74750f3abb8dc11a29a566b51c414370}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Logic\-Block@{handle\-Logic\-Block}}
+\index{handle\-Logic\-Block@{handle\-Logic\-Block}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Logic\-Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Logic\-Block} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a74750f3abb8dc11a29a566b51c414370}
+\-Handler for function body.
+
+\-The function body is checked for php functions, documented constants, functions, and indirectly for global statements. \-It hyperlinks to the documentation for detected elements is created. \-Everything else is highlighted normally. 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a74750f3abb8dc11a29a566b51c414370}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 856 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_addoutput($word);
+            return;
+        }
+        if (is_array($word) && $word[0] == T_DOUBLE_COLON) {
+            $this->_pf_colon_colon = true;
+        }
+        if (!$this->_pf_colon_colon && is_array($word) && $word[0] == T_STRING)
+       {
+            $this->_pv_last_string = $word;
+        }
+        $this->_link($word);
+        if ($this->checkEventPop($word, $pevent)) {
+            $e = $this->_event_stack->popEvent();
+            $this->_event_stack->pushEvent($e);
+            if ($e == PARSER_EVENT_FUNCTION) {
+                $this->_wp->backupPos($word); 
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_ac0835c9fb454181bc476d01f2613e8ca}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Method@{handle\-Method}}
+\index{handle\-Method@{handle\-Method}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Method}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Method} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_ac0835c9fb454181bc476d01f2613e8ca}
+\-Handle the method declaration header
+
+\-This handler only sees the \char`\"{}function name\char`\"{} portion of the method declaration. \-Handling of the method parameters is by \hyperlink{classphp_documentor___highlight_parser_aabdf4a71f7610ba56a173ea10c5f541b}{handle\-Function\-Params()}, and the method body is handled by \hyperlink{classphp_documentor___highlight_parser_ac126f11f9681bc8d9757cb357afbb6c0}{handle\-Method\-Logic\-Block()} 
+
+\-Definition at line 816 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_addoutput($word);
+            return;
+        }
+        if ($this->checkEventPop($word, $pevent)) {
+            if ($word == ';') {
+                $this->_addoutput($word);
+            }
+            return;
+        }
+        $this->_methodlink($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_ac126f11f9681bc8d9757cb357afbb6c0}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Method\-Logic\-Block@{handle\-Method\-Logic\-Block}}
+\index{handle\-Method\-Logic\-Block@{handle\-Method\-Logic\-Block}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Method\-Logic\-Block}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Method\-Logic\-Block} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_ac126f11f9681bc8d9757cb357afbb6c0}
+\-Handler for method body.
+
+\-Like functions, the method body is checked for php functions, documented constants, functions, and indirectly for global statements. \-It also checks for \char`\"{}\$this-\/$>$\-X\-X\-X\-X\char`\"{} where \-X\-X\-X\-X is a class variable or method, and links to the documentation for detected elements is created. \-Everything else is highlighted normally. 
+
+\-Definition at line 887 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (isset($this->_pv_prev_var_type)) {
+            //debug('prevtype is set');
+            if (!is_array($word)) {
+                unset($this->_pv_prev_var_type);
+            } else {
+                if ($word[0] != T_WHITESPACE && 
+                    $word[0] != T_STRING && $word[0] != T_OBJECT_OPERATOR
+                ) {
+                    //fancy_debug('unset', $word);
+                    unset($this->_pv_prev_var_type);
+                }
+            }
+        }
+        $this->_pf_inmethod = true;
+        if ($e = $this->checkEventPush($word, $pevent)) {
+            $this->_addoutput($word);
+            if ($e == PARSER_EVENT_CLASS_MEMBER) {
+                $this->_pf_no_output_yet = true;
+            }
+            return;
+        }
+        if (is_array($word) && $word[0] == T_DOUBLE_COLON) {
+            $this->_pf_colon_colon = true;
+        }
+        if (!$this->_pf_colon_colon && is_array($word) && $word[0] == T_STRING)
+       {
+            $this->_pv_last_string = $word;
+        }
+        if (is_array($word) && $word[0] == T_VARIABLE) {
+            $this->_pv_lastvar = $word;
+        }
+        $this->_link($word);
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_pf_inmethod = false;
+            $e                  = $this->_event_stack->popEvent();
+            $this->_event_stack->pushEvent($e);
+            if ($e == PARSER_EVENT_METHOD) {
+                $this->_wp->backupPos($word); 
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a08a1dde387562480e8030e16e8472548}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Php\-Code@{handle\-Php\-Code}}
+\index{handle\-Php\-Code@{handle\-Php\-Code}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Php\-Code}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Php\-Code} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a08a1dde387562480e8030e16e8472548}
+\-Handles normal global code. \-Special consideration is taken for \-Doc\-Blocks as they need to retrieve the whole \-Doc\-Block before doing any output, so the parser flag \hyperlink{}{\$\-\_\-pf\-\_\-no\-\_\-output\-\_\-yet} is set to tell \hyperlink{classphp_documentor___highlight_parser_a1acd6d7a8b8e29e7ddfa0f843399d65b}{\-\_\-addoutput()} not to spit anything out yet.
+
+\hyperlink{classphp_documentor___highlight_parser_a5b861b5877e7969430612f504417bdf4}{\-\_\-link()} make any global code that is a documentable element link to the php manual or its documentation 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a08a1dde387562480e8030e16e8472548}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 761 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $test = $this->checkEventPush($word, $pevent);
+        if ($test == PARSER_EVENT_DOCBLOCK || $test == PARSER_EVENT_COMMENT) {
+            if (substr($word[1], 0, 2) == '/*' && strpos($word[1], '*/')) {
+                $this->_pv_last_word = $word;
+                if ($word[1] == '/**#@-*/') {
+                    $this->_pf_docblock_template = true;
+                } else {
+                    $this->_pf_docblock = true;
+                }
+                return $this->handleDocBlock($word, PARSER_EVENT_DOCBLOCK);
+            }
+            $this->_pf_no_output_yet = true;
+            $this->_pv_saveline      = $this->_wp->linenum + 1;
+            return;
+        }
+        if (is_array($word) && $word[0] == T_DOUBLE_COLON) {
+            $this->_pf_colon_colon = true;
+        }
+        if (!$this->_pf_colon_colon && is_array($word) && $word[0] == T_STRING)
+       {
+            $this->_pv_last_string = $word;
+        }
+        $this->_link($word);
+        $this->checkEventPop($word, $pevent);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a4ba20cc549548714f50dafced3b6ec71}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Quote@{handle\-Quote}}
+\index{handle\-Quote@{handle\-Quote}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Quote}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Quote} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a4ba20cc549548714f50dafced3b6ec71}
+\-Handles strings in quotation marks and heredoc
+
+\-Special handling is needed for strings that contain variables like\-:
+
+{\ttfamily \$a = \char`\"{}\$test string\char`\"{}}
+
+\-The tokenizer parses out tokens '\char`\"{}',array(\-T\-\_\-\-V\-A\-R\-I\-A\-B\-L\-E,'\$test'),' string', and '\char`\"{}'. \-Since it is possible to have \$this-\/$>$classvar in a string, we save a variable name just in case the next token is -\/$>$ to allow linking to class members. \-Otherwise, the string is simply highlighted.
+
+constant strings (with no \$variables in them) are passed as a single entity, and so will be saved in the last token parsed. \-This means the event handler must tell the word parser to re-\/retrieve the current token so that the correct event handler can process it. 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a4ba20cc549548714f50dafced3b6ec71}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 592 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_pf_inmethod && is_array($word) && $word[0] == T_VARIABLE) {
+            $this->_pv_lastvar = $word;
+        }
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_addoutput($word);
+            return;
+        }
+        if ($this->_pf_quote_active &&
+            (($this->_pv_last_word == '"' && 
+            $this->_last_pevent != PARSER_EVENT_QUOTE) ||
+            (is_array($this->_pv_last_word) && 
+            $this->_pv_last_word[0] == T_END_HEREDOC &&
+            $this->_last_pevent != PARSER_EVENT_EOFQUOTE))
+        ) {
+            $this->_pf_quote_active = false;
+            $this->_wp->backupPos($word);
+            $this->_event_stack->popEvent();
+            return;
+        }
+        if (!$this->_pf_quote_active && 
+            (($this->_pv_last_word == '"' && 
+            $this->_last_pevent != PARSER_EVENT_QUOTE) ||
+            (is_array($this->_pv_last_word) && 
+            $this->_pv_last_word[0] == T_END_HEREDOC &&
+            $this->_last_pevent != PARSER_EVENT_EOFQUOTE))
+        ) {
+            if (is_array($word) && $word[0] == T_VARIABLE) {
+                $this->_pv_lastvar = $word;
+            }
+            $this->_pf_quote_active      = true;
+            $this->_save_highlight_state = $this->_converter->getHighlightState
+      ();
+            $this->_converter->startHighlight();
+            $this->_addoutput($word);
+            $this->checkEventPop($word, $pevent);
+            return;
+        } elseif (is_array($this->_pv_last_word) && 
+            $this->_pv_last_word[0] == T_CONSTANT_ENCAPSED_STRING
+        ) {
+            //$this->_pv_quote_data = $this->_pv_last_word[1];
+            $this->_event_stack->popEvent();
+            $this->_wp->backupPos($word);
+            return;
+        }
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_pf_quote_active = false;
+        }
+        $this->_addoutput($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a9e564abb2302695638d5c1d3f2ff9acb}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Quote\-Var@{handle\-Quote\-Var}}
+\index{handle\-Quote\-Var@{handle\-Quote\-Var}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Quote\-Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Quote\-Var} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a9e564abb2302695638d5c1d3f2ff9acb}
+\-Handles \{\$variable\} within a \char`\"{}quote\char`\"{}
+
+\-This is a simple handler, for a very complex array of legal syntax. \-It is legal to nest control structures inside the \{\}, and other weird stuff. 
+
+\-Definition at line 650 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPop($word, $pevent)) {
+            $this->_pf_quote_active = true;
+            $this->_addoutput($word);
+            return;
+        }
+        if ($this->_pf_inmethod && is_array($word) && $word[0] == T_VARIABLE) {
+            $this->_pv_lastvar = $word;
+        }
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_pf_quote_active = false;
+            if (is_string($word) && ($word == '{' || $word == '"' || $word == "
+      '")
+            ) {
+                $this->_pf_quote_active = true;
+                $this->_pv_lastvar      = false;
+            }
+        }
+        $this->_addoutput($word);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_abb952ee2c4bdbf826958dafe271f6227}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Tags@{handle\-Tags}}
+\index{handle\-Tags@{handle\-Tags}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Tags}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Tags} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tags}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_abb952ee2c4bdbf826958dafe271f6227}
+\-Handle \hyperlink{namespacephp_documentor}{php\-Documentor} tags in a \-Doc\-Block
+
+\-This method uses the \hyperlink{classphp_documentor___highlight_parser_a29ffc8e33fce7331212a7636256a7678}{\$tag\-Handlers} array to determine which method will handle tags found in the docblock, and passes the data to the individual handlers one by one
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$tags} & array of tags to handle\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void  private 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_abb952ee2c4bdbf826958dafe271f6227}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1449 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $newtags = array();
+        $curtag  = array();
+        for ($i=0; $i < count($tags); $i++) {
+            $tagsi = trim($tags[$i][1]);
+            if (substr($tagsi, 0, 1) == '@' && substr($tagsi, 0, 2) != '@ ') {
+                // start a new tag
+                $tags[$i][1] = array(substr($tags[$i][1], 0, 
+                    strpos($tags[$i][1], $tagsi)), $tagsi);
+                if (!empty($curtag)) {
+                    $newtags[] = $curtag;
+                    $curtag    = array();
+                }
+                $curtag[] = $tags[$i];
+            } else {
+                $curtag[] = $tags[$i];
+            }
+        }
+        if (!empty($curtag)) {
+            $newtags[] = $curtag;
+        }
+        foreach ($newtags as $tag) {
+            foreach ($tag as $i => $t) {
+                if ($t[1] === false) {
+                    continue;
+                }
+                if (is_array($t[1])) {
+                    $tag[$i][1][1]
+                        = explode(" ", str_replace("\t", '    ', $t[1][1]));
+                    $x = $tag[$i][1][1];
+                }
+            }
+            $tagname   = substr(array_shift($x), 1);
+            $restoftag = $tag;
+            if (isset($this->tagHandlers[$tagname])) {
+                $handle = $this->tagHandlers[$tagname];
+            } else {
+                $handle = $this->tagHandlers['*'];
+            }
+            $this->$handle($tagname, $restoftag);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a5e19ceeed570fa556cfa546f730a093d}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!handle\-Var@{handle\-Var}}
+\index{handle\-Var@{handle\-Var}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{handle\-Var}]{\setlength{\rightskip}{0pt plus 5cm}{\bf handle\-Var} (
+\begin{DoxyParamCaption}
+\item[{\$}]{word, }
+\item[{\$}]{pevent}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a5e19ceeed570fa556cfa546f730a093d}
+\-Handles class variable declaration
+
+{\ttfamily  class \-X \{ var \$\-Y; \} }
+
+\hyperlink{classphp_documentor___highlight_parser_abb4286c2e0e866198743632494d5d155}{\-\_\-varlink()} make a link to \$\-Y documentation in class variable declaration \char`\"{}var \$\-Y;\char`\"{} 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a5e19ceeed570fa556cfa546f730a093d}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1242 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->checkEventPush($word, $pevent)) {
+            $this->_addoutput($word);
+            return;
+        }
+        if (is_array($word) && $word[0] == T_VARIABLE) {
+            return $this->_varlink($word);
+        }
+        $this->_addoutput($word);
+        $this->checkEventPop($word, $pevent);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a0aa5ad6874d7cb5842fb75d9d9edd1cc}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!new\-Line\-Num@{new\-Line\-Num}}
+\index{new\-Line\-Num@{new\-Line\-Num}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{new\-Line\-Num}]{\setlength{\rightskip}{0pt plus 5cm}{\bf new\-Line\-Num} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a0aa5ad6874d7cb5842fb75d9d9edd1cc}
+\#@-\/ wraps the current line (via the converter) and resets it to empty
+
+\begin{DoxyReturn}{\-Returns}
+void  \-Converter\-::\-Source\-Line() encloses \hyperlink{classphp_documentor___highlight_parser_a67c54106d6508a3fad8868fe68e1a264}{\$\-\_\-line} in a converter-\/specific format 
+\end{DoxyReturn}
+
+
+\-Definition at line 346 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->_pf_no_output_yet) {
+            return;
+        }
+        $this->_flush_save();
+        $this->_line   .= $this->_converter->flushHighlightCache();
+        $this->_output .= $this->_converter->SourceLine($this->_wp->linenum,
+            $this->_line, $this->_path);
+        $this->_line    = '';
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a18ae3c5d37ca12fd56051e21288881fe}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!param\-Tag\-Handler@{param\-Tag\-Handler}}
+\index{param\-Tag\-Handler@{param\-Tag\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{param\-Tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf param\-Tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value, }
+\item[{\$}]{checkforvar = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a18ae3c5d37ca12fd56051e21288881fe}
+\-Handles 
+\begin{DoxyParams}[1]{\-Parameters}
+ & {\em } & \-This handler works like \hyperlink{classphp_documentor___highlight_parser_ad1c543277e68e7f8b4730f53748fad7b}{default\-Tag\-Handler()} except it highlights the type and variable (if present) in \char`\"{}@param type \$variable description\char`\"{} or \char`\"{}@param type description\char`\"{}\\
+\hline
+bool & {\em \$checkforvar} & private parameter, checks for \$var or not \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 1688 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $dbtype  = 'docblock';
+        $dbtype .= ($this->_pf_docblock ? '' : 'template');
+        $ret     = $this->retrieveType($value, 0, $checkforvar);
+        foreach ($value as $num => $line) {
+            $this->_addDocBlockoutput($dbtype, $line[0]);
+            if ($line[1] === false) {
+                if (trim($line[0]) != '*/') {
+                    $this->newLineNum();
+                    $this->_wp->linenum++;
+                }
+                continue;
+            }
+            $this->_addDocBlockoutput($dbtype, $line[1][0]);
+            $stored  = '';
+            $typeloc = 1;
+            $varloc  = 2;
+            if (is_array($line[1][1])) {
+                $this->_addDocBlockoutput('coretag', '@' . $name . ' ');
+                foreach ($ret[0] as $text) {
+                    if (is_string($text)) {
+                        $this->_addDocBlockoutput($dbtype, $text);
+                    }
+                    if (is_array($text)) {
+                        if ($text[0] != 'desc') {
+                            $this->_addDocBlockoutput($text[0], $text[1]);
+                        } else {
+                            $stored .= $text[1];
+                        }
+                    }
+                }
+            } else {
+                if (isset($ret[$num])) {
+                    foreach ($ret[$num] as $text) {
+                        if (is_string($text)) {
+                            $this->_addDocBlockoutput($dbtype, $text);
+                        }
+                        if (is_array($text)) {
+                            if ($text[0] != 'desc') {
+                                $this->_addDocBlockoutput($text[0], $text[1]);
+                            } else {
+                                $stored .= $text[1];
+                            }
+                        }
+                    }
+                } else {
+                    $stored = $line[1];
+                }
+            }
+            $this->getInlineTags($stored);
+            if (strpos($stored, '*/') === false) {
+                $this->newLineNum();
+                $this->_wp->linenum++;
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_af2c58a5bc9af02e3e44df13fdae1d375}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!parse@{parse}}
+\index{parse@{parse}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parse} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{parse\-\_\-data, }
+\item[{\&\$}]{converter, }
+\item[{\$}]{inlinesourceparse = {\ttfamily false}, }
+\item[{\$}]{class = {\ttfamily false}, }
+\item[{\$}]{linenum = {\ttfamily false}, }
+\item[{\$}]{filesourcepath = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_af2c58a5bc9af02e3e44df13fdae1d375}
+source linenum\} 
+\begin{DoxyParams}[1]{\-Parameters}
+false | string & {\em \$filesourcepath} & full path to file with  tag, if this is a  parse\\
+\hline
+\end{DoxyParams}
+int used for recursion limiting if a handler for an event is not found \begin{DoxyReturn}{\-Returns}
+bool  \hyperlink{classphp_documentor_t_parser_abe4d21ebe5f9d4088e7be4271603cd5e}{setup\-States()} initialize parser state variables  \hyperlink{classphp_documentor___highlight_parser_a5b6d9473f683f7db254c4ce70cddaef8}{config\-Word\-Parser()} pass \$parse\-\_\-data to prepare retrieval of tokens 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000100}{\-Todo}]\-C\-S cleanup -\/ rename tokenizer\-\_\-ext constant to uppercase \end{DoxyRefDesc}
+
+
+\-Definition at line 406 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!tokenizer_ext) {
+            if (is_array($parse_data)) {
+                $parse_data = join($parse_data, '');
+            }
+            $parse_data    = explode("\n", $parse_data);
+            $this->_output = '';
+            foreach ($parse_data as $linenum => $line) {
+                if ($linenum > 0) {
+                    $this->_output .= $converter->SourceLine($linenum,
+                        $line, $filesourcepath);
+                }
+            }
+            return $converter->PreserveWhiteSpace($this->_output);
+        }
+        static $endrecur  = 0;
+        $this->_converter = &$converter;
+        $converter->startHighlight();
+        $this->_path = $filesourcepath;
+        $this->setupStates($inlinesourceparse, $class);
+
+        $this->configWordParser($parse_data);
+        if ($linenum !== false) {
+            $this->setLineNum($linenum);
+        }
+        // initialize variables so E_ALL error_reporting doesn't complain
+        $pevent = 0;
+        $word   = 0;
+
+        do {
+            $lpevent = $pevent;
+            $pevent  = $this->_event_stack->getEvent();
+            if ($lpevent != $pevent) {
+                $this->_last_pevent = $lpevent;
+            }
+
+            if ($pevent == PARSER_EVENT_CLASS_MEMBER) {
+                $this->_wp->setWhitespace(true);
+            } else {
+                $this->_wp->setWhitespace(false);
+            }
+
+            if (!is_array($word)) {
+                $lw = $word;
+            }
+            if (is_array($word) && $word[0] != T_WHITESPACE) {
+                $lw = $word;
+            }
+            $dbg_linenum = $this->_wp->linenum;
+            $dbg_pos     = $this->_wp->getPos();
+            $word        = $this->_wp->getWord();
+            if (is_array($word) && ($word[0] == T_WHITESPACE || 
+                $word[0] == T_COMMENT) && 
+                $pevent != PARSER_EVENT_CLASS_MEMBER
+            ) {
+                //debug("added " . $this->_wp->linenum . '-' .
+       $this->_wp->pos);
+                $this->_addoutput($word);
+                continue;
+            } else {
+                $this->_pv_last_word = $lw;
+            }
+            if ($pevent != PARSER_EVENT_DOCBLOCK) {
+                $this->_pv_last_next_word = $this->_pv_next_word;
+                $this->_pv_next_word      = $this->_wp->nextToken();
+            }
+            // in wordparser, have to keep track of lines
+            //$this->publishEvent(PHPDOCUMENTOR_EVENT_NEWLINENUM, 
+            //    $this->_wp->linenum);
+            if (PHPDOCUMENTOR_DEBUG == true) {
+                echo "LAST: ";
+                if (is_array($this->_pv_last_word)) {
+                    echo token_name($this->_pv_last_word[0]) . 
+                        ' => |' .
+                        htmlspecialchars($this->_pv_last_word[1]);
+                } else {
+                    echo "|" . $this->_pv_last_word;
+                }
+                echo "|\n";
+                echo "PEVENT: " . $this->getParserEventName($pevent) . "\n";
+                echo "LASTPEVENT: " .
+                    $this->getParserEventName($this->_last_pevent) . "\n";
+                //echo "LINE: "   . $this->_line   . "\n";
+                //echo "OUTPUT: " . $this->_output . "\n";
+                echo $dbg_linenum . '-' . $dbg_pos . ": ";
+                if (is_array($word)) {
+                    echo token_name($word[0]) . ' => |' . htmlspecialchars(
+      $word[1]);
+                } else {
+                    echo '|'.htmlspecialchars($word);
+                }
+                echo "|\n";
+                $this->_wp->printState();
+                echo "NEXT TOKEN: ";
+                $tok1 = $this->_pv_next_word;
+                $tok  = $this->_wp->_all[$tok1[0]][$tok1[1]];
+                if (is_array($tok)) {
+                    echo token_name($tok[0]) . ' => ' . $tok1[0] . '-' . $tok1[
+      1] .
+                        '|' . htmlspecialchars($tok[1]);
+                } else {
+                    echo "|" . $tok;
+                }
+                echo "|\n";
+                echo "-------------------\n\n\n";
+                flush();
+            }
+            if ($word !== false && isset($this->eventHandlers[$pevent])) {
+                $handle = $this->eventHandlers[$pevent];
+                $this->$handle($word, $pevent);
+            } elseif ($word !== false) {
+                debug('WARNING: possible error, no handler for event number '
+                     . $pevent);
+                if ($endrecur++ == 25) {
+                    die("FATAL ERROR, recursion limit reached");
+                }
+            }
+        } while (!($word === false));
+        if (strlen($this->_line)) {
+            $this->newLineNum();
+        }
+        return $this->_output;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_ab781dbf4f5524e7e7bf97c37f198e33b}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{php\-Documentor\-\_\-\-Highlight\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf php\-Documentor\-\_\-\-Highlight\-Parser} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_ab781dbf4f5524e7e7bf97c37f198e33b}
+\-Initialize the \hyperlink{}{, \$wordpush\-Event} arrays
+
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 2322 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!defined('T_INTERFACE')) {
+            define('T_INTERFACE', -1);
+        }
+        $this->allowableTags
+            = $GLOBALS['_phpDocumentor_tags_allowed'];
+        $this->allowableInlineTags
+            = $GLOBALS['_phpDocumentor_inline_doc_tags_allowed'];
+        $this->inlineTagHandlers
+            = array('*' => 'handleDefaultInlineTag');
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_NOEVENTS] = 
+            array(
+                T_OPEN_TAG => PARSER_EVENT_PHPCODE,
+            );
+
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_PHPCODE] = 
+            array(
+                T_FUNCTION      => PARSER_EVENT_FUNCTION,
+                T_CLASS         => PARSER_EVENT_CLASS,
+                T_INTERFACE     => PARSER_EVENT_CLASS,
+                T_INCLUDE_ONCE  => PARSER_EVENT_INCLUDE,
+                T_INCLUDE       => PARSER_EVENT_INCLUDE,
+                T_START_HEREDOC => PARSER_EVENT_EOFQUOTE,
+                T_REQUIRE       => PARSER_EVENT_INCLUDE,
+                T_REQUIRE_ONCE  => PARSER_EVENT_INCLUDE,
+                T_COMMENT       => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT   => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpushEvent[PARSER_EVENT_PHPCODE]  =
+            array(
+                "define" => PARSER_EVENT_DEFINE,
+                '"'      => PARSER_EVENT_QUOTE,
+                '\''     => PARSER_EVENT_QUOTE,
+            );
+        /**************************************************************/
+
+        $this->wordpushEvent[PARSER_EVENT_FUNCTION]  =
+            array(
+                '{' => PARSER_EVENT_LOGICBLOCK,
+                '(' => PARSER_EVENT_FUNCTION_PARAMS,
+            );
+        $this->tokenpushEvent[PARSER_EVENT_FUNCTION] =
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpopEvent[PARSER_EVENT_FUNCTION]   = array("}");
+        /**************************************************************/
+
+        $this->tokenpopEvent[PARSER_EVENT_EOFQUOTE] = array(T_END_HEREDOC);
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_FUNCTION_PARAMS] =
+            array(
+                T_CONSTANT_ENCAPSED_STRING => PARSER_EVENT_QUOTE,
+                T_ARRAY                    => PARSER_EVENT_ARRAY,
+                T_COMMENT                  => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT              => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpushEvent[PARSER_EVENT_FUNCTION_PARAMS]  =
+            array(
+                '"' => PARSER_EVENT_QUOTE,
+                "'" => PARSER_EVENT_QUOTE,
+            );
+        $this->wordpopEvent[PARSER_EVENT_FUNCTION_PARAMS]   = array(")");
+        /**************************************************************/
+
+        $this->wordpushEvent[PARSER_EVENT_LOGICBLOCK]  = 
+            array(
+                "{" => PARSER_EVENT_LOGICBLOCK,
+                '"' => PARSER_EVENT_QUOTE,
+            );
+        $this->tokenpushEvent[PARSER_EVENT_LOGICBLOCK] =
+            array(
+                T_GLOBAL                   => PARSER_EVENT_FUNC_GLOBAL,
+                T_STATIC                   => PARSER_EVENT_STATIC_VAR,
+                T_START_HEREDOC            => PARSER_EVENT_EOFQUOTE,
+                T_CURLY_OPEN               => PARSER_EVENT_LOGICBLOCK,
+                T_DOLLAR_OPEN_CURLY_BRACES => PARSER_EVENT_LOGICBLOCK,
+            );
+        $this->wordpopEvent[PARSER_EVENT_LOGICBLOCK]   = array("}");
+        $this->tokenpopEvent[PARSER_EVENT_LOGICBLOCK]  = array(T_CURLY_OPEN);
+
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_ARRAY] = 
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpopEvent[PARSER_EVENT_ARRAY]   = array(")");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_FUNC_GLOBAL] =
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpopEvent[PARSER_EVENT_FUNC_GLOBAL]   = array(";");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_STATIC_VAR] =
+            array(
+                T_CONSTANT_ENCAPSED_STRING => PARSER_EVENT_QUOTE,
+                T_COMMENT                  => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT              => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpushEvent[PARSER_EVENT_STATIC_VAR]  =
+            array(
+                "=" => PARSER_EVENT_STATIC_VAR_VALUE,
+            );
+        $this->wordpopEvent[PARSER_EVENT_STATIC_VAR]   = array(";");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_STATIC_VAR_VALUE] = 
+            array(
+                T_CONSTANT_ENCAPSED_STRING => PARSER_EVENT_QUOTE,
+                T_COMMENT                  => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT              => PARSER_EVENT_DOCBLOCK,
+                T_ARRAY                    => PARSER_EVENT_ARRAY,
+            );
+        $this->wordpushEvent[PARSER_EVENT_STATIC_VAR_VALUE]  =
+            array(
+                '"' => PARSER_EVENT_QUOTE,
+                "'" => PARSER_EVENT_QUOTE,
+            );
+        $this->wordpopEvent[PARSER_EVENT_STATIC_VAR_VALUE]   = array(";", ",");
+        /**************************************************************/
+        $this->tokenpushEvent[PARSER_EVENT_QUOTE] = 
+            array(
+                T_OBJECT_OPERATOR => PARSER_EVENT_CLASS_MEMBER,
+                T_CURLY_OPEN      => PARSER_EVENT_QUOTE_VAR,
+            );
+        $this->wordpopEvent[PARSER_EVENT_QUOTE]   = array('"');
+        /**************************************************************/
+        $this->tokenpushEvent[PARSER_EVENT_QUOTE_VAR] = 
+            array(
+                T_OBJECT_OPERATOR => PARSER_EVENT_CLASS_MEMBER,
+                T_CURLY_OPEN      => PARSER_EVENT_QUOTE_VAR,
+            );
+        $this->wordpushEvent[PARSER_EVENT_QUOTE_VAR]  =
+            array(
+                "{" => PARSER_EVENT_QUOTE_VAR,
+                '"' => PARSER_EVENT_QUOTE_VAR,
+                "'" => PARSER_EVENT_QUOTE_VAR,
+            );
+        $this->wordpopEvent[PARSER_EVENT_QUOTE_VAR]   = array('}');
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_DEFINE] = 
+            array(
+                T_COMMENT                  => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT              => PARSER_EVENT_DOCBLOCK,
+                T_CONSTANT_ENCAPSED_STRING => PARSER_EVENT_QUOTE,
+            );
+        $this->wordpushEvent[PARSER_EVENT_DEFINE]  = 
+            array(
+                "(" => PARSER_EVENT_DEFINE_PARAMS,
+            );
+        $this->wordpopEvent[PARSER_EVENT_DEFINE]   = array(";");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_DEFINE_PARAMS] = 
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpushEvent[PARSER_EVENT_DEFINE_PARAMS]  = 
+            array(
+                "(" => PARSER_EVENT_DEFINE_PARAMS_PARENTHESIS,
+                '"' => PARSER_EVENT_QUOTE,
+                "'" => PARSER_EVENT_QUOTE,
+            );
+        $this->wordpopEvent[PARSER_EVENT_DEFINE_PARAMS]   = array(")");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_DEFINE_PARAMS_PARENTHESIS] =
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpushEvent[PARSER_EVENT_DEFINE_PARAMS_PARENTHESIS]  =
+            array(
+                "(" => PARSER_EVENT_DEFINE_PARAMS_PARENTHESIS,
+                '"' => PARSER_EVENT_QUOTE,
+                "'" => PARSER_EVENT_QUOTE,
+            );
+        $this->wordpopEvent[PARSER_EVENT_DEFINE_PARAMS_PARENTHESIS]   = array("
+      )");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_VAR] = 
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+                T_ARRAY       => PARSER_EVENT_ARRAY,
+            );
+        $this->wordpopEvent[PARSER_EVENT_VAR]   = array(";");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_CLASS] = 
+            array(
+                T_FUNCTION    => PARSER_EVENT_METHOD,
+                T_VAR         => PARSER_EVENT_VAR,
+                T_COMMENT     => PARSER_EVENT_DOCBLOCK,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+                T_CLOSE_TAG   => PARSER_EVENT_OUTPHP,
+            );
+        $this->wordpopEvent[PARSER_EVENT_CLASS]   = array("}");
+        /**************************************************************/
+
+        $this->wordpushEvent[PARSER_EVENT_METHOD]  =
+            array(
+                '{' => PARSER_EVENT_METHOD_LOGICBLOCK,
+                '(' => PARSER_EVENT_FUNCTION_PARAMS,
+            );
+        $this->tokenpushEvent[PARSER_EVENT_METHOD] =
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpopEvent[PARSER_EVENT_METHOD]   = array("}", ";");
+        /**************************************************************/
+
+        $this->wordpushEvent[PARSER_EVENT_METHOD_LOGICBLOCK]  = 
+            array(
+                "{" => PARSER_EVENT_METHOD_LOGICBLOCK,
+                '"' => PARSER_EVENT_QUOTE,
+            );
+        $this->tokenpushEvent[PARSER_EVENT_METHOD_LOGICBLOCK] =
+            array(
+                T_OBJECT_OPERATOR          => PARSER_EVENT_CLASS_MEMBER,
+                T_GLOBAL                   => PARSER_EVENT_FUNC_GLOBAL,
+                T_STATIC                   => PARSER_EVENT_STATIC_VAR,
+                T_CURLY_OPEN               => PARSER_EVENT_LOGICBLOCK,
+                T_DOLLAR_OPEN_CURLY_BRACES => PARSER_EVENT_LOGICBLOCK,
+            );
+        $this->wordpopEvent[PARSER_EVENT_METHOD_LOGICBLOCK]   = array("}");
+        $this->tokenpopEvent[PARSER_EVENT_METHOD_LOGICBLOCK]  = array(
+      T_CURLY_OPEN);
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_INCLUDE] = 
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpushEvent[PARSER_EVENT_INCLUDE]  = 
+            array(
+                "(" => PARSER_EVENT_INCLUDE_PARAMS,
+            );
+        $this->wordpopEvent[PARSER_EVENT_INCLUDE]   = array(";");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_INCLUDE_PARAMS] = 
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpushEvent[PARSER_EVENT_INCLUDE_PARAMS]  = 
+            array(
+                "(" => PARSER_EVENT_INCLUDE_PARAMS_PARENTHESIS,
+            );
+        $this->wordpopEvent[PARSER_EVENT_INCLUDE_PARAMS]   = array(")");
+        /**************************************************************/
+
+        $this->tokenpushEvent[PARSER_EVENT_INCLUDE_PARAMS_PARENTHESIS] =
+            array(
+                T_COMMENT     => PARSER_EVENT_COMMENT,
+                T_DOC_COMMENT => PARSER_EVENT_DOCBLOCK,
+            );
+        $this->wordpushEvent[PARSER_EVENT_INCLUDE_PARAMS_PARENTHESIS]  =
+            array(
+                "(" => PARSER_EVENT_INCLUDE_PARAMS_PARENTHESIS,
+            );
+        $this->wordpopEvent[PARSER_EVENT_INCLUDE_PARAMS_PARENTHESIS]   = array(
+      ")");
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a134c963747a4b65ebd261c6781b80ba5}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!property\-Tag\-Handler@{property\-Tag\-Handler}}
+\index{property\-Tag\-Handler@{property\-Tag\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{property\-Tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf property\-Tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a134c963747a4b65ebd261c6781b80ba5}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a134c963747a4b65ebd261c6781b80ba5}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1780 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->paramTagHandler($name, $value, true);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_ab40a58f29c868700b19550679df95544}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!retrieve\-Type@{retrieve\-Type}}
+\index{retrieve\-Type@{retrieve\-Type}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{retrieve\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf retrieve\-Type} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value, }
+\item[{\$}]{state = {\ttfamily 0}, }
+\item[{\$}]{checkforvar = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_ab40a58f29c868700b19550679df95544}
+
+
+\-Definition at line 1806 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $index  = 0;
+        $result = array();
+        do {
+            if (!isset($value[$index][1])) {
+                return $result;
+            }
+            $val = $value[$index][1];
+            if (empty($val)) {
+                return $result;
+            }
+            if ($index == 0) {
+                $val = $val[1];
+                array_shift($val);
+            } else {
+                $val = explode(' ', $val);
+            }
+            $ret              = $this->_retrieveType($val, $state, $checkforvar
+      );
+            $state            = $ret[0];
+            $result[$index++] = $ret[1];
+        } while ((!$checkforvar && $state < 1) || ($state < 2 && $checkforvar))
+      ;
+        return $result;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a3f1393a72b540d3f62d3e84480e619d2}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!return\-Tag\-Handler@{return\-Tag\-Handler}}
+\index{return\-Tag\-Handler@{return\-Tag\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{return\-Tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf return\-Tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a3f1393a72b540d3f62d3e84480e619d2}
+\-Handles \begin{DoxyReturn}{\-Returns}
+
+\end{DoxyReturn}
+\-This handler works like \hyperlink{classphp_documentor___highlight_parser_ad1c543277e68e7f8b4730f53748fad7b}{default\-Tag\-Handler()} except it highlights the type in \char`\"{}@return type description\char`\"{} 
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a3f1393a72b540d3f62d3e84480e619d2}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1772 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->paramTagHandler($name, $value, false);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a855be7133354603f9f7f33da66ec5a30}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!set\-Line\-Num@{set\-Line\-Num}}
+\index{set\-Line\-Num@{set\-Line\-Num}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{set\-Line\-Num}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Line\-Num} (
+\begin{DoxyParamCaption}
+\item[{\$}]{num}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a855be7133354603f9f7f33da66ec5a30}
+\-Start the parsing at a certain line number
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+int & {\em \$num} & line number\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 365 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_wp->linenum = $num;
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a08a9491bf69e824ffe31bd76920662b9}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!setup\-States@{setup\-States}}
+\index{setup\-States@{setup\-States}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{setup\-States}]{\setlength{\rightskip}{0pt plus 5cm}{\bf setup\-States} (
+\begin{DoxyParamCaption}
+\item[{\$}]{inlinesourceparse, }
+\item[{\$}]{class}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a08a9491bf69e824ffe31bd76920662b9}
+source\} tag's output 
+\begin{DoxyParams}[1]{\-Parameters}
+false | string & {\em \$class} & name of class we are going to start from\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void  \$\-\_\-wp sets to a new \hyperlink{classphp_documentor___highlight_word_parser}{php\-Documentor\-\_\-\-Highlight\-Word\-Parser} 
+\end{DoxyReturn}
+
+
+\-Definition at line 2248 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_output = '';
+        $this->_line   = '';
+        unset($this->_wp);
+        $this->_wp          = new phpDocumentor_HighlightWordParser;
+        $this->_event_stack = new EventStack;
+        if ($inlinesourceparse) {
+            $this->_event_stack->pushEvent(PARSER_EVENT_PHPCODE);
+            if ($class) {
+                $this->_event_stack->pushEvent(PARSER_EVENT_CLASS);
+                $this->_pv_class = $class;
+            }
+        } else {
+            $this->_pv_class = null;
+        }
+
+        $this->_pv_define              = null;
+        $this->_pv_define_name         = null;
+        $this->_pv_define_value        = null;
+        $this->_pv_define_params_data  = null;
+        $this->_pv_dtype               = null;
+        $this->_pv_docblock            = null;
+        $this->_pv_dtemplate           = null;
+        $this->_pv_func                = null;
+        $this->_pv_global_name         = null;
+        $this->_pv_global_val          = null;
+        $this->_pv_globals             = null;
+        $this->_pv_global_count        = null;
+        $this->_pv_include_params_data = null;
+        $this->_pv_include_name        = null;
+        $this->_pv_include_value       = null;
+        $this->_pv_linenum             = null;
+        $this->_pv_periodline          = null;
+        $this->_pv_paren_count         = 0;
+        $this->_pv_statics             = null;
+        $this->_pv_static_count        = null;
+        $this->_pv_static_val          = null;
+        $this->_pv_quote_data          = null;
+        $this->_pv_function_data       = null;
+        $this->_pv_var                 = null;
+        $this->_pv_varname             = null;
+        $this->_pf_definename_isset    = false;
+        $this->_pf_extends_found       = false;
+        $this->_pf_includename_isset   = false;
+        $this->_pf_get_source          = false;
+        $this->_pf_getting_source      = false;
+        $this->_pf_in_class            = false;
+        $this->_pf_in_define           = false;
+        $this->_pf_in_global           = false;
+        $this->_pf_in_include          = false;
+        $this->_pf_in_var              = false;
+        $this->_pf_funcparam_val       = false;
+        $this->_pf_quote_active        = false;
+        $this->_pf_reset_quote_data    = true;
+        $this->_pf_useperiod           = false;
+        $this->_pf_var_equals          = false;
+        $this->_pf_obj_op              = false;
+        $this->_pf_docblock            = false;
+        $this->_pf_docblock_template   = false;
+        $this->_pf_colon_colon         = false;
+        $this->_pv_last_string         = false;
+        $this->_pf_inmethod            = false;
+        $this->_pf_no_output_yet       = false;
+        $this->_pv_saveline            = 0;
+        $this->_pv_next_word           = false;
+        $this->_save                   = '';
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_a7d4cd9c769f4ee284af7df08a8fc0beb}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!staticvar\-Tag\-Handler@{staticvar\-Tag\-Handler}}
+\index{staticvar\-Tag\-Handler@{staticvar\-Tag\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{staticvar\-Tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf staticvar\-Tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_a7d4cd9c769f4ee284af7df08a8fc0beb}
+handles the  tag
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classphp_documentor___highlight_parser_a18ae3c5d37ca12fd56051e21288881fe}{param\-Tag\-Handler()} 
+\end{DoxySeeAlso}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a7d4cd9c769f4ee284af7df08a8fc0beb}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1751 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->paramTagHandler($name, $value);
+    }
+\end{DoxyCode}
+\hypertarget{classphp_documentor___highlight_parser_aabc41000dbb16c9e2f3fc4750941906a}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!var\-Tag\-Handler@{var\-Tag\-Handler}}
+\index{var\-Tag\-Handler@{var\-Tag\-Handler}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{var\-Tag\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf var\-Tag\-Handler} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classphp_documentor___highlight_parser_aabc41000dbb16c9e2f3fc4750941906a}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_aabc41000dbb16c9e2f3fc4750941906a}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 1761 of file \-Highlight\-Parser.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->paramTagHandler($name, $value);
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classphp_documentor___highlight_parser_ab1905bb921f2d310a79457ffb9552f7b}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\$\-\_\-converter@{\$\-\_\-converter}}
+\index{\$\-\_\-converter@{\$\-\_\-converter}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\$\-\_\-converter}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-converter}}\label{classphp_documentor___highlight_parser_ab1905bb921f2d310a79457ffb9552f7b}
+
+
+\-Definition at line 248 of file \-Highlight\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___highlight_parser_ae623f634db8825cbb896c2e0e2d03447}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\$\-\_\-filesourcepath@{\$\-\_\-filesourcepath}}
+\index{\$\-\_\-filesourcepath@{\$\-\_\-filesourcepath}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\$\-\_\-filesourcepath}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-filesourcepath}}\label{classphp_documentor___highlight_parser_ae623f634db8825cbb896c2e0e2d03447}
+
+
+\-Definition at line 254 of file \-Highlight\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___highlight_parser_a67c54106d6508a3fad8868fe68e1a264}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\$\-\_\-line@{\$\-\_\-line}}
+\index{\$\-\_\-line@{\$\-\_\-line}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\$\-\_\-line}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-line}}\label{classphp_documentor___highlight_parser_a67c54106d6508a3fad8868fe68e1a264}
+
+
+\-Definition at line 242 of file \-Highlight\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___highlight_parser_a9d0ae9d0264ebd1aba5a9ca6c7385169}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\$\-\_\-output@{\$\-\_\-output}}
+\index{\$\-\_\-output@{\$\-\_\-output}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\$\-\_\-output}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-output}}\label{classphp_documentor___highlight_parser_a9d0ae9d0264ebd1aba5a9ca6c7385169}
+
+
+\-Definition at line 236 of file \-Highlight\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___highlight_parser_a430675102684e9ab820c7622678832b0}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\$event\-Handlers@{\$event\-Handlers}}
+\index{\$event\-Handlers@{\$event\-Handlers}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\$event\-Handlers}]{\setlength{\rightskip}{0pt plus 5cm}\$event\-Handlers}}\label{classphp_documentor___highlight_parser_a430675102684e9ab820c7622678832b0}
+lookup table for event handler methods \begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_parser_a20139dbf0050f44b70e34bf32d89d7e4}{\-Parser\-::parse()} 
+\end{DoxySeeAlso}
+
+
+\-Reimplemented from \hyperlink{classphp_documentor_t_parser_a430675102684e9ab820c7622678832b0}{php\-Documentor\-T\-Parser}.
+
+
+
+\-Definition at line 259 of file \-Highlight\-Parser.\-inc.
+
+\hypertarget{classphp_documentor___highlight_parser_a29ffc8e33fce7331212a7636256a7678}{\index{php\-Documentor\-\_\-\-Highlight\-Parser@{php\-Documentor\-\_\-\-Highlight\-Parser}!\$tag\-Handlers@{\$tag\-Handlers}}
+\index{\$tag\-Handlers@{\$tag\-Handlers}!phpDocumentor_HighlightParser@{php\-Documentor\-\_\-\-Highlight\-Parser}}
+\subsubsection[{\$tag\-Handlers}]{\setlength{\rightskip}{0pt plus 5cm}\$tag\-Handlers}}\label{classphp_documentor___highlight_parser_a29ffc8e33fce7331212a7636256a7678}
+event handlers for   tags.\-pkg 
+
+\-Reimplemented from \hyperlink{class_parser_a29ffc8e33fce7331212a7636256a7678}{\-Parser}.
+
+
+
+\-Definition at line 300 of file \-Highlight\-Parser.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_highlight_parser_8inc}{\-Highlight\-Parser.\-inc}\end{DoxyCompactItemize}

@@ -1,0 +1,43 @@
+\hypertarget{_linq_to_objects_205-advanced-orderby_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Objects/05-\/advanced-\/orderby.php \-File \-Reference}
+\label{_linq_to_objects_205-advanced-orderby_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Objects/05-\/advanced-\/orderby.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Objects/05-\/advanced-\/orderby.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_p_h_p_linq}{\-P\-H\-P\-Linq}
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_linq_to_objects_205-advanced-orderby_8php_a598c06abe9d65a9d2990e39693ce2c27}{\$employees} = null
+\item 
+\hyperlink{_linq_to_objects_205-advanced-orderby_8php_a112ef069ddc0454086e3d1e6d8d55d07}{\$result}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{_linq_to_objects_205-advanced-orderby_8php_a598c06abe9d65a9d2990e39693ce2c27}{\index{\-Linq\-To\-Objects/05-\/advanced-\/orderby.\-php@{\-Linq\-To\-Objects/05-\/advanced-\/orderby.\-php}!\$employees@{\$employees}}
+\index{\$employees@{\$employees}!LinqToObjects/05-advanced-orderby.php@{\-Linq\-To\-Objects/05-\/advanced-\/orderby.\-php}}
+\subsubsection[{\$employees}]{\setlength{\rightskip}{0pt plus 5cm}\$employees = null}}\label{_linq_to_objects_205-advanced-orderby_8php_a598c06abe9d65a9d2990e39693ce2c27}
+\hyperlink{class_p_h_p_linq___linq_to_objects}{\-P\-H\-P\-Linq\-\_\-\-Linq\-To\-Objects} 
+
+\-Definition at line 38 of file 05-\/advanced-\/orderby.\-php.
+
+\hypertarget{_linq_to_objects_205-advanced-orderby_8php_a112ef069ddc0454086e3d1e6d8d55d07}{\index{\-Linq\-To\-Objects/05-\/advanced-\/orderby.\-php@{\-Linq\-To\-Objects/05-\/advanced-\/orderby.\-php}!\$result@{\$result}}
+\index{\$result@{\$result}!LinqToObjects/05-advanced-orderby.php@{\-Linq\-To\-Objects/05-\/advanced-\/orderby.\-php}}
+\subsubsection[{\$result}]{\setlength{\rightskip}{0pt plus 5cm}\$result}}\label{_linq_to_objects_205-advanced-orderby_8php_a112ef069ddc0454086e3d1e6d8d55d07}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ from('$employee')->in($employees)
+                        ->orderBy('$employee => $employee->Name')
+                        ->select('new {
+                                                        "EmailAddress" =>
+       $employee->Email,
+                                                        "Domain" =>
+       substr($employee->Email, strpos($employee->Email, "@") + 1)
+                                          }')
+\end{DoxyCode}
+
+
+\-Definition at line 41 of file 05-\/advanced-\/orderby.\-php.
+

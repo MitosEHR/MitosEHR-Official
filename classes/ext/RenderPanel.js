@@ -1,7 +1,7 @@
 /**
  * Render panel
  *
- * @namespace formLayoutEngine.getFields
+ * @namespace FormLayoutEngine.getFields
  */
 Ext.define('Ext.mitos.RenderPanel', {
     extend      : 'Ext.container.Container',
@@ -85,7 +85,7 @@ Ext.define('Ext.mitos.RenderPanel', {
         /**
          * Ext.direct function
          */
-        formLayoutEngine.getFields({formToRender:formToRender}, function(provider, response){
+        FormLayoutEngine.getFields({formToRender:formToRender}, function(provider, response){
             formPanel.add(eval(response.result));
             formPanel.doLayout();
 

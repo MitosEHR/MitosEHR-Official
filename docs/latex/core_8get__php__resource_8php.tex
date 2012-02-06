@@ -1,0 +1,111 @@
+\hypertarget{core_8get__php__resource_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/core/core.get\-\_\-php\-\_\-resource.\-php \-File \-Reference}
+\label{core_8get__php__resource_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-get\-\_\-php\-\_\-resource.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-get\-\_\-php\-\_\-resource.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{core_8get__php__resource_8php_a0d49b41e38881f00adacbc4a0ad392e0}{smarty\-\_\-core\-\_\-get\-\_\-php\-\_\-resource} (\&\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{core_8get__php__resource_8php_a0d49b41e38881f00adacbc4a0ad392e0}{\index{core.\-get\-\_\-php\-\_\-resource.\-php@{core.\-get\-\_\-php\-\_\-resource.\-php}!smarty\-\_\-core\-\_\-get\-\_\-php\-\_\-resource@{smarty\-\_\-core\-\_\-get\-\_\-php\-\_\-resource}}
+\index{smarty\-\_\-core\-\_\-get\-\_\-php\-\_\-resource@{smarty\-\_\-core\-\_\-get\-\_\-php\-\_\-resource}!core.get_php_resource.php@{core.\-get\-\_\-php\-\_\-resource.\-php}}
+\subsubsection[{smarty\-\_\-core\-\_\-get\-\_\-php\-\_\-resource}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-core\-\_\-get\-\_\-php\-\_\-resource} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{core_8get__php__resource_8php_a0d49b41e38881f00adacbc4a0ad392e0}
+\-Retrieves \-P\-H\-P script resource
+
+sets \$php\-\_\-resource to the returned resource 
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$resource} & \\
+\hline
+string & {\em \$resource\-\_\-type} & \\
+\hline
+ & {\em \$php\-\_\-resource} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 18 of file core.\-get\-\_\-php\-\_\-resource.\-php.
+
+
+\begin{DoxyCode}
+{
+
+    $params['resource_base_path'] = $smarty->trusted_dir;
+    $smarty->_parse_resource_name($params, $smarty);
+
+    /*
+     * Find out if the resource exists.
+     */
+
+    if ($params['resource_type'] == 'file') {
+        $_readable = false;
+        if(file_exists($params['resource_name']) && is_readable($params['
+      resource_name'])) {
+            $_readable = true;
+        } else {
+            // test for file in include_path
+            $_params = array('file_path' => $params['resource_name']);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.get_include_path.php');
+            if(smarty_core_get_include_path($_params, $smarty)) {
+                $_include_path = $_params['new_file_path'];
+                $_readable = true;
+            }
+        }
+    } else if ($params['resource_type'] != 'file') {
+        $_template_source = null;
+        $_readable = is_callable($smarty->_plugins['resource'][$params['
+      resource_type']][0][0])
+            && call_user_func_array($smarty->_plugins['resource'][$params['
+      resource_type']][0][0],
+                                    array($params['resource_name'], &
+      $_template_source, &$smarty));
+    }
+
+    /*
+     * Set the error function, depending on which class calls us.
+     */
+    if (method_exists($smarty, '_syntax_error')) {
+        $_error_funcc = '_syntax_error';
+    } else {
+        $_error_funcc = 'trigger_error';
+    }
+
+    if ($_readable) {
+        if ($smarty->security) {
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.is_trusted.php');
+            if (!smarty_core_is_trusted($params, $smarty)) {
+                $smarty->$_error_funcc('(secure mode) ' . $params['
+      resource_type'] . ':' . $params['resource_name'] . ' is not trusted');
+                return false;
+            }
+        }
+    } else {
+        $smarty->$_error_funcc($params['resource_type'] . ':' . $params['
+      resource_name'] . ' is not readable');
+        return false;
+    }
+
+    if ($params['resource_type'] == 'file') {
+        $params['php_resource'] = $params['resource_name'];
+    } else {
+        $params['php_resource'] = $_template_source;
+    }
+    return true;
+}
+\end{DoxyCode}

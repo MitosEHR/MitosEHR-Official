@@ -1,0 +1,223 @@
+\hypertarget{class_calendar}{\section{\-Calendar \-Class \-Reference}
+\label{class_calendar}\index{\-Calendar@{\-Calendar}}
+}
+\-Inheritance diagram for \-Calendar\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_calendar}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_calendar_a1672d88805ae234407ac9da1283f53e9}{get\-Calendars} ()
+\item 
+\hyperlink{class_calendar_a263416d976ca4032e2100546ba3ec229}{get\-Events} (std\-Class \$params)
+\item 
+\hyperlink{class_calendar_a19abf70239e55d8153c16040c57455e0}{add\-Event} (std\-Class \$params)
+\item 
+\hyperlink{class_calendar_a1cabb62d15f923206a342f173bb652f4}{update\-Event} (std\-Class \$params)
+\item 
+\hyperlink{class_calendar_a66fb21050831aea7340189f572d672dc}{delete\-Event} (std\-Class \$params)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 16 of file \-Calendar.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_calendar_a19abf70239e55d8153c16040c57455e0}{\index{\-Calendar@{\-Calendar}!add\-Event@{add\-Event}}
+\index{add\-Event@{add\-Event}!Calendar@{\-Calendar}}
+\subsubsection[{add\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_calendar_a19abf70239e55d8153c16040c57455e0}
+
+
+\-Definition at line 59 of file \-Calendar.\-php.
+
+
+\begin{DoxyCode}
+                                              {
+
+        $sql = "SELECT fname, mname, lname FROM form_data_demographics WHERE
+       pid='$params->patient_id'";
+        $this->setSQL($sql);
+        $rec = $this->fetch();
+        $fullName = Person::fullname($rec['fname'],$rec['mname'],$rec['lname'])
+      ;
+
+        $row['user_id']             = $params->user_id;
+        $row['category']            = $params->category;
+        $row['facility']            = $params->facility;
+        $row['billing_facillity']   = $params->billing_facillity;
+        $row['patient_id']          = $params->patient_id;
+        $row['title']               = $fullName;
+        $row['status']              = $params->status;
+        $row['start']               = $params->start;
+        $row['end']                 = $params->end;
+        $row['rrule']               = $params->rrule;
+        $row['loc']                 = $params->loc;
+        $row['notes']               = $params->notes;
+        $row['url']                 = $params->url;
+        $row['ad']                  = $params->ad;
+
+        $sql = $this->sqlBind($row, "calendar_events", "I");
+        $this->setSQL($sql);
+        $ret = $this->execLog();
+        // ********************************************************************
+        // If no error found, return the same record back to the calendar
+        // ********************************************************************
+        if ($ret[2]){
+            echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+        } else {
+            $sql = ("SELECT * FROM calendar_events WHERE id = '".$this->
+      lastInsertId."' ");
+            $this->setSQL($sql);
+            $rows = array();
+            foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+                array_push($rows, $row);
+            }
+            return array('success'=>true, 'message'=>'Loaded data', 'data'=>
+      $rows);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_calendar_a66fb21050831aea7340189f572d672dc}{\index{\-Calendar@{\-Calendar}!delete\-Event@{delete\-Event}}
+\index{delete\-Event@{delete\-Event}!Calendar@{\-Calendar}}
+\subsubsection[{delete\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf delete\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_calendar_a66fb21050831aea7340189f572d672dc}
+
+
+\-Definition at line 123 of file \-Calendar.\-php.
+
+
+\begin{DoxyCode}
+                                                 {
+        $this->setSQL( "DELETE FROM calendar_events WHERE id='$params->id'");
+        $this->execLog();
+        return array('success'=> true);
+    }
+\end{DoxyCode}
+\hypertarget{class_calendar_a1672d88805ae234407ac9da1283f53e9}{\index{\-Calendar@{\-Calendar}!get\-Calendars@{get\-Calendars}}
+\index{get\-Calendars@{get\-Calendars}!Calendar@{\-Calendar}}
+\subsubsection[{get\-Calendars}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Calendars} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_calendar_a1672d88805ae234407ac9da1283f53e9}
+
+
+\-Definition at line 18 of file \-Calendar.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+        $color = -4;
+        $sql = ("SELECT * FROM users WHERE calendar = '1' AND authorized = '1'
+       AND active = '1' ORDER BY username");
+        $this->setSQL($sql);
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            if($color > 32){ $color = $color - 30; }
+            $color = $color + 5;
+            $cla_user['id'] = $row['id'];
+            $cla_user['title'] =  $row['title'].' '. $row['lname'];
+            $cla_user['color'] = strval($color);
+            array_push($rows, $cla_user);
+        }
+        return  $rows;
+
+    }
+\end{DoxyCode}
+\hypertarget{class_calendar_a263416d976ca4032e2100546ba3ec229}{\index{\-Calendar@{\-Calendar}!get\-Events@{get\-Events}}
+\index{get\-Events@{get\-Events}!Calendar@{\-Calendar}}
+\subsubsection[{get\-Events}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Events} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_calendar_a263416d976ca4032e2100546ba3ec229}
+
+
+\-Definition at line 35 of file \-Calendar.\-php.
+
+
+\begin{DoxyCode}
+                                               {
+
+        $sql = ("SELECT * FROM calendar_events WHERE start BETWEEN '".$params->
+      startDate." 00:00:00' AND '".$params->endDate." 23:59:59' ");
+        $this->setSQL($sql);
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['id']                  = intval($row['id']);
+            $row['user_id']             = intval($row['user_id']);
+            $row['category']            = intval($row['category']);
+            $row['facility']            = intval($row['facility']);
+            $row['billing_facillity']   = intval($row['billing_facillity']);
+            $row['patient_id']          = intval($row['patient_id']);
+
+            $sql = ("SELECT * FROM form_data_demographics WHERE pid= '".$row['
+      patient_id']."'");
+            $this->setSQL($sql);
+            foreach($this->execStatement(PDO::FETCH_ASSOC) as $urow){
+            $row['title'] = Person::fullname($urow['fname'],$urow['mname'],
+      $urow['lname']);
+            }
+            array_push($rows, $row);
+        }
+        //print_r(json_encode(array('success'=>true, 'message'=>'Loaded data',
+       'data'=>$rows)));    }
+        return array('success'=>true, 'message'=>'Loaded data', 'data'=>$rows);
+    }
+\end{DoxyCode}
+\hypertarget{class_calendar_a1cabb62d15f923206a342f173bb652f4}{\index{\-Calendar@{\-Calendar}!update\-Event@{update\-Event}}
+\index{update\-Event@{update\-Event}!Calendar@{\-Calendar}}
+\subsubsection[{update\-Event}]{\setlength{\rightskip}{0pt plus 5cm}{\bf update\-Event} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_calendar_a1cabb62d15f923206a342f173bb652f4}
+
+
+\-Definition at line 100 of file \-Calendar.\-php.
+
+
+\begin{DoxyCode}
+                                                 {
+
+        $row['user_id']             = $params->user_id;
+        $row['category']            = $params->category;
+        $row['facility']            = $params->facility;
+        $row['billing_facillity']   = $params->billing_facillity;
+        $row['patient_id']          = $params->patient_id;
+        $row['title']               = $params->title;
+        $row['status']              = $params->status;
+        $row['start']               = $params->start;
+        $row['end']                 = $params->end;
+        $row['rrule']               = $params->rrule;
+        $row['loc']                 = $params->loc;
+        $row['notes']               = $params->notes;
+        $row['url']                 = $params->url;
+        $row['ad']                  = $params->ad;
+
+        $sql = $this->sqlBind($row, "calendar_events", "U", "id='" . $params->
+      id . "'");
+        $this->setSQL($sql);
+        $this->execLog();
+        return array('success'=> true);
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{_calendar_8php}{\-Calendar.\-php}\end{DoxyCompactItemize}

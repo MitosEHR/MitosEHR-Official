@@ -1,0 +1,35 @@
+\hypertarget{07-custom_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Zend\-Db/07-\/custom.php \-File \-Reference}
+\label{07-custom_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Zend\-Db/07-\/custom.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Tests/\-Linq\-To\-Zend\-Db/07-\/custom.\-php}}
+}
+\subsection*{\-Data \-Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_sqlite___custom}{\-Sqlite\-\_\-\-Custom}
+\end{DoxyCompactItemize}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_p_h_p_linq}{\-P\-H\-P\-Linq}
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{07-custom_8php_a112ef069ddc0454086e3d1e6d8d55d07}{\$result}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{07-custom_8php_a112ef069ddc0454086e3d1e6d8d55d07}{\index{07-\/custom.\-php@{07-\/custom.\-php}!\$result@{\$result}}
+\index{\$result@{\$result}!07-custom.php@{07-\/custom.\-php}}
+\subsubsection[{\$result}]{\setlength{\rightskip}{0pt plus 5cm}\$result}}\label{07-custom_8php_a112ef069ddc0454086e3d1e6d8d55d07}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ from('$employee')->in($employeeTable)
+                        ->where('$employee => custom("Sqlite_Custom::Like",
+       "Maarten", $employee->Name)')
+                        ->select('$employee')
+\end{DoxyCode}
+
+
+\-Definition at line 48 of file 07-\/custom.\-php.
+

@@ -1,0 +1,273 @@
+\hypertarget{class_mobile___detect}{\section{\-Mobile\-\_\-\-Detect \-Class \-Reference}
+\label{class_mobile___detect}\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_mobile___detect_a095c5d389db211932136b53f25f39685}{\-\_\-\-\_\-construct} ()
+\item 
+\hyperlink{class_mobile___detect_a3815af62ed9d37b2dcaa175379bbfeca}{\-\_\-\-\_\-call} (\$name, \$arguments)
+\item 
+\hyperlink{class_mobile___detect_aa03affe506ea70c6d04fab89fee473fc}{is\-Mobile} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_mobile___detect_aa9e1e06bf2a4247c19be3c0f48da95ff}{is\-Device} (\$device)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_mobile___detect_a75fc18c4ff06288ff9fdf8aba9bd1081}{\$accept}
+\item 
+\hyperlink{class_mobile___detect_a500e55626e728acd7010143dc0e56b8b}{\$user\-Agent}
+\item 
+\hyperlink{class_mobile___detect_a74fa6ba88f216ab9fb444f81f8e7a027}{\$is\-Mobile} = false
+\item 
+\hyperlink{class_mobile___detect_a77c5beaf2c0cc72bff6a6390174d9220}{\$is\-Android} = null
+\item 
+\hyperlink{class_mobile___detect_abc0d51b153d12a82959733849f806870}{\$is\-Blackberry} = null
+\item 
+\hyperlink{class_mobile___detect_aae89458b4937650ddf9ab0a1c60c9388}{\$is\-Opera} = null
+\item 
+\hyperlink{class_mobile___detect_a5299625c89989e6d10b38e04bb34463b}{\$is\-Palm} = null
+\item 
+\hyperlink{class_mobile___detect_a3fb1637ec578272acfd5cb10d0f127fd}{\$is\-Windows} = null
+\item 
+\hyperlink{class_mobile___detect_a22509a5976187f9d2b9a0984e3b71dd9}{\$is\-Generic} = null
+\item 
+\hyperlink{class_mobile___detect_ae60b238d4f4b1441a8e88dc6a444cb7e}{\$is\-Iphone} = null
+\item 
+\hyperlink{class_mobile___detect_a004eefb786861fbe31e1f0f24662477b}{\$devices}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Mobile \-Detect
+
+\href{http://www.opensource.org/licenses/mit-license.php}{\tt http\-://www.\-opensource.\-org/licenses/mit-\/license.\-php} \-The \-M\-I\-T \-License \begin{DoxyVersion}{\-Version}
+\-S\-V\-N\-: 
+\end{DoxyVersion}
+\begin{DoxyParagraph}{\-Id\-:}
+\hyperlink{_mobile___detect_8php}{\-Mobile\-\_\-\-Detect.\-php} 4 2011-\/05-\/26 08\-:04\-:20\-Z \href{mailto:vic.stanciu@gmail.com}{\tt vic.\-stanciu@gmail.\-com} 
+\end{DoxyParagraph}
+
+
+\-Definition at line 10 of file \-Mobile\-\_\-\-Detect.\-php.
+
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_mobile___detect_a095c5d389db211932136b53f25f39685}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-\-\_\-construct} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_mobile___detect_a095c5d389db211932136b53f25f39685}
+
+
+\-Definition at line 35 of file \-Mobile\-\_\-\-Detect.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+        $this->userAgent = $_SERVER['HTTP_USER_AGENT'];
+        $this->accept    = $_SERVER['HTTP_ACCEPT'];
+
+        if (isset($_SERVER['HTTP_X_WAP_PROFILE'])|| isset($_SERVER['
+      HTTP_PROFILE'])) {
+            $this->isMobile = true;
+        } elseif (strpos($this->accept,'text/vnd.wap.wml') > 0 || strpos(
+      $this->accept,'application/vnd.wap.xhtml+xml') > 0) {
+            $this->isMobile = true;
+        } else {
+            foreach ($this->devices as $device => $regexp) {
+                if ($this->isDevice($device)) {
+                    $this->isMobile = true;
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_mobile___detect_a3815af62ed9d37b2dcaa175379bbfeca}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\-\_\-\-\_\-call@{\-\_\-\-\_\-call}}
+\index{\-\_\-\-\_\-call@{\-\_\-\-\_\-call}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\-\_\-\-\_\-call}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-\-\_\-call} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{arguments}
+\end{DoxyParamCaption}
+)}}\label{class_mobile___detect_a3815af62ed9d37b2dcaa175379bbfeca}
+\-Overloads is\-Android() $|$ is\-Blackberry() $|$ is\-Opera() $|$ is\-Palm() $|$ is\-Windows() $|$ is\-Generic() through \hyperlink{class_mobile___detect_aa9e1e06bf2a4247c19be3c0f48da95ff}{is\-Device()}
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \\
+\hline
+array & {\em \$arguments} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+bool 
+\end{DoxyReturn}
+
+
+\-Definition at line 60 of file \-Mobile\-\_\-\-Detect.\-php.
+
+
+\begin{DoxyCode}
+                                              {
+        $device = substr($name, 2);
+        if ($name == "is" . ucfirst($device)) {
+            return $this->isDevice($device);
+        } else {
+            trigger_error("Method $name not defined", E_USER_ERROR);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_mobile___detect_aa9e1e06bf2a4247c19be3c0f48da95ff}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!is\-Device@{is\-Device}}
+\index{is\-Device@{is\-Device}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{is\-Device}]{\setlength{\rightskip}{0pt plus 5cm}{\bf is\-Device} (
+\begin{DoxyParamCaption}
+\item[{\$}]{device}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_aa9e1e06bf2a4247c19be3c0f48da95ff}
+
+
+\-Definition at line 79 of file \-Mobile\-\_\-\-Detect.\-php.
+
+
+\begin{DoxyCode}
+                                         {
+        $var    = "is" . ucfirst($device);
+        $return = $this->$var === null ? (bool) preg_match("/" . $this->devices
+      [$device] . "/i", $this->userAgent) : $this->$var;
+
+        if ($device != 'generic' && $return == true) {
+            $this->isGeneric = false;
+        }
+
+        return $return;
+    }
+\end{DoxyCode}
+\hypertarget{class_mobile___detect_aa03affe506ea70c6d04fab89fee473fc}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!is\-Mobile@{is\-Mobile}}
+\index{is\-Mobile@{is\-Mobile}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{is\-Mobile}]{\setlength{\rightskip}{0pt plus 5cm}{\bf is\-Mobile} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_mobile___detect_aa03affe506ea70c6d04fab89fee473fc}
+\-Returns true if any type of mobile device detected, including special ones \begin{DoxyReturn}{\-Returns}
+bool 
+\end{DoxyReturn}
+
+
+\-Definition at line 74 of file \-Mobile\-\_\-\-Detect.\-php.
+
+
+\begin{DoxyCode}
+                               {
+        return $this->isMobile;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_mobile___detect_a75fc18c4ff06288ff9fdf8aba9bd1081}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$accept@{\$accept}}
+\index{\$accept@{\$accept}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$accept}]{\setlength{\rightskip}{0pt plus 5cm}\$accept\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_a75fc18c4ff06288ff9fdf8aba9bd1081}
+
+
+\-Definition at line 12 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_a004eefb786861fbe31e1f0f24662477b}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$devices@{\$devices}}
+\index{\$devices@{\$devices}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$devices}]{\setlength{\rightskip}{0pt plus 5cm}\$devices\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_a004eefb786861fbe31e1f0f24662477b}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ array(
+        "android"       => "android",
+        "blackberry"    => "blackberry",
+        "iphone"        => "(iphone|ipod)",
+        "opera"         => "opera mini",
+        "palm"          => "(avantgo|blazer|elaine|hiptop|palm|plucker|xiino)",
+        "windows"       => "windows ce; (iemobile|ppc|smartphone)",
+        "generic"       => "
+      (kindle|mobile|mmp|midp|o2|pda|pocket|psp|symbian|smartphone|treo|up.browser|up.link|vodafone|wap)"
+    )
+\end{DoxyCode}
+
+
+\-Definition at line 24 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_a77c5beaf2c0cc72bff6a6390174d9220}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$is\-Android@{\$is\-Android}}
+\index{\$is\-Android@{\$is\-Android}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$is\-Android}]{\setlength{\rightskip}{0pt plus 5cm}\$is\-Android = null\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_a77c5beaf2c0cc72bff6a6390174d9220}
+
+
+\-Definition at line 16 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_abc0d51b153d12a82959733849f806870}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$is\-Blackberry@{\$is\-Blackberry}}
+\index{\$is\-Blackberry@{\$is\-Blackberry}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$is\-Blackberry}]{\setlength{\rightskip}{0pt plus 5cm}\$is\-Blackberry = null\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_abc0d51b153d12a82959733849f806870}
+
+
+\-Definition at line 17 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_a22509a5976187f9d2b9a0984e3b71dd9}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$is\-Generic@{\$is\-Generic}}
+\index{\$is\-Generic@{\$is\-Generic}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$is\-Generic}]{\setlength{\rightskip}{0pt plus 5cm}\$is\-Generic = null\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_a22509a5976187f9d2b9a0984e3b71dd9}
+
+
+\-Definition at line 21 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_ae60b238d4f4b1441a8e88dc6a444cb7e}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$is\-Iphone@{\$is\-Iphone}}
+\index{\$is\-Iphone@{\$is\-Iphone}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$is\-Iphone}]{\setlength{\rightskip}{0pt plus 5cm}\$is\-Iphone = null\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_ae60b238d4f4b1441a8e88dc6a444cb7e}
+
+
+\-Definition at line 22 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_a74fa6ba88f216ab9fb444f81f8e7a027}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$is\-Mobile@{\$is\-Mobile}}
+\index{\$is\-Mobile@{\$is\-Mobile}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$is\-Mobile}]{\setlength{\rightskip}{0pt plus 5cm}\${\bf is\-Mobile} = false\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_a74fa6ba88f216ab9fb444f81f8e7a027}
+
+
+\-Definition at line 15 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_aae89458b4937650ddf9ab0a1c60c9388}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$is\-Opera@{\$is\-Opera}}
+\index{\$is\-Opera@{\$is\-Opera}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$is\-Opera}]{\setlength{\rightskip}{0pt plus 5cm}\$is\-Opera = null\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_aae89458b4937650ddf9ab0a1c60c9388}
+
+
+\-Definition at line 18 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_a5299625c89989e6d10b38e04bb34463b}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$is\-Palm@{\$is\-Palm}}
+\index{\$is\-Palm@{\$is\-Palm}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$is\-Palm}]{\setlength{\rightskip}{0pt plus 5cm}\$is\-Palm = null\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_a5299625c89989e6d10b38e04bb34463b}
+
+
+\-Definition at line 19 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_a3fb1637ec578272acfd5cb10d0f127fd}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$is\-Windows@{\$is\-Windows}}
+\index{\$is\-Windows@{\$is\-Windows}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$is\-Windows}]{\setlength{\rightskip}{0pt plus 5cm}\$is\-Windows = null\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_a3fb1637ec578272acfd5cb10d0f127fd}
+
+
+\-Definition at line 20 of file \-Mobile\-\_\-\-Detect.\-php.
+
+\hypertarget{class_mobile___detect_a500e55626e728acd7010143dc0e56b8b}{\index{\-Mobile\-\_\-\-Detect@{\-Mobile\-\_\-\-Detect}!\$user\-Agent@{\$user\-Agent}}
+\index{\$user\-Agent@{\$user\-Agent}!Mobile_Detect@{\-Mobile\-\_\-\-Detect}}
+\subsubsection[{\$user\-Agent}]{\setlength{\rightskip}{0pt plus 5cm}\$user\-Agent\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{class_mobile___detect_a500e55626e728acd7010143dc0e56b8b}
+
+
+\-Definition at line 13 of file \-Mobile\-\_\-\-Detect.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{_mobile___detect_8php}{\-Mobile\-\_\-\-Detect.\-php}\end{DoxyCompactItemize}

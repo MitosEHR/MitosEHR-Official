@@ -6,47 +6,36 @@ if(!isset($_SESSION)){
 }
 include_once('dbhelper.php');
 /**
- * This Class is used to handle all the log requests
- *
- * Created by JetBrains PhpStorm.
- * User: Ernesto J. Rodriguez (Certun)
- * File: Logs.php
- * Date: 2/4/12
- * Time: 12:27 AM
- *
- * @package default
- */
+     * @brief     log class
+     * @details   This class wil handle all the log logic
+     *
+     * @author    Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
+     * @version   Vega 1.0
+     * @copyright Gnu Public License (GPLv3)
+     *
+     * @todo      move all the log stuff from dbHelper to this class
+     *
+     */
 class Logs extends dbHelper {
 
     /**
-     * Get Logs
+     * @brief     Get all logs
+     * @details   This method will return all the logs and filter them by start and limit
+     *            to be used with the Ext.ux.SlidingPager plugin.
      *
-     * This will return the total recods and the filtered
-     * record by Start and Limit params.
+     * @author    Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
+     * @version   Vega 1.0
      *
-     * <code>
-     * public function getLogs(stdClass $params){
+     * @warning   getLogs 'len' in /data/cinfig.php must be set to 1 in order for Ext.direct to send the Params
      *
-     *        $this->setSQL("SELECT * FROM log ORDER BY id DESC");
-     *        $rows   = $this->execStatement(PDO::FETCH_CLASS);
-     *        $total  = count($rows);
-     *        $rows = $this->filertByStartLimit($rows,$params);
-     *        return array('totals'=>$total ,'rows'=>$rows);
-     *
-     *    }
-     *</code>
-     *
-     * @param stdClass $params
-     * @return array
+     * @param stdClass $params Params sent from sencha
+     * @return mixed array of records with totals count
      */
     public function getLogs(stdClass $params){
-
         $this->setSQL("SELECT * FROM log ORDER BY id DESC");
-        $rows   = $this->execStatement(PDO::FETCH_CLASS);
-        $total  = count($rows);
-        $rows = $this->filertByStartLimit($rows,$params);
-
+        $records    = $this->execStatement(PDO::FETCH_CLASS);
+        $total      = count($records);
+        $rows       = $this->filertByStartLimit($records, $params);
         return array('totals'=>$total ,'rows'=>$rows);
-
     }
 }

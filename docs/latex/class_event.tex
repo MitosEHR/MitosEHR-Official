@@ -1,0 +1,69 @@
+\hypertarget{class_event}{\section{\-Event \-Class \-Reference}
+\label{class_event}\index{\-Event@{\-Event}}
+}
+\-Inheritance diagram for \-Event\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_event}
+\end{center}
+\end{figure}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_event_a91875cda9c1e342613a744adeb9330ca}{range} (\$start, \$end)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 5 of file event.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_event_a91875cda9c1e342613a744adeb9330ca}{\index{\-Event@{\-Event}!range@{range}}
+\index{range@{range}!Event@{\-Event}}
+\subsubsection[{range}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf range} (
+\begin{DoxyParamCaption}
+\item[{\$}]{start, }
+\item[{\$}]{end}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{class_event_a91875cda9c1e342613a744adeb9330ca}
+
+
+\-Definition at line 6 of file event.\-php.
+
+
+\begin{DoxyCode}
+                                        {
+        global $dbh;
+        $found = array();
+        $startTime = strtotime($start);
+        // add a day to the range end to include event times on that day
+        $endTime = new DateTime($end);
+        $endTime->modify('+1 day');
+        $endTime = strtotime($endTime->format('Y-m-d H:i:s'));
+        
+        foreach ($dbh->rs() as $rec) {
+            //var_dump($rec);
+            $recStart = strtotime($rec['start']);
+            $recEnd = strtotime($rec['end']);
+            
+            $startsInRange = ($recStart >= $startTime && $recStart <= $endTime)
+      ;
+            $endsInRange = ($recEnd >= $startTime && $recEnd <= $endTime);
+            $spansRange = ($recStart < $startTime && $recEnd > $endTime);
+            
+            if ($startsInRange || $endsInRange || $spansRange) {
+                array_push($found, $rec);
+            }
+        }
+        return $found;
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/extensible-\/1.\-5.\-0/examples/calendar/remote/php/app/models/\hyperlink{event_8php}{event.\-php}\end{DoxyCompactItemize}

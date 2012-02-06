@@ -1,0 +1,60 @@
+\hypertarget{_p_h_p_linq_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Classes/\-P\-H\-P\-Linq.php \-File \-Reference}
+\label{_p_h_p_linq_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Classes/\-P\-H\-P\-Linq.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Classes/\-P\-H\-P\-Linq.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_p_h_p_linq}{\-P\-H\-P\-Linq}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_p_h_p_linq_8php_a52386bd9c23a1b1b61ba20580f40df64}{linqfrom} (\$name)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{_p_h_p_linq_8php_a52386bd9c23a1b1b61ba20580f40df64}{\index{\-P\-H\-P\-Linq.\-php@{\-P\-H\-P\-Linq.\-php}!linqfrom@{linqfrom}}
+\index{linqfrom@{linqfrom}!PHPLinq.php@{\-P\-H\-P\-Linq.\-php}}
+\subsubsection[{linqfrom}]{\setlength{\rightskip}{0pt plus 5cm}{\bf linqfrom} (
+\begin{DoxyParamCaption}
+\item[{\$}]{name}
+\end{DoxyParamCaption}
+)}}\label{_p_h_p_linq_8php_a52386bd9c23a1b1b61ba20580f40df64}
+\hyperlink{namespace_p_h_p_linq}{\-P\-H\-P\-Linq} \hyperlink{class_p_h_p_linq___exception}{\-P\-H\-P\-Linq\-\_\-\-Exception} \hyperlink{interface_p_h_p_linq___i_linq_provider}{\-P\-H\-P\-Linq\-\_\-\-I\-Linq\-Provider} \hyperlink{class_p_h_p_linq___initiator}{\-P\-H\-P\-Linq\-\_\-\-Initiator} \-Linq\-To\-Objects initiator -\/ \-Set variable name to use as default
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{class_p_h_p_linq___initiator}{\-P\-H\-P\-Linq\-\_\-\-Initiator} 
+\end{DoxyReturn}
+\-Set variable name to use as default
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{class_p_h_p_linq___initiator}{\-P\-H\-P\-Linq\-\_\-\-Initiator}
+\end{DoxyReturn}
+
+
+\-Definition at line 48 of file \-P\-H\-P\-Linq.\-php.
+
+
+\begin{DoxyCode}
+                         {
+        return new PHPLinq_Initiator($name);
+}
+
+// Create easy-to-use initiator ("from")
+if (!function_exists('from')) {
+        function from($name) {
+                return linqfrom($name);
+        }
+} else {
+\end{DoxyCode}

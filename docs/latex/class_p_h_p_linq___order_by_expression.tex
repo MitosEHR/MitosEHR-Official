@@ -1,0 +1,262 @@
+\hypertarget{class_p_h_p_linq___order_by_expression}{\section{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression \-Class \-Reference}
+\label{class_p_h_p_linq___order_by_expression}\index{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}}
+}
+\-Inheritance diagram for \-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_p_h_p_linq___order_by_expression}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_p_h_p_linq___order_by_expression_a99fdd323787851d808d1338a6129fe31}{\-\_\-\-\_\-construct} (\$expression, \$default\-Name= '', \$descending=false, \$comparer=null)
+\item 
+\hyperlink{class_p_h_p_linq___order_by_expression_aee159037bf6217e4b2f0ab57235dada8}{execute} (\$value)
+\item 
+\hyperlink{class_p_h_p_linq___order_by_expression_a6b13a94850006d0497889e389eea9885}{get\-Default\-Name} ()
+\item 
+\hyperlink{class_p_h_p_linq___order_by_expression_a3cb728ca27acfebd282caecdb8a1f5fc}{get\-Function} ()
+\item 
+\hyperlink{class_p_h_p_linq___order_by_expression_a13bec1b4324ac0cbd5d40826369f5135}{get\-Function\-Reference} ()
+\item 
+\hyperlink{class_p_h_p_linq___order_by_expression_ab1cefb04a11dacd3164f79373c1294f0}{get\-Expression} ()
+\item 
+\hyperlink{class_p_h_p_linq___order_by_expression_a8d7e741e6740b5c57292664bffa11293}{is\-Descending} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 43 of file \-Order\-By\-Expression.\-php.
+
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_p_h_p_linq___order_by_expression_a99fdd323787851d808d1338a6129fe31}{\index{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!PHPLinq_OrderByExpression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-\-\_\-construct} (
+\begin{DoxyParamCaption}
+\item[{\$}]{expression, }
+\item[{\$}]{default\-Name = {\ttfamily ''}, }
+\item[{\$}]{descending = {\ttfamily false}, }
+\item[{\$}]{comparer = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___order_by_expression_a99fdd323787851d808d1338a6129fe31}
+\-Construct expression
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$expression} & \-Expression to create \\
+\hline
+string & {\em \$default\-Name} & \-Default name in expression \\
+\hline
+bool & {\em \$descending} & \-Descending order? \\
+\hline
+string & {\em \$comparer} & \-Comparer function \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 80 of file \-Order\-By\-Expression.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+                                  {
+                // Default name
+                $this->_defaultName = $defaultName;
+                
+                // Internal expression
+                $this->_expression = new PHPLinq_Expression($expression, 
+      $defaultName);
+                
+                // Comparer function set?
+                if (is_null($comparer)) {
+                        $comparer = 'strcmp';
+                }
+                
+                // Descending?
+                if ($descending) {
+                        $comparer = '-1 * ' . $comparer;
+                }
+                $this->_descending = $descending;
+                
+                // Compile comparer function
+                //     Check
+       http://www.php.net/manual/nl/function.create-function.php#14322 for this chr(0).'$f' approach...
+                $f = substr($this->_expression->getFunctionReference(), 1); 
+                $this->_functionReference = new PHPLinq_Function(
+                                $defaultName . 'A, ' . $defaultName . 'B',
+                                "return $comparer(
+                                        call_user_func(chr(0).'$f',
+       {$defaultName}A),
+                                        call_user_func(chr(0).'$f',
+       {$defaultName}B)
+                                );"
+                );      
+        }
+\end{DoxyCode}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_p_h_p_linq___order_by_expression_aee159037bf6217e4b2f0ab57235dada8}{\index{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}!execute@{execute}}
+\index{execute@{execute}!PHPLinq_OrderByExpression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}{\bf execute} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___order_by_expression_aee159037bf6217e4b2f0ab57235dada8}
+\-Execute expression
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$value} & \-Value to use as expression parameter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed \-Expression result 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{class_p_h_p_linq___expression_aee159037bf6217e4b2f0ab57235dada8}{\-P\-H\-P\-Linq\-\_\-\-Expression}.
+
+
+
+\-Definition at line 116 of file \-Order\-By\-Expression.\-php.
+
+
+\begin{DoxyCode}
+                                        {
+                // Unused...
+                return $value;
+        }
+\end{DoxyCode}
+\hypertarget{class_p_h_p_linq___order_by_expression_a6b13a94850006d0497889e389eea9885}{\index{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}!get\-Default\-Name@{get\-Default\-Name}}
+\index{get\-Default\-Name@{get\-Default\-Name}!PHPLinq_OrderByExpression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}}
+\subsubsection[{get\-Default\-Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Default\-Name} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___order_by_expression_a6b13a94850006d0497889e389eea9885}
+\-Get default name
+
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{class_p_h_p_linq___expression_a6b13a94850006d0497889e389eea9885}{\-P\-H\-P\-Linq\-\_\-\-Expression}.
+
+
+
+\-Definition at line 126 of file \-Order\-By\-Expression.\-php.
+
+
+\begin{DoxyCode}
+                                         {
+                return $this->_defaultName;
+        }
+\end{DoxyCode}
+\hypertarget{class_p_h_p_linq___order_by_expression_ab1cefb04a11dacd3164f79373c1294f0}{\index{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}!get\-Expression@{get\-Expression}}
+\index{get\-Expression@{get\-Expression}!PHPLinq_OrderByExpression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}}
+\subsubsection[{get\-Expression}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Expression} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___order_by_expression_ab1cefb04a11dacd3164f79373c1294f0}
+\-Get expression
+
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{class_p_h_p_linq___expression}{\-P\-H\-P\-Linq\-\_\-\-Expression} 
+\end{DoxyReturn}
+
+
+\-Definition at line 153 of file \-Order\-By\-Expression.\-php.
+
+
+\begin{DoxyCode}
+                                        {
+                return $this->_expression;
+        }
+\end{DoxyCode}
+\hypertarget{class_p_h_p_linq___order_by_expression_a3cb728ca27acfebd282caecdb8a1f5fc}{\index{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}!get\-Function@{get\-Function}}
+\index{get\-Function@{get\-Function}!PHPLinq_OrderByExpression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}}
+\subsubsection[{get\-Function}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Function} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___order_by_expression_a3cb728ca27acfebd282caecdb8a1f5fc}
+\-Get function
+
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{class_p_h_p_linq___function}{\-P\-H\-P\-Linq\-\_\-\-Function} 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{class_p_h_p_linq___expression_a3cb728ca27acfebd282caecdb8a1f5fc}{\-P\-H\-P\-Linq\-\_\-\-Expression}.
+
+
+
+\-Definition at line 135 of file \-Order\-By\-Expression.\-php.
+
+
+\begin{DoxyCode}
+                                      {
+                return $this->_functionReference;
+        }
+\end{DoxyCode}
+\hypertarget{class_p_h_p_linq___order_by_expression_a13bec1b4324ac0cbd5d40826369f5135}{\index{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}!get\-Function\-Reference@{get\-Function\-Reference}}
+\index{get\-Function\-Reference@{get\-Function\-Reference}!PHPLinq_OrderByExpression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}}
+\subsubsection[{get\-Function\-Reference}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Function\-Reference} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___order_by_expression_a13bec1b4324ac0cbd5d40826369f5135}
+\-Get function reference
+
+\begin{DoxyReturn}{\-Returns}
+mixed 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{class_p_h_p_linq___expression_a13bec1b4324ac0cbd5d40826369f5135}{\-P\-H\-P\-Linq\-\_\-\-Expression}.
+
+
+
+\-Definition at line 144 of file \-Order\-By\-Expression.\-php.
+
+
+\begin{DoxyCode}
+                                               {
+                return $this->_functionReference->getFunctionReference();
+        }
+\end{DoxyCode}
+\hypertarget{class_p_h_p_linq___order_by_expression_a8d7e741e6740b5c57292664bffa11293}{\index{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}!is\-Descending@{is\-Descending}}
+\index{is\-Descending@{is\-Descending}!PHPLinq_OrderByExpression@{\-P\-H\-P\-Linq\-\_\-\-Order\-By\-Expression}}
+\subsubsection[{is\-Descending}]{\setlength{\rightskip}{0pt plus 5cm}{\bf is\-Descending} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_p_h_p_linq___order_by_expression_a8d7e741e6740b5c57292664bffa11293}
+\-Descending?
+
+\begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 162 of file \-Order\-By\-Expression.\-php.
+
+
+\begin{DoxyCode}
+                                       {
+                return $this->_descending;
+        }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-L\-I\-N\-Q\-\_\-040/\-Classes/\-P\-H\-P\-Linq/\hyperlink{_order_by_expression_8php}{\-Order\-By\-Expression.\-php}\end{DoxyCompactItemize}

@@ -1,0 +1,41 @@
+\hypertarget{modifier_8count__characters_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/modifier.count\-\_\-characters.\-php \-File \-Reference}
+\label{modifier_8count__characters_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-count\-\_\-characters.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/modifier.\-count\-\_\-characters.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{modifier_8count__characters_8php_ab709a544c31f80c29b74c942f2c89484}{smarty\-\_\-modifier\-\_\-count\-\_\-characters} (\$string, \$include\-\_\-spaces=false)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{modifier_8count__characters_8php_ab709a544c31f80c29b74c942f2c89484}{\index{modifier.\-count\-\_\-characters.\-php@{modifier.\-count\-\_\-characters.\-php}!smarty\-\_\-modifier\-\_\-count\-\_\-characters@{smarty\-\_\-modifier\-\_\-count\-\_\-characters}}
+\index{smarty\-\_\-modifier\-\_\-count\-\_\-characters@{smarty\-\_\-modifier\-\_\-count\-\_\-characters}!modifier.count_characters.php@{modifier.\-count\-\_\-characters.\-php}}
+\subsubsection[{smarty\-\_\-modifier\-\_\-count\-\_\-characters}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-modifier\-\_\-count\-\_\-characters} (
+\begin{DoxyParamCaption}
+\item[{\$}]{string, }
+\item[{\$}]{include\-\_\-spaces = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{modifier_8count__characters_8php_ab709a544c31f80c29b74c942f2c89484}
+\hyperlink{class_smarty}{\-Smarty} count\-\_\-characters modifier plugin
+
+\-Type\-: modifier\par
+ \-Name\-: count\-\_\-characteres\par
+ \-Purpose\-: count the number of characters in a text \hyperlink{}{count\-\_\-characters (\-Smarty online manual)  string  boolean include whitespace in the character count  integer }
+
+\-Definition at line 21 of file modifier.\-count\-\_\-characters.\-php.
+
+
+\begin{DoxyCode}
+{
+    if ($include_spaces)
+       return(strlen($string));
+
+    return preg_match_all("/[^\s]/",$string, $match);
+}
+\end{DoxyCode}

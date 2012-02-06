@@ -1,0 +1,241 @@
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l}{\section{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L \-Class \-Reference}
+\label{class_h_t_m_l___tree_menu___d_h_t_m_l}\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+}
+\-Inheritance diagram for \-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_h_t_m_l___tree_menu___d_h_t_m_l}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_a4f08871a82864aea9a889db895e988af}{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L} (\&\$structure, \$options=array(), \$is\-Dynamic=true)
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_abe9ad8cdef2c26dc57fe2b0cfaa8785b}{to\-H\-T\-M\-L} ()
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_a6c8edca726c48b401e91ef6d450fdd98}{\-\_\-node\-To\-H\-T\-M\-L} (\$node\-Obj, \$prefix, \$\hyperlink{find__phpdoc_8php_a9717e7bbecb906637e86cef6da3d83c2}{return}= 'new\-Node')
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_aa927a23cfdd5d6ac3df6fc7eedd64475}{\$is\-Dynamic}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_ab0c7013419fc5ee6238d17eff2554afe}{\$images}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_abc92a826d3c81eded7a4f7eac934f348}{\$link\-Target}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_a376d9d3d2e06444fc17f372b3d5395dd}{\$user\-Persistence}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_a0943707e40820b50d6f7f22a57cba351}{\$default\-Class}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___d_h_t_m_l_aecd84a357b47ff0561e12dc717702b5a}{\$no\-Top\-Level\-Images}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 329 of file \-Tree\-Menu.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_a6c8edca726c48b401e91ef6d450fdd98}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!\-\_\-node\-To\-H\-T\-M\-L@{\-\_\-node\-To\-H\-T\-M\-L}}
+\index{\-\_\-node\-To\-H\-T\-M\-L@{\-\_\-node\-To\-H\-T\-M\-L}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{\-\_\-node\-To\-H\-T\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-node\-To\-H\-T\-M\-L} (
+\begin{DoxyParamCaption}
+\item[{\$}]{node\-Obj, }
+\item[{\$}]{prefix, }
+\item[{\$}]{return = {\ttfamily 'new\-Node'}}
+\end{DoxyParamCaption}
+)}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_a6c8edca726c48b401e91ef6d450fdd98}
+\-Prints a node of the menu
+
+private \-Loop through subnodes
+
+\-Definition at line 452 of file \-Tree\-Menu.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $expanded  = $this->isDynamic ? ($nodeObj->expanded  ? 'true' : 'false'
+      ) : 'true';
+        $isDynamic = $this->isDynamic ? ($nodeObj->isDynamic ? 'true' : 'false'
+      ) : 'false';
+        $html = sprintf("\t %s = %s.addItem(new TreeNode('%s', %s, %s, %s, %s,
+       '%s'));\n",
+                        $return,
+                        $prefix,
+                        $nodeObj->text,
+                        !empty($nodeObj->icon) ? "'" . $nodeObj->icon . "'" : '
+      null',
+                        !empty($nodeObj->link) ? "'" . addslashes($nodeObj->
+      link) . "'" : 'null',
+                        $expanded,
+                        $isDynamic,
+                        $nodeObj->cssClass);
+
+        foreach ($nodeObj->events as $event => $handler) {
+            $html .= sprintf("\t %s.setEvent('%s', '%s');\n",
+                             $return,
+                             $event,
+                             str_replace(array("\r", "\n", "'"), array('\r', 
+      '\n', "\'"), $handler));
+        }
+
+        if (!empty($nodeObj->items)) {
+            for ($i=0; $i<count($nodeObj->items); $i++) {
+                $html .= $this->_nodeToHTML($nodeObj->items[$i], $return, 
+      $return . '_' . ($i + 1));
+            }
+        }
+
+        return $html;
+    }
+\end{DoxyCode}
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_a4f08871a82864aea9a889db895e988af}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{structure, }
+\item[{\$}]{options = {\ttfamily array()}, }
+\item[{\$}]{is\-Dynamic = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_a4f08871a82864aea9a889db895e988af}
+\-Constructor, takes the tree structure as an argument and an array of options which can consist of\-: o images -\/ \-The path to the images folder. \-Defaults to \char`\"{}images\char`\"{} o link\-Target -\/ \-The target for the link. \-Defaults to \char`\"{}\-\_\-self\char`\"{} o default\-Class -\/ \-The default \-C\-S\-S class to apply to a node. \-Default is none. o use\-Persistence -\/ \-Whether to use clientside persistence. \-This persistence is achieved using cookies. \-Default is true. o no\-Top\-Level\-Images -\/ \-Whether to skip displaying the first level of images if there is multiple top level branches.
+
+\-And also a boolean for whether the entire tree is dynamic or not. \-This overrides any per\-Node dynamic settings.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+object & {\em \$structure} & \-The menu structure \\
+\hline
+array & {\em \$options} & \-Array of options \\
+\hline
+bool & {\em \$is\-Dynamic} & \-Whether the tree is dynamic or not \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 386 of file \-Tree\-Menu.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->menu      = &$structure;
+        $this->isDynamic = $isDynamic;
+
+        // Defaults
+        $this->images           = 'images';
+        $this->linkTarget       = '_self';
+        $this->defaultClass     = '';
+        $this->usePersistence   = true;
+        $this->noTopLevelImages = false;
+
+        foreach ($options as $option => $value) {
+            $this->$option = $value;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_abe9ad8cdef2c26dc57fe2b0cfaa8785b}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!to\-H\-T\-M\-L@{to\-H\-T\-M\-L}}
+\index{to\-H\-T\-M\-L@{to\-H\-T\-M\-L}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{to\-H\-T\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}{\bf to\-H\-T\-M\-L} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_abe9ad8cdef2c26dc57fe2b0cfaa8785b}
+\-Returns the \-H\-T\-M\-L for the menu. \-This method can be used instead of \hyperlink{class_h_t_m_l___tree_menu___presentation_a9a0565bd7466923acc0a20748fea9b36}{print\-Menu()} to use the menu system with a template system.
+
+public \begin{DoxyReturn}{\-Returns}
+string \-The \-H\-T\-M\-L for the menu 
+\end{DoxyReturn}
+\-Loop through subnodes
+
+\-Definition at line 411 of file \-Tree\-Menu.\-php.
+
+
+\begin{DoxyCode}
+    {
+        static $count = 0;
+        $menuObj = 'objTreeMenu_' . ++$count;
+
+        $html  = "\n";
+        $html .= '<script language="javascript" type="text/javascript">' . "\n
+      \t";
+        $html .= sprintf('%s = new TreeMenu("%s", "%s", "%s", "%s", %s, %s);',
+                         $menuObj,
+                         $this->images,
+                         $menuObj,
+                         $this->linkTarget,
+                         $this->defaultClass,
+                         $this->usePersistence ? 'true' : 'false',
+                         $this->noTopLevelImages ? 'true' : 'false');
+ 
+        $html .= "\n";
+
+        if (isset($this->menu->items)) {
+            for ($i=0; $i<count($this->menu->items); $i++) {
+                $html .= $this->_nodeToHTML($this->menu->items[$i], $menuObj);
+            }
+        }
+
+         $html .= sprintf("\n\t%s.drawMenu();", $menuObj);
+        if ($this->usePersistence && $this->isDynamic) {
+            $html .= sprintf("\n\t%s.resetBranches();", $menuObj);
+        }
+        $html .= "\n</script>";
+
+        return $html;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_a0943707e40820b50d6f7f22a57cba351}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!\$default\-Class@{\$default\-Class}}
+\index{\$default\-Class@{\$default\-Class}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{\$default\-Class}]{\setlength{\rightskip}{0pt plus 5cm}\$default\-Class}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_a0943707e40820b50d6f7f22a57cba351}
+\-The default \-C\-S\-S class for the nodes 
+
+\-Definition at line 359 of file \-Tree\-Menu.\-php.
+
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_ab0c7013419fc5ee6238d17eff2554afe}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!\$images@{\$images}}
+\index{\$images@{\$images}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{\$images}]{\setlength{\rightskip}{0pt plus 5cm}\$images}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_ab0c7013419fc5ee6238d17eff2554afe}
+
+
+\-Definition at line 342 of file \-Tree\-Menu.\-php.
+
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_aa927a23cfdd5d6ac3df6fc7eedd64475}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!\$is\-Dynamic@{\$is\-Dynamic}}
+\index{\$is\-Dynamic@{\$is\-Dynamic}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{\$is\-Dynamic}]{\setlength{\rightskip}{0pt plus 5cm}\$is\-Dynamic}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_aa927a23cfdd5d6ac3df6fc7eedd64475}
+\-Dynamic status of the treemenu. \-If true (default) this has no effect. \-If false it will override all dynamic status vars and set the menu to be fully expanded an non-\/dynamic. 
+
+\-Definition at line 336 of file \-Tree\-Menu.\-php.
+
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_abc92a826d3c81eded7a4f7eac934f348}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!\$link\-Target@{\$link\-Target}}
+\index{\$link\-Target@{\$link\-Target}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{\$link\-Target}]{\setlength{\rightskip}{0pt plus 5cm}\$link\-Target}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_abc92a826d3c81eded7a4f7eac934f348}
+
+
+\-Definition at line 348 of file \-Tree\-Menu.\-php.
+
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_aecd84a357b47ff0561e12dc717702b5a}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!\$no\-Top\-Level\-Images@{\$no\-Top\-Level\-Images}}
+\index{\$no\-Top\-Level\-Images@{\$no\-Top\-Level\-Images}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{\$no\-Top\-Level\-Images}]{\setlength{\rightskip}{0pt plus 5cm}\$no\-Top\-Level\-Images}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_aecd84a357b47ff0561e12dc717702b5a}
+
+
+\-Definition at line 365 of file \-Tree\-Menu.\-php.
+
+\hypertarget{class_h_t_m_l___tree_menu___d_h_t_m_l_a376d9d3d2e06444fc17f372b3d5395dd}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}!\$user\-Persistence@{\$user\-Persistence}}
+\index{\$user\-Persistence@{\$user\-Persistence}!HTML_TreeMenu_DHTML@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-D\-H\-T\-M\-L}}
+\subsubsection[{\$user\-Persistence}]{\setlength{\rightskip}{0pt plus 5cm}\$user\-Persistence}}\label{class_h_t_m_l___tree_menu___d_h_t_m_l_a376d9d3d2e06444fc17f372b3d5395dd}
+
+
+\-Definition at line 354 of file \-Tree\-Menu.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-H\-T\-M\-L\-\_\-\-Tree\-Menu-\/1.\-1.\-2/\hyperlink{_tree_menu_8php}{\-Tree\-Menu.\-php}\end{DoxyCompactItemize}
