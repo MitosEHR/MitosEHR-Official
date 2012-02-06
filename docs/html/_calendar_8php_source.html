@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -108,14 +109,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00013"></a>00013 }
 <a name="l00014"></a>00014 include_once(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;root&#39;</span>].<span class="stringliteral">&quot;/classes/dbHelper.php&quot;</span>);
 <a name="l00015"></a>00015 include_once(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;root&#39;</span>].<span class="stringliteral">&quot;/classes/Person.php&quot;</span>);
-<a name="l00016"></a><a class="code" href="class_calendar.html">00016</a> <span class="keyword">class </span><a class="code" href="class_calendar.html">Calendar</a> <span class="keyword">extends</span> <a class="code" href="classdb_helper.html">dbHelper</a> {
+<a name="l00016"></a><a class="code" href="class_calendar.html">00016</a> <span class="keyword">class </span><a class="code" href="class_calendar.html">Calendar</a> <span class="keyword">extends</span> <a class="code" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a> {
 <a name="l00017"></a>00017 
 <a name="l00018"></a><a class="code" href="class_calendar.html#a1672d88805ae234407ac9da1283f53e9">00018</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_calendar.html#a1672d88805ae234407ac9da1283f53e9">getCalendars</a>(){
 <a name="l00019"></a>00019         $color = -4;
 <a name="l00020"></a>00020         $sql = (<span class="stringliteral">&quot;SELECT * FROM users WHERE calendar = &#39;1&#39; AND authorized = &#39;1&#39; AND active = &#39;1&#39; ORDER BY username&quot;</span>);
-<a name="l00021"></a>00021         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+<a name="l00021"></a>00021         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
 <a name="l00022"></a>00022         $rows = array();
-<a name="l00023"></a>00023         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+<a name="l00023"></a>00023         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
 <a name="l00024"></a>00024             <span class="keywordflow">if</span>($color &gt; 32){ $color = $color - 30; }
 <a name="l00025"></a>00025             $color = $color + 5;
 <a name="l00026"></a>00026             $cla_user[<span class="stringliteral">&#39;id&#39;</span>] = $row[<span class="stringliteral">&#39;id&#39;</span>];
@@ -130,9 +131,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00035"></a><a class="code" href="class_calendar.html#a263416d976ca4032e2100546ba3ec229">00035</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_calendar.html#a263416d976ca4032e2100546ba3ec229">getEvents</a>(stdClass $params){
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037         $sql = (<span class="stringliteral">&quot;SELECT * FROM calendar_events WHERE start BETWEEN &#39;&quot;</span>.$params-&gt;startDate.<span class="stringliteral">&quot; 00:00:00&#39; AND &#39;&quot;</span>.$params-&gt;endDate.<span class="stringliteral">&quot; 23:59:59&#39; &quot;</span>);
-<a name="l00038"></a>00038         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+<a name="l00038"></a>00038         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
 <a name="l00039"></a>00039         $rows = array();
-<a name="l00040"></a>00040         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+<a name="l00040"></a>00040         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
 <a name="l00041"></a>00041             $row[<span class="stringliteral">&#39;id&#39;</span>]                  = intval($row[<span class="stringliteral">&#39;id&#39;</span>]);
 <a name="l00042"></a>00042             $row[<span class="stringliteral">&#39;user_id&#39;</span>]             = intval($row[<span class="stringliteral">&#39;user_id&#39;</span>]);
 <a name="l00043"></a>00043             $row[<span class="stringliteral">&#39;category&#39;</span>]            = intval($row[<span class="stringliteral">&#39;category&#39;</span>]);
@@ -141,8 +142,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00046"></a>00046             $row[<span class="stringliteral">&#39;patient_id&#39;</span>]          = intval($row[<span class="stringliteral">&#39;patient_id&#39;</span>]);
 <a name="l00047"></a>00047 
 <a name="l00048"></a>00048             $sql = (<span class="stringliteral">&quot;SELECT * FROM form_data_demographics WHERE pid= &#39;&quot;</span>.$row[<span class="stringliteral">&#39;patient_id&#39;</span>].<span class="stringliteral">&quot;&#39;&quot;</span>);
-<a name="l00049"></a>00049             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-<a name="l00050"></a>00050             <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $urow){
+<a name="l00049"></a>00049             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+<a name="l00050"></a>00050             <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $urow){
 <a name="l00051"></a>00051             $row[<span class="stringliteral">&#39;title&#39;</span>] = <a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">Person::fullname</a>($urow[<span class="stringliteral">&#39;fname&#39;</span>],$urow[<span class="stringliteral">&#39;mname&#39;</span>],$urow[<span class="stringliteral">&#39;lname&#39;</span>]);
 <a name="l00052"></a>00052             }
 <a name="l00053"></a>00053             array_push($rows, $row);
@@ -154,8 +155,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00059"></a><a class="code" href="class_calendar.html#a19abf70239e55d8153c16040c57455e0">00059</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_calendar.html#a19abf70239e55d8153c16040c57455e0">addEvent</a>(stdClass $params){
 <a name="l00060"></a>00060 
 <a name="l00061"></a>00061         $sql = <span class="stringliteral">&quot;SELECT fname, mname, lname FROM form_data_demographics WHERE pid=&#39;$params-&gt;patient_id&#39;&quot;</span>;
-<a name="l00062"></a>00062         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-<a name="l00063"></a>00063         $rec = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a>();
+<a name="l00062"></a>00062         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+<a name="l00063"></a>00063         $rec = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176" title="Fetch.">fetch</a>();
 <a name="l00064"></a>00064         $fullName = <a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">Person::fullname</a>($rec[<span class="stringliteral">&#39;fname&#39;</span>],$rec[<span class="stringliteral">&#39;mname&#39;</span>],$rec[<span class="stringliteral">&#39;lname&#39;</span>]);
 <a name="l00065"></a>00065 
 <a name="l00066"></a>00066         $row[<span class="stringliteral">&#39;user_id&#39;</span>]             = $params-&gt;user_id;
@@ -173,9 +174,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00078"></a>00078         $row[<span class="stringliteral">&#39;url&#39;</span>]                 = $params-&gt;url;
 <a name="l00079"></a>00079         $row[<span class="stringliteral">&#39;ad&#39;</span>]                  = $params-&gt;ad;
 <a name="l00080"></a>00080 
-<a name="l00081"></a>00081         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($row, <span class="stringliteral">&quot;calendar_events&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
-<a name="l00082"></a>00082         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-<a name="l00083"></a>00083         $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+<a name="l00081"></a>00081         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($row, <span class="stringliteral">&quot;calendar_events&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
+<a name="l00082"></a>00082         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+<a name="l00083"></a>00083         $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 <a name="l00084"></a>00084         <span class="comment">// ********************************************************************</span>
 <a name="l00085"></a>00085         <span class="comment">// If no error found, return the same record back to the calendar</span>
 <a name="l00086"></a>00086         <span class="comment">// ********************************************************************</span>
@@ -183,9 +184,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00088"></a>00088             echo <span class="stringliteral">&#39;{ success: false, errors: { reason: &quot;&#39;</span>. $ret[2] .<span class="stringliteral">&#39;&quot; }}&#39;</span>;
 <a name="l00089"></a>00089         } <span class="keywordflow">else</span> {
 <a name="l00090"></a>00090             $sql = (<span class="stringliteral">&quot;SELECT * FROM calendar_events WHERE id = &#39;&quot;</span>.$this-&gt;lastInsertId.<span class="stringliteral">&quot;&#39; &quot;</span>);
-<a name="l00091"></a>00091             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+<a name="l00091"></a>00091             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
 <a name="l00092"></a>00092             $rows = array();
-<a name="l00093"></a>00093             <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+<a name="l00093"></a>00093             <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
 <a name="l00094"></a>00094                 array_push($rows, $row);
 <a name="l00095"></a>00095             }
 <a name="l00096"></a>00096             <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">true</span>, <span class="stringliteral">&#39;message&#39;</span>=&gt;<span class="stringliteral">&#39;Loaded data&#39;</span>, <span class="stringliteral">&#39;data&#39;</span>=&gt;$rows);
@@ -209,15 +210,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00114"></a>00114         $row[<span class="stringliteral">&#39;url&#39;</span>]                 = $params-&gt;url;
 <a name="l00115"></a>00115         $row[<span class="stringliteral">&#39;ad&#39;</span>]                  = $params-&gt;ad;
 <a name="l00116"></a>00116 
-<a name="l00117"></a>00117         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($row, <span class="stringliteral">&quot;calendar_events&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span> . $params-&gt;id . <span class="stringliteral">&quot;&#39;&quot;</span>);
-<a name="l00118"></a>00118         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-<a name="l00119"></a>00119         $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+<a name="l00117"></a>00117         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($row, <span class="stringliteral">&quot;calendar_events&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span> . $params-&gt;id . <span class="stringliteral">&quot;&#39;&quot;</span>);
+<a name="l00118"></a>00118         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+<a name="l00119"></a>00119         $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 <a name="l00120"></a>00120         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt; <span class="keyword">true</span>);
 <a name="l00121"></a>00121     }
 <a name="l00122"></a>00122 
 <a name="l00123"></a><a class="code" href="class_calendar.html#a66fb21050831aea7340189f572d672dc">00123</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_calendar.html#a66fb21050831aea7340189f572d672dc">deleteEvent</a>(stdClass $params){
-<a name="l00124"></a>00124         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>( <span class="stringliteral">&quot;DELETE FROM calendar_events WHERE id=&#39;$params-&gt;id&#39;&quot;</span>);
-<a name="l00125"></a>00125         $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+<a name="l00124"></a>00124         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>( <span class="stringliteral">&quot;DELETE FROM calendar_events WHERE id=&#39;$params-&gt;id&#39;&quot;</span>);
+<a name="l00125"></a>00125         $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 <a name="l00126"></a>00126         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt; <span class="keyword">true</span>);
 <a name="l00127"></a>00127     }
 <a name="l00128"></a>00128 }
@@ -241,7 +242,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><a class="el" href="_calendar_8php.html">Calendar.php</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:11 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

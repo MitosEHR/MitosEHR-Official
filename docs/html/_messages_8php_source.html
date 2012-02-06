@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -108,7 +109,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00013"></a>00013 }
 <a name="l00014"></a>00014 include_once(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;root&#39;</span>].<span class="stringliteral">&quot;/classes/dbHelper.php&quot;</span>);
 <a name="l00015"></a>00015 include_once(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;root&#39;</span>].<span class="stringliteral">&quot;/classes/Person.php&quot;</span>);
-<a name="l00016"></a><a class="code" href="class_messages.html">00016</a> <span class="keyword">class </span><a class="code" href="class_messages.html">Messages</a> <span class="keyword">extends</span> <a class="code" href="classdb_helper.html">dbHelper</a> {
+<a name="l00016"></a><a class="code" href="class_messages.html">00016</a> <span class="keyword">class </span><a class="code" href="class_messages.html">Messages</a> <span class="keyword">extends</span> <a class="code" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a> {
 <a name="l00017"></a>00017 
 <a name="l00022"></a><a class="code" href="class_messages.html#afd31363ff6e7d1f8195999c7872c787c">00022</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_messages.html#afd31363ff6e7d1f8195999c7872c787c">getMessages</a>(stdClass $params){
 <a name="l00023"></a>00023         $currUser = <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;user&#39;</span>][<span class="stringliteral">&#39;id&#39;</span>];
@@ -123,7 +124,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00032"></a>00032             $wherex = <span class="stringliteral">&quot;pnotes.to_deleted = &#39;0&#39; AND users.id = &#39;&quot;</span>.$currUser.<span class="stringliteral">&quot;&#39;&quot;</span>;
 <a name="l00033"></a>00033         }
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT pnotes.* ,</span>
+<a name="l00035"></a>00035         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT pnotes.* ,</span>
 <a name="l00036"></a>00036 <span class="stringliteral">                              users.title AS user_title,</span>
 <a name="l00037"></a>00037 <span class="stringliteral">                              users.fname AS user_fname,</span>
 <a name="l00038"></a>00038 <span class="stringliteral">                              users.mname AS user_mname,</span>
@@ -138,12 +139,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00047"></a>00047 <span class="stringliteral">                     ORDER BY pnotes.date</span>
 <a name="l00048"></a>00048 <span class="stringliteral">                        LIMIT $params-&gt;start, $params-&gt;limit&quot;</span>);
 <a name="l00049"></a>00049         $rows = array();
-<a name="l00050"></a>00050         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+<a name="l00050"></a>00050         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
 <a name="l00051"></a>00051             $row[<span class="stringliteral">&#39;patient_name&#39;</span>]    = <a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">Person::fullname</a>($row[<span class="stringliteral">&#39;patient_fname&#39;</span>],$row[<span class="stringliteral">&#39;patient_mname&#39;</span>],$row[<span class="stringliteral">&#39;patient_lname&#39;</span>]);
 <a name="l00052"></a>00052 
 <a name="l00053"></a>00053             $id = $row[<span class="stringliteral">&#39;from_id&#39;</span>];
-<a name="l00054"></a>00054             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT title, fname, mname, lname FROM users WHERE id =&#39;$id&#39; &quot;</span>);
-<a name="l00055"></a>00055             $record = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a>();
+<a name="l00054"></a>00054             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT title, fname, mname, lname FROM users WHERE id =&#39;$id&#39; &quot;</span>);
+<a name="l00055"></a>00055             $record = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176" title="Fetch.">fetch</a>();
 <a name="l00056"></a>00056 
 <a name="l00057"></a>00057             $row[<span class="stringliteral">&#39;from_user&#39;</span>] = $record[<span class="stringliteral">&#39;user_title&#39;</span>].<span class="charliteral">&#39; &#39;</span>.<a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">Person::fullname</a>($record[<span class="stringliteral">&#39;fname&#39;</span>],$record[<span class="stringliteral">&#39;mname&#39;</span>],$record[<span class="stringliteral">&#39;lname&#39;</span>]);
 <a name="l00058"></a>00058             $row[<span class="stringliteral">&#39;to_user&#39;</span>]   = $row[<span class="stringliteral">&#39;user_title&#39;</span>].<span class="charliteral">&#39; &#39;</span>.<a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">Person::fullname</a>($row[<span class="stringliteral">&#39;user_fname&#39;</span>],$row[<span class="stringliteral">&#39;user_mname&#39;</span>],$row[<span class="stringliteral">&#39;user_lname&#39;</span>]);
@@ -164,9 +165,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00077"></a>00077         $row[<span class="stringliteral">&#39;message_status&#39;</span>]  = $params-&gt;message_status;
 <a name="l00078"></a>00078         $row[<span class="stringliteral">&#39;subject&#39;</span>]         = $params-&gt;subject;
 <a name="l00079"></a>00079         $row[<span class="stringliteral">&#39;note_type&#39;</span>]       = $params-&gt;note_type;
-<a name="l00080"></a>00080         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($row, <span class="stringliteral">&quot;pnotes&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
-<a name="l00081"></a>00081         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-<a name="l00082"></a>00082         $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+<a name="l00080"></a>00080         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($row, <span class="stringliteral">&quot;pnotes&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
+<a name="l00081"></a>00081         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+<a name="l00082"></a>00082         $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 <a name="l00083"></a>00083         <span class="keywordflow">if</span>($ret[2]){
 <a name="l00084"></a>00084             <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">false</span>);
 <a name="l00085"></a>00085         }<span class="keywordflow">else</span>{
@@ -188,9 +189,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00105"></a>00105             $row[<span class="stringliteral">&#39;to_deleted&#39;</span>]      = 0;
 <a name="l00106"></a>00106             $row[<span class="stringliteral">&#39;from_deleted&#39;</span>]    = 0;
 <a name="l00107"></a>00107 
-<a name="l00108"></a>00108             $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($row, <span class="stringliteral">&quot;pnotes&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span> . $params-&gt;id . <span class="stringliteral">&quot;&#39;&quot;</span>);
-<a name="l00109"></a>00109             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-<a name="l00110"></a>00110             $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+<a name="l00108"></a>00108             $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($row, <span class="stringliteral">&quot;pnotes&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span> . $params-&gt;id . <span class="stringliteral">&quot;&#39;&quot;</span>);
+<a name="l00109"></a>00109             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+<a name="l00110"></a>00110             $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 <a name="l00111"></a>00111 
 <a name="l00112"></a>00112             <span class="keywordflow">if</span>($ret[2]){
 <a name="l00113"></a>00113                 <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">false</span>);
@@ -206,8 +207,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00127"></a>00127         $id         = $params-&gt;id;
 <a name="l00128"></a>00128         $currUser   = <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;user&#39;</span>][<span class="stringliteral">&#39;id&#39;</span>];
 <a name="l00129"></a>00129 
-<a name="l00130"></a>00130         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT to_id, from_id FROM pnotes WHERE id = &#39;$id&#39;&quot;</span>);
-<a name="l00131"></a>00131         $record = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a>();
+<a name="l00130"></a>00130         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT to_id, from_id FROM pnotes WHERE id = &#39;$id&#39;&quot;</span>);
+<a name="l00131"></a>00131         $record = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176" title="Fetch.">fetch</a>();
 <a name="l00132"></a>00132 
 <a name="l00133"></a>00133         <span class="keywordflow">if</span>($record[<span class="stringliteral">&#39;to_id&#39;</span>] == $currUser ){
 <a name="l00134"></a>00134             $sql = <span class="stringliteral">&quot;UPDATE pnotes SET to_deleted = &#39;1&#39; WHERE id=&#39;$id&#39;&quot;</span>;
@@ -215,8 +216,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00136"></a>00136             $sql = <span class="stringliteral">&quot;UPDATE pnotes SET from_deleted = &#39;1&#39; WHERE id=&#39;$id&#39;&quot;</span>;
 <a name="l00137"></a>00137         }
 <a name="l00138"></a>00138 
-<a name="l00139"></a>00139         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-<a name="l00140"></a>00140         $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+<a name="l00139"></a>00139         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+<a name="l00140"></a>00140         $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 <a name="l00141"></a>00141 
 <a name="l00142"></a>00142         <span class="keywordflow">if</span>($ret[2]){
 <a name="l00143"></a>00143             <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">false</span>);
@@ -229,9 +230,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00154"></a>00154 
 <a name="l00155"></a>00155         $row[$params-&gt;col] = $params-&gt;val;
 <a name="l00156"></a>00156 
-<a name="l00157"></a>00157         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($row, <span class="stringliteral">&quot;pnotes&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span> . $params-&gt;id . <span class="stringliteral">&quot;&#39;&quot;</span>);
-<a name="l00158"></a>00158         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-<a name="l00159"></a>00159         $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+<a name="l00157"></a>00157         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($row, <span class="stringliteral">&quot;pnotes&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span> . $params-&gt;id . <span class="stringliteral">&quot;&#39;&quot;</span>);
+<a name="l00158"></a>00158         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+<a name="l00159"></a>00159         $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 <a name="l00160"></a>00160         <span class="keywordflow">if</span> ( $ret[2] ){
 <a name="l00161"></a>00161             <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">false</span>);
 <a name="l00162"></a>00162         } <span class="keywordflow">else</span> {
@@ -260,7 +261,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><a class="el" href="_messages_8php.html">Messages.php</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:11 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

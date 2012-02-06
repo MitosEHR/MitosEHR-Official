@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -107,19 +108,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00005"></a>00005     session_cache_limiter(<span class="stringliteral">&#39;private&#39;</span>);
 <a name="l00006"></a>00006 }
 <a name="l00007"></a>00007 include_once(<span class="stringliteral">&#39;dbhelper.php&#39;</span>);
-<a name="l00019"></a><a class="code" href="class_logs.html">00019</a> <span class="keyword">class </span><a class="code" href="class_logs.html">Logs</a> <span class="keyword">extends</span> <a class="code" href="classdb_helper.html">dbHelper</a> {
+<a name="l00019"></a><a class="code" href="class_logs.html">00019</a> <span class="keyword">class </span><a class="code" href="class_logs.html" title="log class">Logs</a> <span class="keyword">extends</span> <a class="code" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a> {
 <a name="l00020"></a>00020 
-<a name="l00042"></a><a class="code" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee">00042</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee">getLogs</a>(stdClass $params){
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM log ORDER BY id DESC&quot;</span>);
-<a name="l00045"></a>00045         $rows   = $this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_CLASS);
-<a name="l00046"></a>00046         $total  = count($rows);
-<a name="l00047"></a>00047         $rows = $this-&gt;<a class="code" href="classdb_helper.html#afab91f6d05df61aa06e6bfc035b13afe">filertByStartLimit</a>($rows,$params);
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;totals&#39;</span>=&gt;$total ,<span class="stringliteral">&#39;rows&#39;</span>=&gt;$rows);
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051     }
-<a name="l00052"></a>00052 }
+<a name="l00034"></a><a class="code" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee">00034</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee" title="Get all logs.">getLogs</a>(stdClass $params){
+<a name="l00035"></a>00035         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM log ORDER BY id DESC&quot;</span>);
+<a name="l00036"></a>00036         $records    = $this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_CLASS);
+<a name="l00037"></a>00037         $total      = count($records);
+<a name="l00038"></a>00038         $rows       = $this-&gt;<a class="code" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08" title="Filter Records By Sart and Limit.">filertByStartLimit</a>($records, $params);
+<a name="l00039"></a>00039         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;totals&#39;</span>=&gt;$total ,<span class="stringliteral">&#39;rows&#39;</span>=&gt;$rows);
+<a name="l00040"></a>00040     }
+<a name="l00041"></a>00041 }
 </pre></div></div><!-- contents -->
 </div>
 <!-- window showing the filter options -->
@@ -140,7 +138,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><a class="el" href="_logs_8php.html">Logs.php</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:11 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

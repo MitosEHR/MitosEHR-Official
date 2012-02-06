@@ -1,6 +1,7 @@
 var NAVTREE =
 [
   [ "MitosEHR", "index.html", [
+    [ "Related Pages", "pages.html", "pages" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ]
     ] ],

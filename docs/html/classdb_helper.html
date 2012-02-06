@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -100,52 +101,80 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Data Fields</a>  </div>
+<a href="#pub-attribs">Data Fields</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">dbHelper Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="dbHelper" --><div class="dynheader">
+<!-- doxytag: class="dbHelper" -->
+<p>Database Helper Class.  
+ <a href="classdb_helper.html#details">More...</a></p>
+<div class="dynheader">
 Inheritance diagram for dbHelper:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classdb_helper.png" usemap="#dbHelper_map" alt=""/>
   <map id="dbHelper_map" name="dbHelper_map">
-<area href="class_calendar.html" alt="Calendar" shape="rect" coords="125,56,240,80"/>
-<area href="class_combos_data.html" alt="CombosData" shape="rect" coords="125,112,240,136"/>
-<area href="class_facilities.html" alt="Facilities" shape="rect" coords="125,168,240,192"/>
-<area href="classform_layout_builder.html" alt="formLayoutBuilder" shape="rect" coords="125,224,240,248"/>
-<area href="classform_layout_engine.html" alt="formLayoutEngine" shape="rect" coords="125,280,240,304"/>
-<area href="class_globals.html" alt="Globals" shape="rect" coords="125,336,240,360"/>
-<area href="class_logs.html" alt="Logs" shape="rect" coords="125,392,240,416"/>
-<area href="class_messages.html" alt="Messages" shape="rect" coords="125,448,240,472"/>
-<area href="class_office_notes.html" alt="OfficeNotes" shape="rect" coords="125,504,240,528"/>
-<area href="classpassword.html" alt="password" shape="rect" coords="125,560,240,584"/>
-<area href="class_person.html" alt="Person" shape="rect" coords="125,616,240,640"/>
+<area href="class_calendar.html" alt="Calendar" shape="rect" coords="129,56,248,80"/>
+<area href="class_combos_data.html" alt="CombosData" shape="rect" coords="129,112,248,136"/>
+<area href="class_facilities.html" alt="Facilities" shape="rect" coords="129,168,248,192"/>
+<area href="class_form_layout_builder.html" alt="FormLayoutBuilder" shape="rect" coords="129,224,248,248"/>
+<area href="class_form_layout_engine.html" alt="FormLayoutEngine" shape="rect" coords="129,280,248,304"/>
+<area href="class_globals.html" alt="Globals" shape="rect" coords="129,336,248,360"/>
+<area href="class_logs.html" title="log class" alt="Logs" shape="rect" coords="129,392,248,416"/>
+<area href="class_messages.html" alt="Messages" shape="rect" coords="129,448,248,472"/>
+<area href="class_office_notes.html" alt="OfficeNotes" shape="rect" coords="129,504,248,528"/>
+<area href="classpassword.html" alt="password" shape="rect" coords="129,560,248,584"/>
+<area href="class_person.html" alt="Person" shape="rect" coords="129,616,248,640"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#a095c5d389db211932136b53f25f39685">__construct</a> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#afab91f6d05df61aa06e6bfc035b13afe">filertByStartLimit</a> ($rows, $params)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a> contructor.  <a href="#a095c5d389db211932136b53f25f39685"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08">filertByStartLimit</a> ($records, stdClass $params)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter Records By Sart and Limit.  <a href="#a3ca2578f15860418ca93fca0112a0e08"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a> ($sql)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the SQL Statement.  <a href="#a21e387f778abae898a33b0355e56c095"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a> ($fetchStyle=PDO::FETCH_BOTH)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute Statement.  <a href="#a43a2fa1fe095e37df5a641fe1cfc7d9c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#ae033db35138ae80f3b1fd33c5c2c473e">execOnly</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute Statement "WITHOUT" returning records.  <a href="#ae033db35138ae80f3b1fd33c5c2c473e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a> ($b_array, $table, $iu=&quot;I&quot;, $where)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">SQL Bind.  <a href="#aa9840bbfb81d2d519994cd0a8e880c4a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute Log.  <a href="#a75dea4073687142b0b1b6a6819cbb243"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#ac1876160b600b359a60fd5aad7edba09">execEvent</a> ($eventLog)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute Event.  <a href="#ac1876160b600b359a60fd5aad7edba09"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch.  <a href="#ae48cc10bd727774bb36203986ce3b176"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#a24ada5decce3d1b79cd82f5a90ccf404">getError</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch the last error.  <a href="#a24ada5decce3d1b79cd82f5a90ccf404"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#a82b073888555fc72e57142fe913db377">rowCount</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Row Count.  <a href="#a82b073888555fc72e57142fe913db377"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#a29c1e591b4e284bca5ae38ed00eea5a9">$sql_statement</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#ae4ac788f919cb92f528ab1455e8a3e6b">$lastInsertId</a></td></tr>
+<tr><td colspan="2"><h2><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00038">38</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="textblock"><p>Database Helper Class. </p>
+<p>A PDO helper for MitosEHR, contains custom function to manage the database in MitosEHR. PDO is new in PHP v5.</p>
+<p>The PHP Data Objects (PDO) extension defines a lightweight, consistent interface for accessing databases in PHP. Each database driver that implements the PDO interface can expose database-specific features as regular extension functions. Note that you cannot perform any database functions using the PDO extension by itself; you must use a database-specific PDO driver to access a database server.</p>
+<p>PDO provides a data-access abstraction layer, which means that, regardless of which database you're using, you use the same functions to issue queries and fetch data. PDO does not provide a database abstraction; it doesn't rewrite SQL or emulate missing features. You should use a full-blown abstraction layer if you need that facility.</p>
+<p>PDO ships with PHP 5.1, and is available as a PECL extension for PHP 5.0; PDO requires the new OO features in the core of PHP 5, and so will not run with earlier versions of PHP.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd>
+<dd>
+Ernesto J. Rodriguez (Certun) &lt;<a href="mailto:erodriguez@certun.com">erodriguez@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0 </dd></dl>
+<dl class="copyright"><dt><b>Copyright:</b></dt><dd>Gnu Public License (GPLv3) </dd></dl>
+
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00037">37</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a095c5d389db211932136b53f25f39685"></a><!-- doxytag: member="dbHelper::__construct" ref="a095c5d389db211932136b53f25f39685" args="()" -->
 <div class="memitem">
@@ -160,11 +189,14 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Connect to the database $db = new $dbHelper();</p>
-<p>Author: GI Technologies, 2011 </p>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00052">52</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                               {
+<p><a class="el" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a> contructor. </p>
+<p>This method starts the connection with mysql server using $_SESSION values during the login proccess.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0 </dd></dl>
+
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00065">65</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
                 error_reporting(0);
                 <span class="keywordflow">try</span> {
                 $this-&gt;conn = <span class="keyword">new</span> PDO( <span class="stringliteral">&quot;mysql:host=&quot;</span> . <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;db&#39;</span>][<span class="stringliteral">&#39;host&#39;</span>] . <span class="stringliteral">&quot;;port=&quot;</span> . <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;db&#39;</span>][<span class="stringliteral">&#39;port&#39;</span>] . <span class="stringliteral">&quot;;dbname=&quot;</span> . <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;db&#39;</span>][<span class="stringliteral">&#39;database&#39;</span>], $_SESSION[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;db&#39;</span>][<span class="stringliteral">&#39;username&#39;</span>], $_SESSION[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;db&#39;</span>][<span class="stringliteral">&#39;password&#39;</span>] );
@@ -190,20 +222,21 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Inject directly to the LOG $dbHelper-&gt;execEvent("Need to be audited!"); return: N/A</p>
-<p>Author: GI Technologies, 2011</p>
+
+<p>Execute Event. </p>
+<p>This method is used to Inject directly to the evente log</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">$eventLog</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$eventLog</td><td>event data to log </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array Connection error info if any </dd></dl>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00270">270</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                     {
-        
-                <span class="comment">// Prepare the SQL statement first, and then execute.</span>
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00277">277</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
                 $stmt = $this-&gt;conn-&gt;prepare(<span class="stringliteral">&quot;INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)&quot;</span>);
                 $stmt-&gt;bindParam(<span class="stringliteral">&#39;:dtime&#39;</span>, date(<span class="stringliteral">&#39;Y-m-d H:i:s&#39;</span>), PDO::PARAM_STR);
                 $stmt-&gt;bindParam(<span class="stringliteral">&#39;:event&#39;</span>, $eventLog, PDO::PARAM_STR);
@@ -229,26 +262,28 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Simple SQL Statement, with Event LOG injection $dbHelper-&gt;exeLog(); return: Array of records + Inject the action on the event log The Log Injection is automatic It tries to detect an insert, delete, alter and log the event</p>
-<p>Author: GI Technologies, 2011</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
+
+<p>Execute Log. </p>
+<p>This method is used to INSERT, UPDATE, DELETE, and ALTER the database. with a event log injection.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>The Log Injection is automatic It tries to detect an insert, delete, alter and log the event</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_user.html#a8dfbe73a90ecf4cdec6b3229da0ee2f8">User::addUser()</a> for Add example.</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array Connection error info if any </dd></dl>
 <p>Execute the sql statement</p>
-<p>If the QUERY has INSERT, DELETE, ALTER then has to insert the event to the database.</p>
-<p>Check up the last insert id.</p>
 <p>Prepare the SQL statement first, and then execute.</p>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00216">216</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                          {
-                
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00231">231</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
                 $this-&gt;conn-&gt;query( $this-&gt;sql_statement );
 
                 <span class="keywordflow">if</span> (stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;INSERT&quot;</span>) ||
                         stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;DELETE&quot;</span>) ||
-                        stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;UPDATE&quot;</span>) || 
+                        stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;UPDATE&quot;</span>) ||
                         stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;ALTER&quot;</span>)){
-                                
-                                $this-&gt;lastInsertId = $this-&gt;conn-&gt;lastInsertId();
-                                
+
+            $this-&gt;lastInsertId = $this-&gt;conn-&gt;lastInsertId();
+
                         <span class="keywordflow">if</span> (stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;INSERT&quot;</span>)) { $eventLog = <span class="stringliteral">&quot;Record insertion&quot;</span>; }
                         <span class="keywordflow">if</span> (stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;DELETE&quot;</span>)) $eventLog = <span class="stringliteral">&quot;Record deletion&quot;</span>;
                         <span class="keywordflow">if</span> (stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;UPDATE&quot;</span>)) $eventLog = <span class="stringliteral">&quot;Record update&quot;</span>;
@@ -283,12 +318,15 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Simple exec SQL Statement, with no Event LOG injection return: Array of errors, if any.</p>
-<p>Author: GI Technologies, 2011</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00135">135</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                           {
+<p>Execute Statement "WITHOUT" returning records. </p>
+<p>Simple exec SQL Statement, with no Event LOG injection. For example to execute an ALTER a table.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array Connection error info if any </dd></dl>
+
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00154">154</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
         $this-&gt;conn-&gt;query($this-&gt;sql_statement);
                 <span class="keywordflow">if</span> (stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;SELECT&quot;</span>)){
                         $this-&gt;lastInsertId = $this-&gt;conn-&gt;lastInsertId();
@@ -312,18 +350,22 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Simple SQL Statement, with no Event LOG injection $dbHelper-&gt;<a class="el" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement()</a>; return: Array of records, if error occurred return the error instead foreach (sqlStatement($sql) as $urow) {</p>
-<p>Author: GI Technologies, 2011</p>
+
+<p>Execute Statement. </p>
+<p>This method is a simple SQL Statement, with no Event LOG injection</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee" title="Get all logs.">Logs::getLogs()</a> for basic example and <a class="el" href="class_patient.html#a5da7543bb87e70c01a1a3b3180c712fc">Patient::patientLiveSearch()</a> for advance example.</dd></dl>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$fetchStyle</td><td></td></tr>
+    <tr><td class="paramname">int</td><td>defualt to (PDO::FETCH_BOTH) Please see Fetch Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a> </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array of records, if error occurred return the error instead </dd></dl>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00113">113</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                                           {
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00130">130</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
                 $recordset = $this-&gt;conn-&gt;query($this-&gt;sql_statement);
                 <span class="keywordflow">if</span> (stristr($this-&gt;sql_statement, <span class="stringliteral">&quot;SELECT&quot;</span>)){
                         $this-&gt;lastInsertId = $this-&gt;conn-&gt;lastInsertId();
@@ -351,17 +393,18 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Fetch a recordset return: Only one record array $rec = $dbHelper-&gt;fetch($sql); if ($rec['username'] == ""){</p>
-<p>Author: GI Technologies, 2011</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>array|mixed </dd></dl>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00294">294</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                        {
+<p>Fetch. </p>
+<p>This method is used to fetch only one record from the database</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array of record or error if any </dd></dl>
+
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00298">298</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
                 <span class="comment">// Get all the records</span>
                 $recordset = $this-&gt;conn-&gt;query( $this-&gt;sql_statement );
-
         $err = $this-&gt;conn-&gt;errorInfo();
-
         <span class="keywordflow">if</span>(!$err[2]){
             <span class="keywordflow">return</span> $recordset-&gt;fetch(PDO::FETCH_ASSOC);
         } <span class="keywordflow">else</span> {
@@ -372,20 +415,20 @@ Data Fields</h2></td></tr>
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="afab91f6d05df61aa06e6bfc035b13afe"></a><!-- doxytag: member="dbHelper::filertByStartLimit" ref="afab91f6d05df61aa06e6bfc035b13afe" args="($rows, $params)" -->
+<a class="anchor" id="a3ca2578f15860418ca93fca0112a0e08"></a><!-- doxytag: member="dbHelper::filertByStartLimit" ref="a3ca2578f15860418ca93fca0112a0e08" args="($records, stdClass $params)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classdb_helper.html#afab91f6d05df61aa06e6bfc035b13afe">filertByStartLimit</a> </td>
+          <td class="memname"><a class="el" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08">filertByStartLimit</a> </td>
           <td>(</td>
           <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>rows</em>, </td>
+          <td class="paramname"><em>records</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">$&#160;</td>
+          <td class="paramtype">stdClass $&#160;</td>
           <td class="paramname"><em>params</em>&#160;</td>
         </tr>
         <tr>
@@ -396,24 +439,28 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Filter By Sart and Limit</p>
-<p>This Function will filter the $rows array by a start and Limit usin LinQ.</p>
-<p><code> function filertByStartLimit($rows, $params){ $result = from('$row')-&gt;in($rows)-&gt;skip($params-&gt;start) -&gt;take($params-&gt;limit) -&gt;select('$row'); return $result; } </code></p>
+
+<p>Filter Records By Sart and Limit. </p>
+<p>This Function will filter the $records by a start and Limit usin LinQ. The main reason to use LinQ is to avoid multiples SQl queries to get the record totals and filter resutls.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Ernesto J. Rodriguez (Certun) &lt;<a href="mailto:erodriguez@certun.com">erodriguez@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>This method requires stdClass arguments. Use PDO::FETCH_CLASS to sexecute the SQL queries.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee" title="Get all logs.">Logs::getLogs()</a> for basic example and <a class="el" href="class_patient.html#a5da7543bb87e70c01a1a3b3180c712fc">Patient::patientLiveSearch()</a> for advance example.</dd></dl>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">$rows</td><td></td></tr>
-    <tr><td class="paramname">$params</td><td></td></tr>
+    <tr><td class="paramtype"></td><td class="paramname">$records</td><td>SQL recordes to filter </td></tr>
+    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td>Params used to filter the results, $params-&gt;start and $params-&gt;limit are required </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>mixed </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>mixed Records filtered </dd></dl>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00081">81</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                               {
-        $result = from(<span class="stringliteral">&#39;$row&#39;</span>)-&gt;in($rows)
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00092">92</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
+        $result = from(<span class="stringliteral">&#39;$record&#39;</span>)-&gt;in($records)
                   -&gt;skip($params-&gt;start)
                   -&gt;take($params-&gt;limit)
-                  -&gt;select(<span class="stringliteral">&#39;$row&#39;</span>);
+                  -&gt;select(<span class="stringliteral">&#39;$record&#39;</span>);
         <span class="keywordflow">return</span> $result;
     }
 </pre></div>
@@ -432,13 +479,15 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Fetch the last error. getError - Get the error for a statement, if any.</p>
-<p>return: If there was a problem with the connection it will return the error message, if the was not a connection problem, it will return a array with the code and message.</p>
-<p>Author: GI Technologies, 2011</p>
+
+<p>Fetch the last error. </p>
+<p>If there was a problem with the connection it will return the error message, if the was not a connection problem, it will return a array with the code and message.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>array|string </dd></dl>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00321">321</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                           {
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00322">322</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
                 <span class="keywordflow">if</span> (!$this-&gt;err){
                         <span class="keywordflow">return</span> $this-&gt;conn-&gt;errorInfo();
                 } <span class="keywordflow">else</span> {
@@ -461,17 +510,18 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>rowCount return: The number of rows in a table $rec = $dbHelper-&gt;<a class="el" href="classdb_helper.html#a82b073888555fc72e57142fe913db377">rowCount()</a>; if ($rec['username'] == "")</p>
-<p>Author: Ernesto Rodriguez</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>int </dd></dl>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00340">340</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                           {
-        
-                <span class="comment">// Get all the records &amp; count it.</span>
+<p>Row Count. </p>
+<p>This methos is used to query an statement and return the rows coount using PDO</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Ernesto J. Rodriguez (Certun) &lt;<a href="mailto:erodriguez@certun.com">erodriguez@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>count($sql) should be use insted of this method. please refer to <a class="el" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee">Logs()</a> to see an example of how to use count();</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int The number of rows in a table </dd></dl>
+
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00344">344</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
                 $recordset = $this-&gt;conn-&gt;query( $this-&gt;sql_statement );
                 <span class="keywordflow">return</span> $recordset-&gt;rowCount();
-                
         }
 </pre></div>
 </div>
@@ -490,17 +540,21 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Set the SQL Statement</p>
-<p>Author: GI Technologies, 2011</p>
+
+<p>Set the SQL Statement. </p>
+<p>This method set the SQL statement in $this-&gt;sql_statement for othe methods to use it</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee" title="Get all logs.">Logs::getLogs()</a> for basic example and <a class="el" href="class_patient.html#a5da7543bb87e70c01a1a3b3180c712fc">Patient::patientLiveSearch()</a> for advance example.</dd></dl>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">$sql</td><td></td></tr>
+    <tr><td class="paramname">$sql</td><td>string statement to set </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00097">97</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                             {
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00113">113</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
                 $this-&gt;sql_statement = $sql;
         }
 </pre></div>
@@ -542,28 +596,30 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>sqlBind This function builds a SQL Statement based on an array arguments to pass:</p>
-<p>$b_array - An array containing a key that has to be the exact field on the data base, and it's value</p>
-<p>table - A valid database table to make the SQL statement</p>
-<p>$iu - Insert or Update parameter. This has to options i = Insert, u = Update</p>
-<p>$where - If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'</p>
-<p>NOTE: To eliminate fields that are not in the database you can use unset($b_array['field']);</p>
+
+<p>SQL Bind. </p>
+<p>This method is used to INSERT and UPDATE the database.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Gino Rivera (Certun) &lt;<a href="mailto:grivera@certun.com">grivera@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>To eliminate fields that are not in the database you can use unset($b_array['field']); </dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>To UPDATE you can NOT pass the ID in the $b_array. Make user to unset the ID before calling this method.</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_user.html#a8dfbe73a90ecf4cdec6b3229da0ee2f8">User::addUser()</a> for Add example and <a class="el" href="class_user.html#a5da7f289821c6a4372603673d630a60f">User::updateUser()</a> for Update example.</dd></dl>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramtype"></td><td class="paramname">$b_array</td><td></td></tr>
-    <tr><td class="paramtype"></td><td class="paramname">$table</td><td></td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$iu</td><td></td></tr>
-    <tr><td class="paramtype"></td><td class="paramname">$where</td><td></td></tr>
+    <tr><td class="paramtype">array</td><td class="paramname">$b_array</td><td>containing a key that has to be the exact field on the data base, and it's value </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$table</td><td>A valid database table to make the SQL statement </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$iu</td><td>Insert or Update parameter. This has to options I = Insert, U = Update </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$where</td><td>If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient' </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>string </dd></dl>
-<p>Step 1 Create the INSERT or UPDATE Clause</p>
-<p>Step 2 Create the SET clause</p>
-<p>Step 3 Create the WHERE clause, if applicable</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>string cunstructed SQL string </dd></dl>
+<p>Step 1 - Create the INSERT or UPDATE Clause</p>
+<p>Step 2 - Create the SET clause</p>
+<p>Step 3 - Create the WHERE clause, if applicable</p>
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00168">168</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                                           {
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00183">183</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<div class="fragment"><pre class="fragment">    {
 
         unset($b_array[<span class="stringliteral">&#39;__utma&#39;</span>],$b_array[<span class="stringliteral">&#39;__utmz&#39;</span>],$b_array[<span class="stringliteral">&#39;MitosEHR&#39;</span>]);
 
@@ -590,6 +646,21 @@ Data Fields</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Field Documentation</h2>
+<a class="anchor" id="aa8a5a87b9c1a6a0819b88447cbe41877"></a><!-- doxytag: member="dbHelper::$conn" ref="aa8a5a87b9c1a6a0819b88447cbe41877" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$conn<code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00050">50</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ae4ac788f919cb92f528ab1455e8a3e6b"></a><!-- doxytag: member="dbHelper::$lastInsertId" ref="ae4ac788f919cb92f528ab1455e8a3e6b" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -601,7 +672,7 @@ Data Fields</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00043">43</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00046">46</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
 
 </div>
 </div>
@@ -616,7 +687,7 @@ Data Fields</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00040">40</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
+<p>Definition at line <a class="el" href="db_helper_8php_source.html#l00042">42</a> of file <a class="el" href="db_helper_8php_source.html">dbHelper.php</a>.</p>
 
 </div>
 </div>
@@ -643,7 +714,7 @@ Data Fields</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="classdb_helper.html">dbHelper</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:12 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

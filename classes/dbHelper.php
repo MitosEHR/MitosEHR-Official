@@ -7,49 +7,63 @@ if(!isset($_SESSION)){
 set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
 require_once 'PHPLinq/LinqToObjects.php';
 /**
- * Database Helper Class.
+ * @brief       Database Helper Class.
+ * @details     A PDO helper for MitosEHR, contains custom function to manage the database
+ *              in MitosEHR. PDO is new in PHP v5.
  *
- * Description: A PDO helper for MitosEHR, contains custom function to manage the database
- * in MitosEHR. PDO is new in PHP v5 
- * 
- * The PHP Data Objects (PDO) extension defines a lightweight, 
- * consistent interface for accessing databases in PHP. 
- * Each database driver that implements the PDO interface can expose database-specific 
- * features as regular extension functions. Note that you cannot perform any database 
- * functions using the PDO extension by itself; 
- * you must use a database-specific PDO driver to access a database server.
- * 
- * PDO provides a data-access abstraction layer, which means that, 
- * regardless of which database you're using, you use the same functions to issue queries 
- * and fetch data. PDO does not provide a database abstraction; it doesn't rewrite 
- * SQL or emulate missing features. 
- * You should use a full-blown abstraction layer if you need that facility.
- * 
- * PDO ships with PHP 5.1, and is available as a PECL extension for PHP 5.0; 
- * PDO requires the new OO features in the core of PHP 5, and so will not 
- * run with earlier versions of PHP.
- * 
- * Author: GI Technologies, 2011
+ *              The PHP Data Objects (PDO) extension defines a lightweight,
+ *              consistent interface for accessing databases in PHP.
+ *              Each database driver that implements the PDO interface can expose database-specific
+ *              features as regular extension functions. Note that you cannot perform any database
+ *              functions using the PDO extension by itself;
+ *              you must use a database-specific PDO driver to access a database server.
  *
- * @version 0.0.3
- * @package default
+ *              PDO provides a data-access abstraction layer, which means that,
+ *              regardless of which database you're using, you use the same functions to issue queries
+ *              and fetch data. PDO does not provide a database abstraction; it doesn't rewrite
+ *              SQL or emulate missing features.
+ *              You should use a full-blown abstraction layer if you need that facility.
+ *
+ *              PDO ships with PHP 5.1, and is available as a PECL extension for PHP 5.0;
+ *              PDO requires the new OO features in the core of PHP 5, and so will not
+ *              run with earlier versions of PHP.
+ *
+ * @author      Gino Rivera (Certun) <grivera@certun.com>
+ * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
+ * @version     Vega 1.0
+ * @copyright   Gnu Public License (GPLv3)
  *
  */
 class dbHelper {
 	
-	public  $sql_statement;
-	private $conn;
-	private $err;
-	public $lastInsertId;
-	
+    /**
+     * @var
+     */
+    public $sql_statement;
+    /**
+     * @var
+     */
+    public $lastInsertId;
+    /**
+     * @var PDO
+     */
+    protected $conn;
+   	/**
+     * @var string
+     */
+    private $err;
 
     /**
-     * Connect to the database
-     * $db = new $dbHelper();
+     * @brief       dbHelper contructor.
+     * @details     This method starts the connection with mysql server using $_SESSION values
+     *              during the login proccess.
      *
-     * Author: GI Technologies, 2011
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
+     *
      */
-	function __construct() {
+	function __construct()
+    {
 		error_reporting(0);
 		try {
     		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
@@ -58,59 +72,63 @@ class dbHelper {
 		}
 	}
 
-
     /**
-     * Filter By Sart and Limit
+     * @brief       Filter Records By Sart and Limit.
+     * @details     This Function will filter the $records by a start and Limit usin LinQ.
+     *              The main reason to use LinQ is to avoid multiples SQl queries to get
+     *              the record totals and filter resutls.
      *
-     * This Function will filter the $rows array by a start
-     * and Limit usin LinQ.
+     * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
+     * @version     Vega 1.0
      *
-     * <code>
-     * function filertByStartLimit($rows, $params){
-     *     $result = from('$row')->in($rows)->skip($params->start)
-     *                 ->take($params->limit)
-     *                 ->select('$row');
-     *     return $result;
-     * }
-     * </code>
+     * @warning     This method requires stdClass arguments. Use PDO::FETCH_CLASS to sexecute the SQL queries.
      *
-     * @param $rows
-     * @param $params
-     * @return mixed
+     * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
+     *
+     * @param       $records SQL recordes to filter
+     * @param       stdClass $params Params used to filter the results, $params->start and $params->limit are required
+     * @return      mixed Records filtered
      */
-    function filertByStartLimit($rows, $params){
-        $result = from('$row')->in($rows)
+    function filertByStartLimit($records, stdClass $params)
+    {
+        $result = from('$record')->in($records)
                   ->skip($params->start)
                   ->take($params->limit)
-                  ->select('$row');
+                  ->select('$record');
         return $result;
     }
 
-
     /**
-     * Set the SQL Statement
+     * @brief       Set the SQL Statement.
+     * @details     This method set the SQL statement in
+     *              $this->sql_statement for othe methods to use it
      *
-     * Author: GI Technologies, 2011
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
      *
-     * @param $sql
+     * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
+     *
+     * @param       $sql string statement to set
      */
-	function setSQL($sql){
+	function setSQL($sql)
+    {
 		$this->sql_statement = $sql;
 	}
-		
 
     /**
-     * Simple SQL Statement, with no Event LOG injection
-     * $dbHelper->execStatement();
-     * return: Array of records, if error occurred return the error instead
-     * foreach (sqlStatement($sql) as $urow) {
+     * @brief       Execute Statement.
+     * @details     This method is a simple SQL Statement, with no Event LOG injection
      *
-     * Author: GI Technologies, 2011
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
      *
-     * @param int $fetchStyle
-     * @return array
+     * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
+     *
+     * @param       int defualt to (PDO::FETCH_BOTH) Please see Fetch Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a>
+     * @return      array of records, if error occurred return the error instead
      */
-	function execStatement($fetchStyle = PDO::FETCH_BOTH){
+	function execStatement($fetchStyle = PDO::FETCH_BOTH)
+    {
 		$recordset = $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, "SELECT")){
 			$this->lastInsertId = $this->conn->lastInsertId();
@@ -122,57 +140,54 @@ class dbHelper {
 			return $err;
 		}
 	}
-	
 
     /**
-     * Simple exec SQL Statement, with no Event LOG injection
-     * return: Array of errors, if any.
+     * @brief       Execute Statement "WITHOUT" returning records
+     * @details     Simple exec SQL Statement, with no Event LOG injection.
+     *              For example to execute an ALTER a table.
      *
-     * Author: GI Technologies, 2011
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
      *
-     * @return array
+     * @return      array Connection error info if any
      */
-	function execOnly(){
+	function execOnly()
+    {
         $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, "SELECT")){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}
 		return $this->conn->errorInfo();
 	}
-	
-	/**
-     * sqlBind
-     * This function builds a SQL Statement based on an array
-     * arguments to pass:
+
+    /**
+     * @brief       SQL Bind.
+     * @details     This method is used to INSERT and UPDATE the database.
      *
-     * $b_array - An array containing a key that has to be the exact field
-     * on the data base, and it's value
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
      *
-     * table - A valid database table to make the SQL statement
+     * @note        To eliminate fields that are not in the database you can use unset($b_array['field']);
+     * @warning     To UPDATE you can NOT pass the ID in the $b_array.
+     *              Make user to unset the ID before calling this method.
      *
-     * $iu - Insert or Update parameter. This has to options
-     * i = Insert, u = Update
+     * @see         User::addUser() for Add example and  User::updateUser() for Update example.
      *
-     * $where - If in $iu = U is used you must pass a WHERE clause in the
-     * last parameter. ie: id='1', list_id='patient'
-    *
-     * NOTE: To eliminate fields that are not in the database you can use
-     * unset($b_array['field']);
-     *
-     * @param $b_array
-     * @param $table
-     * @param string $iu
-     * @param $where
-     * @return string
+     * @param       array $b_array  containing a key that has to be the exact field on the data base, and it's value
+     * @param       string $table  A valid database table to make the SQL statement
+     * @param       string $iu Insert or Update parameter. This has to options I = Insert, U = Update
+     * @param       string $where If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
+     * @return      string cunstructed SQL string
      */
-	function sqlBind($b_array, $table, $iu="I", $where){
+
+	function sqlBind($b_array, $table, $iu="I", $where)
+    {
 
         unset($b_array['__utma'],$b_array['__utmz'],$b_array['MitosEHR']);
 
         $sql_r = '';
 		/**
-         * Step 1
-         * Create the INSERT or UPDATE Clause
+         * Step 1 -  Create the INSERT or UPDATE Clause
          */
 		$iu = strtolower($iu);
 		if ($iu == "i"){
@@ -181,8 +196,7 @@ class dbHelper {
 			$sql_r = "UPDATE " . $table;
 		}
 		/**
-         * Step 2
-         * Create the SET clause
+         * Step 2 -  Create the SET clause
          */
 		$sql_r .= " SET ";
 		foreach($b_array as $key => $value){
@@ -194,46 +208,40 @@ class dbHelper {
 		}
 		$sql_r = substr($sql_r, 0, -2);
 		/**
-         * Step 3
-         * Create the WHERE clause, if applicable
+         * Step 3 - Create the WHERE clause, if applicable
          */
 		if ($iu == "u"){ $sql_r .= " WHERE " . $where; }
 		return $sql_r;
 	}
 
-
     /**
-     * Simple SQL Statement, with Event LOG injection
-     * $dbHelper->exeLog();
-     * return: Array of records + Inject the action on the event log
-     * The Log Injection is automatic
-     * It tries to detect an insert, delete, alter and log the event
+     * @brief       Execute Log.
+     * @details     This method is used to INSERT, UPDATE, DELETE, and ALTER the database.
+     *              with a event log injection.
      *
-     * Author: GI Technologies, 2011
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
      *
-     * @return array
+     * @note        The Log Injection is automatic It tries to detect an insert, delete, alter and log the event
+     *
+     * @see         User::addUser() for Add example.
+     *
+     * @return      array Connection error info if any
      */
-	function execLog(){
-		
+	function execLog()
+    {
 		/**
 		 * Execute the sql statement
 		 */
 		$this->conn->query( $this->sql_statement );
 
-		/**
-         * If the QUERY has INSERT, DELETE, ALTER then has to
-         * insert the event to the database.
-         */
 		if (stristr($this->sql_statement, "INSERT") ||
 			stristr($this->sql_statement, "DELETE") ||
-			stristr($this->sql_statement, "UPDATE") || 
+			stristr($this->sql_statement, "UPDATE") ||
 			stristr($this->sql_statement, "ALTER")){
-				
-				/**
-                 * Check up the last insert id.
-                 */
-				$this->lastInsertId = $this->conn->lastInsertId();
-				
+
+            $this->lastInsertId = $this->conn->lastInsertId();
+
 			if (stristr($this->sql_statement, "INSERT")) { $eventLog = "Record insertion"; }
 			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
 			if (stristr($this->sql_statement, "UPDATE")) $eventLog = "Record update";
@@ -256,20 +264,18 @@ class dbHelper {
 		return $this->conn->errorInfo();
 	}
 
-
     /**
-     * Inject directly to the LOG
-     * $dbHelper->execEvent("Need to be audited!");
-     * return: N/A
+     * @brief       Execute Event
+     * @details     This method is used to Inject directly to the evente log
      *
-     * Author: GI Technologies, 2011
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
      *
-     * @param $eventLog
-     * @return array
+     * @param       string $eventLog event data to log
+     * @return      array Connection error info if any
      */
-	function execEvent($eventLog){
-	
-		// Prepare the SQL statement first, and then execute.
+	function execEvent($eventLog)
+    {
 		$stmt = $this->conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
 		$stmt->bindParam(':dtime', date('Y-m-d H:i:s'), PDO::PARAM_STR);
 		$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
@@ -280,23 +286,20 @@ class dbHelper {
 		return $this->conn->errorInfo();
 	}
 
-
     /**
-     * Fetch a recordset
-     * return: Only one record array
-     * $rec = $dbHelper->fetch($sql);
-     * if ($rec['username'] == ""){
+     * @brief       Fetch
+     * @details     This method is used to fetch only one record from the database
      *
-     * Author: GI Technologies, 2011
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
      *
-     * @return array|mixed
+     * @return      array of record or error if any
      */
-	function fetch(){
+	function fetch()
+    {
 		// Get all the records
 		$recordset = $this->conn->query( $this->sql_statement );
-
         $err = $this->conn->errorInfo();
-
         if(!$err[2]){
             return $recordset->fetch(PDO::FETCH_ASSOC);
         } else {
@@ -304,21 +307,20 @@ class dbHelper {
         }
 
 	}
-	
 
     /**
-     * Fetch the last error.
-     * getError - Get the error for a statement, if any.
+     * @brief       Fetch the last error.
+     * @details     If there was a problem with the connection it will return
+     *              the error message, if the was not a connection problem, it will
+     *              return a array with the code and message.
      *
-     * return: If there was a problem with the connection it will return
-     * the error message, if the was not a connection problem, it will
-     * return a array with the code and message.
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
      *
-     * Author: GI Technologies, 2011
-     *
-     * @return array|string
+     * @return      array|string
      */
-	function getError(){
+	function getError()
+    {
 		if (!$this->err){
 			return $this->conn->errorInfo();
 		} else {
@@ -326,23 +328,22 @@ class dbHelper {
 		}
 	}
 	
-
     /**
-     * rowCount
-     * return: The number of rows in a table
-     * $rec = $dbHelper->rowCount();
-     * if ($rec['username'] == "")
+     * @brief       Row Count
+     * @details     This methos is used to query an statement and return the rows coount using PDO
      *
-     * Author: Ernesto Rodriguez
+     * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
+     * @version     Vega 1.0
      *
-     * @return int
+     * @note        count($sql) should be use insted of this method.
+     *              please refer to @ref Logs::getLogs() to see an example
+     *              of how to use count();
+     *
+     * @return      int The number of rows in a table
      */
-	function rowCount(){
-	
-		// Get all the records & count it.
+	function rowCount()
+    {
 		$recordset = $this->conn->query( $this->sql_statement );
 		return $recordset->rowCount();
-		
 	}
-
 }

@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -110,7 +111,7 @@ Inheritance diagram for CombosData:</div>
  <div class="center">
   <img src="class_combos_data.png" usemap="#CombosData_map" alt=""/>
   <map id="CombosData_map" name="CombosData_map">
-<area href="classdb_helper.html" alt="dbHelper" shape="rect" coords="0,0,83,24"/>
+<area href="classdb_helper.html" title="Database Helper Class." alt="dbHelper" shape="rect" coords="0,0,83,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -190,9 +191,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00115">115</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                           {
         $sql = <span class="stringliteral">&quot;SELECT catid, catname FROM calendar_categories ORDER BY cattype, catname&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -217,9 +218,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00125">125</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                       {
         $sql = <span class="stringliteral">&quot;SELECT option_id, title  FROM list_options WHERE list_id = &#39;apptstat&#39; ORDER BY seq&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -244,9 +245,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00105">105</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                  {
         $sql = <span class="stringliteral">&quot;SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -271,9 +272,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00085">85</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                   {
         $sql = <span class="stringliteral">&quot;SELECT id, name FROM facility WHERE service_location != 0 ORDER BY name&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -330,9 +331,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00201">201</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                  {
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT lang_code, lang_description FROM lang_languages ORDER BY lang_description&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT lang_code, lang_description FROM lang_languages ORDER BY lang_description&quot;</span>);
         $rows = array();
-        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -357,9 +358,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00035">35</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                             {
         $sql = <span class="stringliteral">&quot;SELECT option_id, title  FROM list_options WHERE list_id = &#39;lists&#39;      ORDER BY seq&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -384,9 +385,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00045">45</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                      {
         $sql = <span class="stringliteral">&quot;SELECT option_id, title  FROM list_options WHERE list_id = &#39;message_status&#39;     ORDER BY seq&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -411,9 +412,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00075">75</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                    {
         $sql = <span class="stringliteral">&quot;SELECT option_id, title  FROM list_options WHERE list_id = &#39;note_type&#39;  ORDER BY seq&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -560,9 +561,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00095">95</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                              {
         $sql = <span class="stringliteral">&quot;SELECT id, role_name FROM acl_roles ORDER BY role_name&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -652,9 +653,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00055">55</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                               {
         $sql = <span class="stringliteral">&quot;SELECT option_id, title  FROM list_options WHERE list_id = &#39;titles&#39;     ORDER BY seq&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -679,9 +680,9 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_combos_data_8php_source.html#l00065">65</a> of file <a class="el" href="_combos_data_8php_source.html">CombosData.php</a>.</p>
 <div class="fragment"><pre class="fragment">                              {
         $sql = <span class="stringliteral">&quot;SELECT option_id, title  FROM list_options WHERE list_id = &#39;types&#39;      ORDER BY seq&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -710,9 +711,9 @@ Public Member Functions</h2></td></tr>
 <span class="stringliteral">                  FROM users</span>
 <span class="stringliteral">                 WHERE username != &#39;&#39; AND active = 1 AND ( info IS NULL OR info NOT LIKE &#39;%Inactive%&#39; )</span>
 <span class="stringliteral">              ORDER BY lname, fname&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows =array();
-        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
+        <span class="keywordflow">foreach</span> ($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row) {
             $row[<span class="stringliteral">&#39;name&#39;</span>] = $row[<span class="stringliteral">&#39;title&#39;</span>].<span class="charliteral">&#39; &#39;</span>.<a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">Person::fullname</a>($row[<span class="stringliteral">&#39;fname&#39;</span>],$row[<span class="stringliteral">&#39;mname&#39;</span>],$row[<span class="stringliteral">&#39;lname&#39;</span>]);
             unset($row[<span class="stringliteral">&#39;title&#39;</span>],$row[<span class="stringliteral">&#39;fname&#39;</span>],$row[<span class="stringliteral">&#39;mname&#39;</span>],$row[<span class="stringliteral">&#39;lname&#39;</span>]);
             array_push($rows,$row);
@@ -745,7 +746,7 @@ Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_combos_data.html">CombosData</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:12 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

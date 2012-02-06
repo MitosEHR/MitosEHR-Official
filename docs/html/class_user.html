@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -111,7 +112,7 @@ Inheritance diagram for User:</div>
   <img src="class_user.png" usemap="#User_map" alt=""/>
   <map id="User_map" name="User_map">
 <area href="class_person.html" alt="Person" shape="rect" coords="0,56,64,80"/>
-<area href="classdb_helper.html" alt="dbHelper" shape="rect" coords="0,0,64,24"/>
+<area href="classdb_helper.html" title="Database Helper Class." alt="dbHelper" shape="rect" coords="0,0,64,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -163,17 +164,17 @@ Public Member Functions</h2></td></tr>
         $data[<span class="stringliteral">&#39;calendar&#39;</span>]   = ($data[<span class="stringliteral">&#39;calendar&#39;</span>]   == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
         <span class="keywordflow">if</span>($data[<span class="stringliteral">&#39;taxonomy&#39;</span>] == <span class="stringliteral">&quot;&quot;</span>){ unset($data[<span class="stringliteral">&#39;taxonomy&#39;</span>]); }
 
-        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($data, <span class="stringliteral">&quot;users&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($data, <span class="stringliteral">&quot;users&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 
         $params-&gt;id = $this-&gt;lastInsertId;
 
         $role[<span class="stringliteral">&#39;user_id&#39;</span>] = $params-&gt;id;
 
-        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($role, <span class="stringliteral">&quot;acl_user_roles&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($role, <span class="stringliteral">&quot;acl_user_roles&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 
         <span class="keywordflow">return</span> $params;
 
@@ -207,16 +208,16 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><pre class="fragment">                                                {
         $aes = $this-&gt;getAES();
         $aesPwd = $aes-&gt;encrypt($newpassword);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT password, pwd_history1 FROM users WHERE id=&#39;&quot;</span>.$this-&gt;user_id.<span class="stringliteral">&quot;&#39;&quot;</span>);
-        $pwds = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a>();
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT password, pwd_history1 FROM users WHERE id=&#39;&quot;</span>.$this-&gt;user_id.<span class="stringliteral">&quot;&#39;&quot;</span>);
+        $pwds = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176" title="Fetch.">fetch</a>();
 
         $row[<span class="stringliteral">&#39;password&#39;</span>]     = $aesPwd;
         $row[<span class="stringliteral">&#39;pwd_history1&#39;</span>] = $pwds[<span class="stringliteral">&#39;password&#39;</span>];
         $row[<span class="stringliteral">&#39;pwd_history2&#39;</span>] = $pwds[<span class="stringliteral">&#39;pwd_history1&#39;</span>];
 
-        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($row, <span class="stringliteral">&quot;users&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span>.$this-&gt;user_id.<span class="stringliteral">&quot;&#39;&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($row, <span class="stringliteral">&quot;users&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span>.$this-&gt;user_id.<span class="stringliteral">&quot;&#39;&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 
         <span class="keywordflow">return</span>;
 
@@ -251,8 +252,8 @@ Public Member Functions</h2></td></tr>
         $aes = $this-&gt;getAES();
         $this-&gt;user_id = $params-&gt;user_id;
         $aesPwd = $aes-&gt;encrypt($params-&gt;password);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT password, pwd_history1, pwd_history2  FROM users WHERE id=&#39;&quot;</span>.$this-&gt;user_id.<span class="stringliteral">&quot;&#39;&quot;</span>);
-        $pwds = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a>();
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT password, pwd_history1, pwd_history2  FROM users WHERE id=&#39;&quot;</span>.$this-&gt;user_id.<span class="stringliteral">&quot;&#39;&quot;</span>);
+        $pwds = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176" title="Fetch.">fetch</a>();
         <span class="keywordflow">if</span>($pwds[<span class="stringliteral">&#39;password&#39;</span>] == $aesPwd || $pwds[<span class="stringliteral">&#39;pwd_history1&#39;</span>] == $aesPwd || $pwds[<span class="stringliteral">&#39;pwd_history2&#39;</span>] == $aesPwd){
             <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;error&#39;</span>=&gt;<span class="keyword">true</span>);
         }<span class="keywordflow">else</span>{
@@ -287,7 +288,7 @@ Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_user_8php_source.html#l00034">34</a> of file <a class="el" href="_user_8php_source.html">User.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                              {
 
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT u.*, r.role_id</span>
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT u.*, r.role_id</span>
 <span class="stringliteral">                         FROM users AS u</span>
 <span class="stringliteral">                    LEFT JOIN acl_user_roles AS r ON r.user_id = u.id</span>
 <span class="stringliteral">                        WHERE u.authorized = 1 OR u.username != &#39;&#39;</span>
@@ -295,7 +296,7 @@ Public Member Functions</h2></td></tr>
 <span class="stringliteral">                        LIMIT $params-&gt;start,$params-&gt;limit&quot;</span>);
 
         $rows = array();
-        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
 
             $row[<span class="stringliteral">&#39;fullname&#39;</span>]    = $this-&gt;<a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">fullname</a>($row[<span class="stringliteral">&#39;fname&#39;</span>],$row[<span class="stringliteral">&#39;mname&#39;</span>],$row[<span class="stringliteral">&#39;lname&#39;</span>]);
             unset($row[<span class="stringliteral">&#39;password&#39;</span>],$row[<span class="stringliteral">&#39;pwd_history1&#39;</span>],$row[<span class="stringliteral">&#39;pwd_history2&#39;</span>]);
@@ -344,17 +345,17 @@ Public Member Functions</h2></td></tr>
         }
         unset($data[<span class="stringliteral">&#39;password&#39;</span>]);
 
-        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($role, <span class="stringliteral">&quot;acl_user_roles&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;user_id=&#39;$this-&gt;user_id&#39;&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($role, <span class="stringliteral">&quot;acl_user_roles&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;user_id=&#39;$this-&gt;user_id&#39;&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 
 
         $data[<span class="stringliteral">&#39;authorized&#39;</span>] = ($data[<span class="stringliteral">&#39;authorized&#39;</span>] == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
         $data[<span class="stringliteral">&#39;active&#39;</span>]         = ($data[<span class="stringliteral">&#39;active&#39;</span>]     == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
         $data[<span class="stringliteral">&#39;calendar&#39;</span>]   = ($data[<span class="stringliteral">&#39;calendar&#39;</span>]   == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
-        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($data, <span class="stringliteral">&quot;users&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;$this-&gt;user_id&#39;&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($data, <span class="stringliteral">&quot;users&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;$this-&gt;user_id&#39;&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 
         <span class="keywordflow">return</span> $params;
 
@@ -385,7 +386,7 @@ Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_user.html">User</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:12 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

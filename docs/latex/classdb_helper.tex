@@ -1,6 +1,11 @@
 \hypertarget{classdb_helper}{\section{db\-Helper \-Class \-Reference}
 \label{classdb_helper}\index{db\-Helper@{db\-Helper}}
 }
+
+
+\-Database \-Helper \-Class.  
+
+
 \-Inheritance diagram for db\-Helper\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -11,27 +16,27 @@
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classdb_helper_a095c5d389db211932136b53f25f39685}{\-\_\-\-\_\-construct} ()
-\item 
-\hyperlink{classdb_helper_afab91f6d05df61aa06e6bfc035b13afe}{filert\-By\-Start\-Limit} (\$rows, \$params)
-\item 
+\begin{DoxyCompactList}\small\item\em \hyperlink{classdb_helper}{db\-Helper} contructor. \end{DoxyCompactList}\item 
+\hyperlink{classdb_helper_a3ca2578f15860418ca93fca0112a0e08}{filert\-By\-Start\-Limit} (\$records, std\-Class \$params)
+\begin{DoxyCompactList}\small\item\em \-Filter \-Records \-By \-Sart and \-Limit. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_a21e387f778abae898a33b0355e56c095}{set\-S\-Q\-L} (\$sql)
-\item 
+\begin{DoxyCompactList}\small\item\em \-Set the \-S\-Q\-L \-Statement. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_a43a2fa1fe095e37df5a641fe1cfc7d9c}{exec\-Statement} (\$fetch\-Style=\-P\-D\-O\-::\-F\-E\-T\-C\-H\-\_\-\-B\-O\-T\-H)
-\item 
+\begin{DoxyCompactList}\small\item\em \-Execute \-Statement. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_ae033db35138ae80f3b1fd33c5c2c473e}{exec\-Only} ()
-\item 
+\begin{DoxyCompactList}\small\item\em \-Execute \-Statement \char`\"{}\-W\-I\-T\-H\-O\-U\-T\char`\"{} returning records. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_aa9840bbfb81d2d519994cd0a8e880c4a}{sql\-Bind} (\$b\-\_\-array, \$table, \$iu=\char`\"{}\-I\char`\"{}, \$where)
-\item 
+\begin{DoxyCompactList}\small\item\em \-S\-Q\-L \-Bind. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_a75dea4073687142b0b1b6a6819cbb243}{exec\-Log} ()
-\item 
+\begin{DoxyCompactList}\small\item\em \-Execute \-Log. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_ac1876160b600b359a60fd5aad7edba09}{exec\-Event} (\$event\-Log)
-\item 
+\begin{DoxyCompactList}\small\item\em \-Execute \-Event. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_ae48cc10bd727774bb36203986ce3b176}{fetch} ()
-\item 
+\begin{DoxyCompactList}\small\item\em \-Fetch. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_a24ada5decce3d1b79cd82f5a90ccf404}{get\-Error} ()
-\item 
+\begin{DoxyCompactList}\small\item\em \-Fetch the last error. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_a82b073888555fc72e57142fe913db377}{row\-Count} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Row \-Count. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Data \-Fields}
 \begin{DoxyCompactItemize}
 \item 
@@ -39,12 +44,38 @@
 \item 
 \hyperlink{classdb_helper_ae4ac788f919cb92f528ab1455e8a3e6b}{\$last\-Insert\-Id}
 \end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classdb_helper_aa8a5a87b9c1a6a0819b88447cbe41877}{\$conn}
+\end{DoxyCompactItemize}
 
 
 \subsection{\-Detailed \-Description}
+\-Database \-Helper \-Class. 
+
+\-A \-P\-D\-O helper for \-Mitos\-E\-H\-R, contains custom function to manage the database in \-Mitos\-E\-H\-R. \-P\-D\-O is new in \-P\-H\-P v5.
+
+\-The \-P\-H\-P \-Data \-Objects (\-P\-D\-O) extension defines a lightweight, consistent interface for accessing databases in \-P\-H\-P. \-Each database driver that implements the \-P\-D\-O interface can expose database-\/specific features as regular extension functions. \-Note that you cannot perform any database functions using the \-P\-D\-O extension by itself; you must use a database-\/specific \-P\-D\-O driver to access a database server.
+
+\-P\-D\-O provides a data-\/access abstraction layer, which means that, regardless of which database you're using, you use the same functions to issue queries and fetch data. \-P\-D\-O does not provide a database abstraction; it doesn't rewrite \-S\-Q\-L or emulate missing features. \-You should use a full-\/blown abstraction layer if you need that facility.
+
+\-P\-D\-O ships with \-P\-H\-P 5.\-1, and is available as a \-P\-E\-C\-L extension for \-P\-H\-P 5.\-0; \-P\-D\-O requires the new \-O\-O features in the core of \-P\-H\-P 5, and so will not run with earlier versions of \-P\-H\-P.
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+
+\-Ernesto \-J. \-Rodriguez (\-Certun) $<$\href{mailto:erodriguez@certun.com}{\tt erodriguez@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0 
+\end{DoxyVersion}
+\begin{DoxyCopyright}{\-Copyright}
+\-Gnu \-Public \-License (\-G\-P\-Lv3) 
+\end{DoxyCopyright}
 
 
-\-Definition at line 38 of file db\-Helper.\-php.
+\-Definition at line 37 of file db\-Helper.\-php.
 
 
 
@@ -56,15 +87,25 @@
 {}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_a095c5d389db211932136b53f25f39685}
-\-Connect to the database \$db = new \$db\-Helper();
 
-\-Author\-: \-G\-I \-Technologies, 2011 
 
-\-Definition at line 52 of file db\-Helper.\-php.
+\hyperlink{classdb_helper}{db\-Helper} contructor. 
+
+\-This method starts the connection with mysql server using \$\-\_\-\-S\-E\-S\-S\-I\-O\-N values during the login proccess.
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0 
+\end{DoxyVersion}
+
+
+\-Definition at line 65 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                               {
+    {
                 error_reporting(0);
                 try {
                 $this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db'][
@@ -86,27 +127,33 @@
 \item[{\$}]{event\-Log}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_ac1876160b600b359a60fd5aad7edba09}
-\-Inject directly to the \-L\-O\-G \$db\-Helper-\/$>$exec\-Event(\char`\"{}\-Need to be audited!\char`\"{}); return\-: \-N/\-A
-
-\-Author\-: \-G\-I \-Technologies, 2011
 
 
-\begin{DoxyParams}{\-Parameters}
-{\em \$event\-Log} & \\
+\-Execute \-Event. 
+
+\-This method is used to \-Inject directly to the evente log
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$event\-Log} & event data to log \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{\-Returns}
-array 
+array \-Connection error info if any 
 \end{DoxyReturn}
 
 
-\-Definition at line 270 of file db\-Helper.\-php.
+\-Definition at line 277 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                                     {
-        
-                // Prepare the SQL statement first, and then execute.
+    {
                 $stmt = $this->conn->prepare("INSERT INTO log (date, event,
        comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)"
       );
@@ -130,37 +177,45 @@ array
 {}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_a75dea4073687142b0b1b6a6819cbb243}
-\-Simple \-S\-Q\-L \-Statement, with \-Event \-L\-O\-G injection \$db\-Helper-\/$>$exe\-Log(); return\-: \-Array of records + \-Inject the action on the event log \-The \-Log \-Injection is automatic \-It tries to detect an insert, delete, alter and log the event
 
-\-Author\-: \-G\-I \-Technologies, 2011
 
+\-Execute \-Log. 
+
+\-This method is used to \-I\-N\-S\-E\-R\-T, \-U\-P\-D\-A\-T\-E, \-D\-E\-L\-E\-T\-E, and \-A\-L\-T\-E\-R the database. with a event log injection.
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+\begin{DoxyNote}{\-Note}
+\-The \-Log \-Injection is automatic \-It tries to detect an insert, delete, alter and log the event
+\end{DoxyNote}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_user_a8dfbe73a90ecf4cdec6b3229da0ee2f8}{\-User\-::add\-User()} for \-Add example.
+\end{DoxySeeAlso}
 \begin{DoxyReturn}{\-Returns}
-array 
+array \-Connection error info if any 
 \end{DoxyReturn}
 \-Execute the sql statement
 
-\-If the \-Q\-U\-E\-R\-Y has \-I\-N\-S\-E\-R\-T, \-D\-E\-L\-E\-T\-E, \-A\-L\-T\-E\-R then has to insert the event to the database.
-
-\-Check up the last insert id.
-
 \-Prepare the \-S\-Q\-L statement first, and then execute.
 
-\-Definition at line 216 of file db\-Helper.\-php.
+\-Definition at line 231 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                          {
-                
+    {
                 $this->conn->query( $this->sql_statement );
 
                 if (stristr($this->sql_statement, "INSERT") ||
                         stristr($this->sql_statement, "DELETE") ||
-                        stristr($this->sql_statement, "UPDATE") || 
+                        stristr($this->sql_statement, "UPDATE") ||
                         stristr($this->sql_statement, "ALTER")){
-                                
-                                $this->lastInsertId = $this->conn->lastInsertId
-      ();
-                                
+
+            $this->lastInsertId = $this->conn->lastInsertId();
+
                         if (stristr($this->sql_statement, "INSERT")) { 
       $eventLog = "Record insertion"; }
                         if (stristr($this->sql_statement, "DELETE")) $eventLog 
@@ -199,20 +254,28 @@ array
 {}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_ae033db35138ae80f3b1fd33c5c2c473e}
-\-Simple exec \-S\-Q\-L \-Statement, with no \-Event \-L\-O\-G injection return\-: \-Array of errors, if any.
 
-\-Author\-: \-G\-I \-Technologies, 2011
 
+\-Execute \-Statement \char`\"{}\-W\-I\-T\-H\-O\-U\-T\char`\"{} returning records. 
+
+\-Simple exec \-S\-Q\-L \-Statement, with no \-Event \-L\-O\-G injection. \-For example to execute an \-A\-L\-T\-E\-R a table.
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
 \begin{DoxyReturn}{\-Returns}
-array 
+array \-Connection error info if any 
 \end{DoxyReturn}
 
 
-\-Definition at line 135 of file db\-Helper.\-php.
+\-Definition at line 154 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                           {
+    {
         $this->conn->query($this->sql_statement);
                 if (stristr($this->sql_statement, "SELECT")){
                         $this->lastInsertId = $this->conn->lastInsertId();
@@ -227,25 +290,36 @@ array
 \item[{\$}]{fetch\-Style = {\ttfamily \-P\-D\-O\-:\-:\-F\-E\-T\-C\-H\-\_\-\-B\-O\-T\-H}}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_a43a2fa1fe095e37df5a641fe1cfc7d9c}
-\-Simple \-S\-Q\-L \-Statement, with no \-Event \-L\-O\-G injection \$db\-Helper-\/$>$\hyperlink{classdb_helper_a43a2fa1fe095e37df5a641fe1cfc7d9c}{exec\-Statement()}; return\-: \-Array of records, if error occurred return the error instead foreach (sql\-Statement(\$sql) as \$urow) \{
-
-\-Author\-: \-G\-I \-Technologies, 2011
 
 
-\begin{DoxyParams}[1]{\-Parameters}
-int & {\em \$fetch\-Style} & \\
+\-Execute \-Statement. 
+
+\-This method is a simple \-S\-Q\-L \-Statement, with no \-Event \-L\-O\-G injection
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_logs_a9c20ffb4dc836181dd4dcb0fe3c8c5ee}{\-Logs\-::get\-Logs()} for basic example and \hyperlink{class_patient_a5da7543bb87e70c01a1a3b3180c712fc}{\-Patient\-::patient\-Live\-Search()} for advance example.
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{\-Parameters}
+{\em int} & defualt to (\-P\-D\-O\-::\-F\-E\-T\-C\-H\-\_\-\-B\-O\-T\-H) \-Please see \-Fetch \-Style docs at \href{http://php.net/manual/en/pdostatement.fetch.php}{\tt \-P\-D\-O \-Statement \-Fetch} \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{\-Returns}
-array 
+array of records, if error occurred return the error instead 
 \end{DoxyReturn}
 
 
-\-Definition at line 113 of file db\-Helper.\-php.
+\-Definition at line 130 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                                                           {
+    {
                 $recordset = $this->conn->query($this->sql_statement);
                 if (stristr($this->sql_statement, "SELECT")){
                         $this->lastInsertId = $this->conn->lastInsertId();
@@ -265,25 +339,31 @@ array
 {}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_ae48cc10bd727774bb36203986ce3b176}
-\-Fetch a recordset return\-: \-Only one record array \$rec = \$db\-Helper-\/$>$fetch(\$sql); if (\$rec\mbox{[}'username'\mbox{]} == \char`\"{}\char`\"{})\{
 
-\-Author\-: \-G\-I \-Technologies, 2011
 
+\-Fetch. 
+
+\-This method is used to fetch only one record from the database
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
 \begin{DoxyReturn}{\-Returns}
-array$|$mixed 
+array of record or error if any 
 \end{DoxyReturn}
 
 
-\-Definition at line 294 of file db\-Helper.\-php.
+\-Definition at line 298 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                        {
+    {
                 // Get all the records
                 $recordset = $this->conn->query( $this->sql_statement );
-
         $err = $this->conn->errorInfo();
-
         if(!$err[2]){
             return $recordset->fetch(PDO::FETCH_ASSOC);
         } else {
@@ -292,41 +372,53 @@ array$|$mixed
 
         }
 \end{DoxyCode}
-\hypertarget{classdb_helper_afab91f6d05df61aa06e6bfc035b13afe}{\index{db\-Helper@{db\-Helper}!filert\-By\-Start\-Limit@{filert\-By\-Start\-Limit}}
+\hypertarget{classdb_helper_a3ca2578f15860418ca93fca0112a0e08}{\index{db\-Helper@{db\-Helper}!filert\-By\-Start\-Limit@{filert\-By\-Start\-Limit}}
 \index{filert\-By\-Start\-Limit@{filert\-By\-Start\-Limit}!dbHelper@{db\-Helper}}
 \subsubsection[{filert\-By\-Start\-Limit}]{\setlength{\rightskip}{0pt plus 5cm}{\bf filert\-By\-Start\-Limit} (
 \begin{DoxyParamCaption}
-\item[{\$}]{rows, }
-\item[{\$}]{params}
+\item[{\$}]{records, }
+\item[{std\-Class \$}]{params}
 \end{DoxyParamCaption}
-)}}\label{classdb_helper_afab91f6d05df61aa06e6bfc035b13afe}
-\-Filter \-By \-Sart and \-Limit
-
-\-This \-Function will filter the \$rows array by a start and \-Limit usin \-Lin\-Q.
-
-{\ttfamily  function filert\-By\-Start\-Limit(\$rows, \$params)\{ \$result = from('\$row')-\/$>$in(\$rows)-\/$>$skip(\$params-\/$>$start) -\/$>$take(\$params-\/$>$limit) -\/$>$select('\$row'); return \$result; \} }
+)}}\label{classdb_helper_a3ca2578f15860418ca93fca0112a0e08}
 
 
-\begin{DoxyParams}{\-Parameters}
-{\em \$rows} & \\
+\-Filter \-Records \-By \-Sart and \-Limit. 
+
+\-This \-Function will filter the \$records by a start and \-Limit usin \-Lin\-Q. \-The main reason to use \-Lin\-Q is to avoid multiples \-S\-Ql queries to get the record totals and filter resutls.
+
+\begin{DoxyAuthor}{\-Author}
+\-Ernesto \-J. \-Rodriguez (\-Certun) $<$\href{mailto:erodriguez@certun.com}{\tt erodriguez@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+\begin{DoxyWarning}{\-Warning}
+\-This method requires std\-Class arguments. \-Use \-P\-D\-O\-::\-F\-E\-T\-C\-H\-\_\-\-C\-L\-A\-S\-S to sexecute the \-S\-Q\-L queries.
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_logs_a9c20ffb4dc836181dd4dcb0fe3c8c5ee}{\-Logs\-::get\-Logs()} for basic example and \hyperlink{class_patient_a5da7543bb87e70c01a1a3b3180c712fc}{\-Patient\-::patient\-Live\-Search()} for advance example.
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{\-Parameters}
+ & {\em \$records} & \-S\-Q\-L recordes to filter \\
 \hline
-{\em \$params} & \\
+std\-Class & {\em \$params} & \-Params used to filter the results, \$params-\/$>$start and \$params-\/$>$limit are required \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{\-Returns}
-mixed 
+mixed \-Records filtered 
 \end{DoxyReturn}
 
 
-\-Definition at line 81 of file db\-Helper.\-php.
+\-Definition at line 92 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                                               {
-        $result = from('$row')->in($rows)
+    {
+        $result = from('$record')->in($records)
                   ->skip($params->start)
                   ->take($params->limit)
-                  ->select('$row');
+                  ->select('$record');
         return $result;
     }
 \end{DoxyCode}
@@ -337,22 +429,28 @@ mixed
 {}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_a24ada5decce3d1b79cd82f5a90ccf404}
-\-Fetch the last error. get\-Error -\/ \-Get the error for a statement, if any.
 
-return\-: \-If there was a problem with the connection it will return the error message, if the was not a connection problem, it will return a array with the code and message.
 
-\-Author\-: \-G\-I \-Technologies, 2011
+\-Fetch the last error. 
 
+\-If there was a problem with the connection it will return the error message, if the was not a connection problem, it will return a array with the code and message.
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
 \begin{DoxyReturn}{\-Returns}
 array$|$string 
 \end{DoxyReturn}
 
 
-\-Definition at line 321 of file db\-Helper.\-php.
+\-Definition at line 322 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                           {
+    {
                 if (!$this->err){
                         return $this->conn->errorInfo();
                 } else {
@@ -367,25 +465,33 @@ array$|$string
 {}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_a82b073888555fc72e57142fe913db377}
-row\-Count return\-: \-The number of rows in a table \$rec = \$db\-Helper-\/$>$\hyperlink{classdb_helper_a82b073888555fc72e57142fe913db377}{row\-Count()}; if (\$rec\mbox{[}'username'\mbox{]} == \char`\"{}\char`\"{})
 
-\-Author\-: \-Ernesto \-Rodriguez
 
+\-Row \-Count. 
+
+\-This methos is used to query an statement and return the rows coount using \-P\-D\-O
+
+\begin{DoxyAuthor}{\-Author}
+\-Ernesto \-J. \-Rodriguez (\-Certun) $<$\href{mailto:erodriguez@certun.com}{\tt erodriguez@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+\begin{DoxyNote}{\-Note}
+count(\$sql) should be use insted of this method. please refer to \hyperlink{class_logs_a9c20ffb4dc836181dd4dcb0fe3c8c5ee}{\-Logs()} to see an example of how to use count();
+\end{DoxyNote}
 \begin{DoxyReturn}{\-Returns}
-int 
+int \-The number of rows in a table 
 \end{DoxyReturn}
 
 
-\-Definition at line 340 of file db\-Helper.\-php.
+\-Definition at line 344 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                           {
-        
-                // Get all the records & count it.
+    {
                 $recordset = $this->conn->query( $this->sql_statement );
                 return $recordset->rowCount();
-                
         }
 \end{DoxyCode}
 \hypertarget{classdb_helper_a21e387f778abae898a33b0355e56c095}{\index{db\-Helper@{db\-Helper}!set\-S\-Q\-L@{set\-S\-Q\-L}}
@@ -395,22 +501,33 @@ int
 \item[{\$}]{sql}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_a21e387f778abae898a33b0355e56c095}
-\-Set the \-S\-Q\-L \-Statement
 
-\-Author\-: \-G\-I \-Technologies, 2011
 
+\-Set the \-S\-Q\-L \-Statement. 
+
+\-This method set the \-S\-Q\-L statement in \$this-\/$>$sql\-\_\-statement for othe methods to use it
+
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_logs_a9c20ffb4dc836181dd4dcb0fe3c8c5ee}{\-Logs\-::get\-Logs()} for basic example and \hyperlink{class_patient_a5da7543bb87e70c01a1a3b3180c712fc}{\-Patient\-::patient\-Live\-Search()} for advance example.
+\end{DoxySeeAlso}
 
 \begin{DoxyParams}{\-Parameters}
-{\em \$sql} & \\
+{\em \$sql} & string statement to set \\
 \hline
 \end{DoxyParams}
 
 
-\-Definition at line 97 of file db\-Helper.\-php.
+\-Definition at line 113 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                             {
+    {
                 $this->sql_statement = $sql;
         }
 \end{DoxyCode}
@@ -424,43 +541,52 @@ int
 \item[{\$}]{where}
 \end{DoxyParamCaption}
 )}}\label{classdb_helper_aa9840bbfb81d2d519994cd0a8e880c4a}
-sql\-Bind \-This function builds a \-S\-Q\-L \-Statement based on an array arguments to pass\-:
 
-\$b\-\_\-array -\/ \-An array containing a key that has to be the exact field on the data base, and it's value
 
-table -\/ \-A valid database table to make the \-S\-Q\-L statement
+\-S\-Q\-L \-Bind. 
 
-\$iu -\/ \-Insert or \-Update parameter. \-This has to options i = \-Insert, u = \-Update
+\-This method is used to \-I\-N\-S\-E\-R\-T and \-U\-P\-D\-A\-T\-E the database.
 
-\$where -\/ \-If in \$iu = \-U is used you must pass a \-W\-H\-E\-R\-E clause in the last parameter. ie\-: id='1', list\-\_\-id='patient'
-
-\-N\-O\-T\-E\-: \-To eliminate fields that are not in the database you can use unset(\$b\-\_\-array\mbox{[}'field'\mbox{]});
-
+\begin{DoxyAuthor}{\-Author}
+\-Gino \-Rivera (\-Certun) $<$\href{mailto:grivera@certun.com}{\tt grivera@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+\begin{DoxyNote}{\-Note}
+\-To eliminate fields that are not in the database you can use unset(\$b\-\_\-array\mbox{[}'field'\mbox{]}); 
+\end{DoxyNote}
+\begin{DoxyWarning}{\-Warning}
+\-To \-U\-P\-D\-A\-T\-E you can \-N\-O\-T pass the \-I\-D in the \$b\-\_\-array. \-Make user to unset the \-I\-D before calling this method.
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_user_a8dfbe73a90ecf4cdec6b3229da0ee2f8}{\-User\-::add\-User()} for \-Add example and \hyperlink{class_user_a5da7f289821c6a4372603673d630a60f}{\-User\-::update\-User()} for \-Update example.
+\end{DoxySeeAlso}
 
 \begin{DoxyParams}[1]{\-Parameters}
- & {\em \$b\-\_\-array} & \\
+array & {\em \$b\-\_\-array} & containing a key that has to be the exact field on the data base, and it's value \\
 \hline
- & {\em \$table} & \\
+string & {\em \$table} & \-A valid database table to make the \-S\-Q\-L statement \\
 \hline
-string & {\em \$iu} & \\
+string & {\em \$iu} & \-Insert or \-Update parameter. \-This has to options \-I = \-Insert, \-U = \-Update \\
 \hline
- & {\em \$where} & \\
+string & {\em \$where} & \-If in \$iu = \-U is used you must pass a \-W\-H\-E\-R\-E clause in the last parameter. ie\-: id='1', list\-\_\-id='patient' \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{\-Returns}
-string 
+string cunstructed \-S\-Q\-L string 
 \end{DoxyReturn}
-\-Step 1 \-Create the \-I\-N\-S\-E\-R\-T or \-U\-P\-D\-A\-T\-E \-Clause
+\-Step 1 -\/ \-Create the \-I\-N\-S\-E\-R\-T or \-U\-P\-D\-A\-T\-E \-Clause
 
-\-Step 2 \-Create the \-S\-E\-T clause
+\-Step 2 -\/ \-Create the \-S\-E\-T clause
 
-\-Step 3 \-Create the \-W\-H\-E\-R\-E clause, if applicable
+\-Step 3 -\/ \-Create the \-W\-H\-E\-R\-E clause, if applicable
 
-\-Definition at line 168 of file db\-Helper.\-php.
+\-Definition at line 183 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
-                                                           {
+    {
 
         unset($b_array['__utma'],$b_array['__utmz'],$b_array['MitosEHR']);
 
@@ -490,19 +616,26 @@ string
 
 
 \subsection{\-Field \-Documentation}
+\hypertarget{classdb_helper_aa8a5a87b9c1a6a0819b88447cbe41877}{\index{db\-Helper@{db\-Helper}!\$conn@{\$conn}}
+\index{\$conn@{\$conn}!dbHelper@{db\-Helper}}
+\subsubsection[{\$conn}]{\setlength{\rightskip}{0pt plus 5cm}\$conn\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classdb_helper_aa8a5a87b9c1a6a0819b88447cbe41877}
+
+
+\-Definition at line 50 of file db\-Helper.\-php.
+
 \hypertarget{classdb_helper_ae4ac788f919cb92f528ab1455e8a3e6b}{\index{db\-Helper@{db\-Helper}!\$last\-Insert\-Id@{\$last\-Insert\-Id}}
 \index{\$last\-Insert\-Id@{\$last\-Insert\-Id}!dbHelper@{db\-Helper}}
 \subsubsection[{\$last\-Insert\-Id}]{\setlength{\rightskip}{0pt plus 5cm}\$last\-Insert\-Id}}\label{classdb_helper_ae4ac788f919cb92f528ab1455e8a3e6b}
 
 
-\-Definition at line 43 of file db\-Helper.\-php.
+\-Definition at line 46 of file db\-Helper.\-php.
 
 \hypertarget{classdb_helper_a29c1e591b4e284bca5ae38ed00eea5a9}{\index{db\-Helper@{db\-Helper}!\$sql\-\_\-statement@{\$sql\-\_\-statement}}
 \index{\$sql\-\_\-statement@{\$sql\-\_\-statement}!dbHelper@{db\-Helper}}
 \subsubsection[{\$sql\-\_\-statement}]{\setlength{\rightskip}{0pt plus 5cm}\$sql\-\_\-statement}}\label{classdb_helper_a29c1e591b4e284bca5ae38ed00eea5a9}
 
 
-\-Definition at line 40 of file db\-Helper.\-php.
+\-Definition at line 42 of file db\-Helper.\-php.
 
 
 

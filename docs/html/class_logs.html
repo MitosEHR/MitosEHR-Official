@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -104,22 +105,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Logs Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="Logs" --><!-- doxytag: inherits="dbHelper" --><div class="dynheader">
+<!-- doxytag: class="Logs" --><!-- doxytag: inherits="dbHelper" -->
+<p>log class  
+ <a href="class_logs.html#details">More...</a></p>
+<div class="dynheader">
 Inheritance diagram for Logs:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_logs.png" usemap="#Logs_map" alt=""/>
   <map id="Logs_map" name="Logs_map">
-<area href="classdb_helper.html" alt="dbHelper" shape="rect" coords="0,0,64,24"/>
+<area href="classdb_helper.html" title="Database Helper Class." alt="dbHelper" shape="rect" coords="0,0,64,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_logs.html#a9c20ffb4dc836181dd4dcb0fe3c8c5ee">getLogs</a> (stdClass $params)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all logs.  <a href="#a9c20ffb4dc836181dd4dcb0fe3c8c5ee"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
+<div class="textblock"><p>log class </p>
+<p>This class wil handle all the log logic</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Ernesto J. Rodriguez (Certun) &lt;<a href="mailto:erodriguez@certun.com">erodriguez@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0 </dd></dl>
+<dl class="copyright"><dt><b>Copyright:</b></dt><dd>Gnu Public License (GPLv3)</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>move all the log stuff from <a class="el" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a> to this class</dd></dl>
+
 <p>Definition at line <a class="el" href="_logs_8php_source.html#l00019">19</a> of file <a class="el" href="_logs_8php_source.html">Logs.php</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a9c20ffb4dc836181dd4dcb0fe3c8c5ee"></a><!-- doxytag: member="Logs::getLogs" ref="a9c20ffb4dc836181dd4dcb0fe3c8c5ee" args="(stdClass $params)" -->
@@ -136,29 +147,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Get <a class="el" href="class_logs.html">Logs</a></p>
-<p>This will return the total recods and the filtered record by Start and Limit params.</p>
-<p><code> public function getLogs(stdClass $params){</code></p>
-<p><code> $this-&gt;setSQL("SELECT * FROM log ORDER BY id DESC"); $rows = $this-&gt;execStatement(PDO::FETCH_CLASS); $total = count($rows); $rows = $this-&gt;filertByStartLimit($rows,$params); return array('totals'=&gt;$total ,'rows'=&gt;$rows);</code></p>
-<p><code> } </code></p>
+
+<p>Get all logs. </p>
+<p>This method will return all the logs and filter them by start and limit to be used with the Ext.ux.SlidingPager plugin.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Ernesto J. Rodriguez (Certun) &lt;<a href="mailto:erodriguez@certun.com">erodriguez@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>getLogs 'len' in /data/cinfig.php must be set to 1 in order for Ext.direct to send the Params</dd></dl>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td></td></tr>
+    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td>Params sent from sencha </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>mixed array of records with totals count </dd></dl>
 
-<p>Definition at line <a class="el" href="_logs_8php_source.html#l00042">42</a> of file <a class="el" href="_logs_8php_source.html">Logs.php</a>.</p>
+<p>Definition at line <a class="el" href="_logs_8php_source.html#l00034">34</a> of file <a class="el" href="_logs_8php_source.html">Logs.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                             {
-
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM log ORDER BY id DESC&quot;</span>);
-        $rows   = $this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_CLASS);
-        $total  = count($rows);
-        $rows = $this-&gt;<a class="code" href="classdb_helper.html#afab91f6d05df61aa06e6bfc035b13afe">filertByStartLimit</a>($rows,$params);
-
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM log ORDER BY id DESC&quot;</span>);
+        $records    = $this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_CLASS);
+        $total      = count($records);
+        $rows       = $this-&gt;<a class="code" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08" title="Filter Records By Sart and Limit.">filertByStartLimit</a>($records, $params);
         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;totals&#39;</span>=&gt;$total ,<span class="stringliteral">&#39;rows&#39;</span>=&gt;$rows);
-
     }
 </pre></div>
 </div>
@@ -186,7 +195,7 @@ Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_logs.html">Logs</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:12 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

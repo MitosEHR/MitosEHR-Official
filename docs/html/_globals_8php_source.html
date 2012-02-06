@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -107,16 +108,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00012"></a>00012     session_cache_limiter(<span class="stringliteral">&#39;private&#39;</span>);
 <a name="l00013"></a>00013 }
 <a name="l00014"></a>00014 include_once(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;root&#39;</span>].<span class="stringliteral">&quot;/classes/dbHelper.php&quot;</span>);
-<a name="l00015"></a><a class="code" href="class_globals.html">00015</a> <span class="keyword">class </span><a class="code" href="class_globals.html">Globals</a> <span class="keyword">extends</span> <a class="code" href="classdb_helper.html">dbHelper</a> {
+<a name="l00015"></a><a class="code" href="class_globals.html">00015</a> <span class="keyword">class </span><a class="code" href="class_globals.html">Globals</a> <span class="keyword">extends</span> <a class="code" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a> {
 <a name="l00016"></a>00016 
 <a name="l00020"></a><a class="code" href="class_globals.html#ae3a26252ce6efe503698085a7ed69dad">00020</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_globals.html#ae3a26252ce6efe503698085a7ed69dad">getGlobals</a>(){
 <a name="l00021"></a>00021 
-<a name="l00022"></a>00022         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT gl_name, gl_index, gl_value FROM globals&quot;</span>);
+<a name="l00022"></a>00022         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT gl_name, gl_index, gl_value FROM globals&quot;</span>);
 <a name="l00023"></a>00023         <span class="comment">// ****************************************************************************************************</span>
 <a name="l00024"></a>00024         <span class="comment">// $rows = $mitos_db-&gt;execStatement(PDO::FETCH_ASSOC) because we wwant to print all recods into one row</span>
 <a name="l00025"></a>00025         <span class="comment">// ****************************************************************************************************</span>
 <a name="l00026"></a>00026         $rows = array();
-<a name="l00027"></a>00027         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>() as $row){
+<a name="l00027"></a>00027         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>() as $row){
 <a name="l00028"></a>00028             $rows[$row[0]] = $row[2];
 <a name="l00029"></a>00029         }
 <a name="l00030"></a>00030         <span class="keywordflow">return</span> $rows;
@@ -132,10 +133,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00044"></a>00044             } <span class="keywordflow">else</span> {
 <a name="l00045"></a>00045                 $rec = $value;
 <a name="l00046"></a>00046             }
-<a name="l00047"></a>00047             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;UPDATE globals</span>
+<a name="l00047"></a>00047             $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;UPDATE globals</span>
 <a name="l00048"></a>00048 <span class="stringliteral">                SET   gl_value =&#39;&quot;</span>. $rec .<span class="stringliteral">&quot;&#39;&quot;</span>.<span class="stringliteral">&quot;</span>
 <a name="l00049"></a>00049 <span class="stringliteral">                WHERE gl_name  =&#39;&quot;</span>. $key .<span class="stringliteral">&quot;&#39;&quot;</span>);
-<a name="l00050"></a>00050             $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+<a name="l00050"></a>00050             $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
 <a name="l00051"></a>00051         }
 <a name="l00052"></a>00052 
 <a name="l00053"></a>00053         $this-&gt;<a class="code" href="class_globals.html#a186bf1b60c507c18d59e1ff6d6f92d97">setGlobals</a>();
@@ -144,9 +145,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00056"></a>00056     }
 <a name="l00057"></a>00057 
 <a name="l00062"></a><a class="code" href="class_globals.html#a186bf1b60c507c18d59e1ff6d6f92d97">00062</a>     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_globals.html#a186bf1b60c507c18d59e1ff6d6f92d97">setGlobals</a>(){
-<a name="l00063"></a>00063         $conn = <span class="keyword">new</span> <a class="code" href="classdb_helper.html">dbHelper</a>();
-<a name="l00064"></a>00064         $conn-&gt;setSQL(<span class="stringliteral">&quot;SELECT gl_name, gl_value FROM globals&quot;</span>);
-<a name="l00065"></a>00065         <span class="keywordflow">foreach</span>($conn-&gt;execStatement(PDO::FETCH_ASSOC) as $setting){
+<a name="l00063"></a>00063         <a class="code" href="classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a> = <span class="keyword">new</span> <a class="code" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a>();
+<a name="l00064"></a>00064         <a class="code" href="classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>-&gt;setSQL(<span class="stringliteral">&quot;SELECT gl_name, gl_value FROM globals&quot;</span>);
+<a name="l00065"></a>00065         <span class="keywordflow">foreach</span>(<a class="code" href="classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>-&gt;execStatement(PDO::FETCH_ASSOC) as $setting){
 <a name="l00066"></a>00066             <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;global_settings&#39;</span>][$setting[<span class="stringliteral">&#39;gl_name&#39;</span>]] = $setting[<span class="stringliteral">&#39;gl_value&#39;</span>];
 <a name="l00067"></a>00067 
 <a name="l00068"></a>00068         }
@@ -173,7 +174,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><a class="el" href="_globals_8php.html">Globals.php</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:11 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

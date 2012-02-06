@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -118,8 +119,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00026"></a>00026 
 <a name="l00032"></a><a class="code" href="class_patient.html#a61881e13afab7b713729f4000e7be366">00032</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_patient.html#a61881e13afab7b713729f4000e7be366">currPatientSet</a>(stdClass $params){
 <a name="l00033"></a>00033 
-<a name="l00034"></a>00034         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT fname,mname,lname FROM form_data_demographics WHERE pid = &#39;$params-&gt;pid&#39;&quot;</span>);
-<a name="l00035"></a>00035         $p = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a>();
+<a name="l00034"></a>00034         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT fname,mname,lname FROM form_data_demographics WHERE pid = &#39;$params-&gt;pid&#39;&quot;</span>);
+<a name="l00035"></a>00035         $p = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176" title="Fetch.">fetch</a>();
 <a name="l00036"></a>00036         $fullname = $this-&gt;<a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">fullname</a>($p[<span class="stringliteral">&#39;fname&#39;</span>],$p[<span class="stringliteral">&#39;mname&#39;</span>],$p[<span class="stringliteral">&#39;lname&#39;</span>]);
 <a name="l00037"></a>00037         <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;patient&#39;</span>][<span class="stringliteral">&#39;pid&#39;</span>]  = $params-&gt;pid;
 <a name="l00038"></a>00038         <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;patient&#39;</span>][<span class="stringliteral">&#39;name&#39;</span>] = $fullname;
@@ -133,7 +134,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00049"></a>00049     }
 <a name="l00050"></a>00050 
 <a name="l00058"></a><a class="code" href="class_patient.html#a5da7543bb87e70c01a1a3b3180c712fc">00058</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_patient.html#a5da7543bb87e70c01a1a3b3180c712fc">patientLiveSearch</a>(stdClass $params){
-<a name="l00059"></a>00059         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT pid,pubpid,fname,lname,mname,DOB,SS</span>
+<a name="l00059"></a>00059         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT pid,pubpid,fname,lname,mname,DOB,SS</span>
 <a name="l00060"></a>00060 <span class="stringliteral">                             FROM form_data_demographics</span>
 <a name="l00061"></a>00061 <span class="stringliteral">                            WHERE fname LIKE &#39;$params-&gt;query%&#39;</span>
 <a name="l00062"></a>00062 <span class="stringliteral">                               OR lname LIKE &#39;$params-&gt;query%&#39;</span>
@@ -141,22 +142,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00064"></a>00064 <span class="stringliteral">                               OR pid   LIKE &#39;$params-&gt;query%&#39;</span>
 <a name="l00065"></a>00065 <span class="stringliteral">                               OR SS    LIKE &#39;%$params-&gt;query&#39;&quot;</span>);
 <a name="l00066"></a>00066         $rows = array();
-<a name="l00067"></a>00067         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_CLASS) as $row){
+<a name="l00067"></a>00067         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_CLASS) as $row){
 <a name="l00068"></a>00068             $row-&gt;fullname = $this-&gt;<a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">fullname</a>($row-&gt;fname,$row-&gt;mname,$row-&gt;lname);
 <a name="l00069"></a>00069             unset($row-&gt;fname,$row-&gt;mname,$row-&gt;lname);
 <a name="l00070"></a>00070             array_push($rows, $row);
 <a name="l00071"></a>00071         }
 <a name="l00072"></a>00072         $total  = count($rows);
-<a name="l00073"></a>00073         $rows = $this-&gt;<a class="code" href="classdb_helper.html#afab91f6d05df61aa06e6bfc035b13afe">filertByStartLimit</a>($rows,$params);
+<a name="l00073"></a>00073         $rows = $this-&gt;<a class="code" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08" title="Filter Records By Sart and Limit.">filertByStartLimit</a>($rows,$params);
 <a name="l00074"></a>00074         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;totals&#39;</span>=&gt;$total ,<span class="stringliteral">&#39;rows&#39;</span>=&gt;$rows);
 <a name="l00075"></a>00075     }
 <a name="l00076"></a>00076 
 <a name="l00081"></a><a class="code" href="class_patient.html#a603592cb352f8f8eeeb8d977b136b056">00081</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_patient.html#a603592cb352f8f8eeeb8d977b136b056">getPatientDemographicData</a>(stdClass $params){
 <a name="l00082"></a>00082         $pid = <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;patient&#39;</span>][<span class="stringliteral">&#39;pid&#39;</span>];
-<a name="l00083"></a>00083         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM form_data_demographics WHERE pid = &#39;$pid&#39;&quot;</span>);
+<a name="l00083"></a>00083         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM form_data_demographics WHERE pid = &#39;$pid&#39;&quot;</span>);
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085         $rows = array();
-<a name="l00086"></a>00086         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+<a name="l00086"></a>00086         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
 <a name="l00087"></a>00087             array_push($rows, $row);
 <a name="l00088"></a>00088         }
 <a name="l00089"></a>00089         <span class="keywordflow">return</span> $rows;
@@ -183,7 +184,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><a class="el" href="_patient_8php.html">Patient.php</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:11 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

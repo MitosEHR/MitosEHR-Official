@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -112,7 +113,7 @@ Inheritance diagram for Patient:</div>
   <img src="class_patient.png" usemap="#Patient_map" alt=""/>
   <map id="Patient_map" name="Patient_map">
 <area href="class_person.html" alt="Person" shape="rect" coords="0,56,70,80"/>
-<area href="classdb_helper.html" alt="dbHelper" shape="rect" coords="0,0,70,24"/>
+<area href="classdb_helper.html" title="Database Helper Class." alt="dbHelper" shape="rect" coords="0,0,70,24"/>
 <area href="class_encounter.html" alt="Encounter" shape="rect" coords="0,168,70,192"/>
 </map>
  </div></div>
@@ -155,8 +156,8 @@ Protected Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_patient_8php_source.html#l00032">32</a> of file <a class="el" href="_patient_8php_source.html">Patient.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                    {
 
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT fname,mname,lname FROM form_data_demographics WHERE pid = &#39;$params-&gt;pid&#39;&quot;</span>);
-        $p = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a>();
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT fname,mname,lname FROM form_data_demographics WHERE pid = &#39;$params-&gt;pid&#39;&quot;</span>);
+        $p = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176" title="Fetch.">fetch</a>();
         $fullname = $this-&gt;<a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">fullname</a>($p[<span class="stringliteral">&#39;fname&#39;</span>],$p[<span class="stringliteral">&#39;mname&#39;</span>],$p[<span class="stringliteral">&#39;lname&#39;</span>]);
         <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;patient&#39;</span>][<span class="stringliteral">&#39;pid&#39;</span>]  = $params-&gt;pid;
         <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;patient&#39;</span>][<span class="stringliteral">&#39;name&#39;</span>] = $fullname;
@@ -236,10 +237,10 @@ Protected Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_patient_8php_source.html#l00081">81</a> of file <a class="el" href="_patient_8php_source.html">Patient.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                               {
         $pid = <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;patient&#39;</span>][<span class="stringliteral">&#39;pid&#39;</span>];
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM form_data_demographics WHERE pid = &#39;$pid&#39;&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM form_data_demographics WHERE pid = &#39;$pid&#39;&quot;</span>);
 
         $rows = array();
-        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);
         }
         <span class="keywordflow">return</span> $rows;
@@ -271,7 +272,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="_patient_8php_source.html#l00058">58</a> of file <a class="el" href="_patient_8php_source.html">Patient.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                       {
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT pid,pubpid,fname,lname,mname,DOB,SS</span>
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT pid,pubpid,fname,lname,mname,DOB,SS</span>
 <span class="stringliteral">                             FROM form_data_demographics</span>
 <span class="stringliteral">                            WHERE fname LIKE &#39;$params-&gt;query%&#39;</span>
 <span class="stringliteral">                               OR lname LIKE &#39;$params-&gt;query%&#39;</span>
@@ -279,13 +280,13 @@ Protected Member Functions</h2></td></tr>
 <span class="stringliteral">                               OR pid   LIKE &#39;$params-&gt;query%&#39;</span>
 <span class="stringliteral">                               OR SS    LIKE &#39;%$params-&gt;query&#39;&quot;</span>);
         $rows = array();
-        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_CLASS) as $row){
+        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_CLASS) as $row){
             $row-&gt;fullname = $this-&gt;<a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">fullname</a>($row-&gt;fname,$row-&gt;mname,$row-&gt;lname);
             unset($row-&gt;fname,$row-&gt;mname,$row-&gt;lname);
             array_push($rows, $row);
         }
         $total  = count($rows);
-        $rows = $this-&gt;<a class="code" href="classdb_helper.html#afab91f6d05df61aa06e6bfc035b13afe">filertByStartLimit</a>($rows,$params);
+        $rows = $this-&gt;<a class="code" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08" title="Filter Records By Sart and Limit.">filertByStartLimit</a>($rows,$params);
         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;totals&#39;</span>=&gt;$total ,<span class="stringliteral">&#39;rows&#39;</span>=&gt;$rows);
     }
 </pre></div>
@@ -314,7 +315,7 @@ Protected Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_patient.html">Patient</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:12 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

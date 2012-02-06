@@ -3,7 +3,7 @@ var searchData=
   ['_24_5fsession',['$_SESSION',['../components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8',1,'components_data.ejs.php']]],
   ['_24accept',['$accept',['../class_mobile___detect.html#a75fc18c4ff06288ff9fdf8aba9bd1081',1,'Mobile_Detect']]],
   ['_24buff',['$buff',['../components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8',1,'components_data.ejs.php']]],
-  ['_24conn',['$conn',['../class_a_c_l.html#aa8a5a87b9c1a6a0819b88447cbe41877',1,'ACL']]],
+  ['_24conn',['$conn',['../class_a_c_l.html#aa8a5a87b9c1a6a0819b88447cbe41877',1,'ACL\$conn()'],['../classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877',1,'dbHelper\$conn()']]],
   ['_24count',['$count',['../components__data_8ejs_8php.html#af789423037bbc89dc7c850e761177570',1,'components_data.ejs.php']]],
   ['_24devices',['$devices',['../class_mobile___detect.html#a004eefb786861fbe31e1f0f24662477b',1,'Mobile_Detect']]],
   ['_24document',['$document',['../class_x_m_l_parser.html#ac5a31edb787609a3143dec9bfa8063ea',1,'XMLParser']]],

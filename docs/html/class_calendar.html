@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -110,7 +111,7 @@ Inheritance diagram for Calendar:</div>
  <div class="center">
   <img src="class_calendar.png" usemap="#Calendar_map" alt=""/>
   <map id="Calendar_map" name="Calendar_map">
-<area href="classdb_helper.html" alt="dbHelper" shape="rect" coords="0,0,64,24"/>
+<area href="classdb_helper.html" title="Database Helper Class." alt="dbHelper" shape="rect" coords="0,0,64,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -145,8 +146,8 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><pre class="fragment">                                              {
 
         $sql = <span class="stringliteral">&quot;SELECT fname, mname, lname FROM form_data_demographics WHERE pid=&#39;$params-&gt;patient_id&#39;&quot;</span>;
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-        $rec = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176">fetch</a>();
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+        $rec = $this-&gt;<a class="code" href="classdb_helper.html#ae48cc10bd727774bb36203986ce3b176" title="Fetch.">fetch</a>();
         $fullName = <a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">Person::fullname</a>($rec[<span class="stringliteral">&#39;fname&#39;</span>],$rec[<span class="stringliteral">&#39;mname&#39;</span>],$rec[<span class="stringliteral">&#39;lname&#39;</span>]);
 
         $row[<span class="stringliteral">&#39;user_id&#39;</span>]             = $params-&gt;user_id;
@@ -164,9 +165,9 @@ Public Member Functions</h2></td></tr>
         $row[<span class="stringliteral">&#39;url&#39;</span>]                 = $params-&gt;url;
         $row[<span class="stringliteral">&#39;ad&#39;</span>]                  = $params-&gt;ad;
 
-        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($row, <span class="stringliteral">&quot;calendar_events&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-        $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($row, <span class="stringliteral">&quot;calendar_events&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+        $ret = $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
         <span class="comment">// ********************************************************************</span>
         <span class="comment">// If no error found, return the same record back to the calendar</span>
         <span class="comment">// ********************************************************************</span>
@@ -174,9 +175,9 @@ Public Member Functions</h2></td></tr>
             echo <span class="stringliteral">&#39;{ success: false, errors: { reason: &quot;&#39;</span>. $ret[2] .<span class="stringliteral">&#39;&quot; }}&#39;</span>;
         } <span class="keywordflow">else</span> {
             $sql = (<span class="stringliteral">&quot;SELECT * FROM calendar_events WHERE id = &#39;&quot;</span>.$this-&gt;lastInsertId.<span class="stringliteral">&quot;&#39; &quot;</span>);
-            $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+            $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
             $rows = array();
-            <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+            <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
                 array_push($rows, $row);
             }
             <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">true</span>, <span class="stringliteral">&#39;message&#39;</span>=&gt;<span class="stringliteral">&#39;Loaded data&#39;</span>, <span class="stringliteral">&#39;data&#39;</span>=&gt;$rows);
@@ -202,8 +203,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="_calendar_8php_source.html#l00123">123</a> of file <a class="el" href="_calendar_8php_source.html">Calendar.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                 {
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>( <span class="stringliteral">&quot;DELETE FROM calendar_events WHERE id=&#39;$params-&gt;id&#39;&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>( <span class="stringliteral">&quot;DELETE FROM calendar_events WHERE id=&#39;$params-&gt;id&#39;&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt; <span class="keyword">true</span>);
     }
 </pre></div>
@@ -227,9 +228,9 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><pre class="fragment">                                  {
         $color = -4;
         $sql = (<span class="stringliteral">&quot;SELECT * FROM users WHERE calendar = &#39;1&#39; AND authorized = &#39;1&#39; AND active = &#39;1&#39; ORDER BY username&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
             <span class="keywordflow">if</span>($color &gt; 32){ $color = $color - 30; }
             $color = $color + 5;
             $cla_user[<span class="stringliteral">&#39;id&#39;</span>] = $row[<span class="stringliteral">&#39;id&#39;</span>];
@@ -262,9 +263,9 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><pre class="fragment">                                               {
 
         $sql = (<span class="stringliteral">&quot;SELECT * FROM calendar_events WHERE start BETWEEN &#39;&quot;</span>.$params-&gt;startDate.<span class="stringliteral">&quot; 00:00:00&#39; AND &#39;&quot;</span>.$params-&gt;endDate.<span class="stringliteral">&quot; 23:59:59&#39; &quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
-        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $row){
+        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
             $row[<span class="stringliteral">&#39;id&#39;</span>]                  = intval($row[<span class="stringliteral">&#39;id&#39;</span>]);
             $row[<span class="stringliteral">&#39;user_id&#39;</span>]             = intval($row[<span class="stringliteral">&#39;user_id&#39;</span>]);
             $row[<span class="stringliteral">&#39;category&#39;</span>]            = intval($row[<span class="stringliteral">&#39;category&#39;</span>]);
@@ -273,8 +274,8 @@ Public Member Functions</h2></td></tr>
             $row[<span class="stringliteral">&#39;patient_id&#39;</span>]          = intval($row[<span class="stringliteral">&#39;patient_id&#39;</span>]);
 
             $sql = (<span class="stringliteral">&quot;SELECT * FROM form_data_demographics WHERE pid= &#39;&quot;</span>.$row[<span class="stringliteral">&#39;patient_id&#39;</span>].<span class="stringliteral">&quot;&#39;&quot;</span>);
-            $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-            <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>(PDO::FETCH_ASSOC) as $urow){
+            $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+            <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $urow){
             $row[<span class="stringliteral">&#39;title&#39;</span>] = <a class="code" href="class_person.html#a5069e130f0f9e778110a9a7c27e8b21a">Person::fullname</a>($urow[<span class="stringliteral">&#39;fname&#39;</span>],$urow[<span class="stringliteral">&#39;mname&#39;</span>],$urow[<span class="stringliteral">&#39;lname&#39;</span>]);
             }
             array_push($rows, $row);
@@ -318,9 +319,9 @@ Public Member Functions</h2></td></tr>
         $row[<span class="stringliteral">&#39;url&#39;</span>]                 = $params-&gt;url;
         $row[<span class="stringliteral">&#39;ad&#39;</span>]                  = $params-&gt;ad;
 
-        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a">sqlBind</a>($row, <span class="stringliteral">&quot;calendar_events&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span> . $params-&gt;id . <span class="stringliteral">&quot;&#39;&quot;</span>);
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>($sql);
-        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+        $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($row, <span class="stringliteral">&quot;calendar_events&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;&quot;</span> . $params-&gt;id . <span class="stringliteral">&quot;&#39;&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
+        $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt; <span class="keyword">true</span>);
     }
 </pre></div>
@@ -349,7 +350,7 @@ Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_calendar.html">Calendar</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:12 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

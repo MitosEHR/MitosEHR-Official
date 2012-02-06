@@ -37,7 +37,7 @@
    <div id="projectname">MitosEHR
    &#160;<span id="projectnumber">Vega v1.0</span>
    </div>
-   <div id="projectbrief">Electronic Health Record</div>
+   <div id="projectbrief">PHP Classes Documentation</div>
   </td>
   
   
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -111,7 +112,7 @@ Inheritance diagram for Globals:</div>
  <div class="center">
   <img src="class_globals.png" usemap="#Globals_map" alt=""/>
   <map id="Globals_map" name="Globals_map">
-<area href="classdb_helper.html" alt="dbHelper" shape="rect" coords="0,0,64,24"/>
+<area href="classdb_helper.html" title="Database Helper Class." alt="dbHelper" shape="rect" coords="0,0,64,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -145,12 +146,12 @@ Static Public Member Functions</h2></td></tr>
 <p>Definition at line <a class="el" href="_globals_8php_source.html#l00020">20</a> of file <a class="el" href="_globals_8php_source.html">Globals.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                {
 
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT gl_name, gl_index, gl_value FROM globals&quot;</span>);
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT gl_name, gl_index, gl_value FROM globals&quot;</span>);
         <span class="comment">// ****************************************************************************************************</span>
         <span class="comment">// $rows = $mitos_db-&gt;execStatement(PDO::FETCH_ASSOC) because we wwant to print all recods into one row</span>
         <span class="comment">// ****************************************************************************************************</span>
         $rows = array();
-        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c">execStatement</a>() as $row){
+        <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>() as $row){
             $rows[$row[0]] = $row[2];
         }
         <span class="keywordflow">return</span> $rows;
@@ -175,9 +176,9 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="_globals_8php_source.html#l00062">62</a> of file <a class="el" href="_globals_8php_source.html">Globals.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                       {
-        $conn = <span class="keyword">new</span> <a class="code" href="classdb_helper.html">dbHelper</a>();
-        $conn-&gt;setSQL(<span class="stringliteral">&quot;SELECT gl_name, gl_value FROM globals&quot;</span>);
-        <span class="keywordflow">foreach</span>($conn-&gt;execStatement(PDO::FETCH_ASSOC) as $setting){
+        <a class="code" href="classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a> = <span class="keyword">new</span> <a class="code" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a>();
+        <a class="code" href="classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>-&gt;setSQL(<span class="stringliteral">&quot;SELECT gl_name, gl_value FROM globals&quot;</span>);
+        <span class="keywordflow">foreach</span>(<a class="code" href="classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877">$conn</a>-&gt;execStatement(PDO::FETCH_ASSOC) as $setting){
             <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;global_settings&#39;</span>][$setting[<span class="stringliteral">&#39;gl_name&#39;</span>]] = $setting[<span class="stringliteral">&#39;gl_value&#39;</span>];
 
         }
@@ -219,10 +220,10 @@ Static Public Member Functions</h2></td></tr>
             } <span class="keywordflow">else</span> {
                 $rec = $value;
             }
-            $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;UPDATE globals</span>
+            $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;UPDATE globals</span>
 <span class="stringliteral">                SET   gl_value =&#39;&quot;</span>. $rec .<span class="stringliteral">&quot;&#39;&quot;</span>.<span class="stringliteral">&quot;</span>
 <span class="stringliteral">                WHERE gl_name  =&#39;&quot;</span>. $key .<span class="stringliteral">&quot;&#39;&quot;</span>);
-            $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243">execLog</a>();
+            $this-&gt;<a class="code" href="classdb_helper.html#a75dea4073687142b0b1b6a6819cbb243" title="Execute Log.">execLog</a>();
         }
 
         $this-&gt;<a class="code" href="class_globals.html#a186bf1b60c507c18d59e1ff6d6f92d97">setGlobals</a>();
@@ -255,7 +256,7 @@ Static Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_globals.html">Globals</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:12 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

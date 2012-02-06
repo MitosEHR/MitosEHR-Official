@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>MitosEHR: formLayoutEngine Class Reference</title>
+<title>MitosEHR: FormLayoutEngine Class Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -101,15 +102,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">formLayoutEngine Class Reference</div>  </div>
+<div class="title">FormLayoutEngine Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="formLayoutEngine" --><!-- doxytag: inherits="dbHelper" --><div class="dynheader">
-Inheritance diagram for formLayoutEngine:</div>
+<!-- doxytag: class="FormLayoutEngine" --><!-- doxytag: inherits="dbHelper" --><div class="dynheader">
+Inheritance diagram for FormLayoutEngine:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classform_layout_engine.png" usemap="#formLayoutEngine_map" alt=""/>
-  <map id="formLayoutEngine_map" name="formLayoutEngine_map">
+  <img src="classform_layout_engine.png" usemap="#FormLayoutEngine_map" alt=""/>
+  <map id="FormLayoutEngine_map" name="FormLayoutEngine_map">
 <area href="classdb_helper.html" alt="dbHelper" shape="rect" coords="0,0,114,24"/>
 </map>
  </div></div>
@@ -124,9 +125,9 @@ Public Member Functions</h2></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00025">25</a> of file <a class="el" href="form_layout_engine_8php_source.html">formLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00025">25</a> of file <a class="el" href="form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a25eb9dec9c7fa7132bc97c113aae2bfe"></a><!-- doxytag: member="formLayoutEngine::getChildItems" ref="a25eb9dec9c7fa7132bc97c113aae2bfe" args="($parent)" -->
+<a class="anchor" id="a25eb9dec9c7fa7132bc97c113aae2bfe"></a><!-- doxytag: member="FormLayoutEngine::getChildItems" ref="a25eb9dec9c7fa7132bc97c113aae2bfe" args="($parent)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -151,7 +152,7 @@ Public Member Functions</h2></td></tr>
 <p>If the item is a combo box lets create a store...</p>
 <p>this if what makes this function reclusive this function will keep calling it self</p>
 
-<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00155">155</a> of file <a class="el" href="form_layout_engine_8php_source.html">formLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00155">155</a> of file <a class="el" href="form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                   {
         $items = array();
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;Select * FROM forms_fields WHERE item_of = &#39;$parent&#39; ORDER BY pos ASC&quot;</span>);
@@ -174,7 +175,7 @@ Public Member Functions</h2></td></tr>
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="a8ac8fd2609c4b0bc23b1deaa36c2a43f"></a><!-- doxytag: member="formLayoutEngine::getComboDefaults" ref="a8ac8fd2609c4b0bc23b1deaa36c2a43f" args="($item)" -->
+<a class="anchor" id="a8ac8fd2609c4b0bc23b1deaa36c2a43f"></a><!-- doxytag: member="FormLayoutEngine::getComboDefaults" ref="a8ac8fd2609c4b0bc23b1deaa36c2a43f" args="($item)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -196,7 +197,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 
-<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00225">225</a> of file <a class="el" href="form_layout_engine_8php_source.html">formLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00225">225</a> of file <a class="el" href="form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                    {
         $item[<span class="stringliteral">&#39;displayField&#39;</span>] = <span class="stringliteral">&#39;name&#39;</span>;
         $item[<span class="stringliteral">&#39;valueField&#39;</span>]   = <span class="stringliteral">&#39;value&#39;</span>;
@@ -210,7 +211,7 @@ Public Member Functions</h2></td></tr>
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="aac0ec25d9ed7255a0d2e2ad1174d324b"></a><!-- doxytag: member="formLayoutEngine::getFields" ref="aac0ec25d9ed7255a0d2e2ad1174d324b" args="(stdClass $params)" -->
+<a class="anchor" id="aac0ec25d9ed7255a0d2e2ad1174d324b"></a><!-- doxytag: member="FormLayoutEngine::getFields" ref="aac0ec25d9ed7255a0d2e2ad1174d324b" args="(stdClass $params)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -249,7 +250,7 @@ Public Member Functions</h2></td></tr>
 <p>Then remove the double quotes form that selection.</p>
 <p>Then replace remaining double quotes for single quotes &lt;-- not required but... we do it because MitosEHR user single quotes to define strings.</p>
 
-<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00039">39</a> of file <a class="el" href="form_layout_engine_8php_source.html">formLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00039">39</a> of file <a class="el" href="form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                        {
         $items = array();
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;Select ff.*</span>
@@ -290,7 +291,7 @@ Public Member Functions</h2></td></tr>
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="a89955ff647a3d7183e3468bac90f90a0"></a><!-- doxytag: member="formLayoutEngine::getItemsOptions" ref="a89955ff647a3d7183e3468bac90f90a0" args="($item_id)" -->
+<a class="anchor" id="a89955ff647a3d7183e3468bac90f90a0"></a><!-- doxytag: member="FormLayoutEngine::getItemsOptions" ref="a89955ff647a3d7183e3468bac90f90a0" args="($item_id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -305,7 +306,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00185">185</a> of file <a class="el" href="form_layout_engine_8php_source.html">formLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00185">185</a> of file <a class="el" href="form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                      {
         $foo = array();
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;Select * FROM forms_field_options WHERE field_id = &#39;$item_id&#39;&quot;</span>);
@@ -324,7 +325,7 @@ Public Member Functions</h2></td></tr>
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="a5b15a478954309f198a8435ce45e1997"></a><!-- doxytag: member="formLayoutEngine::getStore" ref="a5b15a478954309f198a8435ce45e1997" args="($list_id)" -->
+<a class="anchor" id="a5b15a478954309f198a8435ce45e1997"></a><!-- doxytag: member="FormLayoutEngine::getStore" ref="a5b15a478954309f198a8435ce45e1997" args="($list_id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -347,7 +348,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>string </dd></dl>
 
-<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00207">207</a> of file <a class="el" href="form_layout_engine_8php_source.html">formLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="form_layout_engine_8php_source.html#l00207">207</a> of file <a class="el" href="form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                               {
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM list_options WHERE list_id = &#39;$list_id&#39; ORDER BY seq&quot;</span>);
 
@@ -365,7 +366,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/wamp/www/MitosEHR/classes/<a class="el" href="form_layout_engine_8php_source.html">formLayoutEngine.php</a></li>
+<li>C:/wamp/www/MitosEHR/classes/<a class="el" href="form_layout_engine_8php_source.html">FormLayoutEngine.php</a></li>
 </ul>
 </div><!-- contents -->
 </div>
@@ -385,9 +386,9 @@ Public Member Functions</h2></td></tr>
 
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="navelem"><a class="el" href="classform_layout_engine.html">formLayoutEngine</a>      </li>
+      <li class="navelem"><a class="el" href="classform_layout_engine.html">FormLayoutEngine</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 00:20:12 for MitosEHR by
+    <li class="footer">Generated on Mon Feb 6 2012 10:53:28 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>
