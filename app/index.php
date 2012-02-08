@@ -123,15 +123,15 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/patientfile/new/NewPatient.js"></script>
 
 
-        <script type="text/javascript" src="app/administration/facilities/Facilities.js"></script>
-        <script type="text/javascript" src="app/administration/globals/Globals.js"></script>
-        <script type="text/javascript" src="app/administration/layout/Layout.js"></script>
+        <script type="text/javascript" src="app/administration/Facilities.js"></script>
+        <script type="text/javascript" src="app/administration/Globals.js"></script>
+        <script type="text/javascript" src="app/administration/Layout.js"></script>
         <script type="text/javascript" src="app/administration/lists/Lists.js"></script>
-        <script type="text/javascript" src="app/administration/log/Log.js"></script>
+        <script type="text/javascript" src="app/administration/Log.js"></script>
         <script type="text/javascript" src="app/administration/practice/Practice.js"></script>
-        <script type="text/javascript" src="app/administration/roles/Roles.js"></script>
-        <script type="text/javascript" src="app/administration/services/Services.js"></script>
-        <script type="text/javascript" src="app/administration/users/Users.js"></script>
+        <script type="text/javascript" src="app/administration/Roles.js"></script>
+        <script type="text/javascript" src="app/administration/Services.js"></script>
+        <script type="text/javascript" src="app/administration/Users.js"></script>
 
         <script type="text/javascript" src="app/messages/Messages.js"></script>
         <script type="text/javascript" src="app/search/PatientSearch.js"></script>

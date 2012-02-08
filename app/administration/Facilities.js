@@ -13,7 +13,7 @@
  * @namespace  Facilities.updateFacility
  * @namespace  Facilities.deleteFacility
  */
-Ext.define('Ext.mitos.panel.administration.facilities.Facilities',{
+Ext.define('Ext.mitos.panel.administration.Facilities',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelFacilities',
     pageTitle   : 'Facilities (Active)',

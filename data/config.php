@@ -121,6 +121,21 @@ $API = array(
         )
     ),
     /**
+    * Services Functions
+    */
+    'Services'=>array(
+        'methods'=>array(
+           'getServices'=>array(
+               'len'=>1
+           ),
+            'addService'=>array(
+               'len'=>1
+           ),
+            'updateService'=>array(
+               'len'=>1
+           )
+        )
+    ),    /**
      * Form layout Engine Functions
      */
     'FormLayoutEngine'=>array(
@@ -234,6 +249,12 @@ $API = array(
                 'len'=>0
             ),
             'getTitles'=>array(
+                'len'=>0
+            ),
+            'getPriceLevel'=>array(
+                'len'=>0
+            ),
+            'getTAxRate'=>array(
                 'len'=>0
             ),
             'getTypes'=>array(

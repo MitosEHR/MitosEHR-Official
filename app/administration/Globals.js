@@ -12,7 +12,7 @@
  * @namespace Globals.updateGlobals
  *
  */
-Ext.define('Ext.mitos.panel.administration.globals.Globals',{
+Ext.define('Ext.mitos.panel.administration.Globals',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelGlobals',
     pageTitle   : 'MitosEHR Global Settings',

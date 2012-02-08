@@ -8,7 +8,7 @@
 //
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.panel.administration.layout.Layout',{
+Ext.define('Ext.mitos.panel.administration.Layout',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLayout',
     pageTitle   : 'Layout Form Editor',

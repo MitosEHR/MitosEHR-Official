@@ -62,6 +62,26 @@ class CombosData extends dbHelper {
         return $rows;
     }
 
+    public function getPriceLevel(){
+        $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'pricelevel'	ORDER BY seq";
+        $this->setSQL($sql);
+        $rows = array();
+        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
+            array_push($rows, $row);
+        }
+        return $rows;
+    }
+
+    public function getTAxRate(){
+        $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'taxrate'	ORDER BY seq";
+        $this->setSQL($sql);
+        $rows = array();
+        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
+            array_push($rows, $row);
+        }
+        return $rows;
+    }
+
     public function getTypes(){
         $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'types'	ORDER BY seq";
         $this->setSQL($sql);

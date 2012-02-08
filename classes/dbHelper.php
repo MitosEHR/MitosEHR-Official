@@ -91,11 +91,40 @@ class dbHelper {
      */
     function filertByStartLimit($records, stdClass $params)
     {
-        $result = from('$record')->in($records)
-                  ->skip($params->start)
-                  ->take($params->limit)
-                  ->select('$record');
-        return $result;
+        if(isset($params->start) && isset($params->limit)){
+            $records = from('$record')->in($records)
+                       ->skip($params->start)
+                       ->take($params->limit)
+                       ->select('$record');
+            return $records;
+        }else{
+            return $records;
+        }
+    }
+
+    /**
+     * @brief       Filter Records By Query
+     * @details     This function will filter the record by a column value
+     *
+     * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
+     * @version     Vega 1.0
+     *
+     * @warning     This method requires stdClass $records. Use PDO::FETCH_CLASS to sexecute the SQL queries.
+     *
+     * @see         Services::getServices() for example.
+     *
+     * @param       $records SQL recordes to filter
+     * @param       string $column databe column to filter
+     * @param       $query value you are looking for
+     * @return      mixed Records filtered
+     */
+    function filertByQuery($records, $column, $query)
+    {
+            $records = from('$record')->in($records)
+                       ->where('$record => $record->'.$column.' == '.$query.'' )
+                       ->select('$record');
+            return $records;
+
     }
 
     /**

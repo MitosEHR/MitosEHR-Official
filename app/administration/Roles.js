@@ -12,7 +12,7 @@
  * @namespace Roles.saveRolesData
  * @namespace Roles.getRolesData
  */
-Ext.define('Ext.mitos.panel.administration.roles.Roles',{
+Ext.define('Ext.mitos.panel.administration.Roles',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelRoles',
     pageTitle   : 'Roles and Permissions',
