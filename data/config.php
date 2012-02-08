@@ -221,13 +221,16 @@ $API = array(
      */
     'authProcedures'=>array(
         'methods'=>array(
-            'auth'=>array(
+            'login'=>array(
                 'len'=>1
             ),
             'ckAuth'=>array(
                 'len'=>0
             ),
             'unAuth'=>array(
+                'len'=>0
+            ),
+            'getSites'=>array(
                 'len'=>0
             )
 
