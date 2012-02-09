@@ -1,40 +1,42 @@
 <?php
-/* 
- * layoutEngine.class.php
- * 
- * @DESCRIPTION@: This class object will create dynamic ExtJS v4 form, previously created or edited
- * from the Layout Form Editor. Gathering all it's data and parameters from the layout_options table. 
- * Most of the structural database table was originally created by OpenEMR developers.
- * 
- * What this class will not do: This class will not create the entire Screen Panel for you, this
- * will only create the form object with the fields names & dataStores configured on the layout_options table.
- * 
- * version: 0.1.0
- * author: Ernesto J Rodriguez
- *
- */
 if(!isset($_SESSION)){
     session_name ( "MitosEHR" );
     session_start();
     session_cache_limiter('private');
 }
-
-/** @noinspection PhpIncludeInspection */
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-
+include_once("dbHelper.php");
+/**
+ * @brief       Form Layout Engine
+ * @details     This class will create dynamic ExtJS v4 form items array,
+ *              previously created or edited from the Layout Form Editor.
+ *              Gathering all it's data and parameters from the layout_options table.
+ * 
+ *              What this class will not do: This class will not create the
+ *              entire Screen Panel for you, this will only create the form
+ *              items array with the fields names & dataStores configured on
+ *              the layout_options table.
+ * 
+ * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
+ * @version     Vega 1.0
+ * @copyright   Gnu Public License (GPLv3)
+ */
 class FormLayoutEngine extends dbHelper {
     /**
-     * We can get the form fields by form name or form if
-     * example: getFields('Demographics') or getFields('1')
-     * The logic of the function is to get the form parent field
-     * and its options, then get the child items if any with it options.
-     * Then.. use reg Expression to remove the double quotes from all
-     * the options and leave the double quotes to all options values,
-     * unless the value is a int or bool.
+     * @brief       Get Form Fields by Form ID or Form Title
+     * @details     We can get the form fields by form name or form if
+     *              example: getFields('Demographics') or getFields('1')
+     *              The logic of the function is to get the form parent field
+     *              and its options, then get the child items if any with it options.
+     *              Then.. use reg Expression to remove the double quotes from all
+     *              the options and leave the double quotes to all options values,
+     *              unless the value is a int or bool.
      *
-     * @param \stdClass $params
-     * @internal param $formPanel
-     * @return string
+     * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
+     * @version     Vega 1.0
+     *
+     * @param       stdClass $params With the form Tirle or Form ID
+     * @internal    $params->formToRender Holds the Title or ID of the form to render
+     * @return      string String of javascript array
      */
     function getFields(stdClass $params){
         /**
@@ -90,9 +92,10 @@ class FormLayoutEngine extends dbHelper {
             array_push($items,$item);
         }
         /**
-         * in this new block of code we are going to clean the json output using a reg expression
+         * <p>In this next block of code we are going to clean the json output using a reg expression
          * to remove the unnecessary double quotes from the properties, bools, and ints values.
-         * basically we start we this input..
+         * basically we start we this input..</p>
+         * <code>
          * [{
          *      "xtype":"fieldset",
          *      "title":"Who",
@@ -104,8 +107,9 @@ class FormLayoutEngine extends dbHelper {
          *          "anchor":"100%",
          *       }]
          * }]
-         *
-         * and finish with this output...
+         * </code>
+         * <p>and finish with this output...</p>
+         * <code>
          * [{
          *      xtype:'fieldset',
          *      title:'Who',
@@ -117,19 +121,19 @@ class FormLayoutEngine extends dbHelper {
          *          anchor:'100%',
          *       }]
          * }]
+         * </code>
+         * <p>The regular expression will select any string that...</p>
          *
-         * The regular expression will select any string that...
+         * <p>is surrounded by double quotes and follow by : for example "xtype": </p>
          *
-         * is surrounded by double quotes and follow by :   for example   "xtype":
+         * <p>or "Ext.create</p>
          *
-         * or "Ext.create
+         * <p>or }]})"</p>
          *
-         * or }]})"
+         * <p>Then remove the double quotes form that selection.</p>
          *
-         * Then remove the double quotes form that selection.
-         *
-         * Then replace remaining double quotes for single quotes <-- not required but...
-         * we do it because MitosEHR user single quotes to define strings.
+         * <p>Then replace remaining double quotes for single quotes <-- not required but...
+         * we do it because MitosEHR user single quotes to define strings.</p>
          */
         $rawStr     = json_encode($items);
         $regex      = '("\w*?":|"Ext\.create|\)"\})';
@@ -205,13 +209,18 @@ class FormLayoutEngine extends dbHelper {
      * @return string
      */
     function getStore($list_id){
-        $this->setSQL("SELECT * FROM list_options WHERE list_id = '$list_id' ORDER BY seq");
 
-        $buff = "Ext.create('Ext.data.Store',{fields:['name','value'],data:[";
+        $this->setSQL("SELECT o.*
+                         FROM combo_lists_options AS o
+                    LEFT JOIN combo_lists AS l ON l.id = o.list_id
+                        WHERE l.id = '$list_id'
+                     ORDER BY o.seq");
+
+        $buff = "Ext.create('Ext.data.Store',{fields:['option_name','option_value'],data:[";
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
-            $title = $item['title'];
-            $option_id =$item['option_id'];
-            $buff .= "{name:'$title',value:'$option_id'},";
+            $option_name    = $item['option_name'];
+            $option_value   = $item['option_value'];
+            $buff .= "{option_name:'$option_name',option_value:'$option_value'},";
         }
         $buff = rtrim($buff, ',');
         $buff .= "]})";
@@ -223,8 +232,8 @@ class FormLayoutEngine extends dbHelper {
      * @return array
      */
     function getComboDefaults($item){
-        $item['displayField'] = 'name';
-        $item['valueField']   = 'value';
+        $item['displayField'] = 'option_name';
+        $item['valueField']   = 'option_value';
         $item['queryMode']    = 'local';
         $item['editable']     = false;
         if(!isset($item['emptyText'])){
