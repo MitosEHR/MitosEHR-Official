@@ -149,6 +149,7 @@ Globals::setGlobals();
 
         <script type="text/javascript">
             var App;
+            function say(a){ console.log(a); }
             Ext.direct.Manager.addProvider(Ext.mitos.data.REMOTING_API);
 
             Ext.onReady(function(){

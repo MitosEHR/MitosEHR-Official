@@ -1,13 +1,20 @@
-//******************************************************************************
-// list.ejs.php
-// List Options Panel
-// v0.0.2
-// 
-// Author: Ernest Rodriguez
-// Modified: GI Technologies, 2011
-// 
-// MitosEHR (Eletronic Health Records) 2011
-//******************************************************************************
+/**
+ *
+ * list.ejs.php
+ * List Options Panel
+ * v0.0.2
+ *
+ * Author: Ernest Rodriguez
+ * Modified: GI Technologies, 2011
+ *
+ * MitosEHR (Eletronic Health Records) 2011
+ *
+ * @namespace Lists.getOptions
+ * @namespace Lists.addOption
+ * @namespace Lists.updateOption
+ * @namespace Lists.deleteOption
+ *
+ */
 Ext.define('Ext.mitos.panel.administration.lists.Lists',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLists',
@@ -25,23 +32,32 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         me.currList = null;
         me.currTask = null; 
 
-        me.storeListsOption = Ext.create('Ext.mitos.restStoreModel', {
+        Ext.define('LogsModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',			type: 'int'		},
                 {name: 'list_id', 		type: 'string'	},
-                {name: 'option_id', 	type: 'string'	},
-                {name: 'title', 		type: 'string'	},
-                {name: 'seq', 			type: 'int' 	},
-                {name: 'is_default', 	type: 'boolean'	},
                 {name: 'option_value', 	type: 'string'	},
-                {name: 'mapping', 		type: 'string'	},
+                {name: 'option_name', 	type: 'string'	},
+                {name: 'seq', 			type: 'int' 	},
                 {name: 'notes', 		type: 'string'	}
-            ],
-            model		: 'ListRecord',
-            idProperty	: 'id',
-            url	    	: 'app/administration/lists/data.php'
+            ]
+
         });
 
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'LogsModel',
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : Lists.getOptions,
+                    create  : Lists.addOption,
+                    update  : Lists.updateOption,
+                    destroy : Lists.deleteOption
+                }
+            },
+            autoLoad: false
+        });
         // *************************************************************************************
         // Create list Window Dialog
         // *************************************************************************************
@@ -94,8 +110,8 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             errorSummary    : false,
             listeners       : {
                 afteredit   : function(){
-                    me.storeListsOption.sync();
-                    me.storeListsOption.load({params:{list_id: me.currList }});
+                    me.store.sync();
+                    me.store.load({params:{list_id: me.currList }});
                 }
             }
         });
@@ -106,36 +122,32 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         // FIXME: On the double click event, is giving a error on ExtJSv4, don't know what
         // is cousing the problem. I will check this error later.
         me.listGrid = Ext.create('Ext.mitos.GridPanel', {
-            store		: me.storeListsOption,
+            store		: me.store,
             plugins		: [me.rowEditing],
             columns:[{
-                text        : 'ID',
-                width       : 100,
+                text        : 'Option Title',
+                width       : 200,
                 sortable    : true,
-                dataIndex   : 'option_id',
+                dataIndex   : 'option_name',
                 editor      : { allowBlank: false }
             },{
-                text        : 'Title',
-                width       : 175,
+                text        : 'Option Value',
+                width       : 200,
                 sortable    : true,
-                dataIndex   : 'title',
+                dataIndex   : 'option_value',
                 editor      : { allowBlank: false }
             },{
                 text        : 'Order',
+                width       : 100,
                 sortable    : true,
                 dataIndex   : 'seq',
-                editor      : { allowBlank: false }
-            },{
-                text        : 'Default',
-                sortable    : true,
-                dataIndex   : 'is_default',
                 editor      : { allowBlank: false }
             },{
                 text        : 'Notes',
                 sortable    : true,
                 dataIndex   : 'notes',
                 flex        : 1,
-                editor      : { allowBlank: false }
+                editor      : { allowBlank: true }
             }],
             listeners:{
                 scope       : this,
@@ -172,15 +184,6 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     listeners: {
                         scope   : this,
                         select  : this.onSelectList
-                    }
-
-                },'-',{
-                    text        : "Add User",  // ADD USER ??? WHAT IS THIS FOR ?????????????????????????????????????
-                    iconCls     : 'icon-add',
-                    handler     : function(){
-                        // add an empty record
-                        //me.storeListsOption.insert(0, ListRecord({list_id:me.currList}));
-                        //me.rowEditing.startEdit(0, 0);
                     }
                 },'->',{
                     text        : 'Add Option',
@@ -237,7 +240,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
     },
 
     onSelectList:function(combo, record){
-        this.currList = record[0].data.option_id;
+        this.currList = record[0].data.id;
         this.loadGrid();
     },
     
@@ -248,7 +251,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             this.currList = store.getAt(0).data.option_id;
             combo.setValue(this.currList);
         }
-        this.storeListsOption.load({params:{list_id: this.currList}});
+        this.store.load({params:{list_id: this.currList}});
     },
     /**
     * This function is called from MitosAPP.js when

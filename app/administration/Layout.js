@@ -1,13 +1,16 @@
-//******************************************************************************
-// layout.ejs.php
-// Description: Layout Screen Panel
-// v0.0.1
-//
-// Author: GI Technologies, 2011
-// Modified: n/a
-//
-// MitosEHR (Electronic Health Records) 2011
-//******************************************************************************
+/**
+ * layout.ejs.php
+ * Description: Layout Screen Panel
+ * v0.0.1
+ *
+ * Author: GI Technologies, 2011
+ * Modified: n/a
+ *
+ * MitosEHR (Electronic Health Records) 2011
+
+ * @namespace FormLayoutBuilder.addField
+ * @namespace FormLayoutBuilder.updateField
+ */
 Ext.define('Ext.mitos.panel.administration.Layout',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLayout',
@@ -76,14 +79,8 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
                     read: FormLayoutBuilder.getFormFieldsTree
                 }
             },
-//            proxy:{
-//
-//                type        : 'rest',
-//                url	        : 'app/administration/layout/data.php',
-//                extraParams	: { task: "treeRequest" }
-//            },
-            folderSort: false,
-            autoLoad: false
+            folderSort  : false,
+            autoLoad    : false
         });
         /**
          * Xtype Combobox store
@@ -154,18 +151,25 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
          * This are the select lists available to use for comboboxes
          * this lists can be created an modified at "Lists" administration panel.
          */
-        me.selectListoptionsStore = Ext.create('Ext.mitos.restStoreModel',{
+        Ext.define('formlistoptionsModel', {
+            extend: 'Ext.data.Model',
             fields: [
-                {name: 'id',		    type: 'string'},
-                {name: 'list_id',		type: 'string'},
-                {name: 'option_id',		type: 'string'},
-                {name: 'title',	        type: 'string'}
-            ],
-            model 		: 'formlistoptionsModel',
-            idProperty 	: 'id',
-            url	        : 'app/administration/layout/data.php',
-            extraParams	: { task: 'optionsRequest' }
+                {name: 'option_name',	type: 'string'},
+                {name: 'option_value',	type: 'string'}
+            ]
+
         });
+        me.selectListoptionsStore = Ext.create('Ext.data.Store', {
+            model       : 'formlistoptionsModel',
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: CombosData.getOptionsByListId
+                }
+            },
+            autoLoad    : true
+        });
+
         /**
          * This grid only available if the field is a Combobox
          */
@@ -185,12 +189,12 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
                 text        : 'Name',
                 flex        : 1,
                 sortable    : false,
-                dataIndex   : 'title'
+                dataIndex   : 'option_name'
             },{
                 text        : 'Value',
                 flex        : 1,
                 sortable    : false,
-                dataIndex   : 'option_id'
+                dataIndex   : 'option_value'
             }]
         });
         /**
@@ -598,20 +602,42 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
      * if the form is valid send the POST request
      */
     onSave:function(){
-        var form = this.fieldForm.getForm();
-
+        var me = this,
+            form = me.fieldForm.getForm();
         if (form.isValid()) {
-            form.submit({
-                submitEmptyText:false,
-                scope   : this,
-                success : function() {
-                    this.loadFieldsGrid();
-                    this.previewFormRender();
-                },
-                failure: function(form, action) {
-                    Ext.Msg.alert('Opps!', action.result.errors.reason);
-                }
-            });
+            var params = form.getValues();
+
+            if(form.findField('id').getValue() == ''){
+                FormLayoutBuilder.addField( params, function(provider, response){
+                    if(response.result.success){
+                        me.loadFieldsGrid();
+                        me.previewFormRender();
+                    }else{
+                        Ext.Msg.alert('Opps!', action.result.errors.reason);
+                    }
+                });
+            }else{
+                FormLayoutBuilder.updateField( params, function(provider, response){
+                    if(response.result.success){
+                        me.loadFieldsGrid();
+                        me.previewFormRender();
+                    }else{
+                        Ext.Msg.alert('Opps!', action.result.errors.reason);
+                    }
+                });
+            }
+
+//            form.submit({
+//                submitEmptyText:false,
+//                scope   : this,
+//                success : function() {
+//                    this.loadFieldsGrid();
+//                    this.previewFormRender();
+//                },
+//                failure: function(form, action) {
+//                    Ext.Msg.alert('Opps!', action.result.errors.reason);
+//                }
+//            });
         }
     },
     /**

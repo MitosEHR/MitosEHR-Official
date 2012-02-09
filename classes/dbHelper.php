@@ -1,6 +1,6 @@
 <?php
 if(!isset($_SESSION)){
-    session_name ("MitosEHR" );
+    session_name ( "MitosEHR" );
     session_start();
     session_cache_limiter('private');
 }

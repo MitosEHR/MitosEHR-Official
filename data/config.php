@@ -105,6 +105,26 @@ $API = array(
 
     ),
     /**
+    * Lists Functions
+    */
+    'Lists'=>array(
+        'methods'=>array(
+            'getOptions'=>array(
+               'len'=>1
+            ),
+            'createOption'=>array(
+                'len'=>1
+            ),
+            'updateOption'=>array(
+                'len'=>1
+            ),
+            'deleteOption'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
     * Office Notes Functions
     */
     'OfficeNotes'=>array(
@@ -151,6 +171,9 @@ $API = array(
     'FormLayoutBuilder'=>array(
         'methods'=>array(
             'getFormDataTable'=>array(
+                'len'=>1
+            ),
+            'addField'=>array(
                 'len'=>1
             ),
             'updateField'=>array(
@@ -242,28 +265,13 @@ $API = array(
      */
     'CombosData'=>array(
         'methods'=>array(
+            'getOptionsByListId'=>array(
+                'len'=>1
+            ),
             'getUsers'=>array(
                 'len'=>0
             ),
-            'getList'=>array(
-                'len'=>0
-            ),
-            'getMessageStatus'=>array(
-                'len'=>0
-            ),
-            'getTitles'=>array(
-                'len'=>0
-            ),
-            'getPriceLevel'=>array(
-                'len'=>0
-            ),
-            'getTAxRate'=>array(
-                'len'=>0
-            ),
-            'getTypes'=>array(
-                'len'=>0
-            ),
-            'getMsgNoteType'=>array(
+            'getLists'=>array(
                 'len'=>0
             ),
             'getFacilities'=>array(
@@ -278,7 +286,7 @@ $API = array(
             'getCalendarCategories'=>array(
                 'len'=>0
             ),
-            'getCalendarStatus'=>array(
+            'getLanguages'=>array(
                 'len'=>0
             ),
             'getAuthorizations'=>array(
@@ -291,9 +299,6 @@ $API = array(
                 'len'=>0
             ),
             'getFiledXtypes'=>array(
-                'len'=>0
-            ),
-            'getLanguages'=>array(
                 'len'=>0
             ),
             'getPosCodes'=>array(
