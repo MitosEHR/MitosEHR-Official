@@ -2,12 +2,7 @@ Ext.define('Ext.mitos.CalStatusComboBox',{
 	extend          : 'Ext.form.ComboBox',
     alias           : 'widget.mitos.calstatuscombobox',
     name            : 'status',
-    editable        : false,
-    displayField    : 'title',
-    valueField      : 'option_id',
-    queryMode       : 'local',
-    emptyText       : 'Select',
-    
+
     initComponent: function(){	
     	var me = this;
 
@@ -20,7 +15,10 @@ Ext.define('Ext.mitos.CalStatusComboBox',{
             proxy: {
                 type: 'direct',
                 api: {
-                    read: CombosData.getCalendarStatus
+                    read: CombosData.getOptionsByListId
+                },
+                extraParams: {
+                    list_id: 30
                 }
             }
         });
@@ -31,7 +29,12 @@ Ext.define('Ext.mitos.CalStatusComboBox',{
         });
 
     	Ext.apply(this, {
-    		store: me.store
+            editable    : false,
+            queryMode   : 'local',
+            displayField: 'option_name',
+            valueField  : 'option_value',
+            emptyText   : 'Select',
+    		store       : me.store
 		},null);
 		me.callParent();
 	} // end initComponent

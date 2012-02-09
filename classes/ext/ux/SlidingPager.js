@@ -37,7 +37,7 @@ Ext.define('Ext.ux.SlidingPager', {
             },
             listeners: {
                 changecomplete: function(s, v){
-                    pbar.store.loadPage(v);
+                     pbar.store.loadPage(v);
                 }
             }
         });

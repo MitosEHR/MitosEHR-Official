@@ -15,13 +15,16 @@ Ext.define('Ext.mitos.combo.MsgNoteType',{
         Ext.define('MsgNoteTypeModel', {
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'option_id', type: 'string' },
-                {name: 'title',     type: 'string' }
+                {name: 'option_name',   type: 'string' },
+                {name: 'option_value',  type: 'string' }
             ],
             proxy: {
                 type: 'direct',
                 api: {
-                    read: CombosData.getMsgNoteType
+                    read: CombosData.getOptionsByListId
+                },
+                extraParams: {
+                    list_id: 28
                 }
             }
         });
@@ -34,8 +37,8 @@ Ext.define('Ext.mitos.combo.MsgNoteType',{
     	Ext.apply(this, {
             editable    : false,
             queryMode   : 'local',
-            valueField  : 'option_id',
-            displayField: 'title',
+            displayField: 'option_name',
+            valueField  : 'option_value',
             emptyText   : 'Select',
             store       : me.store
 		},null);

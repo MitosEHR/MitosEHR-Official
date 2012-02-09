@@ -10,7 +10,7 @@
  *
  * @namespace Logs.getLogs
  */
-Ext.define('Ext.mitos.panel.administration.log.Log',{
+Ext.define('Ext.mitos.panel.administration.Log',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLog',
     uses        : [ 'Ext.mitos.restStoreModel', 'Ext.mitos.GridPanel' ],

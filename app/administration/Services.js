@@ -1,13 +1,18 @@
-//******************************************************************************
-// services.ejs.php
-// Services
-// v0.0.1
-//
-// Author: Ernest Rodriguez
-//
-// MitosEHR (Electronic Health Records) 2011
-//******************************************************************************
-Ext.define('Ext.mitos.panel.administration.services.Services',{
+/**
+ * services.ejs.php
+ * Services
+ * v0.0.1
+ *
+ * Author: Ernest Rodriguez
+ *
+ * MitosEHR (Electronic Health Records) 2011
+ *
+ *
+ * @namespace Services.getServices
+ * @namespace Services.addService
+ * @namespace Services.updateService
+ */
+Ext.define('Ext.mitos.panel.administration.Services',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelServices',
     pageTitle   : 'Services',
@@ -21,7 +26,12 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     initComponent: function(){
         var me = this;
 
-        me.storeServices = Ext.create('Ext.mitos.restStoreModel',{
+        me.active    = 1;
+        me.query     = '';
+        me.code_type = 'all'
+
+        Ext.define('ServiceModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',      		    type: 'int'},
                 {name: 'code_text',         type: 'string'},
@@ -37,11 +47,32 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
                 {name: 'cyp_factor',        type: 'string'},
                 {name: 'active',            type: 'string'},
                 {name: 'reportable',        type: 'string'}
-            ],
-            model		: 'ModelService',
-            idProperty	: 'id',
-            noCache     : false,
-            url      	: 'app/administration/services/data.php'
+            ]
+
+        });
+
+        me.store = Ext.create('Ext.data.Store', {
+            model: 'ServiceModel',
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : Services.getServices,
+                    create  : Services.addService,
+                    update  : Services.updateService
+                },
+                reader: {
+                    totalProperty	: 'totals',
+                    root			: 'rows'
+                },
+                extraParams :{
+                    code_type   : me.code_type,
+                    query       : me.query,
+                    active      : me.active
+                }
+            },
+
+            remoteSort  : true,
+            autoLoad    : false
         });
         function code_type(val) {
             if(val == '1') {
@@ -64,25 +95,25 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
 
         me.servicesGrid = Ext.create('Ext.mitos.GridPanel', {
             region		: 'center',
-            store       : me.storeServices,
+            store       : me.store,
             columns: [
                 { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
                 { width: 80,  header: 'Code Type',   sortable: true, dataIndex: 'code_type',  renderer:code_type },
                 { width: 80,  header: 'Code',        sortable: true, dataIndex: 'code' },
                 { width: 80,  header: 'Modifier',    sortable: true, dataIndex: 'modifier' },
                 { width: 60,  header: 'Active',      sortable: true, dataIndex: 'active',     renderer:bool },
-                { width: 70, header: 'Reportable',   sortable: true, dataIndex: 'reportable', renderer:bool },
+                { width: 70,  header: 'Reportable',   sortable: true, dataIndex: 'reportable', renderer:bool },
                 { flex: 1,    header: 'Description', sortable: true, dataIndex: 'code_text' },
                 { width: 100, header: 'Standard',    sortable: true, dataIndex: 'none' }
             ],
             listeners: {
                 scope: me,
                 itemclick: function(view, record){
-                    me.onItemclick( me.storeServices, record, 'Edit Service' );
+                    me.onItemclick( me.store, record, 'Edit Service' );
                 }
             },
             tbar: Ext.create('Ext.PagingToolbar', {
-                store       :  me.storeServices,
+                store       :  me.store,
                 displayInfo : true,
                 emptyMsg    : "No Office Notes to display",
                 plugins     : Ext.create('Ext.ux.SlidingPager', {}),
@@ -90,20 +121,17 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
                     xtype   :'mitos.codestypescombo',
                     width   : 100,
                     listeners: {
-                        select: function(combo, record){
-                            var code = record[0].data.ct_id;
-                            me.storeServices.load({ params:{ code: code } });
-                        }
+                        scope   : me,
+                        select  : me.onCodeTypeSelect
                     }
                 },'-',{
                     xtype           : 'textfield',
                     emptyText       : 'Search',
                     enableKeyEvents : true,
                     listeners: {
-                        keyup: function(){
-                            var query = this.getValue();
-                            me.storeServices.load({params:{ search:query }});
-                        },buffer:100
+                        scope   : me,
+                        keyup   : me.onSearch,
+                        buffer  : 500
                     }
                 },'-',{
                     xtype       : 'button',
@@ -111,13 +139,8 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
                     iconCls   	: 'save',
                     enableToggle: true,
                     listeners:{
-                        toggle:function(btn, pressed){
-                             if (pressed){
-                                 me.storeServices.load({params:{ active:0 }});
-                             } else {
-                                 me.storeServices.load({params:{ active:1 }});
-                             }
-                        }
+                        scope   : me,
+                        toggle  : me.onActivePressed
                     }
                 }]
             })
@@ -142,7 +165,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
                     me.action('close');
                 },
                 expand:function(){
-                    me.onNew(this,'ModelService');
+                    me.onNew(this,'ServiceModel');
                 }
             },
             defaults: {
@@ -189,7 +212,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
                     text      	: 'Save',
                     iconCls   	: 'save',
                     handler   : function(){
-                        me.onSave(me.servicesFormPanel, me.storeServices);
+                        me.onSave(me.servicesFormPanel, me.store);
                     }
                 },'-',{
                     text:'Reset / New',
@@ -215,6 +238,34 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
         me.pageBody = [ me.servicesFormPanel, me.servicesGrid ];
         me.callParent(arguments);
     }, // end of initComponent
+
+    onSearch:function(field){
+
+        var me = this,
+            store = me.store;
+        me.query = field.getValue();
+
+        store.proxy.extraParams = {active:me.active, code_type:me.code_type, query:me.query};
+        me.store.load();
+    },
+
+    onCodeTypeSelect:function(combo, record){
+        var me = this,
+            store = me.store;
+        me.code_type = record[0].data.ct_id;
+
+        store.proxy.extraParams = {active:me.active, code_type:me.code_type, query:me.query};
+        me.store.load();
+    },
+
+    onActivePressed:function(btn, pressed){
+        var me = this,
+            store = me.store;
+        me.active = pressed ? 0 : 1;
+
+        store.proxy.extraParams = {active:me.active, code_type:me.code_type, query:me.query};
+        me.store.load();
+    },
 
     onNew:function(form, model){
         form.getForm().reset();
@@ -278,7 +329,7 @@ Ext.define('Ext.mitos.panel.administration.services.Services',{
     * to call every this panel becomes active
     */
     onActive:function(callback){
-        this.storeServices.load();
+        this.store.load();
         callback(true);
     }
 }); //ens servicesPage class
