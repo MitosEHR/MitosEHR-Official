@@ -19,13 +19,20 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
+include_once("dbHelper.php");
 class FormLayoutBuilder extends dbHelper {
 
     private $form_data_table;
     private $col;
 
-    public function addField($data){
+    /**
+     * @param stdClass $params
+     * @return array
+     */
+    public function addField(stdClass $params){
+
+        $data = get_object_vars($params);
+
         $this->getFormDataTable($data['form_id']);
         $this->col  = $data['name'];
         $container  = false;
@@ -93,7 +100,7 @@ class FormLayoutBuilder extends dbHelper {
              */
             $this->insertOptions($data, $field_id);
 
-            print '{"success":true}';
+            return array('success' => true);
         }
     }
 
@@ -101,9 +108,13 @@ class FormLayoutBuilder extends dbHelper {
      * This function will update the fields and print
      * the success callback if no errors found alog the way
      *
-     * @param $data
+     * @param stdClass $params
+     * @return array
      */
-    public function updateField($data){
+    public function updateField(stdClass $params){
+
+        $data = get_object_vars($params);
+
         /**
          * sinatizedData check the data array and if
          * the value is empty delete it form the array
@@ -160,7 +171,7 @@ class FormLayoutBuilder extends dbHelper {
          */
         $this->insertOptions($data, $id);
 
-        print '{"success": true }';
+        return array('success' => true);
     }
 
     /**
@@ -168,6 +179,7 @@ class FormLayoutBuilder extends dbHelper {
      * error were found along the way.
      *
      * @param $data
+     * @return array
      */
     public function deleteField($data){
 
@@ -227,7 +239,7 @@ class FormLayoutBuilder extends dbHelper {
         $ret = $this->execOnly();
         $this->checkError($ret);
 
-        print '{"success":true}';
+        return array('success' => true);
     }
 
     /**
@@ -235,6 +247,7 @@ class FormLayoutBuilder extends dbHelper {
      * print success if no error found along the way.
      *
      * @param $data
+     * @return array
      */
     public function sortFields($data){
         $pos        = 10;
@@ -265,7 +278,7 @@ class FormLayoutBuilder extends dbHelper {
             $pos = $pos + 10;
         }
 
-        print '{"success":true}';
+        return array('success' => true);
     }
 
     /**
