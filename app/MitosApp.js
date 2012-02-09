@@ -51,15 +51,15 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.panel.fees.fees_sheet.FeesSheet',
         'Ext.mitos.panel.fees.payments.Payments',
 
-        'Ext.mitos.panel.administration.facilities.Facilities',
-        'Ext.mitos.panel.administration.globals.Globals',
-        'Ext.mitos.panel.administration.layout.Layout',
+        'Ext.mitos.panel.administration.Facilities',
+        'Ext.mitos.panel.administration.Globals',
+        'Ext.mitos.panel.administration.Layout',
         'Ext.mitos.panel.administration.lists.Lists',
-        'Ext.mitos.panel.administration.log.Log',
+        'Ext.mitos.panel.administration.Log',
         'Ext.mitos.panel.administration.practice.Practice',
-        'Ext.mitos.panel.administration.roles.Roles',
-        'Ext.mitos.panel.administration.services.Services',
-        'Ext.mitos.panel.administration.users.Users',
+        'Ext.mitos.panel.administration.Roles',
+        'Ext.mitos.panel.administration.Services',
+        'Ext.mitos.panel.administration.Users',
 
         'Ext.mitos.panel.miscellaneous.addressbook.Addressbook',
         'Ext.mitos.panel.miscellaneous.myaccount.MyAccount',
@@ -494,31 +494,31 @@ Ext.define('Ext.mitos.panel.MitosApp',{
          * Add Administration Area Panels
          */
         if(perm.access_gloabal_settings){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.globals.Globals'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Globals'));
         }
         if(perm.access_facilities){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.facilities.Facilities'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Facilities'));
         }
         if(perm.access_users){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.users.Users'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Users'));
         }
         if(perm.access_practice){
             me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.practice.Practice'));
         }
         if(perm.access_services){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.services.Services'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Services'));
         }
         if(perm.access_roles){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.roles.Roles'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Roles'));
         }
         if(perm.access_layouts){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.layout.Layout'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Layout'));
         }
         if(perm.access_lists){
             me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.lists.Lists'));
         }
         if(perm.access_event_log){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.log.Log'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Log'));
         }
 
 

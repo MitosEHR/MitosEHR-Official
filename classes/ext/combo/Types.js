@@ -13,14 +13,18 @@ Ext.define('Ext.mitos.combo.Types',{
         Ext.define('TypesModel', {
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'option_id', type: 'string'},
-      			    {name: 'title', type: 'string'}
+                {name: 'option_name',   type: 'string' },
+                {name: 'option_value',  type: 'string' }
             ],
             proxy: {
                 type: 'direct',
                 api: {
-                    read: CombosData.getTypes
+                    read: CombosData.getOptionsByListId
+                },
+                extraParams: {
+                    list_id: 22
                 }
+
             }
         });
 
@@ -30,12 +34,12 @@ Ext.define('Ext.mitos.combo.Types',{
         });
 
     	Ext.apply(this, {
-    		name: 'abook_type', 
-			editable: false, 
-    		displayField: 'title',
-    		valueField: 'option_id',
-    		queryMode: 'local',
-    		store: me.storeTypes
+    		name        : 'abook_type',
+			editable    : false,
+    		displayField: 'option_name',
+    		valueField  : 'option_value',
+    		queryMode   : 'local',
+    		store       : me.store
 		}, null);
 		me.callParent(arguments);
 	} 

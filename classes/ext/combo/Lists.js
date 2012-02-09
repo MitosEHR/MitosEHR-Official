@@ -9,13 +9,13 @@ Ext.define('Ext.mitos.combo.Lists',{
         Ext.define('ListComboModel', {
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'option_id', type: 'string' },
+                {name: 'id',        type: 'int' },
                 {name: 'title',     type: 'string' }
             ],
             proxy: {
                 type: 'direct',
                 api: {
-                    read: CombosData.getList
+                    read: CombosData.getLists
                 }
             }
         });
@@ -28,7 +28,7 @@ Ext.define('Ext.mitos.combo.Lists',{
     	Ext.apply(this, {
             editable    : false,
             queryMode   : 'local',
-            valueField  : 'option_id',
+            valueField  : 'id',
             displayField: 'title',
             emptyText   : 'Select',
             store       : me.store

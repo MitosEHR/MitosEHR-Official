@@ -13,7 +13,7 @@
  * @namespace User.updateUser
  * @namespace User.chechPasswordHistory
  */
-Ext.define('Ext.mitos.panel.administration.users.Users',{
+Ext.define('Ext.mitos.panel.administration.Users',{
     extend      :'Ext.mitos.RenderPanel',
     id          : 'panelUsers',
     pageTitle   : 'Users',

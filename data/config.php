@@ -105,6 +105,26 @@ $API = array(
 
     ),
     /**
+    * Lists Functions
+    */
+    'Lists'=>array(
+        'methods'=>array(
+            'getOptions'=>array(
+               'len'=>1
+            ),
+            'createOption'=>array(
+                'len'=>1
+            ),
+            'updateOption'=>array(
+                'len'=>1
+            ),
+            'deleteOption'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
     * Office Notes Functions
     */
     'OfficeNotes'=>array(
@@ -121,6 +141,21 @@ $API = array(
         )
     ),
     /**
+    * Services Functions
+    */
+    'Services'=>array(
+        'methods'=>array(
+           'getServices'=>array(
+               'len'=>1
+           ),
+            'addService'=>array(
+               'len'=>1
+           ),
+            'updateService'=>array(
+               'len'=>1
+           )
+        )
+    ),    /**
      * Form layout Engine Functions
      */
     'FormLayoutEngine'=>array(
@@ -136,6 +171,9 @@ $API = array(
     'FormLayoutBuilder'=>array(
         'methods'=>array(
             'getFormDataTable'=>array(
+                'len'=>1
+            ),
+            'addField'=>array(
                 'len'=>1
             ),
             'updateField'=>array(
@@ -206,13 +244,16 @@ $API = array(
      */
     'authProcedures'=>array(
         'methods'=>array(
-            'auth'=>array(
+            'login'=>array(
                 'len'=>1
             ),
             'ckAuth'=>array(
                 'len'=>0
             ),
             'unAuth'=>array(
+                'len'=>0
+            ),
+            'getSites'=>array(
                 'len'=>0
             )
 
@@ -224,22 +265,13 @@ $API = array(
      */
     'CombosData'=>array(
         'methods'=>array(
+            'getOptionsByListId'=>array(
+                'len'=>1
+            ),
             'getUsers'=>array(
                 'len'=>0
             ),
-            'getList'=>array(
-                'len'=>0
-            ),
-            'getMessageStatus'=>array(
-                'len'=>0
-            ),
-            'getTitles'=>array(
-                'len'=>0
-            ),
-            'getTypes'=>array(
-                'len'=>0
-            ),
-            'getMsgNoteType'=>array(
+            'getLists'=>array(
                 'len'=>0
             ),
             'getFacilities'=>array(
@@ -254,7 +286,7 @@ $API = array(
             'getCalendarCategories'=>array(
                 'len'=>0
             ),
-            'getCalendarStatus'=>array(
+            'getLanguages'=>array(
                 'len'=>0
             ),
             'getAuthorizations'=>array(
@@ -267,9 +299,6 @@ $API = array(
                 'len'=>0
             ),
             'getFiledXtypes'=>array(
-                'len'=>0
-            ),
-            'getLanguages'=>array(
                 'len'=>0
             ),
             'getPosCodes'=>array(

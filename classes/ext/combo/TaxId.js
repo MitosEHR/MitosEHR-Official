@@ -34,8 +34,8 @@ Ext.define('Ext.mitos.combo.TaxId',{
     	Ext.apply(this, {
             editable    : false,
             queryMode   : 'local',
-            valueField  : 'option_id',
             displayField: 'title',
+            valueField  : 'option_id',
             emptyText   : 'Select',
             store       : me.store
 		},null);

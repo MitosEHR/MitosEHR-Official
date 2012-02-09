@@ -18,9 +18,12 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
 
 <link rel="shortcut icon" href="favicon.ico" >
+
+<script src="data/logon_api.php"></script>
 <script type="text/javascript" src="app/login/login.js"></script>
 <script type="text/javascript">
 Ext.onReady(function(){
+    Ext.direct.Manager.addProvider(Ext.mitos.data.REMOTING_API);
     Ext.create('Ext.mitos.panel.login.Login');
 }); // End App
 </script>
