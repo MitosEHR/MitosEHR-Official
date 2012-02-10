@@ -8,8 +8,15 @@
  *
  * MitosEHR (Electronic Health Records) 2011
 
+ * @namespace FormLayoutBuilder.getFormFieldsTree
+ * @namespace FormLayoutBuilder.getParentFields
+ * @namespace FormLayoutBuilder.getForms
  * @namespace FormLayoutBuilder.addField
  * @namespace FormLayoutBuilder.updateField
+ * @namespace FormLayoutBuilder.deleteField
+ * @namespace FormLayoutBuilder.sortFields
+ * @namespace CombosData.getFiledXtypes
+ * @namespace CombosData.getOptionsByListId
  */
 Ext.define('Ext.mitos.panel.administration.Layout',{
     extend      : 'Ext.mitos.RenderPanel',
@@ -100,7 +107,7 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
             }
         });
         me.fieldXTypesStore = Ext.create('Ext.data.Store', {
-            model: 'XtypesComboModel',
+            model   : 'XtypesComboModel',
             autoLoad: true
         });
 
@@ -121,7 +128,7 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
             }
         });
         me.formsGridStore = Ext.create('Ext.data.Store', {
-            model: 'FormsListModel',
+            model   : 'FormsListModel',
             autoLoad: true
         });
 
@@ -143,7 +150,7 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
             }
         });
         me.parentFieldsStore = Ext.create('Ext.data.Store', {
-            model: 'ParentFieldsModel',
+            model   : 'ParentFieldsModel',
             autoLoad: true
         });
 
@@ -167,7 +174,7 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
                     read: CombosData.getOptionsByListId
                 }
             },
-            autoLoad    : true
+            autoLoad: true
         });
 
         /**
@@ -252,8 +259,8 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
                 emptyText       : 'None',
                 itemId		    : 'parentFields',
                 listeners:{
-                    scope: me,
-                    expand   : me.onParentFieldsExpand
+                    scope   : me,
+                    expand  : me.onParentFieldsExpand
                 }
             },{
                 xtype    : 'fieldset',
@@ -445,7 +452,7 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
                     hidden          : true,
                     allowBlank      : false,
                     listeners:{
-                        scope   : this,
+                        scope   : me,
                         change  : me.onSelectListSelect
                     }
                 }]
@@ -464,7 +471,10 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
             region      : 'east',
             layout      : 'border',
             bodyStyle   : 'background-color:#fff!important',
-            items       : [ me.fieldForm, me.selectListGrid ],
+            items       : [
+                me.fieldForm,
+                me.selectListGrid
+            ],
             dockedItems : [{
                 xtype   : 'toolbar',
                 items   : [{
@@ -613,7 +623,7 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
                         me.loadFieldsGrid();
                         me.previewFormRender();
                     }else{
-                        Ext.Msg.alert('Opps!', action.result.errors.reason);
+                        Ext.Msg.alert('Opps!', response.result.error);
                     }
                 });
             }else{
@@ -622,30 +632,19 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
                         me.loadFieldsGrid();
                         me.previewFormRender();
                     }else{
-                        Ext.Msg.alert('Opps!', action.result.errors.reason);
+                        Ext.Msg.alert('Opps!', response.result.error);
                     }
                 });
             }
-
-//            form.submit({
-//                submitEmptyText:false,
-//                scope   : this,
-//                success : function() {
-//                    this.loadFieldsGrid();
-//                    this.previewFormRender();
-//                },
-//                failure: function(form, action) {
-//                    Ext.Msg.alert('Opps!', action.result.errors.reason);
-//                }
-//            });
         }
     },
     /**
-     * TODO: check database is field has database... if YES... cant delete!
+     * Delete logic
      */
     onDelete:function(){
-        var form = this.fieldForm.getForm(),
-        rec = form.getRecord();
+        var me = this,
+            form = me.fieldForm.getForm(),
+            rec = form.getRecord();
 
         Ext.Msg.show({
             title   : 'Please confirm...',
@@ -655,27 +654,22 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
             scope   : this,
             fn:function(btn){
                 if (btn == 'yes') {
-                    Ext.Ajax.request({
-                        scope   : this,
-                        url     : 'app/administration/layout/data.php',
-                        params:{
-                            id      : rec.data.id,
-                            form_id : rec.data.form_id,
-                            name    : rec.data.name,
-                            xtype   : rec.data.xtype,
-                            task    : 'deleteRequest'
-                        },
-                        success:function(callback){
-                            var responseText = Ext.JSON.decode(callback.responseText);
-                            if(responseText.success){
-                                this.msg('Sweet!', 'Field deleted');
-                                this.currField = null;
-                                this.loadFieldsGrid();
-                                this.previewFormRender();
-                                this.onFormReset();
-                            }else{
-                                Ext.Msg.alert('Opps!', responseText.errors.reason);
-                            }
+                    var params = {
+                        id      : rec.data.id,
+                        form_id : rec.data.form_id,
+                        name    : rec.data.name,
+                        xtype   : rec.data.xtype
+                    };
+
+                    FormLayoutBuilder.deleteField( params, function(provider, response){
+                        if(response.result.success){
+                            me.msg('Sweet!', 'Field deleted');
+                            me.currField = null;
+                            me.loadFieldsGrid();
+                            me.previewFormRender();
+                            me.onFormReset();
+                        }else{
+                            Ext.Msg.alert('Opps!', response.result.error);
                         }
                     });
                 }
@@ -689,33 +683,27 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
      * @param overModel
      */
     onDragDrop:function(node,data,overModel){
-        var childItems = [];
+        var me = this,
+            childItems = [];
         Ext.each(overModel.parentNode.childNodes, function(childItem){
             childItems.push(childItem.data.id);
         });
-        //noinspection JSUnusedGlobalSymbols
-        Ext.Ajax.request({
-            scope : this,
-            url   : 'app/administration/layout/data.php',
-            params:{
-                task: 'sortRequest',
-                item: Ext.JSON.encode({
-                    id               : data.records[0].data.id,
-                    parentNode       : overModel.parentNode.data.id,
-                    parentNodeChilds : childItems
-                })
 
-            },
-            success:function(callback){
-                var responseText = Ext.JSON.decode(callback.responseText);
-                if(responseText.success){
-                    this.msg('Sweet!', 'Field Updated');
-                    this.loadFieldsGrid();
-                    this.previewFormRender();
-                    this.onFormReset();
-                }else{
-                    Ext.Msg.alert('Opps!', responseText.errors.reason);
-                }
+        var params = {
+            id               : data.records[0].data.id,
+            parentNode       : overModel.parentNode.data.id,
+            parentNodeChilds : childItems
+        };
+
+
+        FormLayoutBuilder.sortFields( params, function(provider, response){
+            if(response.result.success){
+                me.msg('Sweet!', 'Form Fields Sorted');
+                me.loadFieldsGrid();
+                me.previewFormRender();
+                me.onFormReset();
+            }else{
+                Ext.Msg.alert('Opps!', response.result.error);
             }
         });
     },
@@ -808,14 +796,16 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
      * @param value
      */
     onXtypeChange:function(combo, value){
+        var me = this;
+
         if (value == 'combobox') {
-            this.selectListGrid.setTitle('Select List Options');
-            this.selectListGrid.expand();
-            this.selectListGrid.enable();
+            me.selectListGrid.setTitle('Select List Options');
+            me.selectListGrid.expand();
+            me.selectListGrid.enable();
         } else {
-            this.selectListGrid.setTitle('');
-            this.selectListGrid.collapse();
-            this.selectListGrid.disable();
+            me.selectListGrid.setTitle('');
+            me.selectListGrid.collapse();
+            me.selectListGrid.disable();
         }
 
         /**
@@ -845,7 +835,7 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
         };
 
 
-        var addProp = this.fieldForm.getComponent('aditionalProperties');
+        var addProp = me.fieldForm.getComponent('aditionalProperties');
         var is = addProp.items.keys;
         /**
          *
@@ -1000,11 +990,13 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
      * @param toggle
      */
     onFormPreview:function(btn,toggle){
+        var me = this;
+
         if(toggle === true){
-            this.previewFormRender();
-            this.fromPreview.expand(false);
+            me.previewFormRender();
+            me.fromPreview.expand(false);
         }else{
-            this.fromPreview.collapse(false);
+            me.fromPreview.collapse(false);
         }
     },
     /**
@@ -1016,7 +1008,7 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
             form = this.fromPreview;
 
         form.el.mask();
-        this.getFormItems( form, me.currForm, function(){
+        me.getFormItems( form, me.currForm, function(){
             form.doLayout();
             form.el.unmask();
         });
@@ -1032,20 +1024,21 @@ Ext.define('Ext.mitos.panel.administration.Layout',{
      *  parentFieldsStore is use to create the child of select list
      */
     loadFieldsGrid:function(){
-        var row = this.formsGrid.getSelectionModel();
-        if(this.currForm === null){
+        var me = this,
+            row = me.formsGrid.getSelectionModel();
+        if(me.currForm === null){
             row.select(0);
         }
-        this.currForm = row.getLastSelected().data.id;
+        me.currForm = row.getLastSelected().data.id;
         /**
          *
          * this.fieldsGridStore.setRootNode() is to manage a sencha bug
          * that removes the treeNotes when you load() the store.
          *
          */
-        this.fieldsGridStore.setRootNode();
-        this.fieldsGridStore.load({params:{currForm: this.currForm }});
-        this.parentFieldsStore.load({params:{currForm: this.currForm }});
+        me.fieldsGridStore.setRootNode();
+        me.fieldsGridStore.load({params:{currForm: me.currForm }});
+        me.parentFieldsStore.load({params:{currForm: me.currForm }});
     },
     /**
     * This function is called from MitosAPP.js when

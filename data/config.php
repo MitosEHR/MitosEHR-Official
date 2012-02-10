@@ -112,13 +112,19 @@ $API = array(
             'getOptions'=>array(
                'len'=>1
             ),
-            'createOption'=>array(
+            'addOption'=>array(
                 'len'=>1
             ),
             'updateOption'=>array(
                 'len'=>1
             ),
             'deleteOption'=>array(
+                'len'=>1
+            ),
+            'sortOptions'=>array(
+                'len'=>1
+            ),
+            'addList'=>array(
                 'len'=>1
             )
         ),

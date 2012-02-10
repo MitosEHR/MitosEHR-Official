@@ -13,6 +13,8 @@
  * @namespace Lists.addOption
  * @namespace Lists.updateOption
  * @namespace Lists.deleteOption
+ * @namespace Lists.sortOptions
+ * @namespace Lists.addList
  *
  */
 Ext.define('Ext.mitos.panel.administration.lists.Lists',{
@@ -32,21 +34,21 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         me.currList = null;
         me.currTask = null; 
 
-        Ext.define('LogsModel', {
+        Ext.define('ListOptionsModel', {
             extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',			type: 'int'		},
                 {name: 'list_id', 		type: 'string'	},
                 {name: 'option_value', 	type: 'string'	},
                 {name: 'option_name', 	type: 'string'	},
-                {name: 'seq', 			type: 'int' 	},
+                {name: 'seq', 			type: 'string' 	},
                 {name: 'notes', 		type: 'string'	}
             ]
 
         });
 
         me.store = Ext.create('Ext.data.Store', {
-            model: 'LogsModel',
+            model: 'ListOptionsModel',
             proxy: {
                 type: 'direct',
                 api: {
@@ -69,34 +71,20 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                 defaults : { labelWidth: 100, anchor: '100%' },
                 items:[{
                     xtype       : 'textfield',
-                    fieldLabel  : 'List Name',
-                    name        : 'list_name',
-                    width       : 200,
-                    allowBlank  : false
-                },{
-                    xtype       : 'textfield',
-                    fieldLabel  : 'Unique name',
-                    name        : 'option_id',
+                    fieldLabel  : 'List Name/Title',
+                    name        : 'title',
                     width       : 200,
                     allowBlank  : false
                 }]
             }],
             buttons:[{
                 text		: 'Create',
-                iconCls		: 'save',
-                itemId      : 'cmdSave',
-                cls         : 'winSave',
-                handler		: function() {
-                    var form = Ext.getCmp('frmLists').getForm();
-                    if(form.isValid()){
-                        me.onSave();
-                    }
-                }
+                scope       : me,
+                handler		: me.onListSave
             },'-',{
                 text		: 'Cancel',
-                iconCls		: 'delete',
-                itemId      : 'cmdClose',
                 handler		: function(){
+                    me.win.down('form').getForm().reset();
                     me.win.hide();
                 }
             }]
@@ -108,11 +96,15 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         me.rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
             autoCancel      : false,
             errorSummary    : false,
+            deleteBtnText   : 'Disable',
             listeners       : {
-                afteredit   : function(){
+                scope       : me,
+                afteredit: function(){
                     me.store.sync();
                     me.store.load({params:{list_id: me.currList }});
-                }
+                },
+                destroy     : me.onOptionDelete,
+                canceledit  : me.onCancelEdit
             }
         });
 
@@ -124,24 +116,39 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
         me.listGrid = Ext.create('Ext.mitos.GridPanel', {
             store		: me.store,
             plugins		: [me.rowEditing],
+            viewConfig: {
+                plugins: {
+                    ptype: 'gridviewdragdrop',
+                    dragText: 'Drag and drop to reorganize'
+                },
+                listeners : {
+                    scope : me,
+                    drop  : me.onDragDrop
+                }
+            },
             columns:[{
                 text        : 'Option Title',
                 width       : 200,
                 sortable    : true,
                 dataIndex   : 'option_name',
-                editor      : { allowBlank: false }
+                editor      : {
+                    allowBlank: false,
+                    enableKeyEvents: true,
+                    listeners:{
+                        scope: me,
+                        keyup: me.onOptionTitleChange
+                    }
+                }
             },{
                 text        : 'Option Value',
                 width       : 200,
                 sortable    : true,
                 dataIndex   : 'option_value',
-                editor      : { allowBlank: false }
-            },{
-                text        : 'Order',
-                width       : 100,
-                sortable    : true,
-                dataIndex   : 'seq',
-                editor      : { allowBlank: false }
+                editor      : {
+                    allowBlank  : false,
+                    readOnly    : true,
+                    itemId      : 'optionValueTextField'
+                }
             },{
                 text        : 'Notes',
                 sortable    : true,
@@ -149,10 +156,6 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                 flex        : 1,
                 editor      : { allowBlank: true }
             }],
-            listeners:{
-                scope       : this,
-                itemclick   : me.onItemClick
-            },
             dockedItems:[{
                 xtype	    : 'toolbar',
                 dock	    : 'top',
@@ -160,46 +163,28 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     xtype	    : 'button',
                     text	    : 'Create New Select List',
                     iconCls	    : 'icoListOptions',
-                    handler     : function(){
-                        me.currTask = 'list';
-                        me.onNewList();
-                    }
-                },'-',{
-                    text	    : 'Delete Select List',
-                    iconCls	    : 'delete',
-                    cls         : 'toolDelete',
-                    handler	    : function(){
-                        me.currTask = 'list';
-                        this.onDelete();
-                    }
+                    scope       : me,
+                    handler     : me.onNewList
                 },'-',{
                     fieldLabel  : 'Select List',
                     xtype	    : 'mitos.listscombo',
                     name		: 'cmbList',
                     itemId      : 'cmbList',
                     labelWidth  : 60,
+                    width       : 300,
                     handler     : function(){
                         me.rowEditing.cancelEdit();
                     },
                     listeners: {
-                        scope   : this,
-                        select  : this.onSelectList
+                        scope   : me,
+                        select  : me.onSelectList,
+                        expand  : me.onExpand
                     }
                 },'->',{
                     text        : 'Add Option',
                     iconCls     : 'icoAddRecord',
-                    handler     : function() {
-                        me.currTask = 'option';
-                        me.onNewOption();
-                    }
-                },'-',{
-                    text        : 'Delete Option',
-                    iconCls     : 'delete',
-                    cls         : 'toolDelete',
-                    handler     : function(){
-                        me.currTask = 'option';
-                        me.onDelete();
-                    }
+                    scope       : me,
+                    handler     : me.onNewOption
                 }]
             }] // END GRID TOP MENU
         }); // END GRID
@@ -209,18 +194,76 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
 
     onNewList:function(){
         this.win.show();
-        //TODO
     },
 
+    onListSave:function(){
+        var me      = this,
+            win     = me.win,
+            form    = win.down('form').getForm(),
+            cmbList = me.listGrid.down('toolbar').getComponent('cmbList'),
+            cmbStore= cmbList.getStore(),
+            params  = form.getValues();
+
+        if(form.isValid()){
+
+
+            Lists.addList(params, function(provider, response){
+                if(response.result.success){
+                    me.currList = response.result.list_id;
+
+                    cmbStore.load();
+                    cmbList.setValue(me.currList);
+                    me.store.load({params:{list_id: me.currList}});
+
+                    form.reset();
+                    win.close();
+
+                }else{
+                    me.msg('Opps!', 'Something went wrong');
+                }
+            });
+
+        }
+
+    },
+        
     onNewOption:function(){
-        //TODO
+        var me = this;
+        me.rowEditing.cancelEdit();
+        var r = Ext.create('ListOptionsModel', {
+            list_id: me.currList
+        });
+        me.store.insert(0, r);
+        me.rowEditing.startEdit(0, 0);
     },
 
-    onSave:function(){
-        //TODO
+    onCancelEdit:function(){
+        this.store.load({params:{list_id: this.currList}});
     },
 
-    onDelete:function(){
+    onOptionTitleChange:function(a){
+        var value   = this.strToLowerUnderscores(a.getValue()),
+            field   = a.up('container').getComponent('optionValueTextField');
+        field.setValue(value);
+    },
+
+    onDragDrop:function(node, data, overModel, dropPosition){
+        var me = this,
+            items = overModel.store.data.items,
+            gridItmes = [];
+        Ext.each(items, function(iteme){
+            gridItmes.push(iteme.data.id);
+        });
+        var params = {
+            list_id   : data.records[0].data.list_id,
+            fields    : gridItmes
+        };
+        Lists.sortOptions(params, function(){
+            me.store.load({params:{list_id: me.currList}});
+        });
+    },
+
+    onOptionDelete:function(context){
         Ext.Msg.show({
             title   : 'Please confirm...',
             icon    : Ext.MessageBox.QUESTION,
@@ -229,29 +272,34 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             scope   : this,
             fn      : function(btn){
                 if(btn=='yes'){
-                    alert('TODO');
+                    context.store.remove(context.record);
+                    context.store.sync();
                 }
             }
         });
     },
 
-    onItemClick:function(){
-        //TODO
-    },
 
     onSelectList:function(combo, record){
-        this.currList = record[0].data.id;
-        this.loadGrid();
+        var me = this;
+        me.currList = record[0].data.id;
+        me.loadGrid();
+    },
+
+    onExpand:function(cmb){
+        cmb.picker.loadMask.destroy()
     },
     
     loadGrid:function(){
-        var combo = this.listGrid.down('toolbar').getComponent('cmbList'),
-        store = combo.getStore();
-        if(this.currList === null){
-            this.currList = store.getAt(0).data.option_id;
-            combo.setValue(this.currList);
+        var me = this,
+            combo = me.listGrid.down('toolbar').getComponent('cmbList'),
+            store = combo.getStore();
+        if(me.currList === null){
+            me.currList = store.getAt(0).data.id;
+            combo.setValue(me.currList);
         }
-        this.store.load({params:{list_id: this.currList}});
+
+        me.store.load({params:{list_id: me.currList}});
     },
     /**
     * This function is called from MitosAPP.js when

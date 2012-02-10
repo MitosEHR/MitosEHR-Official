@@ -27,21 +27,45 @@ class Lists extends dbHelper {
 
     }
 
-    public function createOption(stdClass $params)
+    public function addOption(stdClass $params)
     {
 
-
+        return array('success');
     }
 
     public function updateOption(stdClass $params)
     {
 
-
+        return array('success');
     }
 
     public function deleteOption(stdClass $params)
     {
 
+        return array('success');
+    }
+
+    public function sortOptions(stdClass $params)
+    {
+        $data = get_object_vars($params);
+        $pos = 10;
+        foreach($data['fields'] as $field){
+            $row['seq'] = $pos;
+            $sql = $this->sqlBind($row, "combo_lists_options", "U", "id = '".$field."'");
+            $this->setSQL($sql);
+            $this->execLog();
+            $pos = $pos + 10;
+        }
+        return array('success');
+    }
+
+    public function addList(stdClass $params){
+        $data = get_object_vars($params);
+        $sql = $this->sqlBind($data, "combo_lists", "I");
+        $this->setSQL($sql);
+        $this->execLog();
+        $list_id = $this->lastInsertId;
+        return array('success'=> true, 'list_id'=> $list_id );
 
     }
 

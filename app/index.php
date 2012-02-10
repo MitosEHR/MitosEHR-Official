@@ -10,6 +10,8 @@
  * author: GI Technologies, 2011
  * modified: Ernesto J Rodriguez (Certun)
  *
+ * @namespace Ext.mitos.data.REMOTING_API
+ *
  */
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /**
@@ -78,6 +80,11 @@ Globals::setGlobals();
         </script>
 
         <script src="data/api.php"></script>
+
+        <script type="text/javascript" src="lib/ext-4.0.7/src/grid/plugin/RowEditing.js"></script>
+        <script type="text/javascript" src="classes/ext/Overrides.js"></script>
+
+
 
         <script type="text/javascript" src="classes/ext/NodeDisabled.js"></script>
 
@@ -149,7 +156,12 @@ Globals::setGlobals();
 
         <script type="text/javascript">
             var App;
-            function say(a){ console.log(a); }
+            function say(a){
+                console.log(a);
+            }
+
+
+
             Ext.direct.Manager.addProvider(Ext.mitos.data.REMOTING_API);
 
             Ext.onReady(function(){

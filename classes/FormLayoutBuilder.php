@@ -49,7 +49,7 @@ class FormLayoutBuilder extends dbHelper {
          * to save the field data inside another column.
          */
         if($this->fieldHasColumn() && $data['xtype'] != 'radiofield') {
-            echo '{ "success": false, "errors": { "reason": "Field \"'.$this->col.'\" exist, please verify the form or change the Field \"name\" preoperty" }}';
+            return array('success' => false, 'error'=> 'Field \"'.$this->col.'\" exist, please verify the form or change the Field \"name\" preoperty');
         }else{
             /**
              * since now we know the column doesn't exist, lets create one for the new field
@@ -178,10 +178,12 @@ class FormLayoutBuilder extends dbHelper {
      * This function will delete the field and print success is no
      * error were found along the way.
      *
-     * @param $data
+     * @param stdClass $params
      * @return array
      */
-    public function deleteField($data){
+    public function deleteField(stdClass $params){
+
+        $data = get_object_vars($params);
 
         $this->getFormDataTable($data['form_id']);
         $this->col = $data['name'];
@@ -246,10 +248,13 @@ class FormLayoutBuilder extends dbHelper {
      * This function sorts the fields when the drag and drop is use and
      * print success if no error found along the way.
      *
-     * @param $data
+     * @param stdClass $params
      * @return array
      */
-    public function sortFields($data){
+    public function sortFields(stdClass $params){
+
+        $data = get_object_vars($params);
+
         $pos        = 10;
         $field      = array();
         $item       = $data['id'];

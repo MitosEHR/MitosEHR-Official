@@ -34,5 +34,5 @@ Ext.define('Ext.mitos.combo.Lists',{
             store       : me.store
 		},null);
 		me.callParent(arguments);
-	} 
+	}
 });

@@ -96,7 +96,9 @@ Ext.define('Ext.mitos.RenderPanel', {
         });
     },
 
-
+    strToLowerUnderscores:function(str){
+        return str.toLowerCase().replace(/ /gi, "_");
+    },
 
     getCurrPatient:function(){
         return App.getCurrPatient();
