@@ -96,6 +96,10 @@ Ext.define('Ext.mitos.RenderPanel', {
         });
     },
 
+    onExpandRemoveMask:function(cmb){
+        cmb.picker.loadMask.destroy()
+    },
+
     strToLowerUnderscores:function(str){
         return str.toLowerCase().replace(/ /gi, "_");
     },

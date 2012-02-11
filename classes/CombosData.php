@@ -49,7 +49,7 @@ class CombosData extends dbHelper {
     }
 
     public function getLists(){
-        $this->setSQL("SELECT id, title  FROM combo_lists ORDER BY seq");
+        $this->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
         return $this->execStatement(PDO::FETCH_ASSOC);
     }
 

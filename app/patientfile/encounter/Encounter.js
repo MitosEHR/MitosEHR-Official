@@ -789,7 +789,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
     saveNewEnc:function(btn){
         var me = this,
             form = me.newEncounterWindow.down('form').getForm();
-
         if (form.isValid()){
             var data = form.getValues();
 
@@ -799,7 +798,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                     me.currEncounterEid = response.result.encounter.eid;
                     me.startTimer();
                     btn.up('window').close();
-
                 }else{
                     btn.up('window').close();
                 }
@@ -913,7 +911,6 @@ Ext.define('Ext.mitos.panel.patientfile.encounter.Encounter',{
                 Encounter.closeEncounter( params, function(provider, response){
                     if(response.result.success){
                         // TODO: after close encounter logic
-                        console.log(me.timerTask);
                         Ext.TaskManager.stop(me.timerTask);
                     }else{
                         Ext.Msg.show({

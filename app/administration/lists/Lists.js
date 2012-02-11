@@ -14,13 +14,17 @@
  * @namespace Lists.updateOption
  * @namespace Lists.deleteOption
  * @namespace Lists.sortOptions
+ * @namespace Lists.getLists
  * @namespace Lists.addList
+ * @namespace Lists.updateList
+ * @namespace Lists.deleteList
  *
  */
 Ext.define('Ext.mitos.panel.administration.lists.Lists',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLists',
     pageTitle   : 'Select List Options',
+    pageLayout  : 'border',
     uses        : [
         'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
@@ -32,8 +36,11 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
 
         var me = this;
         me.currList = null;
-        me.currTask = null; 
+        me.currTask = null;
 
+        /**
+         * Options Store
+         */
         Ext.define('ListOptionsModel', {
             extend: 'Ext.data.Model',
             fields: [
@@ -46,76 +53,120 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             ]
 
         });
-
-        me.store = Ext.create('Ext.data.Store', {
+        me.optionsStore = Ext.create('Ext.data.Store', {
             model: 'ListOptionsModel',
             proxy: {
                 type: 'direct',
                 api: {
                     read    : Lists.getOptions,
                     create  : Lists.addOption,
-                    update  : Lists.updateOption,
-                    destroy : Lists.deleteOption
+                    update  : Lists.updateOption
                 }
             },
             autoLoad: false
         });
-        // *************************************************************************************
-        // Create list Window Dialog
-        // *************************************************************************************
-        me.win = Ext.create('Ext.mitos.window.Window', {
-            width: 400,
-            title: 'Create List',
-            items:[{
-                xtype    : 'mitos.form',
-                defaults : { labelWidth: 100, anchor: '100%' },
-                items:[{
-                    xtype       : 'textfield',
-                    fieldLabel  : 'List Name/Title',
-                    name        : 'title',
-                    width       : 200,
-                    allowBlank  : false
-                }]
-            }],
-            buttons:[{
-                text		: 'Create',
-                scope       : me,
-                handler		: me.onListSave
-            },'-',{
-                text		: 'Cancel',
-                handler		: function(){
-                    me.win.down('form').getForm().reset();
-                    me.win.hide();
+        /**
+         * List Store
+         */
+        Ext.define('ListsGridModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'id',			type: 'int'		},
+                {name: 'title', 		type: 'string'	}
+            ]
+        });
+        me.listsStore = Ext.create('Ext.data.Store', {
+            model: 'ListsGridModel',
+            proxy: {
+                type: 'direct',
+                api: {
+                    read    : Lists.getLists,
+                    create  : Lists.addList,
+                    update  : Lists.updateList
                 }
-            }]
-        }); // END WINDOW
-
-        // *************************************************************************************
-        // RowEditor Class
-        // *************************************************************************************
-        me.rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+            },
+            autoLoad: true
+        });
+        /**
+         * RowEditor Classes
+         */
+        me.optionsRowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
             autoCancel      : false,
             errorSummary    : false,
             deleteBtnText   : 'Disable',
             listeners       : {
                 scope       : me,
-                afteredit: function(){
-                    me.store.sync();
-                    me.store.load({params:{list_id: me.currList }});
-                },
-                destroy     : me.onOptionDelete,
+                afteredit   : me.afterEdit,
                 canceledit  : me.onCancelEdit
             }
         });
-
-        // *************************************************************************************
-        // Create the GridPanel
-        // *************************************************************************************
-        // FIXME: On the double click event, is giving a error on ExtJSv4, don't know what
-        // is cousing the problem. I will check this error later.
-        me.listGrid = Ext.create('Ext.mitos.GridPanel', {
-            store		: me.store,
-            plugins		: [me.rowEditing],
+        me.listsRowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+            autoCancel      : false,
+            errorSummary    : false,
+            deleteBtnText   : 'Disable',
+            listeners       : {
+                scope       : me,
+                afteredit   : me.afterEdit,
+                canceledit  : me.onCancelEdit
+            }
+        });
+        /**
+         * Lists Grid
+         */
+        me.listsGrid = Ext.create('Ext.mitos.GridPanel', {
+            store		: me.listsStore,
+            itemId      : 'listsGrid',
+            plugins		: [ me.listsRowEditing ],
+            width       : 300,
+            margin      : '0 2 0 0',
+            region     : 'west',
+            columns:[{
+                text        : 'Select Lists',
+                flex        : 1,
+                sortable    : false,
+                dataIndex   : 'title',
+                editor      : {
+                    allowBlank: false
+                }
+            },{
+                text        : 'Disabled?',
+                width       : 55,
+                sortable    : false,
+                dataIndex   : 'disabled',
+                editor      : {
+                    xtype   : 'mitos.checkbox',
+                    margin  : '0 0 0 20'
+                }
+            }],
+            listeners:{
+                scope       : me,
+                itemclick   : me.onListsGridClick
+            },
+            dockedItems:[{
+                xtype	    : 'toolbar',
+                dock	    : 'top',
+                items:[{
+                    text	    : 'New List',
+                    iconCls     : 'icoAddRecord',
+                    scope       : me,
+                    handler     : me.onNewList
+                },'->',{
+                    text	    : 'Delete List',
+                    cls         : 'toolDelete',
+                    scope       : me,
+                    handler     : me.onDelete,
+                    tooltip     : 'Lists currently in used by forms can NOT be deleted, but they can be disable'
+                }]
+            }]
+        });
+        /**
+         * Options Grid
+         */
+        me.optionsGrid = Ext.create('Ext.mitos.GridPanel', {
+            store		: me.optionsStore,
+            itemId      : 'optionsGrid',
+            plugins		: [ me.optionsRowEditing ],
+            region      : 'center',
             viewConfig: {
                 plugins: {
                     ptype: 'gridviewdragdrop',
@@ -155,99 +206,84 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                 dataIndex   : 'notes',
                 flex        : 1,
                 editor      : { allowBlank: true }
+            },{
+                text        : 'Disabled?',
+                width       : 55,
+                sortable    : false,
+                dataIndex   : 'disabled',
+                editor      : {
+                    xtype   : 'mitos.checkbox',
+                    margin  : '0 0 0 20'
+                }
             }],
             dockedItems:[{
                 xtype	    : 'toolbar',
                 dock	    : 'top',
-                items:[{
-                    xtype	    : 'button',
-                    text	    : 'Create New Select List',
-                    iconCls	    : 'icoListOptions',
-                    scope       : me,
-                    handler     : me.onNewList
-                },'-',{
-                    fieldLabel  : 'Select List',
-                    xtype	    : 'mitos.listscombo',
-                    name		: 'cmbList',
-                    itemId      : 'cmbList',
-                    labelWidth  : 60,
-                    width       : 300,
-                    handler     : function(){
-                        me.rowEditing.cancelEdit();
-                    },
-                    listeners: {
-                        scope   : me,
-                        select  : me.onSelectList,
-                        expand  : me.onExpand
-                    }
-                },'->',{
+                items:['->',{
                     text        : 'Add Option',
                     iconCls     : 'icoAddRecord',
                     scope       : me,
                     handler     : me.onNewOption
                 }]
-            }] // END GRID TOP MENU
-        }); // END GRID
-        me.pageBody = [ me.listGrid ];
+            }]
+        });
+        me.pageBody = [me.listsGrid, me.optionsGrid ];
         me.callParent(arguments);
     },
 
+    /**
+     * This wll load a new record to the grid
+     * and start the rowEditor
+     */
     onNewList:function(){
-        this.win.show();
+        var me = this;
+        me.listsRowEditing.cancelEdit();
+        var m = Ext.create('ListsGridModel', {});
+        me.listsStore.insert(0, m);
+        me.listsRowEditing.startEdit(0, 0);
     },
 
-    onListSave:function(){
-        var me      = this,
-            win     = me.win,
-            form    = win.down('form').getForm(),
-            cmbList = me.listGrid.down('toolbar').getComponent('cmbList'),
-            cmbStore= cmbList.getStore(),
-            params  = form.getValues();
-
-        if(form.isValid()){
-
-
-            Lists.addList(params, function(provider, response){
-                if(response.result.success){
-                    me.currList = response.result.list_id;
-
-                    cmbStore.load();
-                    cmbList.setValue(me.currList);
-                    me.store.load({params:{list_id: me.currList}});
-
-                    form.reset();
-                    win.close();
-
-                }else{
-                    me.msg('Opps!', 'Something went wrong');
-                }
-            });
-
-        }
-
+    /**
+     *
+     * @param grid
+     * @param record
+     */
+    onListsGridClick:function(grid, record){
+        var me = this;
+        me.currList = record.data.id;
+        me.optionsStore.load({params:{list_id: me.currList}});
     },
-        
+
+    /**
+     * This wll load a new record to the grid
+     * and start the rowEditor
+     */
     onNewOption:function(){
         var me = this;
-        me.rowEditing.cancelEdit();
-        var r = Ext.create('ListOptionsModel', {
+        me.optionsRowEditing.cancelEdit();
+        var m = Ext.create('ListOptionsModel', {
             list_id: me.currList
         });
-        me.store.insert(0, r);
-        me.rowEditing.startEdit(0, 0);
+        me.optionsStore.insert(0, m);
+        me.optionsRowEditing.startEdit(0, 0);
     },
 
-    onCancelEdit:function(){
-        this.store.load({params:{list_id: this.currList}});
-    },
-
+    /**
+     * Set the Option Value same as Option Title
+     * @param a
+     */
     onOptionTitleChange:function(a){
-        var value   = this.strToLowerUnderscores(a.getValue()),
+        var value   = a.getValue(),
             field   = a.up('container').getComponent('optionValueTextField');
         field.setValue(value);
     },
-
-    onDragDrop:function(node, data, overModel, dropPosition){
+    /**
+     * Logic to sort the options
+     * @param node
+     * @param data
+     * @param overModel
+     */
+    onDragDrop:function(node, data, overModel){
         var me = this,
             items = overModel.store.data.items,
             gridItmes = [];
@@ -259,47 +295,59 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             fields    : gridItmes
         };
         Lists.sortOptions(params, function(){
-            me.store.load({params:{list_id: me.currList}});
+            me.optionsStore.load({params:{list_id: me.currList}});
         });
     },
 
-    onOptionDelete:function(context){
+
+    /**
+     * Row Editting stuff
+     * @param a
+     */
+    afterEdit:function(a){
+        a.store.sync();
+    },
+
+    onCancelEdit:function(a){
+        a.store.load({params:{list_id: this.currList}});
+    },
+
+    onDelete:function(a){
+        var me      = this,
+            grid    = a.up('grid'),
+            store   = grid.getStore(),
+            sm      = grid.getSelectionModel(),
+            record  = sm.getLastSelected();
+
         Ext.Msg.show({
             title   : 'Please confirm...',
             icon    : Ext.MessageBox.QUESTION,
             msg     : 'Are you sure to delete this record?',
             buttons : Ext.Msg.YESNO,
-            scope   : this,
+            scope   : me,
             fn      : function(btn){
                 if(btn=='yes'){
-                    context.store.remove(context.record);
-                    context.store.sync();
+                    Lists.deleteList(record.data, function(provider, response){
+                        if(response.result.success){
+                            me.msg('Sweet!','List "'+record.data.title+'" deleted.');
+                            store.load();
+                            me.optionsStore.load();
+                        }else{
+                            Ext.Msg.alert('Oops!', 'Unable to delete "'+record.data.title+'"<br>This List is currently been used by one or more forms.');
+                        }
+
+                    });
                 }
             }
         });
     },
 
-
-    onSelectList:function(combo, record){
-        var me = this;
-        me.currList = record[0].data.id;
-        me.loadGrid();
-    },
-
-    onExpand:function(cmb){
-        cmb.picker.loadMask.destroy()
-    },
-    
     loadGrid:function(){
-        var me = this,
-            combo = me.listGrid.down('toolbar').getComponent('cmbList'),
-            store = combo.getStore();
+        var me = this;
         if(me.currList === null){
-            me.currList = store.getAt(0).data.id;
-            combo.setValue(me.currList);
+            me.currList = me.listsStore.getAt(0).data.id;
         }
-
-        me.store.load({params:{list_id: me.currList}});
+        me.optionsStore.load({params:{list_id: me.currList}});
     },
     /**
     * This function is called from MitosAPP.js when

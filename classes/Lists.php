@@ -15,6 +15,10 @@ include_once("dbHelper.php");
 
 class Lists extends dbHelper {
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function getOptions(stdClass $params)
     {
 
@@ -27,24 +31,49 @@ class Lists extends dbHelper {
 
     }
 
+    /**
+     * @param stdClass $params
+     * @return stdClass
+     */
     public function addOption(stdClass $params)
     {
+        $data = get_object_vars($params);
+        unset($data['id']);
 
-        return array('success');
+        $sql = $this->sqlBind($data, "combo_lists_options", "I");
+        $this->setSQL($sql);
+        $this->execLog();
+
+        $params->id = $this->lastInsertId;
+        return $params;
     }
 
+    /**
+     * @param stdClass $params
+     * @return stdClass
+     */
     public function updateOption(stdClass $params)
     {
+        $data = get_object_vars($params);
+        unset($data['id']);
 
-        return array('success');
+        $sql = $this->sqlBind($data, "combo_lists_options", "U", "id = '".$params->id."'");
+        $this->setSQL($sql);
+        $this->execLog();
+
+        return $params;
     }
 
     public function deleteOption(stdClass $params)
     {
 
-        return array('success');
+        return array('success' => true);
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function sortOptions(stdClass $params)
     {
         $data = get_object_vars($params);
@@ -56,17 +85,71 @@ class Lists extends dbHelper {
             $this->execLog();
             $pos = $pos + 10;
         }
-        return array('success');
+        return array('success' => true);
     }
 
-    public function addList(stdClass $params){
+
+    public function getLists(stdClass $params)
+    {
+        $this->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
+        return $this->execStatement(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param stdClass $params
+     * @return array
+     */
+    public function addList(stdClass $params)
+    {
         $data = get_object_vars($params);
+        unset($data['id']);
+
         $sql = $this->sqlBind($data, "combo_lists", "I");
         $this->setSQL($sql);
         $this->execLog();
-        $list_id = $this->lastInsertId;
-        return array('success'=> true, 'list_id'=> $list_id );
+        $params->id = $this->lastInsertId;
 
+        return $params;
+    }
+
+    public function updateList(stdClass $params)
+    {
+        $data = get_object_vars($params);
+        unset($data['id']);
+
+        $sql = $this->sqlBind($data, "combo_lists", "U", "id = '".$params->id."'");
+        $this->setSQL($sql);
+        $this->execLog();
+
+        return $params;
+    }
+
+    /**
+     * @param stdClass $params
+     * @return array|stdClass
+     */
+    public function deleteList(stdClass $params)
+    {
+        $this->setSQL("SELECT count(*)
+                         FROM forms_field_options
+                        WHERE oname = 'list_id'
+                          AND ovalue = '$params->id'");
+        $rec = $this->fetch();
+
+        if($rec['count(*)'] == 0){
+
+            $this->setSQL("DELETE FROM combo_lists_options WHERE list_id = '$params->id'");
+            $this->execLog();
+
+            $this->setSQL("DELETE FROM combo_lists WHERE id = '$params->id'");
+            $this->execLog();
+
+            return array('success' => true);
+        }else{
+            return array('success' => false);
+        }
     }
 
 }
+//$l = new Lists();
+//$l->deleteLists();

@@ -124,7 +124,16 @@ $API = array(
             'sortOptions'=>array(
                 'len'=>1
             ),
+            'getLists'=>array(
+                'len'=>1
+            ),
             'addList'=>array(
+                'len'=>1
+            ),
+            'updateList'=>array(
+                'len'=>1
+            ),
+            'deleteList'=>array(
                 'len'=>1
             )
         ),
