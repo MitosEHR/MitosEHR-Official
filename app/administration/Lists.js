@@ -20,7 +20,7 @@
  * @namespace Lists.deleteList
  *
  */
-Ext.define('Ext.mitos.panel.administration.lists.Lists',{
+Ext.define('Ext.mitos.panel.administration.Lists',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelLists',
     pageTitle   : 'Select List Options',

@@ -54,7 +54,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.panel.administration.Facilities',
         'Ext.mitos.panel.administration.Globals',
         'Ext.mitos.panel.administration.Layout',
-        'Ext.mitos.panel.administration.lists.Lists',
+        'Ext.mitos.panel.administration.Lists',
         'Ext.mitos.panel.administration.Log',
         'Ext.mitos.panel.administration.practice.Practice',
         'Ext.mitos.panel.administration.Roles',

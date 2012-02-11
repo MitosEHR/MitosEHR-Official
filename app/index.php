@@ -133,7 +133,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/administration/Facilities.js"></script>
         <script type="text/javascript" src="app/administration/Globals.js"></script>
         <script type="text/javascript" src="app/administration/Layout.js"></script>
-        <script type="text/javascript" src="app/administration/lists/Lists.js"></script>
+        <script type="text/javascript" src="app/administration/Lists.js"></script>
         <script type="text/javascript" src="app/administration/Log.js"></script>
         <script type="text/javascript" src="app/administration/practice/Practice.js"></script>
         <script type="text/javascript" src="app/administration/Roles.js"></script>
