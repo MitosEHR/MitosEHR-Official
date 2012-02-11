@@ -96,6 +96,15 @@ Ext.define('Ext.mitos.RenderPanel', {
         });
     },
 
+    boolRenderer: function(val) {
+        if (val == '1') {
+            return '<img style="padding-left: 13px" src="ui_icons/yes.gif" />';
+        } else if(val == '0') {
+            return '<img style="padding-left: 13px" src="ui_icons/no.gif" />';
+        }
+        return val;
+    },
+
     onExpandRemoveMask:function(cmb){
         cmb.picker.loadMask.destroy()
     },

@@ -26,11 +26,9 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
     pageTitle   : 'Select List Options',
     pageLayout  : 'border',
     uses        : [
-        'Ext.mitos.restStoreModel',
         'Ext.mitos.GridPanel',
-        'Ext.mitos.window.Window',
         'Ext.mitos.form.FormPanel',
-        'Ext.mitos.window.Window'
+        'Ext.grid.plugin.RowEditing'
     ],
     initComponent: function(){
 
@@ -49,7 +47,8 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                 {name: 'option_value', 	type: 'string'	},
                 {name: 'option_name', 	type: 'string'	},
                 {name: 'seq', 			type: 'string' 	},
-                {name: 'notes', 		type: 'string'	}
+                {name: 'notes', 		type: 'string'	},
+                {name: 'active', 		type: 'string'	}
             ]
 
         });
@@ -72,7 +71,9 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',			type: 'int'		},
-                {name: 'title', 		type: 'string'	}
+                {name: 'title', 		type: 'string'	},
+                {name: 'active', 		type: 'string'	},
+                {name: 'in_use', 		type: 'string'	}
             ]
         });
         me.listsStore = Ext.create('Ext.data.Store', {
@@ -117,7 +118,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
             store		: me.listsStore,
             itemId      : 'listsGrid',
             plugins		: [ me.listsRowEditing ],
-            width       : 300,
+            width       : 320,
             margin      : '0 2 0 0',
             region     : 'west',
             columns:[{
@@ -129,14 +130,21 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     allowBlank: false
                 }
             },{
-                text        : 'Disabled?',
+                text        : 'Active?',
                 width       : 55,
                 sortable    : false,
-                dataIndex   : 'disabled',
+                dataIndex   : 'active',
+                renderer    : me.boolRenderer,
                 editor      : {
                     xtype   : 'mitos.checkbox',
-                    margin  : '0 0 0 20'
+                    padding  : '0 0 0 18'
                 }
+            },{
+                text        : 'In Use?',
+                width       : 55,
+                sortable    : false,
+                dataIndex   : 'in_use',
+                renderer    : me.boolRenderer
             }],
             listeners:{
                 scope       : me,
@@ -152,7 +160,9 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                     handler     : me.onNewList
                 },'->',{
                     text	    : 'Delete List',
-                    cls         : 'toolDelete',
+                    iconCls     : 'icoDeleteBlack',
+                    itemId      : 'listDeleteBtn',
+                    disabled    : true,
                     scope       : me,
                     handler     : me.onDelete,
                     tooltip     : 'Lists currently in used by forms can NOT be deleted, but they can be disable'
@@ -207,10 +217,11 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
                 flex        : 1,
                 editor      : { allowBlank: true }
             },{
-                text        : 'Disabled?',
+                text        : 'Active?',
                 width       : 55,
                 sortable    : false,
-                dataIndex   : 'disabled',
+                dataIndex   : 'active',
+                renderer    : me.boolRenderer,
                 editor      : {
                     xtype   : 'mitos.checkbox',
                     margin  : '0 0 0 20'
@@ -249,9 +260,14 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
      * @param record
      */
     onListsGridClick:function(grid, record){
-        var me = this;
+        var me = this,
+            deleteBtn  = me.listsGrid.down('toolbar').getComponent('listDeleteBtn'),
+            inUse = record.data.in_use == '1'? true : false;
+
         me.currList = record.data.id;
         me.optionsStore.load({params:{list_id: me.currList}});
+
+        inUse ? deleteBtn.disable() : deleteBtn.enable();
     },
 
     /**
@@ -306,6 +322,7 @@ Ext.define('Ext.mitos.panel.administration.lists.Lists',{
      */
     afterEdit:function(a){
         a.store.sync();
+        a.store.load({params:{list_id: this.currList}});
     },
 
     onCancelEdit:function(a){

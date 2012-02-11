@@ -40,6 +40,8 @@ class Lists extends dbHelper {
         $data = get_object_vars($params);
         unset($data['id']);
 
+        $data['active'] = $data['active'] == 'true'? 1 : 0;
+
         $sql = $this->sqlBind($data, "combo_lists_options", "I");
         $this->setSQL($sql);
         $this->execLog();
@@ -56,6 +58,8 @@ class Lists extends dbHelper {
     {
         $data = get_object_vars($params);
         unset($data['id']);
+
+        $data['active'] = $data['active'] == 'true'? 1 : 0;
 
         $sql = $this->sqlBind($data, "combo_lists_options", "U", "id = '".$params->id."'");
         $this->setSQL($sql);
@@ -91,8 +95,21 @@ class Lists extends dbHelper {
 
     public function getLists(stdClass $params)
     {
-        $this->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        $this->setSQL("SELECT * FROM combo_lists ORDER BY title");
+        $lists = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $list){
+            $list_id = $list['id'];
+            $this->setSQL("SELECT count(*)
+                             FROM forms_field_options
+                            WHERE oname = 'list_id'
+                              AND ovalue = '$list_id'");
+            $rec = $this->fetch();
+            $list['in_use'] = $rec['count(*)'] == 0 ? 0 : 1;
+            array_push($lists,$list);
+        }
+
+        return $lists;
+
     }
 
     /**
@@ -103,6 +120,8 @@ class Lists extends dbHelper {
     {
         $data = get_object_vars($params);
         unset($data['id']);
+
+        $data['active'] = $data['active'] == 'true'? 1 : 0;
 
         $sql = $this->sqlBind($data, "combo_lists", "I");
         $this->setSQL($sql);
@@ -116,6 +135,8 @@ class Lists extends dbHelper {
     {
         $data = get_object_vars($params);
         unset($data['id']);
+
+        $data['active'] = $data['active'] == 'true'? 1 : 0;
 
         $sql = $this->sqlBind($data, "combo_lists", "U", "id = '".$params->id."'");
         $this->setSQL($sql);
