@@ -48,7 +48,7 @@ Ext.define('Ext.mitos.panel.administration.Lists',{
                 {name: 'option_name', 	type: 'string'	},
                 {name: 'seq', 			type: 'string' 	},
                 {name: 'notes', 		type: 'string'	},
-                {name: 'active', 		type: 'string'	}
+                {name: 'active', 		type: 'bool'	}
             ]
 
         });
@@ -72,8 +72,8 @@ Ext.define('Ext.mitos.panel.administration.Lists',{
             fields: [
                 {name: 'id',			type: 'int'		},
                 {name: 'title', 		type: 'string'	},
-                {name: 'active', 		type: 'string'	},
-                {name: 'in_use', 		type: 'string'	}
+                {name: 'active', 		type: 'bool'	},
+                {name: 'in_use', 		type: 'bool'	}
             ]
         });
         me.listsStore = Ext.create('Ext.data.Store', {
@@ -224,7 +224,7 @@ Ext.define('Ext.mitos.panel.administration.Lists',{
                 renderer    : me.boolRenderer,
                 editor      : {
                     xtype   : 'mitos.checkbox',
-                    margin  : '0 0 0 20'
+                    padding  : '0 0 0 18'
                 }
             }],
             dockedItems:[{
@@ -261,7 +261,7 @@ Ext.define('Ext.mitos.panel.administration.Lists',{
      */
     onListsGridClick:function(grid, record){
         var me = this,
-            deleteBtn  = me.listsGrid.down('toolbar').getComponent('listDeleteBtn'),
+            deleteBtn  = me.listsGrid.down('toolbar').getComponent('listDeleteBtn');
             inUse = record.data.in_use == '1'? true : false;
 
         me.currList = record.data.id;

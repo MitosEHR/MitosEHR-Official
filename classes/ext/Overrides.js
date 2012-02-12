@@ -14,3 +14,7 @@ Ext.override( Ext.grid.RowEditor, {
     }, me);
   }
 });
+Ext.override( Ext.form.field.Checkbox, {
+    inputValue: '1',
+    uncheckedValue: '0'
+});

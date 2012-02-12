@@ -515,7 +515,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Layout'));
         }
         if(perm.access_lists){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.lists.Lists'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Lists'));
         }
         if(perm.access_event_log){
             me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Log'));

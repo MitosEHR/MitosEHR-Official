@@ -5,7 +5,7 @@
 %%For: 
 %Magnification: 1.00
 %%Orientation: Portrait
-%%BoundingBox: 0 0 500 944.881890
+%%BoundingBox: 0 0 500 1102.362205
 %%Pages: 0
 %%BeginSetup
 %%EndSetup
@@ -19,12 +19,12 @@
 /marginwidth 10 def
 /distx 20 def
 /disty 40 def
-/boundaspect 0.529167 def  % aspect ratio of the BoundingBox (width/height)
+/boundaspect 0.453571 def  % aspect ratio of the BoundingBox (width/height)
 /boundx 500 def
 /boundy boundx boundaspect div def
 /xspacing 0 def
 /yspacing 0 def
-/rows 12 def
+/rows 14 def
 /cols 2 def
 /scalefactor 0 def
 /boxfont /Times-Roman findfont fontheight scalefont def
@@ -180,11 +180,13 @@ boxfont setfont
 (FormLayoutBuilder) cw
 (FormLayoutEngine) cw
 (Globals) cw
+(Lists) cw
 (Logs) cw
 (Messages) cw
 (OfficeNotes) cw
-(password) cw
 (Person) cw
+(Practice) cw
+(Services) cw
 /boxwidth boxwidth marginwidth 2 mul add def
 /xspacing boxwidth distx add def
 /yspacing boxheight disty add def
@@ -196,24 +198,30 @@ boundx scalefactor div boundy scalefactor div scale
 
 % ----- classes -----
 
- (dbHelper) 0.000000 11.000000 box
- (Calendar) 1.000000 10.000000 box
- (CombosData) 1.000000 9.000000 box
- (Facilities) 1.000000 8.000000 box
- (FormLayoutBuilder) 1.000000 7.000000 box
- (FormLayoutEngine) 1.000000 6.000000 box
- (Globals) 1.000000 5.000000 box
- (Logs) 1.000000 4.000000 box
- (Messages) 1.000000 3.000000 box
- (OfficeNotes) 1.000000 2.000000 box
- (password) 1.000000 1.000000 box
- (Person) 1.000000 0.000000 box
-1.000000 0.000000 mark
+ (dbHelper) 0.000000 13.000000 box
+ (Calendar) 1.000000 12.000000 box
+ (CombosData) 1.000000 11.000000 box
+ (Facilities) 1.000000 10.000000 box
+ (FormLayoutBuilder) 1.000000 9.000000 box
+ (FormLayoutEngine) 1.000000 8.000000 box
+ (Globals) 1.000000 7.000000 box
+ (Lists) 1.000000 6.000000 box
+ (Logs) 1.000000 5.000000 box
+ (Messages) 1.000000 4.000000 box
+ (OfficeNotes) 1.000000 3.000000 box
+ (Person) 1.000000 2.000000 box
+1.000000 2.000000 mark
+ (Practice) 1.000000 1.000000 box
+ (Services) 1.000000 0.000000 box
 
 % ----- relations -----
 
 solid
-1 0.000000 10.250000 out
+1 0.000000 12.250000 out
+solid
+0 0.000000 12.500000 hedge
+solid
+0 0.000000 11.500000 hedge
 solid
 0 0.000000 10.500000 hedge
 solid
@@ -237,4 +245,4 @@ solid
 solid
 0 0.000000 0.500000 hedge
 solid
-0.000000 11.000000 0.500000 vedge
+0.000000 13.000000 0.500000 vedge

@@ -91,6 +91,38 @@ $API = array(
 
     ),
     /**
+    * Practice Functions
+    */
+    'Practice'=>array(
+        'methods'=>array(
+            'getPharmacies'=>array(
+               'len'=>1
+            ),
+            'addPharmacy'=>array(
+                'len'=>1
+            ),
+            'updatePharmacy'=>array(
+                'len'=>1
+            ),
+            'getInsurances'=>array(
+                'len'=>1
+            ),
+            'addInsurance'=>array(
+                'len'=>1
+            ),
+            'updateInsurance'=>array(
+                'len'=>1
+            ),
+            'getInsuranceNumbers'=>array(
+                'len'=>1
+            ),
+            'getX12Partners'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
     * Globals Functions
     */
     'Globals'=>array(

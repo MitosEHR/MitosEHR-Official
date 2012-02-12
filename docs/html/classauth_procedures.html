@@ -100,15 +100,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">authProcedures Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="authProcedures" --><table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classauth_procedures.html#ab3b40d43bf9682c3d0ae720d275133b3">login</a> (stdClass $params)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classauth_procedures.html#ab6f9b5403cf9de7de7b5916494516628">getSites</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classauth_procedures.html#a749231878c7380a132ce6c6b2792125b">auth</a> ($authUser, $authPass, $site)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classauth_procedures.html#a6b674b5bfa41820b9066493676931b77">unAuth</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classauth_procedures.html#ae5bd32c3b13e97b4696fb268652b8a23">ckAuth</a> ()</td></tr>
 </table>
@@ -116,49 +120,93 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock">
 <p>Definition at line <a class="el" href="auth_procedures_8php_source.html#l00017">17</a> of file <a class="el" href="auth_procedures_8php_source.html">authProcedures.php</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a749231878c7380a132ce6c6b2792125b"></a><!-- doxytag: member="authProcedures::auth" ref="a749231878c7380a132ce6c6b2792125b" args="($authUser, $authPass, $site)" -->
+<a class="anchor" id="ae5bd32c3b13e97b4696fb268652b8a23"></a><!-- doxytag: member="authProcedures::ckAuth" ref="ae5bd32c3b13e97b4696fb268652b8a23" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="classauth_procedures.html#a749231878c7380a132ce6c6b2792125b">auth</a> </td>
+          <td class="memname">static <a class="el" href="classauth_procedures.html#ae5bd32c3b13e97b4696fb268652b8a23">ckAuth</a> </td>
           <td>(</td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>authUser</em>, </td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [static]</code></td>
         </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="return"><dt><b>Returns:</b></dt><dd>int </dd></dl>
+
+<p>Definition at line <a class="el" href="auth_procedures_8php_source.html#l00138">138</a> of file <a class="el" href="auth_procedures_8php_source.html">authProcedures.php</a>.</p>
+<div class="fragment"><pre class="fragment">                                   {
+
+        <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;flops&#39;</span>]++;
+        <span class="comment">//****************************************************************</span>
+        <span class="comment">// If the session has passed 60 flops, with out any activity exit</span>
+        <span class="comment">// the application.</span>
+        <span class="comment">//</span>
+        <span class="comment">// return an exit code</span>
+        <span class="comment">//****************************************************************</span>
+        <span class="keywordflow">if</span>(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;flops&#39;</span>] &lt; 180) {
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;authorized&#39;</span> =&gt; <span class="keyword">true</span>);
+        }<span class="keywordflow">else</span>{
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;authorized&#39;</span> =&gt; <span class="keyword">false</span>);
+        }
+    }
+</pre></div>
+</div>
+</div>
+<a class="anchor" id="ab6f9b5403cf9de7de7b5916494516628"></a><!-- doxytag: member="authProcedures::getSites" ref="ab6f9b5403cf9de7de7b5916494516628" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
         <tr>
-          <td class="paramkey"></td>
+          <td class="memname"><a class="el" href="classauth_procedures.html#ab6f9b5403cf9de7de7b5916494516628">getSites</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>authPass</em>, </td>
         </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="auth_procedures_8php_source.html#l00154">154</a> of file <a class="el" href="auth_procedures_8php_source.html">authProcedures.php</a>.</p>
+<div class="fragment"><pre class="fragment">                              {
+        $rows = array();
+        <span class="keywordflow">foreach</span>(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;sites&#39;</span>] as $row){
+            $site[<span class="stringliteral">&#39;site_id&#39;</span>] = $row;
+            $site[<span class="stringliteral">&#39;site&#39;</span>]    = $row;
+            array_push($rows,$site);
+        }
+        <span class="keywordflow">return</span> $rows;
+    }
+</pre></div>
+</div>
+</div>
+<a class="anchor" id="ab3b40d43bf9682c3d0ae720d275133b3"></a><!-- doxytag: member="authProcedures::login" ref="ab3b40d43bf9682c3d0ae720d275133b3" args="(stdClass $params)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
         <tr>
-          <td class="paramkey"></td>
+          <td class="memname"><a class="el" href="classauth_procedures.html#ab3b40d43bf9682c3d0ae720d275133b3">login</a> </td>
+          <td>(</td>
+          <td class="paramtype">stdClass $&#160;</td>
+          <td class="paramname"><em>params</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>site</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [static]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">$authUser</td><td></td></tr>
-    <tr><td class="paramname">$authPass</td><td></td></tr>
-    <tr><td class="paramname">$site</td><td></td></tr>
+    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td></td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>int </dd></dl>
 <p>PhpIncludeInspection </p>
 
-<p>Definition at line <a class="el" href="auth_procedures_8php_source.html#l00026">26</a> of file <a class="el" href="auth_procedures_8php_source.html">authProcedures.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                                            {
+<p>Definition at line <a class="el" href="auth_procedures_8php_source.html#l00023">23</a> of file <a class="el" href="auth_procedures_8php_source.html">authProcedures.php</a>.</p>
+<div class="fragment"><pre class="fragment">                                           {
+
         <span class="comment">//-------------------------------------------</span>
         <span class="comment">// Check that the username do not pass</span>
         <span class="comment">// the maximum limit of the field.</span>
@@ -167,9 +215,8 @@ Static Public Member Functions</h2></td></tr>
         <span class="comment">// If this condition is met, the user did not</span>
         <span class="comment">// use the logon form. Possible hack.</span>
         <span class="comment">//-------------------------------------------</span>
-        <span class="keywordflow">if</span> (strlen($authUser) &gt;= 26){
-                echo <span class="stringliteral">&#39;{ &quot;success&quot;: false, &quot;errors&quot;: { &quot;Possible hack, please use the Logon Screen.&quot; }}&#39;</span>;
-                <span class="keywordflow">return</span>;
+        <span class="keywordflow">if</span> (strlen($params-&gt;authUser) &gt;= 26){
+                <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">false</span>, <span class="stringliteral">&#39;error&#39;</span>=&gt;<span class="stringliteral">&#39;Possible hack, please use the Logon Screen.&#39;</span>);
         }
         <span class="comment">//-------------------------------------------</span>
         <span class="comment">// Check that the username do not pass</span>
@@ -179,57 +226,57 @@ Static Public Member Functions</h2></td></tr>
         <span class="comment">// If this condition is met, the user did not</span>
         <span class="comment">// use the logon form. Possible hack.</span>
         <span class="comment">//-------------------------------------------</span>
-        <span class="keywordflow">if</span> (strlen($authPass) &gt;= 11){
-            <span class="keywordflow">return</span> print <span class="stringliteral">&#39;{ &quot;success&quot;: false, &quot;errors&quot;: { &quot;Possible hack, please use the Logon Screen.&quot; }}&#39;</span>;
+        <span class="keywordflow">if</span> (strlen($params-&gt;authPass) &gt;= 11){
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">false</span>, <span class="stringliteral">&#39;error&#39;</span>=&gt;<span class="stringliteral">&#39;Possible hack, please use the Logon Screen.&#39;</span>);
         }
         <span class="comment">//-------------------------------------------</span>
         <span class="comment">// Simple check username</span>
         <span class="comment">//-------------------------------------------</span>
-        <span class="keywordflow">if</span> (!$authUser){
-            <span class="keywordflow">return</span> print <span class="stringliteral">&#39;{ &quot;success&quot;: false, &quot;errors&quot;: { &quot;The username field can not be in blank. Try again.&quot; }}&#39;</span>;
+        <span class="keywordflow">if</span> (!$params-&gt;authUser){
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">false</span>, <span class="stringliteral">&#39;error&#39;</span>=&gt;<span class="stringliteral">&#39;The username field can not be in blank. Try again.&#39;</span>);
         }
         <span class="comment">//-------------------------------------------</span>
         <span class="comment">// Simple check password</span>
         <span class="comment">//-------------------------------------------</span>
-        <span class="keywordflow">if</span> (!$authPass){
-            <span class="keywordflow">return</span> print <span class="stringliteral">&#39;{ &quot;success&quot;: false, &quot;errors&quot;: { &quot;The password field can not be in blank. Try again.&quot; }}&#39;</span>;
+        <span class="keywordflow">if</span> (!$params-&gt;authPass){
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">false</span>, <span class="stringliteral">&#39;error&#39;</span>=&gt;<span class="stringliteral">&#39;The password field can not be in blank. Try again.&#39;</span>);
         }
         <span class="comment">//-------------------------------------------</span>
         <span class="comment">// Find the AES key in the selected site</span>
         <span class="comment">// And include the rest of the remaining</span>
         <span class="comment">// variables to connect to the database.</span>
         <span class="comment">//-------------------------------------------</span>
-        <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;site&#39;</span>] = $site;
-        $fileConf = <span class="stringliteral">&quot;../../sites/&quot;</span> . <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;site&#39;</span>] . <span class="stringliteral">&quot;/conf.php&quot;</span>;
+        <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;site&#39;</span>] = $params-&gt;choiseSite;
+        $fileConf = <span class="stringliteral">&quot;../sites/&quot;</span> . <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;site&#39;</span>] . <span class="stringliteral">&quot;/conf.php&quot;</span>;
         <span class="keywordflow">if</span> (file_exists($fileConf)){
             include_once($fileConf);
             <a class="code" href="components__data_8ejs_8php.html#ab5d961f93efe4e2e8d8374f01dd6c65a">$mitos_db</a> = <span class="keyword">new</span> <a class="code" href="classdb_helper.html" title="Database Helper Class.">dbHelper</a>();
                 $err = <a class="code" href="components__data_8ejs_8php.html#ab5d961f93efe4e2e8d8374f01dd6c65a">$mitos_db</a>-&gt;getError();
                 <span class="keywordflow">if</span> (!is_array($err)){
-                <span class="keywordflow">return</span> print <span class="stringliteral">&#39;{ &quot;success&quot;: false, &quot;errors&quot;: { &quot;reason&quot;: &quot;For some reason, I can\&#39;t connect to the database.&quot;}}&#39;</span>;
+                <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">false</span>, <span class="stringliteral">&#39;error&#39;</span>=&gt;<span class="stringliteral">&#39;For some reason, I can\&#39;t connect to the database.&#39;</span>);
                 }
                 <span class="comment">// Do not stop here!, continue with the rest of the code.</span>
         } <span class="keywordflow">else</span> {
-            <span class="keywordflow">return</span> print <span class="stringliteral">&#39;{ &quot;success&quot;: false, &quot;errors&quot;: { &quot;reason&quot;: &quot;No configuration file found on the selected site.&lt;br&gt;Please contact support.&quot;}}&#39;</span>;
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">false</span>, <span class="stringliteral">&#39;error&#39;</span>=&gt;<span class="stringliteral">&#39;No configuration file found on the selected site.&lt;br&gt;Please contact support.&#39;</span>);
         }
         <span class="comment">//-------------------------------------------</span>
         <span class="comment">// Convert the password to AES and validate</span>
         <span class="comment">//-------------------------------------------</span>
         $aes = <span class="keyword">new</span> <a class="code" href="class_a_e_s.html">AES</a>(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;AESkey&#39;</span>]);
-        $ret = $aes-&gt;encrypt($authPass);
+        $ret = $aes-&gt;encrypt($params-&gt;authPass);
         <span class="comment">//-------------------------------------------</span>
         <span class="comment">// Username &amp; password match</span>
         <span class="comment">//-------------------------------------------</span>
         <a class="code" href="components__data_8ejs_8php.html#ab5d961f93efe4e2e8d8374f01dd6c65a">$mitos_db</a>-&gt;setSQL(<span class="stringliteral">&quot;SELECT id, username, fname, mname, lname, email</span>
 <span class="stringliteral">                         FROM users</span>
-<span class="stringliteral">                                WHERE username   = &#39;$authUser&#39;</span>
+<span class="stringliteral">                                WHERE username   = &#39;$params-&gt;authUser&#39;</span>
 <span class="stringliteral">                                  AND password   = &#39;$ret&#39;</span>
 <span class="stringliteral">                                  AND authorized = &#39;1&#39;</span>
 <span class="stringliteral">                                LIMIT 1&quot;</span>);
 
         $rec = <a class="code" href="components__data_8ejs_8php.html#ab5d961f93efe4e2e8d8374f01dd6c65a">$mitos_db</a>-&gt;fetch();
         <span class="keywordflow">if</span> ($rec[<span class="stringliteral">&#39;username&#39;</span>] == null){
-            <span class="keywordflow">return</span> print <span class="stringliteral">&#39;{ &quot;success&quot;: false, &quot;errors&quot;: { &quot;reason&quot;: &quot;The username or password you provided is invalid.&quot;}}&#39;</span>;
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">false</span>, <span class="stringliteral">&#39;error&#39;</span>=&gt;<span class="stringliteral">&#39;The username or password you provided is invalid.&#39;</span>);
         } <span class="keywordflow">else</span> {
                 <span class="comment">//-------------------------------------------</span>
                 <span class="comment">// Change some User related variables and go</span>
@@ -250,42 +297,12 @@ Static Public Member Functions</h2></td></tr>
                 <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;ver&#39;</span>][<span class="stringliteral">&#39;rev&#39;</span>]         = $rec[<span class="stringliteral">&#39;v_patch&#39;</span>];
                 <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;ver&#39;</span>][<span class="stringliteral">&#39;minor&#39;</span>]       = $rec[<span class="stringliteral">&#39;v_minor&#39;</span>];
                 <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;ver&#39;</span>][<span class="stringliteral">&#39;database&#39;</span>]    = $rec[<span class="stringliteral">&#39;v_database&#39;</span>];
-            <span class="keywordflow">return</span> print <span class="stringliteral">&#39;{ &quot;success&quot;: true }&#39;</span>;
-        }
-    }
-</pre></div>
-</div>
-</div>
-<a class="anchor" id="ae5bd32c3b13e97b4696fb268652b8a23"></a><!-- doxytag: member="authProcedures::ckAuth" ref="ae5bd32c3b13e97b4696fb268652b8a23" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="classauth_procedures.html#ae5bd32c3b13e97b4696fb268652b8a23">ckAuth</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<dl class="return"><dt><b>Returns:</b></dt><dd>int </dd></dl>
 
-<p>Definition at line <a class="el" href="auth_procedures_8php_source.html#l00137">137</a> of file <a class="el" href="auth_procedures_8php_source.html">authProcedures.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                   {
+            <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;lang&#39;</span>][<span class="stringliteral">&#39;code&#39;</span>]       = $params-&gt;lang;
 
-        <a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;flops&#39;</span>]++;
-        <span class="comment">//****************************************************************</span>
-        <span class="comment">// If the session has passed 60 flops, with out any activity exit</span>
-        <span class="comment">// the application.</span>
-        <span class="comment">//</span>
-        <span class="comment">// return an exit code</span>
-        <span class="comment">//****************************************************************</span>
-        <span class="keywordflow">if</span>(<a class="code" href="components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8">$_SESSION</a>[<span class="stringliteral">&#39;site&#39;</span>][<span class="stringliteral">&#39;flops&#39;</span>] &lt; 180) {
-            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;authorized&#39;</span> =&gt; <span class="keyword">true</span>);
-        }<span class="keywordflow">else</span>{
-            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;authorized&#39;</span> =&gt; <span class="keyword">false</span>);
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span>=&gt;<span class="keyword">true</span>);
         }
+
     }
 </pre></div>
 </div>
@@ -305,7 +322,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <dl class="return"><dt><b>Returns:</b></dt><dd>mixed </dd></dl>
 
-<p>Definition at line <a class="el" href="auth_procedures_8php_source.html#l00127">127</a> of file <a class="el" href="auth_procedures_8php_source.html">authProcedures.php</a>.</p>
+<p>Definition at line <a class="el" href="auth_procedures_8php_source.html#l00128">128</a> of file <a class="el" href="auth_procedures_8php_source.html">authProcedures.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                   {
         session_unset();
         session_destroy();
@@ -337,7 +354,7 @@ Static Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="classauth_procedures.html">authProcedures</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
+    <li class="footer">Generated on Sun Feb 12 2012 11:59:14 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

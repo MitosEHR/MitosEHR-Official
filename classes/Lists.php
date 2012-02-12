@@ -93,7 +93,7 @@ class Lists extends dbHelper {
     }
 
 
-    public function getLists(stdClass $params)
+    public function getLists()
     {
         $this->setSQL("SELECT * FROM combo_lists ORDER BY title");
         $lists = array();
@@ -134,9 +134,9 @@ class Lists extends dbHelper {
     public function updateList(stdClass $params)
     {
         $data = get_object_vars($params);
-        unset($data['id']);
+        unset($data['id'],$data['in_use']);
 
-        $data['active'] = $data['active'] == 'true'? 1 : 0;
+        $data['active'] = $data['active'] == 'false'? 1 : 0;
 
         $sql = $this->sqlBind($data, "combo_lists", "U", "id = '".$params->id."'");
         $this->setSQL($sql);

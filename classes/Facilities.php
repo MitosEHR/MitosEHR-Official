@@ -25,21 +25,16 @@ class Facilities extends dbHelper {
         } else {
             $wherex = 'active = 1';
         }
-
         if(isset($params->sort)){
             $orderx = $params->sort[0]->property.' '.$params->sort[0]->direction;
         } else {
             $orderx = 'name';
         }
-
         $sql = "SELECT * FROM facility WHERE $wherex ORDER BY $orderx LIMIT $params->start,$params->limit";
         $this->setSQL($sql);
         $rows = array();
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
-            $row['active']              = ($row['active']             == '1' ? 'on' : 'off');
-            $row['service_location']    = ($row['service_location']   == '1' ? 'on' : 'off');
-            $row['billing_location']    = ($row['billing_location']   == '1' ? 'on' : 'off');
-            $row['accepts_assignment']  = ($row['accepts_assignment'] == '1' ? 'on' : 'off');
+
             if (strlen($row['pos_code']) <= 1){
                 $row['pos_code'] = '0'.$row['pos_code'];
             } else {
@@ -60,11 +55,6 @@ class Facilities extends dbHelper {
 
         $data = get_object_vars($params);
 
-        $data['active']             = ($params->active              == 'on' ? 1 : 0);
-        $data['service_location'] 	= ($params->service_location    == 'on' ? 1 : 0);
-        $data['accepts_assignment'] = ($params->accepts_assignment  == 'on' ? 1 : 0);
-        $data['billing_location'] 	= ($params->billing_location    == 'on' ? 1 : 0);
-
         $sql = $this->sqlBind($data, "facility", "I");
         $this->setSQL($sql);
         $this->execLog();
@@ -84,11 +74,6 @@ class Facilities extends dbHelper {
 
         $id = $data['id'];
         unset($data['id']);
-
-        $data['active']             = ($params->active              == 'on' ? 1 : 0);
-        $data['service_location'] 	= ($params->service_location    == 'on' ? 1 : 0);
-        $data['accepts_assignment'] = ($params->accepts_assignment  == 'on' ? 1 : 0);
-        $data['billing_location'] 	= ($params->billing_location    == 'on' ? 1 : 0);
 
         $sql = $this->sqlBind($data, "facility", "U", "id='$id'");
         $this->setSQL($sql);

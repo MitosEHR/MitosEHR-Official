@@ -1,6 +1,11 @@
 \hypertarget{class_form_layout_engine}{\section{\-Form\-Layout\-Engine \-Class \-Reference}
 \label{class_form_layout_engine}\index{\-Form\-Layout\-Engine@{\-Form\-Layout\-Engine}}
 }
+
+
+\-Form \-Layout \-Engine.  
+
+
 \-Inheritance diagram for \-Form\-Layout\-Engine\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -11,7 +16,7 @@
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{class_form_layout_engine_aac0ec25d9ed7255a0d2e2ad1174d324b}{get\-Fields} (std\-Class \$params)
-\item 
+\begin{DoxyCompactList}\small\item\em \-Get \-Form \-Fields by \-Form \-I\-D or \-Form \-Title. \end{DoxyCompactList}\item 
 \hyperlink{class_form_layout_engine_a25eb9dec9c7fa7132bc97c113aae2bfe}{get\-Child\-Items} (\$parent)
 \item 
 \hyperlink{class_form_layout_engine_a89955ff647a3d7183e3468bac90f90a0}{get\-Items\-Options} (\$item\-\_\-id)
@@ -23,9 +28,24 @@
 
 
 \subsection{\-Detailed \-Description}
+\-Form \-Layout \-Engine. 
+
+\-This class will create dynamic \-Ext\-J\-S v4 form items array, previously created or edited from the \-Layout \-Form \-Editor. \-Gathering all it's data and parameters from the layout\-\_\-options table.
+
+\-What this class will not do\-: \-This class will not create the entire \-Screen \-Panel for you, this will only create the form items array with the fields names \& data\-Stores configured on the layout\-\_\-options table.
+
+\begin{DoxyAuthor}{\-Author}
+\-Ernesto \-J. \-Rodriguez (\-Certun) $<$\href{mailto:erodriguez@certun.com}{\tt erodriguez@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0 
+\end{DoxyVersion}
+\begin{DoxyCopyright}{\-Copyright}
+\-Gnu \-Public \-License (\-G\-P\-Lv3) 
+\end{DoxyCopyright}
 
 
-\-Definition at line 25 of file \-Form\-Layout\-Engine.\-php.
+\-Definition at line 23 of file \-Form\-Layout\-Engine.\-php.
 
 
 
@@ -49,7 +69,7 @@ array
 
 this if what makes this function reclusive this function will keep calling it self
 
-\-Definition at line 155 of file \-Form\-Layout\-Engine.\-php.
+\-Definition at line 159 of file \-Form\-Layout\-Engine.\-php.
 
 
 \begin{DoxyCode}
@@ -91,13 +111,13 @@ array
 \end{DoxyReturn}
 
 
-\-Definition at line 225 of file \-Form\-Layout\-Engine.\-php.
+\-Definition at line 234 of file \-Form\-Layout\-Engine.\-php.
 
 
 \begin{DoxyCode}
                                     {
-        $item['displayField'] = 'name';
-        $item['valueField']   = 'value';
+        $item['displayField'] = 'option_name';
+        $item['valueField']   = 'option_value';
         $item['queryMode']    = 'local';
         $item['editable']     = false;
         if(!isset($item['emptyText'])){
@@ -113,11 +133,21 @@ array
 \item[{std\-Class \$}]{params}
 \end{DoxyParamCaption}
 )}}\label{class_form_layout_engine_aac0ec25d9ed7255a0d2e2ad1174d324b}
+
+
+\-Get \-Form \-Fields by \-Form \-I\-D or \-Form \-Title. 
+
 \-We can get the form fields by form name or form if example\-: get\-Fields('\-Demographics') or get\-Fields('1') \-The logic of the function is to get the form parent field and its options, then get the child items if any with it options. \-Then.. use reg \-Expression to remove the double quotes from all the options and leave the double quotes to all options values, unless the value is a int or bool.
 
+\begin{DoxyAuthor}{\-Author}
+\-Ernesto \-J. \-Rodriguez (\-Certun) $<$\href{mailto:erodriguez@certun.com}{\tt erodriguez@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
 
-\begin{DoxyParams}{\-Parameters}
-{\em $\backslash$std\-Class} & \$params \\
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \-With the form \-Tirle or \-Form \-I\-D \\
 \hline
 \end{DoxyParams}
 define \$itmes as an array to pushh all the \$item into.
@@ -138,13 +168,13 @@ unset the stuff that are not properties
 
 push this item into the \$items \-Array
 
-in this new block of code we are going to clean the json output using a reg expression to remove the unnecessary double quotes from the properties, bools, and ints values. basically we start we this input.. \mbox{[}\{ \char`\"{}xtype\char`\"{}\-:\char`\"{}fieldset\char`\"{}, \char`\"{}title\char`\"{}\-:\char`\"{}\-Who\char`\"{}, \char`\"{}collapsible\char`\"{}\-:\char`\"{}true\char`\"{}, \char`\"{}items\char`\"{}\-:\mbox{[}\{ \char`\"{}xtype\char`\"{}\-:\char`\"{}fieldcontainer\char`\"{}, \char`\"{}field\-Label\char`\"{}\-:\char`\"{}\-Name\char`\"{}, \char`\"{}layout\char`\"{}\-:\char`\"{}hbox\char`\"{}, \char`\"{}anchor\char`\"{}\-:\char`\"{}100\%\char`\"{}, \}\mbox{]} \}\mbox{]}
+\-In this next block of code we are going to clean the json output using a reg expression to remove the unnecessary double quotes from the properties, bools, and ints values. basically we start we this input.. {\ttfamily  \mbox{[}\{ \char`\"{}xtype\char`\"{}\-:\char`\"{}fieldset\char`\"{}, \char`\"{}title\char`\"{}\-:\char`\"{}\-Who\char`\"{}, \char`\"{}collapsible\char`\"{}\-:\char`\"{}true\char`\"{}, \char`\"{}items\char`\"{}\-:\mbox{[}\{ \char`\"{}xtype\char`\"{}\-:\char`\"{}fieldcontainer\char`\"{}, \char`\"{}field\-Label\char`\"{}\-:\char`\"{}\-Name\char`\"{}, \char`\"{}layout\char`\"{}\-:\char`\"{}hbox\char`\"{}, \char`\"{}anchor\char`\"{}\-:\char`\"{}100\%\char`\"{}, \}\mbox{]} \}\mbox{]} } 
 
-and finish with this output... \mbox{[}\{ xtype\-:'fieldset', title\-:'\-Who', collapsible\-:true, items\-:\mbox{[}\{ xtype\-:'fieldcontainer', field\-Label\-:'\-Name', layout\-:'hbox', anchor\-:'100', \}\mbox{]} \}\mbox{]}
+and finish with this output... {\ttfamily  \mbox{[}\{ xtype\-:'fieldset', title\-:'\-Who', collapsible\-:true, items\-:\mbox{[}\{ xtype\-:'fieldcontainer', field\-Label\-:'\-Name', layout\-:'hbox', anchor\-:'100', \}\mbox{]} \}\mbox{]} } 
 
 \-The regular expression will select any string that...
 
-is surrounded by double quotes and follow by \-: for example \char`\"{}xtype\char`\"{}\-:
+is surrounded by double quotes and follow by \-: for example \char`\"{}xtype\char`\"{}\-: 
 
 or "\-Ext.\-create
 
@@ -154,7 +184,7 @@ or \}\mbox{]}\})"
 
 \-Then replace remaining double quotes for single quotes $<$-\/-\/ not required but... we do it because \-Mitos\-E\-H\-R user single quotes to define strings.
 
-\-Definition at line 39 of file \-Form\-Layout\-Engine.\-php.
+\-Definition at line 41 of file \-Form\-Layout\-Engine.\-php.
 
 
 \begin{DoxyCode}
@@ -207,7 +237,7 @@ or \}\mbox{]}\})"
 )}}\label{class_form_layout_engine_a89955ff647a3d7183e3468bac90f90a0}
 
 
-\-Definition at line 185 of file \-Form\-Layout\-Engine.\-php.
+\-Definition at line 189 of file \-Form\-Layout\-Engine.\-php.
 
 
 \begin{DoxyCode}
@@ -250,19 +280,25 @@ string
 \end{DoxyReturn}
 
 
-\-Definition at line 207 of file \-Form\-Layout\-Engine.\-php.
+\-Definition at line 211 of file \-Form\-Layout\-Engine.\-php.
 
 
 \begin{DoxyCode}
                                {
-        $this->setSQL("SELECT * FROM list_options WHERE list_id = '$list_id'
-       ORDER BY seq");
 
-        $buff = "Ext.create('Ext.data.Store',{fields:['name','value'],data:[";
+        $this->setSQL("SELECT o.*
+                         FROM combo_lists_options AS o
+                    LEFT JOIN combo_lists AS l ON l.id = o.list_id
+                        WHERE l.id = '$list_id'
+                     ORDER BY o.seq");
+
+        $buff = "
+      Ext.create('Ext.data.Store',{fields:['option_name','option_value'],data:[";
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
-            $title = $item['title'];
-            $option_id =$item['option_id'];
-            $buff .= "{name:'$title',value:'$option_id'},";
+            $option_name    = $item['option_name'];
+            $option_value   = $item['option_value'];
+            $buff .= "
+      {option_name:'$option_name',option_value:'$option_value'},";
         }
         $buff = rtrim($buff, ',');
         $buff .= "]})";

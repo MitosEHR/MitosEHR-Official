@@ -117,10 +117,10 @@ Inheritance diagram for FormLayoutBuilder:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#a09d2fcc356ffec482c2288ed3128f55d">addField</a> ($data)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#af1ac76169bfb7bbb995f000d5bb9ac2e">updateField</a> ($data)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#a383f52a44383e21583989705ef0d630d">deleteField</a> ($data)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#afcb5238ce6ce86f873765792f9f18ad8">sortFields</a> ($data)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#a9b4218d44df735712697afcd63ee542a">addField</a> (stdClass $params)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#a605ceacafef9bf191f738e434d731ce2">updateField</a> (stdClass $params)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#a43268d844218fd4ca8254bac75031479">deleteField</a> (stdClass $params)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#a53a3f3a0264126d592421492cfb4a11d">sortFields</a> (stdClass $params)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#a9ff1809bc98bb7a1526eb4e035c1ffa8">getForms</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#ad7d4c76349c0ed04f32ca58530ffd16b">getParentFields</a> (stdClass $params)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_builder.html#ac89522e4c6cb3d293adce3bd72e91827">getFormFieldsTree</a> (stdClass $params)</td></tr>
@@ -129,20 +129,27 @@ Public Member Functions</h2></td></tr>
 <div class="textblock">
 <p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00023">23</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a09d2fcc356ffec482c2288ed3128f55d"></a><!-- doxytag: member="FormLayoutBuilder::addField" ref="a09d2fcc356ffec482c2288ed3128f55d" args="($data)" -->
+<a class="anchor" id="a9b4218d44df735712697afcd63ee542a"></a><!-- doxytag: member="FormLayoutBuilder::addField" ref="a9b4218d44df735712697afcd63ee542a" args="(stdClass $params)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_form_layout_builder.html#a09d2fcc356ffec482c2288ed3128f55d">addField</a> </td>
+          <td class="memname"><a class="el" href="class_form_layout_builder.html#a9b4218d44df735712697afcd63ee542a">addField</a> </td>
           <td>(</td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
+          <td class="paramtype">stdClass $&#160;</td>
+          <td class="paramname"><em>params</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 <p>lets defines what is a container for later use.</p>
 <p>if getFieldDataCol returns true, means there is a colunm in the current database form table. in that case we need to return that error leting the user know there is a duplicated field or duplicated name property. The user has 2 options, verify the form to make sure the the field is not getting duplicated or change the name property to save the field data inside another column.</p>
 <p>since now we know the column doesn't exist, lets create one for the new field</p>
@@ -152,14 +159,17 @@ Public Member Functions</h2></td></tr>
 <p>Exec the new field sql statement and store the its ID in $field_id to then store its options</p>
 <p>take each option and insert it in the forms_field_options table using $field_id</p>
 
-<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00028">28</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                   {
+<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00032">32</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
+<div class="fragment"><pre class="fragment">                                              {
+
+        $data = get_object_vars($params);
+
         $this-&gt;getFormDataTable($data[<span class="stringliteral">&#39;form_id&#39;</span>]);
         $this-&gt;col  = $data[<span class="stringliteral">&#39;name&#39;</span>];
         $container  = <span class="keyword">false</span>;
         <span class="keywordflow">if</span>( $data[<span class="stringliteral">&#39;xtype&#39;</span>] == <span class="stringliteral">&#39;fieldcontainer&#39;</span> || $data[<span class="stringliteral">&#39;xtype&#39;</span>] == <span class="stringliteral">&#39;fieldset&#39;</span> ) $container = <span class="keyword">true</span>;
         <span class="keywordflow">if</span>($this-&gt;fieldHasColumn() &amp;&amp; $data[<span class="stringliteral">&#39;xtype&#39;</span>] != <span class="stringliteral">&#39;radiofield&#39;</span>) {
-            echo <span class="stringliteral">&#39;{ &quot;success&quot;: false, &quot;errors&quot;: { &quot;reason&quot;: &quot;Field \&quot;&#39;</span>.$this-&gt;col.<span class="stringliteral">&#39;\&quot; exist, please verify the form or change the Field \&quot;name\&quot; preoperty&quot; }}&#39;</span>;
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">false</span>, <span class="stringliteral">&#39;error&#39;</span>=&gt; <span class="stringliteral">&#39;Field \&quot;&#39;</span>.$this-&gt;col.<span class="stringliteral">&#39;\&quot; exist, please verify the form or change the Field \&quot;name\&quot; preoperty&#39;</span>);
         }<span class="keywordflow">else</span>{
             <span class="keywordflow">if</span>(!$container){
 
@@ -167,8 +177,8 @@ Public Member Functions</h2></td></tr>
                     $this-&gt;addColumn(<span class="stringliteral">&#39;VARCHAR(255)&#39;</span>);
                 }
             }
-            $data = $this-&gt;sinatizedData($data);
-            $data = $this-&gt;setDefults($data);
+            <span class="comment">//$data = $this-&gt;sinatizedData($data);</span>
+<span class="comment"></span>            $data = $this-&gt;setDefults($data);
             $field              = array();
             $field[<span class="stringliteral">&#39;form_id&#39;</span>]   = $data[<span class="stringliteral">&#39;form_id&#39;</span>];
             $field[<span class="stringliteral">&#39;xtype&#39;</span>]     = $data[<span class="stringliteral">&#39;xtype&#39;</span>];
@@ -186,21 +196,21 @@ Public Member Functions</h2></td></tr>
             $field_id = $this-&gt;lastInsertId;
             $this-&gt;insertOptions($data, $field_id);
 
-            print <span class="stringliteral">&#39;{&quot;success&quot;:true}&#39;</span>;
+            <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">true</span>);
         }
     }
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="a383f52a44383e21583989705ef0d630d"></a><!-- doxytag: member="FormLayoutBuilder::deleteField" ref="a383f52a44383e21583989705ef0d630d" args="($data)" -->
+<a class="anchor" id="a43268d844218fd4ca8254bac75031479"></a><!-- doxytag: member="FormLayoutBuilder::deleteField" ref="a43268d844218fd4ca8254bac75031479" args="(stdClass $params)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_form_layout_builder.html#a383f52a44383e21583989705ef0d630d">deleteField</a> </td>
+          <td class="memname"><a class="el" href="class_form_layout_builder.html#a43268d844218fd4ca8254bac75031479">deleteField</a> </td>
           <td>(</td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
+          <td class="paramtype">stdClass $&#160;</td>
+          <td class="paramname"><em>params</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -209,10 +219,11 @@ Public Member Functions</h2></td></tr>
 <p>This function will delete the field and print success is no error were found along the way.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">$data</td><td></td></tr>
+    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 <p>lets defines what is a container for later use.</p>
 <p>check for all kind ao error combination and exit the script if error found. If not, then continue.</p>
 <p>for fieldcontainers and fieldsets lets make sure the field does NOT have child items</p>
@@ -220,8 +231,10 @@ Public Member Functions</h2></td></tr>
 <p>If the field is NOT a container the remove database column for this field</p>
 <p>remove field and field options</p>
 
-<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00172">172</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                      {
+<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00184">184</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
+<div class="fragment"><pre class="fragment">                                                 {
+
+        $data = get_object_vars($params);
 
         $this-&gt;getFormDataTable($data[<span class="stringliteral">&#39;form_id&#39;</span>]);
         $this-&gt;col = $data[<span class="stringliteral">&#39;name&#39;</span>];
@@ -256,7 +269,7 @@ Public Member Functions</h2></td></tr>
         $ret = $this-&gt;<a class="code" href="classdb_helper.html#ae033db35138ae80f3b1fd33c5c2c473e" title="Execute Statement &quot;WITHOUT&quot; returning records.">execOnly</a>();
         $this-&gt;checkError($ret);
 
-        print <span class="stringliteral">&#39;{&quot;success&quot;:true}&#39;</span>;
+        <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">true</span>);
     }
 </pre></div>
 </div>
@@ -283,7 +296,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 
-<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00485">485</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
+<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00503">503</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                       {
         $fields = array();
 
@@ -327,7 +340,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 
-<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00449">449</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
+<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00467">467</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
 <div class="fragment"><pre class="fragment">                              {
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM forms_layout&quot;</span>);
         $rows = array();
@@ -361,7 +374,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 
-<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00462">462</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
+<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00480">480</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                     {
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;Select CONCAT(fo.ovalue, &#39; (&#39;,ff.xtype ,&#39;)&#39; ) AS name, ff.id as value</span>
 <span class="stringliteral">                         FROM forms_fields AS ff</span>
@@ -383,15 +396,15 @@ Public Member Functions</h2></td></tr>
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="afcb5238ce6ce86f873765792f9f18ad8"></a><!-- doxytag: member="FormLayoutBuilder::sortFields" ref="afcb5238ce6ce86f873765792f9f18ad8" args="($data)" -->
+<a class="anchor" id="a53a3f3a0264126d592421492cfb4a11d"></a><!-- doxytag: member="FormLayoutBuilder::sortFields" ref="a53a3f3a0264126d592421492cfb4a11d" args="(stdClass $params)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_form_layout_builder.html#afcb5238ce6ce86f873765792f9f18ad8">sortFields</a> </td>
+          <td class="memname"><a class="el" href="class_form_layout_builder.html#a53a3f3a0264126d592421492cfb4a11d">sortFields</a> </td>
           <td>(</td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
+          <td class="paramtype">stdClass $&#160;</td>
+          <td class="paramname"><em>params</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -400,15 +413,19 @@ Public Member Functions</h2></td></tr>
 <p>This function sorts the fields when the drag and drop is use and print success if no error found along the way.</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">$data</td><td></td></tr>
+    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 <p>set the field item_of to the paretn id and run the sql to update the item item_of column</p>
 <p>here we set the pos column value, starting from 10. after updating the item pos, we add 10 to $pos and loop for each child item</p>
 
-<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00239">239</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                     {
+<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00254">254</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
+<div class="fragment"><pre class="fragment">                                                {
+
+        $data = get_object_vars($params);
+
         $pos        = 10;
         $field      = array();
         $item       = $data[<span class="stringliteral">&#39;id&#39;</span>];
@@ -428,20 +445,20 @@ Public Member Functions</h2></td></tr>
             $pos = $pos + 10;
         }
 
-        print <span class="stringliteral">&#39;{&quot;success&quot;:true}&#39;</span>;
+        <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">true</span>);
     }
 </pre></div>
 </div>
 </div>
-<a class="anchor" id="af1ac76169bfb7bbb995f000d5bb9ac2e"></a><!-- doxytag: member="FormLayoutBuilder::updateField" ref="af1ac76169bfb7bbb995f000d5bb9ac2e" args="($data)" -->
+<a class="anchor" id="a605ceacafef9bf191f738e434d731ce2"></a><!-- doxytag: member="FormLayoutBuilder::updateField" ref="a605ceacafef9bf191f738e434d731ce2" args="(stdClass $params)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_form_layout_builder.html#af1ac76169bfb7bbb995f000d5bb9ac2e">updateField</a> </td>
+          <td class="memname"><a class="el" href="class_form_layout_builder.html#a605ceacafef9bf191f738e434d731ce2">updateField</a> </td>
           <td>(</td>
-          <td class="paramtype">$&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
+          <td class="paramtype">stdClass $&#160;</td>
+          <td class="paramname"><em>params</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -450,10 +467,11 @@ Public Member Functions</h2></td></tr>
 <p>This function will update the fields and print the success callback if no errors found alog the way</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">$data</td><td></td></tr>
+    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 <p>sinatizedData check the data array and if the value is empty delete it form the array then checck the value and if is equal to "on" set it to true, and "off" set it to false</p>
 <p>if not xtype fieldcontainer and fieldset the add some defaul values.</p>
 <p>Here we start the $field array and add a few things from the $data array.</p>
@@ -464,10 +482,13 @@ Public Member Functions</h2></td></tr>
 <p>delete old field options</p>
 <p>take the remaining $data array and insert it in the forms_field_options table one by one.</p>
 
-<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00106">106</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
-<div class="fragment"><pre class="fragment">                                      {
-        $data = $this-&gt;sinatizedData($data);
-        $data = $this-&gt;setDefults($data);
+<p>Definition at line <a class="el" href="_form_layout_builder_8php_source.html#l00114">114</a> of file <a class="el" href="_form_layout_builder_8php_source.html">FormLayoutBuilder.php</a>.</p>
+<div class="fragment"><pre class="fragment">                                                 {
+
+        $data = get_object_vars($params);
+
+        <span class="comment">//$data = $this-&gt;sinatizedData($data);</span>
+<span class="comment"></span>        $data = $this-&gt;setDefults($data);
         $field              = array();
         $id                 = $data[<span class="stringliteral">&#39;id&#39;</span>];
         $field[<span class="stringliteral">&#39;form_id&#39;</span>]   = $data[<span class="stringliteral">&#39;form_id&#39;</span>];
@@ -487,7 +508,7 @@ Public Member Functions</h2></td></tr>
         $this-&gt;checkError($ret);
         $this-&gt;insertOptions($data, $id);
 
-        print <span class="stringliteral">&#39;{&quot;success&quot;: true }&#39;</span>;
+        <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;success&#39;</span> =&gt; <span class="keyword">true</span>);
     }
 </pre></div>
 </div>
@@ -515,7 +536,7 @@ Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_form_layout_builder.html">FormLayoutBuilder</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
+    <li class="footer">Generated on Sun Feb 12 2012 11:59:16 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

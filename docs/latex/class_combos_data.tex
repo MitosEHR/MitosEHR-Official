@@ -10,17 +10,11 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{class_combos_data_ae38d22dfcd26f687b8b0e0e6632c5917}{get\-Options\-By\-List\-Id} (std\-Class \$params)
+\item 
 \hyperlink{class_combos_data_a0fc10b64683021b70c7eb95fb514c119}{get\-Users} ()
 \item 
-\hyperlink{class_combos_data_a5610c1415bd5fd946a42fd0fd4da4cff}{get\-List} ()
-\item 
-\hyperlink{class_combos_data_a09d27a7870dd890eacc9d88fab31998a}{get\-Message\-Status} ()
-\item 
-\hyperlink{class_combos_data_abb987aca7438fe863207fe3dfadb8c55}{get\-Titles} ()
-\item 
-\hyperlink{class_combos_data_a1e7fa771a9df3e495e38f12a85d3a286}{get\-Types} ()
-\item 
-\hyperlink{class_combos_data_a1051474171a1d3daecd6fb0e207d3399}{get\-Msg\-Note\-Type} ()
+\hyperlink{class_combos_data_adadacf20e7598ae5f167f888b2e7aa3c}{get\-Lists} ()
 \item 
 \hyperlink{class_combos_data_ac4aa1fc20da22e9c21781e8687fcead5}{get\-Facilities} ()
 \item 
@@ -30,7 +24,7 @@
 \item 
 \hyperlink{class_combos_data_a6c113ad96ca8b54ec0167ecccf5f0b2c}{get\-Calendar\-Categories} ()
 \item 
-\hyperlink{class_combos_data_a7442e8154cc872b6e29db1afdaba18fa}{get\-Calendar\-Status} ()
+\hyperlink{class_combos_data_ada2ef7bac2979b90332fe9a527c60667}{get\-Languages} ()
 \item 
 \hyperlink{class_combos_data_a1cc9d4b90af3fd2d18449a607edb2c20}{get\-Authorizations} ()
 \item 
@@ -39,8 +33,6 @@
 \hyperlink{class_combos_data_a20eee2f861c3bd5923aa5340eea44cb6}{get\-Tax\-Ids} ()
 \item 
 \hyperlink{class_combos_data_afda093a8a98909d5c22ddf2bef3a347b}{get\-Filed\-Xtypes} ()
-\item 
-\hyperlink{class_combos_data_ada2ef7bac2979b90332fe9a527c60667}{get\-Languages} ()
 \item 
 \hyperlink{class_combos_data_a050b23f05f60bfd5722dd80a844c4a1f}{get\-Pos\-Codes} ()
 \end{DoxyCompactItemize}
@@ -63,7 +55,7 @@
 )}}\label{class_combos_data_a1cc9d4b90af3fd2d18449a607edb2c20}
 
 
-\-Definition at line 135 of file \-Combos\-Data.\-php.
+\-Definition at line 81 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
@@ -94,43 +86,14 @@
 )}}\label{class_combos_data_a6c113ad96ca8b54ec0167ecccf5f0b2c}
 
 
-\-Definition at line 115 of file \-Combos\-Data.\-php.
+\-Definition at line 71 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
                                            {
-        $sql = "SELECT catid, catname FROM calendar_categories ORDER BY
-       cattype, catname";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
-\end{DoxyCode}
-\hypertarget{class_combos_data_a7442e8154cc872b6e29db1afdaba18fa}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Calendar\-Status@{get\-Calendar\-Status}}
-\index{get\-Calendar\-Status@{get\-Calendar\-Status}!CombosData@{\-Combos\-Data}}
-\subsubsection[{get\-Calendar\-Status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Calendar\-Status} (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{class_combos_data_a7442e8154cc872b6e29db1afdaba18fa}
-
-
-\-Definition at line 125 of file \-Combos\-Data.\-php.
-
-
-\begin{DoxyCode}
-                                       {
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id =
-       'apptstat' ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+        $this->setSQL("SELECT catid, catname FROM calendar_categories ORDER BY
+       cattype, catname");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 \end{DoxyCode}
 \hypertarget{class_combos_data_af1b9ff2a0f6b445bf3150edfe7e13461}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Code\-Types@{get\-Code\-Types}}
@@ -142,18 +105,13 @@
 )}}\label{class_combos_data_af1b9ff2a0f6b445bf3150edfe7e13461}
 
 
-\-Definition at line 105 of file \-Combos\-Data.\-php.
+\-Definition at line 66 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
                                   {
-        $sql = "SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+        $this->setSQL("SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 \end{DoxyCode}
 \hypertarget{class_combos_data_ac4aa1fc20da22e9c21781e8687fcead5}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Facilities@{get\-Facilities}}
@@ -165,19 +123,14 @@
 )}}\label{class_combos_data_ac4aa1fc20da22e9c21781e8687fcead5}
 
 
-\-Definition at line 85 of file \-Combos\-Data.\-php.
+\-Definition at line 56 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
                                    {
-        $sql = "SELECT id, name FROM facility WHERE service_location != 0 ORDER
-       BY name";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+        $this->setSQL("SELECT id, name FROM facility WHERE service_location !=
+       0 ORDER BY name");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 \end{DoxyCode}
 \hypertarget{class_combos_data_afda093a8a98909d5c22ddf2bef3a347b}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Filed\-Xtypes@{get\-Filed\-Xtypes}}
@@ -189,7 +142,7 @@
 )}}\label{class_combos_data_afda093a8a98909d5c22ddf2bef3a347b}
 
 
-\-Definition at line 185 of file \-Combos\-Data.\-php.
+\-Definition at line 131 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
@@ -229,90 +182,60 @@
 )}}\label{class_combos_data_ada2ef7bac2979b90332fe9a527c60667}
 
 
-\-Definition at line 201 of file \-Combos\-Data.\-php.
+\-Definition at line 76 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
                                   {
         $this->setSQL("SELECT lang_code, lang_description FROM lang_languages
        ORDER BY lang_description");
-        $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
-            array_push($rows, $row);
-        }
-        return $rows;
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 \end{DoxyCode}
-\hypertarget{class_combos_data_a5610c1415bd5fd946a42fd0fd4da4cff}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-List@{get\-List}}
-\index{get\-List@{get\-List}!CombosData@{\-Combos\-Data}}
-\subsubsection[{get\-List}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-List} (
+\hypertarget{class_combos_data_adadacf20e7598ae5f167f888b2e7aa3c}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Lists@{get\-Lists}}
+\index{get\-Lists@{get\-Lists}!CombosData@{\-Combos\-Data}}
+\subsubsection[{get\-Lists}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Lists} (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{class_combos_data_a5610c1415bd5fd946a42fd0fd4da4cff}
+)}}\label{class_combos_data_adadacf20e7598ae5f167f888b2e7aa3c}
 
 
-\-Definition at line 35 of file \-Combos\-Data.\-php.
+\-Definition at line 51 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
-                             {
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id =
-       'lists'      ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+                              {
+        $this->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 \end{DoxyCode}
-\hypertarget{class_combos_data_a09d27a7870dd890eacc9d88fab31998a}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Message\-Status@{get\-Message\-Status}}
-\index{get\-Message\-Status@{get\-Message\-Status}!CombosData@{\-Combos\-Data}}
-\subsubsection[{get\-Message\-Status}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Message\-Status} (
+\hypertarget{class_combos_data_ae38d22dfcd26f687b8b0e0e6632c5917}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Options\-By\-List\-Id@{get\-Options\-By\-List\-Id}}
+\index{get\-Options\-By\-List\-Id@{get\-Options\-By\-List\-Id}!CombosData@{\-Combos\-Data}}
+\subsubsection[{get\-Options\-By\-List\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Options\-By\-List\-Id} (
 \begin{DoxyParamCaption}
-{}
+\item[{std\-Class \$}]{params}
 \end{DoxyParamCaption}
-)}}\label{class_combos_data_a09d27a7870dd890eacc9d88fab31998a}
+)}}\label{class_combos_data_ae38d22dfcd26f687b8b0e0e6632c5917}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
 
 
-\-Definition at line 45 of file \-Combos\-Data.\-php.
+\-Definition at line 25 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
-                                      {
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id =
-       'message_status'     ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
-\end{DoxyCode}
-\hypertarget{class_combos_data_a1051474171a1d3daecd6fb0e207d3399}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Msg\-Note\-Type@{get\-Msg\-Note\-Type}}
-\index{get\-Msg\-Note\-Type@{get\-Msg\-Note\-Type}!CombosData@{\-Combos\-Data}}
-\subsubsection[{get\-Msg\-Note\-Type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Msg\-Note\-Type} (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{class_combos_data_a1051474171a1d3daecd6fb0e207d3399}
-
-
-\-Definition at line 75 of file \-Combos\-Data.\-php.
-
-
-\begin{DoxyCode}
-                                    {
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id =
-       'note_type'  ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+                                                        {
+        $this->setSQL("SELECT o.option_name,
+                              o.option_value
+                         FROM combo_lists_options AS o
+                    LEFT JOIN combo_lists AS l ON l.id = o.list_id
+                        WHERE l.id = '$params->list_id'
+                     ORDER BY o.seq");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 \end{DoxyCode}
 \hypertarget{class_combos_data_a050b23f05f60bfd5722dd80a844c4a1f}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Pos\-Codes@{get\-Pos\-Codes}}
@@ -324,7 +247,7 @@
 )}}\label{class_combos_data_a050b23f05f60bfd5722dd80a844c4a1f}
 
 
-\-Definition at line 210 of file \-Combos\-Data.\-php.
+\-Definition at line 149 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
@@ -643,18 +566,14 @@
 )}}\label{class_combos_data_aa676cae5ee8d7fb6862a8724adc2660d}
 
 
-\-Definition at line 95 of file \-Combos\-Data.\-php.
+\-Definition at line 61 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
                               {
-        $sql = "SELECT id, role_name FROM acl_roles ORDER BY role_name";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+        $this->setSQL("SELECT id, role_name FROM acl_roles ORDER BY role_name")
+      ;
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 \end{DoxyCode}
 \hypertarget{class_combos_data_a4a35941773d1bc2ee98811721fc7c20c}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-See\-Authorizations@{get\-See\-Authorizations}}
@@ -666,7 +585,7 @@
 )}}\label{class_combos_data_a4a35941773d1bc2ee98811721fc7c20c}
 
 
-\-Definition at line 153 of file \-Combos\-Data.\-php.
+\-Definition at line 99 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
@@ -697,7 +616,7 @@
 )}}\label{class_combos_data_a20eee2f861c3bd5923aa5340eea44cb6}
 
 
-\-Definition at line 172 of file \-Combos\-Data.\-php.
+\-Definition at line 118 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
@@ -714,54 +633,6 @@
         );
     }
 \end{DoxyCode}
-\hypertarget{class_combos_data_abb987aca7438fe863207fe3dfadb8c55}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Titles@{get\-Titles}}
-\index{get\-Titles@{get\-Titles}!CombosData@{\-Combos\-Data}}
-\subsubsection[{get\-Titles}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Titles} (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{class_combos_data_abb987aca7438fe863207fe3dfadb8c55}
-
-
-\-Definition at line 55 of file \-Combos\-Data.\-php.
-
-
-\begin{DoxyCode}
-                               {
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id =
-       'titles'     ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
-\end{DoxyCode}
-\hypertarget{class_combos_data_a1e7fa771a9df3e495e38f12a85d3a286}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Types@{get\-Types}}
-\index{get\-Types@{get\-Types}!CombosData@{\-Combos\-Data}}
-\subsubsection[{get\-Types}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Types} (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}\label{class_combos_data_a1e7fa771a9df3e495e38f12a85d3a286}
-
-
-\-Definition at line 65 of file \-Combos\-Data.\-php.
-
-
-\begin{DoxyCode}
-                              {
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id =
-       'types'      ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
-\end{DoxyCode}
 \hypertarget{class_combos_data_a0fc10b64683021b70c7eb95fb514c119}{\index{\-Combos\-Data@{\-Combos\-Data}!get\-Users@{get\-Users}}
 \index{get\-Users@{get\-Users}!CombosData@{\-Combos\-Data}}
 \subsubsection[{get\-Users}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Users} (
@@ -771,12 +642,12 @@
 )}}\label{class_combos_data_a0fc10b64683021b70c7eb95fb514c119}
 
 
-\-Definition at line 19 of file \-Combos\-Data.\-php.
+\-Definition at line 35 of file \-Combos\-Data.\-php.
 
 
 \begin{DoxyCode}
                               {
-        include_once($_SESSION['site']['root']."/classes/Person.php");
+        include_once("Person.php");
         $sql = "SELECT id, title, fname, mname, lname
                   FROM users
                  WHERE username != '' AND active = 1 AND ( info IS NULL OR info

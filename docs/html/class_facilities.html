@@ -148,15 +148,10 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>stdClass </dd></dl>
 
-<p>Definition at line <a class="el" href="_facilities_8php_source.html#l00059">59</a> of file <a class="el" href="_facilities_8php_source.html">Facilities.php</a>.</p>
+<p>Definition at line <a class="el" href="_facilities_8php_source.html#l00054">54</a> of file <a class="el" href="_facilities_8php_source.html">Facilities.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                 {
 
         $data = get_object_vars($params);
-
-        $data[<span class="stringliteral">&#39;active&#39;</span>]             = ($params-&gt;active              == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
-        $data[<span class="stringliteral">&#39;service_location&#39;</span>]       = ($params-&gt;service_location    == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
-        $data[<span class="stringliteral">&#39;accepts_assignment&#39;</span>] = ($params-&gt;accepts_assignment  == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
-        $data[<span class="stringliteral">&#39;billing_location&#39;</span>]       = ($params-&gt;billing_location    == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
 
         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($data, <span class="stringliteral">&quot;facility&quot;</span>, <span class="stringliteral">&quot;I&quot;</span>);
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
@@ -192,7 +187,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>stdClass </dd></dl>
 
-<p>Definition at line <a class="el" href="_facilities_8php_source.html#l00106">106</a> of file <a class="el" href="_facilities_8php_source.html">Facilities.php</a>.</p>
+<p>Definition at line <a class="el" href="_facilities_8php_source.html#l00091">91</a> of file <a class="el" href="_facilities_8php_source.html">Facilities.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                    {
 
 
@@ -236,21 +231,16 @@ Public Member Functions</h2></td></tr>
         } <span class="keywordflow">else</span> {
             $wherex = <span class="stringliteral">&#39;active = 1&#39;</span>;
         }
-
         <span class="keywordflow">if</span>(isset($params-&gt;sort)){
             $orderx = $params-&gt;sort[0]-&gt;property.<span class="charliteral">&#39; &#39;</span>.$params-&gt;sort[0]-&gt;direction;
         } <span class="keywordflow">else</span> {
             $orderx = <span class="stringliteral">&#39;name&#39;</span>;
         }
-
         $sql = <span class="stringliteral">&quot;SELECT * FROM facility WHERE $wherex ORDER BY $orderx LIMIT $params-&gt;start,$params-&gt;limit&quot;</span>;
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
         $rows = array();
         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $row){
-            $row[<span class="stringliteral">&#39;active&#39;</span>]              = ($row[<span class="stringliteral">&#39;active&#39;</span>]             == <span class="charliteral">&#39;1&#39;</span> ? <span class="stringliteral">&#39;on&#39;</span> : <span class="stringliteral">&#39;off&#39;</span>);
-            $row[<span class="stringliteral">&#39;service_location&#39;</span>]    = ($row[<span class="stringliteral">&#39;service_location&#39;</span>]   == <span class="charliteral">&#39;1&#39;</span> ? <span class="stringliteral">&#39;on&#39;</span> : <span class="stringliteral">&#39;off&#39;</span>);
-            $row[<span class="stringliteral">&#39;billing_location&#39;</span>]    = ($row[<span class="stringliteral">&#39;billing_location&#39;</span>]   == <span class="charliteral">&#39;1&#39;</span> ? <span class="stringliteral">&#39;on&#39;</span> : <span class="stringliteral">&#39;off&#39;</span>);
-            $row[<span class="stringliteral">&#39;accepts_assignment&#39;</span>]  = ($row[<span class="stringliteral">&#39;accepts_assignment&#39;</span>] == <span class="charliteral">&#39;1&#39;</span> ? <span class="stringliteral">&#39;on&#39;</span> : <span class="stringliteral">&#39;off&#39;</span>);
+
             <span class="keywordflow">if</span> (strlen($row[<span class="stringliteral">&#39;pos_code&#39;</span>]) &lt;= 1){
                 $row[<span class="stringliteral">&#39;pos_code&#39;</span>] = <span class="charliteral">&#39;0&#39;</span>.$row[<span class="stringliteral">&#39;pos_code&#39;</span>];
             } <span class="keywordflow">else</span> {
@@ -287,18 +277,13 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>stdClass </dd></dl>
 
-<p>Definition at line <a class="el" href="_facilities_8php_source.html#l00081">81</a> of file <a class="el" href="_facilities_8php_source.html">Facilities.php</a>.</p>
+<p>Definition at line <a class="el" href="_facilities_8php_source.html#l00071">71</a> of file <a class="el" href="_facilities_8php_source.html">Facilities.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                                    {
 
         $data = get_object_vars($params);
 
         $id = $data[<span class="stringliteral">&#39;id&#39;</span>];
         unset($data[<span class="stringliteral">&#39;id&#39;</span>]);
-
-        $data[<span class="stringliteral">&#39;active&#39;</span>]             = ($params-&gt;active              == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
-        $data[<span class="stringliteral">&#39;service_location&#39;</span>]       = ($params-&gt;service_location    == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
-        $data[<span class="stringliteral">&#39;accepts_assignment&#39;</span>] = ($params-&gt;accepts_assignment  == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
-        $data[<span class="stringliteral">&#39;billing_location&#39;</span>]       = ($params-&gt;billing_location    == <span class="stringliteral">&#39;on&#39;</span> ? 1 : 0);
 
         $sql = $this-&gt;<a class="code" href="classdb_helper.html#aa9840bbfb81d2d519994cd0a8e880c4a" title="SQL Bind.">sqlBind</a>($data, <span class="stringliteral">&quot;facility&quot;</span>, <span class="stringliteral">&quot;U&quot;</span>, <span class="stringliteral">&quot;id=&#39;$id&#39;&quot;</span>);
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>($sql);
@@ -332,7 +317,7 @@ Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_facilities.html">Facilities</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
+    <li class="footer">Generated on Sun Feb 12 2012 11:59:15 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

@@ -1,13 +1,21 @@
-//*************************************************************************************************
-// roles.ejs.php
-// Description: Facilities Screen
-// v0.0.3
-// 
-// Author: Ernesto J Rodriguez
-// Modified: n/a
-// 
-// MitosEHR (Electronic Health Records) 2011
-//*************************************************************************************************
+/**
+ * Practice Panel
+ *
+ * Author: Ernesto J Rodriguez
+ * Modified: n/a
+ *
+ * MitosEHR (Electronic Health Records) 2011
+ *
+ * @namespace Practice.getPharmacies
+ * @namespace Practice.addPharmacy
+ * @namespace Practice.updatePharmacy
+ *
+ * @namespace Practice.getInsurances
+ * @namespace Practice.addInsurance
+ * @namespace Practice.updateInsurance
+ *
+ *
+ */
 Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelPractice',
@@ -26,10 +34,12 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         var me = this;
         var currStore;
         var currModel;
-        // *************************************************************************************
-        // Pharmacy Record Structure
-        // *************************************************************************************
-        me.pharmacyStore = Ext.create('Ext.mitos.restStoreModel', {
+
+        /**
+         * Pharmacy Model and Store
+         */
+        Ext.define('pharmacyModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',					type: 'int'},
                 {name: 'name',					type: 'string'},
@@ -55,30 +65,27 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 {name: 'fax_area_code',			type: 'string'},
                 {name: 'fax_prefix',			type: 'string'},
                 {name: 'fax_number',			type: 'string'},
-                {name: 'fax_full',				type: 'string'}
+                {name: 'fax_full',				type: 'string'},
+                {name: 'active',				type: 'string'}
             ],
-        model		: 'pharmacyModel',
-        idProperty	: 'id',
-        url		    : 'app/administration/practice/data.php',
-        extraParams : { task:"pharmacy"}
-        });
-        // -------------------------------------------------------------------------------------
-        // render function for Default Method column in the Pharmacy grid
-        // -------------------------------------------------------------------------------------
-        function transmit_method(val) {
-            if (val == '1') {
-                return 'Print';
-            } else if(val == '2') {
-                return 'Email';
-            } else if(val == '3') {
-                return 'Email';
+            proxy: {
+                type: 'direct',
+                api:{
+                    read    : Practice.getPharmacies,
+                    create  : Practice.addPharmacy,
+                    update  : Practice.updatePharmacy
+                }
             }
-            return val;
-        }
+        });
+        me.pharmacyStore = Ext.create('Ext.data.Store', {
+            model		: 'pharmacyModel',
+            remoteSort	: false
+        });
         // *************************************************************************************
         // Insurance Record Structure
         // *************************************************************************************
-        me.insuranceStore = Ext.create('Ext.mitos.restStoreModel', {
+        Ext.define('insuranceModel', {
+            extend: 'Ext.data.Model',
             fields: [
                 {name: 'id',						type: 'int'},
                 {name: 'name',						type: 'string'},
@@ -108,12 +115,21 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 {name: 'fax_area_code',				type: 'string'},
                 {name: 'fax_prefix',				type: 'string'},
                 {name: 'fax_number',				type: 'string'},
-                {name: 'fax_full',					type: 'string'}
+                {name: 'fax_full',					type: 'string'},
+                {name: 'active',					type: 'string'}
             ],
+            proxy: {
+                type: 'direct',
+                api:{
+                    read    : Practice.getInsurances,
+                    create  : Practice.addInsurance,
+                    update  : Practice.updateInsurance
+                }
+            }
+        });
+        me.insuranceStore = Ext.create('Ext.data.Store', {
             model		: 'insuranceModel',
-            idProperty	: 'id',
-            url		    : 'app/administration/practice/data.php',
-            extraParams : { task:"insurance"}
+            remoteSort	: false
         });
         // *************************************************************************************
         // Insurance Numbers Record Structure
@@ -141,6 +157,22 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             url		    : 'app/administration/practice/data.php',
             extraParams : { task:"x12Partners"}
         });
+
+
+        // -------------------------------------------------------------------------------------
+        // render function for Default Method column in the Pharmacy grid
+        // -------------------------------------------------------------------------------------
+        function transmit_method(val) {
+            if (val == '1') {
+                return 'Print';
+            } else if(val == '2') {
+                return 'Email';
+            } else if(val == '3') {
+                return 'Email';
+            }
+            return val;
+        }
+
         // *************************************************************************************
         // From Items
         // *************************************************************************************
@@ -189,7 +221,9 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                     { xtype: 'textfield',     width: 70,  name: 'fax_number'
                 }]
             },
-            { xtype: 'transmitmethodcombo', fieldLabel  : 'default Method', labelWidth  : 89 }
+            { xtype: 'transmitmethodcombo', fieldLabel  : 'default Method', labelWidth  : 89 },
+            { xtype: 'mitos.checkbox', fieldLabel       : 'Active?',        labelWidth  : 89, name:'active' }
+
         ];
 
         me.insuranceItems = [
@@ -238,7 +272,8 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
             },
             { xtype: 'textfield', fieldLabel: 'CMS ID', width: 100, name: 'cms_id' },
             { xtype:'insurancepayertypecombo', fieldLabel: 'Payer Type', labelWidth  : 89 },
-            { xtype: 'textfield', fieldLabel: 'X12 Partner', width: 100, name: 'x12_default_partner_id' }
+            { xtype: 'textfield', fieldLabel: 'X12 Partner', width: 100, name: 'x12_default_partner_id' },
+            { xtype: 'mitos.checkbox', fieldLabel       : 'Active?',        labelWidth  : 89, name:'active' }
         ];
         // *************************************************************************************
         // Grids
@@ -253,7 +288,8 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 { text: 'Address', flex: 1, sortable: true, dataIndex: 'address_full' },
                 { text: 'Phone', width: 120, sortable: true, dataIndex: 'phone_full' },
                 { text: 'Fax', width: 120, sortable: true, dataIndex: 'fax_full' },
-                { text: 'Default Method', flex: 1, sortable: true, dataIndex: 'transmit_method', renderer: transmit_method }
+                { text: 'Default Method', flex: 1, sortable: true, dataIndex: 'transmit_method', renderer: transmit_method },
+                { text: 'Active?', width:55, sortable: true, dataIndex: 'active', renderer: me.boolRenderer }
             ],
             listeners: {
                 itemdblclick: function(view, record){
@@ -273,7 +309,9 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                 { text: 'Address', flex: 1, sortable: true, dataIndex: 'address_full' },
                 { text: 'Phone', width: 120, sortable: true, dataIndex: 'phone_full' },
                 { text: 'Fax', width: 120, sortable: true, dataIndex: 'fax_full' },
-                { text: 'Default X12 Partner', flex: 1, width: 100, sortable: true, dataIndex: 'x12_default_partner_id' }
+                { text: 'Default X12 Partner', flex: 1, width: 100, sortable: true, dataIndex: 'x12_default_partner_id' },
+                { text: 'Active?', width:55, sortable: true, dataIndex: 'active', renderer: me.boolRenderer }
+
             ],
             listeners: {
                 itemdblclick: function(view, record){
@@ -406,14 +444,14 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                         text      : 'Edit Category',
                         iconCls   : 'save',
                         handler   : function(){
-                            me.openWin();
+                            me.onWinOpen();
                         }
                     },'-',{
                         xtype: 'button',
                         text      : 'Update Files',
                         iconCls   : 'save',
                         handler   : function(){
-                            me.openWin();
+                            me.onWinOpen();
                         }
                     }]
                 }]
@@ -432,23 +470,24 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                             text      : 'Clear HL7 Data',
                             iconCls   : 'save',
                             handler   : function(){
-                                me.openWin();
+                                me.onWinOpen();
                             }
                     },'-',{
                         xtype: 'button',
                             text      : 'Parse HL7',
                             iconCls   : 'save',
                             handler   : function(){
-                                me.openWin();
+                                me.onWinOpen();
                             }
                     }]
                 }]
             }]
         });
-        
+        /**
+         * Window
+         */
         me.win = Ext.create('Ext.mitos.window.Window', {
             width       : 450,
-
             items:[{
                 xtype:'mitos.form',
                 defaults: { labelWidth: 89, anchor: '100%', layout: {
@@ -464,42 +503,32 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
                     var form = me.win.down('form').getForm();
                     if (form.isValid()) {
                         me.onSave(form, currStore);
-                        me.action('close');
                     }
                 }
             },'-',{
-                text: 'Delete',
-                cls : 'winDelete',
-                itemId: 'delete',
+                text: 'Cancel',
                 scope: me,
-                handler: function(){
-                    var form = me.win.down('form').getForm();
-                    me.onDelete(form, currStore);
-                }
+                handler: me.onCancel
             }],
             listeners:{
                 scope:me,
-                close:function(){
-                    me.action('close');
-                }
+                close:me.onWinClose
             }
         }); // END WINDOW
 
         me.pageBody = [ me.praticePanel ];
         me.callParent(arguments);
-    }, // end of initComponent
+    },
 
     onNew:function(form, formItmes, model, title){
         this.setForm(form, formItmes, title);
         form.getForm().reset();
         var newModel  = Ext.ModelManager.create({}, model );
         form.getForm().loadRecord(newModel);
-        this.action('new');
         this.win.show();
     },
 
     onSave:function(form, store){
-
         var record      = form.getRecord(),
             values      = form.getValues(),
             storeIndex  = store.indexOf(record);
@@ -513,53 +542,31 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
         this.win.close();
     },
 
-    onDelete:function(form, store){
-        Ext.Msg.show({
-            title   : 'Please confirm...',
-            icon    : Ext.MessageBox.QUESTION,
-            msg     : 'Are you sure to delete this?',
-            buttons : Ext.Msg.YESNO,
-            scope   : this,
-            fn:function(btn){
-                if(btn=='yes'){
-                    var currentRec = form.getRecord();
-                    store.remove(currentRec);
-                    store.destroy();
-                    this.win.close();
-                }
-            }
-        });
+    onCancel:function(btn){
+        btn.up('window').close();
     },
 
     onItemdblclick:function(formItmes, store, record, title){
         var form = this.win.down('form');
         this.setForm(form, formItmes, title);
         form.getForm().loadRecord(record);
-        this.action('old');
         this.win.show();
     },
+
     setForm:function(form, formItmes, title){
         form.removeAll();
         form.add(formItmes);
         form.doLayout();
         form.up('window').setTitle(title);
     },
-    openWin:function(){
+
+    onWinOpen:function(){
         this.win.show();
     },
-    action:function(action) {
-        var win = this.win,
-            form = win.down('form'),
-            winTbar = win.down('toolbar'),
-            deletebtn = winTbar.getComponent('delete');
 
-        if (action == 'new') {
-            deletebtn.disable();
-        } else if (action == 'old') {
-            deletebtn.enable();
-        } else if (action == 'close') {
-            form.getForm().reset();
-        }
+    onWinClose:function() {
+        var form = this.win.down('form');
+        form.getForm().reset();
     },
     /**
     * This function is called from MitosAPP.js when
@@ -570,8 +577,8 @@ Ext.define('Ext.mitos.panel.administration.practice.Practice',{
     onActive:function(callback){
         this.pharmacyStore.load();
         this.insuranceStore.load();
-        this.insuranceNumbersStore.load();
-        this.x12PartnersStore.load();
+        //this.insuranceNumbersStore.load();
+        //this.x12PartnersStore.load();
         callback(true);
     }
 }); // end of PracticePage
