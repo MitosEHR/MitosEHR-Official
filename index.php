@@ -8,7 +8,7 @@
  * the user and start the main application
  * 
  * Author: GI Technologies, 2011
- * modifed: Ernesto J Rodriguez, Nov 7, 2011
+ * modified: Ernesto J Rodriguez, Nov 7, 2011
  *
  * Ver: 0.0.3
  * 
