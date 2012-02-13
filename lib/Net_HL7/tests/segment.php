@@ -13,9 +13,9 @@ $seg = new Net_HL7_Segment("PID");
 $seg->setField(0, "XXX");
 $seg->setField(3, "XXX");
 
-ok($seg->getField(0) == "PID", "Field 0 is PID");
-ok($seg->getName() == "PID", "Segment name is PID");
-ok($seg->getField(3) == "XXX", "Field 3 is XXX");
+ok($seg->getField(0) == "PID", "Field 0 is PID<br>");
+ok($seg->getName() == "PID", "Segment name is PID<br>");
+ok($seg->getField(3) == "XXX", "Field 3 is XXX<br>");
 
 # Try faulty constructors
 #
@@ -26,11 +26,11 @@ ok($seg->getField(3) == "XXX", "Field 3 is XXX");
 
 $seg = new Net_HL7_Segment("DG1", array(4,3,2,array(1,2,3),0));
 
-ok($seg->getField(3) == "2", "Constructor with array ref");
+ok($seg->getField(3) == "2", "Constructor with array ref<br>");
 
 $comps = $seg->getField(4);
 
-ok($comps[2] == "3", "Constructor with array ref for composed fields");
+ok($comps[2] == "3", "Constructor with array ref for composed fields<br>");
 
 
 # Field setters/getters
@@ -40,33 +40,33 @@ $seg = new Net_HL7_Segment("DG1");
 $seg->setField(3, array(1, 2, 3));
 $seg->setField(8, $hl7->getNull());
 
-ok(is_array($seg->getField(3)), "Composed field 1^2^3");
+ok(is_array($seg->getField(3)), "Composed field 1^2^3<br>");
 
-ok($seg->getField(8) == "\"\"" && $seg->getField(8) == $hl7->getNull(), "HL7 NULL value");
+ok($seg->getField(8) == "\"\"" && $seg->getField(8) == $hl7->getNull(), "HL7 NULL value<br>");
 
 $subFields = $seg->getField(3);
 
-ok(count($subFields) == 3, "Getting composed fields as array");
+ok(count($subFields) == 3, "Getting composed fields as array<br>");
 
-ok($subFields[1] == "2", "Getting single value from composed field");
+ok($subFields[1] == "2", "Getting single value from composed field<br>");
 
 $flds = $seg->getFields();
 
-ok(count($flds) == 9, "Number of fields in segment");
+ok(count($flds) == 9, "Number of fields in segment<br>");
 
 $flds = $seg->getFields(2);
 
-ok(count($flds) == 7, "Getting all fields from 2nd index");
+ok(count($flds) == 7, "Getting all fields from 2nd index<br>");
 
 $flds = $seg->getFields(2, 4);
 
-ok(count($flds) == 3, "Getting fields from 2 till 4");
+ok(count($flds) == 3, "Getting fields from 2 till 4<br>");
 
 $seg->setField(12);
 
-ok($seg->size() == 8, "Size operator");
+ok($seg->size() == 8, "Size operator<br>");
 
 $seg->setField(12, "x");
 
-ok($seg->size() == 12, "Size operator");
+ok($seg->size() == 12, "Size operator<br>");
 ?>

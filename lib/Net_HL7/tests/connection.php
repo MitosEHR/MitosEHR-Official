@@ -1,8 +1,8 @@
 <?php
 
-require_once "../Net/HL7/Segments/MSH.php";
-require_once "../Net/HL7/Message.php";
-require_once "../Net/HL7/Connection.php";
+require_once "Net/HL7/Segments/MSH.php";
+require_once "Net/HL7/Message.php";
+require_once "Net/HL7/Connection.php";
 require_once "test_base.php";
 
 $msg  = new Net_HL7_Message();

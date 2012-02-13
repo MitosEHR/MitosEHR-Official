@@ -139,20 +139,25 @@ class Practice extends dbHelper {
     }
 
 
-
     /**
      * Insurance Numbers stuff
+     * @param stdClass $params
+     * @return stdClass
      */
-    public function getInsuranceNumbers(){
+    public function getInsuranceNumbers(stdClass $params){
 
+        return $params;
     }
 
 
     /**
      * X12 Partners stuff
+     * @param stdClass $params
+     * @return stdClass
      */
-    public function getX12Partners(){
+    public function getX12Partners(stdClass $params){
 
+        return $params;
     }
 
 
