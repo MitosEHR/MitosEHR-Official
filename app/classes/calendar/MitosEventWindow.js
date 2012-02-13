@@ -1,5 +1,5 @@
 /*!
- * Extensible 1.5.0
+ * Extensible 1.5.0-beta1
  * Copyright(c) 2010-2011 Extensible, LLC
  * licensing@ext.ensible.com
  * http://ext.ensible.com
@@ -11,14 +11,49 @@
  * <p>This window also provides custom events specific to the calendar so that other calendar components can be easily
  * notified when an event has been edited via this component.</p>
  * <p>The default configs are as follows:</p><pre><code>
+titleTextAdd: 'Add Event',
+titleTextEdit: 'Edit Event',
+width: 600,
+border: true,
+closeAction: 'hide',
+modal: false,
+resizable: false,
+buttonAlign: 'left',
+labelWidth: 65,
+detailsLinkText: 'Edit Details...',
+savingMessage: 'Saving changes...',
+deletingMessage: 'Deleting event...',
+saveButtonText: 'Save',
+deleteButtonText: 'Delete',
+cancelButtonText: 'Cancel',
+titleLabelText: 'Title',
+datesLabelText: 'When',
+calendarLabelText: 'Calendar',
+editDetailsLinkClass: 'edit-dtl-link',
+bodyStyle: 'padding:5px 10px;',
+enableEditDetails: true
+</code></pre>
+ * @constructor
+ * @param {Object} config The config object
+ */
+Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
+    extend: 'Ext.window.Window',
+    alias: 'widget.extensible.mitoseventeditwindow',
+    
+    requires: [
+        'Ext.form.Panel',
+        'Extensible.calendar.data.EventModel',
+        'Extensible.calendar.data.EventMappings'
+    ],
+    
     // Locale configs
-    titleTextAdd: 'Add Event',
-    titleTextEdit: 'Edit Event',
+    titleTextAdd: 'Add Appointment...',
+    titleTextEdit: 'Edit Appointment',
     width: 600,
     labelWidth: 65,
     detailsLinkText: 'Edit Details...',
     savingMessage: 'Saving changes...',
-    deletingMessage: 'Deleting event...',
+    deletingMessage: 'Deleting appointment...',
     saveButtonText: 'Save',
     deleteButtonText: 'Delete',
     cancelButtonText: 'Cancel',
@@ -30,52 +65,6 @@
     closeAction: 'hide',
     modal: false,
     resizable: false,
-    constrain: true,
-    buttonAlign: 'left',
-    editDetailsLinkClass: 'edit-dtl-link',
-    enableEditDetails: true,
-    bodyStyle: 'padding: 8px 10px 5px;'
-</code></pre>
- * @constructor
- * @param {Object} config The config object
- */
-Ext.define('Extensible.calendar.form.EventWindow', {
-    extend: 'Ext.window.Window',
-    alias: 'widget.extensible.eventeditwindow',
-    
-    requires: [
-        'Ext.form.Panel',
-        'Extensible.calendar.data.EventModel',
-        'Extensible.calendar.data.EventMappings',
-        'Ext.mitos.classes.CalStatusComboBox',
-        'Ext.mitos.classes.combo.Facilities'
-    ],
-    
-    // Locale configs
-    titleTextAdd        : 'Add Event',
-    titleTextEdit       : 'Edit Event',
-    width               : 600,
-    labelWidth          : 85,
-    detailsLinkText     : 'Edit Details...',
-    savingMessage       : 'Saving changes...',
-    deletingMessage     : 'Deleting App...',
-    saveButtonText      : 'Save',
-    deleteButtonText    : 'Delete',
-    cancelButtonText    : 'Cancel',
-    patientLabelTex     : 'Patient',
-    categoryLabelTex    : 'Category',
-    facilityLabelTex    : 'Facility',
-    billingLabelTex     : 'Billing Facility',
-    statusLabelTex      : 'Status',
-    titleLabelText      : 'Notes',
-    datesLabelText      : 'When',
-    calendarLabelText   : 'Provider',
-    
-    // General configs
-    closeAction: 'hide',
-    modal: false,
-    resizable: false,
-    constrain: true,
     buttonAlign: 'left',
     editDetailsLinkClass: 'edit-dtl-link',
     enableEditDetails: true,
@@ -185,76 +174,31 @@ Ext.define('Extensible.calendar.form.EventWindow', {
     },
     
     getFormItemConfigs: function() {
-        var items = [
-            this.patient_search = new Ext.create('Ext.mitos.classes.LivePatientSearch',{
-                itemId      : this.id + '-patient_id',
-                name        : Extensible.calendar.data.EventMappings.Patient.name,
-                emptyText   : 'Search for patient',
-                hideLabel   : false,
-                //hidden      : true,
-                fieldLabel  : this.patientLabelTex
-            }),
-            this.patient_title = new Ext.create('Ext.form.field.Text',{
-                itemId      : this.id + '-title',
-                name        : Extensible.calendar.data.EventMappings.Title.name,
-                anchor      : '100%',
-                disabled     : true,
-                fieldLabel  : this.patientLabelTex
-            }),
-            Ext.create('Ext.mitos.classes.CalCategoryComboBox',{
-                itemId      : this.id + '-category',
-                name        : Extensible.calendar.data.EventMappings.Category.name,
-                fieldLabel  : this.categoryLabelTex,
-                anchor      : '100%'
-            }),
-            Ext.create('Ext.mitos.classes.combo.Facilities',{
-                itemId      : this.id + '-facility',
-                name        : Extensible.calendar.data.EventMappings.BillingFacility.name,
-                fieldLabel  : this.facilityLabelTex,
-                anchor      : '100%'
-            }),
-            Ext.create('Ext.mitos.classes.combo.Facilities',{
-                itemId      : this.id + '-billingfacility',
-                name        : Extensible.calendar.data.EventMappings.Facility.name,
-                fieldLabel  : this.billingLabelTex,
-            anchor      : '100%'
-            }),
-        {
-            xtype       : 'textfield',
-            itemId      : this.id + '-notes',
-            name        : Extensible.calendar.data.EventMappings.Notes.name,
-            fieldLabel  : this.titleLabelText,
-            anchor      : '100%'
+        var items = [{
+            xtype: 'textfield',
+            itemId: this.id + '-title',
+            name: Extensible.calendar.data.EventMappings.Title.name,
+            fieldLabel: this.titleLabelText,
+            anchor: '100%'
         },{
-            xtype       : 'extensible.daterangefield',
-            itemId      : this.id + '-dates',
-            name        : 'dates',
-            anchor      : '95%',
-            fieldLabel  : this.datesLabelText
-        },
-            Ext.create('Ext.mitos.classes.CalStatusComboBox',{
-                itemId      : this.id + '-status',
-                name        : Extensible.calendar.data.EventMappings.Status.name,
-                fieldLabel  : this.statusLabelTex,
-                anchor      : '100%'
-            })
-        ];
-
-        if(this.serchEventField = false){
-            alert('oops');
-        }
-
+            xtype: 'extensible.daterangefield',
+            itemId: this.id + '-dates',
+            name: 'dates',
+            anchor: '95%',
+            fieldLabel: this.datesLabelText
+        }];
+        
         if(this.calendarStore){
             items.push({
-                xtype       : 'extensible.calendarcombo',
-                itemId      : this.id + '-calendar',
-                name        : Extensible.calendar.data.EventMappings.CalendarId.name,
-                anchor      : '100%',
-                fieldLabel  : this.calendarLabelText,
-                store       : this.calendarStore
+                xtype: 'extensible.calendarcombo',
+                itemId: this.id + '-calendar',
+                name: Extensible.calendar.data.EventMappings.CalendarId.name,
+                anchor: '100%',
+                fieldLabel: this.calendarLabelText,
+                store: this.calendarStore
             });
         }
-
+        
         return items;
     },
 
@@ -311,6 +255,9 @@ Ext.define('Extensible.calendar.form.EventWindow', {
 		var anim = (Ext.isIE8 && Ext.isStrict) ? null : animateTarget,
             M = Extensible.calendar.data.EventMappings;
 
+//		Extensible.calendar.form.EventWindow.superclass.show.call(this, anim, function(){
+//            this.titleField.focus(false, 100);
+//        });
         this.callParent([this, anim, function(){
             this.titleField.focus(false, 100);
         }]);
@@ -320,11 +267,6 @@ Ext.define('Extensible.calendar.form.EventWindow', {
 
         if(o.data){
             rec = o;
-            // *********************************************************************************************************
-            // mitos stuff to switch from search field or text field
-            // *********************************************************************************************************
-            this.patient_search.hide();
-            this.patient_title.show();
 			//this.isAdd = !!rec.data[Extensible.calendar.data.EventMappings.IsNew.name];
 			if(rec.phantom){
 				// Enable adding the default record that was passed in
@@ -339,12 +281,6 @@ Ext.define('Extensible.calendar.form.EventWindow', {
             f.loadRecord(rec);
         }
         else{
-            // ***************************************************************************************************
-            // mitos stuff to switch from search field or text field
-            // ***************************************************************************************************
-            this.patient_title.hide();
-            this.patient_search.show();
-
 			//this.isAdd = true;
             this.setTitle(this.titleTextAdd);
 
@@ -386,12 +322,12 @@ Ext.define('Extensible.calendar.form.EventWindow', {
 
     // private
     cleanup: function(hide){
-        if (this.activeRecord) {
+        if(this.activeRecord){
             this.activeRecord.reject();
         }
         delete this.activeRecord;
 		
-        if (hide===true) {
+        if(hide===true){
 			// Work around the CSS day cell height hack needed for initial render in IE8/strict:
 			//var anim = afterDelete || (Ext.isIE8 && Ext.isStrict) ? null : this.animateTarget;
             this.hide();
