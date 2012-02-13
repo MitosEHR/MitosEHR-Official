@@ -46,10 +46,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.panel.patientfile.encounter.Encounter',
 
 
-        'Ext.mitos.panel.fees.billing.Billing',
-        'Ext.mitos.panel.fees.checkout.Checkout',
-        'Ext.mitos.panel.fees.fees_sheet.FeesSheet',
-        'Ext.mitos.panel.fees.payments.Payments',
+        'Ext.mitos.panel.fees.Billing',
+        'Ext.mitos.panel.fees.Checkout',
+        'Ext.mitos.panel.fees.FeesSheet',
+        'Ext.mitos.panel.fees.Payments',
 
         'Ext.mitos.panel.administration.Facilities',
         'Ext.mitos.panel.administration.Globals',
@@ -465,10 +465,10 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             /**
              * Fees Area
              */
-                Ext.create('Ext.mitos.panel.fees.billing.Billing'),
-                Ext.create('Ext.mitos.panel.fees.checkout.Checkout'),
-                Ext.create('Ext.mitos.panel.fees.fees_sheet.FeesSheet'),
-                Ext.create('Ext.mitos.panel.fees.payments.Payments'),
+                Ext.create('Ext.mitos.panel.fees.Billing'),
+                Ext.create('Ext.mitos.panel.fees.Checkout'),
+                Ext.create('Ext.mitos.panel.fees.FeesSheet'),
+                Ext.create('Ext.mitos.panel.fees.Payments'),
 
 
 

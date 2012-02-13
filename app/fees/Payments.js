@@ -8,7 +8,7 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.panel.fees.payments.Payments',{
+Ext.define('Ext.mitos.panel.fees.Payments',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelPayments',
     pageTitle   : 'Payments',

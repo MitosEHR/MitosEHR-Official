@@ -8,7 +8,7 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.panel.fees.checkout.Checkout',{
+Ext.define('Ext.mitos.panel.fees.Checkout',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelCheckout',
     pageTitle   : 'Checkout',

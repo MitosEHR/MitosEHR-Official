@@ -6,7 +6,7 @@
 // Modified: 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.panel.fees.billing.Billing',{
+Ext.define('Ext.mitos.panel.fees.Billing',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelBilling',
     pageTitle   : 'Billing',
