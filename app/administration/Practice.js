@@ -16,7 +16,7 @@
  *
  *
  */
-Ext.define('Ext.mitos.panel.administration.practice.Practice',{
+Ext.define('Ext.mitos.panel.administration.Practice',{
     extend      : 'Ext.mitos.RenderPanel',
     id          : 'panelPractice',
     pageTitle   : 'Practice Settings',

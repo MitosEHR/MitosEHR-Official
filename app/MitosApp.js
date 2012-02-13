@@ -56,7 +56,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
         'Ext.mitos.panel.administration.Layout',
         'Ext.mitos.panel.administration.Lists',
         'Ext.mitos.panel.administration.Log',
-        'Ext.mitos.panel.administration.practice.Practice',
+        'Ext.mitos.panel.administration.Practice',
         'Ext.mitos.panel.administration.Roles',
         'Ext.mitos.panel.administration.Services',
         'Ext.mitos.panel.administration.Users',
@@ -503,7 +503,7 @@ Ext.define('Ext.mitos.panel.MitosApp',{
             me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Users'));
         }
         if(perm.access_practice){
-            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.practice.Practice'));
+            me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Practice'));
         }
         if(perm.access_services){
             me.MainPanel.add(Ext.create('Ext.mitos.panel.administration.Services'));
