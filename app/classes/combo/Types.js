@@ -1,6 +1,6 @@
 Ext.define('Ext.mitos.classes.combo.Types',{
 	extend      : 'Ext.form.ComboBox',
-    alias       : 'mitos.typescombobox',
+    alias       : 'widget.mitos.typescombobox',
     initComponent: function(){	
     	var me = this;
     	
@@ -22,7 +22,7 @@ Ext.define('Ext.mitos.classes.combo.Types',{
                     read: CombosData.getOptionsByListId
                 },
                 extraParams: {
-                    list_id: 22
+                    list_id: 32
                 }
 
             }

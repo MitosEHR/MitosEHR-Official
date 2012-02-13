@@ -91,6 +91,23 @@ $API = array(
 
     ),
     /**
+    * AddressBook Functions
+    */
+    'AddressBook'=>array(
+        'methods'=>array(
+            'getAddresses'=>array(
+               'len'=>1
+            ),
+            'addContact'=>array(
+                'len'=>1
+            ),
+            'updateAddress'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
     * Practice Functions
     */
     'Practice'=>array(
