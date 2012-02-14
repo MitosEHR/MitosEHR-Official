@@ -1,7 +1,7 @@
 /**
  * AddressBook Panel
  *
- *  Author: Ernest Rodriguez
+ * Author: Ernesto J Rodriguez
  * Modified: GI Technologies, 2011
  *
  * MitosEHR (Electronic Health Records) 2011
@@ -141,7 +141,7 @@ Ext.define('Ext.mitos.view.miscellaneous.addressbook.Addressbook',{
                         msgTarget : 'under',
                         items: [
                             { width: 100, xtype: 'displayfield', value: 'First, Middle, Last: '},
-                            { width: 55,  xtype: 'mitos.titlescombo' },
+                            { width: 55,  xtype: 'mitos.titlescombo', name: 'title' },
                             { width: 130, xtype: 'textfield', name: 'fname' },
                             { width: 100, xtype: 'textfield', name: 'mname' },
                             { width: 280, xtype: 'textfield', name: 'lname' }
@@ -360,7 +360,7 @@ Ext.define('Ext.mitos.view.miscellaneous.addressbook.Addressbook',{
                 { header: 'Mobile',     sortable: true, dataIndex: 'phonecell' },
                 { header: 'Fax',        sortable: true, dataIndex: 'fax' },
                 { header: 'Email',          flex:1,  sortable: true, dataIndex: 'email' },
-                { header: 'Primary Address',flex:1,  sortable: true, dataIndex: 'fulladdress' }
+                { header: 'Primary Address',flex:1,  sortable: true, dataIndex: 'fulladdress' },
             ],
             dockedItems: [{
                 xtype: 'toolbar',
@@ -422,6 +422,25 @@ Ext.define('Ext.mitos.view.miscellaneous.addressbook.Addressbook',{
 
     onWinClose:function(window){
         window.down('form').getForm().reset();
+    },
+
+
+    onCopyClipBoard: function(company) {
+        var store = Ext.getCmp('grid').store;
+        var record = store.getById(company);
+
+        var s = '';
+        for (key in record.data) {
+            s += key + ': ' + record.data[key] + '\n';
+        }
+
+        alert('Following data copied to clipboard:\n\n' + s);
+
+        if (window.clipboardData){
+            window.clipboardData.setData('text', s);
+        }else{
+            return (s);
+        }
     },
 
     local:function(val) {

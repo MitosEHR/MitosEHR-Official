@@ -1,4 +1,4 @@
-Messages.getMessages,Messages.getMessages,/**
+/**
  * facilities.ejs.php
  * Description: Patient File ScreenS
  * v0.0.3

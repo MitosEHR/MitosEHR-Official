@@ -177,8 +177,8 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventDetails', {
                 anchor: '70%'
             });
             leftFields.splice(2, 0, this.calendarField);
-        };
-        
+        }
+
         this.items = [{
             id: this.id+'-left-col',
             columnWidth: this.colWidthLeft,

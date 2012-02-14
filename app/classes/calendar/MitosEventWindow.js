@@ -39,13 +39,13 @@ enableEditDetails: true
 Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.extensible.mitoseventeditwindow',
-    
+
     requires: [
         'Ext.form.Panel',
         'Extensible.calendar.data.EventModel',
         'Extensible.calendar.data.EventMappings'
     ],
-    
+
     // Locale configs
     titleTextAdd: 'Add Appointment...',
     titleTextEdit: 'Edit Appointment',
@@ -60,7 +60,7 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
     titleLabelText: 'Title',
     datesLabelText: 'When',
     calendarLabelText: 'Calendar',
-    
+
     // General configs
     closeAction: 'hide',
     modal: false,
@@ -69,11 +69,11 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
     editDetailsLinkClass: 'edit-dtl-link',
     enableEditDetails: true,
     bodyStyle: 'padding: 8px 10px 5px;',
-    
+
     formPanelConfig: {
         border: false
     },
-    
+
     // private
     initComponent: function(){
         this.addEvents({
@@ -121,21 +121,21 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
              */
             editdetails: true
         });
-        
+
         this.fbar = this.getFooterBarConfig();
-        
+
         this.callParent(arguments);
     },
-    
+
     getFooterBarConfig: function() {
         var cfg = ['->', {
                 text: this.saveButtonText,
                 itemId: this.id + '-save-btn',
                 disabled: false,
-                handler: this.onSave, 
+                handler: this.onSave,
                 scope: this
             },{
-                text: this.deleteButtonText, 
+                text: this.deleteButtonText,
                 itemId: this.id + '-delete-btn',
                 disabled: false,
                 handler: this.onDelete,
@@ -148,7 +148,7 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
                 handler: this.onCancel,
                 scope: this
             }];
-        
+
         if(this.enableEditDetails !== false){
             cfg.unshift({
                 xtype: 'tbtext',
@@ -158,21 +158,21 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
         }
         return cfg;
     },
-    
+
     // private
-    onRender : function(ct, position){        
+    onRender : function(ct, position){
         this.formPanel = Ext.create('Ext.FormPanel', Ext.applyIf({
             fieldDefaults: {
                 labelWidth: this.labelWidth
             },
             items: this.getFormItemConfigs()
         }, this.formPanelConfig));
-        
+
         this.add(this.formPanel);
-        
+
         this.callParent(arguments);
     },
-    
+
     getFormItemConfigs: function() {
         var items = [{
             xtype: 'textfield',
@@ -185,9 +185,10 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
             itemId: this.id + '-dates',
             name: 'dates',
             anchor: '95%',
+            singleLine: true,
             fieldLabel: this.datesLabelText
         }];
-        
+
         if(this.calendarStore){
             items.push({
                 xtype: 'extensible.calendarcombo',
@@ -198,54 +199,54 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
                 store: this.calendarStore
             });
         }
-        
+
         return items;
     },
 
     // private
     afterRender: function(){
         this.callParent(arguments);
-		
+
 		this.el.addCls('ext-cal-event-win');
-        
+
         this.initRefs();
-        
+
         // This junk spacer item gets added to the fbar by Ext (fixed in 4.0.2)
         var junkSpacer = this.getDockedItems('toolbar')[0].items.items[0];
         if (junkSpacer.el.hasCls('x-component-default')) {
             Ext.destroy(junkSpacer);
         }
     },
-    
+
     initRefs: function() {
         // toolbar button refs
         this.saveButton = this.down('#' + this.id + '-save-btn');
         this.deleteButton = this.down('#' + this.id + '-delete-btn');
         this.cancelButton = this.down('#' + this.id + '-cancel-btn');
         this.detailsButton = this.down('#' + this.id + '-details-btn');
-        
+
         if (this.detailsButton) {
             this.detailsButton.getEl().on('click', this.onEditDetailsClick, this);
         }
-        
+
         // form item refs
         this.titleField = this.down('#' + this.id + '-title');
         this.dateRangeField = this.down('#' + this.id + '-dates');
         this.calendarField = this.down('#' + this.id + '-calendar');
     },
-    
+
     // private
     onEditDetailsClick: function(e){
         e.stopEvent();
         this.updateRecord(this.activeRecord, true);
         this.fireEvent('editdetails', this, this.activeRecord, this.animateTarget);
     },
-	
+
 	/**
      * Shows the window, rendering it first if necessary, or activates it and brings it to front if hidden.
 	 * @param {Ext.data.Record/Object} o Either a {@link Ext.data.Record} if showing the form
-	 * for an existing event in edit mode, or a plain object containing a StartDate property (and 
-	 * optionally an EndDate property) for showing the form in add mode. 
+	 * for an existing event in edit mode, or a plain object containing a StartDate property (and
+	 * optionally an EndDate property) for showing the form in add mode.
      * @param {String/Element} animateTarget (optional) The target element or id from which the window should
      * animate while opening (defaults to null with no animation)
      * @return {Ext.Window} this
@@ -262,7 +263,7 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
             this.titleField.focus(false, 100);
         }]);
         this.deleteButton[o.data && o.data[M.EventId.name] ? 'show' : 'hide']();
-        
+
         var rec, f = this.formPanel.form;
 
         if(o.data){
@@ -270,14 +271,14 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
 			//this.isAdd = !!rec.data[Extensible.calendar.data.EventMappings.IsNew.name];
 			if(rec.phantom){
 				// Enable adding the default record that was passed in
-				// if it's new even if the user makes no changes 
+				// if it's new even if the user makes no changes
 				//rec.markDirty();
 				this.setTitle(this.titleTextAdd);
 			}
 			else{
 				this.setTitle(this.titleTextEdit);
 			}
-            
+
             f.loadRecord(rec);
         }
         else{
@@ -286,34 +287,34 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
 
             var start = o[M.StartDate.name],
                 end = o[M.EndDate.name] || Extensible.Date.add(start, {hours: 1});
-                
+
             rec = Ext.create('Extensible.calendar.data.EventModel');
             //rec.data[M.EventId.name] = this.newId++;
             rec.data[M.StartDate.name] = start;
             rec.data[M.EndDate.name] = end;
             rec.data[M.IsAllDay.name] = !!o[M.IsAllDay.name] || start.getDate() != Extensible.Date.add(end, {millis: 1}).getDate();
-            
+
             f.reset();
             f.loadRecord(rec);
         }
-        
+
         if(this.calendarStore){
             this.calendarField.setValue(rec.data[M.CalendarId.name]);
         }
         this.dateRangeField.setValue(rec.data);
         this.activeRecord = rec;
         //this.el.setStyle('z-index', 12000);
-        
+
 		return this;
     },
-    
+
     // private
     roundTime: function(dt, incr){
         incr = incr || 15;
         var m = parseInt(dt.getMinutes());
         return dt.add('mi', incr - (m % incr));
     },
-    
+
     // private
     onCancel: function(){
     	this.cleanup(true);
@@ -326,14 +327,14 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
             this.activeRecord.reject();
         }
         delete this.activeRecord;
-		
+
         if(hide===true){
 			// Work around the CSS day cell height hack needed for initial render in IE8/strict:
 			//var anim = afterDelete || (Ext.isIE8 && Ext.isStrict) ? null : this.animateTarget;
             this.hide();
         }
     },
-    
+
     // private
 //    updateRecord: function(keepEditing){
 //        var dates = this.dateRangeField.getValue(),
@@ -381,7 +382,7 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
 //        
 //        return dirty;
 //    },
-    
+
     updateRecord: function(record, keepEditing) {
         var fields = record.fields,
             values = this.formPanel.getForm().getValues(),
@@ -395,7 +396,7 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
                 obj[name] = values[name];
             }
         });
-        
+
         var dates = this.dateRangeField.getValue();
         obj[M.StartDate.name] = dates[0];
         obj[M.EndDate.name] = dates[1];
@@ -403,14 +404,14 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
 
         record.beginEdit();
         record.set(obj);
-        
+
         if (!keepEditing) {
             record.endEdit();
         }
 
         return this;
     },
-    
+
     // private
     onSave: function(){
         if(!this.formPanel.form.isValid()){
@@ -422,7 +423,7 @@ Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
 		}
 		this.fireEvent(this.activeRecord.phantom ? 'eventadd' : 'eventupdate', this, this.activeRecord, this.animateTarget);
     },
-    
+
     // private
     onDelete: function(){
 		this.fireEvent('eventdelete', this, this.activeRecord, this.animateTarget);

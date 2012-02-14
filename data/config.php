@@ -290,6 +290,9 @@ $API = array(
             'getUsers'=>array(
                 'len'=>1
             ),
+            'getCurrentUserData'=>array(
+                'len'=>0
+            ),
             'addUser'=>array(
             	'len'=>1
             ),
@@ -297,6 +300,12 @@ $API = array(
             	'len'=>1
             ),
             'chechPasswordHistory'=>array(
+            	'len'=>1
+            ),
+            'changeMyPassword'=>array(
+            	'len'=>1
+            ),
+            'updateMyAccount'=>array(
             	'len'=>1
             )
 

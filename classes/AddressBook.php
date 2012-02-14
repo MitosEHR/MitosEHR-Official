@@ -25,21 +25,22 @@ class AddressBook extends dbHelper {
         $records = $this->execStatement(PDO::FETCH_ASSOC);
         $total   = count($records);
         $rows    = array();
-
         foreach($records as $row){
         	$row['fullname']    = Person::fullname($row['fname'],$row['mname'],$row['lname']);
         	$row['fulladdress'] = Person::fulladdress($row['street'],$row['streetb'],$row['city'],$row['state'],$row['zip']);
         	array_push($rows, $row);
         }
         return array('totals'=>$total,'rows'=>$rows);
-        
-        
     }
 
     public function addContact(stdClass $params)
     {
-
-        
+        $data = get_object_vars($params);
+        $sql = $this->sqlBind($data, "users", "I");
+        $this->setSQL($sql);
+        $this->execLog();
+        $params->id = $this->lastInsertId;
+        return $params;
     }
 
 

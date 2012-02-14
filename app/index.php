@@ -11,7 +11,6 @@
  * modified: Ernesto J Rodriguez (Certun)
  *
  * @namespace Ext.mitos.data.REMOTING_API
- *
  */
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /**
@@ -73,7 +72,7 @@ Globals::setGlobals();
                 paths			: {
                     'Ext.ux'            : 'app/classes/ux',
                     'Ext.mitos'         : 'app',
-                    'Extensible'        : 'lib/extensible-1.5.0/src'
+                    'Extensible'        : 'lib/extensible-1.5.1/src'
                 }
             });
         </script>
@@ -90,7 +89,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/RenderPanel.js"></script>
 
         <script type="text/javascript" src="app/view/dashboard/Dashboard.js"></script>
-        <script type="text/javascript" src="lib/extensible-1.5.0/src/calendar/data/EventStore.js"></script>
+        <script type="text/javascript" src="lib/extensible-1.5.1/src/calendar/data/EventStore.js"></script>
         <script type="text/javascript" src="app/classes/ux/SlidingPager.js"></script>
 
 
@@ -151,6 +150,8 @@ Globals::setGlobals();
 
         <script type="text/javascript" src="app/view/MitosApp.js"></script>
 
+
+        <script type="text/javascript" src="app/classes/Overrides.js"></script>
 
 
         <script type="text/javascript">

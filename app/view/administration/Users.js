@@ -251,10 +251,10 @@ Ext.define('Ext.mitos.view.administration.Users',{
     onSave:function(form, store){
         var me = this,
             password = form.findField('password').getValue(),
-            user_id = form.findField('id').getValue();
+            id = form.findField('id').getValue();
 
         if(password != ''){
-            User.chechPasswordHistory({password:password,user_id:user_id}, function(provider, response){
+            User.chechPasswordHistory({password:password,id:id}, function(provider, response){
                 if(response.result.error){
                     Ext.Msg.alert('Opps!', 'This password is currently in used, or has been used before.<br>Please use a different password.');
                 }else{
