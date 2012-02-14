@@ -115,7 +115,7 @@ Ext.define('Ext.mitos.view.calendar.Calendar', {
                     xtype       : 'extensible.calendarlist',
                     id          : 'app-calendarlist',
                     store       : this.calendarStore,
-                    collapsible : false,
+                    collapsible : true,
                     border      : false,
                     width       : 178
                 }]
@@ -263,7 +263,7 @@ Ext.define('Ext.mitos.view.calendar.Calendar', {
 
     onActive:function(callback){
         this.calendarStore.load();
-        Ext.getCmp('app-calendar').onActiveCard();
+        //Ext.getCmp('app-calendar').onActiveCard();
         Ext.Function.defer(function(){Ext.getCmp('app-calendarlist').doLayout();}, 500, this);
         callback(true);
     },
