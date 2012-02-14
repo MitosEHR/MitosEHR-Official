@@ -98,7 +98,7 @@ class Roles extends ACL {
         $data = get_object_vars($params);
 
         function parse_boolean($val) {
-            return ($val == 'on')? 1 : 0;
+            return $val;
         }
 
         foreach($data as $key => $val){

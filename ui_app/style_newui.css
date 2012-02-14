@@ -51,6 +51,9 @@
 .edit{
 	background-image: url(../ui_icons/edit.png) !important;
 }
+.icoDeleteBlack {
+    background-image: url(../ui_icons/delete_record.png) !important;
+}
 .icoChart{
     background-image: url(../ui_icons/icoChart.png) !important;
 }

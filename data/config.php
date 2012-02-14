@@ -91,6 +91,55 @@ $API = array(
 
     ),
     /**
+    * AddressBook Functions
+    */
+    'AddressBook'=>array(
+        'methods'=>array(
+            'getAddresses'=>array(
+               'len'=>1
+            ),
+            'addContact'=>array(
+                'len'=>1
+            ),
+            'updateAddress'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
+    * Practice Functions
+    */
+    'Practice'=>array(
+        'methods'=>array(
+            'getPharmacies'=>array(
+               'len'=>1
+            ),
+            'addPharmacy'=>array(
+                'len'=>1
+            ),
+            'updatePharmacy'=>array(
+                'len'=>1
+            ),
+            'getInsurances'=>array(
+                'len'=>1
+            ),
+            'addInsurance'=>array(
+                'len'=>1
+            ),
+            'updateInsurance'=>array(
+                'len'=>1
+            ),
+            'getInsuranceNumbers'=>array(
+                'len'=>1
+            ),
+            'getX12Partners'=>array(
+                'len'=>1
+            )
+        ),
+
+    ),
+    /**
     * Globals Functions
     */
     'Globals'=>array(
@@ -112,13 +161,28 @@ $API = array(
             'getOptions'=>array(
                'len'=>1
             ),
-            'createOption'=>array(
+            'addOption'=>array(
                 'len'=>1
             ),
             'updateOption'=>array(
                 'len'=>1
             ),
             'deleteOption'=>array(
+                'len'=>1
+            ),
+            'sortOptions'=>array(
+                'len'=>1
+            ),
+            'getLists'=>array(
+                'len'=>1
+            ),
+            'addList'=>array(
+                'len'=>1
+            ),
+            'updateList'=>array(
+                'len'=>1
+            ),
+            'deleteList'=>array(
                 'len'=>1
             )
         ),
@@ -226,6 +290,9 @@ $API = array(
             'getUsers'=>array(
                 'len'=>1
             ),
+            'getCurrentUserData'=>array(
+                'len'=>0
+            ),
             'addUser'=>array(
             	'len'=>1
             ),
@@ -233,6 +300,12 @@ $API = array(
             	'len'=>1
             ),
             'chechPasswordHistory'=>array(
+            	'len'=>1
+            ),
+            'changeMyPassword'=>array(
+            	'len'=>1
+            ),
+            'updateMyAccount'=>array(
             	'len'=>1
             )
 

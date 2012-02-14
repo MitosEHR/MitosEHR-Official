@@ -12,16 +12,18 @@ var hierarchy =
       [ "FormLayoutBuilder", "class_form_layout_builder.html", null ],
       [ "FormLayoutEngine", "class_form_layout_engine.html", null ],
       [ "Globals", "class_globals.html", null ],
+      [ "Lists", "class_lists.html", null ],
       [ "Logs", "class_logs.html", null ],
       [ "Messages", "class_messages.html", null ],
       [ "OfficeNotes", "class_office_notes.html", null ],
-      [ "password", "classpassword.html", null ],
       [ "Person", "class_person.html", [
         [ "Patient", "class_patient.html", [
           [ "Encounter", "class_encounter.html", null ]
         ] ],
         [ "User", "class_user.html", null ]
-      ] ]
+      ] ],
+      [ "Practice", "class_practice.html", null ],
+      [ "Services", "class_services.html", null ]
     ] ],
     [ "Mobile_Detect", "class_mobile___detect.html", null ],
     [ "Navigation", "class_navigation.html", null ],

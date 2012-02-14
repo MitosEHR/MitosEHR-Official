@@ -17,14 +17,11 @@ var searchData=
   ['_24iswindows',['$isWindows',['../class_mobile___detect.html#a3fb1637ec578272acfd5cb10d0f127fd',1,'Mobile_Detect']]],
   ['_24lastinsertid',['$lastInsertId',['../classdb_helper.html#ae4ac788f919cb92f528ab1455e8a3e6b',1,'dbHelper']]],
   ['_24mitos_5fdb',['$mitos_db',['../components__data_8ejs_8php.html#ab5d961f93efe4e2e8d8374f01dd6c65a',1,'components_data.ejs.php']]],
-  ['_24npassword',['$nPassword',['../classpassword.html#abf6a1b81b2df703a88051df830fa4c3b',1,'password']]],
-  ['_24opassword',['$oPassword',['../classpassword.html#a45254ea52f68306c737105b330ef23a8',1,'password']]],
   ['_24sql_5fstatement',['$sql_statement',['../classdb_helper.html#a29c1e591b4e284bca5ae38ed00eea5a9',1,'dbHelper']]],
   ['_24tagattrs',['$tagAttrs',['../class_x_m_l_tag.html#a0bdcd2056ab299f9c7445ee392554801',1,'XMLTag']]],
   ['_24tagchildren',['$tagChildren',['../class_x_m_l_tag.html#a2821a1ccb28feedeb1090436a5f83480',1,'XMLTag']]],
   ['_24tagdata',['$tagData',['../class_x_m_l_tag.html#a54d28f1823b6ebc04b6aac2b4a006047',1,'XMLTag']]],
   ['_24tagname',['$tagName',['../class_x_m_l_tag.html#a526eef5c35551ca57b86d20034360d16',1,'XMLTag']]],
   ['_24tagparents',['$tagParents',['../class_x_m_l_tag.html#a057b424591d6238416f982c4ab8f8386',1,'XMLTag']]],
-  ['_24user_5fid',['$user_id',['../classpassword.html#af0fcd925f00973e32f7214859dfb3c6b',1,'password']]],
   ['_24useragent',['$userAgent',['../class_mobile___detect.html#a500e55626e728acd7010143dc0e56b8b',1,'Mobile_Detect']]]
 ];
