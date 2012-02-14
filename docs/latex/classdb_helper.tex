@@ -19,6 +19,8 @@
 \begin{DoxyCompactList}\small\item\em \hyperlink{classdb_helper}{db\-Helper} contructor. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_a3ca2578f15860418ca93fca0112a0e08}{filert\-By\-Start\-Limit} (\$records, std\-Class \$params)
 \begin{DoxyCompactList}\small\item\em \-Filter \-Records \-By \-Sart and \-Limit. \end{DoxyCompactList}\item 
+\hyperlink{classdb_helper_a39e97f07bde6edc04b653a4a93bed758}{filert\-By\-Query} (\$records, \$column, \$query)
+\begin{DoxyCompactList}\small\item\em \-Filter \-Records \-By \-Query. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_a21e387f778abae898a33b0355e56c095}{set\-S\-Q\-L} (\$sql)
 \begin{DoxyCompactList}\small\item\em \-Set the \-S\-Q\-L \-Statement. \end{DoxyCompactList}\item 
 \hyperlink{classdb_helper_a43a2fa1fe095e37df5a641fe1cfc7d9c}{exec\-Statement} (\$fetch\-Style=\-P\-D\-O\-::\-F\-E\-T\-C\-H\-\_\-\-B\-O\-T\-H)
@@ -149,7 +151,7 @@ array \-Connection error info if any
 \end{DoxyReturn}
 
 
-\-Definition at line 277 of file db\-Helper.\-php.
+\-Definition at line 306 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
@@ -202,7 +204,7 @@ array \-Connection error info if any
 
 \-Prepare the \-S\-Q\-L statement first, and then execute.
 
-\-Definition at line 231 of file db\-Helper.\-php.
+\-Definition at line 260 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
@@ -271,7 +273,7 @@ array \-Connection error info if any
 \end{DoxyReturn}
 
 
-\-Definition at line 154 of file db\-Helper.\-php.
+\-Definition at line 183 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
@@ -315,7 +317,7 @@ array of records, if error occurred return the error instead
 \end{DoxyReturn}
 
 
-\-Definition at line 130 of file db\-Helper.\-php.
+\-Definition at line 159 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
@@ -356,7 +358,7 @@ array of record or error if any
 \end{DoxyReturn}
 
 
-\-Definition at line 298 of file db\-Helper.\-php.
+\-Definition at line 327 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
@@ -371,6 +373,60 @@ array of record or error if any
         }
 
         }
+\end{DoxyCode}
+\hypertarget{classdb_helper_a39e97f07bde6edc04b653a4a93bed758}{\index{db\-Helper@{db\-Helper}!filert\-By\-Query@{filert\-By\-Query}}
+\index{filert\-By\-Query@{filert\-By\-Query}!dbHelper@{db\-Helper}}
+\subsubsection[{filert\-By\-Query}]{\setlength{\rightskip}{0pt plus 5cm}{\bf filert\-By\-Query} (
+\begin{DoxyParamCaption}
+\item[{\$}]{records, }
+\item[{\$}]{column, }
+\item[{\$}]{query}
+\end{DoxyParamCaption}
+)}}\label{classdb_helper_a39e97f07bde6edc04b653a4a93bed758}
+
+
+\-Filter \-Records \-By \-Query. 
+
+\-This function will filter the record by a column value
+
+\begin{DoxyAuthor}{\-Author}
+\-Ernesto \-J. \-Rodriguez (\-Certun) $<$\href{mailto:erodriguez@certun.com}{\tt erodriguez@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+\begin{DoxyWarning}{\-Warning}
+\-This method requires std\-Class \$records. \-Use \-P\-D\-O\-::\-F\-E\-T\-C\-H\-\_\-\-C\-L\-A\-S\-S to sexecute the \-S\-Q\-L queries.
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_services_a59098595b4d24b93c1d23c8412f3cc0f}{\-Services\-::get\-Services()} for example.
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{\-Parameters}
+ & {\em \$records} & \-S\-Q\-L recordes to filter \\
+\hline
+string & {\em \$column} & databe column to filter \\
+\hline
+ & {\em \$query} & value you are looking for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed \-Records filtered 
+\end{DoxyReturn}
+
+
+\-Definition at line 121 of file db\-Helper.\-php.
+
+
+\begin{DoxyCode}
+    {
+            $records = from('$record')->in($records)
+                       ->where('$record => $record->'.$column.' == '.$query.'' 
+      )
+                       ->select('$record');
+            return $records;
+
+    }
 \end{DoxyCode}
 \hypertarget{classdb_helper_a3ca2578f15860418ca93fca0112a0e08}{\index{db\-Helper@{db\-Helper}!filert\-By\-Start\-Limit@{filert\-By\-Start\-Limit}}
 \index{filert\-By\-Start\-Limit@{filert\-By\-Start\-Limit}!dbHelper@{db\-Helper}}
@@ -415,11 +471,15 @@ mixed \-Records filtered
 
 \begin{DoxyCode}
     {
-        $result = from('$record')->in($records)
-                  ->skip($params->start)
-                  ->take($params->limit)
-                  ->select('$record');
-        return $result;
+        if(isset($params->start) && isset($params->limit)){
+            $records = from('$record')->in($records)
+                       ->skip($params->start)
+                       ->take($params->limit)
+                       ->select('$record');
+            return $records;
+        }else{
+            return $records;
+        }
     }
 \end{DoxyCode}
 \hypertarget{classdb_helper_a24ada5decce3d1b79cd82f5a90ccf404}{\index{db\-Helper@{db\-Helper}!get\-Error@{get\-Error}}
@@ -446,7 +506,7 @@ array$|$string
 \end{DoxyReturn}
 
 
-\-Definition at line 322 of file db\-Helper.\-php.
+\-Definition at line 351 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
@@ -485,7 +545,7 @@ int \-The number of rows in a table
 \end{DoxyReturn}
 
 
-\-Definition at line 344 of file db\-Helper.\-php.
+\-Definition at line 373 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
@@ -523,7 +583,7 @@ int \-The number of rows in a table
 \end{DoxyParams}
 
 
-\-Definition at line 113 of file db\-Helper.\-php.
+\-Definition at line 142 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}
@@ -582,7 +642,7 @@ string cunstructed \-S\-Q\-L string
 
 \-Step 3 -\/ \-Create the \-W\-H\-E\-R\-E clause, if applicable
 
-\-Definition at line 183 of file db\-Helper.\-php.
+\-Definition at line 212 of file db\-Helper.\-php.
 
 
 \begin{DoxyCode}

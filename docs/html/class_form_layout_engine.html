@@ -105,7 +105,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">FormLayoutEngine Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="FormLayoutEngine" --><!-- doxytag: inherits="dbHelper" --><div class="dynheader">
+<!-- doxytag: class="FormLayoutEngine" --><!-- doxytag: inherits="dbHelper" -->
+<p>Form Layout Engine.  
+ <a href="class_form_layout_engine.html#details">More...</a></p>
+<div class="dynheader">
 Inheritance diagram for FormLayoutEngine:</div>
 <div class="dyncontent">
  <div class="center">
@@ -118,14 +121,21 @@ Inheritance diagram for FormLayoutEngine:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_engine.html#aac0ec25d9ed7255a0d2e2ad1174d324b">getFields</a> (stdClass $params)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Form Fields by Form ID or Form Title.  <a href="#aac0ec25d9ed7255a0d2e2ad1174d324b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_engine.html#a25eb9dec9c7fa7132bc97c113aae2bfe">getChildItems</a> ($parent)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_engine.html#a89955ff647a3d7183e3468bac90f90a0">getItemsOptions</a> ($item_id)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_engine.html#a5b15a478954309f198a8435ce45e1997">getStore</a> ($list_id)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_form_layout_engine.html#a8ac8fd2609c4b0bc23b1deaa36c2a43f">getComboDefaults</a> ($item)</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00025">25</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
+<div class="textblock"><p>Form Layout Engine. </p>
+<p>This class will create dynamic ExtJS v4 form items array, previously created or edited from the Layout Form Editor. Gathering all it's data and parameters from the layout_options table.</p>
+<p>What this class will not do: This class will not create the entire Screen Panel for you, this will only create the form items array with the fields names &amp; dataStores configured on the layout_options table.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Ernesto J. Rodriguez (Certun) &lt;<a href="mailto:erodriguez@certun.com">erodriguez@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0 </dd></dl>
+<dl class="copyright"><dt><b>Copyright:</b></dt><dd>Gnu Public License (GPLv3) </dd></dl>
+
+<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00023">23</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a25eb9dec9c7fa7132bc97c113aae2bfe"></a><!-- doxytag: member="FormLayoutEngine::getChildItems" ref="a25eb9dec9c7fa7132bc97c113aae2bfe" args="($parent)" -->
 <div class="memitem">
@@ -148,11 +158,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>array</dd></dl>
-<p>Here we use the parent id to get the child items and it options using basically the same logic of <a class="el" href="class_form_layout_engine.html#aac0ec25d9ed7255a0d2e2ad1174d324b">getFields()</a> function and returning an array of child items </p>
+<p>Here we use the parent id to get the child items and it options using basically the same logic of <a class="el" href="class_form_layout_engine.html#aac0ec25d9ed7255a0d2e2ad1174d324b" title="Get Form Fields by Form ID or Form Title.">getFields()</a> function and returning an array of child items </p>
 <p>If the item is a combo box lets create a store...</p>
 <p>this if what makes this function reclusive this function will keep calling it self</p>
 
-<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00155">155</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00159">159</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                   {
         $items = array();
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;Select * FROM forms_fields WHERE item_of = &#39;$parent&#39; ORDER BY pos ASC&quot;</span>);
@@ -197,10 +207,10 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>array </dd></dl>
 
-<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00225">225</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00234">234</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                    {
-        $item[<span class="stringliteral">&#39;displayField&#39;</span>] = <span class="stringliteral">&#39;name&#39;</span>;
-        $item[<span class="stringliteral">&#39;valueField&#39;</span>]   = <span class="stringliteral">&#39;value&#39;</span>;
+        $item[<span class="stringliteral">&#39;displayField&#39;</span>] = <span class="stringliteral">&#39;option_name&#39;</span>;
+        $item[<span class="stringliteral">&#39;valueField&#39;</span>]   = <span class="stringliteral">&#39;option_value&#39;</span>;
         $item[<span class="stringliteral">&#39;queryMode&#39;</span>]    = <span class="stringliteral">&#39;local&#39;</span>;
         $item[<span class="stringliteral">&#39;editable&#39;</span>]     = <span class="keyword">false</span>;
         <span class="keywordflow">if</span>(!isset($item[<span class="stringliteral">&#39;emptyText&#39;</span>])){
@@ -225,10 +235,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+
+<p>Get Form Fields by Form ID or Form Title. </p>
 <p>We can get the form fields by form name or form if example: getFields('Demographics') or getFields('1') The logic of the function is to get the form parent field and its options, then get the child items if any with it options. Then.. use reg Expression to remove the double quotes from all the options and leave the double quotes to all options values, unless the value is a int or bool.</p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Ernesto J. Rodriguez (Certun) &lt;<a href="mailto:erodriguez@certun.com">erodriguez@certun.com</a>&gt; </dd></dl>
+<dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0</dd></dl>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">\stdClass</td><td>$params </td></tr>
+    <tr><td class="paramtype">stdClass</td><td class="paramname">$params</td><td>With the form Tirle or Form ID </td></tr>
   </table>
   </dd>
 </dl>
@@ -241,16 +255,16 @@ Public Member Functions</h2></td></tr>
 <p>lets check if this item has a child items. If not, the unset the $item['Items'] this way we make sure the we done return a items property</p>
 <p>unset the stuff that are not properties</p>
 <p>push this item into the $items Array</p>
-<p>in this new block of code we are going to clean the json output using a reg expression to remove the unnecessary double quotes from the properties, bools, and ints values. basically we start we this input.. [{ "xtype":"fieldset", "title":"Who", "collapsible":"true", "items":[{ "xtype":"fieldcontainer", "fieldLabel":"Name", "layout":"hbox", "anchor":"100%", }] }]</p>
-<p>and finish with this output... [{ xtype:'fieldset', title:'Who', collapsible:true, items:[{ xtype:'fieldcontainer', fieldLabel:'Name', layout:'hbox', anchor:'100', }] }]</p>
+<p>In this next block of code we are going to clean the json output using a reg expression to remove the unnecessary double quotes from the properties, bools, and ints values. basically we start we this input.. <code> [{ "xtype":"fieldset", "title":"Who", "collapsible":"true", "items":[{ "xtype":"fieldcontainer", "fieldLabel":"Name", "layout":"hbox", "anchor":"100%", }] }] </code> </p>
+<p>and finish with this output... <code> [{ xtype:'fieldset', title:'Who', collapsible:true, items:[{ xtype:'fieldcontainer', fieldLabel:'Name', layout:'hbox', anchor:'100', }] }] </code> </p>
 <p>The regular expression will select any string that...</p>
-<p>is surrounded by double quotes and follow by : for example "xtype":</p>
+<p>is surrounded by double quotes and follow by : for example "xtype": </p>
 <p>or "Ext.create</p>
 <p>or }]})"</p>
 <p>Then remove the double quotes form that selection.</p>
 <p>Then replace remaining double quotes for single quotes &lt;-- not required but... we do it because MitosEHR user single quotes to define strings.</p>
 
-<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00039">39</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00041">41</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                        {
         $items = array();
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;Select ff.*</span>
@@ -306,7 +320,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00185">185</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00189">189</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                                      {
         $foo = array();
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;Select * FROM forms_field_options WHERE field_id = &#39;$item_id&#39;&quot;</span>);
@@ -348,15 +362,20 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>string </dd></dl>
 
-<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00207">207</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
+<p>Definition at line <a class="el" href="_form_layout_engine_8php_source.html#l00211">211</a> of file <a class="el" href="_form_layout_engine_8php_source.html">FormLayoutEngine.php</a>.</p>
 <div class="fragment"><pre class="fragment">                               {
-        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM list_options WHERE list_id = &#39;$list_id&#39; ORDER BY seq&quot;</span>);
 
-        <a class="code" href="components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8">$buff</a> = <span class="stringliteral">&quot;Ext.create(&#39;Ext.data.Store&#39;,{fields:[&#39;name&#39;,&#39;value&#39;],data:[&quot;</span>;
+        $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT o.*</span>
+<span class="stringliteral">                         FROM combo_lists_options AS o</span>
+<span class="stringliteral">                    LEFT JOIN combo_lists AS l ON l.id = o.list_id</span>
+<span class="stringliteral">                        WHERE l.id = &#39;$list_id&#39;</span>
+<span class="stringliteral">                     ORDER BY o.seq&quot;</span>);
+
+        <a class="code" href="components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8">$buff</a> = <span class="stringliteral">&quot;Ext.create(&#39;Ext.data.Store&#39;,{fields:[&#39;option_name&#39;,&#39;option_value&#39;],data:[&quot;</span>;
         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_ASSOC) as $item){
-            $title = $item[<span class="stringliteral">&#39;title&#39;</span>];
-            $option_id =$item[<span class="stringliteral">&#39;option_id&#39;</span>];
-            <a class="code" href="components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8">$buff</a> .= <span class="stringliteral">&quot;{name:&#39;$title&#39;,value:&#39;$option_id&#39;},&quot;</span>;
+            $option_name    = $item[<span class="stringliteral">&#39;option_name&#39;</span>];
+            $option_value   = $item[<span class="stringliteral">&#39;option_value&#39;</span>];
+            <a class="code" href="components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8">$buff</a> .= <span class="stringliteral">&quot;{option_name:&#39;$option_name&#39;,option_value:&#39;$option_value&#39;},&quot;</span>;
         }
         <a class="code" href="components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8">$buff</a> = rtrim(<a class="code" href="components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8">$buff</a>, <span class="charliteral">&#39;,&#39;</span>);
         <a class="code" href="components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8">$buff</a> .= <span class="stringliteral">&quot;]})&quot;</span>;
@@ -388,7 +407,7 @@ Public Member Functions</h2></td></tr>
     <ul>
       <li class="navelem"><a class="el" href="class_form_layout_engine.html">FormLayoutEngine</a>      </li>
 
-    <li class="footer">Generated on Mon Feb 6 2012 14:43:42 for MitosEHR by
+    <li class="footer">Generated on Sun Feb 12 2012 11:59:16 for MitosEHR by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6.1 </li>
    </ul>

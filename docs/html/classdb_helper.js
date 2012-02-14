@@ -6,6 +6,7 @@ var classdb_helper =
     [ "execOnly", "classdb_helper.html#ae033db35138ae80f3b1fd33c5c2c473e", null ],
     [ "execStatement", "classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c", null ],
     [ "fetch", "classdb_helper.html#ae48cc10bd727774bb36203986ce3b176", null ],
+    [ "filertByQuery", "classdb_helper.html#a39e97f07bde6edc04b653a4a93bed758", null ],
     [ "filertByStartLimit", "classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08", null ],
     [ "getError", "classdb_helper.html#a24ada5decce3d1b79cd82f5a90ccf404", null ],
     [ "rowCount", "classdb_helper.html#a82b073888555fc72e57142fe913db377", null ],

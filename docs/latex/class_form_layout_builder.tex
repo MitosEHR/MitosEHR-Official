@@ -10,13 +10,13 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_form_layout_builder_a09d2fcc356ffec482c2288ed3128f55d}{add\-Field} (\$data)
+\hyperlink{class_form_layout_builder_a9b4218d44df735712697afcd63ee542a}{add\-Field} (std\-Class \$params)
 \item 
-\hyperlink{class_form_layout_builder_af1ac76169bfb7bbb995f000d5bb9ac2e}{update\-Field} (\$data)
+\hyperlink{class_form_layout_builder_a605ceacafef9bf191f738e434d731ce2}{update\-Field} (std\-Class \$params)
 \item 
-\hyperlink{class_form_layout_builder_a383f52a44383e21583989705ef0d630d}{delete\-Field} (\$data)
+\hyperlink{class_form_layout_builder_a43268d844218fd4ca8254bac75031479}{delete\-Field} (std\-Class \$params)
 \item 
-\hyperlink{class_form_layout_builder_afcb5238ce6ce86f873765792f9f18ad8}{sort\-Fields} (\$data)
+\hyperlink{class_form_layout_builder_a53a3f3a0264126d592421492cfb4a11d}{sort\-Fields} (std\-Class \$params)
 \item 
 \hyperlink{class_form_layout_builder_a9ff1809bc98bb7a1526eb4e035c1ffa8}{get\-Forms} ()
 \item 
@@ -34,13 +34,21 @@
 
 
 \subsection{\-Member \-Function \-Documentation}
-\hypertarget{class_form_layout_builder_a09d2fcc356ffec482c2288ed3128f55d}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!add\-Field@{add\-Field}}
+\hypertarget{class_form_layout_builder_a9b4218d44df735712697afcd63ee542a}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!add\-Field@{add\-Field}}
 \index{add\-Field@{add\-Field}!FormLayoutBuilder@{\-Form\-Layout\-Builder}}
 \subsubsection[{add\-Field}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Field} (
 \begin{DoxyParamCaption}
-\item[{\$}]{data}
+\item[{std\-Class \$}]{params}
 \end{DoxyParamCaption}
-)}}\label{class_form_layout_builder_a09d2fcc356ffec482c2288ed3128f55d}
+)}}\label{class_form_layout_builder_a9b4218d44df735712697afcd63ee542a}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
 lets defines what is a container for later use.
 
 if get\-Field\-Data\-Col returns true, means there is a colunm in the current database form table. in that case we need to return that error leting the user know there is a duplicated field or duplicated name property. \-The user has 2 options, verify the form to make sure the the field is not getting duplicated or change the name property to save the field data inside another column.
@@ -57,20 +65,22 @@ now lets start creating the field in the database
 
 take each option and insert it in the forms\-\_\-field\-\_\-options table using \$field\-\_\-id
 
-\-Definition at line 28 of file \-Form\-Layout\-Builder.\-php.
+\-Definition at line 32 of file \-Form\-Layout\-Builder.\-php.
 
 
 \begin{DoxyCode}
-                                   {
+                                              {
+
+        $data = get_object_vars($params);
+
         $this->getFormDataTable($data['form_id']);
         $this->col  = $data['name'];
         $container  = false;
         if( $data['xtype'] == 'fieldcontainer' || $data['xtype'] == 'fieldset' 
       ) $container = true;
         if($this->fieldHasColumn() && $data['xtype'] != 'radiofield') {
-            echo '{ "success": false, "errors": { "reason": "Field \"'.$this->
-      col.'\" exist, please verify the form or change the Field \"name\" preoperty" }}'
-      ;
+            return array('success' => false, 'error'=> 'Field \"'.$this->col.'
+      \" exist, please verify the form or change the Field \"name\" preoperty');
         }else{
             if(!$container){
 
@@ -78,7 +88,7 @@ take each option and insert it in the forms\-\_\-field\-\_\-options table using 
                     $this->addColumn('VARCHAR(255)');
                 }
             }
-            $data = $this->sinatizedData($data);
+            //$data = $this->sinatizedData($data);
             $data = $this->setDefults($data);
             $field              = array();
             $field['form_id']   = $data['form_id'];
@@ -97,24 +107,27 @@ take each option and insert it in the forms\-\_\-field\-\_\-options table using 
             $field_id = $this->lastInsertId;
             $this->insertOptions($data, $field_id);
 
-            print '{"success":true}';
+            return array('success' => true);
         }
     }
 \end{DoxyCode}
-\hypertarget{class_form_layout_builder_a383f52a44383e21583989705ef0d630d}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!delete\-Field@{delete\-Field}}
+\hypertarget{class_form_layout_builder_a43268d844218fd4ca8254bac75031479}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!delete\-Field@{delete\-Field}}
 \index{delete\-Field@{delete\-Field}!FormLayoutBuilder@{\-Form\-Layout\-Builder}}
 \subsubsection[{delete\-Field}]{\setlength{\rightskip}{0pt plus 5cm}{\bf delete\-Field} (
 \begin{DoxyParamCaption}
-\item[{\$}]{data}
+\item[{std\-Class \$}]{params}
 \end{DoxyParamCaption}
-)}}\label{class_form_layout_builder_a383f52a44383e21583989705ef0d630d}
+)}}\label{class_form_layout_builder_a43268d844218fd4ca8254bac75031479}
 \-This function will delete the field and print success is no error were found along the way.
 
 
-\begin{DoxyParams}{\-Parameters}
-{\em \$data} & \\
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
 lets defines what is a container for later use.
 
 check for all kind ao error combination and exit the script if error found. \-If not, then continue.
@@ -127,11 +140,13 @@ for all other fields lats check that the item has a column in the database and t
 
 remove field and field options
 
-\-Definition at line 172 of file \-Form\-Layout\-Builder.\-php.
+\-Definition at line 184 of file \-Form\-Layout\-Builder.\-php.
 
 
 \begin{DoxyCode}
-                                      {
+                                                 {
+
+        $data = get_object_vars($params);
 
         $this->getFormDataTable($data['form_id']);
         $this->col = $data['name'];
@@ -172,7 +187,7 @@ remove field and field options
         $ret = $this->execOnly();
         $this->checkError($ret);
 
-        print '{"success":true}';
+        return array('success' => true);
     }
 \end{DoxyCode}
 \hypertarget{class_form_layout_builder_ac89522e4c6cb3d293adce3bd72e91827}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!get\-Form\-Fields\-Tree@{get\-Form\-Fields\-Tree}}
@@ -192,7 +207,7 @@ array
 \end{DoxyReturn}
 
 
-\-Definition at line 485 of file \-Form\-Layout\-Builder.\-php.
+\-Definition at line 503 of file \-Form\-Layout\-Builder.\-php.
 
 
 \begin{DoxyCode}
@@ -236,7 +251,7 @@ array
 \end{DoxyReturn}
 
 
-\-Definition at line 449 of file \-Form\-Layout\-Builder.\-php.
+\-Definition at line 467 of file \-Form\-Layout\-Builder.\-php.
 
 
 \begin{DoxyCode}
@@ -266,7 +281,7 @@ array
 \end{DoxyReturn}
 
 
-\-Definition at line 462 of file \-Form\-Layout\-Builder.\-php.
+\-Definition at line 480 of file \-Form\-Layout\-Builder.\-php.
 
 
 \begin{DoxyCode}
@@ -293,29 +308,35 @@ array
        return $rows;
     }
 \end{DoxyCode}
-\hypertarget{class_form_layout_builder_afcb5238ce6ce86f873765792f9f18ad8}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!sort\-Fields@{sort\-Fields}}
+\hypertarget{class_form_layout_builder_a53a3f3a0264126d592421492cfb4a11d}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!sort\-Fields@{sort\-Fields}}
 \index{sort\-Fields@{sort\-Fields}!FormLayoutBuilder@{\-Form\-Layout\-Builder}}
 \subsubsection[{sort\-Fields}]{\setlength{\rightskip}{0pt plus 5cm}{\bf sort\-Fields} (
 \begin{DoxyParamCaption}
-\item[{\$}]{data}
+\item[{std\-Class \$}]{params}
 \end{DoxyParamCaption}
-)}}\label{class_form_layout_builder_afcb5238ce6ce86f873765792f9f18ad8}
+)}}\label{class_form_layout_builder_a53a3f3a0264126d592421492cfb4a11d}
 \-This function sorts the fields when the drag and drop is use and print success if no error found along the way.
 
 
-\begin{DoxyParams}{\-Parameters}
-{\em \$data} & \\
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
 set the field item\-\_\-of to the paretn id and run the sql to update the item item\-\_\-of column
 
 here we set the pos column value, starting from 10. after updating the item pos, we add 10 to \$pos and loop for each child item
 
-\-Definition at line 239 of file \-Form\-Layout\-Builder.\-php.
+\-Definition at line 254 of file \-Form\-Layout\-Builder.\-php.
 
 
 \begin{DoxyCode}
-                                     {
+                                                {
+
+        $data = get_object_vars($params);
+
         $pos        = 10;
         $field      = array();
         $item       = $data['id'];
@@ -335,23 +356,26 @@ here we set the pos column value, starting from 10. after updating the item pos,
             $pos = $pos + 10;
         }
 
-        print '{"success":true}';
+        return array('success' => true);
     }
 \end{DoxyCode}
-\hypertarget{class_form_layout_builder_af1ac76169bfb7bbb995f000d5bb9ac2e}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!update\-Field@{update\-Field}}
+\hypertarget{class_form_layout_builder_a605ceacafef9bf191f738e434d731ce2}{\index{\-Form\-Layout\-Builder@{\-Form\-Layout\-Builder}!update\-Field@{update\-Field}}
 \index{update\-Field@{update\-Field}!FormLayoutBuilder@{\-Form\-Layout\-Builder}}
 \subsubsection[{update\-Field}]{\setlength{\rightskip}{0pt plus 5cm}{\bf update\-Field} (
 \begin{DoxyParamCaption}
-\item[{\$}]{data}
+\item[{std\-Class \$}]{params}
 \end{DoxyParamCaption}
-)}}\label{class_form_layout_builder_af1ac76169bfb7bbb995f000d5bb9ac2e}
+)}}\label{class_form_layout_builder_a605ceacafef9bf191f738e434d731ce2}
 \-This function will update the fields and print the success callback if no errors found alog the way
 
 
-\begin{DoxyParams}{\-Parameters}
-{\em \$data} & \\
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
 sinatized\-Data check the data array and if the value is empty delete it form the array then checck the value and if is equal to \char`\"{}on\char`\"{} set it to true, and \char`\"{}off\char`\"{} set it to false
 
 if not xtype fieldcontainer and fieldset the add some defaul values.
@@ -370,12 +394,15 @@ delete old field options
 
 take the remaining \$data array and insert it in the forms\-\_\-field\-\_\-options table one by one.
 
-\-Definition at line 106 of file \-Form\-Layout\-Builder.\-php.
+\-Definition at line 114 of file \-Form\-Layout\-Builder.\-php.
 
 
 \begin{DoxyCode}
-                                      {
-        $data = $this->sinatizedData($data);
+                                                 {
+
+        $data = get_object_vars($params);
+
+        //$data = $this->sinatizedData($data);
         $data = $this->setDefults($data);
         $field              = array();
         $id                 = $data['id'];
@@ -396,7 +423,7 @@ take the remaining \$data array and insert it in the forms\-\_\-field\-\_\-optio
         $this->checkError($ret);
         $this->insertOptions($data, $id);
 
-        print '{"success": true }';
+        return array('success' => true);
     }
 \end{DoxyCode}
 

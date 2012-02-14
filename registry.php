@@ -43,7 +43,7 @@ $_SESSION['site']['facility']   = 'default'; // THIS IS A TEMP VARIABLE
  * Directory related variables
  */
 $_SESSION['dir']['ext']         = "ext-4.0.7";
-$_SESSION['dir']['ext_cal']     = "extensible-1.5.0";
+$_SESSION['dir']['ext_cal']     = "extensible-1.5.1";
 $_SESSION['dir']['AES']         = "phpAES";
 $_SESSION['dir']['adoHelper']   = "dbHelper";
 $_SESSION['dir']['ext_classes'] = "classes/ext";

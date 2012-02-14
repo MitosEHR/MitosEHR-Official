@@ -40,4 +40,28 @@ class Person extends dbHelper {
         return $fullname;
     }
 
+    public static  function fulladdress($street, $streetb, $city, $state ,$zip ){
+
+        if($street != NULL || $street  != "" ) {
+            $street = $street . "<br>";
+        } else {
+            $street = $street;
+        }
+
+        if($streetb != NULL || $streetb != "" ) {
+            $streetb = $streetb . "<br>";
+        } else {
+            $streetb = $streetb;
+        }
+
+        if($city != NULL || $city != "" ) {
+            $city = $city. ", ";
+        } else {
+            $city = $city ;
+        }
+
+        return $street.$streetb.$city.' '.$state.' '.$zip;
+
+    }
+
 }
