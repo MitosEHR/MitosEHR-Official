@@ -15,7 +15,9 @@ if(!isset($_SESSION)){
 }
 
 include_once($_SESSION['site']['root']."/classes/ACL.php");
+include_once($_SESSION['site']['root']."/classes/User.php");
 $ACL = new ACL();
+$User = new User();
 ?>
 
 perm = {
@@ -45,6 +47,12 @@ perm = {
 
 };
 
-setting = {
+user = {
+    id     : <?php print $User->getCurrentUserId() ?>,
+    name   : '<?php print $User->getCurrentUserTitleLastName() ?>'
+
+};
+
+settings = {
 
 };

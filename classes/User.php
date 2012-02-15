@@ -32,6 +32,17 @@ class User extends Person {
         return $_SESSION['user']['id'];
     }
 
+    public function getCurrentUserTitleLastName()
+    {
+        $id = $this->getCurrentUserId();
+        $this->setSQL("SELECT title, lname
+                         FROM users
+                        WHERE id = '$id'");
+        $foo = $this->fetch();
+        $foo = $foo['title'].' '.$foo['lname'];
+        return $foo;
+    }
+
     /**
      * @param stdClass $params
      * @return array

@@ -62,11 +62,11 @@ Ext.define('Ext.mitos.view.MitosApp',{
         'Ext.mitos.view.administration.Services',
         'Ext.mitos.view.administration.Users',
 
-        'Ext.mitos.view.miscellaneous.addressbook.Addressbook',
-        'Ext.mitos.view.miscellaneous.myaccount.MyAccount',
-        'Ext.mitos.view.miscellaneous.mysettings.MySettings',
-        'Ext.mitos.view.miscellaneous.officenotes.OfficeNotes',
-        'Ext.mitos.view.miscellaneous.websearch.Websearch'
+        'Ext.mitos.view.miscellaneous.Addressbook',
+        'Ext.mitos.view.miscellaneous.MyAccount',
+        'Ext.mitos.view.miscellaneous.MySettings',
+        'Ext.mitos.view.miscellaneous.OfficeNotes',
+        'Ext.mitos.view.miscellaneous.Websearch'
 
     ],
     initComponent: function(){
@@ -314,7 +314,7 @@ Ext.define('Ext.mitos.view.MitosApp',{
                 tooltip : 'Create New Ememercency'
             },{
                 xtype		: 'button',
-                text		: 'Dr. Smith',
+                text		: user.name,
                 scale	    : 'large',
                 iconCls		: 'icoDoctor',
                 iconAlign	: 'left',
@@ -477,11 +477,11 @@ Ext.define('Ext.mitos.view.MitosApp',{
             /**
              * Miscellaneous
              */
-                Ext.create('Ext.mitos.view.miscellaneous.addressbook.Addressbook'),
-                Ext.create('Ext.mitos.view.miscellaneous.myaccount.MyAccount'),
-                Ext.create('Ext.mitos.view.miscellaneous.mysettings.MySettings'),
-                Ext.create('Ext.mitos.view.miscellaneous.officenotes.OfficeNotes'),
-                Ext.create('Ext.mitos.view.miscellaneous.websearch.Websearch')
+                Ext.create('Ext.mitos.view.miscellaneous.Addressbook'),
+                Ext.create('Ext.mitos.view.miscellaneous.MyAccount'),
+                Ext.create('Ext.mitos.view.miscellaneous.MySettings'),
+                Ext.create('Ext.mitos.view.miscellaneous.OfficeNotes'),
+                Ext.create('Ext.mitos.view.miscellaneous.Websearch')
 
             ],
             listeners:{
@@ -850,7 +850,11 @@ Ext.define('Ext.mitos.view.MitosApp',{
             icon    : Ext.MessageBox.QUESTION,
             buttons : Ext.Msg.YESNO,
             fn:function(btn){
-                if(btn=='yes'){ window.location = "app/login/data.php?task=unAuth"; }
+                if(btn=='yes'){
+                    authProcedures.unAuth(function(){
+                        window.location = "./"
+                    });
+                }
             }
         });
     },

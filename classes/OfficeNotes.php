@@ -26,19 +26,21 @@ class OfficeNotes extends dbHelper {
 
     public function addOfficeNotes(stdClass $params){
 
-        return;
+        $params->user = $_SESSION['user']['name'];
+        $params->date = date('Y-m-d H:i:s');
+        $params->activity = 1;
+
+        $data = get_object_vars($params);
+        $sql = $this->sqlBind($data, "onotes", "I");
+        $this->setSQL($sql);
+        $this->execLog();
+
+        return $params;
     }
 
-    public function updateOfficeNotes(stdClass $params){
-
-        $data['user']       = $_SESSION['user']['name'];
-        $data['body']       = $params->body;
-        $data['groupname']  = $params->groupname;
-        $data['activity']   = $params->activity;
-
-        $params->date = $data['date'];
-        $params->user = $data['user'];
-
+    public function updateOfficeNotes(stdClass $params)
+    {
+        $data = get_object_vars($params);
         $sql = $this->sqlBind($data, "onotes", "U", "id='" . $params->id . "'");
         $this->setSQL($sql);
         $this->execLog();
