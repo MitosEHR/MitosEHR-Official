@@ -29,14 +29,9 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
         Ext.define('immunizationsModel',{
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'immunization_id',					type: 'int'},
-                {name: 'administered_date',			    	type: 'date',    dateFormat:'c'},
-                {name: 'manufacturer',				    	type: 'string'},
-                {name: 'lot_number',					    type: 'string'},
-                {name: 'administered_by',					type: 'string'},
-                {name: 'education_date',			        type: 'date',    dateFormat:'c'},
-                {name: 'vis_date',			                type: 'date',    dateFormat:'c'},
-                {name: 'note',			                    type: 'string'}
+                {name: 'code',					type: 'int'},
+                {name: 'code_text',			    type: 'string'}
+
             ],
             proxy: {
                 type: 'direct',
@@ -188,31 +183,34 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                 columns:[{
                     header: 'Code Type',
                     width : 100,
-                    dataIndex:'code'
+                    dataIndex:'immunization_id'
                 },{
                     header: 'Date',
                     width : 100,
-                    dataIndex:'date'
+                    dataIndex:'administered_date',
+                    renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s')
                 },{
                     header: 'Lot Number',
                     width : 100,
-                    dataIndex:'immunizationManLN'
+                    dataIndex:'lot_number'
                 },{
                     header: 'Provider',
                     width : 100,
-                    dataIndex:'nameImmunizationAdmin'
+                    dataIndex:'administered_by'
                 },{
                     header: 'Date Immunization',
                     flex  : 1,
-                    dataIndex:'dateInfoGiven'
+                    dataIndex:'education_date',
+                    renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s')
                 },{
                     header: 'Date VIS Statement',
                     flex  : 1,
-                    dataIndex:'dateVISStatement'
+                    dataIndex:'vis_date',
+                    renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s')
                 },{
                     header: 'Notes',
                     flex  : 1,
-                    dataIndex:'notes'
+                    dataIndex:'note'
                 }],
                 listeners:{
                     scope:me,
