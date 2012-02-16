@@ -359,6 +359,10 @@ class FormLayoutBuilder extends dbHelper {
         if($data['xtype'] != 'fieldcontainer' && $data['xtype'] != 'fieldset' ){
             if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
         }
+        if($data['xtype'] == 'radiofield'){
+          // $data['flex'] = 1;
+        }
+
         return $data;
     }
 
@@ -435,6 +439,8 @@ class FormLayoutBuilder extends dbHelper {
     private function sinatizedData($data){
         foreach($data as $option => $val){
             if($val == '') unset($data[$option]);
+            if($option == 'hideLabel' && $val == '0' ) unset($data[$option]);
+
             if($val == 'on'){
                 $data[$option] = 'true';
             }elseif($val == 'off'){
@@ -515,10 +521,10 @@ class FormLayoutBuilder extends dbHelper {
                 unset($item['children']);
                 if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
             }else{
-                if($item['collapsed'] == 'collapsed'){
-                    $item['expanded'] = false;
-                }else{
+                if($item['collapsed']== 0){
                     $item['expanded'] = true;
+                }else{
+                    $item['expanded'] = false;
                 }
             }
             array_push($fields,$item);
@@ -543,10 +549,10 @@ class FormLayoutBuilder extends dbHelper {
                 unset($item['children']);
                 if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
             }else{
-                if($item['collapsed'] == 'true'){
-                    $item['expanded'] = false;
-                }else{
+                if($item['collapsed'] == 0){
                     $item['expanded'] = true;
+                }else{
+                    $item['expanded'] = false;
                 }
             }
             array_push($items,$item);

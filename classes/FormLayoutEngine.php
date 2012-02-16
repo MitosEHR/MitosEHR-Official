@@ -66,7 +66,9 @@ class FormLayoutEngine extends dbHelper {
              * now take each option and add it to this $item array
              */
             foreach($opts as $opt => $val){
-                $item[$opt] = $val;
+                if($opt != 'pos'){
+                    $item[$opt] = $val;
+                };
             }
 
             if($item['xtype'] == 'combobox'){
@@ -85,7 +87,7 @@ class FormLayoutEngine extends dbHelper {
             /**
              * unset the stuff that are not properties
              */
-            unset($item['id'],$item['form_id'],$item['item_of']);
+            unset($item['id'],$item['form_id'],$item['item_of'],$item['pos']);
             /**
              * push this item into the $items Array
              */
@@ -162,7 +164,7 @@ class FormLayoutEngine extends dbHelper {
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
             $opts = $this->getItemsOptions($item['id']);
             foreach($opts as $opt => $val){
-                $item[$opt] = $val;
+                    $item[$opt] = $val;
             }
             /**
              * If the item is a combo box lets create a store...
@@ -177,7 +179,7 @@ class FormLayoutEngine extends dbHelper {
              */
             $item['items'] = $this->getChildItems($item['id']);
             if($item['items'] == null) unset($item['items']);
-            unset($item['id'],$item['form_id'],$item['item_of']);
+            unset($item['id'],$item['form_id'],$item['item_of'],$item['pos']);
             array_push($items,$item);
         }
         return $items;

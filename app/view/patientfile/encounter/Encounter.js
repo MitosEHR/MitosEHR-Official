@@ -509,11 +509,12 @@ Ext.define('Ext.mitos.view.patientfile.encounter.Encounter',{
             title   : 'Procedure Order',
             html    : '<h1>Procedure Order form placeholder!</h1>'
         });
-        me.reviewSysPanel = Ext.create('Ext.panel.Panel',{
+        me.reviewSysPanel = Ext.create('Ext.form.Panel',{
+            autoScroll  : true,
             border  : false,
             action  : 'encounter',
             title   : 'Review of Systems',
-            html    : '<h1>Review of Systems form placeholder!</h1>'
+            fieldDefaults: { msgTarget:'side' }
         });
         me.reviewSysCkPanel = Ext.create('Ext.form.Panel',{
             border  : false,
@@ -710,10 +711,30 @@ Ext.define('Ext.mitos.view.patientfile.encounter.Encounter',{
                     me.setTapPanel('administrative');
                 }
             },'->',{
-                text      	: 'New Encounter',
+                text      	: 'Add Allergies',
                 iconCls   	: 'icoAddRecord',
                 scope       : me,
-                handler     : me.newEncounter
+                handler     : me.newImmunization
+            },'-',{
+                text      	: 'Add Problems',
+                iconCls   	: 'icoAddRecord',
+                scope       : me,
+                handler     : me.newProblem
+            },'-',{
+                text      	: 'Add Medications',
+                iconCls   	: 'icoAddRecord',
+                scope       : me,
+                handler     : me.newMedication
+            },'-',{
+                text      	: 'Add Surgery',
+                iconCls   	: 'icoAddRecord',
+                scope       : me,
+                handler     : me.newSurgery
+            },'-',{
+                text      	: 'Add Dental',
+                iconCls   	: 'icoAddRecord',
+                scope       : me,
+                handler     : me.newDental
             },'-',{
                 text      	: 'Close Encounter',
                 iconCls   	: 'icoAddRecord',
@@ -722,6 +743,26 @@ Ext.define('Ext.mitos.view.patientfile.encounter.Encounter',{
             }]
         }]);
 
+    },
+
+    newImmunization:function(){
+        App.MedicalWindow.show();
+    },
+
+    newProblem:function(){
+        App.MedicalWindow.show();
+    },
+
+    newMedication:function(){
+        App.MedicalWindow.show();
+    },
+
+    newSurgery:function(){
+        App.MedicalWindow.show();
+    },
+
+    newDental:function(){
+        App.MedicalWindow.show();
     },
 
 
@@ -963,6 +1004,10 @@ Ext.define('Ext.mitos.view.patientfile.encounter.Encounter',{
 
             this.getFormItems( me.vitalsPanel.down('form'), 'Vitals', function(){
                 me.vitalsPanel.doLayout();
+            });
+
+            this.getFormItems( me.reviewSysPanel, 'Review of Systems', function(){
+                me.reviewSysPanel.doLayout();
             });
 
             this.getFormItems( me.soapPanel, 'SOAP', function(){

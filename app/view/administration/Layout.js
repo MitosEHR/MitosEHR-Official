@@ -209,7 +209,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
          */
         me.fieldForm = Ext.create('Ext.mitos.classes.form.FormPanel', {
             region          : 'center',
-            url	            : 'app/administration/layout/data.php?task=formRequest',
+            //url	            : 'app/administration/layout/data.php?task=formRequest',
             border          : false,
             autoScroll      : true,
             fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
@@ -279,6 +279,13 @@ Ext.define('Ext.mitos.view.administration.Layout',{
                     xtype           : 'textfield',
                     name            : 'fieldLabel',
                     itemId          : 'fieldLabel',
+                    allowBlank      : false,
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Box Label',
+                    xtype           : 'textfield',
+                    name            : 'boxLabel',
+                    itemId          : 'boxLabel',
                     allowBlank      : false,
                     hidden          : true
                 },{
@@ -413,12 +420,6 @@ Ext.define('Ext.mitos.view.administration.Layout',{
                     xtype           : 'timefield',
                     name            : 'minValue',
                     itemId          : 'timeMinValue',
-                    hidden          : true
-                },{
-                    fieldLabel      : 'Box Label',
-                    xtype           : 'textfield',
-                    name            : 'boxLabel',
-                    itemId          : 'boxLabel',
                     hidden          : true
                 },{
                     fieldLabel      : 'Grow',
@@ -876,6 +877,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
                 'fieldLabel',
                 'labelWidth',
                 'hideLabel',
+                'width',
                 'layout',
                 'margin',
                 'columnWidth'
@@ -960,7 +962,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
             items = [
                 'name',
                 'width',
-                'fieldLabel',
+                'boxLabel',
                 'labelWidth',
                 'hideLabel',
                 'margin',
@@ -1047,6 +1049,8 @@ Ext.define('Ext.mitos.view.administration.Layout',{
         me.fieldsGridStore.setRootNode();
         me.fieldsGridStore.load({params:{currForm: me.currForm }});
         me.parentFieldsStore.load({params:{currForm: me.currForm }});
+
+        me.fieldsGrid.doLayout()
     },
     /**
     * This function is called from MitosAPP.js when
