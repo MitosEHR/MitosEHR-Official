@@ -209,7 +209,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
          */
         me.fieldForm = Ext.create('Ext.mitos.classes.form.FormPanel', {
             region          : 'center',
-            url	            : 'app/administration/layout/data.php?task=formRequest',
+            //url	            : 'app/administration/layout/data.php?task=formRequest',
             border          : false,
             autoScroll      : true,
             fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
@@ -279,6 +279,13 @@ Ext.define('Ext.mitos.view.administration.Layout',{
                     xtype           : 'textfield',
                     name            : 'fieldLabel',
                     itemId          : 'fieldLabel',
+                    allowBlank      : false,
+                    hidden          : true
+                },{
+                    fieldLabel      : 'Box Label',
+                    xtype           : 'textfield',
+                    name            : 'boxLabel',
+                    itemId          : 'boxLabel',
                     allowBlank      : false,
                     hidden          : true
                 },{
@@ -413,12 +420,6 @@ Ext.define('Ext.mitos.view.administration.Layout',{
                     xtype           : 'timefield',
                     name            : 'minValue',
                     itemId          : 'timeMinValue',
-                    hidden          : true
-                },{
-                    fieldLabel      : 'Box Label',
-                    xtype           : 'textfield',
-                    name            : 'boxLabel',
-                    itemId          : 'boxLabel',
                     hidden          : true
                 },{
                     fieldLabel      : 'Grow',
@@ -712,14 +713,16 @@ Ext.define('Ext.mitos.view.administration.Layout',{
      * a new Model with the currForm id
      */
     onFormReset:function(){
-        var form = this.fieldForm.getForm(),
-        row = this.fieldsGrid.getSelectionModel();
+        var formPanel   = this.fieldForm,
+            form        = formPanel.getForm(),
+            row         = this.fieldsGrid.getSelectionModel();
         row.deselectAll();
         form.reset();
         var model = Ext.ModelManager.getModel('layoutTreeModel'),
         newModel  = Ext.ModelManager.create({
             form_id  : this.currForm
         }, model );
+        formPanel.el.unmask();
         form.loadRecord(newModel);
     },
     /**
@@ -728,8 +731,9 @@ Ext.define('Ext.mitos.view.administration.Layout',{
      * This is the easy way to add a child to a fieldset or fieldcontainer.
      */
     onAddChild:function(){
-        var form = this.fieldForm.getForm(),
-        row = this.fieldsGrid.getSelectionModel();
+        var formPanel   = this.fieldForm,
+            form        = formPanel.getForm(),
+            row         = this.fieldsGrid.getSelectionModel();
         row.deselectAll();
         form.reset();
         var model = Ext.ModelManager.getModel('layoutTreeModel'),
@@ -737,6 +741,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
             form_id  : this.currForm,
             item_of  : this.currField
         }, model );
+        formPanel.el.unmask();
         form.loadRecord(newModel);
     },
     /**
@@ -749,7 +754,8 @@ Ext.define('Ext.mitos.view.administration.Layout',{
      * @param record
      */
     onFieldsGridClick:function(grid, record){
-        var form = this.fieldForm.getForm();
+        var formPanel   = this.fieldForm,
+            form        = formPanel.getForm();
         form.loadRecord(record);
         this.currField = record.data.id;
         if(record.data.xtype == 'fieldset' || record.data.xtype == 'fieldcontainer'){
@@ -757,6 +763,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
         }else{
             this.formContainer.down('toolbar').getComponent('addChild').disable();
         }
+        formPanel.el.unmask();
     },
     /**
      *
@@ -767,6 +774,8 @@ Ext.define('Ext.mitos.view.administration.Layout',{
         this.currForm = record.get('id');
         this.fieldsGrid.setTitle('Field editor ('+record.get('name')+')');
         this.loadFieldsGrid();
+        this.onFormReset();
+        this.fieldForm.el.mask('Click "New" or Select a field to update');
     },
     /**
      *
@@ -868,6 +877,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
                 'fieldLabel',
                 'labelWidth',
                 'hideLabel',
+                'width',
                 'layout',
                 'margin',
                 'columnWidth'
@@ -952,7 +962,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
             items = [
                 'name',
                 'width',
-                'fieldLabel',
+                'boxLabel',
                 'labelWidth',
                 'hideLabel',
                 'margin',
@@ -1039,6 +1049,8 @@ Ext.define('Ext.mitos.view.administration.Layout',{
         me.fieldsGridStore.setRootNode();
         me.fieldsGridStore.load({params:{currForm: me.currForm }});
         me.parentFieldsStore.load({params:{currForm: me.currForm }});
+
+        me.fieldsGrid.doLayout()
     },
     /**
     * This function is called from MitosAPP.js when
@@ -1047,6 +1059,8 @@ Ext.define('Ext.mitos.view.administration.Layout',{
     * to call every this panel becomes active
     */
     onActive:function(callback){
+        this.onFormReset();
+        this.fieldForm.el.mask('Click "New" or Select a field to update');
         this.loadFieldsGrid();
         callback(true);
     }
