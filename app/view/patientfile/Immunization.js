@@ -10,21 +10,19 @@
  * @namespace Immunization.addPatientImmunization
  */
 Ext.define('Ext.mitos.view.patientfile.Immunization',{
-    extend  : 'Ext.window.Window',
-    title   : 'Immunization',
-    height  : '700',
-    width   : '1000',
-    closable: true,
-    closeAction: 'hide',
-    minWidth: 350,
-    layout:'card',
-    defaults : { layout: 'fit'},
-    bodyStyle: 'padding: 5px;',
-    modal:true,
+    extend      : 'Ext.window.Window',
+    title       : 'Immunization',
+    height      : '700',
+    width       : '1000',
+    closeAction : 'hide',
+    layout      : 'card',
+    bodyStyle   : 'padding: 5px;',
+    collapseDirection : 'bottom',
+    animCollapse: true,
 
     initComponent:function(){
 
-        var me=this;
+        var me = this;
 
         Ext.define('immunizationsModel',{
             extend: 'Ext.data.Model',
@@ -78,7 +76,7 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
         });
 
 
-        me.items= [{
+        me.items = [{
             xtype   : 'panel',
             title   : 'Immunization',
             layout  : 'border',
@@ -426,8 +424,6 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
     },
 
     onAddImmunization:function(btn){
-        say(this);
-
         var gridPanel   = btn.up('panel').getComponent('patientImmuListGrid'),
             form        = this.getLayout().getActiveItem().down('form').getForm(),
             m           = Ext.create('ListsGridModel', {
@@ -436,9 +432,6 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
         gridPanel.setHeight(245);
 
         form.loadRecord(m);
-
-
-
     },
 
     onGridResized:function(){
@@ -450,6 +443,7 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
         var gridPanel = this.getComponent('immuListGrid');
         gridPanel.expand(true);
     },
+
     onOptionType:function(combo){
 
              var value =  combo.getValue(),
