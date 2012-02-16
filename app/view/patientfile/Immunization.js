@@ -12,8 +12,8 @@
 Ext.define('Ext.mitos.view.patientfile.Immunization',{
     extend  : 'Ext.window.Window',
     title   : 'Immunization',
-    height  : '70%',
-    width   : '80%',
+    height  : '700',
+    width   : '1000',
     closable: true,
     closeAction: 'hide',
     minWidth: 350,
@@ -29,9 +29,14 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
         Ext.define('immunizationsModel',{
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'id',					type: 'int'},
-                {name: 'code_text',			    type: 'string'},
-                {name: 'code',			        type: 'string'}
+                {name: 'immunization_id',					type: 'int'},
+                {name: 'administered_date',			    	type: 'date',    dateFormat:'c'},
+                {name: 'manufacturer',				    	type: 'string'},
+                {name: 'lot_number',					    type: 'string'},
+                {name: 'administered_by',					type: 'string'},
+                {name: 'education_date',			        type: 'date',    dateFormat:'c'},
+                {name: 'vis_date',			                type: 'date',    dateFormat:'c'},
+                {name: 'note',			                    type: 'string'}
             ],
             proxy: {
                 type: 'direct',
@@ -49,14 +54,14 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
         Ext.define('patientImmunizationsModel',{
             extend: 'Ext.data.Model',
             fields: [
-                {name: 'id',					type: 'int'},
-                {name: 'date',			        type: 'string'},
-                {name: 'immunizationMan',		type: 'string'},
-                {name: 'immunizationManLN',		type: 'string'},
-                {name: 'nameImmunizationAdmin',	type: 'string'},
-                {name: 'dateInfoGiven',			type: 'string'},
-                {name: 'dateVISStatement',		type: 'string'},
-                {name: 'notes',			        type: 'string'}
+                {name: 'immunization_id',					type: 'int'},
+                {name: 'administered_date',			    	type: 'date',    dateFormat:'c'},
+                {name: 'manufacturer',				    	type: 'string'},
+                {name: 'lot_number',					    type: 'string'},
+                {name: 'administered_by',					type: 'string'},
+                {name: 'education_date',			        type: 'date',    dateFormat:'c'},
+                {name: 'vis_date',			                type: 'date',    dateFormat:'c'},
+                {name: 'note',			                    type: 'string'}
             ],
             proxy: {
                 type: 'direct',
@@ -86,8 +91,7 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                 defaults        : { width: 500, labelWidth: 300 },
                 items:[{
                     fieldLabel  : 'Immunization (CVX Code)',
-                    name        : 'code',
-                    allowBlank  : false,
+                    name        : 'immunization_id',
                     itemId: 'immuName',
                     enableKeyEvents : true,
                     listeners : {
@@ -97,31 +101,31 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                 },{
                     fieldLabel  : 'Date Administered',
                     xtype       : 'datefield',
-                    name        : 'date'
+                    name        : 'administered_date'
                 },{
                     fieldLabel  : 'Immunization Manufacturer',
-                    name        : 'immunizationMan'
+                    name        : 'manufacturer'
 
                 },{
                     fieldLabel  : 'Immunization Lot Number',
-                    name        : 'immunizationManLN'
+                    name        : 'lot_number'
 
                 },{
                     fieldLabel  : 'Name and Title of Immunization Administrator',
-                    name        : 'nameImmunizationAdmin'
+                    name        : 'administered_by'
 
                 },{
                     fieldLabel  : 'Date Immunization Information Statements Given',
                     xtype       : 'datefield',
-                    name        : 'dateInfoGiven'
+                    name        : 'education_date'
                 },{
                     fieldLabel  : 'Date of VIS Statement (?)',
                     xtype       : 'datefield',
-                    name        : 'dateVISStatement'
+                    name        : 'vis_date'
                 },{
                     fieldLabel  : 'Notes',
                     xtype       : 'textarea',
-                    name        : 'notes'
+                    name        : 'note'
 
                 }],
                 buttons:[{
@@ -161,7 +165,6 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                 width: 400,
                 split: true,
                 collapsible: true,
-                //collapsed: true,
                 store: me.ImmuListStore,
                 columns:[{
                     header: 'Code',
@@ -171,6 +174,123 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                     header: 'Description',
                     flex  : 1,
                     dataIndex : 'code_text'
+                }]
+            },{
+                xtype: 'grid',
+                region: 'south',
+                itemId: 'patientImmuListGrid',
+                store: me.patientImmuListStore,
+                height: 605,
+                split: true,
+                align: 'left',
+                collapsible: true,
+
+                columns:[{
+                    header: 'Code Type',
+                    width : 100,
+                    dataIndex:'code'
+                },{
+                    header: 'Date',
+                    width : 100,
+                    dataIndex:'date'
+                },{
+                    header: 'Lot Number',
+                    width : 100,
+                    dataIndex:'immunizationManLN'
+                },{
+                    header: 'Provider',
+                    width : 100,
+                    dataIndex:'nameImmunizationAdmin'
+                },{
+                    header: 'Date Immunization',
+                    flex  : 1,
+                    dataIndex:'dateInfoGiven'
+                },{
+                    header: 'Date VIS Statement',
+                    flex  : 1,
+                    dataIndex:'dateVISStatement'
+                },{
+                    header: 'Notes',
+                    flex  : 1,
+                    dataIndex:'notes'
+                }],
+                listeners:{
+                    scope:me,
+                    resize:me.onGridResized
+                }
+            }]
+        },{
+            /**
+             * Allergies Card panel
+             */
+            xtype   : 'panel',
+            title   : 'Allergies',
+            layout  : 'border',
+            height  : 300,
+            items:[{
+                xtype: 'mitos.form',
+                region:'center',
+                fieldDefaults   : { msgTarget: 'side', labelWidth: 100 },
+                defaultType     : 'textfield',
+                defaults        : { width: 500, labelWidth: 300 },
+                items:[{
+                    fieldLabel  : 'Type',
+                    name        : 'type',
+                    allowBlank  : false,
+                    xtype       : 'mitos.allergytypescombo',
+                    itemId      : 'allergie',
+                    enableKeyEvents : true,
+                    listeners : {
+                        scope   :me,
+                        'select': me.onOptionType
+                    }
+                },{
+                    fieldLabel  : 'Title',
+                    itemId      : 'title',
+                    name        : 'date'
+                },{
+                    fieldLabel  : 'Diagnosis Code',
+                    name        : 'diagnosiscode'
+
+                },{
+                    fieldLabel   : 'Begin Date',
+                    xtype       : 'datefield',
+                    name        : 'begindate'
+
+                },{
+                    fieldLabel   : 'End Date',
+                    xtype       : 'datefield',
+                    name        : 'begindate'
+
+                },{
+                    fieldLabel  : 'Ocurrence',
+                    xtype       : 'mitos.occurrencecombo',
+                    name        : 'ocurrence'
+
+                },{
+                    fieldLabel  : 'Reaction',
+                    name        : 'reaction'
+                },{
+                    fieldLabel  : 'Referred by',
+                    name        : 'referred'
+                },{
+                    fieldLabel  : 'Outcome',
+                    xtype       : 'mitos.outcomecombo',
+                    name        : 'outcome'
+
+                },{
+                    fieldLabel  : 'Destination',
+                    name        : 'destination'
+                }],
+                buttons:[{
+                    minWidth: 80,
+                    text    : 'Save',
+                    scope   : me,
+                    handler : me.onSave
+                },{
+                    minWidth: 80,
+                    text: 'Cancel'
+
                 }]
             },{
                 xtype: 'grid',
@@ -214,28 +334,6 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                     scope:me,
                     resize:me.onGridResized
                 }
-            }]
-        },{
-            title   : 'Allergies',
-            xtype: 'grid',
-            store: me.ImmuListStore,
-            split: true,
-            collapsible: true,
-            columns:[{
-                header: 'Code Type',
-                width : 200
-            },{
-                header: 'Date',
-                width : 200
-            },{
-                header: 'Lot Number',
-                width : 200
-            },{
-                header: 'Provider',
-                width : 200
-            },{
-                header: 'Notes',
-                flex  : 1
             }]
         },{
             title   : 'Medical Issues',
@@ -335,7 +433,7 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
             m           = Ext.create('ListsGridModel', {
                 immunizationManLN:'sdfsdfds'
             });
-        gridPanel.setHeight(200);
+        gridPanel.setHeight(245);
 
         form.loadRecord(m);
 
@@ -351,6 +449,14 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
     onCodeFieldFocus:function(field){
         var gridPanel = this.getComponent('immuListGrid');
         gridPanel.expand(true);
+    },
+    onOptionType:function(combo){
+
+             var value =  combo.getValue(),
+                titlefield = combo.up('form').getComponent('title');
+            titlefield.setValue(value);
+
+
     },
 
     onImmuGridClick:function(view,record){

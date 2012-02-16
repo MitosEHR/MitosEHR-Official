@@ -109,8 +109,11 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/MsgStatus.js"></script>
         <script type="text/javascript" src="app/classes/combo/posCodes.js"></script>
         <script type="text/javascript" src="app/classes/combo/Roles.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergyTypes.js"></script>
         <script type="text/javascript" src="app/classes/combo/TaxId.js"></script>
         <script type="text/javascript" src="app/classes/combo/Titles.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Outcome.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Occurrence.js"></script>
         <script type="text/javascript" src="app/classes/combo/TransmitMedthod.js"></script>
         <script type="text/javascript" src="app/classes/combo/Types.js"></script>
         <script type="text/javascript" src="app/classes/combo/Users.js"></script>

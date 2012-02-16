@@ -119,7 +119,7 @@ class Lists extends dbHelper {
     public function addList(stdClass $params)
     {
         $data = get_object_vars($params);
-        unset($data['id']);
+        unset($data['id'], $data['in_use']);
 
         $data['active'] = $data['active'] == 'true'? 1 : 0;
 
