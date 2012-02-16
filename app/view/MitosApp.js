@@ -593,6 +593,9 @@ Ext.define('Ext.mitos.view.MitosApp',{
             }]
         });
 
+        me.Immunization = Ext.create('Ext.mitos.view.patientfile.Immunization').show();
+
+
         me.layout    = { type:'border', padding:3 };
         me.defaults	 = { split:true };
         me.items     = [ me.Header, me.navColumn, me.MainPanel, me.Footer ];

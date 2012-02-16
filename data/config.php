@@ -91,6 +91,24 @@ $API = array(
 
     ),
     /**
+    * Immunizations Functions
+    */
+    'Immunization'=>array(
+        'methods'=>array(
+            'getImmunizationsList'=>array(
+               'len'=>0
+            ),
+            'getPatientImmunizations'=>array(
+               'len'=>1
+            ),
+            'addPatientImmunization'=>array(
+               'len'=>1
+            )
+        ),
+
+    ),
+    /**
+    /**
     * AddressBook Functions
     */
     'AddressBook'=>array(
@@ -385,7 +403,7 @@ $API = array(
     'Navigation'=>array(
         'methods'=>array(
             'getNavigation'=>array(
-                'len'=>1
+                'len'=>0
             )
         )
     ),
