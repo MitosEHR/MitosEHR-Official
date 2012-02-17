@@ -51,10 +51,10 @@ class FieldsOptionsConvertion extends dbHelper
             $rows[] = array('field_id'=>$fid,'options'=>json_encode($foo));
         }
 
-        $this->setSQL("DROP TABLE IF EXISTS forms_field_options_test");
+        $this->setSQL("DROP TABLE IF EXISTS forms_field_options");
         $this->execOnly();
 
-        $this->setSQL("CREATE TABLE forms_field_options_test (
+        $this->setSQL("CREATE TABLE forms_field_options (
         id int NOT NULL AUTO_INCREMENT,
         PRIMARY KEY(id),
         field_id TEXT COMMENT 'Field ID',
@@ -65,7 +65,7 @@ class FieldsOptionsConvertion extends dbHelper
 
         foreach($rows as $row){
 
-            $sql = $this->sqlBind($row, 'forms_field_options_test', 'I');
+            $sql = $this->sqlBind($row, 'forms_field_options', 'I');
             $this->setSQL($sql);
             $this->execOnly();
 

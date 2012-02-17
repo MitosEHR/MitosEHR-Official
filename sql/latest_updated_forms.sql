@@ -2853,17 +2853,6 @@ CREATE TABLE IF NOT EXISTS `form_data_review_of_systems` (
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `users_facility`
---
-
-DROP TABLE IF EXISTS `users_facility`;
-CREATE TABLE IF NOT EXISTS `users_facility` (
-  `tablename` varchar(64) NOT NULL,
-  `table_id` int(11) NOT NULL,
-  `facility_id` int(11) NOT NULL,
-  PRIMARY KEY (`tablename`,`table_id`,`facility_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='joins users or patient_data to facility table';
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
