@@ -131,7 +131,7 @@ $API = array(
     'Practice'=>array(
         'methods'=>array(
             'getPharmacies'=>array(
-               'len'=>1
+               'len'=>0
             ),
             'addPharmacy'=>array(
                 'len'=>1
@@ -140,7 +140,7 @@ $API = array(
                 'len'=>1
             ),
             'getInsurances'=>array(
-                'len'=>1
+                'len'=>0
             ),
             'addInsurance'=>array(
                 'len'=>1

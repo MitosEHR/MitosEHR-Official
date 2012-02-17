@@ -10,21 +10,20 @@
  * @namespace Immunization.addPatientImmunization
  */
 Ext.define('Ext.mitos.view.patientfile.Immunization',{
-    extend  : 'Ext.window.Window',
-    title   : 'Immunization',
-    height  : '700',
-    width   : '1000',
-    closable: true,
-    closeAction: 'hide',
-    minWidth: 350,
-    layout:'card',
-    defaults : { layout: 'fit'},
-    bodyStyle: 'padding: 5px;',
+    extend      : 'Ext.window.Window',
+    title       : 'Immunization',
+    height      : '700',
+    width       : '1000',
+    layout      : 'card',
+    bodyStyle   : 'padding: 5px;',
+    collapseDirection : 'bottom',
     modal:true,
+
+    animCollapse: true,
 
     initComponent:function(){
 
-        var me=this;
+        var me = this;
 
         Ext.define('immunizationsModel',{
             extend: 'Ext.data.Model',
@@ -73,7 +72,7 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
         });
 
 
-        me.items= [{
+        me.items = [{
             xtype   : 'panel',
             title   : 'Immunization',
             layout  : 'border',
@@ -96,6 +95,7 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                 },{
                     fieldLabel  : 'Date Administered',
                     xtype       : 'datefield',
+                    format      : 'Y-m-d',
                     name        : 'administered_date'
                 },{
                     fieldLabel  : 'Immunization Manufacturer',
@@ -112,10 +112,12 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                 },{
                     fieldLabel  : 'Date Immunization Information Statements Given',
                     xtype       : 'datefield',
+                    format      : 'Y-m-d',
                     name        : 'education_date'
                 },{
                     fieldLabel  : 'Date of VIS Statement (?)',
                     xtype       : 'datefield',
+                    format      : 'Y-m-d',
                     name        : 'vis_date'
                 },{
                     fieldLabel  : 'Notes',
@@ -188,7 +190,7 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                     header: 'Date',
                     width : 100,
                     dataIndex:'administered_date',
-                    renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s')
+                    renderer : Ext.util.Format.dateRenderer('Y-m-d')
                 },{
                     header: 'Lot Number',
                     width : 100,
@@ -201,12 +203,12 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                     header: 'Date Immunization',
                     flex  : 1,
                     dataIndex:'education_date',
-                    renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s')
+                    renderer : Ext.util.Format.dateRenderer('Y-m-d')
                 },{
                     header: 'Date VIS Statement',
                     flex  : 1,
                     dataIndex:'vis_date',
-                    renderer : Ext.util.Format.dateRenderer('Y-m-d H:i:s')
+                    renderer : Ext.util.Format.dateRenderer('Y-m-d')
                 },{
                     header: 'Notes',
                     flex  : 1,
@@ -442,8 +444,6 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
 
 
     onAddImmunization:function(btn){
-        say(this);
-
         var gridPanel   = btn.up('panel').getComponent('patientImmuListGrid'),
             form        = this.getLayout().getActiveItem().down('form').getForm(),
             m           = Ext.create('ListsGridModel', {
@@ -462,6 +462,7 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
         var gridPanel = this.getComponent('immuListGrid');
         gridPanel.expand(true);
     },
+
     onOptionType:function(combo){
 
              var value =  combo.getValue(),

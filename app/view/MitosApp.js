@@ -593,8 +593,6 @@ Ext.define('Ext.mitos.view.MitosApp',{
             }]
         });
 
-        me.MedicalWindow = Ext.create('Ext.mitos.view.patientfile.Immunization');
-
 
         me.layout    = { type:'border', padding:3 };
         me.defaults	 = { split:true };
@@ -605,6 +603,10 @@ Ext.define('Ext.mitos.view.MitosApp',{
         };
 
         me.callParent(arguments);
+    },
+
+    onMedicalWin:function(action){
+        Ext.create('Ext.mitos.view.patientfile.Immunization').show();
     },
 
 
