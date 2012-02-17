@@ -1050,6 +1050,7 @@ Ext.define('Ext.mitos.view.administration.Layout',{
         me.fieldsGridStore.load({params:{currForm: me.currForm }});
         me.parentFieldsStore.load({params:{currForm: me.currForm }});
 
+        me.previewFormRender();
         me.fieldsGrid.doLayout()
     },
     /**
