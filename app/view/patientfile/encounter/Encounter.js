@@ -713,28 +713,33 @@ Ext.define('Ext.mitos.view.patientfile.encounter.Encounter',{
             },'->',{
                 text      	: 'Add Allergies',
                 iconCls   	: 'icoAddRecord',
+                action      : 'onAllergies',
                 scope       : me,
-                handler     : me.newImmunization
+                handler     : me.onMedicalWin
             },'-',{
                 text      	: 'Add Problems',
                 iconCls   	: 'icoAddRecord',
+                action      : 'onProblems',
                 scope       : me,
-                handler     : me.newProblem
+                handler     : me.onMedicalWin
             },'-',{
                 text      	: 'Add Medications',
                 iconCls   	: 'icoAddRecord',
+                action      : 'onMedication',
                 scope       : me,
-                handler     : me.newMedication
+                handler     : me.onMedicalWin
             },'-',{
                 text      	: 'Add Surgery',
                 iconCls   	: 'icoAddRecord',
+                action      : 'onSurgery',
                 scope       : me,
-                handler     : me.newSurgery
+                handler     : me.onMedicalWin
             },'-',{
                 text      	: 'Add Dental',
                 iconCls   	: 'icoAddRecord',
+                action      : 'onDental',
                 scope       : me,
-                handler     : me.newDental
+                handler     : me.onMedicalWin
             },'-',{
                 text      	: 'Close Encounter',
                 iconCls   	: 'icoAddRecord',
@@ -745,24 +750,8 @@ Ext.define('Ext.mitos.view.patientfile.encounter.Encounter',{
 
     },
 
-    newImmunization:function(){
-        App.MedicalWindow.show();
-    },
-
-    newProblem:function(){
-        App.MedicalWindow.show();
-    },
-
-    newMedication:function(){
-        App.MedicalWindow.show();
-    },
-
-    newSurgery:function(){
-        App.MedicalWindow.show();
-    },
-
-    newDental:function(){
-        App.MedicalWindow.show();
+    onMedicalWin:function(btn){
+        App.onMedicalWin(btn.action);
     },
 
 
