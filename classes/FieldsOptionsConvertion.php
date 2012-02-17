@@ -44,7 +44,7 @@ class FieldsOptionsConvertion extends dbHelper
                 }
 
 
-                $foo[] = array($option['oname']=>$option['ovalue']);
+                $foo[$option['oname']] = $option['ovalue'];
 
             }
 

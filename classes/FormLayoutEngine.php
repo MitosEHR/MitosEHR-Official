@@ -149,6 +149,7 @@ class FormLayoutEngine extends dbHelper {
 
         $itemsJsArray = str_replace( '"', '\'', str_replace( $rawItems[0], $cleanItems, $rawStr ));
         return $itemsJsArray;
+        //return $items;
     }
     /**
      * @param $parent
@@ -162,7 +163,9 @@ class FormLayoutEngine extends dbHelper {
         $items = array();
         $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+
             $opts = $this->getItemsOptions($item['id']);
+
             foreach($opts as $opt => $val){
                     $item[$opt] = $val;
             }
@@ -190,16 +193,11 @@ class FormLayoutEngine extends dbHelper {
      */
     function getItemsOptions($item_id){
         $foo = array();
-        $this->setSQL("Select * FROM forms_field_options WHERE field_id = '$item_id'");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $option){
-            if(is_numeric($option['ovalue'])){      // if the string is numeric intval() the value to remove the comas
-                $option['ovalue'] = intval($option['ovalue']);
-            }elseif($option['ovalue'] == 'true'){   // if the string is true let change the value to a bool
-                $option['ovalue'] = true;
-            }elseif($option['ovalue'] == 'false'){  // if the string is false let change the value to a bool
-                $option['ovalue'] = false;
-            }
-            $foo[$option['oname']] = $option['ovalue'];
+        $this->setSQL("Select options FROM forms_field_options_test WHERE field_id = '$item_id'");
+        $options = $this->fetch();
+        $options = json_decode($options['options'],true);
+        foreach($options as $option => $value){
+            $foo[$option] = $value;
         }
         return $foo;
     }
@@ -244,3 +242,9 @@ class FormLayoutEngine extends dbHelper {
         return $item;
     }
 }
+//echo '<pre>';
+//$params = new stdClass;
+//$params->formToRender = '8';
+//$f = new FormLayoutEngine();
+//print_r($f->getFields($params));
+////print_r($f->getItemsOptions(342));
