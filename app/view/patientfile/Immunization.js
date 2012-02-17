@@ -86,11 +86,11 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                 items:[{
                     fieldLabel  : 'Immunization (CVX Code)',
                     name        : 'immunization_id',
-                    itemId: 'immuName',
+                    itemId      : 'immuName',
                     enableKeyEvents : true,
-                    listeners : {
-                        scope:me,
-                        focus:me.onCodeFieldFocus
+                    listeners   : {
+                        scope       :me,
+                        focus       :me.onCodeFieldFocus
                     }
                 },{
                     fieldLabel  : 'Date Administered',
@@ -414,7 +414,9 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
 
     onAfterRender:function(){
         var me = this,
-            ImmuHeader = this.getComponent(0).getDockedItems()[0];
+            ImmuHeader = this.getComponent(0).getDockedItems()[0],
+            AllergyHeader=this.getComponent(1).getDockedItems()[0],
+            MedicalIssue=this.getComponent(2).getDockedItems()[0];
 
         ImmuHeader.add({
             xtype   : 'button',
@@ -423,16 +425,31 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
             scope   : me,
             handler : me.onAddImmunization
         });
+        AllergyHeader.add({
+            xtype   : 'button',
+            text    : 'Add Allergies',
+            iconCls : 'icoAddRecord',
+            scope   : me,
+            handler : me.onAddImmunization
+
+        });MedicalIssue.add({
+            xtype   : 'button',
+            text    : 'Add Medical Issue',
+            iconCls : 'icoAddRecord',
+            scope   : me,
+            handler : me.onAddImmunization
+
+        });
     },
+
 
     onAddImmunization:function(btn){
         var gridPanel   = btn.up('panel').getComponent('patientImmuListGrid'),
             form        = this.getLayout().getActiveItem().down('form').getForm(),
             m           = Ext.create('ListsGridModel', {
-                immunizationManLN:'sdfsdfds'
+
             });
         gridPanel.setHeight(245);
-
         form.loadRecord(m);
     },
 
