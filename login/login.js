@@ -50,7 +50,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
             autoLoad		: 'gpl-licence-en.html',
             closeAction		: 'hide',
             width			: 900,
-            height			: '70%',
+            height			: '75%',
             modal			: false,
             resizable		: true,
             draggable		: true,
