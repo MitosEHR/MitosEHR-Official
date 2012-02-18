@@ -47,10 +47,10 @@ Ext.define('Ext.mitos.view.MitosApp', {
 		'Ext.mitos.view.calendar.Calendar',
 		'Ext.mitos.view.messages.Messages',
 
-		'Ext.mitos.view.patientfile.new.NewPatient',
-		'Ext.mitos.view.patientfile.summary.Summary',
-		'Ext.mitos.view.patientfile.visits.Visits',
-		'Ext.mitos.view.patientfile.encounter.Encounter',
+		'Ext.mitos.view.patientfile.NewPatient',
+		'Ext.mitos.view.patientfile.Summary',
+		'Ext.mitos.view.patientfile.Visits',
+		'Ext.mitos.view.patientfile.Encounter',
 
 
 		'Ext.mitos.view.fees.Billing',
@@ -494,10 +494,10 @@ Ext.define('Ext.mitos.view.MitosApp', {
 			/**
 			 * Patient Area
 			 */
-				Ext.create('Ext.mitos.view.patientfile.new.NewPatient'),
-				Ext.create('Ext.mitos.view.patientfile.summary.Summary'),
-				Ext.create('Ext.mitos.view.patientfile.visits.Visits'),
-				Ext.create('Ext.mitos.view.patientfile.encounter.Encounter'),
+				Ext.create('Ext.mitos.view.patientfile.NewPatient'),
+				Ext.create('Ext.mitos.view.patientfile.Summary'),
+				Ext.create('Ext.mitos.view.patientfile.Visits'),
+				Ext.create('Ext.mitos.view.patientfile.Encounter'),
 
 
 			/**

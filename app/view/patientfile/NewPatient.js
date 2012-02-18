@@ -13,7 +13,7 @@
  * Author   : GI Technologies, 2011
  * Modified : Ernesto J Rodriguez (Certun) 10/25/2011
  */
-Ext.define('Ext.mitos.view.patientfile.new.NewPatient', {
+Ext.define('Ext.mitos.view.patientfile.NewPatient', {
 	extend       : 'Ext.mitos.classes.RenderPanel',
 	id           : 'panelNewPatient',
 	pageTitle    : 'Patient Entry Form',

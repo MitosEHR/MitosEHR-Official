@@ -101,10 +101,10 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/Users.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Checkbox.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/DateTime.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/visits/Visits.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/summary/Summary.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/encounter/Encounter.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/new/NewPatient.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/Visits.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/Summary.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/Encounter.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/NewPatient.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Immunization.js"></script>
         <script type="text/javascript" src="app/view/administration/Facilities.js"></script>
         <script type="text/javascript" src="app/view/administration/Globals.js"></script>

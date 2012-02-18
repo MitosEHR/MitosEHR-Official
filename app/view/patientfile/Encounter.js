@@ -14,7 +14,7 @@
  * @namespace Encounter.closeEncounter
  * @namespace Encounter.getVitals
  */
-Ext.define('Ext.mitos.view.patientfile.encounter.Encounter', {
+Ext.define('Ext.mitos.view.patientfile.Encounter', {
 	extend       : 'Ext.mitos.classes.RenderPanel',
 	id           : 'panelEncounter',
 	pageTitle    : 'Encounter',

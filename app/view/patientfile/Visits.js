@@ -9,11 +9,15 @@
  * MitosEHR (Electronic Health Records) 2011
  * @namespace Encounter.getEncounters
  */
-Ext.define('Ext.mitos.view.patientfile.visits.Visits', {
+Ext.define('Ext.mitos.view.patientfile.Visits', {
 	extend   : 'Ext.mitos.classes.RenderPanel',
 	id       : 'panelVisits',
 	pageTitle: 'Visits History',
-	uses     : ['Ext.mitos.classes.restStoreModel', 'Ext.mitos.classes.GridPanel', 'Ext.ux.PreviewPlugin'],
+	uses     : [
+		'Ext.mitos.classes.restStoreModel',
+		'Ext.mitos.classes.GridPanel',
+		'Ext.ux.PreviewPlugin'
+	],
 
 	initComponent: function() {
 		var me = this;
