@@ -9,22 +9,22 @@
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
 
-session_name ( "MitosEHR" );
+session_name("MitosEHR");
 session_start();
 session_cache_limiter('private');
 
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-include_once($_SESSION['site']['root']."/repo/global_functions/global_functions.php");
+include_once($_SESSION['site']['root'] . "/classes/dbHelper.php");
+include_once($_SESSION['site']['root'] . "/repo/global_functions/global_functions.php");
 
 $_SESSION['site']['flops'] = 0;
 
-$mitos_db   = new dbHelper();
-$data       = $_POST;
+$mitos_db = new dbHelper();
+$data = $_POST;
 
-foreach($data as $key => $val){
-    if($val == null) unset($data[$key]);
-    if($val == 'off') $data[$key] = 0;
-    if($val == 'on')  $data[$key] = 1;
+foreach ($data as $key => $val) {
+    if ($val == null) unset($data[$key]);
+    if ($val == 'off') $data[$key] = 0;
+    if ($val == 'on') $data[$key] = 1;
 }
 
 
@@ -37,15 +37,15 @@ $mitos_db->setSQL("SELECT pid, fname, mname, lname
                      FROM form_data_demographics
                     WHERE pid = '$pid'");
 $rows = array();
-foreach($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row){
-    $row['fullname'] = fullname($row['fname'],$row['mname'],$row['lname']);
+foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row) {
+    $row['fullname'] = fullname($row['fname'], $row['mname'], $row['lname']);
     array_push($rows, $row);
 }
 
-if ( $ret[2] ){
-    echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+if ($ret[2]) {
+    echo '{ success: false, errors: { reason: "' . $ret[2] . '" }}';
 } else {
-    echo '{ "success": true, "patient": { "pid": "'.$row['pid'].'", fullname:"'.$row['fullname'].'" } }';
+    echo '{ "success": true, "patient": { "pid": "' . $row['pid'] . '", fullname:"' . $row['fullname'] . '" } }';
 }
 
 

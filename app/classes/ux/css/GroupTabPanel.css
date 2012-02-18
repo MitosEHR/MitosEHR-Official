@@ -3,15 +3,17 @@
     background-color: #99BBE8;
     border: solid 15px #99BBE8;
 }
+
 /* End of GroupTabPanel style */
 
 /* Card Layout container */
 .x-grouptabcontainer {
     background-color: white;
-    border-top: 1px solid #d9d9d9 !important;    
+    border-top: 1px solid #d9d9d9 !important;
     border-bottom: 1px solid #d9d9d9 !important;
     border-right: 1px solid #d9d9d9 !important;
 }
+
 /* End of Card Layout container */
 
 /* TreePanel overrides */
@@ -20,7 +22,7 @@
     line-height: 24px;
 }
 
-.x-grouptabbar .x-tree-elbow-line, 
+.x-grouptabbar .x-tree-elbow-line,
 .x-grouptabbar .x-tree-elbow-empty {
     width: 0;
 }
@@ -60,7 +62,7 @@
     background-color: transparent !important;
 }
 
-.x-grouptabbar .x-grid-row-selected .x-grouptab-center  {
+.x-grouptabbar .x-grid-row-selected .x-grouptab-center {
     background-color: #fff !important;
 }
 
@@ -72,14 +74,14 @@
     margin-left: 7px;
     overflow: visible !important;
     line-height: 24px;
-    height: 24px; 
+    height: 24px;
 }
 
 .x-grouptabbar .x-scroller {
     display: none;
 }
 
-.x-grouptabbar .x-panel-body  {
+.x-grouptabbar .x-panel-body {
     overflow: visible !important;
     background: url('images/border.gif') repeat-y top right;
 }
@@ -98,6 +100,7 @@
 }
 
 .x-grouptabbar table {
-     width:150px !important;
+    width: 150px !important;
 }
+
 /* End of TreePanel overrides */

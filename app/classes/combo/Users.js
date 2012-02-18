@@ -5,40 +5,40 @@
  * Date: 10/29/11
  * Time: 4:45 PM
  */
-Ext.define('Ext.mitos.classes.combo.Users',{
-	extend      : 'Ext.form.ComboBox',
-    alias       : 'widget.userscombo',
-    uses        : 'Ext.mitos.classes.restStoreModel',
-    initComponent: function(){
-    	var me = this;
+Ext.define('Ext.mitos.classes.combo.Users', {
+	extend       : 'Ext.form.ComboBox',
+	alias        : 'widget.userscombo',
+	uses         : 'Ext.mitos.classes.restStoreModel',
+	initComponent: function() {
+		var me = this;
 
-        Ext.define('UsersComboModel', {
-            extend: 'Ext.data.Model',
-            fields: [
-                {name: 'id',      type: 'int' },
-                {name: 'name', type: 'string' }
-            ],
-            proxy: {
-                type: 'direct',
-                api: {
-                    read: CombosData.getUsers
-                }
-            }
-        });
+		Ext.define('UsersComboModel', {
+			extend: 'Ext.data.Model',
+			fields: [
+				{name: 'id', type: 'int' },
+				{name: 'name', type: 'string' }
+			],
+			proxy : {
+				type: 'direct',
+				api : {
+					read: CombosData.getUsers
+				}
+			}
+		});
 
-        me.store = Ext.create('Ext.data.Store', {
-            model: 'UsersComboModel',
-            autoLoad: true
-        });
+		me.store = Ext.create('Ext.data.Store', {
+			model   : 'UsersComboModel',
+			autoLoad: true
+		});
 
-    	Ext.apply(this, {
-            editable    : false,
-            queryMode   : 'local',
-            valueField  : 'id',
-            displayField: 'name',
-            emptyText   : 'Select',
-            store       : me.store
-		},null);
+		Ext.apply(this, {
+			editable    : false,
+			queryMode   : 'local',
+			valueField  : 'id',
+			displayField: 'name',
+			emptyText   : 'Select',
+			store       : me.store
+		}, null);
 		me.callParent();
 	} // end initComponent
 });

@@ -6,23 +6,23 @@
  * @private
  */
 Ext.define('Ext.ux.layout.component.form.MultiSelect', {
-    extend: 'Ext.layout.component.field.Field',
-    alias: ['layout.multiselectfield'],
+	extend: 'Ext.layout.component.field.Field',
+	alias : ['layout.multiselectfield'],
 
-    type: 'multiselectfield',
+	type: 'multiselectfield',
 
-    /**
-     * @cfg {Number} height The height of the field. Defaults to 200.
-     */
-    defaultHeight: 200,
+	/**
+	 * @cfg {Number} height The height of the field. Defaults to 200.
+	 */
+	defaultHeight: 200,
 
-    sizeBodyContents: function(width, height) {
-        var me = this;
+	sizeBodyContents: function(width, height) {
+		var me = this;
 
-        if (!Ext.isNumber(height)) {
-            height = me.defaultHeight;
-        }
+		if(!Ext.isNumber(height)) {
+			height = me.defaultHeight;
+		}
 
-        me.owner.panel.setSize(width, height);
-    }
+		me.owner.panel.setSize(width, height);
+	}
 });

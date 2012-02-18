@@ -4,16 +4,16 @@
  * A layout column class used internally be {@link Ext.app.PortalPanel}.
  */
 Ext.define('Ext.mitos.classes.dashboard.PortalColumn', {
-    extend: 'Ext.container.Container',
-    alias: 'widget.portalcolumn',
-    layout: {
-        type: 'anchor'
-    },
-    defaultType: 'portlet',
-    cls: 'x-portal-column',
-    autoHeight: true
-    //
-    // This is a class so that it could be easily extended
-    // if necessary to provide additional behavior.
-    //
+	extend     : 'Ext.container.Container',
+	alias      : 'widget.portalcolumn',
+	layout     : {
+		type: 'anchor'
+	},
+	defaultType: 'portlet',
+	cls        : 'x-portal-column',
+	autoHeight : true
+	//
+	// This is a class so that it could be easily extended
+	// if necessary to provide additional behavior.
+	//
 });
