@@ -47,7 +47,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
             id				: 'winCopyright',
             title			: 'MitosEHR Copyright Notice',
             bodyStyle		: 'background-color: #ffffff; padding: 5px;',
-            autoLoad		: 'app/login/copyright_notice.html',
+            autoLoad		: 'login/copyright_notice.html',
             closeAction		: 'hide',
             width			: 600,
             height			: 500,
