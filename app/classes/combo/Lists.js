@@ -1,38 +1,38 @@
-Ext.define('Ext.mitos.classes.combo.Lists',{
-	extend      : 'Ext.form.ComboBox',
-    alias       : 'widget.mitos.listscombo',
-    width		: 250,
-    iconCls		: 'icoListOptions',
-    initComponent: function(){	
-    	var me = this;
+Ext.define('Ext.mitos.classes.combo.Lists', {
+	extend       : 'Ext.form.ComboBox',
+	alias        : 'widget.mitos.listscombo',
+	width        : 250,
+	iconCls      : 'icoListOptions',
+	initComponent: function() {
+		var me = this;
 
-        Ext.define('ListComboModel', {
-            extend: 'Ext.data.Model',
-            fields: [
-                {name: 'id',        type: 'int' },
-                {name: 'title',     type: 'string' }
-            ],
-            proxy: {
-                type: 'direct',
-                api: {
-                    read: CombosData.getLists
-                }
-            }
-        });
+		Ext.define('ListComboModel', {
+			extend: 'Ext.data.Model',
+			fields: [
+				{name: 'id', type: 'int' },
+				{name: 'title', type: 'string' }
+			],
+			proxy : {
+				type: 'direct',
+				api : {
+					read: CombosData.getLists
+				}
+			}
+		});
 
-        me.store = Ext.create('Ext.data.Store', {
-            model: 'ListComboModel',
-            autoLoad: true
-        });
+		me.store = Ext.create('Ext.data.Store', {
+			model   : 'ListComboModel',
+			autoLoad: true
+		});
 
-    	Ext.apply(this, {
-            editable    : false,
-            queryMode   : 'local',
-            valueField  : 'id',
-            displayField: 'title',
-            emptyText   : 'Select',
-            store       : me.store
-		},null);
+		Ext.apply(this, {
+			editable    : false,
+			queryMode   : 'local',
+			valueField  : 'id',
+			displayField: 'title',
+			emptyText   : 'Select',
+			store       : me.store
+		}, null);
 		me.callParent(arguments);
 	}
 });

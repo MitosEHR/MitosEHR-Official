@@ -5,50 +5,50 @@
  */
 Ext.define('Ext.ux.TabReorderer', {
 
-    extend: 'Ext.ux.BoxReorderer',
+	extend: 'Ext.ux.BoxReorderer',
 
-    itemSelector: '.x-tab',
+	itemSelector: '.x-tab',
 
-    init: function(tabPanel) {
-        var me = this;
-        
-        me.callParent([tabPanel.getTabBar()]);
+	init: function(tabPanel) {
+		var me = this;
 
-        // Ensure reorderable property is copied into dynamically added tabs
-        tabPanel.onAdd = Ext.Function.createSequence(tabPanel.onAdd, me.onAdd);
-    },
+		me.callParent([tabPanel.getTabBar()]);
 
-    afterFirstLayout: function() {
-        var tabs,
-            len,
-            i = 0,
-            tab;
+		// Ensure reorderable property is copied into dynamically added tabs
+		tabPanel.onAdd = Ext.Function.createSequence(tabPanel.onAdd, me.onAdd);
+	},
 
-        this.callParent(arguments);
+	afterFirstLayout: function() {
+		var tabs,
+			len,
+			i = 0,
+			tab;
 
-        // Copy reorderable property from card into tab
-        for (tabs = this.container.items.items, len = tabs.length; i < len; i++) {
-            tab = tabs[i];
-            if (tab.card) {
-                tab.reorderable = tab.card.reorderable;
-            }
-        }
-    },
+		this.callParent(arguments);
 
-    onAdd: function(card, index) {
-        card.tab.reorderable = card.reorderable;
-    },
+		// Copy reorderable property from card into tab
+		for(tabs = this.container.items.items, len = tabs.length; i < len; i++) {
+			tab = tabs[i];
+			if(tab.card) {
+				tab.reorderable = tab.card.reorderable;
+			}
+		}
+	},
 
-    afterBoxReflow: function() {
-        var me = this;
+	onAdd: function(card, index) {
+		card.tab.reorderable = card.reorderable;
+	},
 
-        // Cannot use callParent, this is not called in the scope of this plugin, but that of its Ext.dd.DD object
-        Ext.ux.BoxReorderer.prototype.afterBoxReflow.apply(me, arguments);
+	afterBoxReflow: function() {
+		var me = this;
 
-        // Move the associated card to match the tab order
-        if (me.dragCmp) {
-            me.container.tabPanel.setActiveTab(me.dragCmp.card);
-            me.container.tabPanel.move(me.startIndex, me.curIndex);
-        }
-    }
+		// Cannot use callParent, this is not called in the scope of this plugin, but that of its Ext.dd.DD object
+		Ext.ux.BoxReorderer.prototype.afterBoxReflow.apply(me, arguments);
+
+		// Move the associated card to match the tab order
+		if(me.dragCmp) {
+			me.container.tabPanel.setActiveTab(me.dragCmp.card);
+			me.container.tabPanel.move(me.startIndex, me.curIndex);
+		}
+	}
 });

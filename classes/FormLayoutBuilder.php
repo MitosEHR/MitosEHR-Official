@@ -340,15 +340,24 @@ class FormLayoutBuilder extends dbHelper {
      * @return mixed
      */
     private function insertOptions($data , $id){
-        foreach($data as $key => $val){
-            $opt['field_id'] = $id;
-            $opt['oname']    = $key;
-            $opt['ovalue']   = $val;
-            $sql = $this->sqlBind($opt, "forms_field_options", "I");
+
+            $json = json_encode($data, JSON_NUMERIC_CHECK);
+            $options = array('field_id' => $id, 'options' => $json);
+
+            $sql = ("SELECT count(*) FROM forms_field_options WHERE field_id = '$id'");
+            $this->setSQL($sql);
+            $field = $this->fetch();
+
+            if($field['count(*)'] == 0){
+                $sql = $this->sqlBind($options, "forms_field_options", "I");
+            }else{
+                $sql = $this->sqlBind($options, "forms_field_options", "U", "field_id ='".$id."'" );
+            }
+
             $this->setSQL($sql);
             $ret = $this->execOnly();
             $this->checkError($ret);
-        }
+
         return;
     }
     /**
@@ -438,8 +447,15 @@ class FormLayoutBuilder extends dbHelper {
      */
     private function sinatizedData($data){
         foreach($data as $option => $val){
-            if($val == '') unset($data[$option]);
-            if($option == 'hideLabel' && $val == '0' ) unset($data[$option]);
+            if($val == '' || $val == null) unset($data[$option]);
+            if($option == 'hideLabel' || $option == 'checkboxToggle' || $option == 'collapsed' || $option == 'collapsible'){
+                if($val == 0){
+                    $data[$option] = false;
+                }else{
+                    $data[$option] = true;
+                }
+
+            }
 
             if($val == 'on'){
                 $data[$option] = 'true';
@@ -484,22 +500,25 @@ class FormLayoutBuilder extends dbHelper {
      * @return array
      */
     public function getParentFields(stdClass $params){
-        $this->setSQL("Select CONCAT(fo.ovalue, ' (',ff.xtype ,')' ) AS name, ff.id as value
+        $this->setSQL("Select ff.id, ff.xtype
                          FROM forms_fields AS ff
-                    LEFT JOIN forms_field_options AS fo
-                           ON ff.id = fo.field_id
                     LEFT JOIN forms_layout AS fl
                            ON fl.id = ff.form_id
                         WHERE (fl.name  = '$params->currForm' OR fl.id    = '$params->currForm')
                           AND (ff.xtype = 'fieldcontainer'    OR ff.xtype = 'fieldset')
-                          AND (fo.oname = 'title'             OR fo.oname = 'fieldLabel')
-                     ORDER BY pos");
-        $rows = array();
-        array_push($rows, array('name' => 'Root', 'value' => 0));
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
-            array_push($rows, $row);
+                     ORDER BY ff.pos");
+        $parentFields = array();
+        array_push($parentFields, array('name' => 'Root', 'value' => 0));
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $parentField){
+            $id = $parentField['id'];
+            $this->setSQL("SELECT options FROM forms_field_options WHERE field_id = '$id'");
+            $fo = $this->fetch();
+            $foo = json_decode($fo['options'],true);
+            $row['name']  =  $foo['title'].$foo['fieldLabel'].' ('.$parentField['xtype'].')';
+            $row['value'] =  $parentField['id'];
+            array_push($parentFields, $row);
         }
-       return $rows;
+       return $parentFields;
     }
 
     /**
@@ -566,16 +585,11 @@ class FormLayoutBuilder extends dbHelper {
      */
     private function getItmesOptions($item_id){
         $foo = array();
-        $this->setSQL("Select * FROM forms_field_options WHERE field_id = '$item_id'");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $option){
-            if(is_numeric($option['ovalue'])){      // if the string is numeric intval() the value to remove the comas
-                $option['ovalue'] = intval($option['ovalue']);
-            }elseif($option['ovalue'] == 'true'){   // if the sring is true let change the value to a bool
-                $option['ovalue'] = true;
-            }elseif($option['ovalue'] == 'false'){  // if the sring is false let change the value to a bool
-                $option['ovalue'] = false;
-            }
-            $foo[$option['oname']] = $option['ovalue'];
+        $this->setSQL("Select options FROM forms_field_options WHERE field_id = '$item_id'");
+        $options = $this->fetch();
+        $options = json_decode($options['options'],true);
+        foreach($options as $option => $value){
+            $foo[$option] = $value;
         }
         return $foo;
     }

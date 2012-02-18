@@ -6,11 +6,11 @@
  * Time: 3:21 PM
  */
 Ext.define('Ext.mitos.classes.window.Window', {
-    extend      : 'Ext.window.Window',
-	autoHeight  : true,
-    modal       : true,
-    border	  	: true,
-    autoScroll	: true,
-    resizable   : false,
-    closeAction : 'hide'
+	extend     : 'Ext.window.Window',
+	autoHeight : true,
+	modal      : true,
+	border     : true,
+	autoScroll : true,
+	resizable  : false,
+	closeAction: 'hide'
 });
