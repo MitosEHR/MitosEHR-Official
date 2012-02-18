@@ -127,6 +127,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/patientfile/summary/Summary.js"></script>
         <script type="text/javascript" src="app/view/patientfile/encounter/Encounter.js"></script>
         <script type="text/javascript" src="app/view/patientfile/new/NewPatient.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/Immunization.js"></script>
 
 
         <script type="text/javascript" src="app/view/administration/Facilities.js"></script>
