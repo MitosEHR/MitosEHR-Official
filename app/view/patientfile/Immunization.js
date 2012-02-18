@@ -179,7 +179,6 @@ Ext.define('Ext.mitos.view.patientfile.Immunization',{
                 store: me.patientImmuListStore,
                 height: 605,
                 split: true,
-                align: 'left',
                 collapsible: true,
 
                 columns:[{
