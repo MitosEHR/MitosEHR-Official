@@ -252,8 +252,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						}
 					}
 				]
-			},
-			{
+			},{
 				/**
 				 * Allergies Card panel
 				 */
@@ -345,8 +344,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					{
 						xtype      : 'grid',
 						region     : 'south',
-						itemId     : 'patientAllergyListGrid',
-						store      : me.patientAllergyListStore,
+						itemId     : 'patientAllergiesListGrid',
+						store      : me.patientImmuListStore,
 						height     : 605,
 						split      : true,
 						collapsible: true,
@@ -354,54 +353,42 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 						columns  : [
 							{
-								header   : 'Type',
+								header   : 'Code Type',
 								width    : 100,
-								dataIndex: 'type'
+								dataIndex: 'immunization_id'
 							},
 							{
 								header   : 'Date',
 								width    : 100,
-								dataIndex: 'date'
+								dataIndex: 'administered_date',
+								renderer : Ext.util.Format.dateRenderer('Y-m-d')
 							},
 							{
-								header   : 'Diagnosis Code',
+								header   : 'Lot Number',
 								width    : 100,
-								dataIndex: 'diagnosiscode'
+								dataIndex: 'lot_number'
 							},
 							{
-								header   : 'Begin Date',
+								header   : 'Provider',
 								width    : 100,
-								dataIndex: 'begindate'
+								dataIndex: 'administered_by'
 							},
 							{
-								header   : 'End Date',
+								header   : 'Date Immunization',
 								flex     : 1,
-								dataIndex: 'enddate'
+								dataIndex: 'education_date',
+								renderer : Ext.util.Format.dateRenderer('Y-m-d')
 							},
 							{
-								header   : 'Ocurrence',
+								header   : 'Date VIS Statement',
 								flex     : 1,
-								dataIndex: 'ocurrence'
+								dataIndex: 'vis_date',
+								renderer : Ext.util.Format.dateRenderer('Y-m-d')
 							},
 							{
-								header   : 'Reaction',
+								header   : 'Notes',
 								flex     : 1,
-								dataIndex: 'reaction'
-							},
-							{
-								header   : 'Referred by',
-								flex     : 1,
-								dataIndex: 'referredby'
-							},
-							{
-								header   : 'Outcome',
-								flex     : 1,
-								dataIndex: 'outcome'
-							},
-							{
-								header   : 'Destination',
-								flex     : 1,
-								dataIndex: 'destination'
+								dataIndex: 'note'
 							}
 						],
 						listeners: {
@@ -411,6 +398,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					}
 				]
 			},
+
 			{
 				/**
 				 * Medical Issues Card panel
@@ -500,7 +488,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						xtype      : 'grid',
 						region     : 'south',
 						itemId     : 'patientMedicalListGrid',
-						store      : me.patientMedicalListStore,
+						store      : me.patientImmuListStore,
 						height     : 605,
 						split      : true,
 						collapsible: true,
@@ -602,7 +590,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			scope      : me,
 			afterrender: me.onAfterRender,
 			show       : me.onShow
-		}
+		};
 
 
 		me.callParent(arguments);
@@ -724,4 +712,5 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	onShow: function() {
 		this.patientImmuListStore.load();
 	}
+
 });
