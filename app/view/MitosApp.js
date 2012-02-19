@@ -51,6 +51,7 @@ Ext.define('App.view.MitosApp', {
 		'App.view.patientfile.Summary',
 		'App.view.patientfile.Visits',
 		'App.view.patientfile.Encounter',
+		'App.view.patientfile.MedicalWindow',
 
 
 		'App.view.fees.Billing',
@@ -654,7 +655,7 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	onMedicalWin: function(action) {
-		Ext.create('App.view.patientfile.Immunization').show();
+		Ext.create('App.view.patientfile.MedicalWindow').show();
 	},
 	onChartsWin: function() {
 		if(this.ChartsWindow){
