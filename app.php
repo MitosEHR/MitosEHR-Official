@@ -24,38 +24,35 @@ include_once($_SESSION['site']['root'].'/classes/Globals.php');
 Globals::setGlobals();
 ?>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title><?php echo $_SESSION['global_settings']['mitosehr_name'] ?></title>
-<!--test stuff-->
-<link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
-<!--end test stuff-->
-<link rel="stylesheet" type="text/css" href="themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
-<!--calendar css-->
-<link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/resources/css/extensible-all.css" />
-<!--ens calendar css-->
-<link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
-<link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
-<link rel="shortcut icon" href="favicon.ico" >
-<!--<script type="text/javascript" src="app/view/App.js"></script>-->
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title><?php echo $_SESSION['global_settings']['mitosehr_name'] ?></title>
+        <!--test stuff-->
+        <link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
+        <!--end test stuff-->
+        <link rel="stylesheet" type="text/css" href="themes/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
+        <!--calendar css-->
+        <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/resources/css/extensible-all.css" />
+        <!--ens calendar css-->
+        <link rel="stylesheet" type="text/css" href="ui_app/style_newui.css" >
+        <link rel="stylesheet" type="text/css" href="ui_app/mitosehr_app.css" >
+        <link rel="shortcut icon" href="favicon.ico" >
+        <!--<script type="text/javascript" src="app/view/App.js"></script>-->
+    </head>
     <body>
+
+        <!-- Loading Mask -->
         <div id="mainapp-loading-mask" class="x-mask mitos-mask"></div>
         <div id="mainapp-x-mask-msg">
             <div id="mainapp-loading" class="x-mask-msg mitos-mask-msg">
                 <div>Loading MitosEHR...</div>
             </div>
         </div>
+        <!-- slide down message div -->
         <span id="app-msg" style="display:none;"></span>
 
+        <!-- Ext library -->
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
-        <script type="text/javascript" src="lib/webcam_control/swfobject.js"></script>
-        <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
-        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
-        <!-- Languages -->
-        <script type="text/javascript" src="langs/<?php echo $_SESSION['lang']['code'] ?>.js"></script>
-        <!-- JS Registry -->
-        <script type="text/javascript" src="registry.js.php"></script>
         <script src="data/api.php"></script>
         <script type="text/javascript">
             Ext.Loader.setConfig({
@@ -69,6 +66,18 @@ Globals::setGlobals();
             });
             Ext.direct.Manager.addProvider(App.data.REMOTING_API);
         </script>
+
+        <!-- swfobject is webcam library -->
+        <script type="text/javascript" src="lib/webcam_control/swfobject.js"></script>
+        <!-- Extensible calendar library -->
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/src/Extensible.js"></script>
+        <!-- Languages -->
+        <script type="text/javascript" src="langs/<?php echo $_SESSION['lang']['code'] ?>.js"></script>
+        <!-- JS Registry -->
+        <script type="text/javascript" src="registry.js.php"></script>
+        <!-- form validation vtypes -->
+        <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
+
 
         <script type="text/javascript" src="lib/ext-4.0.7/src/grid/plugin/RowEditing.js"></script>
 
@@ -144,9 +153,11 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/miscellaneous/Websearch.js"></script>
         <script type="text/javascript" src="app/view/patientfile/ChartsWindow.js"></script>
 
-
-        <script type="text/javascript" src="app/view/MitosApp.js"></script>
+        <!-- Override classes -->
         <script type="text/javascript" src="app/classes/Overrides.js"></script>
+
+        <!-- Aplication Viewport -->
+        <script type="text/javascript" src="app/view/MitosApp.js"></script>
         <script type="text/javascript">
             var app;
             function say(a){

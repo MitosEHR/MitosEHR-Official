@@ -126,17 +126,15 @@ Ext.define('App.view.MitosApp', {
 				items: ['-', {
 					text   : lang.issuesBugs,
 					iconCls: 'list',
+					action : 'http://mitosehr.org/projects/mitosehr001/issues',
 					scope  : me,
-					handler: function() {
-						me.showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
-					}
+					handler: me.showMiframe
 				}, '-', {
 					text   : lang.newIssueBug,
 					iconCls: 'icoAddRecord',
+					action : 'http://mitosehr.org/projects/mitosehr001/issues/new',
 					scope  : me,
-					handler: function() {
-						me.showMiframe('http://mitosehr.org/projects/mitosehr001/issues/new');
-					}
+					handler: me.showMiframe
 				}]
 			}
 		});
@@ -430,10 +428,9 @@ Ext.define('App.view.MitosApp', {
 						frame  : true,
 						text   : 'MithosEHR ' + lang.support,
 						iconCls: 'icoHelp',
+						action : 'http://mitosehr.org/projects/mitosehr001/wiki',
 						scope  : me,
-						handler: function() {
-							me.showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
-						}
+						handler: me.showMiframe
 					}, '-']
 				}
 			],
@@ -573,42 +570,37 @@ Ext.define('App.view.MitosApp', {
 							text    : 'Copyright (C) 2011 MitosEHR (Electronic Health Records) |:|  Open Source Software operating under GPLv3 ',
 							iconCls : 'icoGreen',
 							disabled: true,
+							action  : 'http://mitosehr.org/projects/mitosehr001',
 							scope   : me,
-							handler : function() {
-								me.showMiframe('http://mitosehr.org/projects/mitosehr001');
-							}
+							handler : me.showMiframe
 						},
 						'->',
 						{
 							text   : 'news',
+							action : 'http://mitosehr.org/projects/mitosehr001/news',
 							scope  : me,
-							handler: function() {
-								me.showMiframe('http://mitosehr.org/projects/mitosehr001/news');
-							}
+							handler: me.showMiframe
 						},
 						'-',
 						{
 							text   : 'wiki',
+							action : 'http://mitosehr.org/projects/mitosehr001/wiki',
 							scope  : me,
-							handler: function() {
-								me.showMiframe('http://mitosehr.org/projects/mitosehr001/wiki');
-							}
+							handler: me.showMiframe
 						},
 						'-',
 						{
 							text   : 'issues',
+							action : 'http://mitosehr.org/projects/mitosehr001/issues',
 							scope  : me,
-							handler: function() {
-								me.showMiframe('http://mitosehr.org/projects/mitosehr001/issues');
-							}
+							handler: me.showMiframe
 						},
 						'-',
 						{
 							text   : 'forums',
+							action : 'http://mitosehr.org/projects/mitosehr001/boards',
 							scope  : me,
-							handler: function() {
-								me.showMiframe('http://mitosehr.org/projects/mitosehr001/boards');
-							}
+							handler: me.showMiframe
 						}
 					]
 				}
@@ -819,9 +811,10 @@ Ext.define('App.view.MitosApp', {
 	},
 
 
-	showMiframe: function(src) {
+	showMiframe: function(btn) {
+		var src = btn.action;
 		this.winSupport.remove(this.miframe);
-		this.winSupport.add(this.miframe = Ext.create('App.ManagedIframe', {src: src}));
+		this.winSupport.add(this.miframe = Ext.create('App.classes.ManagedIframe', {src: src}));
 		this.winSupport.show();
 	},
 
