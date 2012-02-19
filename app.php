@@ -95,6 +95,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/TaxId.js"></script>
         <script type="text/javascript" src="app/classes/combo/Titles.js"></script>
         <script type="text/javascript" src="app/classes/combo/Outcome.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Medications.js"></script>
         <script type="text/javascript" src="app/classes/combo/Occurrence.js"></script>
         <script type="text/javascript" src="app/classes/combo/TransmitMedthod.js"></script>
         <script type="text/javascript" src="app/classes/combo/Types.js"></script>
@@ -105,7 +106,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/patientfile/Summary.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Encounter.js"></script>
         <script type="text/javascript" src="app/view/patientfile/NewPatient.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/Immunization.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/MedicalWindow.js"></script>
         <script type="text/javascript" src="app/view/administration/Facilities.js"></script>
         <script type="text/javascript" src="app/view/administration/Globals.js"></script>
         <script type="text/javascript" src="app/view/administration/Layout.js"></script>
