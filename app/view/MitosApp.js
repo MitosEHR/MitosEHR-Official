@@ -117,22 +117,14 @@ Ext.define('App.view.MitosApp', {
 			},
 			listeners: {
 				scope: me,
-				load : me.navNodeDefault
+				load : me.navigateToDefault
 			}
 		});
 
 		/**
 		 * This store will handle the patient pool area
 		 */
-		me.patientPoolStore = Ext.create('Ext.data.Store', {
-			fields: ['name', 'pid', 'pic'],
-			data  : [
-				{"name": "Ernesto J Rodriguez", "pid": "123", "pic": "ui_icons/user_32.png"},
-				{"name": "Juan Pablo", "pid": "634", "pic": "ui_icons/user_32.png"},
-				{"name": "Joe Smith", "pid": "867", "pic": "ui_icons/user_32.png"}
-				//...
-			]
-		});
+		me.patientPoolStore = Ext.create('App.store.poolarea.PoolArea');
 
 
 		/**
@@ -402,7 +394,7 @@ Ext.define('App.view.MitosApp', {
 					},
 					listeners  : {
 						scope          : me,
-						selectionchange: me.navNodeSelected
+						selectionchange: me.onNavigationNodeSelected
 					}
 				},
 				{
@@ -661,6 +653,7 @@ Ext.define('App.view.MitosApp', {
 		}
 		Ext.create('App.view.patientfile.MedicalWindow').show();
 	},
+
 	onChartsWin: function() {
 		if(typeof this.ChartsWindow === "undefined"){
 			this.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow').show();
@@ -669,14 +662,12 @@ Ext.define('App.view.MitosApp', {
 		}
 	},
 
-
 	newPatient: function() {
 		var me = this;
-		me.remoteNavNodeSelecte('panelNewPatient', function() {
+		me.navigateTo('panelNewPatient', function() {
 			me.patientUnset();
 
 		});
-		console.log(this.currCardCmp);
 	},
 
 	createEmergency: function() {
@@ -686,7 +677,7 @@ Ext.define('App.view.MitosApp', {
 	createNewEncounter: function() {
 		var me = this;
 
-		me.remoteNavNodeSelecte('panelEncounter', function(success) {
+		me.navigateTo('panelEncounter', function(success) {
 			if(success) {
 				me.currCardCmp.newEncounter();
 			}
@@ -706,7 +697,7 @@ Ext.define('App.view.MitosApp', {
 			var same = true;
 		}
 
-		me.remoteNavNodeSelecte('panelSummary', function() {
+		me.navigateTo('panelSummary', function() {
 			if(same) {
 				me.currCardCmp.onActive();
 			}
@@ -715,17 +706,23 @@ Ext.define('App.view.MitosApp', {
 
 	stowPatientRecord: function() {
 		this.patientUnset();
-		this.remoteNavNodeSelecte('panelDashboard');
+		this.navigateTo('panelDashboard');
 	},
 
 	openCurrEncounter: function() {
-		this.remoteNavNodeSelecte('panelEncounter');
+		var me = this;
+
+		this.navigateTo('panelEncounter', function(success){
+			if(success) {
+				//me.currCardCmp.openEncounter(eid);
+			}
+		});
 	},
 
 	openEncounter: function(eid) {
 		var me = this;
 
-		me.remoteNavNodeSelecte('panelEncounter', function(success) {
+		me.navigateTo('panelEncounter', function(success) {
 			if(success) {
 				me.currCardCmp.openEncounter(eid);
 			}
@@ -737,10 +734,10 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	openPatientVisits: function() {
-		this.remoteNavNodeSelecte('panelVisits');
+		this.navigateTo('panelVisits');
 	},
 
-	remoteNavNodeSelecte: function(id, callback) {
+	navigateTo: function(id, callback) {
 		var tree = this.navColumn.down('treepanel'),
 			treeStore = tree.getStore(),
 			sm = tree.getSelectionModel(),
@@ -752,35 +749,32 @@ Ext.define('App.view.MitosApp', {
 		}
 	},
 
-	navNodeDefault: function() {
-		this.remoteNavNodeSelecte('panelDashboard');
+	navigateToDefault: function() {
+		this.navigateTo('panelDashboard');
 	},
 
-	navNodeSelected: function(model, selected) {
-
+	onNavigationNodeSelected: function(model, selected) {
 		var me = this;
 
 		if(selected[0].data.leaf) {
-
 			var tree = me.navColumn.down('treepanel'),
-				sm = tree.getSelectionModel();
-
-			var card = selected[0].data.id,
+				sm = tree.getSelectionModel(),
+				card = selected[0].data.id,
 				layout = me.MainPanel.getLayout(),
 				cardCmp = Ext.getCmp(card);
 
-			this.currCardCmp = cardCmp;
-
+			me.currCardCmp = cardCmp;
 			layout.setActiveItem(card);
-
 			cardCmp.onActive(function(success) {
-				if(success) {
-					me.lastCardNode = sm.getLastSelected();
-				} else {
-					me.goBack();
-				}
+				(success) ? me.lastCardNode = sm.getLastSelected() : me.goBack();
 			});
 		}
+	},
+
+	goBack: function() {
+		var tree = this.navColumn.down('treepanel'),
+			sm = tree.getSelectionModel();
+		sm.select(this.lastCardNode);
 	},
 
 	navCollapsed: function() {
@@ -803,12 +797,6 @@ Ext.define('App.view.MitosApp', {
 		footView.hide();
 	},
 
-	goBack: function() {
-		var tree = this.navColumn.down('treepanel'),
-			sm = tree.getSelectionModel();
-		sm.select(this.lastCardNode);
-	},
-
 	liveSearchSelect: function(combo, selection) {
 		var me = this,
 			post = selection[0],
@@ -824,10 +812,8 @@ Ext.define('App.view.MitosApp', {
 					pid : post.get('pid'),
 					name: post.get('fullname')
 				};
-
 				btn.update({name: post.get('fullname'), info: '(' + post.get('pid') + ')'});
 				btn.enable();
-
 				me.openPatientSummary();
 			});
 		}
@@ -840,10 +826,8 @@ Ext.define('App.view.MitosApp', {
 			pid : pid,
 			name: fullname
 		};
-
 		btn.update({name: fullname, info: '(' + pid + ')'});
 		btn.enable();
-
 		callback(true);
 	},
 
@@ -857,11 +841,6 @@ Ext.define('App.view.MitosApp', {
 		});
 	},
 
-	afterAppRender: function() {
-		Ext.get('mainapp-loading').remove();
-		Ext.get('mainapp-loading-mask').fadeOut({remove: true});
-
-	},
 
 	showMiframe: function(src) {
 		this.winSupport.remove(this.miframe);
@@ -874,9 +853,8 @@ Ext.define('App.view.MitosApp', {
 			this.msgCt = Ext.core.DomHelper.insertFirst(document.body, {id: 'msg-div'}, true);
 		}
 		this.msgCt.alignTo(document, 't-t');
-		var s = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 1));
-		var m = Ext.core.DomHelper.append(this.msgCt, {html: '<div class="msg"><h3>' + title + '</h3><p>' + s + '</p></div>'}, true);
-
+		var s = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 1)),
+		    m = Ext.core.DomHelper.append(this.msgCt, {html: '<div class="msg"><h3>' + title + '</h3><p>' + s + '</p></div>'}, true);
 		m.slideIn('t').pause(3000).ghost('t', {remove: true});
 	},
 
@@ -931,18 +909,14 @@ Ext.define('App.view.MitosApp', {
 	 */
 	initializePatientDragZone: function(panel) {
 		panel.dragZone = Ext.create('Ext.dd.DragZone', panel.getEl(), {
-
 			ddGroup    : 'patient',
-
 			// On receipt of a mousedown event, see if it is within a draggable element.
 			// Return a drag data object if so. The data object can contain arbitrary application
 			// data, but it should also contain a DOM element in the ddel property to provide
 			// a proxy to drag.
 			getDragData: function(e) {
 				var sourceEl = e.getTarget(panel.itemSelector, 10), d;
-
 				app.MainPanel.el.mask('Drop Here To Open <strong>"' + panel.getRecord(sourceEl).data.name + '"</strong> Current Encounter');
-
 				if(sourceEl) {
 					d = sourceEl.cloneNode(true);
 					d.id = Ext.id();
@@ -954,14 +928,10 @@ Ext.define('App.view.MitosApp', {
 					};
 				}
 			},
-
-
 			// Provide coordinates for the proxy to slide back to on failed drag.
 			// This is the original XY coordinates of the draggable element.
 			getRepairXY: function() {
-
 				app.MainPanel.el.unmask();
-
 				return this.dragData.repairXY;
 			}
 		});
@@ -981,10 +951,16 @@ Ext.define('App.view.MitosApp', {
 			notifyDrop: function(dd, e, data) {
 				app.MainPanel.el.unmask();
 				me.setCurrPatient(data.patientData.pid, data.patientData.name, function() {
-					me.openCurrEncounter();
+					me.openEncounter(data.patientData.eid);
 				});
 			}
 		});
+	},
+
+	afterAppRender: function() {
+		Ext.get('mainapp-loading').remove();
+		Ext.get('mainapp-loading-mask').fadeOut({remove: true});
+
 	},
 
 	getCurrPatient: function() {

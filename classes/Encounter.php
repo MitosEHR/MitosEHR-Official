@@ -85,16 +85,17 @@ class Encounter extends Patient{
         if($encounter != null){
             return $encounter;
         }else{
-            echo '{"success": false}';
+            return array("success" => false);
         }
     }
 
     /**
+     * @param stdClass $params
      * @return array
      */
-    public function getVitals(){
+    public function getVitals(stdClass $params){
 
-        $pid =  $_SESSION['patient']['pid'];
+        $pid =  (isset($params->pid)) ? $params->pid : $_SESSION['patient']['pid'];
 
         $this->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER BY date ASC");
         $total = $this->rowCount();
@@ -108,7 +109,7 @@ class Encounter extends Patient{
         if($total >= 1){
             return $rows;
         }else{
-            echo '{"success": true}';
+            return array("success" => true);
         }
 
     }

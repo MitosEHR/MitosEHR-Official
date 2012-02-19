@@ -504,14 +504,16 @@ Ext.define('App.view.patientfile.Encounter', {
 						patient = me.getCurrPatient();
 					me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
 				}
+				this.vitalsStore.load({
+					scope   : me,
+					params:{pid:app.currPatient.pid},
+					callback: function() {
+						me.vitalsPanel.down('dataview').refresh();
+					}
+				});
 			}
 		});
-		this.vitalsStore.load({
-			scope   : me,
-			callback: function() {
-				me.vitalsPanel.down('dataview').refresh();
-			}
-		});
+
 	},
 
 	/**
