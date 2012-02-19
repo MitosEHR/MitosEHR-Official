@@ -22,7 +22,8 @@ class Person extends dbHelper {
      * @param $lname
      * @return string
      */
-    public static function fullname($fname, $mname, $lname){
+    public static function fullname($fname, $mname, $lname)
+    {
         if($_SESSION['global_settings'] && $_SESSION['global_settings']['fullname']){
             switch($_SESSION['global_settings']['fullname']){
                 case '0':
@@ -40,7 +41,8 @@ class Person extends dbHelper {
         return $fullname;
     }
 
-    public static  function fulladdress($street, $streetb, $city, $state ,$zip ){
+    public static  function fulladdress($street, $streetb, $city, $state ,$zip )
+    {
 
         if($street != NULL || $street  != "" ) {
             $street = $street . "<br>";
@@ -62,6 +64,14 @@ class Person extends dbHelper {
 
         return $street.$streetb.$city.' '.$state.' '.$zip;
 
+    }
+
+    public static function ellipsis($text, $max=100, $append='&hellip;')
+    {
+        if (strlen($text) <= $max) return $text;
+        $out = substr($text,0,$max);
+        return $out.$append;
+        //return preg_replace('/\w+$/','',$out).$append;
     }
 
 }

@@ -106,6 +106,7 @@ class Patient extends Person {
                      GROUP BY p.pid");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
             $foo['name'] = Person::fullname($row['fname'],$row['mname'],$row['lname']);
+            $foo['shortName'] = Person::ellipsis($foo['name'],20);
             $foo['pid'] = $row['pid'];
             $foo['eid'] = $row['MAX(e.eid)'];
             $foo['img'] = 'ui_icons/user_32.png';

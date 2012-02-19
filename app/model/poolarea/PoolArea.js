@@ -10,6 +10,7 @@ Ext.define('App.model.poolarea.PoolArea', {
 	extend   : 'Ext.data.Model',
 	fields   : [
 		{name: 'name', type: 'string'},
+		{name: 'shortName', type: 'string'},
 		{name: 'pid', type: 'int'},
 		{name: 'eid', type: 'int'},
 		{name: 'pic', type: 'string'}

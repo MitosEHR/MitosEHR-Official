@@ -90,10 +90,10 @@ Ext.define('App.view.MitosApp', {
 		 */
 		Ext.TaskManager.start({
 			run     : function() {
-				me.checkSession();
+				//me.checkSession();
 				me.patientPoolStore.load();
 			},
-			interval: 100000
+			interval: 5000
 		});
 
 
@@ -410,12 +410,13 @@ Ext.define('App.view.MitosApp', {
 					items      : [
 						{
 							xtype            : 'dataview',
+							loadMask         : false,
 							cls              : 'patient-pool-view',
 							tpl              : '<tpl for=".">' +
 								'<div class="patient-pool-btn x-btn x-btn-default-large">' +
 								'<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>' +
 								'<div class="patient_btn_info">' +
-								'<div class="patient-name">{name}</div>' +
+								'<div class="patient-name">{shortName}</div>' +
 								'<div class="patient-name">({pid})</div>' +
 								'</div>' +
 								'</div>' +
