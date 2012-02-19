@@ -93,7 +93,7 @@ Ext.define('App.view.MitosApp', {
 				//me.checkSession();
 				me.patientPoolStore.load();
 			},
-			interval: 5000
+			interval: 50000
 		});
 
 
@@ -829,7 +829,9 @@ Ext.define('App.view.MitosApp', {
 		};
 		btn.update({name: fullname, info: '(' + pid + ')'});
 		btn.enable();
-		callback(true);
+		if(typeof callback == 'function') {
+			callback(true);
+		}
 	},
 
 	patientUnset: function() {
@@ -951,9 +953,10 @@ Ext.define('App.view.MitosApp', {
 			},
 			notifyDrop: function(dd, e, data) {
 				app.MainPanel.el.unmask();
-				me.setCurrPatient(data.patientData.pid, data.patientData.name, function() {
-					me.openEncounter(data.patientData.eid);
-				});
+				Patient.currPatientSet({pid:data.patientData.pid});
+				me.setCurrPatient(data.patientData.pid, data.patientData.name);
+				me.openEncounter(data.patientData.eid);
+
 			}
 		});
 	},
