@@ -9,7 +9,7 @@
  * @namespace Immunization.getPatientImmunizations
  * @namespace Immunization.addPatientImmunization
  */
-Ext.define('Ext.mitos.view.patientfile.Immunization', {
+Ext.define('App.view.patientfile.Immunization', {
 	extend           : 'Ext.window.Window',
 	title            : 'Immunization',
 	height           : '700',

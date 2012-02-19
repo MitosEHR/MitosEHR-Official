@@ -23,8 +23,8 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <script type="text/javascript" src="login/login.js"></script>
 <script type="text/javascript">
 Ext.onReady(function(){
-    Ext.direct.Manager.addProvider(Ext.mitos.data.REMOTING_API);
-    Ext.create('Ext.mitos.panel.login.Login');
+    Ext.direct.Manager.addProvider(App.data.REMOTING_API);
+    Ext.create('App.panel.login.Login');
 }); // End App
 </script>
 </head>

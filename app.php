@@ -10,7 +10,7 @@
  * author: GI Technologies, 2011
  * modified: Ernesto J Rodriguez (Certun)
  *
- * @namespace Ext.mitos.data.REMOTING_API
+ * @namespace App.data.REMOTING_API
  */
 if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /**
@@ -61,9 +61,9 @@ Globals::setGlobals();
                 enabled			: true,
                 disableCaching	: false,
                 paths			: {
-                    'Ext.ux'            : 'app/classes/ux',
-                    'Ext.mitos'         : 'app',
-                    'Extensible'        : 'lib/extensible-1.5.1/src'
+                    'Ext.ux'      : 'app/classes/ux',
+                    'App'         : 'app',
+                    'Extensible'  : 'lib/extensible-1.5.1/src'
                 }
             });
         </script>
@@ -125,13 +125,13 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/MitosApp.js"></script>
         <script type="text/javascript" src="app/classes/Overrides.js"></script>
         <script type="text/javascript">
-            var App;
+            var app;
             function say(a){
                 console.log(a);
             }
-            Ext.direct.Manager.addProvider(Ext.mitos.data.REMOTING_API);
+            Ext.direct.Manager.addProvider(App.data.REMOTING_API);
             Ext.onReady(function(){
-                App = Ext.create('Ext.mitos.view.MitosApp');
+                app = Ext.create('App.view.MitosApp');
             });
         </script>
     </body>

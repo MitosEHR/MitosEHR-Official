@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.classes.dashboard.GridPortlet', {
+Ext.define('App.classes.dashboard.GridPortlet', {
 
 	extend: 'Ext.grid.Panel',
 	//alias: 'mitos.dashboard.gridportlet',

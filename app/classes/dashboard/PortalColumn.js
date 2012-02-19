@@ -3,7 +3,7 @@
  * @extends Ext.container.Container
  * A layout column class used internally be {@link Ext.app.PortalPanel}.
  */
-Ext.define('Ext.mitos.classes.dashboard.PortalColumn', {
+Ext.define('App.classes.dashboard.PortalColumn', {
 	extend     : 'Ext.container.Container',
 	alias      : 'widget.portalcolumn',
 	layout     : {

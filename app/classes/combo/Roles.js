@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.classes.combo.Roles', {
+Ext.define('App.classes.combo.Roles', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.mitos.rolescombo',
 	initComponent: function() {

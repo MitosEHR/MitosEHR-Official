@@ -12,11 +12,11 @@
  * @namespace Globals.updateGlobals
  *
  */
-Ext.define('Ext.mitos.view.administration.Globals', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Globals', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelGlobals',
 	pageTitle    : 'MitosEHR Global Settings',
-	uses         : [ 'Ext.mitos.classes.restStoreModel', 'Ext.mitos.classes.form.fields.Checkbox' ],
+	uses         : [ 'App.classes.restStoreModel', 'App.classes.form.fields.Checkbox' ],
 	initComponent: function() {
 		var me = this;
 		// *************************************************************************************
@@ -290,7 +290,7 @@ Ext.define('Ext.mitos.view.administration.Globals', {
 		//**************************************************************************
 		// Global Form Panel
 		//**************************************************************************
-		me.globalFormPanel = Ext.create('Ext.mitos.classes.form.FormPanel', {
+		me.globalFormPanel = Ext.create('App.classes.form.FormPanel', {
 			layout       : 'fit',
 			autoScroll   : true,
 			bodyStyle    : 'padding: 0;',

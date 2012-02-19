@@ -9,13 +9,13 @@
  * MitosEHR (Electronic Health Records) 2011
  * @namespace Encounter.getEncounters
  */
-Ext.define('Ext.mitos.view.patientfile.Visits', {
-	extend   : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.patientfile.Visits', {
+	extend   : 'App.classes.RenderPanel',
 	id       : 'panelVisits',
 	pageTitle: 'Visits History',
 	uses     : [
-		'Ext.mitos.classes.restStoreModel',
-		'Ext.mitos.classes.GridPanel',
+		'App.classes.restStoreModel',
+		'App.classes.GridPanel',
 		'Ext.ux.PreviewPlugin'
 	],
 
@@ -62,7 +62,7 @@ Ext.define('Ext.mitos.view.patientfile.Visits', {
 		//******************************************************************
 		// Visit History Grid
 		//******************************************************************
-		me.historyGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.historyGrid = Ext.create('App.classes.GridPanel', {
 			title     : 'Encounter History',
 			store     : me.store,
 			columns   : [
@@ -72,7 +72,7 @@ Ext.define('Ext.mitos.view.patientfile.Visits', {
 				{ width: 180, header: 'Provider', sortable: false, dataIndex: 'provider' },
 				{ width: 120, header: 'facility', sortable: false, dataIndex: 'facility' },
 				{ width: 120, header: 'Billing Facility', sortable: true, dataIndex: 'billing_facility' },
-				{ width: 45, header: 'Close?', sortable: true, dataIndex: 'close_date', renderer: open }
+				{ width: 45, header: 'Close?', sortable: true, dataIndex: 'close_date', renderer: me.openBool }
 			],
 			viewConfig: {
 				itemId   : 'view',
@@ -117,6 +117,14 @@ Ext.define('Ext.mitos.view.patientfile.Visits', {
 		me.callParent(arguments);
 	},
 
+	openBool: function(val) {
+		if(val !== null) {
+			return '<img src="ui_icons/yes.gif" />';
+		} else {
+			return '<img src="ui_icons/no.gif" />';
+		}
+	},
+
 	onDetailToggle: function(btn, pressed) {
 		this.historyGrid.getComponent('view').getPlugin('preview').toggleExpanded(pressed);
 	},
@@ -126,11 +134,11 @@ Ext.define('Ext.mitos.view.patientfile.Visits', {
 	},
 
 	gridItemDblClick: function(view, record) {
-		App.openEncounter(record.data.eid);
+		app.openEncounter(record.data.eid);
 	},
 
 	createNewEncounter: function() {
-		App.createNewEncounter();
+		app.createNewEncounter();
 	},
 
 	/**

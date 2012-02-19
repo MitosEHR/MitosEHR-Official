@@ -3,13 +3,13 @@
  * @extends Ext.dd.DropTarget
  * Internal class that manages drag/drop for {@link Ext.app.PortalPanel}.
  */
-Ext.define('Ext.mitos.classes.dashboard.PortalDropZone', {
+Ext.define('App.classes.dashboard.PortalDropZone', {
 	extend: 'Ext.dd.DropTarget',
 
 	constructor: function(portal, cfg) {
 		this.portal = portal;
 		Ext.dd.ScrollManager.register(portal.body);
-		Ext.mitos.classes.dashboard.PortalDropZone.superclass.constructor.call(this, portal.body, cfg);
+		App.classes.dashboard.PortalDropZone.superclass.constructor.call(this, portal.body, cfg);
 		portal.body.ddScrollConfig = this.ddScrollConfig;
 	},
 
@@ -185,6 +185,6 @@ Ext.define('Ext.mitos.classes.dashboard.PortalDropZone', {
 	// unregister the dropzone from ScrollManager
 	unreg     : function() {
 		Ext.dd.ScrollManager.unregister(this.portal.body);
-		Ext.mitos.classes.dashboard.PortalDropZone.superclass.unreg.call(this);
+		App.classes.dashboard.PortalDropZone.superclass.unreg.call(this);
 	}
 });

@@ -8,11 +8,11 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.view.fees.Checkout', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.fees.Checkout', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelCheckout',
 	pageTitle    : 'Checkout',
-	uses         : ['Ext.mitos.classes.CRUDStore', 'Ext.mitos.classes.GridPanel'],
+	uses         : ['App.classes.CRUDStore', 'App.classes.GridPanel'],
 	initComponent: function() {
 		var me = this;
 

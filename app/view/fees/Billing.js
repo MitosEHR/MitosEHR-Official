@@ -6,17 +6,17 @@
 // Modified: 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.view.fees.Billing', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.fees.Billing', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelBilling',
 	pageTitle    : 'Billing',
-	uses         : [ 'Ext.mitos.classes.CRUDStore', 'Ext.mitos.classes.GridPanel' ],
+	uses         : [ 'App.classes.CRUDStore', 'App.classes.GridPanel' ],
 	initComponent: function() {
 		var page = this;
 		//******************************************************************
 		// Stores...
 		//******************************************************************
-		page.billingStore = Ext.create('Ext.mitos.classes.CRUDStore', {
+		page.billingStore = Ext.create('App.classes.CRUDStore', {
 			fields    : [
 				{name: 'id', type: 'int'},
 				{name: 'date', type: 'date', dateFormat: 'c'},
@@ -38,7 +38,7 @@ Ext.define('Ext.mitos.view.fees.Billing', {
 		//******************************************************************
 		// Grid...
 		//******************************************************************
-		page.billingGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		page.billingGrid = Ext.create('App.classes.GridPanel', {
 			title    : 'Billing History',
 			store    : page.billingStore,
 			columns  : [

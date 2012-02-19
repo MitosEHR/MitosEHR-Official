@@ -11,15 +11,15 @@
  * @namespace AddressBook.updateAddress
  *
  */
-Ext.define('Ext.mitos.view.miscellaneous.Addressbook', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.miscellaneous.Addressbook', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelAddressbook',
 	pageTitle    : 'Address Book',
 	uses         : [
-		'Ext.mitos.classes.GridPanel',
-		'Ext.mitos.classes.combo.Titles',
-		'Ext.mitos.classes.window.Window',
-		'Ext.mitos.classes.combo.Types'
+		'App.classes.GridPanel',
+		'App.classes.combo.Titles',
+		'App.classes.window.Window',
+		'App.classes.combo.Types'
 	],
 	initComponent: function() {
 		var me = this;
@@ -107,7 +107,7 @@ Ext.define('Ext.mitos.view.miscellaneous.Addressbook', {
 		/**
 		 * Window and form
 		 */
-		me.win = Ext.create('Ext.mitos.classes.window.Window', {
+		me.win = Ext.create('App.classes.window.Window', {
 			width    : 755,
 			title    : 'Add or Edit Contact',
 			items    : [

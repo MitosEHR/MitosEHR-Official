@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.classes.CalStatusComboBox', {
+Ext.define('App.classes.CalStatusComboBox', {
 	extend: 'Ext.form.ComboBox',
 	alias : 'widget.mitos.calstatuscombobox',
 	name  : 'status',

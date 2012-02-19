@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.classes.dashboard.OnotesPortlet', {
+Ext.define('App.classes.dashboard.OnotesPortlet', {
 
 	extend       : 'Ext.grid.Panel',
 	alias        : 'widget.onotesportlet',

@@ -6,18 +6,18 @@
  * @namespace Messages.deleteMessage
  * @namespace Messages.updateMessage
  */
-Ext.define('Ext.mitos.view.messages.Messages', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.messages.Messages', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelMessages',
 	pageTitle    : 'Messages (Inbox)',
 	pageLayout   : 'border',
 	defaults     : {split: true},
 	uses         : [
-		'Ext.mitos.classes.GridPanel',
-		'Ext.mitos.classes.LivePatientSearch',
-		'Ext.mitos.classes.combo.MsgStatus',
-		'Ext.mitos.classes.combo.MsgNoteType',
-		'Ext.mitos.classes.combo.Users'
+		'App.classes.GridPanel',
+		'App.classes.LivePatientSearch',
+		'App.classes.combo.MsgStatus',
+		'App.classes.combo.MsgNoteType',
+		'App.classes.combo.Users'
 	],
 	initComponent: function() {
 
@@ -64,7 +64,7 @@ Ext.define('Ext.mitos.view.messages.Messages', {
 		/**
 		 * Message GridPanel
 		 */
-		me.msgGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.msgGrid = Ext.create('App.classes.GridPanel', {
 			store     : me.storeMsgs,
 			region    : 'center',
 			border    : true,

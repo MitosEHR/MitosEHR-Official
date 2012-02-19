@@ -13,11 +13,11 @@
  * Author   : GI Technologies, 2011
  * Modified : Ernesto J Rodriguez (Certun) 10/25/2011
  */
-Ext.define('Ext.mitos.view.patientfile.NewPatient', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.patientfile.NewPatient', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelNewPatient',
 	pageTitle    : 'Patient Entry Form',
-	uses         : [ 'Ext.mitos.classes.PhotoIdWindow' ],
+	uses         : [ 'App.classes.PhotoIdWindow' ],
 	initComponent: function() {
 
 		var me = this;
@@ -99,7 +99,7 @@ Ext.define('Ext.mitos.view.patientfile.NewPatient', {
 	 * This will show the window to take a picture
 	 */
 	getPhotoIdWindow: function() {
-		Ext.create('Ext.mitos.classes.PhotoIdWindow', {
+		Ext.create('App.classes.PhotoIdWindow', {
 			title      : 'Patient Photo Id',
 			loadMask   : true,
 			modal      : true,
@@ -142,7 +142,7 @@ Ext.define('Ext.mitos.view.patientfile.NewPatient', {
 
 		this.confirmationWin(function(btn) {
 			if(btn == 'yes') {
-				App.patientUnset();
+				app.patientUnset();
 				callback(true);
 			} else {
 				callback(false);

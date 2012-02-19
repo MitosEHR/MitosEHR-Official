@@ -3,7 +3,7 @@
  * @extends Ext.Panel
  * A {@link Ext.Panel Panel} class that is managed by {@link Ext.app.PortalPanel}.
  */
-Ext.define('Ext.mitos.classes.dashboard.Portlet', {
+Ext.define('App.classes.dashboard.Portlet', {
 	extend      : 'Ext.panel.Panel',
 	alias       : 'widget.portlet',
 	layout      : 'fit',

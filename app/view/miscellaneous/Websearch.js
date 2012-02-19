@@ -8,14 +8,14 @@
 //
 // MitosEHR (Eletronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.view.miscellaneous.Websearch', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.miscellaneous.Websearch', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelWebsearch',
 	pageTitle    : 'National Library of Medicine Search',
 	pageLayout   : 'border',
 	uses         : [
-		'Ext.mitos.classes.CRUDStore',
-		'Ext.mitos.classes.GridPanel'
+		'App.classes.CRUDStore',
+		'App.classes.GridPanel'
 	],
 	initComponent: function() {
 
@@ -100,7 +100,7 @@ Ext.define('Ext.mitos.view.miscellaneous.Websearch', {
 		page.searchRow = function(value, p, record) {
 			return Ext.String.format('<div class="topic"><span class="search_title">{0}</span><br><span class="search_source">{1}</span><br><span class="search_snippet" style="white-space: normal;">{2}</span></div>', value, record.get('source') || "Unknown", record.get('snippet') || "Unknown");
 		};
-		page.onotesGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		page.onotesGrid = Ext.create('App.classes.GridPanel', {
 			margin    : '0 0 2 0',
 			region    : 'center',
 			store     : page.store,

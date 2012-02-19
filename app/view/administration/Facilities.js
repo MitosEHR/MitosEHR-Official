@@ -13,13 +13,13 @@
  * @namespace  Facilities.updateFacility
  * @namespace  Facilities.deleteFacility
  */
-Ext.define('Ext.mitos.view.administration.Facilities', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Facilities', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelFacilities',
 	pageTitle    : 'Facilities (Active)',
 	uses         : [
-		'Ext.mitos.classes.GridPanel',
-		'Ext.mitos.classes.window.Window'
+		'App.classes.GridPanel',
+		'App.classes.window.Window'
 	],
 	initComponent: function() {
 
@@ -68,7 +68,7 @@ Ext.define('Ext.mitos.view.administration.Facilities', {
 		// *************************************************************************************
 		// Facility Grid Panel
 		// *************************************************************************************
-		me.FacilityGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.FacilityGrid = Ext.create('App.classes.GridPanel', {
 			store    : me.FacilityStore,
 			columns  : [
 				{
@@ -131,7 +131,7 @@ Ext.define('Ext.mitos.view.administration.Facilities', {
 		// *************************************************************************************
 		// Window User Form
 		// *************************************************************************************
-		me.win = Ext.create('Ext.mitos.classes.window.Window', {
+		me.win = Ext.create('App.classes.window.Window', {
 			width    : 600,
 			items    : [
 				{

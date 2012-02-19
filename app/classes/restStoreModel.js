@@ -1,7 +1,7 @@
 //  *******************************************
 //  Required properties 
 //  *******************************************
-Ext.define('Ext.mitos.classes.restStoreModel', {
+Ext.define('App.classes.restStoreModel', {
 	extend: 'Ext.data.Store',
 
 	constructor: function(config) {
@@ -66,6 +66,6 @@ Ext.define('Ext.mitos.classes.restStoreModel', {
 			autoLoad    : config.autoLoad
 		};
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
-		Ext.mitos.classes.restStoreModel.superclass.constructor.call(this, config);
+		App.classes.restStoreModel.superclass.constructor.call(this, config);
 	}
 });

@@ -5,15 +5,15 @@
  * MitosEHR (Electronic Health Records) 2011
  *
  */
-Ext.define('Ext.mitos.view.miscellaneous.MyAccount', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.miscellaneous.MyAccount', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelMyAccount',
 	pageTitle    : 'My Account',
 	uses         : [
-		'Ext.mitos.classes.combo.Titles',
-		'Ext.mitos.classes.window.Window',
-		'Ext.mitos.classes.combo.Facilities',
-		'Ext.mitos.classes.combo.Authorizations'
+		'App.classes.combo.Titles',
+		'App.classes.window.Window',
+		'App.classes.combo.Facilities',
+		'App.classes.combo.Authorizations'
 	],
 	initComponent: function() {
 		var me = this;
@@ -57,7 +57,7 @@ Ext.define('Ext.mitos.view.miscellaneous.MyAccount', {
 		// User Settings Form
 		// Add or Edit purpose
 		// *************************************************************************************
-		me.myAccountForm = Ext.create('Ext.mitos.classes.form.FormPanel', {
+		me.myAccountForm = Ext.create('App.classes.form.FormPanel', {
 			cls        : 'form-white-bg',
 			frame      : true,
 			hideLabels : true,
@@ -147,9 +147,9 @@ Ext.define('Ext.mitos.view.miscellaneous.MyAccount', {
 							msgTarget: 'under',
 							items    : [
 								{ width: 110, xtype: 'displayfield', value: 'Default Facility: '},
-								Ext.create('Ext.mitos.classes.combo.Facilities', {width: 170 }),
+								Ext.create('App.classes.combo.Facilities', {width: 170 }),
 								{ width: 100, xtype: 'displayfield', value: 'Authorizations: '},
-								Ext.create('Ext.mitos.classes.combo.Authorizations', {width: 175 })
+								Ext.create('App.classes.combo.Authorizations', {width: 175 })
 							]
 						},
 						{
@@ -157,7 +157,7 @@ Ext.define('Ext.mitos.view.miscellaneous.MyAccount', {
 							defaults: { hideLabel: true },
 							items   : [
 								{ width: 110, xtype: 'displayfield', value: 'Access Control: '},
-								Ext.create('Ext.mitos.classes.combo.Roles', {width: 170 }),
+								Ext.create('App.classes.combo.Roles', {width: 170 }),
 								{ width: 100, xtype: 'displayfield', value: 'Taxonomy: '},
 								{ width: 175, xtype: 'textfield', name: 'taxonomy' }
 							]
@@ -232,7 +232,7 @@ Ext.define('Ext.mitos.view.miscellaneous.MyAccount', {
 			}
 		});
 
-		me.win = Ext.create('Ext.mitos.classes.window.Window', {
+		me.win = Ext.create('App.classes.window.Window', {
 			width    : 420,
 			title    : 'Change you password',
 			items    : [

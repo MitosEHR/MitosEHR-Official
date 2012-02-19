@@ -8,7 +8,7 @@
  *
  * @namespace Patient.patientLiveSearch
  */
-Ext.define('Ext.mitos.classes.LivePatientSearch', {
+Ext.define('App.classes.LivePatientSearch', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.patienlivetsearch',
 	hideLabel    : true,

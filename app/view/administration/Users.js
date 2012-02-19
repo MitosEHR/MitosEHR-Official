@@ -13,13 +13,13 @@
  * @namespace User.updateUser
  * @namespace User.chechPasswordHistory
  */
-Ext.define('Ext.mitos.view.administration.Users', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Users', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelUsers',
 	pageTitle    : 'Users',
 	uses         : [
-		'Ext.mitos.classes.restStoreModel',
-		'Ext.mitos.classes.GridPanel'
+		'App.classes.restStoreModel',
+		'App.classes.GridPanel'
 	],
 	initComponent: function() {
 
@@ -83,7 +83,7 @@ Ext.define('Ext.mitos.view.administration.Users', {
 		// *************************************************************************************
 		// Create the GridPanel
 		// *************************************************************************************
-		me.userGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.userGrid = Ext.create('App.classes.GridPanel', {
 			store      : me.userStore,
 			columns    : [
 				{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},
@@ -122,7 +122,7 @@ Ext.define('Ext.mitos.view.administration.Users', {
 		// *************************************************************************************
 		// Window User Form
 		// *************************************************************************************
-		me.win = Ext.create('Ext.mitos.classes.window.Window', {
+		me.win = Ext.create('App.classes.window.Window', {
 			width    : 600,
 			items    : [
 				{

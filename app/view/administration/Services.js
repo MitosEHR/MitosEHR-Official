@@ -12,16 +12,16 @@
  * @namespace Services.addService
  * @namespace Services.updateService
  */
-Ext.define('Ext.mitos.view.administration.Services', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Services', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelServices',
 	pageTitle    : 'Services',
 	pageLayout   : 'border',
 	uses         : [
-		'Ext.mitos.classes.restStoreModel',
-		'Ext.mitos.classes.GridPanel',
-		'Ext.mitos.classes.combo.CodesTypes',
-		'Ext.mitos.classes.combo.Titles'
+		'App.classes.restStoreModel',
+		'App.classes.GridPanel',
+		'App.classes.combo.CodesTypes',
+		'App.classes.combo.Titles'
 	],
 	initComponent: function() {
 		var me = this;
@@ -94,7 +94,7 @@ Ext.define('Ext.mitos.view.administration.Services', {
 			return val;
 		}
 
-		me.servicesGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.servicesGrid = Ext.create('App.classes.GridPanel', {
 			region   : 'center',
 			store    : me.store,
 			columns  : [

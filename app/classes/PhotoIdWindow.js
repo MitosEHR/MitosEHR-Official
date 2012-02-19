@@ -1,7 +1,7 @@
 //******************************************************************************
 // Photo ID Window
 //******************************************************************************
-Ext.define('Ext.mitos.classes.PhotoIdWindow', {
+Ext.define('App.classes.PhotoIdWindow', {
 	extend       : 'Ext.window.Window',
 	alias        : 'widget.photoidwindow',
 	height       : 292,

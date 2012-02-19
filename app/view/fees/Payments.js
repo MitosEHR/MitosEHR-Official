@@ -8,18 +8,18 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.view.fees.Payments', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.fees.Payments', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelPayments',
 	pageTitle    : 'Payments',
 	pageLayout   : 'border',
-	uses         : ['Ext.mitos.classes.CRUDStore', 'Ext.mitos.classes.GridPanel'],
+	uses         : ['App.classes.CRUDStore', 'App.classes.GridPanel'],
 	initComponent: function() {
 		var page = this;
 		//******************************************************************
 		// Stores...
 		//******************************************************************
-		page.paymentStore = Ext.create('Ext.mitos.classes.CRUDStore', {
+		page.paymentStore = Ext.create('App.classes.CRUDStore', {
 			fields    : [
 				{name: 'id', type: 'int'},
 				{name: 'date', type: 'date', dateFormat: 'c'},
@@ -122,7 +122,7 @@ Ext.define('Ext.mitos.view.fees.Payments', {
 		//******************************************************************
 		// Payment history Grid
 		//******************************************************************
-		page.paymentGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		page.paymentGrid = Ext.create('App.classes.GridPanel', {
 			title    : 'Payments Search Results',
 			margin   : '3 0 0 0',
 			height   : 300,

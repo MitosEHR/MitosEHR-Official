@@ -21,7 +21,7 @@
  * @extends Ext.Component
  */
 
-Ext.define('Ext.mitos.classes.ManagedIframe', {
+Ext.define('App.classes.ManagedIframe', {
 
 	/* Begin Definitions */
 	extend: 'Ext.Component',

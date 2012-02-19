@@ -13,23 +13,23 @@ Ext.require([
 	'Ext.resizer.Splitter',
 	'Ext.fx.target.Element',
 	'Ext.fx.target.Component',
-	'Ext.mitos.classes.dashboard.Portlet',
-	'Ext.mitos.classes.dashboard.PortalColumn',
-	'Ext.mitos.classes.dashboard.PortalPanel',
-	'Ext.mitos.classes.dashboard.PortalDropZone',
-	'Ext.mitos.classes.dashboard.GridPortlet',
-	'Ext.mitos.classes.dashboard.ChartPortlet',
-	'Ext.mitos.classes.dashboard.OnotesPortlet'
+	'App.classes.dashboard.Portlet',
+	'App.classes.dashboard.PortalColumn',
+	'App.classes.dashboard.PortalPanel',
+	'App.classes.dashboard.PortalDropZone',
+	'App.classes.dashboard.GridPortlet',
+	'App.classes.dashboard.ChartPortlet',
+	'App.classes.dashboard.OnotesPortlet'
 ]);
-Ext.define('Ext.mitos.view.dashboard.Dashboard', {
-	extend        : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.dashboard.Dashboard', {
+	extend        : 'App.classes.RenderPanel',
 	id            : 'panelDashboard',
 	pageTitle     : 'Dashboard',
 	uses          : [
-		'Ext.mitos.classes.dashboard.PortalPanel',
-		'Ext.mitos.classes.dashboard.PortalColumn',
-		'Ext.mitos.classes.dashboard.GridPortlet',
-		'Ext.mitos.classes.dashboard.ChartPortlet'
+		'App.classes.dashboard.PortalPanel',
+		'App.classes.dashboard.PortalColumn',
+		'App.classes.dashboard.GridPortlet',
+		'App.classes.dashboard.ChartPortlet'
 	],
 	getTools      : function() {
 		return [
@@ -63,7 +63,7 @@ Ext.define('Ext.mitos.view.dashboard.Dashboard', {
 									id       : 'portlet-onotes',
 									title    : 'Office Notes',
 									tools    : this.getTools(),
-									items    : Ext.create('Ext.mitos.classes.dashboard.OnotesPortlet'),
+									items    : Ext.create('App.classes.dashboard.OnotesPortlet'),
 									listeners: {
 										'close': Ext.bind(this.onPortletClose, this)
 									}
@@ -86,7 +86,7 @@ Ext.define('Ext.mitos.view.dashboard.Dashboard', {
 									id       : 'portlet-1',
 									title    : 'Grid Portlet',
 									tools    : this.getTools(),
-									items    : Ext.create('Ext.mitos.classes.dashboard.GridPortlet'),
+									items    : Ext.create('App.classes.dashboard.GridPortlet'),
 									listeners: {
 										'close': Ext.bind(this.onPortletClose, this)
 									}
@@ -100,7 +100,7 @@ Ext.define('Ext.mitos.view.dashboard.Dashboard', {
 									id       : 'portlet-4',
 									title    : 'Portlet 4',
 									tools    : this.getTools(),
-									items    : Ext.create('Ext.mitos.classes.dashboard.ChartPortlet'),
+									items    : Ext.create('App.classes.dashboard.ChartPortlet'),
 									listeners: {
 										'close': Ext.bind(this.onPortletClose, this)
 									}

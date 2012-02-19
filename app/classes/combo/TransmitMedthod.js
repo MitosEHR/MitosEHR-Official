@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.classes.combo.TransmitMedthod', {
+Ext.define('App.classes.combo.TransmitMedthod', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.transmitmethodcombo',
 	initComponent: function() {

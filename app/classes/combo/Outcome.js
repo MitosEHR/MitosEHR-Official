@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.classes.combo.Outcome', {
+Ext.define('App.classes.combo.Outcome', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.mitos.outcomecombo',
 	initComponent: function() {

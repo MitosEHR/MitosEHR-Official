@@ -10,10 +10,10 @@
  *
  * @namespace Logs.getLogs
  */
-Ext.define('Ext.mitos.view.administration.Log', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Log', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelLog',
-	uses         : [ 'Ext.mitos.classes.restStoreModel', 'Ext.mitos.classes.GridPanel' ],
+	uses         : [ 'App.classes.restStoreModel', 'App.classes.GridPanel' ],
 	pageTitle    : 'Event History Log',
 	initComponent: function() {
 		var me = this;
@@ -54,7 +54,7 @@ Ext.define('Ext.mitos.view.administration.Log', {
 		// *************************************************************************************
 		// Create the GridPanel
 		// *************************************************************************************
-		me.logGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.logGrid = Ext.create('App.classes.GridPanel', {
 			store    : me.logStore,
 			columns  : [
 				{ text: 'id', sortable: false, dataIndex: 'id', hidden: true},

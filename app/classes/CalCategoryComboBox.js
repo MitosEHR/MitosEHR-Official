@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.classes.CalCategoryComboBox', {
+Ext.define('App.classes.CalCategoryComboBox', {
 	extend      : 'Ext.form.ComboBox',
 	alias       : 'widget.mitos.calcategoriescombobox',
 	editable    : false,

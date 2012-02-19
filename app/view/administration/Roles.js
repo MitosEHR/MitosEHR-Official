@@ -12,12 +12,12 @@
  * @namespace Roles.saveRolesData
  * @namespace Roles.getRolesData
  */
-Ext.define('Ext.mitos.view.administration.Roles', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Roles', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelRoles',
 	pageTitle    : 'Roles and Permissions',
 	uses         : [
-		'Ext.mitos.classes.restStoreModel'
+		'App.classes.restStoreModel'
 	],
 	initComponent: function() {
 

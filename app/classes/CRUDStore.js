@@ -1,7 +1,7 @@
 //  *******************************************
 //  Required properties 
 //  *******************************************
-Ext.define('Ext.mitos.classes.CRUDStore', {
+Ext.define('App.classes.CRUDStore', {
 	extend     : 'Ext.data.Store',
 //  idProperty	:  database table id
 //  read		:  url to data_read.eje.php
@@ -76,6 +76,6 @@ Ext.define('Ext.mitos.classes.CRUDStore', {
 			autoLoad    : config.autoLoad
 		};
 		Ext.apply(this, Ext.apply(this.initialConfig, config));
-		Ext.mitos.classes.CRUDStore.superclass.constructor.call(this, config);
+		App.classes.CRUDStore.superclass.constructor.call(this, config);
 	}
 });

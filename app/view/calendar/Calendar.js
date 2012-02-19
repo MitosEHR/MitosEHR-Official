@@ -15,8 +15,8 @@
  * @namespace Calendar.deleteEvent
  *
  */
-Ext.define('Ext.mitos.view.calendar.Calendar', {
-	extend     : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.calendar.Calendar', {
+	extend     : 'App.classes.RenderPanel',
 	id         : 'panelCalendar',
 	pageTitle  : 'Calendar Events',
 	constructor: function() {

@@ -1,4 +1,4 @@
-Ext.define('Ext.mitos.classes.combo.CodesTypes', {
+Ext.define('App.classes.combo.CodesTypes', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.mitos.codestypescombo',
 	initComponent: function() {
