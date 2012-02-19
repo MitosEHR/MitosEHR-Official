@@ -934,7 +934,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			scope      : me,
 			afterrender: me.onAfterRender,
 			show       : me.onMedicalWinShow
-		}
+		};
 
 
 		me.callParent(arguments);
@@ -1029,7 +1029,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		gridPanel.setHeight(245);
 		form.loadRecord(m);
 	},
-	onAddAllergy: function(btn) {
+	onAddAllergy: function() {
 		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
@@ -1039,7 +1039,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		formPanel.expand(true);
 		form.loadRecord(m);
 	},
-	onCancelAllergy: function(btn) {
+	onCancelAllergy: function() {
 		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm();
 
@@ -1047,9 +1047,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		formPanel.hide();
 		form.reset();
 	},
-	onAddMedication: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientMedicalListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
+	onAddMedication: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
@@ -1057,9 +1056,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		formPanel.show();
 		form.loadRecord(m);
 	},
-	onAddSurgery: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientSurgeryListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
+	onAddSurgery: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
@@ -1067,9 +1065,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		formPanel.show();
 		form.loadRecord(m);
 	},
-	onAddDental: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientDentalListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
+	onAddDental: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
@@ -1083,7 +1080,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 
-	onCodeFieldFocus: function(field) {
+	onCodeFieldFocus: function() {
 		var gridPanel = this.getComponent('immuListGrid');
 		gridPanel.expand(true);
 	},
