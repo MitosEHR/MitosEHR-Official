@@ -18,33 +18,7 @@ Ext.define('App.view.patientfile.Summary', {
 	initComponent: function() {
 		var me = this;
 
-		Ext.define('SummaryVitalsModel', {
-			extend: 'Ext.data.Model',
-			fields: [
-				'id', 'pid', 'eid', 'uid', 'date', 'weight_lbs', 'weight_kg',
-				{name: 'height_in', type: 'int'},
-				{name: 'height_cm', type: 'int'},
-				'bp_systolic', 'bp_diastolic', 'pulse', 'respiration', 'temp_f',
-				'temp_c', 'temp_location', 'oxygen_saturation', 'head_circumference_in',
-				'head_circumference_cm', 'waist_circumference_in', 'waist_circumference_cm',
-				'bmi', 'bmi_status', 'other_notes'
-			],
-			proxy : {
-				type  : 'direct',
-				api   : {
-					read: Encounter.getVitals
-				},
-				reader: {
-					type: 'json',
-					root: 'encounter'
-				}
-			}
-		});
-
-		me.vitalsStore = Ext.create('Ext.data.Store', {
-			pageSize: 10,
-			model   : 'SummaryVitalsModel'
-		});
+		me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
 
 		me.pageBody = [
 			{

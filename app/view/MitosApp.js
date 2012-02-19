@@ -656,6 +656,13 @@ Ext.define('App.view.MitosApp', {
 	onMedicalWin: function(action) {
 		Ext.create('App.view.patientfile.Immunization').show();
 	},
+	onChartsWin: function() {
+		if(this.ChartsWindow){
+			this.ChartsWindow.show();
+		}else{
+			this.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow').show();
+		}
+	},
 
 
 	newPatient: function() {
@@ -929,7 +936,7 @@ Ext.define('App.view.MitosApp', {
 			getDragData: function(e) {
 				var sourceEl = e.getTarget(panel.itemSelector, 10), d;
 
-				App.MainPanel.el.mask('Drop Here To Open <strong>"' + panel.getRecord(sourceEl).data.name + '"</strong> Current Encounter');
+				app.MainPanel.el.mask('Drop Here To Open <strong>"' + panel.getRecord(sourceEl).data.name + '"</strong> Current Encounter');
 
 				if(sourceEl) {
 					d = sourceEl.cloneNode(true);
@@ -948,7 +955,7 @@ Ext.define('App.view.MitosApp', {
 			// This is the original XY coordinates of the draggable element.
 			getRepairXY: function() {
 
-				App.MainPanel.el.unmask();
+				app.MainPanel.el.unmask();
 
 				return this.dragData.repairXY;
 			}
@@ -967,7 +974,7 @@ Ext.define('App.view.MitosApp', {
 				return Ext.dd.DropZone.prototype.dropAllowed;
 			},
 			notifyDrop: function(dd, e, data) {
-				App.MainPanel.el.unmask();
+				app.MainPanel.el.unmask();
 				me.setCurrPatient(data.patientData.pid, data.patientData.name, function() {
 					me.openCurrEncounter();
 				});
