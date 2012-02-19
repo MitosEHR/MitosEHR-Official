@@ -82,7 +82,6 @@ Ext.define('App.view.MitosApp', {
 
 		me.lastCardNode = null;
 		me.currCardCmp = null;
-
 		me.currPatient = null;
 		/**
 		 * TaskScheduler
@@ -96,25 +95,7 @@ Ext.define('App.view.MitosApp', {
 			interval: 50000
 		});
 
-
-		/**
-		 * Navigation Panel Tree Data
-		 */
-		Ext.define('NavTreeModel', {
-			extend: 'Ext.data.Model',
-			fields: [
-				'text',
-				{name: 'disabled', type: 'bool', defaultValue: false}
-			]
-		});
-		me.storeTree = Ext.create('Ext.data.TreeStore', {
-			model    : 'NavTreeModel',
-			proxy    : {
-				type: 'direct',
-				api : {
-					read: Navigation.getNavigation
-				}
-			},
+		me.storeTree = Ext.create('App.store.navigation.Navigation', {
 			listeners: {
 				scope: me,
 				load : me.navigateToDefault
@@ -125,7 +106,6 @@ Ext.define('App.view.MitosApp', {
 		 * This store will handle the patient pool area
 		 */
 		me.patientPoolStore = Ext.create('App.store.poolarea.PoolArea');
-
 
 		/**
 		 * MitosEHR Support Page
@@ -342,14 +322,14 @@ Ext.define('App.view.MitosApp', {
 							text   : 'My account',
 							iconCls: 'icoArrowRight',
 							handler: function() {
-								me.MainPanel.getLayout().setActiveItem('panelMyAccount');
+								me.navigateTo('panelMyAccount');
 							}
 						},
 						{
 							text   : 'My settings',
 							iconCls: 'icoArrowRight',
 							handler: function() {
-								me.MainPanel.getLayout().setActiveItem('panelMySettings');
+								me.navigateTo('panelMySettings');
 							}
 						},
 						{
@@ -647,12 +627,11 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	onMedicalWin: function(action) {
-		if(typeof this.MedicalWindow === "undefined"){
+		//if(typeof this.MedicalWindow === "undefined"){
 			this.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow').show();
-		}else{
-			this.MedicalWindow.show();
-		}
-		Ext.create('App.view.patientfile.MedicalWindow').show();
+		//}else{
+		//	this.MedicalWindow.show();
+		//}
 	},
 
 	onChartsWin: function() {

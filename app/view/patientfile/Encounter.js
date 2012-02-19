@@ -20,6 +20,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	pageTitle    : 'Encounter',
 	pageLayout   : 'border',
 	requires     : [
+		'App.store.patientfile.Encounter',
 		'App.store.patientfile.Vitals'
 	],
 	initComponent: function() {
