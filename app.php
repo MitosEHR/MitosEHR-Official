@@ -56,6 +56,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="langs/<?php echo $_SESSION['lang']['code'] ?>.js"></script>
         <!-- JS Registry -->
         <script type="text/javascript" src="registry.js.php"></script>
+        <script src="data/api.php"></script>
         <script type="text/javascript">
             Ext.Loader.setConfig({
                 enabled			: true,
@@ -66,13 +67,23 @@ Globals::setGlobals();
                     'Extensible'  : 'lib/extensible-1.5.1/src'
                 }
             });
+            Ext.direct.Manager.addProvider(App.data.REMOTING_API);
         </script>
-        <script src="data/api.php"></script>
+
         <script type="text/javascript" src="lib/ext-4.0.7/src/grid/plugin/RowEditing.js"></script>
+
+        <!-- Models -->
+        <script type="text/javascript" src="lib/extensible-1.5.1/src/calendar/data/EventStore.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/Vitals.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/Encounter.js"></script>
+
+        <!-- Stores -->
+        <script type="text/javascript" src="app/store/patientfile/Vitals.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/Encounter.js"></script>
+
+        <!-- Classes -->
         <script type="text/javascript" src="app/classes/NodeDisabled.js"></script>
         <script type="text/javascript" src="app/classes/RenderPanel.js"></script>
-        <script type="text/javascript" src="app/view/dashboard/Dashboard.js"></script>
-        <script type="text/javascript" src="lib/extensible-1.5.1/src/calendar/data/EventStore.js"></script>
         <script type="text/javascript" src="app/classes/ux/SlidingPager.js"></script>
         <script type="text/javascript" src="app/classes/GridPanel.js"></script>
         <script type="text/javascript" src="app/classes/LivePatientSearch.js"></script>
@@ -95,17 +106,21 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/TaxId.js"></script>
         <script type="text/javascript" src="app/classes/combo/Titles.js"></script>
         <script type="text/javascript" src="app/classes/combo/Outcome.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Medications.js"></script>
         <script type="text/javascript" src="app/classes/combo/Occurrence.js"></script>
         <script type="text/javascript" src="app/classes/combo/TransmitMedthod.js"></script>
         <script type="text/javascript" src="app/classes/combo/Types.js"></script>
         <script type="text/javascript" src="app/classes/combo/Users.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Checkbox.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/DateTime.js"></script>
+
+        <!-- Views-->
+        <script type="text/javascript" src="app/view/dashboard/Dashboard.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Visits.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Summary.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Encounter.js"></script>
         <script type="text/javascript" src="app/view/patientfile/NewPatient.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/Immunization.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/MedicalWindow.js"></script>
         <script type="text/javascript" src="app/view/administration/Facilities.js"></script>
         <script type="text/javascript" src="app/view/administration/Globals.js"></script>
         <script type="text/javascript" src="app/view/administration/Layout.js"></script>
@@ -122,6 +137,9 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/miscellaneous/MySettings.js"></script>
         <script type="text/javascript" src="app/view/miscellaneous/OfficeNotes.js"></script>
         <script type="text/javascript" src="app/view/miscellaneous/Websearch.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/ChartsWindow.js"></script>
+
+
         <script type="text/javascript" src="app/view/MitosApp.js"></script>
         <script type="text/javascript" src="app/classes/Overrides.js"></script>
         <script type="text/javascript">
@@ -129,7 +147,6 @@ Globals::setGlobals();
             function say(a){
                 console.log(a);
             }
-            Ext.direct.Manager.addProvider(App.data.REMOTING_API);
             Ext.onReady(function(){
                 app = Ext.create('App.view.MitosApp');
             });

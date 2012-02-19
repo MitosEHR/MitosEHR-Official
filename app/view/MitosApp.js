@@ -51,6 +51,7 @@ Ext.define('App.view.MitosApp', {
 		'App.view.patientfile.Summary',
 		'App.view.patientfile.Visits',
 		'App.view.patientfile.Encounter',
+		'App.view.patientfile.MedicalWindow',
 
 
 		'App.view.fees.Billing',
@@ -641,7 +642,6 @@ Ext.define('App.view.MitosApp', {
 			]
 		});
 
-
 		me.layout = { type: 'border', padding: 3 };
 		me.defaults = { split: true };
 		me.items = [ me.Header, me.navColumn, me.MainPanel, me.Footer ];
@@ -654,7 +654,19 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	onMedicalWin: function(action) {
-		Ext.create('App.view.patientfile.Immunization').show();
+		if(typeof this.MedicalWindow === "undefined"){
+			this.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow').show();
+		}else{
+			this.MedicalWindow.show();
+		}
+		Ext.create('App.view.patientfile.MedicalWindow').show();
+	},
+	onChartsWin: function() {
+		if(typeof this.ChartsWindow === "undefined"){
+			this.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow').show();
+		}else{
+			this.ChartsWindow.show();
+		}
 	},
 
 
@@ -929,7 +941,7 @@ Ext.define('App.view.MitosApp', {
 			getDragData: function(e) {
 				var sourceEl = e.getTarget(panel.itemSelector, 10), d;
 
-				App.MainPanel.el.mask('Drop Here To Open <strong>"' + panel.getRecord(sourceEl).data.name + '"</strong> Current Encounter');
+				app.MainPanel.el.mask('Drop Here To Open <strong>"' + panel.getRecord(sourceEl).data.name + '"</strong> Current Encounter');
 
 				if(sourceEl) {
 					d = sourceEl.cloneNode(true);
@@ -948,7 +960,7 @@ Ext.define('App.view.MitosApp', {
 			// This is the original XY coordinates of the draggable element.
 			getRepairXY: function() {
 
-				App.MainPanel.el.unmask();
+				app.MainPanel.el.unmask();
 
 				return this.dragData.repairXY;
 			}
@@ -967,7 +979,7 @@ Ext.define('App.view.MitosApp', {
 				return Ext.dd.DropZone.prototype.dropAllowed;
 			},
 			notifyDrop: function(dd, e, data) {
-				App.MainPanel.el.unmask();
+				app.MainPanel.el.unmask();
 				me.setCurrPatient(data.patientData.pid, data.patientData.name, function() {
 					me.openCurrEncounter();
 				});
