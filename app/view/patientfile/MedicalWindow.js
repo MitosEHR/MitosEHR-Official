@@ -11,14 +11,14 @@
  */
 Ext.define('App.view.patientfile.MedicalWindow', {
 	extend     : 'Ext.window.Window',
-	title      : 'MedicalWindow',
+	title      : 'Medical Window',
 	layout     : 'card',
 	closeAction: 'hide',
 	height     : '700',
 	width      : '1000',
 	minHeight  : 400,
 	minWidth   : 550,
-	//modal      : true,
+	modal      : true,
 	initComponent: function() {
 
 		var me = this;
@@ -239,7 +239,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						height     : 605,
 						split      : true,
 						collapsible: true,
-
 						columns  : [
 							{
 								header   : 'Code Type',
@@ -291,18 +290,23 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				/**
 				 * Allergies Card panel
 				 */
-				xtype : 'panel',
-				title : 'Allergies',
-				layout: 'border',
+				xtype       : 'panel',
+				title       : 'Allergies',
+				layout      : 'border',
+				bodyPadding : 5,
 				items : [
 					{
 						xtype        : 'mitos.form',
+						title        : 'Allergies Form',
 						region       : 'north',
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
 						defaultType  : 'textfield',
 						defaults     : { width: 500, labelWidth: 300 },
-						height       : 320,
+						height       : 340,
+						collapsed    : true,
+						border       : true,
 						hidden       : true,
+						margin       : '0 0 3 0',
 						items        : [
 							{
 								fieldLabel     : 'Type',
@@ -374,7 +378,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								minWidth: 80,
-								text    : 'Cancel'
+								text    : 'Cancel',
+								scope   : me,
+								handler : me.onCancelAllergy
 
 							}
 						]
@@ -875,45 +881,50 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
 						pressed     : true,
+						itemId      : 'immunization',
 						action      : 'immunization',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					},
 					'-',
 					{
 						text        : 'Allergies',
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
+						itemId      : 'allergies',
 						action      : 'allergies',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					},
 					'-',
 					{
 						text        : 'Medical Issues',
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
+						itemId      : 'issues',
 						action      : 'issues',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					},
 					'-',
 					{
 						text        : 'Surgery',
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
+						itemId      : 'surgery',
 						action      : 'surgery',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					},
 					'-',
 					{
 						text        : 'Dental',
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
+						itemId      : 'dental',
 						action      : 'dental',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					}
 				]
 			}
@@ -1003,6 +1014,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			handler: me.onAddDental
 
 		});
+
+		me.doLayout();
 	},
 
 
@@ -1017,14 +1030,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		form.loadRecord(m);
 	},
 	onAddAllergy: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientAllergyListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
+		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
 			});
 		formPanel.show();
+		formPanel.expand(true);
 		form.loadRecord(m);
+	},
+	onCancelAllergy: function(btn) {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm();
+
+		formPanel.collapse();
+		formPanel.hide();
+		form.reset();
 	},
 	onAddMedication: function(btn) {
 		var gridPanel = btn.up('panel').getComponent('patientMedicalListGrid'),
@@ -1084,20 +1105,28 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		gridPanel.up('form').collapse(true);
 	},
 
-	OnCardSwitch: function(btn) {
-		var layout = this.getLayout();
+	cardSwitch: function(btn) {
+		var layout = this.getLayout(), title;
 
 		if(btn.action == 'immunization') {
 			layout.setActiveItem(0);
+			title = 'Immunizations';
 		} else if(btn.action == 'allergies') {
 			layout.setActiveItem(1);
+			title = 'Allergies';
 		} else if(btn.action == 'issues') {
 			layout.setActiveItem(2);
+			title = 'Medical Issues';
 		}else if(btn.action == 'surgery') {
 			layout.setActiveItem(3);
+			title = 'Surgeries';
 		}else if(btn.action == 'dental') {
 			layout.setActiveItem(4);
+			title = 'Dentals';
 		}
+
+		layout.getActiveItem().setTitle(app.currPatient.name+' - '+title);
+
 	},
 
 	onMedicalWinShow: function() {

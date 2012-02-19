@@ -307,25 +307,25 @@ Ext.define('App.view.patientfile.Encounter', {
 					},
 					'->',
 					{
+						text   : 'Add Immunization',
+						iconCls: 'icoAddRecord',
+						action : 'immunization',
+						scope  : me,
+						handler: me.onMedicalWin
+					},
+					'-',
+					{
 						text   : 'Add Allergies',
 						iconCls: 'icoAddRecord',
-						action : 'onAllergies',
+						action : 'allergies',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
 					'-',
 					{
-						text   : 'Add Problems',
+						text   : 'Add Medical Issue',
 						iconCls: 'icoAddRecord',
-						action : 'onProblems',
-						scope  : me,
-						handler: me.onMedicalWin
-					},
-					'-',
-					{
-						text   : 'Add Medications',
-						iconCls: 'icoAddRecord',
-						action : 'onMedication',
+						action : 'issues',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
@@ -333,7 +333,7 @@ Ext.define('App.view.patientfile.Encounter', {
 					{
 						text   : 'Add Surgery',
 						iconCls: 'icoAddRecord',
-						action : 'onSurgery',
+						action : 'surgery',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
@@ -341,7 +341,7 @@ Ext.define('App.view.patientfile.Encounter', {
 					{
 						text   : 'Add Dental',
 						iconCls: 'icoAddRecord',
-						action : 'onDental',
+						action : 'dental',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
@@ -359,7 +359,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	},
 
 	onMedicalWin: function(btn) {
-		app.onMedicalWin(btn.action);
+		app.onMedicalWin(btn);
 	},
 
 

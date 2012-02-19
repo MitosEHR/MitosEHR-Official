@@ -621,8 +621,10 @@ Ext.define('App.view.MitosApp', {
 		me.callParent(arguments);
 	},
 
-	onMedicalWin: function(action) {
+	onMedicalWin: function(btn) {
 		this.MedicalWindow.show();
+		this.MedicalWindow.down('toolbar').getComponent(btn.action).toggle(true);
+		this.MedicalWindow.cardSwitch(btn);
 	},
 
 	onChartsWin: function() {
