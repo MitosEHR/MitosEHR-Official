@@ -10,8 +10,8 @@
  *
  * @namespace Encounter.getVitals
  */
-Ext.define('Ext.mitos.view.patientfile.Summary', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.patientfile.Summary', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelSummary',
 	pageTitle    : 'Patient Summary',
 	pageLayout   : 'border',

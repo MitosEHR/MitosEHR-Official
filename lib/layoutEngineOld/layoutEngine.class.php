@@ -307,7 +307,7 @@ class layoutEngineOld extends dbHelper {
 	// This creates the dataStore for the form.
 	//**********************************************************************
 	private function factorFormStore($dataStore, $path, $fieldArray, $index){
-		$buff  = "panel.".$dataStore." = Ext.create('Ext.mitos.classes.CRUDStore',{fields: [";
+		$buff  = "panel.".$dataStore." = Ext.create('App.classes.CRUDStore',{fields: [";
 		$buff .="{name: '".$index."', type: 'int'},";
 		foreach($fieldArray as $key => $row){
 			$buff .= "{name: '".$row['field_id']."', type: 'string'},";
@@ -332,7 +332,7 @@ class layoutEngineOld extends dbHelper {
 	//
 	//**********************************************************************
 	private function factorDataStore($list){
-		$buff  = "panel.store" . ucfirst($list) . " = Ext.create('Ext.mitos.classes.CRUDStore',{";
+		$buff  = "panel.store" . ucfirst($list) . " = Ext.create('App.classes.CRUDStore',{";
 		$buff .= "fields: [{name: 'option_id', type: 'string'},";
 		$buff .= "{name: 'title', type: 'string'}";
 		$buff .= "],";
@@ -350,7 +350,7 @@ class layoutEngineOld extends dbHelper {
 	//
 	//**********************************************************************
 	private function factorStoreProviders(){
-		$buff  = "panel.storeProviders = Ext.create('Ext.mitos.classes.CRUDStore',{";
+		$buff  = "panel.storeProviders = Ext.create('App.classes.CRUDStore',{";
 		$buff .= "fields: [{name: 'id', type: 'int'},";
 		$buff .= "{name: 'cName', type: 'string'},";
 		$buff .= "{name: 'npi', type: 'string'}";
@@ -368,7 +368,7 @@ class layoutEngineOld extends dbHelper {
 	//
 	//**********************************************************************
 	private function factorStoreExams(){
-		$buff  = "panel.storeExams = Ext.create('Ext.mitos.classes.CRUDStore',{";
+		$buff  = "panel.storeExams = Ext.create('App.classes.CRUDStore',{";
 		$buff .= "fields: [{name: 'id', type: 'int'},";
 		$buff .= "{name: 'option_id', type: 'string'},";
 		$buff .= "{name: 'title', type: 'string'},";
@@ -389,7 +389,7 @@ class layoutEngineOld extends dbHelper {
 	//
 	//**********************************************************************
 	private function factorStorePharmacies(){
-		$buff  = "panel.storePharmacies = Ext.create('Ext.mitos.classes.CRUDStore',{";
+		$buff  = "panel.storePharmacies = Ext.create('App.classes.CRUDStore',{";
 		$buff .= "fields: [{name: 'id', type: 'int'},";
 		$buff .= "{name: 'name', type: 'string'},";
 		$buff .= "{name: 'transmit_method', type: 'string'},";
@@ -408,7 +408,7 @@ class layoutEngineOld extends dbHelper {
 	//
 	//**********************************************************************
 	private function factorStoreOrganizations(){
-		$buff  = "panel.storeOrganizations = Ext.create('Ext.mitos.classes.CRUDStore',{";
+		$buff  = "panel.storeOrganizations = Ext.create('App.classes.CRUDStore',{";
 		$buff .= "fields: [{name: 'id', type: 'int'},";
 		$buff .= "{name: 'cName', type: 'string'},";
 		$buff .= "{name: 'organization', type: 'string'}";
@@ -426,7 +426,7 @@ class layoutEngineOld extends dbHelper {
 	//
 	//**********************************************************************
 	private function factorStoreAllergies(){
-		$buff  = "panel.storeAllergies = Ext.create('Ext.mitos.classes.CRUDStore',{";
+		$buff  = "panel.storeAllergies = Ext.create('App.classes.CRUDStore',{";
 		$buff .= "fields: [{name: 'id', type: 'int'},";
 		$buff .= "{name: 'type', type: 'string'}";
 		$buff .= "],";

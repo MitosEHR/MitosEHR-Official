@@ -5,10 +5,10 @@
  * Date: 10/29/11
  * Time: 4:45 PM
  */
-Ext.define('Ext.mitos.classes.combo.posCodes', {
+Ext.define('App.classes.combo.posCodes', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.mitos.poscodescombo',
-	uses         : 'Ext.mitos.classes.restStoreModel',
+	uses         : 'App.classes.restStoreModel',
 	initComponent: function() {
 		var me = this;
 

@@ -5,7 +5,7 @@
  * @namespace authProcedures.getSites
  * @namespace authProcedures.login
  */
-Ext.define('Ext.mitos.panel.login.Login',{
+Ext.define('App.panel.login.Login',{
     extend:'Ext.Viewport',
     initComponent:function(){
         var me = this;

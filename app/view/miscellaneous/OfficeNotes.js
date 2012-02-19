@@ -8,14 +8,14 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.view.miscellaneous.OfficeNotes', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.miscellaneous.OfficeNotes', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelOfficeNotes',
 	pageTitle    : 'Office Notes',
 	pageLayout   : 'border',
 	uses         : [
-		'Ext.mitos.classes.GridPanel',
-		'Ext.mitos.classes.RenderPanel'
+		'App.classes.GridPanel',
+		'App.classes.RenderPanel'
 	],
 	initComponent: function() {
 		var me = this;
@@ -101,7 +101,7 @@ Ext.define('Ext.mitos.view.miscellaneous.OfficeNotes', {
 				}
 			]
 		});
-		me.grid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.grid = Ext.create('App.classes.GridPanel', {
 			region   : 'center',
 			store    : me.store,
 			listeners: {

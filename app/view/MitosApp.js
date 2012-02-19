@@ -4,13 +4,13 @@
  * @namespace Patient.currPatientUnset
  * @namespace authProcedures.unAuth
  */
-Ext.define('Ext.mitos.view.MitosApp', {
+Ext.define('App.view.MitosApp', {
 	extend       : 'Ext.Viewport',
 	uses         : [
 
-		'Ext.mitos.classes.RenderPanel',
-		'Ext.mitos.classes.CRUDStore',
-		'Ext.mitos.classes.restStoreModel',
+		'App.classes.RenderPanel',
+		'App.classes.CRUDStore',
+		'App.classes.restStoreModel',
 
 		'Ext.chart.*',
 		'Ext.fx.target.Sprite',
@@ -23,56 +23,56 @@ Ext.define('Ext.mitos.view.MitosApp', {
 		'Extensible.calendar.data.MemoryCalendarStore',
 		'Extensible.calendar.data.MemoryEventStore',
 
-		'Ext.mitos.classes.combo.*',
-		'Ext.mitos.classes.combo.Users',
-		'Ext.mitos.classes.combo.Roles',
-		'Ext.mitos.classes.combo.TaxId',
-		'Ext.mitos.classes.combo.Lists',
-		'Ext.mitos.classes.combo.posCodes',
-		'Ext.mitos.classes.combo.Titles',
-		'Ext.mitos.classes.combo.CodesTypes',
-		'Ext.mitos.classes.combo.Languages',
-		'Ext.mitos.classes.combo.Authorizations',
-		'Ext.mitos.classes.combo.Facilities',
-		'Ext.mitos.classes.combo.TransmitMedthod',
-		'Ext.mitos.classes.combo.InsurancePayerType',
+		'App.classes.combo.*',
+		'App.classes.combo.Users',
+		'App.classes.combo.Roles',
+		'App.classes.combo.TaxId',
+		'App.classes.combo.Lists',
+		'App.classes.combo.posCodes',
+		'App.classes.combo.Titles',
+		'App.classes.combo.CodesTypes',
+		'App.classes.combo.Languages',
+		'App.classes.combo.Authorizations',
+		'App.classes.combo.Facilities',
+		'App.classes.combo.TransmitMedthod',
+		'App.classes.combo.InsurancePayerType',
 
 
-		'Ext.mitos.classes.form.FormPanel',
-		'Ext.mitos.classes.form.fields.Checkbox',
-		'Ext.mitos.classes.window.Window',
-		'Ext.mitos.classes.NodeDisabled',
+		'App.classes.form.FormPanel',
+		'App.classes.form.fields.Checkbox',
+		'App.classes.window.Window',
+		'App.classes.NodeDisabled',
 
-		'Ext.mitos.view.dashboard.Dashboard',
-		'Ext.mitos.view.calendar.Calendar',
-		'Ext.mitos.view.messages.Messages',
+		'App.view.dashboard.Dashboard',
+		'App.view.calendar.Calendar',
+		'App.view.messages.Messages',
 
-		'Ext.mitos.view.patientfile.NewPatient',
-		'Ext.mitos.view.patientfile.Summary',
-		'Ext.mitos.view.patientfile.Visits',
-		'Ext.mitos.view.patientfile.Encounter',
+		'App.view.patientfile.NewPatient',
+		'App.view.patientfile.Summary',
+		'App.view.patientfile.Visits',
+		'App.view.patientfile.Encounter',
 
 
-		'Ext.mitos.view.fees.Billing',
-		'Ext.mitos.view.fees.Checkout',
-		'Ext.mitos.view.fees.FeesSheet',
-		'Ext.mitos.view.fees.Payments',
+		'App.view.fees.Billing',
+		'App.view.fees.Checkout',
+		'App.view.fees.FeesSheet',
+		'App.view.fees.Payments',
 
-		'Ext.mitos.view.administration.Facilities',
-		'Ext.mitos.view.administration.Globals',
-		'Ext.mitos.view.administration.Layout',
-		'Ext.mitos.view.administration.Lists',
-		'Ext.mitos.view.administration.Log',
-		'Ext.mitos.view.administration.Practice',
-		'Ext.mitos.view.administration.Roles',
-		'Ext.mitos.view.administration.Services',
-		'Ext.mitos.view.administration.Users',
+		'App.view.administration.Facilities',
+		'App.view.administration.Globals',
+		'App.view.administration.Layout',
+		'App.view.administration.Lists',
+		'App.view.administration.Log',
+		'App.view.administration.Practice',
+		'App.view.administration.Roles',
+		'App.view.administration.Services',
+		'App.view.administration.Users',
 
-		'Ext.mitos.view.miscellaneous.Addressbook',
-		'Ext.mitos.view.miscellaneous.MyAccount',
-		'Ext.mitos.view.miscellaneous.MySettings',
-		'Ext.mitos.view.miscellaneous.OfficeNotes',
-		'Ext.mitos.view.miscellaneous.Websearch'
+		'App.view.miscellaneous.Addressbook',
+		'App.view.miscellaneous.MyAccount',
+		'App.view.miscellaneous.MySettings',
+		'App.view.miscellaneous.OfficeNotes',
+		'App.view.miscellaneous.Websearch'
 
 	],
 	initComponent: function() {
@@ -486,37 +486,37 @@ Ext.define('Ext.mitos.view.MitosApp', {
 			/**
 			 * General Area
 			 */
-				Ext.create('Ext.mitos.view.dashboard.Dashboard'), // done  TODO: panels
-				Ext.create('Ext.mitos.view.calendar.Calendar'), // done
-				Ext.create('Ext.mitos.view.messages.Messages'), // done
-				Ext.create('Ext.mitos.view.search.PatientSearch'), //
+				Ext.create('App.view.dashboard.Dashboard'), // done  TODO: panels
+				Ext.create('App.view.calendar.Calendar'), // done
+				Ext.create('App.view.messages.Messages'), // done
+				Ext.create('App.view.search.PatientSearch'), //
 
 			/**
 			 * Patient Area
 			 */
-				Ext.create('Ext.mitos.view.patientfile.NewPatient'),
-				Ext.create('Ext.mitos.view.patientfile.Summary'),
-				Ext.create('Ext.mitos.view.patientfile.Visits'),
-				Ext.create('Ext.mitos.view.patientfile.Encounter'),
+				Ext.create('App.view.patientfile.NewPatient'),
+				Ext.create('App.view.patientfile.Summary'),
+				Ext.create('App.view.patientfile.Visits'),
+				Ext.create('App.view.patientfile.Encounter'),
 
 
 			/**
 			 * Fees Area
 			 */
-				Ext.create('Ext.mitos.view.fees.Billing'),
-				Ext.create('Ext.mitos.view.fees.Checkout'),
-				Ext.create('Ext.mitos.view.fees.FeesSheet'),
-				Ext.create('Ext.mitos.view.fees.Payments'),
+				Ext.create('App.view.fees.Billing'),
+				Ext.create('App.view.fees.Checkout'),
+				Ext.create('App.view.fees.FeesSheet'),
+				Ext.create('App.view.fees.Payments'),
 
 
 			/**
 			 * Miscellaneous
 			 */
-				Ext.create('Ext.mitos.view.miscellaneous.Addressbook'),
-				Ext.create('Ext.mitos.view.miscellaneous.MyAccount'),
-				Ext.create('Ext.mitos.view.miscellaneous.MySettings'),
-				Ext.create('Ext.mitos.view.miscellaneous.OfficeNotes'),
-				Ext.create('Ext.mitos.view.miscellaneous.Websearch')
+				Ext.create('App.view.miscellaneous.Addressbook'),
+				Ext.create('App.view.miscellaneous.MyAccount'),
+				Ext.create('App.view.miscellaneous.MySettings'),
+				Ext.create('App.view.miscellaneous.OfficeNotes'),
+				Ext.create('App.view.miscellaneous.Websearch')
 
 			],
 			listeners: {
@@ -530,31 +530,31 @@ Ext.define('Ext.mitos.view.MitosApp', {
 		 * Add Administration Area Panels
 		 */
 		if(perm.access_gloabal_settings) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Globals'));
+			me.MainPanel.add(Ext.create('App.view.administration.Globals'));
 		}
 		if(perm.access_facilities) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Facilities'));
+			me.MainPanel.add(Ext.create('App.view.administration.Facilities'));
 		}
 		if(perm.access_users) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Users'));
+			me.MainPanel.add(Ext.create('App.view.administration.Users'));
 		}
 		if(perm.access_practice) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Practice'));
+			me.MainPanel.add(Ext.create('App.view.administration.Practice'));
 		}
 		if(perm.access_services) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Services'));
+			me.MainPanel.add(Ext.create('App.view.administration.Services'));
 		}
 		if(perm.access_roles) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Roles'));
+			me.MainPanel.add(Ext.create('App.view.administration.Roles'));
 		}
 		if(perm.access_layouts) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Layout'));
+			me.MainPanel.add(Ext.create('App.view.administration.Layout'));
 		}
 		if(perm.access_lists) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Lists'));
+			me.MainPanel.add(Ext.create('App.view.administration.Lists'));
 		}
 		if(perm.access_event_log) {
-			me.MainPanel.add(Ext.create('Ext.mitos.view.administration.Log'));
+			me.MainPanel.add(Ext.create('App.view.administration.Log'));
 		}
 
 
@@ -654,7 +654,7 @@ Ext.define('Ext.mitos.view.MitosApp', {
 	},
 
 	onMedicalWin: function(action) {
-		Ext.create('Ext.mitos.view.patientfile.Immunization').show();
+		Ext.create('App.view.patientfile.Immunization').show();
 	},
 
 
@@ -853,7 +853,7 @@ Ext.define('Ext.mitos.view.MitosApp', {
 
 	showMiframe: function(src) {
 		this.winSupport.remove(this.miframe);
-		this.winSupport.add(this.miframe = Ext.create('Ext.mitos.ManagedIframe', {src: src}));
+		this.winSupport.add(this.miframe = Ext.create('App.ManagedIframe', {src: src}));
 		this.winSupport.show();
 	},
 

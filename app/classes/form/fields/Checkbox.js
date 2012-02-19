@@ -5,7 +5,7 @@
  * Date: 11/1/11
  * Time: 12:37 PM
  */
-Ext.define('Ext.mitos.classes.form.fields.Checkbox', {
+Ext.define('App.classes.form.fields.Checkbox', {
 	extend        : 'Ext.form.field.Checkbox',
 	alias         : 'widget.mitos.checkbox',
 	inputValue    : '1',

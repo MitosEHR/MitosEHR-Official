@@ -8,20 +8,20 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.view.search.PatientSearch', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.search.PatientSearch', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelPatientSearch',
 	pageTitle    : 'Advance Patient Search',
 	pageLayout   : 'border',
 	uses         : [
-		'Ext.mitos.classes.restStoreModel',
-		'Ext.mitos.classes.GridPanel',
-		'Ext.mitos.classes.RenderPanel'
+		'App.classes.restStoreModel',
+		'App.classes.GridPanel',
+		'App.classes.RenderPanel'
 	],
 	initComponent: function() {
 		var me = this;
 
-		me.store = Ext.create('Ext.mitos.classes.restStoreModel', {
+		me.store = Ext.create('App.classes.restStoreModel', {
 			fields    : [
 				{name: 'id', type: 'int'},
 				{name: 'date', type: 'date', dateFormat: 'c'},
@@ -86,7 +86,7 @@ Ext.define('Ext.mitos.view.search.PatientSearch', {
 				}
 			]
 		});
-		me.grid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.grid = Ext.create('App.classes.GridPanel', {
 			region   : 'center',
 			store    : me.store,
 			listeners: {

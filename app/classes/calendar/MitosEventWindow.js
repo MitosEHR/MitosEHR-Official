@@ -36,7 +36,7 @@
  * @constructor
  * @param {Object} config The config object
  */
-Ext.define('Ext.mitos.classes.calendar.MitosEventWindow', {
+Ext.define('App.classes.calendar.MitosEventWindow', {
 	extend: 'Ext.window.Window',
 	alias : 'widget.extensible.mitoseventeditwindow',
 

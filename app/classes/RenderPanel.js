@@ -3,7 +3,7 @@
  *
  * @namespace FormLayoutEngine.getFields
  */
-Ext.define('Ext.mitos.classes.RenderPanel', {
+Ext.define('App.classes.RenderPanel', {
 	extend       : 'Ext.container.Container',
 	alias        : 'widget.renderpanel',
 	cls          : 'RenderPanel',
@@ -55,11 +55,11 @@ Ext.define('Ext.mitos.classes.RenderPanel', {
 	},
 
 	goBack: function() {
-		App.goBack();
+		app.goBack();
 	},
 
 	checkIfCurrPatient: function() {
-		if(App.getCurrPatient()) {
+		if(app.getCurrPatient()) {
 			return true;
 		} else {
 			return false;
@@ -67,7 +67,7 @@ Ext.define('Ext.mitos.classes.RenderPanel', {
 	},
 
 	patientInfoAlert: function() {
-		var patient = App.getCurrPatient();
+		var patient = app.getCurrPatient();
 
 		Ext.Msg.alert('Status', 'Patient: ' + patient.name + ' (' + patient.pid + ')');
 	},
@@ -119,14 +119,14 @@ Ext.define('Ext.mitos.classes.RenderPanel', {
 	},
 
 	getCurrPatient: function() {
-		return App.getCurrPatient();
+		return app.getCurrPatient();
 	},
 
 	getMitosApp: function() {
-		return App.getMitosApp();
+		return app.getMitosApp();
 	},
 
 	msg: function(title, format) {
-		App.msg(title, format)
+		app.msg(title, format)
 	}
 });

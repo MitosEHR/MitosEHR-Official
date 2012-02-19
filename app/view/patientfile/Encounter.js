@@ -14,12 +14,12 @@
  * @namespace Encounter.closeEncounter
  * @namespace Encounter.getVitals
  */
-Ext.define('Ext.mitos.view.patientfile.Encounter', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.patientfile.Encounter', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelEncounter',
 	pageTitle    : 'Encounter',
 	pageLayout   : 'border',
-	uses         : ['Ext.mitos.classes.restStoreModel'],
+	uses         : ['App.classes.restStoreModel'],
 	initComponent: function() {
 		var me = this;
 
@@ -819,7 +819,7 @@ Ext.define('Ext.mitos.view.patientfile.Encounter', {
 	},
 
 	onMedicalWin: function(btn) {
-		App.onMedicalWin(btn.action);
+		app.onMedicalWin(btn.action);
 	},
 
 
@@ -861,7 +861,7 @@ Ext.define('Ext.mitos.view.patientfile.Encounter', {
 						if(btn == 'yes') {
 							me.showNewEncounterWindow();
 						} else {
-							App.openPatientVisits();
+							app.openPatientVisits();
 						}
 					}
 				});
@@ -905,7 +905,7 @@ Ext.define('Ext.mitos.view.patientfile.Encounter', {
 
 	cancelNewEnc: function(btn) {
 		btn.up('window').close();
-		App.openPatientSummary();
+		app.openPatientSummary();
 	},
 
 

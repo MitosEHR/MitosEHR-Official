@@ -16,19 +16,19 @@
  *
  *
  */
-Ext.define('Ext.mitos.view.administration.Practice', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Practice', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelPractice',
 	pageTitle    : 'Practice Settings',
 	uses         : [
-		'Ext.mitos.classes.restStoreModel',
-		'Ext.mitos.classes.CRUDStore',
-		'Ext.mitos.classes.GridPanel',
-		'Ext.mitos.classes.combo.Titles',
-		'Ext.mitos.classes.combo.TransmitMedthod',
-		'Ext.mitos.classes.combo.InsurancePayerType',
-		'Ext.mitos.classes.form.FormPanel',
-		'Ext.mitos.classes.window.Window'
+		'App.classes.restStoreModel',
+		'App.classes.CRUDStore',
+		'App.classes.GridPanel',
+		'App.classes.combo.Titles',
+		'App.classes.combo.TransmitMedthod',
+		'App.classes.combo.InsurancePayerType',
+		'App.classes.form.FormPanel',
+		'App.classes.window.Window'
 	],
 	initComponent: function() {
 		var me = this;
@@ -134,7 +134,7 @@ Ext.define('Ext.mitos.view.administration.Practice', {
 		// *************************************************************************************
 		// Insurance Numbers Record Structure
 		// *************************************************************************************
-		me.insuranceNumbersStore = Ext.create('Ext.mitos.classes.restStoreModel', {
+		me.insuranceNumbersStore = Ext.create('App.classes.restStoreModel', {
 			fields     : [
 				{name: 'id', type: 'int'},
 				{name: 'name', type: 'string'}
@@ -147,7 +147,7 @@ Ext.define('Ext.mitos.view.administration.Practice', {
 		// *************************************************************************************
 		// X12 Partners Record Structure
 		// *************************************************************************************
-		me.x12PartnersStore = Ext.create('Ext.mitos.classes.restStoreModel', {
+		me.x12PartnersStore = Ext.create('App.classes.restStoreModel', {
 			fields     : [
 				{name: 'id', type: 'int'},
 				{name: 'name', type: 'string'}
@@ -280,7 +280,7 @@ Ext.define('Ext.mitos.view.administration.Practice', {
 		// *************************************************************************************
 		// Grids
 		// *************************************************************************************
-		me.pharmacyGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.pharmacyGrid = Ext.create('App.classes.GridPanel', {
 			store    : me.pharmacyStore,
 			border   : false,
 			frame    : false,
@@ -301,7 +301,7 @@ Ext.define('Ext.mitos.view.administration.Practice', {
 				}
 			}
 		});
-		me.insuranceGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.insuranceGrid = Ext.create('App.classes.GridPanel', {
 			store    : me.insuranceStore,
 			border   : false,
 			frame    : false,
@@ -343,7 +343,7 @@ Ext.define('Ext.mitos.view.administration.Practice', {
 				}
 			}
 		}); // END Insurance Numbers Grid
-		me.x12ParnersGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.x12ParnersGrid = Ext.create('App.classes.GridPanel', {
 			store     : me.x12PartnersStore,
 			border    : false,
 			frame     : false,
@@ -523,7 +523,7 @@ Ext.define('Ext.mitos.view.administration.Practice', {
 		/**
 		 * Window
 		 */
-		me.win = Ext.create('Ext.mitos.classes.window.Window', {
+		me.win = Ext.create('App.classes.window.Window', {
 			width    : 450,
 			items    : [
 				{

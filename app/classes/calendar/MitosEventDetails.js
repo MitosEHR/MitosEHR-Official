@@ -40,7 +40,7 @@
  * @constructor
  * @param {Object} config The config object
  */
-Ext.define('Ext.mitos.classes.calendar.MitosEventDetails', {
+Ext.define('App.classes.calendar.MitosEventDetails', {
 	extend: 'Ext.form.Panel',
 	alias : 'widget.extensible.mitoseventeditform',
 

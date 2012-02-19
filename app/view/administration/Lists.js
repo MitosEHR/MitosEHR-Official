@@ -20,14 +20,14 @@
  * @namespace Lists.deleteList
  *
  */
-Ext.define('Ext.mitos.view.administration.Lists', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Lists', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelLists',
 	pageTitle    : 'Select List Options',
 	pageLayout   : 'border',
 	uses         : [
-		'Ext.mitos.classes.GridPanel',
-		'Ext.mitos.classes.form.FormPanel',
+		'App.classes.GridPanel',
+		'App.classes.form.FormPanel',
 		'Ext.grid.plugin.RowEditing'
 	],
 	initComponent: function() {
@@ -114,7 +114,7 @@ Ext.define('Ext.mitos.view.administration.Lists', {
 		/**
 		 * Lists Grid
 		 */
-		me.listsGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.listsGrid = Ext.create('App.classes.GridPanel', {
 			store      : me.listsStore,
 			itemId     : 'listsGrid',
 			plugins    : [ me.listsRowEditing ],
@@ -182,7 +182,7 @@ Ext.define('Ext.mitos.view.administration.Lists', {
 		/**
 		 * Options Grid
 		 */
-		me.optionsGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.optionsGrid = Ext.create('App.classes.GridPanel', {
 			store      : me.optionsStore,
 			itemId     : 'optionsGrid',
 			plugins    : [ me.optionsRowEditing ],

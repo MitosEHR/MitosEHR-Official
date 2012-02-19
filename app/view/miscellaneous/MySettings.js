@@ -8,13 +8,13 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('Ext.mitos.view.miscellaneous.MySettings', {
-	extend       : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.miscellaneous.MySettings', {
+	extend       : 'App.classes.RenderPanel',
 	id           : 'panelMySettings',
 	pageTitle    : 'My Settings',
 	uses         : [
-		'Ext.mitos.classes.CRUDStore',
-		'Ext.mitos.classes.GridPanel'
+		'App.classes.CRUDStore',
+		'App.classes.GridPanel'
 	],
 	initComponent: function() {
 		var panel = this;
@@ -22,7 +22,7 @@ Ext.define('Ext.mitos.view.miscellaneous.MySettings', {
 		// User Settings Form
 		// Add or Edit purpose
 		// *************************************************************************************
-		panel.uSettingsForm = Ext.create('Ext.mitos.classes.form.FormPanel', {
+		panel.uSettingsForm = Ext.create('App.classes.form.FormPanel', {
 			id         : 'uSettingsForm',
 			bodyStyle  : 'padding: 10px;',
 			cls        : 'form-white-bg',

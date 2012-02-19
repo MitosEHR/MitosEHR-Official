@@ -12,7 +12,7 @@
  * @author ontho (http://www.sencha.com/forum/member.php?285806-ontho)
  * @author jakob.ketterl (http://www.sencha.com/forum/member.php?25102-jakob.ketterl)
  */
-Ext.define('Ext.mitos.classes.form.fields.DateTime', {
+Ext.define('App.classes.form.fields.DateTime', {
 	extend: 'Ext.form.FieldContainer',
 	mixins: {
 		field: 'Ext.form.field.Field'

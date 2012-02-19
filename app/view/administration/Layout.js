@@ -18,14 +18,14 @@
  * @namespace CombosData.getFiledXtypes
  * @namespace CombosData.getOptionsByListId
  */
-Ext.define('Ext.mitos.view.administration.Layout', {
-	extend              : 'Ext.mitos.classes.RenderPanel',
+Ext.define('App.view.administration.Layout', {
+	extend              : 'App.classes.RenderPanel',
 	id                  : 'panelLayout',
 	pageTitle           : 'Layout Form Editor',
 	pageLayout          : 'border',
 	uses                : [
-		'Ext.mitos.classes.restStoreModel',
-		'Ext.mitos.classes.GridPanel'
+		'App.classes.restStoreModel',
+		'App.classes.GridPanel'
 	],
 	initComponent       : function() {
 
@@ -180,7 +180,7 @@ Ext.define('Ext.mitos.view.administration.Layout', {
 		/**
 		 * This grid only available if the field is a Combobox
 		 */
-		me.selectListGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.selectListGrid = Ext.create('App.classes.GridPanel', {
 			store           : me.selectListoptionsStore,
 			region          : 'south',
 			collapseMode    : 'mini',
@@ -210,7 +210,7 @@ Ext.define('Ext.mitos.view.administration.Layout', {
 		/**
 		 * form to create and modified the fields
 		 */
-		me.fieldForm = Ext.create('Ext.mitos.classes.form.FormPanel', {
+		me.fieldForm = Ext.create('App.classes.form.FormPanel', {
 			region       : 'center',
 			//url	            : 'app/administration/layout/data.php?task=formRequest',
 			border       : false,
@@ -616,7 +616,7 @@ Ext.define('Ext.mitos.view.administration.Layout', {
 		 * the user will not have the options to create
 		 * forms, just to modified the fields of existing forms.
 		 */
-		me.formsGrid = Ext.create('Ext.mitos.classes.GridPanel', {
+		me.formsGrid = Ext.create('App.classes.GridPanel', {
 			title      : 'Form list',
 			region     : 'west',
 			store      : me.formsGridStore,

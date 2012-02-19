@@ -20,7 +20,7 @@
  * @constructor
  * @param {Object} config
  */
-Ext.define('Ext.mitos.classes.NodeDisabled', {
+Ext.define('App.classes.NodeDisabled', {
 	alias                  : 'plugin.nodedisabled', extend: 'Ext.AbstractPlugin'
 
 
