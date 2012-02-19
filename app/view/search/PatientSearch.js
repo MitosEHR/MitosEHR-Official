@@ -14,26 +14,11 @@ Ext.define('App.view.search.PatientSearch', {
 	pageTitle    : 'Advance Patient Search',
 	pageLayout   : 'border',
 	uses         : [
-		'App.classes.restStoreModel',
-		'App.classes.GridPanel',
-		'App.classes.RenderPanel'
+		'App.classes.GridPanel'
 	],
 	initComponent: function() {
 		var me = this;
 
-		me.store = Ext.create('App.classes.restStoreModel', {
-			fields    : [
-				{name: 'id', type: 'int'},
-				{name: 'date', type: 'date', dateFormat: 'c'},
-				{name: 'body', type: 'string'},
-				{name: 'user', type: 'string'},
-				{name: 'facility_id', type: 'string'},
-				{name: 'activity', type: 'string'}
-			],
-			model     : 'advanceSearchModel',
-			idProperty: 'id',
-			url       : 'app/search/data.php'
-		});
 
 		me.form = Ext.create('Ext.form.FormPanel', {
 			region     : 'north',
@@ -88,14 +73,7 @@ Ext.define('App.view.search.PatientSearch', {
 		});
 		me.grid = Ext.create('App.classes.GridPanel', {
 			region   : 'center',
-			store    : me.store,
-			listeners: {
-				itemclick: {
-					fn: function(DataView, record, item, rowIndex) {
-
-					}
-				}
-			},
+			//store    : me.store,
 			columns  : [
 				{ header: 'id', sortable: false, dataIndex: 'id', hidden: true},
 				{ width: 150, header: 'Date', sortable: true, dataIndex: 'date', renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s') },
