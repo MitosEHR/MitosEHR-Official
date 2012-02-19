@@ -10,17 +10,15 @@
  * @namespace Immunization.addPatientImmunization
  */
 Ext.define('App.view.patientfile.MedicalWindow', {
-	extend           : 'Ext.window.Window',
-	title            : 'MedicalWindow',
-	height           : '700',
-	width            : '1000',
-	layout           : 'card',
-	bodyStyle        : 'padding: 5px;',
-	collapseDirection: 'bottom',
-	modal            : true,
-
-	animCollapse: true,
-
+	extend     : 'Ext.window.Window',
+	title      : 'MedicalWindow',
+	layout     : 'card',
+	closeAction: 'hide',
+	height     : '700',
+	width      : '1000',
+	minHeight  : 400,
+	minWidth   : 550,
+	//modal      : true,
 	initComponent: function() {
 
 		var me = this;
@@ -252,7 +250,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						}
 					}
 				]
-			},{
+			},
+			{
 				/**
 				 * Allergies Card panel
 				 */
@@ -344,8 +343,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					{
 						xtype      : 'grid',
 						region     : 'south',
-						itemId     : 'patientAllergiesListGrid',
-						store      : me.patientImmuListStore,
+						itemId     : 'patientAllergyListGrid',
+						store      : me.patientAllergyListStore,
 						height     : 605,
 						split      : true,
 						collapsible: true,
@@ -353,42 +352,54 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 						columns  : [
 							{
-								header   : 'Code Type',
+								header   : 'Type',
 								width    : 100,
-								dataIndex: 'immunization_id'
+								dataIndex: 'type'
 							},
 							{
 								header   : 'Date',
 								width    : 100,
-								dataIndex: 'administered_date',
-								renderer : Ext.util.Format.dateRenderer('Y-m-d')
+								dataIndex: 'date'
 							},
 							{
-								header   : 'Lot Number',
+								header   : 'Diagnosis Code',
 								width    : 100,
-								dataIndex: 'lot_number'
+								dataIndex: 'diagnosiscode'
 							},
 							{
-								header   : 'Provider',
+								header   : 'Begin Date',
 								width    : 100,
-								dataIndex: 'administered_by'
+								dataIndex: 'begindate'
 							},
 							{
-								header   : 'Date Immunization',
+								header   : 'End Date',
 								flex     : 1,
-								dataIndex: 'education_date',
-								renderer : Ext.util.Format.dateRenderer('Y-m-d')
+								dataIndex: 'enddate'
 							},
 							{
-								header   : 'Date VIS Statement',
+								header   : 'Ocurrence',
 								flex     : 1,
-								dataIndex: 'vis_date',
-								renderer : Ext.util.Format.dateRenderer('Y-m-d')
+								dataIndex: 'ocurrence'
 							},
 							{
-								header   : 'Notes',
+								header   : 'Reaction',
 								flex     : 1,
-								dataIndex: 'note'
+								dataIndex: 'reaction'
+							},
+							{
+								header   : 'Referred by',
+								flex     : 1,
+								dataIndex: 'referredby'
+							},
+							{
+								header   : 'Outcome',
+								flex     : 1,
+								dataIndex: 'outcome'
+							},
+							{
+								header   : 'Destination',
+								flex     : 1,
+								dataIndex: 'destination'
 							}
 						],
 						listeners: {
@@ -398,7 +409,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					}
 				]
 			},
-
 			{
 				/**
 				 * Medical Issues Card panel
@@ -488,7 +498,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						xtype      : 'grid',
 						region     : 'south',
 						itemId     : 'patientMedicalListGrid',
-						store      : me.patientImmuListStore,
+						store      : me.patientMedicalListStore,
 						height     : 605,
 						split      : true,
 						collapsible: true,
@@ -504,6 +514,285 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								header   : 'Date',
 								width    : 100,
 								dataIndex: 'date'
+							},
+							{
+								header   : 'Diagnosis Code',
+								width    : 100,
+								dataIndex: 'diagnosiscode'
+							},
+							{
+								header   : 'Begin Date',
+								width    : 100,
+								dataIndex: 'begindate'
+							},
+							{
+								header   : 'End Date',
+								flex     : 1,
+								dataIndex: 'enddate'
+							},
+							{
+								header   : 'Ocurrence',
+								flex     : 1,
+								dataIndex: 'ocurrence'
+							},
+							{
+								header   : 'Referred by',
+								flex     : 1,
+								dataIndex: 'referredby'
+							},
+							{
+								header   : 'Outcome',
+								flex     : 1,
+								dataIndex: 'outcome'
+							},
+							{
+								header   : 'Destination',
+								flex     : 1,
+								dataIndex: 'destination'
+							}
+						],
+						listeners: {
+							scope : me,
+							resize: me.onGridResized
+						}
+					}
+				]
+			},{
+				/**
+				 * Surgery Card panel
+				 */
+				xtype : 'panel',
+				title : 'Surgery',
+				layout: 'border',
+				height: 300,
+				items : [
+					{
+						xtype        : 'mitos.form',
+						region       : 'center',
+						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
+						defaultType  : 'textfield',
+						defaults     : { width: 500, labelWidth: 300 },
+						items        : [
+							{
+								fieldLabel     : 'Type',
+								name           : 'type',
+								allowBlank     : false,
+								xtype          : 'mitos.surgerycombo',
+								itemId         : 'surgery',
+								enableKeyEvents: true,
+								listeners      : {
+									scope   : me,
+									'select': me.onOptionType
+								}
+							},
+							{
+								fieldLabel: 'Title',
+								itemId    : 'title',
+								name      : 'date'
+							},
+							{
+								fieldLabel: 'Diagnosis Code',
+								name      : 'diagnosiscode'
+
+							},
+							{
+								fieldLabel: 'Begin Date',
+								xtype     : 'datefield',
+								name      : 'begindate'
+
+							},
+							{
+								fieldLabel: 'End Date',
+								xtype     : 'datefield',
+								name      : 'begindate'
+
+							},
+							{
+								fieldLabel: 'Ocurrence',
+								xtype     : 'mitos.occurrencecombo',
+								name      : 'ocurrence'
+
+							},
+							{
+								fieldLabel: 'Referred by',
+								name      : 'referred'
+							},
+							{
+								fieldLabel: 'Outcome',
+								xtype     : 'mitos.outcomecombo',
+								name      : 'outcome'
+
+							},
+							{
+								fieldLabel: 'Destination',
+								name      : 'destination'
+							}
+						],
+						buttons      : [
+							{
+								minWidth: 80,
+								text    : 'Save',
+								scope   : me,
+								handler : me.onSave
+							},
+							{
+								minWidth: 80,
+								text    : 'Cancel'
+
+							}
+						]
+					},
+					{
+						xtype      : 'grid',
+						region     : 'south',
+						itemId     : 'patientSurgeryListGrid',
+						store      : me.patientMedicalListStore,
+						height     : 605,
+						split      : true,
+						collapsible: true,
+
+
+						columns  : [
+							{
+								header   : 'Type',
+								width    : 100,
+								dataIndex: 'type'
+							},
+							{
+								header   : 'Date',
+								width    : 100,
+								dataIndex: 'date'
+							},
+							{
+								header   : 'Diagnosis Code',
+								width    : 100,
+								dataIndex: 'diagnosiscode'
+							},
+							{
+								header   : 'Begin Date',
+								width    : 100,
+								dataIndex: 'begindate'
+							},
+							{
+								header   : 'End Date',
+								flex     : 1,
+								dataIndex: 'enddate'
+							},
+							{
+								header   : 'Ocurrence',
+								flex     : 1,
+								dataIndex: 'ocurrence'
+							},
+							{
+								header   : 'Referred by',
+								flex     : 1,
+								dataIndex: 'referredby'
+							},
+							{
+								header   : 'Outcome',
+								flex     : 1,
+								dataIndex: 'outcome'
+							},
+							{
+								header   : 'Destination',
+								flex     : 1,
+								dataIndex: 'destination'
+							}
+						],
+						listeners: {
+							scope : me,
+							resize: me.onGridResized
+						}
+					}
+				]
+			},{
+				/**
+				 * Dental Card panel
+				 */
+				xtype : 'panel',
+				title : 'Dental',
+				layout: 'border',
+				height: 300,
+				items : [
+					{
+						xtype        : 'mitos.form',
+						region       : 'center',
+						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
+						defaultType  : 'textfield',
+						defaults     : { width: 500, labelWidth: 300 },
+						items        : [
+							{
+								fieldLabel: 'Title',
+								itemId    : 'title',
+								name      : 'title'
+							},
+							{
+								fieldLabel: 'Diagnosis Code',
+								name      : 'diagnosiscode'
+
+							},
+							{
+								fieldLabel: 'Begin Date',
+								xtype     : 'datefield',
+								name      : 'begindate'
+
+							},
+							{
+								fieldLabel: 'End Date',
+								xtype     : 'datefield',
+								name      : 'begindate'
+
+							},
+							{
+								fieldLabel: 'Ocurrence',
+								xtype     : 'mitos.occurrencecombo',
+								name      : 'ocurrence'
+
+							},
+							{
+								fieldLabel: 'Referred by',
+								name      : 'referred'
+							},
+							{
+								fieldLabel: 'Outcome',
+								xtype     : 'mitos.outcomecombo',
+								name      : 'outcome'
+
+							},
+							{
+								fieldLabel: 'Destination',
+								name      : 'destination'
+							}
+						],
+						buttons      : [
+							{
+								minWidth: 80,
+								text    : 'Save',
+								scope   : me,
+								handler : me.onSave
+							},
+							{
+								minWidth: 80,
+								text    : 'Cancel'
+
+							}
+						]
+					},
+					{
+						xtype      : 'grid',
+						region     : 'south',
+						itemId     : 'patientDentalListGrid',
+						store      : me.patientDentalListStore,
+						height     : 605,
+						split      : true,
+						collapsible: true,
+
+
+						columns  : [
+							{
+								header   : 'Title',
+								width    : 100,
+								dataIndex: 'title'
 							},
 							{
 								header   : 'Diagnosis Code',
@@ -581,6 +870,24 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						action      : 'issues',
 						scope       : me,
 						handler     : me.OnCardSwitch
+					},
+					'-',
+					{
+						text        : 'Surgery',
+						enableToggle: true,
+						toggleGroup : 'SurgeryWin',
+						action      : 'surgery',
+						scope       : me,
+						handler     : me.OnCardSwitch
+					},
+					'-',
+					{
+						text        : 'Dental',
+						enableToggle: true,
+						toggleGroup : 'dentalWin',
+						action      : 'dental',
+						scope       : me,
+						handler     : me.OnCardSwitch
 					}
 				]
 			}
@@ -589,8 +896,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		me.listeners = {
 			scope      : me,
 			afterrender: me.onAfterRender,
-			show       : me.onShow
-		};
+			show       : me.onMedicalWinShow
+		}
 
 
 		me.callParent(arguments);
@@ -614,7 +921,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		var me = this,
 			ImmuHeader = this.getComponent(0).getDockedItems()[0],
 			AllergyHeader = this.getComponent(1).getDockedItems()[0],
-			MedicalIssue = this.getComponent(2).getDockedItems()[0];
+			MedicalIssue = this.getComponent(2).getDockedItems()[0],
+			Surgery = this.getComponent(3).getDockedItems()[0],
+			Dental = this.getComponent(4).getDockedItems()[0];
 
 		ImmuHeader.add({
 			xtype  : 'button',
@@ -637,6 +946,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddMedication
+
+		});
+		Surgery.add({
+			xtype  : 'button',
+			text   : 'Add Surgery',
+			iconCls: 'icoAddRecord',
+			scope  : me,
+			handler: me.onAddSurgery
+
+		});
+		Dental.add({
+			xtype  : 'button',
+			text   : 'Add Dental',
+			iconCls: 'icoAddRecord',
+			scope  : me,
+			handler: me.onAddDental
 
 		});
 	},
@@ -662,6 +987,24 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 	onAddMedication: function(btn) {
 		var gridPanel = btn.up('panel').getComponent('patientMedicalListGrid'),
+			form = this.getLayout().getActiveItem().down('form').getForm(),
+			m = Ext.create('ListsGridModel', {
+
+			});
+		gridPanel.setHeight(245);
+		form.loadRecord(m);
+	},
+	onAddSurgery: function(btn) {
+		var gridPanel = btn.up('panel').getComponent('patientSurgeryListGrid'),
+			form = this.getLayout().getActiveItem().down('form').getForm(),
+			m = Ext.create('ListsGridModel', {
+
+			});
+		gridPanel.setHeight(245);
+		form.loadRecord(m);
+	},
+	onAddDental: function(btn) {
+		var gridPanel = btn.up('panel').getComponent('patientDentalListGrid'),
 			form = this.getLayout().getActiveItem().down('form').getForm(),
 			m = Ext.create('ListsGridModel', {
 
@@ -706,11 +1049,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			layout.setActiveItem(1);
 		} else if(btn.action == 'issues') {
 			layout.setActiveItem(2);
+		}else if(btn.action == 'surgery') {
+			layout.setActiveItem(3);
+		}else if(btn.action == 'dental') {
+			layout.setActiveItem(4);
 		}
 	},
 
-	onShow: function() {
+	onMedicalWinShow: function() {
 		this.patientImmuListStore.load();
 	}
-
 });

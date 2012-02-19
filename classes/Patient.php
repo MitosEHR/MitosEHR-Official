@@ -12,7 +12,7 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once($_SESSION['site']['root']."/classes/Person.php");
+include_once("Person.php");
 
 class Patient extends Person {
 
@@ -89,4 +89,32 @@ class Patient extends Person {
         return $rows;
 
     }
+
+    /**
+     * Form now this is just getting the latest open encounter for all the patients.
+     * TODO: create the table to handle tha pool area and fix this function
+     * @return array
+     */
+    public function getPatientsByPoolArea(){
+    //public function getPatientsByPoolArea(stdClass $params){
+        $rows = array();
+        $this->setSQL("SELECT DISTINCT p.pid, p.title, p.fname, p.mname, p.lname, MAX(e.eid)
+                         FROM form_data_demographics AS p
+                   RIGHT JOIN form_data_encounter AS e
+                           ON p.pid = e.pid
+                        WHERE e.close_date IS NULL
+                     GROUP BY p.pid");
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            $foo['name'] = Person::fullname($row['fname'],$row['mname'],$row['lname']);
+            $foo['shortName'] = Person::ellipsis($foo['name'],20);
+            $foo['pid'] = $row['pid'];
+            $foo['eid'] = $row['MAX(e.eid)'];
+            $foo['img'] = 'ui_icons/user_32.png';
+            array_push($rows, $foo);
+        }
+        return $rows;
+    }
 }
+//$p = new Patient();
+//echo '<pre>';
+//print_r($p->getPatientsByPoolArea());

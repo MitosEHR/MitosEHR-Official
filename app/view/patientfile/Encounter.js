@@ -20,6 +20,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	pageTitle    : 'Encounter',
 	pageLayout   : 'border',
 	requires     : [
+		'App.store.patientfile.Encounter',
 		'App.store.patientfile.Vitals'
 	],
 	initComponent: function() {
@@ -504,14 +505,16 @@ Ext.define('App.view.patientfile.Encounter', {
 						patient = me.getCurrPatient();
 					me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
 				}
+				this.vitalsStore.load({
+					scope   : me,
+					params:{pid:app.currPatient.pid},
+					callback: function() {
+						me.vitalsPanel.down('dataview').refresh();
+					}
+				});
 			}
 		});
-		this.vitalsStore.load({
-			scope   : me,
-			callback: function() {
-				me.vitalsPanel.down('dataview').refresh();
-			}
-		});
+
 	},
 
 	/**

@@ -74,10 +74,14 @@ Globals::setGlobals();
 
         <!-- Models -->
         <script type="text/javascript" src="lib/extensible-1.5.1/src/calendar/data/EventStore.js"></script>
+        <script type="text/javascript" src="app/model/navigation/Navigation.js"></script>
+        <script type="text/javascript" src="app/model/poolarea/PoolArea.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Vitals.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Encounter.js"></script>
 
         <!-- Stores -->
+        <script type="text/javascript" src="app/store/navigation/Navigation.js"></script>
+        <script type="text/javascript" src="app/store/poolarea/PoolArea.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Vitals.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Encounter.js"></script>
 
@@ -108,6 +112,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/Outcome.js"></script>
         <script type="text/javascript" src="app/classes/combo/Medications.js"></script>
         <script type="text/javascript" src="app/classes/combo/Occurrence.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Surgery.js"></script>
         <script type="text/javascript" src="app/classes/combo/TransmitMedthod.js"></script>
         <script type="text/javascript" src="app/classes/combo/Types.js"></script>
         <script type="text/javascript" src="app/classes/combo/Users.js"></script>
