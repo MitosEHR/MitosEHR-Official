@@ -111,7 +111,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Immunization',
 				layout: 'border',
-				height: 300,
+				//height: 300,
 				items : [
 					{
 						xtype        : 'mitos.form',
@@ -294,14 +294,15 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Allergies',
 				layout: 'border',
-				height: 300,
 				items : [
 					{
 						xtype        : 'mitos.form',
-						region       : 'center',
+						region       : 'north',
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
 						defaultType  : 'textfield',
 						defaults     : { width: 500, labelWidth: 300 },
+						height       : 320,
+						hidden       : true,
 						items        : [
 							{
 								fieldLabel     : 'Type',
@@ -380,14 +381,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					},
 					{
 						xtype      : 'grid',
-						region     : 'south',
+						region     : 'center',
 						itemId     : 'patientAllergyListGrid',
 						store      : me.patienAllergiesListStore,
-						height     : 605,
 						split      : true,
-						collapsible: true,
-
-
 						columns  : [
 							{
 								header   : 'Type',
@@ -454,13 +451,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Medical Issues',
 				layout: 'border',
-				height: 300,
 				items : [
 					{
 						xtype        : 'mitos.form',
-						region       : 'center',
+						region       : 'north',
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
 						defaultType  : 'textfield',
+						hidden       : true,
+						height       : 320,
 						defaults     : { width: 500, labelWidth: 300 },
 						items        : [
 							{
@@ -534,14 +532,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					},
 					{
 						xtype      : 'grid',
-						region     : 'south',
+						region     : 'center',
 						itemId     : 'patientMedicalListGrid',
 						store      : me.patientMedicalListStore,
-						height     : 605,
-						split      : true,
-						collapsible: true,
-
-
 						columns  : [
 							{
 								header   : 'Type',
@@ -604,13 +597,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Surgery',
 				layout: 'border',
-				height: 300,
 				items : [
 					{
 						xtype        : 'mitos.form',
-						region       : 'center',
+						region       : 'north',
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
 						defaultType  : 'textfield',
+						hidden       : true,
+						height       : 320,
 						defaults     : { width: 500, labelWidth: 300 },
 						items        : [
 							{
@@ -684,14 +678,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					},
 					{
 						xtype      : 'grid',
-						region     : 'south',
+						region     : 'center',
 						itemId     : 'patientSurgeryListGrid',
 						store      : me.patientMedicalListStore,
-						height     : 605,
-						split      : true,
-						collapsible: true,
-
-
 						columns  : [
 							{
 								header   : 'Type',
@@ -752,13 +741,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Dental',
 				layout: 'border',
-				height: 300,
 				items : [
 					{
 						xtype        : 'mitos.form',
-						region       : 'center',
+						region       : 'north',
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
 						defaultType  : 'textfield',
+						hidden       : true,
+						height       : 320,
 						defaults     : { width: 500, labelWidth: 300 },
 						items        : [
 							{
@@ -820,14 +810,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					},
 					{
 						xtype      : 'grid',
-						region     : 'south',
+						region     : 'center',
 						itemId     : 'patientDentalListGrid',
 						store      : me.patientDentalListStore,
 						height     : 605,
-						split      : true,
-						collapsible: true,
-
-
 						columns  : [
 							{
 								header   : 'Title',
@@ -1022,7 +1008,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 	onAddImmunization: function(btn) {
 		var gridPanel = btn.up('panel').getComponent('patientImmuListGrid'),
-			form = this.getLayout().getActiveItem().down('form').getForm(),
+			formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
 			});
@@ -1031,38 +1018,42 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 	onAddAllergy: function(btn) {
 		var gridPanel = btn.up('panel').getComponent('patientAllergyListGrid'),
-			form = this.getLayout().getActiveItem().down('form').getForm(),
+			formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
 			});
-		gridPanel.setHeight(245);
+		formPanel.show();
 		form.loadRecord(m);
 	},
 	onAddMedication: function(btn) {
 		var gridPanel = btn.up('panel').getComponent('patientMedicalListGrid'),
-			form = this.getLayout().getActiveItem().down('form').getForm(),
+			formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
 			});
-		gridPanel.setHeight(245);
+		formPanel.show();
 		form.loadRecord(m);
 	},
 	onAddSurgery: function(btn) {
 		var gridPanel = btn.up('panel').getComponent('patientSurgeryListGrid'),
-			form = this.getLayout().getActiveItem().down('form').getForm(),
+			formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
 			});
-		gridPanel.setHeight(245);
+		formPanel.show();
 		form.loadRecord(m);
 	},
 	onAddDental: function(btn) {
 		var gridPanel = btn.up('panel').getComponent('patientDentalListGrid'),
-			form = this.getLayout().getActiveItem().down('form').getForm(),
+			formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
 			});
-		gridPanel.setHeight(245);
+		formPanel.show();
 		form.loadRecord(m);
 	},
 
