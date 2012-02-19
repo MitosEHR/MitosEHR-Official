@@ -10,17 +10,15 @@
  * @namespace Immunization.addPatientImmunization
  */
 Ext.define('App.view.patientfile.MedicalWindow', {
-	extend           : 'Ext.window.Window',
-	title            : 'MedicalWindow',
-	height           : '700',
-	width            : '1000',
-	layout           : 'card',
-	bodyStyle        : 'padding: 5px;',
-	collapseDirection: 'bottom',
-	modal            : true,
-
-	animCollapse: true,
-
+	extend     : 'Ext.window.Window',
+	title      : 'MedicalWindow',
+	layout     : 'card',
+	closeAction: 'hide',
+	height     : '700',
+	width      : '1000',
+	minHeight  : 400,
+	minWidth   : 550,
+	//modal      : true,
 	initComponent: function() {
 
 		var me = this;

@@ -642,7 +642,6 @@ Ext.define('App.view.MitosApp', {
 			]
 		});
 
-
 		me.layout = { type: 'border', padding: 3 };
 		me.defaults = { split: true };
 		me.items = [ me.Header, me.navColumn, me.MainPanel, me.Footer ];
@@ -655,13 +654,18 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	onMedicalWin: function(action) {
+		if(typeof this.MedicalWindow === "undefined"){
+			this.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow').show();
+		}else{
+			this.MedicalWindow.show();
+		}
 		Ext.create('App.view.patientfile.MedicalWindow').show();
 	},
 	onChartsWin: function() {
-		if(this.ChartsWindow){
-			this.ChartsWindow.show();
-		}else{
+		if(typeof this.ChartsWindow === "undefined"){
 			this.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow').show();
+		}else{
+			this.ChartsWindow.show();
 		}
 	},
 
