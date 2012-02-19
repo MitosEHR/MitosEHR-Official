@@ -599,7 +599,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		me.listeners = {
 			scope      : me,
 			afterrender: me.onAfterRender,
-			show       : me.onShow
+			show       : me.onMedicalWinShow
 		}
 
 
@@ -719,7 +719,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		}
 	},
 
-	onShow: function() {
+	onMedicalWinShow: function() {
 		this.patientImmuListStore.load();
 	}
 });
