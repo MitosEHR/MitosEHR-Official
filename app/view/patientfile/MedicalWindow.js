@@ -22,7 +22,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	initComponent: function() {
 
 		var me = this;
+ /*
 
+ Immunizations Model And Store
+
+  */
 		Ext.define('immunizationsModel', {
 			extend: 'Ext.data.Model',
 			fields: [
@@ -65,6 +69,38 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		me.patientImmuListStore = Ext.create('Ext.data.Store', {
 			model     : 'patientImmunizationsModel',
+			remoteSort: true,
+			autoLoad  : false
+		});
+/*
+
+ Allergies Model And Store
+
+*/
+		Ext.define('patientAllergiesModel', {
+			extend: 'Ext.data.Model',
+			fields: [
+				{name: 'type', type: 'string'},
+				{name: 'title', type: 'string'},
+				{name: 'diagnosis_code', type: 'string'},
+				{name: 'begin_date', type: 'date', dateFormat: 'c'},
+				{name: 'end_date', type: 'date', dateFormat: 'c'},
+				{name: 'ocurrence', type: 'string'},
+				{name: 'reaction', type: 'string'},
+				{name: 'referred_by', type: 'string'},
+				{name: 'outcome', type: 'string'},
+				{name: 'destination', type: 'string'}
+			],
+			proxy : {
+				type: 'direct',
+				api : {
+					read  : Immunization.getPatientallergies,
+					create: Immunization.addPatientAllergies
+				}
+			}
+		});
+		me.patienAllergiesListStore = Ext.create('Ext.data.Store', {
+			model     : 'patientAllergiesModel',
 			remoteSort: true,
 			autoLoad  : false
 		});
@@ -282,23 +318,25 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								fieldLabel: 'Title',
 								itemId    : 'title',
-								name      : 'date'
+								name      : 'title'
 							},
 							{
 								fieldLabel: 'Diagnosis Code',
-								name      : 'diagnosiscode'
+								name      : 'diagnosis_code'
 
 							},
 							{
 								fieldLabel: 'Begin Date',
 								xtype     : 'datefield',
-								name      : 'begindate'
+								format    : 'Y-m-d',
+								name      : 'begin_date'
 
 							},
 							{
 								fieldLabel: 'End Date',
 								xtype     : 'datefield',
-								name      : 'begindate'
+								format    : 'Y-m-d',
+								name      : 'end_date'
 
 							},
 							{
@@ -313,7 +351,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								fieldLabel: 'Referred by',
-								name      : 'referred'
+								name      : 'referred_by'
 							},
 							{
 								fieldLabel: 'Outcome',
@@ -331,7 +369,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								minWidth: 80,
 								text    : 'Save',
 								scope   : me,
-								handler : me.onSave
+								handler : me.onSaveAllergies
 							},
 							{
 								minWidth: 80,
@@ -344,7 +382,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						xtype      : 'grid',
 						region     : 'south',
 						itemId     : 'patientAllergyListGrid',
-						store      : me.patientAllergyListStore,
+						store      : me.patienAllergiesListStore,
 						height     : 605,
 						split      : true,
 						collapsible: true,
@@ -357,24 +395,24 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								dataIndex: 'type'
 							},
 							{
-								header   : 'Date',
+								header   : 'Title',
 								width    : 100,
-								dataIndex: 'date'
+								dataIndex: 'title'
 							},
 							{
 								header   : 'Diagnosis Code',
 								width    : 100,
-								dataIndex: 'diagnosiscode'
+								dataIndex: 'diagnosis_code'
 							},
 							{
 								header   : 'Begin Date',
 								width    : 100,
-								dataIndex: 'begindate'
+								dataIndex: 'begin_date'
 							},
 							{
 								header   : 'End Date',
 								flex     : 1,
-								dataIndex: 'enddate'
+								dataIndex: 'end_date'
 							},
 							{
 								header   : 'Ocurrence',
@@ -389,7 +427,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Referred by',
 								flex     : 1,
-								dataIndex: 'referredby'
+								dataIndex: 'referred_by'
 							},
 							{
 								header   : 'Outcome',
@@ -523,12 +561,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Begin Date',
 								width    : 100,
-								dataIndex: 'begindate'
+								dataIndex: 'begindate',
+								renderer : Ext.util.Format.dateRenderer('Y-m-d')
 							},
 							{
 								header   : 'End Date',
 								flex     : 1,
-								dataIndex: 'enddate'
+								dataIndex: 'end_date',
+								renderer : Ext.util.Format.dateRenderer('Y-m-d')
 							},
 							{
 								header   : 'Ocurrence',
@@ -676,7 +716,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'End Date',
 								flex     : 1,
-								dataIndex: 'enddate'
+								dataIndex: 'end_date'
 							},
 							{
 								header   : 'Ocurrence',
@@ -875,7 +915,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					{
 						text        : 'Surgery',
 						enableToggle: true,
-						toggleGroup : 'SurgeryWin',
+						toggleGroup : 'medicalWin',
 						action      : 'surgery',
 						scope       : me,
 						handler     : me.OnCardSwitch
@@ -884,7 +924,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					{
 						text        : 'Dental',
 						enableToggle: true,
-						toggleGroup : 'dentalWin',
+						toggleGroup : 'medicalWin',
 						action      : 'dental',
 						scope       : me,
 						handler     : me.OnCardSwitch
@@ -908,6 +948,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			record = form.getRecord(),
 			values = form.getValues(),
 			store = this.patientImmuListStore,
+			storeIndex = store.indexOf(record);
+		if(storeIndex == -1) {
+			store.add(values);
+		} else {
+			record.set(values);
+		}
+		store.sync();
+	},
+	onSaveAllergies: function(btn) {
+		var form = btn.up('form').getForm(),
+			record = form.getRecord(),
+			values = form.getValues(),
+			store = this.patienAllergiesListStore,
 			storeIndex = store.indexOf(record);
 		if(storeIndex == -1) {
 			store.add(values);
