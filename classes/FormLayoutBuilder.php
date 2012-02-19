@@ -57,7 +57,7 @@ class FormLayoutBuilder extends dbHelper {
             if(!$container){
 
                 if(!$this->fieldHasColumn()){
-                    $this->addColumn('VARCHAR(255)');
+                    $this->addColumn('TEXT');
                 }
             }
             /**
