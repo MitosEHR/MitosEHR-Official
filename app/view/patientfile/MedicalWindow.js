@@ -11,14 +11,14 @@
  */
 Ext.define('App.view.patientfile.MedicalWindow', {
 	extend     : 'Ext.window.Window',
-	title      : 'MedicalWindow',
+	title      : 'Medical Window',
 	layout     : 'card',
 	closeAction: 'hide',
 	height     : '700',
 	width      : '1000',
 	minHeight  : 400,
 	minWidth   : 550,
-	//modal      : true,
+	modal      : true,
 	initComponent: function() {
 
 		var me = this;
@@ -43,7 +43,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		me.ImmuListStore = Ext.create('Ext.data.Store', {
 			model     : 'immunizationsModel',
-			remoteSort: true,
+			remoteSort: false,
 			autoLoad  : true
 		});
 
@@ -69,7 +69,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		me.patientImmuListStore = Ext.create('Ext.data.Store', {
 			model     : 'patientImmunizationsModel',
-			remoteSort: true,
+			remoteSort: false,
 			autoLoad  : false
 		});
 /*
@@ -239,7 +239,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						height     : 605,
 						split      : true,
 						collapsible: true,
-
 						columns  : [
 							{
 								header   : 'Code Type',
@@ -291,18 +290,23 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				/**
 				 * Allergies Card panel
 				 */
-				xtype : 'panel',
-				title : 'Allergies',
-				layout: 'border',
+				xtype       : 'panel',
+				title       : 'Allergies',
+				layout      : 'border',
+				bodyPadding : 5,
 				items : [
 					{
 						xtype        : 'mitos.form',
+						title        : 'Allergies Form',
 						region       : 'north',
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
 						defaultType  : 'textfield',
 						defaults     : { width: 500, labelWidth: 300 },
-						height       : 320,
+						height       : 340,
+						collapsed    : true,
+						border       : true,
 						hidden       : true,
+						margin       : '0 0 3 0',
 						items        : [
 							{
 								fieldLabel     : 'Type',
@@ -374,7 +378,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								minWidth: 80,
-								text    : 'Cancel'
+								text    : 'Cancel',
+								scope   : me,
+								handler : me.onCancelAllergy
 
 							}
 						]
@@ -875,45 +881,50 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
 						pressed     : true,
+						itemId      : 'immunization',
 						action      : 'immunization',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					},
 					'-',
 					{
 						text        : 'Allergies',
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
+						itemId      : 'allergies',
 						action      : 'allergies',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					},
 					'-',
 					{
 						text        : 'Medical Issues',
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
+						itemId      : 'issues',
 						action      : 'issues',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					},
 					'-',
 					{
 						text        : 'Surgery',
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
+						itemId      : 'surgery',
 						action      : 'surgery',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					},
 					'-',
 					{
 						text        : 'Dental',
 						enableToggle: true,
 						toggleGroup : 'medicalWin',
+						itemId      : 'dental',
 						action      : 'dental',
 						scope       : me,
-						handler     : me.OnCardSwitch
+						handler     : me.cardSwitch
 					}
 				]
 			}
@@ -923,7 +934,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			scope      : me,
 			afterrender: me.onAfterRender,
 			show       : me.onMedicalWinShow
-		}
+		};
 
 
 		me.callParent(arguments);
@@ -973,7 +984,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		AllergyHeader.add({
 			xtype  : 'button',
-			text   : 'Add Allergies',
+			text   : 'Allergies',
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddAllergy
@@ -981,7 +992,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		MedicalIssue.add({
 			xtype  : 'button',
-			text   : 'Add Medical Issue',
+			text   : 'Medical Issue',
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddMedication
@@ -989,7 +1000,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		Surgery.add({
 			xtype  : 'button',
-			text   : 'Add Surgery',
+			text   : 'Surgery',
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddSurgery
@@ -997,12 +1008,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		Dental.add({
 			xtype  : 'button',
-			text   : 'Add Dental',
+			text   : 'Dental',
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddDental
 
 		});
+
+		me.doLayout();
 	},
 
 
@@ -1016,9 +1029,26 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		gridPanel.setHeight(245);
 		form.loadRecord(m);
 	},
-	onAddAllergy: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientAllergyListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
+	onAddAllergy: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm(),
+			m = Ext.create('ListsGridModel', {
+
+			});
+		formPanel.show();
+		formPanel.expand(true);
+		form.loadRecord(m);
+	},
+	onCancelAllergy: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm();
+
+		formPanel.collapse();
+		formPanel.hide();
+		form.reset();
+	},
+	onAddMedication: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
@@ -1026,9 +1056,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		formPanel.show();
 		form.loadRecord(m);
 	},
-	onAddMedication: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientMedicalListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
+	onAddSurgery: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
@@ -1036,19 +1065,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		formPanel.show();
 		form.loadRecord(m);
 	},
-	onAddSurgery: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientSurgeryListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm(),
-			m = Ext.create('ListsGridModel', {
-
-			});
-		formPanel.show();
-		form.loadRecord(m);
-	},
-	onAddDental: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientDentalListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
+	onAddDental: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
 
@@ -1062,7 +1080,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 
-	onCodeFieldFocus: function(field) {
+	onCodeFieldFocus: function() {
 		var gridPanel = this.getComponent('immuListGrid');
 		gridPanel.expand(true);
 	},
@@ -1084,20 +1102,28 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		gridPanel.up('form').collapse(true);
 	},
 
-	OnCardSwitch: function(btn) {
-		var layout = this.getLayout();
+	cardSwitch: function(btn) {
+		var layout = this.getLayout(), title;
 
 		if(btn.action == 'immunization') {
 			layout.setActiveItem(0);
+			title = 'Immunizations';
 		} else if(btn.action == 'allergies') {
 			layout.setActiveItem(1);
+			title = 'Allergies';
 		} else if(btn.action == 'issues') {
 			layout.setActiveItem(2);
+			title = 'Medical Issues';
 		}else if(btn.action == 'surgery') {
 			layout.setActiveItem(3);
+			title = 'Surgeries';
 		}else if(btn.action == 'dental') {
 			layout.setActiveItem(4);
+			title = 'Dentals';
 		}
+
+		layout.getActiveItem().setTitle(app.currPatient.name+' - '+title);
+
 	},
 
 	onMedicalWinShow: function() {

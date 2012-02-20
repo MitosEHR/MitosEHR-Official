@@ -236,9 +236,10 @@ Ext.define('App.view.patientfile.Encounter', {
 			region      : 'east',
 			margin      : '0 0 0 2',
 			bodyStyle   : 'padding:15px',
-			width       : 400,
+			width       : 500,
 			collapsible : true,
 			animCollapse: true,
+			collapsed   : true,
 			html        : '<h2>Progress Note Placeholder</h2>',
 			listeners   : {
 				scope   : this,
@@ -307,41 +308,41 @@ Ext.define('App.view.patientfile.Encounter', {
 					},
 					'->',
 					{
-						text   : 'Add Allergies',
+						text   : 'Immunization',
 						iconCls: 'icoAddRecord',
-						action : 'onAllergies',
+						action : 'immunization',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
 					'-',
 					{
-						text   : 'Add Problems',
+						text   : 'Allergies',
 						iconCls: 'icoAddRecord',
-						action : 'onProblems',
+						action : 'allergies',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
 					'-',
 					{
-						text   : 'Add Medications',
+						text   : 'Medical Issue',
 						iconCls: 'icoAddRecord',
-						action : 'onMedication',
+						action : 'issues',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
 					'-',
 					{
-						text   : 'Add Surgery',
+						text   : 'Surgery',
 						iconCls: 'icoAddRecord',
-						action : 'onSurgery',
+						action : 'surgery',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
 					'-',
 					{
-						text   : 'Add Dental',
+						text   : 'Dental',
 						iconCls: 'icoAddRecord',
-						action : 'onDental',
+						action : 'dental',
 						scope  : me,
 						handler: me.onMedicalWin
 					},
@@ -359,7 +360,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	},
 
 	onMedicalWin: function(btn) {
-		app.onMedicalWin(btn.action);
+		app.onMedicalWin(btn);
 	},
 
 
