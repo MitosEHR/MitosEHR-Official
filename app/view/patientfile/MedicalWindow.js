@@ -43,7 +43,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		me.ImmuListStore = Ext.create('Ext.data.Store', {
 			model     : 'immunizationsModel',
-			remoteSort: true,
+			remoteSort: false,
 			autoLoad  : true
 		});
 
@@ -69,7 +69,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		me.patientImmuListStore = Ext.create('Ext.data.Store', {
 			model     : 'patientImmunizationsModel',
-			remoteSort: true,
+			remoteSort: false,
 			autoLoad  : false
 		});
 /*
@@ -984,7 +984,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		AllergyHeader.add({
 			xtype  : 'button',
-			text   : 'Add Allergies',
+			text   : 'Allergies',
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddAllergy
@@ -992,7 +992,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		MedicalIssue.add({
 			xtype  : 'button',
-			text   : 'Add Medical Issue',
+			text   : 'Medical Issue',
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddMedication
@@ -1000,7 +1000,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		Surgery.add({
 			xtype  : 'button',
-			text   : 'Add Surgery',
+			text   : 'Surgery',
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddSurgery
@@ -1008,7 +1008,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		Dental.add({
 			xtype  : 'button',
-			text   : 'Add Dental',
+			text   : 'Dental',
 			iconCls: 'icoAddRecord',
 			scope  : me,
 			handler: me.onAddDental

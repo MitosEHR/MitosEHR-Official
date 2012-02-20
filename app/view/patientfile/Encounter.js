@@ -236,9 +236,10 @@ Ext.define('App.view.patientfile.Encounter', {
 			region      : 'east',
 			margin      : '0 0 0 2',
 			bodyStyle   : 'padding:15px',
-			width       : 400,
+			width       : 500,
 			collapsible : true,
 			animCollapse: true,
+			collapsed   : true,
 			html        : '<h2>Progress Note Placeholder</h2>',
 			listeners   : {
 				scope   : this,
@@ -307,7 +308,7 @@ Ext.define('App.view.patientfile.Encounter', {
 					},
 					'->',
 					{
-						text   : 'Add Immunization',
+						text   : 'Immunization',
 						iconCls: 'icoAddRecord',
 						action : 'immunization',
 						scope  : me,
@@ -315,7 +316,7 @@ Ext.define('App.view.patientfile.Encounter', {
 					},
 					'-',
 					{
-						text   : 'Add Allergies',
+						text   : 'Allergies',
 						iconCls: 'icoAddRecord',
 						action : 'allergies',
 						scope  : me,
@@ -323,7 +324,7 @@ Ext.define('App.view.patientfile.Encounter', {
 					},
 					'-',
 					{
-						text   : 'Add Medical Issue',
+						text   : 'Medical Issue',
 						iconCls: 'icoAddRecord',
 						action : 'issues',
 						scope  : me,
@@ -331,7 +332,7 @@ Ext.define('App.view.patientfile.Encounter', {
 					},
 					'-',
 					{
-						text   : 'Add Surgery',
+						text   : 'Surgery',
 						iconCls: 'icoAddRecord',
 						action : 'surgery',
 						scope  : me,
@@ -339,7 +340,7 @@ Ext.define('App.view.patientfile.Encounter', {
 					},
 					'-',
 					{
-						text   : 'Add Dental',
+						text   : 'Dental',
 						iconCls: 'icoAddRecord',
 						action : 'dental',
 						scope  : me,
