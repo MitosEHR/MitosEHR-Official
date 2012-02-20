@@ -143,6 +143,10 @@ Ext.define('App.view.patientfile.Summary', {
 			}
 		];
 
+        me.listeners = {
+            afterrender:me.afterPanelRender
+        };
+
 		me.callParent(arguments);
 
 		me.down('panel').addDocked([
@@ -269,6 +273,18 @@ Ext.define('App.view.patientfile.Summary', {
 
 	},
 
+    afterPanelRender:function(){
+        var me = this,
+            center = me.down('panel').getComponent('centerPanel'),
+            demoFormPanel = center.getComponent('demoFormPanel');
+
+        this.getFormItems(demoFormPanel, 'Demographics', function(success) {
+            if(success) {
+                //me.getFormData(demoFormPanel);
+
+            }
+        });
+    },
 
 	/**
 	 * This function is called from MitosAPP.js when
@@ -284,13 +300,13 @@ Ext.define('App.view.patientfile.Summary', {
 
 			var center = me.down('panel').getComponent('centerPanel'),
 				demoFormPanel = center.getComponent('demoFormPanel');
-
-			this.getFormItems(demoFormPanel, 'Demographics', function(success) {
-				if(success) {
+//
+//			this.getFormItems(demoFormPanel, 'Demographics', function(success) {
+//				if(success) {
 					me.getFormData(demoFormPanel);
-
-				}
-			});
+//
+//				}
+//			});
 
 		} else {
 

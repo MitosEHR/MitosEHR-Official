@@ -803,6 +803,7 @@ Ext.define('App.view.MitosApp', {
 			name: fullname
 		};
 		patientBtn.update({name: fullname, info: '(' + pid + ')'});
+        patientBtn.enable();
 		patientOpenVisitsBtn.enable();
 		patientCreateEncounterBtn.enable();
 		PushForBtn.enable();
@@ -829,6 +830,7 @@ Ext.define('App.view.MitosApp', {
 			patientOpenVisitsBtn.disable();
 			patientCloseCurrEncounterBtn.disable();
 			patientCheckOutBtn.disable();
+            patientBtn.disable();
 			patientBtn.update({name: 'No Patient Selected', info: '( record )'});
 		});
 	},

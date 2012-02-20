@@ -52,6 +52,11 @@ Ext.define('App.view.patientfile.NewPatient', {
 			}
 		});
 		me.pageBody = [ me.form ];
+
+        me.listeners = {
+            afterrender:me.afterPanelRender
+        };
+
 		me.callParent(arguments);
 	},
 
@@ -131,6 +136,10 @@ Ext.define('App.view.patientfile.NewPatient', {
 			}
 		});
 	},
+
+    afterPanelRender:function(){
+        this.getFormItems(this.form, this.formToRender);
+    },
 	/**
 	 * This function is called from MitosAPP.js when
 	 * this panel is selected in the navigation panel.
@@ -138,7 +147,7 @@ Ext.define('App.view.patientfile.NewPatient', {
 	 * to call every this panel becomes active
 	 */
 	onActive       : function(callback) {
-		this.getFormItems(this.form, this.formToRender);
+		//this.getFormItems(this.form, this.formToRender);
 
 		this.confirmationWin(function(btn) {
 			if(btn == 'yes') {

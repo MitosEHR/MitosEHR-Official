@@ -97,10 +97,11 @@ Ext.define('App.view.patientfile.Encounter', {
 			fieldDefaults: { msgTarget: 'side' }
 		});
 		me.reviewSysCkPanel = Ext.create('Ext.form.Panel', {
-			border: false,
-			action: 'encounter',
+            autoScroll   : true,
+            border       : false,
+            action       : 'encounter',
 			title : 'Review of Systems Checks',
-			html  : '<h1>Review of Systems Checks form placeholder!</h1>'
+            fieldDefaults: { msgTarget: 'side' }
 		});
 
 		me.soapPanel = Ext.create('Ext.form.Panel', {
@@ -277,6 +278,9 @@ Ext.define('App.view.patientfile.Encounter', {
 
 		me.pageBody = [ me.centerPanel, me.progressNote ];
 
+        me.listeners = {
+            afterrender:me.afterPanelRender
+        };
 		me.callParent(arguments);
 
 		me.down('panel').addDocked([
@@ -446,8 +450,14 @@ Ext.define('App.view.patientfile.Encounter', {
 	 * Start timer task...  runs every sec
 	 */
 	startTimer: function() {
+        //say(this);
 		Ext.TaskManager.start(this.timerTask);
 	},
+
+    stopTimer: function() {
+        //say(this);
+        Ext.TaskManager.stop(this.timerTask);
+    },
 
 	/**
 	 * This will update the timer every sec
@@ -499,8 +509,7 @@ Ext.define('App.view.patientfile.Encounter', {
 				if(data.close_date === null) {
 					me.startTimer();
 				} else {
-					console.log(me.timerTask);
-					Ext.TaskManager.stop(me.timerTask);
+					me.stopTimer();
 					var stop_date = me.parseDate(data.close_date),
 						timer = me.timer(start_date, stop_date),
 						patient = me.getCurrPatient();
@@ -534,7 +543,7 @@ Ext.define('App.view.patientfile.Encounter', {
 				Encounter.closeEncounter(params, function(provider, response) {
 					if(response.result.success) {
 						// TODO: after close encounter logic
-						Ext.TaskManager.stop(me.timerTask);
+						me.stopTimer();
 					} else {
 						Ext.Msg.show({
 							title  : 'Oops!',
@@ -572,6 +581,30 @@ Ext.define('App.view.patientfile.Encounter', {
 		});
 	},
 
+    afterPanelRender:function(){
+        var me = this;
+
+        this.getFormItems(me.vitalsPanel.down('form'), 'Vitals', function() {
+            me.vitalsPanel.doLayout();
+        });
+
+        this.getFormItems(me.reviewSysPanel, 'Review of Systems', function() {
+            me.reviewSysPanel.doLayout();
+        });
+
+        this.getFormItems(me.soapPanel, 'SOAP', function() {
+            me.soapPanel.doLayout();
+        });
+
+        this.getFormItems(me.speechDicPanel, 'Speech Dictation', function() {
+            me.speechDicPanel.doLayout();
+        });
+
+        this.getFormItems(me.reviewSysCkPanel, 'Review of Systems Check', function() {
+            me.reviewSysCkPanel.doLayout();
+        });
+
+    },
 	/**
 	 * This function is called from MitosAPP.js when
 	 * this panel is selected in the navigation panel.
@@ -583,24 +616,6 @@ Ext.define('App.view.patientfile.Encounter', {
 		if(this.checkIfCurrPatient()) {
 			var patient = this.getCurrPatient();
 			this.updateTitle(patient.name + ' (Visits)');
-
-			this.getFormItems(me.vitalsPanel.down('form'), 'Vitals', function() {
-				me.vitalsPanel.doLayout();
-			});
-
-			this.getFormItems(me.reviewSysPanel, 'Review of Systems', function() {
-				me.reviewSysPanel.doLayout();
-			});
-
-			this.getFormItems(me.soapPanel, 'SOAP', function() {
-				me.soapPanel.doLayout();
-			});
-
-			this.getFormItems(me.speechDicPanel, 'Speech Dictation', function() {
-				me.speechDicPanel.doLayout();
-			});
-
-
 			callback(true);
 		} else {
 			callback(false);

@@ -23,7 +23,7 @@ Ext.define('App.classes.RenderPanel', {
 					xtype : 'container',
 					region: 'north',
 					layout: 'fit',
-					height: 40,
+					height: 33,
 					html  : '<div class="dashboard_title">' + me.pageTitle + '</div>'
 
 				},
@@ -59,11 +59,7 @@ Ext.define('App.classes.RenderPanel', {
 	},
 
 	checkIfCurrPatient: function() {
-		if(app.getCurrPatient()) {
-			return true;
-		} else {
-			return false;
-		}
+		return app.getCurrPatient();
 	},
 
 	patientInfoAlert: function() {
