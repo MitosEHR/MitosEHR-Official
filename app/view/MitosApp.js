@@ -6,7 +6,7 @@
  */
 Ext.define('App.view.MitosApp', {
 	extend       : 'Ext.Viewport',
-	uses         : [
+	requires         : [
 
 		'App.classes.RenderPanel',
 		'App.classes.CRUDStore',
@@ -77,6 +77,8 @@ Ext.define('App.view.MitosApp', {
 
 	],
 	initComponent: function() {
+
+		Ext.tip.QuickTipManager.init();
 
 		var me = this;
 
@@ -789,26 +791,45 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	setCurrPatient: function(pid, fullname, callback) {
-		var btn = this.Header.getComponent('patientButton');
+		var patientBtn = this.Header.getComponent('patientButton'),
+			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
+			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
+			PushForBtn = this.Header.getComponent('patientPushFor'),
+			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
+			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 
 		this.currPatient = {
 			pid : pid,
 			name: fullname
 		};
-		btn.update({name: fullname, info: '(' + pid + ')'});
-		btn.enable();
+		patientBtn.update({name: fullname, info: '(' + pid + ')'});
+		patientOpenVisitsBtn.enable();
+		patientCreateEncounterBtn.enable();
+		PushForBtn.enable();
+		patientCloseCurrEncounterBtn.enable();
+		patientCheckOutBtn.enable();
 		if(typeof callback == 'function') {
 			callback(true);
 		}
 	},
 
 	patientUnset: function() {
-		var btn = this.Header.getComponent('patientButton');
+		var patientBtn = this.Header.getComponent('patientButton'),
+			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
+			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
+			PushForBtn = this.Header.getComponent('patientPushFor'),
+			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
+			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 		/**
 		 * Ext.direct function
 		 */
 		Patient.currPatientUnset(function() {
-			btn.update({name: 'No Patient Selected', info: '( record )'});
+			PushForBtn.disable();
+			patientCreateEncounterBtn.disable();
+			patientOpenVisitsBtn.disable();
+			patientCloseCurrEncounterBtn.disable();
+			patientCheckOutBtn.disable();
+			patientBtn.update({name: 'No Patient Selected', info: '( record )'});
 		});
 	},
 
