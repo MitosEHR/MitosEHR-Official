@@ -644,7 +644,7 @@ Ext.define('App.view.administration.Layout', {
 		 * this panel will render the current form to preview
 		 * all the changes done.
 		 */
-		me.fromPreview = Ext.create('Ext.panel.Panel', {
+		me.fromPreview = Ext.create('Ext.form.Panel', {
 			region          : 'south',
 			height          : 300,
 			collapsible     : true,
@@ -683,7 +683,6 @@ Ext.define('App.view.administration.Layout', {
 				FormLayoutBuilder.addField(params, function(provider, response) {
 					if(response.result.success) {
 						me.loadFieldsGrid();
-						me.previewFormRender();
 					} else {
 						Ext.Msg.alert('Opps!', response.result.error);
 					}
@@ -692,7 +691,6 @@ Ext.define('App.view.administration.Layout', {
 				FormLayoutBuilder.updateField(params, function(provider, response) {
 					if(response.result.success) {
 						me.loadFieldsGrid();
-						me.previewFormRender();
 					} else {
 						Ext.Msg.alert('Opps!', response.result.error);
 					}
@@ -728,7 +726,6 @@ Ext.define('App.view.administration.Layout', {
 							me.msg('Sweet!', 'Field deleted');
 							me.currField = null;
 							me.loadFieldsGrid();
-							me.previewFormRender();
 							me.onFormReset();
 						} else {
 							Ext.Msg.alert('Opps!', response.result.error);
@@ -762,7 +759,6 @@ Ext.define('App.view.administration.Layout', {
 			if(response.result.success) {
 				me.msg('Sweet!', 'Form Fields Sorted');
 				me.loadFieldsGrid();
-				me.previewFormRender();
 				me.onFormReset();
 			} else {
 				Ext.Msg.alert('Opps!', response.result.error);
