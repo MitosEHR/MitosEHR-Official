@@ -450,12 +450,10 @@ Ext.define('App.view.patientfile.Encounter', {
 	 * Start timer task...  runs every sec
 	 */
 	startTimer: function() {
-        //say(this);
 		Ext.TaskManager.start(this.timerTask);
 	},
 
     stopTimer: function() {
-        //say(this);
         Ext.TaskManager.stop(this.timerTask);
     },
 

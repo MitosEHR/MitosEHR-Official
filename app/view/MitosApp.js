@@ -92,9 +92,9 @@ Ext.define('App.view.MitosApp', {
 		Ext.TaskManager.start({
 			run     : function() {
 				//me.checkSession();
-				me.patientPoolStore.load();
+				me.getPatientesInPoolArea();
 			},
-			interval: 50000
+			interval: 5000
 		});
 
 		me.storeTree = Ext.create('App.store.navigation.Navigation', {
@@ -384,7 +384,9 @@ Ext.define('App.view.MitosApp', {
 					region     : 'south',
 					itemId     : 'patientPoolArea',
 					bodyPadding: 5,
-					height     : 300,
+					height     : 25,
+					cls         :'patient-pool',
+					split:true,
 					collapsible: true,
 					border     : false,
 					items      : [
@@ -558,6 +560,7 @@ Ext.define('App.view.MitosApp', {
 					overItemCls      : 'patient-over',
 					selectedItemClass: 'patient-selected',
 					singleSelect     : true,
+					loadMask         : false,
 					store            : me.patientPoolStore,
 					listeners        : {
 						scope : me,
@@ -879,6 +882,26 @@ Ext.define('App.view.MitosApp', {
 					return (v) ? v : 'No Patient Selected';
 				}
 			});
+	},
+
+	getPatientesInPoolArea:function(){
+		var poolArea = this.navColumn.getComponent('patientPoolArea'),
+			height = 35;
+		this.patientPoolStore.load({
+			callback:function(records){
+				if(records.length >= 1){
+					Ext.each(records, function(record){
+						height = height + 45;
+					});
+				}else{
+					height = 25;
+				}
+				height = (height >= 303)? 303 : height;
+				poolArea.down('dataview').refresh();
+				poolArea.setHeight(height);
+				poolArea.doLayout();
+			}
+		});
 	},
 
 	appLogout: function() {

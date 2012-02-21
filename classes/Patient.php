@@ -103,7 +103,7 @@ class Patient extends Person {
                    RIGHT JOIN form_data_encounter AS e
                            ON p.pid = e.pid
                         WHERE e.close_date IS NULL
-                     GROUP BY p.pid");
+                     GROUP BY p.pid LIMIT 6");
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
             $foo['name'] = Person::fullname($row['fname'],$row['mname'],$row['lname']);
             $foo['shortName'] = Person::ellipsis($foo['name'],20);
