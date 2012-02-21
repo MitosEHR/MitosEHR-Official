@@ -111,95 +111,136 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Immunization',
 				layout: 'border',
-				//height: 300,
+				bodyPadding : 5,
 				items : [
 					{
-						xtype        : 'mitos.form',
-						region       : 'center',
-						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
-						defaultType  : 'textfield',
-						defaults     : { width: 500, labelWidth: 300 },
-						items        : [
+						xtype        : 'panel',
+						region       : 'north',
+						layout       : 'border',
+						itemId       : 'immuNorth',
+						height       : 340,
+						collapsed    : true,
+						border       : true,
+						hidden       : true,
+						margin       : '0 0 3 0',
+						items        :[
 							{
-								fieldLabel     : 'Immunization (CVX Code)',
-								name           : 'immunization_id',
-								itemId         : 'immuName',
-								enableKeyEvents: true,
-								listeners      : {
-									scope: me,
-									focus: me.onCodeFieldFocus
-								}
-							},
-							{
-								fieldLabel: 'Date Administered',
-								xtype     : 'datefield',
-								format    : 'Y-m-d',
-								name      : 'administered_date'
-							},
-							{
-								fieldLabel: 'Immunization Manufacturer',
-								name      : 'manufacturer'
-
-							},
-							{
-								fieldLabel: 'Immunization Lot Number',
-								name      : 'lot_number'
-
-							},
-							{
-								fieldLabel: 'Name and Title of Immunization Administrator',
-								name      : 'administered_by'
-
-							},
-							{
-								fieldLabel: 'Date Immunization Information Statements Given',
-								xtype     : 'datefield',
-								format    : 'Y-m-d',
-								name      : 'education_date'
-							},
-							{
-								fieldLabel: 'Date of VIS Statement (?)',
-								xtype     : 'datefield',
-								format    : 'Y-m-d',
-								name      : 'vis_date'
-							},
-							{
-								fieldLabel: 'Notes',
-								xtype     : 'textarea',
-								name      : 'note'
-
-							}
-						],
-						buttons      : [
-							{
-								minWidth: 80,
-								text    : 'Save',
-								scope   : me,
-								handler : me.onSave
-							},
-							{
-								minWidth: 80,
-								text    : 'Cancel'
-
-							}
-						],
-						dockedItems  : [
-							{
-								xtype       : 'toolbar',
-								dock        : 'top',
-								enableToggle: true,
-								layout      : {
-									pack: 'left'
-								},
-								items       : [
+								xtype        : 'mitos.form',
+								region       : 'center',
+								fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
+								defaultType  : 'textfield',
+								defaults     : { width: 500, labelWidth: 300 },
+								items        : [
 									{
-										minWidth: 80,
-										text    : 'Print Record (PDF)'
+										fieldLabel     : 'Immunization (CVX Code)',
+										name           : 'immunization_id',
+										itemId         : 'immuName',
+										enableKeyEvents: true,
+										listeners      : {
+											scope: me,
+											focus: me.onCodeFieldFocus
+										}
 									},
-									'-',
+									{
+										fieldLabel: 'Date Administered',
+										xtype     : 'datefield',
+										format    : 'Y-m-d',
+										name      : 'administered_date'
+									},
+									{
+										fieldLabel: 'Immunization Manufacturer',
+										name      : 'manufacturer'
+
+									},
+									{
+										fieldLabel: 'Immunization Lot Number',
+										name      : 'lot_number'
+
+									},
+									{
+										fieldLabel: 'Name and Title of Immunization Administrator',
+										name      : 'administered_by'
+
+									},
+									{
+										fieldLabel: 'Date Immunization Information Statements Given',
+										xtype     : 'datefield',
+										format    : 'Y-m-d',
+										name      : 'education_date'
+									},
+									{
+										fieldLabel: 'Date of VIS Statement (?)',
+										xtype     : 'datefield',
+										format    : 'Y-m-d',
+										name      : 'vis_date'
+									},
+									{
+										fieldLabel: 'Notes',
+										xtype     : 'textarea',
+										name      : 'note'
+
+									}
+								],
+								buttons      : [
 									{
 										minWidth: 80,
-										text    : 'Print Record (HTML)'
+										text    : 'Save',
+										scope   : me,
+										handler : me.onSave
+									},
+									{
+										minWidth: 80,
+										text    : 'Cancel',
+										scope: me,
+										handler : me.onCancelImmu
+
+									}
+								],
+								dockedItems  : [
+									{
+										xtype       : 'toolbar',
+										dock        : 'top',
+										enableToggle: true,
+										layout      : {
+											pack: 'left'
+										},
+										items       : [
+											{
+												minWidth: 80,
+												text    : 'Print Record (PDF)'
+											},
+											'-',
+											{
+												minWidth: 80,
+												text    : 'Print Record (HTML)'
+											}
+										]
+									}
+								]
+							},
+							{
+								xtype      : 'grid',
+								region     : 'east',
+								itemId     : 'immuListGrid',
+								listeners  : {
+									scope       : me,
+									itemdblclick: me.onImmuGridClick
+								},
+								title      : 'Immunizations List',
+								width      : 400,
+								split      : true,
+								collapsible: true,
+								store      : me.ImmuListStore,
+								columns    : [
+									{
+										header   : 'Code',
+										width    : 40,
+										dataIndex: 'code'
+									},
+									{
+										header   : 'Description',
+										flex     : 1,
+										dataIndex: 'code_text'
 									}
 								]
 							}
@@ -207,38 +248,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					},
 					{
 						xtype      : 'grid',
-						region     : 'east',
-						itemId     : 'immuListGrid',
-						listeners  : {
-							scope       : me,
-							itemdblclick: me.onImmuGridClick
-						},
-						title      : 'Immunizations List',
-						width      : 400,
-						split      : true,
-						collapsible: true,
-						store      : me.ImmuListStore,
-						columns    : [
-							{
-								header   : 'Code',
-								width    : 40,
-								dataIndex: 'code'
-							},
-							{
-								header   : 'Description',
-								flex     : 1,
-								dataIndex: 'code_text'
-							}
-						]
-					},
-					{
-						xtype      : 'grid',
-						region     : 'south',
+						region     : 'center',
 						itemId     : 'patientImmuListGrid',
 						store      : me.patientImmuListStore,
-						height     : 605,
 						split      : true,
-						collapsible: true,
 						columns  : [
 							{
 								header   : 'Code Type',
@@ -457,6 +470,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Medical Issues',
 				layout: 'border',
+				bodyPadding : 5,
 				items : [
 					{
 						xtype        : 'mitos.form',
@@ -531,7 +545,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								minWidth: 80,
-								text    : 'Cancel'
+								text    : 'Cancel',
+								scope   : me,
+								handler : me.onCancelMedical
 
 							}
 						]
@@ -603,6 +619,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Surgery',
 				layout: 'border',
+				bodyPadding : 5,
 				items : [
 					{
 						xtype        : 'mitos.form',
@@ -677,7 +694,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								minWidth: 80,
-								text    : 'Cancel'
+								text    : 'Cancel',
+								scope   : me,
+								handler : me.onCancelSurgery
 
 							}
 						]
@@ -686,7 +705,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						xtype      : 'grid',
 						region     : 'center',
 						itemId     : 'patientSurgeryListGrid',
-						store      : me.patientMedicalListStore,
+						store      : me.patientSurgeryListStore,
 						columns  : [
 							{
 								header   : 'Type',
@@ -747,6 +766,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				xtype : 'panel',
 				title : 'Dental',
 				layout: 'border',
+				bodyPadding : 5,
 				items : [
 					{
 						xtype        : 'mitos.form',
@@ -809,7 +829,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								minWidth: 80,
-								text    : 'Cancel'
+								text    : 'Cancel',
+								scope   : me,
+								handler : me.onCancelDental
 
 							}
 						]
@@ -1020,13 +1042,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 
 	onAddImmunization: function(btn) {
-		var gridPanel = btn.up('panel').getComponent('patientImmuListGrid'),
-			formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm(),
+		var	northContainer = this.getLayout().getActiveItem().getComponent('immuNorth'),
+			form = northContainer.down('form').getForm(),
 			m = Ext.create('ListsGridModel', {
 
 			});
-		gridPanel.setHeight(245);
+		northContainer.show();
+		northContainer.expand(true);
 		form.loadRecord(m);
 	},
 	onAddAllergy: function() {
@@ -1038,8 +1060,40 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		formPanel.show();
 		formPanel.expand(true);
 		form.loadRecord(m);
+	},onCancelImmu: function() {
+		var	northContainer = this.getLayout().getActiveItem().getComponent('immuNorth'),
+			form = northContainer.down('form').getForm();
+
+		northContainer.collapse();
+		northContainer.hide();
+		form.reset();
+
 	},
 	onCancelAllergy: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm();
+
+		formPanel.collapse();
+		formPanel.hide();
+		form.reset();
+	},
+	onCancelMedical: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm();
+
+		formPanel.collapse();
+		formPanel.hide();
+		form.reset();
+	},
+	onCancelSurgery: function() {
+		var formPanel = this.getLayout().getActiveItem().down('form'),
+			form = formPanel.getForm();
+
+		formPanel.collapse();
+		formPanel.hide();
+		form.reset();
+	},
+	onCancelDental: function() {
 		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm();
 
