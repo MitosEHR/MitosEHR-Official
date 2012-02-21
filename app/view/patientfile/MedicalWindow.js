@@ -177,6 +177,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 									{
 										fieldLabel: 'Notes',
 										xtype     : 'textarea',
+										height     : 70,
 										name      : 'note'
 
 									}
@@ -393,7 +394,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								minWidth: 80,
 								text    : 'Cancel',
 								scope   : me,
-								handler : me.onCancelAllergy
+								handler : me.onCancel
 
 							}
 						]
@@ -547,7 +548,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								minWidth: 80,
 								text    : 'Cancel',
 								scope   : me,
-								handler : me.onCancelMedical
+								handler : me.onCancel
 
 							}
 						]
@@ -696,7 +697,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								minWidth: 80,
 								text    : 'Cancel',
 								scope   : me,
-								handler : me.onCancelSurgery
+								handler : me.onCancel
 
 							}
 						]
@@ -831,7 +832,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								minWidth: 80,
 								text    : 'Cancel',
 								scope   : me,
-								handler : me.onCancelDental
+								handler : me.onCancel
 
 							}
 						]
@@ -1009,7 +1010,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			text   : 'Allergies',
 			iconCls: 'icoAddRecord',
 			scope  : me,
-			handler: me.onAddAllergy
+			handler: me.onAdd
 
 		});
 		MedicalIssue.add({
@@ -1017,7 +1018,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			text   : 'Medical Issue',
 			iconCls: 'icoAddRecord',
 			scope  : me,
-			handler: me.onAddMedication
+			handler: me.onAdd
 
 		});
 		Surgery.add({
@@ -1025,7 +1026,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			text   : 'Surgery',
 			iconCls: 'icoAddRecord',
 			scope  : me,
-			handler: me.onAddSurgery
+			handler: me.onAdd
 
 		});
 		Dental.add({
@@ -1033,7 +1034,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			text   : 'Dental',
 			iconCls: 'icoAddRecord',
 			scope  : me,
-			handler: me.onAddDental
+			handler: me.onAdd
 
 		});
 
@@ -1041,7 +1042,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 
-	onAddImmunization: function(btn) {
+	onAddImmunization: function() {
 		var	northContainer = this.getLayout().getActiveItem().getComponent('immuNorth'),
 			form = northContainer.down('form').getForm(),
 			m = Ext.create('ListsGridModel', {
@@ -1051,7 +1052,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		northContainer.expand(true);
 		form.loadRecord(m);
 	},
-	onAddAllergy: function() {
+	onAdd: function() {
 		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
 			m = Ext.create('ListsGridModel', {
@@ -1060,7 +1061,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		formPanel.show();
 		formPanel.expand(true);
 		form.loadRecord(m);
-	},onCancelImmu: function() {
+	},
+	onCancelImmu: function() {
 		var	northContainer = this.getLayout().getActiveItem().getComponent('immuNorth'),
 			form = northContainer.down('form').getForm();
 
@@ -1069,64 +1071,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		form.reset();
 
 	},
-	onCancelAllergy: function() {
+	onCancel: function() {
 		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm();
 
 		formPanel.collapse();
 		formPanel.hide();
 		form.reset();
-	},
-	onCancelMedical: function() {
-		var formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm();
-
-		formPanel.collapse();
-		formPanel.hide();
-		form.reset();
-	},
-	onCancelSurgery: function() {
-		var formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm();
-
-		formPanel.collapse();
-		formPanel.hide();
-		form.reset();
-	},
-	onCancelDental: function() {
-		var formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm();
-
-		formPanel.collapse();
-		formPanel.hide();
-		form.reset();
-	},
-	onAddMedication: function() {
-		var formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm(),
-			m = Ext.create('ListsGridModel', {
-
-			});
-		formPanel.show();
-		form.loadRecord(m);
-	},
-	onAddSurgery: function() {
-		var formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm(),
-			m = Ext.create('ListsGridModel', {
-
-			});
-		formPanel.show();
-		form.loadRecord(m);
-	},
-	onAddDental: function() {
-		var formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm(),
-			m = Ext.create('ListsGridModel', {
-
-			});
-		formPanel.show();
-		form.loadRecord(m);
 	},
 
 	onGridResized: function() {
