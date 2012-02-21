@@ -16,7 +16,7 @@ Ext.define('App.view.administration.Globals', {
 	extend       : 'App.classes.RenderPanel',
 	id           : 'panelGlobals',
 	pageTitle    : 'MitosEHR Global Settings',
-	uses         : [ 'App.classes.restStoreModel', 'App.classes.form.fields.Checkbox' ],
+	uses         : [ 'App.classes.form.fields.Checkbox' ],
 	initComponent: function() {
 		var me = this;
 		// *************************************************************************************

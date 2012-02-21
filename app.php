@@ -102,7 +102,6 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/LivePatientSearch.js"></script>
         <script type="text/javascript" src="app/classes/ManagedIframe.js"></script>
         <script type="text/javascript" src="app/classes/PhotoIdWindow.js"></script>
-        <script type="text/javascript" src="app/classes/restStoreModel.js"></script>
         <script type="text/javascript" src="app/classes/CalCategoryComboBox.js"></script>
         <script type="text/javascript" src="app/classes/CalStatusComboBox.js"></script>
         <script type="text/javascript" src="app/classes/combo/Authorizations.js"></script>

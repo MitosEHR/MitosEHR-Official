@@ -21,8 +21,6 @@ Ext.define('App.view.administration.Practice', {
 	id           : 'panelPractice',
 	pageTitle    : 'Practice Settings',
 	uses         : [
-		'App.classes.restStoreModel',
-		'App.classes.CRUDStore',
 		'App.classes.GridPanel',
 		'App.classes.combo.Titles',
 		'App.classes.combo.TransmitMedthod',
@@ -134,29 +132,29 @@ Ext.define('App.view.administration.Practice', {
 		// *************************************************************************************
 		// Insurance Numbers Record Structure
 		// *************************************************************************************
-		me.insuranceNumbersStore = Ext.create('App.classes.restStoreModel', {
-			fields     : [
-				{name: 'id', type: 'int'},
-				{name: 'name', type: 'string'}
-			],
-			model      : 'insuranceNumbersModel',
-			idProperty : 'id',
-			url        : 'app/administration/practice/data.php',
-			extraParams: { task: "insuranceNumbers"}
-		});
+//		me.insuranceNumbersStore = Ext.create('App.classes.restStoreModel', {
+//			fields     : [
+//				{name: 'id', type: 'int'},
+//				{name: 'name', type: 'string'}
+//			],
+//			model      : 'insuranceNumbersModel',
+//			idProperty : 'id',
+//			url        : 'app/administration/practice/data.php',
+//			extraParams: { task: "insuranceNumbers"}
+//		});
 		// *************************************************************************************
 		// X12 Partners Record Structure
 		// *************************************************************************************
-		me.x12PartnersStore = Ext.create('App.classes.restStoreModel', {
-			fields     : [
-				{name: 'id', type: 'int'},
-				{name: 'name', type: 'string'}
-			],
-			model      : 'x12PartnersModel',
-			idProperty : 'id',
-			url        : 'app/administration/practice/data.php',
-			extraParams: { task: "x12Partners"}
-		});
+//		me.x12PartnersStore = Ext.create('App.classes.restStoreModel', {
+//			fields     : [
+//				{name: 'id', type: 'int'},
+//				{name: 'name', type: 'string'}
+//			],
+//			model      : 'x12PartnersModel',
+//			idProperty : 'id',
+//			url        : 'app/administration/practice/data.php',
+//			extraParams: { task: "x12Partners"}
+//		});
 
 
 		// -------------------------------------------------------------------------------------

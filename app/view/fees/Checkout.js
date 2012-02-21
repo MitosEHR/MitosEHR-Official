@@ -12,7 +12,7 @@ Ext.define('App.view.fees.Checkout', {
 	extend       : 'App.classes.RenderPanel',
 	id           : 'panelCheckout',
 	pageTitle    : 'Checkout',
-	uses         : ['App.classes.CRUDStore', 'App.classes.GridPanel'],
+	uses         : ['App.classes.GridPanel'],
 	initComponent: function() {
 		var me = this;
 

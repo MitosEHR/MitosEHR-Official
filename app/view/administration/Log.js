@@ -13,7 +13,7 @@
 Ext.define('App.view.administration.Log', {
 	extend       : 'App.classes.RenderPanel',
 	id           : 'panelLog',
-	uses         : [ 'App.classes.restStoreModel', 'App.classes.GridPanel' ],
+	uses         : [ 'App.classes.GridPanel' ],
 	pageTitle    : 'Event History Log',
 	initComponent: function() {
 		var me = this;

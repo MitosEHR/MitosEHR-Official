@@ -8,7 +8,6 @@
 Ext.define('App.classes.combo.Languages', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.languagescombo',
-	uses         : 'App.classes.restStoreModel',
 	initComponent: function() {
 		var me = this;
 

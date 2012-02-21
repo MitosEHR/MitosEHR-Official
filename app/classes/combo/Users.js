@@ -8,7 +8,6 @@
 Ext.define('App.classes.combo.Users', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.userscombo',
-	uses         : 'App.classes.restStoreModel',
 	initComponent: function() {
 		var me = this;
 

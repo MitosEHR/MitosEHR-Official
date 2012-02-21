@@ -9,8 +9,6 @@ Ext.define('App.view.MitosApp', {
 	requires         : [
 
 		'App.classes.RenderPanel',
-		'App.classes.CRUDStore',
-		'App.classes.restStoreModel',
 
 		'Ext.chart.*',
 		'Ext.fx.target.Sprite',

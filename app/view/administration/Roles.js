@@ -16,9 +16,6 @@ Ext.define('App.view.administration.Roles', {
 	extend       : 'App.classes.RenderPanel',
 	id           : 'panelRoles',
 	pageTitle    : 'Roles and Permissions',
-	uses         : [
-		'App.classes.restStoreModel'
-	],
 	initComponent: function() {
 
 		var me = this;
@@ -28,7 +25,6 @@ Ext.define('App.view.administration.Roles', {
 		//******************************************************************************
 
 		me.form = Ext.create('Ext.form.Panel', {
-			url        : 'app/administration/roles/data.php?task=save',
 			bodyPadding: 10,
 			items      : [
 				{

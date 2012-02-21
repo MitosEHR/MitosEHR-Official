@@ -14,7 +14,6 @@ Ext.define('App.view.patientfile.Visits', {
 	id       : 'panelVisits',
 	pageTitle: 'Visits History',
 	uses     : [
-		'App.classes.restStoreModel',
 		'App.classes.GridPanel',
 		'Ext.ux.PreviewPlugin'
 	],

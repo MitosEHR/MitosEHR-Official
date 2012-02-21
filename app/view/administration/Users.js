@@ -18,7 +18,6 @@ Ext.define('App.view.administration.Users', {
 	id           : 'panelUsers',
 	pageTitle    : 'Users',
 	uses         : [
-		'App.classes.restStoreModel',
 		'App.classes.GridPanel'
 	],
 	initComponent: function() {

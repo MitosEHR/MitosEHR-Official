@@ -8,7 +8,6 @@
 Ext.define('App.classes.combo.MsgStatus', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.msgstatuscombo',
-	uses         : 'App.classes.restStoreModel',
 	initComponent: function() {
 		var me = this;
 

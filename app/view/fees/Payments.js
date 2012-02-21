@@ -13,29 +13,10 @@ Ext.define('App.view.fees.Payments', {
 	id           : 'panelPayments',
 	pageTitle    : 'Payments',
 	pageLayout   : 'border',
-	uses         : ['App.classes.CRUDStore', 'App.classes.GridPanel'],
+	uses         : ['App.classes.GridPanel'],
 	initComponent: function() {
 		var page = this;
-		//******************************************************************
-		// Stores...
-		//******************************************************************
-		page.paymentStore = Ext.create('App.classes.CRUDStore', {
-			fields    : [
-				{name: 'id', type: 'int'},
-				{name: 'date', type: 'date', dateFormat: 'c'},
-				{name: 'body', type: 'string'},
-				{name: 'user', type: 'string'},
-				{name: 'facility_id', type: 'string'},
-				{name: 'activity', type: 'string'}
-			],
-			model     : 'modelBilling',
-			idProperty: 'id',
-			read      : 'app/miscellaneous/officenotes/data_read.ejs.php',
-			create    : 'app/miscellaneous/officenotes/data_create.ejs.php',
-			update    : 'app/miscellaneous/officenotes/data_update.ejs.php',
-			//destroy		: <-- delete not allow -->
-			autoLoad  : false
-		});
+
 		//******************************************************************
 		// Payments Tab Panel
 		//******************************************************************
@@ -128,7 +109,6 @@ Ext.define('App.view.fees.Payments', {
 			height   : 300,
 			region   : 'south',
 			hidden   : true,
-			store    : page.paymentStore,
 			columns  : [
 				{ header: 'id', sortable: false, dataIndex: 'id', hidden: true},
 				{ width: 150, sortable: true, dataIndex: 'date', renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s') },

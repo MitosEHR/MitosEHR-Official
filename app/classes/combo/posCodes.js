@@ -8,7 +8,6 @@
 Ext.define('App.classes.combo.posCodes', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.mitos.poscodescombo',
-	uses         : 'App.classes.restStoreModel',
 	initComponent: function() {
 		var me = this;
 

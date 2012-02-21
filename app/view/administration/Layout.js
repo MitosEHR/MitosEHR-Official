@@ -24,7 +24,6 @@ Ext.define('App.view.administration.Layout', {
 	pageTitle           : 'Layout Form Editor',
 	pageLayout          : 'border',
 	uses                : [
-		'App.classes.restStoreModel',
 		'App.classes.GridPanel'
 	],
 	initComponent       : function() {

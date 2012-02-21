@@ -8,7 +8,6 @@
 Ext.define('App.classes.combo.TaxId', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.mitos.taxidcombo',
-	uses         : 'App.classes.restStoreModel',
 	initComponent: function() {
 		var me = this;
 

@@ -13,7 +13,6 @@ Ext.define('App.view.miscellaneous.MySettings', {
 	id           : 'panelMySettings',
 	pageTitle    : 'My Settings',
 	uses         : [
-		'App.classes.CRUDStore',
 		'App.classes.GridPanel'
 	],
 	initComponent: function() {

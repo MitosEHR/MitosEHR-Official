@@ -14,7 +14,6 @@ Ext.define('App.view.miscellaneous.Websearch', {
 	pageTitle    : 'National Library of Medicine Search',
 	pageLayout   : 'border',
 	uses         : [
-		'App.classes.CRUDStore',
 		'App.classes.GridPanel'
 	],
 	initComponent: function() {

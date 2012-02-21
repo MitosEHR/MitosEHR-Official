@@ -18,7 +18,6 @@ Ext.define('App.view.administration.Services', {
 	pageTitle    : 'Services',
 	pageLayout   : 'border',
 	uses         : [
-		'App.classes.restStoreModel',
 		'App.classes.GridPanel',
 		'App.classes.combo.CodesTypes',
 		'App.classes.combo.Titles'

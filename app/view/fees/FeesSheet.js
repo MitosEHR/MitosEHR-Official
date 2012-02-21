@@ -13,7 +13,6 @@ Ext.define('App.view.fees.FeesSheet', {
 	id           : 'panelFeesSheet',
 	pageTitle    : 'Fees Sheet',
 	uses         : [
-		'App.classes.CRUDStore',
 		'App.classes.GridPanel'
 	],
 	initComponent: function() {

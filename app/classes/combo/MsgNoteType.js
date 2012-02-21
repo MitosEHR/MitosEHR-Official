@@ -8,7 +8,6 @@
 Ext.define('App.classes.combo.MsgNoteType', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.msgnotetypecombo',
-	uses         : 'App.classes.restStoreModel',
 	initComponent: function() {
 		var me = this;
 
