@@ -440,7 +440,7 @@ Ext.define('App.view.patientfile.Encounter', {
 			 * Save New Vitals Submit
 			 */
 			} else if(SaveBtn.action == "vitals") {
-				var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter with your password:', function(btn, signature) {
+				var msg = Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
 					if(btn == 'ok') {
 						data.signature = signature;
 						Encounter.addVitals(data, function(provider, response) {
@@ -620,10 +620,75 @@ Ext.define('App.view.patientfile.Encounter', {
 		});
 	},
 
+	cf:function(field){
+		var v = field.getValue(),
+			temp = 9*v/5 + 32,
+			res = Ext.util.Format.round(temp, 1);
+		this.up('form').getForm().findField('temp_f').setValue(res);
+	},
+
+	fc:function(field){
+		var v = field.getValue(),
+			temp = (v-32)* 5/9,
+			res = Ext.util.Format.round(temp, 1);
+		field.up('form').getForm().findField('temp_c').setValue(res);
+	},
+
+	lbskg:function(field){
+		var v = field.getValue(),
+			weight = v/2.2,
+			res = Ext.util.Format.round(weight, 1);
+		field.up('form').getForm().findField('weight_kg').setValue(res);
+	},
+	kglbs:function(field){
+		var v = field.getValue(),
+			weight = v*2.2,
+			res = Ext.util.Format.round(weight, 1);
+		field.up('form').getForm().findField('weight_lbs').setValue(res);
+	},
+
+	incm:function(field){
+		say(field);
+		var v = field.getValue(),
+			weight = v*2.54,
+			res = Ext.util.Format.round(weight, 1);
+		if(field.name == 'head_circumference_in'){
+			field.up('form').getForm().findField('head_circumference_cm').setValue(res);
+		}else if(field.name == 'waist_circumference_in'){
+			field.up('form').getForm().findField('waist_circumference_cm').setValue(res);
+		}else if(field.name == 'height_in'){
+			field.up('form').getForm().findField('height_cm').setValue(res);
+		}
+	},
+
+	cmin:function(field){
+		var v = field.getValue(),
+			weight = v*0.39,
+			res = Ext.util.Format.round(weight, 1);
+		if(field.name == 'head_circumference_cm'){
+			field.up('form').getForm().findField('head_circumference_in').setValue(res);
+		}else if(field.name == 'waist_circumference_cm'){
+			field.up('form').getForm().findField('waist_circumference_in').setValue(res);
+		}else if(field.name == 'height_cm'){
+			field.up('form').getForm().findField('height_in').setValue(res);
+		}
+	},
+
     afterPanelRender:function(){
-        var me = this;
+        var me = this, form;
 
         this.getFormItems(me.vitalsPanel.down('form'), 'Vitals', function() {
+	        form = me.vitalsPanel.down('form').getForm();
+	        form.findField('temp_c').addListener('keyup', me.cf, me );
+	        form.findField('temp_f').addListener('keyup', me.fc, me );
+	        form.findField('weight_lbs').addListener('keyup', me.lbskg, me );
+            form.findField('weight_kg').addListener('keyup', me.kglbs, me );
+	        form.findField('height_cm').addListener('keyup', me.cmin, me );
+            form.findField('height_in').addListener('keyup', me.incm, me );
+            form.findField('head_circumference_cm').addListener('keyup', me.cmin, me );
+            form.findField('head_circumference_in').addListener('keyup', me.incm, me );
+            form.findField('waist_circumference_cm').addListener('keyup', me.cmin, me );
+            form.findField('waist_circumference_in').addListener('keyup', me.incm, me );
             me.vitalsPanel.doLayout();
         });
 

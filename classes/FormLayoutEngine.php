@@ -176,6 +176,7 @@ class FormLayoutEngine extends dbHelper {
                 $item = $this->getComboDefaults($item);
                 $item['store'] = $this->getStore($item['list_id']);
             }
+
             /**
              * this if what makes this function reclusive this function will keep
              * calling it self
@@ -198,6 +199,18 @@ class FormLayoutEngine extends dbHelper {
         $options = json_decode($options['options'],true);
         foreach($options as $option => $value){
             $foo[$option] = $value;
+            if( $value == 'temp_f' ||
+                $value == 'temp_c' ||
+                $value == 'weight_lbs' ||
+                $value == 'weight_kg' ||
+                $value == 'height_cm' ||
+                $value == 'height_in' ||
+                $value == 'head_circumference_cm' ||
+                $value == 'head_circumference_in' ||
+                $value == 'waist_circumference_cm' ||
+                $value == 'waist_circumference_in'){
+                $foo['enableKeyEvents'] = true;
+            }
         }
         return $foo;
     }
