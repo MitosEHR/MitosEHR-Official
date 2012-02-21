@@ -111,25 +111,30 @@ class Encounter extends Patient{
         }else{
             return array("success" => true);
         }
+    }
 
+    public function addVitals(stdClass $params){
+
+        $data = get_object_vars($params);
+        unset($data['signature']);
+        if($this->verifyUserSignature($params->signature)){
+            //TODO INSERT SQL!
+            return array('success'=> true);
+        }else{
+            return array('success'=> false);
+        }
     }
 
     /**
      * @param stdClass $params
      * @return array
      */
-    public function closeEncounter(stdClass $params){
-        $aes    = new AES($_SESSION['site']['AESkey']);
-        $pass   = $aes->encrypt($params->signature);
-
-        $uid    = $_SESSION['user']['id'];
-
+    public function closeEncounter(stdClass $params)
+    {
         $data['close_date'] = $params->close_date;
         $data['close_uid'] = $_SESSION['user']['id'];
 
-        $this->setSQL("SELECT username FROM users WHERE id = '$uid' AND password = '$pass' AND authorized = '1' LIMIT 1");
-        $count = $this->rowCount();
-        if($count != 0){
+        if($this->verifyUserSignature($params->signature)){
             $sql = $this->sqlBind($data, "form_data_encounter", "U", "eid='".$params->eid."'");
             $this->setSQL($sql);
             $this->execLog();
@@ -138,4 +143,15 @@ class Encounter extends Patient{
             return array('success'=> false);
         }
     }
+
+    private function verifyUserSignature($signature)
+    {
+        $aes    = new AES($_SESSION['site']['AESkey']);
+        $pass   = $aes->encrypt($signature);
+        $uid    = $_SESSION['user']['id'];
+        $this->setSQL("SELECT username FROM users WHERE id = '$uid' AND password = '$pass' AND authorized = '1' LIMIT 1");
+        $count = $this->rowCount();
+        return ($count != 0) ? true : false;
+    }
+
 }

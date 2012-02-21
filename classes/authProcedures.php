@@ -118,7 +118,6 @@ class authProcedures {
 
             return array('success'=>true);
         }
-
     }
 
     /**

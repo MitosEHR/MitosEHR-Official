@@ -17,6 +17,9 @@ $API = array(
             'getVitals'=>array(
                'len'=>1
             ),
+            'addVitals'=>array(
+               'len'=>1
+            ),
             'createEncounter'=>array(
                 'len'=>1
             ),

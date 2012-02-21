@@ -13,6 +13,7 @@
  * @namespace Encounter.ckOpenEncounters
  * @namespace Encounter.closeEncounter
  * @namespace Encounter.getVitals
+ * @namespace Encounter.addVitals
  */
 Ext.define('App.view.patientfile.Encounter', {
 	extend       : 'App.classes.RenderPanel',
@@ -60,8 +61,9 @@ Ext.define('App.view.patientfile.Encounter', {
 			buttons    : [
 				{
 					text   : 'Create Encounter',
+					action : 'encounter',
 					scope  : me,
-					handler: me.saveNewEnc
+					handler: me.onSave
 				},
 				{
 					text   : 'Cancel',
@@ -188,6 +190,7 @@ Ext.define('App.view.patientfile.Encounter', {
 					{
 						text   : 'Save Vitals',
 						iconCls: 'save',
+						action : 'vitals',
 						scope  : me,
 						handler: me.onSave
 					},
@@ -367,7 +370,6 @@ Ext.define('App.view.patientfile.Encounter', {
 		app.onMedicalWin(btn);
 	},
 
-
 	onChartWindowtShow: function() {
 		app.onChartsWin();
 	},
@@ -410,23 +412,63 @@ Ext.define('App.view.patientfile.Encounter', {
 	},
 
 
-	saveNewEnc: function(btn) {
-		var me = this,
-			form = me.newEncounterWindow.down('form').getForm();
+
+
+	onSave: function(SaveBtn) {
+		var me = this, panel = me.centerPanel.getActiveTab(),
+			form = (SaveBtn.action == "encounter") ? me.newEncounterWindow.down('form').getForm() : panel.down('form').getForm();
+
 		if(form.isValid()) {
 			var data = form.getValues();
 
-			Encounter.createEncounter(data, function(provider, response) {
-				if(response.result.success) {
-					me.currEncounterStartDate = me.parseDate(response.result.encounter.start_date);
-					me.currEncounterEid = response.result.encounter.eid;
-					me.startTimer();
-					btn.up('window').close();
-				} else {
-					btn.up('window').close();
-				}
+			/**
+			 * Save New Encounter Submit
+			 */
+			if(SaveBtn.action == "encounter") {
+				Encounter.createEncounter(data, function(provider, response) {
+					if(response.result.success) {
+						me.currEncounterStartDate = me.parseDate(response.result.encounter.start_date);
+						me.currEncounterEid = response.result.encounter.eid;
+						me.startTimer();
+						SaveBtn.up('window').close();
+					} else {
+						SaveBtn.up('window').close();
+					}
 
-			});
+				});
+			/**
+			 * Save New Vitals Submit
+			 */
+			} else if(SaveBtn.action == "vitals") {
+				var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter with your password:', function(btn, signature) {
+					if(btn == 'ok') {
+						data.signature = signature;
+						Encounter.addVitals(data, function(provider, response) {
+							if(response.result.success) {
+								me.msg('Sweet!', 'Vitals Saved');
+								form.reset();
+								me.vitalsStore.load();
+							} else {
+								Ext.Msg.show({
+									title  : 'Oops!',
+									msg    : 'Incorrect password',
+									buttons: Ext.Msg.OKCANCEL,
+									icon   : Ext.Msg.ERROR,
+									fn     : function(btn) {
+										if(btn == 'ok') {
+											me.onSave(SaveBtn);
+										}
+									}
+								});
+							}
+						});
+
+					}
+				}, this);
+			} else {
+				console.log('Save action not yet implemented');
+			};
+
 		}
 	},
 
@@ -487,8 +529,6 @@ Ext.define('App.view.patientfile.Encounter', {
 		hr = hr % 24;
 		t = twoDigit(hr) + ":" + t;
 
-		//t = day + ":" + t
-
 		t = (day == 0 ) ? '<span class="time">' + t + '</span>' : '<span class="day">' + day + ' day(s)</span><span class="time">' + t + '</span>';
 		return t;
 	},
@@ -507,6 +547,7 @@ Ext.define('App.view.patientfile.Encounter', {
 				if(data.close_date === null) {
 					me.startTimer();
 				} else {
+					me.stopTimer();
 					me.stopTimer();
 					var stop_date = me.parseDate(data.close_date),
 						timer = me.timer(start_date, stop_date),
@@ -540,8 +581,8 @@ Ext.define('App.view.patientfile.Encounter', {
 				};
 				Encounter.closeEncounter(params, function(provider, response) {
 					if(response.result.success) {
-						// TODO: after close encounter logic
 						me.stopTimer();
+						// TODO: after close encounter logic
 					} else {
 						Ext.Msg.show({
 							title  : 'Oops!',
