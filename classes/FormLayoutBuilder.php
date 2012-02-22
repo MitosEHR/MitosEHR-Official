@@ -527,26 +527,27 @@ class FormLayoutBuilder extends dbHelper {
      */
     public function getFormFieldsTree(stdClass $params){
         $fields = array();
-
-        $this->setSQL("Select * FROM forms_fields WHERE form_id = '$params->currForm' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
-        $results = $this->execStatement(PDO::FETCH_ASSOC);
-        foreach($results as $item){
-            $opts = $this->getItmesOptions($item['id']);
-            foreach($opts as $opt => $val){
-                $item[$opt] = $val;
-            }
-            $item['children'] = $this->getChildItems($item['id']);
-            if($item['children'] == null) {
-                unset($item['children']);
-                if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
-            }else{
-                if($item['collapsed']== 0){
-                    $item['expanded'] = true;
-                }else{
-                    $item['expanded'] = false;
+        if(isset($params->currForm)){
+            $this->setSQL("Select * FROM forms_fields WHERE form_id = '$params->currForm' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
+            $results = $this->execStatement(PDO::FETCH_ASSOC);
+            foreach($results as $item){
+                $opts = $this->getItmesOptions($item['id']);
+                foreach($opts as $opt => $val){
+                    $item[$opt] = $val;
                 }
+                $item['children'] = $this->getChildItems($item['id']);
+                if($item['children'] == null) {
+                    unset($item['children']);
+                    if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
+                }else{
+                    if($item['collapsed']== 0){
+                        $item['expanded'] = true;
+                    }else{
+                        $item['expanded'] = false;
+                    }
+                }
+                array_push($fields,$item);
             }
-            array_push($fields,$item);
         }
         return $fields;
     }

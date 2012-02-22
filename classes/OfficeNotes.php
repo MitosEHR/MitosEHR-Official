@@ -7,15 +7,15 @@
  * Time: 9:05 PM
  */
 if(!isset($_SESSION)){
-    session_name ( "MitosEHR" );
+    session_name ( 'MitosEHR' );
     session_start();
     session_cache_limiter('private');
 }
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
+include_once('dbHelper.php');
 class OfficeNotes extends dbHelper {
 
     public function getOfficeNotes(stdClass $params){
-        $wherex = ($params->show == "active")? "WHERE activity = 1" : "";
+        $wherex = (isset($params->show))? 'WHERE activity = 1' : '';
         $this->setSQL("SELECT * FROM onotes $wherex ORDER BY date DESC LIMIT $params->start, $params->limit");
         $rows = array();
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
@@ -31,7 +31,7 @@ class OfficeNotes extends dbHelper {
         $params->activity = 1;
 
         $data = get_object_vars($params);
-        $sql = $this->sqlBind($data, "onotes", "I");
+        $sql = $this->sqlBind($data, 'onotes', 'I');
         $this->setSQL($sql);
         $this->execLog();
 
@@ -41,7 +41,7 @@ class OfficeNotes extends dbHelper {
     public function updateOfficeNotes(stdClass $params)
     {
         $data = get_object_vars($params);
-        $sql = $this->sqlBind($data, "onotes", "U", "id='" . $params->id . "'");
+        $sql = $this->sqlBind($data, 'onotes', 'U', 'id="'.$params->id.'"');
         $this->setSQL($sql);
         $this->execLog();
 

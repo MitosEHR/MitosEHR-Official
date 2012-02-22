@@ -7,11 +7,11 @@
  * Time: 2:28 PM
  */
 if(!isset($_SESSION)){
-    session_name ("MitosEHR" );
+    session_name ('MitosEHR');
     session_start();
     session_cache_limiter('private');
 }
-include_once("dbHelper.php");
+include_once('dbHelper.php');
 
 
 class CombosData extends dbHelper {
@@ -33,7 +33,7 @@ class CombosData extends dbHelper {
     }
 
     public function getUsers(){
-        include_once("Person.php");
+        include_once('Person.php');
         $sql = "SELECT id, title, fname, mname, lname
                   FROM users
                  WHERE username != '' AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' )
