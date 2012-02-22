@@ -95,19 +95,32 @@ class Lists extends dbHelper {
 
     public function getLists()
     {
-        $this->setSQL("SELECT * FROM combo_lists ORDER BY title");
         $lists = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $list){
+        /**
+         * Gets all the combos
+         */
+        $this->setSQL("SELECT * FROM combo_lists ORDER BY title");
+        $combolists = $this->execStatement(PDO::FETCH_ASSOC);
+        /**
+         * get all the form fields options
+         */
+        $this->setSQL("SELECT options FROM forms_field_options");
+        $forms_field_options = $this->execStatement(PDO::FETCH_ASSOC);
+
+        foreach($combolists as $list){
             $list_id = $list['id'];
-            $this->setSQL("SELECT count(*)
-                             FROM forms_field_options
-                            WHERE oname = 'list_id'
-                              AND ovalue = '$list_id'");
-            $rec = $this->fetch();
-            $list['in_use'] = $rec['count(*)'] == 0 ? 0 : 1;
+            $list['in_use'] = 0;
+            foreach($forms_field_options as $field){
+                $field_options = json_decode($field['options'], true);
+                if(isset($field_options['list_id'])){
+                    if($field_options['list_id'] == $list_id){
+                        $list['in_use']++;
+                    }
+                }
+            }
+            $list['in_use'] = ($list['in_use'] == 0)? 0 : 1;
             array_push($lists,$list);
         }
-
         return $lists;
 
     }
@@ -173,4 +186,5 @@ class Lists extends dbHelper {
 
 }
 //$l = new Lists();
-//$l->deleteLists();
+//echo '<pre>';
+//print_r($l->getLists());

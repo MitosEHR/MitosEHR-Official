@@ -66,8 +66,8 @@ class authProcedures {
         if (file_exists($fileConf)){
             /** @noinspection PhpIncludeInspection */
             include_once($fileConf);
-            $mitos_db = new dbHelper();
-        	$err = $mitos_db->getError();
+            $db = new dbHelper();
+        	$err = $db->getError();
         	if (!is_array($err)){
                 return array('success'=>false, 'error'=>'For some reason, I can\'t connect to the database.');
         	}
@@ -79,40 +79,40 @@ class authProcedures {
         // Convert the password to AES and validate
         //-------------------------------------------
         $aes = new AES($_SESSION['site']['AESkey']);
-        $ret = $aes->encrypt($params->authPass);
+        $pass = $aes->encrypt($params->authPass);
         //-------------------------------------------
         // Username & password match
         //-------------------------------------------
-        $mitos_db->setSQL("SELECT id, username, fname, mname, lname, email
+        $db->setSQL("SELECT id, username, fname, mname, lname, email
                          FROM users
         		        WHERE username   = '$params->authUser'
-        		          AND password   = '$ret'
+        		          AND password   = '$pass'
         		          AND authorized = '1'
         		        LIMIT 1");
 
-        $rec = $mitos_db->fetch();
-        if ($rec['username'] == null){
+        $user = $db->fetch();
+        if ($user['username'] == null){
             return array('success'=>false, 'error'=>'The username or password you provided is invalid.');
         } else {
         	//-------------------------------------------
         	// Change some User related variables and go
         	//-------------------------------------------
-        	$_SESSION['user']['name']   = $rec['title'] . " " . $rec['lname'] . ", " . $rec['fname'] . " " . $rec['mname'];
-        	$_SESSION['user']['id']     = $rec['id'];
-        	$_SESSION['user']['email']  = $rec['email'];
+        	$_SESSION['user']['name']   = $user['title'] . " " . $user['lname'] . ", " . $user['fname'] . " " . $user['mname'];
+        	$_SESSION['user']['id']     = $user['id'];
+        	$_SESSION['user']['email']  = $user['email'];
         	$_SESSION['user']['auth']   = true;
         	//-------------------------------------------
         	// Also fetch the current version of the
         	// Application & Database
         	//-------------------------------------------
         	$sql = "SELECT * FROM version LIMIT 1";
-            $mitos_db->setSQL($sql);
-        	$rec = $mitos_db->fetch();
-        	$_SESSION['ver']['codeName']    = $rec['v_tag'];
-        	$_SESSION['ver']['major']       = $rec['v_major'];
-        	$_SESSION['ver']['rev']         = $rec['v_patch'];
-        	$_SESSION['ver']['minor']       = $rec['v_minor'];
-        	$_SESSION['ver']['database']    = $rec['v_database'];
+            $db->setSQL($sql);
+        	$version = $db->fetch();
+        	$_SESSION['ver']['codeName']    = $version['v_tag'];
+        	$_SESSION['ver']['major']       = $version['v_major'];
+        	$_SESSION['ver']['rev']         = $version['v_patch'];
+        	$_SESSION['ver']['minor']       = $version['v_minor'];
+        	$_SESSION['ver']['database']    = $version['v_database'];
 
             $_SESSION['lang']['code']       = $params->lang;
 

@@ -20,7 +20,18 @@ include_once("dbHelper.php");
  * @version     Vega 1.0
  * @copyright   Gnu Public License (GPLv3)
  */
-class FormLayoutEngine extends dbHelper {
+class FormLayoutEngine {
+    /**
+     * @var dbHelper
+     */
+    private $db;
+    /**
+     * Creates the dbHelper instance
+     */
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
     /**
      * @brief       Get Form Fields by Form ID or Form Title
      * @details     We can get the form fields by form name or form if
@@ -46,7 +57,7 @@ class FormLayoutEngine extends dbHelper {
         /**
          * get the form parent fields
          */
-        $this->setSQL("Select ff.*
+        $this->db->setSQL("Select ff.*
                          FROM forms_fields AS ff
                     LEFT JOIN forms_layout AS fl
                            ON ff.form_id = fl.id
@@ -56,7 +67,7 @@ class FormLayoutEngine extends dbHelper {
         /**
          * for each parent item lets get all the options and children items
          */
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
             /**
              * get parent field options using the parent item "id" as parameter and
              * store the return array in $opts.
@@ -161,8 +172,8 @@ class FormLayoutEngine extends dbHelper {
      */
     function getChildItems($parent){
         $items = array();
-        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+        $this->db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
 
             $opts = $this->getItemsOptions($item['id']);
 
@@ -194,8 +205,8 @@ class FormLayoutEngine extends dbHelper {
      */
     function getItemsOptions($item_id){
         $foo = array();
-        $this->setSQL("Select options FROM forms_field_options WHERE field_id = '$item_id'");
-        $options = $this->fetch();
+        $this->db->setSQL("Select options FROM forms_field_options WHERE field_id = '$item_id'");
+        $options = $this->db->fetch();
         $options = json_decode($options['options'],true);
         foreach($options as $option => $value){
             $foo[$option] = $value;
@@ -223,14 +234,14 @@ class FormLayoutEngine extends dbHelper {
      */
     function getStore($list_id){
 
-        $this->setSQL("SELECT o.*
+        $this->db->setSQL("SELECT o.*
                          FROM combo_lists_options AS o
                     LEFT JOIN combo_lists AS l ON l.id = o.list_id
                         WHERE l.id = '$list_id'
                      ORDER BY o.seq");
 
         $buff = "Ext.create('Ext.data.Store',{fields:['option_name','option_value'],data:[";
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
             $option_name    = $item['option_name'];
             $option_value   = $item['option_value'];
             $buff .= "{option_name:'$option_name',option_value:'$option_value'},";

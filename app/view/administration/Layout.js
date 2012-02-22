@@ -71,12 +71,7 @@ Ext.define('App.view.administration.Layout', {
 				{name: 'name', type: 'string'},
 				{name: 'list_id', type: 'string'}
 			],
-			proxy      : {
-				type: 'direct',
-				api : {
-					read: FormLayoutBuilder.getFormFieldsTree
-				}
-			},
+			idProperty: 'id'
 		});
 		/**
 		 * form fields list (center grid)
@@ -84,6 +79,12 @@ Ext.define('App.view.administration.Layout', {
 		me.fieldsGridStore = Ext.create('Ext.data.TreeStore', {
 			model      : 'layoutTreeModel',
 			clearOnLoad: true,
+			proxy      : {
+				type: 'direct',
+				api : {
+					read: FormLayoutBuilder.getFormFieldsTree
+				}
+			},
 			folderSort : false,
 			autoLoad   : false
 		});
@@ -127,7 +128,7 @@ Ext.define('App.view.administration.Layout', {
 		});
 		me.formsGridStore = Ext.create('Ext.data.Store', {
 			model   : 'FormsListModel',
-			autoLoad: false
+			autoLoad: true
 		});
 
 		/**
@@ -172,7 +173,7 @@ Ext.define('App.view.administration.Layout', {
 					read: CombosData.getOptionsByListId
 				}
 			},
-			autoLoad: false
+			autoLoad: true
 		});
 
 		/**
