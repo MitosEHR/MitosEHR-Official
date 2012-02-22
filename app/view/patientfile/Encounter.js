@@ -151,7 +151,7 @@ Ext.define('App.view.patientfile.Encounter', {
 						'<tpl for=".">' +
 						'<td>' +
 						'<div class="column">' +
-						'<div class="row" style="white-space: nowrap">{date}</div>' +
+						'<div class="row" style="white-space: nowrap">{[Ext.Date.format(values.date, "Y-m-d H:i:s")]}</div>' +
 						'<div class="row">{weight_lbs}</div>' +
 						'<div class="row">{weight_kg}</div>' +
 						'<div class="row">{height_in}</div>' +
@@ -171,6 +171,7 @@ Ext.define('App.view.patientfile.Encounter', {
 						'<div class="row">{bmi}</div>' +
 						'<div class="row">{bmi_status}</div>' +
 						'<div class="row">{other_notes}</div>' +
+						'<div class="row">{administer}</div>' +
 						'</div>' +
 						'</td>' +
 						'</tpl>' +
@@ -366,16 +367,23 @@ Ext.define('App.view.patientfile.Encounter', {
 
 	},
 
+	/**
+	 * opens the Medical window
+	 * @param btn
+	 */
 	onMedicalWin: function(btn) {
 		app.onMedicalWin(btn);
 	},
-
+	/**
+	 * opens the Chart window
+	 */
 	onChartWindowtShow: function() {
 		app.onChartsWin();
 	},
-
 	/**
-	 * This is the logic to create a new encounter
+	 * Checks foe opend encounters, if open encounters are
+	 * found alert the user, if not then open the
+	 * new encounter window
 	 */
 	newEncounter: function() {
 		var me = this;
@@ -401,6 +409,9 @@ Ext.define('App.view.patientfile.Encounter', {
 		});
 	},
 
+	/**
+	 * Opens the new encounter window and loads the current date to the form
+	 */
 	showNewEncounterWindow: function() {
 		var me = this,
 			form = me.newEncounterWindow.down('form');
@@ -410,10 +421,12 @@ Ext.define('App.view.patientfile.Encounter', {
 			me.newEncounterWindow.show();
 		});
 	},
-
-
-
-
+	/**
+	 * Sends the data to the server to be saved.
+	 * This function needs the button action to determing
+	 * which form  to save.
+	 * @param SaveBtn
+	 */
 	onSave: function(SaveBtn) {
 		var me = this, panel = me.centerPanel.getActiveTab(),
 			form = (SaveBtn.action == "encounter") ? me.newEncounterWindow.down('form').getForm() : panel.down('form').getForm();
@@ -442,6 +455,7 @@ Ext.define('App.view.patientfile.Encounter', {
 			} else if(SaveBtn.action == "vitals") {
 				var msg = Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
 					if(btn == 'ok') {
+						data = me.addDefaultData(data);
 						data.signature = signature;
 						Encounter.addVitals(data, function(provider, response) {
 							if(response.result.success) {
@@ -468,10 +482,28 @@ Ext.define('App.view.patientfile.Encounter', {
 			} else {
 				console.log('Save action not yet implemented');
 			};
-
 		}
 	},
+	/**
+	 * Takes the form data to be send and adds the default
+	 * data used by every encounter form. For example
+	 * pid (Patient ID), eid (Encounter ID), uid (User ID),
+	 * and date (Current datetime as 00-00-00 00:00:00)
+	 * @param data
+	 */
+	addDefaultData:function(data){
+		data.pid = app.currPatient.pid;
+		data.eid = this.currEncounterEid;
+		data.uid = user.id;
+		data.date = Ext.Date.format(new Date(), 'Y-m-d H:i:s');
+		return data;
+	},
 
+	/**
+	 * Cancels the New Encounter process, closing the window
+	 * and sendong the user to the Patient Summary panel
+	 * @param btn
+	 */
 	cancelNewEnc: function(btn) {
 		btn.up('window').close();
 		app.openPatientSummary();
@@ -479,7 +511,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
 
 	/**
-	 * This will start the timer task
+	 * Parse the PHP time into javascript time
 	 *
 	 * @param date
 	 */
@@ -489,12 +521,14 @@ Ext.define('App.view.patientfile.Encounter', {
 	},
 
 	/**
-	 * Start timer task...  runs every sec
+	 * Start the timerTask
 	 */
 	startTimer: function() {
 		Ext.TaskManager.start(this.timerTask);
 	},
-
+	/**
+	 * stops the timerTask
+	 */
     stopTimer: function() {
         Ext.TaskManager.stop(this.timerTask);
     },
@@ -509,6 +543,15 @@ Ext.define('App.view.patientfile.Encounter', {
 		me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Opened Encounter) <span class="timer">' + timer + '</span>');
 	},
 
+	/**
+	 * This function use the "start time" and "stop time"
+	 * and gets the time elapsed between the two then
+	 * returns it as a timer (00:00:00)  or (1 day(s) 00:00:00)
+	 * if more than 24 hrs
+	 *
+	 * @param start
+	 * @param stop
+	 */
 	timer: function(start, stop) {
 		var ms = Ext.Date.getElapsed(start, stop), t,
 			sec = Math.floor(ms / 1000);
@@ -533,6 +576,10 @@ Ext.define('App.view.patientfile.Encounter', {
 		return t;
 	},
 
+	/**
+	 *
+	 * @param eid
+	 */
 	openEncounter: function(eid) {
 		var me = this;
 		me.currEncounterEid = eid;
@@ -552,8 +599,12 @@ Ext.define('App.view.patientfile.Encounter', {
 					var stop_date = me.parseDate(data.close_date),
 						timer = me.timer(start_date, stop_date),
 						patient = me.getCurrPatient();
+					me.stopTimer();
 					me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
 				}
+				/**
+				 * Here are all the stores to load with the encounter
+				 */
 				this.vitalsStore.load({
 					scope   : me,
 					params:{pid:app.currPatient.pid},
@@ -568,7 +619,6 @@ Ext.define('App.view.patientfile.Encounter', {
 
 	/**
 	 * Function to close the encounter..
-	 * 1.
 	 */
 	closeEncounter: function() {
 		var me = this;
@@ -603,12 +653,18 @@ Ext.define('App.view.patientfile.Encounter', {
 		var f = msg.textField.getInputId();
 		document.getElementById(f).type = 'password';
 	},
-
-
+	/**
+	 * listen for the progress note panel and runs the
+	 * doLayout function to re-adjust the dimentions.
+	 */
 	progressNoteCollapseExpand: function() {
 		this.centerPanel.doLayout();
 	},
 
+	/**
+	 * Sets the tab panel hiding them by type (encounter or administrative)
+	 * @param type
+	 */
 	setTapPanel: function(type) {
 		var me = this;
 		me.centerPanel.getTabBar().items.each(function(t) {
@@ -619,64 +675,104 @@ Ext.define('App.view.patientfile.Encounter', {
 			}
 		});
 	},
-
-	cf:function(field){
+	/**
+	 * Convert Celsius to Fahrenheit
+	 * @param field
+	 * @param e
+	 */
+	cf:function(field, e){
 		var v = field.getValue(),
 			temp = 9*v/5 + 32,
 			res = Ext.util.Format.round(temp, 1);
-		this.up('form').getForm().findField('temp_f').setValue(res);
-	},
+		if(v != '' || e.getKey() != e.TAB ){
+			field.up('form').getForm().findField('temp_f').setValue(res);
+		}
 
-	fc:function(field){
+	},
+	/**
+	 * Convert Fahrenheit to Celsius
+	 * @param field
+	 * @param e
+	 */
+	fc:function(field, e){
 		var v = field.getValue(),
 			temp = (v-32)* 5/9,
 			res = Ext.util.Format.round(temp, 1);
-		field.up('form').getForm().findField('temp_c').setValue(res);
+		if(v != '' || e.getKey() != e.TAB ){
+			field.up('form').getForm().findField('temp_c').setValue(res);
+		}
 	},
 
-	lbskg:function(field){
+	/**
+	 * Convert Lbs to Kg
+	 * @param field
+	 * @param e
+	 */
+	lbskg:function(field, e){
 		var v = field.getValue(),
 			weight = v/2.2,
 			res = Ext.util.Format.round(weight, 1);
-		field.up('form').getForm().findField('weight_kg').setValue(res);
+		if(v != '' || e.getKey() != e.TAB ){
+			field.up('form').getForm().findField('weight_kg').setValue(res);
+		}
 	},
-	kglbs:function(field){
+	/**
+	 * Convert Kg to Lbs
+	 * @param field
+	 * @param e
+	 */
+	kglbs:function(field, e){
 		var v = field.getValue(),
 			weight = v*2.2,
 			res = Ext.util.Format.round(weight, 1);
-		field.up('form').getForm().findField('weight_lbs').setValue(res);
+		if(v != '' || e.getKey() != e.TAB ){
+			field.up('form').getForm().findField('weight_lbs').setValue(res);
+		}
 	},
-
-	incm:function(field){
-		say(field);
+	/**
+	 * Convert Inches to Cetimeter
+	 * @param field
+	 * @param e
+	 */
+	incm:function(field, e){
 		var v = field.getValue(),
 			weight = v*2.54,
 			res = Ext.util.Format.round(weight, 1);
-		if(field.name == 'head_circumference_in'){
-			field.up('form').getForm().findField('head_circumference_cm').setValue(res);
-		}else if(field.name == 'waist_circumference_in'){
-			field.up('form').getForm().findField('waist_circumference_cm').setValue(res);
-		}else if(field.name == 'height_in'){
-			field.up('form').getForm().findField('height_cm').setValue(res);
+		if(v != '' || e.getKey() != e.TAB ){
+			if(field.name == 'head_circumference_in'){
+				field.up('form').getForm().findField('head_circumference_cm').setValue(res);
+			}else if(field.name == 'waist_circumference_in'){
+				field.up('form').getForm().findField('waist_circumference_cm').setValue(res);
+			}else if(field.name == 'height_in'){
+				field.up('form').getForm().findField('height_cm').setValue(res);
+			}
 		}
 	},
-
-	cmin:function(field){
+	/**
+	 * Convert Centimeter to Inches
+	 * @param field
+	 * @param e
+	 */
+	cmin:function(field, e){
 		var v = field.getValue(),
 			weight = v*0.39,
 			res = Ext.util.Format.round(weight, 1);
-		if(field.name == 'head_circumference_cm'){
-			field.up('form').getForm().findField('head_circumference_in').setValue(res);
-		}else if(field.name == 'waist_circumference_cm'){
-			field.up('form').getForm().findField('waist_circumference_in').setValue(res);
-		}else if(field.name == 'height_cm'){
-			field.up('form').getForm().findField('height_in').setValue(res);
+		if(v != '' || e.getKey() != e.TAB ){
+			if(field.name == 'head_circumference_cm'){
+				field.up('form').getForm().findField('head_circumference_in').setValue(res);
+			}else if(field.name == 'waist_circumference_cm'){
+				field.up('form').getForm().findField('waist_circumference_in').setValue(res);
+			}else if(field.name == 'height_cm'){
+				field.up('form').getForm().findField('height_in').setValue(res);
+			}
 		}
 	},
 
+	/**
+	 * After this paneel is render add the forms and listeners for convertions
+	 */
     afterPanelRender:function(){
         var me = this, form;
-
         this.getFormItems(me.vitalsPanel.down('form'), 'Vitals', function() {
 	        form = me.vitalsPanel.down('form').getForm();
 	        form.findField('temp_c').addListener('keyup', me.cf, me );

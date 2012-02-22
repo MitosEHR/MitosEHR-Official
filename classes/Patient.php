@@ -13,9 +13,16 @@ if(!isset($_SESSION)){
 }
 
 include_once("Person.php");
+include_once("dbHelper.php");
 
 class Patient extends Person {
 
+    private $db;
+
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
 
     /**
      * @return mixed
@@ -31,8 +38,8 @@ class Patient extends Person {
      */
     public function currPatientSet(stdClass $params){
 
-        $this->setSQL("SELECT fname,mname,lname FROM form_data_demographics WHERE pid = '$params->pid'");
-        $p = $this->fetch();
+        $this->db->setSQL("SELECT fname,mname,lname FROM form_data_demographics WHERE pid = '$params->pid'");
+        $p = $this->db->fetch();
         $fullname = $this->fullname($p['fname'],$p['mname'],$p['lname']);
         $_SESSION['patient']['pid']  = $params->pid;
         $_SESSION['patient']['name'] = $fullname;
@@ -56,7 +63,7 @@ class Patient extends Person {
      * @return array
      */
     public function patientLiveSearch(stdClass $params){
-        $this->setSQL("SELECT pid,pubpid,fname,lname,mname,DOB,SS
+        $this->db->setSQL("SELECT pid,pubpid,fname,lname,mname,DOB,SS
                              FROM form_data_demographics
                             WHERE fname LIKE '$params->query%'
                                OR lname LIKE '$params->query%'
@@ -64,13 +71,13 @@ class Patient extends Person {
                                OR pid 	LIKE '$params->query%'
                                OR SS 	LIKE '%$params->query'");
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_CLASS) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_CLASS) as $row){
             $row->fullname = $this->fullname($row->fname,$row->mname,$row->lname);
             unset($row->fname,$row->mname,$row->lname);
             array_push($rows, $row);
         }
         $total  = count($rows);
-        $rows = $this->filertByStartLimit($rows,$params);
+        $rows = $this->db->filertByStartLimit($rows,$params);
         return array('totals'=>$total ,'rows'=>$rows);
     }
 
@@ -80,10 +87,10 @@ class Patient extends Person {
      */
     public function getPatientDemographicData(stdClass $params){
         $pid = $_SESSION['patient']['pid'];
-        $this->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
+        $this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
 
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);
         }
         return $rows;
@@ -98,13 +105,13 @@ class Patient extends Person {
     public function getPatientsByPoolArea(){
     //public function getPatientsByPoolArea(stdClass $params){
         $rows = array();
-        $this->setSQL("SELECT DISTINCT p.pid, p.title, p.fname, p.mname, p.lname, MAX(e.eid)
+        $this->db->setSQL("SELECT DISTINCT p.pid, p.title, p.fname, p.mname, p.lname, MAX(e.eid)
                          FROM form_data_demographics AS p
                    RIGHT JOIN form_data_encounter AS e
                            ON p.pid = e.pid
                         WHERE e.close_date IS NULL
                      GROUP BY p.pid LIMIT 6");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
             $foo['name'] = Person::fullname($row['fname'],$row['mname'],$row['lname']);
             $foo['shortName'] = Person::ellipsis($foo['name'],20);
             $foo['pid'] = $row['pid'];

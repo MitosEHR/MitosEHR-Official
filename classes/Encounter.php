@@ -12,18 +12,26 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once($_SESSION['site']['root']."/classes/Patient.php");
-include_once($_SESSION['site']['root']."/classes/AES.php");
+include_once("Patient.php");
+include_once("User.php");
 
-class Encounter extends Patient{
+class Encounter {
 
+    private $db;
+    private $user;
+
+    function __construct(){
+        $this->db = new dbHelper();
+        $this->user = new User();
+        return;
+    }
     /**
      * @return array
      */
     public function ckOpenEncounters(){
         $pid =  $_SESSION['patient']['pid'];
-        $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' AND close_date IS NULL");
-        $total = $this->rowCount();
+        $this->db->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' AND close_date IS NULL");
+        $total = $this->db->rowCount();
         if($total >= 1){
             return array('encounter' => true);
         }else{
@@ -44,9 +52,9 @@ class Encounter extends Patient{
         }
 
         $pid = $_SESSION['patient']['pid'];
-        $this->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' ".$ORDER);
+        $this->db->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' ".$ORDER);
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
             $row['status'] = ($row['close_date']== null)? 'open' : 'close';
         	array_push($rows, $row);
         }
@@ -66,10 +74,10 @@ class Encounter extends Patient{
 
         $data = get_object_vars($params);
 
-        $sql = $this->sqlBind($data, "form_data_encounter", "I");
-        $this->setSQL($sql);
-        $this->execLog();
-        $eid = $this->lastInsertId;
+        $sql = $this->db->sqlBind($data, "form_data_encounter", "I");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
+        $eid = $this->db->lastInsertId;
         return array('success'=>true,'encounter'=>array('eid'=>intval($eid), 'start_date'=>$params->start_date));
     }
 
@@ -79,8 +87,8 @@ class Encounter extends Patient{
      */
     public function getEncounter(stdClass $params){
 
-        $this->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$params->eid'");
-        $encounter = $this->fetch(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$params->eid'");
+        $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
 
         if($encounter != null){
             return $encounter;
@@ -97,13 +105,13 @@ class Encounter extends Patient{
 
         $pid =  (isset($params->pid)) ? $params->pid : $_SESSION['patient']['pid'];
 
-        $this->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER BY date ASC");
-        $total = $this->rowCount();
+        $this->db->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER BY date DESC");
+        $total = $this->db->rowCount();
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
-            $row['date'] = date('Y-m-d g:i a',strtotime ($row['date']));
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
             $row['height_in'] = intval($row['height_in']);
             $row['height_cn'] = intval($row['height_cn']);
+            $row['administer'] = $this->user->getUserNameById($row['uid']);
             array_push($rows, $row);
         }
         if($total >= 1){
@@ -117,8 +125,10 @@ class Encounter extends Patient{
 
         $data = get_object_vars($params);
         unset($data['signature']);
-        if($this->verifyUserSignature($params->signature)){
-            //TODO INSERT SQL!
+        if($this->user->verifyUserPass($params->signature)){
+            $sql = $this->db->sqlBind($data, 'form_data_vitals', 'I');
+            $this->db->setSQL($sql);
+            $this->db->execLog();
             return array('success'=> true);
         }else{
             return array('success'=> false);
@@ -134,24 +144,14 @@ class Encounter extends Patient{
         $data['close_date'] = $params->close_date;
         $data['close_uid'] = $_SESSION['user']['id'];
 
-        if($this->verifyUserSignature($params->signature)){
-            $sql = $this->sqlBind($data, "form_data_encounter", "U", "eid='".$params->eid."'");
-            $this->setSQL($sql);
-            $this->execLog();
+        if($this->user->verifyUserPass($params->signature)){
+            $sql = $this->db->sqlBind($data, "form_data_encounter", "U", "eid='".$params->eid."'");
+            $this->db->setSQL($sql);
+            $this->db->execLog();
             return array('success'=> true);
         }else{
             return array('success'=> false);
         }
-    }
-
-    private function verifyUserSignature($signature)
-    {
-        $aes    = new AES($_SESSION['site']['AESkey']);
-        $pass   = $aes->encrypt($signature);
-        $uid    = $_SESSION['user']['id'];
-        $this->setSQL("SELECT username FROM users WHERE id = '$uid' AND password = '$pass' AND authorized = '1' LIMIT 1");
-        $count = $this->rowCount();
-        return ($count != 0) ? true : false;
     }
 
 }

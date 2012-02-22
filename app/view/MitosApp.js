@@ -89,10 +89,10 @@ Ext.define('App.view.MitosApp', {
 		 */
 		Ext.TaskManager.start({
 			run     : function() {
-				//me.checkSession();
+				me.checkSession();
 				me.getPatientesInPoolArea();
 			},
-			interval: 5000
+			interval: 50000
 		});
 
 		me.storeTree = Ext.create('App.store.navigation.Navigation', {

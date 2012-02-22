@@ -12,9 +12,7 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-
-class Person extends dbHelper {
+class Person {
 
     /**
      * @param $fname

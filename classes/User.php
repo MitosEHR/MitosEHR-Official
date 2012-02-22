@@ -13,12 +13,23 @@ if(!isset($_SESSION)){
 }
 include_once("AES.php");
 include_once("Person.php");
+include_once("dbHelper.php");
 class User extends Person {
 
+    /**
+     * @var dbHelper
+     */
+    private $db;
     /**
      * @var
      */
     private $user_id;
+
+
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
 
     /**
      * @return AES
@@ -35,10 +46,8 @@ class User extends Person {
     public function getCurrentUserTitleLastName()
     {
         $id = $this->getCurrentUserId();
-        $this->setSQL("SELECT title, lname
-                         FROM users
-                        WHERE id = '$id'");
-        $foo = $this->fetch();
+        $this->db->setSQL("SELECT title, lname FROM users WHERE id = '$id'");
+        $foo = $this->db->fetch();
         $foo = $foo['title'].' '.$foo['lname'];
         return $foo;
     }
@@ -49,14 +58,14 @@ class User extends Person {
      */
     public function getUsers(stdClass $params)
     {
-        $this->setSQL("SELECT u.*, r.role_id
-                         FROM users AS u
-                    LEFT JOIN acl_user_roles AS r ON r.user_id = u.id
-                        WHERE u.authorized = 1 OR u.username != ''
-                     ORDER BY u.username
-                        LIMIT $params->start,$params->limit");
+        $this->db->setSQL("SELECT u.*, r.role_id
+                             FROM users AS u
+                        LEFT JOIN acl_user_roles AS r ON r.user_id = u.id
+                            WHERE u.authorized = 1 OR u.username != ''
+                         ORDER BY u.username
+                            LIMIT $params->start,$params->limit");
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
             $row['fullname']    = $this->fullname($row['fname'],$row['mname'],$row['lname']);
             unset($row['password'],$row['pwd_history1'],$row['pwd_history2']);
             array_push($rows, $row);
@@ -64,13 +73,21 @@ class User extends Person {
         return $rows;
     }
 
+    public function getUserNameById($id)
+    {
+        $this->db->setSQL("SELECT title, lname FROM users WHERE id = '$id'");
+        $user = $this->db->fetch();
+        $userName = $user['title']. ' '.$user['lname'];
+        return $userName;
+    }
+
     public function getCurrentUserData()
     {
         $id = $this->getCurrentUserId();
-        $this->setSQL("SELECT *
+        $this->db->setSQL("SELECT *
                          FROM users
                         WHERE id = '$id'");
-        $user = $this->fetch();
+        $user = $this->db->fetch();
         return $user;
     }
 
@@ -87,14 +104,14 @@ class User extends Person {
 //        $data['active']   	= ($data['active']     == 'on' ? 1 : 0);
 //        $data['calendar']   = ($data['calendar']   == 'on' ? 1 : 0);
         if($data['taxonomy'] == ""){ unset($data['taxonomy']); }
-        $sql = $this->sqlBind($data, "users", "I");
-        $this->setSQL($sql);
-        $this->execLog();
-        $params->id = $this->lastInsertId;
+        $sql = $this->db->sqlBind($data, "users", "I");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
         $role['user_id'] = $params->id;
-        $sql = $this->sqlBind($role, "acl_user_roles", "I");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($role, "acl_user_roles", "I");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
         return $params;
     }
 
@@ -114,15 +131,15 @@ class User extends Person {
             $this->changePassword($data['password']);
         }
         unset($data['password']);
-        $sql = $this->sqlBind($role, "acl_user_roles", "U", "user_id='$this->user_id'");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($role, "acl_user_roles", "U", "user_id='$this->user_id'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
 //        $data['authorized'] = ($data['authorized'] == 'on' ? 1 : 0);
 //        $data['active']   	= ($data['active']     == 'on' ? 1 : 0);
 //        $data['calendar']   = ($data['calendar']   == 'on' ? 1 : 0);
-        $sql = $this->sqlBind($data, "users", "U", "id='$this->user_id'");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($data, "users", "U", "id='$this->user_id'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
         return $params;
 
     }
@@ -137,8 +154,8 @@ class User extends Person {
         $aes = $this->getAES();
         $this->user_id = $params->id;
         $aesPwd = $aes->encrypt($params->password);
-        $this->setSQL("SELECT password, pwd_history1, pwd_history2  FROM users WHERE id='".$this->user_id."'");
-        $pwds = $this->fetch();
+        $this->db->setSQL("SELECT password, pwd_history1, pwd_history2  FROM users WHERE id='".$this->user_id."'");
+        $pwds = $this->db->fetch();
         if($pwds['password'] == $aesPwd || $pwds['pwd_history1'] == $aesPwd || $pwds['pwd_history2'] == $aesPwd){
             return array('error'=>true);
         }else{
@@ -155,14 +172,14 @@ class User extends Person {
     {
         $aes = $this->getAES();
         $aesPwd = $aes->encrypt($newpassword);
-        $this->setSQL("SELECT password, pwd_history1 FROM users WHERE id='".$this->user_id."'");
-        $pwds = $this->fetch();
+        $this->db->setSQL("SELECT password, pwd_history1 FROM users WHERE id='".$this->user_id."'");
+        $pwds = $this->db->fetch();
         $row['password']     = $aesPwd;
         $row['pwd_history1'] = $pwds['password'];
         $row['pwd_history2'] = $pwds['pwd_history1'];
-        $sql = $this->sqlBind($row, "users", "U", "id='".$this->user_id."'");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($row, "users", "U", "id='".$this->user_id."'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
         return;
 
     }
@@ -179,10 +196,19 @@ class User extends Person {
     {
         $data = get_object_vars($params);
         unset($data['id']);
-        $sql = $this->sqlBind($data, "users", "U", "id='" .$params->id . "'");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($data, "users", "U", "id='" .$params->id . "'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
         return array('success'=>true);
     }
 
+    public function verifyUserPass($pass)
+    {
+        $aes    = new AES($_SESSION['site']['AESkey']);
+        $pass   = $aes->encrypt($pass);
+        $uid    = $_SESSION['user']['id'];
+        $this->db->setSQL("SELECT username FROM users WHERE id = '$uid' AND password = '$pass' AND authorized = '1' LIMIT 1");
+        $count = $this->db->rowCount();
+        return ($count != 0) ? true : false;
+    }
 }
