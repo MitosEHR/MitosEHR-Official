@@ -5,7 +5,7 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
-require_once 'PHPLinq/LinqToObjects.php';
+require_once'PHPLinq/LinqToObjects.php';
 /**
  * @brief       Database Helper Class.
  * @details     A PDO helper for MitosEHR, contains custom function to manage the database
@@ -228,19 +228,19 @@ class dbHelper {
          */
 		$iu = strtolower($iu);
 		if ($iu == 'i'){
-            $sql = 'INSERT INTO ' . $table;
+            $sql = 'INSERT INTO '.$table;
 		} elseif($iu == 'u'){
-            $sql = "UPDATE " . $table;
+            $sql = 'UPDATE '.$table;
 		}
 		/**
          * Step 2 -  Create the SET clause
          */
-        $sql .= " SET ";
+        $sql .= ' SET ';
 		foreach($b_array as $key => $value){
 			if( $where <> ($key . "='" . addslashes($value) . "'") &&
                 $where <> ($key . "="  . addslashes($value)) &&
                 $where <> ($key . '="' . addslashes($value) . '"')){
-				$sql_r .= $key . "='" . trim(addslashes($value)) . "', "; 
+				$sql .= $key . "='" . trim(addslashes($value)) . "', ";
 			}else{
                 return array(
                     'success'=>false,
@@ -248,7 +248,7 @@ class dbHelper {
                 );
             }
 		}
-        $sql = substr($sql_r, 0, -2);
+        $sql = substr($sql, 0, -2);
 		/**
          * Step 3 - Create the WHERE clause, if applicable
          */

@@ -99,44 +99,8 @@ Ext.define('App.view.patientfile.Summary', {
 						title     : 'Vitals',
 						autoScroll: true,
 						items     : {
-							xtype            : 'dataview',
-							cls              : 'vitals-data',
-							loadMask         : false,
-							tpl              : '<table>' +
-								'<tr>' +
-								'<tpl for=".">' +
-								'<td>' +
-								'<div class="column">' +
-								'<div class="row" style="white-space: nowrap">{date}</div>' +
-								'<div class="row">{weight_lbs}</div>' +
-								'<div class="row">{weight_kg}</div>' +
-								'<div class="row">{height_in}</div>' +
-								'<div class="row">{height_cm}</div>' +
-								'<div class="row">{bp_systolic}</div>' +
-								'<div class="row">{bp_diastolic}</div>' +
-								'<div class="row">{pulse}</div>' +
-								'<div class="row">{respiration}</div>' +
-								'<div class="row">{temp_f}</div>' +
-								'<div class="row">{temp_c}</div>' +
-								'<div class="row">{temp_location}</div>' +
-								'<div class="row">{oxygen_saturation}</div>' +
-								'<div class="row">{head_circumference_in}</div>' +
-								'<div class="row">{head_circumference_cm}</div>' +
-								'<div class="row">{waist_circumference_in}</div>' +
-								'<div class="row">{waist_circumference_cm}</div>' +
-								'<div class="row">{bmi}</div>' +
-								'<div class="row">{bmi_status}</div>' +
-								'<div class="row">{other_notes}</div>' +
-								'</div>' +
-								'</td>' +
-								'</tpl>' +
-								'</tr>' +
-								'</table>',
-							itemSelector     : 'div.patient-pool-btn',
-							overItemCls      : 'patient-over',
-							selectedItemClass: 'patient-selected',
-							singleSelect     : true,
-							store            : me.vitalsStore
+                            xtype: 'vitalsdataview',
+							store: me.vitalsStore
 						}
 					}
 				]

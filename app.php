@@ -129,6 +129,7 @@ Globals::setGlobals();
 
         <!-- Views-->
         <script type="text/javascript" src="app/view/dashboard/Dashboard.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/Vitals.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Visits.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Summary.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Encounter.js"></script>

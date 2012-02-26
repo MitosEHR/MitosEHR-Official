@@ -45,6 +45,7 @@ Ext.define('App.view.MitosApp', {
 		'App.view.calendar.Calendar',
 		'App.view.messages.Messages',
 
+		'App.view.patientfile.Vitals',
 		'App.view.patientfile.NewPatient',
 		'App.view.patientfile.Summary',
 		'App.view.patientfile.Visits',

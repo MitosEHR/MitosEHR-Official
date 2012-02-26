@@ -143,45 +143,8 @@ Ext.define('App.view.patientfile.Encounter', {
 					fieldDefaults: { msgTarget: 'side' }
 				},
 				{
-					xtype            : 'dataview',
-					cls              : 'vitals-data',
-					loadMask         : false,
-					tpl              : '<table>' +
-						'<tr>' +
-						'<tpl for=".">' +
-						'<td>' +
-						'<div class="column">' +
-						'<div class="row" style="white-space: nowrap">{[Ext.Date.format(values.date, "Y-m-d H:i:s")]}</div>' +
-						'<div class="row">{weight_lbs}</div>' +
-						'<div class="row">{weight_kg}</div>' +
-						'<div class="row">{height_in}</div>' +
-						'<div class="row">{height_cm}</div>' +
-						'<div class="row">{bp_systolic}</div>' +
-						'<div class="row">{bp_diastolic}</div>' +
-						'<div class="row">{pulse}</div>' +
-						'<div class="row">{respiration}</div>' +
-						'<div class="row">{temp_f}</div>' +
-						'<div class="row">{temp_c}</div>' +
-						'<div class="row">{temp_location}</div>' +
-						'<div class="row">{oxygen_saturation}</div>' +
-						'<div class="row">{head_circumference_in}</div>' +
-						'<div class="row">{head_circumference_cm}</div>' +
-						'<div class="row">{waist_circumference_in}</div>' +
-						'<div class="row">{waist_circumference_cm}</div>' +
-						'<div class="row">{bmi}</div>' +
-						'<div class="row">{bmi_status}</div>' +
-						'<div class="row">{other_notes}</div>' +
-						'<div class="row">{administer}</div>' +
-						'</div>' +
-						'</td>' +
-						'</tpl>' +
-						'</tr>' +
-						'</table>',
-					itemSelector     : 'div.patient-pool-btn',
-					overItemCls      : 'patient-over',
-					selectedItemClass: 'patient-selected',
-					singleSelect     : true,
-					store            : me.vitalsStore
+					xtype: 'vitalsdataview',
+					store: me.vitalsStore
 				}
 			],
 			dockedItems: {
@@ -684,7 +647,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		var v = field.getValue(),
 			temp = 9*v/5 + 32,
 			res = Ext.util.Format.round(temp, 1);
-		if(v != '' || e.getKey() != e.TAB ){
+		if(e.getKey() != e.TAB ){
 			field.up('form').getForm().findField('temp_f').setValue(res);
 		}
 
@@ -698,7 +661,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		var v = field.getValue(),
 			temp = (v-32)* 5/9,
 			res = Ext.util.Format.round(temp, 1);
-		if(v != '' || e.getKey() != e.TAB ){
+		if(e.getKey() != e.TAB ){
 			field.up('form').getForm().findField('temp_c').setValue(res);
 		}
 	},
@@ -712,7 +675,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		var v = field.getValue(),
 			weight = v/2.2,
 			res = Ext.util.Format.round(weight, 1);
-		if(v != '' || e.getKey() != e.TAB ){
+		if(e.getKey() != e.TAB ){
 			field.up('form').getForm().findField('weight_kg').setValue(res);
 		}
 	},
@@ -725,7 +688,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		var v = field.getValue(),
 			weight = v*2.2,
 			res = Ext.util.Format.round(weight, 1);
-		if(v != '' || e.getKey() != e.TAB ){
+		if(e.getKey() != e.TAB ){
 			field.up('form').getForm().findField('weight_lbs').setValue(res);
 		}
 	},
@@ -738,7 +701,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		var v = field.getValue(),
 			weight = v*2.54,
 			res = Ext.util.Format.round(weight, 1);
-		if(v != '' || e.getKey() != e.TAB ){
+		if(e.getKey() != e.TAB ){
 			if(field.name == 'head_circumference_in'){
 				field.up('form').getForm().findField('head_circumference_cm').setValue(res);
 			}else if(field.name == 'waist_circumference_in'){
@@ -757,7 +720,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		var v = field.getValue(),
 			weight = v*0.39,
 			res = Ext.util.Format.round(weight, 1);
-		if(v != '' || e.getKey() != e.TAB ){
+		if(e.getKey() != e.TAB ){
 			if(field.name == 'head_circumference_cm'){
 				field.up('form').getForm().findField('head_circumference_in').setValue(res);
 			}else if(field.name == 'waist_circumference_cm'){
