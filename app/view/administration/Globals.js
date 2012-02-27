@@ -747,7 +747,7 @@ Ext.define('App.view.administration.Globals', {
 							]
 						},
 						{
-							title      : 'Notifocations',
+							title      : 'Notifications',
 							defaultType: 'textfield',
 							items      : [
 								{
@@ -802,7 +802,7 @@ Ext.define('App.view.administration.Globals', {
 							]
 						},
 						{
-							title      : 'Loging',
+							title      : 'Logging',
 							defaultType: 'mitos.checkbox',
 							items      : [
 								{
@@ -864,7 +864,7 @@ Ext.define('App.view.administration.Globals', {
 							]
 						},
 						{
-							title      : 'Miscellaneus',
+							title      : 'Miscellaneous',
 							defaultType: 'textfield',
 							items      : [
 								{
