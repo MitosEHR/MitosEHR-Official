@@ -96,14 +96,41 @@ Ext.define('App.view.patientfile.Encounter', {
 			border       : false,
 			action       : 'encounter',
 			title        : 'Review of Systems',
-			fieldDefaults: { msgTarget: 'side' }
+			fieldDefaults: { msgTarget: 'side' },
+            dockedItems: {
+                xtype: 'toolbar',
+                dock : 'top',
+                items: [
+                    {
+                        text   : 'Save',
+                        iconCls: 'save',
+                        action : 'reviewSystems',
+                        scope  : me,
+                        handler: me.onSave
+                    }
+                ]
+            }
 		});
+
 		me.reviewSysCkPanel = Ext.create('Ext.form.Panel', {
             autoScroll   : true,
             border       : false,
             action       : 'encounter',
 			title : 'Review of Systems Checks',
-            fieldDefaults: { msgTarget: 'side' }
+            fieldDefaults: { msgTarget: 'side' },
+            dockedItems: {
+                xtype: 'toolbar',
+                dock : 'top',
+                items: [
+                    {
+                        text   : 'Save',
+                        iconCls: 'save',
+                        action : 'reviewSystemChecks',
+                        scope  : me,
+                        handler: me.onSave
+                    }
+                ]
+            }
 		});
 
 		me.soapPanel = Ext.create('Ext.form.Panel', {
@@ -111,14 +138,41 @@ Ext.define('App.view.patientfile.Encounter', {
 			border       : false,
 			title        : 'SOAP',
 			action       : 'encounter',
-			fieldDefaults: { msgTarget: 'side' }
+			fieldDefaults: { msgTarget: 'side' }   ,
+            dockedItems: {
+                xtype: 'toolbar',
+                dock : 'top',
+                items: [
+                    {
+                        text   : 'Save',
+                        iconCls: 'save',
+                        action : 'soap',
+                        scope  : me,
+                        handler: me.onSave
+                    }
+                ]
+            }
 		});
+
 		me.speechDicPanel = Ext.create('Ext.form.Panel', {
 			autoScroll   : true,
 			border       : false,
 			title        : 'Speech Dictation',
 			action       : 'encounter',
-			fieldDefaults: { msgTarget: 'side' }
+			fieldDefaults: { msgTarget: 'side' },
+            dockedItems: {
+                xtype: 'toolbar',
+                dock : 'top',
+                items: [
+                    {
+                        text   : 'Save',
+                        iconCls: 'save',
+                        action : 'speechDictation',
+                        scope  : me,
+                        handler: me.onSave
+                    }
+                ]
+            }
 		});
 
 		me.vitalsPanel = Ext.create('Ext.panel.Panel', {
@@ -152,7 +206,7 @@ Ext.define('App.view.patientfile.Encounter', {
 				dock : 'top',
 				items: [
 					{
-						text   : 'Save Vitals',
+						text   : 'Save',
 						iconCls: 'save',
 						action : 'vitals',
 						scope  : me,
@@ -163,7 +217,7 @@ Ext.define('App.view.patientfile.Encounter', {
 						text   : 'Vector Charts',
 						iconCls: 'icoChart',
 						scope  : me,
-						handler: me.onChartWindowtShow
+						handler: me.onChartWindowShow
 					}
 				]
 			}
@@ -340,7 +394,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	/**
 	 * opens the Chart window
 	 */
-	onChartWindowtShow: function() {
+	onChartWindowShow: function() {
 		app.onChartsWin();
 	},
 	/**
