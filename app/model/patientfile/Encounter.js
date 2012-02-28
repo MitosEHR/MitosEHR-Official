@@ -27,8 +27,11 @@ Ext.define('App.model.patientfile.Encounter', {
 			read: Encounter.getEncounter
 		},
 		reader     : {
-			type: 'json',
-			root: 'encounter'
+			type: 'json'
+			//root: 'encounter'
 		}
-	}
+	},
+    hasMany: [
+        {model: 'App.model.patientfile.Vitals', name: 'vitals', primaryKey: 'eid'}
+    ]
 });

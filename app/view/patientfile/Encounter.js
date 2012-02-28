@@ -14,6 +14,10 @@
  * @namespace Encounter.closeEncounter
  * @namespace Encounter.getVitals
  * @namespace Encounter.addVitals
+ * @namespace Encounter.saveReviewOfSystem
+ * @namespace Encounter.saveReviewOfSystemsChecks
+ * @namespace Encounter.saveSOAP
+ * @namespace Encounter.saveSpeechDictation
  */
 Ext.define('App.view.patientfile.Encounter', {
 	extend       : 'App.classes.RenderPanel',
@@ -39,7 +43,6 @@ Ext.define('App.view.patientfile.Encounter', {
 		};
 
 		me.encounterStore   = Ext.create('App.store.patientfile.Encounter');
-		me.vitalsStore      = Ext.create('App.store.patientfile.Vitals');
 
 		/**
 		 * New Encounter Panel this panel is located hidden at
@@ -104,7 +107,7 @@ Ext.define('App.view.patientfile.Encounter', {
                     {
                         text   : 'Save',
                         iconCls: 'save',
-                        action : 'reviewSystems',
+                        action : 'reviewOfSystems',
                         scope  : me,
                         handler: me.onSave
                     }
@@ -125,7 +128,7 @@ Ext.define('App.view.patientfile.Encounter', {
                     {
                         text   : 'Save',
                         iconCls: 'save',
-                        action : 'reviewSystemChecks',
+                        action : 'reviewOfSystemsChecks',
                         scope  : me,
                         handler: me.onSave
                     }
@@ -197,8 +200,8 @@ Ext.define('App.view.patientfile.Encounter', {
 					fieldDefaults: { msgTarget: 'side' }
 				},
 				{
-					xtype: 'vitalsdataview',
-					store: me.vitalsStore
+					xtype: 'vitalsdataview'
+					//store: me.encounterStore
 				}
 			],
 			dockedItems: {
@@ -309,6 +312,17 @@ Ext.define('App.view.patientfile.Encounter', {
 				xtype: 'toolbar',
 				dock : 'top',
 				items: [
+                    {
+                        text:'load',
+                        handler:function(){
+                            var rec = me.encounterStore.getAt(0);
+                            var view = me.vitalsPanel.down('vitalsdataview');
+                            var store = rec.vitalsStore;
+                            view.store = store;
+                            store.load();
+                            view.refresh();
+                        }
+                    },
 					{
 						text        : 'Encounter',
 						enableToggle: true,
@@ -405,6 +419,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	newEncounter: function() {
 		var me = this;
 		Encounter.ckOpenEncounters(function(provider, response) {
+            /** @namespace response.result.encounter */
 			if(response.result.encounter) {
 				Ext.Msg.show({
 					title  : 'Oops! Open Encounters Found...',
@@ -454,7 +469,7 @@ Ext.define('App.view.patientfile.Encounter', {
 			/**
 			 * Save New Encounter Submit
 			 */
-			if(SaveBtn.action == "encounter") {
+			if(SaveBtn.action == 'encounter') {
 				Encounter.createEncounter(data, function(provider, response) {
 					if(response.result.success) {
 						me.currEncounterStartDate = me.parseDate(response.result.encounter.start_date);
@@ -469,8 +484,8 @@ Ext.define('App.view.patientfile.Encounter', {
 			/**
 			 * Save New Vitals Submit
 			 */
-			} else if(SaveBtn.action == "vitals") {
-				var msg = Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
+			} else if(SaveBtn.action == 'vitals') {
+				Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
 					if(btn == 'ok') {
 						data = me.addDefaultData(data);
 						data.signature = signature;
@@ -493,12 +508,70 @@ Ext.define('App.view.patientfile.Encounter', {
 								});
 							}
 						});
-
 					}
 				}, this);
+                /**
+                 * Save Review of System submit
+                 */
+            } else if(SaveBtn.action == 'reviewOfSystems') {
+                data = me.addDefaultData(data);
+                Encounter.saveReviewOfSystem(data, function(provider, response) {
+                    if(response.result.success) {
+                        me.msg('Sweet!', 'Review Of System Saved');
+                    } else {
+                        Ext.Msg.show({
+                            title  : 'Oops!',
+                            msg    : response.result.error,
+                            buttons: Ext.Msg.OK,
+                            icon   : Ext.Msg.ERROR
+                        });
+                    }
+                });
+            } else if(SaveBtn.action == 'reviewOfSystemsChecks') {
+                data = me.addDefaultData(data);
+                Encounter.saveReviewOfSystemsChecks(data, function(provider, response) {
+                    if(response.result.success) {
+                        me.msg('Sweet!', 'Review Of Systems Checks Saved');
+                    } else {
+                        Ext.Msg.show({
+                            title  : 'Oops!',
+                            msg    : response.result.error,
+                            buttons: Ext.Msg.OK,
+                            icon   : Ext.Msg.ERROR
+                        });
+                    }
+                });
+            } else if(SaveBtn.action == 'soap') {
+                data = me.addDefaultData(data);
+                Encounter.saveSOAP(data, function(provider, response) {
+                    if(response.result.success) {
+                        me.msg('Sweet!', 'SOAP Saved');
+                    } else {
+                        Ext.Msg.show({
+                            title  : 'Oops!',
+                            msg    : response.result.error,
+                            buttons: Ext.Msg.OK,
+                            icon   : Ext.Msg.ERROR
+                        });
+                    }
+                });
+            } else if(SaveBtn.action == 'speechDictation') {
+                data = me.addDefaultData(data);
+                Encounter.saveSpeechDictation(data, function(provider, response) {
+                    if(response.result.success) {
+                        me.msg('Sweet!', 'Speech Dictation Saved');
+                    } else {
+                        Ext.Msg.show({
+                            title  : 'Oops!',
+                            msg    : response.result.error,
+                            buttons: Ext.Msg.OK,
+                            icon   : Ext.Msg.ERROR
+                        });
+                    }
+                });
 			} else {
 				console.log('Save action not yet implemented');
-			};
+			}
 		}
 	},
 	/**
@@ -619,16 +692,19 @@ Ext.define('App.view.patientfile.Encounter', {
 					me.stopTimer();
 					me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
 				}
+
 				/**
 				 * Here are all the stores to load with the encounter
 				 */
-				this.vitalsStore.load({
-					scope   : me,
-					params:{pid:app.currPatient.pid},
-					callback: function() {
-						me.vitalsPanel.down('dataview').refresh();
-					}
-				});
+//				this.vitalsStore.load({
+//					scope   : me,
+//					params:{pid:app.currPatient.pid},
+//					callback: function() {
+//						me.vitalsPanel.down('dataview').refresh();
+//					}
+//				});
+
+
 			}
 		});
 
@@ -830,13 +906,13 @@ Ext.define('App.view.patientfile.Encounter', {
 	 */
 	onActive: function(callback) {
 		var me = this;
-		if(this.checkIfCurrPatient()) {
-			var patient = this.getCurrPatient();
-			this.updateTitle(patient.name + ' (Visits)');
+		if(me.checkIfCurrPatient()) {
+			var patient = me.getCurrPatient();
+			me.updateTitle(patient.name + ' (Visits)');
 			callback(true);
 		} else {
 			callback(false);
-			this.currPatientError();
+            me.currPatientError();
 		}
 	}
 });

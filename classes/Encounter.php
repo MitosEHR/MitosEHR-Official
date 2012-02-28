@@ -92,15 +92,38 @@ class Encounter {
      * @return array|mixed
      */
     public function getEncounter(stdClass $params){
-
         $this->db->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$params->eid'");
         $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
-
+        $encounter['vitals'] = $this->getVitalsByPid($encounter['pid']);
         if($encounter != null){
             return $encounter;
         }else{
             return array("success" => false);
         }
+    }
+
+    public function getVitalsByPid($pid){
+        $this->db->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER BY date DESC");
+        $rows = array();
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['height_in'] = intval($row['height_in']);
+            $row['height_cn'] = intval($row['height_cn']);
+            $row['administer'] = $this->user->getUserNameById($row['uid']);
+            array_push($rows, $row);
+        }
+        return $rows;
+    }
+
+    public function getVitalsByEid($eid){
+        $this->db->setSQL("SELECT * FROM form_data_vitals WHERE eid = '$eid' ORDER BY date DESC");
+        $rows = array();
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['height_in'] = intval($row['height_in']);
+            $row['height_cn'] = intval($row['height_cn']);
+            $row['administer'] = $this->user->getUserNameById($row['uid']);
+            array_push($rows, $row);
+        }
+        return $rows;
     }
 
     /**

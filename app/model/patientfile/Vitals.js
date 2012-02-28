@@ -41,8 +41,9 @@ Ext.define('App.model.patientfile.Vitals', {
 			read: Encounter.getVitals
 		},
 		reader     : {
-			type: 'json',
-			root: 'encounter'
+			type: 'json'
 		}
-	}
+	},
+    belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+
 });
