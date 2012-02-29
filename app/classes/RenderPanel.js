@@ -124,5 +124,14 @@ Ext.define('App.classes.RenderPanel', {
 
 	msg: function(title, format) {
 		app.msg(title, format)
-	}
+	},
+
+    accessWarning: function(){
+        Ext.Msg.show({
+            title  : 'Oops!',
+            msg    : 'Access Denied',
+            buttons: Ext.Msg.OK,
+            icon   : Ext.Msg.ERROR
+        });
+    }
 });

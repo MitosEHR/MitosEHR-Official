@@ -21,34 +21,7 @@ Ext.define('App.view.patientfile.Visits', {
 	initComponent: function() {
 		var me = this;
 
-		Ext.define('patientVisitsModel', {
-			extend: 'Ext.data.Model',
-			fields: [
-				{name: 'eid', type: 'int'},
-				{name: 'start_date', type: 'date', dateFormat: 'c'},
-				{name: 'close_date', type: 'date', dateFormat: 'c'},
-				{name: 'sensitivity', type: 'string'},
-				{name: 'brief_description', type: 'string'},
-				{name: 'visit_category', type: 'string'},
-				{name: 'facility', type: 'string'},
-				{name: 'billing_facility', type: 'string'},
-				{name: 'sensitivity', type: 'string'},
-				{name: 'provider', type: 'string'},
-				{name: 'status', type: 'string'}
-			],
-			proxy : {
-				type: 'direct',
-				api : {
-					read: Encounter.getEncounters
-				}
-			}
-		});
-
-		me.store = Ext.create('Ext.data.Store', {
-			pageSize  : 10,
-			model     : 'patientVisitsModel',
-			remoteSort: true
-		});
+		me.store = Ext.create('App.store.patientfile.Encounters');
 
 		function open(val) {
 			if(val !== null) {

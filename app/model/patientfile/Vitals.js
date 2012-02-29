@@ -30,7 +30,7 @@ Ext.define('App.model.patientfile.Vitals', {
 		{name: 'waist_circumference_in', type: 'int', useNull:true},
 		{name: 'waist_circumference_cm', type: 'int', useNull:true},
 		{name: 'bmi', type: 'int', useNull:true},
-		{name: 'bmi_status', type: 'int, useNull:true'},
+		{name: 'bmi_status', type: 'int', useNull:true},
 		{name: 'other_notes', type: 'string'},
 		{name: 'administer', type: 'string'}
 
@@ -38,7 +38,8 @@ Ext.define('App.model.patientfile.Vitals', {
 	proxy    : {
 		type       : 'direct',
 		api        : {
-			read: Encounter.getVitals
+			read: Encounter.getVitals,
+			create: Encounter.addVitals
 		},
 		reader     : {
 			type: 'json'

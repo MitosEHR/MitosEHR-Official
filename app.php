@@ -86,12 +86,14 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/navigation/Navigation.js"></script>
         <script type="text/javascript" src="app/model/poolarea/PoolArea.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Vitals.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/Encounters.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Encounter.js"></script>
 
         <!-- Stores -->
         <script type="text/javascript" src="app/store/navigation/Navigation.js"></script>
         <script type="text/javascript" src="app/store/poolarea/PoolArea.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Vitals.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/Encounters.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Encounter.js"></script>
 
         <!-- Classes -->

@@ -14,6 +14,9 @@ $API = array(
             'getEncounter'=>array(
                'len'=>1
             ),
+            'updateEncounter'=>array(
+               'len'=>1
+            ),
             'getVitals'=>array(
                'len'=>1
             ),
@@ -330,6 +333,9 @@ $API = array(
             	'len'=>1
             ),
             'updateMyAccount'=>array(
+            	'len'=>1
+            ),
+            'verifyUserPass'=>array(
             	'len'=>1
             )
 

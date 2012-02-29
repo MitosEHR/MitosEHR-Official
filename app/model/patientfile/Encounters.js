@@ -5,7 +5,7 @@
  * Date: 2/18/12
  * Time: 11:09 PM
  */
-Ext.define('App.model.patientfile.Encounter', {
+Ext.define('App.model.patientfile.Encounters', {
 	extend : 'Ext.data.Model',
 	fields : [
 		{name: 'eid', type: 'int'},
@@ -24,15 +24,11 @@ Ext.define('App.model.patientfile.Encounter', {
 	proxy  : {
 		type       : 'direct',
 		api        : {
-			read: Encounter.getEncounter,
-			update: Encounter.updateEncounter
+			read: Encounter.getEncounters
 		},
 		reader     : {
 			type: 'json',
 			root: 'encounter'
 		}
-	},
-    hasMany: [
-        {model: 'App.model.patientfile.Vitals', name: 'vitals', primaryKey: 'eid'}
-    ]
+	}
 });

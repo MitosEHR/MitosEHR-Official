@@ -10,6 +10,7 @@
  *
  * @namespace Encounter.getEncounter
  * @namespace Encounter.createEncounter
+ * @namespace Encounter.updateEncounter
  * @namespace Encounter.ckOpenEncounters
  * @namespace Encounter.closeEncounter
  * @namespace Encounter.getVitals
@@ -18,6 +19,7 @@
  * @namespace Encounter.saveReviewOfSystemsChecks
  * @namespace Encounter.saveSOAP
  * @namespace Encounter.saveSpeechDictation
+ * @namespace User.verifyUserPass
  */
 Ext.define('App.view.patientfile.Encounter', {
 	extend       : 'App.classes.RenderPanel',
@@ -312,17 +314,6 @@ Ext.define('App.view.patientfile.Encounter', {
 				xtype: 'toolbar',
 				dock : 'top',
 				items: [
-                    {
-                        text:'load',
-                        handler:function(){
-                            var rec = me.encounterStore.getAt(0);
-                            var view = me.vitalsPanel.down('vitalsdataview');
-                            var store = rec.vitalsStore;
-                            view.store = store;
-                            store.load();
-                            view.refresh();
-                        }
-                    },
 					{
 						text        : 'Encounter',
 						enableToggle: true,
@@ -470,46 +461,60 @@ Ext.define('App.view.patientfile.Encounter', {
 			 * Save New Encounter Submit
 			 */
 			if(SaveBtn.action == 'encounter') {
-				Encounter.createEncounter(data, function(provider, response) {
-					if(response.result.success) {
-						me.currEncounterStartDate = me.parseDate(response.result.encounter.start_date);
-						me.currEncounterEid = response.result.encounter.eid;
-						me.startTimer();
-						SaveBtn.up('window').close();
-					} else {
-						SaveBtn.up('window').close();
-					}
-
-				});
-			/**
-			 * Save New Vitals Submit
-			 */
+                ACL.hasPermission('add_encounters', function(){
+                    if(response.result) {
+                        Encounter.createEncounter(data, function(provider, response) {
+                            if(response.result.success) {
+                                me.currEncounterStartDate = me.parseDate(response.result.encounter.start_date);
+                                me.currEncounterEid = response.result.encounter.eid;
+                                me.startTimer();
+                                SaveBtn.up('window').close();
+                            } else {
+                                SaveBtn.up('window').close();
+                            }
+                        });
+                    }else{
+                        me.accessWarning();
+                    }
+                });
 			} else if(SaveBtn.action == 'vitals') {
-				Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
-					if(btn == 'ok') {
-						data = me.addDefaultData(data);
-						data.signature = signature;
-						Encounter.addVitals(data, function(provider, response) {
-							if(response.result.success) {
-								me.msg('Sweet!', 'Vitals Saved');
-								form.reset();
-								me.vitalsStore.load();
-							} else {
-								Ext.Msg.show({
-									title  : 'Oops!',
-									msg    : 'Incorrect password',
-									buttons: Ext.Msg.OKCANCEL,
-									icon   : Ext.Msg.ERROR,
-									fn     : function(btn) {
-										if(btn == 'ok') {
-											me.onSave(SaveBtn);
-										}
-									}
-								});
-							}
-						});
-					}
-				}, this);
+                ACL.hasPermission('add_vitals', function(provider, response){
+                    if(response.result) {
+                        Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
+                            if(btn == 'ok') {
+
+                                User.verifyUserPass(signature, function(provider, response){
+                                    if(response.result) {
+                                    var store = me.encounterStore,
+                                        vitals = store.getAt(0).vitals();
+                                        data = me.addDefaultData(data);
+                                        form.reset();
+                                        vitals.add(data);
+                                        vitals.sync();
+                                        vitals.sort('date', 'DESC');
+                                        me.vitalsPanel.down('vitalsdataview').refresh();
+                                        me.msg('Sweet!', 'Vitals Saved');
+                                    } else {
+                                        Ext.Msg.show({
+                                            title  : 'Oops!',
+                                            msg    : 'Incorrect password',
+                                            buttons: Ext.Msg.OKCANCEL,
+                                            icon   : Ext.Msg.ERROR,
+                                            fn     : function(btn) {
+                                                if(btn == 'ok') {
+                                                    me.onSave(SaveBtn);
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        }, this);
+                    } else {
+                        me.accessWarning();
+                    }
+                });
+
                 /**
                  * Save Review of System submit
                  */
@@ -600,114 +605,38 @@ Ext.define('App.view.patientfile.Encounter', {
 	},
 
 
-	/**
-	 * Parse the PHP time into javascript time
-	 *
-	 * @param date
-	 */
-	parseDate: function(date) {
-		var t = date.split(/[- :]/);
-		return new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
-	},
-
-	/**
-	 * Start the timerTask
-	 */
-	startTimer: function() {
-		Ext.TaskManager.start(this.timerTask);
-	},
-	/**
-	 * stops the timerTask
-	 */
-    stopTimer: function() {
-        Ext.TaskManager.stop(this.timerTask);
-    },
-
-	/**
-	 * This will update the timer every sec
-	 */
-	encounterTimer: function() {
-		var me = this;
-		var timer = me.timer(me.currEncounterStartDate, new Date()),
-			patient = me.getCurrPatient();
-		me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Opened Encounter) <span class="timer">' + timer + '</span>');
-	},
-
-	/**
-	 * This function use the "start time" and "stop time"
-	 * and gets the time elapsed between the two then
-	 * returns it as a timer (00:00:00)  or (1 day(s) 00:00:00)
-	 * if more than 24 hrs
-	 *
-	 * @param start
-	 * @param stop
-	 */
-	timer: function(start, stop) {
-		var ms = Ext.Date.getElapsed(start, stop), t,
-			sec = Math.floor(ms / 1000);
-
-		function twoDigit(d) {
-			return (d >= 10) ? d : '0' + d;
-		}
-
-		var min = Math.floor(sec / 60);
-		sec = sec % 60;
-		t = twoDigit(sec);
-
-		var hr = Math.floor(min / 60);
-		min = min % 60;
-		t = twoDigit(min) + ":" + t;
-
-		var day = Math.floor(hr / 24);
-		hr = hr % 24;
-		t = twoDigit(hr) + ":" + t;
-
-		t = (day == 0 ) ? '<span class="time">' + t + '</span>' : '<span class="day">' + day + ' day(s)</span><span class="time">' + t + '</span>';
-		return t;
-	},
 
 	/**
 	 *
 	 * @param eid
 	 */
 	openEncounter: function(eid) {
-		var me = this;
+		var me = this,
+            vitals = me.vitalsPanel.down('vitalsdataview');
+
 		me.currEncounterEid = eid;
 		me.encounterStore.getProxy().extraParams.eid = eid;
 		me.encounterStore.load({
 			scope   : me,
-			callback: function(provider, operation) {
-				var data = operation.response.result,
-					start_date = me.parseDate(data.start_date);
-				me.currEncounterStartDate = start_date;
+			callback: function(record, operation) {
+				var data = record[0].data;
+				me.currEncounterStartDate = data.start_date;
 
 				if(data.close_date === null) {
 					me.startTimer();
 				} else {
 					me.stopTimer();
 					me.stopTimer();
-					var stop_date = me.parseDate(data.close_date),
-						timer = me.timer(start_date, stop_date),
+					var timer = me.timer(data.start_date, data.close_date),
 						patient = me.getCurrPatient();
 					me.stopTimer();
 					me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
 				}
 
-				/**
-				 * Here are all the stores to load with the encounter
-				 */
-//				this.vitalsStore.load({
-//					scope   : me,
-//					params:{pid:app.currPatient.pid},
-//					callback: function() {
-//						me.vitalsPanel.down('dataview').refresh();
-//					}
-//				});
-
-
+                vitals.store = record[0].vitalsStore;
+                vitals.refresh();
 			}
 		});
-
 	},
 
 	/**
@@ -740,7 +669,6 @@ Ext.define('App.view.patientfile.Encounter', {
 						});
 					}
 				});
-
 			}
 		}, this);
 		var f = msg.textField.getInputId();
@@ -753,6 +681,75 @@ Ext.define('App.view.patientfile.Encounter', {
 	progressNoteCollapseExpand: function() {
 		this.centerPanel.doLayout();
 	},
+
+
+    //***************************************************************************************************//
+    //***************************************************************************************************//
+    //*********    *****  ******    ****** **************************************************************//
+    //*********  *  ****  ****  ***  ***** **************************************************************//
+    //*********  **  ***  ***  *****  **** **************************************************************//
+    //*********  ***  **  ***  *****  **** **************************************************************//
+    //*********  ****  *  ****  ***  ********************************************************************//
+    //*********  *****    *****    ******* **************************************************************//
+    //***************************************************************************************************//
+    //***************************************************************************************************//
+
+
+    /**
+     * Start the timerTask
+     */
+    startTimer: function() {
+        Ext.TaskManager.start(this.timerTask);
+    },
+    /**
+     * stops the timerTask
+     */
+    stopTimer: function() {
+        Ext.TaskManager.stop(this.timerTask);
+    },
+
+    /**
+     * This will update the timer every sec
+     */
+    encounterTimer: function() {
+        var me = this;
+        var timer = me.timer(me.currEncounterStartDate, new Date()),
+            patient = me.getCurrPatient();
+        me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i a') + ' (Opened Encounter) <span class="timer">' + timer + '</span>');
+    },
+
+    /**
+     * This function use the "start time" and "stop time"
+     * and gets the time elapsed between the two then
+     * returns it as a timer (00:00:00)  or (1 day(s) 00:00:00)
+     * if more than 24 hrs
+     *
+     * @param start
+     * @param stop
+     */
+    timer: function(start, stop) {
+        var ms = Ext.Date.getElapsed(start, stop), t,
+            sec = Math.floor(ms / 1000);
+
+        function twoDigit(d) {
+            return (d >= 10) ? d : '0' + d;
+        }
+
+        var min = Math.floor(sec / 60);
+        sec = sec % 60;
+        t = twoDigit(sec);
+
+        var hr = Math.floor(min / 60);
+        min = min % 60;
+        t = twoDigit(min) + ":" + t;
+
+        var day = Math.floor(hr / 24);
+        hr = hr % 24;
+        t = twoDigit(hr) + ":" + t;
+
+        t = (day == 0 ) ? '<span class="time">' + t + '</span>' : '<span class="day">' + day + ' day(s)</span><span class="time">' + t + '</span>';
+        return t;
+    },
 
 	/**
 	 * Sets the tab panel hiding them by type (encounter or administrative)

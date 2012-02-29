@@ -96,10 +96,21 @@ class Encounter {
         $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
         $encounter['vitals'] = $this->getVitalsByPid($encounter['pid']);
         if($encounter != null){
-            return $encounter;
+            return array("success" => true, 'encounter' => $encounter);
         }else{
             return array("success" => false);
         }
+    }
+    /**
+     * @param stdClass $params
+     * @return array|mixed
+     */
+    public function updateEncounter(stdClass $params){
+
+
+        return array("success" => true, 'encounter' => $params);
+
+
     }
 
     public function getVitalsByPid($pid){
@@ -151,17 +162,13 @@ class Encounter {
     }
 
     public function addVitals(stdClass $params){
-
         $data = get_object_vars($params);
-        unset($data['signature']);
-        if($this->user->verifyUserPass($params->signature)){
-            $sql = $this->db->sqlBind($data, 'form_data_vitals', 'I');
-            $this->db->setSQL($sql);
-            $this->db->execLog();
-            return array('success'=> true);
-        }else{
-            return array('success'=> false);
-        }
+        unset($data['administer']);
+        $data['date'] = $this->parseDate($data['date']);
+        $sql = $this->db->sqlBind($data, 'form_data_vitals', 'I');
+        $this->db->setSQL($sql);
+        $this->db->execLog();
+        return $params;
     }
 
     /**
@@ -181,6 +188,11 @@ class Encounter {
         }else{
             return array('success'=> false);
         }
+    }
+
+    public function parseDate($date)
+    {
+        return str_replace('T', ' ', $date);
     }
 
 }
