@@ -33,6 +33,10 @@ Ext.define('App.model.patientfile.Encounter', {
 		}
 	},
     hasMany: [
-        {model: 'App.model.patientfile.Vitals', name: 'vitals', primaryKey: 'eid'}
+        {model: 'App.model.patientfile.Vitals', name: 'vitals', primaryKey: 'eid'},
+        {model: 'App.model.patientfile.ReviewOfSystems', name: 'reviewossystems', primaryKey: 'eid'},
+        {model: 'App.model.patientfile.ReviewOfSystemsCheck', name: 'reviewossystemschecks', primaryKey: 'eid'},
+        {model: 'App.model.patientfile.SOAP', name: 'soap', primaryKey: 'eid'},
+        {model: 'App.model.patientfile.SpeechDictation', name: 'speechdictation', primaryKey: 'eid'}
     ]
 });

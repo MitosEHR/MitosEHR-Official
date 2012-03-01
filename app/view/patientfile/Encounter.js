@@ -620,6 +620,7 @@ Ext.define('App.view.patientfile.Encounter', {
 			scope   : me,
 			callback: function(record, operation) {
 				var data = record[0].data;
+                say(record);
 				me.currEncounterStartDate = data.start_date;
 
 				if(data.close_date === null) {
@@ -879,18 +880,110 @@ Ext.define('App.view.patientfile.Encounter', {
         });
 
         this.getFormItems(me.reviewSysPanel, 'Review of Systems', function() {
+            var formFields = me.reviewSysPanel.getForm().getFields(),
+                modelFields = [
+                    {name: 'id', type: 'int'},
+                    {name: 'pid', type: 'int'},
+                    {name: 'eid', type: 'int'},
+                    {name: 'uid', type: 'int'}
+                ];
+
+            Ext.each(formFields.items, function(field) {
+                modelFields.push({name: field.name, type: 'auto'});
+            });
+
+            Ext.define('App.model.patientfile.ReviewOfSystems', {
+                extend: 'Ext.data.Model',
+                fields: modelFields,
+                proxy : {
+                    type: 'direct',
+                    api : {
+                        read: Roles.getRolesData
+                    }
+                },
+                belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+            });
             me.reviewSysPanel.doLayout();
         });
 
         this.getFormItems(me.soapPanel, 'SOAP', function() {
+            var formFields = me.soapPanel.getForm().getFields(),
+                modelFields = [
+                    {name: 'id', type: 'int'},
+                    {name: 'pid', type: 'int'},
+                    {name: 'eid', type: 'int'},
+                    {name: 'uid', type: 'int'}
+                ];
+
+            Ext.each(formFields.items, function(field) {
+                modelFields.push({name: field.name, type: 'auto'});
+            });
+
+            Ext.define('App.model.patientfile.SOAP', {
+                extend: 'Ext.data.Model',
+                fields: modelFields,
+                proxy : {
+                    type: 'direct',
+                    api : {
+                        read: Roles.getRolesData
+                    }
+                },
+                belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+            });
             me.soapPanel.doLayout();
         });
 
         this.getFormItems(me.speechDicPanel, 'Speech Dictation', function() {
+            var formFields = me.speechDicPanel.getForm().getFields(),
+                modelFields = [
+                    {name: 'id', type: 'int'},
+                    {name: 'pid', type: 'int'},
+                    {name: 'eid', type: 'int'},
+                    {name: 'uid', type: 'int'}
+                ];
+
+            Ext.each(formFields.items, function(field) {
+                modelFields.push({name: field.name, type: 'auto'});
+            });
+
+            Ext.define('App.model.patientfile.SpeechDictation', {
+                extend: 'Ext.data.Model',
+                fields: modelFields,
+                proxy : {
+                    type: 'direct',
+                    api : {
+                        read: Roles.getRolesData
+                    }
+                },
+                belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+            });
             me.speechDicPanel.doLayout();
         });
 
         this.getFormItems(me.reviewSysCkPanel, 'Review of Systems Check', function() {
+            var formFields = me.reviewSysCkPanel.getForm().getFields(),
+                modelFields = [
+                    {name: 'id', type: 'int'},
+                    {name: 'pid', type: 'int'},
+                    {name: 'eid', type: 'int'},
+                    {name: 'uid', type: 'int'}
+                ];
+
+            Ext.each(formFields.items, function(field) {
+                modelFields.push({name: field.name, type: 'auto'});
+            });
+
+            Ext.define('App.model.patientfile.ReviewOfSystemsCheck', {
+                extend: 'Ext.data.Model',
+                fields: modelFields,
+                proxy : {
+                    type: 'direct',
+                    api : {
+                        read: Roles.getRolesData
+                    }
+                },
+                belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+            });
             me.reviewSysCkPanel.doLayout();
         });
 
