@@ -20,6 +20,7 @@
  * @namespace Encounter.saveSOAP
  * @namespace Encounter.saveSpeechDictation
  * @namespace User.verifyUserPass
+ * @namespace ACL.hasPermission
  */
 Ext.define('App.view.patientfile.Encounter', {
 	extend       : 'App.classes.RenderPanel',
@@ -451,42 +452,34 @@ Ext.define('App.view.patientfile.Encounter', {
 	 * @param SaveBtn
 	 */
 	onSave: function(SaveBtn) {
-		var me = this, panel = me.centerPanel.getActiveTab(),
-			form = (SaveBtn.action == "encounter") ? me.newEncounterWindow.down('form').getForm() : panel.down('form').getForm();
+		var me = this, panel = me.centerPanel.getActiveTab(), form;
+
+        if(SaveBtn.action == "encounter"){
+            form = me.newEncounterWindow.down('form').getForm();
+        }else if(SaveBtn.action == 'vitals'){
+            form = panel.down('form').getForm();
+        }else{
+            form = panel.getForm();
+        }
 
 		if(form.isValid()) {
-			var data = form.getValues();
+			var data = form.getValues(), store, record;
 
-			/**
-			 * Save New Encounter Submit
-			 */
 			if(SaveBtn.action == 'encounter') {
                 ACL.hasPermission('add_encounters', function(provider, response){
                     if(response.result) {
-                        var store = me.encounterStore;
+                        store = me.encounterStore;
                         store.add(data);
-                        var rec = store.getAt(0);
+                        record = store.getAt(0);
                         rec.save({
-                            callback:function(store,b,c){
+                            callback:function(store){
                                 me.openEncounter(store.data.eid);
                                 SaveBtn.up('window').close();
                             }
                         });
-
-//                        me.currEncounterStartDate = data.start_date;
-//                        me.currEncounterEid = response.result.encounter.eid;
-//                        Encounter.createEncounter(data, function(provider, response) {
-//                            if(response.result.success) {
-//                                me.currEncounterStartDate = response.result.encounter.start_date;
-//                                me.currEncounterEid = response.result.encounter.eid;
-//                                me.startTimer();
-//                                SaveBtn.up('window').close();
-//                            } else {
-//                                SaveBtn.up('window').close();
-//                            }
-//                        });
                     }else{
-                        me.accessWarning();
+                        SaveBtn.up('window').close();
+                        app.accessDenied();
                     }
                 });
 			} else if(SaveBtn.action == 'vitals') {
@@ -494,16 +487,15 @@ Ext.define('App.view.patientfile.Encounter', {
                     if(response.result) {
                         Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
                             if(btn == 'ok') {
-
                                 User.verifyUserPass(signature, function(provider, response){
                                     if(response.result) {
                                     var store = me.encounterStore,
-                                        vitals = store.getAt(0).vitals();
+                                        record = store.getAt(0).vitals();
                                         data = me.addDefaultData(data);
                                         form.reset();
-                                        vitals.add(data);
-                                        vitals.sync();
-                                        vitals.sort('date', 'DESC');
+                                        record.add(data);
+                                        record.sync();
+                                        record.sort('date', 'DESC');
                                         me.vitalsPanel.down('vitalsdataview').refresh();
                                         me.msg('Sweet!', 'Vitals Saved');
                                     } else {
@@ -523,72 +515,34 @@ Ext.define('App.view.patientfile.Encounter', {
                             }
                         }, this);
                     } else {
-                        me.accessWarning();
+                        app.accessDenied();
                     }
                 });
+            } else {
+                ACL.hasPermission('edit_encounters', function(provider, response){
+                    if(response.result) {
+                        store = me.encounterStore;
 
-                /**
-                 * Save Review of System submit
-                 */
-            } else if(SaveBtn.action == 'reviewOfSystems') {
-                data = me.addDefaultData(data);
-                Encounter.saveReviewOfSystem(data, function(provider, response) {
-                    if(response.result.success) {
-                        me.msg('Sweet!', 'Review Of System Saved');
+                        if(SaveBtn.action == 'reviewOfSystems'){
+                            record = store.getAt(0).reviewossystems().getAt(0);
+                        }else if(SaveBtn.action == 'reviewOfSystemsChecks'){
+                            record = store.getAt(0).reviewossystemschecks().getAt(0);
+                        }else if(SaveBtn.action == 'soap'){
+                            record = store.getAt(0).soap().getAt(0);
+                        }else if(SaveBtn.action == 'speechDictation'){
+                            record = store.getAt(0).speechdictation().getAt(0);
+                        }
+                        say(data);
+                        say(record);
+                        data = me.addDefaultData(data);
+                        record.set(data);
+                        record.save();
+                        me.msg('Sweet!', 'Encounter Updated');
                     } else {
-                        Ext.Msg.show({
-                            title  : 'Oops!',
-                            msg    : response.result.error,
-                            buttons: Ext.Msg.OK,
-                            icon   : Ext.Msg.ERROR
-                        });
+                        app.accessDenied();
                     }
                 });
-            } else if(SaveBtn.action == 'reviewOfSystemsChecks') {
-                data = me.addDefaultData(data);
-                Encounter.saveReviewOfSystemsChecks(data, function(provider, response) {
-                    if(response.result.success) {
-                        me.msg('Sweet!', 'Review Of Systems Checks Saved');
-                    } else {
-                        Ext.Msg.show({
-                            title  : 'Oops!',
-                            msg    : response.result.error,
-                            buttons: Ext.Msg.OK,
-                            icon   : Ext.Msg.ERROR
-                        });
-                    }
-                });
-            } else if(SaveBtn.action == 'soap') {
-                data = me.addDefaultData(data);
-                Encounter.saveSOAP(data, function(provider, response) {
-                    if(response.result.success) {
-                        me.msg('Sweet!', 'SOAP Saved');
-                    } else {
-                        Ext.Msg.show({
-                            title  : 'Oops!',
-                            msg    : response.result.error,
-                            buttons: Ext.Msg.OK,
-                            icon   : Ext.Msg.ERROR
-                        });
-                    }
-                });
-            } else if(SaveBtn.action == 'speechDictation') {
-                data = me.addDefaultData(data);
-                Encounter.saveSpeechDictation(data, function(provider, response) {
-                    if(response.result.success) {
-                        me.msg('Sweet!', 'Speech Dictation Saved');
-                    } else {
-                        Ext.Msg.show({
-                            title  : 'Oops!',
-                            msg    : response.result.error,
-                            buttons: Ext.Msg.OK,
-                            icon   : Ext.Msg.ERROR
-                        });
-                    }
-                });
-			} else {
-				console.log('Save action not yet implemented');
-			}
+            }
 		}
 	},
 	/**
@@ -875,7 +829,19 @@ Ext.define('App.view.patientfile.Encounter', {
 	 * After this paneel is render add the forms and listeners for convertions
 	 */
     afterPanelRender:function(){
-        var me = this, form;
+        var me = this, form,
+        dafaultFields = function(){
+            return [
+                {name: 'id', type: 'int'},
+                {name: 'pid', type: 'int'},
+                {name: 'eid', type: 'int'},
+                {name: 'uid', type: 'int'}
+            ]
+        };
+
+        /**
+         * Get 'Vitals' Form Fields and add listeners to convert values
+         */
         this.getFormItems(me.vitalsPanel.down('form'), 'Vitals', function() {
 	        form = me.vitalsPanel.down('form').getForm();
 	        form.findField('temp_c').addListener('keyup', me.cf, me );
@@ -888,17 +854,15 @@ Ext.define('App.view.patientfile.Encounter', {
             form.findField('head_circumference_in').addListener('keyup', me.incm, me );
             form.findField('waist_circumference_cm').addListener('keyup', me.cmin, me );
             form.findField('waist_circumference_in').addListener('keyup', me.incm, me );
-            me.vitalsPanel.doLayout();
+            //me.vitalsPanel.doLayout();
         });
 
+        /**
+         * Get 'Review of Systems' Form and define the Model using the form fields
+         */
         this.getFormItems(me.reviewSysPanel, 'Review of Systems', function() {
             var formFields = me.reviewSysPanel.getForm().getFields(),
-                modelFields = [
-                    {name: 'id', type: 'int'},
-                    {name: 'pid', type: 'int'},
-                    {name: 'eid', type: 'int'},
-                    {name: 'uid', type: 'int'}
-                ];
+                modelFields = new dafaultFields;
 
             Ext.each(formFields.items, function(field) {
                 modelFields.push({name: field.name, type: 'auto'});
@@ -910,22 +874,20 @@ Ext.define('App.view.patientfile.Encounter', {
                 proxy : {
                     type: 'direct',
                     api : {
-                        read: Roles.getRolesData
+                        update: Encounter.updateReviewOfSystemsById
                     }
                 },
                 belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
             });
-            me.reviewSysPanel.doLayout();
+            //me.reviewSysPanel.doLayout();
         });
-
+        /**
+         * Get 'SOAP' Form and define the Model using the form fields
+         */
         this.getFormItems(me.soapPanel, 'SOAP', function() {
             var formFields = me.soapPanel.getForm().getFields(),
-                modelFields = [
-                    {name: 'id', type: 'int'},
-                    {name: 'pid', type: 'int'},
-                    {name: 'eid', type: 'int'},
-                    {name: 'uid', type: 'int'}
-                ];
+                modelFields = new dafaultFields;
+
 
             Ext.each(formFields.items, function(field) {
                 modelFields.push({name: field.name, type: 'auto'});
@@ -937,22 +899,20 @@ Ext.define('App.view.patientfile.Encounter', {
                 proxy : {
                     type: 'direct',
                     api : {
-                        read: Roles.getRolesData
+                        update: Encounter.updateSoapById
                     }
                 },
                 belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
             });
-            me.soapPanel.doLayout();
+            //me.soapPanel.doLayout();
         });
-
+        /**
+         * Get 'Speech Dictation' Form and define the Model using the form fields
+         */
         this.getFormItems(me.speechDicPanel, 'Speech Dictation', function() {
             var formFields = me.speechDicPanel.getForm().getFields(),
-                modelFields = [
-                    {name: 'id', type: 'int'},
-                    {name: 'pid', type: 'int'},
-                    {name: 'eid', type: 'int'},
-                    {name: 'uid', type: 'int'}
-                ];
+                modelFields = new dafaultFields;
+
 
             Ext.each(formFields.items, function(field) {
                 modelFields.push({name: field.name, type: 'auto'});
@@ -964,22 +924,20 @@ Ext.define('App.view.patientfile.Encounter', {
                 proxy : {
                     type: 'direct',
                     api : {
-                        read: Roles.getRolesData
+                        update: Encounter.updateDictationById
                     }
                 },
                 belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
             });
-            me.speechDicPanel.doLayout();
+            //me.speechDicPanel.doLayout();
         });
-
+        /**
+         * Get 'Review of Systems Check' Form and define the Model using the form fields
+         */
         this.getFormItems(me.reviewSysCkPanel, 'Review of Systems Check', function() {
             var formFields = me.reviewSysCkPanel.getForm().getFields(),
-                modelFields = [
-                    {name: 'id', type: 'int'},
-                    {name: 'pid', type: 'int'},
-                    {name: 'eid', type: 'int'},
-                    {name: 'uid', type: 'int'}
-                ];
+                modelFields = new dafaultFields;
+
 
             Ext.each(formFields.items, function(field) {
                 modelFields.push({name: field.name, type: 'auto'});
@@ -991,13 +949,14 @@ Ext.define('App.view.patientfile.Encounter', {
                 proxy : {
                     type: 'direct',
                     api : {
-                        read: Roles.getRolesData
+                        update: Encounter.updateReviewOfSystemsChecksById
                     }
                 },
                 belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
             });
-            me.reviewSysCkPanel.doLayout();
+            //me.reviewSysCkPanel.doLayout();
         });
+
 
     },
 	/**

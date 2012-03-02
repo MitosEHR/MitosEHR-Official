@@ -26,6 +26,18 @@ $API = array(
             'createEncounter'=>array(
                 'len'=>1
             ),
+            'updateSoapById'=>array(
+                'len'=>1
+            ),
+            'updateReviewOfSystemsChecksById'=>array(
+                'len'=>1
+            ),
+            'updateReviewOfSystemsById'=>array(
+                'len'=>1
+            ),
+            'updateDictationById'=>array(
+                'len'=>1
+            ),
             'closeEncounter'=>array(
                'len'=>1
             )

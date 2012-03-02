@@ -134,11 +134,7 @@ class Encounter {
      * @return array|mixed
      */
     public function updateEncounter(stdClass $params){
-
-
         return array("success" => true, 'encounter' => $params);
-
-
     }
 
     public function getVitalsByPid($pid){
@@ -216,6 +212,36 @@ class Encounter {
     public function getDictationByEid($eid){
         $this->db->setSQL("SELECT * FROM form_data_dictation WHERE eid = '$eid' ORDER BY date DESC");
         return $this->db->execStatement(PDO::FETCH_ASSOC);
+    }
+
+
+    public function updateSoapById(stdClass $params){
+        $data = get_object_vars($params);
+        unset($data['id']);
+        $this->db->setSQL($this->db->sqlBind($data, 'form_data_soap', 'U', "id='".$params->id."'"));
+        $this->db->execLog();
+        return $params;
+    }
+    public function updateReviewOfSystemsChecksById(stdClass $params){
+        $data = get_object_vars($params);
+        unset($data['id']);
+        $this->db->setSQL($this->db->sqlBind($data, 'form_data_review_of_systems_check', 'U', "id='".$params->id."'"));
+        $this->db->execLog();
+        return $params;
+    }
+    public function updateReviewOfSystemsById(stdClass $params){
+        $data = get_object_vars($params);
+        unset($data['id']);
+        $this->db->setSQL($this->db->sqlBind($data, 'form_data_review_of_systems', 'U', "id='".$params->id."'"));
+        $this->db->execLog();
+        return $params;
+    }
+    public function updateDictationById(stdClass $params){
+        $data = get_object_vars($params);
+        unset($data['id']);
+        $this->db->setSQL($this->db->sqlBind($data, 'form_data_dictation', 'U', "id='".$params->id."'"));
+        $this->db->execLog();
+        return $params;
     }
 
     /**

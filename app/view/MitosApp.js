@@ -983,6 +983,15 @@ Ext.define('App.view.MitosApp', {
 
 	getMitosApp: function() {
 		return this;
-	}
+	},
+
+    accessDenied: function(){
+        Ext.Msg.show({
+            title  : 'Oops!',
+            msg    : 'Access Denied',
+            buttons: Ext.Msg.OK,
+            icon   : Ext.Msg.ERROR
+        });
+    }
 
 });
