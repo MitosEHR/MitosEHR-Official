@@ -781,18 +781,18 @@ Ext.define('App.view.MitosApp', {
 			 * @param pid int
 			 */
 			Patient.currPatientSet({pid: post.get('pid')}, function() {
-				me.currPatient = {
-					pid : post.get('pid'),
-					name: post.get('fullname')
-				};
-				btn.update({name: post.get('fullname'), info: '(' + post.get('pid') + ')'});
-				btn.enable();
-				me.openPatientSummary();
+                me.setCurrPatient(post.get('pid'),post.get('fullname'),function(){
+                    me.openPatientSummary();
+                });
 			});
 		}
 	},
 
 	setCurrPatient: function(pid, fullname, callback) {
+        this.currPatient = {
+            pid : pid,
+            name: fullname
+        };
 		var patientBtn = this.Header.getComponent('patientButton'),
 			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
@@ -800,10 +800,6 @@ Ext.define('App.view.MitosApp', {
 			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
 			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 
-		this.currPatient = {
-			pid : pid,
-			name: fullname
-		};
 		patientBtn.update({name: fullname, info: '(' + pid + ')'});
         patientBtn.enable();
 		patientOpenVisitsBtn.enable();

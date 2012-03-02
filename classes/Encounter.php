@@ -79,12 +79,33 @@ class Encounter {
         $params->open_uid   = $_SESSION['user']['id'];
 
         $data = get_object_vars($params);
+        foreach($data as $key => $val){
+            if($val == '') {
+                unset($data[$key]);
+            }
+        }
+
+        $data['start_date'] = $this->parseDate($data['start_date']);
 
         $sql = $this->db->sqlBind($data, "form_data_encounter", "I");
         $this->db->setSQL($sql);
         $this->db->execLog();
         $eid = $this->db->lastInsertId;
-        return array('success'=>true,'encounter'=>array('eid'=>intval($eid), 'start_date'=>$params->start_date));
+
+        $default = array('pid'=>$params->pid, 'eid'=>$eid);
+
+        $this->db->setSQL($this->db->sqlBind($default, "form_data_review_of_systems", "I"));
+        $this->db->execOnly();
+        $this->db->setSQL($this->db->sqlBind($default, "form_data_review_of_systems_check", "I"));
+        $this->db->execOnly();
+        $this->db->setSQL($this->db->sqlBind($default, "form_data_soap", "I"));
+        $this->db->execOnly();
+        $this->db->setSQL($this->db->sqlBind($default, "form_data_dictation", "I"));
+        $this->db->execOnly();
+
+        $params->eid = intval($eid);
+
+        return array('success'=>true,'encounter'=>$params);
     }
 
     /**
@@ -94,7 +115,14 @@ class Encounter {
     public function getEncounter(stdClass $params){
         $this->db->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$params->eid'");
         $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
-        $encounter['vitals'] = $this->getVitalsByPid($encounter['pid']);
+
+        $encounter['vitals']                = $this->getVitalsByPid($encounter['pid']);
+        $encounter['reviewossystems']       = $this->getReviewOfSystemsByEid($params->eid);
+        $encounter['reviewossystemschecks'] = $this->getReviewOfSystemsChecksByEid($params->eid);
+        $encounter['soap']                  = $this->getSoapByEid($params->eid);
+        $encounter['speechdictation']       = $this->getDictationByEid($params->eid);
+
+
         if($encounter != null){
             return array("success" => true, 'encounter' => $encounter);
         }else{
@@ -169,6 +197,25 @@ class Encounter {
         $this->db->setSQL($sql);
         $this->db->execLog();
         return $params;
+    }
+
+
+    public function getSoapByEid($eid){
+        $this->db->setSQL("SELECT * FROM form_data_soap WHERE eid = '$eid' ORDER BY date DESC");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
+    }
+
+    public function getReviewOfSystemsChecksByEid($eid){
+        $this->db->setSQL("SELECT * FROM form_data_review_of_systems_check WHERE eid = '$eid' ORDER BY date DESC");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
+    }
+    public function getReviewOfSystemsByEid($eid){
+        $this->db->setSQL("SELECT * FROM form_data_review_of_systems WHERE eid = '$eid' ORDER BY date DESC");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
+    }
+    public function getDictationByEid($eid){
+        $this->db->setSQL("SELECT * FROM form_data_dictation WHERE eid = '$eid' ORDER BY date DESC");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
 
     /**

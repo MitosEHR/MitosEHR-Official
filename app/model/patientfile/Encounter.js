@@ -25,6 +25,7 @@ Ext.define('App.model.patientfile.Encounter', {
 		type       : 'direct',
 		api        : {
 			read: Encounter.getEncounter,
+			create: Encounter.createEncounter,
 			update: Encounter.updateEncounter
 		},
 		reader     : {

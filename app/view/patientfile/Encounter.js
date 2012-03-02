@@ -461,18 +461,30 @@ Ext.define('App.view.patientfile.Encounter', {
 			 * Save New Encounter Submit
 			 */
 			if(SaveBtn.action == 'encounter') {
-                ACL.hasPermission('add_encounters', function(){
+                ACL.hasPermission('add_encounters', function(provider, response){
                     if(response.result) {
-                        Encounter.createEncounter(data, function(provider, response) {
-                            if(response.result.success) {
-                                me.currEncounterStartDate = me.parseDate(response.result.encounter.start_date);
-                                me.currEncounterEid = response.result.encounter.eid;
-                                me.startTimer();
-                                SaveBtn.up('window').close();
-                            } else {
+                        var store = me.encounterStore;
+                        store.add(data);
+                        var rec = store.getAt(0);
+                        rec.save({
+                            callback:function(store,b,c){
+                                me.openEncounter(store.data.eid);
                                 SaveBtn.up('window').close();
                             }
                         });
+
+//                        me.currEncounterStartDate = data.start_date;
+//                        me.currEncounterEid = response.result.encounter.eid;
+//                        Encounter.createEncounter(data, function(provider, response) {
+//                            if(response.result.success) {
+//                                me.currEncounterStartDate = response.result.encounter.start_date;
+//                                me.currEncounterEid = response.result.encounter.eid;
+//                                me.startTimer();
+//                                SaveBtn.up('window').close();
+//                            } else {
+//                                SaveBtn.up('window').close();
+//                            }
+//                        });
                     }else{
                         me.accessWarning();
                     }
