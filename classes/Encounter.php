@@ -207,7 +207,11 @@ class Encounter {
     }
     public function getReviewOfSystemsByEid($eid){
         $this->db->setSQL("SELECT * FROM form_data_review_of_systems WHERE eid = '$eid' ORDER BY date DESC");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        $record = $this->db->fetch();
+        foreach($record[0] as $key => $val){
+            $record[$key] =  ($val == null)? 'null' : $val;
+        }
+        return $record;
     }
     public function getDictationByEid($eid){
         $this->db->setSQL("SELECT * FROM form_data_dictation WHERE eid = '$eid' ORDER BY date DESC");
