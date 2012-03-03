@@ -117,8 +117,8 @@ class Encounter {
         $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
 
         $encounter['vitals']                = $this->getVitalsByPid($encounter['pid']);
-        $encounter['reviewossystems']       = $this->getReviewOfSystemsByEid($params->eid);
-        $encounter['reviewossystemschecks'] = $this->getReviewOfSystemsChecksByEid($params->eid);
+        $encounter['reviewofsystems']       = $this->getReviewOfSystemsByEid($params->eid);
+        $encounter['reviewofsystemschecks'] = $this->getReviewOfSystemsChecksByEid($params->eid);
         $encounter['soap']                  = $this->getSoapByEid($params->eid);
         $encounter['speechdictation']       = $this->getDictationByEid($params->eid);
 

@@ -306,7 +306,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		me.pageBody = [ me.centerPanel, me.progressNote ];
 
         me.listeners = {
-            afterrender:me.afterPanelRender
+            beforerender:me.beforePanelRender
         };
 		me.callParent(arguments);
 
@@ -471,7 +471,7 @@ Ext.define('App.view.patientfile.Encounter', {
                         store = me.encounterStore;
                         store.add(data);
                         record = store.getAt(0);
-                        rec.save({
+                        record.save({
                             callback:function(store){
                                 me.openEncounter(store.data.eid);
                                 SaveBtn.up('window').close();
@@ -524,9 +524,9 @@ Ext.define('App.view.patientfile.Encounter', {
                         store = me.encounterStore;
 
                         if(SaveBtn.action == 'reviewOfSystems'){
-                            record = store.getAt(0).reviewossystems().getAt(0);
+                            record = store.getAt(0).reviewofsystems().getAt(0);
                         }else if(SaveBtn.action == 'reviewOfSystemsChecks'){
-                            record = store.getAt(0).reviewossystemschecks().getAt(0);
+                            record = store.getAt(0).reviewofsystemschecks().getAt(0);
                         }else if(SaveBtn.action == 'soap'){
                             record = store.getAt(0).soap().getAt(0);
                         }else if(SaveBtn.action == 'speechDictation'){
@@ -602,6 +602,14 @@ Ext.define('App.view.patientfile.Encounter', {
 
                 vitals.store = record[0].vitalsStore;
                 vitals.refresh();
+
+                me.reviewSysPanel.getForm().loadRecord(record[0].reviewofsystems().getAt(0));
+                me.reviewSysCkPanel.getForm().loadRecord(record[0].reviewofsystemschecks().getAt(0));
+                me.soapPanel.getForm().loadRecord(record[0].soap().getAt(0));
+                me.speechDicPanel.getForm().loadRecord(record[0].speechdictation().getAt(0));
+
+
+
 			}
 		});
 	},
@@ -828,7 +836,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	/**
 	 * After this paneel is render add the forms and listeners for convertions
 	 */
-    afterPanelRender:function(){
+    beforePanelRender:function(){
         var me = this, form,
         dafaultFields = function(){
             return [
