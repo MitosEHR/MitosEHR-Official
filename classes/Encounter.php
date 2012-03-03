@@ -208,7 +208,7 @@ class Encounter {
     public function getReviewOfSystemsByEid($eid){
         $this->db->setSQL("SELECT * FROM form_data_review_of_systems WHERE eid = '$eid' ORDER BY date DESC");
         $record = $this->db->fetch();
-        foreach($record[0] as $key => $val){
+        foreach($record as $key => $val){
             $record[$key] =  ($val == null)? 'null' : $val;
         }
         return $record;
