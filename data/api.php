@@ -2,7 +2,10 @@
 require('config.php');
 header('Content-Type: text/javascript');
 
+//----------------------------------------------------------------------------------------------------------------------
 // convert API config to Ext.Direct spec
+// What is the purpose of this file.
+//----------------------------------------------------------------------------------------------------------------------
 $actions = array();
 foreach ($API as $aname=>&$a) {
 	$methods = array();

@@ -19,6 +19,8 @@ class Encounter extends Patient{
 
     /**
      * @return array
+     * NOTES: What is ck?
+     *  Naming: "checkOpenEncounters"
      */
     public function ckOpenEncounters(){
         $pid =  $_SESSION['patient']['pid'];
@@ -34,6 +36,7 @@ class Encounter extends Patient{
     /**
      * @param stdClass $params
      * @return array
+     *  Naming: "getPatientEncounters"
      */
     public function getEncounters(stdClass $params){
 
@@ -58,6 +61,7 @@ class Encounter extends Patient{
     /**
      * @param stdClass $params
      * @return array
+     *  Naming: "createPatientEncounters"
      */
     public function createEncounter(stdClass $params){
 
@@ -76,6 +80,7 @@ class Encounter extends Patient{
     /**
      * @param stdClass $params
      * @return array|mixed
+     *  Naming: "getPatientEncounters"
      */
     public function getEncounter(stdClass $params){
 
@@ -91,6 +96,7 @@ class Encounter extends Patient{
 
     /**
      * @return array
+     *  Naming: "getPatientVitals"
      */
     public function getVitals(){
 
@@ -116,6 +122,7 @@ class Encounter extends Patient{
     /**
      * @param stdClass $params
      * @return array
+     *  Naming: "closePatientEncounter"
      */
     public function closeEncounter(stdClass $params){
         $aes    = new AES($_SESSION['site']['AESkey']);

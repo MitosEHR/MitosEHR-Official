@@ -3,6 +3,8 @@ require('logon_config.php');
 header('Content-Type: text/javascript');
 
 // convert API config to Ext.Direct spec
+// This is a straight forward code.
+// Suggestions the foreach can be replaced by LINQ.
 $actions = array();
 foreach ($API as $aname=>&$a) {
 	$methods = array();

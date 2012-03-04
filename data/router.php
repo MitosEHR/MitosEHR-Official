@@ -1,4 +1,8 @@
 <?php
+//----------------------------------------------------------------------------------------------------------------------
+// We sould comment this code and clean it a littler bit.
+// This code was a copy nd paste by Ernesto.
+//----------------------------------------------------------------------------------------------------------------------
 if(!isset($_SESSION)){
     session_name ("MitosEHR" );
     session_start();
@@ -6,11 +10,26 @@ if(!isset($_SESSION)){
 }
 require('config.php');
 
+/**
+ *
+ */
 class Action {
-	public $action;
-	public $method;
-	public $data;
-	public $tid;
+    /**
+     * @var
+     */
+    public $action;
+    /**
+     * @var
+     */
+    public $method;
+    /**
+     * @var
+     */
+    public $data;
+    /**
+     * @var
+     */
+    public $tid;
 }
 
 $isForm = false;
@@ -30,6 +49,14 @@ if(isset($HTTP_RAW_POST_DATA)) {
 	die('Invalid request.');
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+// doRpc "Do a Remote Procedure Call"
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * @param $cdata
+ * @return array
+ * @throws Exception
+ */
 function doRpc($cdata){
     global $API;
 	try {
@@ -77,6 +104,16 @@ function doRpc($cdata){
 	return $r;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+// doArroundCalls
+// What is the purpose of this function, we need to comment more.
+//----------------------------------------------------------------------------------------------------------------------
+/**
+ * @param $fns
+ * @param $cdata
+ * @param null $returnData
+ * @return mixed
+ */
 function doAroundCalls(&$fns, &$cdata, &$returnData=null){
 	if(!$fns){
 		return;

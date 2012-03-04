@@ -47,6 +47,7 @@ class ACL {
     /**
      * @internal param string $format
      * @return array
+     * NOTES: I think we should use the SQLBind made by Gino RIvera on this, this code can be reduced.
      */
     public function getAllRoles(){
         $roles = array();
@@ -61,6 +62,7 @@ class ACL {
     /**
      * @param string $format
      * @return array
+     * NOTES: The foreach can be replaced by LINQ for PHP.
      */
     public function getAllPerms($format='ids'){
         $format = strtolower($format);
@@ -91,6 +93,8 @@ class ACL {
 
 	}
 
+    // NOTES: I suggest naming of the function more complete. For those developer that can easilly lose focus
+    // This function can be named buildAccessControlList();
 	private function buildACL(){
 		//first, get the rules for the user's role
 		if (count($this->user_roles) > 0){
@@ -103,6 +107,8 @@ class ACL {
     /**
      * @param $perm_id
      * @return mixed
+     * NOTES: naming of the function "getPermissionKeyFromID"
+     * Let's use cammel, use only underscore with private properties or variables.
      */
 	private function getperm_keyFromid($perm_id){
 		$strSQL = "SELECT perm_key FROM acl_permissions WHERE id = " . floatval($perm_id) . " LIMIT 1";
@@ -114,6 +120,8 @@ class ACL {
     /**
      * @param $perm_id
      * @return mixed
+     * NOTES: "getPermissionNameFromID"
+     * Let's use cammel, use only underscore with private properties or variables.
      */
 	private function getperm_nameFromid($perm_id){
 		$strSQL = "SELECT perm_name FROM acl_permissions WHERE id = " . floatval($perm_id) . " LIMIT 1";
@@ -136,6 +144,8 @@ class ACL {
     /**
      * @param $role
      * @return array
+     * Naming: "getRolePermissions"
+     * Let's use cammel, use only underscore with private properties or variables.
      */
 	private function getRolePerms($role){
 		if (is_array($role)){
@@ -161,6 +171,8 @@ class ACL {
     /**
      * @param $user_id
      * @return array
+     * NOTES: getUserPermissionsByID
+     * Let's use cammel, use only underscore with private properties or variables.
      */
 	private function getUserPerms($user_id){
 		$strSQL = "SELECT * FROM acl_user_perms WHERE user_id = " . floatval($user_id) . " ORDER BY add_date ASC";

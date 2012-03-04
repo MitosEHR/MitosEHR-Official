@@ -16,6 +16,12 @@ include_once('Person.php');
  */
 class AddressBook extends dbHelper {
 
+    /**
+     * @param stdClass $params
+     * @return array
+     * NOTES: Address of who?,
+     *  Naming: "getAddressesFromPatient" ???
+     */
     public function getAddresses(stdClass $params)
     {
         $this->setSQL("SELECT *
@@ -33,6 +39,12 @@ class AddressBook extends dbHelper {
         return array('totals'=>$total,'rows'=>$rows);
     }
 
+    /**
+     * @param stdClass $params
+     * @return stdClass
+     * NOTES: Add contact to who?
+     *  Naming: "AddContactToPatient"
+     */
     public function addContact(stdClass $params)
     {
         $data = get_object_vars($params);
@@ -44,6 +56,12 @@ class AddressBook extends dbHelper {
     }
 
 
+    /**
+     * @param stdClass $params
+     * @return stdClass
+     * NOTES: Update contact address to who?
+     * Naming: "updatePatientAddress"
+     */
     public function updateAddress(stdClass $params)
     {
         $data = get_object_vars($params);
