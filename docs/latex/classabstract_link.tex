@@ -1,0 +1,149 @@
+\hypertarget{classabstract_link}{\section{abstract\-Link \-Class \-Reference}
+\label{classabstract_link}\index{abstract\-Link@{abstract\-Link}}
+}
+\-Inheritance diagram for abstract\-Link\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.727273cm]{classabstract_link}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classabstract_link_a177b632b658286fdef3533477cdcfbaf}{add\-Link} (\$path, \$file\-Alias, \$name, \$package, \$subpackage, \$category=false)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classabstract_link_a0a4baf0b22973c07685c3981f0d17fc4}{\$path}
+\item 
+\hyperlink{classabstract_link_ac31de7b4a69da02b039d84655a9f28e9}{\$file\-Alias} = ''
+\item 
+\hyperlink{classabstract_link_a9a4a6fba2208984cabb3afacadf33919}{\$type} = ''
+\item 
+\hyperlink{classabstract_link_ab2fc40d43824ea3e1ce5d86dee0d763b}{\$name} = ''
+\item 
+\hyperlink{classabstract_link_a18b2a8d133fa7733bf34abcc6ca2ef5b}{\$category} = ''
+\item 
+\hyperlink{classabstract_link_a365395516cc195292e97e09bc0d165ae}{\$package} = ''
+\item 
+\hyperlink{classabstract_link_ac601dc8dc2a086b6381128cc9c7a3fc5}{\$subpackage} = ''
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 61 of file \-Link\-Classes.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classabstract_link_a177b632b658286fdef3533477cdcfbaf}{\index{abstract\-Link@{abstract\-Link}!add\-Link@{add\-Link}}
+\index{add\-Link@{add\-Link}!abstractLink@{abstract\-Link}}
+\subsubsection[{add\-Link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Link} (
+\begin{DoxyParamCaption}
+\item[{\$}]{path, }
+\item[{\$}]{file\-Alias, }
+\item[{\$}]{name, }
+\item[{\$}]{package, }
+\item[{\$}]{subpackage, }
+\item[{\$}]{category = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{classabstract_link_a177b632b658286fdef3533477cdcfbaf}
+\#@-\/ sets up the link
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$path} & full path to file containing element \\
+\hline
+string & {\em \$file\-Alias} & page name, as configured by \hyperlink{class_parser_a20139dbf0050f44b70e34bf32d89d7e4}{\-Parser\-::parse} \\
+\hline
+string & {\em \$name} & element name \\
+\hline
+string & {\em \$package} & package element is in \\
+\hline
+string & {\em \$subpackage} & subpackage element is in \\
+\hline
+string & {\em \$category} & optional category that documentation is in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+
+\-Definition at line 94 of file \-Link\-Classes.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->path       = $path;
+        $this->fileAlias  = $fileAlias;
+        $this->name       = $name;
+        $this->category   = $category;
+        $this->package    = $package;
+        $this->subpackage = $subpackage;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classabstract_link_a18b2a8d133fa7733bf34abcc6ca2ef5b}{\index{abstract\-Link@{abstract\-Link}!\$category@{\$category}}
+\index{\$category@{\$category}!abstractLink@{abstract\-Link}}
+\subsubsection[{\$category}]{\setlength{\rightskip}{0pt plus 5cm}\$category = ''}}\label{classabstract_link_a18b2a8d133fa7733bf34abcc6ca2ef5b}
+
+
+\-Definition at line 77 of file \-Link\-Classes.\-inc.
+
+\hypertarget{classabstract_link_ac31de7b4a69da02b039d84655a9f28e9}{\index{abstract\-Link@{abstract\-Link}!\$file\-Alias@{\$file\-Alias}}
+\index{\$file\-Alias@{\$file\-Alias}!abstractLink@{abstract\-Link}}
+\subsubsection[{\$file\-Alias}]{\setlength{\rightskip}{0pt plus 5cm}\$file\-Alias = ''}}\label{classabstract_link_ac31de7b4a69da02b039d84655a9f28e9}
+phpdoc alias \-\_\-phpdoc\-\_\-inc for \hyperlink{phpdoc_8inc}{phpdoc.\-inc} 
+
+\-Definition at line 70 of file \-Link\-Classes.\-inc.
+
+\hypertarget{classabstract_link_ab2fc40d43824ea3e1ce5d86dee0d763b}{\index{abstract\-Link@{abstract\-Link}!\$name@{\$name}}
+\index{\$name@{\$name}!abstractLink@{abstract\-Link}}
+\subsubsection[{\$name}]{\setlength{\rightskip}{0pt plus 5cm}\$name = ''}}\label{classabstract_link_ab2fc40d43824ea3e1ce5d86dee0d763b}
+
+
+\-Definition at line 76 of file \-Link\-Classes.\-inc.
+
+\hypertarget{classabstract_link_a365395516cc195292e97e09bc0d165ae}{\index{abstract\-Link@{abstract\-Link}!\$package@{\$package}}
+\index{\$package@{\$package}!abstractLink@{abstract\-Link}}
+\subsubsection[{\$package}]{\setlength{\rightskip}{0pt plus 5cm}\$package = ''}}\label{classabstract_link_a365395516cc195292e97e09bc0d165ae}
+
+
+\-Definition at line 78 of file \-Link\-Classes.\-inc.
+
+\hypertarget{classabstract_link_a0a4baf0b22973c07685c3981f0d17fc4}{\index{abstract\-Link@{abstract\-Link}!\$path@{\$path}}
+\index{\$path@{\$path}!abstractLink@{abstract\-Link}}
+\subsubsection[{\$path}]{\setlength{\rightskip}{0pt plus 5cm}\$path}}\label{classabstract_link_a0a4baf0b22973c07685c3981f0d17fc4}
+
+
+\-Definition at line 66 of file \-Link\-Classes.\-inc.
+
+\hypertarget{classabstract_link_ac601dc8dc2a086b6381128cc9c7a3fc5}{\index{abstract\-Link@{abstract\-Link}!\$subpackage@{\$subpackage}}
+\index{\$subpackage@{\$subpackage}!abstractLink@{abstract\-Link}}
+\subsubsection[{\$subpackage}]{\setlength{\rightskip}{0pt plus 5cm}\$subpackage = ''}}\label{classabstract_link_ac601dc8dc2a086b6381128cc9c7a3fc5}
+
+
+\-Definition at line 79 of file \-Link\-Classes.\-inc.
+
+\hypertarget{classabstract_link_a9a4a6fba2208984cabb3afacadf33919}{\index{abstract\-Link@{abstract\-Link}!\$type@{\$type}}
+\index{\$type@{\$type}!abstractLink@{abstract\-Link}}
+\subsubsection[{\$type}]{\setlength{\rightskip}{0pt plus 5cm}\$type = ''}}\label{classabstract_link_a9a4a6fba2208984cabb3afacadf33919}
+element type linked to. can only be a documentable element 
+
+\-Reimplemented in \hyperlink{classtutorial_link_a9a4a6fba2208984cabb3afacadf33919}{tutorial\-Link}, \hyperlink{classconst_link_a9a4a6fba2208984cabb3afacadf33919}{const\-Link}, \hyperlink{classvar_link_a9a4a6fba2208984cabb3afacadf33919}{var\-Link}, \hyperlink{classmethod_link_a9a4a6fba2208984cabb3afacadf33919}{method\-Link}, \hyperlink{classclass_link_a9a4a6fba2208984cabb3afacadf33919}{class\-Link}, \hyperlink{classglobal_link_a9a4a6fba2208984cabb3afacadf33919}{global\-Link}, \hyperlink{classdefine_link_a9a4a6fba2208984cabb3afacadf33919}{define\-Link}, \hyperlink{classfunction_link_a9a4a6fba2208984cabb3afacadf33919}{function\-Link}, and \hyperlink{classpage_link_a9a4a6fba2208984cabb3afacadf33919}{page\-Link}.
+
+
+
+\-Definition at line 75 of file \-Link\-Classes.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_link_classes_8inc}{\-Link\-Classes.\-inc}\end{DoxyCompactItemize}

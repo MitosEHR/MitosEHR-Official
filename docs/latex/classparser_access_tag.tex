@@ -1,0 +1,168 @@
+\hypertarget{classparser_access_tag}{\section{parser\-Access\-Tag \-Class \-Reference}
+\label{classparser_access_tag}\index{parser\-Access\-Tag@{parser\-Access\-Tag}}
+}
+\-Inheritance diagram for parser\-Access\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classparser_access_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_access_tag_ab1136a23fc4760b8779856dfb4777190}{parser\-Access\-Tag} (\$value)
+\item 
+\hyperlink{classparser_access_tag_a31e57fd66b58b300f8a489aa1b9431f6}{\-Convert} (\&\$converter)
+\item 
+\hyperlink{classparser_access_tag_afde980915cc78c408e6ac75b662e631c}{get\-String} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_access_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\$keyword} = 'access'
+\item 
+\hyperlink{classparser_access_tag_a836830dd749f0dce60c36cd6bcf5a580}{\$isvalid} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 253 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_access_tag_a31e57fd66b58b300f8a489aa1b9431f6}{\index{parser\-Access\-Tag@{parser\-Access\-Tag}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserAccessTag@{parser\-Access\-Tag}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{converter}
+\end{DoxyParamCaption}
+)}}\label{classparser_access_tag_a31e57fd66b58b300f8a489aa1b9431f6}
+process this tag through the given output converter
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$converter} & the output converter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string converted value of the tag 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classparser_string_with_inline_tags_a0cd1d8e1e41d6daa6bcdfdb8ed60b35b}{parser\-String\-With\-Inline\-Tags\-::\-Convert()} 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000065}{\-Todo}]\-C\-S cleanup -\/ rename to convert for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Reimplemented from \hyperlink{classparser_tag_a31e57fd66b58b300f8a489aa1b9431f6}{parser\-Tag}.
+
+
+
+\-Definition at line 308 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->value;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_access_tag_afde980915cc78c408e6ac75b662e631c}{\index{parser\-Access\-Tag@{parser\-Access\-Tag}!get\-String@{get\-String}}
+\index{get\-String@{get\-String}!parserAccessTag@{parser\-Access\-Tag}}
+\subsubsection[{get\-String}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-String} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_access_tag_afde980915cc78c408e6ac75b662e631c}
+\-No inline tags are possible, returns 'public', 'protected' or 'private'
+
+\begin{DoxyReturn}{\-Returns}
+string returns the text minus any inline tags 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classparser_tag_afde980915cc78c408e6ac75b662e631c}{parser\-Tag}.
+
+
+
+\-Definition at line 318 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->value;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_access_tag_ab1136a23fc4760b8779856dfb4777190}{\index{parser\-Access\-Tag@{parser\-Access\-Tag}!parser\-Access\-Tag@{parser\-Access\-Tag}}
+\index{parser\-Access\-Tag@{parser\-Access\-Tag}!parserAccessTag@{parser\-Access\-Tag}}
+\subsubsection[{parser\-Access\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Access\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classparser_access_tag_ab1136a23fc4760b8779856dfb4777190}
+checks \$value to make sure it is private, protected or public, otherwise it's not a valid  tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{classparser_string_with_inline_tags}{parser\-String\-With\-Inline\-Tags} & {\em \$value} & the tag value\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classparser_access_tag_a836830dd749f0dce60c36cd6bcf5a580}{\$isvalid} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 276 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!is_string($value)) {
+            if (is_object($value)) {
+                if (method_exists($value, 'getstring')) {
+                    $value = $value->getString();
+                }
+            }
+        }
+        switch(trim($value)) {
+        case 'private' :
+        case 'public' :
+        case 'protected' :
+            $this->value   = $value;
+            $this->isvalid = true;
+            break;
+        default :
+            addError(PDERROR_ACCESS_WRONG_PARAM, $value);
+            $this->value = 'public';
+            break;
+        }
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_access_tag_a836830dd749f0dce60c36cd6bcf5a580}{\index{parser\-Access\-Tag@{parser\-Access\-Tag}!\$isvalid@{\$isvalid}}
+\index{\$isvalid@{\$isvalid}!parserAccessTag@{parser\-Access\-Tag}}
+\subsubsection[{\$isvalid}]{\setlength{\rightskip}{0pt plus 5cm}\$isvalid = false}}\label{classparser_access_tag_a836830dd749f0dce60c36cd6bcf5a580}
+
+
+\-Definition at line 266 of file \-Doc\-Block\-Tags.\-inc.
+
+\hypertarget{classparser_access_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\index{parser\-Access\-Tag@{parser\-Access\-Tag}!\$keyword@{\$keyword}}
+\index{\$keyword@{\$keyword}!parserAccessTag@{parser\-Access\-Tag}}
+\subsubsection[{\$keyword}]{\setlength{\rightskip}{0pt plus 5cm}\$keyword = 'access'}}\label{classparser_access_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}
+
+
+\-Reimplemented from \hyperlink{classparser_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-Tag}.
+
+
+
+\-Definition at line 259 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_doc_block_tags_8inc}{\-Doc\-Block\-Tags.\-inc}\end{DoxyCompactItemize}

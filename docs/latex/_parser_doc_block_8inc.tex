@@ -1,0 +1,125 @@
+\hypertarget{_parser_doc_block_8inc}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Parser\-Doc\-Block.inc \-File \-Reference}
+\label{_parser_doc_block_8inc}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Parser\-Doc\-Block.\-inc@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Parser\-Doc\-Block.\-inc}}
+}
+\subsection*{\-Data \-Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classparser_desc}{parser\-Desc}
+\item 
+class \hyperlink{classparser_doc_block}{parser\-Doc\-Block}
+\end{DoxyCompactItemize}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespacephp_documentor}{php\-Documentor}
+\item 
+namespace \hyperlink{namespacetag}{tag}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_parser_doc_block_8inc_a6def53ec751000d3eb982111e8170c4f}{get\-Tag\-Ranking} (\$tag)
+\item 
+\hyperlink{_parser_doc_block_8inc_a0827ab821cc049cb80351e77c3d19ab5}{tagsort} (\$\hyperlink{classa}{a}, \$b)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{_parser_doc_block_8inc_a6def53ec751000d3eb982111e8170c4f}{\index{\-Parser\-Doc\-Block.\-inc@{\-Parser\-Doc\-Block.\-inc}!get\-Tag\-Ranking@{get\-Tag\-Ranking}}
+\index{get\-Tag\-Ranking@{get\-Tag\-Ranking}!ParserDocBlock.inc@{\-Parser\-Doc\-Block.\-inc}}
+\subsubsection[{get\-Tag\-Ranking}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Tag\-Ranking} (
+\begin{DoxyParamCaption}
+\item[{\$}]{tag}
+\end{DoxyParamCaption}
+)}}\label{_parser_doc_block_8inc_a6def53ec751000d3eb982111e8170c4f}
+\-Determines the arbitrary tag rank value for a given tag  private 
+
+\-Definition at line 1151 of file \-Parser\-Doc\-Block.\-inc.
+
+
+\begin{DoxyCode}
+{
+    switch(phpDocumentor_get_class($tag))
+    {
+        case 'parserreturntag' :
+            $o = 0;
+            break;
+        case 'parservartag' :
+            $o = 1;
+            break;
+        case 'parsertutorialtag' :
+            $o = 2;
+            break;
+        case 'parserstaticvartag' :
+            $o = 3;
+            break;
+        case 'parserseetag' :
+            $o = 10;
+            break;
+        case 'parserlinktag' :
+            $o = 11;
+            break;
+        case 'parsertag' :
+            switch ($tag->keyword)
+            {
+                case 'author' :
+                    $o = 4;
+                    break;
+                case 'version' :
+                    $o = 5;
+                    break;
+                case 'copyright' :
+                    $o = 6;
+                    break;
+                case 'deprecated' :
+                case 'deprec' :
+                    $o = 12;
+                    break;
+                case 'todo' :
+                case 'TODO' :
+                    $o = 13;
+                    break;
+                case 'abstract' :
+                    $o = 14;
+                    break;
+                default :
+                    $o = 15;
+                    break;
+            }
+            break;
+        case 'parseraccesstag' :
+            $o = 18;
+            break;
+        case 'parsernametag' :
+            $o = 19;
+            break;
+        default :
+            $o = 20;
+            break;
+    }
+    return $o;
+}
+\end{DoxyCode}
+\hypertarget{_parser_doc_block_8inc_a0827ab821cc049cb80351e77c3d19ab5}{\index{\-Parser\-Doc\-Block.\-inc@{\-Parser\-Doc\-Block.\-inc}!tagsort@{tagsort}}
+\index{tagsort@{tagsort}!ParserDocBlock.inc@{\-Parser\-Doc\-Block.\-inc}}
+\subsubsection[{tagsort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tagsort} (
+\begin{DoxyParamCaption}
+\item[{\$}]{a, }
+\item[{\$}]{b}
+\end{DoxyParamCaption}
+)}}\label{_parser_doc_block_8inc_a0827ab821cc049cb80351e77c3d19ab5}
+\-Utilizes the get\-Tag\-Ranking method to determine tag sort order of two given tags  private 
+
+\-Definition at line 1218 of file \-Parser\-Doc\-Block.\-inc.
+
+
+\begin{DoxyCode}
+{
+    $returnval = 0;
+    $o = getTagRanking($a);
+    $p = getTagRanking($b);
+    if ($o == $p) return 0;
+    if ($o < $p) return -1;
+    if ($o > $p) return 1;
+}
+\end{DoxyCode}

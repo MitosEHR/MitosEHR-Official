@@ -1,0 +1,58 @@
+\hypertarget{core_8process__compiled__include_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/core/core.process\-\_\-compiled\-\_\-include.\-php \-File \-Reference}
+\label{core_8process__compiled__include_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-process\-\_\-compiled\-\_\-include.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/core/core.\-process\-\_\-compiled\-\_\-include.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{core_8process__compiled__include_8php_a14c8b416ffcab6084ff899138d46fee1}{smarty\-\_\-core\-\_\-process\-\_\-compiled\-\_\-include} (\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{core_8process__compiled__include_8php_a14c8b416ffcab6084ff899138d46fee1}{\index{core.\-process\-\_\-compiled\-\_\-include.\-php@{core.\-process\-\_\-compiled\-\_\-include.\-php}!smarty\-\_\-core\-\_\-process\-\_\-compiled\-\_\-include@{smarty\-\_\-core\-\_\-process\-\_\-compiled\-\_\-include}}
+\index{smarty\-\_\-core\-\_\-process\-\_\-compiled\-\_\-include@{smarty\-\_\-core\-\_\-process\-\_\-compiled\-\_\-include}!core.process_compiled_include.php@{core.\-process\-\_\-compiled\-\_\-include.\-php}}
+\subsubsection[{smarty\-\_\-core\-\_\-process\-\_\-compiled\-\_\-include}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-core\-\_\-process\-\_\-compiled\-\_\-include} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{core_8process__compiled__include_8php_a14c8b416ffcab6084ff899138d46fee1}
+\-Replace nocache-\/tags by results of the corresponding non-\/cacheable functions and return it
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$compiled\-\_\-tpl} & \\
+\hline
+string & {\em \$cached\-\_\-source} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 17 of file core.\-process\-\_\-compiled\-\_\-include.\-php.
+
+
+\begin{DoxyCode}
+{
+    $_cache_including = $smarty->_cache_including;
+    $smarty->_cache_including = true;
+
+    $_return = $params['results'];
+    foreach ($smarty->_cache_serials as $_include_file_path=>$_cache_serial) {
+        $_return = preg_replace_callback('!(\{nocache\:('.$_cache_serial.')#(\d
+      +)\})!s',
+                                         array(&$smarty, '
+      _process_compiled_include_callback'),
+                                         $_return);
+    }
+    $smarty->_cache_including = $_cache_including;
+    return $_return;
+}
+\end{DoxyCode}

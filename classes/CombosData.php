@@ -11,13 +11,29 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
+include_once("dbHelper.php");
 
 
 class CombosData extends dbHelper {
 
+
+    /**
+     * @param stdClass $params
+     * @internal param $list_id
+     * @return array
+     */
+    public function getOptionsByListId(stdClass $params){
+        $this->setSQL("SELECT o.option_name,
+                              o.option_value
+                         FROM combo_lists_options AS o
+                    LEFT JOIN combo_lists AS l ON l.id = o.list_id
+                        WHERE l.id = '$params->list_id'
+                     ORDER BY o.seq");
+        return $this->execStatement(PDO::FETCH_ASSOC);
+    }
+
     public function getUsers(){
-        include_once($_SESSION['site']['root']."/classes/Person.php");
+        include_once("Person.php");
         $sql = "SELECT id, title, fname, mname, lname
                   FROM users
                  WHERE username != '' AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' )
@@ -32,104 +48,34 @@ class CombosData extends dbHelper {
         return $rows;
     }
 
-    public function getList(){
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'lists'	ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
-
-    public function getMessageStatus(){
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'message_status'	ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
-
-    public function getTitles(){
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'titles'	ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
-
-    public function getTypes(){
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'types'	ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
-
-    public function getMsgNoteType(){
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'note_type'	ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+    public function getLists(){
+        $this->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getFacilities(){
-        $sql = "SELECT id, name FROM facility WHERE service_location != 0 ORDER BY name";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+        $this->setSQL("SELECT id, name FROM facility WHERE service_location != 0 ORDER BY name");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getRoles(){
-        $sql = "SELECT id, role_name FROM acl_roles ORDER BY role_name";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+        $this->setSQL("SELECT id, role_name FROM acl_roles ORDER BY role_name");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getCodeTypes(){
-        $sql = "SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+        $this->setSQL("SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getCalendarCategories(){
-        $sql = "SELECT catid, catname FROM calendar_categories ORDER BY cattype, catname";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+        $this->setSQL("SELECT catid, catname FROM calendar_categories ORDER BY cattype, catname");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 
-    public function getCalendarStatus(){
-        $sql = "SELECT option_id, title  FROM list_options WHERE list_id = 'apptstat' ORDER BY seq";
-        $this->setSQL($sql);
-        $rows = array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
-            array_push($rows, $row);
-        }
-        return $rows;
+    public function getLanguages(){
+        $this->setSQL("SELECT lang_code, lang_description FROM lang_languages ORDER BY lang_description");
+        return $this->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getAuthorizations(){
@@ -198,14 +144,7 @@ class CombosData extends dbHelper {
         );
     }
 
-    public function getLanguages(){
-        $this->setSQL("SELECT lang_code, lang_description FROM lang_languages ORDER BY lang_description");
-        $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
-            array_push($rows, $row);
-        }
-        return $rows;
-    }
+
 
     public function getPosCodes(){
         $pos = array();
@@ -312,3 +251,5 @@ class CombosData extends dbHelper {
         return $pos;
     }
 }
+//$c = new CombosData();
+//print_r($c->getTitles());

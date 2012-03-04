@@ -1,0 +1,190 @@
+\hypertarget{class_facilities}{\section{\-Facilities \-Class \-Reference}
+\label{class_facilities}\index{\-Facilities@{\-Facilities}}
+}
+\-Inheritance diagram for \-Facilities\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_facilities}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_facilities_aa646b2df41d4299472ef1ecd1da58b7c}{get\-Facilities} (std\-Class \$params)
+\item 
+\hyperlink{class_facilities_a8269f3d46545583edb5321ec45e9142d}{add\-Facility} (std\-Class \$params)
+\item 
+\hyperlink{class_facilities_a6f9689cc04b19a7f8e8e40078cc88545}{update\-Facility} (std\-Class \$params)
+\item 
+\hyperlink{class_facilities_a74f7ce94e5868596a5552db02a118e74}{delete\-Facility} (std\-Class \$params)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 15 of file \-Facilities.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_facilities_a8269f3d46545583edb5321ec45e9142d}{\index{\-Facilities@{\-Facilities}!add\-Facility@{add\-Facility}}
+\index{add\-Facility@{add\-Facility}!Facilities@{\-Facilities}}
+\subsubsection[{add\-Facility}]{\setlength{\rightskip}{0pt plus 5cm}{\bf add\-Facility} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_facilities_a8269f3d46545583edb5321ec45e9142d}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+std\-Class 
+\end{DoxyReturn}
+
+
+\-Definition at line 54 of file \-Facilities.\-php.
+
+
+\begin{DoxyCode}
+                                                 {
+
+        $data = get_object_vars($params);
+
+        $sql = $this->sqlBind($data, "facility", "I");
+        $this->setSQL($sql);
+        $this->execLog();
+
+        $params->id = $this->lastInsertId;
+
+        return $params;
+    }
+\end{DoxyCode}
+\hypertarget{class_facilities_a74f7ce94e5868596a5552db02a118e74}{\index{\-Facilities@{\-Facilities}!delete\-Facility@{delete\-Facility}}
+\index{delete\-Facility@{delete\-Facility}!Facilities@{\-Facilities}}
+\subsubsection[{delete\-Facility}]{\setlength{\rightskip}{0pt plus 5cm}{\bf delete\-Facility} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_facilities_a74f7ce94e5868596a5552db02a118e74}
+\-Not in used. \-For \-Now you can only set the \-Facility \char`\"{}inactive\char`\"{}
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+std\-Class 
+\end{DoxyReturn}
+
+
+\-Definition at line 91 of file \-Facilities.\-php.
+
+
+\begin{DoxyCode}
+                                                    {
+
+
+        $sql = "UPDATE facility SET active = '0' WHERE id='$params->id'";
+
+        $this->setSQL($sql);
+        $this->execLog();
+
+        return $params;
+    }
+\end{DoxyCode}
+\hypertarget{class_facilities_aa646b2df41d4299472ef1ecd1da58b7c}{\index{\-Facilities@{\-Facilities}!get\-Facilities@{get\-Facilities}}
+\index{get\-Facilities@{get\-Facilities}!Facilities@{\-Facilities}}
+\subsubsection[{get\-Facilities}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Facilities} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_facilities_aa646b2df41d4299472ef1ecd1da58b7c}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 21 of file \-Facilities.\-php.
+
+
+\begin{DoxyCode}
+                                                   {
+
+        if(isset($params->active)){
+            $wherex = 'active = '.$params->active ;
+        } else {
+            $wherex = 'active = 1';
+        }
+        if(isset($params->sort)){
+            $orderx = $params->sort[0]->property.' '.$params->sort[0]->
+      direction;
+        } else {
+            $orderx = 'name';
+        }
+        $sql = "SELECT * FROM facility WHERE $wherex ORDER BY $orderx LIMIT
+       $params->start,$params->limit";
+        $this->setSQL($sql);
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+
+            if (strlen($row['pos_code']) <= 1){
+                $row['pos_code'] = '0'.$row['pos_code'];
+            } else {
+                $row['pos_code'] = $row['pos_code'];
+            }
+            array_push($rows, $row);
+        }
+
+        return $rows;
+
+    }
+\end{DoxyCode}
+\hypertarget{class_facilities_a6f9689cc04b19a7f8e8e40078cc88545}{\index{\-Facilities@{\-Facilities}!update\-Facility@{update\-Facility}}
+\index{update\-Facility@{update\-Facility}!Facilities@{\-Facilities}}
+\subsubsection[{update\-Facility}]{\setlength{\rightskip}{0pt plus 5cm}{\bf update\-Facility} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_facilities_a6f9689cc04b19a7f8e8e40078cc88545}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+std\-Class 
+\end{DoxyReturn}
+
+
+\-Definition at line 71 of file \-Facilities.\-php.
+
+
+\begin{DoxyCode}
+                                                    {
+
+        $data = get_object_vars($params);
+
+        $id = $data['id'];
+        unset($data['id']);
+
+        $sql = $this->sqlBind($data, "facility", "U", "id='$id'");
+        $this->setSQL($sql);
+        $this->execLog();
+
+        return $params;
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{_facilities_8php}{\-Facilities.\-php}\end{DoxyCompactItemize}

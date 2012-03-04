@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['_24_5fsession',['$_SESSION',['../components__data_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8',1,'components_data.ejs.php']]],
+  ['_24accept',['$accept',['../class_mobile___detect.html#a75fc18c4ff06288ff9fdf8aba9bd1081',1,'Mobile_Detect']]],
+  ['_24buff',['$buff',['../components__data_8ejs_8php.html#aee88b745b9e14ca8b4227da600cea0b8',1,'components_data.ejs.php']]],
+  ['_24conn',['$conn',['../class_a_c_l.html#aa8a5a87b9c1a6a0819b88447cbe41877',1,'ACL\$conn()'],['../classdb_helper.html#aa8a5a87b9c1a6a0819b88447cbe41877',1,'dbHelper\$conn()']]],
+  ['_24count',['$count',['../components__data_8ejs_8php.html#af789423037bbc89dc7c850e761177570',1,'components_data.ejs.php']]],
+  ['_24devices',['$devices',['../class_mobile___detect.html#a004eefb786861fbe31e1f0f24662477b',1,'Mobile_Detect']]],
+  ['_24document',['$document',['../class_x_m_l_parser.html#ac5a31edb787609a3143dec9bfa8063ea',1,'XMLParser']]],
+  ['_24isandroid',['$isAndroid',['../class_mobile___detect.html#a77c5beaf2c0cc72bff6a6390174d9220',1,'Mobile_Detect']]],
+  ['_24isblackberry',['$isBlackberry',['../class_mobile___detect.html#abc0d51b153d12a82959733849f806870',1,'Mobile_Detect']]],
+  ['_24isgeneric',['$isGeneric',['../class_mobile___detect.html#a22509a5976187f9d2b9a0984e3b71dd9',1,'Mobile_Detect']]],
+  ['_24isiphone',['$isIphone',['../class_mobile___detect.html#ae60b238d4f4b1441a8e88dc6a444cb7e',1,'Mobile_Detect']]],
+  ['_24ismobile',['$isMobile',['../class_mobile___detect.html#a74fa6ba88f216ab9fb444f81f8e7a027',1,'Mobile_Detect']]],
+  ['_24isopera',['$isOpera',['../class_mobile___detect.html#aae89458b4937650ddf9ab0a1c60c9388',1,'Mobile_Detect']]],
+  ['_24ispalm',['$isPalm',['../class_mobile___detect.html#a5299625c89989e6d10b38e04bb34463b',1,'Mobile_Detect']]],
+  ['_24iswindows',['$isWindows',['../class_mobile___detect.html#a3fb1637ec578272acfd5cb10d0f127fd',1,'Mobile_Detect']]],
+  ['_24lastinsertid',['$lastInsertId',['../classdb_helper.html#ae4ac788f919cb92f528ab1455e8a3e6b',1,'dbHelper']]],
+  ['_24mitos_5fdb',['$mitos_db',['../components__data_8ejs_8php.html#ab5d961f93efe4e2e8d8374f01dd6c65a',1,'components_data.ejs.php']]],
+  ['_24sql_5fstatement',['$sql_statement',['../classdb_helper.html#a29c1e591b4e284bca5ae38ed00eea5a9',1,'dbHelper']]],
+  ['_24tagattrs',['$tagAttrs',['../class_x_m_l_tag.html#a0bdcd2056ab299f9c7445ee392554801',1,'XMLTag']]],
+  ['_24tagchildren',['$tagChildren',['../class_x_m_l_tag.html#a2821a1ccb28feedeb1090436a5f83480',1,'XMLTag']]],
+  ['_24tagdata',['$tagData',['../class_x_m_l_tag.html#a54d28f1823b6ebc04b6aac2b4a006047',1,'XMLTag']]],
+  ['_24tagname',['$tagName',['../class_x_m_l_tag.html#a526eef5c35551ca57b86d20034360d16',1,'XMLTag']]],
+  ['_24tagparents',['$tagParents',['../class_x_m_l_tag.html#a057b424591d6238416f982c4ab8f8386',1,'XMLTag']]],
+  ['_24useragent',['$userAgent',['../class_mobile___detect.html#a500e55626e728acd7010143dc0e56b8b',1,'Mobile_Detect']]]
+];

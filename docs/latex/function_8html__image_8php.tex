@@ -1,0 +1,161 @@
+\hypertarget{function_8html__image_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/function.html\-\_\-image.\-php \-File \-Reference}
+\label{function_8html__image_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-html\-\_\-image.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/function.\-html\-\_\-image.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{function_8html__image_8php_aae2ca0f68919a2a529968ca053834c2f}{smarty\-\_\-function\-\_\-html\-\_\-image} (\$params, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{function_8html__image_8php_aae2ca0f68919a2a529968ca053834c2f}{\index{function.\-html\-\_\-image.\-php@{function.\-html\-\_\-image.\-php}!smarty\-\_\-function\-\_\-html\-\_\-image@{smarty\-\_\-function\-\_\-html\-\_\-image}}
+\index{smarty\-\_\-function\-\_\-html\-\_\-image@{smarty\-\_\-function\-\_\-html\-\_\-image}!function.html_image.php@{function.\-html\-\_\-image.\-php}}
+\subsubsection[{smarty\-\_\-function\-\_\-html\-\_\-image}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-function\-\_\-html\-\_\-image} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{function_8html__image_8php_aae2ca0f68919a2a529968ca053834c2f}
+\hyperlink{class_smarty}{\-Smarty} \{html\-\_\-image\} function plugin
+
+\-Type\-: function\par
+ \-Name\-: html\-\_\-image\par
+ \-Date\-: \-Feb 24, 2003\par
+ \-Purpose\-: format \-H\-T\-M\-L tags for the image\par
+ \-Input\-:\par
+
+\begin{DoxyItemize}
+\item file = file (and path) of image (required)
+\item border = border width (optional, default 0)
+\item height = image height (optional, default actual height)
+\item image =image width (optional, default actual width)
+\item basedir = base directory for absolute paths, default is environment variable \-D\-O\-C\-U\-M\-E\-N\-T\-\_\-\-R\-O\-O\-T
+\end{DoxyItemize}
+
+\-Examples\-: \{html\-\_\-image file=\char`\"{}images/masthead.\-gif\char`\"{}\} \-Output\-:  \hyperlink{}{\{html\-\_\-image\} (\-Smarty online manual)  \-Monte \-Ohrt $<$\href{mailto:monte@ispi.net}{\tt monte@ispi.\-net}$>$  credits to \-Duda $<$\href{mailto:duda@big.hu}{\tt duda@big.\-hu}$>$ -\/ wrote first image function in repository, helped with lots of functionality  1.\-0  array  \-Smarty  string  smarty\-\_\-function\-\_\-escape\-\_\-special\-\_\-chars() }
+
+\-Definition at line 37 of file function.\-html\-\_\-image.\-php.
+
+
+\begin{DoxyCode}
+{
+    require_once $smarty->_get_plugin_filepath('shared','escape_special_chars')
+      ;
+    
+    $alt = '';
+    $file = '';
+    $border = 0;
+    $height = '';
+    $width = '';
+    $extra = '';
+    $prefix = '';
+    $suffix = '';
+    $basedir = isset($GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT'])
+        ? $GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT'] : '';
+    if(strstr($GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'], 'Mac')) {
+        $dpi_default = 72;
+    } else {
+        $dpi_default = 96;
+    }
+
+    foreach($params as $_key => $_val) {
+        switch($_key) {
+            case 'file':
+            case 'border':
+            case 'height':
+            case 'width':
+            case 'dpi':
+            case 'basedir':
+                $$_key = $_val;
+                break;
+
+            case 'alt':
+                if(!is_array($_val)) {
+                    $$_key = smarty_function_escape_special_chars($_val);
+                } else {
+                    $smarty->trigger_error("html_image: extra attribute '$_key'
+       cannot be an array", E_USER_NOTICE);
+                }
+                break;
+
+            case 'link':
+            case 'href':
+                $prefix = '<a href="' . $_val . '">';
+                $suffix = '</a>';
+                break;
+
+            default:
+                if(!is_array($_val)) {
+                    $extra .= ' '.$_key.'="'.
+      smarty_function_escape_special_chars($_val).'"';
+                } else {
+                    $smarty->trigger_error("html_image: extra attribute '$_key'
+       cannot be an array", E_USER_NOTICE);
+                }
+                break;
+        }
+    }
+
+    if (empty($file)) {
+        $smarty->trigger_error("html_image: missing 'file' parameter", 
+      E_USER_NOTICE);
+        return;
+    }
+
+    if (substr($file,0,1) == '/') {
+        $_image_path = $basedir . $file;
+    } else {
+        $_image_path = $file;
+    }
+
+    if(!isset($params['width']) || !isset($params['height'])) {
+        if(!$_image_data = @getimagesize($_image_path)) {
+            if(!file_exists($_image_path)) {
+                $smarty->trigger_error("html_image: unable to find
+       '$_image_path'", E_USER_NOTICE);
+                return;
+            } else if(!is_readable($_image_path)) {
+                $smarty->trigger_error("html_image: unable to read
+       '$_image_path'", E_USER_NOTICE);
+                return;
+            } else {
+                $smarty->trigger_error("html_image: '$_image_path' is not a
+       valid image file", E_USER_NOTICE);
+                return;
+            }
+        }
+        $_params = array('resource_type' => 'file', 'resource_name' => 
+      $_image_path);
+        require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . '
+      core.is_secure.php');
+        if(!$smarty->security && !smarty_core_is_secure($_params, $smarty)) {
+            $smarty->trigger_error("html_image: (secure) '$_image_path' not in
+       secure directory", E_USER_NOTICE);
+            return;
+        }
+
+        if(!isset($params['width'])) {
+            $width = $_image_data[0];
+        }
+        if(!isset($params['height'])) {
+            $height = $_image_data[1];
+        }
+
+    }
+
+    if(isset($params['dpi'])) {
+        $_resize = $dpi_default/$params['dpi'];
+        $width = round($width * $_resize);
+        $height = round($height * $_resize);
+    }
+
+    return $prefix . '<img src="'.$file.'" alt="'.$alt.'" border="'.$border.'"
+       width="'.$width.'" height="'.$height.'"'.$extra.' />' . $suffix;
+}
+\end{DoxyCode}

@@ -1,0 +1,82 @@
+\hypertarget{_h_t_m_lframes_converter_8inc}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converters/\-H\-T\-M\-L/frames/\-H\-T\-M\-Lframes\-Converter.inc \-File \-Reference}
+\label{_h_t_m_lframes_converter_8inc}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converters/\-H\-T\-M\-L/frames/\-H\-T\-M\-Lframes\-Converter.\-inc@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converters/\-H\-T\-M\-L/frames/\-H\-T\-M\-Lframes\-Converter.\-inc}}
+}
+\subsection*{\-Data \-Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_h_t_m_lframes_converter}{\-H\-T\-M\-Lframes\-Converter}
+\end{DoxyCompactItemize}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_converters}{\-Converters}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_h_t_m_lframes_converter_8inc_a9078c8cbcd40a326cf75fe68ef5f86da}{\-H\-T\-M\-Lframes\-\_\-pindexcmp} (\$\hyperlink{classa}{a}, \$b)
+\item 
+\hyperlink{_h_t_m_lframes_converter_8inc_a170c4f861d1034a9e8dcf332545c033f}{\-H\-T\-M\-Lframes\-\_\-lettersort} (\$\hyperlink{classa}{a}, \$b)
+\item 
+\hyperlink{_h_t_m_lframes_converter_8inc_ae42562214b3dbccbe4de209854fa50a0}{\-H\-T\-M\-Lframes\-\_\-outputfilter} (\$src, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{_h_t_m_lframes_converter_8inc_a170c4f861d1034a9e8dcf332545c033f}{\index{\-H\-T\-M\-Lframes\-Converter.\-inc@{\-H\-T\-M\-Lframes\-Converter.\-inc}!\-H\-T\-M\-Lframes\-\_\-lettersort@{\-H\-T\-M\-Lframes\-\_\-lettersort}}
+\index{\-H\-T\-M\-Lframes\-\_\-lettersort@{\-H\-T\-M\-Lframes\-\_\-lettersort}!HTMLframesConverter.inc@{\-H\-T\-M\-Lframes\-Converter.\-inc}}
+\subsubsection[{\-H\-T\-M\-Lframes\-\_\-lettersort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-H\-T\-M\-Lframes\-\_\-lettersort} (
+\begin{DoxyParamCaption}
+\item[{\$}]{a, }
+\item[{\$}]{b}
+\end{DoxyParamCaption}
+)}}\label{_h_t_m_lframes_converter_8inc_a170c4f861d1034a9e8dcf332545c033f}
+private 
+
+\-Definition at line 1896 of file \-H\-T\-M\-Lframes\-Converter.\-inc.
+
+
+\begin{DoxyCode}
+{
+    return strnatcasecmp($a['letter'],$b['letter']);
+}
+\end{DoxyCode}
+\hypertarget{_h_t_m_lframes_converter_8inc_ae42562214b3dbccbe4de209854fa50a0}{\index{\-H\-T\-M\-Lframes\-Converter.\-inc@{\-H\-T\-M\-Lframes\-Converter.\-inc}!\-H\-T\-M\-Lframes\-\_\-outputfilter@{\-H\-T\-M\-Lframes\-\_\-outputfilter}}
+\index{\-H\-T\-M\-Lframes\-\_\-outputfilter@{\-H\-T\-M\-Lframes\-\_\-outputfilter}!HTMLframesConverter.inc@{\-H\-T\-M\-Lframes\-Converter.\-inc}}
+\subsubsection[{\-H\-T\-M\-Lframes\-\_\-outputfilter}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-H\-T\-M\-Lframes\-\_\-outputfilter} (
+\begin{DoxyParamCaption}
+\item[{\$}]{src, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{_h_t_m_lframes_converter_8inc_ae42562214b3dbccbe4de209854fa50a0}
+private 
+
+\-Definition at line 1902 of file \-H\-T\-M\-Lframes\-Converter.\-inc.
+
+
+\begin{DoxyCode}
+{
+    return str_replace('{$subdir}',$smarty->_tpl_vars['subdir'],$src);
+}
+\end{DoxyCode}
+\hypertarget{_h_t_m_lframes_converter_8inc_a9078c8cbcd40a326cf75fe68ef5f86da}{\index{\-H\-T\-M\-Lframes\-Converter.\-inc@{\-H\-T\-M\-Lframes\-Converter.\-inc}!\-H\-T\-M\-Lframes\-\_\-pindexcmp@{\-H\-T\-M\-Lframes\-\_\-pindexcmp}}
+\index{\-H\-T\-M\-Lframes\-\_\-pindexcmp@{\-H\-T\-M\-Lframes\-\_\-pindexcmp}!HTMLframesConverter.inc@{\-H\-T\-M\-Lframes\-Converter.\-inc}}
+\subsubsection[{\-H\-T\-M\-Lframes\-\_\-pindexcmp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-H\-T\-M\-Lframes\-\_\-pindexcmp} (
+\begin{DoxyParamCaption}
+\item[{\$}]{a, }
+\item[{\$}]{b}
+\end{DoxyParamCaption}
+)}}\label{_h_t_m_lframes_converter_8inc_a9078c8cbcd40a326cf75fe68ef5f86da}
+private  string name of the package to set as the first package 
+
+\-Definition at line 1887 of file \-H\-T\-M\-Lframes\-Converter.\-inc.
+
+
+\begin{DoxyCode}
+{
+    global $phpDocumentor_DefaultPackageName;
+    if ($a['title'] == $phpDocumentor_DefaultPackageName) return -1;
+    if ($b['title'] == $phpDocumentor_DefaultPackageName) return 1;
+    return strnatcasecmp($a['title'],$b['title']);
+}
+\end{DoxyCode}

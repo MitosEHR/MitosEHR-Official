@@ -56,32 +56,37 @@ class Patient extends Person {
      * @return array
      */
     public function patientLiveSearch(stdClass $params){
-        $this->setSQL("SELECT count(pid) as total
-                             FROM form_data_demographics
-                            WHERE fname LIKE '$params->query%'
-                               OR lname LIKE '$params->query%'
-                               OR mname LIKE '$params->query%'
-                               OR pid 	LIKE '$params->query%'
-                               OR SS 	LIKE '%$params->query'");
-        $total = $this->rowCount();
-        // ------------------------------------------------------------------------------
-        // sql statement and json to get patients
-        // ------------------------------------------------------------------------------
         $this->setSQL("SELECT pid,pubpid,fname,lname,mname,DOB,SS
                              FROM form_data_demographics
                             WHERE fname LIKE '$params->query%'
                                OR lname LIKE '$params->query%'
                                OR mname LIKE '$params->query%'
                                OR pid 	LIKE '$params->query%'
-                               OR SS 	LIKE '%$params->query'
-                            LIMIT $params->start,$params->limit");
+                               OR SS 	LIKE '%$params->query'");
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_CLASS) as $row){
+            $row->fullname = $this->fullname($row->fname,$row->mname,$row->lname);
+            unset($row->fname,$row->mname,$row->lname);
+            array_push($rows, $row);
+        }
+        $total  = count($rows);
+        $rows = $this->filertByStartLimit($rows,$params);
+        return array('totals'=>$total ,'rows'=>$rows);
+    }
+
+    /**
+     * @param stdClass $params
+     * @return array
+     */
+    public function getPatientDemographicData(stdClass $params){
+        $pid = $_SESSION['patient']['pid'];
+        $this->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
+
         $rows = array();
         foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
-            $row['fullname'] = $this->fullname($row['fname'],$row['mname'],$row['lname']);
-            unset($row['fname'],$row['mname'],$row['lname']);
             array_push($rows, $row);
         }
         return $rows;
-    }
 
+    }
 }

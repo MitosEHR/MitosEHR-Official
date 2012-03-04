@@ -1,0 +1,269 @@
+\hypertarget{class_object_word_parser}{\section{\-Object\-Word\-Parser \-Class \-Reference}
+\label{class_object_word_parser}\index{\-Object\-Word\-Parser@{\-Object\-Word\-Parser}}
+}
+\-Inheritance diagram for \-Object\-Word\-Parser\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_object_word_parser}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_object_word_parser_a727bc7c019d693f644bc68cdeaac756d}{\-Object\-Word\-Parser} (\$casesensitive=false)
+\item 
+\hyperlink{class_object_word_parser_a1545e049222168d79849355fe4343067}{setup} (\&\$input)
+\item 
+\hyperlink{class_object_word_parser_aed2fad5b3be15693fc9b44b7b73af497}{get\-Word} ()
+\item 
+\hyperlink{class_object_word_parser_a262dd19cf075626e7fcb8e73f891068f}{next\-Is\-Object\-Or\-Non\-N\-L} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_object_word_parser_a5b830a5b931a201674311dfdee4dd6c5}{\$\-\_\-casesensitive} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 130 of file \-Parser\-Desc\-Cleanup.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_object_word_parser_aed2fad5b3be15693fc9b44b7b73af497}{\index{\-Object\-Word\-Parser@{\-Object\-Word\-Parser}!get\-Word@{get\-Word}}
+\index{get\-Word@{get\-Word}!ObjectWordParser@{\-Object\-Word\-Parser}}
+\subsubsection[{get\-Word}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Word} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_object_word_parser_aed2fad5b3be15693fc9b44b7b73af497}
+\-Retrieve a token from the token list
+
+\-The \hyperlink{class_parser}{\-Parser} class relies upon this method to retrieve the next token. \-The \hyperlink{class_word_parser_a71e405c46bb9f4fc20444b174a15829b}{\$wordseperators} array is a collection of strings that delineate tokens for the current parser state. \$wordseperators is set by the parser with a call to \hyperlink{class_parser_a283368f67f931488905c6f3f84b1c549}{\-Parser\-::config\-Word\-Parser()} every time a new parser state is reached.
+
+\-For example, while parsing the source code for a class, the word {\ttfamily var} is a token, and {\ttfamily global} is not, but inside a function, the reverse is true. \-The parser state \hyperlink{}{\-P\-A\-R\-S\-E\-R\-\_\-\-S\-T\-A\-T\-E\-\_\-\-C\-L\-A\-S\-S} has a token list that includes whitespace, code delimiters like ; and \{\}, and comment/\-Doc\-Block indicators
+
+\-If the whitespace option has been turned off using \hyperlink{class_word_parser_a6b3c5739a63c39226c2f0273eb2f24a2}{set\-Whitespace()}, then no whitespace is returned with tokens
+
+\{ 
+
+\-Reimplemented from \hyperlink{class_word_parser_aed2fad5b3be15693fc9b44b7b73af497}{\-Word\-Parser}.
+
+
+
+\-Definition at line 166 of file \-Parser\-Desc\-Cleanup.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!isset($this->data[$this->index])) return false;
+        // return any inline tags unchanged
+        if (is_object($this->data[$this->index]))
+        {
+            $index = $this->index;
+            list($this->index,) = each($this->data);
+            $this->pos = 0;
+            if ($this->index)
+            {
+                if (!is_object($this->data[$this->index]))
+                $this->size = strlen($this->data[$this->index]);
+                else $this->size = 0;
+                $this->cache = array();
+                return $this->data[$index];
+            } else
+            {
+                return false;
+            }
+        }
+        //$st = $this->mtime();
+        if ($this->size == $this->pos)
+        {
+            // cycle to next line in the array
+            list($this->index,) = each($this->data);
+            if (!$this->index) return false;
+            $this->pos = 0;
+            if (!is_object($this->data[$this->index]))
+            $this->size = strlen($this->data[$this->index]);
+            else $this->size = 0;
+            $this->cache = array();
+            return $this->getWord();
+        }
+
+        $npos = $this->size;
+        if (is_array($this->wordseperators))
+        {
+            //$this->wordseperators = array();
+            foreach($this->wordseperators as $sep)
+            {
+                if (isset($this->cache[$sep]))
+                $tpos = $this->cache[$sep];
+                else
+                $tpos = false;
+                if ($tpos < $this->pos || !is_int($tpos))
+                {
+                    if ($this->_casesensitive)
+                        $tpos = strpos($this->data[$this->index],$sep,$this->
+      pos);
+                    else
+                        $tpos = strpos(strtolower($this->data[$this->index]),
+      $sep,$this->pos);
+                }
+            
+                if ( ($tpos < $npos) && !($tpos === false))
+                {
+                    //echo trim($sep) . "=$tpos\n";
+                    $npos = $tpos;
+                    $seplen = strlen($sep);
+                } 
+                  else if (!($tpos === false))
+                {
+                    $this->cache[$sep] = $tpos;
+                }
+            }
+        } else {
+            // its time to cycle
+            return "";
+        }
+
+        $len = $npos - $this->pos;
+        if ($len == 0)
+        {
+            $len = $seplen;
+        }
+
+        //$st3 = $this->mtime();
+        $word = substr($this->data[$this->index],$this->pos,$len);
+        
+        // Change random other os newlines to the unix one
+        if ($word == "\r" || $word == "\r\n")
+        {
+            $word = "\n";
+        }
+        
+        if ($this->linenumpos <= $this->pos)
+        {
+            $this->linenumpos = $this->pos + $len;
+            $this->linenum += count(explode("\n",$word)) - 1;
+        }
+
+        if ($this->getsource)
+        {
+            $this->source .= $word;
+        }
+        $this->pos = $this->pos + $len;
+        //$this->word = WORD_PARSER_RET_SEP;
+
+        // Things like // commenats rely on the newline to find their end so im
+       going to have to return them
+        // never return worthless white space /t ' '
+        if ($this->returnWhiteSpace == false)
+        {
+            if (strlen(trim($word)) == 0 && $word != "\n") 
+            {
+                $word = $this->getWord();
+            }
+        }
+        //$this->time3 = $this->time3 + ($this->mtime() - $st3);
+        //$this->time = $this->time + ($this->mtime() - $st);
+        return $word;
+    }
+\end{DoxyCode}
+\hypertarget{class_object_word_parser_a262dd19cf075626e7fcb8e73f891068f}{\index{\-Object\-Word\-Parser@{\-Object\-Word\-Parser}!next\-Is\-Object\-Or\-Non\-N\-L@{next\-Is\-Object\-Or\-Non\-N\-L}}
+\index{next\-Is\-Object\-Or\-Non\-N\-L@{next\-Is\-Object\-Or\-Non\-N\-L}!ObjectWordParser@{\-Object\-Word\-Parser}}
+\subsubsection[{next\-Is\-Object\-Or\-Non\-N\-L}]{\setlength{\rightskip}{0pt plus 5cm}{\bf next\-Is\-Object\-Or\-Non\-N\-L} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_object_word_parser_a262dd19cf075626e7fcb8e73f891068f}
+\-Determine if the next word is an inline tag \begin{DoxyReturn}{\-Returns}
+boolean 
+\end{DoxyReturn}
+
+
+\-Definition at line 281 of file \-Parser\-Desc\-Cleanup.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return (($this->size == $this->pos) && isset($this->data[$this->index +
+       1])
+            && is_object($this->data[$this->index + 1])) ||
+               (($this->size > $this->pos) && !in_array($this->data[$this->
+      index]{$this->pos}, array("\n", "\r")));
+    }
+\end{DoxyCode}
+\hypertarget{class_object_word_parser_a727bc7c019d693f644bc68cdeaac756d}{\index{\-Object\-Word\-Parser@{\-Object\-Word\-Parser}!\-Object\-Word\-Parser@{\-Object\-Word\-Parser}}
+\index{\-Object\-Word\-Parser@{\-Object\-Word\-Parser}!ObjectWordParser@{\-Object\-Word\-Parser}}
+\subsubsection[{\-Object\-Word\-Parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Object\-Word\-Parser} (
+\begin{DoxyParamCaption}
+\item[{\$}]{casesensitive = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_object_word_parser_a727bc7c019d693f644bc68cdeaac756d}
+
+
+\-Definition at line 138 of file \-Parser\-Desc\-Cleanup.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->_casesensitive = $casesensitive;
+    }
+\end{DoxyCode}
+\hypertarget{class_object_word_parser_a1545e049222168d79849355fe4343067}{\index{\-Object\-Word\-Parser@{\-Object\-Word\-Parser}!setup@{setup}}
+\index{setup@{setup}!ObjectWordParser@{\-Object\-Word\-Parser}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}{\bf setup} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{input}
+\end{DoxyParamCaption}
+)}}\label{class_object_word_parser_a1545e049222168d79849355fe4343067}
+\-Set the word parser to go.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em array} & \hyperlink{classparser_string_with_inline_tags_a0f298096f322952a72a50f98a74c7b60}{parser\-String\-With\-Inline\-Tags\-::\$value} style-\/array, with alternating text and inline tags \\
+\hline
+\end{DoxyParams}
+
+
+\-Reimplemented from \hyperlink{class_word_parser_a1545e049222168d79849355fe4343067}{\-Word\-Parser}.
+
+
+
+\-Definition at line 149 of file \-Parser\-Desc\-Cleanup.\-inc.
+
+
+\begin{DoxyCode}
+    {
+//        if (is_string($input[0])) $input[0] = ltrim($input[0]);
+        $this->data = & $input;
+        $this->pos = 0;
+        $this->linenum = 0;
+        $this->linenumpos = 0;
+        $this->cache = array();
+        reset($this->data);
+        list($this->index,) = each($this->data);
+        if (!is_object($this->data[$this->index]))
+        $this->size = strlen($this->data[$this->index]);
+        else $this->size = 0;
+        //$this->run = 0;
+        //$this->word = WORD_PARSER_RET_WORD;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_object_word_parser_a5b830a5b931a201674311dfdee4dd6c5}{\index{\-Object\-Word\-Parser@{\-Object\-Word\-Parser}!\$\-\_\-casesensitive@{\$\-\_\-casesensitive}}
+\index{\$\-\_\-casesensitive@{\$\-\_\-casesensitive}!ObjectWordParser@{\-Object\-Word\-Parser}}
+\subsubsection[{\$\-\_\-casesensitive}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-casesensitive = false}}\label{class_object_word_parser_a5b830a5b931a201674311dfdee4dd6c5}
+\-Determines whether text searching is case-\/sensitive or not  private 
+
+\-Definition at line 136 of file \-Parser\-Desc\-Cleanup.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_parser_desc_cleanup_8inc}{\-Parser\-Desc\-Cleanup.\-inc}\end{DoxyCompactItemize}

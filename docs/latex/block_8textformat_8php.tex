@@ -1,0 +1,90 @@
+\hypertarget{block_8textformat_8php}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.6.0/libs/plugins/block.textformat.\-php \-File \-Reference}
+\label{block_8textformat_8php}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/block.\-textformat.\-php@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Smarty-\/2.\-6.\-0/libs/plugins/block.\-textformat.\-php}}
+}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_smarty}{\-Smarty}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{block_8textformat_8php_a554a9a9491c1e0aae20a36d2a9458195}{smarty\-\_\-block\-\_\-textformat} (\$params, \$content, \&\$smarty)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{block_8textformat_8php_a554a9a9491c1e0aae20a36d2a9458195}{\index{block.\-textformat.\-php@{block.\-textformat.\-php}!smarty\-\_\-block\-\_\-textformat@{smarty\-\_\-block\-\_\-textformat}}
+\index{smarty\-\_\-block\-\_\-textformat@{smarty\-\_\-block\-\_\-textformat}!block.textformat.php@{block.\-textformat.\-php}}
+\subsubsection[{smarty\-\_\-block\-\_\-textformat}]{\setlength{\rightskip}{0pt plus 5cm}{\bf smarty\-\_\-block\-\_\-textformat} (
+\begin{DoxyParamCaption}
+\item[{\$}]{params, }
+\item[{\$}]{content, }
+\item[{\&\$}]{smarty}
+\end{DoxyParamCaption}
+)}}\label{block_8textformat_8php_a554a9a9491c1e0aae20a36d2a9458195}
+\hyperlink{class_smarty}{\-Smarty} \{textformat\}\{/textformat\} block plugin
+
+\-Type\-: block function\par
+ \-Name\-: textformat\par
+ \-Purpose\-: format text a certain way with preset styles or custom wrap/indent settings\par
+ \hyperlink{}{\{textformat\} (\-Smarty online manual)  array  \-Params\-: style\-: string (email) indent\-: integer (0) wrap\-: integer (80) wrap\-\_\-char string (\char`\"{}$\backslash$n\char`\"{}) indent\-\_\-char\-: string (\char`\"{} \char`\"{}) wrap\-\_\-boundary\-: boolean (true)   string contents of the block  \-Smarty clever simulation of a method  string string \$content re-\/formatted }
+
+\-Definition at line 30 of file block.\-textformat.\-php.
+
+
+\begin{DoxyCode}
+{
+        $style = null;
+        $indent = 0;
+        $indent_first = 0;
+        $indent_char = ' ';
+        $wrap = 80;
+        $wrap_char = "\n";
+        $wrap_cut = false;
+        $assign = null;
+        
+        if($content == null) {
+                return true;
+        }
+
+    extract($params);
+
+        if($style == 'email') {
+                $wrap = 72;
+        }       
+        
+        // split into paragraphs        
+        $paragraphs = preg_split('![\r\n][\r\n]!',$content);
+        $output = '';
+
+        foreach($paragraphs as $paragraph) {
+                if($paragraph == '') {
+                        continue;
+                }
+                // convert mult. spaces & special chars to single space
+                $paragraph = preg_replace(array('!\s+!','!(^\s+)|(\s+$)!'),
+      array(' ',''),$paragraph);
+                // indent first line
+                if($indent_first > 0) {
+                        $paragraph = str_repeat($indent_char,$indent_first) . 
+      $paragraph;
+                }
+                // wordwrap sentences
+                $paragraph = wordwrap($paragraph, $wrap - $indent, $wrap_char, 
+      $wrap_cut);
+                // indent lines
+                if($indent > 0) {
+                        $paragraph = preg_replace('!^!m',str_repeat(
+      $indent_char,$indent),$paragraph);
+                }
+                $output .= $paragraph . $wrap_char . $wrap_char;
+        }
+                                
+        if($assign != null) {
+                $smarty->assign($assign,$output);
+        } else {
+                return $output;
+        }
+}
+\end{DoxyCode}

@@ -1,5 +1,4 @@
 <?php
-
 /* MitosEHR Starter
  * 
  * Description: This will start the application, if no sites are found
@@ -13,63 +12,62 @@
  * Ver: 0.0.3
  * 
  */
-//-------------------------------------------------------------------
-// Startup the SESSION
-// This will change in the future. 
-// Maybe implement a SESSION Manager against the database.
-//-------------------------------------------------------------------
+
+/**
+ * Startup the SESSION
+ * This will change in the future.
+ * Maybe implement a SESSION Manager against the database.
+ */
 session_name ( "MitosEHR" );
 session_start();
 session_cache_limiter('private');
 define('_MitosEXEC', 1);
-//-------------------------------------------------------------------
-// Startup the registry
-// This contains SESSION Variables to use in the application
-// and mobile_detect class is used to detect mobile browsers.
-//-------------------------------------------------------------------
+/*
+ * Startup the registry
+ * This contains SESSION Variables to use in the application
+ * and mobile_detect class is used to detect mobile browsers.
+ */
 include_once("registry.php");
 include_once("classes/Mobile_Detect.php");
 $mobile = new Mobile_Detect();
-//-------------------------------------------------------------------
-// Make the auth process
-//-------------------------------------------------------------------
+/**
+ * Make the auth process
+ */
 if(isset($_SESSION['user']['auth'])){
 	if ($_SESSION['user']['auth'] == true){
-		//-----------------------------------------------------------
-		// Load the i18n Library
-		// Load the main screen
-		//-----------------------------------------------------------
+		/**
+		 * Load the i18n Library
+		 * Load the main screen
+		 */
 		include_once("classes/I18n.class.php");
-        //-----------------------------------------------------------
-        // if mobile go to mobile app, else go to app
-        //-----------------------------------------------------------
+        /**
+         * if mobile go to mobile app, else go to app
+         */
         if ($mobile->isMobile()) {
-
 		    include_once("app_mobile/index.php");
         }else{
             include_once("app/index.php");
         }
 	}
-//-------------------------------------------------------------------
-// Make the logon process or Setup process
-//-------------------------------------------------------------------
+/**
+ * Make the logon process or Setup process
+ */
 } else {
-	//---------------------------------------------------------------
-	// Browse the site dir first
-	//---------------------------------------------------------------
+	/**
+     * Browse the site dir first
+     */
 	$count = 0;
-
 	foreach ($_SESSION['site']['sites'] as $site){ $count++; }
-	//---------------------------------------------------------------
-	// If no directory is found inside sites dir run the setup wizard,
-	// if a directory is found inside sites dir run the logon screen
-	//---------------------------------------------------------------
+	/**
+     * If no directory is found inside sites dir run the setup wizard,
+     * if a directory is found inside sites dir run the logon screen
+     */
 	if( $count <= 0){
 		include_once("install/install.ejs.php");
 	} else {
-        //-----------------------------------------------------------
-        // if mobile go to mobile app, else go to app
-        //-----------------------------------------------------------
+        /**
+         * if mobile go to mobile app, else go to app
+         */
         if ($mobile->isMobile()) {
             include_once("app_mobile/login/login.ejs.php");
         }else{

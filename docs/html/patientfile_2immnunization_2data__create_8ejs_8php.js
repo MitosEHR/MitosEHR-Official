@@ -1,0 +1,25 @@
+var patientfile_2immnunization_2data__create_8ejs_8php =
+[
+    [ "$_SESSION", "patientfile_2immnunization_2data__create_8ejs_8php.html#a99fda8552a3e58235643b79f5af3ded8", null ],
+    [ "$data", "patientfile_2immnunization_2data__create_8ejs_8php.html#a6efc15b5a2314dd4b5aaa556a375c6d6", null ],
+    [ "$mitos_db", "patientfile_2immnunization_2data__create_8ejs_8php.html#ab5d961f93efe4e2e8d8374f01dd6c65a", null ],
+    [ "$ret", "patientfile_2immnunization_2data__create_8ejs_8php.html#affd9e3eb0aad0a7ca42912cd925f148c", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a63a1136a683bf9c4637010f73791443a", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a9eb773d64ffa16faf1e29ccbaf4f065c", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#addcf6434ea14720a2fb19d21dc55a8c9", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a7333deeacbe82dc6e01b7e9e86eb3e5a", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#abc2948b74989328277b5513f9ba22e4e", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a652ce4ee989023692939900810b2a70a", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#ad7806756ac25ee8772f6b02f00d601b7", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a7c5128fc922226763e03d46ff4b7a35e", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#ab89a458f1e0bf0241b5dbb11f14f56e3", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#abb2e5d696b624c8bca263c29503b7350", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a11d3455aa396c9c69454f3e6fad3ec6c", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a65028e126c36dd80a9536adb4a71e013", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a356c4da2469428341dbff416200baee5", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#a1c503dc6be7e45d4cce60426e0dc6c16", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#af8886f39ae82fe4c6411bad1e0097c79", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#ad7a9a2a4679ba8036c5c2fa97dee89c4", null ],
+    [ "$row", "patientfile_2immnunization_2data__create_8ejs_8php.html#abca371c5e770b60b9b3dacacf9877173", null ],
+    [ "$sql", "patientfile_2immnunization_2data__create_8ejs_8php.html#a047170d6020a882807665812a27e2525", null ]
+];

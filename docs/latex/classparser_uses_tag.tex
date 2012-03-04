@@ -1,0 +1,189 @@
+\hypertarget{classparser_uses_tag}{\section{parser\-Uses\-Tag \-Class \-Reference}
+\label{classparser_uses_tag}\index{parser\-Uses\-Tag@{parser\-Uses\-Tag}}
+}
+\-Inheritance diagram for parser\-Uses\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.000000cm]{classparser_uses_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_uses_tag_aee2440da4fdc212d196e39b6c1d37105}{parser\-Uses\-Tag} (\$seeel, \$description)
+\item 
+\hyperlink{classparser_uses_tag_ad6c06bea9d11cc1c362b592306cfa707}{\-Convert} (\&\$c)
+\item 
+\hyperlink{classparser_uses_tag_a50a571908126fc3a550f24f0527660bd}{get\-See\-Element} ()
+\item 
+\hyperlink{classparser_uses_tag_a2e7bb35c71bf1824456ceb944cb7a845}{get\-Description} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_uses_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\$keyword} = 'uses'
+\item 
+\hyperlink{classparser_uses_tag_a8117a7944266f3283fa6d3526d5b24dc}{\$\-\_\-description}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 838 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_uses_tag_ad6c06bea9d11cc1c362b592306cfa707}{\index{parser\-Uses\-Tag@{parser\-Uses\-Tag}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserUsesTag@{parser\-Uses\-Tag}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_uses_tag_ad6c06bea9d11cc1c362b592306cfa707}
+\-Return a link to documentation for other element, and description of how it is used
+
+\-Works exactly like \hyperlink{}{parent\-::\-Convert()} except that it also includes a description of how the element used is used.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string link to the uses target 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000068}{\-Todo}]\-C\-S cleanup -\/ rename to convert for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Reimplemented from \hyperlink{classparser_see_tag_a31e57fd66b58b300f8a489aa1b9431f6}{parser\-See\-Tag}.
+
+
+
+\-Reimplemented in \hyperlink{classparser_used_by_tag_ad6c06bea9d11cc1c362b592306cfa707}{parser\-Used\-By\-Tag}.
+
+
+
+\-Definition at line 879 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $val         = $this->value;
+        $see         = parent::Convert($c);
+        $this->value = $this->_description;
+        $desc_val    = parserTag::Convert($c);
+        if (!empty($desc_val)) {
+            $see .= ' - '.$desc_val;
+        }
+        $this->value = $val;
+        return $see;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_uses_tag_a2e7bb35c71bf1824456ceb944cb7a845}{\index{parser\-Uses\-Tag@{parser\-Uses\-Tag}!get\-Description@{get\-Description}}
+\index{get\-Description@{get\-Description}!parserUsesTag@{parser\-Uses\-Tag}}
+\subsubsection[{get\-Description}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Description} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_uses_tag_a2e7bb35c71bf1824456ceb944cb7a845}
+\-Get the description of how the element used is being used.
+
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{classparser_string_with_inline_tags}{parser\-String\-With\-Inline\-Tags} 
+\end{DoxyReturn}
+
+
+\-Definition at line 908 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->_description;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_uses_tag_a50a571908126fc3a550f24f0527660bd}{\index{parser\-Uses\-Tag@{parser\-Uses\-Tag}!get\-See\-Element@{get\-See\-Element}}
+\index{get\-See\-Element@{get\-See\-Element}!parserUsesTag@{parser\-Uses\-Tag}}
+\subsubsection[{get\-See\-Element}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-See\-Element} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classparser_uses_tag_a50a571908126fc3a550f24f0527660bd}
+\-Get the text of the link to the element that is being used
+
+\begin{DoxyReturn}{\-Returns}
+string  private 
+\end{DoxyReturn}
+
+
+\-Definition at line 898 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        return $this->value->getString();
+    }
+\end{DoxyCode}
+\hypertarget{classparser_uses_tag_aee2440da4fdc212d196e39b6c1d37105}{\index{parser\-Uses\-Tag@{parser\-Uses\-Tag}!parser\-Uses\-Tag@{parser\-Uses\-Tag}}
+\index{parser\-Uses\-Tag@{parser\-Uses\-Tag}!parserUsesTag@{parser\-Uses\-Tag}}
+\subsubsection[{parser\-Uses\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Uses\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{seeel, }
+\item[{\$}]{description}
+\end{DoxyParamCaption}
+)}}\label{classparser_uses_tag_aee2440da4fdc212d196e39b6c1d37105}
+set up the uses tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$seeel} & element to link to \\
+\hline
+\hyperlink{classparser_string_with_inline_tags}{parser\-String\-With\-Inline\-Tags} & {\em \$description} & description of how the element is used \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 857 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($seeel->hasInlineTag()) {
+            addErrorDie(PDERROR_DUMB_USES);
+        }
+        parent::parserSeeTag($seeel);
+        $this->_description = $description;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_uses_tag_a8117a7944266f3283fa6d3526d5b24dc}{\index{parser\-Uses\-Tag@{parser\-Uses\-Tag}!\$\-\_\-description@{\$\-\_\-description}}
+\index{\$\-\_\-description@{\$\-\_\-description}!parserUsesTag@{parser\-Uses\-Tag}}
+\subsubsection[{\$\-\_\-description}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-description}}\label{classparser_uses_tag_a8117a7944266f3283fa6d3526d5b24dc}
+private 
+
+\-Definition at line 848 of file \-Doc\-Block\-Tags.\-inc.
+
+\hypertarget{classparser_uses_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\index{parser\-Uses\-Tag@{parser\-Uses\-Tag}!\$keyword@{\$keyword}}
+\index{\$keyword@{\$keyword}!parserUsesTag@{parser\-Uses\-Tag}}
+\subsubsection[{\$keyword}]{\setlength{\rightskip}{0pt plus 5cm}\$keyword = 'uses'}}\label{classparser_uses_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}
+
+
+\-Reimplemented from \hyperlink{classparser_see_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-See\-Tag}.
+
+
+
+\-Reimplemented in \hyperlink{classparser_used_by_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-Used\-By\-Tag}.
+
+
+
+\-Definition at line 844 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_doc_block_tags_8inc}{\-Doc\-Block\-Tags.\-inc}\end{DoxyCompactItemize}

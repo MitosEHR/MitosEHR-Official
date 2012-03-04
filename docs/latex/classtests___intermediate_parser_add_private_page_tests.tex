@@ -1,0 +1,262 @@
+\hypertarget{classtests___intermediate_parser_add_private_page_tests}{\section{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests \-Class \-Reference}
+\label{classtests___intermediate_parser_add_private_page_tests}\index{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtests___intermediate_parser_add_private_page_tests_ad7067a2d7c3e25584c00856a4019fad1}{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Not\-Already\-Empty} ()
+\item 
+\hyperlink{classtests___intermediate_parser_add_private_page_tests_a9e65bc22524f7af4c94d601eb0f91453}{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Empty} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classtests___intermediate_parser_add_private_page_tests_a36f43c36e6b3288e6bfb8244ce59073e}{main} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtests___intermediate_parser_add_private_page_tests_a0bc688732d2b3b162ffebaf7812e78da}{set\-Up} ()
+\item 
+\hyperlink{classtests___intermediate_parser_add_private_page_tests_a80fe3d17e658907fc75346a0ec9d6fc7}{tear\-Down} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 60 of file \-Intermediate\-Parser\-Add\-Private\-Page\-Tests.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classtests___intermediate_parser_add_private_page_tests_a36f43c36e6b3288e6bfb8244ce59073e}{\index{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}!main@{main}}
+\index{main@{main}!tests_IntermediateParserAddPrivatePageTests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf main} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{classtests___intermediate_parser_add_private_page_tests_a36f43c36e6b3288e6bfb8244ce59073e}
+\-Runs the test methods of this class.  public
+
+\begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 99 of file \-Intermediate\-Parser\-Add\-Private\-Page\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("
+      tests_IntermediateParserAddPrivatePageTests");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+\end{DoxyCode}
+\hypertarget{classtests___intermediate_parser_add_private_page_tests_a0bc688732d2b3b162ffebaf7812e78da}{\index{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}!set\-Up@{set\-Up}}
+\index{set\-Up@{set\-Up}!tests_IntermediateParserAddPrivatePageTests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}}
+\subsubsection[{set\-Up}]{\setlength{\rightskip}{0pt plus 5cm}{\bf set\-Up} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classtests___intermediate_parser_add_private_page_tests_a0bc688732d2b3b162ffebaf7812e78da}
+\-Sets up the fixture, for example, open a network connection. \-This method is called before a test is executed.  protected \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 112 of file \-Intermediate\-Parser\-Add\-Private\-Page\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                               {
+        $GLOBALS['_phpDocumentor_install_dir'] = PHPDOCUMENTOR_BASE;
+        $GLOBALS['_phpDocumentor_setting']['quiet'] = "on";
+
+        $this->ps = new phpDocumentor_setup();
+        $this->ip = new phpDocumentor_IntermediateParser();
+        $this->pp = new parserPage();
+        $this->pd = new ParserData;
+        $this->pd->package = 'TESTING';
+        $this->path = PHPDOCUMENTOR_BASE . 'TestFile.php';
+        $this->ip->pages = array($this->path => $this->pd);
+    }
+\end{DoxyCode}
+\hypertarget{classtests___intermediate_parser_add_private_page_tests_a80fe3d17e658907fc75346a0ec9d6fc7}{\index{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}!tear\-Down@{tear\-Down}}
+\index{tear\-Down@{tear\-Down}!tests_IntermediateParserAddPrivatePageTests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}}
+\subsubsection[{tear\-Down}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tear\-Down} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}\label{classtests___intermediate_parser_add_private_page_tests_a80fe3d17e658907fc75346a0ec9d6fc7}
+\-Tears down the fixture, for example, close a network connection. \-This method is called after a test is executed.  protected \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+
+
+\-Definition at line 131 of file \-Intermediate\-Parser\-Add\-Private\-Page\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                  {
+        unset($this->path);
+        unset($this->pd);
+        unset($this->pp);
+        unset($this->ip);
+        unset($this->ps);
+    }
+\end{DoxyCode}
+\hypertarget{classtests___intermediate_parser_add_private_page_tests_a9e65bc22524f7af4c94d601eb0f91453}{\index{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}!test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Empty@{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Empty}}
+\index{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Empty@{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Empty}!tests_IntermediateParserAddPrivatePageTests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Empty} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests___intermediate_parser_add_private_page_tests_a9e65bc22524f7af4c94d601eb0f91453}
+\-Shows correct behavior for adding a private page object, when the privatepages array is completely empty \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+don't bother checking '\mbox{[}\$this-\/$>$path\mbox{]}-\/$>$parent-\/$>$parser\-Version, because it will change between \-Php\-Documentor versions, and we don't want to keep it hand-\/updated in here
+
+\-Definition at line 200 of file \-Intermediate\-Parser\-Add\-Private\-Page\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                         {
+        $this->ip->addPrivatePage($this->pp, $this->path);
+
+        // verify parent attributes are set correctly
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->type,
+       "page");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->id, "
+      ");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->file,
+       "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      sourceLocation, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->name,
+       "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      origName, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      category, "default");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      package, "default");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      subpackage, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      modDate, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->path,
+       "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      packageOutput, "");
+
+        // now verify current page attributes are set correctly
+        $this->assertEquals($this->ip->privatepages[$this->path]->elements, 
+      array());
+        $this->assertEquals($this->ip->privatepages[$this->path]->_hasclasses, 
+      "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->
+      _hasinterfaces, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->
+      privateelements, array());
+        $this->assertEquals($this->ip->privatepages[$this->path]->classelements
+      , array());
+        $this->assertEquals($this->ip->privatepages[$this->path]->tutorial, "")
+      ;
+        $this->assertEquals($this->ip->privatepages[$this->path]->
+      privateclasselements, array());
+        $this->assertEquals($this->ip->privatepages[$this->path]->links, array(
+      ));
+        $this->assertEquals($this->ip->privatepages[$this->path]->clean, true);
+        $this->assertEquals($this->ip->privatepages[$this->path]->docblock, "")
+      ;
+        $this->assertEquals($this->ip->privatepages[$this->path]->
+      _explicitdocblock, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->type, "page")
+      ;
+    }
+\end{DoxyCode}
+\hypertarget{classtests___intermediate_parser_add_private_page_tests_ad7067a2d7c3e25584c00856a4019fad1}{\index{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}!test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Not\-Already\-Empty@{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Not\-Already\-Empty}}
+\index{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Not\-Already\-Empty@{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Not\-Already\-Empty}!tests_IntermediateParserAddPrivatePageTests@{tests\-\_\-\-Intermediate\-Parser\-Add\-Private\-Page\-Tests}}
+\subsubsection[{test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Not\-Already\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}{\bf test\-Show\-Correct\-Behavior\-When\-Private\-Page\-Array\-Is\-Not\-Already\-Empty} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtests___intermediate_parser_add_private_page_tests_ad7067a2d7c3e25584c00856a4019fad1}
+\-N\-O\-W \-L\-I\-S\-T \-T\-H\-E \-T\-E\-S\-T \-C\-A\-S\-E\-S -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ normal, expected cases -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ demonstrate the correct behavior -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/$|$ \-Shows correct behavior for adding a private page object, when the privatepages array already has an element \begin{DoxySince}{\-Since}
+1.\-4.\-0a2 
+\end{DoxySince}
+don't bother checking '\mbox{[}\$this-\/$>$path\mbox{]}-\/$>$parent-\/$>$parser\-Version, because it will change between \-Php\-Documentor versions, and we don't want to keep it hand-\/updated in here
+
+\-Definition at line 157 of file \-Intermediate\-Parser\-Add\-Private\-Page\-Tests.\-php.
+
+
+\begin{DoxyCode}
+                                                                               
+          {
+        $this->ip->privatepages = array($this->path => $this->pd);
+        $this->ip->addPrivatePage($this->pp, $this->path);
+
+        // verify parent attributes are set correctly
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->type,
+       "page");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->id, "
+      ");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->file,
+       "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      sourceLocation, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->name,
+       "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      origName, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      category, "default");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      package, "default");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      subpackage, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      modDate, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->path,
+       "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->parent->
+      packageOutput, "");
+
+        // now verify current page attributes are set correctly
+        $this->assertEquals($this->ip->privatepages[$this->path]->elements, 
+      array());
+        $this->assertEquals($this->ip->privatepages[$this->path]->_hasclasses, 
+      "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->
+      _hasinterfaces, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->
+      privateelements, array());
+        $this->assertEquals($this->ip->privatepages[$this->path]->classelements
+      , array());
+        $this->assertEquals($this->ip->privatepages[$this->path]->tutorial, "")
+      ;
+        $this->assertEquals($this->ip->privatepages[$this->path]->
+      privateclasselements, array());
+        $this->assertEquals($this->ip->privatepages[$this->path]->links, array(
+      ));
+        $this->assertEquals($this->ip->privatepages[$this->path]->clean, true);
+        $this->assertEquals($this->ip->privatepages[$this->path]->docblock, "")
+      ;
+        $this->assertEquals($this->ip->privatepages[$this->path]->
+      _explicitdocblock, "");
+        $this->assertEquals($this->ip->privatepages[$this->path]->type, "page")
+      ;
+        $this->assertEquals($this->ip->privatepages[$this->path]->package, "
+      TESTING");
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/tests/\hyperlink{_intermediate_parser_add_private_page_tests_8php}{\-Intermediate\-Parser\-Add\-Private\-Page\-Tests.\-php}\end{DoxyCompactItemize}

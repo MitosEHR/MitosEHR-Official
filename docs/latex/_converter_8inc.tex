@@ -1,0 +1,144 @@
+\hypertarget{_converter_8inc}{\section{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converter.inc \-File \-Reference}
+\label{_converter_8inc}\index{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converter.\-inc@{\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\-Converter.\-inc}}
+}
+\subsection*{\-Data \-Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_converter}{\-Converter}
+\item 
+class \hyperlink{class____dummy_converter}{\-\_\-\-\_\-dummy\-Converter}
+\end{DoxyCompactItemize}
+\subsection*{\-Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespace_converters}{\-Converters}
+\item 
+namespace \hyperlink{namespaceone}{one}
+\item 
+namespace \hyperlink{namespacetwo}{two}
+\item 
+namespace \hyperlink{namespaceignore}{ignore}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_converter_8inc_a37d0022f58e72b954eb4b1ea499f7f73}{rootcmp} (\$\hyperlink{classa}{a}, \$b)
+\item 
+\hyperlink{_converter_8inc_a53db9016b4e13099425d593e36c0142a}{tutorialcmp} (\$\hyperlink{classa}{a}, \$b)
+\item 
+\hyperlink{_converter_8inc_ad6937ec0fb795ad86c6441bacb83bf2a}{adv\-\_\-htmlentities} (\$s)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{_converter_8inc_ad6937ec0fb795ad86c6441bacb83bf2a}{\index{\-Converter.\-inc@{\-Converter.\-inc}!adv\-\_\-htmlentities@{adv\-\_\-htmlentities}}
+\index{adv\-\_\-htmlentities@{adv\-\_\-htmlentities}!Converter.inc@{\-Converter.\-inc}}
+\subsubsection[{adv\-\_\-htmlentities}]{\setlength{\rightskip}{0pt plus 5cm}{\bf adv\-\_\-htmlentities} (
+\begin{DoxyParamCaption}
+\item[{\$}]{s}
+\end{DoxyParamCaption}
+)}}\label{_converter_8inc_ad6937ec0fb795ad86c6441bacb83bf2a}
+smart htmlentities, doesn't entity the allowed tags list \-Since version 1.\-1, this function uses htmlspecialchars instead of htmlentities, for international support \-This function has been replaced by functionality in \hyperlink{_parser_desc_cleanup_8inc}{\-Parser\-Desc\-Cleanup.\-inc} 
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$s} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string browser-\/displayable page 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Deprecated}
+\item[\hyperlink{deprecated__deprecated000003}{\-Deprecated}]\-As of v1.\-2, \-No longer needed, as valid tags are parsed out of the source, and everything else is \hyperlink{class_converter_a0b2058070d303b4d06535be248b021ab}{\-Converter\-::post\-Process()} handled \end{DoxyRefDesc}
+
+
+\-Definition at line 5431 of file \-Converter.\-inc.
+
+
+\begin{DoxyCode}
+{
+    return;
+    global $phpDocumentor___html,$_phpDocumentor_html_allowed;
+    $result = htmlspecialchars($s);
+    $entities = array_flip(get_html_translation_table(HTML_SPECIALCHARS));
+    $result = strtr($result,$phpDocumentor___html);
+    $matches = array();
+    preg_match_all('/(&lt;img.*&gt;)/U',$result,$matches);
+    for($i=0;$i<count($matches[1]);$i++)
+    {
+        $result = str_replace($matches[1][$i],strtr($matches[1][$i],array_flip(
+      get_html_translation_table(HTML_SPECIALCHARS))),$result);
+    }
+    preg_match_all('/(&lt;font.*&gt;)/U',$result,$matches);
+    for($i=0;$i<count($matches[1]);$i++)
+    {
+        $result = str_replace($matches[1][$i],strtr($matches[1][$i],array_flip(
+      get_html_translation_table(HTML_SPECIALCHARS))),$result);
+    }
+    preg_match_all('/(&lt;ol.*&gt;)/U',$result,$matches);
+    for($i=0;$i<count($matches[1]);$i++)
+    {
+        $result = str_replace($matches[1][$i],strtr($matches[1][$i],array_flip(
+      get_html_translation_table(HTML_SPECIALCHARS))),$result);
+    }
+    preg_match_all('/(&lt;ul.*&gt;)/U',$result,$matches);
+    for($i=0;$i<count($matches[1]);$i++)
+    {
+        $result = str_replace($matches[1][$i],strtr($matches[1][$i],array_flip(
+      get_html_translation_table(HTML_SPECIALCHARS))),$result);
+    }
+    preg_match_all('/(&lt;li.*&gt;)/U',$result,$matches);
+    for($i=0;$i<count($matches[1]);$i++)
+    {
+        $result = str_replace($matches[1][$i],strtr($matches[1][$i],array_flip(
+      get_html_translation_table(HTML_SPECIALCHARS))),$result);
+    }
+    preg_match_all('/(&lt;a .*&gt;)/U',$result,$matches);
+    for($i=0;$i<count($matches[1]);$i++)
+    {
+        $result = str_replace($matches[1][$i],strtr($matches[1][$i],array_flip(
+      get_html_translation_table(HTML_SPECIALCHARS))),$result);
+    }
+    return $result;
+}
+\end{DoxyCode}
+\hypertarget{_converter_8inc_a37d0022f58e72b954eb4b1ea499f7f73}{\index{\-Converter.\-inc@{\-Converter.\-inc}!rootcmp@{rootcmp}}
+\index{rootcmp@{rootcmp}!Converter.inc@{\-Converter.\-inc}}
+\subsubsection[{rootcmp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf rootcmp} (
+\begin{DoxyParamCaption}
+\item[{\$}]{a, }
+\item[{\$}]{b}
+\end{DoxyParamCaption}
+)}}\label{_converter_8inc_a37d0022f58e72b954eb4b1ea499f7f73}
+private \begin{DoxySeeAlso}{\-See also}
+\hyperlink{class_converter_a4608c8dbec49cd82b6a11951b2704ae5}{\-Converter\-::get\-Sorted\-Class\-Tree\-From\-Class()} 
+\end{DoxySeeAlso}
+
+
+\-Definition at line 5404 of file \-Converter.\-inc.
+
+
+\begin{DoxyCode}
+{
+    return strnatcasecmp($a['class'],$b['class']);
+}
+\end{DoxyCode}
+\hypertarget{_converter_8inc_a53db9016b4e13099425d593e36c0142a}{\index{\-Converter.\-inc@{\-Converter.\-inc}!tutorialcmp@{tutorialcmp}}
+\index{tutorialcmp@{tutorialcmp}!Converter.inc@{\-Converter.\-inc}}
+\subsubsection[{tutorialcmp}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tutorialcmp} (
+\begin{DoxyParamCaption}
+\item[{\$}]{a, }
+\item[{\$}]{b}
+\end{DoxyParamCaption}
+)}}\label{_converter_8inc_a53db9016b4e13099425d593e36c0142a}
+private  string used to make the first tutorials converted the default package tutorials 
+
+\-Definition at line 5413 of file \-Converter.\-inc.
+
+
+\begin{DoxyCode}
+{
+    global $phpDocumentor_DefaultPackageName;
+    if ($a == $phpDocumentor_DefaultPackageName) return -1;
+    if ($b == $phpDocumentor_DefaultPackageName) return 1;
+    return strnatcasecmp($a, $b);
+}
+\end{DoxyCode}

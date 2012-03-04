@@ -1,0 +1,125 @@
+\hypertarget{classparser_used_by_tag}{\section{parser\-Used\-By\-Tag \-Class \-Reference}
+\label{classparser_used_by_tag}\index{parser\-Used\-By\-Tag@{parser\-Used\-By\-Tag}}
+}
+\-Inheritance diagram for parser\-Used\-By\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.000000cm]{classparser_used_by_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_used_by_tag_ae60b2acd24d104f0351571fa71cdd782}{parser\-Used\-By\-Tag} (\$link, \$description)
+\item 
+\hyperlink{classparser_used_by_tag_ad6c06bea9d11cc1c362b592306cfa707}{\-Convert} (\&\$c)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_used_by_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\$keyword} = 'usedby'
+\item 
+\hyperlink{classparser_used_by_tag_a054eb7a4dbfc7372b7cc31124bfbe1f3}{\$\-\_\-link}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 932 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_used_by_tag_ad6c06bea9d11cc1c362b592306cfa707}{\index{parser\-Used\-By\-Tag@{parser\-Used\-By\-Tag}!\-Convert@{\-Convert}}
+\index{\-Convert@{\-Convert}!parserUsedByTag@{parser\-Used\-By\-Tag}}
+\subsubsection[{\-Convert}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_used_by_tag_ad6c06bea9d11cc1c362b592306cfa707}
+process this tag through the given output converter
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000069}{\-Todo}]\-C\-S cleanup -\/ rename to convert for camel\-Case rule \end{DoxyRefDesc}
+
+
+\-Reimplemented from \hyperlink{classparser_uses_tag_ad6c06bea9d11cc1c362b592306cfa707}{parser\-Uses\-Tag}.
+
+
+
+\-Definition at line 964 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $see      = $c->returnSee($this->_link);
+        $desc_val = parserTag::Convert($c);
+        if (!empty($desc_val)) {
+            $see .= ' - '.$desc_val;
+        }
+        return $see;
+    }
+\end{DoxyCode}
+\hypertarget{classparser_used_by_tag_ae60b2acd24d104f0351571fa71cdd782}{\index{parser\-Used\-By\-Tag@{parser\-Used\-By\-Tag}!parser\-Used\-By\-Tag@{parser\-Used\-By\-Tag}}
+\index{parser\-Used\-By\-Tag@{parser\-Used\-By\-Tag}!parserUsedByTag@{parser\-Used\-By\-Tag}}
+\subsubsection[{parser\-Used\-By\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Used\-By\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{link, }
+\item[{\$}]{description}
+\end{DoxyParamCaption}
+)}}\label{classparser_used_by_tag_ae60b2acd24d104f0351571fa71cdd782}
+set up the usedby tag
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{classabstract_link}{abstract\-Link} & {\em \$link} & link of element that uses this element \\
+\hline
+string & {\em \$description} & description of how the element is used \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 950 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->value = $description;
+        $this->_link = $link;
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_used_by_tag_a054eb7a4dbfc7372b7cc31124bfbe1f3}{\index{parser\-Used\-By\-Tag@{parser\-Used\-By\-Tag}!\$\-\_\-link@{\$\-\_\-link}}
+\index{\$\-\_\-link@{\$\-\_\-link}!parserUsedByTag@{parser\-Used\-By\-Tag}}
+\subsubsection[{\$\-\_\-link}]{\setlength{\rightskip}{0pt plus 5cm}\$\-\_\-link}}\label{classparser_used_by_tag_a054eb7a4dbfc7372b7cc31124bfbe1f3}
+private 
+
+\-Definition at line 942 of file \-Doc\-Block\-Tags.\-inc.
+
+\hypertarget{classparser_used_by_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\index{parser\-Used\-By\-Tag@{parser\-Used\-By\-Tag}!\$keyword@{\$keyword}}
+\index{\$keyword@{\$keyword}!parserUsedByTag@{parser\-Used\-By\-Tag}}
+\subsubsection[{\$keyword}]{\setlength{\rightskip}{0pt plus 5cm}\$keyword = 'usedby'}}\label{classparser_used_by_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}
+
+
+\-Reimplemented from \hyperlink{classparser_uses_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-Uses\-Tag}.
+
+
+
+\-Definition at line 938 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_doc_block_tags_8inc}{\-Doc\-Block\-Tags.\-inc}\end{DoxyCompactItemize}

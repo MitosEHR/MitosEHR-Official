@@ -1,0 +1,177 @@
+\hypertarget{class_h_t_m_l___tree_menu___listbox}{\section{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox \-Class \-Reference}
+\label{class_h_t_m_l___tree_menu___listbox}\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+}
+\-Inheritance diagram for \-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_h_t_m_l___tree_menu___listbox}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___listbox_a860ad5873c2d3cfd6e3f395b35baa1a6}{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox} (\$structure, \$options=array())
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___listbox_abe9ad8cdef2c26dc57fe2b0cfaa8785b}{to\-H\-T\-M\-L} ()
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___listbox_add594e3f86cd6287951e45b981b773c4}{\-\_\-node\-To\-H\-T\-M\-L} (\$node, \$prefix= '')
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___listbox_a8e2d8b376864d205f0cdec183774158b}{\$promo\-Text}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___listbox_afec16a23b175cab08a54c75f1f7f046a}{\$indent\-Char}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___listbox_a83d5d7afb5bef6011b4c7151fc5a1e2a}{\$indent\-Num}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu___listbox_abc92a826d3c81eded7a4f7eac934f348}{\$link\-Target}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 493 of file \-Tree\-Menu.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_h_t_m_l___tree_menu___listbox_add594e3f86cd6287951e45b981b773c4}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}!\-\_\-node\-To\-H\-T\-M\-L@{\-\_\-node\-To\-H\-T\-M\-L}}
+\index{\-\_\-node\-To\-H\-T\-M\-L@{\-\_\-node\-To\-H\-T\-M\-L}!HTML_TreeMenu_Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+\subsubsection[{\-\_\-node\-To\-H\-T\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-\_\-node\-To\-H\-T\-M\-L} (
+\begin{DoxyParamCaption}
+\item[{\$}]{node, }
+\item[{\$}]{prefix = {\ttfamily ''}}
+\end{DoxyParamCaption}
+)}}\label{class_h_t_m_l___tree_menu___listbox_add594e3f86cd6287951e45b981b773c4}
+\-Returns \-H\-T\-M\-L for a single node
+
+private \-Loop through subnodes
+
+\-Definition at line 581 of file \-Tree\-Menu.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $html = sprintf('<option value="%s">%s%s</option>', $node->link, 
+      $prefix, $node->text);
+        
+        if (isset($node->items)) {
+            for ($i=0; $i<count($node->items); $i++) {
+                $html .= $this->_nodeToHTML($node->items[$i], $prefix . 
+      str_repeat($this->indentChar, $this->indentNum));
+            }
+        }
+        
+        return $html;
+    }
+\end{DoxyCode}
+\hypertarget{class_h_t_m_l___tree_menu___listbox_a860ad5873c2d3cfd6e3f395b35baa1a6}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}!\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}!HTML_TreeMenu_Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+\subsubsection[{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox} (
+\begin{DoxyParamCaption}
+\item[{\$}]{structure, }
+\item[{\$}]{options = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}\label{class_h_t_m_l___tree_menu___listbox_a860ad5873c2d3cfd6e3f395b35baa1a6}
+\-Constructor
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+object & {\em \$structure} & \-The menu structure \\
+\hline
+array & {\em \$options} & \-Options whic affect the display of the listbox. \-These can consist of\-: o promo\-Text \-The text that appears at the the top of the listbox \-Defaults to \char`\"{}\-Select...\char`\"{} o indent\-Char \-The character to use for indenting the nodes \-Defaults to \char`\"{}\&nbsp;\char`\"{} o indent\-Num \-How many of the indent\-Chars to use per indentation level \-Defaults to 2 o link\-Target \-Target for the links. \-Defaults to \char`\"{}\-\_\-self\char`\"{} o submit\-Text \-Text for the submit button. \-Defaults to \char`\"{}\-Go\char`\"{} \\
+\hline
+\end{DoxyParams}
+
+
+\-Definition at line 535 of file \-Tree\-Menu.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->menu       = $structure;
+        $this->promoText  = 'Select...';
+        $this->indentChar = '&nbsp;';
+        $this->indentNum  = 2;
+        $this->linkTarget = '_self';
+        $this->submitText = 'Go';
+        
+        foreach ($options as $option => $value) {
+            $this->$option = $value;
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_h_t_m_l___tree_menu___listbox_abe9ad8cdef2c26dc57fe2b0cfaa8785b}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}!to\-H\-T\-M\-L@{to\-H\-T\-M\-L}}
+\index{to\-H\-T\-M\-L@{to\-H\-T\-M\-L}!HTML_TreeMenu_Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+\subsubsection[{to\-H\-T\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}{\bf to\-H\-T\-M\-L} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_h_t_m_l___tree_menu___listbox_abe9ad8cdef2c26dc57fe2b0cfaa8785b}
+\-Returns the \-H\-T\-M\-L generated \-Loop through subnodes
+
+\-Definition at line 552 of file \-Tree\-Menu.\-php.
+
+
+\begin{DoxyCode}
+    {
+        static $count = 0;
+        $nodeHTML = '';
+
+        if (isset($this->menu->items)) {
+            for ($i=0; $i<count($this->menu->items); $i++) {
+                $nodeHTML .= $this->_nodeToHTML($this->menu->items[$i]);
+            }
+        }
+
+        return sprintf('<form target="%s" action="" onsubmit="var link =
+       this.%s.options[this.%s.selectedIndex].value; if (link) {this.action = link; return
+       true} else return false"><select name="%s"><option value="">%s</option>%s</select>
+       <input type="submit" value="%s" /></form>',
+                       $this->linkTarget,
+                       'HTML_TreeMenu_Listbox_' . ++$count,
+                       'HTML_TreeMenu_Listbox_' . $count,
+                       'HTML_TreeMenu_Listbox_' . $count,
+                       $this->promoText,
+                       $nodeHTML,
+                       $this->submitText);
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_h_t_m_l___tree_menu___listbox_afec16a23b175cab08a54c75f1f7f046a}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}!\$indent\-Char@{\$indent\-Char}}
+\index{\$indent\-Char@{\$indent\-Char}!HTML_TreeMenu_Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+\subsubsection[{\$indent\-Char}]{\setlength{\rightskip}{0pt plus 5cm}\$indent\-Char}}\label{class_h_t_m_l___tree_menu___listbox_afec16a23b175cab08a54c75f1f7f046a}
+
+
+\-Definition at line 505 of file \-Tree\-Menu.\-php.
+
+\hypertarget{class_h_t_m_l___tree_menu___listbox_a83d5d7afb5bef6011b4c7151fc5a1e2a}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}!\$indent\-Num@{\$indent\-Num}}
+\index{\$indent\-Num@{\$indent\-Num}!HTML_TreeMenu_Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+\subsubsection[{\$indent\-Num}]{\setlength{\rightskip}{0pt plus 5cm}\$indent\-Num}}\label{class_h_t_m_l___tree_menu___listbox_a83d5d7afb5bef6011b4c7151fc5a1e2a}
+
+
+\-Definition at line 512 of file \-Tree\-Menu.\-php.
+
+\hypertarget{class_h_t_m_l___tree_menu___listbox_abc92a826d3c81eded7a4f7eac934f348}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}!\$link\-Target@{\$link\-Target}}
+\index{\$link\-Target@{\$link\-Target}!HTML_TreeMenu_Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+\subsubsection[{\$link\-Target}]{\setlength{\rightskip}{0pt plus 5cm}\$link\-Target}}\label{class_h_t_m_l___tree_menu___listbox_abc92a826d3c81eded7a4f7eac934f348}
+
+
+\-Definition at line 518 of file \-Tree\-Menu.\-php.
+
+\hypertarget{class_h_t_m_l___tree_menu___listbox_a8e2d8b376864d205f0cdec183774158b}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}!\$promo\-Text@{\$promo\-Text}}
+\index{\$promo\-Text@{\$promo\-Text}!HTML_TreeMenu_Listbox@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu\-\_\-\-Listbox}}
+\subsubsection[{\$promo\-Text}]{\setlength{\rightskip}{0pt plus 5cm}\$promo\-Text}}\label{class_h_t_m_l___tree_menu___listbox_a8e2d8b376864d205f0cdec183774158b}
+
+
+\-Definition at line 499 of file \-Tree\-Menu.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-H\-T\-M\-L\-\_\-\-Tree\-Menu-\/1.\-1.\-2/\hyperlink{_tree_menu_8php}{\-Tree\-Menu.\-php}\end{DoxyCompactItemize}

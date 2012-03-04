@@ -11,19 +11,17 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-include_once($_SESSION['site']['root']."/classes/AES.class.php");
+include_once("dbHelper.php");
+include_once("AES.php");
 
 class authProcedures {
 
     /**
-     * @static
-     * @param $authUser
-     * @param $authPass
-     * @param $site
+     * @param stdClass $params
      * @return int
      */
-    public static function auth($authUser, $authPass, $site){
+    public function login(stdClass $params){
+
         //-------------------------------------------
         // Check that the username do not pass
         // the maximum limit of the field.
@@ -32,9 +30,8 @@ class authProcedures {
         // If this condition is met, the user did not
         // use the logon form. Possible hack.
         //-------------------------------------------
-        if (strlen($authUser) >= 26){
-        	echo '{ "success": false, "errors": { "Possible hack, please use the Logon Screen." }}';
-         	return;
+        if (strlen($params->authUser) >= 26){
+         	return array('success'=>false, 'error'=>'Possible hack, please use the Logon Screen.');
         }
         //-------------------------------------------
         // Check that the username do not pass
@@ -44,58 +41,58 @@ class authProcedures {
         // If this condition is met, the user did not
         // use the logon form. Possible hack.
         //-------------------------------------------
-        if (strlen($authPass) >= 11){
-            return print '{ "success": false, "errors": { "Possible hack, please use the Logon Screen." }}';
+        if (strlen($params->authPass) >= 11){
+            return array('success'=>false, 'error'=>'Possible hack, please use the Logon Screen.');
         }
         //-------------------------------------------
         // Simple check username
         //-------------------------------------------
-        if (!$authUser){
-            return print '{ "success": false, "errors": { "The username field can not be in blank. Try again." }}';
+        if (!$params->authUser){
+            return array('success'=>false, 'error'=>'The username field can not be in blank. Try again.');
         }
         //-------------------------------------------
         // Simple check password
         //-------------------------------------------
-        if (!$authPass){
-            return print '{ "success": false, "errors": { "The password field can not be in blank. Try again." }}';
+        if (!$params->authPass){
+            return array('success'=>false, 'error'=>'The password field can not be in blank. Try again.');
         }
         //-------------------------------------------
         // Find the AES key in the selected site
         // And include the rest of the remaining
         // variables to connect to the database.
         //-------------------------------------------
-        $_SESSION['site']['site'] = $site;
-        $fileConf = "../../sites/" . $_SESSION['site']['site'] . "/conf.php";
+        $_SESSION['site']['site'] = $params->choiseSite;
+        $fileConf = "../sites/" . $_SESSION['site']['site'] . "/conf.php";
         if (file_exists($fileConf)){
             /** @noinspection PhpIncludeInspection */
             include_once($fileConf);
             $mitos_db = new dbHelper();
         	$err = $mitos_db->getError();
         	if (!is_array($err)){
-                return print '{ "success": false, "errors": { "reason": "For some reason, I can\'t connect to the database."}}';
+                return array('success'=>false, 'error'=>'For some reason, I can\'t connect to the database.');
         	}
         	// Do not stop here!, continue with the rest of the code.
         } else {
-            return print '{ "success": false, "errors": { "reason": "No configuration file found on the selected site.<br>Please contact support."}}';
+            return array('success'=>false, 'error'=>'No configuration file found on the selected site.<br>Please contact support.');
         }
         //-------------------------------------------
         // Convert the password to AES and validate
         //-------------------------------------------
         $aes = new AES($_SESSION['site']['AESkey']);
-        $ret = $aes->encrypt($authPass);
+        $ret = $aes->encrypt($params->authPass);
         //-------------------------------------------
         // Username & password match
         //-------------------------------------------
         $mitos_db->setSQL("SELECT id, username, fname, mname, lname, email
                          FROM users
-        		        WHERE username   = '$authUser'
+        		        WHERE username   = '$params->authUser'
         		          AND password   = '$ret'
         		          AND authorized = '1'
         		        LIMIT 1");
 
         $rec = $mitos_db->fetch();
         if ($rec['username'] == null){
-            return print '{ "success": false, "errors": { "reason": "The username or password you provided is invalid."}}';
+            return array('success'=>false, 'error'=>'The username or password you provided is invalid.');
         } else {
         	//-------------------------------------------
         	// Change some User related variables and go
@@ -116,8 +113,12 @@ class authProcedures {
         	$_SESSION['ver']['rev']         = $rec['v_patch'];
         	$_SESSION['ver']['minor']       = $rec['v_minor'];
         	$_SESSION['ver']['database']    = $rec['v_database'];
-            return print '{ "success": true }';
+
+            $_SESSION['lang']['code']       = $params->lang;
+
+            return array('success'=>true);
         }
+
     }
 
     /**
@@ -148,5 +149,15 @@ class authProcedures {
         }else{
             return array('authorized' => false);
         }
+    }
+
+    public function getSites(){
+        $rows = array();
+        foreach($_SESSION['site']['sites'] as $row){
+            $site['site_id'] = $row;
+            $site['site']    = $row;
+            array_push($rows,$site);
+        }
+        return $rows;
     }
 }

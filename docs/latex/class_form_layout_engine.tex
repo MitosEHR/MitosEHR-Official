@@ -1,0 +1,312 @@
+\hypertarget{class_form_layout_engine}{\section{\-Form\-Layout\-Engine \-Class \-Reference}
+\label{class_form_layout_engine}\index{\-Form\-Layout\-Engine@{\-Form\-Layout\-Engine}}
+}
+
+
+\-Form \-Layout \-Engine.  
+
+
+\-Inheritance diagram for \-Form\-Layout\-Engine\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_form_layout_engine}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_form_layout_engine_aac0ec25d9ed7255a0d2e2ad1174d324b}{get\-Fields} (std\-Class \$params)
+\begin{DoxyCompactList}\small\item\em \-Get \-Form \-Fields by \-Form \-I\-D or \-Form \-Title. \end{DoxyCompactList}\item 
+\hyperlink{class_form_layout_engine_a25eb9dec9c7fa7132bc97c113aae2bfe}{get\-Child\-Items} (\$parent)
+\item 
+\hyperlink{class_form_layout_engine_a89955ff647a3d7183e3468bac90f90a0}{get\-Items\-Options} (\$item\-\_\-id)
+\item 
+\hyperlink{class_form_layout_engine_a5b15a478954309f198a8435ce45e1997}{get\-Store} (\$list\-\_\-id)
+\item 
+\hyperlink{class_form_layout_engine_a8ac8fd2609c4b0bc23b1deaa36c2a43f}{get\-Combo\-Defaults} (\$item)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Form \-Layout \-Engine. 
+
+\-This class will create dynamic \-Ext\-J\-S v4 form items array, previously created or edited from the \-Layout \-Form \-Editor. \-Gathering all it's data and parameters from the layout\-\_\-options table.
+
+\-What this class will not do\-: \-This class will not create the entire \-Screen \-Panel for you, this will only create the form items array with the fields names \& data\-Stores configured on the layout\-\_\-options table.
+
+\begin{DoxyAuthor}{\-Author}
+\-Ernesto \-J. \-Rodriguez (\-Certun) $<$\href{mailto:erodriguez@certun.com}{\tt erodriguez@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0 
+\end{DoxyVersion}
+\begin{DoxyCopyright}{\-Copyright}
+\-Gnu \-Public \-License (\-G\-P\-Lv3) 
+\end{DoxyCopyright}
+
+
+\-Definition at line 23 of file \-Form\-Layout\-Engine.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_form_layout_engine_a25eb9dec9c7fa7132bc97c113aae2bfe}{\index{\-Form\-Layout\-Engine@{\-Form\-Layout\-Engine}!get\-Child\-Items@{get\-Child\-Items}}
+\index{get\-Child\-Items@{get\-Child\-Items}!FormLayoutEngine@{\-Form\-Layout\-Engine}}
+\subsubsection[{get\-Child\-Items}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Child\-Items} (
+\begin{DoxyParamCaption}
+\item[{\$}]{parent}
+\end{DoxyParamCaption}
+)}}\label{class_form_layout_engine_a25eb9dec9c7fa7132bc97c113aae2bfe}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \$parent} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array
+\end{DoxyReturn}
+\-Here we use the parent id to get the child items and it options using basically the same logic of \hyperlink{class_form_layout_engine_aac0ec25d9ed7255a0d2e2ad1174d324b}{get\-Fields()} function and returning an array of child items \-If the item is a combo box lets create a store...
+
+this if what makes this function reclusive this function will keep calling it self
+
+\-Definition at line 159 of file \-Form\-Layout\-Engine.\-php.
+
+
+\begin{DoxyCode}
+                                   {
+        $items = array();
+        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent'
+       ORDER BY pos ASC");
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+            $opts = $this->getItemsOptions($item['id']);
+            foreach($opts as $opt => $val){
+                $item[$opt] = $val;
+            }
+            if($item['xtype'] == 'combobox'){
+                $item = $this->getComboDefaults($item);
+                $item['store'] = $this->getStore($item['list_id']);
+            }
+            $item['items'] = $this->getChildItems($item['id']);
+            if($item['items'] == null) unset($item['items']);
+            unset($item['id'],$item['form_id'],$item['item_of']);
+            array_push($items,$item);
+        }
+        return $items;
+    }
+\end{DoxyCode}
+\hypertarget{class_form_layout_engine_a8ac8fd2609c4b0bc23b1deaa36c2a43f}{\index{\-Form\-Layout\-Engine@{\-Form\-Layout\-Engine}!get\-Combo\-Defaults@{get\-Combo\-Defaults}}
+\index{get\-Combo\-Defaults@{get\-Combo\-Defaults}!FormLayoutEngine@{\-Form\-Layout\-Engine}}
+\subsubsection[{get\-Combo\-Defaults}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Combo\-Defaults} (
+\begin{DoxyParamCaption}
+\item[{\$}]{item}
+\end{DoxyParamCaption}
+)}}\label{class_form_layout_engine_a8ac8fd2609c4b0bc23b1deaa36c2a43f}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \$item} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 234 of file \-Form\-Layout\-Engine.\-php.
+
+
+\begin{DoxyCode}
+                                    {
+        $item['displayField'] = 'option_name';
+        $item['valueField']   = 'option_value';
+        $item['queryMode']    = 'local';
+        $item['editable']     = false;
+        if(!isset($item['emptyText'])){
+            $item['emptyText']    = 'Select';
+        }
+        return $item;
+    }
+\end{DoxyCode}
+\hypertarget{class_form_layout_engine_aac0ec25d9ed7255a0d2e2ad1174d324b}{\index{\-Form\-Layout\-Engine@{\-Form\-Layout\-Engine}!get\-Fields@{get\-Fields}}
+\index{get\-Fields@{get\-Fields}!FormLayoutEngine@{\-Form\-Layout\-Engine}}
+\subsubsection[{get\-Fields}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Fields} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_form_layout_engine_aac0ec25d9ed7255a0d2e2ad1174d324b}
+
+
+\-Get \-Form \-Fields by \-Form \-I\-D or \-Form \-Title. 
+
+\-We can get the form fields by form name or form if example\-: get\-Fields('\-Demographics') or get\-Fields('1') \-The logic of the function is to get the form parent field and its options, then get the child items if any with it options. \-Then.. use reg \-Expression to remove the double quotes from all the options and leave the double quotes to all options values, unless the value is a int or bool.
+
+\begin{DoxyAuthor}{\-Author}
+\-Ernesto \-J. \-Rodriguez (\-Certun) $<$\href{mailto:erodriguez@certun.com}{\tt erodriguez@certun.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{\-Version}
+\-Vega 1.\-0
+\end{DoxyVersion}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \-With the form \-Tirle or \-Form \-I\-D \\
+\hline
+\end{DoxyParams}
+define \$itmes as an array to pushh all the \$item into.
+
+get the form parent fields
+
+for each parent item lets get all the options and children items
+
+get parent field options using the parent item \char`\"{}id\char`\"{} as parameter and store the return array in \$opts.
+
+now take each option and add it to this \$item array
+
+now lets get the the child items using the parent item \-I\-D parameter
+
+lets check if this item has a child items. \-If not, the unset the \$item\mbox{[}'\-Items'\mbox{]} this way we make sure the we done return a items property
+
+unset the stuff that are not properties
+
+push this item into the \$items \-Array
+
+\-In this next block of code we are going to clean the json output using a reg expression to remove the unnecessary double quotes from the properties, bools, and ints values. basically we start we this input.. {\ttfamily  \mbox{[}\{ \char`\"{}xtype\char`\"{}\-:\char`\"{}fieldset\char`\"{}, \char`\"{}title\char`\"{}\-:\char`\"{}\-Who\char`\"{}, \char`\"{}collapsible\char`\"{}\-:\char`\"{}true\char`\"{}, \char`\"{}items\char`\"{}\-:\mbox{[}\{ \char`\"{}xtype\char`\"{}\-:\char`\"{}fieldcontainer\char`\"{}, \char`\"{}field\-Label\char`\"{}\-:\char`\"{}\-Name\char`\"{}, \char`\"{}layout\char`\"{}\-:\char`\"{}hbox\char`\"{}, \char`\"{}anchor\char`\"{}\-:\char`\"{}100\%\char`\"{}, \}\mbox{]} \}\mbox{]} } 
+
+and finish with this output... {\ttfamily  \mbox{[}\{ xtype\-:'fieldset', title\-:'\-Who', collapsible\-:true, items\-:\mbox{[}\{ xtype\-:'fieldcontainer', field\-Label\-:'\-Name', layout\-:'hbox', anchor\-:'100', \}\mbox{]} \}\mbox{]} } 
+
+\-The regular expression will select any string that...
+
+is surrounded by double quotes and follow by \-: for example \char`\"{}xtype\char`\"{}\-: 
+
+or "\-Ext.\-create
+
+or \}\mbox{]}\})"
+
+\-Then remove the double quotes form that selection.
+
+\-Then replace remaining double quotes for single quotes $<$-\/-\/ not required but... we do it because \-Mitos\-E\-H\-R user single quotes to define strings.
+
+\-Definition at line 41 of file \-Form\-Layout\-Engine.\-php.
+
+
+\begin{DoxyCode}
+                                        {
+        $items = array();
+        $this->setSQL("Select ff.*
+                         FROM forms_fields AS ff
+                    LEFT JOIN forms_layout AS fl
+                           ON ff.form_id = fl.id
+                        WHERE (fl.name = '$params->formToRender' OR fl.id =
+       '$params->formToRender')
+                          AND (ff.item_of IS NULL OR ff.item_of = '0')
+                     ORDER BY pos ASC, ff.id ASC");
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+            $opts = $this->getItemsOptions($item['id']);
+            foreach($opts as $opt => $val){
+                $item[$opt] = $val;
+            }
+
+            if($item['xtype'] == 'combobox'){
+                $item = $this->getComboDefaults($item);
+                $item['store'] = $this->getStore($item['list_id']);
+            }
+            $item['items'] = $this->getChildItems($item['id']);
+            if($item['items'] == null) unset($item['items']);
+            unset($item['id'],$item['form_id'],$item['item_of']);
+            array_push($items,$item);
+        }
+        $rawStr     = json_encode($items);
+        $regex      = '("\w*?":|"Ext\.create|\)"\})';
+        $cleanItems = array();
+
+        preg_match_all( $regex, $rawStr, $rawItems );
+
+        foreach($rawItems[0] as $item){
+            array_push( $cleanItems, str_replace( '"', '', $item) );
+        }
+
+        $itemsJsArray = str_replace( '"', '\'', str_replace( $rawItems[0], 
+      $cleanItems, $rawStr ));
+        return $itemsJsArray;
+    }
+\end{DoxyCode}
+\hypertarget{class_form_layout_engine_a89955ff647a3d7183e3468bac90f90a0}{\index{\-Form\-Layout\-Engine@{\-Form\-Layout\-Engine}!get\-Items\-Options@{get\-Items\-Options}}
+\index{get\-Items\-Options@{get\-Items\-Options}!FormLayoutEngine@{\-Form\-Layout\-Engine}}
+\subsubsection[{get\-Items\-Options}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Items\-Options} (
+\begin{DoxyParamCaption}
+\item[{\$}]{item\-\_\-id}
+\end{DoxyParamCaption}
+)}}\label{class_form_layout_engine_a89955ff647a3d7183e3468bac90f90a0}
+
+
+\-Definition at line 189 of file \-Form\-Layout\-Engine.\-php.
+
+
+\begin{DoxyCode}
+                                      {
+        $foo = array();
+        $this->setSQL("Select * FROM forms_field_options WHERE field_id =
+       '$item_id'");
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $option){
+            if(is_numeric($option['ovalue'])){      // if the string is numeric
+       intval() the value to remove the comas
+                $option['ovalue'] = intval($option['ovalue']);
+            }elseif($option['ovalue'] == 'true'){   // if the string is true
+       let change the value to a bool
+                $option['ovalue'] = true;
+            }elseif($option['ovalue'] == 'false'){  // if the string is false
+       let change the value to a bool
+                $option['ovalue'] = false;
+            }
+            $foo[$option['oname']] = $option['ovalue'];
+        }
+        return $foo;
+    }
+\end{DoxyCode}
+\hypertarget{class_form_layout_engine_a5b15a478954309f198a8435ce45e1997}{\index{\-Form\-Layout\-Engine@{\-Form\-Layout\-Engine}!get\-Store@{get\-Store}}
+\index{get\-Store@{get\-Store}!FormLayoutEngine@{\-Form\-Layout\-Engine}}
+\subsubsection[{get\-Store}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Store} (
+\begin{DoxyParamCaption}
+\item[{\$}]{list\-\_\-id}
+\end{DoxyParamCaption}
+)}}\label{class_form_layout_engine_a5b15a478954309f198a8435ce45e1997}
+\-The return of this function is use for testing only
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \$list\-\_\-id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Definition at line 211 of file \-Form\-Layout\-Engine.\-php.
+
+
+\begin{DoxyCode}
+                               {
+
+        $this->setSQL("SELECT o.*
+                         FROM combo_lists_options AS o
+                    LEFT JOIN combo_lists AS l ON l.id = o.list_id
+                        WHERE l.id = '$list_id'
+                     ORDER BY o.seq");
+
+        $buff = "
+      Ext.create('Ext.data.Store',{fields:['option_name','option_value'],data:[";
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+            $option_name    = $item['option_name'];
+            $option_value   = $item['option_value'];
+            $buff .= "
+      {option_name:'$option_name',option_value:'$option_value'},";
+        }
+        $buff = rtrim($buff, ',');
+        $buff .= "]})";
+        return $buff;
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{_form_layout_engine_8php}{\-Form\-Layout\-Engine.\-php}\end{DoxyCompactItemize}

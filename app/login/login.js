@@ -1,3 +1,10 @@
+/**
+ * Logon page
+ *
+ *
+ * @namespace authProcedures.getSites
+ * @namespace authProcedures.login
+ */
 Ext.define('Ext.mitos.panel.login.Login',{
     extend:'Ext.Viewport',
     initComponent:function(){
@@ -5,28 +12,25 @@ Ext.define('Ext.mitos.panel.login.Login',{
         me.currSite = null;
         me.currLang = null;
 
-        Ext.define("Sites", {
-            extend: "Ext.data.Model",
-            fields: [{
-                type: 'int', name: 'site_id'
-            },{
-                type: 'string', name: 'site'
-            }]
-        });
-        me.storeSites = Ext.create('Ext.data.Store',{
-            model: 'Sites',
-            proxy:{
-                type: 'ajax',
-                url: 'app/login/component_data.ejs.php?task=sites',
-                reader: {
-                    type: 'json',
-                    idProperty: 'site_id',
-                    totalProperty: 'results',
-                    root: 'row'
+        Ext.define('SitesModel', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'site_id', type: 'int' },
+                {name: 'site',    type: 'string' }
+            ],
+            proxy: {
+                type: 'direct',
+                api: {
+                    read: authProcedures.getSites
                 }
-            },
+            }
+        });
+
+        me.storeSites = Ext.create('Ext.data.Store', {
+            model: 'SitesModel',
             autoLoad: false
         });
+
 
         me.langStore = Ext.create('Ext.data.Store', {
             fields:['name','value'],
@@ -35,6 +39,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
                 {name: 'Spanish',       value: 'es'}
             ]
         });
+
         /**
          * The Copyright Notice Window
          */
@@ -57,7 +62,6 @@ Ext.define('Ext.mitos.panel.login.Login',{
          */
         me.formLogin = Ext.create('Ext.form.FormPanel', {
             id				: 'formLogin',
-            url				: 'app/login/data.php?task=auth',
             bodyStyle		: 'background: #ffffff; padding:5px 5px 0',
             defaultType		: 'textfield',
             waitMsgTarget	: true,
@@ -177,27 +181,21 @@ Ext.define('Ext.mitos.panel.login.Login',{
      * Form Submit/Logon function
      */
     onSubmit:function(){
-        var form = this.formLogin.getForm();
+        var me = this,
+            formPanel = this.formLogin,
+            form = formPanel.getForm(),
+            params = form.getValues();
         if(form.isValid()){
-            form.submit({
-                method      : 'POST',
-                waitTitle   : 'Connecting',
-                waitMsg     : 'Sending credentials...',
-                scope: this,
-                success:function(){
-                    //window.open('./','MitosEHR', "status=0,toolbar=0,location=0");
+            formPanel.el.mask('Sending credentials...');
+            authProcedures.login(params, function(provider, response){
+                if(response.result.success){
                     window.location = './';
-                },
-                failure:function(form, action){
-                    if(action.failureType == 'server'){
-                        var obj = Ext.JSON.decode(action.response.responseText);
-                        this.msg('Login Failed!', obj.errors.reason);
-                    }else{
-                        this.msg('Warning!', 'Authentication server is unreachable : ' + action.response.responseText);
-                    }
-                    this.onFormReset();
+                }else{
+                    me.msg('Login Failed!', response.result.error);
+                    me.onFormReset();
+                    formPanel.el.unmask();
                 }
-            })
+            });
         }else{
             this.msg('Oops!', 'Username And Password are required.');
         }
@@ -220,7 +218,7 @@ Ext.define('Ext.mitos.panel.login.Login',{
     onFormReset:function(){
         var form = this.formLogin.getForm();
         form.reset();
-        var model = Ext.ModelManager.getModel('Sites'),
+        var model = Ext.ModelManager.getModel('SitesModel'),
         newModel  = Ext.ModelManager.create({
             choiseSite  : this.currSite,
             lang        : this.currLang

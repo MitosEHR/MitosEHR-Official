@@ -1,0 +1,317 @@
+\hypertarget{classparser_example_tag}{\section{parser\-Example\-Tag \-Class \-Reference}
+\label{classparser_example_tag}\index{parser\-Example\-Tag@{parser\-Example\-Tag}}
+}
+\-Inheritance diagram for parser\-Example\-Tag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{classparser_example_tag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_example_tag_a573b450bac5c92db592ce228fd1e50cc}{parser\-Example\-Tag} (\$value, \$current\-\_\-path)
+\item 
+\hyperlink{classparser_example_tag_ac04d3e20b49fa4ddfce71354ef2044f9}{\-Convert\-Source} (\&\$c)
+\item 
+\hyperlink{classparser_example_tag_aa8282e3797b5543b38d27aebf1ecd9db}{write\-Source} (\&\$c, \$source)
+\item 
+\hyperlink{classparser_example_tag_adabc9556631a05ea803bb7274eca1b95}{get\-Source\-Link} (\&\$c)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classparser_example_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\$keyword} = 'example'
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 1180 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classparser_example_tag_ac04d3e20b49fa4ddfce71354ef2044f9}{\index{parser\-Example\-Tag@{parser\-Example\-Tag}!\-Convert\-Source@{\-Convert\-Source}}
+\index{\-Convert\-Source@{\-Convert\-Source}!parserExampleTag@{parser\-Example\-Tag}}
+\subsubsection[{\-Convert\-Source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Convert\-Source} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_example_tag_ac04d3e20b49fa4ddfce71354ef2044f9}
+convert the source code
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void  \hyperlink{classphp_documentor___highlight_parser}{php\-Documentor\-\_\-\-Highlight\-Parser} highlights source code  \hyperlink{classparser_example_tag_aa8282e3797b5543b38d27aebf1ecd9db}{write\-Source()} 
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000074}{\-Todo}]\-C\-S cleanup -\/ rename to convert\-Source for camel\-Case rule 
+
+what's up with all the \char`\"{}return\char`\"{} statements? can they \-\_\-all\-\_\- be removed? \end{DoxyRefDesc}
+
+
+\-Reimplemented from \hyperlink{classparser_file_source_tag_ac04d3e20b49fa4ddfce71354ef2044f9}{parser\-File\-Source\-Tag}.
+
+
+
+\-Definition at line 1353 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        $this->writeSource($c, $c->ProgramExample($this->source, true, null,
+                            null, null, null, $this->origsource));
+        return;
+        $parser = new phpDocumentor_HighlightParser;
+        $return = '';
+        $return = $parser->parse($this->source, $c);
+        $this->writeSource($c, $return);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_example_tag_adabc9556631a05ea803bb7274eca1b95}{\index{parser\-Example\-Tag@{parser\-Example\-Tag}!get\-Source\-Link@{get\-Source\-Link}}
+\index{get\-Source\-Link@{get\-Source\-Link}!parserExampleTag@{parser\-Example\-Tag}}
+\subsubsection[{get\-Source\-Link}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Source\-Link} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c}
+\end{DoxyParamCaption}
+)}}\label{classparser_example_tag_adabc9556631a05ea803bb7274eca1b95}
+\-Retrieve a converter-\/specific link to the example
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string  \-Converter\-::get\-Example\-Link() retrieve the link to the example 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classparser_file_source_tag_adabc9556631a05ea803bb7274eca1b95}{parser\-File\-Source\-Tag}.
+
+
+
+\-Definition at line 1389 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if (!$this->path) return $this->_title;
+        return $c->getExampleLink($this->path, $this->_title);
+    }
+\end{DoxyCode}
+\hypertarget{classparser_example_tag_a573b450bac5c92db592ce228fd1e50cc}{\index{parser\-Example\-Tag@{parser\-Example\-Tag}!parser\-Example\-Tag@{parser\-Example\-Tag}}
+\index{parser\-Example\-Tag@{parser\-Example\-Tag}!parserExampleTag@{parser\-Example\-Tag}}
+\subsubsection[{parser\-Example\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf parser\-Example\-Tag} (
+\begin{DoxyParamCaption}
+\item[{\$}]{value, }
+\item[{\$}]{current\-\_\-path}
+\end{DoxyParamCaption}
+)}}\label{classparser_example_tag_a573b450bac5c92db592ce228fd1e50cc}
+
+
+\-Definition at line 1203 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        global $_phpDocumentor_setting;
+        parent::parserTag('example', $value);
+        $path = false;
+        // code thanks to Sam Blum, modified by Greg Beaver
+        $tagValue = $value->getString();
+
+        $path = $isAbsPath 
+              = $pathOnly 
+              = $fileName 
+              = $fileExt 
+              = $original_path  
+              = $title 
+              = false;
+        do {
+            // make sure the format is stuff.ext description
+            if (!preg_match('`(.*)\.(\w*)\s(.*)`', $tagValue, $match)) {
+                // or format is stuff.ext
+                if (!preg_match('`(.*)\.(\w*)\s*$`', $tagValue, $match)) {
+                    // Murphy: Some funny path was given
+                    $original_path = $tagValue; // used for error output
+                    break; // try-block
+                }
+            }
+            if (strlen($match[1]) === 0) {
+                // Murphy: Some funny path was given
+                $original_path = $tagValue; // used for error output
+                break; // try-block
+            }
+            $fileExt = $match[2];
+            $title   = 'example';
+            if (isset($match[3])) {
+                $title = trim($match[3]);
+            }
+            // Replace windows '\' the path.
+            $pathTmp = str_replace('\\', '/', $match[1]); 
+
+            // Is there a path and a file or is it just a file?
+            if (strpos($pathTmp, '/') === false) {
+                // No path part
+                $pathOnly = '';
+                $fileName = $pathTmp .'.'. $fileExt;
+            } else {
+                // split the path on the last directory, find the filename
+                $splitPos = strrpos($pathTmp, '/'); 
+                $pathOnly = substr($match[1], 0, $splitPos+1);
+                $fileName = substr($match[1], $splitPos+1) .'.'. $fileExt;
+                // Is the path absolute? (i.e. does it start like an absolute
+       path?)
+                if (('/' === $pathTmp[0]) || preg_match('`^\w*:`i', $pathTmp)) 
+      { 
+                    // works for both windows 'C:' and URLs like 'http://'
+                    $isAbsPath = true; // Yes
+                }
+            }
+
+            $original_path = $pathOnly . $fileName;
+
+            // Now look for the file starting with abs. path.
+            if ($isAbsPath) {
+                // remove any weirdities like /../file.ext
+                $tmp = realpath($original_path); 
+                if ($tmp && is_file($tmp)) {
+                    $path = $tmp;
+                }
+                // Alway break if abs. path was detected,
+                // even if file was not found.
+                break; // try-block
+            }
+
+            // Search for the example file some standard places 
+            // 1) Look if the ini-var examplesdir is set and look there ...
+            if (isset($_phpDocumentor_setting['examplesdir'])) {
+                $tmp = realpath($_phpDocumentor_setting['examplesdir'] 
+                    . PATH_DELIMITER  . $original_path);
+                if ($tmp && is_file($tmp)) {
+                    $path = $tmp; // Yo! found it :)
+                    break; // try-block
+                }
+            }
+
+            // 2) Then try to look for an 'example/'-dir 
+            //    below the *currently* parsed file ...
+            if (!empty($current_path)) {
+                $tmp = realpath(dirname($current_path) . PATH_DELIMITER 
+                    . 'examples' . PATH_DELIMITER . $fileName);
+                if ($tmp && is_file($tmp)) {
+                    $path = $tmp; // Yo! found it :)
+                    break; // try-block
+                }
+            }
+
+            // 3) Then try to look for the example file 
+            //    below the subdir PHPDOCUMENTOR_BASE/examples/ ...
+            if (is_dir(PHPDOCUMENTOR_BASE . PATH_DELIMITER . 'examples')) {
+                $tmp = realpath(PHPDOCUMENTOR_BASE . PATH_DELIMITER 
+                    . 'examples' . PATH_DELIMITER . $original_path);
+                if ($tmp && is_file($tmp)) {
+                    $path = $tmp; // Yo! found it :)
+                    break; // try-block
+                }
+            }
+
+            $tmp = realpath(PHPDOCUMENTOR_BASE . PATH_DELIMITER . 
+      $original_path);
+            if ($tmp && is_file($tmp)) {
+                $path = $tmp; // Yo! found it :)
+                break; // try-block
+            }
+            // If we reach this point, nothing was found and $path is false.
+        } while (false);
+
+        if (!$path) {
+            addWarning(PDERROR_EXAMPLE_NOT_FOUND, $original_path);
+            $this->_title = 'example not found';
+            $this->path   = false;
+        } else {
+            $this->_title = ($title) ? $title : 'example';
+            // make a unique html-filename but avoid it to get too long.
+            $uniqueFileName = str_replace(array(':', 
+                DIRECTORY_SEPARATOR, '/'), array('_', '_', '_'), $path);
+            $uniqueFileName = substr($uniqueFileName, -50) . '_' . md5($path);
+            $this->path     = $uniqueFileName;
+            
+            $f = @fopen($path, 'r');
+            if ($f) {
+                $example = fread($f, filesize($path));
+                if (tokenizer_ext) {
+                    $obj = new phpDocumentorTWordParser;
+                    $obj->setup($example);
+                    $this->source     = $obj->getFileSource();
+                    $this->origsource = $example;
+                    unset($obj);
+                } else {
+                    $this->source = $example;
+                }
+            }
+        }
+    }
+\end{DoxyCode}
+\hypertarget{classparser_example_tag_aa8282e3797b5543b38d27aebf1ecd9db}{\index{parser\-Example\-Tag@{parser\-Example\-Tag}!write\-Source@{write\-Source}}
+\index{write\-Source@{write\-Source}!parserExampleTag@{parser\-Example\-Tag}}
+\subsubsection[{write\-Source}]{\setlength{\rightskip}{0pt plus 5cm}{\bf write\-Source} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{c, }
+\item[{\$}]{source}
+\end{DoxyParamCaption}
+)}}\label{classparser_example_tag_aa8282e3797b5543b38d27aebf1ecd9db}
+have the output converter write the source code
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{class_converter}{\-Converter} & {\em \&\$c} & the output converter \\
+\hline
+string & {\em \$source} & highlighted source code\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void  private  \hyperlink{class_converter_a757f70385404e298a4c053d6b7d1be28}{\-Converter\-::write\-Example()} writes final example out 
+\end{DoxyReturn}
+
+
+\-Reimplemented from \hyperlink{classparser_file_source_tag_aa8282e3797b5543b38d27aebf1ecd9db}{parser\-File\-Source\-Tag}.
+
+
+
+\-Definition at line 1374 of file \-Doc\-Block\-Tags.\-inc.
+
+
+\begin{DoxyCode}
+    {
+        if ($this->path) {
+            $c->writeExample($this->_title, $this->path, $source);
+        }
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{classparser_example_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{\index{parser\-Example\-Tag@{parser\-Example\-Tag}!\$keyword@{\$keyword}}
+\index{\$keyword@{\$keyword}!parserExampleTag@{parser\-Example\-Tag}}
+\subsubsection[{\$keyword}]{\setlength{\rightskip}{0pt plus 5cm}\$keyword = 'example'}}\label{classparser_example_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}
+
+
+\-Reimplemented from \hyperlink{classparser_file_source_tag_a4a925d6b38bcf3957c713a7d3dc7da1f}{parser\-File\-Source\-Tag}.
+
+
+
+\-Definition at line 1186 of file \-Doc\-Block\-Tags.\-inc.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/php\-Documentor/\hyperlink{_doc_block_tags_8inc}{\-Doc\-Block\-Tags.\-inc}\end{DoxyCompactItemize}

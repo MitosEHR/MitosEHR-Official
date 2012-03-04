@@ -1,0 +1,283 @@
+\hypertarget{class_messages}{\section{\-Messages \-Class \-Reference}
+\label{class_messages}\index{\-Messages@{\-Messages}}
+}
+\-Inheritance diagram for \-Messages\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_messages}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_messages_afd31363ff6e7d1f8195999c7872c787c}{get\-Messages} (std\-Class \$params)
+\item 
+\hyperlink{class_messages_af21409673464290f9778f00a37d0916f}{send\-New\-Message} (std\-Class \$params)
+\item 
+\hyperlink{class_messages_a680d448339858b79bc7345388fddb939}{reply\-Message} (std\-Class \$params)
+\item 
+\hyperlink{class_messages_a5d42e1d778e63a975d50232cead8ad39}{delete\-Message} (std\-Class \$params)
+\item 
+\hyperlink{class_messages_a16ca9e7822d284ff09a5dc622e7f8f86}{update\-Message} (std\-Class \$params)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 16 of file \-Messages.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_messages_a5d42e1d778e63a975d50232cead8ad39}{\index{\-Messages@{\-Messages}!delete\-Message@{delete\-Message}}
+\index{delete\-Message@{delete\-Message}!Messages@{\-Messages}}
+\subsubsection[{delete\-Message}]{\setlength{\rightskip}{0pt plus 5cm}{\bf delete\-Message} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_messages_a5d42e1d778e63a975d50232cead8ad39}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 126 of file \-Messages.\-php.
+
+
+\begin{DoxyCode}
+                                                   {
+        $id         = $params->id;
+        $currUser   = $_SESSION['user']['id'];
+
+        $this->setSQL("SELECT to_id, from_id FROM pnotes WHERE id = '$id'");
+        $record = $this->fetch();
+
+        if($record['to_id'] == $currUser ){
+            $sql = "UPDATE pnotes SET to_deleted = '1' WHERE id='$id'";
+        }elseif($record['from_id'] == $currUser){
+            $sql = "UPDATE pnotes SET from_deleted = '1' WHERE id='$id'";
+        }
+
+        $this->setSQL($sql);
+        $ret = $this->execLog();
+
+        if($ret[2]){
+            return array('success' => false);
+        }else{
+            return array('success' => true);
+        }
+    }
+\end{DoxyCode}
+\hypertarget{class_messages_afd31363ff6e7d1f8195999c7872c787c}{\index{\-Messages@{\-Messages}!get\-Messages@{get\-Messages}}
+\index{get\-Messages@{get\-Messages}!Messages@{\-Messages}}
+\subsubsection[{get\-Messages}]{\setlength{\rightskip}{0pt plus 5cm}{\bf get\-Messages} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_messages_afd31363ff6e7d1f8195999c7872c787c}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 22 of file \-Messages.\-php.
+
+
+\begin{DoxyCode}
+                                                 {
+        $currUser = $_SESSION['user']['id'];
+
+        if($params->get == 'inbox'){
+            $wherex = "pnotes.to_deleted = '0' AND users.id = '".$currUser."'";
+        }elseif($params->get == 'sent'){
+            $wherex = "pnotes.from_deleted = '0' AND pnotes.from_id = '".
+      $currUser."'";
+        }elseif($params->get == 'trash'){
+            $wherex = "pnotes.to_deleted = '1' OR pnotes.from_deleted = '1' AND
+       users.id = '".$currUser."'";
+        }else{
+            $wherex = "pnotes.to_deleted = '0' AND users.id = '".$currUser."'";
+        }
+
+        $this->setSQL("SELECT pnotes.* ,
+                              users.title AS user_title,
+                              users.fname AS user_fname,
+                              users.mname AS user_mname,
+                              users.lname AS user_lname,
+                              form_data_demographics.fname AS patient_fname,
+                              form_data_demographics.mname AS patient_mname,
+                              form_data_demographics.lname AS patient_lname
+                         FROM pnotes
+              LEFT OUTER JOIN form_data_demographics ON pnotes.pid =
+       form_data_demographics.pid
+              LEFT OUTER JOIN users ON pnotes.to_id = users.id
+                        WHERE $wherex
+                     ORDER BY pnotes.date
+                        LIMIT $params->start, $params->limit");
+        $rows = array();
+        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            $row['patient_name']    = Person::fullname($row['patient_fname'],
+      $row['patient_mname'],$row['patient_lname']);
+
+            $id = $row['from_id'];
+            $this->setSQL("SELECT title, fname, mname, lname FROM users WHERE
+       id ='$id' ");
+            $record = $this->fetch();
+
+            $row['from_user'] = $record['user_title'].' '.Person::fullname(
+      $record['fname'],$record['mname'],$record['lname']);
+            $row['to_user']   = $row['user_title'].' '.Person::fullname($row['
+      user_fname'],$row['user_mname'],$row['user_lname']);
+            array_push($rows, $row);
+        }
+        return $rows;
+    }
+\end{DoxyCode}
+\hypertarget{class_messages_a680d448339858b79bc7345388fddb939}{\index{\-Messages@{\-Messages}!reply\-Message@{reply\-Message}}
+\index{reply\-Message@{reply\-Message}!Messages@{\-Messages}}
+\subsubsection[{reply\-Message}]{\setlength{\rightskip}{0pt plus 5cm}{\bf reply\-Message} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_messages_a680d448339858b79bc7345388fddb939}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array$|$std\-Class 
+\end{DoxyReturn}
+
+
+\-Definition at line 96 of file \-Messages.\-php.
+
+
+\begin{DoxyCode}
+                                                  {
+
+            $t                      = date('l jS \of F Y h:i:s A');
+            $row['body']            = 'On '.$t.' - <spam
+       style="font-weight:bold">'.$_SESSION['user']['name'].'</spam> - Wrote:<br><br>'.$params->curr_msg.'
+      <br><br>';
+            $row['from_id']         = $_SESSION['user']['id'];
+            $row['to_id']           = $params->to_id;
+            $row['message_status']  = $params->message_status;
+            $row['subject']         = $params->subject;
+            $row['note_type']       = $params->note_type;
+            $row['to_deleted']      = 0;
+            $row['from_deleted']    = 0;
+
+            $sql = $this->sqlBind($row, "pnotes", "U", "id='" . $params->id . "
+      '");
+            $this->setSQL($sql);
+            $ret = $this->execLog();
+
+            if($ret[2]){
+                return array('success' => false);
+            }else{
+                return array('success' => true);
+            }
+
+
+        return $params;
+    }
+\end{DoxyCode}
+\hypertarget{class_messages_af21409673464290f9778f00a37d0916f}{\index{\-Messages@{\-Messages}!send\-New\-Message@{send\-New\-Message}}
+\index{send\-New\-Message@{send\-New\-Message}!Messages@{\-Messages}}
+\subsubsection[{send\-New\-Message}]{\setlength{\rightskip}{0pt plus 5cm}{\bf send\-New\-Message} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_messages_af21409673464290f9778f00a37d0916f}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array$|$std\-Class 
+\end{DoxyReturn}
+
+
+\-Definition at line 68 of file \-Messages.\-php.
+
+
+\begin{DoxyCode}
+                                                    {
+
+        $t                      = date('l jS \of F Y h:i:s A');
+        $row['body']            = 'On '.$t.' - <spam style="font-weight:bold">'
+      .$_SESSION['user']['name'].'</spam> - Wrote:<br><br>'.$params->curr_msg;
+        $row['pid']             = $params->pid;
+        $row['from_id']         = $_SESSION['user']['id'];
+        $row['to_id']           = $params->to_id;
+        $row['facility_id']     = $_SESSION['site']['facility'];
+        $row['authorized']      = $params->authorized;
+        $row['message_status']  = $params->message_status;
+        $row['subject']         = $params->subject;
+        $row['note_type']       = $params->note_type;
+        $sql = $this->sqlBind($row, "pnotes", "I");
+        $this->setSQL($sql);
+        $ret = $this->execLog();
+        if($ret[2]){
+            return array('success' => false);
+        }else{
+            return array('success' => true);
+        }
+
+        return $params;
+    }
+\end{DoxyCode}
+\hypertarget{class_messages_a16ca9e7822d284ff09a5dc622e7f8f86}{\index{\-Messages@{\-Messages}!update\-Message@{update\-Message}}
+\index{update\-Message@{update\-Message}!Messages@{\-Messages}}
+\subsubsection[{update\-Message}]{\setlength{\rightskip}{0pt plus 5cm}{\bf update\-Message} (
+\begin{DoxyParamCaption}
+\item[{std\-Class \$}]{params}
+\end{DoxyParamCaption}
+)}}\label{class_messages_a16ca9e7822d284ff09a5dc622e7f8f86}
+
+\begin{DoxyParams}[1]{\-Parameters}
+std\-Class & {\em \$params} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array 
+\end{DoxyReturn}
+
+
+\-Definition at line 153 of file \-Messages.\-php.
+
+
+\begin{DoxyCode}
+                                                   {
+
+        $row[$params->col] = $params->val;
+
+        $sql = $this->sqlBind($row, "pnotes", "U", "id='" . $params->id . "'");
+        $this->setSQL($sql);
+        $ret = $this->execLog();
+        if ( $ret[2] ){
+            return array('success' => false);
+        } else {
+            return array('success' => true);
+        }
+
+    }
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/classes/\hyperlink{_messages_8php}{\-Messages.\-php}\end{DoxyCompactItemize}

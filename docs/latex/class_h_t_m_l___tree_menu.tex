@@ -1,0 +1,87 @@
+\hypertarget{class_h_t_m_l___tree_menu}{\section{\-H\-T\-M\-L\-\_\-\-Tree\-Menu \-Class \-Reference}
+\label{class_h_t_m_l___tree_menu}\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu_ad21778255353b4ff6fb578f3b2a31b8f}{\-H\-T\-M\-L\-\_\-\-Tree\-Menu} ()
+\item 
+\& \hyperlink{class_h_t_m_l___tree_menu_ab1f863fc8239851fe0b02f1af57acb93}{add\-Item} (\&\$node)
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_h_t_m_l___tree_menu_a737abdef83dabb219182c1e88887c6c3}{\$items}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\-Definition at line 67 of file \-Tree\-Menu.\-php.
+
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_h_t_m_l___tree_menu_ab1f863fc8239851fe0b02f1af57acb93}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}!add\-Item@{add\-Item}}
+\index{add\-Item@{add\-Item}!HTML_TreeMenu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}}
+\subsubsection[{add\-Item}]{\setlength{\rightskip}{0pt plus 5cm}\& {\bf add\-Item} (
+\begin{DoxyParamCaption}
+\item[{\&\$}]{node}
+\end{DoxyParamCaption}
+)}}\label{class_h_t_m_l___tree_menu_ab1f863fc8239851fe0b02f1af57acb93}
+\-This function adds an item to the the tree.
+
+public 
+\begin{DoxyParams}[1]{\-Parameters}
+object & {\em \$node} & \-The node to add. \-This object should be a \hyperlink{class_h_t_m_l___tree_node}{\-H\-T\-M\-L\-\_\-\-Tree\-Node} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+object \-Returns a reference to the new node inside the tree. 
+\end{DoxyReturn}
+
+
+\-Definition at line 94 of file \-Tree\-Menu.\-php.
+
+
+\begin{DoxyCode}
+    {
+        $this->items[] = &$node;
+        return $this->items[count($this->items) - 1];
+    }
+\end{DoxyCode}
+\hypertarget{class_h_t_m_l___tree_menu_ad21778255353b4ff6fb578f3b2a31b8f}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}!\-H\-T\-M\-L\-\_\-\-Tree\-Menu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}}
+\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}!HTML_TreeMenu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}}
+\subsubsection[{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-H\-T\-M\-L\-\_\-\-Tree\-Menu} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_h_t_m_l___tree_menu_ad21778255353b4ff6fb578f3b2a31b8f}
+\-Constructor
+
+public 
+
+\-Definition at line 80 of file \-Tree\-Menu.\-php.
+
+
+\begin{DoxyCode}
+    {
+        // Not much to do here :(
+    }
+\end{DoxyCode}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_h_t_m_l___tree_menu_a737abdef83dabb219182c1e88887c6c3}{\index{\-H\-T\-M\-L\-\_\-\-Tree\-Menu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}!\$items@{\$items}}
+\index{\$items@{\$items}!HTML_TreeMenu@{\-H\-T\-M\-L\-\_\-\-Tree\-Menu}}
+\subsubsection[{\$items}]{\setlength{\rightskip}{0pt plus 5cm}\$items}}\label{class_h_t_m_l___tree_menu_a737abdef83dabb219182c1e88887c6c3}
+
+
+\-Definition at line 73 of file \-Tree\-Menu.\-php.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-C\-:/wamp/www/\-Mitos\-E\-H\-R/lib/\-Php\-Documentor/\-H\-T\-M\-L\-\_\-\-Tree\-Menu-\/1.\-1.\-2/\hyperlink{_tree_menu_8php}{\-Tree\-Menu.\-php}\end{DoxyCompactItemize}
