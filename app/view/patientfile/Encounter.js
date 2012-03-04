@@ -409,7 +409,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	 * new encounter window
 	 */
 	newEncounter: function() {
-		var me = this;
+		var me = this, form, model;
 		Encounter.ckOpenEncounters(function(provider, response) {
             /** @namespace response.result.encounter */
 			if(response.result.encounter) {
@@ -420,31 +420,26 @@ Ext.define('App.view.patientfile.Encounter', {
 					icon   : Ext.Msg.QUESTION,
 					fn     : function(btn) {
 						if(btn == 'yes') {
-							me.showNewEncounterWindow();
+                            form = me.newEncounterWindow.down('form');
+                            form.getForm().reset();
+                            model = Ext.ModelManager.getModel('App.model.patientfile.Encounter');
+                            model = Ext.ModelManager.create({
+                                start_date: new Date()
+                            }, model);
+                            form.getForm().loadRecord(model);
+                            me.newEncounterWindow.show();
 						} else {
 							app.openPatientVisits();
 						}
 					}
 				});
 			} else {
-				me.showNewEncounterWindow();
+                me.newEncounterWindow.show();
 			}
 
 		});
 	},
 
-	/**
-	 * Opens the new encounter window and loads the current date to the form
-	 */
-	showNewEncounterWindow: function() {
-		var me = this,
-			form = me.newEncounterWindow.down('form');
-		me.getFormItems(form, 'New Encounter', function() {
-			form.getForm().findField('start_date').setValue(new Date());
-			form.doLayout();
-			me.newEncounterWindow.show();
-		});
-	},
 	/**
 	 * Sends the data to the server to be saved.
 	 * This function needs the button action to determing
@@ -463,14 +458,21 @@ Ext.define('App.view.patientfile.Encounter', {
         }
 
 		if(form.isValid()) {
-			var data = form.getValues(), store, record;
+			var values = form.getValues(), store, record, storeIndex;
 
 			if(SaveBtn.action == 'encounter') {
                 ACL.hasPermission('add_encounters', function(provider, response){
                     if(response.result) {
                         store = me.encounterStore;
-                        store.add(data);
-                        record = store.getAt(0);
+                        record = form.getRecord();
+                        storeIndex = store.indexOf(record);
+
+                        if(storeIndex == -1) {
+                            store.add(values);
+                            record = store.last();
+                        } else {
+                            record.set(values);
+                        }
                         record.save({
                             callback:function(store){
                                 me.openEncounter(store.data.eid);
@@ -491,9 +493,9 @@ Ext.define('App.view.patientfile.Encounter', {
                                     if(response.result) {
                                     var store = me.encounterStore,
                                         record = store.getAt(0).vitals();
-                                        data = me.addDefaultData(data);
+                                        values = me.addDefaultData(values);
                                         form.reset();
-                                        record.add(data);
+                                        record.add(values);
                                         record.sync();
                                         record.sort('date', 'DESC');
                                         me.vitalsPanel.down('vitalsdataview').refresh();
@@ -532,10 +534,8 @@ Ext.define('App.view.patientfile.Encounter', {
                         }else if(SaveBtn.action == 'speechDictation'){
                             record = store.getAt(0).speechdictation().getAt(0);
                         }
-                        say(data);
-                        say(record);
-                        data = me.addDefaultData(data);
-                        record.set(data);
+                        values = me.addDefaultData(values);
+                        record.set(values);
                         record.save();
                         me.msg('Sweet!', 'Encounter Updated');
                     } else {
@@ -590,7 +590,7 @@ Ext.define('App.view.patientfile.Encounter', {
 				me.currEncounterStartDate = data.start_date;
 
 				if(data.close_date === null) {
-					me.startTimer();
+					//me.startTimer();
 				} else {
 					me.stopTimer();
 					me.stopTimer();
@@ -964,6 +964,8 @@ Ext.define('App.view.patientfile.Encounter', {
             });
             //me.reviewSysCkPanel.doLayout();
         });
+
+        this.getFormItems(me.newEncounterWindow.down('form'), 'New Encounter');
 
 
     },
