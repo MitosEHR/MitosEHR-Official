@@ -88,6 +88,8 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/Vitals.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Encounters.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Encounter.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/Immunization.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/PatientImmunization.js"></script>
 
         <!-- Stores -->
         <script type="text/javascript" src="app/store/navigation/Navigation.js"></script>

@@ -27,48 +27,16 @@ Ext.define('App.view.patientfile.MedicalWindow', {
  Immunizations Model And Store
 
   */
-		Ext.define('immunizationsModel', {
-			extend: 'Ext.data.Model',
-			fields: [
-				{name: 'code', type: 'int'},
-				{name: 'code_text', type: 'string'}
 
-			],
-			proxy : {
-				type: 'direct',
-				api : {
-					read: Immunization.getImmunizationsList
-				}
-			}
-		});
 		me.ImmuListStore = Ext.create('Ext.data.Store', {
-			model     : 'immunizationsModel',
+			model     : 'App.model.patientfile.Immunization',
 			remoteSort: false,
 			autoLoad  : true
 		});
 
-		Ext.define('patientImmunizationsModel', {
-			extend: 'Ext.data.Model',
-			fields: [
-				{name: 'immunization_id', type: 'int'},
-				{name: 'administered_date', type: 'date', dateFormat: 'c'},
-				{name: 'manufacturer', type: 'string'},
-				{name: 'lot_number', type: 'string'},
-				{name: 'administered_by', type: 'string'},
-				{name: 'education_date', type: 'date', dateFormat: 'c'},
-				{name: 'vis_date', type: 'date', dateFormat: 'c'},
-				{name: 'note', type: 'string'}
-			],
-			proxy : {
-				type: 'direct',
-				api : {
-					read  : Immunization.getPatientImmunizations,
-					create: Immunization.addPatientImmunization
-				}
-			}
-		});
+
 		me.patientImmuListStore = Ext.create('Ext.data.Store', {
-			model     : 'patientImmunizationsModel',
+			model     : 'App.model.patientfile.PatientImmunization',
 			remoteSort: false,
 			autoLoad  : false
 		});
