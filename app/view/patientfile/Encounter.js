@@ -495,7 +495,8 @@ Ext.define('App.view.patientfile.Encounter', {
                             if(btn == 'ok') {
                                 User.verifyUserPass(signature, function(provider, response){
                                     if(response.result) {
-                                    var store = me.encounterStore,
+                                        //noinspection JSUnresolvedFunction
+                                        var store = me.encounterStore,
                                         record = store.getAt(0).vitals();
                                         values = me.addDefaultData(values);
                                         form.reset();
@@ -530,12 +531,16 @@ Ext.define('App.view.patientfile.Encounter', {
                         store = me.encounterStore;
 
                         if(SaveBtn.action == 'reviewOfSystems'){
+                            //noinspection JSUnresolvedFunction
                             record = store.getAt(0).reviewofsystems().getAt(0);
                         }else if(SaveBtn.action == 'reviewOfSystemsChecks'){
+                            //noinspection JSUnresolvedFunction
                             record = store.getAt(0).reviewofsystemschecks().getAt(0);
                         }else if(SaveBtn.action == 'soap'){
+                            //noinspection JSUnresolvedFunction
                             record = store.getAt(0).soap().getAt(0);
                         }else if(SaveBtn.action == 'speechDictation'){
+                            //noinspection JSUnresolvedFunction
                             record = store.getAt(0).speechdictation().getAt(0);
                         }
                         values = me.addDefaultData(values);
@@ -559,7 +564,8 @@ Ext.define('App.view.patientfile.Encounter', {
 	addDefaultData:function(data){
 		data.pid = app.currPatient.pid;
 		data.eid = this.currEncounterEid;
-		data.uid = user.id;
+		//noinspection JSUnresolvedVariable
+        data.uid = user.id;
 		data.date = Ext.Date.format(new Date(), 'Y-m-d H:i:s');
 		return data;
 	},
@@ -605,10 +611,13 @@ Ext.define('App.view.patientfile.Encounter', {
 
                 vitals.store = record[0].vitalsStore;
                 vitals.refresh();
-
+                //noinspection JSUnresolvedFunction
                 me.reviewSysPanel.getForm().loadRecord(record[0].reviewofsystems().getAt(0));
+                //noinspection JSUnresolvedFunction
                 me.reviewSysCkPanel.getForm().loadRecord(record[0].reviewofsystemschecks().getAt(0));
+                //noinspection JSUnresolvedFunction
                 me.soapPanel.getForm().loadRecord(record[0].soap().getAt(0));
+                //noinspection JSUnresolvedFunction
                 me.speechDicPanel.getForm().loadRecord(record[0].speechdictation().getAt(0));
 
 
