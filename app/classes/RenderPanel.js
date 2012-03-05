@@ -124,5 +124,13 @@ Ext.define('App.classes.RenderPanel', {
 
 	msg: function(title, format) {
 		app.msg(title, format)
-	}
+	},
+
+    signatureWin:function(callback){
+        var msg = Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
+            callback(btn, signature);
+        });
+        var f = msg.textField.getInputId();
+        document.getElementById(f).type = 'password';
+    }
 });

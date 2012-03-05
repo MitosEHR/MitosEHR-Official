@@ -1,13 +1,16 @@
 /**
- * Encounter.ejs.php
+ * Encounter.js
  * Encounter Panel
- * v0.0.1
+ *
+ * This class renders all the panel used  inside the Encounter Panel
+ *
+ * v0.1.0
  *
  * Author: Ernesto J. Rodriguez
- * Modified:
  *
  * MitosEHR (Electronic Health Records) 2011
  *
+ * This are all the Ext.direct methods used in this class
  * @namespace Encounter.getEncounter
  * @namespace Encounter.createEncounter
  * @namespace Encounter.updateEncounter
@@ -491,8 +494,10 @@ Ext.define('App.view.patientfile.Encounter', {
 			} else if(SaveBtn.action == 'vitals') {
                 ACL.hasPermission('add_vitals', function(provider, response){
                     if(response.result) {
-                        Ext.Msg.prompt('Digital Signature', 'Please sign this entry with your password:', function(btn, signature) {
+                        me.signatureWin(function(btn, signature){
                             if(btn == 'ok') {
+                                say(btn);
+                                say(signature);
                                 User.verifyUserPass(signature, function(provider, response){
                                     if(response.result) {
                                         //noinspection JSUnresolvedFunction
@@ -520,7 +525,7 @@ Ext.define('App.view.patientfile.Encounter', {
                                     }
                                 });
                             }
-                        }, this);
+                        });
                     } else {
                         app.accessDenied();
                     }
@@ -631,7 +636,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	 */
 	closeEncounter: function() {
 		var me = this;
-		var msg = Ext.Msg.prompt('Digital Signature', 'Please sign the encounter with your password:', function(btn, signature) {
+        me.signatureWin(function(btn, signature){
 			if(btn == 'ok') {
 				var params = {
 					eid       : me.currEncounterEid,
@@ -658,9 +663,8 @@ Ext.define('App.view.patientfile.Encounter', {
 					}
 				});
 			}
-		}, this);
-		var f = msg.textField.getInputId();
-		document.getElementById(f).type = 'password';
+		});
+
 	},
 	/**
 	 * listen for the progress note panel and runs the
