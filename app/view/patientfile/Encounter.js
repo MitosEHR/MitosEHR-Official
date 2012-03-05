@@ -445,6 +445,13 @@ Ext.define('App.view.patientfile.Encounter', {
 					}
 				});
 			} else {
+                form = me.newEncounterWindow.down('form');
+                form.getForm().reset();
+                model = Ext.ModelManager.getModel('App.model.patientfile.Encounter');
+                model = Ext.ModelManager.create({
+                    start_date: new Date()
+                }, model);
+                form.getForm().loadRecord(model);
                 me.newEncounterWindow.show();
 			}
 
