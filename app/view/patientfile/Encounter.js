@@ -52,7 +52,12 @@ Ext.define('App.view.patientfile.Encounter', {
 			interval: 1000 //1 second
 		};
 
-		me.encounterStore   = Ext.create('App.store.patientfile.Encounter');
+		me.encounterStore = Ext.create('App.store.patientfile.Encounter',{
+            listeners:{
+                scope:me,
+                datachanged:me.updateProgressNote
+            }
+        });
 
 		/**
 		 * New Encounter Panel this panel is located hidden at
@@ -266,7 +271,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		/**
 		 * Progress Note
 		 */
-		me.progressNote = Ext.create('Ext.panel.Panel', {
+		me.progressNote = Ext.create('App.view.patientfile.ProgressNote', {
 			title       : 'Encounter Progress Note',
 			region      : 'east',
 			margin      : '0 0 0 2',
@@ -275,7 +280,6 @@ Ext.define('App.view.patientfile.Encounter', {
 			collapsible : true,
 			animCollapse: true,
 			collapsed   : true,
-			html        : '<h2>Progress Note Placeholder</h2>',
 			listeners   : {
 				scope   : this,
 				collapse: me.progressNoteCollapseExpand,
@@ -672,6 +676,11 @@ Ext.define('App.view.patientfile.Encounter', {
 		this.centerPanel.doLayout();
 	},
 
+    updateProgressNote:function(store){
+        var someData = store.first().data;
+        say(this.progressNote);
+        //tpl.overwrite (progressNote.body, someData)
+    },
 
     //***************************************************************************************************//
     //***************************************************************************************************//
