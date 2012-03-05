@@ -641,7 +641,8 @@ Ext.define('App.view.patientfile.Encounter', {
 				Encounter.closeEncounter(params, function(provider, response) {
 					if(response.result.success) {
 						me.stopTimer();
-						// TODO: after close encounter logic
+                        app.openPatientVisits();
+                        me.msg('Sweet!', 'Encounter Closed');
 					} else {
 						Ext.Msg.show({
 							title  : 'Oops!',
