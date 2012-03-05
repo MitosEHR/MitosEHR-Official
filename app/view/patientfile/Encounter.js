@@ -496,8 +496,6 @@ Ext.define('App.view.patientfile.Encounter', {
                     if(response.result) {
                         me.signatureWin(function(btn, signature){
                             if(btn == 'ok') {
-                                say(btn);
-                                say(signature);
                                 User.verifyUserPass(signature, function(provider, response){
                                     if(response.result) {
                                         //noinspection JSUnresolvedFunction
