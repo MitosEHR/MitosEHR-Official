@@ -19,6 +19,10 @@
  * @namespace Encounter.saveReviewOfSystemsChecks
  * @namespace Encounter.saveSOAP
  * @namespace Encounter.saveSpeechDictation
+ * @namespace Encounter.updateReviewOfSystemsById
+ * @namespace Encounter.updateReviewOfSystemsChecksById
+ * @namespace Encounter.updateSoapById
+ * @namespace Encounter.updateDictationById
  * @namespace User.verifyUserPass
  * @namespace ACL.hasPermission
  */
@@ -404,7 +408,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		app.onChartsWin();
 	},
 	/**
-	 * Checks foe opend encounters, if open encounters are
+	 * Checks for opened encounters, if open encounters are
 	 * found alert the user, if not then open the
 	 * new encounter window
 	 */
@@ -442,7 +446,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
 	/**
 	 * Sends the data to the server to be saved.
-	 * This function needs the button action to determing
+	 * This function needs the button action to determine
 	 * which form  to save.
 	 * @param SaveBtn
 	 */
@@ -562,7 +566,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
 	/**
 	 * Cancels the New Encounter process, closing the window
-	 * and sendong the user to the Patient Summary panel
+	 * and send the user to the Patient Summary panel
 	 * @param btn
 	 */
 	cancelNewEnc: function(btn) {
@@ -584,13 +588,12 @@ Ext.define('App.view.patientfile.Encounter', {
 		me.encounterStore.getProxy().extraParams.eid = eid;
 		me.encounterStore.load({
 			scope   : me,
-			callback: function(record, operation) {
+			callback: function(record) {
 				var data = record[0].data;
-                say(record);
 				me.currEncounterStartDate = data.start_date;
 
 				if(data.close_date === null) {
-					//me.startTimer();
+					me.startTimer();
 				} else {
 					me.stopTimer();
 					me.stopTimer();
@@ -651,7 +654,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	},
 	/**
 	 * listen for the progress note panel and runs the
-	 * doLayout function to re-adjust the dimentions.
+	 * doLayout function to re-adjust the dimensions.
 	 */
 	progressNoteCollapseExpand: function() {
 		this.centerPanel.doLayout();
@@ -834,8 +837,8 @@ Ext.define('App.view.patientfile.Encounter', {
 	},
 
 	/**
-	 * After this paneel is render add the forms and listeners for convertions
-	 */
+	 * After this panel is render add the forms and listeners for conventions
+     */
     beforePanelRender:function(){
         var me = this, form,
         dafaultFields = function(){
