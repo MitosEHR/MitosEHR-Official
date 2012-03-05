@@ -798,7 +798,7 @@ Ext.define('App.view.patientfile.Encounter', {
 		}
 	},
 	/**
-	 * Convert Inches to Cetimeter
+	 * Convert Inches to Centimeter
 	 * @param field
 	 * @param e
 	 */
