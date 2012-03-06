@@ -22,56 +22,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	initComponent: function() {
 
 		var me = this;
- /*
-
- Immunizations Model And Store
-
-  */
-
-		me.ImmuListStore = Ext.create('Ext.data.Store', {
-			model     : 'App.model.patientfile.Immunization',
-			remoteSort: false,
-			autoLoad  : true
-		});
 
 
-		me.patientImmuListStore = Ext.create('Ext.data.Store', {
-			model     : 'App.model.patientfile.PatientImmunization',
-			remoteSort: false,
-			autoLoad  : false
-		});
-/*
-
- Allergies Model And Store
-
-*/
-		Ext.define('patientAllergiesModel', {
-			extend: 'Ext.data.Model',
-			fields: [
-				{name: 'type', type: 'string'},
-				{name: 'title', type: 'string'},
-				{name: 'diagnosis_code', type: 'string'},
-				{name: 'begin_date', type: 'date', dateFormat: 'c'},
-				{name: 'end_date', type: 'date', dateFormat: 'c'},
-				{name: 'ocurrence', type: 'string'},
-				{name: 'reaction', type: 'string'},
-				{name: 'referred_by', type: 'string'},
-				{name: 'outcome', type: 'string'},
-				{name: 'destination', type: 'string'}
-			],
-			proxy : {
-				type: 'direct',
-				api : {
-					read  : Immunization.getPatientallergies,
-					create: Immunization.addPatientAllergies
-				}
-			}
-		});
-		me.patienAllergiesListStore = Ext.create('Ext.data.Store', {
-			model     : 'patientAllergiesModel',
-			remoteSort: true,
-			autoLoad  : false
-		});
+		me.ImmuListStore = Ext.create('App.store.patientfile.Immunization');
+		me.patientImmuListStore =Ext.create('App.store.patientfile.PatientImmunization');
+		me.patienAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
+		me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues');
+		me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
+		me.patientDentalStore = Ext.create('App.store.patientfile.Dental');
 
 
 		me.items = [
@@ -154,6 +112,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 									{
 										minWidth: 80,
 										text    : 'Save',
+										itemId  : 'SaveImmunization',
 										scope   : me,
 										handler : me.onSave
 									},
@@ -355,8 +314,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								minWidth: 80,
 								text    : 'Save',
+								itemId  : 'SaveAllergies',
 								scope   : me,
-								handler : me.onSaveAllergies
+								handler : me.onSave
 							},
 							{
 								minWidth: 80,
@@ -454,7 +414,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								fieldLabel     : 'Type',
 								name           : 'type',
 								allowBlank     : false,
-								xtype          : 'mitos.medicationscombo',
+								xtype          : 'mitos.medicalissuescombo',
 								itemId         : 'medications',
 								enableKeyEvents: true,
 								listeners      : {
@@ -465,7 +425,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								fieldLabel: 'Title',
 								itemId    : 'title',
-								name      : 'date'
+								name      : 'title'
 							},
 							{
 								fieldLabel: 'Diagnosis Code',
@@ -481,7 +441,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								fieldLabel: 'End Date',
 								xtype     : 'datefield',
-								name      : 'begindate'
+								name      : 'end_date'
 
 							},
 							{
@@ -509,6 +469,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								minWidth: 80,
 								text    : 'Save',
+								itemId  : 'SaveMedicalIssues',
 								scope   : me,
 								handler : me.onSave
 							},
@@ -525,12 +486,16 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						xtype      : 'grid',
 						region     : 'center',
 						itemId     : 'patientMedicalListGrid',
-						store      : me.patientMedicalListStore,
+						store      : me.patientMedicalIssuesStore,
 						columns  : [
 							{
 								header   : 'Type',
 								width    : 100,
 								dataIndex: 'type'
+							},{
+								header   : 'Title',
+								width    : 100,
+								dataIndex: 'title'
 							},
 							{
 								header   : 'Date',
@@ -658,6 +623,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								minWidth: 80,
 								text    : 'Save',
+								itemId  : 'SaveSurgery',
 								scope   : me,
 								handler : me.onSave
 							},
@@ -793,6 +759,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								minWidth: 80,
 								text    : 'Save',
+								itemId  : 'SaveDental',
 								scope   : me,
 								handler : me.onSave
 							},
@@ -931,7 +898,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		me.callParent(arguments);
 	},
 
-	onSave: function(btn) {
+
+
+	/*onSave: function(btn) {
 		var form = btn.up('form').getForm(),
 			record = form.getRecord(),
 			values = form.getValues(),
@@ -944,18 +913,69 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		}
 		store.sync();
 	},
-	onSaveAllergies: function(btn) {
+
+	 onSaveAllergies: function(btn) {
+	 var form = btn.up('form').getForm(),
+	 record = form.getRecord(),
+	 values = form.getValues(),
+	 store = this.patienAllergiesListStore,
+	 storeIndex = store.indexOf(record);
+	 if(storeIndex == -1) {
+	 store.add(values);
+	 } else {
+	 record.set(values);
+	 }
+	 store.sync();
+	 },
+	 onSaveMedicalIssues: function(btn) {
+	 var form = btn.up('form').getForm(),
+	 record = form.getRecord(),
+	 values = form.getValues(),
+	 store = this.patientMedicalIssuesStore,
+	 storeIndex = store.indexOf(record);
+	 if(storeIndex == -1) {
+	 store.add(values);
+	 } else {
+	 record.set(values);
+	 }
+	 store.sync();
+	 }, */
+
+	onSave:function(btn) {
+
 		var form = btn.up('form').getForm(),
 			record = form.getRecord(),
-			values = form.getValues(),
-			store = this.patienAllergiesListStore,
-			storeIndex = store.indexOf(record);
+			store,
+			values = form.getValues();
+		if(btn.itemId == 'SaveImmunization'){
+
+			 store = this.patientImmuListStore;
+		}
+		else if(btn.itemId == 'SaveAllergies'){
+
+			store = this.patienAllergiesListStore;
+		}
+		else if(btn.itemId == 'SaveMedicalIssues'){
+
+			 store = this.patientMedicalIssuesStore;
+		}
+		else if(btn.itemId == 'SaveSurgery'){
+
+			 store = this.patientSurgeryStore;
+		}
+		else if(btn.itemId == 'SaveDental'){
+
+			 store = this.patientDentalStore;
+		}
+
+		var	storeIndex = store.indexOf(record);
 		if(storeIndex == -1) {
 			store.add(values);
 		} else {
 			record.set(values);
 		}
 		store.sync();
+
 	},
 
 	onAfterRender: function() {
@@ -1008,6 +1028,25 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.doLayout();
 	},
+	/*newImmunization: function() {
+		var me = this, form, model;
+
+
+
+		form = this.getLayout().getActiveItem().getComponent('immuNorth');
+		form = form.down('form');
+		form.getForm().reset();
+		model = Ext.ModelManager.getModel('App.model.patientfile.Immunization');
+		model = Ext.ModelManager.create({
+			lot_number: '1'
+		}, model);
+		form.getForm().loadRecord(model);
+		me.form.show();
+
+
+
+
+	},*/
 
 
 	onAddImmunization: function() {
@@ -1020,6 +1059,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		northContainer.expand(true);
 		form.loadRecord(m);
 	},
+
 	onAdd: function() {
 		var formPanel = this.getLayout().getActiveItem().down('form'),
 			form = formPanel.getForm(),
