@@ -204,12 +204,12 @@ class dbHelper {
      *
      * @param       array $b_array  containing a key that has to be the exact field on the data base, and it's value
      * @param       string $table  A valid database table to make the SQL statement
-     * @param       string $iu Insert or Update parameter. This has to options I = Insert, U = Update
-     * @param       string $where If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
+     * @param       string $InsertUpdate Insert or Update parameter. This has to options I = Insert, U = Update
+     * @param       string $where If in $InsertUpdate = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
      * @return      string cunstructed SQL string
      */
 
-	function sqlBind($b_array, $table, $iu="I", $where)
+	function sqlBind($b_array, $Table, $InsertUpdate="I", $Where, $Order)
     {
 
         unset($b_array['__utma'],$b_array['__utmz'],$b_array['MitosEHR']);
@@ -218,28 +218,35 @@ class dbHelper {
 		/**
          * Step 1 -  Create the INSERT or UPDATE Clause
          */
-		$iu = strtolower($iu);
-		if ($iu == "i"){
-			$sql_r = "INSERT INTO " . $table;
-		} elseif($iu == "u"){
-			$sql_r = "UPDATE " . $table;
+        $InsertUpdate = strtolower($InsertUpdate);
+		if ($InsertUpdate == "i"){
+			$sql_r = "INSERT INTO " . $Table;
+		} elseif($InsertUpdate == "u"){
+			$sql_r = "UPDATE " . $Table;
 		}
 		/**
          * Step 2 -  Create the SET clause
          */
 		$sql_r .= " SET ";
 		foreach($b_array as $key => $value){
-			if($where <> ($key . "='" . addslashes($value) . "'") &&
-				$where <> ($key . "=" . addslashes($value)) &&
-				$where <> ($key . '="' . addslashes($value) . '"')){
+			if($Where <> ($key . "='" . addslashes($value) . "'") &&
+                $Where <> ($key . "=" . addslashes($value)) &&
+                $Where <> ($key . '="' . addslashes($value) . '"')){
 				$sql_r .= $key . "='" . trim(addslashes($value)) . "', "; 
 			}
 		}
+        /*
+        * Step 3 - Create the Order clause
+        */
+        if($Order <> "" && $InsertUpdate == ""){
+
+        }
+
 		$sql_r = substr($sql_r, 0, -2);
 		/**
          * Step 3 - Create the WHERE clause, if applicable
          */
-		if ($iu == "u"){ $sql_r .= " WHERE " . $where; }
+		if ($InsertUpdate == "u"){ $sql_r .= " WHERE " . $Where; }
 		return $sql_r;
 	}
 
