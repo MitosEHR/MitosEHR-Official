@@ -214,13 +214,13 @@ Public Member Functions</h2></td></tr>
         $records = $this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_CLASS);
 
         <span class="keywordflow">if</span>($params-&gt;code_type != <span class="stringliteral">&#39;all&#39;</span>){
-            $records = $this-&gt;<a class="code" href="classdb_helper.html#a39e97f07bde6edc04b653a4a93bed758" title="Filter Records By Query.">filertByQuery</a>($records, <span class="stringliteral">&#39;code_type&#39;</span>, $params-&gt;code_type);
+            $records = $this-&gt;<a class="code" href="classdb_helper.html#a39e97f07bde6edc04b653a4a93bed758" title="Filter Records By Query.">filterByQuery</a>($records, <span class="stringliteral">&#39;code_type&#39;</span>, $params-&gt;code_type);
         }
 
-        $records = $this-&gt;<a class="code" href="classdb_helper.html#a39e97f07bde6edc04b653a4a93bed758" title="Filter Records By Query.">filertByQuery</a>($records, <span class="stringliteral">&#39;active&#39;</span>, $params-&gt;active);
+        $records = $this-&gt;<a class="code" href="classdb_helper.html#a39e97f07bde6edc04b653a4a93bed758" title="Filter Records By Query.">filterByQuery</a>($records, <span class="stringliteral">&#39;active&#39;</span>, $params-&gt;active);
 
         $total   = count($records);
-        $records = $this-&gt;<a class="code" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08" title="Filter Records By Sart and Limit.">filertByStartLimit</a>($records,$params);
+        $records = $this-&gt;<a class="code" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08" title="Filter Records By Sart and Limit.">filterbystartlimit</a>($records,$params);
 
         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;totals&#39;</span>=&gt;$total,<span class="stringliteral">&#39;rows&#39;</span>=&gt;$records);
 

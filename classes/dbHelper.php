@@ -54,9 +54,9 @@ class dbHelper {
     private $err;
 
     /**
-     * @brief       dbHelper contructor.
+     * @brief       dbHelper constructor.
      * @details     This method starts the connection with mysql server using $_SESSION values
-     *              during the login proccess.
+     *              during the login process.
      *
      * @author      Gino Rivera (Certun) <grivera@certun.com>
      * @version     Vega 1.0
@@ -73,10 +73,10 @@ class dbHelper {
 	}
 
     /**
-     * @brief       Filter Records By Sart and Limit.
-     * @details     This Function will filter the $records by a start and Limit usin LinQ.
+     * @brief       Filter Records By Start and Limit.
+     * @details     This Function will filter the $records by a start and Limit using LinQ.
      *              The main reason to use LinQ is to avoid multiples SQl queries to get
-     *              the record totals and filter resutls.
+     *              the record totals and filter results.
      *
      * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
      * @version     Vega 1.0
@@ -85,11 +85,11 @@ class dbHelper {
      *
      * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
      *
-     * @param       $records SQL recordes to filter
+     * @param       $records SQL records to filter
      * @param       stdClass $params Params used to filter the results, $params->start and $params->limit are required
      * @return      mixed Records filtered
      */
-    function filertByStartLimit($records, stdClass $params)
+    function filterByStartLimit($records, stdClass $params)
     {
         if(isset($params->start) && isset($params->limit)){
             $records = from('$record')->in($records)
@@ -118,7 +118,7 @@ class dbHelper {
      * @param       $query value you are looking for
      * @return      mixed Records filtered
      */
-    function filertByQuery($records, $column, $query)
+    function filterByQuery($records, $column, $query)
     {
             $records = from('$record')->in($records)
                        ->where('$record => $record->'.$column.' == '.$query.'' )
@@ -209,46 +209,71 @@ class dbHelper {
      * @return      string cunstructed SQL string
      */
 
-	function sqlBind($b_array, $Table, $InsertUpdate="I", $Where, $Order)
+	function sqlBind($b_array, $Table, $InsertUpdate="I", $Where)
     {
 
         unset($b_array['__utma'],$b_array['__utmz'],$b_array['MitosEHR']);
 
-        $sql_r = '';
+        $sqlReturn = '';
 		/**
          * Step 1 -  Create the INSERT or UPDATE Clause
          */
         $InsertUpdate = strtolower($InsertUpdate);
 		if ($InsertUpdate == "i"){
-			$sql_r = "INSERT INTO " . $Table;
+            $sqlReturn = "INSERT INTO " . $Table;
 		} elseif($InsertUpdate == "u"){
-			$sql_r = "UPDATE " . $Table;
+            $sqlReturn = "UPDATE " . $Table;
 		}
 		/**
          * Step 2 -  Create the SET clause
          */
-		$sql_r .= " SET ";
+        $sqlReturn .= " SET ";
 		foreach($b_array as $key => $value){
 			if($Where <> ($key . "='" . addslashes($value) . "'") &&
                 $Where <> ($key . "=" . addslashes($value)) &&
                 $Where <> ($key . '="' . addslashes($value) . '"')){
-				$sql_r .= $key . "='" . trim(addslashes($value)) . "', "; 
+                $sqlReturn .= $key . "='" . trim(addslashes($value)) . "', ";
 			}
 		}
-        /*
-        * Step 3 - Create the Order clause
-        */
-        if($Order <> "" && $InsertUpdate == ""){
-
-        }
-
-		$sql_r = substr($sql_r, 0, -2);
+        $sqlReturn = substr($sqlReturn, 0, -2);
 		/**
          * Step 3 - Create the WHERE clause, if applicable
          */
-		if ($InsertUpdate == "u"){ $sql_r .= " WHERE " . $Where; }
-		return $sql_r;
+		if ($InsertUpdate == "u"){ $sqlReturn .= " WHERE " . $Where; }
+		return $sqlReturn;
 	}
+
+    /**
+     * @param $Table
+     * @param $Fields
+     * @param $Order
+     * @param $Where
+     */
+    function sqlSelectBuilder($Table, $Fields, $Order, $Where){
+
+        // Step 1 - Select clause and wrote down the fields
+        $sqlReturn = 'SELECT ';
+        foreach($Fields as $key => $value) $sqlReturn .= $Fields[$key] . ", ";
+        $sqlReturn = substr($sqlReturn, 0, -2);
+
+        // Step 2 - From clause, the filter part
+        $sqlReturn .= "FROM " . $Table . " ";
+
+        // Step 3 - Order clause, sort the results
+        if($Order <> ""){
+            foreach($Order as $key => $value) $sqlReturn .= "ORDER BY " . $key . " " . $value . " AND ";
+        }
+        $sqlReturn = substr($sqlReturn, 0, -5);
+
+        // Step 4 - Where clause, filter the records
+        if($Where <> "") $sqlReturn .= "WHERE ";
+        foreach($Where as $key => $value){
+            $sqlReturn .= $key . "==" . $value . " AND ";
+        }
+        $sqlReturn = substr($sqlReturn, 0, -5);
+
+        return $sqlReturn;
+    }
 
     /**
      * @brief       Execute Log.
@@ -382,4 +407,68 @@ class dbHelper {
 		$recordset = $this->conn->query( $this->sql_statement );
 		return $recordset->rowCount();
 	}
+
+    /**
+     * @param \PDO $conn
+     */
+    public function setConn($conn)
+    {
+        $this->conn = $conn;
+    }
+
+    /**
+     * @return \PDO
+     */
+    public function getConn()
+    {
+        return $this->conn;
+    }
+
+    /**
+     * @param string $err
+     */
+    public function setErr($err)
+    {
+        $this->err = $err;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErr()
+    {
+        return $this->err;
+    }
+
+    /**
+     * @param  $lastInsertId
+     */
+    public function setLastInsertId($lastInsertId)
+    {
+        $this->lastInsertId = $lastInsertId;
+    }
+
+    /**
+     * @return
+     */
+    public function getLastInsertId()
+    {
+        return $this->lastInsertId;
+    }
+
+    /**
+     * @param  $sql_statement
+     */
+    public function setSqlStatement($sql_statement)
+    {
+        $this->sql_statement = $sql_statement;
+    }
+
+    /**
+     * @return
+     */
+    public function getSqlStatement()
+    {
+        return $this->sql_statement;
+    }
 }

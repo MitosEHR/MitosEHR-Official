@@ -38,13 +38,13 @@ class Services extends dbHelper {
         $records = $this->execStatement(PDO::FETCH_CLASS);
 
         if($params->code_type != 'all'){
-            $records = $this->filertByQuery($records, 'code_type', $params->code_type);
+            $records = $this->filterByQuery($records, 'code_type', $params->code_type);
         }
 
-        $records = $this->filertByQuery($records, 'active', $params->active);
+        $records = $this->filterByQuery($records, 'active', $params->active);
 
         $total   = count($records);
-        $records = $this->filertByStartLimit($records,$params);
+        $records = $this->filterByStartLimit($records,$params);
 
         return array('totals'=>$total,'rows'=>$records);
 

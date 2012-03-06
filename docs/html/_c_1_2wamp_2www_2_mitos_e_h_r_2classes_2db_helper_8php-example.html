@@ -100,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dl class="version"><dt><b>Version:</b></dt><dd>Vega 1.0 </dd></dl>
 <dl class="copyright"><dt><b>Copyright:</b></dt><dd>Gnu Public License (GPLv3)</dd></dl>
 <dl class="warning"><dt><b>Warning:</b></dt><dd>This method requires stdClass arguments. Use PDO::FETCH_CLASS to sexecute the SQL queries.</dd></dl>
-<p>$this-&gt;setSQL("SELECT * FROM log ORDER BY id DESC"); $rows = $this-&gt;execStatement(PDO::FETCH_CLASS); $total = count($rows); $rows = $this-&gt;filertByStartLimit($rows,$params); return array('totals'=&gt;$total ,'rows'=&gt;$rows);</p>
+<p>$this-&gt;setSQL("SELECT * FROM log ORDER BY id DESC"); $rows = $this-&gt;execStatement(PDO::FETCH_CLASS); $total = count($rows); $rows = $this-&gt;filterbystartlimit($rows,$params); return array('totals'=&gt;$total ,'rows'=&gt;$rows);</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramtype">stdClass</td><td class="paramname">$records</td><td>SQL recordes to filter </td></tr>

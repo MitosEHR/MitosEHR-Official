@@ -166,7 +166,7 @@ Public Member Functions</h2></td></tr>
         $this-&gt;<a class="code" href="classdb_helper.html#a21e387f778abae898a33b0355e56c095" title="Set the SQL Statement.">setSQL</a>(<span class="stringliteral">&quot;SELECT * FROM log ORDER BY id DESC&quot;</span>);
         $records    = $this-&gt;<a class="code" href="classdb_helper.html#a43a2fa1fe095e37df5a641fe1cfc7d9c" title="Execute Statement.">execStatement</a>(PDO::FETCH_CLASS);
         $total      = count($records);
-        $rows       = $this-&gt;<a class="code" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08" title="Filter Records By Sart and Limit.">filertByStartLimit</a>($records, $params);
+        $rows       = $this-&gt;<a class="code" href="classdb_helper.html#a3ca2578f15860418ca93fca0112a0e08" title="Filter Records By Sart and Limit.">filterbystartlimit</a>($records, $params);
         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;totals&#39;</span>=&gt;$total ,<span class="stringliteral">&#39;rows&#39;</span>=&gt;$rows);
     }
 </pre></div>

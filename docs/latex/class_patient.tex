@@ -172,7 +172,7 @@ array
             array_push($rows, $row);
         }
         $total  = count($rows);
-        $rows = $this->filertByStartLimit($rows,$params);
+        $rows = $this->filterbystartlimit($rows,$params);
         return array('totals'=>$total ,'rows'=>$rows);
     }
 \end{DoxyCode}
