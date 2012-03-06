@@ -277,6 +277,9 @@ class Encounter {
         $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
         $encounter['start_date']            = date('F j, Y, g:i a',strtotime($encounter['start_date']));
         $encounter['patient_name']          = $this->patient->getPatientFullNameByPid($encounter['pid']);
+        $encounter['open_by']               = $this->user->getUserNameById($encounter['open_uid']);
+        $encounter['signed_by']             = $this->user->getUserNameById($encounter['close_uid']);
+
         $encounter['vitals']                = $this->getVitalsByEid($eid);
         $encounter['reviewofsystems']       = array();
         $encounter['reviewofsystemschecks'] = array();
