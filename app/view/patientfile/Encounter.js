@@ -26,6 +26,7 @@
  * @namespace Encounter.updateReviewOfSystemsChecksById
  * @namespace Encounter.updateSoapById
  * @namespace Encounter.updateDictationById
+ * @namespace Encounter.getProgressNoteByEid
  * @namespace User.verifyUserPass
  * @namespace ACL.hasPermission
  */
@@ -279,7 +280,7 @@ Ext.define('App.view.patientfile.Encounter', {
 			width       : 500,
 			collapsible : true,
 			animCollapse: true,
-			collapsed   : true,
+			collapsed   : false,
 			listeners   : {
 				scope   : this,
 				collapse: me.progressNoteCollapseExpand,
@@ -518,6 +519,7 @@ Ext.define('App.view.patientfile.Encounter', {
                                         record.sync();
                                         record.sort('date', 'DESC');
                                         me.vitalsPanel.down('vitalsdataview').refresh();
+                                        me.updateProgressNote();
                                         me.msg('Sweet!', 'Vitals Saved');
                                     } else {
                                         Ext.Msg.show({
@@ -559,7 +561,11 @@ Ext.define('App.view.patientfile.Encounter', {
                         }
                         values = me.addDefaultData(values);
                         record.set(values);
-                        record.save();
+                        record.save({
+                            callback:function(){
+                                me.updateProgressNote();
+                            }
+                        });
                         me.msg('Sweet!', 'Encounter Updated');
                     } else {
                         app.accessDenied();
@@ -634,6 +640,7 @@ Ext.define('App.view.patientfile.Encounter', {
                 //noinspection JSUnresolvedFunction
                 me.speechDicPanel.getForm().loadRecord(record[0].speechdictation().getAt(0));
 
+                me.updateProgressNote();
 
 
 			}
@@ -683,10 +690,12 @@ Ext.define('App.view.patientfile.Encounter', {
 		this.centerPanel.doLayout();
 	},
 
-    updateProgressNote:function(store){
-        var someData = store.first().data;
-        say(this.progressNote);
-        //tpl.overwrite (progressNote.body, someData)
+    updateProgressNote:function(){
+        var me = this;
+        Encounter.getProgressNoteByEid(me.currEncounterEid, function(provider, response){
+            var data = response.result;
+            me.progressNote.tpl.overwrite(me.progressNote.body, data);
+        });
     },
 
     //***************************************************************************************************//

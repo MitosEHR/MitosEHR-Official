@@ -237,8 +237,34 @@ cursor: pointer !important;
 .patient-pool-btn .patient_btn_info div{
     padding-left: 32px;
 }
+.progressNote .secession{
+    padding:10px;
+    margin:10px 0;
+    border: 1px solid #ccc;
+    position:relative;
+    width:100%;
+    float:left
 
+}
+.progressNote .secession .title{
+    background-color:white;
+    position:absolute;
+    padding: 0 5px;
+    font-weight:bold;
+    top: -8px;
+    left: 5px
+}
+.progressNote .secession span {
+    text-decoration:underline
 
+}
+.progressNote .secession p {
+    margin:5px 0;
+}
+.progressNote .secession .pblock {
+    float:left;
+    width:148px;
+}
 body#login{
 	background-image:url(login_bg.png) !important;
 	background-position: bottom;

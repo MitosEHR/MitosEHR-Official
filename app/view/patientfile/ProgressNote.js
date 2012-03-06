@@ -22,38 +22,47 @@ Ext.define('App.view.patientfile.ProgressNote', {
 	initComponent: function() {
 		var me = this;
 
-        me.tpl = '' +
+        me.tpl = new Ext.XTemplate(
             '<div class="progressNote">' +
-            '   <div class="title"> [patient name] - [date - time]</div>' +
-            '   <div class="section">' +
-            '       <div class="title"> Review of System </div>' +
-            '       <div class="body"> [Content Placeholder] </div>' +
-            '   </div>' +
-            '   <div class="section">' +
+            '   <div class="title">{patient_name} - #{pid} - {start_date}</div>' +
+            '   <div class="secession">' +
             '       <div class="title"> Review of System Checks </div>' +
-            '       <div class="body"> [Content Placeholder] </div>' +
+            '       <tpl for="reviewofsystems">' +
+            '           <tpl if="this.isNotNull(value)">' +
+            '               <div class="pblock"> {name}: {value} </div>' +
+            '           </tpl>' +
+            '       </tpl>' +
             '   </div>' +
-            '   <div class="section">' +
-            '       <div class="title"> Subjective </div>' +
-            '       <div class="body"> [Content Placeholder] </div>' +
+            '   <div class="secession">' +
+            '       <div class="title"> Review of System Checks </div>' +
+            '       <tpl for="reviewofsystemschecks">' +
+            '           <tpl if="this.isNotNull(value)">' +
+            '               <div class="pblock"> {name}: {value} </div>' +
+            '           </tpl>' +
+            '       </tpl>' +
             '   </div>' +
-            '   <div class="section">' +
-            '       <div class="title"> Objective </div>' +
-            '       <div class="body"> [Content Placeholder] </div>' +
-            '   </div>' +
-            '   <div class="section">' +
-            '       <div class="title"> Assessment </div>' +
-            '       <div class="body"> [Content Placeholder] </div>' +
-            '   </div>' +
-            '   <div class="section">' +
-            '       <div class="title"> Plan </div>' +
-            '       <div class="body"> [Content Placeholder] </div>' +
-            '   </div>' +
-            '   <div class="section">' +
-            '       <div class="title"> Speech Dictation </div>' +
-            '       <div class="body"> [Content Placeholder] </div>' +
-            '   </div>' +
-            '</div>';
+            '   <tpl for="soap">' +
+            '       <div class="secession">' +
+            '           <div class="title"> SOAP </div>' +
+            '           <p><span>Subjective:</span> {subjective} </p>' +
+            '           <p><span>Objective:</span> {objective}</p>' +
+            '           <p><span>Assessment:</span> {assessment}</p>' +
+            '           <p><span>Plan:</span> {plan}</p>' +
+            '       </div>' +
+            '   </tpl>' +
+            '   <tpl for="speechdictation">' +
+            '       <div class="secession">' +
+            '           <div class="title"> Speech Dictation </div>' +
+            '           <p><span>Dictation:</span> {dictation}</p>' +
+            '           <p><span>Additional Notes:</span> {additional_notes}</p>' +
+            '       </div>' +
+            '   </tpl>' +
+            '</div>',
+            {
+            isNotNull: function(value){
+                return value != 'null' && value != null;
+            }
+        });
 
 		me.callParent(arguments);
 	}

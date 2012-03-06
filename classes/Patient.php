@@ -37,12 +37,8 @@ class Patient extends Person {
      * @return mixed
      */
     public function currPatientSet(stdClass $params){
-
-        $this->db->setSQL("SELECT fname,mname,lname FROM form_data_demographics WHERE pid = '$params->pid'");
-        $p = $this->db->fetch();
-        $fullname = $this->fullname($p['fname'],$p['mname'],$p['lname']);
         $_SESSION['patient']['pid']  = $params->pid;
-        $_SESSION['patient']['name'] = $fullname;
+        $_SESSION['patient']['name'] = $this->getPatientFullNameByPid($params->pid);
         return;
     }
 
@@ -55,6 +51,15 @@ class Patient extends Person {
         return;
     }
 
+    /**
+     * @param $pid
+     * @return string
+     */
+    public function getPatientFullNameByPid($pid){
+        $this->db->setSQL("SELECT fname,mname,lname FROM form_data_demographics WHERE pid = '$pid'");
+        $p = $this->db->fetch();
+        return $this->fullname($p['fname'],$p['mname'],$p['lname']);
+    }
     /**
      * @param \stdClass $params
      * @internal param $search

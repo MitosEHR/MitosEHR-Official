@@ -38,6 +38,9 @@ $API = array(
             'updateDictationById'=>array(
                 'len'=>1
             ),
+            'getProgressNoteByEid'=>array(
+                'len'=>1
+            ),
             'closeEncounter'=>array(
                'len'=>1
             )

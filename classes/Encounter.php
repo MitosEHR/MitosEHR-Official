@@ -25,10 +25,15 @@ class Encounter {
      * @var User
      */
     private $user;
+    /**
+     * @var Patient
+     */
+    private $patient;
 
     function __construct(){
         $this->db = new dbHelper();
         $this->user = new User();
+        $this->patient = new Patient();
         return;
     }
     /**
@@ -267,9 +272,52 @@ class Encounter {
         }
     }
 
+    public function getProgressNoteByEid($eid){
+        $this->db->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$eid'");
+        $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
+        $encounter['start_date']            = date('F j, Y, g:i a',strtotime($encounter['start_date']));
+        $encounter['patient_name']          = $this->patient->getPatientFullNameByPid($encounter['pid']);
+        $encounter['vitals']                = $this->getVitalsByEid($eid);
+        $encounter['reviewofsystems']       = array();
+        $encounter['reviewofsystemschecks'] = array();
+        $encounter['soap']                  = array();
+        $encounter['speechdictation']       = array();
+
+        foreach($this->getReviewOfSystemsByEid($eid) as $key => $value){
+            if($key != 'id' && $key != 'pid' && $key != 'eid' && $key != 'uid' && $key != 'date'){
+                if($value != null && $value != 'null'){
+                    $value = ($value == 1 || $value == '1')? 'Yes' : 'No';
+                    $encounter['reviewofsystems'][] = array('name' => $key, 'value' => $value);
+                }
+            }
+
+        }
+
+        $record = $this->getReviewOfSystemsChecksByEid($eid);
+        foreach($record[0] as $key => $value){
+            if($key != 'id' && $key != 'pid' && $key != 'eid' && $key != 'uid' && $key != 'date'){
+                if($value != null && $value != 'null' && $value != '0' || $value != 0){
+                    $value = ($value == 1 || $value == '1')? 'Yes' : 'No';
+                    $encounter['reviewofsystemschecks'][] = array('name' => $key, 'value' => $value);
+                }
+            }
+        }
+
+        //$encounter['reviewofsystemschecks'] = $this->getReviewOfSystemsChecksByEid($eid);
+        $encounter['soap']                  = $this->getSoapByEid($eid);
+        $encounter['speechdictation']       = $this->getDictationByEid($eid);
+
+
+        return $encounter;
+    }
+
     public function parseDate($date)
     {
         return str_replace('T', ' ', $date);
     }
 
 }
+//
+//$e = new Encounter();
+//echo '<pre>';
+//print_r($e->getProgressNoteByEid(7));
