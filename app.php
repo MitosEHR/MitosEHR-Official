@@ -90,6 +90,11 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/Encounter.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Immunization.js"></script>
         <script type="text/javascript" src="app/model/patientfile/PatientImmunization.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/Allergies.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/Dental.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/MedicalIssues.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/Surgery.js"></script>
+
 
         <!-- Stores -->
         <script type="text/javascript" src="app/store/navigation/Navigation.js"></script>
@@ -97,6 +102,12 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/patientfile/Vitals.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Encounters.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Encounter.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/Immunization.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/PatientImmunization.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/Allergies.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/Dental.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/MedicalIssue.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/Surgery.js"></script>
 
         <!-- Classes -->
         <script type="text/javascript" src="app/classes/NodeDisabled.js"></script>
@@ -119,6 +130,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/posCodes.js"></script>
         <script type="text/javascript" src="app/classes/combo/Roles.js"></script>
         <script type="text/javascript" src="app/classes/combo/AllergyTypes.js"></script>
+        <script type="text/javascript" src="app/classes/combo/MedicalIssues.js"></script>
         <script type="text/javascript" src="app/classes/combo/TaxId.js"></script>
         <script type="text/javascript" src="app/classes/combo/Titles.js"></script>
         <script type="text/javascript" src="app/classes/combo/Outcome.js"></script>
