@@ -20,7 +20,18 @@ include_once("dbHelper.php");
  * @version     Vega 1.0
  * @copyright   Gnu Public License (GPLv3)
  */
-class FormLayoutEngine extends dbHelper {
+class FormLayoutEngine {
+    /**
+     * @var dbHelper
+     */
+    private $db;
+    /**
+     * Creates the dbHelper instance
+     */
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
     /**
      * @brief       Get Form Fields by Form ID or Form Title
      * @details     We can get the form fields by form name or form if
@@ -46,7 +57,7 @@ class FormLayoutEngine extends dbHelper {
         /**
          * get the form parent fields
          */
-        $this->setSQL("Select ff.*
+        $this->db->setSQL("Select ff.*
                          FROM forms_fields AS ff
                     LEFT JOIN forms_layout AS fl
                            ON ff.form_id = fl.id
@@ -56,7 +67,7 @@ class FormLayoutEngine extends dbHelper {
         /**
          * for each parent item lets get all the options and children items
          */
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
             /**
              * get parent field options using the parent item "id" as parameter and
              * store the return array in $opts.
@@ -66,7 +77,9 @@ class FormLayoutEngine extends dbHelper {
              * now take each option and add it to this $item array
              */
             foreach($opts as $opt => $val){
-                $item[$opt] = $val;
+                if($opt != 'pos'){
+                    $item[$opt] = $val;
+                };
             }
 
             if($item['xtype'] == 'combobox'){
@@ -85,7 +98,7 @@ class FormLayoutEngine extends dbHelper {
             /**
              * unset the stuff that are not properties
              */
-            unset($item['id'],$item['form_id'],$item['item_of']);
+            unset($item['id'],$item['form_id'],$item['item_of'],$item['pos']);
             /**
              * push this item into the $items Array
              */
@@ -147,6 +160,7 @@ class FormLayoutEngine extends dbHelper {
 
         $itemsJsArray = str_replace( '"', '\'', str_replace( $rawItems[0], $cleanItems, $rawStr ));
         return $itemsJsArray;
+        //return $items;
     }
     /**
      * @param $parent
@@ -158,11 +172,13 @@ class FormLayoutEngine extends dbHelper {
      */
     function getChildItems($parent){
         $items = array();
-        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+        $this->db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
+
             $opts = $this->getItemsOptions($item['id']);
+
             foreach($opts as $opt => $val){
-                $item[$opt] = $val;
+                    $item[$opt] = $val;
             }
             /**
              * If the item is a combo box lets create a store...
@@ -171,13 +187,14 @@ class FormLayoutEngine extends dbHelper {
                 $item = $this->getComboDefaults($item);
                 $item['store'] = $this->getStore($item['list_id']);
             }
+
             /**
              * this if what makes this function reclusive this function will keep
              * calling it self
              */
             $item['items'] = $this->getChildItems($item['id']);
             if($item['items'] == null) unset($item['items']);
-            unset($item['id'],$item['form_id'],$item['item_of']);
+            unset($item['id'],$item['form_id'],$item['item_of'],$item['pos']);
             array_push($items,$item);
         }
         return $items;
@@ -188,16 +205,23 @@ class FormLayoutEngine extends dbHelper {
      */
     function getItemsOptions($item_id){
         $foo = array();
-        $this->setSQL("Select * FROM forms_field_options WHERE field_id = '$item_id'");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $option){
-            if(is_numeric($option['ovalue'])){      // if the string is numeric intval() the value to remove the comas
-                $option['ovalue'] = intval($option['ovalue']);
-            }elseif($option['ovalue'] == 'true'){   // if the string is true let change the value to a bool
-                $option['ovalue'] = true;
-            }elseif($option['ovalue'] == 'false'){  // if the string is false let change the value to a bool
-                $option['ovalue'] = false;
+        $this->db->setSQL("Select options FROM forms_field_options WHERE field_id = '$item_id'");
+        $options = $this->db->fetch();
+        $options = json_decode($options['options'],true);
+        foreach($options as $option => $value){
+            $foo[$option] = $value;
+            if( $value == 'temp_f' ||
+                $value == 'temp_c' ||
+                $value == 'weight_lbs' ||
+                $value == 'weight_kg' ||
+                $value == 'height_cm' ||
+                $value == 'height_in' ||
+                $value == 'head_circumference_cm' ||
+                $value == 'head_circumference_in' ||
+                $value == 'waist_circumference_cm' ||
+                $value == 'waist_circumference_in'){
+                $foo['enableKeyEvents'] = true;
             }
-            $foo[$option['oname']] = $option['ovalue'];
         }
         return $foo;
     }
@@ -210,14 +234,14 @@ class FormLayoutEngine extends dbHelper {
      */
     function getStore($list_id){
 
-        $this->setSQL("SELECT o.*
+        $this->db->setSQL("SELECT o.*
                          FROM combo_lists_options AS o
                     LEFT JOIN combo_lists AS l ON l.id = o.list_id
                         WHERE l.id = '$list_id'
                      ORDER BY o.seq");
 
         $buff = "Ext.create('Ext.data.Store',{fields:['option_name','option_value'],data:[";
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
             $option_name    = $item['option_name'];
             $option_value   = $item['option_value'];
             $buff .= "{option_name:'$option_name',option_value:'$option_value'},";
@@ -242,3 +266,9 @@ class FormLayoutEngine extends dbHelper {
         return $item;
     }
 }
+//echo '<pre>';
+//$params = new stdClass;
+//$params->formToRender = '8';
+//$f = new FormLayoutEngine();
+//print_r($f->getFields($params));
+////print_r($f->getItemsOptions(342));

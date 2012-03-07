@@ -1,11 +1,11 @@
 <?php
 if(!isset($_SESSION)){
-    session_name ( "MitosEHR" );
+    session_name ( 'MitosEHR' );
     session_start();
     session_cache_limiter('private');
 }
 set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
-require_once 'PHPLinq/LinqToObjects.php';
+require_once'PHPLinq/LinqToObjects.php';
 /**
  * @brief       Database Helper Class.
  * @details     A PDO helper for MitosEHR, contains custom function to manage the database
@@ -65,8 +65,15 @@ class dbHelper {
 	function __construct()
     {
 		error_reporting(0);
+        $host   = $_SESSION['site']['db']['host'];
+        $port   = $_SESSION['site']['db']['port'];
+        $dbname = $_SESSION['site']['db']['database'];
+        $dbuser = $_SESSION['site']['db']['username'];
+        $dbpass = $_SESSION['site']['db']['password'];
 		try {
-    		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
+    		$this->conn = new PDO( 'mysql:host='.$host.';port='.$port.';dbname='.$dbname,$dbuser,$dbpass,
+                array(PDO::ATTR_PERSISTENT => true)
+            );
 		} catch (PDOException $e) {
     		$this->err = $e->getMessage();
 		}
@@ -159,7 +166,7 @@ class dbHelper {
 	function execStatement($fetchStyle = PDO::FETCH_BOTH)
     {
 		$recordset = $this->conn->query($this->sql_statement);
-		if (stristr($this->sql_statement, "SELECT")){
+		if (stristr($this->sql_statement, 'SELECT')){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}
 		$err = $this->conn->errorInfo();
@@ -183,7 +190,7 @@ class dbHelper {
 	function execOnly()
     {
         $this->conn->query($this->sql_statement);
-		if (stristr($this->sql_statement, "SELECT")){
+		if (stristr($this->sql_statement, 'SELECT')){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}
 		return $this->conn->errorInfo();
@@ -209,38 +216,44 @@ class dbHelper {
      * @return      string cunstructed SQL string
      */
 
-	function sqlBind($b_array, $table, $iu="I", $where)
+	function sqlBind($b_array, $table, $iu='I', $where)
     {
+        if(isset($b_array['__utma']))   unset($b_array['__utma']);
+        if(isset($b_array['__utmz']))   unset($b_array['__utmz']);
+        if(isset($b_array['MitosEHR'])) unset($b_array['MitosEHR']);
 
-        unset($b_array['__utma'],$b_array['__utmz'],$b_array['MitosEHR']);
-
-        $sql_r = '';
+        $sql = '';
 		/**
          * Step 1 -  Create the INSERT or UPDATE Clause
          */
 		$iu = strtolower($iu);
-		if ($iu == "i"){
-			$sql_r = "INSERT INTO " . $table;
-		} elseif($iu == "u"){
-			$sql_r = "UPDATE " . $table;
+		if ($iu == 'i'){
+            $sql = 'INSERT INTO '.$table;
+		} elseif($iu == 'u'){
+            $sql = 'UPDATE '.$table;
 		}
 		/**
          * Step 2 -  Create the SET clause
          */
-		$sql_r .= " SET ";
+        $sql .= ' SET ';
 		foreach($b_array as $key => $value){
-			if($where <> ($key . "='" . addslashes($value) . "'") &&
-				$where <> ($key . "=" . addslashes($value)) &&
-				$where <> ($key . '="' . addslashes($value) . '"')){
-				$sql_r .= $key . "='" . trim(addslashes($value)) . "', "; 
-			}
+			if( $where <> ($key . "='" . addslashes($value) . "'") &&
+                $where <> ($key . "="  . addslashes($value)) &&
+                $where <> ($key . '="' . addslashes($value) . '"')){
+				$sql .= $key . "='" . trim(addslashes($value)) . "', ";
+			}else{
+                return array(
+                    'success'=>false,
+                    'error'=>'Where value can not be updated. please make sure to unset it from the array'
+                );
+            }
 		}
-		$sql_r = substr($sql_r, 0, -2);
+        $sql = substr($sql, 0, -2);
 		/**
          * Step 3 - Create the WHERE clause, if applicable
          */
-		if ($iu == "u"){ $sql_r .= " WHERE " . $where; }
-		return $sql_r;
+		if ($iu == 'u'){ $sql .= ' WHERE ' . $where; }
+		return $sql;
 	}
 
     /**

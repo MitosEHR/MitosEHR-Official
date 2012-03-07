@@ -1,4 +1,4 @@
-To compile the Appilcation using JSBuilder2 from Sencha, just run this command
+To compile the Application using JSBuilder2 from Sencha, just run this command
 java -jar JSBuilder2.jar --projectFile path-to\app.jsb2  --homeDir path-to-root-dir\
 
 Exmaple...

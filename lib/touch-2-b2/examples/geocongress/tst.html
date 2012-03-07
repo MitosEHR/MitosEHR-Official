@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>TST</title>
+        <script type="text/javascript" src="../../sencha-touch.js"></script>
+        <link rel="stylesheet" href="resources/css/geocongress.css" type="text/css">
+
+        <script type="text/javascript">
+
+            /**
+             * List of states, their abbreviations and the number of districts
+             */
+
+            Ext.setup({
+                onReady: function() {
+                    var store = Ext.create('Ext.data.Store', {
+                       fields: ['firstName', 'lastName'],
+                       groupField: 'lastName'
+                    });
+
+                    Ext.create('Ext.List', {
+                       fullscreen: true,
+                       grouped: true,
+                       itemTpl: '<div class="contact">{firstName} <strong>{lastName}</strong></div>',
+                       store: store
+                    });
+
+                    store.setData([
+                        { firstName: 'Tommy',   lastName: 'Maintz'},
+                        { firstName: 'Rob',     lastName: 'Dougan'},
+                        { firstName: 'Ed',      lastName: 'Spencer'}
+                    ]);
+                }
+            });
+        </script>
+
+    </head>
+    <body>
+    </body>
+</html>

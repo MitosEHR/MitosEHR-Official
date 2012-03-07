@@ -20,11 +20,27 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 include_once("dbHelper.php");
-class FormLayoutBuilder extends dbHelper {
+class FormLayoutBuilder {
 
+    /**
+     * @var
+     */
     private $form_data_table;
+    /**
+     * @var
+     */
     private $col;
-
+    /**
+     * @var dbHelper
+     */
+    private $db;
+    /**
+     * Creates the dbHelper instance
+     */
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
     /**
      * @param stdClass $params
      * @return array
@@ -57,7 +73,7 @@ class FormLayoutBuilder extends dbHelper {
             if(!$container){
 
                 if(!$this->fieldHasColumn()){
-                    $this->addColumn('VARCHAR(255)');
+                    $this->addColumn('TEXT');
                 }
             }
             /**
@@ -66,7 +82,7 @@ class FormLayoutBuilder extends dbHelper {
              * then checck the value and if is equal to "on"
              * set it to true, and "off" set it to false
              */
-            //$data = $this->sinatizedData($data);
+            $data = $this->sinatizedData($data);
             /**
              * if not xtype fieldcontainer and fieldset the add some
              * defaul values.
@@ -89,11 +105,11 @@ class FormLayoutBuilder extends dbHelper {
              * Exec the new field sql statement and store the its ID
              * in $field_id to then store its options
              */
-            $sql = $this->sqlBind($field, "forms_fields", "I");
-            $this->setSQL($sql);
-            $ret = $this->execLog();
+            $sql = $this->db->sqlBind($field, "forms_fields", "I");
+            $this->db->setSQL($sql);
+            $ret = $this->db->execLog();
             $this->checkError($ret);
-            $field_id = $this->lastInsertId;
+            $field_id = $this->db->lastInsertId;
             /**
              * take each option and insert it in the forms_field_options
              * table using $field_id
@@ -121,7 +137,7 @@ class FormLayoutBuilder extends dbHelper {
          * then checck the value and if is equal to "on"
          * set it to true, and "off" set it to false
          */
-        //$data = $this->sinatizedData($data);
+        $data = $this->sinatizedData($data);
         /**
          * if not xtype fieldcontainer and fieldset the add some
          * defaul values.
@@ -155,15 +171,15 @@ class FormLayoutBuilder extends dbHelper {
          * Exec the new field sql statement and store the its ID
          * in $field_id to then store its options
          */
-        $sql = $this->sqlBind($field, "forms_fields", "U", "id='$id'");
-        $this->setSQL($sql);
-        $ret = $this->execLog();
+        $sql = $this->db->sqlBind($field, "forms_fields", "U", "id='$id'");
+        $this->db->setSQL($sql);
+        $ret = $this->db->execLog();
         $this->checkError($ret);
         /**
          * delete old field options
          */
-        $this->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
-        $ret = $this->execOnly();
+        $this->db->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
+        $ret = $this->db->execOnly();
         $this->checkError($ret);
         /**
          * take the remaining $data array and insert it in the
@@ -234,11 +250,11 @@ class FormLayoutBuilder extends dbHelper {
          * remove field and field options
          */
         $id = $data['id'];
-        $this->setSQL("DELETE FROM forms_fields WHERE id='$id'");
-        $ret = $this->execOnly();
+        $this->db->setSQL("DELETE FROM forms_fields WHERE id='$id'");
+        $ret = $this->db->execOnly();
         $this->checkError($ret);
-        $this->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
-        $ret = $this->execOnly();
+        $this->db->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
+        $ret = $this->db->execOnly();
         $this->checkError($ret);
 
         return array('success' => true);
@@ -265,9 +281,9 @@ class FormLayoutBuilder extends dbHelper {
          * update the item item_of column
          */
         $field['item_of'] = $parentItem;
-        $sql = $this->sqlBind($field, "forms_fields", "U", "id='$item'");
-        $this->setSQL($sql);
-        $ret = $this->execOnly();
+        $sql = $this->db->sqlBind($field, "forms_fields", "U", "id='$item'");
+        $this->db->setSQL($sql);
+        $ret = $this->db->execOnly();
         $this->checkError($ret);
         /**
          * here we set the pos column value, starting from 10.
@@ -276,9 +292,9 @@ class FormLayoutBuilder extends dbHelper {
          */
         foreach($childItems as $child){
             $field['pos'] = $pos;
-            $sql = $this->sqlBind($field, "forms_fields", "U", "id='$child'");
-            $this->setSQL($sql);
-            $ret = $this->execOnly();
+            $sql = $this->db->sqlBind($field, "forms_fields", "U", "id='$child'");
+            $this->db->setSQL($sql);
+            $ret = $this->db->execOnly();
             $this->checkError($ret);
             $pos = $pos + 10;
         }
@@ -299,8 +315,8 @@ class FormLayoutBuilder extends dbHelper {
      */
     private function addColumn($conf){
 
-        $this->setSQL("ALTER TABLE $this->form_data_table ADD $this->col $conf");
-        $ret = $this->execOnly();
+        $this->db->setSQL("ALTER TABLE $this->form_data_table ADD $this->col $conf");
+        $ret = $this->db->execOnly();
         $this->checkError($ret);
 
         if(!$this->fieldHasColumn()) {
@@ -323,8 +339,8 @@ class FormLayoutBuilder extends dbHelper {
      */
     private function dropColumn(){
     
-        $this->setSQL("ALTER TABLE $this->form_data_table DROP $this->col");
-        $ret = $this->execOnly();
+        $this->db->setSQL("ALTER TABLE $this->form_data_table DROP $this->col");
+        $ret = $this->db->execOnly();
         $this->checkError($ret);
 
         if($this->fieldHasColumn()) {
@@ -340,15 +356,24 @@ class FormLayoutBuilder extends dbHelper {
      * @return mixed
      */
     private function insertOptions($data , $id){
-        foreach($data as $key => $val){
-            $opt['field_id'] = $id;
-            $opt['oname']    = $key;
-            $opt['ovalue']   = $val;
-            $sql = $this->sqlBind($opt, "forms_field_options", "I");
-            $this->setSQL($sql);
-            $ret = $this->execOnly();
+
+            $json = json_encode($data, JSON_NUMERIC_CHECK);
+            $options = array('field_id' => $id, 'options' => $json);
+
+            $sql = ("SELECT count(*) FROM forms_field_options WHERE field_id = '$id'");
+            $this->db->setSQL($sql);
+            $field = $this->db->fetch();
+
+            if($field['count(*)'] == 0){
+                $sql = $this->db->sqlBind($options, "forms_field_options", "I");
+            }else{
+                $sql = $this->db->sqlBind($options, "forms_field_options", "U", "field_id ='".$id."'" );
+            }
+
+            $this->db->setSQL($sql);
+            $ret = $this->db->execOnly();
             $this->checkError($ret);
-        }
+
         return;
     }
     /**
@@ -359,6 +384,10 @@ class FormLayoutBuilder extends dbHelper {
         if($data['xtype'] != 'fieldcontainer' && $data['xtype'] != 'fieldset' ){
             if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
         }
+        if($data['xtype'] == 'radiofield'){
+          // $data['flex'] = 1;
+        }
+
         return $data;
     }
 
@@ -367,8 +396,8 @@ class FormLayoutBuilder extends dbHelper {
      * @return mixed
      */
     private function getFormDataTable($form_id){
-        $this->setSQL("SELECT form_data FROM forms_layout WHERE id = '$form_id'");
-        $form_data_table = $this->fetch();
+        $this->db->setSQL("SELECT form_data FROM forms_layout WHERE id = '$form_id'");
+        $form_data_table = $this->db->fetch();
         $this->form_data_table = $form_data_table['form_data'];
         return;
     }
@@ -377,8 +406,8 @@ class FormLayoutBuilder extends dbHelper {
      * @return bool
      */
     private function fieldHasColumn(){
-        $this->setSQL("SELECT * FROM information_schema.COLUMNS WHERE TABLE_NAME = '$this->form_data_table' AND COLUMN_NAME = '$this->col'");
-        $ret = $this->execStatement(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT * FROM information_schema.COLUMNS WHERE TABLE_NAME = '$this->form_data_table' AND COLUMN_NAME = '$this->col'");
+        $ret = $this->db->execStatement(PDO::FETCH_ASSOC);
         if(isset($ret[0]['COLUMN_NAME'])) {
             return true;
         }else{
@@ -391,9 +420,9 @@ class FormLayoutBuilder extends dbHelper {
      * @return bool
      */
     private function fieldHasChild($id){
-        $this->setSQL("SELECT id FROM forms_fields WHERE item_of ='$id'");
-        $this->execStatement(PDO::FETCH_ASSOC);
-        $count = $this->rowCount();
+        $this->db->setSQL("SELECT id FROM forms_fields WHERE item_of ='$id'");
+        $this->db->execStatement(PDO::FETCH_ASSOC);
+        $count = $this->db->rowCount();
         if($count >= 1 ) {
             return true;
         }else{
@@ -405,9 +434,9 @@ class FormLayoutBuilder extends dbHelper {
      * @return bool
      */
     private function fieldHasBrother(){
-        $this->setSQL("SELECT id FROM forms_field_options WHERE oname = 'name' AND ovalue ='$this->col'");
-        $this->execStatement(PDO::FETCH_ASSOC);
-        $count = $this->rowCount();
+        $this->db->setSQL("SELECT id FROM forms_field_options WHERE oname = 'name' AND ovalue ='$this->col'");
+        $this->db->execStatement(PDO::FETCH_ASSOC);
+        $count = $this->db->rowCount();
         if($count >= 2 ) {
             return true;
         }else{
@@ -419,8 +448,8 @@ class FormLayoutBuilder extends dbHelper {
      * @return bool
      */
     private function filedInUsed(){
-        $this->setSQL("SELECT $this->col FROM $this->form_data_table");
-        $ret = $this->execStatement(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT $this->col FROM $this->form_data_table");
+        $ret = $this->db->execStatement(PDO::FETCH_ASSOC);
         if($ret[0]){
             return true;
         }else{
@@ -432,17 +461,26 @@ class FormLayoutBuilder extends dbHelper {
      * @param $data
      * @return array
      */
-//    private function sinatizedData($data){
-//        foreach($data as $option => $val){
-//            if($val == '') unset($data[$option]);
-//            if($val == 'on'){
-//                $data[$option] = 'true';
-//            }elseif($val == 'off'){
-//                $data[$option] = 'false';
-//            }
-//        }
-//        return $data;
-//    }
+    private function sinatizedData($data){
+        foreach($data as $option => $val){
+            if($val == '' || $val == null) unset($data[$option]);
+            if($option == 'hideLabel' || $option == 'checkboxToggle' || $option == 'collapsed' || $option == 'collapsible'){
+                if($val == 0){
+                    $data[$option] = false;
+                }else{
+                    $data[$option] = true;
+                }
+
+            }
+
+            if($val == 'on'){
+                $data[$option] = 'true';
+            }elseif($val == 'off'){
+                $data[$option] = 'false';
+            }
+        }
+        return $data;
+    }
 
     /**
      * This function is call after every sql statement and
@@ -465,9 +503,9 @@ class FormLayoutBuilder extends dbHelper {
      * @return array
      */
     public function getForms(){
-        $this->setSQL("SELECT * FROM forms_layout");
+        $this->db->setSQL("SELECT * FROM forms_layout");
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);
         }
         return $rows;
@@ -478,22 +516,25 @@ class FormLayoutBuilder extends dbHelper {
      * @return array
      */
     public function getParentFields(stdClass $params){
-        $this->setSQL("Select CONCAT(fo.ovalue, ' (',ff.xtype ,')' ) AS name, ff.id as value
+        $this->db->setSQL("Select ff.id, ff.xtype
                          FROM forms_fields AS ff
-                    LEFT JOIN forms_field_options AS fo
-                           ON ff.id = fo.field_id
                     LEFT JOIN forms_layout AS fl
                            ON fl.id = ff.form_id
                         WHERE (fl.name  = '$params->currForm' OR fl.id    = '$params->currForm')
                           AND (ff.xtype = 'fieldcontainer'    OR ff.xtype = 'fieldset')
-                          AND (fo.oname = 'title'             OR fo.oname = 'fieldLabel')
-                     ORDER BY pos");
-        $rows = array();
-        array_push($rows, array('name' => 'Root', 'value' => 0));
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
-            array_push($rows, $row);
+                     ORDER BY ff.pos");
+        $parentFields = array();
+        array_push($parentFields, array('name' => 'Root', 'value' => 0));
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $parentField){
+            $id = $parentField['id'];
+            $this->db->setSQL("SELECT options FROM forms_field_options WHERE field_id = '$id'");
+            $fo = $this->db->fetch();
+            $foo = json_decode($fo['options'],true);
+            $row['name']  =  $foo['title'].$foo['fieldLabel'].' ('.$parentField['xtype'].')';
+            $row['value'] =  $parentField['id'];
+            array_push($parentFields, $row);
         }
-       return $rows;
+       return $parentFields;
     }
 
     /**
@@ -502,26 +543,27 @@ class FormLayoutBuilder extends dbHelper {
      */
     public function getFormFieldsTree(stdClass $params){
         $fields = array();
-
-        $this->setSQL("Select * FROM forms_fields WHERE form_id = '$params->currForm' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
-        $results = $this->execStatement(PDO::FETCH_ASSOC);
-        foreach($results as $item){
-            $opts = $this->getItmesOptions($item['id']);
-            foreach($opts as $opt => $val){
-                $item[$opt] = $val;
-            }
-            $item['children'] = $this->getChildItems($item['id']);
-            if($item['children'] == null) {
-                unset($item['children']);
-                if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
-            }else{
-                if($item['collapsed'] == 'collapsed'){
-                    $item['expanded'] = false;
-                }else{
-                    $item['expanded'] = true;
+        if(isset($params->currForm)){
+            $this->db->setSQL("Select * FROM forms_fields WHERE form_id = '$params->currForm' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
+            $results = $this->db->execStatement(PDO::FETCH_ASSOC);
+            foreach($results as $item){
+                $opts = $this->getItmesOptions($item['id']);
+                foreach($opts as $opt => $val){
+                    $item[$opt] = $val;
                 }
+                $item['children'] = $this->getChildItems($item['id']);
+                if($item['children'] == null) {
+                    unset($item['children']);
+                    if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
+                }else{
+                    if($item['collapsed']== 0){
+                        $item['expanded'] = true;
+                    }else{
+                        $item['expanded'] = false;
+                    }
+                }
+                array_push($fields,$item);
             }
-            array_push($fields,$item);
         }
         return $fields;
     }
@@ -532,8 +574,8 @@ class FormLayoutBuilder extends dbHelper {
      */
     private function getChildItems($parent){
         $items = array();
-        $this->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $item){
+        $this->db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
             $opts = $this->getItmesOptions($item['id']);
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;
@@ -543,10 +585,10 @@ class FormLayoutBuilder extends dbHelper {
                 unset($item['children']);
                 if($item['xtype'] != 'fieldset' && $item['xtype'] != 'fieldcontainer') $item['leaf'] = true;
             }else{
-                if($item['collapsed'] == 'true'){
-                    $item['expanded'] = false;
-                }else{
+                if($item['collapsed'] == 0){
                     $item['expanded'] = true;
+                }else{
+                    $item['expanded'] = false;
                 }
             }
             array_push($items,$item);
@@ -560,16 +602,11 @@ class FormLayoutBuilder extends dbHelper {
      */
     private function getItmesOptions($item_id){
         $foo = array();
-        $this->setSQL("Select * FROM forms_field_options WHERE field_id = '$item_id'");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $option){
-            if(is_numeric($option['ovalue'])){      // if the string is numeric intval() the value to remove the comas
-                $option['ovalue'] = intval($option['ovalue']);
-            }elseif($option['ovalue'] == 'true'){   // if the sring is true let change the value to a bool
-                $option['ovalue'] = true;
-            }elseif($option['ovalue'] == 'false'){  // if the sring is false let change the value to a bool
-                $option['ovalue'] = false;
-            }
-            $foo[$option['oname']] = $option['ovalue'];
+        $this->db->setSQL("Select options FROM forms_field_options WHERE field_id = '$item_id'");
+        $options = $this->db->fetch();
+        $options = json_decode($options['options'],true);
+        foreach($options as $option => $value){
+            $foo[$option] = $value;
         }
         return $foo;
     }
