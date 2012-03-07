@@ -216,7 +216,7 @@ class dbHelper {
      * @return      string cunstructed SQL string
      */
 
-	function sqlBind($BindFieldsArray, $Table, $InsertOrUpdateu='I', $Where)
+	function sqlBind($BindFieldsArray, $Table, $InsertOrUpdate='I', $Where)
     {
         if(isset($BindFieldsArray['__utma']))   unset($BindFieldsArray['__utma']);
         if(isset($BindFieldsArray['__utmz']))   unset($BindFieldsArray['__utmz']);
@@ -226,9 +226,9 @@ class dbHelper {
 		/**
          * Step 1 -  Create the INSERT or UPDATE Clause
          */
-		$iu = strtolower($InsertOrUpdateu);
-		if ($InsertOrUpdateu == 'i') $sql = 'INSERT INTO '.$Table;
-		elseif($InsertOrUpdateu == 'u') $sql = 'UPDATE '.$Table;
+		$iu = strtolower($InsertOrUpdate);
+		if ($InsertOrUpdate == 'i') $sql = 'INSERT INTO '.$Table;
+		elseif($InsertOrUpdate == 'u') $sql = 'UPDATE '.$Table;
 
 		/**
          * Step 2 -  Create the SET clause
@@ -250,7 +250,7 @@ class dbHelper {
 		/**
          * Step 3 - Create the WHERE clause, if applicable
          */
-		if ($InsertOrUpdateu == 'u'){ $sql .= ' WHERE ' . $Where; }
+		if ($InsertOrUpdate == 'u'){ $sql .= ' WHERE ' . $Where; }
 		return $sql;
 	}
 
