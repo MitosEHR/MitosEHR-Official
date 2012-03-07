@@ -22,8 +22,8 @@ Ext.define('App.model.patientfile.Dental', {
 	proxy : {
 		type: 'direct',
 		api : {
-			read  : Immunization.getDental,
-			create: Immunization.addDental
+			read  : Medical.getDental,
+			create: Medical.addDental
 		}
 	}
 });
