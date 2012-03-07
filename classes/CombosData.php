@@ -7,40 +7,49 @@
  * Time: 2:28 PM
  */
 if(!isset($_SESSION)){
-    session_name ("MitosEHR" );
+    session_name ('MitosEHR');
     session_start();
     session_cache_limiter('private');
 }
-include_once("dbHelper.php");
+include_once('dbHelper.php');
+class CombosData {
 
-
-class CombosData extends dbHelper {
-
-
+    /**
+     * @var dbHelper
+     */
+    private $db;
+    /**
+     * Creates the dbHelper instance
+     */
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
     /**
      * @param stdClass $params
      * @internal param $list_id
      * @return array
      */
     public function getOptionsByListId(stdClass $params){
-        $this->setSQL("SELECT o.option_name,
+        $params->list_id = (isset($params->list_id)) ? $params->list_id : 1;
+        $this->db->setSQL("SELECT o.option_name,
                               o.option_value
                          FROM combo_lists_options AS o
                     LEFT JOIN combo_lists AS l ON l.id = o.list_id
                         WHERE l.id = '$params->list_id'
                      ORDER BY o.seq");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getUsers(){
-        include_once("Person.php");
+        include_once('Person.php');
         $sql = "SELECT id, title, fname, mname, lname
                   FROM users
                  WHERE username != '' AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' )
               ORDER BY lname, fname";
-        $this->setSQL($sql);
+        $this->db->setSQL($sql);
         $rows =array();
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $row) {
+        foreach ($this->db->execStatement(PDO::FETCH_ASSOC) as $row) {
             $row['name'] = $row['title'].' '.Person::fullname($row['fname'],$row['mname'],$row['lname']);
             unset($row['title'],$row['fname'],$row['mname'],$row['lname']);
             array_push($rows,$row);
@@ -49,33 +58,33 @@ class CombosData extends dbHelper {
     }
 
     public function getLists(){
-        $this->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getFacilities(){
-        $this->setSQL("SELECT id, name FROM facility WHERE service_location != 0 ORDER BY name");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT id, name FROM facility WHERE service_location != 0 ORDER BY name");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getRoles(){
-        $this->setSQL("SELECT id, role_name FROM acl_roles ORDER BY role_name");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT id, role_name FROM acl_roles ORDER BY role_name");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getCodeTypes(){
-        $this->setSQL("SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getCalendarCategories(){
-        $this->setSQL("SELECT catid, catname FROM calendar_categories ORDER BY cattype, catname");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT catid, catname FROM calendar_categories ORDER BY cattype, catname");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getLanguages(){
-        $this->setSQL("SELECT lang_code, lang_description FROM lang_languages ORDER BY lang_description");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        $this->db->setSQL("SELECT lang_code, lang_description FROM lang_languages ORDER BY lang_description");
+        return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
 
     public function getAuthorizations(){
@@ -137,10 +146,10 @@ class CombosData extends dbHelper {
             4 => array("id"=> 5,   "name" => "CheckBox Field",          "value" => "mitos.checkbox"),
             5 => array("id"=> 6,   "name" => "Slelect List / Combo Box","value" => "combobox"),
             6 => array("id"=> 7,   "name" => "Radio Field",             "value" => "radiofield"),
-            6 => array("id"=> 7,   "name" => "Date/Time Field",         "value" => "mitos.datetime"),
-            7 => array("id"=> 8,   "name" => "Date Field",              "value" => "datefield"),
-            8 => array("id"=> 9,   "name" => "Time Field",              "value" => "timefield"),
-            9 => array("id"=> 10,  "name" => "Number Field",            "value" => "numberfield")
+            7 => array("id"=> 8,   "name" => "Date/Time Field",         "value" => "mitos.datetime"),
+            8 => array("id"=> 9,   "name" => "Date Field",              "value" => "datefield"),
+            9 => array("id"=> 10,   "name" => "Time Field",              "value" => "timefield"),
+            10 => array("id"=> 11,  "name" => "Number Field",            "value" => "numberfield")
         );
     }
 

@@ -8,63 +8,63 @@
  *
  * @namespace Patient.patientLiveSearch
  */
-Ext.define('Ext.mitos.classes.LivePatientSearch',{
-    extend      : 'Ext.form.ComboBox',
-    alias       : 'widget.patienlivetsearch',
-    hideLabel	: true,
-    initComponent: function(){
-        var me = this;
-        
-        Ext.define('patientLiveSearchModel', {
-            extend: 'Ext.data.Model',
-            fields: [
-                {name: 'pid', 		type: 'int'},
-                {name: 'pubpid', 	type: 'int'},
-                {name: 'fullname', 	type: 'string'},
-                {name: 'DOB', 	    type: 'string'},
-                {name: 'SS', 	    type: 'string'}
-            ],
-            proxy: {
-                type: 'direct',
-                api: {
-                    read: Patient.patientLiveSearch
-                },
-                reader: {
-                    totalProperty	: 'totals',
-                    root			: 'rows'
-                }
-            }
-        });
+Ext.define('App.classes.LivePatientSearch', {
+	extend       : 'Ext.form.ComboBox',
+	alias        : 'widget.patienlivetsearch',
+	hideLabel    : true,
+	initComponent: function() {
+		var me = this;
 
-        me.store = Ext.create('Ext.data.Store', {
-            model: 'patientLiveSearchModel',
-            pageSize	: 10,
-            autoLoad: false
-        });
+		Ext.define('patientLiveSearchModel', {
+			extend: 'Ext.data.Model',
+			fields: [
+				{name: 'pid', type: 'int'},
+				{name: 'pubpid', type: 'int'},
+				{name: 'fullname', type: 'string'},
+				{name: 'DOB', type: 'string'},
+				{name: 'SS', type: 'string'}
+			],
+			proxy : {
+				type  : 'direct',
+				api   : {
+					read: Patient.patientLiveSearch
+				},
+				reader: {
+					totalProperty: 'totals',
+					root         : 'rows'
+				}
+			}
+		});
 
-        Ext.apply(this, {
-            store		: me.store,
-            displayField: 'fullname',
-            valueField  : 'pid',
-            emptyText	: me.emptyText,
-            typeAhead	: false,
-            hideTrigger	: true,
-            minChars	: 1,
-            anchor		: '100%',
-            listConfig: {
-                loadingText	: 'Searching...',
-                //emptyText	: 'No matching posts found.',
-                //---------------------------------------------------------------------
-                // Custom rendering template for each item
-                //---------------------------------------------------------------------
-                getInnerTpl: function() {
-                    return '<div class="search-item"><h3><span>{fullname}</span>&nbsp;&nbsp;({pid})</h3>DOB:&nbsp;{DOB}&nbsp;SS:&nbsp;{SS}</div>';
-                }
-            },
-            pageSize: 10
-        }, null);
+		me.store = Ext.create('Ext.data.Store', {
+			model   : 'patientLiveSearchModel',
+			pageSize: 10,
+			autoLoad: false
+		});
 
-        me.callParent();
-    }
+		Ext.apply(this, {
+			store       : me.store,
+			displayField: 'fullname',
+			valueField  : 'pid',
+			emptyText   : me.emptyText,
+			typeAhead   : false,
+			hideTrigger : true,
+			minChars    : 1,
+			anchor      : '100%',
+			listConfig  : {
+				loadingText: 'Searching...',
+				//emptyText	: 'No matching posts found.',
+				//---------------------------------------------------------------------
+				// Custom rendering template for each item
+				//---------------------------------------------------------------------
+				getInnerTpl: function() {
+					return '<div class="search-item"><h3><span>{fullname}</span>&nbsp;&nbsp;({pid})</h3>DOB:&nbsp;{DOB}&nbsp;SS:&nbsp;{SS}</div>';
+				}
+			},
+			pageSize    : 10
+		}, null);
+
+		me.callParent();
+	}
 
 });

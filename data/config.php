@@ -14,10 +14,31 @@ $API = array(
             'getEncounter'=>array(
                'len'=>1
             ),
+            'updateEncounter'=>array(
+               'len'=>1
+            ),
             'getVitals'=>array(
                'len'=>1
             ),
+            'addVitals'=>array(
+               'len'=>1
+            ),
             'createEncounter'=>array(
+                'len'=>1
+            ),
+            'updateSoapById'=>array(
+                'len'=>1
+            ),
+            'updateReviewOfSystemsChecksById'=>array(
+                'len'=>1
+            ),
+            'updateReviewOfSystemsById'=>array(
+                'len'=>1
+            ),
+            'updateDictationById'=>array(
+                'len'=>1
+            ),
+            'getProgressNoteByEid'=>array(
                 'len'=>1
             ),
             'closeEncounter'=>array(
@@ -91,6 +112,24 @@ $API = array(
 
     ),
     /**
+    * Immunizations Functions
+    */
+    'Immunization'=>array(
+        'methods'=>array(
+            'getImmunizationsList'=>array(
+               'len'=>0
+            ),
+            'getPatientImmunizations'=>array(
+               'len'=>1
+            ),
+            'addPatientImmunization'=>array(
+               'len'=>1
+            )
+        ),
+
+    ),
+    /**
+    /**
     * AddressBook Functions
     */
     'AddressBook'=>array(
@@ -113,7 +152,7 @@ $API = array(
     'Practice'=>array(
         'methods'=>array(
             'getPharmacies'=>array(
-               'len'=>1
+               'len'=>0
             ),
             'addPharmacy'=>array(
                 'len'=>1
@@ -122,7 +161,7 @@ $API = array(
                 'len'=>1
             ),
             'getInsurances'=>array(
-                'len'=>1
+                'len'=>0
             ),
             'addInsurance'=>array(
                 'len'=>1
@@ -277,6 +316,9 @@ $API = array(
             ),
             'getPatientDemographicData'=>array(
             	'len'=>1
+            ),
+            'getPatientsByPoolArea'=>array(
+            	'len'=>1
             )
 
         )
@@ -306,6 +348,9 @@ $API = array(
             	'len'=>1
             ),
             'updateMyAccount'=>array(
+            	'len'=>1
+            ),
+            'verifyUserPass'=>array(
             	'len'=>1
             )
 
@@ -385,7 +430,7 @@ $API = array(
     'Navigation'=>array(
         'methods'=>array(
             'getNavigation'=>array(
-                'len'=>1
+                'len'=>0
             )
         )
     ),
