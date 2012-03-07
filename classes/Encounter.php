@@ -207,17 +207,9 @@ class Encounter {
     public function getVitals(stdClass $params)
     {
         $pid =  (isset($params->pid)) ? $params->pid : $_SESSION['patient']['pid'];
-        $this->db->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER BY date DESC");
-        $total = $this->db->rowCount();
-        $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
-            $row['height_in'] = intval($row['height_in']);
-            $row['height_cn'] = intval($row['height_cn']);
-            $row['administer'] = $this->user->getUserNameById($row['uid']);
-            array_push($rows, $row);
-        }
-        if($total >= 1){
-            return $rows;
+        $vitals = $this->getVitalsByPid($pid);
+        if(count($vitals) >= 1){
+            return $vitals;
         }else{
             return array("success" => true);
         }
@@ -239,7 +231,7 @@ class Encounter {
 
     //*************************************************************//
     //******************** Medical Window *************************//
-    //************************ Stuff ******************************//
+    //************************ START ******************************//
     //*************************************************************//
 
     /**
@@ -332,6 +324,12 @@ class Encounter {
         $this->db->setSQL("SELECT * FROM patient_dental WHERE eid='$eid'");
         return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
+
+    //*************************************************************//
+    //******************** Medical Window *************************//
+    //************************  END  ******************************//
+    //*************************************************************//
+
     /**
      * @param $eid
      * @return array
