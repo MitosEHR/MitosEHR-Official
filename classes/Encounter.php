@@ -432,10 +432,6 @@ class Encounter {
 
         $encounter['vitals']                = $this->getVitalsByEid($eid);
         $encounter['reviewofsystems']       = array();
-        $encounter['reviewofsystemschecks'] = array();
-        $encounter['soap']                  = array();
-        $encounter['speechdictation']       = array();
-
         foreach($this->getReviewOfSystemsByEid($eid) as $key => $value){
             if($key != 'id' && $key != 'pid' && $key != 'eid' && $key != 'uid' && $key != 'date'){
                 if($value != null && $value != 'null'){
@@ -446,6 +442,7 @@ class Encounter {
 
         }
 
+        $encounter['reviewofsystemschecks'] = array();
         $record = $this->getReviewOfSystemsChecksByEid($eid);
         foreach($record[0] as $key => $value){
             if($key != 'id' && $key != 'pid' && $key != 'eid' && $key != 'uid' && $key != 'date'){
@@ -456,10 +453,8 @@ class Encounter {
             }
         }
 
-        //$encounter['reviewofsystemschecks'] = $this->getReviewOfSystemsChecksByEid($eid);
         $encounter['soap']                  = $this->getSoapByEid($eid);
         $encounter['speechdictation']       = $this->getDictationByEid($eid);
-
 
         return $encounter;
     }
