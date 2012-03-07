@@ -7,7 +7,7 @@
  * Time: 3:26 PM
  */
 if(!isset($_SESSION)){
-    session_name ("MitosEHR" );
+    session_name ("MitosEHR");
     session_start();
     session_cache_limiter('private');
 }
@@ -58,7 +58,6 @@ class Encounter {
      */
     public function getEncounters(stdClass $params)
     {
-
         if(isset($params->sort)){
             $ORDER = 'ORDER BY ' . $params->sort[0]->property . ' ' . $params->sort[0]->direction;
         } else {
@@ -83,7 +82,6 @@ class Encounter {
      */
     public function createEncounter(stdClass $params)
     {
-
         $params->pid        = $_SESSION['patient']['pid'];
         $params->open_uid   = $_SESSION['user']['id'];
 
@@ -144,7 +142,6 @@ class Encounter {
      * @return array|mixed
      */
     public function updateEncounter(stdClass $params)
-
     {
         return array("success" => true, 'encounter' => $params);
     }
