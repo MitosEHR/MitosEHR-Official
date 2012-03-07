@@ -116,7 +116,7 @@ Ext.define('App.view.patientfile.ProgressNote', {
             '                       <td>' +
             '                           <div class="column">' +
             '                               <div class="row" style="white-space: nowrap">{date}</div>' +
-            '                              <div class="row">{weight_lbs}</div>' +
+            '                               <div class="row">{weight_lbs}</div>' +
             '                               <div class="row">{weight_kg}</div>' +
             '                               <div class="row">{height_in}</div>' +
             '                               <div class="row">{height_cm}</div>' +
