@@ -62,7 +62,7 @@ class ACL {
      * @param string $format
      * @return array
      */
-    public function getAllPerms($format='ids'){
+    public function getAllPermissions($format='ids'){
         $format = strtolower($format);
         $strSQL = "SELECT * FROM acl_permissions ORDER BY seq ASC";
         $this->conn->setSQL($strSQL);

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['generatexml',['GenerateXML',['../class_x_m_l_parser.html#abc3bdfba197d54f6a37b9cf7950e00ad',1,'XMLParser']]],
-  ['getallperms',['getAllPerms',['../class_a_c_l.html#a52a8e6475527958d575c898b47dab742',1,'ACL']]],
+  ['getAllPermissions',['getAllPermissions',['../class_a_c_l.html#a52a8e6475527958d575c898b47dab742',1,'ACL']]],
   ['getallroles',['getAllRoles',['../class_a_c_l.html#ad9d41efb9af8f1d2f8d9575069976da0',1,'ACL']]],
   ['getauthorizations',['getAuthorizations',['../class_combos_data.html#a1cc9d4b90af3fd2d18449a607edb2c20',1,'CombosData']]],
   ['getcalendarcategories',['getCalendarCategories',['../class_combos_data.html#a6c113ad96ca8b54ec0167ecccf5f0b2c',1,'CombosData']]],

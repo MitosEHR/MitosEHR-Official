@@ -115,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00023"></a>00023         $perms = array();
 <a name="l00024"></a>00024         $roles = $this-&gt;<a class="code" href="class_a_c_l.html#ad9d41efb9af8f1d2f8d9575069976da0">getAllRoles</a>();
 <a name="l00025"></a>00025         $cattegories = array(<span class="stringliteral">&#39;General&#39;</span>,<span class="stringliteral">&#39;Calendar&#39;</span>,<span class="stringliteral">&#39;Patients&#39;</span>,<span class="stringliteral">&#39;Encounters&#39;</span>,<span class="stringliteral">&#39;Demographics&#39;</span>,<span class="stringliteral">&#39;Documents&#39;</span>,<span class="stringliteral">&#39;ePrescription&#39;</span>,<span class="stringliteral">&#39;Administrators&#39;</span>,<span class="stringliteral">&#39;Miscellaneous&#39;</span>);
-<a name="l00026"></a>00026         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="class_a_c_l.html#a52a8e6475527958d575c898b47dab742">getAllPerms</a>(<span class="stringliteral">&#39;full&#39;</span>) as $perm){
+<a name="l00026"></a>00026         <span class="keywordflow">foreach</span>($this-&gt;<a class="code" href="class_a_c_l.html#a52a8e6475527958d575c898b47dab742">getAllPermissions</a>(<span class="stringliteral">&#39;full&#39;</span>) as $perm){
 <a name="l00027"></a>00027             array_push($perms,$perm);
 <a name="l00028"></a>00028         }
 <a name="l00029"></a>00029         <span class="keywordflow">foreach</span>($cattegories as $cat){
