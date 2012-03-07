@@ -229,6 +229,7 @@ class dbHelper {
 		$iu = strtolower($InsertOrUpdate);
 		if ($InsertOrUpdate == 'i') $sql = 'INSERT INTO '.$Table;
 		elseif($InsertOrUpdate == 'u') $sql = 'UPDATE '.$Table;
+        else return "No update or insert command.";
 
 		/**
          * Step 2 -  Create the SET clause
@@ -291,13 +292,13 @@ class dbHelper {
 			/**
              * Using the same, internal functions.
              */
-            $data['dtime'] = date('Y-m-d H:i:s');
-            $data['event'] = $eventLog;
-            $data['comments'] = $this->sql_statement;
-            $data['user'] = $_SESSION['user']['name'];
-            $data['checksum'] = crc32($this->sql_statement);
-            $data['facility'] = $_SESSION['site']['facility'];
-            $data['patient_id'] =  $_SESSION['patient']['id'];
+            $data['dtime']      = date('Y-m-d H:i:s');
+            $data['event']      = $eventLog;
+            $data['comments']   = $this->sql_statement;
+            $data['user']       = $_SESSION['user']['name'];
+            $data['checksum']   = crc32($this->sql_statement);
+            $data['facility']   = $_SESSION['site']['facility'];
+            $data['patient_id'] = $_SESSION['patient']['id'];
 
             $sqlStatement = $this->sqlBind($data, "log", "I");
             $this->setSQL($sqlStatement);
@@ -338,13 +339,13 @@ class dbHelper {
      *
      * @return      array of record or error if any
      */
-	function fetch()
+	function fetchRecord()
     {
 		// Get all the records
 		$recordset = $this->conn->query( $this->sql_statement );
         $err = $this->conn->errorInfo();
         if(!$err[2]){
-            return $recordset->fetch(PDO::FETCH_ASSOC);
+            return $recordset->fetchRecord(PDO::FETCH_ASSOC);
         } else {
             return $err;
         }

@@ -206,7 +206,7 @@ class FormLayoutEngine {
     function getItemsOptions($item_id){
         $foo = array();
         $this->db->setSQL("Select options FROM forms_field_options WHERE field_id = '$item_id'");
-        $options = $this->db->fetch();
+        $options = $this->db->fetchRecord();
         $options = json_decode($options['options'],true);
         foreach($options as $option => $value){
             $foo[$option] = $value;

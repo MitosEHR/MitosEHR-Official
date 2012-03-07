@@ -297,9 +297,9 @@ class Practice extends dbHelper {
      */
     private function getNextPharmacyInsuranceId(){
         $this->setSQL("SELECT id FROM pharmacies ORDER BY id DESC");
-        $prec = $this->fetch();
+        $prec = $this->fetchRecord();
         $this->setSQL("SELECT id FROM insurance_companies ORDER BY id DESC");
-        $irec = $this->fetch();
+        $irec = $this->fetchRecord();
         return max($prec['id'], $irec['id']) +1;
     }
     

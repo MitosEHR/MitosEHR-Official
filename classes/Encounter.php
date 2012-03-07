@@ -122,7 +122,7 @@ class Encounter {
     public function getEncounter(stdClass $params)
     {
         $this->db->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$params->eid'");
-        $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
+        $encounter = $this->db->fetchRecord(PDO::FETCH_ASSOC);
 
         $encounter['vitals']                = $this->getVitalsByPid($encounter['pid']);
         $encounter['reviewofsystems']       = $this->getReviewOfSystemsByEid($params->eid);
@@ -352,7 +352,7 @@ class Encounter {
     public function getReviewOfSystemsByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM form_data_review_of_systems WHERE eid = '$eid' ORDER BY date DESC");
-        $record = $this->db->fetch();
+        $record = $this->db->fetchRecord();
         foreach($record as $key => $val){
             $record[$key] =  ($val == null)? 'null' : $val;
         }
@@ -421,7 +421,7 @@ class Encounter {
     public function getProgressNoteByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$eid'");
-        $encounter = $this->db->fetch(PDO::FETCH_ASSOC);
+        $encounter = $this->db->fetchRecord(PDO::FETCH_ASSOC);
         $encounter['start_date']            = date('F j, Y, g:i a',strtotime($encounter['start_date']));
         $encounter['patient_name']          = $this->patient->getPatientFullNameByPid($encounter['pid']);
         $encounter['open_by']               = $this->user->getUserNameById($encounter['open_uid']);

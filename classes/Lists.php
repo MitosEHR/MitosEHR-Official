@@ -168,7 +168,7 @@ class Lists extends dbHelper {
                          FROM forms_field_options
                         WHERE oname = 'list_id'
                           AND ovalue = '$params->id'");
-        $rec = $this->fetch();
+        $rec = $this->fetchRecord();
 
         if($rec['count(*)'] == 0){
 
