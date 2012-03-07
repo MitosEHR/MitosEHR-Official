@@ -216,30 +216,28 @@ class dbHelper {
      * @return      string cunstructed SQL string
      */
 
-	function sqlBind($b_array, $table, $iu='I', $where)
+	function sqlBind($BindFieldsArray, $Table, $InsertOrUpdateu='I', $Where)
     {
-        if(isset($b_array['__utma']))   unset($b_array['__utma']);
-        if(isset($b_array['__utmz']))   unset($b_array['__utmz']);
-        if(isset($b_array['MitosEHR'])) unset($b_array['MitosEHR']);
+        if(isset($BindFieldsArray['__utma']))   unset($BindFieldsArray['__utma']);
+        if(isset($BindFieldsArray['__utmz']))   unset($BindFieldsArray['__utmz']);
+        if(isset($BindFieldsArray['MitosEHR'])) unset($BindFieldsArray['MitosEHR']);
 
         $sql = '';
 		/**
          * Step 1 -  Create the INSERT or UPDATE Clause
          */
-		$iu = strtolower($iu);
-		if ($iu == 'i'){
-            $sql = 'INSERT INTO '.$table;
-		} elseif($iu == 'u'){
-            $sql = 'UPDATE '.$table;
-		}
+		$iu = strtolower($InsertOrUpdateu);
+		if ($InsertOrUpdateu == 'i') $sql = 'INSERT INTO '.$Table;
+		elseif($InsertOrUpdateu == 'u') $sql = 'UPDATE '.$Table;
+
 		/**
          * Step 2 -  Create the SET clause
          */
         $sql .= ' SET ';
-		foreach($b_array as $key => $value){
-			if( $where <> ($key . "='" . addslashes($value) . "'") &&
-                $where <> ($key . "="  . addslashes($value)) &&
-                $where <> ($key . '="' . addslashes($value) . '"')){
+		foreach($BindFieldsArray as $key => $value){
+			if( $Where <> ($key . "='" . addslashes($value) . "'") &&
+                $Where <> ($key . "="  . addslashes($value)) &&
+                $Where <> ($key . '="' . addslashes($value) . '"')){
 				$sql .= $key . "='" . trim(addslashes($value)) . "', ";
 			}else{
                 return array(
@@ -252,7 +250,7 @@ class dbHelper {
 		/**
          * Step 3 - Create the WHERE clause, if applicable
          */
-		if ($iu == 'u'){ $sql .= ' WHERE ' . $where; }
+		if ($InsertOrUpdateu == 'u'){ $sql .= ' WHERE ' . $Where; }
 		return $sql;
 	}
 
@@ -291,7 +289,7 @@ class dbHelper {
 			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
 
 			/**
-             * Prepare the SQL statement first, and then execute.
+             * Using the same, internal functions.
              */
             $data['dtime'] = date('Y-m-d H:i:s');
             $data['event'] = $eventLog;
