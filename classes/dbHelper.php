@@ -284,24 +284,27 @@ class dbHelper {
 
             $this->lastInsertId = $this->conn->lastInsertId();
 
-			if (stristr($this->sql_statement, "INSERT")) { $eventLog = "Record insertion"; }
+            $eventLog = "Event triggered but never defined.";
+			if (stristr($this->sql_statement, "INSERT")) $eventLog = "Record insertion";
 			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
 			if (stristr($this->sql_statement, "UPDATE")) $eventLog = "Record update";
 			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
+
 			/**
              * Prepare the SQL statement first, and then execute.
              */
-            $sql = "INSERT INTO	log (date, facility, event, comments, user, patient_id, checksum)
-            		VALUES (:dtime, :facility, :event, :comments, :user, :patient_id, :checksum)";
-			$stmt = $this->conn->prepare($sql);
-			$stmt->bindParam(':dtime', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-            $stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
-			$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
-			$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
-			$stmt->bindParam(':checksum', crc32($this->sql_statement), PDO::PARAM_STR);
-			$stmt->bindParam(':facility', $_SESSION['site']['facility'], PDO::PARAM_STR);
-			$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
-			$stmt->execute();
+            $data['dtime'] = date('Y-m-d H:i:s');
+            $data['event'] = $eventLog;
+            $data['comments'] = $this->sql_statement;
+            $data['user'] = $_SESSION['user']['name'];
+            $data['checksum'] = crc32($this->sql_statement);
+            $data['facility'] = $_SESSION['site']['facility'];
+            $data['patient_id'] =  $_SESSION['patient']['id'];
+
+            $sqlStatement = $this->sqlBind($data, "log", "I");
+            $this->setSQL($sqlStatement);
+            $this->execStatement();
+
 		}
 		return $this->conn->errorInfo();
 	}
