@@ -902,48 +902,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 
-
-	/*onSave: function(btn) {
-		var form = btn.up('form').getForm(),
-			record = form.getRecord(),
-			values = form.getValues(),
-			store = this.patientImmuListStore,
-			storeIndex = store.indexOf(record);
-		if(storeIndex == -1) {
-			store.add(values);
-		} else {
-			record.set(values);
-		}
-		store.sync();
-	},
-
-	 onSaveAllergies: function(btn) {
-	 var form = btn.up('form').getForm(),
-	 record = form.getRecord(),
-	 values = form.getValues(),
-	 store = this.patienAllergiesListStore,
-	 storeIndex = store.indexOf(record);
-	 if(storeIndex == -1) {
-	 store.add(values);
-	 } else {
-	 record.set(values);
-	 }
-	 store.sync();
-	 },
-	 onSaveMedicalIssues: function(btn) {
-	 var form = btn.up('form').getForm(),
-	 record = form.getRecord(),
-	 values = form.getValues(),
-	 store = this.patientMedicalIssuesStore,
-	 storeIndex = store.indexOf(record);
-	 if(storeIndex == -1) {
-	 store.add(values);
-	 } else {
-	 record.set(values);
-	 }
-	 store.sync();
-	 }, */
-
 	onSave:function(btn) {
 
 		var form = btn.up('form').getForm(),
