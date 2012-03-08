@@ -23,14 +23,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		var me = this;
 
-
 		me.ImmuListStore = Ext.create('App.store.patientfile.Immunization');
-		me.patientImmuListStore =Ext.create('App.store.patientfile.PatientImmunization');
+		me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization');
 		me.patienAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
 		me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues');
 		me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
 		me.patientDentalStore = Ext.create('App.store.patientfile.Dental');
-
 
 		me.items = [
 			{
@@ -1026,44 +1024,20 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.doLayout();
 	},
-	/*newImmunization: function() {
-		var me = this, form, model;
-
-
-
-		form = this.getLayout().getActiveItem().getComponent('immuNorth');
-		form = form.down('form');
-		form.getForm().reset();
-		model = Ext.ModelManager.getModel('App.model.patientfile.Immunization');
-		model = Ext.ModelManager.create({
-			lot_number: '1'
-		}, model);
-		form.getForm().loadRecord(model);
-		me.form.show();
-
-
-
-
-	},*/
-
 
 	onAddImmunization: function() {
 		var	northContainer = this.getLayout().getActiveItem().getComponent('immuNorth'),
 			form = northContainer.down('form').getForm(),
             model = Ext.ModelManager.getModel('App.model.patientfile.PatientImmunization');
-
         model = Ext.ModelManager.create({
             pid : app.currPatient.pid,
             administered_uid : user.id,
             administered_date : new Date(),
             education_date : new Date(),
             vis_date : new Date()
-
         }, model);
-        say(model);
         form.reset();
         form.loadRecord(model);
-
 		northContainer.show();
 		northContainer.expand(true);
 	},
