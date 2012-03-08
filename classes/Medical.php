@@ -59,6 +59,20 @@ class Medical {
         return $this->getImmunizationsByPid($params->pid);
     }
 
+    public function addPatientImmunization(stdClass $params)
+    {
+        $data = get_object_vars($params);
+        unset($data['id']);
+
+        $data['administered_date'] = $this->parseDate($data['administered_date']);
+        $data['education_date'] = $this->parseDate($data['education_date']);
+        $data['vis_date'] = $this->parseDate($data['vis_date']);
+
+        $this->db->setSQL($this->db->sqlBind($data, 'patient_immunizations', 'I'));
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
+        return $params;
+    }
 
     /*********************************************
      * METHODS USED BY PHP                       *
@@ -155,7 +169,14 @@ class Medical {
         $this->db->setSQL("SELECT * FROM patient_dental WHERE eid='$eid'");
         return $this->db->execStatement(PDO::FETCH_ASSOC);
     }
-
+    /**
+     * @param $date
+     * @return mixed
+     */
+    public function parseDate($date)
+    {
+        return str_replace('T', ' ', $date);
+    }
 
 }
 //

@@ -945,32 +945,30 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		var form = btn.up('form').getForm(),
 			record = form.getRecord(),
-			store,
-			values = form.getValues();
-		if(btn.itemId == 'SaveImmunization'){
+            values = form.getValues(),
+			store, storeIndex;
 
+		if(btn.itemId == 'SaveImmunization'){
 			 store = this.patientImmuListStore;
 		}
 		else if(btn.itemId == 'SaveAllergies'){
-
 			store = this.patienAllergiesListStore;
 		}
 		else if(btn.itemId == 'SaveMedicalIssues'){
-
 			 store = this.patientMedicalIssuesStore;
 		}
 		else if(btn.itemId == 'SaveSurgery'){
-
 			 store = this.patientSurgeryStore;
 		}
 		else if(btn.itemId == 'SaveDental'){
-
 			 store = this.patientDentalStore;
 		}
 
-		var	storeIndex = store.indexOf(record);
+		storeIndex = store.indexOf(record);
+
 		if(storeIndex == -1) {
-			store.add(values);
+            record.set(values);
+			store.add(record);
 		} else {
 			record.set(values);
 		}
@@ -1052,12 +1050,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	onAddImmunization: function() {
 		var	northContainer = this.getLayout().getActiveItem().getComponent('immuNorth'),
 			form = northContainer.down('form').getForm(),
-			m = Ext.create('ListsGridModel', {
+            model = Ext.ModelManager.getModel('App.model.patientfile.PatientImmunization');
 
-			});
+        model = Ext.ModelManager.create({
+            pid : app.currPatient.pid,
+            administered_uid : user.id,
+            administered_date : new Date(),
+            education_date : new Date(),
+            vis_date : new Date()
+
+        }, model);
+        say(model);
+        form.reset();
+        form.loadRecord(model);
+
 		northContainer.show();
 		northContainer.expand(true);
-		form.loadRecord(m);
 	},
 
 	onAdd: function() {
@@ -1112,7 +1120,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			textField = this.down('form').getComponent('immuName'),
 			value = record.data.code;
 		textField.setValue(value);
-		gridPanel.up('form').collapse(true);
+		//gridPanel.up('form').collapse(true);
 	},
 
 	cardSwitch: function(btn) {
@@ -1140,6 +1148,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 	onMedicalWinShow: function() {
-		this.patientImmuListStore.load();
+		this.patientImmuListStore.load({params:{pid:app.currPatient.pid}});
 	}
 });
