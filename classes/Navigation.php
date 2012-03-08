@@ -41,7 +41,7 @@ class Navigation {
         // *************************************************************************************
         // Patient Folder
         // *************************************************************************************
-        array_push( $nav, array( 'text' => 'Patient', 'cls' => 'folder', 'expanded' => false, 'children' =>
+        array_push( $nav, array( 'text' => 'Patient', 'cls' => 'folder', 'expanded' => true, 'children' =>
             array(
                 array( 'text' => $this->t['new_patient'][$this->lang],      'disabled'=> ($this->ACL->hasPermission('add_patient')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelNewPatient' ),
                 array( 'text' => $this->t['patient_summary'][$this->lang],  'disabled'=> ($this->ACL->hasPermission('access_patient_summary')? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelSummary' ),
@@ -89,7 +89,7 @@ class Navigation {
         // *************************************************************************************
         // Miscellaneous Folder
         // *************************************************************************************
-        array_push( $nav, array( 'text' => 'Miscellaneous', 'cls' => 'folder', 'expanded' => true, 'children' =>
+        array_push( $nav, array( 'text' => 'Miscellaneous', 'cls' => 'folder', 'expanded' => false, 'children' =>
             array(
                 array( 'text' => 'Web Search',      'leaf' => true, 'cls' => 'file', 'id' => 'panelWebsearch' ),
                 array( 'text' => 'Address Book',    'leaf' => true, 'cls' => 'file', 'id' => 'panelAddressbook' ),

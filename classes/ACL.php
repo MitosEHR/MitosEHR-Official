@@ -64,7 +64,7 @@ class ACL {
      * @return array
      * NOTES: The foreach can be replaced by LINQ for PHP.
      */
-    public function getAllPerms($format='ids'){
+    public function getAllPermissions($format='ids'){
         $format = strtolower($format);
         $strSQL = "SELECT * FROM acl_permissions ORDER BY seq ASC";
         $this->conn->setSQL($strSQL);

@@ -7,20 +7,30 @@
  * Time: 11:28 AM
  */
 if(!isset($_SESSION)){
-    session_name ( "MitosEHR" );
+    session_name ( 'MitosEHR' );
     session_start();
     session_cache_limiter('private');
 }
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-include_once($_SESSION['site']['root']."/classes/Person.php");
-class Calendar extends dbHelper {
-
+include_once('dbHelper.php');
+include_once('Person.php');
+class Calendar {
+    /**
+     * @var dbHelper
+     */
+    private $db;
+    /**
+     * Creates the dbHelper instance
+     */
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
     public function getCalendars(){
         $color = -4;
         $sql = ("SELECT * FROM users WHERE calendar = '1' AND authorized = '1' AND active = '1' ORDER BY username");
-        $this->setSQL($sql);
+        $this->db->setSQL($sql);
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
             if($color > 32){ $color = $color - 30; }
             $color = $color + 5;
             $cla_user['id'] = $row['id'];
@@ -35,9 +45,9 @@ class Calendar extends dbHelper {
     public function getEvents(stdClass $params){
 
         $sql = ("SELECT * FROM calendar_events WHERE start BETWEEN '".$params->startDate." 00:00:00' AND '".$params->endDate." 23:59:59' ");
-        $this->setSQL($sql);
+        $this->db->setSQL($sql);
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
             $row['id']                  = intval($row['id']);
             $row['user_id']             = intval($row['user_id']);
             $row['category']            = intval($row['category']);
@@ -46,8 +56,8 @@ class Calendar extends dbHelper {
             $row['patient_id']          = intval($row['patient_id']);
 
             $sql = ("SELECT * FROM form_data_demographics WHERE pid= '".$row['patient_id']."'");
-            $this->setSQL($sql);
-            foreach($this->execStatement(PDO::FETCH_ASSOC) as $urow){
+            $this->db->setSQL($sql);
+            foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $urow){
             $row['title'] = Person::fullname($urow['fname'],$urow['mname'],$urow['lname']);
             }
             array_push($rows, $row);
@@ -59,8 +69,8 @@ class Calendar extends dbHelper {
     public function addEvent(stdClass $params){
 
         $sql = "SELECT fname, mname, lname FROM form_data_demographics WHERE pid='$params->patient_id'";
-        $this->setSQL($sql);
-        $rec = $this->fetch();
+        $this->db->setSQL($sql);
+        $rec = $this->db->fetch();
         $fullName = Person::fullname($rec['fname'],$rec['mname'],$rec['lname']);
 
         $row['user_id']             = $params->user_id;
@@ -78,9 +88,9 @@ class Calendar extends dbHelper {
         $row['url']                 = $params->url;
         $row['ad']                  = $params->ad;
 
-        $sql = $this->sqlBind($row, "calendar_events", "I");
-        $this->setSQL($sql);
-        $ret = $this->execLog();
+        $sql = $this->db->sqlBind($row, "calendar_events", "I");
+        $this->db->setSQL($sql);
+        $ret = $this->db->execLog();
         // ********************************************************************
         // If no error found, return the same record back to the calendar
         // ********************************************************************
@@ -88,9 +98,9 @@ class Calendar extends dbHelper {
             echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
         } else {
             $sql = ("SELECT * FROM calendar_events WHERE id = '".$this->lastInsertId."' ");
-            $this->setSQL($sql);
+            $this->db->setSQL($sql);
             $rows = array();
-            foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+            foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
                 array_push($rows, $row);
             }
             return array('success'=>true, 'message'=>'Loaded data', 'data'=>$rows);
@@ -114,15 +124,15 @@ class Calendar extends dbHelper {
         $row['url']                 = $params->url;
         $row['ad']                  = $params->ad;
 
-        $sql = $this->sqlBind($row, "calendar_events", "U", "id='" . $params->id . "'");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($row, "calendar_events", "U", "id='" . $params->id . "'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
         return array('success'=> true);
     }
 
     public function deleteEvent(stdClass $params){
-        $this->setSQL( "DELETE FROM calendar_events WHERE id='$params->id'");
-        $this->execLog();
+        $this->db->setSQL( "DELETE FROM calendar_events WHERE id='$params->id'");
+        $this->db->execLog();
         return array('success'=> true);
     }
 }

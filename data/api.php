@@ -35,7 +35,7 @@ $cfg = array(
 	'actions'=>$actions
 );
 
-echo 'Ext.ns("Ext.mitos.data"); Ext.mitos.data.REMOTING_API = ';
+echo 'Ext.ns("App.data"); App.data.REMOTING_API = ';
 
 echo json_encode($cfg);
 echo ';';

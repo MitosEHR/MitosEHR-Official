@@ -9,7 +9,7 @@
 // Remember, this file is called via the Framework Store, this is the AJAX thing.
 //--------------------------------------------------------------------------------------------------------------------------
 
-session_name ( "MitosEHR" );
+session_name("MitosEHR");
 session_start();
 session_cache_limiter('private');
 
@@ -30,7 +30,7 @@ $mitos_db = new dbHelper();
 // Flag the message to delete
 // *************************************************************************************
 
-$data = json_decode ( $_POST['row'] );
+$data = json_decode($_POST['row']);
 $delete_id = $data[0]->id;
 
 // *************************************************************************************
@@ -41,10 +41,10 @@ $sql = "DELETE FROM facility WHERE id='" . $delete_id . "'";
 $mitos_db->setSQL($sql);
 $ret = $mitos_db->execOnly();
 
-if ( $ret == "" ){
-	echo '{ success: false, errors: { reason: "'. $ret[2] .'" }}';
+if ($ret == "") {
+    echo '{ success: false, errors: { reason: "' . $ret[2] . '" }}';
 } else {
-	echo "{ success: true }";
+    echo "{ success: true }";
 }
 
 ?>

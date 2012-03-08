@@ -11,9 +11,20 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-class Facilities extends dbHelper {
+include_once('dbHelper.php');
 
+class Facilities {
+    /**
+     * @var dbHelper
+     */
+    private $db;
+    /**
+     * Creates the dbHelper instance
+     */
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
     /**
      * @param stdClass $params
      * @return array
@@ -31,9 +42,9 @@ class Facilities extends dbHelper {
             $orderx = 'name';
         }
         $sql = "SELECT * FROM facility WHERE $wherex ORDER BY $orderx LIMIT $params->start,$params->limit";
-        $this->setSQL($sql);
+        $this->db->setSQL($sql);
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
 
             if (strlen($row['pos_code']) <= 1){
                 $row['pos_code'] = '0'.$row['pos_code'];
@@ -55,11 +66,11 @@ class Facilities extends dbHelper {
 
         $data = get_object_vars($params);
 
-        $sql = $this->sqlBind($data, "facility", "I");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($data, "facility", "I");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
 
-        $params->id = $this->lastInsertId;
+        $params->id = $this->db->lastInsertId;
 
         return $params;
     }
@@ -75,9 +86,9 @@ class Facilities extends dbHelper {
         $id = $data['id'];
         unset($data['id']);
 
-        $sql = $this->sqlBind($data, "facility", "U", "id='$id'");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($data, "facility", "U", "id='$id'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
 
         return $params;
     }
@@ -93,8 +104,8 @@ class Facilities extends dbHelper {
 
         $sql = "UPDATE facility SET active = '0' WHERE id='$params->id'";
 
-        $this->setSQL($sql);
-        $this->execLog();
+        $this->db->setSQL($sql);
+        $this->db->execLog();
 
         return $params;
     }

@@ -14,7 +14,19 @@ include_once('Person.php');
  * @version     Vega 1.0
  * @copyright   Gnu Public License(GPLv3)
  */
-class AddressBook extends dbHelper {
+class AddressBook {
+
+    /**
+     * @var dbHelper
+     */
+    private $db;
+    /**
+     * Creates the dbHelper instance
+     */
+    function __construct(){
+        $this->db = new dbHelper();
+        return;
+    }
 
     /**
      * @param stdClass $params
@@ -24,11 +36,11 @@ class AddressBook extends dbHelper {
      */
     public function getAddresses(stdClass $params)
     {
-        $this->setSQL("SELECT *
+        $this->db->setSQL("SELECT *
                          FROM users
                         WHERE users.active = 1 AND ( users.authorized = 1 OR users.username = '' )
                         LIMIT $params->start,$params->limit");
-        $records = $this->execStatement(PDO::FETCH_ASSOC);
+        $records = $this->db->execStatement(PDO::FETCH_ASSOC);
         $total   = count($records);
         $rows    = array();
         foreach($records as $row){
@@ -48,10 +60,10 @@ class AddressBook extends dbHelper {
     public function addContact(stdClass $params)
     {
         $data = get_object_vars($params);
-        $sql = $this->sqlBind($data, "users", "I");
-        $this->setSQL($sql);
-        $this->execLog();
-        $params->id = $this->lastInsertId;
+        $sql = $this->db->sqlBind($data, "users", "I");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
         return $params;
     }
 
@@ -66,9 +78,9 @@ class AddressBook extends dbHelper {
     {
         $data = get_object_vars($params);
         unset($data['id'],$data['fullname'],$data['fulladdress']);
-        $sql = $this->sqlBind($data, "users", "U", "id='".$params->id."'");
-        $this->setSQL($sql);
-        $this->execLog();
+        $sql = $this->db->sqlBind($data, "users", "U", "id='".$params->id."'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
         $params->fullname    = Person::fullname($params->fname,$params->mname,$params->lname);
         $params->fulladdress = Person::fulladdress($params->street,$params->streetb,$params->city,$params->state,$params->zip);
         return $params;

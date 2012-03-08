@@ -23,7 +23,7 @@ class Roles extends ACL {
         $perms = array();
         $roles = $this->getAllRoles();
         $cattegories = array('General','Calendar','Patients','Encounters','Demographics','Documents','ePrescription','Administrators','Miscellaneous');
-        foreach($this->getAllPerms('full') as $perm){
+        foreach($this->getAllPermissions('full') as $perm){
             array_push($perms,$perm);
         }
         foreach($cattegories as $cat){

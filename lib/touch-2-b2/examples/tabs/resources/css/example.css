@@ -1,0 +1,17 @@
+/**
+ * Custom CSS for the tabs example
+ */
+
+body {
+    background-color: #376daa;
+}
+
+.card1,
+.card2,
+.card3 {
+    text-align: center;
+    color: #204167;
+    text-shadow: #3F80CA 0 1px 0;
+    font-size: 72px;
+    padding-top: 100px;
+}

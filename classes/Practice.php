@@ -20,9 +20,19 @@ class Practice extends dbHelper {
      */
     public function getPharmacies(){
         $rows = array();
-        $this->setSQL("SELECT p.id AS id, p.name, p.transmit_method, p.email,
-                              a.id AS address_id, a.line1, a.line2, a.city, p.active,
-                              a.state, a.zip, a.plus_four, a.country,
+        $this->setSQL("SELECT p.id AS id,
+                              p.name,
+                              p.transmit_method,
+                              p.email,
+                              p.active,
+                              a.id AS address_id,
+                              a.line1,
+                              a.line2,
+                              a.city,
+                              a.state,
+                              a.zip,
+                              a.plus_four,
+                              a.country,
                               a.foreign_id AS address_foreign_id
                          FROM pharmacies AS p
                     LEFT JOIN addresses AS a ON p.id = a.foreign_id
@@ -80,10 +90,23 @@ class Practice extends dbHelper {
      */
     public function getInsurances(){
         $rows = array();
-        $this->setSQL("SELECT i.id AS id, i.name, i.attn, i.cms_id, i.freeb_type,
-                              i.x12_receiver_id, i.x12_default_partner_id, i.active,
-                              i.alt_cms_id, a.id AS address_id, a.line1, a.line2,
-                              a.city, a.state, a.zip, a.plus_four, a.country,
+        $this->setSQL("SELECT i.id AS id,
+                              i.name,
+                              i.attn,
+                              i.cms_id,
+                              i.freeb_type,
+                              i.x12_receiver_id,
+                              i.x12_default_partner_id,
+                              i.active,
+                              i.alt_cms_id,
+                              a.id AS address_id,
+                              a.line1,
+                              a.line2,
+                              a.city,
+                              a.state,
+                              a.zip,
+                              a.plus_four,
+                              a.country,
                               a.foreign_id AS address_foreign_id
                          FROM insurance_companies AS i
                     LEFT JOIN addresses AS a ON i.id = a.foreign_id

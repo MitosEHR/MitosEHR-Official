@@ -132,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00058"></a>00058         <span class="keywordflow">return</span> array(<span class="stringliteral">&#39;totals&#39;</span>=&gt;$total,<span class="stringliteral">&#39;row&#39;</span>=&gt;$roles);
 <a name="l00059"></a>00059     }
 <a name="l00060"></a>00060 
-<a name="l00065"></a><a class="code" href="class_a_c_l.html#a52a8e6475527958d575c898b47dab742">00065</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_a_c_l.html#a52a8e6475527958d575c898b47dab742">getAllPerms</a>($format=<span class="stringliteral">&#39;ids&#39;</span>){
+<a name="l00065"></a><a class="code" href="class_a_c_l.html#a52a8e6475527958d575c898b47dab742">00065</a>     <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_a_c_l.html#a52a8e6475527958d575c898b47dab742">getAllPermissions</a>($format=<span class="stringliteral">&#39;ids&#39;</span>){
 <a name="l00066"></a>00066         $format = strtolower($format);
 <a name="l00067"></a>00067         $strSQL = <span class="stringliteral">&quot;SELECT * FROM acl_permissions ORDER BY seq ASC&quot;</span>;
 <a name="l00068"></a>00068         $this-&gt;conn-&gt;setSQL($strSQL);

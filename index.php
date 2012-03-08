@@ -12,7 +12,6 @@
  * Ver: 0.0.3
  * 
  */
-
 /**
  * Startup the SESSION
  * This will change in the future.
@@ -35,18 +34,13 @@ $mobile = new Mobile_Detect();
  */
 if(isset($_SESSION['user']['auth'])){
 	if ($_SESSION['user']['auth'] == true){
-		/**
-		 * Load the i18n Library
-		 * Load the main screen
-		 */
-		include_once("classes/I18n.class.php");
         /**
          * if mobile go to mobile app, else go to app
          */
         if ($mobile->isMobile()) {
-		    include_once("app_mobile/index.php");
+		    include_once("app_mobile.php");
         }else{
-            include_once("app/index.php");
+            include_once("app.php");
         }
 	}
 /**
@@ -69,9 +63,9 @@ if(isset($_SESSION['user']['auth'])){
          * if mobile go to mobile app, else go to app
          */
         if ($mobile->isMobile()) {
-            include_once("app_mobile/login/login.ejs.php");
+            include_once("login/login_mobile.php");
         }else{
-            include_once("app/login/login.php");
+            include_once("login/login.php");
         }
 	}
 }
