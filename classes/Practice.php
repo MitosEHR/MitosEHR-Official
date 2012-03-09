@@ -82,8 +82,6 @@ class Practice extends dbHelper {
         return $params;
     }
 
-
-
     /**
      * Insurance stuff
      * @return array
@@ -160,7 +158,6 @@ class Practice extends dbHelper {
         $this->updatePhones($data);
         return $params;
     }
-
 
     /**
      * Insurance Numbers stuff
@@ -274,6 +271,7 @@ class Practice extends dbHelper {
         $this->execOnly();
         return;
     }
+
     private function updatePhones($data){
         $prow['country_code'] 		        = $data['phone_country_code'];
         $prow['area_code'] 		            = $data['phone_area_code'];

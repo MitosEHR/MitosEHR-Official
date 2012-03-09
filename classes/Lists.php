@@ -171,7 +171,6 @@ class Lists extends dbHelper {
         $rec = $this->fetchRecord();
 
         if($rec['count(*)'] == 0){
-
             $this->setSQL("DELETE FROM combo_lists_options WHERE list_id = '$params->id'");
             $this->execLog();
 
