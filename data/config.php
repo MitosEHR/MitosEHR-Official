@@ -112,9 +112,9 @@ $API = array(
 
     ),
     /**
-    * Immunizations Functions
+    * Medical Functions
     */
-    'Immunization'=>array(
+    'Medical'=>array(
         'methods'=>array(
             'getImmunizationsList'=>array(
                'len'=>0
@@ -123,6 +123,30 @@ $API = array(
                'len'=>1
             ),
             'addPatientImmunization'=>array(
+               'len'=>1
+            ),
+            'getPatientAllergies'=>array(
+               'len'=>1
+            ),
+            'addPatientAllergy'=>array(
+               'len'=>1
+            ),
+            'getMedicalIssues'=>array(
+               'len'=>1
+            ),
+            'addMedicalIssue'=>array(
+               'len'=>1
+            ),
+            'getSurgeries'=>array(
+               'len'=>1
+            ),
+            'addSurgery'=>array(
+               'len'=>1
+            ),
+            'getDental'=>array(
+               'len'=>1
+            ),
+            'addDental'=>array(
                'len'=>1
             )
         ),

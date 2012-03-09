@@ -23,8 +23,8 @@ Ext.define('App.model.patientfile.MedicalIssues', {
 	proxy : {
 		type: 'direct',
 		api : {
-			read  : Immunization.getMedicalIssues,
-			create: Immunization.addMedicalIssues
+			read  : Medical.getMedicalIssues,
+			create: Medical.addMedicalIssues
 		}
 	}
 });

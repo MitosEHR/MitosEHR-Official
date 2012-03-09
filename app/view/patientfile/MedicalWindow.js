@@ -23,14 +23,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		var me = this;
 
-
 		me.ImmuListStore = Ext.create('App.store.patientfile.Immunization');
-		me.patientImmuListStore =Ext.create('App.store.patientfile.PatientImmunization');
+		me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization');
 		me.patienAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
 		me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues');
 		me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
 		me.patientDentalStore = Ext.create('App.store.patientfile.Dental');
-
 
 		me.items = [
 			{
@@ -44,8 +42,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						region       : 'north',
 						layout       : 'border',
 						itemId       : 'immuNorth',
-						height       : 340,
-						collapsed    : true,
+						height       : 365,
 						border       : true,
 						hidden       : true,
 						margin       : '0 0 3 0',
@@ -53,17 +50,27 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								xtype        : 'mitos.form',
 								region       : 'center',
-								fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
+								fieldDefaults: { msgTarget: 'side', anchor: '100%' },
 								defaultType  : 'textfield',
-								defaults     : { width: 500, labelWidth: 300 },
+								defaults     : { anchor: '100%', labelWidth: 300 },
 								items        : [
+                                    {
+                                        fieldLabel     : 'Immunization Name',
+                                        name           : 'immunization_name',
+                                        itemId         : 'immuName',
+                                        enableKeyEvents: true,
+                                        listeners      : {
+                                            scoep: me,
+                                            focus: me.onCodeFieldFocus
+                                        }
+                                    },
 									{
 										fieldLabel     : 'Immunization (CVX Code)',
 										name           : 'immunization_id',
-										itemId         : 'immuName',
+										itemId         : 'immuCode',
 										enableKeyEvents: true,
 										listeners      : {
-											scope: me,
+                                            scoep: me,
 											focus: me.onCodeFieldFocus
 										}
 									},
@@ -108,22 +115,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 									}
 								],
-								buttons      : [
-									{
-										minWidth: 80,
-										text    : 'Save',
-										itemId  : 'SaveImmunization',
-										scope   : me,
-										handler : me.onSave
-									},
-									{
-										minWidth: 80,
-										text    : 'Cancel',
-										scope: me,
-										handler : me.onCancelImmu
 
-									}
-								],
 								dockedItems  : [
 									{
 										xtype       : 'toolbar',
@@ -150,14 +142,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								xtype      : 'grid',
 								region     : 'east',
 								itemId     : 'immuListGrid',
-								listeners  : {
-									scope       : me,
-									itemdblclick: me.onImmuGridClick
-								},
 								title      : 'Immunizations List',
 								width      : 400,
 								split      : true,
+                                collapsed  : true,
 								collapsible: true,
+                                border     : false,
 								store      : me.ImmuListStore,
 								columns    : [
 									{
@@ -170,9 +160,30 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										flex     : 1,
 										dataIndex: 'code_text'
 									}
-								]
+								],
+                                listeners : {
+                                    scope       : me,
+                                    itemdblclick: me.onImmuGridClick
+                                }
 							}
-						]
+						],
+                        buttons : [
+                            {
+                                minWidth: 80,
+                                text    : 'Save',
+                                itemId  : 'SaveImmunization',
+                                scope   : me,
+                                handler : me.onSave
+                            },
+                            {
+                                minWidth: 80,
+                                text    : 'Cancel',
+                                itemId  : 'CancelImmunization',
+                                scope: me,
+                                handler : me.onCancel
+
+                            }
+                        ]
 					},
 					{
 						xtype      : 'grid',
@@ -222,7 +233,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						],
 						listeners: {
 							scope : me,
-							resize: me.onGridResized
+							resize: me.onGridResized,
+                            itemdblclick:me.onItemdblclick
 						}
 					}
 				]
@@ -387,7 +399,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						],
 						listeners: {
 							scope : me,
-							resize: me.onGridResized
+							resize: me.onGridResized,
+                            itemdblclick:me.onItemdblclick
 						}
 					}
 				]
@@ -542,7 +555,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						],
 						listeners: {
 							scope : me,
-							resize: me.onGridResized
+							resize: me.onGridResized,
+                            itemdblclick : me.onItemdblclick
 						}
 					}
 				]
@@ -690,7 +704,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						],
 						listeners: {
 							scope : me,
-							resize: me.onGridResized
+							resize: me.onGridResized,
+                            itemdblclick:me.onItemdblclick
 						}
 					}
 				]
@@ -899,78 +914,34 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 
-
-	/*onSave: function(btn) {
-		var form = btn.up('form').getForm(),
-			record = form.getRecord(),
-			values = form.getValues(),
-			store = this.patientImmuListStore,
-			storeIndex = store.indexOf(record);
-		if(storeIndex == -1) {
-			store.add(values);
-		} else {
-			record.set(values);
-		}
-		store.sync();
-	},
-
-	 onSaveAllergies: function(btn) {
-	 var form = btn.up('form').getForm(),
-	 record = form.getRecord(),
-	 values = form.getValues(),
-	 store = this.patienAllergiesListStore,
-	 storeIndex = store.indexOf(record);
-	 if(storeIndex == -1) {
-	 store.add(values);
-	 } else {
-	 record.set(values);
-	 }
-	 store.sync();
-	 },
-	 onSaveMedicalIssues: function(btn) {
-	 var form = btn.up('form').getForm(),
-	 record = form.getRecord(),
-	 values = form.getValues(),
-	 store = this.patientMedicalIssuesStore,
-	 storeIndex = store.indexOf(record);
-	 if(storeIndex == -1) {
-	 store.add(values);
-	 } else {
-	 record.set(values);
-	 }
-	 store.sync();
-	 }, */
-
 	onSave:function(btn) {
 
 		var form = btn.up('form').getForm(),
 			record = form.getRecord(),
-			store,
-			values = form.getValues();
-		if(btn.itemId == 'SaveImmunization'){
+            values = form.getValues(),
+			store, storeIndex;
 
+		if(btn.itemId == 'SaveImmunization'){
 			 store = this.patientImmuListStore;
 		}
 		else if(btn.itemId == 'SaveAllergies'){
-
 			store = this.patienAllergiesListStore;
 		}
 		else if(btn.itemId == 'SaveMedicalIssues'){
-
 			 store = this.patientMedicalIssuesStore;
 		}
 		else if(btn.itemId == 'SaveSurgery'){
-
 			 store = this.patientSurgeryStore;
 		}
 		else if(btn.itemId == 'SaveDental'){
-
 			 store = this.patientDentalStore;
 		}
 
-		var	storeIndex = store.indexOf(record);
+		storeIndex = store.indexOf(record);
+
 		if(storeIndex == -1) {
-			store.add(values);
+            record.set(values);
+			store.add(record);
 		} else {
 			record.set(values);
 		}
@@ -990,101 +961,101 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			xtype  : 'button',
 			text   : 'Add Immunization',
 			iconCls: 'icoAddRecord',
+            itemId : 'addiImunization',
 			scope  : me,
-			handler: me.onAddImmunization
+			handler: me.onAddNew
 		});
 		AllergyHeader.add({
 			xtype  : 'button',
 			text   : 'Allergies',
 			iconCls: 'icoAddRecord',
+            itemId : 'addiAllergy',
 			scope  : me,
-			handler: me.onAdd
+			handler: me.onAddNew
 
 		});
 		MedicalIssue.add({
 			xtype  : 'button',
 			text   : 'Medical Issue',
 			iconCls: 'icoAddRecord',
+            itemId : 'addiIssue',
 			scope  : me,
-			handler: me.onAdd
+			handler: me.onAddNew
 
 		});
 		Surgery.add({
 			xtype  : 'button',
 			text   : 'Surgery',
 			iconCls: 'icoAddRecord',
+            itemId : 'addiSurgery',
 			scope  : me,
-			handler: me.onAdd
+			handler: me.onAddNew
 
 		});
 		Dental.add({
 			xtype  : 'button',
 			text   : 'Dental',
 			iconCls: 'icoAddRecord',
+            itemId : 'addiDental',
 			scope  : me,
-			handler: me.onAdd
+			handler: me.onAddNew
 
 		});
 
 		me.doLayout();
 	},
-	/*newImmunization: function() {
-		var me = this, form, model;
 
 
+	onAddNew: function(btn) {
+        var me = this, panel, form, model;
 
-		form = this.getLayout().getActiveItem().getComponent('immuNorth');
-		form = form.down('form');
-		form.getForm().reset();
-		model = Ext.ModelManager.getModel('App.model.patientfile.Immunization');
-		model = Ext.ModelManager.create({
-			lot_number: '1'
-		}, model);
-		form.getForm().loadRecord(model);
-		me.form.show();
+        if(btn.itemId == 'addiImunization'){
+            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+            model = Ext.ModelManager.getModel('App.model.patientfile.PatientImmunization');
+            model = Ext.ModelManager.create({
+                pid : app.currPatient.pid,
+                administered_uid : user.id,
+                administered_date : new Date(),
+                education_date : new Date(),
+                vis_date : new Date()
+            }, model);
+            form = panel.down('form').getForm();
+        }else{
+            panel = me.getLayout().getActiveItem().down('form');
+            if(btn.itemId == 'addiAllergy'){
+                model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
+            }else if(btn.itemId == 'addiIssue'){
+                model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
+            }else if(btn.itemId == 'addiSurgery'){
+                model = Ext.ModelManager.getModel('App.model.patientfile.Surgery');
+            }else if(btn.itemId == 'addiDental'){
+                model = Ext.ModelManager.getModel('App.model.patientfile.Dental');
+            }
+            model = Ext.ModelManager.create({
+                pid : app.currPatient.pid,
+                begin_date: new Date()
+            }, model);
+            form = panel.getForm();
+        }
 
-
-
-
-	},*/
-
-
-	onAddImmunization: function() {
-		var	northContainer = this.getLayout().getActiveItem().getComponent('immuNorth'),
-			form = northContainer.down('form').getForm(),
-			m = Ext.create('ListsGridModel', {
-
-			});
-		northContainer.show();
-		northContainer.expand(true);
-		form.loadRecord(m);
-	},
-
-	onAdd: function() {
-		var formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm(),
-			m = Ext.create('ListsGridModel', {
-
-			});
-		formPanel.show();
-		formPanel.expand(true);
-		form.loadRecord(m);
-	},
-	onCancelImmu: function() {
-		var	northContainer = this.getLayout().getActiveItem().getComponent('immuNorth'),
-			form = northContainer.down('form').getForm();
-
-		northContainer.collapse();
-		northContainer.hide();
-		form.reset();
+        form.reset();
+        form.loadRecord(model);
+		panel.show();
+		panel.expand(true);
 
 	},
-	onCancel: function() {
-		var formPanel = this.getLayout().getActiveItem().down('form'),
-			form = formPanel.getForm();
 
-		formPanel.collapse();
-		formPanel.hide();
+	onCancel: function(btn) {
+        var me = this, panel, form;
+        if(btn.itemId == 'CancelImmunization'){
+            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+            form = panel.down('form').getForm();
+        }else{
+            panel = me.getLayout().getActiveItem().down('form');
+            form = panel.getForm();
+        }
+        panel.collapse();
+        panel.hide();
 		form.reset();
 	},
 
@@ -1092,9 +1063,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		this.doLayout();
 	},
 
+    onItemdblclick: function(grid, record){
+        var me = this, form, panel;
+        if(grid.panel.itemId == 'patientImmuListGrid'){
+            panel = me.getLayout().getActiveItem().getComponent('immuNorth')
+        }else{
+            panel = me.getLayout().getActiveItem().down('form');
+        }
+        form = panel.down('form').getForm();
+        panel.show();
+        panel.expand(true);
+        form.loadRecord(record);
+    },
 
-	onCodeFieldFocus: function() {
-		var gridPanel = this.getComponent('immuListGrid');
+
+    onCodeFieldFocus: function(field) {
+		var gridPanel = field.up('panel').up('panel').getComponent('immuListGrid');
 		gridPanel.expand(true);
 	},
 
@@ -1108,11 +1092,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 	onImmuGridClick: function(view, record) {
-		var gridPanel = this.getComponent('immuListGrid'),
-			textField = this.down('form').getComponent('immuName'),
-			value = record.data.code;
-		textField.setValue(value);
-		gridPanel.up('form').collapse(true);
+		var gridPanel = view.up('grid'),
+			nameField = this.down('form').getComponent('immuName'),
+			codeField = this.down('form').getComponent('immuCode'),
+			nameValue = record.data.code_text,
+			codeValue = record.data.code;
+        nameField.setValue(nameValue);
+        codeField.setValue(codeValue);
+		gridPanel.collapse(true);
 	},
 
 	cardSwitch: function(btn) {
@@ -1140,6 +1127,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 	onMedicalWinShow: function() {
-		this.patientImmuListStore.load();
+		this.patientImmuListStore.load({params:{pid:app.currPatient.pid}});
 	}
 });

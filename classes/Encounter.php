@@ -225,108 +225,6 @@ class Encounter {
         $this->db->execLog();
         return $params;
     }
-
-    //*************************************************************//
-    //******************** Medical Window *************************//
-    //************************ START ******************************//
-    //*************************************************************//
-
-    /**
-     * @param $pid
-     * @return array
-     */
-    public function getImmunizationsByPid($pid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_immunizations WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $eid
-     * @return array
-     */
-    public function getImmunizationsByEid($eid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_immunizations WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $pid
-     * @return array
-     */
-    public function getAllergiesByPid($pid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_allergies WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $eid
-     * @return array
-     */
-    public function getAllergiesByEid($eid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_allergies WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $pid
-     * @return array
-     */
-    public function getMedicalIssuesByPid($pid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_medical_issues WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $eid
-     * @return array
-     */
-    public function getMedicalIssuesByEid($eid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_medical_issues WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $pid
-     * @return array
-     */
-    public function getSurgeriesByPid($pid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_surgeries WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $eid
-     * @return array
-     */
-    public function getSurgeriesByEid($eid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_surgeries WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $pid
-     * @return array
-     */
-    public function getDentalByPid($pid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_dental WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-    /**
-     * @param $eid
-     * @return array
-     */
-    public function getDentalByEid($eid)
-    {
-        $this->db->setSQL("SELECT * FROM patient_dental WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
-    }
-
-    //*************************************************************//
-    //******************** Medical Window *************************//
-    //************************  END  ******************************//
-    //*************************************************************//
-
     /**
      * @param $eid
      * @return array
@@ -427,32 +325,60 @@ class Encounter {
         $encounter['open_by']               = $this->user->getUserNameById($encounter['open_uid']);
         $encounter['signed_by']             = $this->user->getUserNameById($encounter['close_uid']);
 
-        $encounter['vitals']                = $this->getVitalsByEid($eid);
-        $encounter['reviewofsystems']       = array();
-        foreach($this->getReviewOfSystemsByEid($eid) as $key => $value){
+        /**
+         * Add vitals to progress note
+         */
+        $vitals = $this->getVitalsByEid($eid);
+        if(count($vitals)) $encounter['vitals'] = $vitals;
+
+        /**
+         * Add Review of Systems to progress note
+         */
+        $ros = $this->getReviewOfSystemsByEid($eid);
+        $foo = array();
+        foreach($ros as $key => $value){
             if($key != 'id' && $key != 'pid' && $key != 'eid' && $key != 'uid' && $key != 'date'){
                 if($value != null && $value != 'null'){
                     $value = ($value == 1 || $value == '1')? 'Yes' : 'No';
-                    $encounter['reviewofsystems'][] = array('name' => $key, 'value' => $value);
+                    $foo[] = array('name' => $key, 'value' => $value);
                 }
             }
 
         }
+        if(!empty($foo)) $encounter['reviewofsystems'] = $foo;
 
-        $encounter['reviewofsystemschecks'] = array();
-        $record = $this->getReviewOfSystemsChecksByEid($eid);
-        foreach($record[0] as $key => $value){
+        /**
+         * Add Review of Systems Checks to progress note
+         */
+        $rosck = $this->getReviewOfSystemsChecksByEid($eid);
+        $foo = array();
+        foreach($rosck[0] as $key => $value){
             if($key != 'id' && $key != 'pid' && $key != 'eid' && $key != 'uid' && $key != 'date'){
                 if($value != null && $value != 'null' && $value != '0' || $value != 0){
                     $value = ($value == 1 || $value == '1')? 'Yes' : 'No';
-                    $encounter['reviewofsystemschecks'][] = array('name' => $key, 'value' => $value);
+                    $foo[] = array('name' => $key, 'value' => $value);
                 }
             }
         }
+        if(!empty($foo)) $encounter['reviewofsystemschecks'] = $foo;
 
-        $encounter['soap']                  = $this->getSoapByEid($eid);
-        $encounter['speechdictation']       = $this->getDictationByEid($eid);
 
+        /**
+         * Add SOAP to progress note
+         */
+        $encounter['soap'] = $this->getSoapByEid($eid);
+
+        /**
+         *
+         */
+        $speech = $this->getDictationByEid($eid);
+        if($speech[0]['dictation']){
+            $encounter['speechdictation'] = $speech;
+        }
+
+        /**
+         * return the encounter array of data
+         */
         return $encounter;
     }
     /**
@@ -465,7 +391,8 @@ class Encounter {
     }
 
 }
-//
+
 //$e = new Encounter();
 //echo '<pre>';
 //print_r($e->getProgressNoteByEid(7));
+//print_r($e->getProgressNoteByEid(8));

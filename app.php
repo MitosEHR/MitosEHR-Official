@@ -145,6 +145,8 @@ Globals::setGlobals();
 
         <!-- Views-->
         <script type="text/javascript" src="app/view/dashboard/Dashboard.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/ProgressNote.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/ChartsWindow.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Vitals.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Visits.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Summary.js"></script>
@@ -167,7 +169,6 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/miscellaneous/MySettings.js"></script>
         <script type="text/javascript" src="app/view/miscellaneous/OfficeNotes.js"></script>
         <script type="text/javascript" src="app/view/miscellaneous/Websearch.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/ChartsWindow.js"></script>
 
         <!-- Override classes -->
         <script type="text/javascript" src="app/classes/Overrides.js"></script>

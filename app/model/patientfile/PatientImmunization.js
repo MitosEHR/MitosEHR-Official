@@ -8,11 +8,13 @@
 Ext.define('App.model.patientfile.PatientImmunization', {
 	extend: 'Ext.data.Model',
 	fields: [
+		{name: 'id', type: 'int'},
+		{name: 'pid', type: 'int'},
 		{name: 'immunization_id', type: 'int'},
 		{name: 'administered_date', type: 'date', dateFormat: 'c'},
 		{name: 'manufacturer', type: 'string'},
 		{name: 'lot_number', type: 'string'},
-		{name: 'administered_by', type: 'string'},
+		{name: 'administered_uid', type: 'string'},
 		{name: 'education_date', type: 'date', dateFormat: 'c'},
 		{name: 'vis_date', type: 'date', dateFormat: 'c'},
 		{name: 'note', type: 'string'}
@@ -20,8 +22,8 @@ Ext.define('App.model.patientfile.PatientImmunization', {
 	proxy : {
 		type: 'direct',
 		api : {
-			read  : Immunization.getPatientImmunizations,
-			create: Immunization.addPatientImmunization
+			read  : Medical.getPatientImmunizations,
+			create: Medical.addPatientImmunization
 		}
 	}
 });
