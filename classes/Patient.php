@@ -82,7 +82,7 @@ class Patient extends Person {
             array_push($rows, $row);
         }
         $total  = count($rows);
-        $rows = $this->db->filertByStartLimit($rows,$params);
+        $rows = $this->db->filterByStartLimit($rows,$params);
         return array('totals'=>$total ,'rows'=>$rows);
     }
 

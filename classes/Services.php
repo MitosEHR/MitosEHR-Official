@@ -44,7 +44,7 @@ class Services extends dbHelper {
         $records = $this->filertByQuery($records, 'active', $params->active);
 
         $total   = count($records);
-        $records = $this->filertByStartLimit($records,$params);
+        $records = $this->filterByStartLimit($records,$params);
 
         return array('totals'=>$total,'rows'=>$records);
 

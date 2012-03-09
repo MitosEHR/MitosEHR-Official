@@ -96,7 +96,7 @@ class dbHelper {
      * @param       stdClass $params Params used to filter the results, $params->start and $params->limit are required
      * @return      mixed Records filtered
      */
-    function filertByStartLimit($records, stdClass $params)
+    function filterByStartLimit($records, stdClass $params)
     {
         if(isset($params->start) && isset($params->limit)){
             $records = from('$record')->in($records)
