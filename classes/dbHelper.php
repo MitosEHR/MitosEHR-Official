@@ -266,8 +266,8 @@ class dbHelper {
         $sqlReturn .= "FROM " . $Table . " ";
 
         // Step 3 - Order clause, sort the results
-        if($Order <> "") foreach($Order as $key => $value) $sqlReturn .= "ORDER BY " . $key . " " . $value . " AND ";
-        $sqlReturn = substr($sqlReturn, 0, -5);
+        if($Order <> "") foreach($Order as $key => $value) $sqlReturn .= "ORDER BY " . $value . ", ";
+        $sqlReturn = substr($sqlReturn, 0, -2);
 
         // Step 4 - Where clause, filter the records
         if($Where <> ""){
