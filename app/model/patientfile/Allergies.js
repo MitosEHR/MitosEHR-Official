@@ -24,8 +24,8 @@ Ext.define('App.model.patientfile.Allergies', {
 	proxy : {
 		type: 'direct',
 		api : {
-			read  : Immunization.getPatientallergies,
-			create: Immunization.addPatientAllergies
+			read  : Medical.getPatientAllergies,
+			create: Medical.addPatientAllergy
 		}
 	}
 });

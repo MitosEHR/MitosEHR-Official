@@ -70,7 +70,7 @@ class Calendar {
 
         $sql = "SELECT fname, mname, lname FROM form_data_demographics WHERE pid='$params->patient_id'";
         $this->db->setSQL($sql);
-        $rec = $this->db->fetch();
+        $rec = $this->db->fetchRecord();
         $fullName = Person::fullname($rec['fname'],$rec['mname'],$rec['lname']);
 
         $row['user_id']             = $params->user_id;

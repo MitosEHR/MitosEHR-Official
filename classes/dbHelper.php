@@ -1,11 +1,11 @@
 <?php
 if(!isset($_SESSION)){
-    session_name ( "MitosEHR" );
+    session_name ( 'MitosEHR' );
     session_start();
     session_cache_limiter('private');
 }
 set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
-require_once 'PHPLinq/LinqToObjects.php';
+require_once'PHPLinq/LinqToObjects.php';
 /**
  * @brief       Database Helper Class.
  * @details     A PDO helper for MitosEHR, contains custom function to manage the database
@@ -54,9 +54,9 @@ class dbHelper {
     private $err;
 
     /**
-     * @brief       dbHelper constructor.
+     * @brief       dbHelper contructor.
      * @details     This method starts the connection with mysql server using $_SESSION values
-     *              during the login process.
+     *              during the login proccess.
      *
      * @author      Gino Rivera (Certun) <grivera@certun.com>
      * @version     Vega 1.0
@@ -65,18 +65,25 @@ class dbHelper {
 	function __construct()
     {
 		error_reporting(0);
+        $host   = $_SESSION['site']['db']['host'];
+        $port   = $_SESSION['site']['db']['port'];
+        $dbname = $_SESSION['site']['db']['database'];
+        $dbuser = $_SESSION['site']['db']['username'];
+        $dbpass = $_SESSION['site']['db']['password'];
 		try {
-    		$this->conn = new PDO( "mysql:host=" . $_SESSION['site']['db']['host'] . ";port=" . $_SESSION['site']['db']['port'] . ";dbname=" . $_SESSION['site']['db']['database'], $_SESSION['site']['db']['username'], $_SESSION['site']['db']['password'] );
+    		$this->conn = new PDO( 'mysql:host='.$host.';port='.$port.';dbname='.$dbname,$dbuser,$dbpass,
+                array(PDO::ATTR_PERSISTENT => true)
+            );
 		} catch (PDOException $e) {
     		$this->err = $e->getMessage();
 		}
 	}
 
     /**
-     * @brief       Filter Records By Start and Limit.
-     * @details     This Function will filter the $records by a start and Limit using LinQ.
+     * @brief       Filter Records By Sart and Limit.
+     * @details     This Function will filter the $records by a start and Limit usin LinQ.
      *              The main reason to use LinQ is to avoid multiples SQl queries to get
-     *              the record totals and filter results.
+     *              the record totals and filter resutls.
      *
      * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
      * @version     Vega 1.0
@@ -85,11 +92,11 @@ class dbHelper {
      *
      * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
      *
-     * @param       $records SQL records to filter
+     * @param       $records SQL recordes to filter
      * @param       stdClass $params Params used to filter the results, $params->start and $params->limit are required
      * @return      mixed Records filtered
      */
-    function filterByStartLimit($records, stdClass $params)
+    function filertByStartLimit($records, stdClass $params)
     {
         if(isset($params->start) && isset($params->limit)){
             $records = from('$record')->in($records)
@@ -118,7 +125,7 @@ class dbHelper {
      * @param       $query value you are looking for
      * @return      mixed Records filtered
      */
-    function filterByQuery($records, $column, $query)
+    function filertByQuery($records, $column, $query)
     {
             $records = from('$record')->in($records)
                        ->where('$record => $record->'.$column.' == '.$query.'' )
@@ -159,7 +166,7 @@ class dbHelper {
 	function execStatement($fetchStyle = PDO::FETCH_BOTH)
     {
 		$recordset = $this->conn->query($this->sql_statement);
-		if (stristr($this->sql_statement, "SELECT")){
+		if (stristr($this->sql_statement, 'SELECT')){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}
 		$err = $this->conn->errorInfo();
@@ -183,7 +190,7 @@ class dbHelper {
 	function execOnly()
     {
         $this->conn->query($this->sql_statement);
-		if (stristr($this->sql_statement, "SELECT")){
+		if (stristr($this->sql_statement, 'SELECT')){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}
 		return $this->conn->errorInfo();
@@ -204,81 +211,50 @@ class dbHelper {
      *
      * @param       array $b_array  containing a key that has to be the exact field on the data base, and it's value
      * @param       string $table  A valid database table to make the SQL statement
-     * @param       string $InsertUpdate Insert or Update parameter. This has to options I = Insert, U = Update
-     * @param       string $where If in $InsertUpdate = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
+     * @param       string $iu Insert or Update parameter. This has to options I = Insert, U = Update
+     * @param       string $where If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
      * @return      string cunstructed SQL string
      */
 
-	function sqlBind($b_array, $Table, $InsertUpdate="I", $Where)
+	function sqlBind($b_array, $table, $iu='I', $where)
     {
+        if(isset($b_array['__utma']))   unset($b_array['__utma']);
+        if(isset($b_array['__utmz']))   unset($b_array['__utmz']);
+        if(isset($b_array['MitosEHR'])) unset($b_array['MitosEHR']);
 
-        unset($b_array['__utma'],$b_array['__utmz'],$b_array['MitosEHR']);
-
-        $sqlReturn = '';
+        $sql = '';
 		/**
          * Step 1 -  Create the INSERT or UPDATE Clause
          */
-        $InsertUpdate = strtolower($InsertUpdate);
-		if ($InsertUpdate == "i"){
-            $sqlReturn = "INSERT INTO " . $Table;
-		} elseif($InsertUpdate == "u"){
-            $sqlReturn = "UPDATE " . $Table;
+		$iu = strtolower($iu);
+		if ($iu == 'i'){
+            $sql = 'INSERT INTO '.$table;
+		} elseif($iu == 'u'){
+            $sql = 'UPDATE '.$table;
 		}
 		/**
          * Step 2 -  Create the SET clause
          */
-        $sqlReturn .= " SET ";
+        $sql .= ' SET ';
 		foreach($b_array as $key => $value){
-			if($Where <> ($key . "='" . addslashes($value) . "'") &&
-                $Where <> ($key . "=" . addslashes($value)) &&
-                $Where <> ($key . '="' . addslashes($value) . '"')){
-                $sqlReturn .= $key . "='" . trim(addslashes($value)) . "', ";
-			}
+			if( $where <> ($key . "='" . addslashes($value) . "'") &&
+                $where <> ($key . "="  . addslashes($value)) &&
+                $where <> ($key . '="' . addslashes($value) . '"')){
+				$sql .= $key . "='" . trim(addslashes($value)) . "', ";
+			}else{
+                return array(
+                    'success'=>false,
+                    'error'=>'Where value can not be updated. please make sure to unset it from the array'
+                );
+            }
 		}
-        $sqlReturn = substr($sqlReturn, 0, -2);
+        $sql = substr($sql, 0, -2);
 		/**
          * Step 3 - Create the WHERE clause, if applicable
          */
-		if ($InsertUpdate == "u"){ $sqlReturn .= " WHERE " . $Where; }
-		return $sqlReturn;
+		if ($iu == 'u'){ $sql .= ' WHERE ' . $where; }
+		return $sql;
 	}
-
-    /**
-     * @brief       SQL Select Builder.
-     * @details     This method is used to build Select statements for MySQL.
-     *
-     * @author      Gino Rivera (Certun) <grivera@certun.com>
-     * @version     Vega 1.0
-     *
-     * @param $Table
-     * @param $Fields
-     * @param $Order
-     * @param $Where
-     */
-    function sqlSelectBuilder($Table, $Fields, $Order, $Where){
-
-        // Step 1 - Select clause and wrote down the fields
-        $sqlReturn = 'SELECT ';
-        foreach($Fields as $key => $value) $sqlReturn .= $value . ", ";
-        $sqlReturn = substr($sqlReturn, 0, -2);
-
-        // Step 2 - From clause, the filter part
-        $sqlReturn .= "FROM " . $Table . " ";
-
-        // Step 3 - Order clause, sort the results
-        if($Order <> "") foreach($Order as $key => $value) $sqlReturn .= "ORDER BY " . $value . ", ";
-        $sqlReturn = substr($sqlReturn, 0, -2);
-
-        // Step 4 - Where clause, filter the records
-        if($Where <> ""){
-            $sqlReturn .= "WHERE ";
-            foreach($Where as $key => $value) $sqlReturn .= $key . "==" . $value . " AND ";
-        }
-
-        $sqlReturn = substr($sqlReturn, 0, -5);
-
-        return $sqlReturn;
-    }
 
     /**
      * @brief       Execute Log.
@@ -412,68 +388,4 @@ class dbHelper {
 		$recordset = $this->conn->query( $this->sql_statement );
 		return $recordset->rowCount();
 	}
-
-    /**
-     * @param \PDO $conn
-     */
-    public function setConn($conn)
-    {
-        $this->conn = $conn;
-    }
-
-    /**
-     * @return \PDO
-     */
-    public function getConn()
-    {
-        return $this->conn;
-    }
-
-    /**
-     * @param string $err
-     */
-    public function setErr($err)
-    {
-        $this->err = $err;
-    }
-
-    /**
-     * @return string
-     */
-    public function getErr()
-    {
-        return $this->err;
-    }
-
-    /**
-     * @param  $lastInsertId
-     */
-    public function setLastInsertId($lastInsertId)
-    {
-        $this->lastInsertId = $lastInsertId;
-    }
-
-    /**
-     * @return
-     */
-    public function getLastInsertId()
-    {
-        return $this->lastInsertId;
-    }
-
-    /**
-     * @param  $sql_statement
-     */
-    public function setSqlStatement($sql_statement)
-    {
-        $this->sql_statement = $sql_statement;
-    }
-
-    /**
-     * @return
-     */
-    public function getSqlStatement()
-    {
-        return $this->sql_statement;
-    }
 }

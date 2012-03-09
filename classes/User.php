@@ -47,7 +47,7 @@ class User extends Person {
     {
         $id = $this->getCurrentUserId();
         $this->db->setSQL("SELECT title, lname FROM users WHERE id = '$id'");
-        $foo = $this->db->fetch();
+        $foo = $this->db->fetchRecord();
         $foo = $foo['title'].' '.$foo['lname'];
         return $foo;
     }
@@ -76,7 +76,7 @@ class User extends Person {
     public function getUserNameById($id)
     {
         $this->db->setSQL("SELECT title, lname FROM users WHERE id = '$id'");
-        $user = $this->db->fetch();
+        $user = $this->db->fetchRecord();
         $userName = $user['title']. ' '.$user['lname'];
         return $userName;
     }
@@ -87,7 +87,7 @@ class User extends Person {
         $this->db->setSQL("SELECT *
                          FROM users
                         WHERE id = '$id'");
-        $user = $this->db->fetch();
+        $user = $this->db->fetchRecord();
         return $user;
     }
 
@@ -155,7 +155,7 @@ class User extends Person {
         $this->user_id = $params->id;
         $aesPwd = $aes->encrypt($params->password);
         $this->db->setSQL("SELECT password, pwd_history1, pwd_history2  FROM users WHERE id='".$this->user_id."'");
-        $pwds = $this->db->fetch();
+        $pwds = $this->db->fetchRecord();
         if($pwds['password'] == $aesPwd || $pwds['pwd_history1'] == $aesPwd || $pwds['pwd_history2'] == $aesPwd){
             return array('error'=>true);
         }else{
@@ -173,7 +173,7 @@ class User extends Person {
         $aes = $this->getAES();
         $aesPwd = $aes->encrypt($newpassword);
         $this->db->setSQL("SELECT password, pwd_history1 FROM users WHERE id='".$this->user_id."'");
-        $pwds = $this->db->fetch();
+        $pwds = $this->db->fetchRecord();
         $row['password']     = $aesPwd;
         $row['pwd_history1'] = $pwds['password'];
         $row['pwd_history2'] = $pwds['pwd_history1'];
