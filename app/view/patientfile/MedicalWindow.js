@@ -42,7 +42,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						region       : 'north',
 						layout       : 'border',
 						itemId       : 'immuNorth',
-						height       : 340,
+						height       : 365,
 						border       : true,
 						hidden       : true,
 						margin       : '0 0 3 0',
@@ -54,10 +54,20 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								defaultType  : 'textfield',
 								defaults     : { anchor: '100%', labelWidth: 300 },
 								items        : [
+                                    {
+                                        fieldLabel     : 'Immunization Name',
+                                        name           : 'immunization_name',
+                                        itemId         : 'immuName',
+                                        enableKeyEvents: true,
+                                        listeners      : {
+                                            scoep: me,
+                                            focus: me.onCodeFieldFocus
+                                        }
+                                    },
 									{
 										fieldLabel     : 'Immunization (CVX Code)',
 										name           : 'immunization_id',
-										itemId         : 'immuName',
+										itemId         : 'immuCode',
 										enableKeyEvents: true,
 										listeners      : {
                                             scoep: me,
@@ -1039,10 +1049,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         var me = this, panel, form;
         if(btn.itemId == 'CancelImmunization'){
             panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+            form = panel.down('form').getForm();
         }else{
-            panel = this.getLayout().getActiveItem().down('form');
+            panel = me.getLayout().getActiveItem().down('form');
+            form = panel.getForm();
         }
-        form = panel.getForm();
         panel.collapse();
         panel.hide();
 		form.reset();
@@ -1082,9 +1093,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 	onImmuGridClick: function(view, record) {
 		var gridPanel = view.up('grid'),
-			textField = this.down('form').getComponent('immuName'),
-			value = record.data.code;
-		textField.setValue(value);
+			nameField = this.down('form').getComponent('immuName'),
+			codeField = this.down('form').getComponent('immuCode'),
+			nameValue = record.data.code_text,
+			codeValue = record.data.code;
+        nameField.setValue(nameValue);
+        codeField.setValue(codeValue);
 		gridPanel.collapse(true);
 	},
 
