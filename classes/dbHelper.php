@@ -125,7 +125,7 @@ class dbHelper {
      * @param       $query value you are looking for
      * @return      mixed Records filtered
      */
-    function filertByQuery($records, $column, $query)
+    function filterByQuery($records, $column, $query)
     {
             $records = from('$record')->in($records)
                        ->where('$record => $record->'.$column.' == '.$query.'' )
