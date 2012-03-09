@@ -62,7 +62,7 @@ class dbHelper {
      * @version     Vega 1.0
      *
      */
-	function __construct()
+	private function __construct()
     {
 		error_reporting(0);
         $host   = $_SESSION['site']['db']['host'];
@@ -96,7 +96,7 @@ class dbHelper {
      * @param       stdClass $params Params used to filter the results, $params->start and $params->limit are required
      * @return      mixed Records filtered
      */
-    function filterByStartLimit($records, stdClass $params)
+    public function filterByStartLimit($records, stdClass $params)
     {
         if(isset($params->start) && isset($params->limit)){
             $records = from('$record')->in($records)
@@ -125,7 +125,7 @@ class dbHelper {
      * @param       $query value you are looking for
      * @return      mixed Records filtered
      */
-    function filterByQuery($records, $column, $query)
+    public function filterByQuery($records, $column, $query)
     {
             $records = from('$record')->in($records)
                        ->where('$record => $record->'.$column.' == '.$query.'' )
@@ -146,7 +146,7 @@ class dbHelper {
      *
      * @param       $sql string statement to set
      */
-	function setSQL($sql)
+    public function setSQL($sql)
     {
 		$this->sql_statement = $sql;
 	}
@@ -163,7 +163,7 @@ class dbHelper {
      * @param       int defualt to (PDO::FETCH_BOTH) Please see Fetch Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a>
      * @return      array of records, if error occurred return the error instead
      */
-	function execStatement($fetchStyle = PDO::FETCH_BOTH)
+    public function execStatement($fetchStyle = PDO::FETCH_BOTH)
     {
 		$recordset = $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, 'SELECT')){
@@ -187,7 +187,7 @@ class dbHelper {
      *
      * @return      array Connection error info if any
      */
-	function execOnly()
+    public function execOnly()
     {
         $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, 'SELECT')){
@@ -216,7 +216,7 @@ class dbHelper {
      * @return      string cunstructed SQL string
      */
 
-	function sqlBind($BindFieldsArray, $Table, $InsertOrUpdate='I', $Where)
+    public function sqlBind($BindFieldsArray, $Table, $InsertOrUpdate='I', $Where)
     {
         if(isset($BindFieldsArray['__utma']))   unset($BindFieldsArray['__utma']);
         if(isset($BindFieldsArray['__utmz']))   unset($BindFieldsArray['__utmz']);
@@ -320,13 +320,16 @@ class dbHelper {
      */
 	function execEvent($eventLog)
     {
-		$stmt = $this->conn->prepare("INSERT INTO log (date, event, comments, user, patient_id) VALUES (:dtime, :event, :comments, :user, :patient_id)");
-		$stmt->bindParam(':dtime', date('Y-m-d H:i:s'), PDO::PARAM_STR);
-		$stmt->bindParam(':event', $eventLog, PDO::PARAM_STR);
-		$stmt->bindParam(':comments', $this->sql_statement, PDO::PARAM_STR);
-		$stmt->bindParam(':user', $_SESSION['user']['name'], PDO::PARAM_STR);
-		$stmt->bindParam(':patient_id', $_SESSION['patient']['id'], PDO::PARAM_INT);
-		$stmt->execute();
+        $data["dtime"] = date('Y-m-d H:i:s');
+        $data["event"] = $eventLog;
+        $data["comments"] = $this->sql_statement;
+        $data["user"] = $_SESSION['user']['name'];
+        $data["patient_id"] = $_SESSION['patient']['id'];
+
+        $sqlStatement = $this->sqlBind($data, "log", "I");
+        $this->setSQL($sqlStatement);
+        $this->execStatement();
+
 		return $this->conn->errorInfo();
 	}
 
