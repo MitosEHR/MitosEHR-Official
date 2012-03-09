@@ -43,7 +43,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						layout       : 'border',
 						itemId       : 'immuNorth',
 						height       : 340,
-						collapsed    : true,
 						border       : true,
 						hidden       : true,
 						margin       : '0 0 3 0',
@@ -51,9 +50,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								xtype        : 'mitos.form',
 								region       : 'center',
-								fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
+								fieldDefaults: { msgTarget: 'side', anchor: '100%' },
 								defaultType  : 'textfield',
-								defaults     : { width: 500, labelWidth: 300 },
+								defaults     : { anchor: '100%', labelWidth: 300 },
 								items        : [
 									{
 										fieldLabel     : 'Immunization (CVX Code)',
@@ -61,7 +60,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										itemId         : 'immuName',
 										enableKeyEvents: true,
 										listeners      : {
-											scope: me,
+                                            scoep: me,
 											focus: me.onCodeFieldFocus
 										}
 									},
@@ -106,23 +105,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 									}
 								],
-								buttons      : [
-									{
-										minWidth: 80,
-										text    : 'Save',
-										itemId  : 'SaveImmunization',
-										scope   : me,
-										handler : me.onSave
-									},
-									{
-										minWidth: 80,
-										text    : 'Cancel',
-                                        itemId  : 'CancelImmunization',
-										scope: me,
-										handler : me.onCancel
 
-									}
-								],
 								dockedItems  : [
 									{
 										xtype       : 'toolbar',
@@ -149,14 +132,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								xtype      : 'grid',
 								region     : 'east',
 								itemId     : 'immuListGrid',
-								listeners  : {
-									scope       : me,
-									itemdblclick: me.onImmuGridClick
-								},
 								title      : 'Immunizations List',
 								width      : 400,
 								split      : true,
+                                collapsed  : true,
 								collapsible: true,
+                                border     : false,
 								store      : me.ImmuListStore,
 								columns    : [
 									{
@@ -169,9 +150,30 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										flex     : 1,
 										dataIndex: 'code_text'
 									}
-								]
+								],
+                                listeners : {
+                                    scope       : me,
+                                    itemdblclick: me.onImmuGridClick
+                                }
 							}
-						]
+						],
+                        buttons : [
+                            {
+                                minWidth: 80,
+                                text    : 'Save',
+                                itemId  : 'SaveImmunization',
+                                scope   : me,
+                                handler : me.onSave
+                            },
+                            {
+                                minWidth: 80,
+                                text    : 'Cancel',
+                                itemId  : 'CancelImmunization',
+                                scope: me,
+                                handler : me.onCancel
+
+                            }
+                        ]
 					},
 					{
 						xtype      : 'grid',
@@ -1064,8 +1066,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     },
 
 
-    onCodeFieldFocus: function() {
-		var gridPanel = this.getComponent('immuListGrid');
+    onCodeFieldFocus: function(field) {
+		var gridPanel = field.up('panel').up('panel').getComponent('immuListGrid');
 		gridPanel.expand(true);
 	},
 
@@ -1079,11 +1081,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 	onImmuGridClick: function(view, record) {
-		var gridPanel = this.getComponent('immuListGrid'),
+		var gridPanel = view.up('grid'),
 			textField = this.down('form').getComponent('immuName'),
 			value = record.data.code;
 		textField.setValue(value);
-		//gridPanel.up('form').collapse(true);
+		gridPanel.collapse(true);
 	},
 
 	cardSwitch: function(btn) {
