@@ -257,6 +257,43 @@ class dbHelper {
 	}
 
     /**
+    * @brief       SQL Select Builder.
+    * @details     This method is used to build Select statements for MySQL.
+    *
+    * @author      Gino Rivera (Certun) <grivera@certun.com>
+    * @version     Vega 1.0
+    *
+    * @param $Table
+    * @param $Fields
+    * @param $Order
+    * @param $Where
+    */
+    function sqlSelectBuilder($Table, $Fields, $Order, $Where){
+
+        // Step 1 - Select clause and wrote down the fields
+        $sqlReturn = 'SELECT ';
+        foreach($Fields as $key => $value) $sqlReturn .= $value . ", ";
+        $sqlReturn = substr($sqlReturn, 0, -2);
+
+        // Step 2 - From clause, the filter part
+        $sqlReturn .= "FROM " . $Table . " ";
+
+        // Step 3 - Order clause, sort the results
+        if($Order <> "") foreach($Order as $key => $value) $sqlReturn .= "ORDER BY " . $value . ", ";
+        $sqlReturn = substr($sqlReturn, 0, -2);
+
+        // Step 4 - Where clause, filter the records
+        if($Where <> ""){
+            $sqlReturn .= "WHERE ";
+            foreach($Where as $key => $value) $sqlReturn .= $key . "==" . $value . " , ";
+        }
+
+        $sqlReturn = substr($sqlReturn, 0, -2);
+
+        return $sqlReturn;
+    }
+
+    /**
      * @brief       Execute Log.
      * @details     This method is used to INSERT, UPDATE, DELETE, and ALTER the database.
      *              with a event log injection.
