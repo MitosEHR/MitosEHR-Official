@@ -160,7 +160,7 @@ class dbHelper {
      *
      * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
      *
-     * @param       int defualt to (PDO::FETCH_BOTH) Please see Fetch Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a>
+     * @param       int default to (PDO::FETCH_BOTH) Please see Fetch Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a>
      * @return      array of records, if error occurred return the error instead
      */
 	function execStatement($fetchStyle = PDO::FETCH_BOTH)
