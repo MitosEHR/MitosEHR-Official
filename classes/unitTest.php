@@ -1,4 +1,8 @@
 <?php
+session_name ( 'MitosEHR' );
+session_start();
+session_cache_limiter('private');
+$_SESSION['site']['root'] = "/var/www/mitosehr";
 
 include_once("dbHelper.php");
 
@@ -12,8 +16,9 @@ $fields[] = "lastname";
 
 $order[] = "firstname";
 
-$where["firstname"] = "gino";
+$where[] = "firstname='gino'";
+$where[] = "lastname='rivera'";
 
-echo $dbHelperTest->setSqlStatement("patient", $fields, $order, $where);
+echo $dbHelperTest->sqlSelectBuilder("patient", $fields, $order, $where);
 
 ?>

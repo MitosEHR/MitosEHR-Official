@@ -4,8 +4,10 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
-require_once'PHPLinq/LinqToObjects.php';
+
+set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes');
+require_once('PHPLinq.php');
+
 /**
  * @brief       Database Helper Class.
  * @details     A PDO helper for MitosEHR, contains custom function to manage the database
@@ -276,19 +278,19 @@ class dbHelper {
         $sqlReturn = substr($sqlReturn, 0, -2);
 
         // Step 2 - From clause, the filter part
-        $sqlReturn .= "FROM " . $Table . " ";
+        $sqlReturn .= " FROM " . $Table . " ";
 
         // Step 3 - Order clause, sort the results
-        if($Order <> "") foreach($Order as $key => $value) $sqlReturn .= "ORDER BY " . $value . ", ";
+        if($Order <> "") foreach($Order as $key => $value) $sqlReturn .= " ORDER BY " . $value . ", ";
         $sqlReturn = substr($sqlReturn, 0, -2);
 
         // Step 4 - Where clause, filter the records
         if($Where <> ""){
-            $sqlReturn .= "WHERE ";
-            foreach($Where as $key => $value) $sqlReturn .= $key . "==" . $value . " , ";
+            $sqlReturn .= " HAVING ";
+            foreach($Where as $key => $value) $sqlReturn .= "(" . $value . ") AND ";
         }
 
-        $sqlReturn = substr($sqlReturn, 0, -2);
+        $sqlReturn = substr($sqlReturn, 0, -5);
 
         return $sqlReturn;
     }
