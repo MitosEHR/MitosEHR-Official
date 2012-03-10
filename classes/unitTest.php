@@ -21,4 +21,12 @@ $where[] = "lastname='rivera'";
 
 echo $dbHelperTest->sqlSelectBuilder("patient", $fields, $order, $where);
 
+echo "<br/>";
+$fields=null;
+$order=null;
+$where=null;
+
+$fields[] = "*";
+echo $dbHelperTest->sqlSelectBuilder("patient", $fields, $order, $where);
+
 ?>

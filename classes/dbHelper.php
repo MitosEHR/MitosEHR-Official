@@ -280,17 +280,18 @@ class dbHelper {
         // Step 2 - From clause, the filter part
         $sqlReturn .= " FROM " . $Table . " ";
 
-        // Step 3 - Order clause, sort the results
-        if($Order <> "") foreach($Order as $key => $value) $sqlReturn .= " ORDER BY " . $value . ", ";
-        $sqlReturn = substr($sqlReturn, 0, -2);
-
-        // Step 4 - Where clause, filter the records
-        if($Where <> ""){
+        // Step 3 - Having clause, filter the records
+        if($Where != ""){
             $sqlReturn .= " HAVING ";
             foreach($Where as $key => $value) $sqlReturn .= "(" . $value . ") AND ";
+            $sqlReturn = substr($sqlReturn, 0, -5);
         }
 
-        $sqlReturn = substr($sqlReturn, 0, -5);
+        // Step 4 - Order clause, sort the results
+        if($Order != "") foreach($Order as $key => $value) {
+            $sqlReturn .= " ORDER BY " . $value . ", ";
+            $sqlReturn = substr($sqlReturn, 0, -2);
+        }
 
         return $sqlReturn;
     }
