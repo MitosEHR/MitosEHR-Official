@@ -92,7 +92,7 @@ class dbHelper {
      *
      * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
      *
-     * @param       $records SQL recordes to filter
+     * @param       array $records SQL recordes to filter
      * @param       stdClass $params Params used to filter the results, $params->start and $params->limit are required
      * @return      mixed Records filtered
      */
@@ -120,9 +120,9 @@ class dbHelper {
      *
      * @see         Services::getServices() for example.
      *
-     * @param       $records SQL recordes to filter
+     * @param       array $records SQL recordes to filter
      * @param       string $column databe column to filter
-     * @param       $query value you are looking for
+     * @param       string $query value you are looking for
      * @return      mixed Records filtered
      */
     public function filterByQuery($records, $column, $query)
