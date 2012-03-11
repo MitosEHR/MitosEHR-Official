@@ -127,7 +127,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 ]
             }
 		});
-
 		me.reviewSysCkPanel = Ext.create('Ext.form.Panel', {
             autoScroll   : true,
             action       : 'encounter',
@@ -147,7 +146,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 ]
             }
 		});
-
 		me.soapPanel = Ext.create('Ext.form.Panel', {
 			autoScroll   : true,
 			title        : 'SOAP',
@@ -167,7 +165,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 ]
             }
 		});
-
 		me.speechDicPanel = Ext.create('Ext.form.Panel', {
 			autoScroll   : true,
 			title        : 'Speech Dictation',
@@ -187,7 +184,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 ]
             }
 		});
-
 		me.vitalsPanel = Ext.create('Ext.panel.Panel', {
 			title      : 'Vitals',
 			action     : 'encounter',
@@ -210,7 +206,6 @@ Ext.define('App.view.patientfile.Encounter', {
 				},
 				{
 					xtype: 'vitalsdataview'
-					//store: me.encounterStore
 				}
 			],
 			dockedItems: {
@@ -756,24 +751,6 @@ Ext.define('App.view.patientfile.Encounter', {
         return t;
     },
 
-	/**
-	 * Sets the tab panel hiding them by type (encounter or administrative)
-	 * @param type
-	 */
-	setTapPanel: function(btn) {
-		var me = this;
-        say(btn.action);
-        me.centerPanel.getLayout().setActiveItem(btn.action);
-        //me.centerPanel.getLayout().getActiveItem().forceComponentLayout();
-
-	},
-    whenToggle:function(btn, pressed){
-        if(pressed){
-            btn.disable();
-        }else{
-            btn.enable();
-        }
-    },
 	/**
 	 * Convert Celsius to Fahrenheit
 	 * @param field
