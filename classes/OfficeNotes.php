@@ -18,7 +18,7 @@ class OfficeNotes extends dbHelper {
         $wherex = (isset($params->show))? 'WHERE activity = 1' : '';
         $this->setSQL("SELECT * FROM onotes $wherex ORDER BY date DESC LIMIT $params->start, $params->limit");
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->fetchRecords(PDO::FETCH_ASSOC) as $row){
         	array_push($rows, $row);
         }
         return $rows;

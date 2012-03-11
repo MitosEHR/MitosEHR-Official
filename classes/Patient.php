@@ -76,7 +76,7 @@ class Patient extends Person {
                                OR pid 	LIKE '$params->query%'
                                OR SS 	LIKE '%$params->query'");
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_CLASS) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_CLASS) as $row){
             $row->fullname = $this->fullname($row->fname,$row->mname,$row->lname);
             unset($row->fname,$row->mname,$row->lname);
             array_push($rows, $row);
@@ -95,7 +95,7 @@ class Patient extends Person {
         $this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
 
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);
         }
         return $rows;
@@ -116,7 +116,7 @@ class Patient extends Person {
                            ON p.pid = e.pid
                         WHERE e.close_date IS NULL
                      GROUP BY p.pid LIMIT 6");
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $foo['name'] = Person::fullname($row['fname'],$row['mname'],$row['lname']);
             $foo['shortName'] = Person::ellipsis($foo['name'],20);
             $foo['pid'] = $row['pid'];

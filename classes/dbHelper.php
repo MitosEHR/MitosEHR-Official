@@ -152,51 +152,6 @@ class dbHelper {
 	}
 
     /**
-     * @brief       Execute Statement.
-     * @details     This method is a simple SQL Statement, with no Event LOG injection
-     *
-     * @author      Gino Rivera (Certun) <grivera@certun.com>
-     * @version     Vega 1.0
-     *
-     * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
-     *
-     * @param       int defualt to (PDO::FETCH_BOTH) Please see Fetch Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a>
-     * @return      array of records, if error occurred return the error instead
-     */
-    public function execStatement($fetchStyle = PDO::FETCH_BOTH)
-    {
-		$recordset = $this->conn->query($this->sql_statement);
-		if (stristr($this->sql_statement, 'SELECT')){
-			$this->lastInsertId = $this->conn->lastInsertId();
-		}
-		$err = $this->conn->errorInfo();
-		if(!$err[2]){
-			return $recordset->fetchAll($fetchStyle);
-		} else {
-			return $err;
-		}
-	}
-
-    /**
-     * @brief       Execute Statement "WITHOUT" returning records
-     * @details     Simple exec SQL Statement, with no Event LOG injection.
-     *              For example to execute an ALTER a table.
-     *
-     * @author      Gino Rivera (Certun) <grivera@certun.com>
-     * @version     Vega 1.0
-     *
-     * @return      array Connection error info if any
-     */
-    public function execOnly()
-    {
-        $this->conn->query($this->sql_statement);
-		if (stristr($this->sql_statement, 'SELECT')){
-			$this->lastInsertId = $this->conn->lastInsertId();
-		}
-		return $this->conn->errorInfo();
-	}
-
-    /**
      * @brief       SQL Bind.
      * @details     This method is used to INSERT and UPDATE the database.
      *
@@ -215,18 +170,16 @@ class dbHelper {
      * @param       string $Where If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
      * @return      string cunstructed SQL string
      */
-
     public function sqlBind($BindFieldsArray, $Table, $InsertOrUpdate='I', $Where)
     {
         if(isset($BindFieldsArray['__utma']))   unset($BindFieldsArray['__utma']);
         if(isset($BindFieldsArray['__utmz']))   unset($BindFieldsArray['__utmz']);
         if(isset($BindFieldsArray['MitosEHR'])) unset($BindFieldsArray['MitosEHR']);
 
-        $sql = '';
 		/**
          * Step 1 -  Create the INSERT or UPDATE Clause
          */
-		$iu = strtolower($InsertOrUpdate);
+        $InsertOrUpdate = strtolower($InsertOrUpdate);
 		if ($InsertOrUpdate == 'i') $sql = 'INSERT INTO '.$Table;
 		elseif($InsertOrUpdate == 'u') $sql = 'UPDATE '.$Table;
         else return "No update or insert command.";
@@ -252,7 +205,29 @@ class dbHelper {
          * Step 3 - Create the WHERE clause, if applicable
          */
 		if ($InsertOrUpdate == 'u'){ $sql .= ' WHERE ' . $Where; }
+        /**
+         * Step 4 - return the sql statement
+         */
 		return $sql;
+	}
+
+    /**
+     * @brief       Execute Statement "WITHOUT" returning records
+     * @details     Simple exec SQL Statement, with no Event LOG injection.
+     *              For example to execute an ALTER a table.
+     *
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
+     *
+     * @return      array Connection error info if any
+     */
+    public function execOnly()
+    {
+        $this->conn->query($this->sql_statement);
+		if (stristr($this->sql_statement, 'SELECT')){
+			$this->lastInsertId = $this->conn->lastInsertId();
+		}
+		return $this->conn->errorInfo();
 	}
 
     /**
@@ -302,7 +277,7 @@ class dbHelper {
 
             $sqlStatement = $this->sqlBind($data, "log", "I");
             $this->setSQL($sqlStatement);
-            $this->execStatement();
+            $this->fetchRecords();
 
 		}
 		return $this->conn->errorInfo();
@@ -328,7 +303,7 @@ class dbHelper {
 
         $sqlStatement = $this->sqlBind($data, "log", "I");
         $this->setSQL($sqlStatement);
-        $this->execStatement();
+        $this->fetchRecords();
 
 		return $this->conn->errorInfo();
 	}
@@ -353,6 +328,32 @@ class dbHelper {
             return $err;
         }
 
+	}
+
+    /**
+     * @brief       Execute Statement.
+     * @details     This method is a simple SQL Statement, with no Event LOG injection
+     *
+     * @author      Gino Rivera (Certun) <grivera@certun.com>
+     * @version     Vega 1.0
+     *
+     * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
+     *
+     * @param       int defualt to (PDO::FETCH_BOTH) Please see Fetch Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a>
+     * @return      array of records, if error occurred return the error instead
+     */
+    public function fetchRecords($fetchStyle = PDO::FETCH_BOTH)
+    {
+		$recordset = $this->conn->query($this->sql_statement);
+		if (stristr($this->sql_statement, 'SELECT')){
+			$this->lastInsertId = $this->conn->lastInsertId();
+		}
+		$err = $this->conn->errorInfo();
+		if(!$err[2]){
+			return $recordset->fetchAll($fetchStyle);
+		} else {
+			return $err;
+		}
 	}
 
     /**

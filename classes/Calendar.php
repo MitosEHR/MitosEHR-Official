@@ -30,7 +30,7 @@ class Calendar {
         $sql = ("SELECT * FROM users WHERE calendar = '1' AND authorized = '1' AND active = '1' ORDER BY username");
         $this->db->setSQL($sql);
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             if($color > 32){ $color = $color - 30; }
             $color = $color + 5;
             $cla_user['id'] = $row['id'];
@@ -47,7 +47,7 @@ class Calendar {
         $sql = ("SELECT * FROM calendar_events WHERE start BETWEEN '".$params->startDate." 00:00:00' AND '".$params->endDate." 23:59:59' ");
         $this->db->setSQL($sql);
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['id']                  = intval($row['id']);
             $row['user_id']             = intval($row['user_id']);
             $row['category']            = intval($row['category']);
@@ -57,7 +57,7 @@ class Calendar {
 
             $sql = ("SELECT * FROM form_data_demographics WHERE pid= '".$row['patient_id']."'");
             $this->db->setSQL($sql);
-            foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $urow){
+            foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $urow){
             $row['title'] = Person::fullname($urow['fname'],$urow['mname'],$urow['lname']);
             }
             array_push($rows, $row);
@@ -100,7 +100,7 @@ class Calendar {
             $sql = ("SELECT * FROM calendar_events WHERE id = '".$this->lastInsertId."' ");
             $this->db->setSQL($sql);
             $rows = array();
-            foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+            foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
                 array_push($rows, $row);
             }
             return array('success'=>true, 'message'=>'Loaded data', 'data'=>$rows);

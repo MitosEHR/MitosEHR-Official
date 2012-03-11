@@ -51,7 +51,7 @@ class ACL {
     public function getAllRoles(){
         $roles = array();
         $this->conn->setSQL("SELECT * FROM acl_roles ORDER BY seq ASC");
-        foreach ($this->conn->execStatement(PDO::FETCH_ASSOC) as $row) {
+        foreach ($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row) {
             array_push($roles, $row);
         }
         $total = $this->conn->rowCount();
@@ -67,7 +67,7 @@ class ACL {
         $strSQL = "SELECT * FROM acl_permissions ORDER BY seq ASC";
         $this->conn->setSQL($strSQL);
         $resp = array();
-        foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row){
             if ($format == 'full'){
                 $resp[$row['perm_key']] = array('id' => $row['id'], 'Name' => $row['perm_name'], 'Key' => $row['perm_key'], 'Cat' => $row['perm_cat']);
             } else {
@@ -84,7 +84,7 @@ class ACL {
 
         $this->conn->setSQL("SELECT * FROM acl_user_roles WHERE user_id = '$this->user_id' ORDER BY add_date ASC");
 		$resp = array();
-        foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row){
 			$resp[] = $row['role_id'];
 		}
 		return $resp;
@@ -107,7 +107,7 @@ class ACL {
 	private function getperm_keyFromid($perm_id){
 		$strSQL = "SELECT perm_key FROM acl_permissions WHERE id = " . floatval($perm_id) . " LIMIT 1";
         $this->conn->setSQL($strSQL);
-		$row = $this->conn->execStatement(PDO::FETCH_ASSOC);
+		$row = $this->conn->fetchRecords(PDO::FETCH_ASSOC);
 		return $row[0]['perm_key'];
 	}
 
@@ -118,7 +118,7 @@ class ACL {
 	private function getperm_nameFromid($perm_id){
 		$strSQL = "SELECT perm_name FROM acl_permissions WHERE id = " . floatval($perm_id) . " LIMIT 1";
         $this->conn->setSQL($strSQL);
-		$row = $this->conn->execStatement(PDO::FETCH_ASSOC);
+		$row = $this->conn->fetchRecords(PDO::FETCH_ASSOC);
 		return $row[0]['perm_name'];
 	}
 
@@ -129,7 +129,7 @@ class ACL {
 	private function getRoleNameFromid($role_id){
 		$strSQL = "SELECT role_name FROM acl_roles WHERE id = " . floatval($role_id) . " LIMIT 1";
         $this->conn->setSQL($strSQL);
-		$row = $this->conn->execStatement(PDO::FETCH_ASSOC);
+		$row = $this->conn->fetchRecords(PDO::FETCH_ASSOC);
 		return $row[0]['role_name'];
 	}
 
@@ -145,7 +145,7 @@ class ACL {
 		}
         $this->conn->setSQL($roleSQL);
 		$perms = array();
-		foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
+		foreach($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row){
 			$pK = strtolower($this->getperm_keyFromid($row['perm_id']));
 			if ($pK == '') { continue; }
             if ($row['value'] == '1') {
@@ -166,7 +166,7 @@ class ACL {
 		$strSQL = "SELECT * FROM acl_user_perms WHERE user_id = " . floatval($user_id) . " ORDER BY add_date ASC";
         $this->conn->setSQL($strSQL);
 		$perms = array();
-        foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row){
 			$pK = strtolower($this->getperm_keyFromid($row['perm_id']));
 			if ($pK == '') { continue; }
             if ($row['value'] == '1') {

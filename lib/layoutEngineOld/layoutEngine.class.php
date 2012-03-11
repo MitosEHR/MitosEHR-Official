@@ -86,7 +86,7 @@ class layoutEngineOld extends dbHelper {
 						ORDER BY 
 							IF(LENGTH(ld.definition),ld.definition,lo.title), lo.seq");
 }
-		foreach($this->execStatement(PDO::FETCH_ASSOC) as $key => $row){
+		foreach($this->fetchRecords(PDO::FETCH_ASSOC) as $key => $row){
 			$buff .= "{boxLabel: '".$row['title']."',";
 			$buff .= "name: '".$fieldName."',";
 			$buff .= "inputValue: '".$row['option_id']."'";
@@ -469,7 +469,7 @@ class layoutEngineOld extends dbHelper {
 					uor = '1' OR uor = '2'
 				ORDER BY
   					layout_options.group_order, layout_options.seq");
-		return $this->execStatement(PDO::FETCH_ASSOC);
+		return $this->fetchRecords(PDO::FETCH_ASSOC);
 	}
 	
 	private function tfInGroup($formPanel, $group){
@@ -484,7 +484,7 @@ class layoutEngineOld extends dbHelper {
 						ORDER BY
   							layout_options.group_order
 							, layout_options.seq");
-		return count($this->execStatement(PDO::FETCH_ASSOC));
+		return count($this->fetchRecords(PDO::FETCH_ASSOC));
 	}
 				
 	//**********************************************************************

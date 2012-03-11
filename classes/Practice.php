@@ -37,7 +37,7 @@ class Practice extends dbHelper {
                          FROM pharmacies AS p
                     LEFT JOIN addresses AS a ON p.id = a.foreign_id
                      ORDER BY p.name DESC");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $this->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$row['id']."");
             $row = $this->getPhones($row);
             $row['address_full'] = $row['line1'].' '.$row['line2'].' '.$row['city'].','.$row['state'].' '.$row['zip'].'-'.$row['plus_four'].' '.$row['country'];
@@ -109,7 +109,7 @@ class Practice extends dbHelper {
                          FROM insurance_companies AS i
                     LEFT JOIN addresses AS a ON i.id = a.foreign_id
                      ORDER BY i.name DESC");
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $this->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$row['id']."");
             $row = $this->getPhones($row);
             $row['address_full'] = $row['line1'].' '.$row['line2'].' '.$row['city'].','.$row['state'].' '.$row['zip'].'-'.$row['plus_four'].' '.$row['country'];
@@ -224,7 +224,7 @@ class Practice extends dbHelper {
      */
     private function getPhones($row){
         $this->setSQL("SELECT * FROM phone_numbers WHERE phone_numbers.foreign_id =".$row['id']."");
-        foreach ($this->execStatement(PDO::FETCH_ASSOC) as $phoneRow) {
+        foreach ($this->fetchRecords(PDO::FETCH_ASSOC) as $phoneRow) {
             switch ($phoneRow['type']) {
                 case "2":
                     $row['phone_id'] 	        = $phoneRow['id'];
