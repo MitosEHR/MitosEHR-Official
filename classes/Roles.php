@@ -23,7 +23,7 @@ class Roles extends ACL {
         $perms = array();
         $roles = $this->getAllRoles();
         $cattegories = array('General','Calendar','Patients','Encounters','Demographics','Documents','ePrescription','Administrators','Miscellaneous');
-        foreach($this->getAllPerms('full') as $perm){
+        foreach($this->getAllPermissions('full') as $perm){
             array_push($perms,$perm);
         }
         foreach($cattegories as $cat){
@@ -128,16 +128,16 @@ class Roles extends ACL {
     private function saveRolePerm($role, $perm, $val){
 
         $this->conn->setSQL("SELECT id FROM acl_roles WHERE role_key = '$role'");
-        $role = $this->conn->fetch();
+        $role = $this->conn->fetchRecord();
         $role_perms['role_id'] = $role['id'];
 
         $this->conn->setSQL("SELECT id FROM acl_permissions WHERE perm_key = '$perm'");
-        $perms = $this->conn->fetch();
+        $perms = $this->conn->fetchRecord();
         $role_perms['perm_id'] = $perms['id'];
         $role_perms['value'] = $val;
 
         $this->conn->setSQL("SELECT id FROM acl_role_perms WHERE 	role_id = '".$role_perms['role_id']."' AND perm_id = '".$role_perms['perm_id']."' ");
-        $role_perm = $this->conn->fetch();
+        $role_perm = $this->conn->fetchRecord();
 
         if($role_perm['id'] != null){
             $sql = $this->conn->sqlBind($role_perms, "acl_role_perms", "U", "id = '".$role_perm['id']."'");

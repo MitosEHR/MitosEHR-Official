@@ -90,7 +90,7 @@ class authProcedures {
         		          AND authorized = '1'
         		        LIMIT 1");
 
-        $user = $db->fetch();
+        $user = $db->fetchRecord();
         if ($user['username'] == null){
             return array('success'=>false, 'error'=>'The username or password you provided is invalid.');
         } else {
@@ -107,7 +107,7 @@ class authProcedures {
         	//-------------------------------------------
         	$sql = "SELECT * FROM version LIMIT 1";
             $db->setSQL($sql);
-        	$version = $db->fetch();
+        	$version = $db->fetchRecord();
         	$_SESSION['ver']['codeName']    = $version['v_tag'];
         	$_SESSION['ver']['major']       = $version['v_major'];
         	$_SESSION['ver']['rev']         = $version['v_patch'];

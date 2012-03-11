@@ -57,7 +57,7 @@ class Patient extends Person {
      */
     public function getPatientFullNameByPid($pid){
         $this->db->setSQL("SELECT fname,mname,lname FROM form_data_demographics WHERE pid = '$pid'");
-        $p = $this->db->fetch();
+        $p = $this->db->fetchRecord();
         return $this->fullname($p['fname'],$p['mname'],$p['lname']);
     }
     /**
@@ -82,7 +82,7 @@ class Patient extends Person {
             array_push($rows, $row);
         }
         $total  = count($rows);
-        $rows = $this->db->filertByStartLimit($rows,$params);
+        $rows = $this->db->filterByStartLimit($rows,$params);
         return array('totals'=>$total ,'rows'=>$rows);
     }
 

@@ -52,7 +52,7 @@ class Messages extends dbHelper {
 
             $id = $row['from_id'];
             $this->setSQL("SELECT title, fname, mname, lname FROM users WHERE id ='$id' ");
-            $record = $this->fetch();
+            $record = $this->fetchRecord();
 
             $row['from_user'] = $record['user_title'].' '.Person::fullname($record['fname'],$record['mname'],$record['lname']);
             $row['to_user']   = $row['user_title'].' '.Person::fullname($row['user_fname'],$row['user_mname'],$row['user_lname']);
@@ -128,7 +128,7 @@ class Messages extends dbHelper {
         $currUser   = $_SESSION['user']['id'];
 
         $this->setSQL("SELECT to_id, from_id FROM pnotes WHERE id = '$id'");
-        $record = $this->fetch();
+        $record = $this->fetchRecord();
 
         if($record['to_id'] == $currUser ){
             $sql = "UPDATE pnotes SET to_deleted = '1' WHERE id='$id'";

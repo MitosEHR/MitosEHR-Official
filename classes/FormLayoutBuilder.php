@@ -362,7 +362,7 @@ class FormLayoutBuilder {
 
             $sql = ("SELECT count(*) FROM forms_field_options WHERE field_id = '$id'");
             $this->db->setSQL($sql);
-            $field = $this->db->fetch();
+            $field = $this->db->fetchRecord();
 
             if($field['count(*)'] == 0){
                 $sql = $this->db->sqlBind($options, "forms_field_options", "I");
@@ -397,7 +397,7 @@ class FormLayoutBuilder {
      */
     private function getFormDataTable($form_id){
         $this->db->setSQL("SELECT form_data FROM forms_layout WHERE id = '$form_id'");
-        $form_data_table = $this->db->fetch();
+        $form_data_table = $this->db->fetchRecord();
         $this->form_data_table = $form_data_table['form_data'];
         return;
     }
@@ -528,7 +528,7 @@ class FormLayoutBuilder {
         foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $parentField){
             $id = $parentField['id'];
             $this->db->setSQL("SELECT options FROM forms_field_options WHERE field_id = '$id'");
-            $fo = $this->db->fetch();
+            $fo = $this->db->fetchRecord();
             $foo = json_decode($fo['options'],true);
             $row['name']  =  $foo['title'].$foo['fieldLabel'].' ('.$parentField['xtype'].')';
             $row['value'] =  $parentField['id'];
@@ -603,7 +603,7 @@ class FormLayoutBuilder {
     private function getItmesOptions($item_id){
         $foo = array();
         $this->db->setSQL("Select options FROM forms_field_options WHERE field_id = '$item_id'");
-        $options = $this->db->fetch();
+        $options = $this->db->fetchRecord();
         $options = json_decode($options['options'],true);
         foreach($options as $option => $value){
             $foo[$option] = $value;
