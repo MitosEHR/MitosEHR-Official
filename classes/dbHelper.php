@@ -62,7 +62,7 @@ class dbHelper {
      * @version     Vega 1.0
      *
      */
-	private function __construct()
+	function __construct()
     {
 		error_reporting(0);
         $host   = $_SESSION['site']['db']['host'];
@@ -209,10 +209,10 @@ class dbHelper {
      *
      * @see         User::addUser() for Add example and  User::updateUser() for Update example.
      *
-     * @param       array $b_array  containing a key that has to be the exact field on the data base, and it's value
-     * @param       string $table  A valid database table to make the SQL statement
-     * @param       string $iu Insert or Update parameter. This has to options I = Insert, U = Update
-     * @param       string $where If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
+     * @param       array $BindFieldsArray  containing a key that has to be the exact field on the data base, and it's value
+     * @param       string $Table  A valid database table to make the SQL statement
+     * @param       string $InsertOrUpdate Insert or Update parameter. This has to options I = Insert, U = Update
+     * @param       string $Where If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
      * @return      string cunstructed SQL string
      */
 
@@ -348,7 +348,7 @@ class dbHelper {
 		$recordset = $this->conn->query( $this->sql_statement );
         $err = $this->conn->errorInfo();
         if(!$err[2]){
-            return $recordset->fetchRecord(PDO::FETCH_ASSOC);
+            return $recordset->fetch(PDO::FETCH_ASSOC);
         } else {
             return $err;
         }
