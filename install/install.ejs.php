@@ -155,7 +155,7 @@ Ext.onReady(function() {
 		        	}
 		        }]
             },{
-                title		: 'Site Info',
+                title		: 'Site Information',
                 defaults	: {width: 530},
                 id			: 'clinicInfo',
                 defaultType	: 'textfield',
@@ -165,7 +165,7 @@ Ext.onReady(function() {
 			        name		: 'siteName',
 			        id			: 'siteNameField',
 			        labelAlign	: 'top',
-			        fieldLabel	: 'Site Name (Site Name = Your Main Clinic\'s Name)',
+			        fieldLabel	: 'Site Name (Your Main Clinic\'s Name)',
 			        allowBlank	: false ,
 			        listeners: {
 				   	  	validitychange: function(){
@@ -211,7 +211,7 @@ Ext.onReady(function() {
                         }
                     }]
             },{
-                title		: 'Database Info',
+                title		: 'Database Information',
                 defaults	: {width: 530},
                 id			: 'databaseInfo',
                 defaultType	: 'textfield',
@@ -354,7 +354,7 @@ Ext.onReady(function() {
 		        	}
 		        }]
             },{
-                title		: 'Admin Info',
+                title		: 'Administrator Information',
                 defaults	: {width: 530},
                 id			: 'adminInfo',
                 defaultType	: 'textfield',
