@@ -235,9 +235,11 @@ class dbHelper {
         $sqlReturn .= " FROM " . $Table . " ";
 
         // Step 3 - Order clause, sort the results
-        if($Order != "") foreach($Order as $key => $value) {
-            $sqlReturn .= " ORDER BY " . $value . ", ";
-            $sqlReturn = substr($sqlReturn, 0, -2);
+        if($Order != ""){
+            foreach($Order as $key => $value) {
+                $sqlReturn .= " ORDER BY " . $value . ", ";
+                $sqlReturn = substr($sqlReturn, 0, -2);
+            }
         }
 
         // Step 4 - Having clause, filter the records
