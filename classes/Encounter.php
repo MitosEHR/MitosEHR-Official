@@ -41,11 +41,16 @@ class Encounter {
      * @return array
      * NOTES: What is ck?
      *  Naming: "checkOpenEncounters"
-     */
-    public function ckOpenEncounters()
+*/
+    public function checkOpenEncounters()
     {
         $pid =  $_SESSION['patient']['pid'];
-        $this->db->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' AND close_date IS NULL");
+
+        $fields[]="*";
+        $where[]="pid = '" . $pid . "'";
+        $where[] = "close_date IS NULL";
+
+        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, "", $where) );
         $total = $this->db->rowCount();
         if($total >= 1){
             return array('encounter' => true);

@@ -5,7 +5,7 @@ $API = array(
     */
     'Encounter'=>array(
         'methods'=>array(
-            'ckOpenEncounters'=>array(
+            'checkOpenEncounters'=>array(
                'len'=>0
             ),
             'getEncounters'=>array(

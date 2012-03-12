@@ -10,7 +10,7 @@
  *
  * @namespace Encounter.getEncounter
  * @namespace Encounter.createEncounter
- * @namespace Encounter.ckOpenEncounters
+ * @namespace Encounter.checkOpenEncounters
  * @namespace Encounter.closeEncounter
  * @namespace Encounter.getVitals
  * @namespace Encounter.addVitals

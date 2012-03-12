@@ -14,7 +14,7 @@
  * @namespace Encounter.getEncounter
  * @namespace Encounter.createEncounter
  * @namespace Encounter.updateEncounter
- * @namespace Encounter.ckOpenEncounters
+ * @namespace Encounter.checkOpenEncounters
  * @namespace Encounter.closeEncounter
  * @namespace Encounter.getVitals
  * @namespace Encounter.addVitals
@@ -407,7 +407,7 @@ Ext.define('App.view.patientfile.Encounter', {
 	 */
 	newEncounter: function() {
 		var me = this, form, model;
-		Encounter.ckOpenEncounters(function(provider, response) {
+		Encounter.checkOpenEncounters(function(provider, response) {
             /** @namespace response.result.encounter */
 			if(response.result.encounter) {
 				Ext.Msg.show({
