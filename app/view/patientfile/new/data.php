@@ -37,7 +37,7 @@ $mitos_db->setSQL("SELECT pid, fname, mname, lname
                      FROM form_data_demographics
                     WHERE pid = '$pid'");
 $rows = array();
-foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row) {
+foreach ($mitos_db->fetchRecords(PDO::FETCH_ASSOC) as $row) {
     $row['fullname'] = fullname($row['fname'], $row['mname'], $row['lname']);
     array_push($rows, $row);
 }

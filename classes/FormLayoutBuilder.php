@@ -407,7 +407,7 @@ class FormLayoutBuilder {
      */
     private function fieldHasColumn(){
         $this->db->setSQL("SELECT * FROM information_schema.COLUMNS WHERE TABLE_NAME = '$this->form_data_table' AND COLUMN_NAME = '$this->col'");
-        $ret = $this->db->execStatement(PDO::FETCH_ASSOC);
+        $ret = $this->db->fetchRecords(PDO::FETCH_ASSOC);
         if(isset($ret[0]['COLUMN_NAME'])) {
             return true;
         }else{
@@ -421,7 +421,7 @@ class FormLayoutBuilder {
      */
     private function fieldHasChild($id){
         $this->db->setSQL("SELECT id FROM forms_fields WHERE item_of ='$id'");
-        $this->db->execStatement(PDO::FETCH_ASSOC);
+        $this->db->fetchRecords(PDO::FETCH_ASSOC);
         $count = $this->db->rowCount();
         if($count >= 1 ) {
             return true;
@@ -435,7 +435,7 @@ class FormLayoutBuilder {
      */
     private function fieldHasBrother(){
         $this->db->setSQL("SELECT id FROM forms_field_options WHERE oname = 'name' AND ovalue ='$this->col'");
-        $this->db->execStatement(PDO::FETCH_ASSOC);
+        $this->db->fetchRecords(PDO::FETCH_ASSOC);
         $count = $this->db->rowCount();
         if($count >= 2 ) {
             return true;
@@ -449,7 +449,7 @@ class FormLayoutBuilder {
      */
     private function filedInUsed(){
         $this->db->setSQL("SELECT $this->col FROM $this->form_data_table");
-        $ret = $this->db->execStatement(PDO::FETCH_ASSOC);
+        $ret = $this->db->fetchRecords(PDO::FETCH_ASSOC);
         if($ret[0]){
             return true;
         }else{
@@ -505,7 +505,7 @@ class FormLayoutBuilder {
     public function getForms(){
         $this->db->setSQL("SELECT * FROM forms_layout");
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             array_push($rows, $row);
         }
         return $rows;
@@ -525,7 +525,7 @@ class FormLayoutBuilder {
                      ORDER BY ff.pos");
         $parentFields = array();
         array_push($parentFields, array('name' => 'Root', 'value' => 0));
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $parentField){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $parentField){
             $id = $parentField['id'];
             $this->db->setSQL("SELECT options FROM forms_field_options WHERE field_id = '$id'");
             $fo = $this->db->fetchRecord();
@@ -545,7 +545,7 @@ class FormLayoutBuilder {
         $fields = array();
         if(isset($params->currForm)){
             $this->db->setSQL("Select * FROM forms_fields WHERE form_id = '$params->currForm' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
-            $results = $this->db->execStatement(PDO::FETCH_ASSOC);
+            $results = $this->db->fetchRecords(PDO::FETCH_ASSOC);
             foreach($results as $item){
                 $opts = $this->getItmesOptions($item['id']);
                 foreach($opts as $opt => $val){
@@ -575,7 +575,7 @@ class FormLayoutBuilder {
     private function getChildItems($parent){
         $items = array();
         $this->db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $item){
             $opts = $this->getItmesOptions($item['id']);
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;

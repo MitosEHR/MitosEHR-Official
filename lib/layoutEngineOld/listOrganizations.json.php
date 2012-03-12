@@ -34,7 +34,7 @@ $mitos_db->setSQL("SELECT
 
 $total = $mitos_db->rowCount();
 $rows = array();
-foreach ($mitos_db->execStatement(PDO::FETCH_ASSOC) as $row) {
+foreach ($mitos_db->fetchRecords(PDO::FETCH_ASSOC) as $row) {
 	$row['cName'] = $row['fname'] ." ". $row['mname'] ." ". $row['lname'];  
 	array_push($rows, $row);
 }

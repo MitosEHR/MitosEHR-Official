@@ -70,7 +70,7 @@ class Encounter {
         $pid = $_SESSION['patient']['pid'];
         $this->db->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' ".$ORDER);
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['status'] = ($row['close_date']== null)? 'open' : 'close';
         	array_push($rows, $row);
         }
@@ -178,7 +178,7 @@ class Encounter {
     {
         $this->db->setSQL("SELECT * FROM form_data_vitals WHERE pid = '$pid' ORDER BY date DESC");
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['height_in'] = intval($row['height_in']);
             $row['height_cn'] = intval($row['height_cn']);
             $row['administer'] = $this->user->getUserNameById($row['uid']);
@@ -194,7 +194,7 @@ class Encounter {
     {
         $this->db->setSQL("SELECT * FROM form_data_vitals WHERE eid = '$eid' ORDER BY date DESC");
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['height_in'] = intval($row['height_in']);
             $row['height_cn'] = intval($row['height_cn']);
             $row['administer'] = $this->user->getUserNameById($row['uid']);
@@ -238,7 +238,7 @@ class Encounter {
     public function getSoapByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM form_data_soap WHERE eid = '$eid' ORDER BY date DESC");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $eid
@@ -247,7 +247,7 @@ class Encounter {
     public function getReviewOfSystemsChecksByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM form_data_review_of_systems_check WHERE eid = '$eid' ORDER BY date DESC");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $eid
@@ -269,7 +269,7 @@ class Encounter {
     public function getDictationByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM form_data_dictation WHERE eid = '$eid' ORDER BY date DESC");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param stdClass $params

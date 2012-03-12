@@ -82,7 +82,7 @@ class Roles extends ACL {
                    RIGHT JOIN acl_permissions ON acl_role_perms.perm_id = acl_permissions.id");
         $rows = array();
 
-        foreach($this->conn->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $rows[$row['perm_key'].'_'.$row['role_key']] = $row['value'];
         }
         return $rows;

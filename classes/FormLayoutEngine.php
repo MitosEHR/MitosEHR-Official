@@ -67,7 +67,7 @@ class FormLayoutEngine {
         /**
          * for each parent item lets get all the options and children items
          */
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $item){
             /**
              * get parent field options using the parent item "id" as parameter and
              * store the return array in $opts.
@@ -173,7 +173,7 @@ class FormLayoutEngine {
     function getChildItems($parent){
         $items = array();
         $this->db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $item){
 
             $opts = $this->getItemsOptions($item['id']);
 
@@ -241,7 +241,7 @@ class FormLayoutEngine {
                      ORDER BY o.seq");
 
         $buff = "Ext.create('Ext.data.Store',{fields:['option_name','option_value'],data:[";
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $item){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $item){
             $option_name    = $item['option_name'];
             $option_value   = $item['option_value'];
             $buff .= "{option_name:'$option_name',option_value:'$option_value'},";

@@ -97,22 +97,19 @@ Ext.define('App.view.patientfile.Encounter', {
 		 * Tap Panel panels and forms
 		 */
 		me.MiscBillingOptionsPanel = Ext.create('Ext.form.Panel', {
-			hidden: true,
-			border: false,
-			action: 'administrative',
-			title : 'Misc. Billing Options HCFA',
-			html  : '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
+            autoScroll: true,
+			action    : 'administrative',
+			title     : 'Misc. Billing Options HCFA',
+			html      : '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
 		});
 		me.procedurePanel = Ext.create('Ext.form.Panel', {
-			hidden: true,
-			border: false,
-			action: 'administrative',
-			title : 'Procedure Order',
-			html  : '<h1>Procedure Order form placeholder!</h1>'
+            autoScroll: true,
+			action    : 'administrative',
+			title     : 'Procedure Order',
+			html      : '<h1>Procedure Order form placeholder!</h1>'
 		});
 		me.reviewSysPanel = Ext.create('Ext.form.Panel', {
-			autoScroll   : true,
-			border       : false,
+
 			action       : 'encounter',
 			title        : 'Review of Systems',
 			fieldDefaults: { msgTarget: 'side' },
@@ -130,10 +127,8 @@ Ext.define('App.view.patientfile.Encounter', {
                 ]
             }
 		});
-
 		me.reviewSysCkPanel = Ext.create('Ext.form.Panel', {
             autoScroll   : true,
-            border       : false,
             action       : 'encounter',
 			title : 'Review of Systems Checks',
             fieldDefaults: { msgTarget: 'side' },
@@ -151,10 +146,8 @@ Ext.define('App.view.patientfile.Encounter', {
                 ]
             }
 		});
-
 		me.soapPanel = Ext.create('Ext.form.Panel', {
 			autoScroll   : true,
-			border       : false,
 			title        : 'SOAP',
 			action       : 'encounter',
 			fieldDefaults: { msgTarget: 'side' }   ,
@@ -172,10 +165,8 @@ Ext.define('App.view.patientfile.Encounter', {
                 ]
             }
 		});
-
 		me.speechDicPanel = Ext.create('Ext.form.Panel', {
 			autoScroll   : true,
-			border       : false,
 			title        : 'Speech Dictation',
 			action       : 'encounter',
 			fieldDefaults: { msgTarget: 'side' },
@@ -193,14 +184,12 @@ Ext.define('App.view.patientfile.Encounter', {
                 ]
             }
 		});
-
 		me.vitalsPanel = Ext.create('Ext.panel.Panel', {
 			title      : 'Vitals',
 			action     : 'encounter',
 			cls        : 'vitals-panel',
 			bodyPadding: '5 10',
 			autoScroll : true,
-			border     : false,
 			layout     : {
 				type   : 'table',
 				columns: 2
@@ -217,7 +206,6 @@ Ext.define('App.view.patientfile.Encounter', {
 				},
 				{
 					xtype: 'vitalsdataview'
-					//store: me.encounterStore
 				}
 			],
 			dockedItems: {
@@ -247,27 +235,47 @@ Ext.define('App.view.patientfile.Encounter', {
 		/**
 		 * Encounter panel
 		 */
-		me.centerPanel = Ext.create('Ext.tab.Panel', {
-			xtype     : 'tabpanel',
-			region    : 'center',
-			activeItem: 0,
-			defaults  : {
-				bodyStyle : 'padding:15px',
-				border    : false,
-				bodyBorder: false,
-				layout    : 'fit'
-			},
-			items     : [
-				me.vitalsPanel,
-				me.reviewSysPanel,
-				me.reviewSysCkPanel,
-				me.soapPanel,
-				me.speechDicPanel,
-				me.MiscBillingOptionsPanel,
-				me.procedurePanel
-			]
-		});
-
+        me.centerPanel = Ext.create('Ext.tab.Panel', {
+            region    : 'center',
+            plain:true,
+            margin:'1 0 0 0',
+            bodyPadding: 5,
+            items: [
+                {
+                    xtype:'tabpanel',
+                    title:'Encounter',
+                    plain:true,
+                    activeItem: 0,
+                    defaults  : {
+                        bodyStyle : 'padding:15px',
+                        bodyBorder: true,
+                        layout    : 'fit'
+                    },
+                    items:[
+                        me.vitalsPanel,
+                        me.reviewSysPanel,
+                        me.reviewSysCkPanel,
+                        me.soapPanel,
+                        me.speechDicPanel
+                    ]
+                },
+                {
+                    xtype:'tabpanel',
+                    title:'Administrative',
+                    plain:true,
+                    activeItem: 0,
+                    defaults  : {
+                        bodyStyle : 'padding:15px',
+                        bodyBorder: true,
+                        layout    : 'fit'
+                    },
+                    items:[
+                        me.MiscBillingOptionsPanel,
+                        me.procedurePanel
+                    ]
+                }
+            ]
+        });
 
 		/**
 		 * Progress Note
@@ -328,29 +336,6 @@ Ext.define('App.view.patientfile.Encounter', {
 				dock : 'top',
 				items: [
 					{
-						text        : 'Encounter',
-						enableToggle: true,
-						pressed     : true,
-						toggleGroup : '1',
-						iconCls     : '',
-						scope       : me,
-						handler     : function() {
-							me.setTapPanel('encounter');
-						}
-					},
-					'-',
-					{
-						text        : 'Administrative',
-						enableToggle: true,
-						toggleGroup : '1',
-						iconCls     : '',
-						scope       : me,
-						handler     : function() {
-							me.setTapPanel('administrative');
-						}
-					},
-					'->',
-					{
 						text   : 'Immunization',
 						iconCls: 'icoAddRecord',
 						action : 'immunization',
@@ -389,7 +374,7 @@ Ext.define('App.view.patientfile.Encounter', {
 						scope  : me,
 						handler: me.onMedicalWin
 					},
-					'-',
+					'->',
 					{
 						text   : 'Close Encounter',
 						iconCls: 'icoAddRecord',
@@ -766,20 +751,6 @@ Ext.define('App.view.patientfile.Encounter', {
         return t;
     },
 
-	/**
-	 * Sets the tab panel hiding them by type (encounter or administrative)
-	 * @param type
-	 */
-	setTapPanel: function(type) {
-		var me = this;
-		me.centerPanel.getTabBar().items.each(function(t) {
-			if(t.card.action == type) {
-				t.show();
-			} else {
-				t.hide();
-			}
-		});
-	},
 	/**
 	 * Convert Celsius to Fahrenheit
 	 * @param field
