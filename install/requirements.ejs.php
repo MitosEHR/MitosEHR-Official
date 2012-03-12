@@ -56,6 +56,6 @@ if (!ini_get('safe_mode')){
 }else{
 	$safe_mode = "Fail";
 }
-echo '{"msg":"PHP safe maode off","status":"'.$safe_mode.'"}'; 
+echo '{"msg":"PHP safe mode off","status":"'.$safe_mode.'"}';
 
 echo ']';
