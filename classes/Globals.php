@@ -21,10 +21,10 @@ class Globals extends dbHelper {
 
         $this->setSQL("SELECT gl_name, gl_index, gl_value FROM globals");
         // ****************************************************************************************************
-        // $rows = $mitos_db->execStatement(PDO::FETCH_ASSOC) because we wwant to print all recods into one row
+        // $rows = $mitos_db->fetchRecords(PDO::FETCH_ASSOC) because we wwant to print all recods into one row
         // ****************************************************************************************************
         $rows = array();
-        foreach($this->execStatement() as $row){
+        foreach($this->fetchRecords() as $row){
             $rows[$row[0]] = $row[2];
         }
         return $rows;
@@ -62,7 +62,7 @@ class Globals extends dbHelper {
     public static function setGlobals(){
         $conn = new dbHelper();
         $conn->setSQL("SELECT gl_name, gl_value FROM globals");
-        foreach($conn->execStatement(PDO::FETCH_ASSOC) as $setting){
+        foreach($conn->fetchRecords(PDO::FETCH_ASSOC) as $setting){
             $_SESSION['global_settings'][$setting['gl_name']] = $setting['gl_value'];
 
         }

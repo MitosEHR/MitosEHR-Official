@@ -40,7 +40,7 @@ class AddressBook {
                          FROM users
                         WHERE users.active = 1 AND ( users.authorized = 1 OR users.username = '' )
                         LIMIT $params->start,$params->limit");
-        $records = $this->db->execStatement(PDO::FETCH_ASSOC);
+        $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
         $total   = count($records);
         $rows    = array();
         foreach($records as $row){

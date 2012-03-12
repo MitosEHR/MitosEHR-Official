@@ -35,7 +35,7 @@ class Services extends dbHelper {
                            OR related_code 	  LIKE '$params->query%'
                      ORDER BY $sortx");
 
-        $records = $this->execStatement(PDO::FETCH_CLASS);
+        $records = $this->fetchRecords(PDO::FETCH_CLASS);
 
         if($params->code_type != 'all'){
             $records = $this->filterByQuery($records, 'code_type', $params->code_type);

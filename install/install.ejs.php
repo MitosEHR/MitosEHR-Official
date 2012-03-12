@@ -106,7 +106,7 @@ Ext.onReady(function() {
 		            winSiteSetup.show();
 		        }
 			}, '-',{
-				text	: 'Do Not Agree',
+				text	: 'Not Agree',
 		        id		: 'btn_notAgree',
 		        margin	: '0 10 0 5',
 				name	: 'btn_reset',
@@ -155,7 +155,7 @@ Ext.onReady(function() {
 		        	}
 		        }]
             },{
-                title		: 'Site Info',
+                title		: 'Site Information',
                 defaults	: {width: 530},
                 id			: 'clinicInfo',
                 defaultType	: 'textfield',
@@ -165,7 +165,7 @@ Ext.onReady(function() {
 			        name		: 'siteName',
 			        id			: 'siteNameField',
 			        labelAlign	: 'top',
-			        fieldLabel	: 'Site Name (Site Name = Your Main Clinic\'s Name)',
+			        fieldLabel	: 'Site Name (Your Main Clinic\'s Name)',
 			        allowBlank	: false ,
 			        listeners: {
 				   	  	validitychange: function(){
@@ -182,13 +182,13 @@ Ext.onReady(function() {
 		            value: 'Tips...'
                 },{
 			    	xtype: 'displayfield',
-		            value: '<span style="color:red;">* A Site will have their own database and will no be able to comunicate with other sites.</span>'
+		            value: '<span style="color:red;">* A Site will have their own database and will no be able to communicate with other sites.</span>'
                 },{
 			    	xtype: 'displayfield',
-		            value: '<span style="color:green;">* If not sute that to use as "Site Name", just type "default".</span>'
+		            value: '<span style="color:green;">* If not sure what name to choose for your site, just type "default".</span>'
                 },{
 			    	xtype: 'displayfield',
-		            value: '<span style="color:green;">* A Site can have multiples clinics.</span>'
+		            value: '<span style="color:green;">* A Site can have multiple clinics.</span>'
                 },{
 			    	xtype: 'displayfield',
 		            value: '<span style="color:green;">* Why "Site Name" and no "Clinic\' Name"?</span> Basically because you can have more than one installation using the same webserver. ei. Two physician that share the same office but no their patients.'
@@ -211,7 +211,7 @@ Ext.onReady(function() {
                         }
                     }]
             },{
-                title		: 'Database Info',
+                title		: 'Database Information',
                 defaults	: {width: 530},
                 id			: 'databaseInfo',
                 defaultType	: 'textfield',
@@ -224,7 +224,7 @@ Ext.onReady(function() {
 					xtype			: 'fieldset',
 					id				: 'rootFieldset',
 		            checkboxToggle	: true,
-		            title			: 'Create a New Database (Roor Access Needed)',
+		            title			: 'Create a New Database (Root Access Needed)',
 		            defaultType		: 'textfield',
 		            collapsed		: true,
 		            disabled		: true,
@@ -275,7 +275,7 @@ Ext.onReady(function() {
 		            xtype			: 'fieldset',
 		            id				: 'dbuserFieldset',
 		            checkboxToggle	: true,
-		            title			: 'Install on Existing Database',
+		            title			: 'Install on a existing database',
 		            defaultType		: 'textfield',
 		            collapsed		: true,
 		            disabled		: true,
@@ -354,24 +354,24 @@ Ext.onReady(function() {
 		        	}
 		        }]
             },{
-                title		: 'Admin Info',
+                title		: 'Administrator Information',
                 defaults	: {width: 530},
                 id			: 'adminInfo',
                 defaultType	: 'textfield',
                 disabled	: true,
                 items: [{
 			    	xtype		: 'displayfield',
-		            value		: 'Choose Admin Username and Password'
+		            value		: 'Choose Administrator Username and Password'
                 },{
 			    	xtype		: 'displayfield',
 			    	padding		: '0 0 10px 0',
-		            value		: '(This will be the Super User/Global Admin with access to all areas)'
+		            value		: '(This account will be the Super User/Global Admin with access to all areas)'
                 },{
-	                fieldLabel	: 'Admin Username',
+	                fieldLabel	: 'Administrator Username',
 	                name		: 'adminUser',
 	                padding		: '0 0 10px 0'
 	            },{
-	                fieldLabel	: 'Admin Password',
+	                fieldLabel	: 'Administrator Password',
 	                type		: 'password', 
 	                name		: 'adminPass',
 	                inputType	: 'password'

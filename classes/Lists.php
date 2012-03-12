@@ -27,7 +27,7 @@ class Lists extends dbHelper {
                     LEFT JOIN combo_lists AS l ON l.id = o.list_id
                         WHERE l.id = '$params->list_id'
                      ORDER BY o.seq");
-        return $this->execStatement(PDO::FETCH_ASSOC);
+        return $this->fetchRecords(PDO::FETCH_ASSOC);
 
     }
 
@@ -100,12 +100,12 @@ class Lists extends dbHelper {
          * Gets all the combos
          */
         $this->setSQL("SELECT * FROM combo_lists ORDER BY title");
-        $combolists = $this->execStatement(PDO::FETCH_ASSOC);
+        $combolists = $this->fetchRecords(PDO::FETCH_ASSOC);
         /**
          * get all the form fields options
          */
         $this->setSQL("SELECT options FROM forms_field_options");
-        $forms_field_options = $this->execStatement(PDO::FETCH_ASSOC);
+        $forms_field_options = $this->fetchRecords(PDO::FETCH_ASSOC);
 
         foreach($combolists as $list){
             $list_id = $list['id'];

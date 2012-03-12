@@ -23,7 +23,7 @@
 //
 //        $sql = ("SELECT DISTINCT field_id  FROM forms_field_options ORDER BY field_id");
 //        $this->setSQL($sql);
-//        $fields = $this->execStatement(PDO::FETCH_ASSOC);
+//        $fields = $this->fetchRecords(PDO::FETCH_ASSOC);
 //
 //
 //        foreach($fields as $field){
@@ -32,7 +32,7 @@
 //
 //            $sql = ("SELECT oname, ovalue  FROM forms_field_options WHERE field_id = $fid  ORDER BY field_id");
 //            $this->setSQL($sql);
-//            $options = $this->execStatement(PDO::FETCH_ASSOC);
+//            $options = $this->fetchRecords(PDO::FETCH_ASSOC);
 //
 //            foreach($options as $option){
 //

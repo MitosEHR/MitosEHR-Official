@@ -16,7 +16,7 @@ if ($count <= 0){
 } else {
 	$count = 'Fail'; 
 }
-echo '{"msg":"MitosEHR not installed","status":"'.$count.'"},'; 
+echo '{"msg":"MitosEHR is not installed","status":"'.$count.'"},';
 
 //******************************************************
 // verified that php 5.2.0 or later is istalled
@@ -47,7 +47,7 @@ if (substr(sprintf('%o', fileperms("../sites")), -4)) {
 } else {
  	$sitesPerm = 'Fail';
 }
-echo '{"msg":"Sites folder writable","status":"'.$sitesPerm.'"},'; 
+echo '{"msg":"Sites folder is writable","status":"'.$sitesPerm.'"},';
 //******************************************************
 // check if safe_mome is off
 //******************************************************
@@ -56,6 +56,6 @@ if (!ini_get('safe_mode')){
 }else{
 	$safe_mode = "Fail";
 }
-echo '{"msg":"PHP safe maode off","status":"'.$safe_mode.'"}'; 
+echo '{"msg":"PHP safe mode off","status":"'.$safe_mode.'"}';
 
 echo ']';

@@ -38,7 +38,7 @@ class CombosData {
                     LEFT JOIN combo_lists AS l ON l.id = o.list_id
                         WHERE l.id = '$params->list_id'
                      ORDER BY o.seq");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getUsers(){
@@ -49,7 +49,7 @@ class CombosData {
               ORDER BY lname, fname";
         $this->db->setSQL($sql);
         $rows =array();
-        foreach ($this->db->execStatement(PDO::FETCH_ASSOC) as $row) {
+        foreach ($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row) {
             $row['name'] = $row['title'].' '.Person::fullname($row['fname'],$row['mname'],$row['lname']);
             unset($row['title'],$row['fname'],$row['mname'],$row['lname']);
             array_push($rows,$row);
@@ -59,32 +59,32 @@ class CombosData {
 
     public function getLists(){
         $this->db->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getFacilities(){
         $this->db->setSQL("SELECT id, name FROM facility WHERE service_location != 0 ORDER BY name");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getRoles(){
         $this->db->setSQL("SELECT id, role_name FROM acl_roles ORDER BY role_name");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getCodeTypes(){
         $this->db->setSQL("SELECT ct_key, ct_id FROM code_types ORDER BY ct_seq");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getCalendarCategories(){
         $this->db->setSQL("SELECT catid, catname FROM calendar_categories ORDER BY cattype, catname");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getLanguages(){
         $this->db->setSQL("SELECT lang_code, lang_description FROM lang_languages ORDER BY lang_description");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getAuthorizations(){

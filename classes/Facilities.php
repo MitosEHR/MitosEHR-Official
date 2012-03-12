@@ -44,7 +44,7 @@ class Facilities {
         $sql = "SELECT * FROM facility WHERE $wherex ORDER BY $orderx LIMIT $params->start,$params->limit";
         $this->db->setSQL($sql);
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
 
             if (strlen($row['pos_code']) <= 1){
                 $row['pos_code'] = '0'.$row['pos_code'];

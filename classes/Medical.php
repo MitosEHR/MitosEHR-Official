@@ -51,7 +51,7 @@ class Medical {
     {
         $sql = "SELECT * FROM codes WHERE code_type='100'";
         $this->db->setSQL($sql);
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getPatientImmunizations(stdClass $params)
@@ -86,7 +86,7 @@ class Medical {
     private function getImmunizationsByPid($pid)
     {
         $this->db->setSQL("SELECT * FROM patient_immunizations WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $eid
@@ -95,7 +95,7 @@ class Medical {
     private function getImmunizationsByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM patient_immunizations WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $pid
@@ -104,7 +104,7 @@ class Medical {
     private function getAllergiesByPid($pid)
     {
         $this->db->setSQL("SELECT * FROM patient_allergies WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $eid
@@ -113,7 +113,7 @@ class Medical {
     private function getAllergiesByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM patient_allergies WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $pid
@@ -122,7 +122,7 @@ class Medical {
     private function getMedicalIssuesByPid($pid)
     {
         $this->db->setSQL("SELECT * FROM patient_medical_issues WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $eid
@@ -131,7 +131,7 @@ class Medical {
     private function getMedicalIssuesByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM patient_medical_issues WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $pid
@@ -140,7 +140,7 @@ class Medical {
     private function getSurgeriesByPid($pid)
     {
         $this->db->setSQL("SELECT * FROM patient_surgeries WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $eid
@@ -149,7 +149,7 @@ class Medical {
     private function getSurgeriesByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM patient_surgeries WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $pid
@@ -158,7 +158,7 @@ class Medical {
     private function getDentalByPid($pid)
     {
         $this->db->setSQL("SELECT * FROM patient_dental WHERE pid='$pid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $eid
@@ -167,7 +167,7 @@ class Medical {
     private function getDentalByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM patient_dental WHERE eid='$eid'");
-        return $this->db->execStatement(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $date

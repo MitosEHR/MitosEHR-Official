@@ -65,7 +65,7 @@ class User extends Person {
                          ORDER BY u.username
                             LIMIT $params->start,$params->limit");
         $rows = array();
-        foreach($this->db->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['fullname']    = $this->fullname($row['fname'],$row['mname'],$row['lname']);
             unset($row['password'],$row['pwd_history1'],$row['pwd_history2']);
             array_push($rows, $row);

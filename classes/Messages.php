@@ -47,7 +47,7 @@ class Messages extends dbHelper {
                      ORDER BY pnotes.date
                         LIMIT $params->start, $params->limit");
         $rows = array();
-        foreach($this->execStatement(PDO::FETCH_ASSOC) as $row){
+        foreach($this->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['patient_name']    = Person::fullname($row['patient_fname'],$row['patient_mname'],$row['patient_lname']);
 
             $id = $row['from_id'];
