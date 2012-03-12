@@ -6,6 +6,7 @@ if(!isset($_SESSION)){
 }
 set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
 require_once'PHPLinq/LinqToObjects.php';
+
 /**
  * @brief       Database Helper Class.
  * @details     A PDO helper for MitosEHR, contains custom function to manage the database
@@ -65,11 +66,11 @@ class dbHelper {
 	function __construct()
     {
 		error_reporting(0);
-        $host   = $_SESSION['site']['db']['host'];
-        $port   = $_SESSION['site']['db']['port'];
-        $dbname = $_SESSION['site']['db']['database'];
-        $dbuser = $_SESSION['site']['db']['username'];
-        $dbpass = $_SESSION['site']['db']['password'];
+        $host   = (string)$_SESSION['site']['db']['host'];
+        $port   = (int)$_SESSION['site']['db']['port'];
+        $dbname = (string)$_SESSION['site']['db']['database'];
+        $dbuser = (string)$_SESSION['site']['db']['username'];
+        $dbpass = (string)$_SESSION['site']['db']['password'];
 		try {
     		$this->conn = new PDO( 'mysql:host='.$host.';port='.$port.';dbname='.$dbname,$dbuser,$dbpass,
                 array(PDO::ATTR_PERSISTENT => true)
