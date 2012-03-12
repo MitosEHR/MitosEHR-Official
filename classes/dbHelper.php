@@ -223,7 +223,7 @@ class dbHelper {
      * @param $Order
      * @param $Where
      */
-    function sqlSelectBuilder($Table, $Fields, $Order, $Where){
+    public function sqlSelectBuilder($Table, $Fields, $Order, $Where){
 
         // Step 1 - Select clause and wrote down the fields
         $sqlReturn = 'SELECT ';
