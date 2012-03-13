@@ -79,19 +79,17 @@ class authProcedures {
         // Convert the password to AES and validate
         //-------------------------------------------
         $aes = new AES($_SESSION['site']['AESkey']);
-        $pass = $aes->encrypt($params->authPass);
         //-------------------------------------------
         // Username & password match
         //-------------------------------------------
-        $db->setSQL("SELECT id, username, fname, mname, lname, email
+        $db->setSQL("SELECT id, username, fname, mname, lname, email, password
                          FROM users
         		        WHERE username   = '$params->authUser'
-        		          AND password   = '$pass'
         		          AND authorized = '1'
         		        LIMIT 1");
 
         $user = $db->fetchRecord();
-        if ($user['username'] == null){
+        if ($params->authPass != $aes->decrypt($user['password'])){
             return array('success'=>false, 'error'=>'The username or password you provided is invalid.');
         } else {
         	//-------------------------------------------
