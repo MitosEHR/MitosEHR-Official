@@ -44,10 +44,8 @@ class Encounter {
 */
     public function checkOpenEncounters()
     {
-        $pid =  $_SESSION['patient']['pid'];
-
-        $fields[]="*";
-        $where[]="pid = '" . $pid . "'";
+        $fields[] = "*";
+        $where[] = "pid = '" .  $_SESSION['patient']['pid'] . "'";
         $where[] = "close_date IS NULL";
 
         $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, "", $where) );
@@ -66,14 +64,16 @@ class Encounter {
      */
     public function getEncounters(stdClass $params)
     {
+        $fields[] = "*";
+
         if(isset($params->sort)){
-            $ORDER = 'ORDER BY ' . $params->sort[0]->property . ' ' . $params->sort[0]->direction;
+            $order[$params->sort[0]->direction] = $params->sort[0]->property;
         } else {
-            $ORDER = 'ORDER BY start_date DESC';
+            $order["DESC"] = $params->sort[0]->property;
         }
 
-        $pid = $_SESSION['patient']['pid'];
-        $this->db->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid' ".$ORDER);
+        $where[] = $_SESSION['patient']['pid'];
+        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, $order, $where) );
         $rows = array();
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['status'] = ($row['close_date']== null)? 'open' : 'close';
@@ -81,7 +81,6 @@ class Encounter {
         }
 
         return $rows;
-
     }
 
     /**

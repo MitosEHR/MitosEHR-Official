@@ -15,9 +15,9 @@ $fields[] = "firstname";
 $fields[] = "lastname";
 
 $order[] = "firstname";
+$order["DESC"] = "lastname";
 
-$where[] = "firstname='gino'";
-$where[] = "lastname='rivera'";
+$where["OR"] = "firstname='gino'";
 $where[] = "lastname='rivera'";
 
 echo $dbHelperTest->sqlSelectBuilder("patient", $fields, $order, $where);
