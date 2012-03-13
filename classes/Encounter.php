@@ -46,9 +46,9 @@ class Encounter {
     {
         $pid =  $_SESSION['patient']['pid'];
 
-        $fields[]="*";
-        $where[]="pid = '" . $pid . "'";
-        $where[] = "close_date IS NULL";
+        $fields[]   = "*";
+        $where[]    = "pid = '" . $pid . "'";
+        $where[]    = "close_date IS NULL";
 
         $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, "", $where) );
         $total = $this->db->rowCount();
