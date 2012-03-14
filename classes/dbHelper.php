@@ -234,19 +234,23 @@ class dbHelper {
         // Step 2 - From clause, table
         $sqlReturn .= " FROM " . $Table . " ";
 
-        // Step 3 - Order clause, sort the results
-        if($Order != ""){
-            foreach($Order as $key => $value) {
-                $sqlReturn .= " ORDER BY " . $value . ", ";
-                $sqlReturn = substr($sqlReturn, 0, -2);
-            }
-        }
-
-        // Step 4 - Having clause, filter the records
+        // Step 3 - Having clause, filter the records
         if($Where != ""){
             $sqlReturn .= " HAVING ";
-            foreach($Where as $key => $value) $sqlReturn .= "(" . $value . ") AND ";
+            foreach($Where as $key => $value) {
+                $sqlReturn .= "(" . $value . ")";
+                $sqlReturn .= (is_int($key)) ? " AND " : " " . $key . " ";
+             }
             $sqlReturn = substr($sqlReturn, 0, -5);
+        }
+
+        // Step 4 - Order clause, sort the results
+        if($Order != ""){
+            $sqlReturn .= " ORDER BY ";
+            foreach($Order as $key => $value) {
+                $sqlReturn .= (!is_int($key)) ? $value . " " . $key . ", " : $value . ", ";
+            }
+            $sqlReturn = substr($sqlReturn, 0, -2);
         }
 
         return $sqlReturn;
