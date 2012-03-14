@@ -60,8 +60,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         itemId         : 'immuName',
                                         enableKeyEvents: true,
                                         listeners      : {
-                                            scoep: me,
-                                            focus: me.onCodeFieldFocus
+                                            scope: me,
+                                            focus: me.onCodeFieldFocus,
+                                            blur: me.onCodeFieldBlur
                                         }
                                     },
 									{
@@ -70,8 +71,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										itemId         : 'immuCode',
 										enableKeyEvents: true,
 										listeners      : {
-                                            scoep: me,
-											focus: me.onCodeFieldFocus
+                                            scope: me,
+											focus: me.onCodeFieldFocus,
+                                            blur: me.onCodeFieldBlur
 										}
 									},
 									{
@@ -1054,6 +1056,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             panel = me.getLayout().getActiveItem().down('form');
             form = panel.getForm();
         }
+        me.closeImmunizationGrid();
         panel.collapse();
         panel.hide();
 		form.reset();
@@ -1074,13 +1077,25 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         panel.show();
         panel.expand(true);
         form.loadRecord(record);
+        me.closeImmunizationGrid();
+    },
+
+    closeImmunizationGrid:function(){
+        this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').collapse();
+    },
+
+    openImmunizationGrid:function(){
+        this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').expand(true);
     },
 
 
-    onCodeFieldFocus: function(field) {
-		var gridPanel = field.up('panel').up('panel').getComponent('immuListGrid');
-		gridPanel.expand(true);
+    onCodeFieldFocus: function() {
+		this.openImmunizationGrid();
 	},
+
+    onCodeFieldBlur:function(){
+        this.closeImmunizationGrid();
+    },
 
 	onOptionType: function(combo) {
 
@@ -1092,14 +1107,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 	onImmuGridClick: function(view, record) {
-		var gridPanel = view.up('grid'),
-			nameField = this.down('form').getComponent('immuName'),
+		var nameField = this.down('form').getComponent('immuName'),
 			codeField = this.down('form').getComponent('immuCode'),
 			nameValue = record.data.code_text,
 			codeValue = record.data.code;
         nameField.setValue(nameValue);
         codeField.setValue(codeValue);
-		gridPanel.collapse(true);
+		this.closeImmunizationGrid();
 	},
 
 	cardSwitch: function(btn) {

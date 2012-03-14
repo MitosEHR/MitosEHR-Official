@@ -85,24 +85,59 @@ class Services {
     }
 
     public function liveIDCXSearch(stdClass $params){
-        $queries = explode(',', $params->query );
-        $query = trim(end(array_values($queries)));
-        $this->db->setSQL("SELECT *
-                             FROM codes
-                            WHERE (code_text      LIKE '%$query%'
-                               OR code_text_short LIKE '%$query%'
-                               OR code            LIKE '$query%'
-                               OR related_code 	  LIKE '$query%')
-                               AND code_type = '2'
-                         ORDER BY code ASC");
+        $Str = explode(',', $params->query );
+        $queryStr = trim(end(array_values($Str)));
+        $queries = explode(' ', $queryStr);
+
+        $sql = "SELECT * FROM codes WHERE ";
+
+        foreach($queries as $query){
+            $sql .= "(code_text LIKE '%$query%' OR code_text_short LIKE '%$query%' OR code LIKE '$query%' OR related_code LIKE '$query%') AND ";
+        }
+        $sql .= "code_type = '2'";
+
+        //print $sql;
+
+        $this->db->setSQL($sql);
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+//        // primary array where all the record will be store
+//        $records = array();
+//        $idHaystack = array();
+//        foreach($queries as $query){
+//            $this->db->setSQL("SELECT *
+//                                 FROM codes
+//                                WHERE (code_text      LIKE '%$query%'
+//                                   OR code_text_short LIKE '%$query%'
+//                                   OR code            LIKE '$query%'
+//                                   OR related_code 	  LIKE '$query%')
+//                                   AND code_type = '2'
+//                             ORDER BY code ASC");
+//            foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+//                if(array_key_exists($row['id'], $idHaystack)){
+//                    $records[$row['id']]['weight']++;
+//                }else{
+//                    $idHaystack[$row['id']] = true;
+//                    $row['weight'] = 1;
+//                    $records[$row['id']] = $row;
+//                }
+//            }
+//        }
+//        function cmp($a, $b) {
+//          if ($a['weight'] === $b['weight']) {
+//            return 0;
+//          } else {
+//            return $a['weight'] < $b['weight'] ? 1 : -1; // reverse order
+//          }
+//        }
+//        usort($records, 'cmp');
         $total   = count($records);
         $records = array_slice($records,$params->start,$params->limit);
         return array('totals'=>$total,'rows'=>$records);
     }
 }
 //$params = new stdClass();
-//$params->query = '200, 1, head';
+//$params->query = 'head neoplasm face';
 //$params->start = 0;
 //$params->limit = 25;
 //

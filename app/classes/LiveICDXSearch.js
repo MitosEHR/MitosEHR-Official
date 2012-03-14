@@ -71,7 +71,6 @@ Ext.define('App.classes.LiveICDXSearch', {
 			pageSize    : 10,
             listeners:{
                 scope:me,
-                beforedeselect:me.codeBeforeSelected,
                 select:me.codeSelected
             }
 		}, null);
@@ -79,32 +78,26 @@ Ext.define('App.classes.LiveICDXSearch', {
 		me.callParent();
 	},
 
-    codeBeforeSelected:function(combo){
-        this.oldValue = combo.getRawValue();
-    },
-
     codeSelected:function(combo, record){
+        var value = record[0].data.code;
         if(this.oldValue){
-            combo.setRawValue(this.oldValue + record[0].data.code + ', ');
+            combo.setRawValue(this.oldValue + value + ', ');
         }else{
-            combo.setRawValue(record[0].data.code + ', ');
+            combo.setRawValue(value + ', ');
         }
+        this.oldValue = combo.getRawValue();
     },
 
     onRender:function (ct, position) {
         this.callParent(arguments);
         var id = this.getId();
         this.triggerConfig = {
-            tag:'div', cls:'x-form-twin-triggers', style:'display:block;width:46px;', cn:[
-                {tag:"img", style:Ext.isIE ? 'margin-left:-3;height:19px' : '', src:Ext.BLANK_IMAGE_URL, id:"trigger1" + id, name:"trigger1" + id, cls:"x-form-trigger " + this.trigger1Class},
+            tag:'div', cls:'x-form-twin-triggers', style:'display:block;', cn:[
                 {tag:"img", style:Ext.isIE ? 'margin-left:-6;height:19px' : '', src:Ext.BLANK_IMAGE_URL, id:"trigger2" + id, name:"trigger2" + id, cls:"x-form-trigger " + this.trigger2Class}
             ]};
         this.triggerEl.replaceWith(this.triggerConfig);
         this.triggerEl.on('mouseup', function (e) {
-
-                if (e.target.name == "trigger1" + id) {
-                    this.onTriggerClick();
-                } else if (e.target.name == "trigger2" + id) {
+                if (e.target.name == "trigger2" + id) {
                     this.reset();
                     this.oldValue = null;
                     if (this.spObj !== '' && this.spExtraParam !== '') {
@@ -117,9 +110,7 @@ Ext.define('App.classes.LiveICDXSearch', {
                 }
             },
             this);
-        var trigger1 = Ext.get("trigger1" + id);
         var trigger2 = Ext.get("trigger2" + id);
-        trigger1.addClsOnOver('x-form-trigger-over');
         trigger2.addClsOnOver('x-form-trigger-over');
     }
 
