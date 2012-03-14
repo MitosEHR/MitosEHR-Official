@@ -58,6 +58,7 @@ $_SESSION['patient']['name']    = null;
  */
 $_SESSION['server']             = $_SERVER;
 $_SESSION['server']['OS']       = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "win") ? "Windows" : "Linux");
+$_SESSION['server']['token']    = null;
 /**
  * Client related variables
  */

@@ -388,7 +388,7 @@ Ext.define('App.view.miscellaneous.Addressbook', {
 				{ header: 'Mobile', sortable: true, dataIndex: 'phonecell' },
 				{ header: 'Fax', sortable: true, dataIndex: 'fax' },
 				{ header: 'Email', flex: 1, sortable: true, dataIndex: 'email' },
-				{ header: 'Primary Address', flex: 1, sortable: true, dataIndex: 'fulladdress' },
+				{ header: 'Primary Address', flex: 1, sortable: true, dataIndex: 'fulladdress' }
 			],
 			dockedItems: [
 				{

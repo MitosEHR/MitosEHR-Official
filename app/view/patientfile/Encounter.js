@@ -144,6 +144,7 @@ Ext.define('App.view.patientfile.Encounter', {
                     region:'south',
                     split:true,
                     height:300,
+                    frame:true,
                     items:[
                         {
                             xtype:'fieldcontainer',
@@ -270,8 +271,13 @@ Ext.define('App.view.patientfile.Encounter', {
             title:'Procedure Order',
             html:'<h1>Procedure Order form placeholder!</h1>'
         });
+        me.CurrentProceduralTerminology = Ext.create('Ext.form.Panel', {
+            autoScroll:true,
+            action:'administrative',
+            title:'Current Procedural Terminology',
+            html:'<h1>Current Procedural Terminology form placeholder!</h1>'
+        });
         me.reviewSysPanel = Ext.create('Ext.form.Panel', {
-
             action:'encounter',
             title:'Review of Systems',
             fieldDefaults:{ msgTarget:'side' },
@@ -432,7 +438,8 @@ Ext.define('App.view.patientfile.Encounter', {
                     },
                     items:[
                         me.MiscBillingOptionsPanel,
-                        me.procedurePanel
+                        me.procedurePanel,
+                        me.CurrentProceduralTerminology
                     ]
                 }
             ]

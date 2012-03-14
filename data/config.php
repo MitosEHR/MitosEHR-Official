@@ -280,6 +280,9 @@ $API = array(
            ),
             'updateService'=>array(
                'len'=>1
+           ),
+            'liveIDCXSearch'=>array(
+               'len'=>1
            )
         )
     ),    /**

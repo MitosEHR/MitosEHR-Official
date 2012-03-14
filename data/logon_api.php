@@ -29,7 +29,7 @@ foreach ($API as $aname=>&$a) {
 }
 
 $cfg = array(
-    'url'=>'data/router.php',
+    'url'=>'data/logon_router.php',
     'type'=>'remoting',
 	'actions'=>$actions
 );

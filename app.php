@@ -114,6 +114,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/RenderPanel.js"></script>
         <script type="text/javascript" src="app/classes/ux/SlidingPager.js"></script>
         <script type="text/javascript" src="app/classes/GridPanel.js"></script>
+        <script type="text/javascript" src="app/classes/LiveICDXSearch.js"></script>
         <script type="text/javascript" src="app/classes/LivePatientSearch.js"></script>
         <script type="text/javascript" src="app/classes/ManagedIframe.js"></script>
         <script type="text/javascript" src="app/classes/PhotoIdWindow.js"></script>

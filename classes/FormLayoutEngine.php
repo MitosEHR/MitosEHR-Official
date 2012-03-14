@@ -90,6 +90,10 @@ class FormLayoutEngine {
              * now lets get the the child items using the parent item ID parameter
              */
             $item['items'] = $this->getChildItems($item['id']);
+
+            if($item['xtype'] == 'fieldset' && $item['title'] == 'Assessment' ){
+                $item['items'][] = array('xtype' => 'liveicdxsearch', 'margin'=>'10 5 15 5', 'emptyText'=>'Diagnostic Codes');
+            }
             /**
              * lets check if this item has a child items. If not, the unset the $item['Items']
              * this way we make sure the we done return a items property

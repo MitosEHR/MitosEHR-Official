@@ -60,27 +60,6 @@ function doRpc($cdata){
     global $API;
 	try {
 
-        /**
-         * Check if user is authorized/Logged in
-         */
-        if(isset($_SESSION['user']['auth'])){
-        	if ($_SESSION['user']['auth'] != true){
-                throw new Exception('Authorization Required.');
-        	}
-        }else{
-            throw new Exception('Authorization Required.');
-        }
-
-        /**
-         * Check if tdi is a valid tid (expected tid)
-         */
-        if(isset($_SESSION['last_tid'])){
-            $expectedTid = $_SESSION['last_tid'] + 1;
-            if($cdata->tid != $expectedTid){
-                throw new Exception('Call to unrecognize transaction ID: MitosEHR does not recognized this transaction ID.');
-            }
-        }
-
 		if(!isset($API[$cdata->action])){
 			throw new Exception('Call to undefined action: ' . $cdata->action);
 		}
@@ -122,8 +101,6 @@ function doRpc($cdata){
 		$r['message'] = $e->getMessage();
 		$r['where'] = $e->getTraceAsString();
 	}
-
-    $_SESSION['last_tid'] = $cdata->tid;
 
 	return $r;
 }
