@@ -16,7 +16,9 @@ include_once("Person.php");
 include_once("dbHelper.php");
 
 class Patient extends Person {
-
+    /**
+     * @var dbHelper
+     */
     private $db;
 
     function __construct(){
