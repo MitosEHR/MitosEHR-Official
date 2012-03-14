@@ -64,20 +64,30 @@ class Encounter {
      */
     public function getEncounters(stdClass $params)
     {
-        $fields[] = "*";
-
-        if(isset($params->sort)){
-            $order[$params->sort[0]->direction] = $params->sort[0]->property;
-        } else {
-            $order["DESC"] = $params->sort[0]->property;
-        }
-
-        $where[] = $_SESSION['patient']['pid'];
-        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, $order, $where) );
         $rows = array();
+
+        // TEST sqlSelectBuilder()
+//        $fields[] = "*";
+//        if(isset($params->sort)){
+//            $order[$params->sort[0]->direction] = $params->sort[0]->property;
+//        } else {
+//            $order["DESC"] = $params->sort[0]->property;
+//        }
+//
+//        $where[] = $_SESSION['patient']['pid'];
+//        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, $order, $where) );
+//        $rows = array();
+//        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+//            $row['status'] = ($row['close_date']== null)? 'open' : 'close';
+//        	array_push($rows, $row);
+//        }
+
+
+        $pid = $_SESSION['patient']['pid'];
+        $this->db->setSQL("SELECT * FROM form_data_encounter WHERE pid = '$pid'");
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['status'] = ($row['close_date']== null)? 'open' : 'close';
-        	array_push($rows, $row);
+            array_push($rows, $row);
         }
 
         return $rows;
