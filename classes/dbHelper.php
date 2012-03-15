@@ -219,9 +219,9 @@ class dbHelper {
      * @version Vega 1.0
      *
      * @param $Table
-     * @param $Fields
-     * @param $Order
-     * @param $Where
+     * @param (array)$Fields
+     * @param (array)$Order
+     * @param (array)$Where
      * @return string
      */
     public function sqlSelectBuilder($Table, $Fields = array("*"), $Where = null, $Order = null){
@@ -384,7 +384,8 @@ class dbHelper {
      *
      * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
      *
-     * @param       int defualt to (PDO::FETCH_BOTH) Please see Fetch Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a>
+     * @param       int default to (PDO::FETCH_BOTH) Please see Fetch
+     *              Style docs at <a href="http://php.net/manual/en/pdostatement.fetch.php">PDO Statement Fetch</a>
      * @return      array of records, if error occurred return the error instead
      */
     public function fetchRecords($fetchStyle = PDO::FETCH_BOTH)
