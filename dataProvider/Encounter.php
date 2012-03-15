@@ -80,7 +80,7 @@ class Encounter {
         }
         $where[] = "pid = '".$_SESSION['patient']['pid']."'";
 
-        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, $where, $order) );
+        $this->db->setSQL( $this->db->sqlSelectBuilder('form_data_encounter', $fields, $where, $order) );
         $rows = array();
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['status'] = ($row['close_date']== null)? 'open' : 'close';
@@ -109,20 +109,20 @@ class Encounter {
 
         $data['start_date'] = $this->parseDate($data['start_date']);
 
-        $sql = $this->db->sqlBind($data, "form_data_encounter", "I");
+        $sql = $this->db->sqlBind($data, 'form_data_encounter', 'I');
         $this->db->setSQL($sql);
         $this->db->execLog();
         $eid = $this->db->lastInsertId;
 
         $default = array('pid'=>$params->pid, 'eid'=>$eid);
 
-        $this->db->setSQL($this->db->sqlBind($default, "form_data_review_of_systems", "I"));
+        $this->db->setSQL($this->db->sqlBind($default, 'form_data_review_of_systems', 'I'));
         $this->db->execOnly();
-        $this->db->setSQL($this->db->sqlBind($default, "form_data_review_of_systems_check", "I"));
+        $this->db->setSQL($this->db->sqlBind($default, 'form_data_review_of_systems_check', 'I'));
         $this->db->execOnly();
-        $this->db->setSQL($this->db->sqlBind($default, "form_data_soap", "I"));
+        $this->db->setSQL($this->db->sqlBind($default, 'form_data_soap', 'I'));
         $this->db->execOnly();
-        $this->db->setSQL($this->db->sqlBind($default, "form_data_dictation", "I"));
+        $this->db->setSQL($this->db->sqlBind($default, 'form_data_dictation', 'I'));
         $this->db->execOnly();
 
         $params->eid = intval($eid);
@@ -140,10 +140,10 @@ class Encounter {
      */
     public function getEncounter(stdClass $params)
     {
-        $fields[] = "*";
-        $where["eid"] = $params->eid;
+        $fields[] = '*';
+        $where['eid'] = $params->eid;
 
-        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, "", $where) );
+        $this->db->setSQL( $this->db->sqlSelectBuilder('form_data_encounter', $fields, $where) );
         $encounter = $this->db->fetchRecord(PDO::FETCH_ASSOC);
 
         $encounter['vitals']                = $this->getVitalsByPid($encounter['pid']);
@@ -154,9 +154,9 @@ class Encounter {
 
 
         if($encounter != null){
-            return array("success" => true, 'encounter' => $encounter);
+            return array('success' => true, 'encounter' => $encounter);
         }else{
-            return array("success" => false);
+            return array('success' => false);
         }
     }
     /**
@@ -181,7 +181,7 @@ class Encounter {
         $data['close_uid'] = $_SESSION['user']['id'];
 
         if($this->user->verifyUserPass($params->signature)){
-            $sql = $this->db->sqlBind($data, "form_data_encounter", "U", "eid='".$params->eid."'");
+            $sql = $this->db->sqlBind($data, 'form_data_encounter', 'U', "eid='".$params->eid."'");
             $this->db->setSQL($sql);
             $this->db->execLog();
 
