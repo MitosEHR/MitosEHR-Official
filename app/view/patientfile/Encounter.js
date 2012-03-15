@@ -52,13 +52,44 @@ Ext.define('App.view.patientfile.Encounter', {
             },
             interval:1000 //1 second
         };
-
         me.encounterStore = Ext.create('App.store.patientfile.Encounter', {
             listeners:{
                 scope:me,
                 datachanged:me.updateProgressNote
             }
         });
+        me.encounterEventHistoryStore = Ext.create('App.store.patientfile.EncounterEventHistory');
+
+        Ext.define('DataObject', {
+            extend: 'Ext.data.Model',
+            fields: ['name', 'column1', 'column2']
+        });
+
+        me.myData = [
+            { name : "Rec 0", column1 : "0", column2 : "0" },
+            { name : "Rec 1", column1 : "1", column2 : "1" },
+            { name : "Rec 2", column1 : "2", column2 : "2" },
+            { name : "Rec 3", column1 : "3", column2 : "3" },
+            { name : "Rec 4", column1 : "4", column2 : "4" },
+            { name : "Rec 5", column1 : "5", column2 : "5" },
+            { name : "Rec 6", column1 : "6", column2 : "6" },
+            { name : "Rec 7", column1 : "7", column2 : "7" },
+            { name : "Rec 8", column1 : "8", column2 : "8" },
+            { name : "Rec 9", column1 : "9", column2 : "9" }
+        ];
+
+            // create the data store
+        me.firstGridStore = Ext.create('Ext.data.Store', {
+            model: 'DataObject',
+            data:me.myData
+        });
+
+        me.secondGridStore = Ext.create('Ext.data.Store', {
+            model: 'DataObject'
+        });
+
+
+
 
         /**
          * New Encounter Panel this panel is located hidden at
@@ -261,26 +292,88 @@ Ext.define('App.view.patientfile.Encounter', {
          */
         me.MiscBillingOptionsPanel = Ext.create('Ext.form.Panel', {
             autoScroll:true,
-            action:'administrative',
             title:'Misc. Billing Options HCFA',
             html:'<h1>Misc. Billing Options HCFA form placeholder!</h1>'
         });
         me.procedurePanel = Ext.create('Ext.form.Panel', {
             autoScroll:true,
-            action:'administrative',
             title:'Procedure Order',
             html:'<h1>Procedure Order form placeholder!</h1>'
         });
-        me.CurrentProceduralTerminology = Ext.create('Ext.form.Panel', {
+        me.CurrentProceduralTerminology = Ext.create('Ext.panel.Panel', {
+            bodyStyle:0,
             autoScroll:true,
-            action:'administrative',
             title:'Current Procedural Terminology',
-            html:'<h1>Current Procedural Terminology form placeholder!</h1>'
-        });
-        me.EncounterEventHistory = Ext.create('App.classes.grid.EventHistory',{
-            title:'Encounter History'
+            layout:{
+                type:'hbox',
+                align:'stretch',
+                padding:5
+            },
+            defaults:{
+                flex:1
+            },
+            items:[
+                {
+                    xtype:'grid',
+                    multiSelect:true,
+                    viewConfig:{
+                        plugins:{
+                            ptype:'gridviewdragdrop',
+                            dragGroup:'firstGridDDGroup',
+                            dropGroup:'secondGridDDGroup'
+                        },
+                        listeners:{
+                            drop:function (node, data, dropRec, dropPosition) {
+                                var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+                                me.msg("Drag from right to left", 'Dropped ' + data.records[0].get('name') + dropOn);
+                            }
+                        }
+                    },
+                    stripeRows:true,
+                    title:'First Grid',
+                    margins:'0 2 0 0',
+                    columns:[
+                        {text:"Record Name", flex:1, sortable:true, dataIndex:'name'},
+                        {text:"column1", width:70, sortable:true, dataIndex:'column1'},
+                        {text:"column2", width:70, sortable:true, dataIndex:'column2'}
+                    ],
+                    store:me.firstGridStore
+                },
+                {
+                    xtype:'grid',
+                    viewConfig:{
+                        plugins:{
+                            ptype:'gridviewdragdrop',
+                            dragGroup:'secondGridDDGroup',
+                            dropGroup:'firstGridDDGroup'
+                        },
+                        listeners:{
+                            drop:function (node, data, dropRec, dropPosition) {
+                                var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+                                me.msg("Drag from left to right", 'Dropped ' + data.records[0].get('name') + dropOn);
+                            }
+                        }
+                    },
+                    stripeRows:true,
+                    title:'Second Grid',
+                    margins:'0 0 0 3',
+                    columns:[
+                        {text:"Record Name", flex:1, sortable:true, dataIndex:'name'},
+                        {text:"column1", width:70, sortable:true, dataIndex:'column1'},
+                        {text:"column2", width:70, sortable:true, dataIndex:'column2'}
+                    ],
+                    store:me.secondGridStore
+                }
+            ]
+
         });
 
+
+        me.EncounterEventHistory = Ext.create('App.classes.grid.EventHistory', {
+            bodyStyle:0,
+            title: 'Encounter History',
+            store: me.encounterEventHistoryStore
+        });
 
 
         me.reviewSysPanel = Ext.create('Ext.form.Panel', {
@@ -691,6 +784,7 @@ Ext.define('App.view.patientfile.Encounter', {
                                         me.vitalsPanel.down('vitalsdataview').refresh();
                                         me.updateProgressNote();
                                         me.msg('Sweet!', 'Vitals Saved');
+                                        me.encounterEventHistoryStore.load({params:{eid:me.currEncounterEid}});
                                     } else {
                                         Ext.Msg.show({
                                             title:'Oops!',
@@ -737,6 +831,7 @@ Ext.define('App.view.patientfile.Encounter', {
                             }
                         });
                         me.msg('Sweet!', 'Encounter Updated');
+                        me.encounterEventHistoryStore.load({params:{eid:me.currEncounterEid}});
                     } else {
                         app.accessDenied();
                     }
@@ -810,6 +905,8 @@ Ext.define('App.view.patientfile.Encounter', {
                 me.speechDicPanel.getForm().loadRecord(record[0].speechdictation().getAt(0));
 
                 me.updateProgressNote();
+
+                me.encounterEventHistoryStore.load({params:{eid:eid}});
 
 
             }

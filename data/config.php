@@ -43,6 +43,9 @@ $API = array(
             ),
             'closeEncounter'=>array(
                'len'=>1
+            ),
+            'getEncounterEventHistory'=>array(
+               'len'=>1
             )
         )
     ),

@@ -11,8 +11,8 @@ Ext.define('App.classes.grid.EventHistory',{
     initComponent:function(){
         Ext.apply(this,{
             columns: [
-                { header: 'Date',  dataIndex: 'date' },
-                { header: 'User',  dataIndex: 'user' },
+                { header: 'Date',  dataIndex: 'date', width: 140, renderer: Ext.util.Format.dateRenderer('Y-m-d g:i:s a') },
+                { header: 'User',  dataIndex: 'user', width: 150 },
                 { header: 'Event', dataIndex: 'event', flex: 1 }
             ]
         },null);

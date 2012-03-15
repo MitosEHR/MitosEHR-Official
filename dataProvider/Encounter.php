@@ -447,7 +447,7 @@ class Encounter {
         }
         $icdxs = substr($icdxs, 0, -2);
         $soap = $this->getSoapByEid($eid);
-        $soap[0]['assessment'] = $soap[0]['assessment'].' <strong>[ '.$icdxs.' ]</strong> ';
+        $soap[0]['assessment'] = $soap[0]['assessment'].' <span style="font-weight:bold; text-decoration:none">[ '.$icdxs.' ]</span> ';
         $encounter['soap'] = $soap;
 
         /**
@@ -466,11 +466,17 @@ class Encounter {
 
     protected function addEncounterHistoryEvent($msg){
         $data['eid']    = $this->eid;
+        $data['pid']    = $_SESSION['patient']['pid'];
         $data['date']   = date('Y-m-d H:i:s');
         $data['user']   = $this->user->getCurrentUserTitleLastName();
         $data['event']  = $msg;
         $this->db->setSQL($this->db->sqlBind($data, 'encounter_history', 'I'));
         $this->db->execOnly();
+    }
+
+    public function getEncounterEventHistory($params){
+        $this->db->setSQL("SELECT * FROM encounter_history WHERE eid = '$params->eid' ORDER BY `date` DESC");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     /**
