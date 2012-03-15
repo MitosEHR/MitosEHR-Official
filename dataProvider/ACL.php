@@ -68,6 +68,7 @@ class ACL {
         $format = strtolower($format);
         $strSQL = "SELECT * FROM acl_permissions ORDER BY seq ASC";
         $this->conn->setSQL($strSQL);
+
         $resp = array();
         foreach($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row){
             if ($format == 'full'){
@@ -110,7 +111,7 @@ class ACL {
      * NOTES: naming of the function "getPermissionKeyFromID"
      * Let's use cammel, use only underscore with private properties or variables.
      */
-	private function getperm_keyFromid($perm_id){
+	private function getPermissionsKeyFromID($perm_id){
 		$strSQL = "SELECT perm_key FROM acl_permissions WHERE id = " . floatval($perm_id) . " LIMIT 1";
         $this->conn->setSQL($strSQL);
 		$row = $this->conn->fetchRecords(PDO::FETCH_ASSOC);
@@ -156,7 +157,7 @@ class ACL {
         $this->conn->setSQL($roleSQL);
 		$perms = array();
 		foreach($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row){
-			$pK = strtolower($this->getperm_keyFromid($row['perm_id']));
+			$pK = strtolower($this->getPermissionsKeyFromID($row['perm_id']));
 			if ($pK == '') { continue; }
             if ($row['value'] == '1') {
                 $hP = true;
@@ -179,7 +180,7 @@ class ACL {
         $this->conn->setSQL($strSQL);
 		$perms = array();
         foreach($this->conn->fetchRecords(PDO::FETCH_ASSOC) as $row){
-			$pK = strtolower($this->getperm_keyFromid($row['perm_id']));
+			$pK = strtolower($this->getPermissionsKeyFromID($row['perm_id']));
 			if ($pK == '') { continue; }
             if ($row['value'] == '1') {
                 $hP = true;
