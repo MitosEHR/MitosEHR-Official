@@ -259,6 +259,12 @@ class Encounter {
         $this->addEncounterHistoryEvent('Vitals added');
         return $params;
     }
+
+    public function getIcdxByEid($eid){
+        $this->db->setSQL("SELECT * FROM encounter_codes_icdx WHERE eid = '$eid' ORDER BY id ASC");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+    }
+
     /**
      * @param $eid
      * @return array
@@ -266,7 +272,14 @@ class Encounter {
     public function getSoapByEid($eid)
     {
         $this->db->setSQL("SELECT * FROM form_data_soap WHERE eid = '$eid' ORDER BY date DESC");
-        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+        $soap = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+        $icdxs = '';
+        foreach($this->getIcdxByEid($eid) as $code){
+            $icdxs .= $code['code'].', ';
+        }
+        $soap[0]['icdxCodes'] = $icdxs;
+        return $soap;
     }
     /**
      * @param $eid
@@ -425,14 +438,20 @@ class Encounter {
         }
         if(!empty($foo)) $encounter['reviewofsystemschecks'] = $foo;
 
-
         /**
          * Add SOAP to progress note
          */
-        $encounter['soap'] = $this->getSoapByEid($eid);
+        $icdxs = '';
+        foreach($this->getIcdxByEid($eid) as $code){
+            $icdxs .= $code['code'].', ';
+        }
+        $icdxs = substr($icdxs, 0, -2);
+        $soap = $this->getSoapByEid($eid);
+        $soap[0]['assessment'] = $soap[0]['assessment'].' <strong>[ '.$icdxs.' ]</strong> ';
+        $encounter['soap'] = $soap;
 
         /**
-         *
+         * Add Dictation to progress note
          */
         $speech = $this->getDictationByEid($eid);
         if($speech[0]['dictation']){
@@ -468,4 +487,3 @@ class Encounter {
 //$e = new Encounter();
 //echo '<pre>';
 //print_r($e->getProgressNoteByEid(7));
-//print_r($e->getProgressNoteByEid(8));
