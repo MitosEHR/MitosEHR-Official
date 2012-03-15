@@ -13,7 +13,7 @@ if(!isset($_SESSION)){
 }
 include_once("AES.php");
 include_once("Person.php");
-include_once("dbHelper.php");
+include_once("../classes/dbHelper.php");
 class User extends Person {
 
     /**

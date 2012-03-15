@@ -13,7 +13,7 @@ if(!isset($_SESSION)){
 }
 
 include_once("Person.php");
-include_once("dbHelper.php");
+include_once("../classes/dbHelper.php");
 
 class Patient extends Person {
     /**

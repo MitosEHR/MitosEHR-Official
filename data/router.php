@@ -104,7 +104,7 @@ function doRpc($cdata){
 			'method'=>$method
 		);
 
-		require_once("../classes/$action.php");
+		require_once("../dataProvider/$action.php");
 		$o = new $action();
         if (isset($mdef['len'])) {
 		    $params = isset($cdata->data) && is_array($cdata->data) ? $cdata->data : array();

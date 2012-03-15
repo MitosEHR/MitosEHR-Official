@@ -232,7 +232,7 @@ class dbHelper {
         foreach($Fields as $key => $value) $sqlReturn .= $value . ", ";
         $sqlReturn = substr($sqlReturn, 0, -2);
 
-        // Step 2 - From clause, the filter part
+        // Step 2 - From clause, table
         $sqlReturn .= " FROM " . $Table . " ";
 
         // Step 3 - Having clause, filter the records
