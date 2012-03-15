@@ -132,7 +132,6 @@ class dbHelper {
                        ->where('$record => $record->'.$column.' == '.$query.'' )
                        ->select('$record');
             return $records;
-
     }
 
     /**

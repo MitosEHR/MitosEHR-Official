@@ -140,7 +140,10 @@ class Encounter {
      */
     public function getEncounter(stdClass $params)
     {
-        $this->db->setSQL("SELECT * FROM form_data_encounter WHERE eid = '$params->eid'");
+        $fields[] = "*";
+        $where["eid"] = $params->eid;
+
+        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, "", $where) );
         $encounter = $this->db->fetchRecord(PDO::FETCH_ASSOC);
 
         $encounter['vitals']                = $this->getVitalsByPid($encounter['pid']);
