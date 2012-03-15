@@ -14,7 +14,7 @@ if(!isset($_SESSION)){
 
 include_once('Patient.php');
 include_once('User.php');
-include_once('dbHelper.php');
+include_once('../classes/dbHelper.php');
 
 class Medical {
     /**

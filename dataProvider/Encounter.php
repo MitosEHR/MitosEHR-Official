@@ -12,9 +12,10 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
+include_once('../classes/dbHelper.php');
 include_once('Patient.php');
 include_once('User.php');
-include_once('dbHelper.php');
+
 
 class Encounter {
     /**

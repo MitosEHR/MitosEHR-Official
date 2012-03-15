@@ -4,7 +4,7 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once('dbHelper.php');
+include_once('../classes/dbHelper.php');
 /**
      * @brief     log class
      * @details   This class wil handle all the log logic

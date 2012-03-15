@@ -4,7 +4,7 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once("dbHelper.php");
+include_once("../classes/dbHelper.php");
 /**
  * @brief       Form Layout Engine
  * @details     This class will create dynamic ExtJS v4 form items array,
