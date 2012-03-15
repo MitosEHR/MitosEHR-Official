@@ -4,8 +4,8 @@ if (!isset($_SESSION)) {
     session_start();
     session_cache_limiter('private');
 }
-include_once('../classes/dbHelper.php');
-include_once('Person.php');
+include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
+include_once($_SESSION['site']['root'].'/dataProvider/Person.php');
 /**
  * @brief       Brief Description
  * @details     Detail Description ...

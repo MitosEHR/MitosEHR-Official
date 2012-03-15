@@ -11,8 +11,8 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once('../classes/dbHelper.php');
-include_once('../classes/AES.php');
+include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
+include_once($_SESSION['site']['root'].'/classes/AES.php');
 
 class authProcedures {
 

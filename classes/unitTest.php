@@ -2,9 +2,9 @@
 session_name ( 'MitosEHR' );
 session_start();
 session_cache_limiter('private');
-$_SESSION['site']['root'] = "/wamp/www/MitosEHR-Official";
+$_SESSION['site']['root'] = '/wamp/www/MitosEHR-Official';
 
-include_once("dbHelper.php");
+include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
 
 echo "Unit Test:<br/>";
 echo "-----------------------------------------------------------------------------------------------------------<br/>";

@@ -11,7 +11,7 @@ if(!isset($_SESSION)){
     session_start();
     session_cache_limiter('private');
 }
-include_once("ACL.php");
+include_once($_SESSION['site']['root'].'/dataProvider/ACL.php');
 
 class Navigation {
     /**

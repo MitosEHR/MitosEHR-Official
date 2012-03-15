@@ -14,8 +14,8 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once($_SESSION['site']['root']."/dataProvider/ACL.php");
-include_once($_SESSION['site']['root']."/dataProvider/User.php");
+include_once($_SESSION['site']['root'].'/dataProvider/ACL.php');
+include_once($_SESSION['site']['root'].'/dataProvider/User.php');
 $ACL = new ACL();
 $User = new User();
 ?>

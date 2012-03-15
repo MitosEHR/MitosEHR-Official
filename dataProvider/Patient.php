@@ -12,8 +12,8 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once("Person.php");
-include_once("../classes/dbHelper.php");
+include_once($_SESSION['site']['root'].'/dataProvider/Person.php');
+include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
 
 class Patient extends Person {
     /**
