@@ -277,6 +277,9 @@ Ext.define('App.view.patientfile.Encounter', {
             title:'Current Procedural Terminology',
             html:'<h1>Current Procedural Terminology form placeholder!</h1>'
         });
+        me.EncounterEventHistory = Ext.create('App.classes.grid.EventHistory',{
+            title:'Encounter History'
+        });
 
 
 
@@ -442,7 +445,8 @@ Ext.define('App.view.patientfile.Encounter', {
                     items:[
                         me.MiscBillingOptionsPanel,
                         me.procedurePanel,
-                        me.CurrentProceduralTerminology
+                        me.CurrentProceduralTerminology,
+                        me.EncounterEventHistory
                     ]
                 }
             ]
