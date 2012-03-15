@@ -16,7 +16,7 @@ session_name("MitosEHR");
 session_start();
 session_cache_limiter('private');
 
-include_once("../../../classes/I18n.class.php");
+include_once("../../../dataProvider/I18n.class.php");
 
 //******************************************************************************
 // Reset session count 10 secs = 1 Flop

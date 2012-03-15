@@ -20,7 +20,7 @@ $_SESSION['site']['flops'] = 0;
 /*
  * Include Globals and run setGlobals static method to set the global settings
  */
-include_once($_SESSION['site']['root'].'/classes/Globals.php');
+include_once($_SESSION['site']['root'].'/dataProvider/Globals.php');
 Globals::setGlobals();
 ?>
 <html>
