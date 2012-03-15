@@ -13,7 +13,7 @@ And it can be installed on the following systems:
 * And other platforms that can run Apache Web server, MySQL
  
 Currently tested on:
-* Ubuntu Linux (LAMP)
+* Linux (LAMP)
 * Mac OS X
 * Windows (WAMP)
 
@@ -23,7 +23,5 @@ Mobile Application:
 * Opera Mobile
 
 Setup documentation can be found in the INSTALL file,
-and extensive documentation can be found on the
-
-MitosEHR web site at:
+and extensive documentation can be found at the MitosEHR web site at:
 http://www.mitosehr.org/
