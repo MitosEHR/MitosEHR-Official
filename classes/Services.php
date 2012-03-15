@@ -58,8 +58,7 @@ class Services {
     public function addService(stdClass $params)
     {
         $data = get_object_vars($params);
-        $data['active']     = ($data['active']      == 'on' ? 1 : 0);
-        $data['reportable'] = ($data['reportable']  == 'on' ? 1 : 0);
+        unset($data['id']);
         $sql = $this->db->sqlBind($data, "codes", "I");
         $this->db->setSQL($sql);
         $this->db->execLog();
@@ -76,8 +75,6 @@ class Services {
         $data = get_object_vars($params);
         $id = $data['id'];
         unset($data['id']);
-        $data['active']     = ($data['active']      == 'on' ? 1 : 0);
-        $data['reportable'] = ($data['reportable']  == 'on' ? 1 : 0);
         $sql = $this->db->sqlBind($data, "codes", "U", "id='$id'");
         $this->db->setSQL($sql);
         $this->db->execLog();
@@ -88,9 +85,7 @@ class Services {
         $Str = explode(',', $params->query );
         $queryStr = trim(end(array_values($Str)));
         $queries = explode(' ', $queryStr);
-
         $sql = "SELECT * FROM codes WHERE ";
-
         foreach($queries as $query){
             $sql .= "(code_text LIKE '%$query%' OR code_text_short LIKE '%$query%' OR code LIKE '$query%' OR related_code LIKE '$query%') AND ";
         }
@@ -131,6 +126,7 @@ class Services {
 //          }
 //        }
 //        usort($records, 'cmp');
+
         $total   = count($records);
         $records = array_slice($records,$params->start,$params->limit);
         return array('totals'=>$total,'rows'=>$records);

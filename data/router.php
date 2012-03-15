@@ -74,8 +74,8 @@ function doRpc($cdata){
         /**
          * Check if tdi is a valid tid (expected tid)
          */
-        if(isset($_SESSION['last_tid'])){
-            $expectedTid = $_SESSION['last_tid'] + 1;
+        if($_SESSION['server']['last_tid'] != null){
+            $expectedTid = $_SESSION['server']['last_tid'] + 1;
             if($cdata->tid != $expectedTid){
                 throw new Exception('Call to unrecognize transaction ID: MitosEHR does not recognized this transaction ID.');
             }
@@ -123,7 +123,7 @@ function doRpc($cdata){
 		$r['where'] = $e->getTraceAsString();
 	}
 
-    $_SESSION['last_tid'] = $cdata->tid;
+    $_SESSION['server']['last_tid'] = $cdata->tid;
 
 	return $r;
 }

@@ -9,5 +9,6 @@ Ext.define('App.store.patientfile.Encounters', {
 	extend: 'Ext.data.Store',
 	requires: ['App.model.patientfile.Encounters'],
 	pageSize: 25,
-	model   : 'App.model.patientfile.Encounters'
+	model   : 'App.model.patientfile.Encounters',
+    remoteSort:true
 });
