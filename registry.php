@@ -1,4 +1,5 @@
 <?php
+if(!defined('_MitosEXEC')) die('No direct access allowed.');
 /* The MitosEHR Registry File, this will containt all the global variables
  * used by MitosEHR, putting here variable is a security risk please consider
  * first putting here variables that are not sesible to the database.
@@ -59,6 +60,7 @@ $_SESSION['patient']['name']    = null;
 $_SESSION['server']             = $_SERVER;
 $_SESSION['server']['OS']       = (strstr( strtolower($_SERVER['SERVER_SIGNATURE']), "win") ? "Windows" : "Linux");
 $_SESSION['server']['token']    = null;
+$_SESSION['server']['last_tid'] = null;
 /**
  * Client related variables
  */

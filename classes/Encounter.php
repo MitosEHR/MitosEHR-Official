@@ -30,6 +30,8 @@ class Encounter {
      */
     private $patient;
 
+    private $eid;
+
     function __construct()
     {
         $this->db = new dbHelper();
@@ -37,18 +39,23 @@ class Encounter {
         $this->patient = new Patient();
         return;
     }
+
+    private function setEid($eid){
+        $this->eid = $eid;
+    }
+
     /**
      * @return array
      * NOTES: What is ck?
      *  Naming: "checkOpenEncounters"
-*/
+    */
     public function checkOpenEncounters()
     {
         $fields[] = "*";
-        $where[] = "pid = '".$_SESSION['patient']['pid']."'";
-        $where[] = "close_date IS NULL";
+        $where[]  = "pid = '".$_SESSION['patient']['pid']."'";
+        $where[]  = "close_date IS NULL";
 
-        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, "", $where) );
+        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, $where) );
         $total = $this->db->rowCount();
         if($total >= 1){
             return array('encounter' => true);
@@ -72,12 +79,13 @@ class Encounter {
         }
         $where[] = "pid = '".$_SESSION['patient']['pid']."'";
 
-        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, $order, $where) );
+        $this->db->setSQL( $this->db->sqlSelectBuilder("form_data_encounter", $fields, $where, $order) );
         $rows = array();
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['status'] = ($row['close_date']== null)? 'open' : 'close';
         	array_push($rows, $row);
         }
+
         return $rows;
     }
 
@@ -117,6 +125,9 @@ class Encounter {
         $this->db->execOnly();
 
         $params->eid = intval($eid);
+
+        $this->setEid($params->eid);
+        $this->addEncounterHistoryEvent('New Encounter Created');
 
         return array('success'=>true,'encounter'=>$params);
     }
@@ -160,6 +171,8 @@ class Encounter {
      */
     public function closeEncounter(stdClass $params)
     {
+        $this->setEid($params->eid);
+
         $data['close_date'] = $params->close_date;
         $data['close_uid'] = $_SESSION['user']['id'];
 
@@ -167,10 +180,15 @@ class Encounter {
             $sql = $this->db->sqlBind($data, "form_data_encounter", "U", "eid='".$params->eid."'");
             $this->db->setSQL($sql);
             $this->db->execLog();
+
+            $this->addEncounterHistoryEvent('Encounter Closed');
+
             return array('success'=> true);
         }else{
             return array('success'=> false);
         }
+
+
     }
     /**
      * @param $pid
@@ -225,12 +243,16 @@ class Encounter {
      */
     public function addVitals(stdClass $params)
     {
+        $this->setEid($params->eid);
+
         $data = get_object_vars($params);
         unset($data['administer']);
         $data['date'] = $this->parseDate($data['date']);
         $sql = $this->db->sqlBind($data, 'form_data_vitals', 'I');
         $this->db->setSQL($sql);
         $this->db->execLog();
+
+        $this->addEncounterHistoryEvent('Vitals added');
         return $params;
     }
     /**
@@ -278,10 +300,26 @@ class Encounter {
      * @return stdClass
      */
     public function updateSoapById(stdClass $params){
+
+        $this->setEid($params->eid);
+
         $data = get_object_vars($params);
-        unset($data['id']);
+        $icdcCodes = $data['icdxCodes'];
+        unset($data['id'],$data['icdxCodes']);
         $this->db->setSQL($this->db->sqlBind($data, 'form_data_soap', 'U', "id='".$params->id."'"));
         $this->db->execLog();
+
+        $this->db->setSQL("DELETE FROM encounter_codes_icdx WHERE eid = '$params->eid'");
+        $this->db->execOnly();
+
+        $icdcCodes = explode(',', substr(trim($icdcCodes), 0, -1));
+        foreach($icdcCodes as $icdcCode){
+            $icdc['eid'] = $data['eid'];
+            $icdc['code'] = trim($icdcCode);
+            $this->db->setSQL($this->db->sqlBind($icdc, 'encounter_codes_icdx', 'I'));
+            $this->db->execOnly();
+        }
+        $this->addEncounterHistoryEvent('SOAP updated');
         return $params;
     }
     /**
@@ -290,10 +328,14 @@ class Encounter {
      */
     public function updateReviewOfSystemsChecksById(stdClass $params)
     {
+        $this->setEid($params->eid);
+
         $data = get_object_vars($params);
         unset($data['id']);
         $this->db->setSQL($this->db->sqlBind($data, 'form_data_review_of_systems_check', 'U', "id='".$params->id."'"));
         $this->db->execLog();
+
+        $this->addEncounterHistoryEvent('Review of System Checks updated');
         return $params;
     }
     /**
@@ -302,10 +344,14 @@ class Encounter {
      */
     public function updateReviewOfSystemsById(stdClass $params)
     {
+        $this->setEid($params->eid);
+
         $data = get_object_vars($params);
         unset($data['id']);
         $this->db->setSQL($this->db->sqlBind($data, 'form_data_review_of_systems', 'U', "id='".$params->id."'"));
         $this->db->execLog();
+
+        $this->addEncounterHistoryEvent('Review of System updated');
         return $params;
     }
     /**
@@ -314,10 +360,14 @@ class Encounter {
      */
     public function updateDictationById(stdClass $params)
     {
+        $this->setEid($params->eid);
+
         $data = get_object_vars($params);
         unset($data['id']);
         $this->db->setSQL($this->db->sqlBind($data, 'form_data_dictation', 'U', "id='".$params->id."'"));
         $this->db->execLog();
+
+        $this->addEncounterHistoryEvent('Speech Dictation updated');
         return $params;
     }
     /**
@@ -390,6 +440,16 @@ class Encounter {
          */
         return $encounter;
     }
+
+    protected function addEncounterHistoryEvent($msg){
+        $data['eid']    = $this->eid;
+        $data['date']   = date('Y-m-d H:i:s');
+        $data['user']   = $this->user->getCurrentUserTitleLastName();
+        $data['event']  = $msg;
+        $this->db->setSQL($this->db->sqlBind($data, 'encounter_history', 'I'));
+        $this->db->execOnly();
+    }
+
     /**
      * @param $date
      * @return mixed

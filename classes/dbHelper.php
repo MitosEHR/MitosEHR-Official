@@ -223,8 +223,9 @@ class dbHelper {
      * @param $Fields
      * @param $Order
      * @param $Where
+     * @return string
      */
-    public function sqlSelectBuilder($Table, $Fields, $Order="", $Where=""){
+    public function sqlSelectBuilder($Table, $Fields = array("*"), $Where = null, $Order = null){
 
         // Step 1 - Select clause and wrote down the fields
         $sqlReturn = 'SELECT ';
@@ -235,7 +236,7 @@ class dbHelper {
         $sqlReturn .= " FROM " . $Table . " ";
 
         // Step 3 - Having clause, filter the records
-        if($Where != ""){
+        if($Where != null){
             $sqlReturn .= " HAVING ";
             foreach($Where as $key => $value) {
                 $sqlReturn .= "(" . $value . ")";
@@ -245,7 +246,7 @@ class dbHelper {
         }
 
         // Step 4 - Order clause, sort the results
-        if($Order != ""){
+        if($Order != null){
             $sqlReturn .= " ORDER BY ";
             foreach($Order as $key => $value) {
                 $sqlReturn .= (!is_int($key)) ? $value . " " . $key . ", " : $value . ", ";

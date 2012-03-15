@@ -214,7 +214,7 @@ Ext.define('App.view.patientfile.Encounter', {
                             xtype:'fieldset',
                             margin:5,
                             padding:8,
-                            title:'Reminders',
+                            title:'Patient Notes nad Reminders',
                             items:[
                                 {
                                     xtype:'textfield',
@@ -277,6 +277,9 @@ Ext.define('App.view.patientfile.Encounter', {
             title:'Current Procedural Terminology',
             html:'<h1>Current Procedural Terminology form placeholder!</h1>'
         });
+
+
+
         me.reviewSysPanel = Ext.create('Ext.form.Panel', {
             action:'encounter',
             title:'Review of Systems',
@@ -628,13 +631,14 @@ Ext.define('App.view.patientfile.Encounter', {
      * @param SaveBtn
      */
     onSave:function (SaveBtn) {
-        var me = this, panel = me.centerPanel.getActiveTab(), form;
+        var me = this, panel = me.centerPanel.getActiveTab().getActiveTab(), form;
 
         if (SaveBtn.action == "encounter") {
             form = me.newEncounterWindow.down('form').getForm();
         } else if (SaveBtn.action == 'vitals') {
             form = panel.down('form').getForm();
         } else {
+            say(panel);
             form = panel.getForm();
         }
 
