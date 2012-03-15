@@ -12,7 +12,7 @@ if(!isset($_SESSION)){
     session_cache_limiter('private');
 }
 
-include_once("../../classes/authProcedures.php");
+include_once("../classes/authProcedures.php");
 
 
 if($_REQUEST['task'] == 'unAuth'){
