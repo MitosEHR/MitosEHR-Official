@@ -105,6 +105,9 @@
 .icoClose{
     background-image: url(../ui_icons/no.gif) !important;
 }
+.icoAdd{
+    background-image: url(../ui_icons/add.gif) !important;
+}
 .icoPreview{
     background-image: url(../ui_icons/preview.png) !important;
 }

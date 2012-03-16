@@ -151,7 +151,7 @@ class Encounter {
     {
         $this->setEid($params->eid);
         $fields[] = '*';
-        $where['eid'] = $params->eid;
+        $where[]  = "eid = '$params->eid'";
 
         $this->db->setSQL( $this->db->sqlSelectBuilder('form_data_encounter', $fields, $where) );
         $encounter = $this->db->fetchRecord(PDO::FETCH_ASSOC);

@@ -412,12 +412,15 @@ Ext.define('App.view.patientfile.Encounter', {
                             ],
                             dockedItems: [{
                                 xtype: 'toolbar',
-                                items: ['->',{
-                                    text: 'Remove CPT',
-                                    iconCls:'icoClose',
-                                    itemId:'removeCptBtn',
-                                    disabled:true
-                                }]
+                                items: ['->',
+                                    {
+                                        text: 'Remove',
+                                        iconCls:'icoClose',
+                                        itemId:'removeCptBtn',
+                                        disabled:true
+
+                                    }
+                                ]
                             }],
                             viewConfig:{
                                 plugins:{
@@ -649,7 +652,7 @@ Ext.define('App.view.patientfile.Encounter', {
             width:500,
             collapsible:true,
             animCollapse:true,
-            collapsed:false,
+            collapsed:true,
             listeners:{
                 scope:this,
                 collapse:me.progressNoteCollapseExpand,
@@ -958,7 +961,6 @@ Ext.define('App.view.patientfile.Encounter', {
         app.openPatientSummary();
     },
 
-
     /**
      *
      * @param eid
@@ -974,16 +976,15 @@ Ext.define('App.view.patientfile.Encounter', {
             callback:function (record) {
                 var data = record[0].data;
                 me.currEncounterStartDate = data.start_date;
-
-                if (data.close_date === null) {
+                if (!data.close_date) {
                     me.startTimer();
                 } else {
-                    me.stopTimer();
-                    me.stopTimer();
-                    var timer = me.timer(data.start_date, data.close_date),
-                        patient = me.getCurrPatient();
-                    me.stopTimer();
-                    me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
+                    if(me.stopTimer()){
+                        var timer = me.timer(data.start_date, data.close_date),
+                            patient = me.getCurrPatient();
+                        me.stopTimer();
+                        me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
+                    }
                 }
 
                 vitals.store = record[0].vitalsStore;
@@ -1027,9 +1028,10 @@ Ext.define('App.view.patientfile.Encounter', {
                 };
                 Encounter.closeEncounter(params, function (provider, response) {
                     if (response.result.success) {
-                        me.stopTimer();
-                        app.openPatientVisits();
-                        me.msg('Sweet!', 'Encounter Closed');
+                        if(me.stopTimer()){
+                            app.openPatientVisits();
+                            me.msg('Sweet!', 'Encounter Closed');
+                        }
                     } else {
                         Ext.Msg.show({
                             title:'Oops!',
@@ -1079,7 +1081,7 @@ Ext.define('App.view.patientfile.Encounter', {
         if(panel.card.itemId == 'encounter'){
             this.isProgressNoteCollapsed(true);
         }else{
-            this.isProgressNoteCollapsed(false);
+            this.isProgressNoteCollapsed(true);
         }
     },
 
@@ -1105,12 +1107,14 @@ Ext.define('App.view.patientfile.Encounter', {
      */
     startTimer:function () {
         Ext.TaskManager.start(this.timerTask);
+        return true;
     },
     /**
      * stops the timerTask
      */
     stopTimer:function () {
         Ext.TaskManager.stop(this.timerTask);
+        return true;
     },
 
     /**
