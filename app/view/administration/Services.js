@@ -154,7 +154,6 @@ Ext.define('App.view.administration.Services', {
 			titleCollapse: true,
 			animCollapse : false,
 			collapseMode : 'header',
-			//frame 		: true,
 			height       : 150,
 			margin       : '0 0 3 0',
 			layout       : 'anchor',

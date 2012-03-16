@@ -9,7 +9,8 @@ Ext.define('App.model.patientfile.CptCodesGrid', {
 	extend : 'Ext.data.Model',
 	fields : [
 		{name: 'code', type: 'float'},
-		{name: 'code_text', type: 'string'}
+		{name: 'code_text', type: 'string'},
+		{name: 'modifiers', type: 'string'}
 	],
 	proxy  : {
 		type       : 'direct',

@@ -143,7 +143,7 @@ class Services {
                                    OR code_text_short LIKE '%$query%'
                                    OR code            LIKE '$query%'
                                    OR related_code 	  LIKE '$query%')
-                                   AND code_type = '2'
+                                  AND code_type = '2'
                              ORDER BY code ASC");
             /**
              * loop for each sql record as $row

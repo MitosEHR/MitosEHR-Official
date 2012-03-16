@@ -327,8 +327,12 @@ Ext.define('App.view.patientfile.Encounter', {
                         },
                         {
                             xtype:'grid',
+                            title:'CPT Quick Reference List',
+                            margins:0,
                             flex:1,
                             multiSelect:true,
+                            stripeRows:true,
+                            store:me.cptCodesGridStore,
                             viewConfig:{
                                 plugins:{
                                     ptype:'gridviewdragdrop',
@@ -342,20 +346,17 @@ Ext.define('App.view.patientfile.Encounter', {
                                     }
                                 }
                             },
-                            stripeRows:true,
-                            title:'CPT Quick Reference List',
-                            margins:0,
                             columns:[
                                 {text:"Code", width:70, sortable:true, dataIndex:'code'},
-                                {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'}
+                                {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'},
+                                {text:"Modifiers", width:150, sortable:false, dataIndex:'modifiers'}
                             ],
                             tbar: Ext.create('Ext.PagingToolbar', {
                                 store      : me.cptCodesGridStore,
                                 displayInfo: true,
                                 emptyMsg   : "No Office Notes to display",
                                 plugins    : Ext.create('Ext.ux.SlidingPager', {})
-                            }),
-                            store:me.cptCodesGridStore
+                            })
                         }
                     ]
                 },
@@ -385,7 +386,29 @@ Ext.define('App.view.patientfile.Encounter', {
                             store:me.secondGridStore,
                             columns:[
                                 {text:"Code", width:70, sortable:true, dataIndex:'code'},
-                                {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'}
+                                {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'},
+                                {
+                                    text:'Modifiers',
+                                    width:200,
+                                    sortable:false,
+                                    dataIndex:'modifiers',
+                                    editor: {
+//                                        xtype: 'textfield',
+//                                        emptyText:'Click to add'
+                                        xtype: 'combobox',
+                                        triggerAction: 'all',
+                                        selectOnTab: true,
+                                        emptyText:'Click to add',
+                                        store: [
+                                            ['Option 1','Option 1'],
+                                            ['Option 2','Option 2'],
+                                            ['Option 3','Option 3'],
+                                            ['Option 4','Option 4']
+                                        ],
+                                        lazyRender: true,
+                                        listClass: 'x-combo-list-small'
+                                    }
+                                }
                             ],
                             dockedItems: [{
                                 xtype: 'toolbar',
@@ -415,6 +438,9 @@ Ext.define('App.view.patientfile.Encounter', {
                                         this.view.panel.down('toolbar').getComponent('removeCptBtn').setDisabled(selections.length == 0);
                                     }
                                 }
+                            }),
+                            plugins: Ext.create('Ext.grid.plugin.CellEditing', {
+                                clicksToEdit: 1
                             })
                         }
                     ]
@@ -566,6 +592,7 @@ Ext.define('App.view.patientfile.Encounter', {
                 {
                     xtype:'tabpanel',
                     title:'Encounter',
+                    itemId:'encounter',
                     plain:true,
                     activeItem:0,
                     defaults:{
@@ -584,6 +611,7 @@ Ext.define('App.view.patientfile.Encounter', {
                 {
                     xtype:'tabpanel',
                     title:'Administrative',
+                    itemId:'administrative',
                     plain:true,
                     activeItem:0,
                     defaults:{
@@ -598,7 +626,16 @@ Ext.define('App.view.patientfile.Encounter', {
                         me.EncounterEventHistory
                     ]
                 }
-            ]
+            ],
+            listeners: {
+                render: function() {
+                    this.items.each(function(i){
+                        i.tab.on('click', function(){
+                            me.onTapPanelChange(this);
+                        });
+                    });
+                }
+            }
         });
 
         /**
@@ -1036,6 +1073,18 @@ Ext.define('App.view.patientfile.Encounter', {
             pid = patient.pid;
         this.cptCodesGridStore.proxy.extraParams = {pid:pid,filter:filter};
         this.cptCodesGridStore.load();
+    },
+
+    onTapPanelChange:function(panel){
+        if(panel.card.itemId == 'encounter'){
+            this.isProgressNoteCollapsed(true);
+        }else{
+            this.isProgressNoteCollapsed(false);
+        }
+    },
+
+    isProgressNoteCollapsed:function(ans){
+        ans ? this.progressNote.collapse() : this.progressNote.expand();
 
     },
 
