@@ -287,8 +287,7 @@ Ext.define('App.view.patientfile.Encounter', {
             },
             layout:{
                 type:'hbox',
-                align:'stretch',
-                //padding:5
+                align:'stretch'
             },
             items:[
                 {
