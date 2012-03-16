@@ -474,7 +474,7 @@ class Encounter {
 
     protected function addEncounterHistoryEvent($msg){
         $data['eid']    = $this->eid;
-        $data['pid']    = $_SESSION['patient']['pid'];
+        //$data['pid']    = $_SESSION['patient']['pid'];
         $data['date']   = date('Y-m-d H:i:s');
         $data['user']   = $this->user->getCurrentUserTitleLastName();
         $data['event']  = $msg;
