@@ -136,8 +136,8 @@ class Services {
 
     public function getCptCodesBySelection(stdClass $params){
 
-
         return $this->getCptUsedByPid($params->pid);
+
     }
 
 
@@ -172,9 +172,10 @@ class Services {
     }
 
 }
-//
+
 //$params = new stdClass();
 //$params->query = 'head neoplasm face';
+//$params->pid = '7';
 //$params->start = 0;
 //$params->limit = 25;
 //
