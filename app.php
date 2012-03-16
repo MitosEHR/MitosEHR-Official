@@ -95,6 +95,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/MedicalIssues.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Surgery.js"></script>
         <script type="text/javascript" src="app/model/patientfile/EventHistory.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/CptCodesGrid.js"></script>
 
 
         <!-- Stores -->
@@ -110,6 +111,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/patientfile/MedicalIssue.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Surgery.js"></script>
         <script type="text/javascript" src="app/store/patientfile/EncounterEventHistory.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/CptCodesGrid.js"></script>
 
         <!-- Classes -->
         <script type="text/javascript" src="app/classes/NodeDisabled.js"></script>

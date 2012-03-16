@@ -132,7 +132,47 @@ class Services {
         $records = array_slice($records,$params->start,$params->limit);
         return array('totals'=>$total,'rows'=>$records);
     }
+
+
+    public function getCptCodesBySelection(stdClass $params){
+
+
+        return $this->getCptUsedByPid($params->pid);
+    }
+
+
+    public function getIcdxByEid($eid){
+        $this->db->setSQL("SELECT * FROM encounter_codes_icdx WHERE eid = '$eid' ORDER BY id ASC");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+    }
+
+    public function getIcdxUsedBPid($pid){
+        $this->db->setSQL("SELECT DISTINCT eci.code, codes.code_text
+                             FROM encounter_codes_icdx AS eci
+                        left JOIN codes ON eci.code = codes.code
+                        LEFT JOIN form_data_encounter AS e ON eci.eid = e.eid
+                            WHERE e.pid = '$pid'
+                         ORDER BY e.start_date DESC");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+    }
+
+    public function getCptByEid($eid){
+        $this->db->setSQL("SELECT * FROM encounter_codes_cpt WHERE eid = '$eid' ORDER BY id ASC");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+    }
+
+    public function getCptUsedByPid($pid){
+        $this->db->setSQL("SELECT DISTINCT ecc.code, codes.code_text, e.start_date as last_date
+                             FROM encounter_codes_cpt AS ecc
+                        left JOIN codes ON ecc.code = codes.code
+                        LEFT JOIN form_data_encounter AS e ON ecc.eid = e.eid
+                            WHERE e.pid = '$pid'
+                         ORDER BY e.start_date DESC");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+    }
+
 }
+//
 //$params = new stdClass();
 //$params->query = 'head neoplasm face';
 //$params->start = 0;
@@ -140,4 +180,4 @@ class Services {
 //
 //$t = new Services();
 //print '<pre>';
-//print_r($t->liveIDCXSearch($params));
+//print_r($t->getCptUsedByPid(10));

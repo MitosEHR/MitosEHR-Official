@@ -286,6 +286,9 @@ $API = array(
            ),
             'liveIDCXSearch'=>array(
                'len'=>1
+           ),
+            'getCptCodesBySelection'=>array(
+               'len'=>1
            )
         )
     ),    /**

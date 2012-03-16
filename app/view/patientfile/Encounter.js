@@ -59,33 +59,11 @@ Ext.define('App.view.patientfile.Encounter', {
             }
         });
         me.encounterEventHistoryStore = Ext.create('App.store.patientfile.EncounterEventHistory');
+        me.cptCodesGridStore = Ext.create('App.store.patientfile.CptCodesGrid');
 
-        Ext.define('DataObject', {
-            extend: 'Ext.data.Model',
-            fields: ['name', 'column1', 'column2']
-        });
-
-        me.myData = [
-            { name : "Rec 0", column1 : "0", column2 : "0" },
-            { name : "Rec 1", column1 : "1", column2 : "1" },
-            { name : "Rec 2", column1 : "2", column2 : "2" },
-            { name : "Rec 3", column1 : "3", column2 : "3" },
-            { name : "Rec 4", column1 : "4", column2 : "4" },
-            { name : "Rec 5", column1 : "5", column2 : "5" },
-            { name : "Rec 6", column1 : "6", column2 : "6" },
-            { name : "Rec 7", column1 : "7", column2 : "7" },
-            { name : "Rec 8", column1 : "8", column2 : "8" },
-            { name : "Rec 9", column1 : "9", column2 : "9" }
-        ];
-
-            // create the data store
-        me.firstGridStore = Ext.create('Ext.data.Store', {
-            model: 'DataObject',
-            data:me.myData
-        });
 
         me.secondGridStore = Ext.create('Ext.data.Store', {
-            model: 'DataObject'
+            model: 'App.model.patientfile.CptCodesGrid'
         });
 
 
@@ -304,65 +282,118 @@ Ext.define('App.view.patientfile.Encounter', {
             bodyStyle:0,
             autoScroll:true,
             title:'Current Procedural Terminology',
-            layout:{
-                type:'hbox',
-                align:'stretch',
-                padding:5
-            },
             defaults:{
                 flex:1
             },
+            layout:{
+                type:'hbox',
+                align:'stretch',
+                //padding:5
+            },
             items:[
                 {
-                    xtype:'grid',
-                    multiSelect:true,
-                    viewConfig:{
-                        plugins:{
-                            ptype:'gridviewdragdrop',
-                            dragGroup:'firstGridDDGroup',
-                            dropGroup:'secondGridDDGroup'
-                        },
-                        listeners:{
-                            drop:function (node, data, dropRec, dropPosition) {
-                                var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
-                                me.msg("Drag from right to left", 'Dropped ' + data.records[0].get('name') + dropOn);
-                            }
-                        }
+                    xtype:'container',
+                    layout:{
+                        type:'vbox',
+                        align:'stretch',
+                        padding:5
                     },
-                    stripeRows:true,
-                    title:'First Grid',
-                    margins:'0 2 0 0',
-                    columns:[
-                        {text:"Record Name", flex:1, sortable:true, dataIndex:'name'},
-                        {text:"column1", width:70, sortable:true, dataIndex:'column1'},
-                        {text:"column2", width:70, sortable:true, dataIndex:'column2'}
-                    ],
-                    store:me.firstGridStore
+                    items:[
+                        {
+                            xtype  : 'fieldset',
+                            title  : 'CPT Quick Reference Options',
+                            padding: '10 15',
+                            margin : '0 0 3 0',
+                            layout : 'anchor',
+                            items  : {
+                                xtype       : 'combobox',
+                                anchor      : '100%',
+                                editable    : false,
+                                queryMode   : 'local',
+                                valueField:'value',
+                                displayField:'name',
+                                store: Ext.create('Ext.data.Store',{
+                                    fields:['name','value'],
+                                    data:[
+                                        { name:'Show All CPT codes',      value:1 },
+                                        { name:'Used by Patien',          value:2 },
+                                        { name:'Commonly Used by Clinic', value:3 }
+                                    ]
+                                })
+                            }
+                        },
+                        {
+                            xtype:'grid',
+                            flex:1,
+                            multiSelect:true,
+                            viewConfig:{
+                                plugins:{
+                                    ptype:'gridviewdragdrop',
+                                    dragGroup:'firstGridDDGroup',
+                                    dropGroup:'secondGridDDGroup'
+                                },
+                                listeners:{
+                                    drop:function (node, data, dropRec, dropPosition) {
+                                        var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+                                        me.msg("Drag from right to left", 'Dropped ' + data.records[0].get('name') + dropOn);
+                                    }
+                                }
+                            },
+                            stripeRows:true,
+                            title:'CPT Quick Reference List',
+                            margins:0,
+                            columns:[
+                                {text:"Code", width:70, sortable:true, dataIndex:'code'},
+                                {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'}
+                            ],
+                            store:me.cptCodesGridStore
+                        }
+                    ]
                 },
                 {
-                    xtype:'grid',
-                    viewConfig:{
-                        plugins:{
-                            ptype:'gridviewdragdrop',
-                            dragGroup:'secondGridDDGroup',
-                            dropGroup:'firstGridDDGroup'
-                        },
-                        listeners:{
-                            drop:function (node, data, dropRec, dropPosition) {
-                                var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
-                                me.msg("Drag from left to right", 'Dropped ' + data.records[0].get('name') + dropOn);
-                            }
-                        }
+                    xtype:'container',
+                    layout:{
+                        type:'vbox',
+                        align:'stretch',
+                        padding:5
                     },
-                    stripeRows:true,
-                    title:'Second Grid',
-                    margins:'0 0 0 3',
-                    columns:[
-                        {text:"Record Name", flex:1, sortable:true, dataIndex:'name'},
-                        {text:"column1", width:70, sortable:true, dataIndex:'column1'},
-                        {text:"column2", width:70, sortable:true, dataIndex:'column2'}
-                    ],
-                    store:me.secondGridStore
+                    items:[
+                        {
+                            xtype      : 'fieldset',
+                            title      : 'CPT Live Sarch',
+                            padding    : '10 15',
+                            margin     : '0 0 3 0',
+                            layout     : 'anchor',
+                            items:{ xtype:'liveicdxsearch' }
+
+                        },
+                        {
+                            xtype:'grid',
+                            flex:1,
+                            viewConfig:{
+                                plugins:{
+                                    ptype:'gridviewdragdrop',
+                                    dragGroup:'secondGridDDGroup',
+                                    dropGroup:'firstGridDDGroup'
+                                },
+                                listeners:{
+                                    drop:function (node, data, dropRec, dropPosition) {
+                                        var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+                                        me.msg("Drag from left to right", 'Dropped ' + data.records[0].get('name') + dropOn);
+                                    }
+                                }
+                            },
+                            stripeRows:true,
+                            title:'Encounter CPT\'s',
+                            margins:0,
+                            columns:[
+                                {text:"Code", width:70, sortable:true, dataIndex:'code'},
+                                {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'}
+                            ],
+                            store:me.secondGridStore
+                        }
+                    ]
+
                 }
             ]
 
@@ -907,6 +938,7 @@ Ext.define('App.view.patientfile.Encounter', {
                 me.updateProgressNote();
 
                 me.encounterEventHistoryStore.load({params:{eid:eid}});
+                me.cptCodesGridStore.load({params:{eid:eid,pid:patient.pid}})
 
 
             }

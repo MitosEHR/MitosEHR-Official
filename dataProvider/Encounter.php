@@ -15,6 +15,7 @@ if(!isset($_SESSION)){
 include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
 include_once($_SESSION['site']['root'].'/dataProvider/Patient.php');
 include_once($_SESSION['site']['root'].'/dataProvider/User.php');
+include_once($_SESSION['site']['root'].'/dataProvider/Services.php');
 
 
 class Encounter {
@@ -30,7 +31,13 @@ class Encounter {
      * @var Patient
      */
     private $patient;
-
+    /**
+     * @var Services
+     */
+    private $services;
+    /**
+     * @var
+     */
     private $eid;
 
     function __construct()
@@ -38,6 +45,8 @@ class Encounter {
         $this->db = new dbHelper();
         $this->user = new User();
         $this->patient = new Patient();
+        $this->services = new Services();
+
         return;
     }
 
@@ -260,10 +269,6 @@ class Encounter {
         return $params;
     }
 
-    public function getIcdxByEid($eid){
-        $this->db->setSQL("SELECT * FROM encounter_codes_icdx WHERE eid = '$eid' ORDER BY id ASC");
-        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
-    }
 
     /**
      * @param $eid
@@ -275,7 +280,7 @@ class Encounter {
         $soap = $this->db->fetchRecords(PDO::FETCH_ASSOC);
 
         $icdxs = '';
-        foreach($this->getIcdxByEid($eid) as $code){
+        foreach($this->services->getIcdxByEid($eid) as $code){
             $icdxs .= $code['code'].', ';
         }
         $soap[0]['icdxCodes'] = $icdxs;
@@ -442,7 +447,7 @@ class Encounter {
          * Add SOAP to progress note
          */
         $icdxs = '';
-        foreach($this->getIcdxByEid($eid) as $code){
+        foreach($this->services->getIcdxByEid($eid) as $code){
             $icdxs .= $code['code'].', ';
         }
         $icdxs = substr($icdxs, 0, -2);
