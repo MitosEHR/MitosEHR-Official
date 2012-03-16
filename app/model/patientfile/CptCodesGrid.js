@@ -18,7 +18,8 @@ Ext.define('App.model.patientfile.CptCodesGrid', {
 		},
 		reader     : {
 			type: 'json',
-			root: 'codes'
+			root: 'rows',
+            totalProperty: 'totals'
 		}
 	}
 });

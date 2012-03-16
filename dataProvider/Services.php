@@ -31,9 +31,10 @@ class Services {
     public function getServices(stdClass $params)
     {
         $sortx = $params->sort ? $params->sort[0]->property.' '.$params->sort[0]->direction : 'code ASC';
+
         $this->db->setSQL("SELECT *
                          FROM codes
-                        WHERE code_text      LIKE '%$params->query%'
+                        WHERE code_text       LIKE '%$params->query%'
                            OR code_text_short LIKE '%$params->query%'
                            OR code            LIKE '$params->query%'
                            OR modifier 	      LIKE '$params->query%'
@@ -136,8 +137,17 @@ class Services {
 
     public function getCptCodesBySelection(stdClass $params){
 
-        return $this->getCptUsedByPid($params->pid);
-
+        if($params->filter == 1){
+            return $this->getCptUsedByPid($params->pid);
+        }elseif($params->filter == 2){
+            return $this->getCptUsedByClinic($params->pid);
+        }elseif($params->filter == 3){
+            $params->active = 1;
+            $params->code_type = 2;
+            return $this->getServices($params);
+        }else{
+            return $params;
+        }
     }
 
 
@@ -168,7 +178,19 @@ class Services {
                         LEFT JOIN form_data_encounter AS e ON ecc.eid = e.eid
                             WHERE e.pid = '$pid'
                          ORDER BY e.start_date DESC");
-        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+        $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+        return array('totals'=>count($records),'rows'=>$records);
+    }
+
+    public function getCptUsedByClinic(){
+        $this->db->setSQL("SELECT DISTINCT ecc.code, codes.code_text
+                             FROM encounter_codes_cpt AS ecc
+                        left JOIN codes ON ecc.code = codes.code
+                         ORDER BY codes.code DESC");
+        $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+        return array('totals'=>count($records),'rows'=>$records);
     }
 
 }
