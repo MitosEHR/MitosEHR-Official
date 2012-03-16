@@ -149,6 +149,7 @@ class Encounter {
      */
     public function getEncounter(stdClass $params)
     {
+        $this->setEid($params->eid);
         $fields[] = '*';
         $where['eid'] = $params->eid;
 
@@ -161,6 +162,8 @@ class Encounter {
         $encounter['soap']                  = $this->getSoapByEid($params->eid);
         $encounter['speechdictation']       = $this->getDictationByEid($params->eid);
 
+
+        $this->addEncounterHistoryEvent('Encounter viewed');
 
         if($encounter != null){
             return array('success' => true, 'encounter' => $encounter);
