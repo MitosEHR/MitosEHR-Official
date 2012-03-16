@@ -314,11 +314,15 @@ Ext.define('App.view.patientfile.Encounter', {
                                 store: Ext.create('Ext.data.Store',{
                                     fields:['name','value'],
                                     data:[
-                                        { name:'Show All CPT codes',      value:1 },
-                                        { name:'Used by Patien',          value:2 },
-                                        { name:'Commonly Used by Clinic', value:3 }
+                                        { name:'Show CPTs history for this patient', value:1 },
+                                        { name:'Show CPTs commonly used by Clinic', value:2 },
+                                        { name:'Show All CPTs', value:3 }
                                     ]
-                                })
+                                }),
+                                listeners:{
+                                    scope:me,
+                                    change:me.onCptQuickRefereneOption
+                                }
                             }
                         },
                         {
@@ -328,8 +332,8 @@ Ext.define('App.view.patientfile.Encounter', {
                             viewConfig:{
                                 plugins:{
                                     ptype:'gridviewdragdrop',
-                                    dragGroup:'firstGridDDGroup',
-                                    dropGroup:'secondGridDDGroup'
+                                    dragGroup:'firstCPTGridDDGroup',
+                                    dropGroup:'secondCPTGridDDGroup'
                                 },
                                 listeners:{
                                     drop:function (node, data, dropRec, dropPosition) {
@@ -345,6 +349,12 @@ Ext.define('App.view.patientfile.Encounter', {
                                 {text:"Code", width:70, sortable:true, dataIndex:'code'},
                                 {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'}
                             ],
+                            tbar: Ext.create('Ext.PagingToolbar', {
+                                store      : me.cptCodesGridStore,
+                                displayInfo: true,
+                                emptyMsg   : "No Office Notes to display",
+                                plugins    : Ext.create('Ext.ux.SlidingPager', {})
+                            }),
                             store:me.cptCodesGridStore
                         }
                     ]
@@ -369,11 +379,28 @@ Ext.define('App.view.patientfile.Encounter', {
                         {
                             xtype:'grid',
                             flex:1,
+                            stripeRows:true,
+                            title:'Encounter CPT\'s',
+                            margins:0,
+                            store:me.secondGridStore,
+                            columns:[
+                                {text:"Code", width:70, sortable:true, dataIndex:'code'},
+                                {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'}
+                            ],
+                            dockedItems: [{
+                                xtype: 'toolbar',
+                                items: ['->',{
+                                    text: 'Remove CPT',
+                                    iconCls:'icoClose',
+                                    itemId:'removeCptBtn',
+                                    disabled:true
+                                }]
+                            }],
                             viewConfig:{
                                 plugins:{
                                     ptype:'gridviewdragdrop',
-                                    dragGroup:'secondGridDDGroup',
-                                    dropGroup:'firstGridDDGroup'
+                                    dragGroup:'secondCPTGridDDGroup',
+                                    dropGroup:'firstCPTGridDDGroup'
                                 },
                                 listeners:{
                                     drop:function (node, data, dropRec, dropPosition) {
@@ -382,14 +409,13 @@ Ext.define('App.view.patientfile.Encounter', {
                                     }
                                 }
                             },
-                            stripeRows:true,
-                            title:'Encounter CPT\'s',
-                            margins:0,
-                            columns:[
-                                {text:"Code", width:70, sortable:true, dataIndex:'code'},
-                                {text:"Description", flex:1, width:70, sortable:true, dataIndex:'code_text'}
-                            ],
-                            store:me.secondGridStore
+                            selModel:Ext.create('Ext.selection.CheckboxModel', {
+                                listeners: {
+                                    selectionchange: function(sm, selections) {
+                                        this.view.panel.down('toolbar').getComponent('removeCptBtn').setDisabled(selections.length == 0);
+                                    }
+                                }
+                            })
                         }
                     ]
 
@@ -937,7 +963,13 @@ Ext.define('App.view.patientfile.Encounter', {
                 me.updateProgressNote();
 
                 me.encounterEventHistoryStore.load({params:{eid:eid}});
-                me.cptCodesGridStore.load({params:{eid:eid,pid:patient.pid}})
+
+                var combo = me.CurrentProceduralTerminology.down('combobox');
+                if(combo.getValue() != 1){
+                    combo.setValue(1);
+                }else{
+                    me.loadCptQuickReferenceGrid(1);
+                }
 
 
             }
@@ -993,6 +1025,18 @@ Ext.define('App.view.patientfile.Encounter', {
             var data = response.result;
             me.progressNote.tpl.overwrite(me.progressNote.body, data);
         });
+    },
+
+    onCptQuickRefereneOption:function(combo,value){
+        this.loadCptQuickReferenceGrid(value);
+    },
+
+    loadCptQuickReferenceGrid:function(filter){
+        var patient = app.getCurrPatient(),
+            pid = patient.pid;
+        this.cptCodesGridStore.proxy.extraParams = {pid:pid,filter:filter};
+        this.cptCodesGridStore.load();
+
     },
 
     //***************************************************************************************************//
