@@ -163,7 +163,7 @@ class Encounter {
         $encounter['speechdictation']       = $this->getDictationByEid($params->eid);
 
 
-        $this->addEncounterHistoryEvent('Encounter viewed');
+        //$this->addEncounterHistoryEvent('Encounter viewed');
 
         if($encounter != null){
             return array('success' => true, 'encounter' => $encounter);

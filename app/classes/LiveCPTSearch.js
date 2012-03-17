@@ -8,9 +8,9 @@
  *
  * @namespace Services.liveIDCXSearch
  */
-Ext.define('App.classes.LiveICDXSearch', {
+Ext.define('App.classes.LiveCPTSearch', {
 	extend       : 'Ext.form.field.ComboBox',
-	alias        : 'widget.liveicdxsearch',
+	alias        : 'widget.livecptsearch',
 	hideLabel    : true,
     triggerTip:'Click to clear selection.',
     spObj:'',
@@ -22,13 +22,14 @@ Ext.define('App.classes.LiveICDXSearch', {
 	initComponent: function() {
 		var me = this;
 
-		Ext.define('liveICDXSearchModel', {
+		Ext.define('liveCPTSearchModel', {
 			extend: 'Ext.data.Model',
 			fields: [
 				{name: 'id', type: 'int'},
 				{name: 'code', type: 'string'},
 				{name: 'code_text', type: 'string'},
-				{name: 'code_type', type: 'string'}
+				{name: 'code_type', type: 'string'},
+				{name: 'modifiers', type: 'string'}
 			],
 			proxy : {
 				type  : 'direct',
@@ -39,12 +40,12 @@ Ext.define('App.classes.LiveICDXSearch', {
 					totalProperty: 'totals',
 					root         : 'rows'
 				},
-                extraParams: { code_type:2 }
+                extraParams: { code_type:1 }
 			}
 		});
 
 		me.store = Ext.create('Ext.data.Store', {
-			model   : 'liveICDXSearchModel',
+			model   : 'liveCPTSearchModel',
 			pageSize: 25,
 			autoLoad: false
 		});
@@ -67,25 +68,12 @@ Ext.define('App.classes.LiveICDXSearch', {
 					return '<div class="search-item">{code}: {code_text}</div>';
 				}
 			},
-			pageSize    : 10,
-            listeners:{
-                scope:me,
-                select:me.codeSelected
-            }
+			pageSize    : 25
 		}, null);
 
 		me.callParent();
 	},
 
-    codeSelected:function(combo, record){
-        var value = record[0].data.code;
-        if(this.oldValue){
-            combo.setRawValue(this.oldValue + value + ', ');
-        }else{
-            combo.setRawValue(value + ', ');
-        }
-        this.oldValue = combo.getRawValue();
-    },
 
     onRender:function (ct, position) {
         this.callParent(arguments);
