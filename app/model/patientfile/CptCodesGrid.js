@@ -6,22 +6,22 @@
  * Time: 11:09 PM
  */
 Ext.define('App.model.patientfile.CptCodesGrid', {
-	extend : 'Ext.data.Model',
-	fields : [
-		{name: 'id', type: 'int '},
-		{name: 'code', type: 'float'},
-		{name: 'code_text', type: 'string'},
-		{name: 'modifiers', type: 'string', defaultValue:''}
-	],
-	proxy  : {
-		type       : 'direct',
-		api        : {
-			read: Services.getCptCodesBySelection
-		},
-		reader     : {
-			type: 'json',
-			root: 'rows',
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int '},
+        {name: 'code', type: 'float'},
+        {name: 'code_text', type: 'string'},
+        {name: 'modifiers', type: 'string', defaultValue: ''}
+    ],
+    proxy : {
+        type  : 'direct',
+        api   : {
+            read: Services.getCptCodesBySelection
+        },
+        reader: {
+            type         : 'json',
+            root         : 'rows',
             totalProperty: 'totals'
-		}
-	}
+        }
+    }
 });

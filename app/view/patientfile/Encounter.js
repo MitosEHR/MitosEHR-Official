@@ -289,7 +289,7 @@ Ext.define('App.view.patientfile.Encounter', {
             items     : [
                 {
                     xtype : 'container',
-                    itemId:'leftCol',
+                    itemId: 'leftCol',
                     layout: {
                         type   : 'vbox',
                         align  : 'stretch',
@@ -360,7 +360,7 @@ Ext.define('App.view.patientfile.Encounter', {
                 },
                 {
                     xtype : 'container',
-                    itemId:'rightCol',
+                    itemId: 'rightCol',
                     layout: {
                         type   : 'vbox',
                         align  : 'stretch',
@@ -374,10 +374,10 @@ Ext.define('App.view.patientfile.Encounter', {
                             margin : '0 0 3 0',
                             layout : 'anchor',
                             items  : {
-                                xtype: 'livecptsearch',
-                                listeners:{
-                                    scope:me,
-                                    select:me.onLiveCptSelect
+                                xtype    : 'livecptsearch',
+                                listeners: {
+                                    scope : me,
+                                    select: me.onLiveCptSelect
                                 }
                             }
 
@@ -1081,7 +1081,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
     },
 
-    onLiveCptSelect:function(btn, record){
+    onLiveCptSelect: function(btn, record) {
         btn.reset();
         var grid = this.CurrentProceduralTerminology.getComponent('rightCol').down('grid');
         this.secondGridStore.add(record[0])
