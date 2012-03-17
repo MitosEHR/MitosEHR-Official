@@ -170,7 +170,7 @@ Ext.define('App.view.MitosApp', {
 					handler  : me.openPatientSummary,
 					listeners: {
 						scope      : me,
-						afterrender: me.patientUnset
+						afterrender: me.patientBtnRender
 					},
 					tpl      : me.patientBtn()
 				},
@@ -200,40 +200,40 @@ Ext.define('App.view.MitosApp', {
 					handler: me.createNewEncounter,
 					tooltip: 'Crate New Encounter'
 				},
-				{
-					xtype   : 'button',
-					scale   : 'large',
-					style   : 'float:left',
-					margin  : '0 0 0 3',
-					cls     : 'headerLargeBtn',
-					padding : 0,
-					itemId  : 'patientPushFor',
-					iconCls : 'icoArrowRight',
-					scope   : me,
-					tooltip : 'Sent Current Patient Record To...',
-					arrowCls: 'none',
-					menu    : [
-						{
-							text   : 'Front Office',
-							iconCls: 'icoArrowRight',
-							action : 'fronOffice',
-							handler: me.sendPatientTo
-						},
-						{
-							text   : 'Triage',
-							iconCls: 'icoArrowRight',
-							action : 'triage',
-							handler: me.sendPatientTo
-						},
-						{
-							text   : 'Doctor',
-							iconCls: 'icoArrowRight',
-							action : 'doctor',
-							scope  : me,
-							handler: me.sendPatientTo
-						}
-					]
-				},
+//				{
+//					xtype   : 'button',
+//					scale   : 'large',
+//					style   : 'float:left',
+//					margin  : '0 0 0 3',
+//					cls     : 'headerLargeBtn',
+//					padding : 0,
+//					itemId  : 'patientPushFor',
+//					iconCls : 'icoArrowRight',
+//					scope   : me,
+//					tooltip : 'Sent Current Patient Record To...',
+//					arrowCls: 'none',
+//					menu    : [
+//						{
+//							text   : 'Front Office',
+//							iconCls: 'icoArrowRight',
+//							action : 'fronOffice',
+//							handler: me.sendPatientTo
+//						},
+//						{
+//							text   : 'Triage',
+//							iconCls: 'icoArrowRight',
+//							action : 'triage',
+//							handler: me.sendPatientTo
+//						},
+//						{
+//							text   : 'Doctor',
+//							iconCls: 'icoArrowRight',
+//							action : 'doctor',
+//							scope  : me,
+//							handler: me.sendPatientTo
+//						}
+//					]
+//				},
 				{
 					xtype  : 'button',
 					scale  : 'large',
@@ -409,7 +409,7 @@ Ext.define('App.view.MitosApp', {
 							store            : me.patientPoolStore,
 							listeners        : {
 								scope : me,
-								render: me.initializePatientDragZone
+								render: me.initializeOpenEncounterDragZone
 							}
 						}
 					]
@@ -490,13 +490,16 @@ Ext.define('App.view.MitosApp', {
 				Ext.create('App.view.miscellaneous.MyAccount'),
 				Ext.create('App.view.miscellaneous.MySettings'),
 				Ext.create('App.view.miscellaneous.OfficeNotes'),
-				Ext.create('App.view.miscellaneous.Websearch')
+				Ext.create('App.view.miscellaneous.Websearch'),
 
-			],
-			listeners: {
-				scope      : me,
-				afterrender: me.initializeHospitalDropZone
-			}
+
+				me.ppdz = Ext.create('App.view.PatientPoolDropZone')
+
+            ],
+            listeners:{
+                scope:me,
+                afterrender:me.initializeOpenEncounterDropZone
+            }
 		});
 
 
@@ -563,7 +566,7 @@ Ext.define('App.view.MitosApp', {
 					store            : me.patientPoolStore,
 					listeners        : {
 						scope : me,
-						render: me.initializePatientDragZone
+						render: me.initializeOpenEncounterDragZone
 					}
 				},
 				{
@@ -611,8 +614,8 @@ Ext.define('App.view.MitosApp', {
 			]
 		});
 
-		this.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow');
-		this.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow');
+		me.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow');
+		me.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow');
 
 		me.layout = { type: 'border', padding: 3 };
 		me.defaults = { split: true };
@@ -728,20 +731,21 @@ Ext.define('App.view.MitosApp', {
 
 	onNavigationNodeSelected: function(model, selected) {
 		var me = this;
+        if(0 < selected.length){
+            if(selected[0].data.leaf) {
+                var tree = me.navColumn.down('treepanel'),
+                    sm = tree.getSelectionModel(),
+                    card = selected[0].data.id,
+                    layout = me.MainPanel.getLayout(),
+                    cardCmp = Ext.getCmp(card);
 
-		if(selected[0].data.leaf) {
-			var tree = me.navColumn.down('treepanel'),
-				sm = tree.getSelectionModel(),
-				card = selected[0].data.id,
-				layout = me.MainPanel.getLayout(),
-				cardCmp = Ext.getCmp(card);
-
-			me.currCardCmp = cardCmp;
-			layout.setActiveItem(card);
-			cardCmp.onActive(function(success) {
-				(success) ? me.lastCardNode = sm.getLastSelected() : me.goBack();
-			});
-		}
+                me.currCardCmp = cardCmp;
+                layout.setActiveItem(card);
+                cardCmp.onActive(function(success) {
+                    (success) ? me.lastCardNode = sm.getLastSelected() : me.goBack();
+                });
+            }
+        }
 	},
 
 	goBack: function() {
@@ -796,15 +800,15 @@ Ext.define('App.view.MitosApp', {
 		var patientBtn = this.Header.getComponent('patientButton'),
 			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
-			PushForBtn = this.Header.getComponent('patientPushFor'),
+			//PushForBtn = this.Header.getComponent('patientPushFor'),
 			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
 			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 
-		patientBtn.update({name: fullname, info: '(' + pid + ')'});
+		patientBtn.update({ pid:pid, name:fullname });
         patientBtn.enable();
 		patientOpenVisitsBtn.enable();
 		patientCreateEncounterBtn.enable();
-		PushForBtn.enable();
+		//PushForBtn.enable();
 		patientCloseCurrEncounterBtn.enable();
 		patientCheckOutBtn.enable();
 		if(typeof callback == 'function') {
@@ -816,20 +820,20 @@ Ext.define('App.view.MitosApp', {
 		var patientBtn = this.Header.getComponent('patientButton'),
 			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
-			PushForBtn = this.Header.getComponent('patientPushFor'),
+			//PushForBtn = this.Header.getComponent('patientPushFor'),
 			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
 			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 		/**
 		 * Ext.direct function
 		 */
 		Patient.currPatientUnset(function() {
-			PushForBtn.disable();
+			//PushForBtn.disable();
 			patientCreateEncounterBtn.disable();
 			patientOpenVisitsBtn.disable();
 			patientCloseCurrEncounterBtn.disable();
 			patientCheckOutBtn.disable();
             patientBtn.disable();
-			patientBtn.update({name: 'No Patient Selected', info: '( record )'});
+			patientBtn.update({ pid:'record number', name:'No Patient Selected'});
 		});
 	},
 
@@ -865,12 +869,12 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	patientBtn: function() {
-		return new Ext.create('Ext.XTemplate',
+		return Ext.create('Ext.XTemplate',
 			'<div class="patient_btn">',
 			'<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>',
 			'<div class="patient_btn_info">',
 			'<div class="patient_btn_name">{name}</div>',
-			'<div class="patient_btn_record">{info}</div>',
+			'<div class="patient_btn_record">( {pid} )</div>',
 			'</div>',
 			'</div>', {
 				defaultValue: function(v) {
@@ -878,6 +882,11 @@ Ext.define('App.view.MitosApp', {
 				}
 			});
 	},
+
+    patientBtnRender:function(btn){
+        this.patientUnset();
+        this.initializePatientPoolDragZone(btn)
+    },
 
 	getPatientesInPoolArea:function(){
 		var poolArea = this.navColumn.getComponent('patientPoolArea'),
@@ -915,12 +924,44 @@ Ext.define('App.view.MitosApp', {
 		});
 	},
 
+    initializePatientPoolDragZone: function(panel) {
+        panel.dragZone = Ext.create('Ext.dd.DragZone', panel.getEl(), {
+            ddGroup    : 'patientPoolAreas',
+            // On receipt of a mousedown event, see if it is within a draggable element.
+            // Return a drag data object if so. The data object can contain arbitrary application
+            // data, but it should also contain a DOM element in the ddel property to provide
+            // a proxy to drag.
+            getDragData: function() {
+
+                var sourceEl = app.Header.getComponent('patientButton').el.dom, d;
+                app.MainPanel.getLayout().setActiveItem(app.ppdz);
+                app.navColumn.down('treepanel').getSelectionModel().deselectAll();
+
+                if(sourceEl) {
+                    d = sourceEl.cloneNode(true);
+                    d.id = Ext.id();
+                    return panel.dragData = {
+                        sourceEl   : sourceEl,
+                        repairXY   : Ext.fly(sourceEl).getXY(),
+                        ddel       : d,
+                        patientData: panel.data
+                    };
+                }
+            },
+            // Provide coordinates for the proxy to slide back to on failed drag.
+            // This is the original XY coordinates of the draggable element.
+            getRepairXY: function() {
+                app.goBack();
+                return this.dragData.repairXY;
+            }
+        });
+    },
 
 	/**
 	 *
 	 * @param panel
 	 */
-	initializePatientDragZone: function(panel) {
+	initializeOpenEncounterDragZone: function(panel) {
 		panel.dragZone = Ext.create('Ext.dd.DragZone', panel.getEl(), {
 			ddGroup    : 'patient',
 			// On receipt of a mousedown event, see if it is within a draggable element.
@@ -954,7 +995,7 @@ Ext.define('App.view.MitosApp', {
 	 *
 	 * @param panel
 	 */
-	initializeHospitalDropZone: function(panel) {
+	initializeOpenEncounterDropZone: function(panel) {
 		var me = this;
 		panel.dropZone = Ext.create('Ext.dd.DropZone', panel.getEl(), {
 			ddGroup   : 'patient',
@@ -974,7 +1015,6 @@ Ext.define('App.view.MitosApp', {
 	afterAppRender: function() {
 		Ext.get('mainapp-loading').remove();
 		Ext.get('mainapp-loading-mask').fadeOut({remove: true});
-
 	},
 
 	getCurrPatient: function() {

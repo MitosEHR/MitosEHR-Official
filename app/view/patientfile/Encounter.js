@@ -982,7 +982,6 @@ Ext.define('App.view.patientfile.Encounter', {
                     if(me.stopTimer()){
                         var timer = me.timer(data.start_date, data.close_date),
                             patient = me.getCurrPatient();
-                        me.stopTimer();
                         me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
                     }
                 }
