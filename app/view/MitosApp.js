@@ -156,6 +156,7 @@ Ext.define('App.view.MitosApp', {
 			items      : [
 				{
 					xtype : 'container',
+                    itemId: 'appLogo',
 					html  : '<img src="ui_app/app_logo.png" height="40" width="200" style="float:left">',
 					style : 'float:left',
 					border: false
@@ -756,9 +757,11 @@ Ext.define('App.view.MitosApp', {
 
 	navCollapsed: function() {
 		var navView = this.navColumn.getComponent('patientPoolArea'),
+            appLogo = this.Header.getComponent('appLogo'),
 			foot = this.Footer,
 			footView = foot.down('dataview');
 
+        appLogo.setWidth(35);
 		navView.hide();
 		foot.setHeight(60);
 		footView.show();
@@ -766,9 +769,11 @@ Ext.define('App.view.MitosApp', {
 
 	navExpanded: function() {
 		var navView = this.navColumn.getComponent('patientPoolArea'),
+            appLogo = this.Header.getComponent('appLogo'),
 			foot = this.Footer,
 			footView = foot.down('dataview');
 
+        appLogo.setWidth(200);
 		navView.show();
 		foot.setHeight(30);
 		footView.hide();
