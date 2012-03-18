@@ -33,12 +33,13 @@ Ext.define('App.classes.LiveICDXSearch', {
 			proxy : {
 				type  : 'direct',
 				api   : {
-					read: Services.liveIDCXSearch
+					read: Services.liveCodeSearch
 				},
 				reader: {
 					totalProperty: 'totals',
 					root         : 'rows'
-				}
+				},
+                extraParams: { code_type:2 }
 			}
 		});
 
@@ -54,10 +55,8 @@ Ext.define('App.classes.LiveICDXSearch', {
 			valueField  : 'code',
 			emptyText   : me.emptyText,
 			typeAhead   : false,
-			//hideTrigger : true,
 			minChars    : 1,
             anchor      : '100%',
-            //multiSelect:true,
 			listConfig  : {
 				loadingText: 'Searching...',
 				//emptyText	: 'No matching posts found.',
