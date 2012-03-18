@@ -56,10 +56,7 @@ Ext.define('App.view.PatientPoolDropZone',{
                             dropGroup: 'patientPoolAreas'
                         },
                         listeners: {
-                            drop: function(node, data, dropRec, dropPosition) {
-                                var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
-                                me.msg('Sweet!', pname + ' sent to ' + this.panel.title);
-                            }
+                            drop: me.onPatientDrop
                         }
                     }
                 },
@@ -87,10 +84,7 @@ Ext.define('App.view.PatientPoolDropZone',{
                             dropGroup: 'patientPoolAreas'
                         },
                         listeners: {
-                            drop: function(node, data, dropRec, dropPosition) {
-                                var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
-                                me.msg('Sweet!', pname + ' sent to ' + this.panel.title);
-                            }
+                            drop: me.onPatientDrop
                         }
                     }
                 },
@@ -118,10 +112,7 @@ Ext.define('App.view.PatientPoolDropZone',{
                             dropGroup: 'patientPoolAreas'
                         },
                         listeners: {
-                            drop: function(node, data, dropRec, dropPosition) {
-                                var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
-                                me.msg('Sweet!', pname + ' sent to ' + this.panel.title);
-                            }
+                            drop: me.onPatientDrop
                         }
                     }
                 },
@@ -149,10 +140,7 @@ Ext.define('App.view.PatientPoolDropZone',{
                             dropGroup: 'patientPoolAreas'
                         },
                         listeners: {
-                            drop: function(node, data, dropRec, dropPosition) {
-                                var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
-                                me.msg('Sweet!', pname + ' sent to ' + this.panel.title);
-                            }
+                            drop: me.onPatientDrop
                         }
                     }
                 }
@@ -165,33 +153,10 @@ Ext.define('App.view.PatientPoolDropZone',{
 
     },
 
-    initializePatientDropZone: function(panel) {
 
-        panel.dropZone = Ext.create('Ext.dd.DropZone', panel.getEl(), {
-            ddGroup   : 'patientPoolAreas',
-            notifyOver: function() {
-                return Ext.dd.DropZone.prototype.dropAllowed;
-            },
-            notifyDrop: function(dd, e, data) {
-                if(panel.action == 'front'){
-                    app.msg('Sweet!', data.patientData.name + ' Sent to Front Office');
-                }else if(panel.action == 'triage'){
-                    app.msg('Sweet!', data.patientData.name + ' Sent to Triage');
-                }else if(panel.action == 'physician'){
-                    app.msg('Sweet!', data.patientData.name + ' Sent to Physician');
-                }else if(panel.action == 'checkout'){
-                    app.msg('Sweet!', data.patientData.name + ' Sent to Checkout');
-                }
-
-                app.patientUnset();
-                app.navigateToDefault();
-//                say(panel.action);
-//                say(dd);
-//                say(e);
-//                say(data);
-
-            }
-        });
+    onPatientDrop:function(node, data, dropRec, dropPosition){
+        var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
+        app.msg('Sweet!', pname + ' sent to ' + this.panel.title);
     }
 
 

@@ -201,40 +201,6 @@ Ext.define('App.view.MitosApp', {
 					handler: me.createNewEncounter,
 					tooltip: 'Crate New Encounter'
 				},
-//				{
-//					xtype   : 'button',
-//					scale   : 'large',
-//					style   : 'float:left',
-//					margin  : '0 0 0 3',
-//					cls     : 'headerLargeBtn',
-//					padding : 0,
-//					itemId  : 'patientPushFor',
-//					iconCls : 'icoArrowRight',
-//					scope   : me,
-//					tooltip : 'Sent Current Patient Record To...',
-//					arrowCls: 'none',
-//					menu    : [
-//						{
-//							text   : 'Front Office',
-//							iconCls: 'icoArrowRight',
-//							action : 'fronOffice',
-//							handler: me.sendPatientTo
-//						},
-//						{
-//							text   : 'Triage',
-//							iconCls: 'icoArrowRight',
-//							action : 'triage',
-//							handler: me.sendPatientTo
-//						},
-//						{
-//							text   : 'Doctor',
-//							iconCls: 'icoArrowRight',
-//							action : 'doctor',
-//							scope  : me,
-//							handler: me.sendPatientTo
-//						}
-//					]
-//				},
 				{
 					xtype  : 'button',
 					scale  : 'large',

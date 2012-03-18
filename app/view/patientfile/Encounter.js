@@ -827,7 +827,6 @@ Ext.define('App.view.patientfile.Encounter', {
         } else if(SaveBtn.action == 'vitals') {
             form = panel.down('form').getForm();
         } else {
-            say(panel);
             form = panel.getForm();
         }
 
@@ -1083,10 +1082,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
     onLiveCptSelect: function(btn, record) {
         btn.reset();
-        var grid = this.CurrentProceduralTerminology.getComponent('rightCol').down('grid');
         this.secondGridStore.add(record[0])
-        say(grid);
-
     },
 
     //***************************************************************************************************//
