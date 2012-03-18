@@ -917,11 +917,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 
 	onSave:function(btn) {
-
+/*
 		var form = btn.up('form').getForm(),
 			record = form.getRecord(),
             values = form.getValues(),
-			store, storeIndex;
+			store, storeIndex; */
 
 		if(btn.itemId == 'SaveImmunization'){
 			 store = this.patientImmuListStore;
@@ -938,7 +938,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		else if(btn.itemId == 'SaveDental'){
 			 store = this.patientDentalStore;
 		}
-
+	/*
 		storeIndex = store.indexOf(record);
 
 		if(storeIndex == -1) {
@@ -948,6 +948,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			record.set(values);
 		}
 		store.sync();
+	*/
 
 	},
 
