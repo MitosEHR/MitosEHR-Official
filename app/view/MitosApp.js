@@ -937,14 +937,16 @@ Ext.define('App.view.MitosApp', {
                 app.MainPanel.getLayout().setActiveItem(app.ppdz);
                 app.navColumn.down('treepanel').getSelectionModel().deselectAll();
 
+
                 if(sourceEl) {
                     d = sourceEl.cloneNode(true);
                     d.id = Ext.id();
                     return panel.dragData = {
+                        copy       : true,
                         sourceEl   : sourceEl,
                         repairXY   : Ext.fly(sourceEl).getXY(),
                         ddel       : d,
-                        patientData: panel.data
+                        patient    : [ panel.data ]
                     };
                 }
             },

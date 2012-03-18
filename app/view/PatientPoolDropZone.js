@@ -7,49 +7,153 @@
  */
 Ext.define('App.view.PatientPoolDropZone',{
     extend:'App.classes.RenderPanel',
-    pageTitle:'Patient Drop Zone',
+    pageTitle:'Patient Pool Areas',
     pageLayout:'fit',
     initComponent:function(){
         var me = this;
 
+        me.foStore = Ext.create('Ext.data.Store',{
+            model: 'App.model.poolarea.PoolDropAreas'
+        });
+
+        me.triageStore = Ext.create('Ext.data.Store',{
+            model: 'App.model.poolarea.PoolDropAreas'
+        });
+
+        me.physicianStore = Ext.create('Ext.data.Store',{
+            model: 'App.model.poolarea.PoolDropAreas'
+        });
+
+        me.ckoutStore = Ext.create('Ext.data.Store',{
+            model: 'App.model.poolarea.PoolDropAreas'
+        });
+
         me.container = Ext.create('Ext.panel.Panel',{
-            defaults : { flex:1, margin:5, frame:true  },
+            defaults : { flex:1, margin:5, frame:false  },
             layout   : { type:'hbox', align:'stretch' },
             items:[
                 {
-                    xtype:'panel',
+                    xtype:'grid',
                     title:'Front Office',
                     action:'front',
-                    listeners: {
-                        scope:me,
-                        afterrender:me.initializePatientDropZone
+                    store:me.foStore,
+                    columns:[
+                        {
+                            header:'Record #',
+                            width:100,
+                            dataIndex:'pid'
+                        },
+                        {
+                            header:'Patien Name',
+                            flex:1,
+                            dataIndex:'name'
+                        }
+                    ],
+                    viewConfig : {
+                        plugins  : {
+                            ptype    : 'gridviewdragdrop',
+                            dragGroup: 'patientPoolAreas',
+                            dropGroup: 'patientPoolAreas'
+                        },
+                        listeners: {
+                            drop: function(node, data, dropRec, dropPosition) {
+                                var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
+                                me.msg('Sweet!', pname + ' sent to ' + this.panel.title);
+                            }
+                        }
                     }
                 },
                 {
-                    xtype:'panel',
+                    xtype:'grid',
                     title:'Triage',
                     action:'triage',
-                    listeners: {
-                        scope:me,
-                        afterrender:me.initializePatientDropZone
+                    store:me.triageStore,
+                    columns:[
+                        {
+                            header:'Record #',
+                            width:100,
+                            dataIndex:'pid'
+                        },
+                        {
+                            header:'Patien Name',
+                            flex:1,
+                            dataIndex:'name'
+                        }
+                    ],
+                    viewConfig : {
+                        plugins  : {
+                            ptype    : 'gridviewdragdrop',
+                            dragGroup: 'patientPoolAreas',
+                            dropGroup: 'patientPoolAreas'
+                        },
+                        listeners: {
+                            drop: function(node, data, dropRec, dropPosition) {
+                                var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
+                                me.msg('Sweet!', pname + ' sent to ' + this.panel.title);
+                            }
+                        }
                     }
                 },
                 {
-                    xtype:'panel',
+                    xtype:'grid',
                     title:'Physician',
                     action:'physician',
-                    listeners: {
-                        scope:me,
-                        afterrender:me.initializePatientDropZone
+                    store:me.physicianStore,
+                    columns:[
+                        {
+                            header:'Record #',
+                            width:100,
+                            dataIndex:'pid'
+                        },
+                        {
+                            header:'Patien Name',
+                            flex:1,
+                            dataIndex:'name'
+                        }
+                    ],
+                    viewConfig : {
+                        plugins  : {
+                            ptype    : 'gridviewdragdrop',
+                            dragGroup: 'patientPoolAreas',
+                            dropGroup: 'patientPoolAreas'
+                        },
+                        listeners: {
+                            drop: function(node, data, dropRec, dropPosition) {
+                                var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
+                                me.msg('Sweet!', pname + ' sent to ' + this.panel.title);
+                            }
+                        }
                     }
                 },
                 {
-                    xtype:'panel',
+                    xtype:'grid',
                     title:'Checkout',
                     action:'checkout',
-                    listeners: {
-                        scope:me,
-                        afterrender:me.initializePatientDropZone
+                    store:me.ckoutStore,
+                    columns:[
+                        {
+                            header:'Record #',
+                            width:100,
+                            dataIndex:'pid'
+                        },
+                        {
+                            header:'Patien Name',
+                            flex:1,
+                            dataIndex:'name'
+                        }
+                    ],
+                    viewConfig : {
+                        plugins  : {
+                            ptype    : 'gridviewdragdrop',
+                            dragGroup: 'patientPoolAreas',
+                            dropGroup: 'patientPoolAreas'
+                        },
+                        listeners: {
+                            drop: function(node, data, dropRec, dropPosition) {
+                                var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
+                                me.msg('Sweet!', pname + ' sent to ' + this.panel.title);
+                            }
+                        }
                     }
                 }
             ]
