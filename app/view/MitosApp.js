@@ -156,6 +156,7 @@ Ext.define('App.view.MitosApp', {
 			items      : [
 				{
 					xtype : 'container',
+                    itemId: 'appLogo',
 					html  : '<img src="ui_app/app_logo.png" height="40" width="200" style="float:left">',
 					style : 'float:left',
 					border: false
@@ -200,40 +201,6 @@ Ext.define('App.view.MitosApp', {
 					handler: me.createNewEncounter,
 					tooltip: 'Crate New Encounter'
 				},
-//				{
-//					xtype   : 'button',
-//					scale   : 'large',
-//					style   : 'float:left',
-//					margin  : '0 0 0 3',
-//					cls     : 'headerLargeBtn',
-//					padding : 0,
-//					itemId  : 'patientPushFor',
-//					iconCls : 'icoArrowRight',
-//					scope   : me,
-//					tooltip : 'Sent Current Patient Record To...',
-//					arrowCls: 'none',
-//					menu    : [
-//						{
-//							text   : 'Front Office',
-//							iconCls: 'icoArrowRight',
-//							action : 'fronOffice',
-//							handler: me.sendPatientTo
-//						},
-//						{
-//							text   : 'Triage',
-//							iconCls: 'icoArrowRight',
-//							action : 'triage',
-//							handler: me.sendPatientTo
-//						},
-//						{
-//							text   : 'Doctor',
-//							iconCls: 'icoArrowRight',
-//							action : 'doctor',
-//							scope  : me,
-//							handler: me.sendPatientTo
-//						}
-//					]
-//				},
 				{
 					xtype  : 'button',
 					scale  : 'large',
@@ -756,9 +723,11 @@ Ext.define('App.view.MitosApp', {
 
 	navCollapsed: function() {
 		var navView = this.navColumn.getComponent('patientPoolArea'),
+            appLogo = this.Header.getComponent('appLogo'),
 			foot = this.Footer,
 			footView = foot.down('dataview');
 
+        appLogo.setWidth(35);
 		navView.hide();
 		foot.setHeight(60);
 		footView.show();
@@ -766,9 +735,11 @@ Ext.define('App.view.MitosApp', {
 
 	navExpanded: function() {
 		var navView = this.navColumn.getComponent('patientPoolArea'),
+            appLogo = this.Header.getComponent('appLogo'),
 			foot = this.Footer,
 			footView = foot.down('dataview');
 
+        appLogo.setWidth(200);
 		navView.show();
 		foot.setHeight(30);
 		footView.hide();
@@ -937,14 +908,16 @@ Ext.define('App.view.MitosApp', {
                 app.MainPanel.getLayout().setActiveItem(app.ppdz);
                 app.navColumn.down('treepanel').getSelectionModel().deselectAll();
 
+
                 if(sourceEl) {
                     d = sourceEl.cloneNode(true);
                     d.id = Ext.id();
                     return panel.dragData = {
+                        copy       : true,
                         sourceEl   : sourceEl,
                         repairXY   : Ext.fly(sourceEl).getXY(),
                         ddel       : d,
-                        patientData: panel.data
+                        patient    : [ panel.data ]
                     };
                 }
             },

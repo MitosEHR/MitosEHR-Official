@@ -284,7 +284,7 @@ $API = array(
             'updateService'=>array(
                'len'=>1
            ),
-            'liveIDCXSearch'=>array(
+            'liveCodeSearch'=>array(
                'len'=>1
            ),
             'getCptCodesBySelection'=>array(

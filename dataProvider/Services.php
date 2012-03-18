@@ -82,7 +82,7 @@ class Services {
         return $params;
     }
 
-    public function liveIDCXSearch(stdClass $params){
+    public function liveCodeSearch(stdClass $params){
         /**
          * brake the $params->query coming form sencha using into an array using "commas"
          * example:
@@ -143,7 +143,7 @@ class Services {
                                    OR code_text_short LIKE '%$query%'
                                    OR code            LIKE '$query%'
                                    OR related_code 	  LIKE '$query%')
-                                  AND code_type = '2'
+                                  AND code_type = '$params->code_type'
                              ORDER BY code ASC");
             /**
              * loop for each sql record as $row
@@ -180,6 +180,15 @@ class Services {
         $total   = count($records);
         $records = array_slice($records,$params->start,$params->limit);
         return array('totals'=>$total,'rows'=>$records);
+    }
+
+    /**
+     * @param stdClass $params
+     * @return array
+     */
+    public function liveIDCXSearch(stdClass $params){
+        $params->code_type = 2;
+        return $this->liveCodeSearch($params);
     }
 
 

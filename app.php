@@ -85,6 +85,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="lib/extensible-1.5.1/src/calendar/data/EventStore.js"></script>
         <script type="text/javascript" src="app/model/navigation/Navigation.js"></script>
         <script type="text/javascript" src="app/model/poolarea/PoolArea.js"></script>
+        <script type="text/javascript" src="app/model/poolarea/PoolDropAreas.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Vitals.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Encounters.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Encounter.js"></script>
@@ -119,6 +120,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/ux/SlidingPager.js"></script>
         <script type="text/javascript" src="app/classes/GridPanel.js"></script>
         <script type="text/javascript" src="app/classes/LiveICDXSearch.js"></script>
+        <script type="text/javascript" src="app/classes/LiveCPTSearch.js"></script>
         <script type="text/javascript" src="app/classes/LivePatientSearch.js"></script>
         <script type="text/javascript" src="app/classes/ManagedIframe.js"></script>
         <script type="text/javascript" src="app/classes/PhotoIdWindow.js"></script>
@@ -151,6 +153,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/grid/EventHistory.js"></script>
 
         <!-- Views-->
+        <script type="text/javascript" src="app/view/PatientPoolDropZone.js"></script>
         <script type="text/javascript" src="app/view/dashboard/Dashboard.js"></script>
         <script type="text/javascript" src="app/view/patientfile/ProgressNote.js"></script>
         <script type="text/javascript" src="app/view/patientfile/ChartsWindow.js"></script>
