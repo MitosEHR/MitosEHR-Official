@@ -77,7 +77,7 @@ Ext.define('App.view.fees.FeesSheet', {
                     },
 
                     {
-                        xtype:'form',
+                        xtype:'fieldset',
                         title:'Payment Information',
                         region:'center',
                         items:[
@@ -121,7 +121,7 @@ Ext.define('App.view.fees.FeesSheet', {
                     },
 
                     {
-                        xtype:'form',
+                        xtype:'fieldset',
                         title:'Check Information',
                         region:'east',
                         items:[
@@ -144,7 +144,7 @@ Ext.define('App.view.fees.FeesSheet', {
                             }
                         ]
                     }, {
-                       xtype:'form',
+                       xtype:'fieldset',
                        title:'Description',
                        //region:'south',
 
