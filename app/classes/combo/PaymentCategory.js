@@ -16,7 +16,7 @@ Ext.define('App.classes.combo.PaymentCategory', {
 					read: CombosData.getOptionsByListId
 				},
 				extraParams: {
-					list_id: 51
+					list_id: 49
 				}
 			}
 		});

@@ -87,7 +87,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                         type   : 'hbox',
                                         align  : 'stretch'
                                     },
-                                    height:220,
+                                    height:200,
                                     defaults:{ flex:1 },
                                     items:[
                                         {
@@ -107,11 +107,11 @@ Ext.define('App.view.fees.FeesSheet', {
                                                     fieldLabel:'Payment Amount'
                                                 }, {
                                                     fieldLabel: 'Paying Entity',
-                                                    xtype     : 'mitos.paymentmethodcombo',
+                                                    xtype     : 'mitos.payingentitycombo',
                                                     name      : 'paymentmethod'
                                                 }, {
                                                     fieldLabel: 'Payment Category',
-                                                    xtype     : 'mitos.paymentmethodcombo',
+                                                    xtype     : 'mitos.paymentcategorycombo',
                                                     name      : 'paymentmethod'
                                                 }
                                             ]
