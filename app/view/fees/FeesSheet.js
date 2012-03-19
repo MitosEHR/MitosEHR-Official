@@ -103,9 +103,8 @@ Ext.define('App.view.fees.FeesSheet', {
                                                     xtype     : 'mitos.paymentmethodcombo',
                                                     name      : 'paymentmethod'
                                                 }, {
-                                                    xtype:'numberfield',
-                                                    fieldLabel:'Payment Amount',
-                                                    minvalue:0
+                                                    xtype:'mitos.currency',
+                                                    fieldLabel:'Payment Amount'
                                                 }, {
                                                     fieldLabel: 'Payment Entity',
                                                     xtype     : 'mitos.paymentmethodcombo',
@@ -158,19 +157,22 @@ Ext.define('App.view.fees.FeesSheet', {
                                                     fieldLabel:'Payment From'
                                                 },
                                                 {
+                                                    xtype:'textfield',
+                                                    fieldLabel:'Patient Id'
+                                                },
+                                                {
                                                     xtype:'datefield',
                                                     fieldLabel:'Deposit Date'
                                                 },
                                                 {
-                                                    xtype:'numberfield',
-                                                    fieldLabel:'Remaining Amount',
-                                                    minValue:0
+                                                    xtype:'mitos.currency',
+                                                    fieldLabel:'Remaining Amount'
                                                 },
                                                 {
                                                     xtype:'textfield',
                                                     fieldLabel:'Notes',
                                                     height:50,
-                                                    width: 300
+                                                    width: 550
 
                                                 }
                                             ]
