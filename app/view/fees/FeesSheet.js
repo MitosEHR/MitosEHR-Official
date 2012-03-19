@@ -53,10 +53,11 @@ Ext.define('App.view.fees.FeesSheet', {
             closeAction:'hide',
             modal:true,
             closable:false,
-            layout:'hbox',
+            layout:'border',
             width:1000,
             height:700,
             items:[
+
                 {
                     title:'Payment Entry',
                     plain:true,
@@ -68,18 +69,10 @@ Ext.define('App.view.fees.FeesSheet', {
                         labelWidth  : 110
                     },
 
-                    items:[{
-                        xtype      : 'fieldset',
-                        title      : 'Payment Live Search',
-                        layout     : 'anchor',
-                        items:{ xtype:'liveicdxsearch' }
-
-                    },
-
-                    {
-                        xtype:'fieldset',
-                        title:'Payment Information',
-                        region:'center',
+                    items:[
+                        {
+                        xtype :'form',
+                        title :'Payment Entry',
                         items:[
                             {
                                 xtype:'fieldcontainer',
@@ -90,91 +83,130 @@ Ext.define('App.view.fees.FeesSheet', {
 
                                 items:[
                                     {
-                                    xtype     : 'datefield',
-                                    fieldLabel: 'Posting Date'
-                                }, {
-                                    xtype     : 'mitos.paymentmethodcombo',
-                                    fieldLabel: 'Payment Method',
-                                    name      : 'payment method'
-                                }, {
-                                    xtype     : 'numberfield',
-                                    fieldLabel: 'Payment Amount',
-                                    minvalue  : 0
-                                }, {
-                                    xtype       : 'combo',
-                                    fieldLabel  : 'Paying Entity',
-                                    store       : page.entity,
-                                    queryMode   : 'local',
-                                    displayField: 'name',
-                                    valueField  : 'abbr'
-                                }, {
-                                    xtype       : 'combo',
-                                    fieldLabel  : 'Payment Category',
-                                    store       : page.payment_category,
-                                    queryMode   : 'local',
-                                    displayField: 'name',
-                                    valueField  : 'abbr'
-                                }]
+                                    xtype      : 'fieldset',
+                                    title      : 'Payment Live Search',
+                                    layout     : 'anchor',
+                                    items:{ xtype:'liveicdxsearch' }
 
-                            }
-                        ]
-                    },
-
-                    {
-                        xtype:'fieldset',
-                        title:'Check Information',
-                        region:'east',
-                        items:[
-                            {
-                                xtype:'fieldcontainer',
-
-                                defaults:{
-                                    labelWidth: 110
-                                },
-
-                                items:[
-                                    {
-                                    xtype     : 'datefield',
-                                    fieldLabel: 'Check Date'
                                 },  {
-                                    xtype     : 'textfield',
-                                    fieldLabel: 'Check Number'
-                                }]
+                                    xtype :'fieldcontainer',
+                                    layout:'hbox',
+                                    align  : 'stretch',
+                                    padding: 5,
+                                    items : [
+                                        {
+                                        xtype : 'container',
+                                        itemId: 'leftCol',
+                                        items:
+                                            {
+                                            xtype  : 'fieldset',
+                                            title  : 'Payment Information',
+                                            layout : 'anchor',
+                                            items  : [{
+                                                    xtype     : 'numberfield',
+                                                    fieldLabel: 'Payment Amount',
+                                                    minvalue  : 0
+                                            }]
+                                        }
+                                    }]
 
+                                }/*,
+
+                                    {
+                                    xtype:'fieldset',
+                                    title:'Payment Information',
+                                    items:[
+                                        {
+                                            xtype:'fieldcontainer',
+
+                                            defaults:{
+                                                labelWidth: 110
+                                            },
+
+                                            items:[
+                                               {
+                                                xtype     : 'numberfield',
+                                                fieldLabel: 'Payment Amount',
+                                                minvalue  : 0
+                                            }, {
+                                                xtype       : 'combo',
+                                                fieldLabel  : 'Paying Entity',
+                                                store       : page.entity,
+                                                queryMode   : 'local',
+                                                displayField: 'name',
+                                                valueField  : 'abbr'
+                                            }, {
+                                                xtype       : 'combo',
+                                                fieldLabel  : 'Payment Category',
+                                                store       : page.payment_category,
+                                                queryMode   : 'local',
+                                                displayField: 'name',
+                                                valueField  : 'abbr'
+                                            }]
+
+                                        }
+                                    ]
+                                },  {
+                                    xtype:'fieldset',
+                                    title:'Check Information',
+                                    items:[
+                                        {
+                                        xtype:'fieldcontainer',
+
+                                        defaults:{
+                                            labelWidth: 110
+                                        },
+
+                                        items:[
+                                            {
+                                            xtype     : 'datefield',
+                                            fieldLabel: 'Check Date'
+                                        },  {
+                                            xtype     : 'datefield',
+                                            fieldLabel: 'Posting Date'
+                                        },
+                                            {
+                                            xtype     : 'textfield',
+                                            fieldLabel: 'Check Number'
+                                        }]
+
+                                        }
+                                    ]
+                                },  {
+                                      xtype:'fieldset',
+                                      title:'Description',
+                                      items:[
+                                          {
+
+                                          xtype:'fieldcontainer',
+
+                                          defaults:{
+                                              labelWidth: 110
+                                          },
+
+                                          items:[
+                                              {
+                                              xtype     : 'textfield',
+                                              fieldLabel: 'Payment From'
+                                          }, {
+                                              xtype     : 'datefield',
+                                              fieldLabel: 'Deposit Date'
+                                          }, {
+                                              xtype     : 'numberfield',
+                                              fieldLabel: 'Remaining Amount',
+                                              minValue  : 0
+                                          }, {
+                                              xtype     : 'textfield',
+                                              fieldLabel: 'Notes',
+                                              height    : 50,
+                                              anchor    : '100%'
+
+                                          }]
+                                      }]
+                                }*/]
                             }
                         ]
-                    }, {
-                       xtype:'fieldset',
-                       title:'Description',
-                       //region:'south',
 
-                           items:[ {
-                               xtype:'fieldcontainer',
-
-                               defaults:{
-                                   labelWidth: 110
-                               },
-
-                               items:[
-                                   {
-                                   xtype     : 'textfield',
-                                   fieldLabel: 'Payment From'
-                               }, {
-                                   xtype     : 'datefield',
-                                   fieldLabel: 'Deposit Date'
-                               }, {
-                                   xtype     : 'numberfield',
-                                   fieldLabel: 'Remaining Amount',
-                                   minValue  : 0
-                               }, {
-                                   xtype     : 'textfield',
-                                   fieldLabel: 'Notes',
-                                   height    : 50,
-                                   anchor    : '100%'
-
-                               }]
-
-                           }]
                     }]
                 },
 
