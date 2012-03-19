@@ -53,12 +53,7 @@ Ext.define('App.view.fees.FeesSheet', {
         });
 
         page.centerPanel = Ext.create('Ext.tab.Panel', {
-            closeAction:'hide',
-            modal:true,
-            closable:false,
-            layout:'border',
-            //width:1000,
-            //height:700,
+
             items:[
 
                 {
@@ -76,15 +71,12 @@ Ext.define('App.view.fees.FeesSheet', {
                         {
                             xtype:'form',
                             title:'Payment Entry',
-
-                            defaults:{
-                                labelWidth:110
-                            },
-
+                            defaults:{ labelWidth:110 },
                             items:[
                                 {
                                     xtype:'fieldset',
                                     title:'Payment Live Search',
+                                    height: 60,
                                     layout:'anchor',
                                     items:{ xtype:'liveicdxsearch' }
 
@@ -95,7 +87,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                         type   : 'hbox',
                                         align  : 'stretch'
                                     },
-                                    height:200,
+                                    height:220,
                                     defaults:{ flex:1 },
                                     items:[
                                         {
@@ -103,82 +95,34 @@ Ext.define('App.view.fees.FeesSheet', {
                                             xtype:'fieldset',
                                             title:'Payment Information',
                                             layout:'anchor',
-                                            margin:'0 5 0 0',
+                                            margin:'5 5 5 0',
+                                            defaults: { labelWidth:110 },
                                             items:[
                                                 {
+                                                    fieldLabel: 'Payment Method',
+                                                    xtype     : 'mitos.paymentmethodcombo',
+                                                    name      : 'paymentmethod'
+                                                }, {
                                                     xtype:'numberfield',
                                                     fieldLabel:'Payment Amount',
                                                     minvalue:0
+                                                }, {
+                                                    fieldLabel: 'Payment Entity',
+                                                    xtype     : 'mitos.paymentmethodcombo',
+                                                    name      : 'paymentmethod'
+                                                }, {
+                                                    fieldLabel: 'Payment Category',
+                                                    xtype     : 'mitos.paymentmethodcombo',
+                                                    name      : 'paymentmethod'
                                                 }
                                             ]
 
                                         },
                                         {
                                             xtype:'fieldset',
-                                            title:'Payment Information',
+                                            title:'Check Information',
                                             layout:'anchor',
-                                            margin:0,
-                                            items:[
-                                                {
-                                                    xtype:'numberfield',
-                                                    fieldLabel:'Payment Amount',
-                                                    minvalue:0
-                                                }
-                                            ]
-                                        }
-                                    ]
-
-                                },
-
-                                {
-                                    xtype:'fieldset',
-                                    title:'Payment Information',
-                                    items:[
-                                        {
-                                            xtype:'fieldcontainer',
-
-                                            defaults:{
-                                                labelWidth:110
-                                            },
-
-                                            items:[
-                                                {
-                                                    xtype:'numberfield',
-                                                    fieldLabel:'Payment Amount',
-                                                    minvalue:0
-                                                },
-                                                {
-                                                    xtype:'combo',
-                                                    fieldLabel:'Paying Entity',
-                                                    store:page.entity,
-                                                    queryMode:'local',
-                                                    displayField:'name',
-                                                    valueField:'abbr'
-                                                },
-                                                {
-                                                    xtype:'combo',
-                                                    fieldLabel:'Payment Category',
-                                                    store:page.payment_category,
-                                                    queryMode:'local',
-                                                    displayField:'name',
-                                                    valueField:'abbr'
-                                                }
-                                            ]
-
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype:'fieldset',
-                                    title:'Check Information',
-                                    items:[
-                                        {
-                                            xtype:'fieldcontainer',
-
-                                            defaults:{
-                                                labelWidth:110
-                                            },
-
+                                            margin:'5 0 5 0',
                                             items:[
                                                 {
                                                     xtype:'datefield',
@@ -193,22 +137,21 @@ Ext.define('App.view.fees.FeesSheet', {
                                                     fieldLabel:'Check Number'
                                                 }
                                             ]
-
                                         }
                                     ]
+
                                 },
+
                                 {
                                     xtype:'fieldset',
                                     title:'Description',
+                                    margin:'0 0 15 0',
+                                    height: 188,
                                     items:[
                                         {
 
                                             xtype:'fieldcontainer',
-
-                                            defaults:{
-                                                labelWidth:110
-                                            },
-
+                                            defaults:{ labelWidth:110 },
                                             items:[
                                                 {
                                                     xtype:'textfield',
@@ -227,7 +170,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                                     xtype:'textfield',
                                                     fieldLabel:'Notes',
                                                     height:50,
-                                                    anchor:'100%'
+                                                    width: 300
 
                                                 }
                                             ]
