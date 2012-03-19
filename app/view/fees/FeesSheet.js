@@ -69,7 +69,7 @@ Ext.define('App.view.fees.FeesSheet', {
                         bodyStyle:'padding:15px',
                         bodyBorder:true,
                         layout:'fit',
-                        labelWidth:110,
+                        labelWidth:110
                     },
 
                     items:[
@@ -78,7 +78,7 @@ Ext.define('App.view.fees.FeesSheet', {
                             title:'Payment Entry',
 
                             defaults:{
-                                labelWidth:110,
+                                labelWidth:110
                             },
 
                             items:[
