@@ -106,7 +106,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                                     xtype:'mitos.currency',
                                                     fieldLabel:'Payment Amount'
                                                 }, {
-                                                    fieldLabel: 'Payment Entity',
+                                                    fieldLabel: 'Paying Entity',
                                                     xtype     : 'mitos.paymentmethodcombo',
                                                     name      : 'paymentmethod'
                                                 }, {
