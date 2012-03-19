@@ -917,11 +917,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 
 	onSave:function(btn) {
-/*
-		var form = btn.up('form').getForm(),
+		var form = this.getLayout().getActiveItem().down('form').getForm(),
 			record = form.getRecord(),
             values = form.getValues(),
-			store, storeIndex; */
+			store, storeIndex;
 
 		if(btn.itemId == 'SaveImmunization'){
 			 store = this.patientImmuListStore;
@@ -938,7 +937,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		else if(btn.itemId == 'SaveDental'){
 			 store = this.patientDentalStore;
 		}
-	/*
+
 		storeIndex = store.indexOf(record);
 
 		if(storeIndex == -1) {
@@ -948,7 +947,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			record.set(values);
 		}
 		store.sync();
-	*/
+
 
 	},
 
@@ -1068,6 +1067,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
     onItemdblclick: function(grid, record){
+        say(this);
         var me = this, form, panel;
         if(grid.panel.itemId == 'patientImmuListGrid'){
             panel = me.getLayout().getActiveItem().getComponent('immuNorth')
@@ -1095,7 +1095,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
     onCodeFieldBlur:function(){
-        this.closeImmunizationGrid();
+        //this.closeImmunizationGrid();
     },
 
 	onOptionType: function(combo) {
