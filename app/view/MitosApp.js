@@ -75,6 +75,9 @@ Ext.define('App.view.MitosApp', {
 		'App.view.miscellaneous.Websearch'
 
 	],
+
+    minWidthToFullMode: 1240,
+
 	initComponent: function() {
 
 		Ext.tip.QuickTipManager.init();
@@ -157,6 +160,7 @@ Ext.define('App.view.MitosApp', {
 				{
 					xtype : 'container',
                     itemId: 'appLogo',
+                    width : window.innerWidth < me.minWidthToFullMode ? 35 : 200,
 					html  : '<img src="ui_app/app_logo.png" height="40" width="200" style="float:left">',
 					style : 'float:left',
 					border: false
@@ -321,6 +325,7 @@ Ext.define('App.view.MitosApp', {
 			width      : 200,
 			split      : true,
 			collapsible: true,
+            collapsed  : window.innerWidth < me.minWidthToFullMode,
 			items      : [
 				{
 					xtype      : 'treepanel',
@@ -506,7 +511,7 @@ Ext.define('App.view.MitosApp', {
 		 * Footer Panel
 		 */
 		me.Footer = Ext.create('Ext.container.Container', {
-			height : 30,
+			height : window.innerWidth < me.minWidthToFullMode ? 60 : 30,
 			split  : false,
 			padding: '3 0',
 			region : 'south',
@@ -514,7 +519,7 @@ Ext.define('App.view.MitosApp', {
 				{
 					xtype            : 'dataview',
 					margin           : '0 0 3 0',
-					hidden           : true,
+					hidden           : window.innerWidth >= me.minWidthToFullMode,
 					cls              : 'patient-pool-view-footer x-toolbar x-toolbar-default x-box-layout-ct',
 					tpl              : '<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px;" role="presentation" tabindex="-1"></div>' +
 						'<tpl for=".">' +
@@ -593,6 +598,7 @@ Ext.define('App.view.MitosApp', {
 		};
 
 		me.callParent(arguments);
+
 	},
 
 	onMedicalWin: function(btn) {
