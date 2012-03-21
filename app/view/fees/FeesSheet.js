@@ -87,7 +87,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                         type   : 'hbox',
                                         align  : 'stretch'
                                     },
-                                    height:220,
+                                    height:190,
                                     defaults:{ flex:1 },
                                     items:[
                                         {
@@ -107,11 +107,11 @@ Ext.define('App.view.fees.FeesSheet', {
                                                     fieldLabel:'Payment Amount'
                                                 }, {
                                                     fieldLabel: 'Paying Entity',
-                                                    xtype     : 'mitos.paymentmethodcombo',
+                                                    xtype     : 'mitos.payingentitycombo',
                                                     name      : 'paymentmethod'
                                                 }, {
                                                     fieldLabel: 'Payment Category',
-                                                    xtype     : 'mitos.paymentmethodcombo',
+                                                    xtype     : 'mitos.paymentcategorycombo',
                                                     name      : 'paymentmethod'
                                                 }
                                             ]
@@ -129,7 +129,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                                 },
                                                 {
                                                     xtype:'datefield',
-                                                    fieldLabel:'Posting Date'
+                                                    fieldLabel:'Post To Date'
                                                 },
                                                 {
                                                     xtype:'textfield',
@@ -179,31 +179,59 @@ Ext.define('App.view.fees.FeesSheet', {
                                         }
                                     ]
                                 }
-
                             ]
+                        }
+                    ]/*,
+                    buttons:[
+                        {
+                            text:'Save',
+                            // action:'encounter',
+                            scope:page
+                            // handler:page.coSignEncounter
+                        },
+                        {
+                            text:'Allocate',
+                            //  action:'encounter',
+                            scope:page
+                            // handler:me.signEncounter
+                        },
+                        {
+                            text:'Cancel'
+                            //  handler:me.cancelCheckout
 
                         }
-                    ]
+                    ]*/
                 },
 
                 {
+                    xtype:'form',
                     title:'ERA Posting',
-                    plain:true,
-                    activeItem:0,
-                    defaults:{
-                        bodyStyle:'padding:15px',
-                        bodyBorder:true,
-                        layout:'fit'
-                    },
+                    defaults:{ labelWidth:110 },
+
                     items:[
-                        {
-
-
-                        }
-                    ]
+                            {
+                                xtype:'datefield',
+                                fieldLabel:'Date'
+                            },
+                            {
+                                xtype:'datefield',
+                                fieldLabel:'Post To Date'
+                            },
+                            {
+                                xtype:'datefield',
+                                fieldLabel:'Deposit Date'
+                            },
+                            {
+                                xtype:'textfield',
+                                fieldLabel:'Insurance Company'
+                            },
+                            {
+                                xtype:'textfield',
+                                fieldLabel:'Patient Id'
+                            }
+                        ]
                 }
             ],
-
             buttons:[
                 {
                     text:'Save',
