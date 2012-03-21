@@ -30,22 +30,28 @@ class Services {
      */
     public function getServices(stdClass $params)
     {
+        /*
+         * define $code_table
+         */
+        if($params->code_type == 'cpt'){
+            $code_table = 'cpt_codes';
+        }elseif($params->code_type == 'icd'){
+            $code_table = 'icd_codes';
+        }elseif($params->code_type == 'hcpcs'){
+            $code_table = 'hcpcs_codes';
+        }else{
+            $code_table = 'cvx_codes';
+        }
+
         $sortx = $params->sort ? $params->sort[0]->property.' '.$params->sort[0]->direction : 'code ASC';
 
         $this->db->setSQL("SELECT *
-                         FROM codes
+                         FROM $code_table
                         WHERE code_text       LIKE '%$params->query%'
                            OR code_text_short LIKE '%$params->query%'
                            OR code            LIKE '$params->query%'
-                           OR modifier 	      LIKE '$params->query%'
-                           OR units 	      LIKE '$params->query%'
-                           OR fee 	          LIKE '$params->query%'
-                           OR related_code 	  LIKE '$params->query%'
                      ORDER BY $sortx");
         $records = $this->db->fetchRecords(PDO::FETCH_CLASS);
-        if($params->code_type != 'all'){
-            $records = $this->db->filterByQuery($records, 'code_type', $params->code_type);
-        }
         $records = $this->db->filterByQuery($records, 'active', $params->active);
         $total   = count($records);
         $records = $this->db->filterByStartLimit($records,$params);
@@ -83,6 +89,18 @@ class Services {
     }
 
     public function liveCodeSearch(stdClass $params){
+        /*
+         * define $code_table
+         */
+        if($params->code_type == 'cpt'){
+            $code_table = 'cpt_codes';
+        }elseif($params->code_type == 'icd'){
+            $code_table = 'icd_codes';
+        }elseif($params->code_type == 'hcpcs'){
+            $code_table = 'hcpcs_codes';
+        }else{
+            $code_table = 'cvx_codes';
+        }
         /**
          * brake the $params->query coming form sencha using into an array using "commas"
          * example:
@@ -138,12 +156,10 @@ class Services {
          */
         foreach($queries as $query){
             $this->db->setSQL("SELECT *
-                                 FROM codes
+                                 FROM $code_table
                                 WHERE (code_text      LIKE '%$query%'
                                    OR code_text_short LIKE '%$query%'
-                                   OR code            LIKE '$query%'
-                                   OR related_code 	  LIKE '$query%')
-                                  AND code_type = '$params->code_type'
+                                   OR code            LIKE '$query%')
                              ORDER BY code ASC");
             /**
              * loop for each sql record as $row
@@ -200,7 +216,7 @@ class Services {
             return $this->getCptUsedByClinic($params->pid);
         }elseif($params->filter == 3){
             $params->active = 1;
-            $params->code_type = 1;
+            $params->code_type = 'cpt';
             return $this->getServices($params);
         }else{
             return $params;

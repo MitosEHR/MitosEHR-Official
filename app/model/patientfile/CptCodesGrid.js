@@ -9,7 +9,7 @@ Ext.define('App.model.patientfile.CptCodesGrid', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int '},
-        {name: 'code', type: 'float'},
+        {name: 'code', type: 'strig'},
         {name: 'code_text', type: 'string'},
         {name: 'modifiers', type: 'string', defaultValue: ''}
     ],

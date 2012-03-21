@@ -26,7 +26,7 @@ Ext.define('App.classes.LiveICDXSearch', {
 			extend: 'Ext.data.Model',
 			fields: [
 				{name: 'id', type: 'int'},
-				{name: 'code', type: 'string'},
+				{name: 'code', type: 'float'},
 				{name: 'code_text', type: 'string'},
 				{name: 'code_type', type: 'string'}
 			],
@@ -39,7 +39,7 @@ Ext.define('App.classes.LiveICDXSearch', {
 					totalProperty: 'totals',
 					root         : 'rows'
 				},
-                extraParams: { code_type:2 }
+                extraParams: { code_type: 'icd' }
 			}
 		});
 

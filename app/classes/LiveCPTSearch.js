@@ -26,7 +26,7 @@ Ext.define('App.classes.LiveCPTSearch', {
             extend: 'Ext.data.Model',
             fields: [
                 {name: 'id', type: 'int'},
-                {name: 'code', type: 'string'},
+                {name: 'code', type: 'float'},
                 {name: 'code_text', type: 'string'},
                 {name: 'code_type', type: 'string'},
                 {name: 'modifiers', type: 'string'}
@@ -40,7 +40,7 @@ Ext.define('App.classes.LiveCPTSearch', {
                     totalProperty: 'totals',
                     root         : 'rows'
                 },
-                extraParams: { code_type: 1 }
+                extraParams: { code_type: 'cpt' }
             }
         });
 
