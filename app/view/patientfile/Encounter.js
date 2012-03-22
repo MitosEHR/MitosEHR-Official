@@ -312,6 +312,7 @@ Ext.define('App.view.patientfile.Encounter', {
                                 store       : Ext.create('Ext.data.Store', {
                                     fields: ['name', 'value'],
                                     data  : [
+                                        { name: 'Show related CPTs for current diagnostics', value: 0 },
                                         { name: 'Show CPTs history for this patient', value: 1 },
                                         { name: 'Show CPTs commonly used by Clinic', value: 2 },
                                         { name: 'Show All CPTs', value: 3 }
@@ -346,8 +347,7 @@ Ext.define('App.view.patientfile.Encounter', {
                             },
                             columns    : [
                                 {text: "Code", width: 70, sortable: true, dataIndex: 'code'},
-                                {text: "Description", flex: 1, width: 70, sortable: true, dataIndex: 'code_text'},
-                                {text: "Modifiers", width: 150, sortable: false, dataIndex: 'modifiers'}
+                                {text: "Description", flex: 1, width: 70, sortable: true, dataIndex: 'code_text'}
                             ],
                             tbar       : Ext.create('Ext.PagingToolbar', {
                                 store      : me.cptCodesGridStore,
@@ -1063,7 +1063,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
     loadCptQuickReferenceGrid: function(filter) {
         var patient = app.getCurrPatient(), pid = patient.pid;
-        this.cptCodesGridStore.proxy.extraParams = {pid: pid, filter: filter};
+        this.cptCodesGridStore.proxy.extraParams = {pid: pid, eid: this.currEncounterEid, filter: filter};
         this.cptCodesGridStore.load();
     },
 

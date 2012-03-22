@@ -733,7 +733,7 @@ Ext.define('App.view.MitosApp', {
 			foot = this.Footer,
 			footView = foot.down('dataview');
 
-        appLogo.setWidth(35);
+        appLogo.hide();
 		navView.hide();
 		foot.setHeight(60);
 		footView.show();
@@ -745,7 +745,7 @@ Ext.define('App.view.MitosApp', {
 			foot = this.Footer,
 			footView = foot.down('dataview');
 
-        appLogo.setWidth(200);
+        appLogo.show();
 		navView.show();
 		foot.setHeight(30);
 		footView.hide();
@@ -777,7 +777,6 @@ Ext.define('App.view.MitosApp', {
 		var patientBtn = this.Header.getComponent('patientButton'),
 			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
-			//PushForBtn = this.Header.getComponent('patientPushFor'),
 			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
 			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 
@@ -785,7 +784,6 @@ Ext.define('App.view.MitosApp', {
         patientBtn.enable();
 		patientOpenVisitsBtn.enable();
 		patientCreateEncounterBtn.enable();
-		//PushForBtn.enable();
 		patientCloseCurrEncounterBtn.enable();
 		patientCheckOutBtn.enable();
 		if(typeof callback == 'function') {
@@ -797,14 +795,12 @@ Ext.define('App.view.MitosApp', {
 		var patientBtn = this.Header.getComponent('patientButton'),
 			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
-			//PushForBtn = this.Header.getComponent('patientPushFor'),
 			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
 			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 		/**
 		 * Ext.direct function
 		 */
 		Patient.currPatientUnset(function() {
-			//PushForBtn.disable();
 			patientCreateEncounterBtn.disable();
 			patientOpenVisitsBtn.disable();
 			patientCloseCurrEncounterBtn.disable();

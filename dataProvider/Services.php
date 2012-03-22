@@ -209,8 +209,9 @@ class Services {
 
 
     public function getCptCodesBySelection(stdClass $params){
-
-        if($params->filter == 1){
+        if($params->filter == 0){
+            return $this->getCptRelatedByEidIcds($params->eid);
+        }elseif($params->filter == 1){
             return $this->getCptUsedByPid($params->pid);
         }elseif($params->filter == 2){
             return $this->getCptUsedByClinic($params->pid);
@@ -223,6 +224,22 @@ class Services {
         }
     }
 
+    public function getCptRelatedByEidIcds($eid){
+
+        $this->db->setSQL("SELECT code FROM encounter_codes_icdx WHERE eid = '$eid'");
+
+        $icds = $this->db->fetchRecords(PDO::FETCH_CLASS);
+        $records = array();
+        foreach($icds as $icd){
+            $this->db->setSQL("SELECT cpt FROM cpt_icd WHERE icd = '$icd->code'");
+            $cpts = $this->db->fetchRecords(PDO::FETCH_CLASS);
+            foreach($cpts as $cpt){
+                $this->db->setSQL("SELECT id, code, code_text FROM cpt_codes WHERE code = '$cpt->cpt' AND active ='1'");
+                $records[] = $this->db->fetchRecord(PDO::FETCH_ASSOC);
+            }
+        }
+        return array('totals'=>count($records),'rows'=>$records);
+    }
 
     public function getIcdxByEid($eid){
         $this->db->setSQL("SELECT * FROM encounter_codes_icdx WHERE eid = '$eid' ORDER BY id ASC");
@@ -269,11 +286,12 @@ class Services {
 }
 
 //$params = new stdClass();
-//$params->query = 'head neoplasm face';
+//$params->filter = 0;
 //$params->pid = '7';
+//$params->eid = '2';
 //$params->start = 0;
 //$params->limit = 25;
 //
 //$t = new Services();
 //print '<pre>';
-//print_r($t->getCptUsedByPid(10));
+//print_r($t->getCptCodesBySelection($params));
