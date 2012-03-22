@@ -25,6 +25,13 @@ class Calendar {
         $this->db = new dbHelper();
         return;
     }
+
+    /*
+     *
+     * getCalendars function
+     * Get all the calendars from all the users?
+     *
+     *  */
     public function getCalendars(){
         $color = -4;
         $sql = ("SELECT * FROM users WHERE calendar = '1' AND authorized = '1' AND active = '1' ORDER BY username");
