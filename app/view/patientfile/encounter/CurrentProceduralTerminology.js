@@ -90,7 +90,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
                             ],
                             listeners:{
                                 drop:function (node, data, dropRec, dropPosition) {
-                                    var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+                                    //var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
                                     app.msg('Sweet!', 'CPT removed this this Encounter');
                                 }
                             }
@@ -200,7 +200,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
                             ],
                             listeners:{
                                 drop:function (node, data, dropRec, dropPosition) {
-                                    var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+                                    //var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
                                     app.msg('Sweet!', 'CPT added to this Encounter');
                                 }
                             }
@@ -228,7 +228,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
 
     onLiveCptSelect:function (btn, record) {
         btn.reset();
-        this.secondGridStore.add(record[0])
+        this.secondGridStore.add(record[0]);
     },
 
     loadCptQuickReferenceGrid:function (filter) {
