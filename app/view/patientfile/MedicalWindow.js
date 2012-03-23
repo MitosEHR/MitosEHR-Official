@@ -208,7 +208,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Immunization Name',
 								width    : 100,
-								dataIndex: 'immunization_name '
+								dataIndex: 'immunization_name'
 							},
 							{
 								header   : 'Manufacturer',
