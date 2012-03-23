@@ -25,6 +25,8 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
             model:'App.model.patientfile.CptCodesGrid'
         });
 
+
+
         me.items = [
             {
                 xtype:'panel',
@@ -144,23 +146,23 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                 text:'Modifiers',
                                 width:200,
                                 sortable:false,
-                                dataIndex:'modifiers',
-                                editor:{
-                                    //                                        xtype: 'textfield',
-                                    //                                        emptyText:'Click to add'
-                                    xtype:'combobox',
-                                    triggerAction:'all',
-                                    selectOnTab:true,
-                                    emptyText:'Click to add',
-                                    store:[
-                                        ['Option 1', 'Option 1'],
-                                        ['Option 2', 'Option 2'],
-                                        ['Option 3', 'Option 3'],
-                                        ['Option 4', 'Option 4']
-                                    ],
-                                    lazyRender:true,
-                                    listClass:'x-combo-list-small'
-                                }
+                                dataIndex:'modifiers'
+//                                editor:{
+//                                    //                                        xtype: 'textfield',
+//                                    //                                        emptyText:'Click to add'
+//                                    xtype:'combobox',
+//                                    triggerAction:'all',
+//                                    selectOnTab:true,
+//                                    emptyText:'Click to add',
+//                                    store:[
+//                                        ['Option 1', 'Option 1'],
+//                                        ['Option 2', 'Option 2'],
+//                                        ['Option 3', 'Option 3'],
+//                                        ['Option 4', 'Option 4']
+//                                    ],
+//                                    lazyRender:true,
+//                                    listClass:'x-combo-list-small'
+//                                }
                             }
                         ],
                         dockedItems:[
@@ -183,13 +185,8 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                     ptype:'gridviewdragdrop',
                                     dragGroup:'secondCPTGridDDGroup',
                                     dropGroup:'firstCPTGridDDGroup'
-                                },
-                                {
-                                    pluginId:'preview',
-                                    ptype:'preview',
-                                    bodyField:'summary',
-                                    previewExpanded:false
                                 }
+
                             ],
                             listeners:{
                                 drop:function (node, data, dropRec, dropPosition) {
@@ -198,13 +195,103 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                 }
                             }
                         },
-                        plugins:Ext.create('Ext.grid.plugin.CellEditing', {
-                            clicksToEdit:1
-                        }),
-                        listeners:{
-                            scope:me,
-                            itemclick:me.gridItemClick
-                        }
+                        plugins:Ext.create('App.classes.grid.RowFormEditing', {
+                            autoCancel   : false,
+                            errorSummary : false,
+                            clicksToEdit:1,
+                            formItems   :[
+                                {
+                                    fieldLabel:'Full Description',
+                                    xtype:'displayfield'
+                                },
+                                {
+                                    xtype:'container',
+                                    layout:'column',
+                                    items:[
+                                        {
+                                            xtype:'fieldcontainer',
+                                            layout:'anchor',
+                                            columnWidth: .5,
+                                            margin:'0 3 0 0',
+                                            defaults:{ anchor:'100%' },
+                                            items:[
+
+                                                {
+                                                    fieldLabel:'Date Of Service',
+                                                    xtype:'textfield'
+                                                },
+                                                {
+                                                    fieldLabel:'Place Of Service',
+                                                    xtype:'textfield'
+                                                },
+                                                {
+                                                    fieldLabel:'Emergency?',
+                                                    xtype:'textfield'
+                                                },
+                                                {
+                                                    fieldLabel:'Diagnosis',
+                                                    xtype:'textfield'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype:'fieldcontainer',
+                                            layout:'anchor',
+                                            columnWidth: .5,
+                                            margin:'0 0 0 3',
+                                            defaults:{ anchor:'100%' },
+                                            items:[
+                                                {
+                                                    fieldLabel:'Charges',
+                                                    xtype:'textfield'
+                                                },
+                                                {
+                                                    fieldLabel:'Days of Units',
+                                                    xtype:'textfield'
+                                                },
+                                                {
+                                                    fieldLabel:'ESSDT Fam. Plan',
+                                                    xtype:'textfield'
+                                                }
+
+                                            ]
+                                        }
+
+                                    ]
+                                },
+                                {
+                                    xtype:'fieldcontainer',
+                                    layout:'hbox',
+                                    fieldLabel:'Diagnosis',
+                                    defaults:{ xtype:'textfield', width:60, margin:'0 5 0 0' },
+                                    items:[
+                                        {
+                                            name:'idc1'
+                                        },{
+                                            name:'idc2'
+                                        },{
+                                            name:'idc3'
+                                        },{
+                                            name:'idc4'
+                                        },{
+                                            name:'idc5'
+                                        },{
+                                            name:'idc6'
+                                        }
+                                    ]
+
+                                }
+                            ]
+//                            listeners    : {
+//                                scope     : me,
+//                                afteredit : me.afterEdit,
+//                                canceledit: me.onCancelEdit
+//                            }
+                        })
+//                        listeners:{
+//                            scope:me
+//                            itemclick:me.gridItemClick
+//                        }
                     }
                 ]
 

@@ -62,12 +62,12 @@ If you are unsure which license is appropriate for your use, please contact the 
  *         renderTo: Ext.getBody()
  *     });
  */
-Ext.define('Ext.grid.plugin.RowEditing', {
+Ext.define('App.classes.grid.RowFormEditing', {
     extend: 'Ext.grid.plugin.Editing',
-    alias: 'plugin.rowediting',
+    alias: 'plugin.rowformediting',
 
     requires: [
-        'Ext.grid.RowEditor'
+        'App.classes.grid.RowFormEditor'
     ],
 
     editStyle: 'row',
@@ -273,7 +273,7 @@ Ext.define('Ext.grid.plugin.RowEditing', {
             view = me.view,
             headerCt = grid.headerCt;
 
-        return Ext.create('Ext.grid.RowEditor', {
+        return Ext.create('App.classes.grid.RowFormEditor', {
             autoCancel: me.autoCancel,
             errorSummary: me.errorSummary,
             fields: headerCt.getGridColumns(),

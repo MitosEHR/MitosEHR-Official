@@ -298,6 +298,9 @@ class Services {
 
         $newRecords = array();
         foreach($records as $rec){
+
+            if(is_object($rec)) $rec = get_object_vars($rec);
+
             $code_text = $rec['code_text'];
 
             $table = <<<EOD
@@ -344,9 +347,9 @@ EOD;
         return $newRecords;
     }
 }
-
+//
 //$params = new stdClass();
-//$params->filter = 0;
+//$params->filter = 3;
 //$params->pid = '7';
 //$params->eid = '2';
 //$params->start = 0;
