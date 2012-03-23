@@ -17,42 +17,7 @@ Ext.define('App.view.fees.FeesSheet', {
     initComponent:function () {
         var page = this;
 
-        page.panel = Ext.create('Ext.form.Panel', {
-
-            bodyStyle:'padding:15px',
-            title:'Fees Sheet',
-            items:[
-                {
-                    xtype:'datefield',
-                    fieldLabel:'Date'
-                },
-                {
-                    xtype:'datefield',
-                    fieldLabel:'End date'
-                }
-            ]
-        });
-
-        page.entity = Ext.create('Ext.data.Store', {
-            fields:['ident', 'type'],
-            data:[
-                {"abbr":"PATIENT", "name":"Patient"},
-                {"abbr":"INSURANCE", "name":"Insurance"}
-            ]
-        });
-
-        page.payment_category = Ext.create('Ext.data.Store', {
-            fields:['ident', 'type'],
-            data:[
-                {"abbr":"PATIENT_PAY", "name":"Patient Payment"},
-                {"abbr":"INSURANCE_PAY", "name":"Insurance Payment"},
-                {"abbr":"GROUP_PAY", "name":"Group Payment"},
-                {"abbr":"FAMILY_PAY", "name":"Family Payment"},
-                {"abbr":"PRE_PAY", "name":"Pre Payment"}
-            ]
-        });
-
-        page.centerPanel = Ext.create('Ext.tab.Panel', {
+        page.panel = Ext.create('Ext.tab.Panel', {
 
             items:[
 
@@ -253,7 +218,7 @@ Ext.define('App.view.fees.FeesSheet', {
             ]
         });
 
-        page.pageBody = [page.centerPanel];
+        page.pageBody = [page.panel];
         page.callParent(arguments);
 
     }, // end of initComponent
