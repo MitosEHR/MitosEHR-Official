@@ -323,13 +323,13 @@ EOD;
     }
 }
 
-$params = new stdClass();
-$params->filter = 0;
-$params->pid = '7';
-$params->eid = '2';
-$params->start = 0;
-$params->limit = 25;
-
-$t = new Services();
-print '<pre>';
-print_r($t->getCptCodesBySelection($params));
+//$params = new stdClass();
+//$params->filter = 0;
+//$params->pid = '7';
+//$params->eid = '2';
+//$params->start = 0;
+//$params->limit = 25;
+//
+//$t = new Services();
+//print '<pre>';
+//print_r($t->getCptCodesBySelection($params));
