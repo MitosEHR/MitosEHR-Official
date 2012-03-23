@@ -131,7 +131,10 @@ $API = array(
             'getPatientAllergies'=>array(
                'len'=>1
             ),
-            'addPatientAllergy'=>array(
+            'addPatientAllergies'=>array(
+               'len'=>1
+            ),
+            'updatePatientAllergies'=>array(
                'len'=>1
             ),
             'getMedicalIssues'=>array(

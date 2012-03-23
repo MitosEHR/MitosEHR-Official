@@ -10,6 +10,7 @@ Ext.define('App.model.patientfile.Allergies', {
 	extend: 'Ext.data.Model',
 	fields: [
 		{name: 'id', type: 'int'},
+		{name: 'eid', type: 'int'},
 		{name: 'pid', type: 'int'},
 		{name: 'type', type: 'string'},
 		{name: 'title', type: 'string'},
@@ -26,7 +27,8 @@ Ext.define('App.model.patientfile.Allergies', {
 		type: 'direct',
 		api : {
 			read  : Medical.getPatientAllergies,
-			create: Medical.addPatientAllergies
+			create: Medical.addPatientAllergies,
+			update: Medical.updatePatientAllergies
 		}
 	}
 });

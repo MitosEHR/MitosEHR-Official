@@ -42,7 +42,6 @@ Ext.define('App.view.patientfile.Encounter', {
         var me = this;
 
         me.currEncounterStartDate = null;
-        me.currEncounterEid = null;
 
         me.timerTask = {
             scope:me,
@@ -689,7 +688,7 @@ Ext.define('App.view.patientfile.Encounter', {
                                         me.vitalsPanel.down('vitalsdataview').refresh();
                                         me.updateProgressNote();
                                         me.msg('Sweet!', 'Vitals Saved');
-                                        me.encounterEventHistoryStore.load({params:{eid:me.currEncounterEid}});
+                                        me.encounterEventHistoryStore.load({params: {eid: app.currEncounterId}});
                                     } else {
                                         Ext.Msg.show({
                                             title:'Oops!',
@@ -736,7 +735,7 @@ Ext.define('App.view.patientfile.Encounter', {
                             }
                         });
                         me.msg('Sweet!', 'Encounter Updated');
-                        me.encounterEventHistoryStore.load({params:{eid:me.currEncounterEid}});
+                        me.encounterEventHistoryStore.load({params: {eid: app.currEncounterId}});
                     } else {
                         app.accessDenied();
                     }
@@ -753,7 +752,7 @@ Ext.define('App.view.patientfile.Encounter', {
      */
     addDefaultData:function (data) {
         data.pid = app.currPatient.pid;
-        data.eid = this.currEncounterEid;
+        data.eid = app.currEncounterId;
         //noinspection JSUnresolvedVariable
         data.uid = user.id;
         data.date = Ext.Date.format(new Date(), 'Y-m-d H:i:s');
@@ -777,7 +776,7 @@ Ext.define('App.view.patientfile.Encounter', {
     openEncounter:function (eid) {
         var me = this, vitals = me.vitalsPanel.down('vitalsdataview');
 
-        me.currEncounterEid = eid;
+        app.currEncounterId = eid;
         me.encounterStore.getProxy().extraParams.eid = eid;
         me.encounterStore.load({
             scope:me,
@@ -828,9 +827,9 @@ Ext.define('App.view.patientfile.Encounter', {
         me.signatureWin(function (btn, signature) {
             if (btn == 'ok') {
                 var params = {
-                    eid:me.currEncounterEid,
-                    close_date:Ext.Date.format(new Date(), 'Y-m-d H:i:s'),
-                    signature:signature
+                    eid       : app.currEncounterId,
+                    close_date: Ext.Date.format(new Date(), 'Y-m-d H:i:s'),
+                    signature : signature
                 };
                 Encounter.closeEncounter(params, function (provider, response) {
                     if (response.result.success) {
@@ -866,7 +865,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
     updateProgressNote:function () {
         var me = this;
-        Encounter.getProgressNoteByEid(me.currEncounterEid, function (provider, response) {
+        Encounter.getProgressNoteByEid(app.currEncounterId, function(provider, response) {
             var data = response.result;
             me.progressNote.tpl.overwrite(me.progressNote.body, data);
         });
