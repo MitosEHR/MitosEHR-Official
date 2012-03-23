@@ -1,10 +1,10 @@
-Ext.define('App.classes.combo.Outcome', {
+Ext.define('App.classes.combo.Outcome2', {
 	extend       : 'Ext.form.ComboBox',
-	alias        : 'widget.mitos.outcomecombo',
+	alias        : 'widget.mitos.outcome2combo',
 	initComponent: function() {
 		var me = this;
 
-		Ext.define('OutcomeModel', {
+		Ext.define('Outcome2model', {
 			extend: 'Ext.data.Model',
 			fields: [
 				{name: 'option_name', type: 'string' },
@@ -16,13 +16,13 @@ Ext.define('App.classes.combo.Outcome', {
 					read: CombosData.getOptionsByListId
 				},
 				extraParams: {
-					list_id: 27
+					list_id: 74
 				}
 			}
 		});
 
 		me.store = Ext.create('Ext.data.Store', {
-			model   : 'OutcomeModel',
+			model   : 'Outcome2model',
 			autoLoad: true
 		});
 
