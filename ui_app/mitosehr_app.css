@@ -268,6 +268,17 @@ cursor: pointer !important;
     float:left;
     width:210px;
 }
+.cpt_summary {
+    margin: 5px;
+    background-color:#fff;
+    border: solid 1px #ccc;
+}
+.cpt_summary table {
+    font-size: 12px;
+}
+.cpt_summary table td {
+    padding:5px;
+}
 body#login{
 	background-image:url(login_bg.png) !important;
 	background-position: bottom;
