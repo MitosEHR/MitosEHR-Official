@@ -31,39 +31,34 @@
  * @namespace ACL.hasPermission
  */
 Ext.define('App.view.patientfile.Encounter', {
-    extend       : 'App.classes.RenderPanel',
-    id           : 'panelEncounter',
-    pageTitle    : 'Encounter',
-    pageLayout   : 'border',
-    requires     : [
+    extend:'App.classes.RenderPanel',
+    id:'panelEncounter',
+    pageTitle:'Encounter',
+    pageLayout:'border',
+    requires:[
         'App.store.patientfile.Encounter', 'App.store.patientfile.Vitals'
     ],
-    initComponent: function() {
+    initComponent:function () {
         var me = this;
 
         me.currEncounterStartDate = null;
-        me.currEncounterEid = null;
 
         me.timerTask = {
-            scope   : me,
-            run     : function() {
+            scope:me,
+            run:function () {
                 me.encounterTimer();
             },
-            interval: 1000 //1 second
+            interval:1000 //1 second
         };
         me.encounterStore = Ext.create('App.store.patientfile.Encounter', {
-            listeners: {
-                scope      : me,
-                datachanged: me.updateProgressNote
+            listeners:{
+                scope:me,
+                datachanged:me.updateProgressNote
             }
         });
+
         me.encounterEventHistoryStore = Ext.create('App.store.patientfile.EncounterEventHistory');
-        me.cptCodesGridStore = Ext.create('App.store.patientfile.CptCodesGrid');
 
-
-        me.secondGridStore = Ext.create('Ext.data.Store', {
-            model: 'App.model.patientfile.CptCodesGrid'
-        });
 
 
         /**
@@ -72,190 +67,190 @@ Ext.define('App.view.patientfile.Encounter', {
          * the "New Encounter" button is pressed.
          */
         me.newEncounterWindow = Ext.create('Ext.window.Window', {
-            title      : 'New Encounter Form',
-            closeAction: 'hide',
-            modal      : true,
-            closable   : false,
-            items      : [
+            title:'New Encounter Form',
+            closeAction:'hide',
+            modal:true,
+            closable:false,
+            items:[
                 {
-                    xtype      : 'form',
-                    border     : false,
-                    bodyPadding: '10 10 0 10'
+                    xtype:'form',
+                    border:false,
+                    bodyPadding:'10 10 0 10'
                 }
             ],
-            buttons    : [
+            buttons:[
                 {
-                    text   : 'Create Encounter',
-                    action : 'encounter',
-                    scope  : me,
-                    handler: me.onSave
+                    text:'Create Encounter',
+                    action:'encounter',
+                    scope:me,
+                    handler:me.onSave
                 },
                 {
-                    text   : 'Cancel',
-                    handler: me.cancelNewEnc
+                    text:'Cancel',
+                    handler:me.cancelNewEnc
 
                 }
             ]
         });
 
         me.checkoutWindow = Ext.create('Ext.window.Window', {
-            title      : 'Checkout and Signing',
-            closeAction: 'hide',
-            modal      : true,
-            closable   : false,
-            layout     : 'border',
-            width      : 1000,
-            height     : 700,
-            bodyPadding: 5,
-            items      : [
+            title:'Checkout and Signing',
+            closeAction:'hide',
+            modal:true,
+            closable:false,
+            layout:'border',
+            width:1000,
+            height:700,
+            bodyPadding:5,
+            items:[
                 {
-                    xtype  : 'grid',
-                    title  : 'Service / Diagnostics',
-                    region : 'center',
-                    columns: [
+                    xtype:'grid',
+                    title:'Service / Diagnostics',
+                    region:'center',
+                    columns:[
                         {
-                            header   : 'Code',
-                            width    : 40,
-                            dataIndex: 'code'
+                            header:'Code',
+                            width:40,
+                            dataIndex:'code'
                         },
                         {
-                            header   : 'Description',
-                            flex     : 1,
-                            dataIndex: 'code_text'
+                            header:'Description',
+                            flex:1,
+                            dataIndex:'code_text'
                         }
                     ]
                 },
                 {
-                    xtype  : 'grid',
-                    title  : 'Orders',
-                    region : 'east',
-                    split  : true,
-                    width  : 485,
-                    columns: [
+                    xtype:'grid',
+                    title:'Orders',
+                    region:'east',
+                    split:true,
+                    width:485,
+                    columns:[
                         {
-                            header   : 'Code',
-                            width    : 40,
-                            dataIndex: 'code'
+                            header:'Code',
+                            width:40,
+                            dataIndex:'code'
                         },
                         {
-                            header   : 'Description',
-                            flex     : 1,
-                            dataIndex: 'code_text'
+                            header:'Description',
+                            flex:1,
+                            dataIndex:'code_text'
                         }
                     ]
                 },
                 {
-                    xtype : 'form',
-                    title : 'Additional Info',
-                    region: 'south',
-                    split : true,
-                    height: 300,
-                    frame : true,
-                    items : [
+                    xtype:'form',
+                    title:'Additional Info',
+                    region:'south',
+                    split:true,
+                    height:300,
+                    frame:true,
+                    items:[
                         {
-                            xtype   : 'fieldcontainer',
-                            layout  : 'column',
-                            defaults: {
-                                xtype  : 'fieldset',
-                                padding: 8
+                            xtype:'fieldcontainer',
+                            layout:'column',
+                            defaults:{
+                                xtype:'fieldset',
+                                padding:8
                             },
-                            items   : [
+                            items:[
                                 {
-                                    title      : 'Meaningful Use Measures',
-                                    columnWidth: .5,
-                                    margin     : '5 1 5 5',
-                                    items      : [
+                                    title:'Meaningful Use Measures',
+                                    columnWidth:.5,
+                                    margin:'5 1 5 5',
+                                    items:[
                                         {
-                                            xtype   : 'checkboxgroup',
-                                            defaults: {
-                                                xtype: 'checkboxfield'
+                                            xtype:'checkboxgroup',
+                                            defaults:{
+                                                xtype:'checkboxfield'
                                             },
-                                            items   : [
+                                            items:[
                                                 {
-                                                    boxLabel: 'Clinical Summary Provided'
+                                                    boxLabel:'Clinical Summary Provided'
                                                 },
                                                 {
-                                                    boxLabel: 'Elegibility Confirmed'
+                                                    boxLabel:'Elegibility Confirmed'
                                                 }
                                             ]
                                         },
                                         {
-                                            xtype   : 'checkboxgroup',
-                                            defaults: {
-                                                xtype: 'checkboxfield'
+                                            xtype:'checkboxgroup',
+                                            defaults:{
+                                                xtype:'checkboxfield'
                                             },
-                                            items   : [
+                                            items:[
                                                 {
-                                                    boxLabel: 'Medical Rencocilationl'
+                                                    boxLabel:'Medical Rencocilationl'
                                                 },
                                                 {
-                                                    boxLabel: 'Puch to Exchange'
+                                                    boxLabel:'Puch to Exchange'
                                                 }
                                             ]
                                         }
                                     ]
                                 },
                                 {
-                                    title      : 'Follow Up',
-                                    columnWidth: .5,
-                                    margin     : '5 5 1 5',
-                                    height     : 91,
-                                    defaults   : {
-                                        anchor: '100%'
+                                    title:'Follow Up',
+                                    columnWidth:.5,
+                                    margin:'5 5 1 5',
+                                    height:91,
+                                    defaults:{
+                                        anchor:'100%'
                                     },
-                                    items      : [
+                                    items:[
                                         {
-                                            xtype     : 'textfield',
-                                            fieldLabel: 'Time'
+                                            xtype:'textfield',
+                                            fieldLabel:'Time'
                                         },
                                         {
-                                            fieldLabel: 'Facility',
-                                            xtype     : 'mitos.facilitiescombo'
+                                            fieldLabel:'Facility',
+                                            xtype:'mitos.facilitiescombo'
                                         }
                                     ]
                                 }
                             ]
                         },
                         {
-                            xtype  : 'fieldset',
-                            margin : 5,
-                            padding: 8,
-                            title  : 'Patient Notes nad Reminders',
-                            items  : [
+                            xtype:'fieldset',
+                            margin:5,
+                            padding:8,
+                            title:'Patient Notes nad Reminders',
+                            items:[
                                 {
-                                    xtype     : 'textfield',
-                                    name      : 'note',
-                                    fieldLabel: 'Note',
-                                    anchor    : '100%'
+                                    xtype:'textfield',
+                                    name:'note',
+                                    fieldLabel:'Note',
+                                    anchor:'100%'
                                 },
                                 {
-                                    xtype     : 'textareafield',
-                                    grow      : true,
-                                    name      : 'reminder',
-                                    fieldLabel: 'Reminder',
-                                    anchor    : '100%'
+                                    xtype:'textareafield',
+                                    grow:true,
+                                    name:'reminder',
+                                    fieldLabel:'Reminder',
+                                    anchor:'100%'
                                 }
                             ]
                         }
                     ]
                 }
             ],
-            buttons    : [
+            buttons:[
                 {
-                    text   : 'Co-Sign',
-                    action : 'encounter',
-                    scope  : me,
-                    handler: me.coSignEncounter
+                    text:'Co-Sign',
+                    action:'encounter',
+                    scope:me,
+                    handler:me.coSignEncounter
                 },
                 {
-                    text   : 'Sign',
-                    action : 'encounter',
-                    scope  : me,
-                    handler: me.signEncounter
+                    text:'Sign',
+                    action:'encounter',
+                    scope:me,
+                    handler:me.signEncounter
                 },
                 {
-                    text   : 'Cancel',
-                    handler: me.cancelCheckout
+                    text:'Cancel',
+                    handler:me.cancelCheckout
 
                 }
             ]
@@ -266,323 +261,142 @@ Ext.define('App.view.patientfile.Encounter', {
          * Tap Panel panels and forms
          */
         me.MiscBillingOptionsPanel = Ext.create('Ext.form.Panel', {
-            autoScroll: true,
-            title     : 'Misc. Billing Options HCFA',
-            html      : '<h1>Misc. Billing Options HCFA form placeholder!</h1>'
+            autoScroll:true,
+            title:'Misc. Billing Options HCFA',
+            html:'<h1>Misc. Billing Options HCFA form placeholder!</h1>'
         });
         me.procedurePanel = Ext.create('Ext.form.Panel', {
-            autoScroll: true,
-            title     : 'Procedure Order',
-            html      : '<h1>Procedure Order form placeholder!</h1>'
+            autoScroll:true,
+            title:'Procedure Order',
+            html:'<h1>Procedure Order form placeholder!</h1>'
         });
-        me.CurrentProceduralTerminology = Ext.create('Ext.panel.Panel', {
-            bodyStyle : 0,
-            autoScroll: true,
-            title     : 'Current Procedural Terminology',
-            defaults  : {
-                flex: 1
-            },
-            layout    : {
-                type : 'hbox',
-                align: 'stretch'
-            },
-            items     : [
-                {
-                    xtype : 'container',
-                    itemId: 'leftCol',
-                    layout: {
-                        type   : 'vbox',
-                        align  : 'stretch',
-                        padding: 5
-                    },
-                    items : [
-                        {
-                            xtype  : 'fieldset',
-                            title  : 'CPT Quick Reference Options',
-                            padding: '10 15',
-                            margin : '0 0 3 0',
-                            layout : 'anchor',
-                            items  : {
-                                xtype       : 'combobox',
-                                anchor      : '100%',
-                                editable    : false,
-                                queryMode   : 'local',
-                                valueField  : 'value',
-                                displayField: 'name',
-                                store       : Ext.create('Ext.data.Store', {
-                                    fields: ['name', 'value'],
-                                    data  : [
-                                        { name: 'Show CPTs history for this patient', value: 1 },
-                                        { name: 'Show CPTs commonly used by Clinic', value: 2 },
-                                        { name: 'Show All CPTs', value: 3 }
-                                    ]
-                                }),
-                                listeners   : {
-                                    scope : me,
-                                    change: me.onCptQuickRefereneOption
-                                }
-                            }
-                        },
-                        {
-                            xtype      : 'grid',
-                            title      : 'CPT Quick Reference List',
-                            margins    : 0,
-                            flex       : 1,
-                            multiSelect: true,
-                            stripeRows : true,
-                            store      : me.cptCodesGridStore,
-                            viewConfig : {
-                                plugins  : {
-                                    ptype    : 'gridviewdragdrop',
-                                    dragGroup: 'firstCPTGridDDGroup',
-                                    dropGroup: 'secondCPTGridDDGroup'
-                                },
-                                listeners: {
-                                    drop: function(node, data, dropRec, dropPosition) {
-                                        var dropOn = dropRec? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
-                                        me.msg("Drag from right to left", 'Dropped ' + data.records[0].get('name') + dropOn);
-                                    }
-                                }
-                            },
-                            columns    : [
-                                {text: "Code", width: 70, sortable: true, dataIndex: 'code'},
-                                {text: "Description", flex: 1, width: 70, sortable: true, dataIndex: 'code_text'},
-                                {text: "Modifiers", width: 150, sortable: false, dataIndex: 'modifiers'}
-                            ],
-                            tbar       : Ext.create('Ext.PagingToolbar', {
-                                store      : me.cptCodesGridStore,
-                                displayInfo: true,
-                                emptyMsg   : "No Office Notes to display",
-                                plugins    : Ext.create('Ext.ux.SlidingPager', {})
-                            })
-                        }
-                    ]
-                },
-                {
-                    xtype : 'container',
-                    itemId: 'rightCol',
-                    layout: {
-                        type   : 'vbox',
-                        align  : 'stretch',
-                        padding: '5 5 5 0'
-                    },
-                    items : [
-                        {
-                            xtype  : 'fieldset',
-                            title  : 'CPT Live Sarch',
-                            padding: '10 15',
-                            margin : '0 0 3 0',
-                            layout : 'anchor',
-                            items  : {
-                                xtype    : 'livecptsearch',
-                                listeners: {
-                                    scope : me,
-                                    select: me.onLiveCptSelect
-                                }
-                            }
 
-                        },
-                        {
-                            xtype      : 'grid',
-                            flex       : 1,
-                            stripeRows : true,
-                            title      : 'Encounter CPT\'s',
-                            margins    : 0,
-                            store      : me.secondGridStore,
-                            columns    : [
-                                {text: "Code", width: 70, sortable: true, dataIndex: 'code'},
-                                {text: "Description", flex: 1, width: 70, sortable: true, dataIndex: 'code_text'},
-                                {
-                                    text     : 'Modifiers',
-                                    width    : 200,
-                                    sortable : false,
-                                    dataIndex: 'modifiers',
-                                    editor   : {
-//                                        xtype: 'textfield',
-//                                        emptyText:'Click to add'
-                                        xtype        : 'combobox',
-                                        triggerAction: 'all',
-                                        selectOnTab  : true,
-                                        emptyText    : 'Click to add',
-                                        store        : [
-                                            ['Option 1', 'Option 1'],
-                                            ['Option 2', 'Option 2'],
-                                            ['Option 3', 'Option 3'],
-                                            ['Option 4', 'Option 4']
-                                        ],
-                                        lazyRender   : true,
-                                        listClass    : 'x-combo-list-small'
-                                    }
-                                }
-                            ],
-                            dockedItems: [
-                                {
-                                    xtype: 'toolbar',
-                                    items: ['->', {
-                                        text    : 'Remove',
-                                        iconCls : 'icoClose',
-                                        itemId  : 'removeCptBtn',
-                                        disabled: true
-
-                                    }
-                                    ]
-                                }
-                            ],
-                            viewConfig : {
-                                plugins  : {
-                                    ptype    : 'gridviewdragdrop',
-                                    dragGroup: 'secondCPTGridDDGroup',
-                                    dropGroup: 'firstCPTGridDDGroup'
-                                },
-                                listeners: {
-                                    drop: function(node, data, dropRec, dropPosition) {
-                                        var dropOn = dropRec? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
-                                        me.msg("Drag from left to right", 'Dropped ' + data.records[0].get('name') + dropOn);
-                                    }
-                                }
-                            },
-                            selModel   : Ext.create('Ext.selection.CheckboxModel', {
-                                listeners: {
-                                    selectionchange: function(sm, selections) {
-                                        this.view.panel.down('toolbar').getComponent('removeCptBtn').setDisabled(selections.length == 0);
-                                    }
-                                }
-                            }),
-                            plugins    : Ext.create('Ext.grid.plugin.CellEditing', {
-                                clicksToEdit: 1
-                            })
-                        }
-                    ]
-
-                }
-            ]
-
-        });
+        me.CurrentProceduralTerminology = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology');
 
 
         me.EncounterEventHistory = Ext.create('App.classes.grid.EventHistory', {
-            bodyStyle: 0,
-            title    : 'Encounter History',
-            store    : me.encounterEventHistoryStore
+            bodyStyle:0,
+            title:'Encounter History',
+            store:me.encounterEventHistoryStore
         });
 
 
         me.reviewSysPanel = Ext.create('Ext.form.Panel', {
-            action       : 'encounter',
-            title        : 'Review of Systems',
-            fieldDefaults: { msgTarget: 'side' },
-            dockedItems  : {
-                xtype: 'toolbar',
-                dock : 'top',
-                items: [
+            action:'encounter',
+            title:'Review of Systems',
+            fieldDefaults:{ msgTarget:'side' },
+            dockedItems:{
+                xtype:'toolbar',
+                dock:'top',
+                items:[
                     {
-                        text   : 'Save',
-                        iconCls: 'save',
-                        action : 'reviewOfSystems',
-                        scope  : me,
-                        handler: me.onSave
+                        text:'Save',
+                        iconCls:'save',
+                        action:'reviewOfSystems',
+                        scope:me,
+                        handler:me.onSave
                     }
                 ]
             }
         });
         me.reviewSysCkPanel = Ext.create('Ext.form.Panel', {
-            autoScroll   : true,
-            action       : 'encounter',
-            title        : 'Review of Systems Checks',
-            fieldDefaults: { msgTarget: 'side' },
-            dockedItems  : {
-                xtype: 'toolbar',
-                dock : 'top',
-                items: [
+            autoScroll:true,
+            action:'encounter',
+            title:'Review of Systems Checks',
+            fieldDefaults:{ msgTarget:'side' },
+            dockedItems:{
+                xtype:'toolbar',
+                dock:'top',
+                items:[
                     {
-                        text   : 'Save',
-                        iconCls: 'save',
-                        action : 'reviewOfSystemsChecks',
-                        scope  : me,
-                        handler: me.onSave
+                        text:'Save',
+                        iconCls:'save',
+                        action:'reviewOfSystemsChecks',
+                        scope:me,
+                        handler:me.onSave
                     }
                 ]
             }
         });
         me.soapPanel = Ext.create('Ext.form.Panel', {
-            autoScroll   : true,
-            title        : 'SOAP',
-            action       : 'encounter',
-            fieldDefaults: { msgTarget: 'side' },
-            dockedItems  : {
-                xtype: 'toolbar',
-                dock : 'top',
-                items: [
+            autoScroll:true,
+            title:'SOAP',
+            action:'encounter',
+            fieldDefaults:{ msgTarget:'side' },
+            dockedItems:{
+                xtype:'toolbar',
+                dock:'top',
+                items:[
                     {
-                        text   : 'Save',
-                        iconCls: 'save',
-                        action : 'soap',
-                        scope  : me,
-                        handler: me.onSave
+                        text:'Save',
+                        iconCls:'save',
+                        action:'soap',
+                        scope:me,
+                        handler:me.onSave
                     }
                 ]
             }
         });
         me.speechDicPanel = Ext.create('Ext.form.Panel', {
-            autoScroll   : true,
-            title        : 'Speech Dictation',
-            action       : 'encounter',
-            fieldDefaults: { msgTarget: 'side' },
-            dockedItems  : {
-                xtype: 'toolbar',
-                dock : 'top',
-                items: [
+            autoScroll:true,
+            title:'Speech Dictation',
+            action:'encounter',
+            fieldDefaults:{ msgTarget:'side' },
+            dockedItems:{
+                xtype:'toolbar',
+                dock:'top',
+                items:[
                     {
-                        text   : 'Save',
-                        iconCls: 'save',
-                        action : 'speechDictation',
-                        scope  : me,
-                        handler: me.onSave
+                        text:'Save',
+                        iconCls:'save',
+                        action:'speechDictation',
+                        scope:me,
+                        handler:me.onSave
                     }
                 ]
             }
         });
         me.vitalsPanel = Ext.create('Ext.panel.Panel', {
-            title      : 'Vitals',
-            action     : 'encounter',
-            cls        : 'vitals-panel',
-            bodyPadding: '5 10',
-            autoScroll : true,
-            layout     : {
-                type   : 'table',
-                columns: 2
+            title:'Vitals',
+            action:'encounter',
+            cls:'vitals-panel',
+            bodyPadding:'5 10',
+            autoScroll:true,
+            layout:{
+                type:'table',
+                columns:2
             },
-            items      : [
+            items:[
                 {
-                    xtype        : 'form',
-                    columnWidth  : 325,
-                    width        : 325,
-                    border       : false,
-                    url          : '',
-                    layout       : 'anchor',
-                    fieldDefaults: { msgTarget: 'side' }
+                    xtype:'form',
+                    columnWidth:325,
+                    width:325,
+                    border:false,
+                    url:'',
+                    layout:'anchor',
+                    fieldDefaults:{ msgTarget:'side' }
                 },
                 {
-                    xtype: 'vitalsdataview'
+                    xtype:'vitalsdataview'
                 }
             ],
-            dockedItems: {
-                xtype: 'toolbar',
-                dock : 'top',
-                items: [
+            dockedItems:{
+                xtype:'toolbar',
+                dock:'top',
+                items:[
                     {
-                        text   : 'Save',
-                        iconCls: 'save',
-                        action : 'vitals',
-                        scope  : me,
-                        handler: me.onSave
+                        text:'Save',
+                        iconCls:'save',
+                        action:'vitals',
+                        scope:me,
+                        handler:me.onSave
                     },
                     '->',
                     {
-                        text   : 'Vector Charts',
-                        iconCls: 'icoChart',
-                        scope  : me,
-                        handler: me.onChartWindowShow
+                        text:'Vector Charts',
+                        iconCls:'icoChart',
+                        scope:me,
+                        handler:me.onChartWindowShow
                     }
                 ]
             }
@@ -594,45 +408,45 @@ Ext.define('App.view.patientfile.Encounter', {
          * Encounter panel
          */
         me.centerPanel = Ext.create('Ext.tab.Panel', {
-            region     : 'center',
-            margin     : '1 0 0 0',
-            bodyPadding: 5,
-            items      : [
+            region:'center',
+            margin:'1 0 0 0',
+            bodyPadding:5,
+            items:[
                 {
-                    xtype     : 'tabpanel',
-                    title     : 'Encounter',
-                    itemId    : 'encounter',
-                    plain     : true,
-                    activeItem: 0,
-                    defaults  : {
-                        bodyStyle : 'padding:15px',
-                        bodyBorder: true,
-                        layout    : 'fit'
+                    xtype:'tabpanel',
+                    title:'Encounter',
+                    itemId:'encounter',
+                    plain:true,
+                    activeItem:0,
+                    defaults:{
+                        bodyStyle:'padding:15px',
+                        bodyBorder:true,
+                        layout:'fit'
                     },
-                    items     : [
+                    items:[
                         me.vitalsPanel, me.reviewSysPanel, me.reviewSysCkPanel, me.soapPanel, me.speechDicPanel
                     ]
                 },
                 {
-                    xtype     : 'tabpanel',
-                    title     : 'Administrative',
-                    itemId    : 'administrative',
-                    plain     : true,
-                    activeItem: 0,
-                    defaults  : {
-                        bodyStyle : 'padding:15px',
-                        bodyBorder: true,
-                        layout    : 'fit'
+                    xtype:'tabpanel',
+                    title:'Administrative',
+                    itemId:'administrative',
+                    plain:true,
+                    activeItem:0,
+                    defaults:{
+                        bodyStyle:'padding:15px',
+                        bodyBorder:true,
+                        layout:'fit'
                     },
-                    items     : [
+                    items:[
                         me.MiscBillingOptionsPanel, me.procedurePanel, me.CurrentProceduralTerminology, me.EncounterEventHistory
                     ]
                 }
             ],
-            listeners  : {
-                render: function() {
-                    this.items.each(function(i) {
-                        i.tab.on('click', function() {
+            listeners:{
+                render:function () {
+                    this.items.each(function (i) {
+                        i.tab.on('click', function () {
                             me.onTapPanelChange(this);
                         });
                     });
@@ -644,41 +458,41 @@ Ext.define('App.view.patientfile.Encounter', {
          * Progress Note
          */
         me.progressNote = Ext.create('App.view.patientfile.ProgressNote', {
-            title       : 'Encounter Progress Note',
-            region      : 'east',
-            margin      : '0 0 0 2',
-            bodyStyle   : 'padding:15px',
-            width       : 500,
-            collapsible : true,
-            animCollapse: true,
-            collapsed   : true,
-            listeners   : {
-                scope   : this,
-                collapse: me.progressNoteCollapseExpand,
-                expand  : me.progressNoteCollapseExpand
+            title:'Encounter Progress Note',
+            region:'east',
+            margin:'0 0 0 2',
+            bodyStyle:'padding:15px',
+            width:500,
+            collapsible:true,
+            animCollapse:true,
+            collapsed:true,
+            listeners:{
+                scope:this,
+                collapse:me.progressNoteCollapseExpand,
+                expand:me.progressNoteCollapseExpand
             },
-            tbar        : [
+            tbar:[
                 {
-                    text   : 'View (CCD)',
-                    tooltip: 'View (Continuity of Care Document)',
-                    handler: function() {
+                    text:'View (CCD)',
+                    tooltip:'View (Continuity of Care Document)',
+                    handler:function () {
                         // refresh logic
                     }
                 },
                 '-',
                 {
-                    text   : 'Print (CCD)',
-                    tooltip: 'Print (Continuity of Care Document)',
-                    handler: function() {
+                    text:'Print (CCD)',
+                    tooltip:'Print (Continuity of Care Document)',
+                    handler:function () {
                         // refresh log
 
                     }
                 },
                 '->',
                 {
-                    text   : 'Export (CCD)',
-                    tooltip: 'Export (Continuity of Care Document)',
-                    handler: function() {
+                    text:'Export (CCD)',
+                    tooltip:'Export (Continuity of Care Document)',
+                    handler:function () {
                         // refresh log
 
                     }
@@ -689,46 +503,46 @@ Ext.define('App.view.patientfile.Encounter', {
         me.pageBody = [ me.centerPanel, me.progressNote ];
 
         me.listeners = {
-            beforerender: me.beforePanelRender
+            beforerender:me.beforePanelRender
         };
         me.callParent(arguments);
 
         me.down('panel').addDocked({
-            xtype   : 'toolbar',
-            dock    : 'top',
-            defaults: {
-                scope  : me,
-                handler: me.onMedicalWin
+            xtype:'toolbar',
+            dock:'top',
+            defaults:{
+                scope:me,
+                handler:me.onMedicalWin
             },
-            items   : [
+            items:[
                 {
-                    text  : 'Add Immunizations ',
-                    action: 'immunization'
+                    text:'Add Immunizations ',
+                    action:'immunization'
                 },
                 '-',
                 {
-                    text  : 'Add Allergies ',
-                    action: 'allergies'
+                    text:'Add Allergies ',
+                    action:'allergies'
                 },
                 '-',
                 {
-                    text  : 'Add Medical Issues ',
-                    action: 'issues'
+                    text:'Add Medical Issues ',
+                    action:'issues'
                 },
                 '-',
                 {
-                    text  : 'Add Surgery ',
-                    action: 'surgery'
+                    text:'Add Surgery ',
+                    action:'surgery'
                 },
                 '-',
                 {
-                    text  : 'Add Dental ',
-                    action: 'dental'
+                    text:'Add Dental ',
+                    action:'dental'
                 },
                 '->',
                 {
-                    text   : 'Checkout',
-                    handler: me.onCheckout
+                    text:'Checkout',
+                    handler:me.onCheckout
                 }
             ]
         });
@@ -739,13 +553,13 @@ Ext.define('App.view.patientfile.Encounter', {
      * opens the Medical window
      * @param btn
      */
-    onMedicalWin     : function(btn) {
+    onMedicalWin:function (btn) {
         app.onMedicalWin(btn);
     },
     /**
      * opens the Chart window
      */
-    onChartWindowShow: function() {
+    onChartWindowShow:function () {
         app.onChartsWin();
     },
     /**
@@ -753,23 +567,23 @@ Ext.define('App.view.patientfile.Encounter', {
      * found alert the user, if not then open the
      * new encounter window
      */
-    newEncounter     : function() {
+    newEncounter:function () {
         var me = this, form, model;
-        Encounter.checkOpenEncounters(function(provider, response) {
+        Encounter.checkOpenEncounters(function (provider, response) {
             /** @namespace response.result.encounter */
-            if(response.result.encounter) {
+            if (response.result.encounter) {
                 Ext.Msg.show({
-                    title  : 'Oops! Open Encounters Found...',
-                    msg    : 'Do you want to <strong>continue creating the New Encounters?</strong><br>"Click No to review Encounter History"',
-                    buttons: Ext.Msg.YESNO,
-                    icon   : Ext.Msg.QUESTION,
-                    fn     : function(btn) {
-                        if(btn == 'yes') {
+                    title:'Oops! Open Encounters Found...',
+                    msg:'Do you want to <strong>continue creating the New Encounters?</strong><br>"Click No to review Encounter History"',
+                    buttons:Ext.Msg.YESNO,
+                    icon:Ext.Msg.QUESTION,
+                    fn:function (btn) {
+                        if (btn == 'yes') {
                             form = me.newEncounterWindow.down('form');
                             form.getForm().reset();
                             model = Ext.ModelManager.getModel('App.model.patientfile.Encounter');
                             model = Ext.ModelManager.create({
-                                start_date: new Date()
+                                start_date:new Date()
                             }, model);
                             form.getForm().loadRecord(model);
                             me.newEncounterWindow.show();
@@ -783,7 +597,7 @@ Ext.define('App.view.patientfile.Encounter', {
                 form.getForm().reset();
                 model = Ext.ModelManager.getModel('App.model.patientfile.Encounter');
                 model = Ext.ModelManager.create({
-                    start_date: new Date()
+                    start_date:new Date()
                 }, model);
                 form.getForm().loadRecord(model);
                 me.newEncounterWindow.show();
@@ -792,21 +606,21 @@ Ext.define('App.view.patientfile.Encounter', {
         });
     },
 
-    onCheckout: function() {
+    onCheckout:function () {
         var me = this, win = me.checkoutWindow, patient = me.getCurrPatient();
         win.setTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Checkout)');
         win.show();
     },
 
-    coSignEncounter: function() {
+    coSignEncounter:function () {
 
     },
 
-    signEncounter: function() {
+    signEncounter:function () {
 
     },
 
-    cancelCheckout: function(btn) {
+    cancelCheckout:function (btn) {
         var win = btn.up('window'), form = win.down('form').getForm();
         win.close();
         form.reset();
@@ -819,35 +633,35 @@ Ext.define('App.view.patientfile.Encounter', {
      * which form  to save.
      * @param SaveBtn
      */
-    onSave        : function(SaveBtn) {
+    onSave:function (SaveBtn) {
         var me = this, panel = me.centerPanel.getActiveTab().getActiveTab(), form;
 
-        if(SaveBtn.action == "encounter") {
+        if (SaveBtn.action == "encounter") {
             form = me.newEncounterWindow.down('form').getForm();
-        } else if(SaveBtn.action == 'vitals') {
+        } else if (SaveBtn.action == 'vitals') {
             form = panel.down('form').getForm();
         } else {
             form = panel.getForm();
         }
 
-        if(form.isValid()) {
+        if (form.isValid()) {
             var values = form.getValues(), store, record, storeIndex;
 
-            if(SaveBtn.action == 'encounter') {
-                ACL.hasPermission('add_encounters', function(provider, response) {
-                    if(response.result) {
+            if (SaveBtn.action == 'encounter') {
+                ACL.hasPermission('add_encounters', function (provider, response) {
+                    if (response.result) {
                         store = me.encounterStore;
                         record = form.getRecord();
                         storeIndex = store.indexOf(record);
 
-                        if(storeIndex == -1) {
+                        if (storeIndex == -1) {
                             store.add(values);
                             record = store.last();
                         } else {
                             record.set(values);
                         }
                         record.save({
-                            callback: function(store) {
+                            callback:function (store) {
                                 me.openEncounter(store.data.eid);
                                 SaveBtn.up('window').close();
                             }
@@ -857,13 +671,13 @@ Ext.define('App.view.patientfile.Encounter', {
                         app.accessDenied();
                     }
                 });
-            } else if(SaveBtn.action == 'vitals') {
-                ACL.hasPermission('add_vitals', function(provider, response) {
-                    if(response.result) {
-                        me.signatureWin(function(btn, signature) {
-                            if(btn == 'ok') {
-                                User.verifyUserPass(signature, function(provider, response) {
-                                    if(response.result) {
+            } else if (SaveBtn.action == 'vitals') {
+                ACL.hasPermission('add_vitals', function (provider, response) {
+                    if (response.result) {
+                        me.signatureWin(function (btn, signature) {
+                            if (btn == 'ok') {
+                                User.verifyUserPass(signature, function (provider, response) {
+                                    if (response.result) {
                                         //noinspection JSUnresolvedFunction
                                         var store = me.encounterStore, record = store.getAt(0).vitals();
                                         values = me.addDefaultData(values);
@@ -874,15 +688,15 @@ Ext.define('App.view.patientfile.Encounter', {
                                         me.vitalsPanel.down('vitalsdataview').refresh();
                                         me.updateProgressNote();
                                         me.msg('Sweet!', 'Vitals Saved');
-                                        me.encounterEventHistoryStore.load({params: {eid: me.currEncounterEid}});
+                                        me.encounterEventHistoryStore.load({params: {eid: app.currEncounterId}});
                                     } else {
                                         Ext.Msg.show({
-                                            title  : 'Oops!',
-                                            msg    : 'Incorrect password',
-                                            buttons: Ext.Msg.OKCANCEL,
-                                            icon   : Ext.Msg.ERROR,
-                                            fn     : function(btn) {
-                                                if(btn == 'ok') {
+                                            title:'Oops!',
+                                            msg:'Incorrect password',
+                                            buttons:Ext.Msg.OKCANCEL,
+                                            icon:Ext.Msg.ERROR,
+                                            fn:function (btn) {
+                                                if (btn == 'ok') {
                                                     me.onSave(SaveBtn);
                                                 }
                                             }
@@ -896,32 +710,32 @@ Ext.define('App.view.patientfile.Encounter', {
                     }
                 });
             } else {
-                ACL.hasPermission('edit_encounters', function(provider, response) {
-                    if(response.result) {
+                ACL.hasPermission('edit_encounters', function (provider, response) {
+                    if (response.result) {
                         store = me.encounterStore;
 
-                        if(SaveBtn.action == 'reviewOfSystems') {
+                        if (SaveBtn.action == 'reviewOfSystems') {
                             //noinspection JSUnresolvedFunction
                             record = store.getAt(0).reviewofsystems().getAt(0);
-                        } else if(SaveBtn.action == 'reviewOfSystemsChecks') {
+                        } else if (SaveBtn.action == 'reviewOfSystemsChecks') {
                             //noinspection JSUnresolvedFunction
                             record = store.getAt(0).reviewofsystemschecks().getAt(0);
-                        } else if(SaveBtn.action == 'soap') {
+                        } else if (SaveBtn.action == 'soap') {
                             //noinspection JSUnresolvedFunction
                             record = store.getAt(0).soap().getAt(0);
-                        } else if(SaveBtn.action == 'speechDictation') {
+                        } else if (SaveBtn.action == 'speechDictation') {
                             //noinspection JSUnresolvedFunction
                             record = store.getAt(0).speechdictation().getAt(0);
                         }
                         values = me.addDefaultData(values);
                         record.set(values);
                         record.save({
-                            callback: function() {
+                            callback:function () {
                                 me.updateProgressNote();
                             }
                         });
                         me.msg('Sweet!', 'Encounter Updated');
-                        me.encounterEventHistoryStore.load({params: {eid: me.currEncounterEid}});
+                        me.encounterEventHistoryStore.load({params: {eid: app.currEncounterId}});
                     } else {
                         app.accessDenied();
                     }
@@ -936,9 +750,9 @@ Ext.define('App.view.patientfile.Encounter', {
      * and date (Current datetime as 00-00-00 00:00:00)
      * @param data
      */
-    addDefaultData: function(data) {
+    addDefaultData:function (data) {
         data.pid = app.currPatient.pid;
-        data.eid = this.currEncounterEid;
+        data.eid = app.currEncounterId;
         //noinspection JSUnresolvedVariable
         data.uid = user.id;
         data.date = Ext.Date.format(new Date(), 'Y-m-d H:i:s');
@@ -950,7 +764,7 @@ Ext.define('App.view.patientfile.Encounter', {
      * and send the user to the Patient Summary panel
      * @param btn
      */
-    cancelNewEnc: function(btn) {
+    cancelNewEnc:function (btn) {
         btn.up('window').close();
         app.openPatientSummary();
     },
@@ -959,20 +773,20 @@ Ext.define('App.view.patientfile.Encounter', {
      *
      * @param eid
      */
-    openEncounter: function(eid) {
+    openEncounter:function (eid) {
         var me = this, vitals = me.vitalsPanel.down('vitalsdataview');
 
-        me.currEncounterEid = eid;
+        app.currEncounterId = eid;
         me.encounterStore.getProxy().extraParams.eid = eid;
         me.encounterStore.load({
-            scope   : me,
-            callback: function(record) {
+            scope:me,
+            callback:function (record) {
                 var data = record[0].data;
                 me.currEncounterStartDate = data.start_date;
-                if(!data.close_date) {
+                if (!data.close_date) {
                     me.startTimer();
                 } else {
-                    if(me.stopTimer()) {
+                    if (me.stopTimer()) {
                         var timer = me.timer(data.start_date, data.close_date), patient = me.getCurrPatient();
                         me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
                     }
@@ -991,13 +805,13 @@ Ext.define('App.view.patientfile.Encounter', {
 
                 me.updateProgressNote();
 
-                me.encounterEventHistoryStore.load({params: {eid: eid}});
+                me.encounterEventHistoryStore.load({params:{eid:eid}});
 
                 var combo = me.CurrentProceduralTerminology.down('combobox');
-                if(combo.getValue() != 1) {
-                    combo.setValue(1);
+                if (combo.getValue() != 0) {
+                    combo.setValue(0);
                 } else {
-                    me.loadCptQuickReferenceGrid(1);
+                    me.CurrentProceduralTerminology.loadCptQuickReferenceGrid(0);
                 }
 
 
@@ -1008,29 +822,29 @@ Ext.define('App.view.patientfile.Encounter', {
     /**
      * Function to close the encounter..
      */
-    closeEncounter            : function() {
+    closeEncounter:function () {
         var me = this;
-        me.signatureWin(function(btn, signature) {
-            if(btn == 'ok') {
+        me.signatureWin(function (btn, signature) {
+            if (btn == 'ok') {
                 var params = {
-                    eid       : me.currEncounterEid,
+                    eid       : app.currEncounterId,
                     close_date: Ext.Date.format(new Date(), 'Y-m-d H:i:s'),
                     signature : signature
                 };
-                Encounter.closeEncounter(params, function(provider, response) {
-                    if(response.result.success) {
-                        if(me.stopTimer()) {
+                Encounter.closeEncounter(params, function (provider, response) {
+                    if (response.result.success) {
+                        if (me.stopTimer()) {
                             app.openPatientVisits();
                             me.msg('Sweet!', 'Encounter Closed');
                         }
                     } else {
                         Ext.Msg.show({
-                            title  : 'Oops!',
-                            msg    : 'Incorrect password',
-                            buttons: Ext.Msg.OKCANCEL,
-                            icon   : Ext.Msg.ERROR,
-                            fn     : function(btn) {
-                                if(btn == 'ok') {
+                            title:'Oops!',
+                            msg:'Incorrect password',
+                            buttons:Ext.Msg.OKCANCEL,
+                            icon:Ext.Msg.ERROR,
+                            fn:function (btn) {
+                                if (btn == 'ok') {
                                     me.closeEncounter();
                                 }
                             }
@@ -1045,45 +859,35 @@ Ext.define('App.view.patientfile.Encounter', {
      * listen for the progress note panel and runs the
      * doLayout function to re-adjust the dimensions.
      */
-    progressNoteCollapseExpand: function() {
+    progressNoteCollapseExpand:function () {
         this.centerPanel.doLayout();
     },
 
-    updateProgressNote: function() {
+    updateProgressNote:function () {
         var me = this;
-        Encounter.getProgressNoteByEid(me.currEncounterEid, function(provider, response) {
+        Encounter.getProgressNoteByEid(app.currEncounterId, function(provider, response) {
             var data = response.result;
             me.progressNote.tpl.overwrite(me.progressNote.body, data);
         });
     },
 
-    onCptQuickRefereneOption: function(combo, value) {
-        this.loadCptQuickReferenceGrid(value);
-    },
 
-    loadCptQuickReferenceGrid: function(filter) {
-        var patient = app.getCurrPatient(), pid = patient.pid;
-        this.cptCodesGridStore.proxy.extraParams = {pid: pid, filter: filter};
-        this.cptCodesGridStore.load();
-    },
-
-    onTapPanelChange: function(panel) {
-        if(panel.card.itemId == 'encounter') {
+    onTapPanelChange:function (panel) {
+        if (panel.card.itemId == 'encounter') {
             this.isProgressNoteCollapsed(true);
         } else {
             this.isProgressNoteCollapsed(true);
         }
     },
 
-    isProgressNoteCollapsed: function(ans) {
-        ans? this.progressNote.collapse() : this.progressNote.expand();
+    isProgressNoteCollapsed:function (ans) {
+        ans ? this.progressNote.collapse() : this.progressNote.expand();
 
     },
 
-    onLiveCptSelect: function(btn, record) {
-        btn.reset();
-        this.secondGridStore.add(record[0])
-    },
+
+
+
 
     //***************************************************************************************************//
     //***************************************************************************************************//
@@ -1100,14 +904,14 @@ Ext.define('App.view.patientfile.Encounter', {
     /**
      * Start the timerTask
      */
-    startTimer: function() {
+    startTimer:function () {
         Ext.TaskManager.start(this.timerTask);
         return true;
     },
     /**
      * stops the timerTask
      */
-    stopTimer : function() {
+    stopTimer:function () {
         Ext.TaskManager.stop(this.timerTask);
         return true;
     },
@@ -1115,7 +919,7 @@ Ext.define('App.view.patientfile.Encounter', {
     /**
      * This will update the timer every sec
      */
-    encounterTimer: function() {
+    encounterTimer:function () {
         var me = this;
         var timer = me.timer(me.currEncounterStartDate, new Date()), patient = me.getCurrPatient();
         me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Opened Encounter) <span class="timer">' + timer + '</span>');
@@ -1130,11 +934,11 @@ Ext.define('App.view.patientfile.Encounter', {
      * @param start
      * @param stop
      */
-    timer: function(start, stop) {
+    timer:function (start, stop) {
         var ms = Ext.Date.getElapsed(start, stop), t, sec = Math.floor(ms / 1000);
 
         function twoDigit(d) {
-            return (d >= 10)? d : '0' + d;
+            return (d >= 10) ? d : '0' + d;
         }
 
         var min = Math.floor(sec / 60);
@@ -1149,7 +953,7 @@ Ext.define('App.view.patientfile.Encounter', {
         hr = hr % 24;
         t = twoDigit(hr) + ":" + t;
 
-        t = (day == 0 )? '<span class="time">' + t + '</span>' : '<span class="day">' + day + ' day(s)</span><span class="time">' + t + '</span>';
+        t = (day == 0 ) ? '<span class="time">' + t + '</span>' : '<span class="day">' + day + ' day(s)</span><span class="time">' + t + '</span>';
         return t;
     },
 
@@ -1158,9 +962,9 @@ Ext.define('App.view.patientfile.Encounter', {
      * @param field
      * @param e
      */
-    cf: function(field, e) {
+    cf:function (field, e) {
         var v = field.getValue(), temp = 9 * v / 5 + 32, res = Ext.util.Format.round(temp, 1);
-        if(e.getKey() != e.TAB) {
+        if (e.getKey() != e.TAB) {
             field.up('form').getForm().findField('temp_f').setValue(res);
         }
 
@@ -1170,9 +974,9 @@ Ext.define('App.view.patientfile.Encounter', {
      * @param field
      * @param e
      */
-    fc: function(field, e) {
+    fc:function (field, e) {
         var v = field.getValue(), temp = (v - 32) * 5 / 9, res = Ext.util.Format.round(temp, 1);
-        if(e.getKey() != e.TAB) {
+        if (e.getKey() != e.TAB) {
             field.up('form').getForm().findField('temp_c').setValue(res);
         }
     },
@@ -1182,9 +986,9 @@ Ext.define('App.view.patientfile.Encounter', {
      * @param field
      * @param e
      */
-    lbskg: function(field, e) {
+    lbskg:function (field, e) {
         var v = field.getValue(), weight = v / 2.2, res = Ext.util.Format.round(weight, 1);
-        if(e.getKey() != e.TAB) {
+        if (e.getKey() != e.TAB) {
             field.up('form').getForm().findField('weight_kg').setValue(res);
         }
     },
@@ -1193,9 +997,9 @@ Ext.define('App.view.patientfile.Encounter', {
      * @param field
      * @param e
      */
-    kglbs: function(field, e) {
+    kglbs:function (field, e) {
         var v = field.getValue(), weight = v * 2.2, res = Ext.util.Format.round(weight, 1);
-        if(e.getKey() != e.TAB) {
+        if (e.getKey() != e.TAB) {
             field.up('form').getForm().findField('weight_lbs').setValue(res);
         }
     },
@@ -1204,14 +1008,14 @@ Ext.define('App.view.patientfile.Encounter', {
      * @param field
      * @param e
      */
-    incm : function(field, e) {
+    incm:function (field, e) {
         var v = field.getValue(), weight = v * 2.54, res = Ext.util.Format.round(weight, 1);
-        if(e.getKey() != e.TAB) {
-            if(field.name == 'head_circumference_in') {
+        if (e.getKey() != e.TAB) {
+            if (field.name == 'head_circumference_in') {
                 field.up('form').getForm().findField('head_circumference_cm').setValue(res);
-            } else if(field.name == 'waist_circumference_in') {
+            } else if (field.name == 'waist_circumference_in') {
                 field.up('form').getForm().findField('waist_circumference_cm').setValue(res);
-            } else if(field.name == 'height_in') {
+            } else if (field.name == 'height_in') {
                 field.up('form').getForm().findField('height_cm').setValue(res);
             }
         }
@@ -1221,14 +1025,14 @@ Ext.define('App.view.patientfile.Encounter', {
      * @param field
      * @param e
      */
-    cmin : function(field, e) {
+    cmin:function (field, e) {
         var v = field.getValue(), weight = v * 0.39, res = Ext.util.Format.round(weight, 1);
-        if(e.getKey() != e.TAB) {
-            if(field.name == 'head_circumference_cm') {
+        if (e.getKey() != e.TAB) {
+            if (field.name == 'head_circumference_cm') {
                 field.up('form').getForm().findField('head_circumference_in').setValue(res);
-            } else if(field.name == 'waist_circumference_cm') {
+            } else if (field.name == 'waist_circumference_cm') {
                 field.up('form').getForm().findField('waist_circumference_in').setValue(res);
-            } else if(field.name == 'height_cm') {
+            } else if (field.name == 'height_cm') {
                 field.up('form').getForm().findField('height_in').setValue(res);
             }
         }
@@ -1237,20 +1041,20 @@ Ext.define('App.view.patientfile.Encounter', {
     /**
      * After this panel is render add the forms and listeners for conventions
      */
-    beforePanelRender: function() {
-        var me = this, form, dafaultFields = function() {
+    beforePanelRender:function () {
+        var me = this, form, dafaultFields = function () {
             return [
-                {name: 'id', type: 'int'},
-                {name: 'pid', type: 'int'},
-                {name: 'eid', type: 'int'},
-                {name: 'uid', type: 'int'}
+                {name:'id', type:'int'},
+                {name:'pid', type:'int'},
+                {name:'eid', type:'int'},
+                {name:'uid', type:'int'}
             ]
         };
 
         /**
          * Get 'Vitals' Form Fields and add listeners to convert values
          */
-        this.getFormItems(me.vitalsPanel.down('form'), 'Vitals', function() {
+        this.getFormItems(me.vitalsPanel.down('form'), 'Vitals', function () {
             form = me.vitalsPanel.down('form').getForm();
             form.findField('temp_c').addListener('keyup', me.cf, me);
             form.findField('temp_f').addListener('keyup', me.fc, me);
@@ -1268,95 +1072,95 @@ Ext.define('App.view.patientfile.Encounter', {
         /**
          * Get 'Review of Systems' Form and define the Model using the form fields
          */
-        this.getFormItems(me.reviewSysPanel, 'Review of Systems', function() {
+        this.getFormItems(me.reviewSysPanel, 'Review of Systems', function () {
             var formFields = me.reviewSysPanel.getForm().getFields(), modelFields = new dafaultFields;
 
-            Ext.each(formFields.items, function(field) {
-                modelFields.push({name: field.name, type: 'auto'});
+            Ext.each(formFields.items, function (field) {
+                modelFields.push({name:field.name, type:'auto'});
             });
 
             Ext.define('App.model.patientfile.ReviewOfSystems', {
-                extend   : 'Ext.data.Model',
-                fields   : modelFields,
-                proxy    : {
-                    type: 'direct',
-                    api : {
-                        update: Encounter.updateReviewOfSystemsById
+                extend:'Ext.data.Model',
+                fields:modelFields,
+                proxy:{
+                    type:'direct',
+                    api:{
+                        update:Encounter.updateReviewOfSystemsById
                     }
                 },
-                belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+                belongsTo:{ model:'App.model.patientfile.Encounter', foreignKey:'eid' }
             });
             //me.reviewSysPanel.doLayout();
         });
         /**
          * Get 'SOAP' Form and define the Model using the form fields
          */
-        this.getFormItems(me.soapPanel, 'SOAP', function() {
+        this.getFormItems(me.soapPanel, 'SOAP', function () {
             var formFields = me.soapPanel.getForm().getFields(), modelFields = new dafaultFields;
 
 
-            Ext.each(formFields.items, function(field) {
-                modelFields.push({name: field.name, type: 'auto'});
+            Ext.each(formFields.items, function (field) {
+                modelFields.push({name:field.name, type:'auto'});
             });
 
             Ext.define('App.model.patientfile.SOAP', {
-                extend   : 'Ext.data.Model',
-                fields   : modelFields,
-                proxy    : {
-                    type: 'direct',
-                    api : {
-                        update: Encounter.updateSoapById
+                extend:'Ext.data.Model',
+                fields:modelFields,
+                proxy:{
+                    type:'direct',
+                    api:{
+                        update:Encounter.updateSoapById
                     }
                 },
-                belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+                belongsTo:{ model:'App.model.patientfile.Encounter', foreignKey:'eid' }
             });
             //me.soapPanel.doLayout();
         });
         /**
          * Get 'Speech Dictation' Form and define the Model using the form fields
          */
-        this.getFormItems(me.speechDicPanel, 'Speech Dictation', function() {
+        this.getFormItems(me.speechDicPanel, 'Speech Dictation', function () {
             var formFields = me.speechDicPanel.getForm().getFields(), modelFields = new dafaultFields;
 
 
-            Ext.each(formFields.items, function(field) {
-                modelFields.push({name: field.name, type: 'auto'});
+            Ext.each(formFields.items, function (field) {
+                modelFields.push({name:field.name, type:'auto'});
             });
 
             Ext.define('App.model.patientfile.SpeechDictation', {
-                extend   : 'Ext.data.Model',
-                fields   : modelFields,
-                proxy    : {
-                    type: 'direct',
-                    api : {
-                        update: Encounter.updateDictationById
+                extend:'Ext.data.Model',
+                fields:modelFields,
+                proxy:{
+                    type:'direct',
+                    api:{
+                        update:Encounter.updateDictationById
                     }
                 },
-                belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+                belongsTo:{ model:'App.model.patientfile.Encounter', foreignKey:'eid' }
             });
             //me.speechDicPanel.doLayout();
         });
         /**
          * Get 'Review of Systems Check' Form and define the Model using the form fields
          */
-        this.getFormItems(me.reviewSysCkPanel, 'Review of Systems Check', function() {
+        this.getFormItems(me.reviewSysCkPanel, 'Review of Systems Check', function () {
             var formFields = me.reviewSysCkPanel.getForm().getFields(), modelFields = new dafaultFields;
 
 
-            Ext.each(formFields.items, function(field) {
-                modelFields.push({name: field.name, type: 'auto'});
+            Ext.each(formFields.items, function (field) {
+                modelFields.push({name:field.name, type:'auto'});
             });
 
             Ext.define('App.model.patientfile.ReviewOfSystemsCheck', {
-                extend   : 'Ext.data.Model',
-                fields   : modelFields,
-                proxy    : {
-                    type: 'direct',
-                    api : {
-                        update: Encounter.updateReviewOfSystemsChecksById
+                extend:'Ext.data.Model',
+                fields:modelFields,
+                proxy:{
+                    type:'direct',
+                    api:{
+                        update:Encounter.updateReviewOfSystemsChecksById
                     }
                 },
-                belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
+                belongsTo:{ model:'App.model.patientfile.Encounter', foreignKey:'eid' }
             });
             //me.reviewSysCkPanel.doLayout();
         });
@@ -1371,9 +1175,9 @@ Ext.define('App.view.patientfile.Encounter', {
      * place inside this function all the functions you want
      * to call every this panel becomes active
      */
-    onActive         : function(callback) {
+    onActive:function (callback) {
         var me = this;
-        if(me.checkIfCurrPatient()) {
+        if (me.checkIfCurrPatient()) {
             var patient = me.getCurrPatient();
             me.updateTitle(patient.name + ' (Visits)');
             callback(true);

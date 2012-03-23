@@ -25,7 +25,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.ImmuListStore = Ext.create('App.store.patientfile.Immunization');
 		me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization');
-		me.patienAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
+		me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
 		me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues');
 		me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
 		me.patientDentalStore = Ext.create('App.store.patientfile.Dental');
@@ -245,10 +245,16 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				/**
 				 * Allergies Card panel
 				 */
-				xtype       : 'panel',
-				title       : 'Allergies',
-				layout      : 'border',
-				bodyPadding : 5,
+				xtype        : 'panel',
+				title        : 'Allergies',
+				layout       : 'border',
+				bodyPadding  : 5,
+				region       : 'north',
+				itemId       : 'allergiesNorth',
+				height       : 365,
+				border       : true,
+				hidden       : true,
+				margin       : '0 0 3 0',
 				items : [
 					{
 						xtype        : 'mitos.form',
@@ -268,7 +274,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								name           : 'type',
 								allowBlank     : false,
 								xtype          : 'mitos.allergytypescombo',
-								itemId         : 'allergie',
+								itemId         : 'allergies',
 								enableKeyEvents: true,
 								listeners      : {
 									scope   : me,
@@ -315,7 +321,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								fieldLabel: 'Outcome',
-								xtype     : 'mitos.outcomecombo',
+								xtype     : 'mitos.outcome2combo',
 								name      : 'outcome'
 
 							},
@@ -335,6 +341,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								minWidth: 80,
 								text    : 'Cancel',
+								itemId  : 'CancelAllergies',
 								scope   : me,
 								handler : me.onCancel
 
@@ -344,8 +351,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					{
 						xtype      : 'grid',
 						region     : 'center',
-						itemId     : 'patientAllergyListGrid',
-						store      : me.patienAllergiesListStore,
+						itemId     : 'patientAllergiesListGrid',
+						store      : me.patientAllergiesListStore,
 						split      : true,
 						columns  : [
 							{
@@ -411,10 +418,16 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				/**
 				 * Medical Issues Card panel
 				 */
-				xtype : 'panel',
-				title : 'Medical Issues',
-				layout: 'border',
-				bodyPadding : 5,
+				xtype        : 'panel',
+				title        : 'Medical Issues',
+				layout       : 'border',
+				bodyPadding  : 5,
+				region       : 'north',
+				itemId       : 'medicalIssueNorth',
+				height       : 365,
+				border       : true,
+				hidden       : true,
+				margin       : '0 0 3 0',
 				items : [
 					{
 						xtype        : 'mitos.form',
@@ -444,13 +457,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								fieldLabel: 'Diagnosis Code',
-								name      : 'diagnosiscode'
+								name      : 'diagnosis_code'
 
 							},
 							{
 								fieldLabel: 'Begin Date',
 								xtype     : 'datefield',
-								name      : 'begindate'
+								name      : 'begin_date'
 
 							},
 							{
@@ -467,11 +480,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								fieldLabel: 'Referred by',
-								name      : 'referred'
+								name      : 'referred_by'
 							},
 							{
 								fieldLabel: 'Outcome',
-								xtype     : 'mitos.outcomecombo',
+								xtype     : 'mitos.outcome2combo',
 								name      : 'outcome'
 
 							},
@@ -520,12 +533,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Diagnosis Code',
 								width    : 100,
-								dataIndex: 'diagnosiscode'
+								dataIndex: 'diagnosis_code'
 							},
 							{
 								header   : 'Begin Date',
 								width    : 100,
-								dataIndex: 'begindate',
+								dataIndex: 'begin_date',
 								renderer : Ext.util.Format.dateRenderer('Y-m-d')
 							},
 							{
@@ -542,7 +555,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Referred by',
 								flex     : 1,
-								dataIndex: 'referredby'
+								dataIndex: 'referred_by'
 							},
 							{
 								header   : 'Outcome',
@@ -570,6 +583,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				title : 'Surgery',
 				layout: 'border',
 				bodyPadding : 5,
+				region       : 'north',
+				itemId       : 'surgeryNorth',
+				height       : 365,
+				border       : true,
+				hidden       : true,
+				margin       : '0 0 3 0',
 				items : [
 					{
 						xtype        : 'mitos.form',
@@ -599,19 +618,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								fieldLabel: 'Diagnosis Code',
-								name      : 'diagnosiscode'
+								name      : 'diagnosis_code'
 
 							},
 							{
 								fieldLabel: 'Begin Date',
 								xtype     : 'datefield',
-								name      : 'begindate'
+								name      : 'begin_date'
 
 							},
 							{
 								fieldLabel: 'End Date',
 								xtype     : 'datefield',
-								name      : 'begindate'
+								name      : 'end_date'
 
 							},
 							{
@@ -622,11 +641,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								fieldLabel: 'Referred by',
-								name      : 'referred'
+								name      : 'referred_by'
 							},
 							{
 								fieldLabel: 'Outcome',
-								xtype     : 'mitos.outcomecombo',
+								xtype     : 'mitos.outcome2combo',
 								name      : 'outcome'
 
 							},
@@ -656,7 +675,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						xtype      : 'grid',
 						region     : 'center',
 						itemId     : 'patientSurgeryListGrid',
-						store      : me.patientSurgeryListStore,
+						store      : me.patientSurgeryStore,
 						columns  : [
 							{
 								header   : 'Type',
@@ -671,12 +690,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Diagnosis Code',
 								width    : 100,
-								dataIndex: 'diagnosiscode'
+								dataIndex: 'diagnosis_code'
 							},
 							{
 								header   : 'Begin Date',
 								width    : 100,
-								dataIndex: 'begindate'
+								dataIndex: 'begin_date'
 							},
 							{
 								header   : 'End Date',
@@ -691,7 +710,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Referred by',
 								flex     : 1,
-								dataIndex: 'referredby'
+								dataIndex: 'referred_by'
 							},
 							{
 								header   : 'Outcome',
@@ -719,6 +738,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				title : 'Dental',
 				layout: 'border',
 				bodyPadding : 5,
+				region       : 'north',
+				itemId       : 'dentalNorth',
+				height       : 365,
+				border       : true,
+				hidden       : true,
+				margin       : '0 0 3 0',
 				items : [
 					{
 						xtype        : 'mitos.form',
@@ -736,19 +761,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								fieldLabel: 'Diagnosis Code',
-								name      : 'diagnosiscode'
+								name      : 'diagnosis_code'
 
 							},
 							{
 								fieldLabel: 'Begin Date',
 								xtype     : 'datefield',
-								name      : 'begindate'
+								name      : 'begin_date'
 
 							},
 							{
 								fieldLabel: 'End Date',
 								xtype     : 'datefield',
-								name      : 'begindate'
+								name      : 'end_date'
 
 							},
 							{
@@ -759,11 +784,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							},
 							{
 								fieldLabel: 'Referred by',
-								name      : 'referred'
+								name      : 'referred_by'
 							},
 							{
 								fieldLabel: 'Outcome',
-								xtype     : 'mitos.outcomecombo',
+								xtype     : 'mitos.outcome2combo',
 								name      : 'outcome'
 
 							},
@@ -793,7 +818,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						xtype      : 'grid',
 						region     : 'center',
 						itemId     : 'patientDentalListGrid',
-						store      : me.patientDentalListStore,
+						store      : me.patientDentalStore,
 						height     : 605,
 						columns  : [
 							{
@@ -804,17 +829,17 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Diagnosis Code',
 								width    : 100,
-								dataIndex: 'diagnosiscode'
+								dataIndex: 'diagnosis_code'
 							},
 							{
 								header   : 'Begin Date',
 								width    : 100,
-								dataIndex: 'begindate'
+								dataIndex: 'begin_date'
 							},
 							{
 								header   : 'End Date',
 								flex     : 1,
-								dataIndex: 'enddate'
+								dataIndex: 'end_date'
 							},
 							{
 								header   : 'Ocurrence',
@@ -824,7 +849,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Referred by',
 								flex     : 1,
-								dataIndex: 'referredby'
+								dataIndex: 'referred_by'
 							},
 							{
 								header   : 'Outcome',
@@ -922,11 +947,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             values = form.getValues(),
 			store, storeIndex;
 
+		values.eid = app.currEncounterId;
+
 		if(btn.itemId == 'SaveImmunization'){
 			 store = this.patientImmuListStore;
 		}
 		else if(btn.itemId == 'SaveAllergies'){
-			store = this.patienAllergiesListStore;
+			store = this.patientAllergiesListStore;
 		}
 		else if(btn.itemId == 'SaveMedicalIssues'){
 			 store = this.patientMedicalIssuesStore;
@@ -941,9 +968,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		storeIndex = store.indexOf(record);
 
 		if(storeIndex == -1) {
+			values.created_uid = app.user.id;
             record.set(values);
 			store.add(record);
 		} else {
+			values.update_uid = app.user.id;
 			record.set(values);
 		}
 		store.sync();
@@ -1009,39 +1038,50 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 
 	onAddNew: function(btn) {
-        var me = this, panel, form, model;
+		var me = this, panel, form, model;
 
-        if(btn.itemId == 'addiImunization'){
-            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-            model = Ext.ModelManager.getModel('App.model.patientfile.PatientImmunization');
-            model = Ext.ModelManager.create({
-                pid : app.currPatient.pid,
-                administered_uid : user.id,
-                administered_date : new Date(),
-                education_date : new Date(),
-                vis_date : new Date()
-            }, model);
-            form = panel.down('form').getForm();
-        }else{
-            panel = me.getLayout().getActiveItem().down('form');
-            if(btn.itemId == 'addiAllergy'){
-                model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
-            }else if(btn.itemId == 'addiIssue'){
-                model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
-            }else if(btn.itemId == 'addiSurgery'){
-                model = Ext.ModelManager.getModel('App.model.patientfile.Surgery');
-            }else if(btn.itemId == 'addiDental'){
-                model = Ext.ModelManager.getModel('App.model.patientfile.Dental');
-            }
-            model = Ext.ModelManager.create({
-                pid : app.currPatient.pid,
-                begin_date: new Date()
-            }, model);
-            form = panel.getForm();
-        }
+		if(btn.itemId == 'addiImunization'){
+			panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+			model = Ext.ModelManager.getModel('App.model.patientfile.PatientImmunization');
+			model = Ext.ModelManager.create({
+				pid : app.currPatient.pid,
+				administered_uid : user.id,
+				administered_date : new Date(),
+				education_date : new Date(),
+				vis_date : new Date()
+			}, model);
+			form = panel.down('form').getForm();
+		}else{
 
-        form.reset();
-        form.loadRecord(model);
+			if(btn.itemId == 'addiAllergy'){
+				panel = me.getLayout().getActiveItem().down('form');
+				model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
+				model = Ext.ModelManager.create({
+					pid : app.currPatient.pid,
+					begin_date: new Date(),
+					end_date : new Date()
+
+				}, model);
+				form = panel.getForm();
+
+
+			}else if(btn.itemId == 'addiIssue'){
+				model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
+			}else if(btn.itemId == 'addiSurgery'){
+				model = Ext.ModelManager.getModel('App.model.patientfile.Surgery');
+			}else if(btn.itemId == 'addiDental'){
+				model = Ext.ModelManager.getModel('App.model.patientfile.Dental');
+			}
+			/*panel = me.getLayout().getActiveItem().down('form');
+			model = Ext.ModelManager.create({
+				pid : app.currPatient.pid,
+				begin_date: new Date()
+			}, model);
+			form = panel.getForm();*/
+		}
+
+		form.reset();
+		form.loadRecord(model);
 		panel.show();
 		panel.expand(true);
 
@@ -1057,6 +1097,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             form = panel.getForm();
         }
         me.closeImmunizationGrid();
+		me.closeAllergiesGrid();
         panel.collapse();
         panel.hide();
 		form.reset();
@@ -1070,21 +1111,24 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         say(this);
         var me = this, form, panel;
         if(grid.panel.itemId == 'patientImmuListGrid'){
-            panel = me.getLayout().getActiveItem().getComponent('immuNorth')
+            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+	        me.closeImmunizationGrid();
         }else{
-            panel = me.getLayout().getActiveItem().down('form');
+            panel = me.getLayout().getActiveItem();
         }
         form = panel.down('form').getForm();
         panel.show();
         panel.expand(true);
         form.loadRecord(record);
-        me.closeImmunizationGrid();
+
     },
 
     closeImmunizationGrid:function(){
         this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').collapse();
     },
-
+	closeAllergiesGrid:function(){
+		this.getLayout().getActiveItem().getComponent('allergiesNorth').down('grid').collapse();
+	},
     openImmunizationGrid:function(){
         this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').expand(true);
     },
@@ -1143,5 +1187,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 	onMedicalWinShow: function() {
 		this.patientImmuListStore.load({params:{pid:app.currPatient.pid}});
+		this.patientAllergiesListStore.load({params:{pid:app.currPatient.pid}});
 	}
 });

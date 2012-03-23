@@ -87,6 +87,8 @@ Ext.define('App.view.MitosApp', {
 		me.lastCardNode = null;
 		me.currCardCmp = null;
 		me.currPatient = null;
+		me.currEncounterId = null;
+		me.user = user;
 		/**
 		 * TaskScheduler
 		 * This will run all the procedures inside the checkSession
@@ -733,7 +735,7 @@ Ext.define('App.view.MitosApp', {
 			foot = this.Footer,
 			footView = foot.down('dataview');
 
-        appLogo.setWidth(35);
+        appLogo.hide();
 		navView.hide();
 		foot.setHeight(60);
 		footView.show();
@@ -745,7 +747,7 @@ Ext.define('App.view.MitosApp', {
 			foot = this.Footer,
 			footView = foot.down('dataview');
 
-        appLogo.setWidth(200);
+        appLogo.show();
 		navView.show();
 		foot.setHeight(30);
 		footView.hide();
@@ -777,7 +779,6 @@ Ext.define('App.view.MitosApp', {
 		var patientBtn = this.Header.getComponent('patientButton'),
 			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
-			//PushForBtn = this.Header.getComponent('patientPushFor'),
 			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
 			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 
@@ -785,7 +786,6 @@ Ext.define('App.view.MitosApp', {
         patientBtn.enable();
 		patientOpenVisitsBtn.enable();
 		patientCreateEncounterBtn.enable();
-		//PushForBtn.enable();
 		patientCloseCurrEncounterBtn.enable();
 		patientCheckOutBtn.enable();
 		if(typeof callback == 'function') {
@@ -797,7 +797,6 @@ Ext.define('App.view.MitosApp', {
 		var patientBtn = this.Header.getComponent('patientButton'),
 			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
-			//PushForBtn = this.Header.getComponent('patientPushFor'),
 			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
 			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 		/**
@@ -805,6 +804,7 @@ Ext.define('App.view.MitosApp', {
 		 */
 		Patient.currPatientUnset(function() {
 			//PushForBtn.disable();
+			app.currEncounterId = null;
 			patientCreateEncounterBtn.disable();
 			patientOpenVisitsBtn.disable();
 			patientCloseCurrEncounterBtn.disable();

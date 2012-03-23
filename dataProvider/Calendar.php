@@ -26,12 +26,13 @@ class Calendar {
         return;
     }
 
-    /*
+    /**
      *
      * getCalendars function
-     * Get all the calendars from all the users?
+     * Calendars = Providers or Users configured to be in the calendar
      *
-     *  */
+     * @return array
+     */
     public function getCalendars(){
         $color = -4;
         $sql = ("SELECT * FROM users WHERE calendar = '1' AND authorized = '1' AND active = '1' ORDER BY username");
@@ -49,6 +50,12 @@ class Calendar {
 
     }
 
+    /**
+     * Events are the patient appointments
+     *
+     * @param stdClass $params
+     * @return array
+     */
     public function getEvents(stdClass $params){
 
         $sql = ("SELECT * FROM calendar_events WHERE start BETWEEN '".$params->startDate." 00:00:00' AND '".$params->endDate." 23:59:59' ");
@@ -73,6 +80,10 @@ class Calendar {
         return array('success'=>true, 'message'=>'Loaded data', 'data'=>$rows);
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function addEvent(stdClass $params){
 
         $sql = "SELECT fname, mname, lname FROM form_data_demographics WHERE pid='$params->patient_id'";
@@ -114,6 +125,10 @@ class Calendar {
         }
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function updateEvent(stdClass $params){
 
         $row['user_id']             = $params->user_id;
@@ -137,6 +152,10 @@ class Calendar {
         return array('success'=> true);
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
     public function deleteEvent(stdClass $params){
         $this->db->setSQL( "DELETE FROM calendar_events WHERE id='$params->id'");
         $this->db->execLog();

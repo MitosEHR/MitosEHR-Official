@@ -30,22 +30,28 @@ class Services {
      */
     public function getServices(stdClass $params)
     {
+        /*
+         * define $code_table
+         */
+        if($params->code_type == 'cpt'){
+            $code_table = 'cpt_codes';
+        }elseif($params->code_type == 'icd'){
+            $code_table = 'icd_codes';
+        }elseif($params->code_type == 'hcpcs'){
+            $code_table = 'hcpcs_codes';
+        }else{
+            $code_table = 'cvx_codes';
+        }
+
         $sortx = $params->sort ? $params->sort[0]->property.' '.$params->sort[0]->direction : 'code ASC';
 
-        $this->db->setSQL("SELECT *
-                         FROM codes
+        $this->db->setSQL("SELECT DISTINCT *
+                         FROM $code_table
                         WHERE code_text       LIKE '%$params->query%'
                            OR code_text_short LIKE '%$params->query%'
                            OR code            LIKE '$params->query%'
-                           OR modifier 	      LIKE '$params->query%'
-                           OR units 	      LIKE '$params->query%'
-                           OR fee 	          LIKE '$params->query%'
-                           OR related_code 	  LIKE '$params->query%'
                      ORDER BY $sortx");
         $records = $this->db->fetchRecords(PDO::FETCH_CLASS);
-        if($params->code_type != 'all'){
-            $records = $this->db->filterByQuery($records, 'code_type', $params->code_type);
-        }
         $records = $this->db->filterByQuery($records, 'active', $params->active);
         $total   = count($records);
         $records = $this->db->filterByStartLimit($records,$params);
@@ -83,6 +89,18 @@ class Services {
     }
 
     public function liveCodeSearch(stdClass $params){
+        /*
+         * define $code_table
+         */
+        if($params->code_type == 'cpt'){
+            $code_table = 'cpt_codes';
+        }elseif($params->code_type == 'icd'){
+            $code_table = 'icd_codes';
+        }elseif($params->code_type == 'hcpcs'){
+            $code_table = 'hcpcs_codes';
+        }else{
+            $code_table = 'cvx_codes';
+        }
         /**
          * brake the $params->query coming form sencha using into an array using "commas"
          * example:
@@ -138,12 +156,10 @@ class Services {
          */
         foreach($queries as $query){
             $this->db->setSQL("SELECT *
-                                 FROM codes
+                                 FROM $code_table
                                 WHERE (code_text      LIKE '%$query%'
                                    OR code_text_short LIKE '%$query%'
-                                   OR code            LIKE '$query%'
-                                   OR related_code 	  LIKE '$query%')
-                                  AND code_type = '$params->code_type'
+                                   OR code            LIKE '$query%')
                              ORDER BY code ASC");
             /**
              * loop for each sql record as $row
@@ -193,20 +209,40 @@ class Services {
 
 
     public function getCptCodesBySelection(stdClass $params){
-
-        if($params->filter == 1){
+        if($params->filter == 0){
+            return $this->getCptRelatedByEidIcds($params->eid);
+        }elseif($params->filter == 1){
             return $this->getCptUsedByPid($params->pid);
         }elseif($params->filter == 2){
             return $this->getCptUsedByClinic($params->pid);
         }elseif($params->filter == 3){
             $params->active = 1;
-            $params->code_type = 1;
+            $params->code_type = 'cpt';
             return $this->getServices($params);
         }else{
             return $params;
         }
     }
 
+    public function getCptRelatedByEidIcds($eid){
+
+        $this->db->setSQL("SELECT code FROM encounter_codes_icdx WHERE eid = '$eid'");
+
+        $icds = $this->db->fetchRecords(PDO::FETCH_CLASS);
+        $records = array();
+        foreach($icds as $icd){
+            $this->db->setSQL("SELECT cpt FROM cpt_icd WHERE icd = '$icd->code'");
+            $cpts = $this->db->fetchRecords(PDO::FETCH_CLASS);
+            foreach($cpts as $cpt){
+                $this->db->setSQL("SELECT codes.*
+                                     FROM cpt_codes AS codes
+                                    WHERE code = '$cpt->cpt'
+                                      AND active ='1'");
+                $records[] = $this->db->fetchRecord(PDO::FETCH_ASSOC);
+            }
+        }
+        return array('totals'=>count($records),'rows'=>$records);
+    }
 
     public function getIcdxByEid($eid){
         $this->db->setSQL("SELECT * FROM encounter_codes_icdx WHERE eid = '$eid' ORDER BY id ASC");
@@ -224,14 +260,17 @@ class Services {
     }
 
     public function getCptByEid($eid){
-        $this->db->setSQL("SELECT * FROM encounter_codes_cpt WHERE eid = '$eid' ORDER BY id ASC");
+        $this->db->setSQL("SELECT DISTINCT codes.*
+                             FROM encounter_codes_cpt AS ecc
+                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
+                            WHERE eec.eid = '$eid' ORDER BY eec.id ASC");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getCptUsedByPid($pid){
-        $this->db->setSQL("SELECT DISTINCT ecc.code, codes.code_text, e.start_date as last_date
+        $this->db->setSQL("SELECT DISTINCT codes.*
                              FROM encounter_codes_cpt AS ecc
-                        left JOIN codes ON ecc.code = codes.code
+                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
                         LEFT JOIN form_data_encounter AS e ON ecc.eid = e.eid
                             WHERE e.pid = '$pid'
                          ORDER BY e.start_date DESC");
@@ -241,9 +280,9 @@ class Services {
     }
 
     public function getCptUsedByClinic(){
-        $this->db->setSQL("SELECT DISTINCT ecc.code, codes.code_text
+        $this->db->setSQL("SELECT DISTINCT codes.*
                              FROM encounter_codes_cpt AS ecc
-                        left JOIN codes ON ecc.code = codes.code
+                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
                          ORDER BY codes.code DESC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
 
@@ -253,11 +292,12 @@ class Services {
 }
 
 //$params = new stdClass();
-//$params->query = 'head neoplasm face';
+//$params->filter = 0;
 //$params->pid = '7';
+//$params->eid = '2';
 //$params->start = 0;
 //$params->limit = 25;
 //
 //$t = new Services();
 //print '<pre>';
-//print_r($t->getCptUsedByPid(10));
+//print_r($t->getCptCodesBySelection($params));

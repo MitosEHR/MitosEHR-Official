@@ -141,6 +141,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/TaxId.js"></script>
         <script type="text/javascript" src="app/classes/combo/Titles.js"></script>
         <script type="text/javascript" src="app/classes/combo/Outcome.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Outcome2.js"></script>
         <script type="text/javascript" src="app/classes/combo/PaymentMethod.js"></script>
         <script type="text/javascript" src="app/classes/combo/PaymentCategory.js"></script>
         <script type="text/javascript" src="app/classes/combo/PayingEntity.js"></script>
@@ -163,6 +164,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/patientfile/Vitals.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Visits.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Summary.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/encounter/CurrentProceduralTerminology.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Encounter.js"></script>
         <script type="text/javascript" src="app/view/patientfile/NewPatient.js"></script>
         <script type="text/javascript" src="app/view/patientfile/MedicalWindow.js"></script>

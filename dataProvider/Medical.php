@@ -72,6 +72,42 @@ class Medical {
         $this->db->execLog();
         $params->id = $this->db->lastInsertId;
         return $params;
+
+    }
+
+    public function getPatientAllergies(stdClass $params)
+    {
+        return $this->getAllergiesByPatientID($params->pid);
+    }
+
+    public function addPatientAllergies(stdClass $params)
+    {
+        $data = get_object_vars($params);
+        unset($data['id']);
+
+        $data['begin_date'] = $this->parseDate($data['begin_date']);
+        $data['end_date'] = $this->parseDate($data['end_date']);
+
+
+        $this->db->setSQL($this->db->sqlBind($data, 'patient_allergies', 'I'));
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
+        return $params;
+    }
+    public function updatePatientAllergies(stdClass $params)
+    {
+        $data = get_object_vars($params);
+
+        $id = $data['id'];
+        unset($data['id']);
+        $data['begin_date'] = $this->parseDate($data['begin_date']);
+        $data['end_date'] = $this->parseDate($data['end_date']);
+
+        $this->db->setSQL($this->db->sqlBind($data, "patient_allergies", "U", "id='$id'"));
+        $this->db->execLog();
+
+        return $params;
+
     }
 
     /*********************************************
