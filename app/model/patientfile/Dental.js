@@ -9,6 +9,10 @@
 Ext.define('App.model.patientfile.Dental', {
 	extend: 'Ext.data.Model',
 	fields: [
+		{name: 'id', type: 'int'},
+		{name: 'eid', type: 'int'},
+		{name: 'pid', type: 'int'},
+		{name: 'type', type: 'string'},
 		{name: 'title', type: 'string'},
 		{name: 'diagnosis_code', type: 'string'},
 		{name: 'begin_date', type: 'date', dateFormat: 'c'},

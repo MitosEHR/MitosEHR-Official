@@ -87,6 +87,8 @@ Ext.define('App.view.MitosApp', {
 		me.lastCardNode = null;
 		me.currCardCmp = null;
 		me.currPatient = null;
+		me.currEncounterId = null;
+		me.user = user;
 		/**
 		 * TaskScheduler
 		 * This will run all the procedures inside the checkSession
@@ -805,6 +807,7 @@ Ext.define('App.view.MitosApp', {
 		 */
 		Patient.currPatientUnset(function() {
 			//PushForBtn.disable();
+			app.currEncounterId = null;
 			patientCreateEncounterBtn.disable();
 			patientOpenVisitsBtn.disable();
 			patientCloseCurrEncounterBtn.disable();

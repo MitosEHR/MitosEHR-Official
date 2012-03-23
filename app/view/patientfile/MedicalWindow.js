@@ -947,6 +947,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             values = form.getValues(),
 			store, storeIndex;
 
+		values.eid = app.currEncounterId;
+
 		if(btn.itemId == 'SaveImmunization'){
 			 store = this.patientImmuListStore;
 		}
@@ -966,9 +968,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		storeIndex = store.indexOf(record);
 
 		if(storeIndex == -1) {
+			values.created_uid = app.user.id;
             record.set(values);
 			store.add(record);
 		} else {
+			values.update_uid = app.user.id;
 			record.set(values);
 		}
 		store.sync();
@@ -1107,15 +1111,16 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         say(this);
         var me = this, form, panel;
         if(grid.panel.itemId == 'patientImmuListGrid'){
-            panel = me.getLayout().getActiveItem().getComponent('immuNorth')
+            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+	        me.closeImmunizationGrid();
         }else{
-            panel = me.getLayout().getActiveItem().down('form');
+            panel = me.getLayout().getActiveItem();
         }
         form = panel.down('form').getForm();
         panel.show();
         panel.expand(true);
         form.loadRecord(record);
-        me.closeImmunizationGrid();
+
     },
 
     closeImmunizationGrid:function(){
