@@ -55,6 +55,7 @@ class Services {
         $records = $this->db->filterByQuery($records, 'active', $params->active);
         $total   = count($records);
         $records = $this->db->filterByStartLimit($records,$params);
+        $records = $this->addCptSummary($records);
         return array('totals'=>$total,'rows'=>$records);
     }
 
@@ -241,6 +242,8 @@ class Services {
                 $records[] = $this->db->fetchRecord(PDO::FETCH_ASSOC);
             }
         }
+
+        $records = $this->addCptSummary($records);
         return array('totals'=>count($records),'rows'=>$records);
     }
 
@@ -264,7 +267,9 @@ class Services {
                              FROM encounter_codes_cpt AS ecc
                         left JOIN cpt_codes AS codes ON ecc.code = codes.code
                             WHERE eec.eid = '$eid' ORDER BY eec.id ASC");
-        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+        $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+        $records = $this->addCptSummary($records);
+        return array('totals'=>count($records),'rows'=>$records);
     }
 
     public function getCptUsedByPid($pid){
@@ -275,7 +280,7 @@ class Services {
                             WHERE e.pid = '$pid'
                          ORDER BY e.start_date DESC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-
+        $records = $this->addCptSummary($records);
         return array('totals'=>count($records),'rows'=>$records);
     }
 
@@ -285,10 +290,37 @@ class Services {
                         left JOIN cpt_codes AS codes ON ecc.code = codes.code
                          ORDER BY codes.code DESC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-
+        $records = $this->addCptSummary($records);
         return array('totals'=>count($records),'rows'=>$records);
     }
 
+    private function addCptSummary($records){
+
+        $newRecords = array();
+
+        foreach($records as $rec){
+
+            $table = <<<EOD
+            <table border="1">
+            <tr>
+            <td>row 1, cell 1</td>
+            <td>row 1, cell 2</td>
+            </tr>
+            <tr>
+            <td>row 2, cell 1</td>
+            <td>row 2, cell 2</td>
+            </tr>
+            </table>
+EOD;
+
+            $rec['summary'] = $table;
+
+            $newRecords[] = $rec;
+
+        }
+
+        return $newRecords;
+    }
 }
 
 //$params = new stdClass();

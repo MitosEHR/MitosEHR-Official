@@ -5,20 +5,17 @@
  * Time: 2:06 AM
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
+Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     extend:'Ext.panel.Panel',
     allias:'widget.currentproceduralterminology',
     bodyStyle:0,
     autoScroll:true,
     title:'Current Procedural Terminology',
-    defaults:{
-        flex:1
-    },
-    layout:{
-        type:'hbox',
-        align:'stretch'
-    },
-    initComponent:function(){
+    border:false,
+    bodyBorder:false,
+    bodyPadding:'5 0 0 0',
+    layout:'border',
+    initComponent:function () {
         var me = this;
 
         me.cptCodesGridStore = Ext.create('App.store.patientfile.CptCodesGrid');
@@ -30,8 +27,13 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
 
         me.items = [
             {
-                xtype:'container',
+                xtype:'panel',
+                title:'CPT Search',
                 itemId:'leftCol',
+                region:'west',
+                width:450,
+                collapsible:true,
+                split:true,
                 layout:{
                     type:'vbox',
                     align:'stretch',
@@ -84,7 +86,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
                                 {
                                     pluginId:'preview',
                                     ptype:'preview',
-                                    bodyField:'preview',
+                                    bodyField:'summary',
                                     previewExpanded:false
                                 }
                             ],
@@ -107,14 +109,16 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
                         }),
                         listeners:{
                             scope:me,
-                            itemclick:me.onCptQuickRefereneItemClick
+                            itemclick:me.gridItemClick
                         }
 
                     }
                 ]
             },
             {
-                xtype:'container',
+                xtype:'panel',
+                title:'Encounter CPTs',
+                region:'center',
                 itemId:'rightCol',
                 layout:{
                     type:'vbox',
@@ -153,8 +157,8 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
                                 sortable:false,
                                 dataIndex:'modifiers',
                                 editor:{
-    //                                        xtype: 'textfield',
-    //                                        emptyText:'Click to add'
+                                    //                                        xtype: 'textfield',
+                                    //                                        emptyText:'Click to add'
                                     xtype:'combobox',
                                     triggerAction:'all',
                                     selectOnTab:true,
@@ -194,7 +198,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
                                 {
                                     pluginId:'preview',
                                     ptype:'preview',
-                                    bodyField:'preview',
+                                    bodyField:'summary',
                                     previewExpanded:false
                                 }
                             ],
@@ -207,7 +211,11 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
                         },
                         plugins:Ext.create('Ext.grid.plugin.CellEditing', {
                             clicksToEdit:1
-                        })
+                        }),
+                        listeners:{
+                            scope:me,
+                            itemclick:me.gridItemClick
+                        }
                     }
                 ]
 
@@ -222,10 +230,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
         this.loadCptQuickReferenceGrid(value);
     },
 
-    onCptQuickRefereneItemClick:function (view) {
-        view.getPlugin('preview').toggleRowExpanded();
-    },
-
     onLiveCptSelect:function (btn, record) {
         btn.reset();
         this.secondGridStore.add(record[0]);
@@ -235,6 +239,10 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology',{
         var patient = app.getCurrPatient(), pid = patient.pid;
         this.cptCodesGridStore.proxy.extraParams = {pid:pid, eid:app.currEncounterId, filter:filter};
         this.cptCodesGridStore.load();
+    },
+
+    gridItemClick: function(view) {
+        view.getPlugin('preview').toggleRowExpanded();
     }
 
 });
