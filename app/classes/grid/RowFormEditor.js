@@ -58,6 +58,8 @@ Ext.define('App.classes.grid.RowFormEditor', {
 
         me.cls = Ext.baseCSSPrefix + 'grid-row-editor';
 
+        me.currRowH = null;
+
 //        me.layout = {
 //            type: 'hbox',
 //            align: 'middle'
@@ -86,8 +88,6 @@ Ext.define('App.classes.grid.RowFormEditor', {
 
         plugin = me.editingPlugin;
 
-        say(plugin);
-        say(plugin.formItems);
 
         me.items = plugin.formItems;
 
@@ -103,18 +103,18 @@ Ext.define('App.classes.grid.RowFormEditor', {
         form.trackResetOnLoad = true;
     },
 
-    onFieldChange: function() {
-        var me = this,
-            form = me.getForm(),
-            valid = form.isValid();
-        if (me.errorSummary && me.isVisible()) {
-            me[valid ? 'hideToolTip' : 'showToolTip']();
-        }
-        if (me.floatingButtons) {
-            me.floatingButtons.child('#update').setDisabled(!valid);
-        }
-        me.isValid = valid;
-    },
+//    onFieldChange: function() {
+//        var me = this,
+//            form = me.getForm(),
+//            valid = form.isValid();
+//        if (me.errorSummary && me.isVisible()) {
+//            me[valid ? 'hideToolTip' : 'showToolTip']();
+//        }
+//        if (me.floatingButtons) {
+//            me.floatingButtons.child('#update').setDisabled(!valid);
+//        }
+//        me.isValid = valid;
+//    },
 
     afterRender: function() {
         var me = this,
@@ -193,73 +193,73 @@ Ext.define('App.classes.grid.RowFormEditor', {
         }
     },
 
-    onColumnAdd: function(column) {
-        this.setField(column);
-    },
-
-    onColumnRemove: function(column) {
-        this.columns.remove(column);
-    },
-
-    onColumnResize: function(column, width) {
-        column.getEditor().setWidth(width - 2);
-        if (this.isVisible()) {
-            this.reposition();
-        }
-    },
-
-    onColumnHide: function(column) {
-        column.getEditor().hide();
-        if (this.isVisible()) {
-            this.reposition();
-        }
-    },
-
-    onColumnShow: function(column) {
-        var field = column.getEditor();
-        field.setWidth(column.getWidth() - 2).show();
-        if (this.isVisible()) {
-            this.reposition();
-        }
-    },
-
-    onColumnMove: function(column, fromIdx, toIdx) {
-        var field = column.getEditor();
-        if (this.items.indexOf(field) != toIdx) {
-            this.move(fromIdx, toIdx);
-        }
-    },
-
-    onFieldAdd: function(map, fieldId, column) {
-        var me = this,
-            colIdx = me.editingPlugin.grid.headerCt.getHeaderIndex(column),
-            field = column.getEditor({ xtype: 'displayfield' });
-
-        me.insert(colIdx, field);
-    },
-
-    onFieldRemove: function(map, fieldId, column) {
-        var me = this,
-            field = column.getEditor(),
-            fieldEl = field.el;
-        me.remove(field, false);
-        if (fieldEl) {
-            fieldEl.remove();
-        }
-    },
-
-    onFieldReplace: function(map, fieldId, column, oldColumn) {
-        var me = this;
-        me.onFieldRemove(map, fieldId, oldColumn);
-    },
-
-    clearFields: function() {
-        var me = this,
-            map = me.columns;
-        map.each(function(fieldId) {
-            map.removeAtKey(fieldId);
-        });
-    },
+//    onColumnAdd: function(column) {
+//        this.setField(column);
+//    },
+//
+//    onColumnRemove: function(column) {
+//        this.columns.remove(column);
+//    },
+//
+//    onColumnResize: function(column, width) {
+//        column.getEditor().setWidth(width - 2);
+//        if (this.isVisible()) {
+//            this.reposition();
+//        }
+//    },
+//
+//    onColumnHide: function(column) {
+//        column.getEditor().hide();
+//        if (this.isVisible()) {
+//            this.reposition();
+//        }
+//    },
+//
+//    onColumnShow: function(column) {
+//        var field = column.getEditor();
+//        field.setWidth(column.getWidth() - 2).show();
+//        if (this.isVisible()) {
+//            this.reposition();
+//        }
+//    },
+//
+//    onColumnMove: function(column, fromIdx, toIdx) {
+//        var field = column.getEditor();
+//        if (this.items.indexOf(field) != toIdx) {
+//            this.move(fromIdx, toIdx);
+//        }
+//    },
+//
+//    onFieldAdd: function(map, fieldId, column) {
+//        var me = this,
+//            colIdx = me.editingPlugin.grid.headerCt.getHeaderIndex(column),
+//            field = column.getEditor({ xtype: 'displayfield' });
+//
+//        me.insert(colIdx, field);
+//    },
+//
+//    onFieldRemove: function(map, fieldId, column) {
+//        var me = this,
+//            field = column.getEditor(),
+//            fieldEl = field.el;
+//        me.remove(field, false);
+//        if (fieldEl) {
+//            fieldEl.remove();
+//        }
+//    },
+//
+//    onFieldReplace: function(map, fieldId, column, oldColumn) {
+//        var me = this;
+//        me.onFieldRemove(map, fieldId, oldColumn);
+//    },
+//
+//    clearFields: function() {
+//        var me = this,
+//            map = me.columns;
+//        map.each(function(fieldId) {
+//            map.removeAtKey(fieldId);
+//        });
+//    },
 
     getFloatingButtons: function() {
         var me = this,
@@ -317,6 +317,9 @@ Ext.define('App.classes.grid.RowFormEditor', {
     },
 
     reposition: function(animateConfig) {
+
+        if(this.currRowH) this.currRow.setHeight(this.currRowH);
+
         var me = this,
             context = me.context,
             row = context && Ext.get(context.row),
@@ -325,6 +328,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
             grid = me.editingPlugin.grid,
             viewEl = grid.view.el,
             scroller = grid.verticalScroller,
+
 
             // always get data from ColumnModel as its what drives
             // the GridView's sizing
@@ -349,6 +353,8 @@ Ext.define('App.classes.grid.RowFormEditor', {
                 }
             };
 
+        //if(me.currRowH) me.currRow.setHeight(me.currRowH);
+
         // need to set both top/left
         if (row && Ext.isElement(row.dom)) {
             // Bring our row into view if necessary, so a row editor that's already
@@ -359,8 +365,12 @@ Ext.define('App.classes.grid.RowFormEditor', {
             // offsetTop will be relative to the table, and is incorrect
             // when mixed with certain grid features (e.g., grouping).
             y = row.getXY()[1] + 19;
-            rowH = row.getHeight();
-            newHeight = rowH + 10;
+
+
+            me.currRowH = row.getHeight();
+            me.currRow = row;
+
+            row.setHeight(me.getHeight() + 19);
 
             // IE doesn't set the height quite right.
             // This isn't a border-box issue, it even happens
@@ -385,7 +395,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
                     listeners: {
                         afteranimate: function() {
                             invalidateScroller();
-                            y = row.getXY()[1] - 5;
+                            y = row.getXY()[1] + 19;
                             me.el.setY(y);
                         }
                     }
@@ -415,17 +425,17 @@ Ext.define('App.classes.grid.RowFormEditor', {
         }
     },
 
-    removeField: function(field) {
-        var me = this;
-
-        // Incase we pass a column instead, which is fine
-        field = me.getEditor(field);
-        me.mun(field, 'validitychange', me.onValidityChange, me);
-
-        // Remove field/column from our mapping, which will fire the event to
-        // remove the field from our container
-        me.columns.removeKey(field.id);
-    },
+//    removeField: function(field) {
+//        var me = this;
+//
+//        // Incase we pass a column instead, which is fine
+//        field = me.getEditor(field);
+//        me.mun(field, 'validitychange', me.onValidityChange, me);
+//
+//        // Remove field/column from our mapping, which will fire the event to
+//        // remove the field from our container
+//        me.columns.removeKey(field.id);
+//    },
 
     setField: function(column) {
         var me = this,
@@ -477,11 +487,14 @@ Ext.define('App.classes.grid.RowFormEditor', {
     },
 
     renderColumnData: function(field, record) {
-//        var me = this,
-//            grid = me.editingPlugin.grid,
-//            headerCt = grid.headerCt,
-//            view = grid.view,
-//            store = view.store,
+        var me = this,
+            grid = me.editingPlugin.grid,
+            headerCt = grid.headerCt,
+            view = grid.view,
+            store = view.store,
+            form = me.getForm();
+
+        form.loadRecord(record);
 //
 //            //column = me.columns.get(field.id),
 //            value = record.get(column.dataIndex);
@@ -593,6 +606,8 @@ Ext.define('App.classes.grid.RowFormEditor', {
             me.context.view.focus();
             me.context = null;
         }
+        me.currRow.setHeight(me.currRowH);
+        me.currRowH = null;
     },
 
     isDirty: function() {

@@ -202,7 +202,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             formItems   :[
                                 {
                                     fieldLabel:'Full Description',
-                                    xtype:'displayfield'
+                                    xtype:'displayfield',
+                                    name:'code_text',
+                                    anchor:'100%'
                                 },
                                 {
                                     xtype:'container',
@@ -213,24 +215,19 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                             layout:'anchor',
                                             columnWidth: .5,
                                             margin:'0 3 0 0',
-                                            defaults:{ anchor:'100%' },
+                                            defaults:{ xtype:'textfield', anchor:'100%' },
                                             items:[
-
-                                                {
-                                                    fieldLabel:'Date Of Service',
-                                                    xtype:'textfield'
-                                                },
                                                 {
                                                     fieldLabel:'Place Of Service',
-                                                    xtype:'textfield'
+                                                    name:'place_of_service'
                                                 },
                                                 {
                                                     fieldLabel:'Emergency?',
-                                                    xtype:'textfield'
+                                                    name:'emergency'
                                                 },
                                                 {
-                                                    fieldLabel:'Diagnosis',
-                                                    xtype:'textfield'
+                                                    fieldLabel:'Charges',
+                                                    name:'charges'
                                                 }
                                             ]
                                         },
@@ -239,19 +236,15 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                             layout:'anchor',
                                             columnWidth: .5,
                                             margin:'0 0 0 3',
-                                            defaults:{ anchor:'100%' },
+                                            defaults:{ xtype:'textfield', anchor:'100%', labelWidth:110 },
                                             items:[
                                                 {
-                                                    fieldLabel:'Charges',
-                                                    xtype:'textfield'
-                                                },
-                                                {
                                                     fieldLabel:'Days of Units',
-                                                    xtype:'textfield'
+                                                    name:'days_of_units'
                                                 },
                                                 {
                                                     fieldLabel:'ESSDT Fam. Plan',
-                                                    xtype:'textfield'
+                                                    name:'essdt_plan'
                                                 }
 
                                             ]
@@ -260,25 +253,10 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                     ]
                                 },
                                 {
-                                    xtype:'fieldcontainer',
-                                    layout:'hbox',
+                                    xtype:'liveicdxsearch',
                                     fieldLabel:'Diagnosis',
-                                    defaults:{ xtype:'textfield', width:60, margin:'0 5 0 0' },
-                                    items:[
-                                        {
-                                            name:'idc1'
-                                        },{
-                                            name:'idc2'
-                                        },{
-                                            name:'idc3'
-                                        },{
-                                            name:'idc4'
-                                        },{
-                                            name:'idc5'
-                                        },{
-                                            name:'idc6'
-                                        }
-                                    ]
+                                    hideLabel:false,
+                                    name:'diagnosis'
 
                                 }
                             ]
