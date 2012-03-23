@@ -206,14 +206,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								renderer : Ext.util.Format.dateRenderer('Y-m-d')
 							},
 							{
-								header   : 'Lot Number',
+								header   : 'Immunization Name',
 								width    : 100,
-								dataIndex: 'lot_number'
+								dataIndex: 'immunization_name '
 							},
 							{
-								header   : 'Provider',
+								header   : 'Manufacturer',
 								width    : 100,
-								dataIndex: 'administered_by'
+								dataIndex: 'manufacturer'
 							},
 							{
 								header   : 'Date Immunization',
@@ -969,10 +969,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		if(storeIndex == -1) {
 			values.created_uid = app.user.id;
+			values.create_date = new Date();
             record.set(values);
 			store.add(record);
 		} else {
-			values.update_uid = app.user.id;
+			values.updated_uid = app.user.id;
 			record.set(values);
 		}
 		store.sync();
