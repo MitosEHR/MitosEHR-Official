@@ -538,14 +538,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Begin Date',
 								width    : 100,
-								dataIndex: 'begin_date',
-								renderer : Ext.util.Format.dateRenderer('Y-m-d')
+								dataIndex: 'begin_date'
 							},
 							{
 								header   : 'End Date',
 								flex     : 1,
-								dataIndex: 'end_date',
-								renderer : Ext.util.Format.dateRenderer('Y-m-d')
+								dataIndex: 'end_date'
 							},
 							{
 								header   : 'Ocurrence',
@@ -1059,19 +1057,33 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
 				model = Ext.ModelManager.create({
 					pid : app.currPatient.pid,
-					begin_date: new Date(),
-					end_date : new Date()
-
+					begin_date: new Date()
 				}, model);
 				form = panel.getForm();
-
-
-			}else if(btn.itemId == 'addiIssue'){
+            }else if(btn.itemId == 'addiIssue'){
+				panel = me.getLayout().getActiveItem().down('form');
 				model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
+				model = Ext.ModelManager.create({
+					pid : app.currPatient.pid,
+					begin_date: new Date()
+				}, model);
+				form = panel.getForm();
 			}else if(btn.itemId == 'addiSurgery'){
+				panel = me.getLayout().getActiveItem().down('form');
 				model = Ext.ModelManager.getModel('App.model.patientfile.Surgery');
+				model = Ext.ModelManager.create({
+					pid : app.currPatient.pid,
+					begin_date: new Date()
+				}, model);
+				form = panel.getForm();
 			}else if(btn.itemId == 'addiDental'){
+				panel = me.getLayout().getActiveItem().down('form');
 				model = Ext.ModelManager.getModel('App.model.patientfile.Dental');
+				model = Ext.ModelManager.create({
+					pid : app.currPatient.pid,
+					begin_date: new Date()
+				}, model);
+				form = panel.getForm();
 			}
 			/*panel = me.getLayout().getActiveItem().down('form');
 			model = Ext.ModelManager.create({
@@ -1127,9 +1139,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     closeImmunizationGrid:function(){
         this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').collapse();
     },
-	closeAllergiesGrid:function(){
-		this.getLayout().getActiveItem().getComponent('allergiesNorth').down('grid').collapse();
-	},
+
     openImmunizationGrid:function(){
         this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').expand(true);
     },
@@ -1189,5 +1199,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	onMedicalWinShow: function() {
 		this.patientImmuListStore.load({params:{pid:app.currPatient.pid}});
 		this.patientAllergiesListStore.load({params:{pid:app.currPatient.pid}});
+		this.patientMedicalIssuesStore.load({params:{pid:app.currPatient.pid}});
+
 	}
 });

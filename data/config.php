@@ -128,6 +128,9 @@ $API = array(
             'addPatientImmunization'=>array(
                'len'=>1
             ),
+            'updatePatientImmunization'=>array(
+               'len'=>1
+            ),
             'getPatientAllergies'=>array(
                'len'=>1
             ),
@@ -137,10 +140,13 @@ $API = array(
             'updatePatientAllergies'=>array(
                'len'=>1
             ),
-            'getMedicalIssues'=>array(
+            'getPatientMedicalIssues'=>array(
                'len'=>1
             ),
-            'addMedicalIssue'=>array(
+            'addPatientMedicalIssue'=>array(
+               'len'=>1
+            ),
+            'updatePatientMedicalIssue'=>array(
                'len'=>1
             ),
             'getSurgeries'=>array(
@@ -149,10 +155,16 @@ $API = array(
             'addSurgery'=>array(
                'len'=>1
             ),
+            'updateSurgery'=>array(
+               'len'=>1
+            ),
             'getDental'=>array(
                'len'=>1
             ),
             'addDental'=>array(
+               'len'=>1
+            ),
+            'updateDental'=>array(
                'len'=>1
             )
         ),
