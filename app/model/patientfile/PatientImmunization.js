@@ -28,7 +28,8 @@ Ext.define('App.model.patientfile.PatientImmunization', {
 		type: 'direct',
 		api : {
 			read  : Medical.getPatientImmunizations,
-			create: Medical.addPatientImmunization
+			create: Medical.addPatientImmunization,
+			update: Medical.updatePatientImmunization
 		}
 	}
 });

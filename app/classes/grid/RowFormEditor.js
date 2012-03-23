@@ -29,7 +29,7 @@ If you are unsure which license is appropriate for your use, please contact the 
  *
  * @ignore
  */
-Ext.define('Ext.grid.RowEditor', {
+Ext.define('App.classes.grid.RowFormEditor', {
     extend: 'Ext.form.Panel',
     requires: [
         'Ext.tip.ToolTip',
@@ -45,6 +45,7 @@ Ext.define('Ext.grid.RowEditor', {
     lastScrollLeft: 0,
     lastScrollTop: 0,
 
+    bodyPadding: 5,
     border: false,
     
     // Change the hideMode to offsets so that we get accurate measurements when
@@ -53,41 +54,50 @@ Ext.define('Ext.grid.RowEditor', {
 
     initComponent: function() {
         var me = this,
-            form;
+            form, plugin;
 
         me.cls = Ext.baseCSSPrefix + 'grid-row-editor';
 
-        me.layout = {
-            type: 'hbox',
-            align: 'middle'
-        };
+//        me.layout = {
+//            type: 'hbox',
+//            align: 'middle'
+//        };
 
         // Maintain field-to-column mapping
         // It's easy to get a field from a column, but not vice versa
-        me.columns = Ext.create('Ext.util.HashMap');
-        me.columns.getKey = function(columnHeader) {
-            var f;
-            if (columnHeader.getEditor) {
-                f = columnHeader.getEditor();
-                if (f) {
-                    return f.id;
-                }
-            }
-            return columnHeader.id;
-        };
-        me.mon(me.columns, {
-            add: me.onFieldAdd,
-            remove: me.onFieldRemove,
-            replace: me.onFieldReplace,
-            scope: me
-        });
+//        me.columns = Ext.create('Ext.util.HashMap');
+//        me.columns.getKey = function(columnHeader) {
+//            var f;
+//            if (columnHeader.getEditor) {
+//                f = columnHeader.getEditor();
+//                if (f) {
+//                    return f.id;
+//                }
+//            }
+//            return columnHeader.id;
+//        };
+//        me.mon(me.columns, {
+//            add: me.onFieldAdd,
+//            remove: me.onFieldRemove,
+//            replace: me.onFieldReplace,
+//            scope: me
+//        });
+
+
+        plugin = me.editingPlugin;
+
+        say(plugin);
+        say(plugin.formItems);
+
+        me.items = plugin.formItems;
+
 
         me.callParent(arguments);
 
-        if (me.fields) {
-            me.setField(me.fields);
-            delete me.fields;
-        }
+//        if (me.fields) {
+//            me.setField(me.fields);
+//            delete me.fields;
+//        }
 
         form = me.getForm();
         form.trackResetOnLoad = true;
@@ -348,7 +358,7 @@ Ext.define('Ext.grid.RowEditor', {
             // Get the y position of the row relative to its top-most static parent.
             // offsetTop will be relative to the table, and is incorrect
             // when mixed with certain grid features (e.g., grouping).
-            y = row.getXY()[1] - 5;
+            y = row.getXY()[1] + 19;
             rowH = row.getHeight();
             newHeight = rowH + 10;
 
@@ -360,11 +370,11 @@ Ext.define('Ext.grid.RowEditor', {
                 newHeight += 2;
             }
 
-            // Set editor height to match the row height
-            if (me.getHeight() != newHeight) {
-                me.setHeight(newHeight);
-                me.el.setLeft(0);
-            }
+//            // Set editor height to match the row height
+//            if (me.getHeight() != newHeight) {
+//                me.setHeight(newHeight);
+//                me.el.setLeft(0);
+//            }
 
             if (animateConfig) {
                 var animObj = {
@@ -467,34 +477,35 @@ Ext.define('Ext.grid.RowEditor', {
     },
 
     renderColumnData: function(field, record) {
-        var me = this,
-            grid = me.editingPlugin.grid,
-            headerCt = grid.headerCt,
-            view = grid.view,
-            store = view.store,
-            column = me.columns.get(field.id),
-            value = record.get(column.dataIndex);
-
-        // honor our column's renderer (TemplateHeader sets renderer for us!)
-        if (column.renderer) {
-            var metaData = { tdCls: '', style: '' },
-                rowIdx = store.indexOf(record),
-                colIdx = headerCt.getHeaderIndex(column);
-
-            value = column.renderer.call(
-                column.scope || headerCt.ownerCt,
-                value,
-                metaData,
-                record,
-                rowIdx,
-                colIdx,
-                store,
-                view
-            );
-        }
-
-        field.setRawValue(value);
-        field.resetOriginalValue();
+//        var me = this,
+//            grid = me.editingPlugin.grid,
+//            headerCt = grid.headerCt,
+//            view = grid.view,
+//            store = view.store,
+//
+//            //column = me.columns.get(field.id),
+//            value = record.get(column.dataIndex);
+//
+//        // honor our column's renderer (TemplateHeader sets renderer for us!)
+//        if (column.renderer) {
+//            var metaData = { tdCls: '', style: '' },
+//                rowIdx = store.indexOf(record),
+//                colIdx = headerCt.getHeaderIndex(column);
+//
+//            value = column.renderer.call(
+//                column.scope || headerCt.ownerCt,
+//                value,
+//                metaData,
+//                record,
+//                rowIdx,
+//                colIdx,
+//                store,
+//                view
+//            );
+//        }
+//
+//        field.setRawValue(value);
+//        field.resetOriginalValue();
     },
 
     beforeEdit: function() {

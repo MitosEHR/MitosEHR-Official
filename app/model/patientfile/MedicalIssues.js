@@ -9,6 +9,13 @@
 Ext.define('App.model.patientfile.MedicalIssues', {
 	extend: 'Ext.data.Model',
 	fields: [
+
+		{name: 'id', type: 'int'},
+		{name: 'eid', type: 'int'},
+		{name: 'pid', type: 'int'},
+		{name: 'created_uid', type: 'int'},
+		{name: 'updated_uid', type: 'int'},
+		{name: 'create_date', type: 'date', dateFormat: 'c'},
 		{name: 'type', type: 'string'},
 		{name: 'title', type: 'string'},
 		{name: 'diagnosis_code', type: 'string'},
@@ -24,7 +31,8 @@ Ext.define('App.model.patientfile.MedicalIssues', {
 		type: 'direct',
 		api : {
 			read  : Medical.getMedicalIssues,
-			create: Medical.addMedicalIssues
+			create: Medical.addMedicalIssues,
+			update: Medical.updateMedicalIssues
 		}
 	}
 });

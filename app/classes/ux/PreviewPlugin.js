@@ -85,8 +85,7 @@ Ext.define('Ext.ux.PreviewPlugin', {
 				Ext.get(Ext.get(row).query('.x-grid-rowbody-tr')).addCls(hideBodyCls);
 			});
 			Ext.get(Ext.get(row).query('.x-grid-rowbody-tr')).removeCls(hideBodyCls);
-            say(view);
-            view.doLayout();
+            view.up('grid').doLayout();
 		}
 	}
 

@@ -154,6 +154,8 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/form/fields/Checkbox.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/DateTime.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Currency.js"></script>
+        <script type="text/javascript" src="app/classes/grid/RowFormEditor.js"></script>
+        <script type="text/javascript" src="app/classes/grid/RowFormEditing.js"></script>
         <script type="text/javascript" src="app/classes/grid/EventHistory.js"></script>
 
         <!-- Views-->
