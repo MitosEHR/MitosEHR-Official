@@ -297,20 +297,42 @@ class Services {
     private function addCptSummary($records){
 
         $newRecords = array();
-
         foreach($records as $rec){
+            $code_text = $rec['code_text'];
 
             $table = <<<EOD
-            <table border="1">
-            <tr>
-            <td>row 1, cell 1</td>
-            <td>row 1, cell 2</td>
-            </tr>
-            <tr>
-            <td>row 2, cell 1</td>
-            <td>row 2, cell 2</td>
-            </tr>
-            </table>
+            <div class="cpt_summary">
+                <table border="0" width="100%">
+                    <tr>
+                        <td style="width:120px">Full Description:</td>
+                        <td colspan="3">$code_text</td>
+                    </tr>
+                    <tr>
+                        <td style="width:120px">Date Of Service:</td>
+                        <td style="width:200px">[mm dd yy] to [mm dd yy]</td>
+                        <td style="width:120px">Charges:</td>
+                        <td >[CHRGs]</td>
+                    </tr>
+                    <tr>
+                        <td>Place Of Service:</td>
+                        <td>[POS]</td>
+                        <td>Days of Units:</td>
+                        <td>[DOU]</td>
+                    </tr>
+                    <tr>
+                        <td>EMG:</td>
+                        <td>[EMG]</td>
+                        <td>ESSDT Family Plan:</td>
+                        <td>[EFP]</td>
+                    </tr>
+                    <tr>
+                        <td>Diagnosis:</td>
+                        <td>[ICDs]</td>
+                        <td>NPI:</td>
+                        <td>[NPI]</td>
+                    </tr>
+                </table>
+            </div>
 EOD;
 
             $rec['summary'] = $table;
