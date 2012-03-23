@@ -108,11 +108,19 @@ Ext.define('App.view.fees.FeesSheet', {
                                                 }, {
                                                     fieldLabel: 'Paying Entity',
                                                     xtype     : 'mitos.payingentitycombo',
-                                                    name      : 'paymentmethod'
+                                                    name      : 'paymentmethod',
+		                                            itemId    : 'payingEntity',
+		                                            enableKeyEvents : true,
+		                                            listeners : {
+													    scope : page,
+			                                          'select': page.onOptionType
+		                                            }
                                                 }, {
                                                     fieldLabel: 'Payment Category',
-                                                    xtype     : 'mitos.paymentcategorycombo',
-                                                    name      : 'paymentmethod'
+                                                    //xtype     : 'mitos.paymentcategorycombo',
+                                                    xtype:'textfield',
+		                                            itemId:'payment',
+		                                            name      : 'paymentmethod'
                                                 }
                                             ]
 
@@ -144,6 +152,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                 {
                                     xtype:'fieldset',
                                     title:'Description',
+	                                itemId:'description',
                                     margin:'0 0 15 0',
                                     height: 188,
                                     items:[
@@ -154,7 +163,8 @@ Ext.define('App.view.fees.FeesSheet', {
                                             items:[
                                                 {
                                                     xtype:'textfield',
-                                                    fieldLabel:'Payment From'
+                                                    fieldLabel:'Payment From',
+	                                                itemId:'paymentfrom'
                                                 },
                                                 {
                                                     xtype:'textfield',
@@ -266,5 +276,25 @@ Ext.define('App.view.fees.FeesSheet', {
      */
     onActive:function (callback) {
         callback(true);
-    }
+    },
+
+	onOptionType: function(combo) {
+		var me = this;
+		var value = combo.getValue(),
+			patient =  me.getCurrPatient(),
+			titlefield = combo.up('form').down('description').down('fieldcontainer').getComponent('paymentfrom');
+		titlefield.setValue(patient.name);
+
+
+	}
+
+	/*onOptionType: function(combo) {
+var me = this;
+		var value = combo.getValue(),
+			patient =  me.getCurrPatient(),
+		titlefield = combo.up('fieldset').getComponent('payment');
+		titlefield.setValue(patient.name);
+
+
+	}*/
 }); //end oNotesPage class
