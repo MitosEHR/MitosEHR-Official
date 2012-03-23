@@ -47,6 +47,7 @@ class Medical {
     /**
      * @return mixed
      */
+    /*************************************************************************************************************/
     public function getImmunizationsList()
     {
         $sql = "SELECT * FROM codes WHERE code_type='100'";
@@ -67,6 +68,8 @@ class Medical {
         $data['administered_date'] = $this->parseDate($data['administered_date']);
         $data['education_date'] = $this->parseDate($data['education_date']);
         $data['vis_date'] = $this->parseDate($data['vis_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+
 
         $this->db->setSQL($this->db->sqlBind($data, 'patient_immunizations', 'I'));
         $this->db->execLog();
@@ -74,6 +77,25 @@ class Medical {
         return $params;
 
     }
+    public function updatePatientImmunization(stdClass $params)
+    {
+        $data = get_object_vars($params);
+
+        $id = $data['id'];
+        unset($data['id']);
+        $data['administered_date'] = $this->parseDate($data['administered_date']);
+        $data['education_date'] = $this->parseDate($data['education_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+        $data['vis_date'] = $this->parseDate($data['vis_date']);
+
+        $this->db->setSQL($this->db->sqlBind($data, "patient_immunizations", "U", "id='$id'"));
+        $this->db->execLog();
+
+        return $params;
+
+    }
+
+/*************************************************************************************************************/
 
     public function getPatientAllergies(stdClass $params)
     {
@@ -87,6 +109,8 @@ class Medical {
 
         $data['begin_date'] = $this->parseDate($data['begin_date']);
         $data['end_date'] = $this->parseDate($data['end_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+
 
 
         $this->db->setSQL($this->db->sqlBind($data, 'patient_allergies', 'I'));
@@ -102,6 +126,8 @@ class Medical {
         unset($data['id']);
         $data['begin_date'] = $this->parseDate($data['begin_date']);
         $data['end_date'] = $this->parseDate($data['end_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+
 
         $this->db->setSQL($this->db->sqlBind($data, "patient_allergies", "U", "id='$id'"));
         $this->db->execLog();
@@ -109,6 +135,51 @@ class Medical {
         return $params;
 
     }
+    /*************************************************************************************************************/
+
+    public function getMedicalIssues(stdClass $params)
+    {
+        return $this->getMedicalIssuesByPatientID($params->pid);
+    }
+
+    public function addMedicalIssues(stdClass $params)
+    {
+        $data = get_object_vars($params);
+        unset($data['id']);
+
+        $data['begin_date'] = $this->parseDate($data['begin_date']);
+        $data['end_date'] = $this->parseDate($data['end_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+
+
+
+        $this->db->setSQL($this->db->sqlBind($data, 'patient_issues', 'I'));
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
+        return $params;
+    }
+    public function updateMedicalIssues(stdClass $params)
+    {
+        $data = get_object_vars($params);
+
+        $id = $data['id'];
+        unset($data['id']);
+        $data['begin_date'] = $this->parseDate($data['begin_date']);
+        $data['end_date'] = $this->parseDate($data['end_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+
+
+        $this->db->setSQL($this->db->sqlBind($data, "patient_issues", "U", "id='$id'"));
+        $this->db->execLog();
+
+        return $params;
+
+    }
+
+
+    /*************************************************************************************************************/
+    /*************************************************************************************************************/
+    /*************************************************************************************************************/
 
     /*********************************************
      * METHODS USED BY PHP                       *
@@ -157,7 +228,7 @@ class Medical {
      */
     private function getMedicalIssuesByPatientID($pid)
     {
-        $this->db->setSQL("SELECT * FROM patient_medical_issues WHERE pid='$pid'");
+        $this->db->setSQL("SELECT * FROM patient_issues WHERE pid='$pid'");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
@@ -166,7 +237,7 @@ class Medical {
      */
     private function getMedicalIssuesByEncounterID($eid)
     {
-        $this->db->setSQL("SELECT * FROM patient_medical_issues WHERE eid='$eid'");
+        $this->db->setSQL("SELECT * FROM patient_issues WHERE eid='$eid'");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
