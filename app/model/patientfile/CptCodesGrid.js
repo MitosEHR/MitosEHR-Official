@@ -11,6 +11,8 @@ Ext.define('App.model.patientfile.CptCodesGrid', {
         {name: 'id', type: 'int '},
         {name: 'code', type: 'strig'},
         {name: 'code_text', type: 'string'},
+        {name: 'code_text_medium', type: 'string'},
+        {name: 'summary', type: 'string'},
         {name: 'modifiers', type: 'string', defaultValue: ''}
     ],
     proxy : {

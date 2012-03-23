@@ -45,7 +45,7 @@ class Services {
 
         $sortx = $params->sort ? $params->sort[0]->property.' '.$params->sort[0]->direction : 'code ASC';
 
-        $this->db->setSQL("SELECT *
+        $this->db->setSQL("SELECT DISTINCT *
                          FROM $code_table
                         WHERE code_text       LIKE '%$params->query%'
                            OR code_text_short LIKE '%$params->query%'
@@ -234,7 +234,10 @@ class Services {
             $this->db->setSQL("SELECT cpt FROM cpt_icd WHERE icd = '$icd->code'");
             $cpts = $this->db->fetchRecords(PDO::FETCH_CLASS);
             foreach($cpts as $cpt){
-                $this->db->setSQL("SELECT id, code, code_text FROM cpt_codes WHERE code = '$cpt->cpt' AND active ='1'");
+                $this->db->setSQL("SELECT codes.*
+                                     FROM cpt_codes AS codes
+                                    WHERE code = '$cpt->cpt'
+                                      AND active ='1'");
                 $records[] = $this->db->fetchRecord(PDO::FETCH_ASSOC);
             }
         }
@@ -257,14 +260,17 @@ class Services {
     }
 
     public function getCptByEid($eid){
-        $this->db->setSQL("SELECT * FROM encounter_codes_cpt WHERE eid = '$eid' ORDER BY id ASC");
+        $this->db->setSQL("SELECT DISTINCT codes.*
+                             FROM encounter_codes_cpt AS ecc
+                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
+                            WHERE eec.eid = '$eid' ORDER BY eec.id ASC");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
     public function getCptUsedByPid($pid){
-        $this->db->setSQL("SELECT DISTINCT ecc.code, codes.code_text, e.start_date as last_date
+        $this->db->setSQL("SELECT DISTINCT codes.*
                              FROM encounter_codes_cpt AS ecc
-                        left JOIN codes ON ecc.code = codes.code
+                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
                         LEFT JOIN form_data_encounter AS e ON ecc.eid = e.eid
                             WHERE e.pid = '$pid'
                          ORDER BY e.start_date DESC");
@@ -274,9 +280,9 @@ class Services {
     }
 
     public function getCptUsedByClinic(){
-        $this->db->setSQL("SELECT DISTINCT ecc.code, codes.code_text
+        $this->db->setSQL("SELECT DISTINCT codes.*
                              FROM encounter_codes_cpt AS ecc
-                        left JOIN codes ON ecc.code = codes.code
+                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
                          ORDER BY codes.code DESC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
 
