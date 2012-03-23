@@ -82,12 +82,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                     ptype:'gridviewdragdrop',
                                     dragGroup:'firstCPTGridDDGroup',
                                     dropGroup:'secondCPTGridDDGroup'
-                                },
-                                {
-                                    pluginId:'preview',
-                                    ptype:'preview',
-                                    bodyField:'summary',
-                                    previewExpanded:false
                                 }
                             ],
                             listeners:{
@@ -106,12 +100,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             displayInfo:true,
                             emptyMsg:"No Office Notes to display",
                             plugins:Ext.create('Ext.ux.SlidingPager', {})
-                        }),
-                        listeners:{
-                            scope:me,
-                            itemclick:me.gridItemClick
-                        }
-
+                        })
                     }
                 ]
             },
