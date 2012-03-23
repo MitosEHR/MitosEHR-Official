@@ -10,6 +10,10 @@ Ext.define('App.model.patientfile.PatientImmunization', {
 	fields: [
 		{name: 'id', type: 'int'},
 		{name: 'pid', type: 'int'},
+		{name: 'eid', type: 'int'},
+		{name: 'created_uid', type: 'int'},
+		{name: 'updated_uid', type: 'int'},
+		{name: 'immunization_name', type: 'string'},
 		{name: 'immunization_id', type: 'int'},
 		{name: 'administered_date', type: 'date', dateFormat: 'c'},
 		{name: 'manufacturer', type: 'string'},
@@ -17,6 +21,7 @@ Ext.define('App.model.patientfile.PatientImmunization', {
 		{name: 'administered_uid', type: 'string'},
 		{name: 'education_date', type: 'date', dateFormat: 'c'},
 		{name: 'vis_date', type: 'date', dateFormat: 'c'},
+		{name: 'create_date', type: 'date', dateFormat: 'c'},
 		{name: 'note', type: 'string'}
 	],
 	proxy : {
