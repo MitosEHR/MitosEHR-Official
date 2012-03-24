@@ -16,7 +16,7 @@ Ext.define('App.classes.combo.Surgery', {
 					read: CombosData.getOptionsByListId
 				},
 				extraParams: {
-					list_id: 75
+					list_id: 76
 				}
 			}
 		});

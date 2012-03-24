@@ -12,13 +12,14 @@ Ext.define('App.model.patientfile.Dental', {
 		{name: 'id', type: 'int'},
 		{name: 'eid', type: 'int'},
 		{name: 'pid', type: 'int'},
-		{name: 'type', type: 'string'},
+		{name: 'created_uid', type: 'int'},
+		{name: 'updated_uid', type: 'int'},
+		{name: 'create_date', type: 'date', dateFormat: 'c'},
 		{name: 'title', type: 'string'},
 		{name: 'diagnosis_code', type: 'string'},
 		{name: 'begin_date', type: 'date', dateFormat: 'c'},
 		{name: 'end_date', type: 'date', dateFormat: 'c'},
 		{name: 'ocurrence', type: 'string'},
-		{name: 'reaction', type: 'string'},
 		{name: 'referred_by', type: 'string'},
 		{name: 'outcome', type: 'string'},
 		{name: 'destination', type: 'string'}
@@ -26,8 +27,9 @@ Ext.define('App.model.patientfile.Dental', {
 	proxy : {
 		type: 'direct',
 		api : {
-			read  : Medical.getDental,
-			create: Medical.addDental
+			read  : Medical.getPatientDental,
+			create: Medical.addPatientDental,
+			update: Medical.updatePatientDental
 		}
 	}
 });

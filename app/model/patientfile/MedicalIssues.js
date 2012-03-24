@@ -22,7 +22,6 @@ Ext.define('App.model.patientfile.MedicalIssues', {
 		{name: 'begin_date', type: 'date', dateFormat: 'c'},
 		{name: 'end_date', type: 'date', dateFormat: 'c'},
 		{name: 'ocurrence', type: 'string'},
-		{name: 'reaction', type: 'string'},
 		{name: 'referred_by', type: 'string'},
 		{name: 'outcome', type: 'string'},
 		{name: 'destination', type: 'string'}

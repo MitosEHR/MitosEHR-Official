@@ -175,10 +175,84 @@ class Medical {
         return $params;
 
     }
+    /*************************************************************************************************************/
+    public function getPatientSurgery(stdClass $params)
+    {
+        return $this->getPatientSurgeryByPatientID($params->pid);
+    }
+
+    public function addPatientSurgery(stdClass $params)
+    {
+        $data = get_object_vars($params);
+        unset($data['id']);
+
+        $data['begin_date'] = $this->parseDate($data['begin_date']);
+        $data['end_date'] = $this->parseDate($data['end_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
 
 
+
+        $this->db->setSQL($this->db->sqlBind($data, 'patient_surgery', 'I'));
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
+        return $params;
+    }
+    public function updatePatientSurgery(stdClass $params)
+    {
+        $data = get_object_vars($params);
+
+        $id = $data['id'];
+        unset($data['id']);
+        $data['begin_date'] = $this->parseDate($data['begin_date']);
+        $data['end_date'] = $this->parseDate($data['end_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+
+
+        $this->db->setSQL($this->db->sqlBind($data, "patient_surgery", "U", "id='$id'"));
+        $this->db->execLog();
+
+        return $params;
+
+    }
     /*************************************************************************************************************/
-    /*************************************************************************************************************/
+    public function getPatientDental(stdClass $params)
+    {
+        return $this->getPatientDentalByPatientID($params->pid);
+    }
+
+    public function addPatientDental(stdClass $params)
+    {
+        $data = get_object_vars($params);
+        unset($data['id']);
+
+        $data['begin_date'] = $this->parseDate($data['begin_date']);
+        $data['end_date'] = $this->parseDate($data['end_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+
+
+
+        $this->db->setSQL($this->db->sqlBind($data, 'patient_dental', 'I'));
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
+        return $params;
+    }
+    public function updatePatientDental(stdClass $params)
+    {
+        $data = get_object_vars($params);
+
+        $id = $data['id'];
+        unset($data['id']);
+        $data['begin_date'] = $this->parseDate($data['begin_date']);
+        $data['end_date'] = $this->parseDate($data['end_date']);
+        $data['create_date'] = $this->parseDate($data['create_date']);
+
+
+        $this->db->setSQL($this->db->sqlBind($data, "patient_dental", "U", "id='$id'"));
+        $this->db->execLog();
+
+        return $params;
+
+    }
     /*************************************************************************************************************/
 
     /*********************************************
@@ -244,25 +318,25 @@ class Medical {
      * @param $pid
      * @return array
      */
-    private function getSurgeriesByPatientID($pid)
+    private function getPatientSurgeryByPatientID($pid)
     {
-        $this->db->setSQL("SELECT * FROM patient_surgeries WHERE pid='$pid'");
+        $this->db->setSQL("SELECT * FROM patient_surgery WHERE pid='$pid'");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $eid
      * @return array
      */
-    private function getSurgeriesByEncounterID($eid)
+    private function getPatientSurgeryByEncounterID($eid)
     {
-        $this->db->setSQL("SELECT * FROM patient_surgeries WHERE eid='$eid'");
+        $this->db->setSQL("SELECT * FROM patient_surgery WHERE eid='$eid'");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**
      * @param $pid
      * @return array
      */
-    private function getDentalByPatientID($pid)
+    private function getPatientDentalByPatientID($pid)
     {
         $this->db->setSQL("SELECT * FROM patient_dental WHERE pid='$pid'");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
@@ -271,7 +345,7 @@ class Medical {
      * @param $eid
      * @return array
      */
-    private function getDentalByEncounterID($eid)
+    private function getPatientDentalByEncounterID($eid)
     {
         $this->db->setSQL("SELECT * FROM patient_dental WHERE eid='$eid'");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);

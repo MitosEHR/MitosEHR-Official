@@ -140,31 +140,31 @@ $API = array(
             'updatePatientAllergies'=>array(
                'len'=>1
             ),
-            'getPatientMedicalIssues'=>array(
+            'getMedicalIssues'=>array(
                'len'=>1
             ),
-            'addPatientMedicalIssue'=>array(
+            'addMedicalIssues'=>array(
                'len'=>1
             ),
-            'updatePatientMedicalIssue'=>array(
+            'updateMedicalIssues'=>array(
                'len'=>1
             ),
-            'getSurgeries'=>array(
+            'getPatientSurgery'=>array(
                'len'=>1
             ),
-            'addSurgery'=>array(
+            'addPatientSurgery'=>array(
                'len'=>1
             ),
-            'updateSurgery'=>array(
+            'updatePatientSurgery'=>array(
                'len'=>1
             ),
-            'getDental'=>array(
+            'getPatientDental'=>array(
                'len'=>1
             ),
-            'addDental'=>array(
+            'addPatientDental'=>array(
                'len'=>1
             ),
-            'updateDental'=>array(
+            'updatePatientDental'=>array(
                'len'=>1
             )
         ),

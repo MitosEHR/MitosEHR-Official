@@ -79,7 +79,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 									{
 										fieldLabel: 'Date Administered',
 										xtype     : 'datefield',
-										format    : 'Y-m-d',
+										format    : 'Y-m-d H:i:s',
 										name      : 'administered_date'
 									},
 									{
@@ -100,13 +100,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 									{
 										fieldLabel: 'Date Immunization Information Statements Given',
 										xtype     : 'datefield',
-										format    : 'Y-m-d',
+										format    : 'Y-m-d H:i:s',
 										name      : 'education_date'
 									},
 									{
 										fieldLabel: 'Date of VIS Statement (?)',
 										xtype     : 'datefield',
-										format    : 'Y-m-d',
+										format    : 'Y-m-d H:i:s',
 										name      : 'vis_date'
 									},
 									{
@@ -202,8 +202,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Date',
 								width    : 100,
-								dataIndex: 'administered_date',
-								renderer : Ext.util.Format.dateRenderer('Y-m-d')
+								dataIndex: 'administered_date'
 							},
 							{
 								header   : 'Immunization Name',
@@ -218,14 +217,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								header   : 'Date Immunization',
 								flex     : 1,
-								dataIndex: 'education_date',
-								renderer : Ext.util.Format.dateRenderer('Y-m-d')
+								dataIndex: 'education_date'
 							},
 							{
 								header   : 'Date VIS Statement',
 								flex     : 1,
-								dataIndex: 'vis_date',
-								renderer : Ext.util.Format.dateRenderer('Y-m-d')
+								dataIndex: 'vis_date'
+
 							},
 							{
 								header   : 'Notes',
@@ -294,14 +292,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								fieldLabel: 'Begin Date',
 								xtype     : 'datefield',
-								format    : 'Y-m-d',
+								format    : 'Y-m-d H:i:s',
 								name      : 'begin_date'
 
 							},
 							{
 								fieldLabel: 'End Date',
 								xtype     : 'datefield',
-								format    : 'Y-m-d',
+								format    : 'Y-m-d H:i:s',
 								name      : 'end_date'
 
 							},
@@ -463,12 +461,15 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								fieldLabel: 'Begin Date',
 								xtype     : 'datefield',
+								format    : 'Y-m-d H:i:s',
 								name      : 'begin_date'
+
 
 							},
 							{
 								fieldLabel: 'End Date',
 								xtype     : 'datefield',
+								format    : 'Y-m-d H:i:s',
 								name      : 'end_date'
 
 							},
@@ -524,11 +525,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								header   : 'Title',
 								width    : 100,
 								dataIndex: 'title'
-							},
-							{
-								header   : 'Date',
-								width    : 100,
-								dataIndex: 'date'
 							},
 							{
 								header   : 'Diagnosis Code',
@@ -612,7 +608,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								fieldLabel: 'Title',
 								itemId    : 'title',
-								name      : 'date'
+								name      : 'title'
 							},
 							{
 								fieldLabel: 'Diagnosis Code',
@@ -622,12 +618,15 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								fieldLabel: 'Begin Date',
 								xtype     : 'datefield',
+								format    : 'Y-m-d H:i:s',
 								name      : 'begin_date'
+
 
 							},
 							{
 								fieldLabel: 'End Date',
 								xtype     : 'datefield',
+								format    : 'Y-m-d H:i:s',
 								name      : 'end_date'
 
 							},
@@ -679,11 +678,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								header   : 'Type',
 								width    : 100,
 								dataIndex: 'type'
-							},
-							{
-								header   : 'Date',
-								width    : 100,
-								dataIndex: 'date'
 							},
 							{
 								header   : 'Diagnosis Code',
@@ -765,12 +759,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 							{
 								fieldLabel: 'Begin Date',
 								xtype     : 'datefield',
+								format    : 'Y-m-d H:i:s',
 								name      : 'begin_date'
 
 							},
 							{
 								fieldLabel: 'End Date',
 								xtype     : 'datefield',
+								format    : 'Y-m-d H:i:s',
 								name      : 'end_date'
 
 							},
@@ -862,7 +858,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						],
 						listeners: {
 							scope : me,
-							resize: me.onGridResized
+							resize: me.onGridResized,
+							itemdblclick:me.onItemdblclick
 						}
 					}
 				]
@@ -1051,46 +1048,30 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			}, model);
 			form = panel.down('form').getForm();
 		}else{
-
+			panel = me.getLayout().getActiveItem().down('form');
 			if(btn.itemId == 'addiAllergy'){
-				panel = me.getLayout().getActiveItem().down('form');
+
 				model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
-				model = Ext.ModelManager.create({
-					pid : app.currPatient.pid,
-					begin_date: new Date()
-				}, model);
-				form = panel.getForm();
+
             }else if(btn.itemId == 'addiIssue'){
-				panel = me.getLayout().getActiveItem().down('form');
+
 				model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
-				model = Ext.ModelManager.create({
-					pid : app.currPatient.pid,
-					begin_date: new Date()
-				}, model);
-				form = panel.getForm();
+
 			}else if(btn.itemId == 'addiSurgery'){
-				panel = me.getLayout().getActiveItem().down('form');
+
 				model = Ext.ModelManager.getModel('App.model.patientfile.Surgery');
-				model = Ext.ModelManager.create({
-					pid : app.currPatient.pid,
-					begin_date: new Date()
-				}, model);
-				form = panel.getForm();
+
 			}else if(btn.itemId == 'addiDental'){
-				panel = me.getLayout().getActiveItem().down('form');
+
 				model = Ext.ModelManager.getModel('App.model.patientfile.Dental');
-				model = Ext.ModelManager.create({
-					pid : app.currPatient.pid,
-					begin_date: new Date()
-				}, model);
+
 				form = panel.getForm();
 			}
-			/*panel = me.getLayout().getActiveItem().down('form');
 			model = Ext.ModelManager.create({
 				pid : app.currPatient.pid,
 				begin_date: new Date()
 			}, model);
-			form = panel.getForm();*/
+			form = panel.getForm();
 		}
 
 		form.reset();
@@ -1200,6 +1181,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		this.patientImmuListStore.load({params:{pid:app.currPatient.pid}});
 		this.patientAllergiesListStore.load({params:{pid:app.currPatient.pid}});
 		this.patientMedicalIssuesStore.load({params:{pid:app.currPatient.pid}});
+		this.patientSurgeryStore.load({params:{pid:app.currPatient.pid}});
+		this.patientDentalStore.load({params:{pid:app.currPatient.pid}});
 
 	}
 });
