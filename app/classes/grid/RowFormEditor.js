@@ -304,6 +304,17 @@ Ext.define('App.classes.grid.RowFormEditor', {
                 }]
             });
 
+            if(plugin.enableRemove){
+                me.floatingButtons.add({
+                    flex: 1,
+                    xtype: 'button',
+                    handler: plugin.completeRemove,
+                    scope: plugin,
+                    text: 'Remove'
+                });
+            }
+
+
             // Prevent from bubbling click events to the grid view
             me.mon(btns.el, {
                 // BrowserBug: Opera 11.01
@@ -589,6 +600,20 @@ Ext.define('App.classes.grid.RowFormEditor', {
         form.updateRecord(me.context.record);
         me.hide();
         return true;
+    },
+
+    completeRemove:function(){
+        var me = this,
+            form = me.getForm(),
+            store = me.context.store;
+
+        say(form);
+        say(store);
+
+        me.hide();
+        form.clearInvalid();
+        form.reset();
+
     },
 
     onShow: function() {
