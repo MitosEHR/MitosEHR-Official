@@ -44,7 +44,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						itemId       : 'immuNorth',
 						height       : 365,
 						border       : true,
-						hidden       : true,
 						margin       : '0 0 3 0',
 						items        :[
 							{
@@ -147,9 +146,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								title      : 'Immunizations List',
 								width      : 400,
 								split      : true,
-								collapsed  : true,
-								collapsible: true,
 								border     : false,
+								collapseMode : 'mini',
 								store      : me.ImmuListStore,
 								columns    : [
 									{
@@ -251,20 +249,17 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				itemId       : 'allergiesNorth',
 				height       : 365,
 				border       : true,
-				hidden       : true,
 				margin       : '0 0 3 0',
 				items : [
 					{
 						xtype        : 'mitos.form',
-						title        : 'Allergies Form',
 						region       : 'north',
 						layout       : 'column',
 						height       : 320,
-						hidden       : true,
 						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
 						items        : [{
-
+							xtype:'container',
 							items   : [{
 								fieldLabel     : 'Type',
 								name           : 'type',
@@ -304,7 +299,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 							]
 						},{
-
+							xtype:'container',
 							items   : [{
 								fieldLabel: 'Ocurrence',
 								xtype     : 'mitos.occurrencecombo',
@@ -432,7 +427,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				itemId       : 'medicalIssueNorth',
 				height       : 365,
 				border       : true,
-				hidden       : true,
 				margin       : '0 0 3 0',
 				items : [
 					{
@@ -440,12 +434,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						region       : 'north',
 						layout       : 'column',
 						height       : 320,
-						hidden       : true,
 						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
 						items        : [{
 
-
+							xtype:'container',
 							items       :[
 								{
 									fieldLabel     : 'Type',
@@ -486,7 +479,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								}
 							]
 						},{
-
+							xtype:'container',
 							items   :[
 								{
 									fieldLabel: 'Ocurrence',
@@ -598,7 +591,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				itemId       : 'surgeryNorth',
 				height       : 365,
 				border       : true,
-				hidden       : true,
+
 				margin       : '0 0 3 0',
 				items : [
 					{
@@ -606,13 +599,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						region       : 'north',
 						layout       : 'column',
 						height       : 320,
-						hidden       : true,
 						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
 						items        : [
 							{
 
-
+								xtype:'container',
 								items       :[{
 									fieldLabel     : 'Type',
 									name           : 'type',
@@ -653,6 +645,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 								]
 							},{
+								xtype:'container',
 								items       :[{
 									fieldLabel: 'Ocurrence',
 									xtype     : 'mitos.occurrencecombo',
@@ -757,7 +750,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				itemId       : 'dentalNorth',
 				height       : 365,
 				border       : true,
-				hidden       : true,
 				margin       : '0 0 3 0',
 				items : [
 					{
@@ -765,12 +757,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						region       : 'north',
 						layout       : 'column',
 						height       : 320,
-						hidden       : true,
 						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
 						items        : [{
-
-
+							xtype:'container',
 							items       :[{
 								fieldLabel: 'Title',
 								itemId    : 'title',
@@ -800,7 +790,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						},{
 
 
-
+							xtype:'container',
 							items       :[{
 								fieldLabel: 'Ocurrence',
 								xtype     : 'mitos.occurrencecombo',
@@ -960,7 +950,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.listeners = {
 			scope      : me,
-			afterrender: me.onAfterRender,
+			//afterrender: me.onAfterRender,
 			show       : me.onMedicalWinShow
 		};
 
@@ -1008,7 +998,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 
 	},
-
+/*
 	onAfterRender: function() {
 		var me = this,
 			ImmuHeader = this.getComponent(0).getDockedItems()[0],
@@ -1027,7 +1017,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		AllergyHeader.add({
 			xtype  : 'button',
-			text   : 'Allergies',
+			text   : 'Add Allergies',
 			iconCls: 'icoAddRecord',
 			itemId : 'addiAllergy',
 			scope  : me,
@@ -1036,7 +1026,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		MedicalIssue.add({
 			xtype  : 'button',
-			text   : 'Medical Issue',
+			text   : 'Add Medical Issue',
 			iconCls: 'icoAddRecord',
 			itemId : 'addiIssue',
 			scope  : me,
@@ -1045,7 +1035,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		Surgery.add({
 			xtype  : 'button',
-			text   : 'Surgery',
+			text   : 'Add Surgery',
 			iconCls: 'icoAddRecord',
 			itemId : 'addiSurgery',
 			scope  : me,
@@ -1054,7 +1044,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		Dental.add({
 			xtype  : 'button',
-			text   : 'Dental',
+			text   : 'Add Dental',
 			iconCls: 'icoAddRecord',
 			itemId : 'addiDental',
 			scope  : me,
@@ -1064,7 +1054,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.doLayout();
 	},
-
+*/
 
 	onAddNew: function(btn) {
 		var me = this, panel, form, model;
@@ -1170,7 +1160,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	onOptionType: function(combo) {
 
 		var value = combo.getValue(),
-			titlefield = combo.up('form').getComponent('title');
+			titlefield = combo.up('container').getComponent('title');
 		titlefield.setValue(value);
 
 
