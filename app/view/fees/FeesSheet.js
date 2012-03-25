@@ -18,16 +18,138 @@ Ext.define('App.view.fees.FeesSheet', {
         var me = this;
 
         me.panel = Ext.create('Ext.form.Panel', {
-            title: 'Checkout',
-            layout   : 'card',
-            align : 'stretch',
+            title:'Physician Assessment',
+            defaults:{
+                bodyStyle:'padding:15px',
+                bodyBorder:true,
+                layout:'fit',
+                labelWidth:110
+            },
+            items : [
+                {
+                    xtype:'container',
+                    layout: {
+                        type   : 'hbox',
+                        align  : 'stretch'
+                    },
+                    height:340,
+                    margin:'0 0 5 0',
+                    defaults:{ flex:1 },
+                    items:[
+                        {
+                            xtype:'container',
+                            items:[
+                                {
+                                    xtype:'fieldset',
+                                    title:'Follow-Up Information',
+                                    margin:'5 10 10 5',
+                                    height:162.5,
+                                    defaults: {
+                                        labelWidth:110,
+                                        anchor:'100%'
+                                    },
+                                    items:[
+                                        {
+                                            fieldLabel: 'Time',
+                                            xtype     : 'mitos.paymentmethodcombo'
+                                        },
+                                        {
+                                            fieldLabel: 'Facility',
+                                            xtype     : 'mitos.facilitiescombo'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype:'fieldset',
+                                    title:'Meaningful Use Measures',
+                                    columnWidth:.5,
+                                    margin:'0 10 0 5',
+                                    height: 162.5,
+                                    items:[
+                                        {
+                                            xtype:'checkboxgroup',
+                                            defaults:{
+                                                xtype:'checkboxfield',
+                                                margin: '5 0 0 0',
+                                                height:25
+                                            },
+                                            items:[
+                                                {
+                                                    boxLabel:'Clinical Summary Provided'
+                                                },
+                                                {
+                                                    boxLabel:'Elegibility Confirmed'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype:'checkboxgroup',
+                                            defaults:{
+                                                xtype:'checkboxfield'
+                                            },
+                                            items:[
+                                                {
+                                                    boxLabel:'Medical Reconciliation'
+                                                },
+                                                {
+                                                    boxLabel:'Push to Exchange'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
 
+                            ]
+                        },
+                        {
+                            xtype  : 'grid',
+                            title  : 'Orders',
+                            margin:'4 3 0 0',
+                            columns: [
+                                {
+                                    header : 'Code'
+                                },
+                                {
+                                    header : 'Description',
+                                    flex:1
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    xtype:'fieldcontainer',
+                    items:[
+                        {
+                            xtype:'fieldset',
+                            title:'Notes and Reminders',
+                            margin:'0 3 5 3',
+                            height: 150,
+                            items:[
+                                {
+                                    xtype:'textfield',
+                                    name:'note',
+                                    fieldLabel:'Note',
+                                    anchor:'100%'
+                                },
+                                {
+                                    xtype:'textareafield',
+                                    grow:true,
+                                    name:'reminder',
+                                    fieldLabel:'Reminder',
+                                    anchor:'100%'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
             bbar     : [
                 {
                     id      : 'move-prev',
                     text    : 'Back',
                     handler : function(btn) {
-                    me.navigate(btn.up("panel"), "prev");
+                        me.navigate(btn.up("panel"), "prev");
                     },
                     disabled: true
                 },
@@ -37,140 +159,8 @@ Ext.define('App.view.fees.FeesSheet', {
                     id      : 'move-next',
                     text    : 'Next',
                     handler : function(btn) {
-                    me.navigate(btn.up("panel"), "next");
+                        me.navigate(btn.up("panel"), "next");
                     }
-                }
-            ],
-            // the panels (or "cards") within the layout
-            items    : [
-                {
-                    xtype:'form',
-                        title:'Physician Assessment',
-                        defaults:{
-                        bodyStyle:'padding:15px',
-                        bodyBorder:true,
-                        layout:'fit',
-                        labelWidth:110
-                    },
-                    items : [
-                        {
-                            xtype:'container',
-                            layout: {
-                                type   : 'hbox',
-                                align  : 'stretch'
-                            },
-                            height:340,
-                            margin:'0 0 5 0',
-                            defaults:{ flex:1 },
-                            items:[
-                                {
-                                    xtype:'container',
-                                    items:[
-                                        {
-                                            xtype:'fieldset',
-                                            title:'Follow-Up Information',
-                                            margin:'5 10 10 5',
-                                            height:162.5,
-                                            defaults: {
-                                                labelWidth:110,
-                                                anchor:'100%'
-                                            },
-                                            items:[
-                                                {
-                                                    fieldLabel: 'Time',
-                                                    xtype     : 'mitos.paymentmethodcombo'
-                                                },
-                                                {
-                                                    fieldLabel: 'Facility',
-                                                    xtype     : 'mitos.facilitiescombo'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype:'fieldset',
-                                            title:'Meaningful Use Measures',
-                                            columnWidth:.5,
-                                            margin:'0 10 0 5',
-                                            height: 162.5,
-                                            items:[
-                                                {
-                                                    xtype:'checkboxgroup',
-                                                    defaults:{
-                                                        xtype:'checkboxfield',
-                                                        margin: '5 0 0 0',
-                                                        height:25
-                                                    },
-                                                    items:[
-                                                        {
-                                                            boxLabel:'Clinical Summary Provided'
-                                                        },
-                                                        {
-                                                            boxLabel:'Elegibility Confirmed'
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    xtype:'checkboxgroup',
-                                                    defaults:{
-                                                        xtype:'checkboxfield'
-                                                    },
-                                                    items:[
-                                                        {
-                                                            boxLabel:'Medical Reconciliation'
-                                                        },
-                                                        {
-                                                            boxLabel:'Push to Exchange'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-
-                                    ]
-                                },
-                                {
-                                    xtype  : 'grid',
-                                    title  : 'Orders',
-                                    margin:'4 3 0 0',
-                                    columns: [
-                                        {
-                                            header : 'Code'
-                                        },
-                                        {
-                                            header : 'Description',
-                                            flex:1
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            xtype:'fieldcontainer',
-                            items:[
-                                {
-                                    xtype:'fieldset',
-                                    title:'Notes and Reminders',
-                                    margin:'0 3 5 3',
-                                    height: 150,
-                                    items:[
-                                        {
-                                            xtype:'textfield',
-                                            name:'note',
-                                            fieldLabel:'Note',
-                                            anchor:'100%'
-                                        },
-                                        {
-                                            xtype:'textareafield',
-                                            grow:true,
-                                            name:'reminder',
-                                            fieldLabel:'Reminder',
-                                            anchor:'100%'
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
                 }
             ]
         });
