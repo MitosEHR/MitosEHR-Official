@@ -17,7 +17,7 @@ Ext.define('App.view.fees.FeesSheet', {
     initComponent: function() {
         var me = this;
 
-        me.panel = Ext.create('Ext.form.Panel', {
+        me.pageBody =  Ext.create('Ext.form.Panel', {
             title:'Physician Assessment',
             defaults:{
                 bodyStyle:'padding:15px',
@@ -146,7 +146,7 @@ Ext.define('App.view.fees.FeesSheet', {
             ],
             bbar     : [
                 {
-                    id      : 'move-prev',
+                    itemId      : 'move-prev',
                     text    : 'Back',
                     handler : function(btn) {
                         me.navigate(btn.up("panel"), "prev");
@@ -156,7 +156,7 @@ Ext.define('App.view.fees.FeesSheet', {
                 '->',
                 //spacer so buttons align to each side
                 {
-                    id      : 'move-next',
+                    itemId      : 'move-next',
                     text    : 'Next',
                     handler : function(btn) {
                         me.navigate(btn.up("panel"), "next");
@@ -165,8 +165,6 @@ Ext.define('App.view.fees.FeesSheet', {
             ]
         });
 
-
-    		me.pageBody = [ me.panel ];
     		me.callParent(arguments);
     	},
     /*	navigate     : function(panel, direction) {
