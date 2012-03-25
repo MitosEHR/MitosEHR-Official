@@ -35,6 +35,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                 region:'west',
                 width:450,
                 collapsible:true,
+                collapseMode:'mini',
+                collapsed:true,
+                titleCollapse:true,
                 split:true,
                 layout:{
                     type:'vbox',
@@ -168,13 +171,21 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         dockedItems:[
                             {
                                 xtype:'toolbar',
-                                items:['->', {
-                                    text:'Remove',
-                                    iconCls:'icoClose',
-                                    itemId:'removeCptBtn',
-                                    disabled:true
-
-                                }
+                                items:[
+                                    {
+                                        text:'Quick Reference',
+                                        itemId:'referenceCptBtn',
+                                        enableToggle:true,
+                                        scope:me,
+                                        toggleHandler:me.onQuickReferenceToggle
+                                    },
+                                    '->',
+                                    {
+                                        text:'Remove',
+                                        iconCls:'icoClose',
+                                        itemId:'removeCptBtn',
+                                        disabled:true
+                                    }
                                 ]
                             }
                         ],
@@ -199,6 +210,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             autoCancel   : false,
                             errorSummary : false,
                             clicksToEdit:1,
+                            enableRemove:true,
                             formItems   :[
                                 {
                                     fieldLabel:'Full Description',
@@ -245,6 +257,12 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                                 {
                                                     fieldLabel:'ESSDT Fam. Plan',
                                                     name:'essdt_plan'
+                                                },
+                                                {
+                                                    fieldLabel:'Modifiers',
+                                                    xtype: 'livecptsearch',
+                                                    hideLabel:false,
+                                                    name:'modifiers'
                                                 }
 
                                             ]
@@ -265,11 +283,10 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
 //                                afteredit : me.afterEdit,
 //                                canceledit: me.onCancelEdit
 //                            }
-                        })
-//                        listeners:{
-//                            scope:me
-//                            itemclick:me.gridItemClick
-//                        }
+                        }),
+                        listeners:{
+                            selectionchange:me.onEncounterCptSelectionChange
+                        }
                     }
                 ]
 
@@ -277,6 +294,15 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         ];
 
         me.callParent(arguments);
+
+    },
+
+    onQuickReferenceToggle:function(btn, pressed){
+        if(pressed){
+            this.getComponent('leftCol').expand();
+        }else{
+            this.getComponent('leftCol').collapse();
+        }
 
     },
 
@@ -293,6 +319,10 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         var patient = app.getCurrPatient(), pid = patient.pid;
         this.cptCodesGridStore.proxy.extraParams = {pid:pid, eid:app.currEncounterId, filter:filter};
         this.cptCodesGridStore.load();
+    },
+
+    onEncounterCptSelectionChange:function(sm, selections) {
+        sm.view.panel.down('toolbar').getComponent('removeCptBtn').setDisabled(selections.length == 0);
     },
 
     gridItemClick: function(view) {

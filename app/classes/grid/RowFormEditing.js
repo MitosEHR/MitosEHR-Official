@@ -231,6 +231,18 @@ Ext.define('App.classes.grid.RowFormEditing', {
         }
     },
 
+    completeRemove:function(){
+        var me = this;
+
+        if (me.editing) {
+            me.getEditor().completeRemove();
+            me.callParent(arguments);
+
+            me.fireEvent('completeremove', me.context);
+        }
+
+    },
+
     // private
     validateEdit: function() {
         var me             = this,

@@ -44,7 +44,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						itemId       : 'immuNorth',
 						height       : 365,
 						border       : true,
-						hidden       : true,
 						margin       : '0 0 3 0',
 						items        :[
 							{
@@ -54,26 +53,26 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								defaultType  : 'textfield',
 								defaults     : { anchor: '100%', labelWidth: 300 },
 								items        : [
-                                    {
-                                        fieldLabel     : 'Immunization Name',
-                                        name           : 'immunization_name',
-                                        itemId         : 'immuName',
-                                        enableKeyEvents: true,
-                                        listeners      : {
-                                            scope: me,
-                                            focus: me.onCodeFieldFocus,
-                                            blur: me.onCodeFieldBlur
-                                        }
-                                    },
+									{
+										fieldLabel     : 'Immunization Name',
+										name           : 'immunization_name',
+										itemId         : 'immuName',
+										enableKeyEvents: true,
+										listeners      : {
+											scope: me,
+											focus: me.onCodeFieldFocus,
+											blur: me.onCodeFieldBlur
+										}
+									},
 									{
 										fieldLabel     : 'Immunization (CVX Code)',
 										name           : 'immunization_id',
 										itemId         : 'immuCode',
 										enableKeyEvents: true,
 										listeners      : {
-                                            scope: me,
+											scope: me,
 											focus: me.onCodeFieldFocus,
-                                            blur: me.onCodeFieldBlur
+											blur: me.onCodeFieldBlur
 										}
 									},
 									{
@@ -147,9 +146,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								title      : 'Immunizations List',
 								width      : 400,
 								split      : true,
-                                collapsed  : true,
-								collapsible: true,
-                                border     : false,
+								border     : false,
+								collapseMode : 'mini',
 								store      : me.ImmuListStore,
 								columns    : [
 									{
@@ -163,29 +161,29 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										dataIndex: 'code_text'
 									}
 								],
-                                listeners : {
-                                    scope       : me,
-                                    itemdblclick: me.onImmuGridClick
-                                }
+								listeners : {
+									scope       : me,
+									itemdblclick: me.onImmuGridClick
+								}
 							}
 						],
-                        buttons : [
-                            {
-                                minWidth: 80,
-                                text    : 'Save',
-                                itemId  : 'SaveImmunization',
-                                scope   : me,
-                                handler : me.onSave
-                            },
-                            {
-                                minWidth: 80,
-                                text    : 'Cancel',
-                                itemId  : 'CancelImmunization',
-                                scope: me,
-                                handler : me.onCancel
+						buttons : [
+							{
+								minWidth: 80,
+								text    : 'Save',
+								itemId  : 'SaveImmunization',
+								scope   : me,
+								handler : me.onSave
+							},
+							{
+								minWidth: 80,
+								text    : 'Cancel',
+								itemId  : 'CancelImmunization',
+								scope: me,
+								handler : me.onCancel
 
-                            }
-                        ]
+							}
+						]
 					},
 					{
 						xtype      : 'grid',
@@ -234,7 +232,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						listeners: {
 							scope : me,
 							resize: me.onGridResized,
-                            itemdblclick:me.onItemdblclick
+							itemdblclick:me.onItemdblclick
 						}
 					}
 				]
@@ -251,23 +249,18 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				itemId       : 'allergiesNorth',
 				height       : 365,
 				border       : true,
-				hidden       : true,
 				margin       : '0 0 3 0',
 				items : [
 					{
 						xtype        : 'mitos.form',
-						title        : 'Allergies Form',
 						region       : 'north',
-						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
-						defaultType  : 'textfield',
-						defaults     : { width: 500, labelWidth: 300 },
-						height       : 340,
-						collapsed    : true,
-						border       : true,
-						hidden       : true,
-						margin       : '0 0 3 0',
-						items        : [
-							{
+						layout       : 'column',
+						height       : 320,
+						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
+						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
+						items        : [{
+							xtype:'container',
+							items   : [{
 								fieldLabel     : 'Type',
 								name           : 'type',
 								allowBlank     : false,
@@ -279,54 +272,64 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 									'select': me.onOptionType
 								}
 							},
-							{
-								fieldLabel: 'Title',
-								itemId    : 'title',
-								name      : 'title'
-							},
-							{
-								fieldLabel: 'Diagnosis Code',
-								name      : 'diagnosis_code'
+								{
+									fieldLabel: 'Title',
+									itemId    : 'title',
+									name      : 'title'
+								},
+								{
+									fieldLabel: 'Diagnosis Code',
+									name      : 'diagnosis_code'
 
-							},
-							{
-								fieldLabel: 'Begin Date',
-								xtype     : 'datefield',
-								format    : 'Y-m-d H:i:s',
-								name      : 'begin_date'
+								},
+								{
+									fieldLabel: 'Begin Date',
+									xtype     : 'datefield',
+									format    : 'Y-m-d H:i:s',
+									name      : 'begin_date'
 
-							},
-							{
-								fieldLabel: 'End Date',
-								xtype     : 'datefield',
-								format    : 'Y-m-d H:i:s',
-								name      : 'end_date'
+								},
+								{
+									fieldLabel: 'End Date',
+									xtype     : 'datefield',
+									format    : 'Y-m-d H:i:s',
+									name      : 'end_date'
 
-							},
-							{
+								}
+
+							]
+						},{
+							xtype:'container',
+							items   : [{
 								fieldLabel: 'Ocurrence',
 								xtype     : 'mitos.occurrencecombo',
 								name      : 'ocurrence'
 
 							},
-							{
-								fieldLabel: 'Reaction',
-								name      : 'reaction'
-							},
-							{
-								fieldLabel: 'Referred by',
-								name      : 'referred_by'
-							},
-							{
-								fieldLabel: 'Outcome',
-								xtype     : 'mitos.outcome2combo',
-								name      : 'outcome'
+								{
+									fieldLabel: 'Reaction',
+									name      : 'reaction'
+								},
+								{
+									fieldLabel: 'Referred by',
+									name      : 'referred_by'
+								},
+								{
+									fieldLabel: 'Outcome',
+									xtype     : 'mitos.outcome2combo',
+									name      : 'outcome'
 
-							},
-							{
-								fieldLabel: 'Destination',
-								name      : 'destination'
-							}
+								},
+								{
+									fieldLabel: 'Destination',
+									name      : 'destination'
+								}
+
+							]
+						}
+
+
+
 						],
 						buttons      : [
 							{
@@ -407,7 +410,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						listeners: {
 							scope : me,
 							resize: me.onGridResized,
-                            itemdblclick:me.onItemdblclick
+							itemdblclick:me.onItemdblclick
 						}
 					}
 				]
@@ -424,75 +427,82 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				itemId       : 'medicalIssueNorth',
 				height       : 365,
 				border       : true,
-				hidden       : true,
 				margin       : '0 0 3 0',
 				items : [
 					{
 						xtype        : 'mitos.form',
 						region       : 'north',
-						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
-						defaultType  : 'textfield',
-						hidden       : true,
+						layout       : 'column',
 						height       : 320,
-						defaults     : { width: 500, labelWidth: 300 },
-						items        : [
-							{
-								fieldLabel     : 'Type',
-								name           : 'type',
-								allowBlank     : false,
-								xtype          : 'mitos.medicalissuescombo',
-								itemId         : 'medications',
-								enableKeyEvents: true,
-								listeners      : {
-									scope   : me,
-									'select': me.onOptionType
+						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
+						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
+						items        : [{
+
+							xtype:'container',
+							items       :[
+								{
+									fieldLabel     : 'Type',
+									name           : 'type',
+									allowBlank     : false,
+									xtype          : 'mitos.medicalissuescombo',
+									itemId         : 'medications',
+									enableKeyEvents: true,
+									listeners      : {
+										scope   : me,
+										'select': me.onOptionType
+									}
+								},
+								{
+									fieldLabel: 'Title',
+									itemId    : 'title',
+									name      : 'title'
+								},
+								{
+									fieldLabel: 'Diagnosis Code',
+									name      : 'diagnosis_code'
+
+								},
+								{
+									fieldLabel: 'Begin Date',
+									xtype     : 'datefield',
+									format    : 'Y-m-d H:i:s',
+									name      : 'begin_date'
+
+
+								},
+								{
+									fieldLabel: 'End Date',
+									xtype     : 'datefield',
+									format    : 'Y-m-d H:i:s',
+									name      : 'end_date'
+
 								}
-							},
-							{
-								fieldLabel: 'Title',
-								itemId    : 'title',
-								name      : 'title'
-							},
-							{
-								fieldLabel: 'Diagnosis Code',
-								name      : 'diagnosis_code'
+							]
+						},{
+							xtype:'container',
+							items   :[
+								{
+									fieldLabel: 'Ocurrence',
+									xtype     : 'mitos.occurrencecombo',
+									name      : 'ocurrence'
 
-							},
-							{
-								fieldLabel: 'Begin Date',
-								xtype     : 'datefield',
-								format    : 'Y-m-d H:i:s',
-								name      : 'begin_date'
+								},
+								{
+									fieldLabel: 'Referred by',
+									name      : 'referred_by'
+								},
+								{
+									fieldLabel: 'Outcome',
+									xtype     : 'mitos.outcome2combo',
+									name      : 'outcome'
 
+								},
+								{
+									fieldLabel: 'Destination',
+									name      : 'destination'
+								}]
+						}
 
-							},
-							{
-								fieldLabel: 'End Date',
-								xtype     : 'datefield',
-								format    : 'Y-m-d H:i:s',
-								name      : 'end_date'
-
-							},
-							{
-								fieldLabel: 'Ocurrence',
-								xtype     : 'mitos.occurrencecombo',
-								name      : 'ocurrence'
-
-							},
-							{
-								fieldLabel: 'Referred by',
-								name      : 'referred_by'
-							},
-							{
-								fieldLabel: 'Outcome',
-								xtype     : 'mitos.outcome2combo',
-								name      : 'outcome'
-
-							},
-							{
-								fieldLabel: 'Destination',
-								name      : 'destination'
-							}
 						],
 						buttons      : [
 							{
@@ -565,7 +575,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						listeners: {
 							scope : me,
 							resize: me.onGridResized,
-                            itemdblclick : me.onItemdblclick
+							itemdblclick : me.onItemdblclick
 						}
 					}
 				]
@@ -581,76 +591,82 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				itemId       : 'surgeryNorth',
 				height       : 365,
 				border       : true,
-				hidden       : true,
+
 				margin       : '0 0 3 0',
 				items : [
 					{
 						xtype        : 'mitos.form',
 						region       : 'north',
-						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
-						defaultType  : 'textfield',
-						hidden       : true,
+						layout       : 'column',
 						height       : 320,
-						defaults     : { width: 500, labelWidth: 300 },
+						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
+						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
 						items        : [
 							{
-								fieldLabel     : 'Type',
-								name           : 'type',
-								allowBlank     : false,
-								xtype          : 'mitos.surgerycombo',
-								itemId         : 'surgery',
-								enableKeyEvents: true,
-								listeners      : {
-									scope   : me,
-									'select': me.onOptionType
-								}
-							},
-							{
-								fieldLabel: 'Title',
-								itemId    : 'title',
-								name      : 'title'
-							},
-							{
-								fieldLabel: 'Diagnosis Code',
-								name      : 'diagnosis_code'
 
-							},
-							{
-								fieldLabel: 'Begin Date',
-								xtype     : 'datefield',
-								format    : 'Y-m-d H:i:s',
-								name      : 'begin_date'
+								xtype:'container',
+								items       :[{
+									fieldLabel     : 'Type',
+									name           : 'type',
+									allowBlank     : false,
+									xtype          : 'mitos.surgerycombo',
+									itemId         : 'surgery',
+									enableKeyEvents: true,
+									listeners      : {
+										scope   : me,
+										'select': me.onOptionType
+									}
+								},
+									{
+										fieldLabel: 'Title',
+										itemId    : 'title',
+										name      : 'title'
+									},
+									{
+										fieldLabel: 'Diagnosis Code',
+										name      : 'diagnosis_code'
+
+									},
+									{
+										fieldLabel: 'Begin Date',
+										xtype     : 'datefield',
+										format    : 'Y-m-d H:i:s',
+										name      : 'begin_date'
 
 
-							},
-							{
-								fieldLabel: 'End Date',
-								xtype     : 'datefield',
-								format    : 'Y-m-d H:i:s',
-								name      : 'end_date'
+									},
+									{
+										fieldLabel: 'End Date',
+										xtype     : 'datefield',
+										format    : 'Y-m-d H:i:s',
+										name      : 'end_date'
 
-							},
-							{
-								fieldLabel: 'Ocurrence',
-								xtype     : 'mitos.occurrencecombo',
-								name      : 'ocurrence'
+									}
 
-							},
-							{
-								fieldLabel: 'Referred by',
-								name      : 'referred_by'
-							},
-							{
-								fieldLabel: 'Outcome',
-								xtype     : 'mitos.outcome2combo',
-								name      : 'outcome'
+								]
+							},{
+								xtype:'container',
+								items       :[{
+									fieldLabel: 'Ocurrence',
+									xtype     : 'mitos.occurrencecombo',
+									name      : 'ocurrence'
 
-							},
-							{
-								fieldLabel: 'Destination',
-								name      : 'destination'
-							}
-						],
+								},
+									{
+										fieldLabel: 'Referred by',
+										name      : 'referred_by'
+									},
+									{
+										fieldLabel: 'Outcome',
+										xtype     : 'mitos.outcome2combo',
+										name      : 'outcome'
+
+									},
+									{
+										fieldLabel: 'Destination',
+										name      : 'destination'
+									}]
+							}],
 						buttons      : [
 							{
 								minWidth: 80,
@@ -718,7 +734,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 						listeners: {
 							scope : me,
 							resize: me.onGridResized,
-                            itemdblclick:me.onItemdblclick
+							itemdblclick:me.onItemdblclick
 						}
 					}
 				]
@@ -728,86 +744,93 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				 */
 				xtype : 'panel',
 				title : 'Dental',
-				layout: 'border',
+				layout: 'fit',
 				bodyPadding : 5,
 				region       : 'north',
 				itemId       : 'dentalNorth',
 				height       : 365,
 				border       : true,
-				hidden       : true,
 				margin       : '0 0 3 0',
 				items : [
-					{
-						xtype        : 'mitos.form',
-						region       : 'north',
-						fieldDefaults: { msgTarget: 'side', labelWidth: 100 },
-						defaultType  : 'textfield',
-						hidden       : true,
-						height       : 320,
-						defaults     : { width: 500, labelWidth: 300 },
-						items        : [
-							{
-								fieldLabel: 'Title',
-								itemId    : 'title',
-								name      : 'title'
-							},
-							{
-								fieldLabel: 'Diagnosis Code',
-								name      : 'diagnosis_code'
-
-							},
-							{
-								fieldLabel: 'Begin Date',
-								xtype     : 'datefield',
-								format    : 'Y-m-d H:i:s',
-								name      : 'begin_date'
-
-							},
-							{
-								fieldLabel: 'End Date',
-								xtype     : 'datefield',
-								format    : 'Y-m-d H:i:s',
-								name      : 'end_date'
-
-							},
-							{
-								fieldLabel: 'Ocurrence',
-								xtype     : 'mitos.occurrencecombo',
-								name      : 'ocurrence'
-
-							},
-							{
-								fieldLabel: 'Referred by',
-								name      : 'referred_by'
-							},
-							{
-								fieldLabel: 'Outcome',
-								xtype     : 'mitos.outcome2combo',
-								name      : 'outcome'
-
-							},
-							{
-								fieldLabel: 'Destination',
-								name      : 'destination'
-							}
-						],
-						buttons      : [
-							{
-								minWidth: 80,
-								text    : 'Save',
-								itemId  : 'SaveDental',
-								scope   : me,
-								handler : me.onSave
-							},
-							{
-								minWidth: 80,
-								text    : 'Cancel',
-								scope   : me,
-								handler : me.onCancel
-
-							}
-						]
-					},
+//					{
+//						xtype        : 'mitos.form',
+//						region       : 'north',
+//						layout       : 'column',
+//						height       : 320,
+//						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
+//						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
+//						items        : [{
+//							xtype:'container',
+//							items       :[{
+//								fieldLabel: 'Title',
+//								itemId    : 'title',
+//								name      : 'title'
+//							},
+//								{
+//									fieldLabel: 'Diagnosis Code',
+//									name      : 'diagnosis_code'
+//
+//								},
+//								{
+//									fieldLabel: 'Begin Date',
+//									xtype     : 'datefield',
+//									format    : 'Y-m-d H:i:s',
+//									name      : 'begin_date'
+//
+//								},
+//								{
+//									fieldLabel: 'End Date',
+//									xtype     : 'datefield',
+//									format    : 'Y-m-d H:i:s',
+//									name      : 'end_date'
+//
+//								}
+//
+//							]
+//						},{
+//
+//
+//							xtype:'container',
+//							items       :[{
+//								fieldLabel: 'Ocurrence',
+//								xtype     : 'mitos.occurrencecombo',
+//								name      : 'ocurrence'
+//
+//							},
+//								{
+//									fieldLabel: 'Referred by',
+//									name      : 'referred_by'
+//								},
+//								{
+//									fieldLabel: 'Outcome',
+//									xtype     : 'mitos.outcome2combo',
+//									name      : 'outcome'
+//
+//								},
+//								{
+//									fieldLabel: 'Destination',
+//									name      : 'destination'
+//								}]
+//						}
+//
+//						],
+//						buttons      : [
+//							{
+//								minWidth: 80,
+//								text    : 'Save',
+//								itemId  : 'SaveDental',
+//								scope   : me,
+//								handler : me.onSave
+//							},
+//							{
+//								minWidth: 80,
+//								text    : 'Cancel',
+//								scope   : me,
+//								handler : me.onCancel
+//
+//							}
+//						]
+//					},
 					{
 						xtype      : 'grid',
 						region     : 'center',
@@ -856,11 +879,86 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								dataIndex: 'destination'
 							}
 						],
-						listeners: {
-							scope : me,
-							resize: me.onGridResized,
-							itemdblclick:me.onItemdblclick
-						}
+						plugins:Ext.create('App.classes.grid.RowFormEditing', {
+							autoCancel   : false,
+							errorSummary : false,
+							clicksToEdit:1,
+							formItems   :[
+								{
+									xtype:'container',
+									layout: 'column',
+									defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
+									fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
+									items        : [
+										{
+											xtype:'container',
+											items       :[
+												{
+													fieldLabel: 'Title',
+													itemId    : 'title',
+													name      : 'title'
+												},
+												{
+													fieldLabel: 'Diagnosis Code',
+													name      : 'diagnosis_code'
+
+												},
+												{
+													fieldLabel: 'Begin Date',
+													xtype     : 'datefield',
+													format    : 'Y-m-d H:i:s',
+													name      : 'begin_date'
+
+												},
+												{
+													fieldLabel: 'End Date',
+													xtype     : 'datefield',
+													format    : 'Y-m-d H:i:s',
+													name      : 'end_date'
+
+												}
+
+											]
+										},
+										{
+											xtype:'container',
+											items       :[
+												{
+													fieldLabel: 'Ocurrence',
+													xtype     : 'mitos.occurrencecombo',
+													name      : 'ocurrence'
+
+												},
+												{
+													fieldLabel: 'Referred by',
+													name      : 'referred_by'
+												},
+												{
+													fieldLabel: 'Outcome',
+													xtype     : 'mitos.outcome2combo',
+													name      : 'outcome'
+
+												},
+												{
+													fieldLabel: 'Destination',
+													name      : 'destination'
+												}
+											]
+										}
+									]
+								}
+							]
+//                            listeners    : {
+//                                scope     : me,
+//                                afteredit : me.afterEdit,
+//                                canceledit: me.onCancelEdit
+//                            }
+						})
+//						listeners: {
+//							scope : me,
+//							resize: me.onGridResized,
+//							itemdblclick:me.onItemdblclick
+//						}
 					}
 				]
 			}
@@ -927,7 +1025,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.listeners = {
 			scope      : me,
-			afterrender: me.onAfterRender,
+			//afterrender: me.onAfterRender,
 			show       : me.onMedicalWinShow
 		};
 
@@ -939,25 +1037,25 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	onSave:function(btn) {
 		var form = this.getLayout().getActiveItem().down('form').getForm(),
 			record = form.getRecord(),
-            values = form.getValues(),
+			values = form.getValues(),
 			store, storeIndex;
 
 		values.eid = app.currEncounterId;
 
 		if(btn.itemId == 'SaveImmunization'){
-			 store = this.patientImmuListStore;
+			store = this.patientImmuListStore;
 		}
 		else if(btn.itemId == 'SaveAllergies'){
 			store = this.patientAllergiesListStore;
 		}
 		else if(btn.itemId == 'SaveMedicalIssues'){
-			 store = this.patientMedicalIssuesStore;
+			store = this.patientMedicalIssuesStore;
 		}
 		else if(btn.itemId == 'SaveSurgery'){
-			 store = this.patientSurgeryStore;
+			store = this.patientSurgeryStore;
 		}
 		else if(btn.itemId == 'SaveDental'){
-			 store = this.patientDentalStore;
+			store = this.patientDentalStore;
 		}
 
 		storeIndex = store.indexOf(record);
@@ -965,7 +1063,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		if(storeIndex == -1) {
 			values.created_uid = app.user.id;
 			values.create_date = new Date();
-            record.set(values);
+			record.set(values);
 			store.add(record);
 		} else {
 			values.updated_uid = app.user.id;
@@ -975,7 +1073,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 
 	},
-
+/*
 	onAfterRender: function() {
 		var me = this,
 			ImmuHeader = this.getComponent(0).getDockedItems()[0],
@@ -988,42 +1086,42 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			xtype  : 'button',
 			text   : 'Add Immunization',
 			iconCls: 'icoAddRecord',
-            itemId : 'addiImunization',
+			itemId : 'addiImunization',
 			scope  : me,
 			handler: me.onAddNew
 		});
 		AllergyHeader.add({
 			xtype  : 'button',
-			text   : 'Allergies',
+			text   : 'Add Allergies',
 			iconCls: 'icoAddRecord',
-            itemId : 'addiAllergy',
+			itemId : 'addiAllergy',
 			scope  : me,
 			handler: me.onAddNew
 
 		});
 		MedicalIssue.add({
 			xtype  : 'button',
-			text   : 'Medical Issue',
+			text   : 'Add Medical Issue',
 			iconCls: 'icoAddRecord',
-            itemId : 'addiIssue',
+			itemId : 'addiIssue',
 			scope  : me,
 			handler: me.onAddNew
 
 		});
 		Surgery.add({
 			xtype  : 'button',
-			text   : 'Surgery',
+			text   : 'Add Surgery',
 			iconCls: 'icoAddRecord',
-            itemId : 'addiSurgery',
+			itemId : 'addiSurgery',
 			scope  : me,
 			handler: me.onAddNew
 
 		});
 		Dental.add({
 			xtype  : 'button',
-			text   : 'Dental',
+			text   : 'Add Dental',
 			iconCls: 'icoAddRecord',
-            itemId : 'addiDental',
+			itemId : 'addiDental',
 			scope  : me,
 			handler: me.onAddNew
 
@@ -1031,7 +1129,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.doLayout();
 	},
-
+*/
 
 	onAddNew: function(btn) {
 		var me = this, panel, form, model;
@@ -1053,7 +1151,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 				model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
 
-            }else if(btn.itemId == 'addiIssue'){
+			}else if(btn.itemId == 'addiIssue'){
 
 				model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
 
@@ -1082,18 +1180,18 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	},
 
 	onCancel: function(btn) {
-        var me = this, panel, form;
-        if(btn.itemId == 'CancelImmunization'){
-            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-            form = panel.down('form').getForm();
-        }else{
-            panel = me.getLayout().getActiveItem().down('form');
-            form = panel.getForm();
-        }
-        me.closeImmunizationGrid();
+		var me = this, panel, form;
+		if(btn.itemId == 'CancelImmunization'){
+			panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+			form = panel.down('form').getForm();
+		}else{
+			panel = me.getLayout().getActiveItem().down('form');
+			form = panel.getForm();
+		}
+		me.closeImmunizationGrid();
 		me.closeAllergiesGrid();
-        panel.collapse();
-        panel.hide();
+		panel.collapse();
+		panel.hide();
 		form.reset();
 	},
 
@@ -1101,43 +1199,43 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		this.doLayout();
 	},
 
-    onItemdblclick: function(grid, record){
-        say(this);
-        var me = this, form, panel;
-        if(grid.panel.itemId == 'patientImmuListGrid'){
-            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-	        me.closeImmunizationGrid();
-        }else{
-            panel = me.getLayout().getActiveItem();
-        }
-        form = panel.down('form').getForm();
-        panel.show();
-        panel.expand(true);
-        form.loadRecord(record);
+	onItemdblclick: function(grid, record){
+		say(this);
+		var me = this, form, panel;
+		if(grid.panel.itemId == 'patientImmuListGrid'){
+			panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+			me.closeImmunizationGrid();
+		}else{
+			panel = me.getLayout().getActiveItem();
+		}
+		form = panel.down('form').getForm();
+		panel.show();
+		panel.expand(true);
+		form.loadRecord(record);
 
-    },
+	},
 
-    closeImmunizationGrid:function(){
-        this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').collapse();
-    },
+	closeImmunizationGrid:function(){
+		this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').collapse();
+	},
 
-    openImmunizationGrid:function(){
-        this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').expand(true);
-    },
+	openImmunizationGrid:function(){
+		this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').expand(true);
+	},
 
 
-    onCodeFieldFocus: function() {
+	onCodeFieldFocus: function() {
 		this.openImmunizationGrid();
 	},
 
-    onCodeFieldBlur:function(){
-        //this.closeImmunizationGrid();
-    },
+	onCodeFieldBlur:function(){
+		//this.closeImmunizationGrid();
+	},
 
 	onOptionType: function(combo) {
 
 		var value = combo.getValue(),
-			titlefield = combo.up('form').getComponent('title');
+			titlefield = combo.up('container').getComponent('title');
 		titlefield.setValue(value);
 
 
@@ -1148,8 +1246,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			codeField = this.down('form').getComponent('immuCode'),
 			nameValue = record.data.code_text,
 			codeValue = record.data.code;
-        nameField.setValue(nameValue);
-        codeField.setValue(codeValue);
+		nameField.setValue(nameValue);
+		codeField.setValue(codeValue);
 		this.closeImmunizationGrid();
 	},
 
