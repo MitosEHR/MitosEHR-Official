@@ -26,6 +26,84 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         });
 
 
+        me.cptFormEdit = Ext.create('App.classes.grid.RowFormEditing', {
+            autoCancel   : false,
+            errorSummary : false,
+            clicksToEdit:1,
+            enableRemove:true,
+            formItems   :[
+                {
+                    fieldLabel:'Full Description',
+                    xtype:'displayfield',
+                    name:'code_text',
+                    anchor:'100%'
+                },
+                {
+                    xtype:'container',
+                    layout:'column',
+                    items:[
+                        {
+                            xtype:'fieldcontainer',
+                            layout:'anchor',
+                            columnWidth: .5,
+                            margin:'0 3 0 0',
+                            defaults:{ xtype:'textfield', anchor:'100%' },
+                            items:[
+                                {
+                                    fieldLabel:'Place Of Service',
+                                    name:'place_of_service'
+                                },
+                                {
+                                    fieldLabel:'Emergency?',
+                                    name:'emergency'
+                                },
+                                {
+                                    fieldLabel:'Charges',
+                                    name:'charges'
+                                }
+                            ]
+                        },
+                        {
+                            xtype:'fieldcontainer',
+                            layout:'anchor',
+                            columnWidth: .5,
+                            margin:'0 0 0 3',
+                            defaults:{ xtype:'textfield', anchor:'100%', labelWidth:110 },
+                            items:[
+                                {
+                                    fieldLabel:'Days of Units',
+                                    name:'days_of_units'
+                                },
+                                {
+                                    fieldLabel:'ESSDT Fam. Plan',
+                                    name:'essdt_plan'
+                                },
+                                {
+                                    fieldLabel:'Modifiers',
+                                    xtype: 'livecptsearch',
+                                    hideLabel:false,
+                                    name:'modifiers'
+                                }
+
+                            ]
+                        }
+
+                    ]
+                },
+                {
+                    xtype:'liveicdxsearch',
+                    fieldLabel:'Diagnosis',
+                    hideLabel:false,
+                    name:'diagnosis'
+
+                }
+            ]
+//                            listeners    : {
+//                                scope     : me,
+//                                afteredit : me.afterEdit,
+//                                canceledit: me.onCancelEdit
+//                            }
+        });
 
         me.items = [
             {
@@ -206,84 +284,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                 }
                             }
                         },
-                        plugins:Ext.create('App.classes.grid.RowFormEditing', {
-                            autoCancel   : false,
-                            errorSummary : false,
-                            clicksToEdit:1,
-                            enableRemove:true,
-                            formItems   :[
-                                {
-                                    fieldLabel:'Full Description',
-                                    xtype:'displayfield',
-                                    name:'code_text',
-                                    anchor:'100%'
-                                },
-                                {
-                                    xtype:'container',
-                                    layout:'column',
-                                    items:[
-                                        {
-                                            xtype:'fieldcontainer',
-                                            layout:'anchor',
-                                            columnWidth: .5,
-                                            margin:'0 3 0 0',
-                                            defaults:{ xtype:'textfield', anchor:'100%' },
-                                            items:[
-                                                {
-                                                    fieldLabel:'Place Of Service',
-                                                    name:'place_of_service'
-                                                },
-                                                {
-                                                    fieldLabel:'Emergency?',
-                                                    name:'emergency'
-                                                },
-                                                {
-                                                    fieldLabel:'Charges',
-                                                    name:'charges'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype:'fieldcontainer',
-                                            layout:'anchor',
-                                            columnWidth: .5,
-                                            margin:'0 0 0 3',
-                                            defaults:{ xtype:'textfield', anchor:'100%', labelWidth:110 },
-                                            items:[
-                                                {
-                                                    fieldLabel:'Days of Units',
-                                                    name:'days_of_units'
-                                                },
-                                                {
-                                                    fieldLabel:'ESSDT Fam. Plan',
-                                                    name:'essdt_plan'
-                                                },
-                                                {
-                                                    fieldLabel:'Modifiers',
-                                                    xtype: 'livecptsearch',
-                                                    hideLabel:false,
-                                                    name:'modifiers'
-                                                }
-
-                                            ]
-                                        }
-
-                                    ]
-                                },
-                                {
-                                    xtype:'liveicdxsearch',
-                                    fieldLabel:'Diagnosis',
-                                    hideLabel:false,
-                                    name:'diagnosis'
-
-                                }
-                            ]
-//                            listeners    : {
-//                                scope     : me,
-//                                afteredit : me.afterEdit,
-//                                canceledit: me.onCancelEdit
-//                            }
-                        }),
+                        plugins:me.cptFormEdit,
                         listeners:{
                             selectionchange:me.onEncounterCptSelectionChange
                         }
@@ -311,8 +312,12 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     },
 
     onLiveCptSelect:function (btn, record) {
+        var me = this;
         btn.reset();
-        this.secondGridStore.add(record[0]);
+        me.cptFormEdit.cancelEdit();
+        me.secondGridStore.insert(0, record[0]);
+        me.cptFormEdit.startEdit(0, 0);
+
     },
 
     loadCptQuickReferenceGrid:function (filter) {

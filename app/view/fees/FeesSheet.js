@@ -14,224 +14,166 @@ Ext.define('App.view.fees.FeesSheet', {
     pageTitle:'Fees Sheet',
     uses:['App.classes.GridPanel'],
 
-    initComponent:function () {
-        var page = this;
+    initComponent: function() {
+        var me = this;
 
-        page.panel = Ext.create('Ext.tab.Panel', {
-
-            items:[
-
+        me.pageBody =  Ext.create('Ext.form.Panel', {
+            title:'Physician Assessment',
+            defaults:{
+                bodyStyle:'padding:15px',
+                bodyBorder:true,
+                layout:'fit',
+                labelWidth:110
+            },
+            items : [
                 {
-                    title:'Payment Entry',
-                    plain:true,
-                    activeItem:0,
-                    defaults:{
-                        bodyStyle:'padding:15px',
-                        bodyBorder:true,
-                        layout:'fit',
-                        labelWidth:110
+                    xtype:'container',
+                    layout: {
+                        type   : 'hbox',
+                        align  : 'stretch'
                     },
-
+                    height:340,
+                    margin:'0 0 5 0',
+                    defaults:{ flex:1 },
                     items:[
                         {
-                            xtype:'form',
-                            title:'Payment Entry',
-                            defaults:{ labelWidth:110 },
+                            xtype:'container',
                             items:[
                                 {
                                     xtype:'fieldset',
-                                    title:'Payment Live Search',
-                                    height: 60,
-                                    layout:'anchor',
-                                    items:{ xtype:'liveicdxsearch' }
-
-                                },
-                                {
-                                    xtype:'container',
-                                    layout: {
-                                        type   : 'hbox',
-                                        align  : 'stretch'
+                                    title:'Follow-Up Information',
+                                    margin:'5 10 10 5',
+                                    height:162.5,
+                                    defaults: {
+                                        labelWidth:110,
+                                        anchor:'100%'
                                     },
-                                    height:190,
-                                    defaults:{ flex:1 },
                                     items:[
                                         {
-
-                                            xtype:'fieldset',
-                                            title:'Payment Information',
-                                            layout:'anchor',
-                                            margin:'5 5 5 0',
-                                            defaults: { labelWidth:110 },
-                                            items:[
-                                                {
-                                                    fieldLabel: 'Payment Method',
-                                                    xtype     : 'mitos.paymentmethodcombo',
-                                                    name      : 'paymentmethod'
-                                                }, {
-                                                    xtype:'mitos.currency',
-                                                    fieldLabel:'Payment Amount'
-                                                }, {
-                                                    fieldLabel: 'Paying Entity',
-                                                    xtype     : 'mitos.payingentitycombo',
-                                                    name      : 'paymentmethod',
-		                                            itemId    : 'payingEntity',
-		                                            enableKeyEvents : true,
-		                                            listeners : {
-													    scope : page,
-			                                          'select': page.onOptionType
-		                                            }
-                                                }, {
-                                                    fieldLabel: 'Payment Category',
-                                                    //xtype     : 'mitos.paymentcategorycombo',
-                                                    xtype:'textfield',
-		                                            itemId:'payment',
-		                                            name      : 'paymentmethod'
-                                                }
-                                            ]
-
+                                            fieldLabel: 'Time',
+                                            xtype     : 'mitos.paymentmethodcombo'
                                         },
                                         {
-                                            xtype:'fieldset',
-                                            title:'Check Information',
-                                            layout:'anchor',
-                                            margin:'5 0 5 0',
-                                            items:[
-                                                {
-                                                    xtype:'datefield',
-                                                    fieldLabel:'Check Date'
-                                                },
-                                                {
-                                                    xtype:'datefield',
-                                                    fieldLabel:'Post To Date'
-                                                },
-                                                {
-                                                    xtype:'textfield',
-                                                    fieldLabel:'Check Number'
-                                                }
-                                            ]
+                                            fieldLabel: 'Facility',
+                                            xtype     : 'mitos.facilitiescombo'
                                         }
                                     ]
-
                                 },
-
                                 {
                                     xtype:'fieldset',
-                                    title:'Description',
-	                                itemId:'description',
-                                    margin:'0 0 15 0',
-                                    height: 188,
+                                    title:'Meaningful Use Measures',
+                                    columnWidth:.5,
+                                    margin:'0 10 0 5',
+                                    height: 162.5,
                                     items:[
                                         {
-
-                                            xtype:'fieldcontainer',
-                                            defaults:{ labelWidth:110 },
+                                            xtype:'checkboxgroup',
+                                            defaults:{
+                                                xtype:'checkboxfield',
+                                                margin: '5 0 0 0',
+                                                height:25
+                                            },
                                             items:[
                                                 {
-                                                    xtype:'textfield',
-                                                    fieldLabel:'Payment From',
-	                                                itemId:'paymentfrom'
+                                                    boxLabel:'Clinical Summary Provided'
                                                 },
                                                 {
-                                                    xtype:'textfield',
-                                                    fieldLabel:'Patient Id'
+                                                    boxLabel:'Elegibility Confirmed'
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            xtype:'checkboxgroup',
+                                            defaults:{
+                                                xtype:'checkboxfield'
+                                            },
+                                            items:[
+                                                {
+                                                    boxLabel:'Medical Reconciliation'
                                                 },
                                                 {
-                                                    xtype:'datefield',
-                                                    fieldLabel:'Deposit Date'
-                                                },
-                                                {
-                                                    xtype:'mitos.currency',
-                                                    fieldLabel:'Remaining Amount'
-                                                },
-                                                {
-                                                    xtype:'textfield',
-                                                    fieldLabel:'Notes',
-                                                    height:50,
-                                                    width: 550
-
+                                                    boxLabel:'Push to Exchange'
                                                 }
                                             ]
                                         }
                                     ]
                                 }
+
+                            ]
+                        },
+                        {
+                            xtype  : 'grid',
+                            title  : 'Orders',
+                            margin:'4 3 0 0',
+                            columns: [
+                                {
+                                    header : 'Code'
+                                },
+                                {
+                                    header : 'Description',
+                                    flex:1
+                                }
                             ]
                         }
-                    ]/*,
-                    buttons:[
-                        {
-                            text:'Save',
-                            // action:'encounter',
-                            scope:page
-                            // handler:page.coSignEncounter
-                        },
-                        {
-                            text:'Allocate',
-                            //  action:'encounter',
-                            scope:page
-                            // handler:me.signEncounter
-                        },
-                        {
-                            text:'Cancel'
-                            //  handler:me.cancelCheckout
-
-                        }
-                    ]*/
+                    ]
                 },
-
                 {
-                    xtype:'form',
-                    title:'ERA Posting',
-                    defaults:{ labelWidth:110 },
-
+                    xtype:'fieldcontainer',
                     items:[
-                            {
-                                xtype:'datefield',
-                                fieldLabel:'Date'
-                            },
-                            {
-                                xtype:'datefield',
-                                fieldLabel:'Post To Date'
-                            },
-                            {
-                                xtype:'datefield',
-                                fieldLabel:'Deposit Date'
-                            },
-                            {
-                                xtype:'textfield',
-                                fieldLabel:'Insurance Company'
-                            },
-                            {
-                                xtype:'textfield',
-                                fieldLabel:'Patient Id'
-                            }
-                        ]
+                        {
+                            xtype:'fieldset',
+                            title:'Notes and Reminders',
+                            margin:'0 3 5 3',
+                            height: 150,
+                            items:[
+                                {
+                                    xtype:'textfield',
+                                    name:'note',
+                                    fieldLabel:'Note',
+                                    anchor:'100%'
+                                },
+                                {
+                                    xtype:'textareafield',
+                                    grow:true,
+                                    name:'reminder',
+                                    fieldLabel:'Reminder',
+                                    anchor:'100%'
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
-            buttons:[
+            bbar     : [
                 {
-                    text:'Save',
-                    // action:'encounter',
-                    scope:page
-                    // handler:page.coSignEncounter
+                    itemId      : 'move-prev',
+                    text    : 'Back',
+                    handler : function(btn) {
+                        me.navigate(btn.up("panel"), "prev");
+                    },
+                    disabled: true
                 },
+                '->',
+                //spacer so buttons align to each side
                 {
-                    text:'Allocate',
-                    //  action:'encounter',
-                    scope:page
-                    // handler:me.signEncounter
-                },
-                {
-                    text:'Cancel'
-                    //  handler:me.cancelCheckout
-
+                    itemId      : 'move-next',
+                    text    : 'Next',
+                    handler : function(btn) {
+                        me.navigate(btn.up("panel"), "next");
+                    }
                 }
             ]
         });
 
-        page.pageBody = [page.panel];
-        page.callParent(arguments);
+    		me.callParent(arguments);
+    	},
+    /*	navigate     : function(panel, direction) {
 
-    }, // end of initComponent
+    		var layout = panel.getLayout();
+    		layout[direction]();
+    		Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
+    		Ext.getCmp('move-next').setDisabled(!layout.getNext());
+    	}, // end of initComponent*/
 
     /**
      * This function is called from MitosAPP.js when

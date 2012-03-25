@@ -605,15 +605,14 @@ Ext.define('App.classes.grid.RowFormEditor', {
     completeRemove:function(){
         var me = this,
             form = me.getForm(),
-            store = me.context.store;
+            view = me.context.view,
+            store = me.context.store,
+            record = view.getSelectionModel().getLastSelected();
 
-        say(form);
-        say(store);
-
+        store.remove(record);
         me.hide();
         form.clearInvalid();
         form.reset();
-
     },
 
     onShow: function() {
