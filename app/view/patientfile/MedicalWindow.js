@@ -744,7 +744,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				 */
 				xtype : 'panel',
 				title : 'Dental',
-				layout: 'border',
+				layout: 'fit',
 				bodyPadding : 5,
 				region       : 'north',
 				itemId       : 'dentalNorth',
@@ -752,85 +752,85 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				border       : true,
 				margin       : '0 0 3 0',
 				items : [
-					{
-						xtype        : 'mitos.form',
-						region       : 'north',
-						layout       : 'column',
-						height       : 320,
-						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
-						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
-						items        : [{
-							xtype:'container',
-							items       :[{
-								fieldLabel: 'Title',
-								itemId    : 'title',
-								name      : 'title'
-							},
-								{
-									fieldLabel: 'Diagnosis Code',
-									name      : 'diagnosis_code'
-
-								},
-								{
-									fieldLabel: 'Begin Date',
-									xtype     : 'datefield',
-									format    : 'Y-m-d H:i:s',
-									name      : 'begin_date'
-
-								},
-								{
-									fieldLabel: 'End Date',
-									xtype     : 'datefield',
-									format    : 'Y-m-d H:i:s',
-									name      : 'end_date'
-
-								}
-
-							]
-						},{
-
-
-							xtype:'container',
-							items       :[{
-								fieldLabel: 'Ocurrence',
-								xtype     : 'mitos.occurrencecombo',
-								name      : 'ocurrence'
-
-							},
-								{
-									fieldLabel: 'Referred by',
-									name      : 'referred_by'
-								},
-								{
-									fieldLabel: 'Outcome',
-									xtype     : 'mitos.outcome2combo',
-									name      : 'outcome'
-
-								},
-								{
-									fieldLabel: 'Destination',
-									name      : 'destination'
-								}]
-						}
-
-						],
-						buttons      : [
-							{
-								minWidth: 80,
-								text    : 'Save',
-								itemId  : 'SaveDental',
-								scope   : me,
-								handler : me.onSave
-							},
-							{
-								minWidth: 80,
-								text    : 'Cancel',
-								scope   : me,
-								handler : me.onCancel
-
-							}
-						]
-					},
+//					{
+//						xtype        : 'mitos.form',
+//						region       : 'north',
+//						layout       : 'column',
+//						height       : 320,
+//						defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
+//						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
+//						items        : [{
+//							xtype:'container',
+//							items       :[{
+//								fieldLabel: 'Title',
+//								itemId    : 'title',
+//								name      : 'title'
+//							},
+//								{
+//									fieldLabel: 'Diagnosis Code',
+//									name      : 'diagnosis_code'
+//
+//								},
+//								{
+//									fieldLabel: 'Begin Date',
+//									xtype     : 'datefield',
+//									format    : 'Y-m-d H:i:s',
+//									name      : 'begin_date'
+//
+//								},
+//								{
+//									fieldLabel: 'End Date',
+//									xtype     : 'datefield',
+//									format    : 'Y-m-d H:i:s',
+//									name      : 'end_date'
+//
+//								}
+//
+//							]
+//						},{
+//
+//
+//							xtype:'container',
+//							items       :[{
+//								fieldLabel: 'Ocurrence',
+//								xtype     : 'mitos.occurrencecombo',
+//								name      : 'ocurrence'
+//
+//							},
+//								{
+//									fieldLabel: 'Referred by',
+//									name      : 'referred_by'
+//								},
+//								{
+//									fieldLabel: 'Outcome',
+//									xtype     : 'mitos.outcome2combo',
+//									name      : 'outcome'
+//
+//								},
+//								{
+//									fieldLabel: 'Destination',
+//									name      : 'destination'
+//								}]
+//						}
+//
+//						],
+//						buttons      : [
+//							{
+//								minWidth: 80,
+//								text    : 'Save',
+//								itemId  : 'SaveDental',
+//								scope   : me,
+//								handler : me.onSave
+//							},
+//							{
+//								minWidth: 80,
+//								text    : 'Cancel',
+//								scope   : me,
+//								handler : me.onCancel
+//
+//							}
+//						]
+//					},
 					{
 						xtype      : 'grid',
 						region     : 'center',
@@ -879,11 +879,86 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								dataIndex: 'destination'
 							}
 						],
-						listeners: {
-							scope : me,
-							resize: me.onGridResized,
-							itemdblclick:me.onItemdblclick
-						}
+						plugins:Ext.create('App.classes.grid.RowFormEditing', {
+							autoCancel   : false,
+							errorSummary : false,
+							clicksToEdit:1,
+							formItems   :[
+								{
+									xtype:'container',
+									layout: 'column',
+									defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
+									fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
+									items        : [
+										{
+											xtype:'container',
+											items       :[
+												{
+													fieldLabel: 'Title',
+													itemId    : 'title',
+													name      : 'title'
+												},
+												{
+													fieldLabel: 'Diagnosis Code',
+													name      : 'diagnosis_code'
+
+												},
+												{
+													fieldLabel: 'Begin Date',
+													xtype     : 'datefield',
+													format    : 'Y-m-d H:i:s',
+													name      : 'begin_date'
+
+												},
+												{
+													fieldLabel: 'End Date',
+													xtype     : 'datefield',
+													format    : 'Y-m-d H:i:s',
+													name      : 'end_date'
+
+												}
+
+											]
+										},
+										{
+											xtype:'container',
+											items       :[
+												{
+													fieldLabel: 'Ocurrence',
+													xtype     : 'mitos.occurrencecombo',
+													name      : 'ocurrence'
+
+												},
+												{
+													fieldLabel: 'Referred by',
+													name      : 'referred_by'
+												},
+												{
+													fieldLabel: 'Outcome',
+													xtype     : 'mitos.outcome2combo',
+													name      : 'outcome'
+
+												},
+												{
+													fieldLabel: 'Destination',
+													name      : 'destination'
+												}
+											]
+										}
+									]
+								}
+							]
+//                            listeners    : {
+//                                scope     : me,
+//                                afteredit : me.afterEdit,
+//                                canceledit: me.onCancelEdit
+//                            }
+						})
+//						listeners: {
+//							scope : me,
+//							resize: me.onGridResized,
+//							itemdblclick:me.onItemdblclick
+//						}
 					}
 				]
 			}
