@@ -236,7 +236,7 @@ Ext.define('App.classes.grid.RowFormEditing', {
 
         if (me.editing) {
             me.getEditor().completeRemove();
-            me.callParent(arguments);
+            //me.callParent(arguments);
 
             me.fireEvent('completeremove', me.context);
         }
