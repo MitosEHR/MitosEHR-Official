@@ -17,116 +17,105 @@ Ext.define('App.view.fees.Checkout', {
     initComponent: function() {
 		var me = this;
 
-		me.panel = Ext.create('Ext.form.Panel', {
-			title: 'Checkout',
-			layout   : 'card',
-            align : 'stretch',
-
-			bbar     : [
-				{
-					id      : 'move-prev',
-					text    : 'Back',
-					handler : function(btn) {
-						me.navigate(btn.up("panel"), "prev");
-					},
-					disabled: true
-				},
-				'->',
-				//spacer so buttons align to each side
-				{
-					id      : 'move-next',
-					text    : 'Next',
-					handler : function(btn) {
-						me.navigate(btn.up("panel"), "next");
-					}
-				}
-			],
-			// the panels (or "cards") within the layout
-			items    : [
+        me.pageBody = Ext.create('Ext.form.Panel', {
+            title:'Patient Checkout',
+            defaults:{
+                bodyStyle:'padding:15px',
+                bodyBorder:true,
+                layout:'fit',
+                labelWidth:110
+            },
+            items:[
                 {
-                    xtype:'form',
-                    title:'Patient Checkout',
-                    defaults:{
-                        bodyStyle:'padding:15px',
-                        bodyBorder:true,
-                        layout:'fit',
-                        labelWidth:110
+                    xtype:'container',
+                    layout: {
+                        type   : 'hbox',
+                        align  : 'stretch'
                     },
+                    height:300,
+                    defaults:{ flex:1 },
                     items:[
                         {
-                            xtype:'container',
-                            layout: {
-                                type   : 'hbox',
-                                align  : 'stretch'
-                            },
-                            height:300,
-                            defaults:{ flex:1 },
+                            xtype:'fieldset',
+                            title:'Transaction Information',
+                            layout:'anchor',
+                            margin:'5 5 5 5',
+                            defaults: { labelWidth:110 },
                             items:[
                                 {
-                                    xtype:'fieldset',
-                                    title:'Transaction Information',
-                                    layout:'anchor',
-                                    margin:'5 5 5 5',
-                                    defaults: { labelWidth:110 },
-                                    items:[
-                                        {
-                                            fieldLabel: 'Patient Name',
-                                            xtype     : 'textfield'
-                                        },
-                                        {
-                                            fieldLabel: 'Encounter #',
-                                            xtype     : 'textfield'
-                                        },
-                                        {
-                                            fieldLabel: 'Facility',
-                                            xtype     : 'mitos.facilitiescombo'
-                                        },
-                                        {
-                                            fieldLabel: 'Transaction #',
-                                            xtype     : 'textfield'
-                                        },
-                                        {
-                                            fieldLabel: 'Transaction Date',
-                                            xtype     : 'datefield'
-                                        }
-                                    ]
-
+                                    fieldLabel: 'Patient Name',
+                                    xtype     : 'textfield'
                                 },
                                 {
-                                    xtype:'fieldset',
-                                    title:'Payment Information',
-                                    layout:'anchor',
-                                    margin:'5 5 5 0',
-                                    items:[
-                                        {
-                                            xtype:'mitos.currency',
-                                            fieldLabel:'Payment Amount'
-                                        },
-                                        {
-                                            fieldLabel: 'Paying Entity',
-                                            xtype     : 'mitos.payingentitycombo',
-                                            name      : 'paymentmethod'
-                                        },
-                                        {
-                                            xtype:'datefield',
-                                            fieldLabel:'Post To Date'
-                                        },
-                                        {
-                                            xtype:'textfield',
-                                            fieldLabel:'Check Number'
-                                        }
-                                    ]
+                                    fieldLabel: 'Encounter #',
+                                    xtype     : 'textfield'
+                                },
+                                {
+                                    fieldLabel: 'Facility',
+                                    xtype     : 'mitos.facilitiescombo'
+                                },
+                                {
+                                    fieldLabel: 'Transaction #',
+                                    xtype     : 'textfield'
+                                },
+                                {
+                                    fieldLabel: 'Transaction Date',
+                                    xtype     : 'datefield'
+                                }
+                            ]
+
+                        },
+                        {
+                            xtype:'fieldset',
+                            title:'Payment Information',
+                            layout:'anchor',
+                            margin:'5 5 5 0',
+                            items:[
+                                {
+                                    xtype:'mitos.currency',
+                                    fieldLabel:'Payment Amount'
+                                },
+                                {
+                                    fieldLabel: 'Paying Entity',
+                                    xtype     : 'mitos.payingentitycombo',
+                                    name      : 'paymentmethod'
+                                },
+                                {
+                                    xtype:'datefield',
+                                    fieldLabel:'Post To Date'
+                                },
+                                {
+                                    xtype:'textfield',
+                                    fieldLabel:'Check Number'
                                 }
                             ]
                         }
-
                     ]
                 }
-			]
+
+            ],
+            bbar: [
+                {
+                    itemId      : 'move-prev',
+                    text    : 'Back',
+                    handler : function(btn) {
+                        me.navigate(btn.up("panel"), "prev");
+                    },
+                    disabled: true
+                },
+                '->',
+                //spacer so buttons align to each side
+                {
+                    itemId      : 'move-next',
+                    text    : 'Next',
+                    handler : function(btn) {
+                        me.navigate(btn.up("panel"), "next");
+                    }
+                }
+            ]
 		});
 
 
-		me.pageBody = [ me.panel ];
 		me.callParent(arguments);
 	},
 	/*navigate     : function(panel, direction) {
