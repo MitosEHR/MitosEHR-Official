@@ -96,7 +96,7 @@ Ext.define('App.view.fees.Checkout', {
             ],
             bbar: [
                 {
-                    itemId      : 'move-prev',
+                    itemId  : 'move-prev',
                     text    : 'Back',
                     handler : function(btn) {
                         me.navigate(btn.up("panel"), "prev");
@@ -106,7 +106,7 @@ Ext.define('App.view.fees.Checkout', {
                 '->',
                 //spacer so buttons align to each side
                 {
-                    itemId      : 'move-next',
+                    itemId  : 'move-next',
                     text    : 'Next',
                     handler : function(btn) {
                         me.navigate(btn.up("panel"), "next");

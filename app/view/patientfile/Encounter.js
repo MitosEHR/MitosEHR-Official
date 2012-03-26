@@ -105,7 +105,7 @@ Ext.define('App.view.patientfile.Encounter', {
             items:[
                 {
                     xtype:'grid',
-                    title:'Service / Diagnostics',
+                    title:'Services / Diagnostics',
                     region:'center',
                     columns:[
                         {
@@ -181,7 +181,7 @@ Ext.define('App.view.patientfile.Encounter', {
                                             },
                                             items:[
                                                 {
-                                                    boxLabel:'Medical Rencocilationl'
+                                                    boxLabel:'Medical Reconciliation'
                                                 },
                                                 {
                                                     boxLabel:'Puch to Exchange'
@@ -215,7 +215,7 @@ Ext.define('App.view.patientfile.Encounter', {
                             xtype:'fieldset',
                             margin:5,
                             padding:8,
-                            title:'Patient Notes nad Reminders',
+                            title:'Patient Notes and Reminders',
                             items:[
                                 {
                                     xtype:'textfield',
