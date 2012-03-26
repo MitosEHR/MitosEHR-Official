@@ -53,68 +53,68 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								defaultType  : 'textfield',
 								defaults     : { anchor: '100%', labelWidth: 300 },
 								items        : [
-									{
-										fieldLabel     : 'Immunization Name',
-										name           : 'immunization_name',
-										itemId         : 'immuName',
-										enableKeyEvents: true,
-										listeners      : {
-											scope: me,
-											focus: me.onCodeFieldFocus,
-											blur: me.onCodeFieldBlur
-										}
-									},
-									{
-										fieldLabel     : 'Immunization (CVX Code)',
-										name           : 'immunization_id',
-										itemId         : 'immuCode',
-										enableKeyEvents: true,
-										listeners      : {
-											scope: me,
-											focus: me.onCodeFieldFocus,
-											blur: me.onCodeFieldBlur
-										}
-									},
-									{
-										fieldLabel: 'Date Administered',
-										xtype     : 'datefield',
-										format    : 'Y-m-d H:i:s',
-										name      : 'administered_date'
-									},
-									{
-										fieldLabel: 'Immunization Manufacturer',
-										name      : 'manufacturer'
-
-									},
-									{
-										fieldLabel: 'Immunization Lot Number',
-										name      : 'lot_number'
-
-									},
-									{
-										fieldLabel: 'Name and Title of Immunization Administrator',
-										name      : 'administered_by'
-
-									},
-									{
-										fieldLabel: 'Date Immunization Information Statements Given',
-										xtype     : 'datefield',
-										format    : 'Y-m-d H:i:s',
-										name      : 'education_date'
-									},
-									{
-										fieldLabel: 'Date of VIS Statement (?)',
-										xtype     : 'datefield',
-										format    : 'Y-m-d H:i:s',
-										name      : 'vis_date'
-									},
-									{
-										fieldLabel: 'Notes',
-										xtype     : 'textarea',
-										height     : 70,
-										name      : 'note'
-
-									}
+//									{
+//										fieldLabel     : 'Immunization Name',
+//										name           : 'immunization_name',
+//										itemId         : 'immuName',
+//										enableKeyEvents: true,
+//										listeners      : {
+//											scope: me,
+//											focus: me.onCodeFieldFocus,
+//											blur: me.onCodeFieldBlur
+//										}
+//									},
+//									{
+//										fieldLabel     : 'Immunization (CVX Code)',
+//										name           : 'immunization_id',
+//										itemId         : 'immuCode',
+//										enableKeyEvents: true,
+//										listeners      : {
+//											scope: me,
+//											focus: me.onCodeFieldFocus,
+//											blur: me.onCodeFieldBlur
+//										}
+//									},
+//									{
+//										fieldLabel: 'Date Administered',
+//										xtype     : 'datefield',
+//										format    : 'Y-m-d H:i:s',
+//										name      : 'administered_date'
+//									},
+//									{
+//										fieldLabel: 'Immunization Manufacturer',
+//										name      : 'manufacturer'
+//
+//									},
+//									{
+//										fieldLabel: 'Immunization Lot Number',
+//										name      : 'lot_number'
+//
+//									},
+//									{
+//										fieldLabel: 'Name and Title of Immunization Administrator',
+//										name      : 'administered_by'
+//
+//									},
+//									{
+//										fieldLabel: 'Date Immunization Information Statements Given',
+//										xtype     : 'datefield',
+//										format    : 'Y-m-d H:i:s',
+//										name      : 'education_date'
+//									},
+//									{
+//										fieldLabel: 'Date of VIS Statement (?)',
+//										xtype     : 'datefield',
+//										format    : 'Y-m-d H:i:s',
+//										name      : 'vis_date'
+//									},
+//									{
+//										fieldLabel: 'Notes',
+//										xtype     : 'textarea',
+//										height     : 70,
+//										name      : 'note'
+//
+//									}
 								],
 
 								dockedItems  : [
@@ -138,34 +138,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										]
 									}
 								]
-							},
-							{
-								xtype      : 'grid',
-								region     : 'east',
-								itemId     : 'immuListGrid',
-								title      : 'Immunizations List',
-								width      : 400,
-								split      : true,
-								border     : false,
-								collapseMode : 'mini',
-								store      : me.ImmuListStore,
-								columns    : [
-									{
-										header   : 'Code',
-										width    : 40,
-										dataIndex: 'code'
-									},
-									{
-										header   : 'Description',
-										flex     : 1,
-										dataIndex: 'code_text'
-									}
-								],
-								listeners : {
-									scope       : me,
-									itemdblclick: me.onImmuGridClick
-								}
 							}
+
 						],
 						buttons : [
 							{
@@ -229,11 +203,131 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 								dataIndex: 'note'
 							}
 						],
-						listeners: {
-							scope : me,
-							resize: me.onGridResized,
-							itemdblclick:me.onItemdblclick
-						}
+
+						plugins:Ext.create('App.classes.grid.RowFormEditing', {
+						autoCancel   : false,
+						errorSummary : false,
+						clicksToEdit:1,
+						formItems   :[
+							{
+								xtype:'container',
+								layout: 'column',
+								defaults     : { border: false, columnWidth: .5, defaultType  : 'textfield', layout : 'anchor'},
+								fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor : '80%' },
+								items        : [
+									{
+										xtype:'container',
+										items       :[
+											{
+												fieldLabel     : 'Immunization Name',
+												name           : 'immunization_name',
+												itemId         : 'immuName',
+												enableKeyEvents: true,
+												listeners      : {
+													scope: me,
+													focus: me.onCodeFieldFocus,
+													blur: me.onCodeFieldBlur
+												}
+											},
+											{
+												fieldLabel     : 'Immunization (CVX Code)',
+												name           : 'immunization_id',
+												itemId         : 'immuCode',
+												enableKeyEvents: true,
+												listeners      : {
+													scope: me,
+													focus: me.onCodeFieldFocus,
+													blur: me.onCodeFieldBlur
+												}
+											},
+											{
+												fieldLabel: 'Date Administered',
+												xtype     : 'datefield',
+												format    : 'Y-m-d H:i:s',
+												name      : 'administered_date'
+											},
+											{
+												fieldLabel: 'Immunization Manufacturer',
+												name      : 'manufacturer'
+
+											},
+											{
+												fieldLabel: 'Immunization Lot Number',
+												name      : 'lot_number'
+
+											}
+
+
+										]
+									},{
+										xtype:'container',
+										items   : [{
+											fieldLabel: 'Ocurrence',
+											xtype     : 'mitos.occurrencecombo',
+											name      : 'ocurrence'
+
+										},
+											{
+												fieldLabel: 'Name and Title of Immunization Administrator',
+												name      : 'administered_by'
+
+											},
+											{
+												fieldLabel: 'Date Immunization Information Statements Given',
+												xtype     : 'datefield',
+												format    : 'Y-m-d H:i:s',
+												name      : 'education_date'
+											},
+											{
+												fieldLabel: 'Date of VIS Statement (?)',
+												xtype     : 'datefield',
+												format    : 'Y-m-d H:i:s',
+												name      : 'vis_date'
+											},
+											{
+												fieldLabel: 'Notes',
+												xtype     : 'textarea',
+												height     : 70,
+												name      : 'note'
+
+											}
+										]
+									}
+								]
+							},{
+								xtype      : 'grid',
+								region     : 'east',
+								itemId     : 'immuListGrid',
+								title      : 'Immunizations List',
+								width      : 400,
+								split      : true,
+								border     : false,
+								collapseMode : 'mini',
+								store      : me.ImmuListStore,
+								columns    : [
+									{
+										header   : 'Code',
+										width    : 40,
+										dataIndex: 'code'
+									},
+									{
+										header   : 'Description',
+										flex     : 1,
+										dataIndex: 'code_text'
+									}
+								],
+								listeners : {
+									scope       : me,
+									itemdblclick: me.onImmuGridClick
+								}
+							}
+						]
+					})
+//						listeners: {
+//							scope : me,
+//							resize: me.onGridResized,
+//							itemdblclick:me.onItemdblclick
+//						}
 					}
 				]
 			},
@@ -243,7 +337,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				 */
 				xtype        : 'panel',
 				title        : 'Allergies',
-				layout       : 'border',
+				layout       : 'fit',
 				bodyPadding  : 5,
 				region       : 'north',
 				itemId       : 'allergiesNorth',
