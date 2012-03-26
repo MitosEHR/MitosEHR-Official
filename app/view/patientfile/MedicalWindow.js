@@ -1089,7 +1089,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.doLayout();
 	},
-*/
+
 
 	onAddNew: function(btn) {
 		var me = this, panel, form, model;
@@ -1138,6 +1138,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		panel.expand(true);
 
 	},
+ */
 
 	onCancel: function(btn) {
 		var me = this, panel, form;
