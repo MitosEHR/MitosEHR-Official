@@ -51,7 +51,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                     items:[
                                         {
                                             fieldLabel: 'Time',
-                                            xtype     : 'mitos.paymentmethodcombo'
+                                            xtype     : 'textfield'
                                         },
                                         {
                                             fieldLabel: 'Facility',
@@ -187,9 +187,8 @@ Ext.define('App.view.fees.FeesSheet', {
 
 	onOptionType: function(combo) {
 		var me = this;
-		var value = combo.getValue(),
-			patient =  me.getCurrPatient(),
-			titlefield = combo.up('form').down('description').down('fieldcontainer').getComponent('paymentfrom');
+        var patient =  me.getCurrPatient();
+        var titlefield = combo.up('form').down('description').down('fieldcontainer').getComponent('paymentfrom');
 		titlefield.setValue(patient.name);
 
 
