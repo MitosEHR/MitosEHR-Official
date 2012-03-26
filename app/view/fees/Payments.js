@@ -19,6 +19,26 @@ Ext.define('App.view.fees.Payments', {
 
 		me.panel = Ext.create('Ext.form.Panel', {
             title:'Payment Entry',
+            dockedItems:{
+                xtype:'toolbar',
+                dock:'top',
+                items:[
+                    {
+                        text:'Save',
+                        iconCls:'save',
+                        action:'payments',
+                        scope:me,
+                        handler:me.onSave
+                    },
+                    {
+                        text:'Allocate',
+                        iconCls:'allocate',
+                        action:'payments',
+                        scope:me
+                        //handler:me.onSave
+                    }
+                ]
+            },
             defaults:{
                 bodyStyle:'padding:15px',
                 bodyBorder:true,
@@ -230,7 +250,6 @@ Ext.define('App.view.fees.Payments', {
                     disabled: true
                 },
                 '->',
-                //spacer so buttons align to each side
                 {
                     itemId  : 'move-next',
                     text    : 'Next',

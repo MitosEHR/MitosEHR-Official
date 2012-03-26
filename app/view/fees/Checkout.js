@@ -19,6 +19,19 @@ Ext.define('App.view.fees.Checkout', {
 
         me.pageBody = Ext.create('Ext.form.Panel', {
             title:'Patient Checkout',
+            dockedItems:{
+                xtype:'toolbar',
+                dock:'top',
+                items:[
+                    {
+                        text:'Save',
+                        iconCls:'save',
+                        action:'checkout',
+                        scope:me,
+                        handler:me.onSave
+                    }
+                ]
+            },
             defaults:{
                 bodyStyle:'padding:15px',
                 bodyBorder:true,
@@ -104,7 +117,6 @@ Ext.define('App.view.fees.Checkout', {
                     disabled: true
                 },
                 '->',
-                //spacer so buttons align to each side
                 {
                     itemId  : 'move-next',
                     text    : 'Next',
@@ -118,13 +130,13 @@ Ext.define('App.view.fees.Checkout', {
 
 		me.callParent(arguments);
 	},
-	/*navigate     : function(panel, direction) {
+	navigate     : function(panel, direction) {
 
 		var layout = panel.getLayout();
 		layout[direction]();
 		Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
 		Ext.getCmp('move-next').setDisabled(!layout.getNext());
-	},*/
+	},
 
 	/**
 	 * This function is called from MitosAPP.js when
@@ -135,4 +147,4 @@ Ext.define('App.view.fees.Checkout', {
 	onActive: function(callback) {
 		callback(true);
 	}
-}); //end oNotesPage class
+}); //end Checkout class
