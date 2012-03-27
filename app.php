@@ -59,7 +59,7 @@ Globals::setGlobals();
                 enabled			: true,
                 disableCaching	: false,
                 paths			: {
-                    'Ext'         : 'lib/extjs-4.1.0-rc1/src',
+                    //'Ext'         : 'lib/extjs-4.1.0-rc1/src',
                     'Ext.ux'      : 'app/classes/ux',
                     'App'         : 'app',
                     'Extensible'  : 'lib/extensible-1.5.1/src'
