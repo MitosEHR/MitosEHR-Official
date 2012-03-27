@@ -52,13 +52,14 @@ Globals::setGlobals();
         <span id="app-msg" style="display:none;"></span>
 
         <!-- Ext library -->
-        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/bootstrap.js"></script>
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/ext-all-debug.js"></script>
         <script src="data/api.php"></script>
         <script type="text/javascript">
             Ext.Loader.setConfig({
                 enabled			: true,
                 disableCaching	: false,
                 paths			: {
+                    'Ext'         : 'lib/extjs-4.1.0-rc1/src',
                     'Ext.ux'      : 'app/classes/ux',
                     'App'         : 'app',
                     'Extensible'  : 'lib/extensible-1.5.1/src'
