@@ -181,7 +181,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             },
                             {
                                 text:"Description",
-                                flex:1, width:70,
+                                flex:1,
                                 sortable:true,
                                 dataIndex:'code_text_medium'
                             }
