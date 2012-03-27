@@ -76,12 +76,7 @@ Ext.define('App.view.patientfile.Summary', {
 					{
 						xtype    : 'form',
 						title    : 'Demographics',
-						itemId   : 'demoFormPanel',
-						listeners: {
-							scope: me,
-							add  : me.fieldsAdded
-
-						}
+						itemId   : 'demoFormPanel'
 					},
 					{
 						title: 'Notes',
@@ -108,7 +103,8 @@ Ext.define('App.view.patientfile.Summary', {
 		];
 
         me.listeners = {
-            afterrender:me.afterPanelRender
+            scope:me,
+            beforerender:me.beforePanelRender
         };
 
 		me.callParent(arguments);
@@ -171,20 +167,10 @@ Ext.define('App.view.patientfile.Summary', {
 
 	},
 
-	fieldsAdded: function(formPanel) {
-		this.disableFields(formPanel);
-
-	},
-
-	disableFields: function(formPanel) {
-
-		var fields = formPanel.getForm().getFields();
-
-		Ext.each(fields.items, function(field) {
+	disableFields: function(fields) {
+		Ext.each(fields, function(field) {
 			field.setReadOnly(true);
-
 		}, this);
-
 	},
 
 	getFormData: function(fornpanel) {
@@ -237,15 +223,14 @@ Ext.define('App.view.patientfile.Summary', {
 
 	},
 
-    afterPanelRender:function(){
+    beforePanelRender:function(){
         var me = this,
             center = me.down('panel').getComponent('centerPanel'),
             demoFormPanel = center.getComponent('demoFormPanel');
 
         this.getFormItems(demoFormPanel, 'Demographics', function(success) {
             if(success) {
-                //me.getFormData(demoFormPanel);
-
+                me.disableFields(demoFormPanel.getForm().getFields().items);
             }
         });
     },
@@ -264,13 +249,9 @@ Ext.define('App.view.patientfile.Summary', {
 
 			var center = me.down('panel').getComponent('centerPanel'),
 				demoFormPanel = center.getComponent('demoFormPanel');
-//
-//			this.getFormItems(demoFormPanel, 'Demographics', function(success) {
-//				if(success) {
-					me.getFormData(demoFormPanel);
-//
-//				}
-//			});
+
+		    me.getFormData(demoFormPanel);
+
 
 		} else {
 

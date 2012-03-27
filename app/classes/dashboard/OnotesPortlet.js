@@ -46,7 +46,6 @@ Ext.define('App.classes.dashboard.OnotesPortlet', {
 				},
 				{
 					text     : 'Note',
-					width    : 75,
 					sortable : true,
 					dataIndex: 'body',
 					flex     : 1
