@@ -5,32 +5,39 @@
  * Time: 9:09 PM
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('App.view.PatientPoolDropZone',{
+Ext.define('App.view.PatientPoolDropZone', {
     extend:'App.classes.RenderPanel',
     pageTitle:'Patient Pool Areas',
-    pageLayout:'fit',
-    initComponent:function(){
+
+    initComponent:function () {
         var me = this;
 
-        me.foStore = Ext.create('Ext.data.Store',{
-            model: 'App.model.poolarea.PoolDropAreas'
+        me.foStore = Ext.create('Ext.data.Store', {
+            model:'App.model.poolarea.PoolDropAreas'
         });
 
-        me.triageStore = Ext.create('Ext.data.Store',{
-            model: 'App.model.poolarea.PoolDropAreas'
+        me.triageStore = Ext.create('Ext.data.Store', {
+            model:'App.model.poolarea.PoolDropAreas'
         });
 
-        me.physicianStore = Ext.create('Ext.data.Store',{
-            model: 'App.model.poolarea.PoolDropAreas'
+        me.physicianStore = Ext.create('Ext.data.Store', {
+            model:'App.model.poolarea.PoolDropAreas'
         });
 
-        me.ckoutStore = Ext.create('Ext.data.Store',{
-            model: 'App.model.poolarea.PoolDropAreas'
+        me.ckoutStore = Ext.create('Ext.data.Store', {
+            model:'App.model.poolarea.PoolDropAreas'
         });
 
-        me.container = Ext.create('Ext.panel.Panel',{
-            defaults : { flex:1, margin:5, frame:false  },
-            layout   : { type:'hbox', align:'stretch' },
+        me.pageBody = Ext.create('Ext.panel.Panel', {
+            defaults:{
+                flex:1,
+                margin:5,
+                frame:false
+            },
+            layout:{
+                type:'hbox',
+                align:'stretch'
+            },
             items:[
                 {
                     xtype:'grid',
@@ -49,14 +56,14 @@ Ext.define('App.view.PatientPoolDropZone',{
                             dataIndex:'name'
                         }
                     ],
-                    viewConfig : {
-                        plugins  : {
-                            ptype    : 'gridviewdragdrop',
-                            dragGroup: 'patientPoolAreas',
-                            dropGroup: 'patientPoolAreas'
+                    viewConfig:{
+                        plugins:{
+                            ptype:'gridviewdragdrop',
+                            dragGroup:'patientPoolAreas',
+                            dropGroup:'patientPoolAreas'
                         },
-                        listeners: {
-                            drop: me.onPatientDrop
+                        listeners:{
+                            drop:me.onPatientDrop
                         }
                     }
                 },
@@ -77,14 +84,14 @@ Ext.define('App.view.PatientPoolDropZone',{
                             dataIndex:'name'
                         }
                     ],
-                    viewConfig : {
-                        plugins  : {
-                            ptype    : 'gridviewdragdrop',
-                            dragGroup: 'patientPoolAreas',
-                            dropGroup: 'patientPoolAreas'
+                    viewConfig:{
+                        plugins:{
+                            ptype:'gridviewdragdrop',
+                            dragGroup:'patientPoolAreas',
+                            dropGroup:'patientPoolAreas'
                         },
-                        listeners: {
-                            drop: me.onPatientDrop
+                        listeners:{
+                            drop:me.onPatientDrop
                         }
                     }
                 },
@@ -105,14 +112,14 @@ Ext.define('App.view.PatientPoolDropZone',{
                             dataIndex:'name'
                         }
                     ],
-                    viewConfig : {
-                        plugins  : {
-                            ptype    : 'gridviewdragdrop',
-                            dragGroup: 'patientPoolAreas',
-                            dropGroup: 'patientPoolAreas'
+                    viewConfig:{
+                        plugins:{
+                            ptype:'gridviewdragdrop',
+                            dragGroup:'patientPoolAreas',
+                            dropGroup:'patientPoolAreas'
                         },
-                        listeners: {
-                            drop: me.onPatientDrop
+                        listeners:{
+                            drop:me.onPatientDrop
                         }
                     }
                 },
@@ -133,33 +140,27 @@ Ext.define('App.view.PatientPoolDropZone',{
                             dataIndex:'name'
                         }
                     ],
-                    viewConfig : {
-                        plugins  : {
-                            ptype    : 'gridviewdragdrop',
-                            dragGroup: 'patientPoolAreas',
-                            dropGroup: 'patientPoolAreas'
+                    viewConfig:{
+                        plugins:{
+                            ptype:'gridviewdragdrop',
+                            dragGroup:'patientPoolAreas',
+                            dropGroup:'patientPoolAreas'
                         },
-                        listeners: {
-                            drop: me.onPatientDrop
+                        listeners:{
+                            drop:me.onPatientDrop
                         }
                     }
                 }
             ]
         });
 
-        me.pageBody = [ me.container ];
-
         me.callParent(arguments);
 
     },
 
-
-    onPatientDrop:function(node, data, dropRec, dropPosition){
+    onPatientDrop:function (node, data, dropRec, dropPosition) {
         var pname = (data.records[0].data) ? data.records[0].data.name : data.records[0].name;
         app.msg('Sweet!', pname + ' sent to ' + this.panel.title);
     }
-
-
-
 
 });
