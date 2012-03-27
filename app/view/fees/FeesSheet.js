@@ -176,9 +176,7 @@ Ext.define('App.view.fees.FeesSheet', {
      * place inside this function all the functions you want
      * to call every this panel becomes active
      */
-    onActive:function (callback) {
-        callback(true);
-    },
+
 
 	onOptionType: function(combo) {
 		var me = this;
@@ -187,7 +185,7 @@ Ext.define('App.view.fees.FeesSheet', {
 		titlefield.setValue(patient.name);
 	},
 
-	onActive: function(){
+	onActive: function(callback){
 
 		Ext.Msg.show({
 			title  : 'Error',
@@ -196,6 +194,8 @@ Ext.define('App.view.fees.FeesSheet', {
 			buttons: Ext.Msg.OK,
 			scope  : this,
 			fn     : function(btn) {
+
+				callback(false);
 
 			}
 		})
