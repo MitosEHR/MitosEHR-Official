@@ -24,6 +24,7 @@ Ext.define('App.view.fees.FeesSheet', {
                 bodyBorder:true,
                 layout:'fit',
                 labelWidth:110
+
             },
             items : [
                 {
@@ -167,13 +168,13 @@ Ext.define('App.view.fees.FeesSheet', {
 
     		me.callParent(arguments);
     	},
-    /*	navigate     : function(panel, direction) {
+    	navigate: function(panel, direction) {
 
     		var layout = panel.getLayout();
     		layout[direction]();
     		Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
     		Ext.getCmp('move-next').setDisabled(!layout.getNext());
-    	}, // end of initComponent*/
+    	},
 
     /**
      * This function is called from MitosAPP.js when
@@ -190,17 +191,6 @@ Ext.define('App.view.fees.FeesSheet', {
         var patient =  me.getCurrPatient();
         var titlefield = combo.up('form').down('description').down('fieldcontainer').getComponent('paymentfrom');
 		titlefield.setValue(patient.name);
-
-
 	}
 
-	/*onOptionType: function(combo) {
-var me = this;
-		var value = combo.getValue(),
-			patient =  me.getCurrPatient(),
-		titlefield = combo.up('fieldset').getComponent('payment');
-		titlefield.setValue(patient.name);
-
-
-	}*/
-}); //end oNotesPage class
+}); //end FeesSheet class
