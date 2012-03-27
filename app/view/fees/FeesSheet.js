@@ -94,6 +94,7 @@ Ext.define('App.view.fees.FeesSheet', {
                                                 },
                                                 {
                                                     boxLabel:'Push to Exchange'
+
                                                 }
                                             ]
                                         }
@@ -184,6 +185,20 @@ Ext.define('App.view.fees.FeesSheet', {
         var patient =  me.getCurrPatient();
         var titlefield = combo.up('form').down('description').down('fieldcontainer').getComponent('paymentfrom');
 		titlefield.setValue(patient.name);
+	},
+
+	onActive: function(){
+
+		Ext.Msg.show({
+			title  : 'Error',
+			msg    : 'You Currently dont have an <strong>Encounter</strong>',
+			icon   : Ext.MessageBox.ERROR,
+			buttons: Ext.Msg.OK,
+			scope  : this,
+			fn     : function(btn) {
+
+			}
+		})
 	}
 
 }); //end FeesSheet class

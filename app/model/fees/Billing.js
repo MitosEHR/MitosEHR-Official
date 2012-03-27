@@ -1,7 +1,20 @@
 /**
  * Created by JetBrains PhpStorm.
- * User: Plushy
- * Date: 3/26/12
- * Time: 10:18 PM
- * To change this template use File | Settings | File Templates.
+ * User: Ernesto J. Rodriguez (Certun)
+ * File:
+ * Date: 2/18/12
+ * Time: 11:09 PM
  */
+
+Ext.define('App.model.fees.Billing', {
+	extend: 'Ext.data.Model',
+	fields: [
+
+	],
+	proxy : {
+		type: 'direct',
+		api : {
+
+		}
+	}
+});

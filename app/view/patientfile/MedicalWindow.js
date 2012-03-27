@@ -1114,54 +1114,54 @@ Ext.define('App.view.patientfile.MedicalWindow', {
      me.doLayout();
      },
      */
-
-    onAddNew:function (btn) {
-        var me = this, panel, form, model;
-
-        if (btn.itemId == 'addiImunization') {
-            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-            model = Ext.ModelManager.getModel('App.model.patientfile.PatientImmunization');
-            model = Ext.ModelManager.create({
-                pid:app.currPatient.pid,
-                administered_uid:user.id,
-                administered_date:new Date(),
-                education_date:new Date(),
-                vis_date:new Date()
-            }, model);
-            form = panel.down('form').getForm();
-        } else {
-            panel = me.getLayout().getActiveItem().down('form');
-            if (btn.itemId == 'addiAllergy') {
-
-                model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
-
-            } else if (btn.itemId == 'addiIssue') {
-
-                model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
-
-            } else if (btn.itemId == 'addiSurgery') {
-
-                model = Ext.ModelManager.getModel('App.model.patientfile.Surgery');
-
-            } else if (btn.itemId == 'addiDental') {
-
-                model = Ext.ModelManager.getModel('App.model.patientfile.Dental');
-
-                form = panel.getForm();
-            }
-            model = Ext.ModelManager.create({
-                pid:app.currPatient.pid,
-                begin_date:new Date()
-            }, model);
-            form = panel.getForm();
-        }
-
-        form.reset();
-        form.loadRecord(model);
-        panel.show();
-        panel.expand(true);
-
-    },
+//
+//    onAddNew:function (btn) {
+//        var me = this, panel, form, model;
+//
+//        if (btn.itemId == 'addiImunization') {
+//            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+//            model = Ext.ModelManager.getModel('App.model.patientfile.PatientImmunization');
+//            model = Ext.ModelManager.create({
+//                pid:app.currPatient.pid,
+//                administered_uid:user.id,
+//                administered_date:new Date(),
+//                education_date:new Date(),
+//                vis_date:new Date()
+//            }, model);
+//            form = panel.down('form').getForm();
+//        } else {
+//            panel = me.getLayout().getActiveItem().down('form');
+//            if (btn.itemId == 'addiAllergy') {
+//
+//                model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
+//
+//            } else if (btn.itemId == 'addiIssue') {
+//
+//                model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
+//
+//            } else if (btn.itemId == 'addiSurgery') {
+//
+//                model = Ext.ModelManager.getModel('App.model.patientfile.Surgery');
+//
+//            } else if (btn.itemId == 'addiDental') {
+//
+//                model = Ext.ModelManager.getModel('App.model.patientfile.Dental');
+//
+//                form = panel.getForm();
+//            }
+//            model = Ext.ModelManager.create({
+//                pid:app.currPatient.pid,
+//                begin_date:new Date()
+//            }, model);
+//            form = panel.getForm();
+//        }
+//
+//        form.reset();
+//        form.loadRecord(model);
+//        panel.show();
+//        panel.expand(true);
+//
+//    },
 
     onCancel:function (btn) {
         var me = this, panel, form;

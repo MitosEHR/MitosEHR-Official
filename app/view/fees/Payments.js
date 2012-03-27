@@ -54,7 +54,12 @@ Ext.define('App.view.fees.Payments', {
                                 {
                                     fieldLabel: 'Paying Entity',
                                     xtype     : 'mitos.payingentitycombo',
-                                    name      : 'paymentmethod'
+                                    name      : 'paymentmethod',
+	                                enableKeyEvents:true,
+	                                listeners:{
+		                                scope:me,
+		                                'select':me.onOptionType
+	                                }
                                 },
                                 {
                                     fieldLabel: 'Payment Category',
@@ -105,7 +110,8 @@ Ext.define('App.view.fees.Payments', {
                                     items:[
                                         {
                                             xtype:'textfield',
-                                            fieldLabel:'Payment From'
+                                            fieldLabel:'Payment From',
+	                                        itemID:'payment_from'
                                         },
                                         {
                                             xtype:'textfield',
@@ -260,6 +266,14 @@ Ext.define('App.view.fees.Payments', {
 	 */
 	onActive: function(callback) {
 		callback(true);
+	},
+	onOptionType:function (combo) {
+
+		var value = combo.getValue(),
+			titlefield = combo.up('form').down('fieldset').down('fieldcontainer').getComponent('payment_from');
+		titlefield.setValue(value);
+
+
 	}
 
 }); //end Payments class
