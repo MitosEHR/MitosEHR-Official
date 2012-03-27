@@ -80,7 +80,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
 
 
-        <script type="text/javascript" src="lib/ext-4.0.7/src/grid/plugin/RowEditing.js"></script>
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/src/grid/plugin/RowEditing.js"></script>
 
         <!-- Models -->
         <script type="text/javascript" src="lib/extensible-1.5.1/src/calendar/data/EventStore.js"></script>
