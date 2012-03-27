@@ -39,6 +39,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
 
     saveBtnText  : 'Update',
     cancelBtnText: 'Cancel',
+    removeBtnText: 'Remove',
     errorsText: 'Errors',
     dirtyText: 'You need to commit or cancel your changes',
 
@@ -57,64 +58,14 @@ Ext.define('App.classes.grid.RowFormEditor', {
             form, plugin;
 
         me.cls = Ext.baseCSSPrefix + 'grid-row-editor';
-
         me.currRowH = null;
-
-//        me.layout = {
-//            type: 'hbox',
-//            align: 'middle'
-//        };
-
-        // Maintain field-to-column mapping
-        // It's easy to get a field from a column, but not vice versa
-//        me.columns = Ext.create('Ext.util.HashMap');
-//        me.columns.getKey = function(columnHeader) {
-//            var f;
-//            if (columnHeader.getEditor) {
-//                f = columnHeader.getEditor();
-//                if (f) {
-//                    return f.id;
-//                }
-//            }
-//            return columnHeader.id;
-//        };
-//        me.mon(me.columns, {
-//            add: me.onFieldAdd,
-//            remove: me.onFieldRemove,
-//            replace: me.onFieldReplace,
-//            scope: me
-//        });
-
-
         plugin = me.editingPlugin;
-
-
         me.items = plugin.formItems;
-
-
         me.callParent(arguments);
-
-//        if (me.fields) {
-//            me.setField(me.fields);
-//            delete me.fields;
-//        }
 
         form = me.getForm();
         form.trackResetOnLoad = true;
     },
-
-//    onFieldChange: function() {
-//        var me = this,
-//            form = me.getForm(),
-//            valid = form.isValid();
-//        if (me.errorSummary && me.isVisible()) {
-//            me[valid ? 'hideToolTip' : 'showToolTip']();
-//        }
-//        if (me.floatingButtons) {
-//            me.floatingButtons.child('#update').setDisabled(!valid);
-//        }
-//        me.isValid = valid;
-//    },
 
     afterRender: function() {
         var me = this,
@@ -134,7 +85,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
             'keydown'
         ]);
 
-        me.keyNav = Ext.create('Ext.util.KeyNav', me.el, {
+        me.keyNav = new Ext.util.KeyNav(me.el, {
             enter: plugin.completeEdit,
             esc: plugin.onEscKey,
             scope: plugin
@@ -193,74 +144,6 @@ Ext.define('App.classes.grid.RowFormEditor', {
         }
     },
 
-//    onColumnAdd: function(column) {
-//        this.setField(column);
-//    },
-//
-//    onColumnRemove: function(column) {
-//        this.columns.remove(column);
-//    },
-//
-//    onColumnResize: function(column, width) {
-//        column.getEditor().setWidth(width - 2);
-//        if (this.isVisible()) {
-//            this.reposition();
-//        }
-//    },
-//
-//    onColumnHide: function(column) {
-//        column.getEditor().hide();
-//        if (this.isVisible()) {
-//            this.reposition();
-//        }
-//    },
-//
-//    onColumnShow: function(column) {
-//        var field = column.getEditor();
-//        field.setWidth(column.getWidth() - 2).show();
-//        if (this.isVisible()) {
-//            this.reposition();
-//        }
-//    },
-//
-//    onColumnMove: function(column, fromIdx, toIdx) {
-//        var field = column.getEditor();
-//        if (this.items.indexOf(field) != toIdx) {
-//            this.move(fromIdx, toIdx);
-//        }
-//    },
-//
-//    onFieldAdd: function(map, fieldId, column) {
-//        var me = this,
-//            colIdx = me.editingPlugin.grid.headerCt.getHeaderIndex(column),
-//            field = column.getEditor({ xtype: 'displayfield' });
-//
-//        me.insert(colIdx, field);
-//    },
-//
-//    onFieldRemove: function(map, fieldId, column) {
-//        var me = this,
-//            field = column.getEditor(),
-//            fieldEl = field.el;
-//        me.remove(field, false);
-//        if (fieldEl) {
-//            fieldEl.remove();
-//        }
-//    },
-//
-//    onFieldReplace: function(map, fieldId, column, oldColumn) {
-//        var me = this;
-//        me.onFieldRemove(map, fieldId, oldColumn);
-//    },
-//
-//    clearFields: function() {
-//        var me = this,
-//            map = me.columns;
-//        map.each(function(fieldId) {
-//            map.removeAtKey(fieldId);
-//        });
-//    },
-
     getFloatingButtons: function() {
         var me = this,
             cssPrefix = Ext.baseCSSPrefix,
@@ -269,15 +152,16 @@ Ext.define('App.classes.grid.RowFormEditor', {
             btns;
 
         if (!me.floatingButtons) {
-            btns = me.floatingButtons = Ext.create('Ext.Container', {
+            btns = me.floatingButtons = new Ext.Container({
                 renderTpl: [
                     '<div class="{baseCls}-ml"></div>',
                     '<div class="{baseCls}-mr"></div>',
                     '<div class="{baseCls}-bl"></div>',
                     '<div class="{baseCls}-br"></div>',
-                    '<div class="{baseCls}-bc"></div>'
+                    '<div class="{baseCls}-bc"></div>',
+                    '{%this.renderContainer(out,values)%}'
                 ],
-
+                width: plugin.enableRemove ? 300 : 200,
                 renderTo: me.el,
                 baseCls: btnsCss,
                 layout: {
@@ -285,22 +169,23 @@ Ext.define('App.classes.grid.RowFormEditor', {
                     align: 'middle'
                 },
                 defaults: {
+                    flex: 1,
                     margins: '0 1 0 1'
                 },
                 items: [{
                     itemId: 'update',
-                    flex: 1,
                     xtype: 'button',
                     handler: plugin.completeEdit,
                     scope: plugin,
                     text: me.saveBtnText,
-                    disabled: !me.isValid
+                    disabled: !me.isValid,
+                    minWidth: Ext.panel.Panel.prototype.minButtonWidth
                 }, {
-                    flex: 1,
                     xtype: 'button',
                     handler: plugin.cancelEdit,
                     scope: plugin,
-                    text: me.cancelBtnText
+                    text: me.cancelBtnText,
+                    minWidth: Ext.panel.Panel.prototype.minButtonWidth
                 }]
             });
 
@@ -310,7 +195,8 @@ Ext.define('App.classes.grid.RowFormEditor', {
                     xtype: 'button',
                     handler: plugin.completeRemove,
                     scope: plugin,
-                    text: 'Remove'
+                    text: me.removeBtnText,
+                    minWidth: Ext.panel.Panel.prototype.minButtonWidth
                 });
             }
 
@@ -364,8 +250,6 @@ Ext.define('App.classes.grid.RowFormEditor', {
                 }
             };
 
-        //if(me.currRowH) me.currRow.setHeight(me.currRowH);
-
         // need to set both top/left
         if (row && Ext.isElement(row.dom)) {
             // Bring our row into view if necessary, so a row editor that's already
@@ -390,12 +274,6 @@ Ext.define('App.classes.grid.RowFormEditor', {
             if (Ext.isIE) {
                 newHeight += 2;
             }
-
-//            // Set editor height to match the row height
-//            if (me.getHeight() != newHeight) {
-//                me.setHeight(newHeight);
-//                me.el.setLeft(0);
-//            }
 
             if (animateConfig) {
                 var animObj = {
@@ -435,18 +313,6 @@ Ext.define('App.classes.grid.RowFormEditor', {
             return fieldInfo.getEditor();
         }
     },
-
-//    removeField: function(field) {
-//        var me = this;
-//
-//        // Incase we pass a column instead, which is fine
-//        field = me.getEditor(field);
-//        me.mun(field, 'validitychange', me.onValidityChange, me);
-//
-//        // Remove field/column from our mapping, which will fire the event to
-//        // remove the field from our container
-//        me.columns.removeKey(field.id);
-//    },
 
     setField: function(column) {
         var me = this,
@@ -506,30 +372,6 @@ Ext.define('App.classes.grid.RowFormEditor', {
             form = me.getForm();
 
         form.loadRecord(record);
-//
-//            //column = me.columns.get(field.id),
-//            value = record.get(column.dataIndex);
-//
-//        // honor our column's renderer (TemplateHeader sets renderer for us!)
-//        if (column.renderer) {
-//            var metaData = { tdCls: '', style: '' },
-//                rowIdx = store.indexOf(record),
-//                colIdx = headerCt.getHeaderIndex(column);
-//
-//            value = column.renderer.call(
-//                column.scope || headerCt.ownerCt,
-//                value,
-//                metaData,
-//                record,
-//                rowIdx,
-//                colIdx,
-//                store,
-//                view
-//            );
-//        }
-//
-//        field.setRawValue(value);
-//        field.resetOriginalValue();
     },
 
     beforeEdit: function() {
@@ -613,6 +455,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
         me.hide();
         form.clearInvalid();
         form.reset();
+        me.editingPlugin.fireEvent('afterremove', me.context);
     },
 
     onShow: function() {

@@ -180,6 +180,10 @@ Ext.define('App.classes.grid.RowFormEditing', {
         me.autoCancel = !!me.autoCancel;
     },
 
+    init: function(grid) {
+        this.callParent([grid]);
+    },
+
     /**
      * @private
      * AbstractComponent calls destroy on all its plugins at destroy time.
@@ -227,7 +231,7 @@ Ext.define('App.classes.grid.RowFormEditing', {
 
         if (me.editing && me.validateEdit()) {
             me.editing = false;
-            me.fireEvent('edit', me.context);
+            me.fireEvent('edit', me, me.context);
         }
     },
 
@@ -238,7 +242,7 @@ Ext.define('App.classes.grid.RowFormEditing', {
             me.getEditor().completeRemove();
             //me.callParent(arguments);
 
-            me.fireEvent('completeremove', me.context);
+            me.fireEvent('completeremove', me, me.context);
         }
 
     },
@@ -251,14 +255,18 @@ Ext.define('App.classes.grid.RowFormEditing', {
             record         = context.record,
             newValues      = {},
             originalValues = {},
-            name;
+            editors        = editor.items.items,
+            e,
+            eLen           = editors.length,
+            name, item;
 
-        editor.items.each(function(item) {
+        for (e = 0; e < eLen; e++) {
+            item = editors[e];
             name = item.name;
 
             newValues[name]      = item.getValue();
             originalValues[name] = record.get(name);
-        });
+        }
 
         Ext.apply(context, {
             newValues      : newValues,
@@ -280,49 +288,58 @@ Ext.define('App.classes.grid.RowFormEditing', {
 
     // private
     initEditor: function() {
-        var me = this,
-            grid = me.grid,
-            view = me.view,
-            headerCt = grid.headerCt;
+        var me       = this,
+            grid     = me.grid,
+            view     = me.view,
+            headerCt = grid.headerCt,
+            btns     = ['saveBtnText', 'cancelBtnText', 'errorsText', 'dirtyText'],
+            b,
+            bLen     = btns.length,
+            cfg      = {
+                autoCancel: me.autoCancel,
+                errorSummary: me.errorSummary,
+                fields: headerCt.getGridColumns(),
+                hidden: true,
 
-        return Ext.create('App.classes.grid.RowFormEditor', {
-            autoCancel: me.autoCancel,
-            errorSummary: me.errorSummary,
-            fields: headerCt.getGridColumns(),
-            hidden: true,
+                // keep a reference..
+                editingPlugin: me,
+                renderTo: view.el
+            },
+            item;
 
-            // keep a reference..
-            editingPlugin: me,
-            renderTo: view.el
-        });
+        for (b = 0; b < bLen; b++) {
+            item = btns[b];
+
+            if (Ext.isDefined(me[item])) {
+                cfg[item] = me[item];
+            }
+        }
+        return Ext.create('App.classes.grid.RowFormEditor', cfg);
     },
 
     // private
     initEditTriggers: function() {
         var me = this,
-            grid = me.grid,
-            view = me.view,
-            headerCt = grid.headerCt,
             moveEditorEvent = me.clicksToMoveEditor === 1 ? 'click' : 'dblclick';
 
         me.callParent(arguments);
 
         if (me.clicksToMoveEditor !== me.clicksToEdit) {
-            me.mon(view, 'cell' + moveEditorEvent, me.moveEditorByClick, me);
+            me.mon(me.view, 'cell' + moveEditorEvent, me.moveEditorByClick, me);
         }
+    },
 
-        view.on('render', function() {
-            // Column events
-            me.mon(headerCt, {
-                add: me.onColumnAdd,
-                remove: me.onColumnRemove,
-                columnresize: me.onColumnResize,
-                columnhide: me.onColumnHide,
-                columnshow: me.onColumnShow,
-                columnmove: me.onColumnMove,
-                scope: me
-            });
-        }, me, { single: true });
+    addHeaderEvents: function(){
+        var me = this;
+        me.callParent();
+
+        me.mon(me.grid.headerCt, {
+            scope: me,
+            columnresize: me.onColumnResize,
+            columnhide: me.onColumnHide,
+            columnshow: me.onColumnShow,
+            columnmove: me.onColumnMove
+        });
     },
 
     startEditByClick: function() {

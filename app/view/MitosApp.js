@@ -466,8 +466,8 @@ Ext.define('App.view.MitosApp', {
 				Ext.create('App.view.miscellaneous.OfficeNotes'),
 				Ext.create('App.view.miscellaneous.Websearch'),
 
-
-				me.ppdz = Ext.create('App.view.PatientPoolDropZone')
+//
+//				me.ppdz = Ext.create('App.view.PatientPoolDropZone')
 
             ],
             listeners:{
