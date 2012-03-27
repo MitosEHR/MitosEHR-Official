@@ -94,12 +94,13 @@ Ext.define('App.view.fees.Payments', {
                 {
                     xtype:'fieldset',
                     title:'Description',
+	                itemID:'description',
                     margin:'0 10 15 10',
                     height: 99,
                     items:[
                         {
                             xtype:'fieldcontainer',
-                            layout: {
+	                        layout: {
                                 type   : 'hbox',
                                 align  : 'stretch'
                             },
@@ -270,8 +271,9 @@ Ext.define('App.view.fees.Payments', {
 	onOptionType:function (combo) {
 
 		var value = combo.getValue(),
-		    patient =  me.getCurrPatient(),
-			titlefield = combo.up('form').down('fieldset').down('fieldcontainer').getComponent('payment_from');
+		    patient =  this.getCurrPatient(),
+			titlefield = combo.up('container').getComponent('description').getComponent('payment_from');
+
 		titlefield.setValue(patient.name);
 
 

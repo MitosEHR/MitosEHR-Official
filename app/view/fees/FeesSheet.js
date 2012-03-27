@@ -179,7 +179,6 @@ Ext.define('App.view.fees.FeesSheet', {
 
 
 
-
 	onActive: function(callback){
 
 		Ext.Msg.show({
