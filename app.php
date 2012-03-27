@@ -30,7 +30,7 @@ Globals::setGlobals();
         <!--test stuff-->
         <link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
         <!--end test stuff-->
-        <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-neptune.css">
+        <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
         <!--calendar css-->
         <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/resources/css/extensible-all.css" />
         <!--ens calendar css-->
