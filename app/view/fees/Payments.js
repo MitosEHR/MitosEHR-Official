@@ -270,8 +270,9 @@ Ext.define('App.view.fees.Payments', {
 	onOptionType:function (combo) {
 
 		var value = combo.getValue(),
+		    patient =  me.getCurrPatient(),
 			titlefield = combo.up('form').down('fieldset').down('fieldcontainer').getComponent('payment_from');
-		titlefield.setValue(value);
+		titlefield.setValue(patient.name);
 
 
 	}

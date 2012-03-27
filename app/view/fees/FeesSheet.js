@@ -178,12 +178,7 @@ Ext.define('App.view.fees.FeesSheet', {
      */
 
 
-	onOptionType: function(combo) {
-		var me = this;
-        var patient =  me.getCurrPatient();
-        var titlefield = combo.up('form').down('description').down('fieldcontainer').getComponent('paymentfrom');
-		titlefield.setValue(patient.name);
-	},
+
 
 	onActive: function(callback){
 
