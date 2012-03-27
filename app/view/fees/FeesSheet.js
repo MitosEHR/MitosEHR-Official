@@ -190,7 +190,7 @@ Ext.define('App.view.fees.FeesSheet', {
 			scope  : this,
 			fn     : function(btn) {
 
-				callback(false);
+				callback(true);
 
 			}
 		})
