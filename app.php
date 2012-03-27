@@ -30,7 +30,7 @@ Globals::setGlobals();
         <!--test stuff-->
         <link rel="stylesheet" type="text/css" href="ui_app/dashboard.css" >
         <!--end test stuff-->
-        <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/<?php echo $_SESSION['global_settings']['css_header'] ?>">
+        <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext']; ?>/resources/css/ext-neptune.css">
         <!--calendar css-->
         <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/resources/css/extensible-all.css" />
         <!--ens calendar css-->
@@ -52,7 +52,7 @@ Globals::setGlobals();
         <span id="app-msg" style="display:none;"></span>
 
         <!-- Ext library -->
-        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/ext-all-debug.js"></script>
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/ext-all.js"></script>
         <script src="data/api.php"></script>
         <script type="text/javascript">
             Ext.Loader.setConfig({
