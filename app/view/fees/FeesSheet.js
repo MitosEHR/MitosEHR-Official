@@ -156,13 +156,6 @@ Ext.define('App.view.fees.FeesSheet', {
 
         me.callParent(arguments);
     },
-    navigate:function (panel, direction) {
-
-        var layout = panel.getLayout();
-        layout[direction]();
-        Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
-        Ext.getCmp('move-next').setDisabled(!layout.getNext());
-    },
 
     /**
      * This function is called from MitosAPP.js when
