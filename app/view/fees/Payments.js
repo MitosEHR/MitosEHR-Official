@@ -32,7 +32,7 @@ Ext.define('App.view.fees.Payments', {
                         type   : 'hbox',
                         align  : 'stretch'
                     },
-                    height:146,
+                    height:160,
                     defaults:{ flex:1 },
                     items:[
                         {
@@ -49,7 +49,8 @@ Ext.define('App.view.fees.Payments', {
                                 },
                                 {
                                     xtype:'mitos.currency',
-                                    fieldLabel:'Payment Amount'
+                                    fieldLabel:'Payment Amount',
+                                    minValue:0
                                 },
                                 {
                                     fieldLabel: 'Paying Entity',
@@ -58,7 +59,7 @@ Ext.define('App.view.fees.Payments', {
 	                                enableKeyEvents:true,
 	                                listeners:{
 		                                scope:me,
-		                                'select':me.onOptionType
+		                                select:me.onOptionType
 	                                }
                                 },
                                 {
@@ -94,9 +95,9 @@ Ext.define('App.view.fees.Payments', {
                 {
                     xtype:'fieldset',
                     title:'Description',
-	                itemID:'description',
+	                itemId:'description',
                     margin:'0 10 15 10',
-                    height: 99,
+                    height: 120,
                     items:[
                         {
                             xtype:'fieldcontainer',
@@ -112,11 +113,13 @@ Ext.define('App.view.fees.Payments', {
                                         {
                                             xtype:'textfield',
                                             fieldLabel:'Payment From',
-	                                        itemID:'payment_from'
+	                                        itemId:'payment_from',
+	                                        action:'payment_from'
                                         },
                                         {
                                             xtype:'textfield',
-                                            fieldLabel:'Id'
+                                            fieldLabel:'Patient ID',
+                                            action:'pid'
                                         },
                                         {
                                             xtype:'datefield',
@@ -270,12 +273,17 @@ Ext.define('App.view.fees.Payments', {
 	},
 	onOptionType:function (combo) {
 
-		var value = combo.getValue(),
-		    patient =  this.getCurrPatient(),
-			titlefield = combo.up('container').getComponent('description').getComponent('payment_from');
+        var patient =  this.getCurrPatient(),
+            Fromfield = this.query('textfield[action="payment_from"]'),
+            pidfield = this.query('textfield[action="pid"]');
 
-		titlefield.setValue(patient.name);
-
+        if(combo.getValue() == 'patient'){
+            Fromfield[0].setValue(patient.name);
+            pidfield[0].setValue(patient.pid);
+        }else{
+            Fromfield[0].reset();
+            pidfield[0].reset();
+        }
 
 	}
 
