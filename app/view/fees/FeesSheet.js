@@ -14,24 +14,23 @@ Ext.define('App.view.fees.FeesSheet', {
     pageTitle:'Fees Sheet',
     uses:['App.classes.GridPanel'],
 
-    initComponent: function() {
+    initComponent:function () {
         var me = this;
 
-        me.pageBody =  Ext.create('Ext.form.Panel', {
+        me.pageBody = Ext.create('Ext.form.Panel', {
             title:'Physician Assessment',
             defaults:{
                 bodyStyle:'padding:15px',
                 bodyBorder:true,
-                layout:'fit',
                 labelWidth:110
 
             },
-            items : [
+            items:[
                 {
                     xtype:'container',
-                    layout: {
-                        type   : 'hbox',
-                        align  : 'stretch'
+                    layout:{
+                        type:'hbox',
+                        align:'stretch'
                     },
                     height:340,
                     margin:'0 0 5 0',
@@ -44,19 +43,19 @@ Ext.define('App.view.fees.FeesSheet', {
                                     xtype:'fieldset',
                                     title:'Follow-Up Information',
                                     margin:'5 10 10 5',
-                                    height:162.5,
-                                    defaults: {
+                                    height:162,
+                                    defaults:{
                                         labelWidth:110,
                                         anchor:'100%'
                                     },
                                     items:[
                                         {
-                                            fieldLabel: 'Time',
-                                            xtype     : 'textfield'
+                                            fieldLabel:'Time',
+                                            xtype:'textfield'
                                         },
                                         {
-                                            fieldLabel: 'Facility',
-                                            xtype     : 'mitos.facilitiescombo'
+                                            fieldLabel:'Facility',
+                                            xtype:'mitos.facilitiescombo'
                                         }
                                     ]
                                 },
@@ -65,13 +64,13 @@ Ext.define('App.view.fees.FeesSheet', {
                                     title:'Meaningful Use Measures',
                                     columnWidth:.5,
                                     margin:'0 10 0 5',
-                                    height: 162.5,
+                                    height:162,
                                     items:[
                                         {
                                             xtype:'checkboxgroup',
                                             defaults:{
                                                 xtype:'checkboxfield',
-                                                margin: '5 0 0 0',
+                                                margin:'5 0 0 0',
                                                 height:25
                                             },
                                             items:[
@@ -104,15 +103,15 @@ Ext.define('App.view.fees.FeesSheet', {
                             ]
                         },
                         {
-                            xtype  : 'grid',
-                            title  : 'Orders',
+                            xtype:'grid',
+                            title:'Orders',
                             margin:'4 3 0 0',
-                            columns: [
+                            columns:[
                                 {
-                                    header : 'Code'
+                                    header:'Code'
                                 },
                                 {
-                                    header : 'Description',
+                                    header:'Description',
                                     flex:1
                                 }
                             ]
@@ -120,55 +119,50 @@ Ext.define('App.view.fees.FeesSheet', {
                     ]
                 },
                 {
-                    xtype:'fieldcontainer',
+                    xtype:'fieldset',
+                    title:'Notes and Reminders',
+                    margin:'0 3 5 3',
+                    height:150,
                     items:[
                         {
-                            xtype:'fieldset',
-                            title:'Notes and Reminders',
-                            margin:'0 3 5 3',
-                            height: 150,
-                            items:[
-                                {
-                                    xtype:'textfield',
-                                    name:'note',
-                                    fieldLabel:'Note',
-                                    anchor:'100%'
-                                },
-                                {
-                                    xtype:'textareafield',
-                                    grow:true,
-                                    name:'reminder',
-                                    fieldLabel:'Reminder',
-                                    anchor:'100%'
-                                }
-                            ]
+                            xtype:'textfield',
+                            name:'note',
+                            fieldLabel:'Note',
+                            anchor:'100%'
+                        },
+                        {
+                            xtype:'textareafield',
+                            grow:true,
+                            name:'reminder',
+                            fieldLabel:'Reminder',
+                            anchor:'100%'
                         }
                     ]
                 }
             ],
-            bbar     : [
+            bbar:[
 
                 '->',
                 //spacer so buttons align to each side
                 {
-                    itemId      : 'move-next',
-                    text    : 'Next',
-                    handler : function(btn) {
-	                    app.navigateTo('panelPayments');
+                    itemId:'move-next',
+                    text:'Next',
+                    handler:function (btn) {
+                        app.navigateTo('panelPayments');
                     }
                 }
             ]
         });
 
-    		me.callParent(arguments);
-    	},
-    	navigate: function(panel, direction) {
+        me.callParent(arguments);
+    },
+    navigate:function (panel, direction) {
 
-    		var layout = panel.getLayout();
-    		layout[direction]();
-    		Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
-    		Ext.getCmp('move-next').setDisabled(!layout.getNext());
-    	},
+        var layout = panel.getLayout();
+        layout[direction]();
+        Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
+        Ext.getCmp('move-next').setDisabled(!layout.getNext());
+    },
 
     /**
      * This function is called from MitosAPP.js when
@@ -179,20 +173,20 @@ Ext.define('App.view.fees.FeesSheet', {
 
 
 
-	onActive: function(callback){
+    onActive:function (callback) {
 
-		Ext.Msg.show({
-			title  : 'Error',
-			msg    : 'You Currently dont have an <strong>Encounter</strong>',
-			icon   : Ext.MessageBox.ERROR,
-			buttons: Ext.Msg.OK,
-			scope  : this,
-			fn     : function(btn) {
+        Ext.Msg.show({
+            title:'Error',
+            msg:'You Currently dont have an <strong>Encounter</strong>',
+            icon:Ext.MessageBox.ERROR,
+            buttons:Ext.Msg.OK,
+            scope:this,
+            fn:function (btn) {
 
-				callback(true);
+                callback(true);
 
-			}
-		})
-	}
+            }
+        })
+    }
 
 }); //end FeesSheet class
