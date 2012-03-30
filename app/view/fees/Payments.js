@@ -118,7 +118,7 @@ Ext.define('App.view.fees.Payments', {
                                         },
                                         {
                                             xtype:'textfield',
-                                            fieldLabel:'Patient ID',
+                                            fieldLabel:'ID',
                                             action:'pid'
                                         },
                                         {
@@ -239,7 +239,6 @@ Ext.define('App.view.fees.Payments', {
                     }
                 },
                 '->',
-                //spacer so buttons align to each side
                 {
                     itemId  : 'move-next',
                     text    : 'Next',

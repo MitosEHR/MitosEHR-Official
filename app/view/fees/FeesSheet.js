@@ -18,136 +18,22 @@ Ext.define('App.view.fees.FeesSheet', {
         var me = this;
 
         me.pageBody = Ext.create('Ext.form.Panel', {
-            title:'Physician Assessment',
+            title:'Fees Form',
             defaults:{
                 bodyStyle:'padding:15px',
                 bodyBorder:true,
                 labelWidth:110
-
             },
             items:[
-                {
-                    xtype:'container',
-                    layout:{
-                        type:'hbox',
-                        align:'stretch'
-                    },
-                    height:340,
-                    margin:'0 0 5 0',
-                    defaults:{ flex:1 },
-                    items:[
-                        {
-                            xtype:'container',
-                            items:[
-                                {
-                                    xtype:'fieldset',
-                                    title:'Follow-Up Information',
-                                    margin:'5 10 10 5',
-                                    height:162,
-                                    defaults:{
-                                        labelWidth:110,
-                                        anchor:'100%'
-                                    },
-                                    items:[
-                                        {
-                                            fieldLabel:'Time',
-                                            xtype:'textfield'
-                                        },
-                                        {
-                                            fieldLabel:'Facility',
-                                            xtype:'mitos.facilitiescombo'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype:'fieldset',
-                                    title:'Meaningful Use Measures',
-                                    columnWidth:.5,
-                                    margin:'0 10 0 5',
-                                    height:162,
-                                    items:[
-                                        {
-                                            xtype:'checkboxgroup',
-                                            defaults:{
-                                                xtype:'checkboxfield',
-                                                margin:'5 0 0 0',
-                                                height:25
-                                            },
-                                            items:[
-                                                {
-                                                    boxLabel:'Clinical Summary Provided'
-                                                },
-                                                {
-                                                    boxLabel:'Elegibility Confirmed'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype:'checkboxgroup',
-                                            defaults:{
-                                                xtype:'checkboxfield'
-                                            },
-                                            items:[
-                                                {
-                                                    boxLabel:'Medical Reconciliation'
-                                                },
-                                                {
-                                                    boxLabel:'Push to Exchange'
 
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-
-                            ]
-                        },
-                        {
-                            xtype:'grid',
-                            title:'Orders',
-                            margin:'4 3 0 0',
-                            columns:[
-                                {
-                                    header:'Code'
-                                },
-                                {
-                                    header:'Description',
-                                    flex:1
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    xtype:'fieldset',
-                    title:'Notes and Reminders',
-                    margin:'0 3 5 3',
-                    height:150,
-                    items:[
-                        {
-                            xtype:'textfield',
-                            name:'note',
-                            fieldLabel:'Note',
-                            anchor:'100%'
-                        },
-                        {
-                            xtype:'textareafield',
-                            grow:true,
-                            name:'reminder',
-                            fieldLabel:'Reminder',
-                            anchor:'100%'
-                        }
-                    ]
-                }
             ],
-            bbar:[
 
+            bbar:[
                 '->',
-                //spacer so buttons align to each side
                 {
                     itemId:'move-next',
                     text:'Next',
-                    handler:function (btn) {
+                    handler:function () {
                         app.navigateTo('panelPayments');
                     }
                 }
@@ -164,22 +50,8 @@ Ext.define('App.view.fees.FeesSheet', {
      * to call every this panel becomes active
      */
 
-
-
-    onActive:function (callback) {
-
-        Ext.Msg.show({
-            title:'Error',
-            msg:'You Currently dont have an <strong>Encounter</strong>',
-            icon:Ext.MessageBox.ERROR,
-            buttons:Ext.Msg.OK,
-            scope:this,
-            fn:function (btn) {
-
-                callback(true);
-
-            }
-        })
-    }
+    onActive     : function(callback) {
+   		callback(true);
+   	}
 
 }); //end FeesSheet class
