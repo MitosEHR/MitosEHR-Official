@@ -538,6 +538,10 @@ Ext.define('App.view.patientfile.Encounter', {
                 {
                     text:'Add Dental ',
                     action:'dental'
+                },'-',
+                {
+                    text:'Add Medications ',
+                    action:'medications'
                 },
                 '->',
                 {

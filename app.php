@@ -95,6 +95,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/Allergies.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Dental.js"></script>
         <script type="text/javascript" src="app/model/patientfile/MedicalIssues.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/Medications.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Surgery.js"></script>
         <script type="text/javascript" src="app/model/patientfile/EventHistory.js"></script>
         <script type="text/javascript" src="app/model/patientfile/CptCodesGrid.js"></script>
@@ -111,6 +112,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/patientfile/Allergies.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Dental.js"></script>
         <script type="text/javascript" src="app/store/patientfile/MedicalIssue.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/Medications.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Surgery.js"></script>
         <script type="text/javascript" src="app/store/patientfile/EncounterEventHistory.js"></script>
         <script type="text/javascript" src="app/store/patientfile/CptCodesGrid.js"></script>

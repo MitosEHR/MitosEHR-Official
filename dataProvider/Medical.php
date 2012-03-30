@@ -254,7 +254,44 @@ class Medical {
 
     }
     /*************************************************************************************************************/
+    public function getPatientMedications(stdClass $params)
+       {
+           return $this->getPatientMedicationsByPatientID($params->pid);
+       }
 
+       public function addPatientMedications(stdClass $params)
+       {
+           $data = get_object_vars($params);
+           unset($data['id']);
+
+           $data['begin_date'] = $this->parseDate($data['begin_date']);
+           $data['end_date'] = $this->parseDate($data['end_date']);
+           $data['create_date'] = $this->parseDate($data['create_date']);
+
+
+
+           $this->db->setSQL($this->db->sqlBind($data, 'patient_medications', 'I'));
+           $this->db->execLog();
+           $params->id = $this->db->lastInsertId;
+           return $params;
+       }
+       public function updatePatientMedications(stdClass $params)
+       {
+           $data = get_object_vars($params);
+
+           $id = $data['id'];
+           unset($data['id']);
+           $data['begin_date'] = $this->parseDate($data['begin_date']);
+           $data['end_date'] = $this->parseDate($data['end_date']);
+           $data['create_date'] = $this->parseDate($data['create_date']);
+
+
+           $this->db->setSQL($this->db->sqlBind($data, "patient_medications", "U", "id='$id'"));
+           $this->db->execLog();
+
+           return $params;
+
+       }
     /*********************************************
      * METHODS USED BY PHP                       *
      *********************************************/
@@ -348,6 +385,24 @@ class Medical {
     private function getPatientDentalByEncounterID($eid)
     {
         $this->db->setSQL("SELECT * FROM patient_dental WHERE eid='$eid'");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+    }
+    /**
+     * @param $pid
+     * @return array
+     */
+    private function getPatientMedicationsByPatientID($pid)
+    {
+        $this->db->setSQL("SELECT * FROM patient_medications WHERE pid='$pid'");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+    }
+    /**
+     * @param $eid
+     * @return array
+     */
+    private function getPatientMedicationsByEncounterID($eid)
+    {
+        $this->db->setSQL("SELECT * FROM patient_medications WHERE eid='$eid'");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
     /**

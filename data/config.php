@@ -166,6 +166,15 @@ $API = array(
             ),
             'updatePatientDental'=>array(
                'len'=>1
+            ),
+            'getPatientMedications'=>array(
+               'len'=>1
+            ),
+            'addPatientMedications'=>array(
+               'len'=>1
+            ),
+            'updatePatientMedications'=>array(
+               'len'=>1
             )
         ),
 
