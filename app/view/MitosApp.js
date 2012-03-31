@@ -989,9 +989,10 @@ Ext.define('App.view.MitosApp', {
 			},
 			notifyDrop: function(dd, e, data) {
 				app.MainPanel.el.unmask();
-				Patient.currPatientSet({pid:data.patientData.pid});
-				me.setCurrPatient(data.patientData.pid, data.patientData.name);
-				me.openEncounter(data.patientData.eid);
+
+				me.setCurrPatient(data.patientData.pid, data.patientData.name, function(){
+                    me.openEncounter(data.patientData.eid);
+                });
 
 			}
 		});
