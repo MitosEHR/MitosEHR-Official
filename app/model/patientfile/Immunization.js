@@ -8,7 +8,8 @@
 Ext.define('App.model.patientfile.Immunization', {
 	extend: 'Ext.data.Model',
 	fields: [
-		{name: 'code', type: 'int'},
+        {name: 'id', type: 'int'},
+        {name: 'code', type: 'int'},
 		{name: 'code_text', type: 'string'}
 
 	],

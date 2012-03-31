@@ -118,7 +118,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 													action         : 'immuName',
 													enableKeyEvents: true,
 													listeners      : {
-														scope: me,
+
 														focus: me.onCodeFieldFocus
 													}
 												},
@@ -192,6 +192,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 									xtype       : 'grid',
 									region      : 'east',
 									itemId      : 'immuListGrid',
+									action      : 'immuListGrid',
 									title       : 'Immunizations List',
 									width       : 400,
 									split       : true,
@@ -212,7 +213,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										}
 									],
 									listeners   : {
-
+                                        scope       : me,
 										itemdblclick: me.onImmuGridClick
 									}
 								}
@@ -1156,32 +1157,20 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		this.doLayout();
 	},
 
-	onItemdblclick: function(grid, record) {
-		say(this);
-		var me = this, form, panel;
-		if(grid.panel.itemId == 'patientImmuListGrid') {
-			panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-			me.closeImmunizationGrid();
-		} else {
-			panel = me.getLayout().getActiveItem();
-		}
-		form = panel.down('form').getForm();
-		panel.show();
-		panel.expand(true);
-		form.loadRecord(record);
 
+
+	closeImmunizationGrid: function(field) {
+
+        var grid = field.up('form').query('grid[action="immuListGrid"]');
+        grid[0].collapsed();
 	},
 
-	closeImmunizationGrid: function() {
-		this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').collapse();
-	},
 
-	openImmunizationGrid: function() {
-		this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').expand(true);
-	},
 
-	onCodeFieldFocus: function() {
-		this.openImmunizationGrid();
+	onCodeFieldFocus: function(field) {
+       var grid = field.up('form').query('grid[action="immuListGrid"]');
+
+        grid[0].expand();
 	},
 
 	onOptionType: function(combo) {
@@ -1198,9 +1187,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             codeField = field.up('form').query('textfield[action="immuCode"]'),
 			nameValue = record.data.code_text,
 			codeValue = record.data.code;
+
+        say(nameField[0]);
+        say(codeField[0]);
 		nameField[0].setValue(nameValue);
 		codeField[0].setValue(codeValue);
-		//this.closeImmunizationGrid();
+        say(this);
+        this.closeImmunizationGrid;
+
 	},
 
 	cardSwitch: function(btn) {
