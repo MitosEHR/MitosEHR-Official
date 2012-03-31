@@ -772,39 +772,44 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	setCurrPatient: function(pid, fullname, callback) {
-        this.currPatient = {
-            pid : pid,
-            name: fullname
-        };
-		var patientBtn = this.Header.getComponent('patientButton'),
-			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
-			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
-			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
-			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
 
-		patientBtn.update({ pid:pid, name:fullname });
-        patientBtn.enable();
-		patientOpenVisitsBtn.enable();
-		patientCreateEncounterBtn.enable();
-		patientCloseCurrEncounterBtn.enable();
-		patientCheckOutBtn.enable();
-		if(typeof callback == 'function') {
-			callback(true);
-		}
+		var me = this,
+            patientBtn = me.Header.getComponent('patientButton'),
+			patientOpenVisitsBtn = me.Header.getComponent('patientOpenVisits'),
+			patientCreateEncounterBtn = me.Header.getComponent('patientCreateEncounter'),
+			patientCloseCurrEncounterBtn = me.Header.getComponent('patientCloseCurrEncounter'),
+			patientCheckOutBtn = me.Header.getComponent('patientCheckOut');
+
+        Patient.currPatientSet({ pid:pid }, function(){
+            me.currPatient = {
+                pid : pid,
+                name: fullname
+            };
+            patientBtn.update({ pid:pid, name:fullname });
+            patientBtn.enable();
+            patientOpenVisitsBtn.enable();
+            patientCreateEncounterBtn.enable();
+            patientCloseCurrEncounterBtn.enable();
+            patientCheckOutBtn.enable();
+            if(typeof callback == 'function') {
+                callback(true);
+            }
+        });
 	},
 
 	patientUnset: function() {
-		var patientBtn = this.Header.getComponent('patientButton'),
-			patientOpenVisitsBtn = this.Header.getComponent('patientOpenVisits'),
-			patientCreateEncounterBtn = this.Header.getComponent('patientCreateEncounter'),
-			patientCloseCurrEncounterBtn = this.Header.getComponent('patientCloseCurrEncounter'),
-			patientCheckOutBtn = this.Header.getComponent('patientCheckOut');
+		var me = this,
+            patientBtn = me.Header.getComponent('patientButton'),
+			patientOpenVisitsBtn = me.Header.getComponent('patientOpenVisits'),
+			patientCreateEncounterBtn = me.Header.getComponent('patientCreateEncounter'),
+			patientCloseCurrEncounterBtn = me.Header.getComponent('patientCloseCurrEncounter'),
+			patientCheckOutBtn = me.Header.getComponent('patientCheckOut');
 		/**
 		 * Ext.direct function
 		 */
 		Patient.currPatientUnset(function() {
-			//PushForBtn.disable();
-			app.currEncounterId = null;
+            me.currEncounterId = null;
+            me.currPatient = null;
 			patientCreateEncounterBtn.disable();
 			patientOpenVisitsBtn.disable();
 			patientCloseCurrEncounterBtn.disable();

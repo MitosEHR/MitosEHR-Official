@@ -27,7 +27,6 @@ Ext.define('App.view.patientfile.NewPatient', {
 
 		me.form = Ext.create('Ext.form.Panel', {
 			title        : me.formTitle,
-			url          : 'app/patientfile/new/data.php',
 			bodyStyle    : 'padding: 5px',
 			layout       : 'anchor',
 			fieldDefaults: { msgTarget: 'side' },
@@ -54,49 +53,50 @@ Ext.define('App.view.patientfile.NewPatient', {
 		me.pageBody = [ me.form ];
 
         me.listeners = {
-            afterrender:me.afterPanelRender
+            beforerender:me.beforePanelRender
         };
 
 		me.callParent(arguments);
 	},
 
 	onSave: function() {
-		var me = this;
-		var form = this.form.getForm();
+		var me = this, form, values, date;
 
-		this.form.add({
+		date = me.form.add({
 			xtype : 'textfield',
 			name  : 'date_created',
 			hidden: true,
 			value : Ext.Date.format(new Date(), 'Y-m-d H:i:s')
 		});
 
+        form = me.form.getForm();
+        values = form.getFieldValues();
+
 		if(form.isValid()) {
-			form.submit({
-				submitEmptyText: false,
-				scope          : me,
-				success        : function(forn, action) {
 
-					/** @namespace action.result.patient.pid */
-					/** @namespace action.result.patient.fullname */
+            Patient.createNewPatient(values, function(provider, response){
 
-					var pid = action.result.patient.pid,
-						fullname = action.result.patient.fullname;
+                /** @namespace action.result.patient.pid */
+                /** @namespace action.result.patient.fullname */
 
+                var pid = response.result.patient.pid,
+                    fullname = response.result.patient.fullname;
 
-					me.msg('Sweet!', 'Patient ' + fullname + ' Saved... ');
-					me.getMitosApp().setCurrPatient(pid, fullname, function(success) {
-						if(success) {
-							me.getMitosApp().patientSummary();
-						}
-					});
+                if(response.result.success){
+                    me.msg('Sweet!', 'Patient "' + fullname + '" Created... ');
+                    app.setCurrPatient(pid, fullname, function(success) {
+                        if(success) {
+                            app.openPatientSummary();
+                        }
+                    });
+                }else{
+                    Ext.Msg.alert('Opps!', 'Someting went wrong saving the patient');
+                }
 
-				},
-				failure        : function(form, action) {
-					Ext.Msg.alert('Opps!', action.result.errors.reason);
-				}
-			});
+            });
 		}
+
+        me.form.remove(date);
 	},
 
 
@@ -137,7 +137,7 @@ Ext.define('App.view.patientfile.NewPatient', {
 		});
 	},
 
-    afterPanelRender:function(){
+    beforePanelRender:function(){
         this.getFormItems(this.form, this.formToRender);
     },
 	/**

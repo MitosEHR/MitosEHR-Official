@@ -362,6 +362,9 @@ $API = array(
      */
     'Patient'=>array(
         'methods'=>array(
+            'createNewPatient'=>array(
+                'len'=>1
+            ),
             'patientLiveSearch'=>array(
                 'len'=>1
             ),

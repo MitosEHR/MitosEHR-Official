@@ -53,6 +53,34 @@ class Patient extends Person {
         return;
     }
 
+    public function createNewPatient(stdClass $params){
+
+
+        $data = get_object_vars($params);
+
+        foreach ($data as $key => $val) {
+            if ($val == null) unset($data[$key]);
+            if ($val === false) $data[$key] = 0;
+            if ($val === true) $data[$key] = 1;
+        }
+
+        $this->db->setSQL($this->db->sqlBind($data, "form_data_demographics", "I"));
+        $this->db->execLog();
+        $pid = $this->db->lastInsertId;
+
+        $this->db->setSQL("SELECT pid, fname, mname, lname
+                     FROM form_data_demographics
+                    WHERE pid = '$pid'");
+
+        $patient = $this->db->fetchRecord(PDO::FETCH_ASSOC);
+
+        $patient['fullname'] = $this->fullname($patient['fname'], $patient['mname'], $patient['lname']);
+
+        return array("success" =>true, "patient"=> array( "pid"=> $pid , "fullname" => $patient['fullname']));
+
+
+    }
+
     /**
      * @param $pid
      * @return string

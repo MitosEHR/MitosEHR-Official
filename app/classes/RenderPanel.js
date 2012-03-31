@@ -88,7 +88,7 @@ Ext.define('App.classes.RenderPanel', {
 		 */
 		FormLayoutEngine.getFields({formToRender: formToRender}, function(provider, response) {
 			formPanel.add(eval(response.result));
-			formPanel.doLayout();
+			//formPanel.doLayout();
 
 			if(typeof callback == 'function') {
 				callback(true);
