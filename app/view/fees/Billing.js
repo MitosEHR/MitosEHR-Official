@@ -2,7 +2,7 @@
 // Billing.ejs.php
 // Billing Forms
 // v0.0.1
-// Author: Ernest Rodriguez
+// Author: Emmanuel J. Carrasquillo
 // Modified: 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
@@ -15,9 +15,6 @@ Ext.define('App.view.fees.Billing', {
 	initComponent: function() {
 		var page = this;
 
-		//******************************************************************
-		// Grid...
-		//******************************************************************
 		page.billingGrid = Ext.create('Ext.form.Panel', {
 			title    : 'Billing History',
             defaults:{
@@ -30,18 +27,18 @@ Ext.define('App.view.fees.Billing', {
                     xtype:'container',
                     margin:'5 5 0 5',
                     layout:'hbox',
+                    defaults:{
+                        flex:1,
+                        height:300,
+                        stripeRows:true
+                    },
                     items:[
                         {
                             xtype:'grid',
                             title:'Search Criteria',
                             itemId:'leftCol',
-                            region:'west',
-                            flex:1,
-                            width:585,
-                            height:300,
                             margin:'0 5 0 0',
                             multiSelect:true,
-                            stripeRows:true,
 
                             store:page.cptCodesGridStore,
                             viewConfig:{
@@ -52,11 +49,11 @@ Ext.define('App.view.fees.Billing', {
                                         dragGroup:'firstSearchCriteriaGridDDGroup',
                                         dropGroup:'secondSearchCriteriaGridDDGroup'
                                     }
-                                ]
-                                /*listeners:{
+                                ],
+                                listeners:{
                                     scope:page,
-                                    drop:page.onQuickRefereneDrop
-                                }*/
+                                    drop:page.onSearchCriteriaDrop
+                                }
                             },
                             columns:[
                                 {
@@ -72,21 +69,11 @@ Ext.define('App.view.fees.Billing', {
                                     dataIndex:'criteria_description_medium'
                                 }
                             ]
-                            /*,
-                            listeners:{
-                                scope:page,
-                                collapse:page.onQuickReferenceCollapsed
-                            }*/
                         },
                         {
                             xtype:'grid',
                             title:'Current Selected Criteria',
-                            region:'center',
-                            flex:1,
-                            width:585,
-                            height:300,
                             itemId:'rightCol',
-                            stripeRows:true,
 
                             store:page.secondGridStore,
                             columns:[
@@ -105,34 +92,20 @@ Ext.define('App.view.fees.Billing', {
                             ],
                             viewConfig:{
                                 itemId:'view',
-                                //copy:true,
                                 plugins:[
                                     {
                                         ptype:'gridviewdragdrop',
-                                        dragGroup:'secondCPTGridDDGroup',
-                                        dropGroup:'firstCPTGridDDGroup'
+                                        dragGroup:'secondSearchCriteriaGridDDGroup',
+                                        dropGroup:'firstSearchCriteriaGridDDGroup'
                                     }
 
-                                ]/*,
+                                ],
                                 listeners:{
                                     scope:page,
-                                    drop:page.onEncounterCptDrop
-                                }*/
+                                    drop:page.onCurrentSelectedCriteriaDrop
+                                }
                             }
-                            /*plugins:page.cptFormEdit,
-                            listeners:{
-                                selectionchange:page.onEncounterCptSelectionChange
-                            }*/
                         }
-
-                      /*  {
-                            xtype:'textfield',
-                            fieldLabel: 'Timeframe'
-                        },
-                        {
-                            xtype:'textfield',
-                            fieldLabel: 'Timeframe'
-                        }*/
                     ]
                 },
                 {
@@ -151,9 +124,24 @@ Ext.define('App.view.fees.Billing', {
                 }
             ]
 		});
-		page.pageBody = [  page.billingGrid ];
+		page.pageBody = [ page.billingGrid ];
 		page.callParent(arguments);
 	}, // end of initComponent
+
+    onSearchCriteriaDrop:function () {
+        app.msg('Criteria removed from Current Selected Criteria');
+    },
+
+    onCurrentSelectedCriteriaDrop:function (node, data) {
+        var me = this,
+            index;
+
+        app.msg('Search Criteria added to Current Selected Criteria');
+        me.cptFormEdit.cancelEdit();
+        index = me.secondGridStore.indexOf(data.records[0]);
+        me.cptFormEdit.startEdit(index, 0);
+    },
+
 	/**
 	 * This function is called from MitosAPP.js when
 	 * this panel is selected in the navigation panel.
