@@ -148,9 +148,11 @@ Ext.define('App.view.fees.Payments', {
                     xtype:'form',
                     title:'Patient CPTs',
                     margin:'0 10 15 10',
+	                height:280,
                     items:[
                         {
                             xtype:'fieldcontainer',
+	                        height:40,
                             layout: {
                                 type   : 'hbox'
                             },
@@ -195,6 +197,7 @@ Ext.define('App.view.fees.Payments', {
                         {
                             xtype  : 'grid',
                             title  : 'CPTs',
+	                        height : 180,
                             columns: [
                                 {
                                     header : 'CPT Code',
