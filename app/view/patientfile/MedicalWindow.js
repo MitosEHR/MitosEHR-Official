@@ -115,9 +115,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 													fieldLabel     : 'Immunization Name',
 													name           : 'immunization_name',
 													itemId         : 'immuName',
+													action         : 'immuName',
 													enableKeyEvents: true,
 													listeners      : {
-														scope: me,
+                                                        scope: me,
 														focus: me.onCodeFieldFocus
 													}
 												},
@@ -125,6 +126,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 													fieldLabel     : 'Immunization (CVX Code)',
 													name           : 'immunization_id',
 													itemId         : 'immuCode',
+													action         : 'immuCode',
 													enableKeyEvents: true,
 													listeners      : {
 														scope: me,
@@ -190,11 +192,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 									xtype       : 'grid',
 									region      : 'east',
 									itemId      : 'immuListGrid',
+									action      : 'immuListGrid',
 									title       : 'Immunizations List',
 									width       : 400,
 									split       : true,
 									border      : false,
 									collapseMode: 'mini',
+                                    collapsed   : true,
 									store       : me.ImmuListStore,
 									columns     : [
 										{
@@ -209,7 +213,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										}
 									],
 									listeners   : {
-										scope       : me,
+                                        scope       : me,
 										itemdblclick: me.onImmuGridClick
 									}
 								}
@@ -1153,55 +1157,38 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		this.doLayout();
 	},
 
-	onItemdblclick: function(grid, record) {
-		say(this);
-		var me = this, form, panel;
-		if(grid.panel.itemId == 'patientImmuListGrid') {
-			panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-			me.closeImmunizationGrid();
-		} else {
-			panel = me.getLayout().getActiveItem();
-		}
-		form = panel.down('form').getForm();
-		panel.show();
-		panel.expand(true);
-		form.loadRecord(record);
 
-	},
 
 	closeImmunizationGrid: function() {
-		this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').collapse();
+        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
+        grid[0].collapse();
 	},
 
-	openImmunizationGrid: function() {
-		this.getLayout().getActiveItem().getComponent('immuNorth').down('grid').expand(true);
-	},
+    openImmunizationGrid: function() {
+        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
+        grid[0].expand();
+    },
 
 	onCodeFieldFocus: function() {
-		this.openImmunizationGrid();
+        this.openImmunizationGrid();
 	},
 
 	onOptionType: function(combo) {
-
 		var value = combo.getValue(),
 			titlefield = combo.up('container').getComponent('title');
 		titlefield.setValue(value);
-
-
 	},
 
-	onImmuGridClick: function(view, record) {
-		var test = this.query('plugins');
-        say(test);
-        var nameField = this.up('container').query('textfield[itemId="immuName"]'),
-            codeField = this.up('container').query('textfield[itemId="immuCode"]'),
+	onImmuGridClick: function(field, record) {
+	    var nameField = field.up('form').query('textfield[action="immuName"]'),
+            codeField = field.up('form').query('textfield[action="immuCode"]'),
 			nameValue = record.data.code_text,
 			codeValue = record.data.code;
-        say(nameField);
-        say(codeField);
+
 		nameField[0].setValue(nameValue);
 		codeField[0].setValue(codeValue);
-		this.closeImmunizationGrid();
+        this.closeImmunizationGrid();
+
 	},
 
 	cardSwitch: function(btn) {

@@ -339,9 +339,9 @@ Ext.define('App.view.MitosApp', {
 					border     : false,
 					store      : me.storeTree,
 					width      : 200,
-//					plugins    : [
-//						{ptype: 'nodedisabled'}
-//					],
+					plugins    : [
+						{ptype: 'nodedisabled'}
+					],
 //					root       : {
 //						nodeType : 'async',
 //						draggable: false
@@ -989,9 +989,10 @@ Ext.define('App.view.MitosApp', {
 			},
 			notifyDrop: function(dd, e, data) {
 				app.MainPanel.el.unmask();
-				Patient.currPatientSet({pid:data.patientData.pid});
-				me.setCurrPatient(data.patientData.pid, data.patientData.name);
-				me.openEncounter(data.patientData.eid);
+
+				me.setCurrPatient(data.patientData.pid, data.patientData.name, function(){
+                    me.openEncounter(data.patientData.eid);
+                });
 
 			}
 		});
