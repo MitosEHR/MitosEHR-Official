@@ -78,7 +78,7 @@ Ext.define('App.view.administration.Layout', {
 		 */
 		me.fieldsGridStore = Ext.create('Ext.data.TreeStore', {
 			model      : 'layoutTreeModel',
-			clearOnLoad: true,
+			//clearOnLoad: true,
 			proxy      : {
 				type: 'direct',
 				api : {
@@ -1098,13 +1098,7 @@ Ext.define('App.view.administration.Layout', {
 			row.select(0);
 		}
 		me.currForm = row.getLastSelected().data.id;
-		/**
-		 *
-		 * this.fieldsGridStore.setRootNode() is to manage a sencha bug
-		 * that removes the treeNotes when you load() the store.
-		 *
-		 */
-		me.fieldsGridStore.setRootNode();
+
 		me.fieldsGridStore.load({params: {currForm: me.currForm }});
 		me.parentFieldsStore.load({params: {currForm: me.currForm }});
 
