@@ -339,9 +339,9 @@ Ext.define('App.view.MitosApp', {
 					border     : false,
 					store      : me.storeTree,
 					width      : 200,
-//					plugins    : [
-//						{ptype: 'nodedisabled'}
-//					],
+					plugins    : [
+						{ptype: 'nodedisabled'}
+					],
 //					root       : {
 //						nodeType : 'async',
 //						draggable: false

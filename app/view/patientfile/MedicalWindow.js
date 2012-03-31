@@ -118,7 +118,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 													action         : 'immuName',
 													enableKeyEvents: true,
 													listeners      : {
-
+                                                        scope: me,
 														focus: me.onCodeFieldFocus
 													}
 												},
@@ -1159,27 +1159,24 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 
 
-	closeImmunizationGrid: function(field) {
-
-        var grid = field.up('form').query('grid[action="immuListGrid"]');
-        grid[0].collapsed();
+	closeImmunizationGrid: function() {
+        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
+        grid[0].collapse();
 	},
 
-
-
-	onCodeFieldFocus: function(field) {
-       var grid = field.up('form').query('grid[action="immuListGrid"]');
-
+    openImmunizationGrid: function() {
+        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
         grid[0].expand();
+    },
+
+	onCodeFieldFocus: function() {
+        this.openImmunizationGrid();
 	},
 
 	onOptionType: function(combo) {
-
 		var value = combo.getValue(),
 			titlefield = combo.up('container').getComponent('title');
 		titlefield.setValue(value);
-
-
 	},
 
 	onImmuGridClick: function(field, record) {
@@ -1188,12 +1185,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			nameValue = record.data.code_text,
 			codeValue = record.data.code;
 
-        say(nameField[0]);
-        say(codeField[0]);
 		nameField[0].setValue(nameValue);
 		codeField[0].setValue(codeValue);
-        say(this);
-        this.closeImmunizationGrid;
+        this.closeImmunizationGrid();
 
 	},
 
