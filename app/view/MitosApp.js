@@ -102,6 +102,7 @@ Ext.define('App.view.MitosApp', {
 		});
 
 		me.storeTree = Ext.create('App.store.navigation.Navigation', {
+            autoLoad:true,
 			listeners: {
 				scope: me,
 				load : me.navigateToDefault
@@ -338,13 +339,13 @@ Ext.define('App.view.MitosApp', {
 					border     : false,
 					store      : me.storeTree,
 					width      : 200,
-					plugins    : [
-						{ptype: 'nodedisabled'}
-					],
-					root       : {
-						nodeType : 'async',
-						draggable: false
-					},
+//					plugins    : [
+//						{ptype: 'nodedisabled'}
+//					],
+//					root       : {
+//						nodeType : 'async',
+//						draggable: false
+//					},
 					listeners  : {
 						scope          : me,
 						selectionchange: me.onNavigationNodeSelected
