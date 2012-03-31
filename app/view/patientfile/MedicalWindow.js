@@ -115,6 +115,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 													fieldLabel     : 'Immunization Name',
 													name           : 'immunization_name',
 													itemId         : 'immuName',
+													action         : 'immuName',
 													enableKeyEvents: true,
 													listeners      : {
 														scope: me,
@@ -125,6 +126,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 													fieldLabel     : 'Immunization (CVX Code)',
 													name           : 'immunization_id',
 													itemId         : 'immuCode',
+													action         : 'immuCode',
 													enableKeyEvents: true,
 													listeners      : {
 														scope: me,
@@ -195,6 +197,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 									split       : true,
 									border      : false,
 									collapseMode: 'mini',
+                                    collapsed   : true,
 									store       : me.ImmuListStore,
 									columns     : [
 										{
@@ -209,7 +212,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 										}
 									],
 									listeners   : {
-										scope       : me,
+
 										itemdblclick: me.onImmuGridClick
 									}
 								}
@@ -1190,18 +1193,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 	},
 
-	onImmuGridClick: function(view, record) {
-		var test = this.query('plugins');
-        say(test);
-        var nameField = this.up('container').query('textfield[itemId="immuName"]'),
-            codeField = this.up('container').query('textfield[itemId="immuCode"]'),
+	onImmuGridClick: function(field, record) {
+	    var nameField = field.up('form').query('textfield[action="immuName"]'),
+            codeField = field.up('form').query('textfield[action="immuCode"]'),
 			nameValue = record.data.code_text,
 			codeValue = record.data.code;
-        say(nameField);
-        say(codeField);
 		nameField[0].setValue(nameValue);
 		codeField[0].setValue(codeValue);
-		this.closeImmunizationGrid();
+		//this.closeImmunizationGrid();
 	},
 
 	cardSwitch: function(btn) {
