@@ -11,28 +11,145 @@ Ext.define('App.view.fees.Billing', {
 	id           : 'panelBilling',
 	pageTitle    : 'Billing',
 	uses         : [ 'App.classes.GridPanel' ],
+
 	initComponent: function() {
 		var page = this;
 
 		//******************************************************************
 		// Grid...
 		//******************************************************************
-		page.billingGrid = Ext.create('App.classes.GridPanel', {
+		page.billingGrid = Ext.create('Ext.form.Panel', {
 			title    : 'Billing History',
-			columns  : [
-				{ header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-				{ width: 150, sortable: true, dataIndex: 'date', renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s') },
-				{ width: 150, sortable: true, dataIndex: 'user' },
-				{ flex: 1, sortable: true, dataIndex: 'body' },
-				{ flex: 1, sortable: true, dataIndex: 'body' },
-				{ flex: 1, sortable: true, dataIndex: 'body' },
-				{ flex: 1, sortable: true, dataIndex: 'body' }
-			],
-			listeners: {
-				itemclick: function() {
+            defaults:{
+                bodyStyle:'padding:15px',
+                bodyBorder:true,
+                labelWidth:110
+            },
+            items:[
+                {
+                    xtype:'container',
+                    margin:'5 5 0 5',
+                    layout:'hbox',
+                    items:[
+                        {
+                            xtype:'grid',
+                            title:'Search Criteria',
+                            itemId:'leftCol',
+                            region:'west',
+                            flex:1,
+                            width:585,
+                            height:300,
+                            margin:'0 5 0 0',
+                            multiSelect:true,
+                            stripeRows:true,
 
-				}
-			}
+                            store:page.cptCodesGridStore,
+                            viewConfig:{
+                                copy:true,
+                                plugins:[
+                                    {
+                                        ptype:'gridviewdragdrop',
+                                        dragGroup:'firstSearchCriteriaGridDDGroup',
+                                        dropGroup:'secondSearchCriteriaGridDDGroup'
+                                    }
+                                ]
+                                /*listeners:{
+                                    scope:page,
+                                    drop:page.onQuickRefereneDrop
+                                }*/
+                            },
+                            columns:[
+                                {
+                                    text:"Criteria Id",
+                                    width:100,
+                                    sortable:true,
+                                    dataIndex:'criteria_id'
+                                },
+                                {
+                                    text:"Criteria Description",
+                                    flex:1,
+                                    sortable:true,
+                                    dataIndex:'criteria_description_medium'
+                                }
+                            ]
+                            /*,
+                            listeners:{
+                                scope:page,
+                                collapse:page.onQuickReferenceCollapsed
+                            }*/
+                        },
+                        {
+                            xtype:'grid',
+                            title:'Current Selected Criteria',
+                            region:'center',
+                            flex:1,
+                            width:585,
+                            height:300,
+                            itemId:'rightCol',
+                            stripeRows:true,
+
+                            store:page.secondGridStore,
+                            columns:[
+                                {
+                                    text:"Criteria Id",
+                                    width:100,
+                                    sortable:true,
+                                    dataIndex:'criteria_id'
+                                },
+                                {
+                                    text:"Description",
+                                    flex:1,
+                                    sortable:true,
+                                    dataIndex:'criteria_description'
+                                }
+                            ],
+                            viewConfig:{
+                                itemId:'view',
+                                //copy:true,
+                                plugins:[
+                                    {
+                                        ptype:'gridviewdragdrop',
+                                        dragGroup:'secondCPTGridDDGroup',
+                                        dropGroup:'firstCPTGridDDGroup'
+                                    }
+
+                                ]/*,
+                                listeners:{
+                                    scope:page,
+                                    drop:page.onEncounterCptDrop
+                                }*/
+                            }
+                            /*plugins:page.cptFormEdit,
+                            listeners:{
+                                selectionchange:page.onEncounterCptSelectionChange
+                            }*/
+                        }
+
+                      /*  {
+                            xtype:'textfield',
+                            fieldLabel: 'Timeframe'
+                        },
+                        {
+                            xtype:'textfield',
+                            fieldLabel: 'Timeframe'
+                        }*/
+                    ]
+                },
+                {
+                    xtype  : 'grid',
+                    title  : 'Payments Found',
+                    height : 180,
+                    margin : '5 5 5 5',
+                    columns: [
+                        {
+                            header : 'Payment Number'
+                        },
+                        {
+                            header : 'Date'
+                        }
+                    ]
+                }
+            ]
 		});
 		page.pageBody = [  page.billingGrid ];
 		page.callParent(arguments);
