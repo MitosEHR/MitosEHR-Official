@@ -52,7 +52,7 @@ Globals::setGlobals();
         <span id="app-msg" style="display:none;"></span>
 
         <!-- Ext library -->
-        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/ext-all.js"></script>
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/ext-all-debug.js"></script>
         <script src="data/api.php"></script>
         <script type="text/javascript">
             Ext.Loader.setConfig({

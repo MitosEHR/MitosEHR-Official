@@ -94,7 +94,6 @@ Ext.define('App.view.administration.Lists', {
 		me.optionsRowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
 			autoCancel   : false,
 			errorSummary : false,
-			deleteBtnText: 'Disable',
 			listeners    : {
 				scope     : me,
 				afteredit : me.afterEdit,
@@ -104,7 +103,6 @@ Ext.define('App.view.administration.Lists', {
 		me.listsRowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
 			autoCancel   : false,
 			errorSummary : false,
-			deleteBtnText: 'Disable',
 			listeners    : {
 				scope     : me,
 				afteredit : me.afterEdit,
@@ -278,8 +276,8 @@ Ext.define('App.view.administration.Lists', {
 	 */
 	onListsGridClick: function(grid, record) {
 		var me = this,
-			deleteBtn = me.listsGrid.down('toolbar').getComponent('listDeleteBtn');
-		inUse = record.data.in_use == '1' ? true : false;
+			deleteBtn = me.listsGrid.down('toolbar').getComponent('listDeleteBtn'),
+		inUse = !!record.data.in_use == '1';
 
 		me.currList = record.data.id;
 		me.optionsStore.load({params: {list_id: me.currList}});
@@ -318,7 +316,7 @@ Ext.define('App.view.administration.Lists', {
 	 */
 	onDragDrop         : function(node, data, overModel) {
 		var me = this,
-			items = overModel.store.data.items,
+			items = overModel.stores[0].data.items,
 			gridItmes = [];
 		Ext.each(items, function(iteme) {
 			gridItmes.push(iteme.data.id);
@@ -338,12 +336,13 @@ Ext.define('App.view.administration.Lists', {
 	 * @param a
 	 */
 	afterEdit: function(a) {
-		a.store.sync();
-		a.store.load({params: {list_id: this.currList}});
+		a.context.store.sync();
+		//a.context.store.load({params: {list_id: this.currList}});
 	},
 
 	onCancelEdit: function(a) {
-		a.store.load({params: {list_id: this.currList}});
+        say(a);
+		a.context.store.load({params: {list_id: this.currList}});
 	},
 
 	onDelete: function(a) {
