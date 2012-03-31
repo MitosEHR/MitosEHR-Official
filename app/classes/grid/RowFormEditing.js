@@ -255,7 +255,7 @@ Ext.define('App.classes.grid.RowFormEditing', {
             record         = context.record,
             newValues      = {},
             originalValues = {},
-            editors        = editor.items.items,
+            editors        = editor.getForm().getFields().items,
             e,
             eLen           = editors.length,
             name, item;
