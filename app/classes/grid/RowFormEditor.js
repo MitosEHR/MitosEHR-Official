@@ -64,7 +64,23 @@ Ext.define('App.classes.grid.RowFormEditor', {
         me.callParent(arguments);
 
         form = me.getForm();
+
+        me.setFields();
+
         form.trackResetOnLoad = true;
+    },
+
+    onFieldChange: function() {
+        var me = this,
+            form = me.getForm(),
+            valid = form.isValid();
+        if (me.errorSummary && me.isVisible()) {
+            me[valid ? 'hideToolTip' : 'showToolTip']();
+        }
+        if (me.floatingButtons) {
+            me.floatingButtons.child('#update').setDisabled(!valid);
+        }
+        me.isValid = valid;
     },
 
     afterRender: function() {
@@ -314,37 +330,14 @@ Ext.define('App.classes.grid.RowFormEditor', {
         }
     },
 
-    setField: function(column) {
+    setFields: function(column) {
         var me = this,
-            field;
+            form = me.getForm(),
+            fields = form.getFields().items;
 
-        if (Ext.isArray(column)) {
-            Ext.Array.forEach(column, me.setField, me);
-            return;
-        }
-
-        // Get a default display field if necessary
-        field = column.getEditor(null, {
-            xtype: 'displayfield',
-            // Default display fields will not return values. This is done because
-            // the display field will pick up column renderers from the grid.
-            getModelData: function() {
-                return null;
-            }
+        Ext.each(fields, function(field){
+            me.mon(field, 'change', me.onFieldChange, me);
         });
-        field.margins = '0 0 0 2';
-        field.setWidth(column.getDesiredWidth() - 2);
-        me.mon(field, 'change', me.onFieldChange, me);
-
-        // Maintain mapping of fields-to-columns
-        // This will fire events that maintain our container items
-        me.columns.add(field.id, column);
-        if (column.hidden) {
-            me.onColumnHide(column);
-        }
-        if (me.isVisible() && me.context) {
-            me.renderColumnData(field, me.context.record);
-        }
     },
 
     loadRecord: function(record) {
