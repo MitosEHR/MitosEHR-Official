@@ -13,9 +13,9 @@ Ext.define('App.view.fees.Billing', {
     uses         : [ 'App.classes.GridPanel' ],
 
     initComponent: function() {
-        var page = this;
+        var me = this;
 
-//		page.billingGrid = Ext.create('Ext.form.Panel', {
+//		me.billingGrid = Ext.create('Ext.form.Panel', {
 //			title    : 'Billing History',
 //            defaults:{
 //                bodyStyle:'padding:15px',
@@ -40,7 +40,7 @@ Ext.define('App.view.fees.Billing', {
 //                            margin:'0 5 0 0',
 //                            multiSelect:true,
 //
-//                            store:page.cptCodesGridStore,
+//                            store:me.cptCodesGridStore,
 //                            viewConfig:{
 //                                copy:true,
 //                                plugins:[
@@ -51,8 +51,8 @@ Ext.define('App.view.fees.Billing', {
 //                                    }
 //                                ],
 //                                listeners:{
-//                                    scope:page,
-//                                    drop:page.onSearchCriteriaDrop
+//                                    scope:me,
+//                                    drop:me.onSearchCriteriaDrop
 //                                }
 //                            },
 //                            columns:[
@@ -75,7 +75,7 @@ Ext.define('App.view.fees.Billing', {
 //                            title:'Current Selected Criteria',
 //                            itemId:'rightCol',
 //
-//                            store:page.secondGridStore,
+//                            store:me.secondGridStore,
 //                            columns:[
 //                                {
 //                                    text:"Criteria Id",
@@ -101,8 +101,8 @@ Ext.define('App.view.fees.Billing', {
 //
 //                                ],
 //                                listeners:{
-//                                    scope:page,
-//                                    drop:page.onCurrentSelectedCriteriaDrop
+//                                    scope:me,
+//                                    drop:me.onCurrentSelectedCriteriaDrop
 //                                }
 //                            }
 //                        }
@@ -125,34 +125,27 @@ Ext.define('App.view.fees.Billing', {
 //            ]
 //		});
 
-
-        page.store = Ext.create('Ext.data.Store', {
-            storeId:'simpsonsStore',
-            fields:['name', 'email', 'phone'],
-            data:{'items':[
-                { 'name': 'Lisa',  "email":"lisa@simpsons.com",  "phone":"555-111-1224"  },
-                { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555-222-1234" },
-                { 'name': 'Homer', "email":"home@simpsons.com",  "phone":"555-222-1244"  },
-                { 'name': 'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254"  }
-            ]},
-            proxy: {
-                type: 'memory',
-                reader: {
-                    type: 'json',
-                    root: 'items'
-                }
-            }
-        });
+	    me.patientMedicationsStore = Ext.create('App.store.fees.Billing');
 
 
 
-        page.encountersGrid = Ext.create('Ext.grid.Panel', {
+        me.encountersGrid = Ext.create('Ext.grid.Panel', {
             title: 'Encounters test',
-            store: page.store,
+            store: me.patientMedicationsStore,
             columns: [
-                { header: 'Name',  dataIndex: 'name' },
-                { header: 'Email', dataIndex: 'email', flex: 1 },
-                { header: 'Phone', dataIndex: 'phone' }
+                {
+	                header: 'Name',
+	              dataIndex: 'name'
+                },
+                {
+	              header: 'Email',
+	              dataIndex: 'email',
+	              flex: 1
+                },
+                {
+	              header: 'Phone',
+	              dataIndex: 'phone'
+                }
             ],
             tbar:[
                 {
@@ -219,8 +212,8 @@ Ext.define('App.view.fees.Billing', {
 
         });
 
-        page.pageBody = [ page.encountersGrid ];
-        page.callParent(arguments);
+        me.pageBody = [ me.encountersGrid ];
+        me.callParent(arguments);
     }, // end of initComponent
 
     onSearchCriteriaDrop:function () {
