@@ -165,12 +165,14 @@ Ext.define('App.view.fees.Billing', {
                 {
                     xtype:'datefield',
                     fieldLabel:'From',
-                    labelWidth: 40
+                    labelWidth: 40,
+	                action:'datefrom'
                 },
                 {
                     xtype:'datefield',
                     fieldLabel:'To',
-                    labelWidth: 30
+                    labelWidth: 30,
+	                action:'dateto'
 
                 },
                 '->',
@@ -181,8 +183,25 @@ Ext.define('App.view.fees.Billing', {
                 {
                     text: '30+',
                     enableToggle: true,
-                    toggleGroup: 'pastduedates'
+                    toggleGroup: 'pastduedates',
+	                enableKeyEvents:true,
+	                listeners:{
 
+		                scope:me,
+		                toggleHandler:function(button,state){
+
+			                var datefrom = this.query('datefield[action="datefrom"]'),
+				                dateto = this.query('datefield[action="dateto"]');
+							say(button);
+			                datefrom[0].reset();
+			                dateto[0].reset();
+
+
+		                }
+
+
+
+	                }
                 },
                 {
                     text: '60+',

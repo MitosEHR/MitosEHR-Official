@@ -50,7 +50,7 @@ class Fees {
     /*************************************************************************************************************/
     public function getPatientList()
     {
-        $sql = "SELECT * FROM patient_data WHERE title='Mr.'";
+        $sql = "SELECT * FROM patient_data ";
         $this->db->setSQL($sql);
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
