@@ -156,31 +156,51 @@ Ext.define('App.view.fees.Billing', {
             ],
             tbar:[
                 {
-
                     xtype:'patienlivetsearch',
-                    emptyText: 'Patient Live Search...'
+                    emptyText: 'Patient Live Search...',
+                    width: 300,
+                    margin: '0 5 0 0'
 
                 },
-                    {
+                {
+                    xtype:'datefield',
+                    fieldLabel:'From',
+                    labelWidth: 40
+                },
+                {
+                    xtype:'datefield',
+                    fieldLabel:'To',
+                    labelWidth: 30
 
-                        xtype: 'buttongroup',
-                        columns: 4,
-                        title: 'Past due',
-                        items:
-                        [
-                            {
-                                text: '30+'
+                },
+                '->',
+                {
+                    xtype: 'tbtext',
+                    text: 'Past due:'
+                },
+                {
+                    text: '30+',
+                    enableToggle: true,
+                    toggleGroup: 'pastduedates'
 
-                            },{
-                                text: '60+'
-                            },{
-                                text: '120+'
-                            },{
-                                text: '180+'
+                },
+                {
+                    text: '60+',
+                    enableToggle: true,
+                    toggleGroup: 'pastduedates'
+                },
+                {
+                    text: '120+',
+                    enableToggle: true,
+                    toggleGroup: 'pastduedates'
+                },
+                {
+                    text: '180+',
+                    enableToggle: true,
+                    toggleGroup: 'pastduedates'
 
-                            }
-                        ]
-                    }
+                }
+
 
 
             ],
