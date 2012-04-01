@@ -154,21 +154,36 @@ Ext.define('App.view.fees.Billing', {
                 { header: 'Email', dataIndex: 'email', flex: 1 },
                 { header: 'Phone', dataIndex: 'phone' }
             ],
+            tbar:[
+                {
+                xtype:'fieldset',
+                title:'Search',
+                padding:'10 15',
+                margin:'0 0 3 0',
+                layout:'anchor',
+                items:{
+                    xtype:'patienlivetsearch',
+                    emptyText: 'Patient Live Search...'
+
+                }
+
+            }
+
+            ],
             plugins: Ext.create('App.classes.grid.RowFormEditing', {
                 autoCancel  : false,
                 errorSummary: false,
                 clicksToEdit: 1,
                 formItems   : [
                     Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
-                        height:500
+                        height:350
                     })
 
                 ]
+
             })
 
         });
-
-        //Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology')
 
 		page.pageBody = [ page.encountersGrid ];
 		page.callParent(arguments);
