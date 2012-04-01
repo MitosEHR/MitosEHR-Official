@@ -60,7 +60,8 @@ class Encounter {
      *  Naming: "checkOpenEncounters"
     */
     public function checkOpenEncounters()
-    {
+
+{
         $fields[] = "*";
         $where[]  = "pid = '".$_SESSION['patient']['pid']."'";
         $where[]  = "close_date IS NULL";
@@ -73,13 +74,36 @@ class Encounter {
             return array('encounter' => false);
         }
     }
-
     /**
      * @param stdClass $params
      * @return array
      *  Naming: "getPatientEncounters"
      */
     public function getEncounters(stdClass $params)
+    {
+        $fields[] = "*";
+        if(isset($params->sort)){
+            $order[$params->sort[0]->direction] = $params->sort[0]->property;
+        } else {
+            $order['DESC'] = 'start_date';
+        }
+        $where[] = "pid = '".$_SESSION['patient']['pid']."'";
+
+        $this->db->setSQL( $this->db->sqlSelectBuilder('form_data_encounter', $fields, $where, $order) );
+        $rows = array();
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+            $row['status'] = ($row['close_date']== null)? 'open' : 'close';
+        	array_push($rows, $row);
+        }
+
+        return $rows;
+    }
+    /**
+     * @param stdClass $params
+     * @return array
+     *  Naming: "getPatientEncounters"
+     */
+    public function getEncountersPastDue(stdClass $params)
     {
         $fields[] = "*";
         if(isset($params->sort)){
