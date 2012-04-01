@@ -186,16 +186,8 @@ Ext.define('App.view.fees.Checkout', {
 
     onActive:function (callback) {
 
-        Ext.Msg.show({
-            title:'Error',
-            msg:'You Currently dont have an <strong>Encounter</strong>',
-            icon:Ext.MessageBox.ERROR,
-            buttons:Ext.Msg.OK,
-            scope:this,
-            fn:function () {
-                callback(true);
-            }
-        })
+        callback(true);
+
     }
 
 }); //end Checkout class
