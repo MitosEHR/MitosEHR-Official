@@ -45,7 +45,13 @@ Ext.define('App.view.fees.Payments', {
                                 {
                                     fieldLabel: 'Payment Method',
                                     xtype     : 'mitos.paymentmethodcombo',
-                                    name      : 'paymentmethod'
+                                    name      : 'paymentmethod',
+                                    enableKeyEvents:true,
+                                    listeners :{
+                                        scope : me,
+                                        select:me.onCheckPayment
+
+                                    }
                                 },
                                 {
                                     xtype:'mitos.currency',
@@ -72,8 +78,11 @@ Ext.define('App.view.fees.Payments', {
                         },
                         {
                             xtype:'fieldset',
+                            action:'checkinfo',
                             title:'Check Information',
                             layout:'anchor',
+                            collapsed: true,
+                            width:0,
                             margin:'5 5 5 0',
                             items:[
                                 {
@@ -98,6 +107,7 @@ Ext.define('App.view.fees.Payments', {
 	                itemId:'description',
                     margin:'0 10 15 10',
                     height: 120,
+
                     items:[
                         {
                             xtype:'fieldcontainer',
@@ -287,6 +297,26 @@ Ext.define('App.view.fees.Payments', {
             pidfield[0].reset();
         }
 
-	}
+	},
+
+    onCheckPayment:function(combo){
+        var checkinfo = this.query('fieldset[action="checkinfo"]');
+
+        if(combo.getValue() == 'check_payment'){
+
+        checkinfo[0].expand();
+        checkinfo[0].setWidth(500);
+
+        }else{
+
+        checkinfo[0].collapse();
+        checkinfo[0].setWidth(0);
+        }
+
+
+
+
+    }
+
 
 }); //end Payments class
