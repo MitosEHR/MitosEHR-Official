@@ -7,13 +7,13 @@
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 Ext.define('App.view.fees.Billing', {
-	extend       : 'App.classes.RenderPanel',
-	id           : 'panelBilling',
-	pageTitle    : 'Billing',
-	uses         : [ 'App.classes.GridPanel' ],
+    extend       : 'App.classes.RenderPanel',
+    id           : 'panelBilling',
+    pageTitle    : 'Billing',
+    uses         : [ 'App.classes.GridPanel' ],
 
-	initComponent: function() {
-		var page = this;
+    initComponent: function() {
+        var page = this;
 
 //		page.billingGrid = Ext.create('Ext.form.Panel', {
 //			title    : 'Billing History',
@@ -146,8 +146,8 @@ Ext.define('App.view.fees.Billing', {
 
 
 
-		page.encountersGrid = Ext.create('Ext.grid.Panel', {
-            title: 'Encputers test',
+        page.encountersGrid = Ext.create('Ext.grid.Panel', {
+            title: 'Encounters test',
             store: page.store,
             columns: [
                 { header: 'Name',  dataIndex: 'name' },
@@ -156,18 +156,32 @@ Ext.define('App.view.fees.Billing', {
             ],
             tbar:[
                 {
-                xtype:'fieldset',
-                title:'Search',
-                padding:'10 15',
-                margin:'0 0 3 0',
-                layout:'anchor',
-                items:{
+
                     xtype:'patienlivetsearch',
                     emptyText: 'Patient Live Search...'
 
-                }
+                },
+                    {
 
-            }
+                        xtype: 'buttongroup',
+                        columns: 4,
+                        title: 'Past due',
+                        items:
+                        [
+                            {
+                                text: '30+'
+
+                            },{
+                                text: '60+'
+                            },{
+                                text: '120+'
+                            },{
+                                text: '180+'
+
+                            }
+                        ]
+                    }
+
 
             ],
             plugins: Ext.create('App.classes.grid.RowFormEditing', {
@@ -185,9 +199,9 @@ Ext.define('App.view.fees.Billing', {
 
         });
 
-		page.pageBody = [ page.encountersGrid ];
-		page.callParent(arguments);
-	}, // end of initComponent
+        page.pageBody = [ page.encountersGrid ];
+        page.callParent(arguments);
+    }, // end of initComponent
 
     onSearchCriteriaDrop:function () {
         app.msg('Criteria removed from Current Selected Criteria');
@@ -203,13 +217,13 @@ Ext.define('App.view.fees.Billing', {
         me.cptFormEdit.startEdit(index, 0);
     },
 
-	/**
-	 * This function is called from MitosAPP.js when
-	 * this panel is selected in the navigation panel.
-	 * place inside this function all the functions you want
-	 * to call every this panel becomes active
-	 */
-	onActive     : function(callback) {
-		callback(true);
-	}
+    /**
+     * This function is called from MitosAPP.js when
+     * this panel is selected in the navigation panel.
+     * place inside this function all the functions you want
+     * to call every this panel becomes active
+     */
+    onActive     : function(callback) {
+        callback(true);
+    }
 }); //ens oNotesPage class
