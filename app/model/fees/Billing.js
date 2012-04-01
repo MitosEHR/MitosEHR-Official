@@ -10,19 +10,15 @@ Ext.define('App.model.fees.Billing', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int '},
-        {name: 'criteria_id', type: 'strig'},
-        {name: 'criteria_description', type: 'string'},
-        {name: 'criteria_description_medium', type: 'string'}
+        {name: 'fname', type: 'strig'},
+        {name: 'lname', type: 'strig'},
+        {name: 'mname', type: 'strig'},
+        {name: 'ss', type: 'string'}
     ],
     proxy : {
-        type  : 'direct',
-        api   : {
-            read: Services.getCptCodesBySelection
-        },
-        reader: {
-            type         : 'json',
-            root         : 'rows',
-            totalProperty: 'totals'
-        }
+    		type: 'direct',
+    		api : {
+    			read  : Fees.getPatientList
+    		}
     }
 });

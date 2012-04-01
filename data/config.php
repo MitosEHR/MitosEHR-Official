@@ -93,6 +93,16 @@ $API = array(
             )
         ),
 
+    ),/**
+    * Fees Functions
+    */
+    'Fees'=>array(
+        'methods'=>array(
+            'getPatientList'=>array(
+               'len'=>1
+            )
+        ),
+
     ),
     /**
     * Facilities Functions

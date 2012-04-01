@@ -125,26 +125,33 @@ Ext.define('App.view.fees.Billing', {
 //            ]
 //		});
 
-	    me.patientMedicationsStore = Ext.create('App.store.fees.Billing');
+	    me.patientListStore = Ext.create('App.store.fees.Billing');
 
 
 
         me.encountersGrid = Ext.create('Ext.grid.Panel', {
             title: 'Encounters test',
-            store: me.patientMedicationsStore,
+            store: me.patientListStore,
             columns: [
                 {
-	                header: 'Name',
-	              dataIndex: 'name'
+	                header: 'First Name',
+	              dataIndex: 'fname',
+                    flex: 1
                 },
                 {
-	              header: 'Email',
-	              dataIndex: 'email',
+	              header: 'Middle Name',
+	              dataIndex: 'mname',
 	              flex: 1
                 },
                 {
-	              header: 'Phone',
-	              dataIndex: 'phone'
+	              header: 'Last Name',
+	              dataIndex: 'lname',
+                    flex: 1
+                },
+                {
+	              header: 'SS',
+	              dataIndex: 'ss',
+                    flex: 1
                 }
             ],
             tbar:[

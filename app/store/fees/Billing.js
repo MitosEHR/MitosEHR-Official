@@ -9,5 +9,5 @@ Ext.define('App.store.fees.Billing', {
 	extend    : 'Ext.data.Store',
 	model     : 'App.model.fees.Billing',
 	remoteSort: true,
-	autoLoad  : false
+	autoLoad  : true
 });
