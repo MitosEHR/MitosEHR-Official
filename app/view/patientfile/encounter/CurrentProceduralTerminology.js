@@ -365,7 +365,8 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     },
 
     encounterCptStoreLoad:function(eid){
-        this.encounterCptStore.load({params:{eid:eid ? eid : app.currEncounterId}})
+        this.encounterCptStore.proxy.extraParams = {eid:eid ? eid : app.currEncounterId};
+        this.encounterCptStore.load();
     }
 
 

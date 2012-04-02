@@ -42,7 +42,8 @@ class Fees extends Encounter {
 
     public function getFilterEncountersBillingData(stdClass $params){
 
-        $sql = "SELECT enc.prov_uid AS encounterProviderUid,
+        $sql = "SELECT enc.eid,
+                       enc.prov_uid AS encounterProviderUid,
                        enc.start_date,
                        demo.title,
                        demo.fname,

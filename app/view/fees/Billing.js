@@ -124,13 +124,17 @@ Ext.define('App.view.fees.Billing', {
                 errorSummary:false,
                 clicksToEdit:1,
                 formItems:[
-                    Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
-                        height:350
+                    me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
+                        height:500
                     })
 
                 ]
 
-            })
+            }),
+            listeners:{
+                scope:me,
+                itemclick:me.rowClicked
+            }
 
         });
 
@@ -149,6 +153,11 @@ Ext.define('App.view.fees.Billing', {
             this.pastDue = 0;
         }
         this.reloadGrid();
+
+    },
+
+    rowClicked:function(grid, record){
+        this.cptPanel.encounterCptStoreLoad(record.data.eid);
 
     },
 
