@@ -111,11 +111,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                 itemId:'leftCol',
                 region:'west',
                 width:450,
-                collapsible:true,
-                collapseMode:'mini',
-                collapsed:true,
+                hidden:true,
                 titleCollapse:true,
-                split:true,
+                margin:'0 5 0 0',
                 bodyStyle:'background-color:#fff',
                 layout:{
                     type:'vbox',
@@ -159,6 +157,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         store:me.referenceCptStore,
                         viewConfig:{
                             copy:true,
+                            stripRows:true,
                             plugins:[
                                 {
                                     ptype:'gridviewdragdrop',
@@ -311,9 +310,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
 
     onQuickReferenceToggle:function (btn, pressed) {
         if (pressed) {
-            this.getComponent('leftCol').expand();
+            this.getComponent('leftCol').show();
         } else {
-            this.getComponent('leftCol').collapse();
+            this.getComponent('leftCol').hide();
         }
 
     },

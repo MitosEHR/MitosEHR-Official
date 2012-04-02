@@ -24,6 +24,9 @@ Ext.define('App.view.fees.Billing', {
 
         me.encountersGrid = Ext.create('Ext.grid.Panel', {
             store:me.patientListStore,
+            viewConfig: {
+                stripeRows: true
+            },
             columns:[
                 {
                     header:'Service Date',
@@ -124,8 +127,7 @@ Ext.define('App.view.fees.Billing', {
                 clicksToEdit:1,
                 formItems:[
                     me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
-
-                        height:400
+                        height:450
                     })
 
                 ]
