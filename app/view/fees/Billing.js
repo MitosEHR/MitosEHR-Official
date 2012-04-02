@@ -7,228 +7,124 @@
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
 Ext.define('App.view.fees.Billing', {
-    extend       : 'App.classes.RenderPanel',
-    id           : 'panelBilling',
-    pageTitle    : 'Billing',
-    uses         : [ 'App.classes.GridPanel' ],
+    extend:'App.classes.RenderPanel',
+    id:'panelBilling',
+    pageTitle:'Billing',
+    uses:[ 'App.classes.GridPanel' ],
 
-    initComponent: function() {
+    initComponent:function () {
         var me = this;
 
-//		me.billingGrid = Ext.create('Ext.form.Panel', {
-//			title    : 'Billing History',
-//            defaults:{
-//                bodyStyle:'padding:15px',
-//                bodyBorder:true,
-//                labelWidth:110
-//            },
-//            items:[
-//                {
-//                    xtype:'container',
-//                    margin:'5 5 0 5',
-//                    layout:'hbox',
-//                    defaults:{
-//                        flex:1,
-//                        height:300,
-//                        stripeRows:true
-//                    },
-//                    items:[
-//                        {
-//                            xtype:'grid',
-//                            title:'Search Criteria',
-//                            itemId:'leftCol',
-//                            margin:'0 5 0 0',
-//                            multiSelect:true,
-//
-//                            store:me.cptCodesGridStore,
-//                            viewConfig:{
-//                                copy:true,
-//                                plugins:[
-//                                    {
-//                                        ptype:'gridviewdragdrop',
-//                                        dragGroup:'firstSearchCriteriaGridDDGroup',
-//                                        dropGroup:'secondSearchCriteriaGridDDGroup'
-//                                    }
-//                                ],
-//                                listeners:{
-//                                    scope:me,
-//                                    drop:me.onSearchCriteriaDrop
-//                                }
-//                            },
-//                            columns:[
-//                                {
-//                                    text:"Criteria Id",
-//                                    width:100,
-//                                    sortable:true,
-//                                    dataIndex:'criteria_id'
-//                                },
-//                                {
-//                                    text:"Criteria Description",
-//                                    flex:1,
-//                                    sortable:true,
-//                                    dataIndex:'criteria_description_medium'
-//                                }
-//                            ]
-//                        },
-//                        {
-//                            xtype:'grid',
-//                            title:'Current Selected Criteria',
-//                            itemId:'rightCol',
-//
-//                            store:me.secondGridStore,
-//                            columns:[
-//                                {
-//                                    text:"Criteria Id",
-//                                    width:100,
-//                                    sortable:true,
-//                                    dataIndex:'criteria_id'
-//                                },
-//                                {
-//                                    text:"Description",
-//                                    flex:1,
-//                                    sortable:true,
-//                                    dataIndex:'criteria_description'
-//                                }
-//                            ],
-//                            viewConfig:{
-//                                itemId:'view',
-//                                plugins:[
-//                                    {
-//                                        ptype:'gridviewdragdrop',
-//                                        dragGroup:'secondSearchCriteriaGridDDGroup',
-//                                        dropGroup:'firstSearchCriteriaGridDDGroup'
-//                                    }
-//
-//                                ],
-//                                listeners:{
-//                                    scope:me,
-//                                    drop:me.onCurrentSelectedCriteriaDrop
-//                                }
-//                            }
-//                        }
-//                    ]
-//                },
-//                {
-//                    xtype  : 'grid',
-//                    title  : 'Payments Found',
-//                    height : 180,
-//                    margin : '5 5 5 5',
-//                    columns: [
-//                        {
-//                            header : 'Payment Number'
-//                        },
-//                        {
-//                            header : 'Date'
-//                        }
-//                    ]
-//                }
-//            ]
-//		});
+        me.patient = null;
+        me.pastDue = null;
+        me.dateRange = { start:null, limit:null };
 
-	    me.patientListStore = Ext.create('App.store.fees.Billing');
-
+        me.patientListStore = Ext.create('App.store.fees.Billing');
 
 
         me.encountersGrid = Ext.create('Ext.grid.Panel', {
-            title: 'Encounters test',
-            store: me.patientListStore,
-            columns: [
+            title:'Encounters test',
+            store:me.patientListStore,
+            columns:[
                 {
-	                header: 'First Name',
-	              dataIndex: 'fname',
-                    flex: 1
+                    header:'Service Date',
+                    dataIndex:'start_date',
+                    width:200
                 },
                 {
-	              header: 'Middle Name',
-	              dataIndex: 'mname',
-	              flex: 1
+                    header:'Patient',
+                    dataIndex:'patientName',
+                    width:200
                 },
                 {
-	              header: 'Last Name',
-	              dataIndex: 'lname',
-                    flex: 1
+                    header:'Primary Provideer',
+                    dataIndex:'primaryProvider',
+                    width:200
                 },
                 {
-	              header: 'SS',
-	              dataIndex: 'ss',
-                    flex: 1
+                    header:'Encounter Provider',
+                    dataIndex:'encounterProvider',
+                    flex:1
                 }
             ],
             tbar:[
                 {
                     xtype:'patienlivetsearch',
-                    emptyText: 'Patient Live Search...',
-                    width: 300,
-                    margin: '0 5 0 0'
+                    emptyText:'Patient Live Search...',
+                    width:300,
+                    margin:'0 5 0 0'
 
                 },
                 {
                     xtype:'datefield',
                     fieldLabel:'From',
-                    labelWidth: 40,
-	                action:'datefrom'
+                    labelWidth:40,
+                    action:'datefrom'
                 },
                 {
                     xtype:'datefield',
                     fieldLabel:'To',
-                    labelWidth: 30,
-	                action:'dateto'
+                    labelWidth:30,
+                    action:'dateto'
 
                 },
                 '->',
                 {
-                    xtype: 'tbtext',
-                    text: 'Past due:'
+                    xtype:'tbtext',
+                    text:'Past due:'
                 },
                 {
-                    text: '30+',
-                    enableToggle: true,
-                    toggleGroup: 'pastduedates',
-	                enableKeyEvents:true,
-	                listeners:{
+                    text:'30+',
+                    enableToggle:true,
+                    action:30,
+                    toggleGroup:'pastduedates',
+                    enableKeyEvents:true,
+                    listeners:{
+                        scope:me,
+                        click:me.onBtnClicked
+                    }
 
-		                scope:me,
-		                toggleHandler:function(button,state){
-
-			                var datefrom = this.query('datefield[action="datefrom"]'),
-				                dateto = this.query('datefield[action="dateto"]');
-							say(button);
-			                datefrom[0].reset();
-			                dateto[0].reset();
-
-
-		                }
-
-
-
-	                }
                 },
                 {
-                    text: '60+',
-                    enableToggle: true,
-                    toggleGroup: 'pastduedates'
+                    text:'60+',
+                    enableToggle:true,
+                    action:60,
+                    toggleGroup:'pastduedates',
+                    listeners:{
+                        scope:me,
+                        click:me.onBtnClicked
+                    }
                 },
                 {
-                    text: '120+',
-                    enableToggle: true,
-                    toggleGroup: 'pastduedates'
+                    text:'120+',
+                    enableToggle:true,
+                    action:120,
+                    toggleGroup:'pastduedates',
+                    listeners:{
+                        scope:me,
+                        click:me.onBtnClicked
+                    }
                 },
                 {
-                    text: '180+',
-                    enableToggle: true,
-                    toggleGroup: 'pastduedates'
+                    text:'180+',
+                    enableToggle:true,
+                    action:180,
+                    toggleGroup:'pastduedates',
+                    listeners:{
+                        scope:me,
+                        click:me.onBtnClicked
+                    }
 
                 }
 
 
-
             ],
-            plugins: Ext.create('App.classes.grid.RowFormEditing', {
-                autoCancel  : false,
-                errorSummary: false,
-                clicksToEdit: 1,
-                formItems   : [
-                    Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
+            plugins:Ext.create('App.classes.grid.RowFormEditing', {
+                autoCancel:false,
+                errorSummary:false,
+                clicksToEdit:1,
+                formItems:[
+                    Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         height:350
                     })
 
@@ -242,18 +138,30 @@ Ext.define('App.view.fees.Billing', {
         me.callParent(arguments);
     }, // end of initComponent
 
-    onSearchCriteriaDrop:function () {
-        app.msg('Criteria removed from Current Selected Criteria');
+    onBtnClicked:function (btn) {
+        var datefrom = this.query('datefield[action="datefrom"]'),
+            dateto = this.query('datefield[action="dateto"]');
+        if(btn.pressed){
+            datefrom[0].reset();
+            dateto[0].reset();
+            this.pastDue = btn.action;
+        }else{
+            this.pastDue = 0;
+        }
+        this.reloadGrid();
+
     },
 
-    onCurrentSelectedCriteriaDrop:function (node, data) {
-        var me = this,
-            index;
-
-        app.msg('Search Criteria added to Current Selected Criteria');
-        me.cptFormEdit.cancelEdit();
-        index = me.secondGridStore.indexOf(data.records[0]);
-        me.cptFormEdit.startEdit(index, 0);
+    reloadGrid:function(){
+        this.patientListStore.load({
+            params:{
+                query:{
+                    patient:this.patient,
+                    pastDue:this.pastDue,
+                    dateRange:this.dateRange
+                }
+            }
+        });
     },
 
     /**
@@ -262,7 +170,8 @@ Ext.define('App.view.fees.Billing', {
      * place inside this function all the functions you want
      * to call every this panel becomes active
      */
-    onActive     : function(callback) {
+    onActive:function (callback) {
+        this.reloadGrid();
         callback(true);
     }
 }); //ens oNotesPage class

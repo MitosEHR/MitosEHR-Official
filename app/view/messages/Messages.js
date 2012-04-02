@@ -56,7 +56,12 @@ Ext.define('App.view.messages.Messages', {
 					create : Messages.sendNewMessage,
 					update : Messages.replyMessage,
 					destroy: Messages.deleteMessage
-				}
+				},
+                reader     : {
+                    type: 'json',
+                    root: 'messages',
+                    totalProperty:'totals'
+                }
 			},
 			autoLoad: false
 		});

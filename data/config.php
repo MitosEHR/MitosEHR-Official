@@ -98,7 +98,7 @@ $API = array(
     */
     'Fees'=>array(
         'methods'=>array(
-            'getPatientList'=>array(
+            'getFilterEncountersBillingData'=>array(
                'len'=>1
             )
         ),

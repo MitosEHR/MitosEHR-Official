@@ -46,7 +46,7 @@ class Messages extends dbHelper {
                         WHERE $wherex
                      ORDER BY pnotes.date
                         LIMIT $params->start, $params->limit");
-        $rows = array();
+        $messages = array();
         foreach($this->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['patient_name']    = Person::fullname($row['patient_fname'],$row['patient_mname'],$row['patient_lname']);
 
@@ -56,9 +56,10 @@ class Messages extends dbHelper {
 
             $row['from_user'] = $record['user_title'].' '.Person::fullname($record['fname'],$record['mname'],$record['lname']);
             $row['to_user']   = $row['user_title'].' '.Person::fullname($row['user_fname'],$row['user_mname'],$row['user_lname']);
-            array_push($rows, $row);
+            array_push($messages, $row);
         }
-        return $rows;
+        $total = count($messages);
+        return array('totals' => $total, 'messages' => $messages);
     }
 
     /**

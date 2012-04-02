@@ -9,16 +9,27 @@
 Ext.define('App.model.fees.Billing', {
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'id', type: 'int '},
-        {name: 'fname', type: 'strig'},
-        {name: 'lname', type: 'strig'},
-        {name: 'mname', type: 'strig'},
-        {name: 'ss', type: 'string'}
+        {name: 'eid', type: 'int '},
+        {name: 'pid', type: 'int'},
+        {name: 'patientName', type: 'string'},
+        {name: 'primaryProvider', type: 'string'},
+        {name: 'encounterProvider', type: 'string'},
+        {name: 'supervisorProvider', type: 'string'},
+        {name: 'facility', type: 'string'},
+        {name: 'billing_facility', type: 'string'},
+        {name: 'start_date', type: 'string'},
+        {name: 'close_date', type: 'string'}
     ],
     proxy : {
-    		type: 'direct',
-    		api : {
-    			read  : Fees.getPatientList
-    		}
+        type: 'direct',
+        api : {
+            read  : Fees.getFilterEncountersBillingData
+        },
+        reader     : {
+            type: 'json',
+            root: 'encounters',
+            totalProperty:'totals'
+        }
     }
+
 });
