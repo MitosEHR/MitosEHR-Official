@@ -127,7 +127,7 @@ Ext.define('App.view.fees.Billing', {
                 clicksToEdit:1,
                 formItems:[
                     me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
-                        height:450
+                        height:400
                     })
 
                 ]
