@@ -58,6 +58,9 @@
     padding: 120px 10px 10px 26px;
     margin: 0;
 }
+.grid-row-form-editor .x-grid-body {
+    background-color: #ffffff!important;
+}
 
 ::-webkit-scrollbar {
     width: 5px;

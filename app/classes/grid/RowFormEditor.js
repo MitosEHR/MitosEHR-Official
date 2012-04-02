@@ -57,7 +57,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
         var me = this,
             form, plugin;
 
-        me.cls = Ext.baseCSSPrefix + 'grid-row-editor';
+        me.cls = Ext.baseCSSPrefix + 'grid-row-editor grid-row-form-editor';
         me.currRowH = null;
         plugin = me.editingPlugin;
         me.items = plugin.formItems;

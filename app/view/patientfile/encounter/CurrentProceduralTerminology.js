@@ -8,12 +8,11 @@
 Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     extend:'Ext.panel.Panel',
     allias:'widget.currentproceduralterminology',
-    bodyStyle:0,
     autoScroll:true,
-    title:'Current Procedural Terminology',
     border:false,
     bodyBorder:false,
-    bodyPadding:'5 0 0 0',
+    bodyPadding:5,
+    bodyStyle: 'background-color:#fff',
     layout:'border',
     eid:null,
     initComponent:function () {
@@ -117,6 +116,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                 collapsed:true,
                 titleCollapse:true,
                 split:true,
+                bodyStyle:'background-color:#fff',
                 layout:{
                     type:'vbox',
                     align:'stretch',
@@ -156,8 +156,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         title:'CPT Quick Reference List',
                         margins:0,
                         flex:1,
-                        multiSelect:true,
-                        stripeRows:true,
                         store:me.referenceCptStore,
                         viewConfig:{
                             copy:true,
@@ -205,10 +203,11 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                 title:'Encounter CPTs',
                 region:'center',
                 itemId:'rightCol',
+                bodyStyle:'background-color:#fff',
                 layout:{
                     type:'vbox',
                     align:'stretch',
-                    padding:'5 5 5 0'
+                    padding:5
                 },
                 items:[
                     {
@@ -229,7 +228,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                     {
                         xtype:'grid',
                         flex:1,
-                        stripeRows:true,
                         title:'Encounter CPT\'s',
                         margins:0,
                         store:me.encounterCptStore,

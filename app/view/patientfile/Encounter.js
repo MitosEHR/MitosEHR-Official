@@ -271,7 +271,9 @@ Ext.define('App.view.patientfile.Encounter', {
             html:'<h1>Procedure Order form placeholder!</h1>'
         });
 
-        me.CurrentProceduralTerminology = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology');
+        me.CurrentProceduralTerminology = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
+            title:'Current Procedural Terminology'
+        });
 
 
         me.EncounterEventHistory = Ext.create('App.classes.grid.EventHistory', {
