@@ -45,6 +45,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
     lastScrollLeft: 0,
     lastScrollTop: 0,
     bodyPadding: 5,
+    padding:'0 0 5 0',
     border: false,
     buttonAlign:'center',
     // Change the hideMode to offsets so that we get accurate measurements when
