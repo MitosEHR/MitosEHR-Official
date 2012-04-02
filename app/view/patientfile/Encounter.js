@@ -818,6 +818,7 @@ Ext.define('App.view.patientfile.Encounter', {
                     me.CurrentProceduralTerminology.loadCptQuickReferenceGrid(0);
                 }
 
+                me.CurrentProceduralTerminology.encounterCptStoreLoad(null);
 
             }
         });

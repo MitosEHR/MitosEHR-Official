@@ -15,13 +15,14 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     bodyBorder:false,
     bodyPadding:'5 0 0 0',
     layout:'border',
+    eid:null,
     initComponent:function () {
         var me = this;
 
-        me.cptCodesGridStore = Ext.create('App.store.patientfile.CptCodesGrid');
 
+        me.referenceCptStore = Ext.create('App.store.patientfile.CptCodesGrid');
 
-        me.secondGridStore = Ext.create('Ext.data.Store', {
+        me.encounterCptStore = Ext.create('Ext.data.Store', {
             model:'App.model.patientfile.CptCodesGrid'
         });
 
@@ -157,7 +158,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         flex:1,
                         multiSelect:true,
                         stripeRows:true,
-                        store:me.cptCodesGridStore,
+                        store:me.referenceCptStore,
                         viewConfig:{
                             copy:true,
                             plugins:[
@@ -187,7 +188,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             }
                         ],
                         tbar:Ext.create('Ext.PagingToolbar', {
-                            store:me.cptCodesGridStore,
+                            store:me.referenceCptStore,
                             displayInfo:true,
                             emptyMsg:"No Office Notes to display",
                             plugins:Ext.create('Ext.ux.SlidingPager', {})
@@ -231,7 +232,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         stripeRows:true,
                         title:'Encounter CPT\'s',
                         margins:0,
-                        store:me.secondGridStore,
+                        store:me.encounterCptStore,
                         columns:[
                             {
                                 text:"Code",
@@ -285,12 +286,19 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         plugins:me.cptFormEdit,
                         listeners:{
                             selectionchange:me.onEncounterCptSelectionChange
-                        }
+                        },
+                        tools: [{
+                            type: 'refresh',
+                            handler: function(){
+                                me.encounterCptStoreLoad(null);
+                            }
+                        }]
                     }
                 ]
 
             }
         ];
+
 
         me.callParent(arguments);
 
@@ -328,15 +336,15 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         var me = this;
         btn.reset();
         me.cptFormEdit.cancelEdit();
-        me.secondGridStore.insert(0, record[0]);
+        me.encounterCptStore.insert(0, record[0]);
         me.cptFormEdit.startEdit(0, 0);
 
     },
 
     loadCptQuickReferenceGrid:function (filter) {
         var patient = app.getCurrPatient(), pid = patient.pid;
-        this.cptCodesGridStore.proxy.extraParams = {pid:pid, eid:app.currEncounterId, filter:filter};
-        this.cptCodesGridStore.load();
+        this.referenceCptStore.proxy.extraParams = {pid:pid, eid:app.currEncounterId, filter:filter};
+        this.referenceCptStore.load();
     },
 
     onEncounterCptSelectionChange:function (sm, selections) {
@@ -348,12 +356,17 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
 
         app.msg('Sweet!', 'CPT added to this Encounter');
         me.cptFormEdit.cancelEdit();
-        index = me.secondGridStore.indexOf(data.records[0]);
+        index = me.encounterCptStore.indexOf(data.records[0]);
         me.cptFormEdit.startEdit(index, 0);
     },
 
     gridItemClick:function (view) {
         view.getPlugin('preview').toggleRowExpanded();
+    },
+
+    encounterCptStoreLoad:function(eid){
+        this.encounterCptStore.load({params:{eid:eid ? eid : app.currEncounterId}})
     }
+
 
 });
