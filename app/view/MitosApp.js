@@ -105,7 +105,7 @@ Ext.define('App.view.MitosApp', {
             autoLoad:true,
 			listeners: {
 				scope: me,
-				load : me.navigateToDefault
+				load : me.afterNavigationLoad
 			}
 		});
 
@@ -155,6 +155,7 @@ Ext.define('App.view.MitosApp', {
 			height     : 44,
 			split      : false,
 			collapsible: false,
+			collapsed  : true,
 			frame      : false,
 			border     : false,
 			bodyStyle  : 'background: transparent',
@@ -163,7 +164,7 @@ Ext.define('App.view.MitosApp', {
 				{
 					xtype : 'container',
                     itemId: 'appLogo',
-                    width : window.innerWidth < me.minWidthToFullMode ? 35 : 200,
+                    width : window.innerWidth < this.minWidthToFullMode ? 35 : 200,
 					html  : '<img src="ui_app/app_logo.png" height="40" width="200" style="float:left">',
 					style : 'float:left',
 					border: false
@@ -340,8 +341,8 @@ Ext.define('App.view.MitosApp', {
 			region     : 'west',
 			width      : 200,
 			split      : true,
-			collapsible: true,
-            collapsed  : window.innerWidth < me.minWidthToFullMode,
+ 			collapsible: true,
+ 			collapsed  : false,
 			items      : [
 				{
 					xtype      : 'treepanel',
@@ -721,6 +722,10 @@ Ext.define('App.view.MitosApp', {
 	navigateToDefault: function() {
 		//this.navigateTo('panelDashboard');
 	},
+
+    afterNavigationLoad:function(){
+        window.innerWidth < this.minWidthToFullMode ? this.navColumn.collapse() : this.navColumn.expand();
+    },
 
 	onNavigationNodeSelected: function(model, selected) {
 		var me = this;
