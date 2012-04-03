@@ -22,7 +22,12 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         me.referenceCptStore = Ext.create('App.store.patientfile.CptCodesGrid');
 
         me.encounterCptStore = Ext.create('Ext.data.Store', {
-            model:'App.model.patientfile.CptCodesGrid'
+            model:'App.model.patientfile.EncounterCptCodes',
+            autoSync:true,
+            listeners:{
+                load:me.afterLoadStore,
+                update:me.afterLoadStore
+            }
         });
 
 
@@ -161,8 +166,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             plugins:[
                                 {
                                     ptype:'gridviewdragdrop',
-                                    dragGroup:'firstCPTGridDDGroup',
-                                    dropGroup:'secondCPTGridDDGroup'
+                                    dragGroup:'CPTGridDDGroup'
                                 }
                             ],
                             listeners:{
@@ -270,8 +274,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             plugins:[
                                 {
                                     ptype:'gridviewdragdrop',
-                                    dragGroup:'secondCPTGridDDGroup',
-                                    dropGroup:'firstCPTGridDDGroup'
+                                    dropGroup:'CPTGridDDGroup'
                                 }
 
                             ],
@@ -349,12 +352,26 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     },
     onEncounterCptDrop:function (node, data, dropRec, dropPosition) {
         var me = this,
+            store = me.encounterCptStore,
             index;
+
+//
+//
+//        say(node);
+//        say(data);
+//        say(dropRec);
+//        say(dropPosition);
 
         app.msg('Sweet!', 'CPT added to this Encounter');
         me.cptFormEdit.cancelEdit();
-        index = me.encounterCptStore.indexOf(data.records[0]);
-        me.cptFormEdit.startEdit(index, 0);
+        index = store.indexOf(data.records[0]);
+        store.getAt(index).setDirty();
+        store.sync();
+        //me.cptFormEdit.startEdit(index, 0);
+    },
+
+    afterLoadStore:function(store){
+        say(store);
     },
 
     gridItemClick:function (view) {

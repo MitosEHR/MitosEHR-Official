@@ -5,10 +5,10 @@
  * Date: 2/18/12
  * Time: 11:09 PM
  */
-Ext.define('App.model.patientfile.CptCodesGrid', {
+Ext.define('App.model.patientfile.EncounterCptCodes', {
     extend: 'Ext.data.Model',
     fields: [
-        //{name: 'id', type: 'int '},
+        {name: 'id', type: 'int '},
         {name: 'code', type: 'strig'},
         {name: 'code_text', type: 'string'},
         {name: 'code_text_medium', type: 'string'},
@@ -18,12 +18,16 @@ Ext.define('App.model.patientfile.CptCodesGrid', {
     proxy : {
         type  : 'direct',
         api   : {
-            read: Services.getCptCodesBySelection
+            read: Encounter.getEnconterCptCodes,
+            add: Encounter.addEnconterCptCodes,
+            update: Encounter.updateEnconterCptCodes,
+            destroy: Encounter.deleteEnconterCptCodes
         },
         reader: {
             type         : 'json',
             root         : 'rows',
             totalProperty: 'totals'
         }
-    }
+    },
+    belongsTo: { model: 'App.model.patientfile.Encounter', foreignKey: 'eid' }
 });

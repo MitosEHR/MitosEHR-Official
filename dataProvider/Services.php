@@ -243,7 +243,6 @@ class Services {
             }
         }
 
-        $records = $this->addCptSummary($records);
         return array('totals'=>count($records),'rows'=>$records);
     }
 
@@ -266,9 +265,9 @@ class Services {
         $this->db->setSQL("SELECT DISTINCT codes.*
                              FROM encounter_codes_cpt AS ecc
                         left JOIN cpt_codes AS codes ON ecc.code = codes.code
-                            WHERE eec.eid = '$eid' ORDER BY eec.id ASC");
+                            WHERE ecc.eid = '$eid' ORDER BY ecc.id ASC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-        $records = $this->addCptSummary($records);
+
         return array('totals'=>count($records),'rows'=>$records);
     }
 
@@ -280,7 +279,6 @@ class Services {
                             WHERE e.pid = '$pid'
                          ORDER BY e.start_date DESC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-        $records = $this->addCptSummary($records);
         return array('totals'=>count($records),'rows'=>$records);
     }
 
@@ -290,64 +288,11 @@ class Services {
                         left JOIN cpt_codes AS codes ON ecc.code = codes.code
                          ORDER BY codes.code DESC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-        $records = $this->addCptSummary($records);
         return array('totals'=>count($records),'rows'=>$records);
     }
 
-    private function addCptSummary($records){
-
-        $newRecords = array();
-        foreach($records as $rec){
-
-            if(is_object($rec)) $rec = get_object_vars($rec);
-
-            $code_text = $rec['code_text'];
-
-            $table = <<<EOD
-            <div class="cpt_summary">
-                <table border="0" width="100%">
-                    <tr>
-                        <td style="width:120px">Full Description:</td>
-                        <td colspan="3">$code_text</td>
-                    </tr>
-                    <tr>
-                        <td style="width:120px">Date Of Service:</td>
-                        <td style="width:200px">[mm dd yy] to [mm dd yy]</td>
-                        <td style="width:120px">Charges:</td>
-                        <td >[CHRGs]</td>
-                    </tr>
-                    <tr>
-                        <td>Place Of Service:</td>
-                        <td>[POS]</td>
-                        <td>Days of Units:</td>
-                        <td>[DOU]</td>
-                    </tr>
-                    <tr>
-                        <td>EMG:</td>
-                        <td>[EMG]</td>
-                        <td>ESSDT Family Plan:</td>
-                        <td>[EFP]</td>
-                    </tr>
-                    <tr>
-                        <td>Diagnosis:</td>
-                        <td>[ICDs]</td>
-                        <td>NPI:</td>
-                        <td>[NPI]</td>
-                    </tr>
-                </table>
-            </div>
-EOD;
-
-            $rec['summary'] = $table;
-
-            $newRecords[] = $rec;
-
-        }
-
-        return $newRecords;
-    }
 }
-//
+
 //$params = new stdClass();
 //$params->filter = 3;
 //$params->pid = '7';
@@ -357,4 +302,4 @@ EOD;
 //
 //$t = new Services();
 //print '<pre>';
-//print_r($t->getCptCodesBySelection($params));
+//print_r($t->getCptByEid(7));
