@@ -428,6 +428,9 @@ $API = array(
             ),
             'verifyUserPass'=>array(
             	'len'=>1
+            ),
+            'getProviders'=>array(
+            	'len'=>1
             )
 
         )

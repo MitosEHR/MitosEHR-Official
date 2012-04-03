@@ -211,4 +211,21 @@ class User extends Person {
         $count = $this->db->rowCount();
         return ($count != 0) ? true : false;
     }
+
+    public function getProviders()
+    {
+        $this->db->setSQL("SELECT u.id, u.fname, u.lname, u.mname
+                FROM acl_user_roles AS acl
+                LEFT JOIN users AS u ON u.id = acl.user_id
+                WHERE acl.role_id = '2'");
+        $records = array();
+        $records[] = array('name' => 'All', 'id' => 'all');
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC)As $row){
+            $row['name'] = $this->getUserNameById($row['id']);
+            $records[] = $row;
+        }
+
+        return $records;
+    }
+
 }

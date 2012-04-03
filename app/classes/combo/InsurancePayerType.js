@@ -1,6 +1,6 @@
 Ext.define('App.classes.combo.InsurancePayerType', {
 	extend       : 'Ext.form.ComboBox',
-	alias        : 'widget.insurancepayertypecombo',
+	alias        : 'widget.mitos.insurancepayertypecombo',
 	initComponent: function() {
 		var me = this;
 
@@ -11,6 +11,7 @@ Ext.define('App.classes.combo.InsurancePayerType', {
 		me.store = Ext.create('Ext.data.Store', {
 			fields: ['id', 'name'],
 			data  : [
+				{"id": "1", "name": "All"},
 				{"id": "16", "name": "Other HCFA"},
 				{"id": "MB", "name": "Medicare Part B"},
 				{"id": "MC", "name": "Medicaid"},
