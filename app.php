@@ -157,6 +157,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/TransmitMedthod.js"></script>
         <script type="text/javascript" src="app/classes/combo/Types.js"></script>
         <script type="text/javascript" src="app/classes/combo/Users.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Providers.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Checkbox.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/DateTime.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Currency.js"></script>

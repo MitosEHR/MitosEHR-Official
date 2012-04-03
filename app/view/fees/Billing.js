@@ -14,7 +14,7 @@ Ext.define('App.view.fees.Billing', {
     pageLayout:'card',
     initComponent:function () {
         var me = this;
-
+	    me.paymentstatus = 1;
         me.patient = null;
         me.pastDue = null;
         me.dateRange = { start:null, limit:null };
@@ -38,7 +38,7 @@ Ext.define('App.view.fees.Billing', {
                     width:200
                 },
                 {
-                    header:'Primary Provideer',
+                    header:'Primary Provider',
                     dataIndex:'primaryProvider',
                     width:200
                 },
@@ -46,29 +46,60 @@ Ext.define('App.view.fees.Billing', {
                     header:'Encounter Provider',
                     dataIndex:'encounterProvider',
                     flex:1
+                },
+                {
+                    header:'Insurance',
+                    dataIndex:'insurance',
+	                width:200
+                },
+                {
+                    header:'Billed',
+                    dataIndex:'paymentstatus',
+                    renderer:this.boolRenderer,
+	                width:60
                 }
             ],
             tbar:[
                 {
                     xtype:'patienlivetsearch',
                     emptyText:'Patient Live Search...',
-                    width:300,
+                    width:235,
                     margin:'0 5 0 0'
 
                 },
+	            '-',
                 {
                     xtype:'datefield',
                     fieldLabel:'From',
-                    labelWidth:40,
-                    action:'datefrom'
+                    labelWidth:35,
+                    action:'datefrom',
+	                width:150
                 },
                 {
                     xtype:'datefield',
                     fieldLabel:'To',
-                    labelWidth:30,
-                    action:'dateto'
+                    labelWidth:25,
+                    action:'dateto',
+	                padding:'0 5 0 0',
+	                width:150
 
                 },
+	            '-',
+	            {
+		            xtype:'mitos.providerscombo',
+		            labelWidth:55,
+		            padding:'0 5 0 5',
+		            fieldLabel:'Provider',
+		            defaultValue:'All'
+
+	            },
+	            '-',
+	            {
+		            xtype:'textfield',
+		            labelWidth:60,
+		            fieldLabel:'Insurance'
+
+	            },
                 '->',
                 {
                     xtype:'tbtext',
@@ -277,6 +308,7 @@ Ext.define('App.view.fees.Billing', {
             me.progressNote.tpl.overwrite(me.progressNote.body, data);
         });
     },
+
 
     /**
      * This function is called from MitosAPP.js when
