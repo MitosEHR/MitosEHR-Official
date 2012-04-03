@@ -105,7 +105,7 @@ Ext.define('App.view.MitosApp', {
             autoLoad:true,
 			listeners: {
 				scope: me,
-				load : me.navigateToDefault
+				//load : me.navigateToDefault
 			}
 		});
 
