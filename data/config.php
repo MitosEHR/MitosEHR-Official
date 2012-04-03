@@ -23,6 +23,12 @@ $API = array(
             'addVitals'=>array(
                'len'=>1
             ),
+            'getEnconterCptCodes'=>array(
+               'len'=>1
+            ),
+            'updateEnconterCptCodes'=>array(
+               'len'=>1
+            ),
             'createEncounter'=>array(
                 'len'=>1
             ),

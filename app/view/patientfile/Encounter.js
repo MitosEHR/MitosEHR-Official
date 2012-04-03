@@ -809,7 +809,7 @@ Ext.define('App.view.patientfile.Encounter', {
                 //noinspection JSUnresolvedFunction
                 me.speechDicPanel.getForm().loadRecord(record[0].speechdictation().getAt(0));
 
-                me.updateProgressNote();
+                //me.updateProgressNote();
 
                 me.encounterEventHistoryStore.load({params:{eid:eid}});
 

@@ -38,6 +38,7 @@ Ext.define('App.model.patientfile.Encounter', {
         {model: 'App.model.patientfile.ReviewOfSystems', name: 'reviewofsystems', primaryKey: 'eid'},
         {model: 'App.model.patientfile.ReviewOfSystemsCheck', name: 'reviewofsystemschecks', primaryKey: 'eid'},
         {model: 'App.model.patientfile.SOAP', name: 'soap', primaryKey: 'eid'},
-        {model: 'App.model.patientfile.SpeechDictation', name: 'speechdictation', primaryKey: 'eid'}
+        {model: 'App.model.patientfile.SpeechDictation', name: 'speechdictation', primaryKey: 'eid'},
+        {model: 'App.model.patientfile.EncounterCptCodes', name: 'cptcodes', primaryKey: 'eid'}
     ]
 });
