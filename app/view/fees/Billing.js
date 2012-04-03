@@ -21,6 +21,44 @@ Ext.define('App.view.fees.Billing', {
 
         me.patientListStore = Ext.create('App.store.fees.Billing');
 
+        me.billingWindow = Ext.create('Ext.window.Window',{
+            defaultTitle:'Encounter Billing Details',
+            closeAction:'hide',
+            height:window.innerHeight - 50,
+            width:window.innerWidth - 50,
+            maximizable:true,
+            //maximized:true,
+            layout:'border',
+            autoScroll:true,
+            items:[
+                me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
+                    region:'center'
+                }),
+                me.progressNote = Ext.create('App.view.patientfile.ProgressNote',{
+                    title:'Encounter Progress Note',
+                    region:'east',
+                    margin:'0 0 0 2',
+                    bodyStyle:'padding:15px',
+                    width:500,
+                    autoScroll:true,
+                    collapsible:true,
+                    animCollapse:true,
+                    collapsed:true
+                })
+            ],
+            buttons:[
+                {
+                    text:'Save'
+                },
+                {
+                    text:'Next'
+                },
+                {
+                    text:'Close'
+                }
+            ]
+
+        });
 
         me.encountersGrid = Ext.create('Ext.grid.Panel', {
             store:me.patientListStore,
@@ -121,18 +159,18 @@ Ext.define('App.view.fees.Billing', {
 
 
             ],
-            plugins:Ext.create('App.classes.grid.RowFormEditing', {
-                autoCancel:false,
-                errorSummary:false,
-                clicksToEdit:1,
-                formItems:[
-                    me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
-                        height:400
-                    })
-
-                ]
-
-            }),
+//            plugins:Ext.create('App.classes.grid.RowFormEditing', {
+//                autoCancel:false,
+//                errorSummary:false,
+//                clicksToEdit:1,
+//                formItems:[
+//                    me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
+//                        height:400
+//                    })
+//
+//                ]
+//
+//            }),
             listeners:{
                 scope:me,
                 itemclick:me.rowClicked
@@ -159,6 +197,10 @@ Ext.define('App.view.fees.Billing', {
     },
 
     rowClicked:function(grid, record){
+        var title = this.billingWindow.defaultTitle;
+        this.billingWindow.setTitle(title + ' ( ' + record.data.patientName + ' )');
+        this.updateProgressNote(record.data.eid);
+        this.billingWindow.show();
         this.cptPanel.encounterCptStoreLoad(record.data.eid);
 
     },
@@ -172,6 +214,14 @@ Ext.define('App.view.fees.Billing', {
                     dateRange:this.dateRange
                 }
             }
+        });
+    },
+
+    updateProgressNote:function (eid) {
+        var me = this;
+        Encounter.getProgressNoteByEid(eid, function(provider, response) {
+            var data = response.result;
+            me.progressNote.tpl.overwrite(me.progressNote.body, data);
         });
     },
 
