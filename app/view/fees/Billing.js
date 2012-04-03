@@ -142,6 +142,7 @@ Ext.define('App.view.fees.Billing', {
 
         me.encounterBillingDetails = Ext.create('Ext.panel.Panel',{
             defaultTitle:'Encounter Billing Details',
+            title: 'Encounter Billing Details',
             layout:'border',
             items:[
                 me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
