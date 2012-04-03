@@ -142,8 +142,6 @@ Ext.define('App.classes.RenderPanel', {
         return this.getComponent('RenderPanel-body-container');
     },
     getPageBody:function(){
-        say(this);
-        say(this.getPageBodyContainer());
         return this.getPageBodyContainer().down('panel');
     }
 

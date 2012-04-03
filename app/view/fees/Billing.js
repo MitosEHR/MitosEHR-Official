@@ -134,7 +134,8 @@ Ext.define('App.view.fees.Billing', {
 //            }),
             listeners:{
                 scope:me,
-                itemclick:me.rowClicked
+                itemclick:me.rowClicked,
+                selectionchange:me.onSelectionChanged
             }
 
         });
@@ -162,23 +163,38 @@ Ext.define('App.view.fees.Billing', {
                 {
                     text:'Encounters',
                     scope:me,
+                    action:'encounters',
+                    tooltip:'Back to Encounter List',
                     handler:me.onBtnCancel
                 },
                 '->',
                 {
-                    text:'<<  Back'
+                    text:'<<<  Back',
+                    scope:me,
+                    action:'back',
+                    tooltip:'Previous Encounter Details',
+                    handler:me.onBtnBack
                 },
                 {
-                    text:'Save'
+                    text:'Save',
+                    scope:me,
+                    action:'save',
+                    tooltip:'Save Billing Details'
                 },
 
                 {
                     text:'Cancel',
                     scope:me,
+                    action:'cancel',
+                    tooltip:'Cancel and Go Back to Encounter List',
                     handler:me.onBtnCancel
                 },
                 {
-                    text:'Next  >>'
+                    text:'Next  >>>',
+                    scope:me,
+                    action:'next',
+                    tooltip:'Next Encounter Details',
+                    handler:me.onBtnNext
                 }
             ]
         });
@@ -201,18 +217,51 @@ Ext.define('App.view.fees.Billing', {
 
     },
 
-    rowClicked:function(grid, record){
-        var title = this.encounterBillingDetails.defaultTitle;
-        this.encounterBillingDetails.setTitle(title + ' ( ' + record.data.patientName + ' )');
-        this.updateProgressNote(record.data.eid);
-        say(this.getPageBody());
-        this.getPageBody().getLayout().setActiveItem(1);
-        this.cptPanel.encounterCptStoreLoad(record.data.eid);
+    rowClicked:function(){
+        this.goToEncounterBillingDetail();
+    },
 
+    goToEncounterBillingDetail:function(){
+        this.getPageBody().getLayout().setActiveItem(1);
+    },
+
+    goToEncounterList:function(){
+        this.getPageBody().getLayout().setActiveItem(0);
+    },
+
+    onSelectionChanged:function(sm, model){
+        var title = this.encounterBillingDetails.defaultTitle,
+            backbtn = this.encounterBillingDetails.query('button[action="back"]'),
+            nextBtn = this.encounterBillingDetails.query('button[action="next"]'),
+            rowIndex = model[0].index;
+        this.updateProgressNote(model[0].data.eid);
+        this.encounterBillingDetails.setTitle(title + ' ( ' + model[0].data.patientName + ' )');
+        this.cptPanel.encounterCptStoreLoad(model[0].data.eid);
+
+        nextBtn[0].setDisabled(rowIndex == sm.store.data.length -1);
+        backbtn[0].setDisabled(rowIndex == 0);
     },
 
     onBtnCancel:function(){
         this.getPageBody().getLayout().setActiveItem(0);
+    },
+
+    onBtnBack:function(){
+        var sm = this.encountersGrid.getSelectionModel(),
+            currRowIndex = sm.getLastSelected().index,
+            prevRowindex = currRowIndex - 1;
+        sm.select(prevRowindex);
+    },
+
+    onBtnNext:function(){
+        var sm = this.encountersGrid.getSelectionModel(),
+            currRowIndex = sm.getLastSelected().index,
+            nextRowindex = currRowIndex + 1;
+        sm.select(nextRowindex);
+    },
+
+    onBtnSave:function(){
+        this.goToEncounterList();
     },
 
     reloadGrid:function(){
