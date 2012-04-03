@@ -29,6 +29,7 @@ Ext.define('App.classes.RenderPanel', {
 				},
 				{
 					cls    : 'RenderPanel-body-container',
+                    itemId : 'RenderPanel-body-container',
 					xtype  : 'container',
 					region : 'center',
 					layout : 'fit',
@@ -40,6 +41,7 @@ Ext.define('App.classes.RenderPanel', {
 							frame   : true,
 							layout  : this.pageLayout,
 							border  : false,
+                            itemId  : 'pageLayout',
 							defaults: {frame: false, border: false, autoScroll: true},
 							items   : me.pageBody
 						}
@@ -132,5 +134,17 @@ Ext.define('App.classes.RenderPanel', {
         });
         var f = msg.textField.getInputId();
         document.getElementById(f).type = 'password';
+    },
+    getPageHeader:function(){
+        return this.getComponent('RenderPanel-header');
+    },
+    getPageBodyContainer:function(){
+        return this.getComponent('RenderPanel-body-container');
+    },
+    getPageBody:function(){
+        say(this);
+        say(this.getPageBodyContainer());
+        return this.getPageBodyContainer().down('panel');
     }
+
 });

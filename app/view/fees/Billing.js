@@ -11,7 +11,7 @@ Ext.define('App.view.fees.Billing', {
     id:'panelBilling',
     pageTitle:'Billing',
     uses:[ 'App.classes.GridPanel' ],
-
+    pageLayout:'card',
     initComponent:function () {
         var me = this;
 
@@ -20,45 +20,6 @@ Ext.define('App.view.fees.Billing', {
         me.dateRange = { start:null, limit:null };
 
         me.patientListStore = Ext.create('App.store.fees.Billing');
-
-        me.billingWindow = Ext.create('Ext.window.Window',{
-            defaultTitle:'Encounter Billing Details',
-            closeAction:'hide',
-            height:window.innerHeight - 50,
-            width:window.innerWidth - 50,
-            maximizable:true,
-            //maximized:true,
-            layout:'border',
-            autoScroll:true,
-            items:[
-                me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
-                    region:'center'
-                }),
-                me.progressNote = Ext.create('App.view.patientfile.ProgressNote',{
-                    title:'Encounter Progress Note',
-                    region:'east',
-                    margin:'0 0 0 2',
-                    bodyStyle:'padding:15px',
-                    width:500,
-                    autoScroll:true,
-                    collapsible:true,
-                    animCollapse:true,
-                    collapsed:true
-                })
-            ],
-            buttons:[
-                {
-                    text:'Save'
-                },
-                {
-                    text:'Next'
-                },
-                {
-                    text:'Close'
-                }
-            ]
-
-        });
 
         me.encountersGrid = Ext.create('Ext.grid.Panel', {
             store:me.patientListStore,
@@ -178,7 +139,51 @@ Ext.define('App.view.fees.Billing', {
 
         });
 
-        me.pageBody = [ me.encountersGrid ];
+        me.encounterBillingDetails = Ext.create('Ext.panel.Panel',{
+            defaultTitle:'Encounter Billing Details',
+            layout:'border',
+            items:[
+                me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
+                    region:'center'
+                }),
+                me.progressNote = Ext.create('App.view.patientfile.ProgressNote',{
+                    title:'Encounter Progress Note',
+                    region:'east',
+                    margin:5,
+                    bodyStyle:'padding:15px',
+                    width:500,
+                    autoScroll:true,
+                    collapsible:true,
+                    animCollapse:true,
+                    collapsed:false
+                })
+            ],
+            buttons:[
+                {
+                    text:'Encounters',
+                    scope:me,
+                    handler:me.onBtnCancel
+                },
+                '->',
+                {
+                    text:'<<  Back'
+                },
+                {
+                    text:'Save'
+                },
+
+                {
+                    text:'Cancel',
+                    scope:me,
+                    handler:me.onBtnCancel
+                },
+                {
+                    text:'Next  >>'
+                }
+            ]
+        });
+
+        me.pageBody = [ me.encountersGrid, me.encounterBillingDetails ];
         me.callParent(arguments);
     }, // end of initComponent
 
@@ -197,12 +202,17 @@ Ext.define('App.view.fees.Billing', {
     },
 
     rowClicked:function(grid, record){
-        var title = this.billingWindow.defaultTitle;
-        this.billingWindow.setTitle(title + ' ( ' + record.data.patientName + ' )');
+        var title = this.encounterBillingDetails.defaultTitle;
+        this.encounterBillingDetails.setTitle(title + ' ( ' + record.data.patientName + ' )');
         this.updateProgressNote(record.data.eid);
-        this.billingWindow.show();
+        say(this.getPageBody());
+        this.getPageBody().getLayout().setActiveItem(1);
         this.cptPanel.encounterCptStoreLoad(record.data.eid);
 
+    },
+
+    onBtnCancel:function(){
+        this.getPageBody().getLayout().setActiveItem(0);
     },
 
     reloadGrid:function(){
