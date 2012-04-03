@@ -117,21 +117,7 @@ Ext.define('App.view.fees.Billing', {
                     }
 
                 }
-
-
             ],
-//            plugins:Ext.create('App.classes.grid.RowFormEditing', {
-//                autoCancel:false,
-//                errorSummary:false,
-//                clicksToEdit:1,
-//                formItems:[
-//                    me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
-//                        height:400
-//                    })
-//
-//                ]
-//
-//            }),
             listeners:{
                 scope:me,
                 itemclick:me.rowClicked,
@@ -169,6 +155,11 @@ Ext.define('App.view.fees.Billing', {
                     handler:me.onBtnCancel
                 },
                 '->',
+                {
+                    xtype: 'tbtext',
+                    action:'page',
+                    text: '( 1 of 1 )'
+                },
                 {
                     text:'<<<  Back',
                     scope:me,
@@ -234,11 +225,13 @@ Ext.define('App.view.fees.Billing', {
         var title = this.encounterBillingDetails.defaultTitle,
             backbtn = this.encounterBillingDetails.query('button[action="back"]'),
             nextBtn = this.encounterBillingDetails.query('button[action="next"]'),
+            pageInfo = this.encounterBillingDetails.query('tbtext[action="page"]'),
             rowIndex = model[0].index;
         this.updateProgressNote(model[0].data.eid);
         this.encounterBillingDetails.setTitle(title + ' ( ' + model[0].data.patientName + ' )');
         this.cptPanel.encounterCptStoreLoad(model[0].data.eid);
 
+        pageInfo[0].setText('( Page ' + (rowIndex + 1) + ' of ' + sm.store.data.length + ' ) ');
         nextBtn[0].setDisabled(rowIndex == sm.store.data.length -1);
         backbtn[0].setDisabled(rowIndex == 0);
     },
