@@ -105,7 +105,7 @@ Ext.define('App.view.MitosApp', {
             autoLoad:true,
 			listeners: {
 				scope: me,
-				//load : me.navigateToDefault
+				load : me.navigateToDefault
 			}
 		});
 
@@ -702,7 +702,7 @@ Ext.define('App.view.MitosApp', {
 	},
 
 	navigateToDefault: function() {
-		this.navigateTo('panelDashboard');
+		//this.navigateTo('panelDashboard');
 	},
 
 	onNavigationNodeSelected: function(model, selected) {
