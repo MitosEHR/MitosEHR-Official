@@ -166,6 +166,12 @@ Ext.define('App.panel.login.Login',{
                 afterrender:me.onAfterrender
             }
         }).show();
+
+        me.listeners = {
+            resize:me.onResized
+        };
+
+        me.callParent(arguments);
     },
     /**
      * when keyboard ENTER key press
@@ -267,5 +273,13 @@ Ext.define('App.panel.login.Login',{
         var m = Ext.core.DomHelper.append(this.msgCt, {html:'<div class="msg"><h3>' + title + '</h3><p>' + s + '</p></div>'}, true);
 
         m.slideIn('t').pause(3000).ghost('t', {remove:true});
+    },
+
+    onResized:function(){
+        var win = this.winLogon,
+            ch =  win.getHeight() - (win.getHeight() / 2),
+            cw = win.getWidth() - (win.getWidth() / 2);
+
+        win.alignTo(this, 'c', [-cw, -ch]);
     }
 });
