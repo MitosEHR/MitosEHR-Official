@@ -235,6 +235,19 @@ Ext.define('App.view.MitosApp', {
 					handler: me.checkOutPatient,
 					tooltip: 'Check Out Patient'
 				},
+                {
+					xtype  : 'button',
+					scale  : 'large',
+					style  : 'float:left',
+					margin : '0 0 0 3',
+					cls    : 'headerLargeBtn',
+					padding: 0,
+					itemId : 'patientCharge',
+					iconCls: 'icoMoney',
+					scope  : me,
+					handler: me.chargePatient,
+					tooltip: 'Charge Patient'
+				},
 				{
 					xtype      : 'panel',
 					width      : 260,
@@ -280,7 +293,7 @@ Ext.define('App.view.MitosApp', {
 					iconCls: 'icoEmer',
 					scope  : me,
 					handler: me.createEmergency,
-					tooltip: 'Create New Ememercency'
+					tooltip: 'Create New Emergency'
 				},
 				{
 					xtype    : 'button',
@@ -684,6 +697,10 @@ Ext.define('App.view.MitosApp', {
 
 	checkOutPatient: function() {
 
+	},
+
+    chargePatient: function() {
+        this.navigateTo('panelCheckout');
 	},
 
 	openPatientVisits: function() {

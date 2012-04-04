@@ -19,6 +19,7 @@ Ext.define('App.view.patientfile.Summary', {
 		var me = this;
 
 		me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
+		me.qrCodeWindow = Ext.create('App.view.patientfile.QrCodeWindow');
 
 		me.pageBody = [
 			{
@@ -160,6 +161,12 @@ Ext.define('App.view.patientfile.Summary', {
 						handler: function() {
 
 						}
+					},
+					{
+						text   : 'Print QRcode',
+						iconCls: 'icoListOptions',
+						scope: me,
+						handler: me.onQrCodeCreate
 					}
 				]
 			}
@@ -234,6 +241,11 @@ Ext.define('App.view.patientfile.Summary', {
             }
         });
     },
+
+	onQrCodeCreate:function () {
+		this.qrCodeWindow.show();
+
+	},
 
 	/**
 	 * This function is called from MitosAPP.js when
