@@ -23,11 +23,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
 
         me.encounterCptStore = Ext.create('Ext.data.Store', {
             model:'App.model.patientfile.EncounterCptCodes',
-            autoSync:true,
-            listeners:{
-                load:me.afterLoadStore,
-                update:me.afterLoadStore
-            }
+            autoSync:true
         });
 
 
@@ -280,7 +276,8 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             ],
                             listeners:{
                                 scope:me,
-                                drop:me.onEncounterCptDrop
+                                drop:me.onEncounterCptDrop,
+                                itemadd:me.afterCptAdded
                             }
                         },
                         plugins:me.cptFormEdit,
@@ -351,24 +348,24 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         //sm.view.panel.down('toolbar').getComponent('removeCptBtn').setDisabled(selections.length == 0);
     },
     onEncounterCptDrop:function (node, data, dropRec, dropPosition) {
-        var me = this,
-            store = me.encounterCptStore,
-            index;
-//        say(node);
-//        say(data);
-//        say(dropRec);
-//        say(dropPosition);
+//        var me = this,
+//            store = me.encounterCptStore,
+//            index;
 
-        app.msg('Sweet!', 'CPT added to this Encounter');
-        me.cptFormEdit.cancelEdit();
-        index = store.indexOf(data.records[0]);
+
+ //       app.msg('Sweet!', 'CPT added to this Encounter');
+        //me.cptFormEdit.cancelEdit();
+        //index = store.indexOf(data.records[0]);
         //store.getAt(index).setDirty();
         //store.sync();
         //me.cptFormEdit.startEdit(index, 0);
     },
 
-    afterLoadStore:function(store){
-        say(store);
+    afterCptAdded:function(model, index){
+        var me = this;
+        app.msg('Sweet!', 'CPT added to this Encounter');
+        me.cptFormEdit.cancelEdit();
+        me.cptFormEdit.startEdit(index, 0);
     },
 
     gridItemClick:function (view) {
