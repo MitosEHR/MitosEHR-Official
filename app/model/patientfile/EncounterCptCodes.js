@@ -19,7 +19,7 @@ Ext.define('App.model.patientfile.EncounterCptCodes', {
         type  : 'direct',
         api   : {
             read: Encounter.getEnconterCptCodes,
-            add: Encounter.addEnconterCptCodes,
+            create: Encounter.addEnconterCptCodes,
             update: Encounter.updateEnconterCptCodes,
             destroy: Encounter.deleteEnconterCptCodes
         },

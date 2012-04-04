@@ -227,21 +227,18 @@ class Services {
 
     public function getCptRelatedByEidIcds($eid){
 
-        $this->db->setSQL("SELECT code FROM encounter_codes_icdx WHERE eid = '$eid'");
-
-        $icds = $this->db->fetchRecords(PDO::FETCH_CLASS);
+        $this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
+                             FROM cpt_codes as cpt
+                       RIGHT JOIN cpt_icd as ci ON ci.cpt = cpt.code
+                        LEFT JOIN encounter_codes_icdx as eci ON eci.code = ci.icd
+                            WHERE eci.eid = '$eid'");
         $records = array();
-        foreach($icds as $icd){
-            $this->db->setSQL("SELECT cpt FROM cpt_icd WHERE icd = '$icd->code'");
-            $cpts = $this->db->fetchRecords(PDO::FETCH_CLASS);
-            foreach($cpts as $cpt){
-                $this->db->setSQL("SELECT codes.*
-                                     FROM cpt_codes AS codes
-                                    WHERE code = '$cpt->cpt'
-                                      AND active ='1'");
-                $records[] = $this->db->fetchRecord(PDO::FETCH_ASSOC);
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+            if($row['code'] != null || $row['code'] != ''){
+                $records[] = $row;
             }
         }
+
 
         return array('totals'=>count($records),'rows'=>$records);
     }
@@ -302,4 +299,4 @@ class Services {
 //
 //$t = new Services();
 //print '<pre>';
-//print_r($t->getCptByEid(7));
+//print_r($t->getCptRelatedByEidIcds(7));

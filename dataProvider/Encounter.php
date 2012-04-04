@@ -302,10 +302,11 @@ class Encounter {
     }
 
     public function addEnconterCptCodes(stdClass $params){
+        $params->id = rand(99999, 99999999999);
         return $params;
     }
     public function updateEnconterCptCodes(stdClass $params){
-        $params->id = rand(20000, 3999999);
+
         return $params;
     }
     public function deeleteEnconterCptCodes(stdClass $params){

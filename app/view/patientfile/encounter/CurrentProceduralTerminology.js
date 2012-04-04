@@ -354,9 +354,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         var me = this,
             store = me.encounterCptStore,
             index;
-
-//
-//
 //        say(node);
 //        say(data);
 //        say(dropRec);
@@ -365,8 +362,8 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         app.msg('Sweet!', 'CPT added to this Encounter');
         me.cptFormEdit.cancelEdit();
         index = store.indexOf(data.records[0]);
-        store.getAt(index).setDirty();
-        store.sync();
+        //store.getAt(index).setDirty();
+        //store.sync();
         //me.cptFormEdit.startEdit(index, 0);
     },
 

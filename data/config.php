@@ -26,7 +26,13 @@ $API = array(
             'getEnconterCptCodes'=>array(
                'len'=>1
             ),
+            'addEnconterCptCodes'=>array(
+               'len'=>1
+            ),
             'updateEnconterCptCodes'=>array(
+               'len'=>1
+            ),
+            'deleteEnconterCptCodes'=>array(
                'len'=>1
             ),
             'createEncounter'=>array(

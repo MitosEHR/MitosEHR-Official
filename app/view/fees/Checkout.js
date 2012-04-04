@@ -37,11 +37,12 @@ Ext.define('App.view.fees.Checkout', {
                     items:[
                         {
                             xtype:'container',
+                            margin:'0 5 0 5',
                             items:[
                                 {
                                     xtype:'fieldset',
                                     title:'Follow-Up Information',
-                                    margin:'5 10 10 5',
+                                    margin:'5 0 10 0',
                                     height:162,
                                     defaults:{
                                         labelWidth:110,
@@ -61,7 +62,7 @@ Ext.define('App.view.fees.Checkout', {
                                 {
                                     xtype:'fieldset',
                                     title:'Notes and Reminders',
-                                    margin:'0 10 5 5',
+                                    margin:'0 0 5 0',
                                     height:162,
                                     items:[
                                         {
@@ -84,7 +85,7 @@ Ext.define('App.view.fees.Checkout', {
                         {
                             xtype:'grid',
                             title:'Orders',
-                            margin:'4 4 0 0',
+                            margin:'4 5 0 5',
                             columns:[
                                 {
                                     header:'Code'
@@ -109,7 +110,7 @@ Ext.define('App.view.fees.Checkout', {
                         {
                             xtype:'fieldset',
                             title:'Transaction Information',
-                            margin:'5 20 0 5',
+                            margin:'5 5 0 5',
                             defaults: { labelWidth:110 },
                             items:[
                                 {
@@ -138,7 +139,7 @@ Ext.define('App.view.fees.Checkout', {
                         {
                             xtype:'fieldset',
                             title:'Payment Information',
-                            margin:'5 5 0 0',
+                            margin:'5 5 0 5',
                             items:[
                                 {
                                     xtype:'mitos.currency',
