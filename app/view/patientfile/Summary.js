@@ -32,6 +32,24 @@ Ext.define('App.view.patientfile.Summary', {
 				defaults   : { margin: '0 0 5 0', bodyPadding: 5, collapsible: true, titleCollapse: true },
 				items      : [
 					{
+                        action:'patientImgs',
+                        collapsible: false,
+                        titleCollapse: false,
+                        layout:'hbox',
+                        defaults:{flex:1},
+						tbar :[
+                            {
+                                text : 'Print'
+                            },
+                            '->',
+                            {
+                                text : 'Update'
+
+                            }
+
+                        ]
+					},
+                    {
 						title: 'Clinical Reminders',
 						html : 'Panel content!'
 					},
@@ -172,6 +190,19 @@ Ext.define('App.view.patientfile.Summary', {
 			}
 		]);
 
+        me.query('panel[action="patientImgs"]')[0].add(
+            {
+                xtype:'container',
+                margin:'5 20',
+                html:'<img src="ui_icons/user_100.png" height="100" width="100" >'
+            },
+            {
+                xtype:'container',
+                margin:'5 20',
+                html:'<img src="ui_icons/patientDataQrCode.png" height="100" width="100" >'
+            }
+        );
+
 	},
 
 	disableFields: function(fields) {
@@ -247,6 +278,24 @@ Ext.define('App.view.patientfile.Summary', {
 
 	},
 
+    getPatientImgs:function(){
+        var panel = this.query('panel[action="patientImgs"]')[0], idImg, qrImg;
+        panel.removeAll();
+
+        panel.add(
+            {
+                xtype:'container',
+                margin:'5 20',
+                html:'<img src="ui_icons/user_100.png" height="100" width="100" >'
+            },
+            {
+                xtype:'container',
+                margin:'5 20',
+                html:'<img src="'+ settings.site_url +'/patients/'+ app.currPatient.pid +'/patientDataQrCode.png" height="100" width="100" >'
+            }
+        );
+    },
+
 	/**
 	 * This function is called from MitosAPP.js when
 	 * this panel is selected in the navigation panel.
@@ -263,7 +312,7 @@ Ext.define('App.view.patientfile.Summary', {
 				demoFormPanel = center.getComponent('demoFormPanel');
 
 		    me.getFormData(demoFormPanel);
-
+            me.getPatientImgs();
 
 		} else {
 

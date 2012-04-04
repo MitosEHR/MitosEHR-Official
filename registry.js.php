@@ -54,5 +54,5 @@ user = {
 };
 
 settings = {
-
+    site_url: '<?php print $_SESSION['site']['url'].'/sites/'.$_SESSION['site']['site'] ?>'
 };

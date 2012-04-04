@@ -54,8 +54,6 @@ class Patient extends Person {
     }
 
     public function createNewPatient(stdClass $params){
-
-
         $data = get_object_vars($params);
 
         foreach ($data as $key => $val) {
@@ -73,12 +71,15 @@ class Patient extends Person {
                     WHERE pid = '$pid'");
 
         $patient = $this->db->fetchRecord(PDO::FETCH_ASSOC);
-
         $patient['fullname'] = $this->fullname($patient['fname'], $patient['mname'], $patient['lname']);
 
+        if(!$this->createPatientDir($pid)){
+            return array("success" =>false, "error"=> 'Patient directory failed');
+        };
+
+        $this->createPatientQrCode($pid,$patient['fullname']);
+
         return array("success" =>true, "patient"=> array( "pid"=> $pid , "fullname" => $patient['fullname']));
-
-
     }
 
     /**
@@ -132,6 +133,7 @@ class Patient extends Person {
 
     }
 
+
     /**
      * Form now this is just getting the latest open encounter for all the patients.
      * TODO: create the table to handle tha pool area and fix this function
@@ -156,7 +158,31 @@ class Patient extends Person {
         }
         return $rows;
     }
+
+    private function createPatientDir($pid){
+        $root =  $_SESSION['site']['root'];
+        $site = $_SESSION['site']['site'];
+        $path = $root.'/sites/'.$site.'/patients/'.$pid;
+        if(mkdir($path, 0777,true )){
+            chmod($path,0777);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function createPatientQrCode($pid, $fullname){
+        //set it to writable location, a place for temp generated PNG files
+        $root =  $_SESSION['site']['root'];
+        $site = $_SESSION['site']['site'];
+        $path = $root.'/sites/'.$site.'/patients/'.$pid;
+        $data = 'name:'.$fullname.'|pid:'.$pid;
+        $PNG_TEMP_DIR = $path;
+        include($root."/lib/phpqrcode/qrlib.php");
+        $filename = $PNG_TEMP_DIR. '/patientDataQrCode.png';
+        QRcode::png($data, $filename, 'Q', 2, 2);
+    }
 }
 //$p = new Patient();
 //echo '<pre>';
-//print_r($p->getPatientsByPoolArea());
+//print_r($p->createPatientDir(2));
