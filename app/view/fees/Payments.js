@@ -39,7 +39,7 @@ Ext.define('App.view.fees.Payments', {
                             xtype:'fieldset',
                             title:'Payment Information',
                             layout:'anchor',
-                            margin:'5 5 5 5',
+                            margin:'5 0 5 5',
                             defaults: { labelWidth:110 },
                             items:[
                                 {
@@ -105,7 +105,7 @@ Ext.define('App.view.fees.Payments', {
                     xtype:'fieldset',
                     title:'Description',
 	                itemId:'description',
-                    margin:'0 10 15 10',
+                    margin:'0 5 15 5',
                     height: 120,
 
                     items:[
@@ -141,11 +141,12 @@ Ext.define('App.view.fees.Payments', {
                                     xtype:'fieldcontainer',
                                     items:[
                                         {
+
                                             xtype:'textareafield',
                                             grow:true,
                                             name:'note',
                                             fieldLabel:'Note',
-                                            width: 843,
+                                            width: 835,
                                             anchor:'100%'
                                         }
                                     ]
@@ -157,7 +158,7 @@ Ext.define('App.view.fees.Payments', {
                 {
                     xtype:'form',
                     title:'Patient CPTs',
-                    margin:'0 10 15 10',
+                    margin:'0 5 15 5',
 	                height:280,
                     items:[
                         {
@@ -167,7 +168,11 @@ Ext.define('App.view.fees.Payments', {
                                 type   : 'hbox'
                             },
 
-                            defaults:{  flex:1, height:30 },
+                            defaults:{
+                                flex:1,
+                                height:30,
+                                labelWidth:110
+                            },
 
                             items:[
                                 {
@@ -176,8 +181,7 @@ Ext.define('App.view.fees.Payments', {
                                     items:[
                                         {
                                             xtype:'textfield',
-                                            fieldLabel:'Patient Name',
-                                            labelWidth:110
+                                            fieldLabel:'Patient Name'
                                         }
                                     ]
                                 },
@@ -186,8 +190,7 @@ Ext.define('App.view.fees.Payments', {
                                     items:[
                                         {
                                             xtype:'textfield',
-                                            fieldLabel:'Patient Id',
-                                            labelWidth:110
+                                            fieldLabel:'Patient Id'
                                         }
                                     ]
                                 },
@@ -197,8 +200,7 @@ Ext.define('App.view.fees.Payments', {
                                     items:[
                                         {
                                             xtype:'mitos.currency',
-                                            fieldLabel:'Remaining Amount',
-                                            labelWidth:110
+                                            fieldLabel:'Remaining Amount'
                                         }
                                     ]
                                 }
@@ -305,16 +307,15 @@ Ext.define('App.view.fees.Payments', {
         if(combo.getValue() == 'check_payment'){
 
         checkinfo[0].expand();
-        checkinfo[0].setWidth(500);
+        checkinfo[0].setWidth(600);
+        //checkinfo.setPadding(0,15,0,15);
 
         }else{
 
         checkinfo[0].collapse();
         checkinfo[0].setWidth(0);
+        //checkinfo.setPadding(0,0,0,0);
         }
-
-
-
 
     }
 

@@ -18,7 +18,7 @@ Ext.define('App.view.fees.Checkout', {
         var me = this;
 
         me.pageBody = Ext.create('Ext.form.Panel', {
-            title:'Physician Assessment',
+            title:'Charge Patient',
             defaults:{
                 bodyStyle:'padding:15px',
                 bodyBorder:true,
@@ -31,61 +31,75 @@ Ext.define('App.view.fees.Checkout', {
                         type:'hbox',
                         align:'stretch'
                     },
-                    height:340,
-                    margin:'0 0 5 0',
-                    defaults:{ flex:1 },
+                    height:360,
                     items:[
                         {
-                            xtype:'container',
-                            margin:'0 5 0 5',
+                            xtype:'fieldset',
+                            title:'Payment Receipt',
+                            margin:'5 5 5 5',
+                            flex:2,
+                            defaults: { labelWidth:110 },
                             items:[
-                                {
-                                    xtype:'fieldset',
-                                    title:'Follow-Up Information',
-                                    margin:'5 0 10 0',
-                                    height:162,
-                                    defaults:{
-                                        labelWidth:110,
-                                        anchor:'100%'
+                                /*{
+                                    xtype:'container',
+                                    height:350,
+                                    width:600,
+                                    layout:{
+                                        type:'table',
+                                        columns:5
                                     },
                                     items:[
                                         {
-                                            fieldLabel:'Time',
-                                            xtype:'textfield'
-                                        },
-                                        {
-                                            fieldLabel:'Facility',
-                                            xtype:'mitos.facilitiescombo'
-                                        }
+                                            fieldLabel: 'Transaction Date',
+                                            xtype     : 'datefield'//,
+                                            //colspan: 1
+                                        },{
+                                            fieldLabel: ' ',
+                                           // xtype     : 'textfield',
+                                            colspan: 2
+                                        },{
+                                            xtype:'textfield',
+                                            fieldLabel:'Payment From',
+                                            cellCls: 'highlight'
+                                        }//,{
+                                       //     xtype:'mitos.currency',
+                                       //     fieldLabel:'Payment Amount'
+                                       // }
                                     ]
+                                },*/
+                                {
+                                    fieldLabel: 'Transaction Date',
+                                    xtype     : 'datefield'
                                 },
                                 {
-                                    xtype:'fieldset',
-                                    title:'Notes and Reminders',
-                                    margin:'0 0 5 0',
-                                    height:162,
-                                    items:[
-                                        {
-                                            xtype:'textfield',
-                                            name:'note',
-                                            fieldLabel:'Note',
-                                            anchor:'100%'
-                                        },
-                                        {
-                                            xtype:'textareafield',
-                                            grow:true,
-                                            name:'reminder',
-                                            fieldLabel:'Reminder',
-                                            anchor:'100%'
-                                        }
-                                    ]
+                                    xtype:'mitos.currency',
+                                    fieldLabel:'Payment Amount'
+                                },
+                                {
+                                    xtype:'textfield',
+                                    fieldLabel:'Payment From',
+                                    itemId:'payment_from',
+                                    action:'payment_from'
+                                },
+                                {
+                                    fieldLabel: 'Payment From',
+                                    xtype     : 'textfield'
+                                },
+                                {
+                                    fieldLabel: 'Encounter Number',
+                                    xtype     : 'textfield'
+                                },
+                                {
+                                    fieldLabel: 'Facility',
+                                    xtype     : 'mitos.facilitiescombo'
                                 }
                             ]
                         },
                         {
                             xtype:'grid',
                             title:'Orders',
-                            margin:'4 5 0 5',
+                            margin:'8 4 5 5',
+                            flex:1,
                             columns:[
                                 {
                                     header:'Code'
@@ -100,63 +114,46 @@ Ext.define('App.view.fees.Checkout', {
                 },
                 {
                     xtype:'container',
-                    layout: {
-                        type   : 'hbox',
-                        align  : 'stretch'
+                    layout:'hbox',
+                    defaults:{
+                        height:125,
+                        flex:1,
+                        margin:'5 5 5 5'
                     },
-                    height:200,
-                    defaults:{ flex:1 },
                     items:[
                         {
                             xtype:'fieldset',
-                            title:'Transaction Information',
-                            margin:'5 5 0 5',
-                            defaults: { labelWidth:110 },
+                            title:'Follow-Up Information',
+                            defaults:{
+                                labelWidth:110,
+                                anchor:'100%'
+                            },
                             items:[
                                 {
-                                    fieldLabel: 'Patient Name',
-                                    xtype     : 'textfield'
+                                    fieldLabel:'Time',
+                                    xtype:'textfield'
                                 },
                                 {
-                                    fieldLabel: 'Encounter #',
-                                    xtype     : 'textfield'
-                                },
-                                {
-                                    fieldLabel: 'Facility',
-                                    xtype     : 'mitos.facilitiescombo'
-                                },
-                                {
-                                    fieldLabel: 'Transaction #',
-                                    xtype     : 'textfield'
-                                },
-                                {
-                                    fieldLabel: 'Transaction Date',
-                                    xtype     : 'datefield'
+                                    fieldLabel:'Facility',
+                                    xtype:'mitos.facilitiescombo'
                                 }
                             ]
-
                         },
                         {
                             xtype:'fieldset',
-                            title:'Payment Information',
-                            margin:'5 5 0 5',
+                            title:'Notes and Alerts',
+                            defaults:{ anchor:'100%'},
                             items:[
                                 {
-                                    xtype:'mitos.currency',
-                                    fieldLabel:'Payment Amount'
-                                },
-                                {
-                                    fieldLabel: 'Paying Entity',
-                                    xtype     : 'mitos.payingentitycombo',
-                                    name      : 'paymentmethod'
-                                },
-                                {
-                                    xtype:'datefield',
-                                    fieldLabel:'Post To Date'
-                                },
-                                {
                                     xtype:'textfield',
-                                    fieldLabel:'Check Number'
+                                    name:'note',
+                                    fieldLabel:'Note'
+                                },
+                                {
+                                    xtype:'textareafield',
+                                    grow:true,
+                                    name:'reminder',
+                                    fieldLabel:'Alert'
                                 }
                             ]
                         }
@@ -188,7 +185,6 @@ Ext.define('App.view.fees.Checkout', {
     onActive:function (callback) {
 
         callback(true);
-
     }
 
 }); //end Checkout class
