@@ -26,7 +26,9 @@
 	font-family: 'Cuprum';
 	src: url('../ui_fonts/Cuprum.ttf');
 }
-
+.x-livesearch-match {
+    background-color: yellow;
+}
 .vitals-data .column {
     margin-right: 5px
 }

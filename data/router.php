@@ -74,12 +74,12 @@ function doRpc($cdata){
         /**
          * Check if tdi is a valid tid (expected tid)
          */
-        if($_SESSION['server']['last_tid'] != null){
-            $expectedTid = $_SESSION['server']['last_tid'] + 1;
-            if($cdata->tid != $expectedTid){
-                throw new Exception('Call to unrecognize transaction ID: MitosEHR does not recognized this transaction ID.');
-            }
-        }
+//        if($_SESSION['server']['last_tid'] != null){
+//            $expectedTid = $_SESSION['server']['last_tid'] + 1;
+//            if($cdata->tid != $expectedTid){
+//                throw new Exception('Call to unrecognize transaction ID: MitosEHR does not recognized this transaction ID.');
+//            }
+//        }
 
 		if(!isset($API[$cdata->action])){
 			throw new Exception('Call to undefined action: ' . $cdata->action);

@@ -9,6 +9,6 @@
 Ext.define('App.store.patientfile.CptCodesGrid', {
 	extend: 'Ext.data.Store',
 	model     : 'App.model.patientfile.CptCodesGrid',
-	remoteSort: true,
+	remoteSort: false,
 	autoLoad  : false
 });

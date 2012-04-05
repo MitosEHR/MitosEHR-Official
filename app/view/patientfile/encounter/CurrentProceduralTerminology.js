@@ -19,11 +19,19 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         var me = this;
 
 
-        me.referenceCptStore = Ext.create('App.store.patientfile.CptCodesGrid');
+        me.referenceCptStore = Ext.create('App.store.patientfile.CptCodesGrid',{
+            buffered: true,
+            pageSize: 100
+        });
 
         me.encounterCptStore = Ext.create('Ext.data.Store', {
-            model:'App.model.patientfile.EncounterCptCodes',
-            autoSync:true
+            model:'App.model.patientfile.CptCodes',
+            autoSync:true,
+            listeners:{
+                scope:me,
+                add:me.afterCptAdded,
+                beforesync:me.beforesync
+            }
         });
 
 
@@ -60,7 +68,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                 },
                                 {
                                     fieldLabel:'Charges',
-                                    name:'charges'
+                                    name:'charge'
                                 }
                             ]
                         },
@@ -140,8 +148,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                 data:[
                                     { name:'Show related CPTs for current diagnostics', value:0 },
                                     { name:'Show CPTs history for this patient', value:1 },
-                                    { name:'Show CPTs commonly used by Clinic', value:2 },
-                                    { name:'Show All CPTs', value:3 }
+                                    { name:'Show CPTs commonly used by Clinic', value:2 }
                                 ]
                             }),
                             listeners:{
@@ -150,25 +157,20 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             }
                         }
                     },
-                    {
-                        xtype:'grid',
-                        title:'CPT Quick Reference List',
+                    Ext.create('Ext.ux.LiveSearchGridPanel', {
                         margins:0,
                         flex:1,
                         store:me.referenceCptStore,
                         viewConfig:{
                             copy:true,
                             stripRows:true,
+                            loadMask:true,
                             plugins:[
                                 {
                                     ptype:'gridviewdragdrop',
                                     dragGroup:'CPTGridDDGroup'
                                 }
-                            ],
-                            listeners:{
-                                scope:me,
-                                drop:me.onQuickRefereneDrop
-                            }
+                            ]
                         },
                         columns:[
                             {
@@ -183,14 +185,8 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                 sortable:true,
                                 dataIndex:'code_text_medium'
                             }
-                        ],
-                        tbar:Ext.create('Ext.PagingToolbar', {
-                            store:me.referenceCptStore,
-                            displayInfo:true,
-                            emptyMsg:"No Office Notes to display",
-                            plugins:Ext.create('Ext.ux.SlidingPager', {})
-                        })
-                    }
+                        ]
+                    })
                 ],
                 listeners:{
                     scope:me,
@@ -227,7 +223,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                     {
                         xtype:'grid',
                         flex:1,
-                        title:'Encounter CPT\'s',
+                        //title:'Encounter CPT\'s',
                         margins:0,
                         store:me.encounterCptStore,
                         columns:[
@@ -250,18 +246,20 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                 dataIndex:'modifiers'
                             }
                         ],
-                        dockedItems:[
+                        tbar:[
                             {
-                                xtype:'toolbar',
-                                items:[
-                                    {
-                                        text:'Quick Reference',
-                                        action:'referenceCptBtn',
-                                        enableToggle:true,
-                                        scope:me,
-                                        toggleHandler:me.onQuickReferenceToggle
-                                    }
-                                ]
+                                text:'Quick Reference',
+                                action:'referenceCptBtn',
+                                enableToggle:true,
+                                scope:me,
+                                toggleHandler:me.onQuickReferenceToggle
+                            },
+                            '->',
+                            {
+                                text: 'Reload',
+                                handler: function(){
+                                    me.encounterCptStoreLoad(null);
+                                }
                             }
                         ],
                         viewConfig:{
@@ -277,19 +275,14 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             listeners:{
                                 scope:me,
                                 drop:me.onEncounterCptDrop,
-                                itemadd:me.afterCptAdded
+                                beforedrop:me.beforeEncounterCptDrop
                             }
                         },
                         plugins:me.cptFormEdit,
                         listeners:{
                             selectionchange:me.onEncounterCptSelectionChange
-                        },
-                        tools: [{
-                            type: 'refresh',
-                            handler: function(){
-                                me.encounterCptStoreLoad(null);
-                            }
-                        }]
+                        }
+
                     }
                 ]
 
@@ -332,49 +325,61 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     onLiveCptSelect:function (btn, record) {
         var me = this;
         btn.reset();
-        me.cptFormEdit.cancelEdit();
-        me.encounterCptStore.insert(0, record[0]);
-        me.cptFormEdit.startEdit(0, 0);
+        me.encounterCptStore.add(record[0]);
 
     },
 
     loadCptQuickReferenceGrid:function (filter) {
         var patient = app.getCurrPatient(), pid = patient.pid;
-        this.referenceCptStore.proxy.extraParams = {pid:pid, eid:app.currEncounterId, filter:filter};
-        this.referenceCptStore.load();
+        //this.referenceCptStore.proxy.extraParams = {pid:pid, eid:app.currEncounterId, filter:filter};
+        this.referenceCptStore.load({params:{pid:pid, eid:app.currEncounterId, filter:filter}});
     },
 
     onEncounterCptSelectionChange:function (sm, selections) {
-        //sm.view.panel.down('toolbar').getComponent('removeCptBtn').setDisabled(selections.length == 0);
+
+
     },
     onEncounterCptDrop:function (node, data, dropRec, dropPosition) {
-//        var me = this,
-//            store = me.encounterCptStore,
-//            index;
 
 
- //       app.msg('Sweet!', 'CPT added to this Encounter');
-        //me.cptFormEdit.cancelEdit();
-        //index = store.indexOf(data.records[0]);
-        //store.getAt(index).setDirty();
-        //store.sync();
-        //me.cptFormEdit.startEdit(index, 0);
+    },
+
+    beforesync:function(options){
+        options.create[0].data.eid = this.eid;
+    },
+
+    beforeEncounterCptDrop:function(node, data){
+//        say(data);
+//        data.records[0].data.eid = app.currEncounterId;
+//        say(data);
     },
 
     afterCptAdded:function(model, index){
         var me = this;
         app.msg('Sweet!', 'CPT added to this Encounter');
-        me.cptFormEdit.cancelEdit();
-        me.cptFormEdit.startEdit(index, 0);
+
+        Ext.Function.defer(function(){
+            me.encounterCptStoreLoad();
+        }, 400)
+
+//        me.cptFormEdit.cancelEdit();
+//        me.cptFormEdit.startEdit(index, 0);
     },
 
     gridItemClick:function (view) {
         view.getPlugin('preview').toggleRowExpanded();
     },
 
-    encounterCptStoreLoad:function(eid){
-        this.encounterCptStore.proxy.extraParams = {eid:eid ? eid : app.currEncounterId};
-        this.encounterCptStore.load();
+    encounterCptStoreLoad:function(eid, callback){
+
+        this.eid = eid ? eid : app.currEncounterId;
+
+        this.encounterCptStore.proxy.extraParams = {eid:eid ? eid : app.currEncounterId, filter:null};
+        this.encounterCptStore.load({
+            callback:function(){
+                callback ? callback() : null;
+            }
+        });
     }
 
 

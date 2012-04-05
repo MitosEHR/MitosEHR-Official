@@ -5,9 +5,10 @@
  * Date: 2/18/12
  * Time: 11:09 PM
  */
-Ext.define('App.model.patientfile.CptCodesGrid', {
+Ext.define('App.model.patientfile.CptCodes', {
     extend: 'Ext.data.Model',
     fields: [
+        {name: 'id', type: 'int'},
         {name: 'eid', type: 'int'},
         {name: 'code', type: 'strig'},
         {name: 'code_text', type: 'string'},
@@ -22,7 +23,10 @@ Ext.define('App.model.patientfile.CptCodesGrid', {
     proxy : {
         type  : 'direct',
         api   : {
-            read: Services.getCptCodes
+            read: Services.getCptCodes,
+            create: Services.addCptCode,
+            update: Services.updateCptCode,
+            destroy: Services.deleteCptCode
         },
         reader: {
             root         : 'rows',

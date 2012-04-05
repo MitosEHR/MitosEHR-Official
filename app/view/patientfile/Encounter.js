@@ -809,18 +809,16 @@ Ext.define('App.view.patientfile.Encounter', {
                 //noinspection JSUnresolvedFunction
                 me.speechDicPanel.getForm().loadRecord(record[0].speechdictation().getAt(0));
 
-                //me.updateProgressNote();
-
                 me.encounterEventHistoryStore.load({params:{eid:eid}});
 
-                var combo = me.CurrentProceduralTerminology.down('combobox');
-                if (combo.getValue() != 0) {
-                    combo.setValue(0);
-                } else {
-                    me.CurrentProceduralTerminology.loadCptQuickReferenceGrid(0);
-                }
-
-                me.CurrentProceduralTerminology.encounterCptStoreLoad(null);
+                me.CurrentProceduralTerminology.encounterCptStoreLoad(null, function(){
+                    var combo = me.CurrentProceduralTerminology.down('combobox');
+                    if (combo.getValue() != 1) {
+                        combo.setValue(1);
+                    } else {
+                        me.CurrentProceduralTerminology.loadCptQuickReferenceGrid(1);
+                    }
+                });
 
             }
         });
@@ -1097,7 +1095,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 },
                 belongsTo:{ model:'App.model.patientfile.Encounter', foreignKey:'eid' }
             });
-            //me.reviewSysPanel.doLayout();
         });
         /**
          * Get 'SOAP' Form and define the Model using the form fields
@@ -1121,7 +1118,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 },
                 belongsTo:{ model:'App.model.patientfile.Encounter', foreignKey:'eid' }
             });
-            //me.soapPanel.doLayout();
         });
         /**
          * Get 'Speech Dictation' Form and define the Model using the form fields
@@ -1145,7 +1141,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 },
                 belongsTo:{ model:'App.model.patientfile.Encounter', foreignKey:'eid' }
             });
-            //me.speechDicPanel.doLayout();
         });
         /**
          * Get 'Review of Systems Check' Form and define the Model using the form fields
@@ -1169,7 +1164,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 },
                 belongsTo:{ model:'App.model.patientfile.Encounter', foreignKey:'eid' }
             });
-            //me.reviewSysCkPanel.doLayout();
         });
 
         this.getFormItems(me.newEncounterWindow.down('form'), 'New Encounter');

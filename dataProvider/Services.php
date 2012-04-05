@@ -55,7 +55,6 @@ class Services {
         $records = $this->db->filterByQuery($records, 'active', $params->active);
         $total   = count($records);
         $records = $this->db->filterByStartLimit($records,$params);
-        $records = $this->addCptSummary($records);
         return array('totals'=>$total,'rows'=>$records);
     }
 
@@ -208,41 +207,6 @@ class Services {
         return $this->liveCodeSearch($params);
     }
 
-
-    public function getCptCodesBySelection(stdClass $params){
-        if($params->filter == 0){
-            return $this->getCptRelatedByEidIcds($params->eid);
-        }elseif($params->filter == 1){
-            return $this->getCptUsedByPid($params->pid);
-        }elseif($params->filter == 2){
-            return $this->getCptUsedByClinic($params->pid);
-        }elseif($params->filter == 3){
-            $params->active = 1;
-            $params->code_type = 'cpt';
-            return $this->getServices($params);
-        }else{
-            return $params;
-        }
-    }
-
-    public function getCptRelatedByEidIcds($eid){
-
-        $this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
-                             FROM cpt_codes as cpt
-                       RIGHT JOIN cpt_icd as ci ON ci.cpt = cpt.code
-                        LEFT JOIN encounter_codes_icdx as eci ON eci.code = ci.icd
-                            WHERE eci.eid = '$eid'");
-        $records = array();
-        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
-            if($row['code'] != null || $row['code'] != ''){
-                $records[] = $row;
-            }
-        }
-
-
-        return array('totals'=>count($records),'rows'=>$records);
-    }
-
     public function getIcdxByEid($eid){
         $this->db->setSQL("SELECT * FROM encounter_codes_icdx WHERE eid = '$eid' ORDER BY id ASC");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
@@ -258,20 +222,93 @@ class Services {
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * CPT CODES SECCION!!!
+     */
+
+    /**
+     * @param stdClass $params
+     * @return array|stdClass
+     */
+    public function getCptCodes(stdClass $params){
+
+        if($params->filter === 0){
+            return $this->getCptRelatedByEidIcds($params->eid);
+        }elseif($params->filter === 1){
+            return $this->getCptUsedByPid($params->pid);
+        }elseif($params->filter === 2){
+            return $this->getCptUsedByClinic($params->pid);
+        }elseif($params->filter === null){
+            return $this->getCptByEid($params->eid);
+        }else{
+            return $params;
+        }
+    }
+
+    public function addCptCode(stdClass $params){
+        $data = get_object_vars($params);
+        unset($data['code_text'], $data['code_text_medium']);
+
+        foreach($data as $key => $val){
+            if($val == null || $val == '') {
+                unset($data[$key]);
+            }
+        }
+        $this->db->setSQL($this->db->sqlBind($data, 'encounter_codes_cpt', 'I'));
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
+        return $params;
+    }
+
+    public function updateCptCode(stdClass $params){
+
+        return $params;
+    }
+    public function deeleteCptCode(stdClass $params){
+        return $params;
+    }
+
+    /**
+     * @param $eid
+     * @return array
+     */
+    public function getCptRelatedByEidIcds($eid){
+        $this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
+                             FROM cpt_codes as cpt
+                       RIGHT JOIN cpt_icd as ci ON ci.cpt = cpt.code
+                        LEFT JOIN encounter_codes_icdx as eci ON eci.code = ci.icd
+                            WHERE eci.eid = '$eid'");
+        $records = array();
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+            if($row['code'] != null || $row['code'] != ''){
+                $records[] = $row;
+            }
+        }
+        return array('totals'=>count($records),'rows'=>$records);
+    }
+
+    /**
+     * @param $eid
+     * @return array
+     */
     public function getCptByEid($eid){
-        $this->db->setSQL("SELECT DISTINCT codes.*
+        $this->db->setSQL("SELECT DISTINCT ecc.id, cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
                              FROM encounter_codes_cpt AS ecc
-                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
+                        left JOIN cpt_codes AS cpt ON ecc.code = cpt.code
                             WHERE ecc.eid = '$eid' ORDER BY ecc.id ASC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
 
         return array('totals'=>count($records),'rows'=>$records);
     }
 
+    /**
+     * @param $pid
+     * @return array
+     */
     public function getCptUsedByPid($pid){
-        $this->db->setSQL("SELECT DISTINCT codes.*
+        $this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
                              FROM encounter_codes_cpt AS ecc
-                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
+                        left JOIN cpt_codes AS cpt ON ecc.code = cpt.code
                         LEFT JOIN form_data_encounter AS e ON ecc.eid = e.eid
                             WHERE e.pid = '$pid'
                          ORDER BY e.start_date DESC");
@@ -279,11 +316,14 @@ class Services {
         return array('totals'=>count($records),'rows'=>$records);
     }
 
+    /**
+     * @return array
+     */
     public function getCptUsedByClinic(){
-        $this->db->setSQL("SELECT DISTINCT codes.*
+        $this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
                              FROM encounter_codes_cpt AS ecc
-                        left JOIN cpt_codes AS codes ON ecc.code = codes.code
-                         ORDER BY codes.code DESC");
+                        left JOIN cpt_codes AS cpt ON ecc.code = cpt.code
+                         ORDER BY cpt.code DESC");
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
         return array('totals'=>count($records),'rows'=>$records);
     }
@@ -299,4 +339,4 @@ class Services {
 //
 //$t = new Services();
 //print '<pre>';
-//print_r($t->getCptRelatedByEidIcds(7));
+//print_r($t->getCptUsedByPid(1));

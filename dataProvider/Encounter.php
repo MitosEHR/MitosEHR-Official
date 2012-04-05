@@ -185,7 +185,7 @@ class Encounter {
         $encounter['reviewofsystemschecks'] = $this->getReviewOfSystemsChecksByEid($params->eid);
         $encounter['soap']                  = $this->getSoapByEid($params->eid);
         $encounter['speechdictation']       = $this->getDictationByEid($params->eid);
-        $encounter['encountercpts']         = $this->services->getCptByEid($params->eid);
+        //$encounter['cptcodes']              = $this->services->getCptByEid($params->eid);
 
 
         //$this->addEncounterHistoryEvent('Encounter viewed');
@@ -297,21 +297,7 @@ class Encounter {
         return $params;
     }
 
-    public function getEnconterCptCodes(stdClass $params){
-        return $this->services->getCptByEid($params->eid);
-    }
 
-    public function addEnconterCptCodes(stdClass $params){
-        $params->id = rand(99999, 99999999999);
-        return $params;
-    }
-    public function updateEnconterCptCodes(stdClass $params){
-
-        return $params;
-    }
-    public function deeleteEnconterCptCodes(stdClass $params){
-        return $params;
-    }
     /**
      * @param $eid
      * @return array

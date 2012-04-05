@@ -80,6 +80,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
 
 
+        <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/examples/ux/LiveSearchGridPanel.js"></script>
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/src/grid/plugin/RowEditing.js"></script>
 
         <!-- Models -->
@@ -99,7 +100,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/Surgery.js"></script>
         <script type="text/javascript" src="app/model/patientfile/EventHistory.js"></script>
         <script type="text/javascript" src="app/model/patientfile/CptCodesGrid.js"></script>
-        <script type="text/javascript" src="app/model/patientfile/EncounterCptCodes.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/CptCodes.js"></script>
         <script type="text/javascript" src="app/model/fees/Billing.js"></script>
 
 

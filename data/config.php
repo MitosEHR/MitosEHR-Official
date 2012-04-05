@@ -23,18 +23,6 @@ $API = array(
             'addVitals'=>array(
                'len'=>1
             ),
-            'getEnconterCptCodes'=>array(
-               'len'=>1
-            ),
-            'addEnconterCptCodes'=>array(
-               'len'=>1
-            ),
-            'updateEnconterCptCodes'=>array(
-               'len'=>1
-            ),
-            'deleteEnconterCptCodes'=>array(
-               'len'=>1
-            ),
             'createEncounter'=>array(
                 'len'=>1
             ),
@@ -333,9 +321,18 @@ $API = array(
             'liveCodeSearch'=>array(
                'len'=>1
            ),
-            'getCptCodesBySelection'=>array(
+            'getCptCodes'=>array(
                'len'=>1
-           )
+            ),
+            'addCptCode'=>array(
+               'len'=>1
+            ),
+            'updateCptCode'=>array(
+               'len'=>1
+            ),
+            'deleteCptCode'=>array(
+               'len'=>1
+            )
         )
     ),    /**
      * Form layout Engine Functions
