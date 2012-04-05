@@ -103,6 +103,7 @@ Ext.define('App.view.patientfile.NewPatient', {
 	/**
 	 * This will show the window to take a picture
 	 */
+
 	getPhotoIdWindow: function() {
 		Ext.create('App.classes.PhotoIdWindow', {
 			title      : 'Patient Photo Id',
@@ -115,9 +116,7 @@ Ext.define('App.view.patientfile.NewPatient', {
 					{
 						text   : 'Capture Image',
 						iconCls: 'save',
-						handler: function() {
-
-						}
+						handler: captureToCanvas()
 					}
 				]
 			}
