@@ -83,6 +83,9 @@ Globals::setGlobals();
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/examples/ux/LiveSearchGridPanel.js"></script>
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/src/grid/plugin/RowEditing.js"></script>
 
+        <!-- Override classes -->
+        <script type="text/javascript" src="app/classes/Overrides.js"></script>
+
         <!-- Models -->
         <script type="text/javascript" src="lib/extensible-1.5.1/src/calendar/data/EventStore.js"></script>
         <script type="text/javascript" src="app/model/navigation/Navigation.js"></script>
@@ -197,8 +200,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/miscellaneous/OfficeNotes.js"></script>
         <script type="text/javascript" src="app/view/miscellaneous/Websearch.js"></script>
 
-        <!-- Override classes -->
-        <script type="text/javascript" src="app/classes/Overrides.js"></script>
+
 
         <!-- Aplication Viewport -->
         <script type="text/javascript" src="app/view/MitosApp.js"></script>
