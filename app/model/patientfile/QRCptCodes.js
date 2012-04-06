@@ -5,7 +5,7 @@
  * Date: 2/18/12
  * Time: 11:09 PM
  */
-Ext.define('App.model.patientfile.CptCodesGrid', {
+Ext.define('App.model.patientfile.QRCptCodes', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'eid', type: 'int'},
