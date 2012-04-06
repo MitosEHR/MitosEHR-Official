@@ -16,6 +16,15 @@ Ext.define('App.view.fees.Checkout', {
 
     initComponent:function () {
         var me = this;
+        var paymentDescription = Ext.create('Ext.data.Store', {
+            fields: ['name'],
+            data : [
+                { "name":"General Visit" },
+                { "name":"Special Visit" },
+                { "name":"Other" }
+                //...
+            ]
+        });
 
         me.pageBody = Ext.create('Ext.form.Panel', {
             title:'Charge Patient',
@@ -40,58 +49,114 @@ Ext.define('App.view.fees.Checkout', {
                             flex:2,
                             defaults: { labelWidth:110 },
                             items:[
-                                /*{
+                                {
                                     xtype:'container',
-                                    height:350,
-                                    width:600,
-                                    layout:{
-                                        type:'table',
-                                        columns:5
-                                    },
-                                    items:[
+                                    layout:'absolute',
+                                    items: [
                                         {
-                                            fieldLabel: 'Transaction Date',
-                                            xtype     : 'datefield'//,
-                                            //colspan: 1
-                                        },{
-                                            fieldLabel: ' ',
-                                           // xtype     : 'textfield',
-                                            colspan: 2
-                                        },{
+                                            fieldLabel: 'Facility',
+                                            xtype     : 'mitos.facilitiescombo',
+                                            labelWidth:60
+                                        },
+                                        {
+                                            fieldLabel: 'Date',
+                                            xtype     : 'datefield',
+                                            labelWidth:60,
+                                            x: 280
+                                        },
+                                        {
+                                            fieldLabel: 'No', //Encounter Number
+                                            xtype     : 'displayfield',
+                                            labelWidth:60,
+                                            x:555
+                                        },
+                                        {
                                             xtype:'textfield',
-                                            fieldLabel:'Payment From',
-                                            cellCls: 'highlight'
-                                        }//,{
-                                       //     xtype:'mitos.currency',
-                                       //     fieldLabel:'Payment Amount'
-                                       // }
+                                            fieldLabel:'Received From',
+                                            labelWidth:110,
+                                            anchor:'65%',
+                                            y:40
+                                        },
+                                        {
+                                            xtype:'mitos.currency',
+                                            fieldLabel:'Amount',
+                                            labelWidth:60,
+                                            x:516,
+                                            y:40
+
+                                        },
+                                        {
+                                            xtype:'combobox',
+                                            fieldLabel:'For Payment of',
+                                            labelWidth:110,
+                                            anchor:'65%',
+                                            store:paymentDescription,
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            y:80
+                                        },
+                                        {
+                                            fieldLabel: 'Paid by',
+                                            xtype     : 'mitos.paymentmethodcombo',
+                                            labelWidth:60,
+                                            x:516,
+                                            y:80
+                                        },
+                                        {
+                                            xtype:'textfield',
+                                            fieldLabel:'Description',
+                                            labelWidth:110,
+                                            anchor:'100%',
+                                            y:120
+                                        },
+                                        {
+                                            xtype:'displayfield',
+                                            fieldLabel:'Next Appointment',
+                                            labelWidth:110,
+                                            y:160
+                                        },
+                                        {
+                                            xtype:'container',
+                                            y:220,
+                                            layout: {
+                                                   type: 'table',
+                                                   columns: 1,
+                                                   rows: 6
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'label',
+                                                    text: 'Accounted Amount  ',
+                                                    rowspan:2,
+                                                    colspan:1
+                                                },
+                                                {
+                                                    xtype: 'label',
+                                                    text: '$',
+                                                    rowspan:2,
+                                                    colspan:1
+                                                },
+                                                {
+                                                    xtype:'label',
+                                                    text:'Payment Amount  ',
+                                                    rowspan:2,
+                                                    colspan:1
+                                                },
+                                                {
+                                                    xtype:'label',
+                                                    text:'$'
+                                                },
+                                                {
+                                                    xtype:'label',
+                                                    text:'Balance Due  '
+                                                },
+                                                {
+                                                    xtype:'label',
+                                                    text:'$'
+                                                }
+                                            ]
+                                        }
                                     ]
-                                },*/
-                                {
-                                    fieldLabel: 'Transaction Date',
-                                    xtype     : 'datefield'
-                                },
-                                {
-                                    xtype:'mitos.currency',
-                                    fieldLabel:'Payment Amount'
-                                },
-                                {
-                                    xtype:'textfield',
-                                    fieldLabel:'Payment From',
-                                    itemId:'payment_from',
-                                    action:'payment_from'
-                                },
-                                {
-                                    fieldLabel: 'Payment From',
-                                    xtype     : 'textfield'
-                                },
-                                {
-                                    fieldLabel: 'Encounter Number',
-                                    xtype     : 'textfield'
-                                },
-                                {
-                                    fieldLabel: 'Facility',
-                                    xtype     : 'mitos.facilitiescombo'
                                 }
                             ]
                         },
