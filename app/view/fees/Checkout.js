@@ -126,7 +126,7 @@ Ext.define('App.view.fees.Checkout', {
                                             items: [
                                                 {
                                                     xtype: 'label',
-                                                    text: 'Accounted Amount  ',
+                                                    text: 'Accounted Amount',
                                                     rowspan:2,
                                                     colspan:1
                                                 },
@@ -138,7 +138,7 @@ Ext.define('App.view.fees.Checkout', {
                                                 },
                                                 {
                                                     xtype:'label',
-                                                    text:'Payment Amount  ',
+                                                    text:'Payment Amount',
                                                     rowspan:2,
                                                     colspan:1
                                                 },
@@ -148,7 +148,7 @@ Ext.define('App.view.fees.Checkout', {
                                                 },
                                                 {
                                                     xtype:'label',
-                                                    text:'Balance Due  '
+                                                    text:'Balance Due'
                                                 },
                                                 {
                                                     xtype:'label',
