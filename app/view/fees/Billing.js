@@ -296,14 +296,18 @@ Ext.define('App.view.fees.Billing', {
 	},
 
 	onSelectionChanged: function(sm, model) {
-		var title = this.encounterBillingDetails.defaultTitle,
-			backbtn = this.encounterBillingDetails.query('button[action="back"]'),
-			nextBtn = this.encounterBillingDetails.query('button[action="next"]'),
-			pageInfo = this.encounterBillingDetails.query('tbtext[action="page"]'),
+		var me = this,
+            title = me.encounterBillingDetails.defaultTitle,
+			backbtn = me.encounterBillingDetails.query('button[action="back"]'),
+			nextBtn = me.encounterBillingDetails.query('button[action="next"]'),
+			pageInfo = me.encounterBillingDetails.query('tbtext[action="page"]'),
 			rowIndex = model[0].index;
-		this.updateProgressNote(model[0].data.eid);
-		this.encounterBillingDetails.setTitle(title + ' ( ' + model[0].data.patientName + ' )');
-		this.cptPanel.encounterCptStoreLoad(model[0].data.eid);
+        me.updateProgressNote(model[0].data.eid);
+        me.encounterBillingDetails.setTitle(title + ' ( ' + model[0].data.patientName + ' )');
+
+        me.cptPanel.encounterCptStoreLoad(model[0].data.eid, function(){
+            me.cptPanel.setDefaultQRCptCodes();
+        });
 
 		pageInfo[0].setText('( Page ' + (rowIndex + 1) + ' of ' + sm.store.data.length + ' ) ');
 		nextBtn[0].setDisabled(rowIndex == sm.store.data.length - 1);

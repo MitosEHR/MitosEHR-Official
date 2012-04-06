@@ -812,14 +812,8 @@ Ext.define('App.view.patientfile.Encounter', {
                 me.encounterEventHistoryStore.load({params:{eid:eid}});
 
                 me.CurrentProceduralTerminology.encounterCptStoreLoad(null, function(){
-                    var combo = me.CurrentProceduralTerminology.down('combobox');
-                    if (combo.getValue() != 1) {
-                        combo.setValue(1);
-                    } else {
-                        me.CurrentProceduralTerminology.loadCptQuickReferenceGrid(1);
-                    }
+                    me.CurrentProceduralTerminology.setDefaultQRCptCodes();
                 });
-
             }
         });
     },

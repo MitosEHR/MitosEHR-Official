@@ -381,13 +381,19 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         view.getPlugin('preview').toggleRowExpanded();
     },
 
+    setDefaultQRCptCodes:function(){
+        var combo = this.down('combobox');
+        if (combo.getValue() != 1) {
+            combo.setValue(1);
+        } else {
+            this.loadCptQuickReferenceGrid(1);
+        }
+    },
+
     encounterCptStoreLoad:function(eid, callback){
-
         this.eid = eid ? eid : app.currEncounterId;
-
         this.encounterCptStore.proxy.extraParams = {eid:eid ? eid : app.currEncounterId, filter:null};
         this.encounterCptStore.load({
-
             callback:function(){
                 callback ? callback() : null;
             }
