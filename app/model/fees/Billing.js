@@ -18,7 +18,8 @@ Ext.define('App.model.fees.Billing', {
         {name: 'facility', type: 'string'},
         {name: 'billing_facility', type: 'string'},
         {name: 'start_date', type: 'string'},
-        {name: 'close_date', type: 'string'}
+        {name: 'close_date', type: 'string'},
+        {name: 'billing_stage', type: 'int'}
     ],
     proxy : {
         type: 'direct',

@@ -45,6 +45,7 @@ class Fees extends Encounter {
         $sql = "SELECT enc.eid,
                        enc.prov_uid AS encounterProviderUid,
                        enc.start_date,
+                       enc.billing_stage,
                        demo.title,
                        demo.fname,
                        demo.mname,
