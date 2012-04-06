@@ -19,9 +19,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         var me = this;
 
 
-        me.referenceCptStore = Ext.create('App.store.patientfile.CptCodesGrid',{
-            buffered: true,
-            pageSize: 100
+        me.referenceCptStore = Ext.create('App.store.patientfile.QRCptCodes',{
+//            buffered: true,
+//            pageSize: 100
         });
 
         me.encounterCptStore = Ext.create('Ext.data.Store', {
@@ -223,7 +223,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                     {
                         xtype:'grid',
                         flex:1,
-                        //title:'Encounter CPT\'s',
                         margins:0,
                         store:me.encounterCptStore,
                         columns:[
@@ -240,10 +239,11 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                 dataIndex:'code_text'
                             },
                             {
-                                text:'Modifiers',
-                                width:200,
-                                sortable:false,
-                                dataIndex:'modifiers'
+                                text:'Sattus',
+                                width:50,
+                                sortable:true,
+                                dataIndex:'status',
+                                renderer:me.status
                             }
                         ],
                         tbar:[
@@ -264,7 +264,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         ],
                         viewConfig:{
                             itemId:'view',
-                            //copy:true,
                             plugins:[
                                 {
                                     ptype:'gridviewdragdrop',
@@ -292,6 +291,18 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
 
         me.callParent(arguments);
 
+    },
+
+
+    status:function(val){
+        if(val == '0') {
+            return '<img style="padding-left: 10px" src="ui_icons/no.gif" />';
+        } else if(val == '1') {
+            return '<img style="padding-left: 10px" src="ui_icons/yes.gif" />';
+        } else if(val == '2') {
+            return '<img style="padding-left: 10px" src="ui_icons/icohelp.png" />';
+        }
+        return val;
     },
 
     onQuickReferenceCollapsed:function () {
@@ -359,8 +370,8 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         app.msg('Sweet!', 'CPT added to this Encounter');
 
         Ext.Function.defer(function(){
-            me.encounterCptStoreLoad();
-        }, 400)
+            me.encounterCptStoreLoad(null);
+        }, 500);
 
 //        me.cptFormEdit.cancelEdit();
 //        me.cptFormEdit.startEdit(index, 0);
@@ -376,6 +387,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
 
         this.encounterCptStore.proxy.extraParams = {eid:eid ? eid : app.currEncounterId, filter:null};
         this.encounterCptStore.load({
+
             callback:function(){
                 callback ? callback() : null;
             }

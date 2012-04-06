@@ -53,10 +53,10 @@ Ext.define('App.view.fees.Billing', {
 					width    : 200
 				},
 				{
-					header   : 'Billed',
-					dataIndex: 'paymentstatus',
-					renderer : this.boolRenderer,
-					width    : 60
+					header   : 'Billing Stage',
+					dataIndex: 'billing_stage',
+					renderer : me.stage,
+					width    : 135
 				}
 			],
 			tbar      : [
@@ -254,6 +254,20 @@ Ext.define('App.view.fees.Billing', {
 		me.pageBody = [ me.encountersGrid, me.encounterBillingDetails ];
 		me.callParent(arguments);
 	}, // end of initComponent
+
+
+    stage:function(val){
+        if(val == '1') {
+            return '<img src="ui_icons/stage1.png" />';
+        } else if(val == '2') {
+            return '<img src="ui_icons/stage2.png" />';
+        } else if(val == '3') {
+            return '<img src="ui_icons/stage3.png" />';
+        } else if(val == '4') {
+            return '<img src="ui_icons/stage4.png" />';
+        }
+        return val;
+    },
 
 	onBtnClicked: function(btn) {
 		var datefrom = this.query('datefield[action="datefrom"]'),

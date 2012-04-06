@@ -233,16 +233,16 @@ class Services {
     public function getCptCodes(stdClass $params){
 
         if($params->filter === 0){
-            return $this->getCptRelatedByEidIcds($params->eid);
+            $record =  $this->getCptRelatedByEidIcds($params->eid);
         }elseif($params->filter === 1){
-            return $this->getCptUsedByPid($params->pid);
+            $record = $this->getCptUsedByPid($params->pid);
         }elseif($params->filter === 2){
-            return $this->getCptUsedByClinic($params->pid);
+            $record = $this->getCptUsedByClinic($params->pid);
         }elseif($params->filter === null){
-            return $this->getCptByEid($params->eid);
-        }else{
-            return $params;
+            $record = $this->getCptByEid($params->eid);
         }
+
+        return $record;
     }
 
     public function addCptCode(stdClass $params){
@@ -292,7 +292,7 @@ class Services {
      * @return array
      */
     public function getCptByEid($eid){
-        $this->db->setSQL("SELECT DISTINCT ecc.id, cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
+        $this->db->setSQL("SELECT DISTINCT ecc.id, ecc.status, cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
                              FROM encounter_codes_cpt AS ecc
                         left JOIN cpt_codes AS cpt ON ecc.code = cpt.code
                             WHERE ecc.eid = '$eid' ORDER BY ecc.id ASC");
@@ -331,12 +331,12 @@ class Services {
 }
 
 //$params = new stdClass();
-//$params->filter = 3;
+//$params->filter = 2;
 //$params->pid = '7';
-//$params->eid = '2';
+//$params->eid = '1';
 //$params->start = 0;
 //$params->limit = 25;
 //
 //$t = new Services();
 //print '<pre>';
-//print_r($t->getCptUsedByPid(1));
+//print_r($t->getCptCodes($params));

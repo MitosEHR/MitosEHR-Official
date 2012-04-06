@@ -6,9 +6,9 @@
  * Time: 11:11 PM
  */
 
-Ext.define('App.store.patientfile.CptCodesGrid', {
+Ext.define('App.store.patientfile.QRCptCodes', {
 	extend: 'Ext.data.Store',
-	model     : 'App.model.patientfile.CptCodesGrid',
+	model     : 'App.model.patientfile.QRCptCodes',
 	remoteSort: false,
 	autoLoad  : false
 });

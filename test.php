@@ -26,7 +26,7 @@
 Ext.define('Company', {
     extend:'Ext.data.Model',
     fields:[
-        {name:'id', tyep:'int'},
+        {name:'id'},
         {name:'company', type:'string'},
         {name:'price', type:'float'},
         {name:'change', type:'float'},
@@ -44,7 +44,7 @@ Ext.define('Company', {
 Ext.define('Company2', {
     extend:'Ext.data.Model',
     fields:[
-        {name:'id', tyep:'int'},
+        {name:'id'},
         {name:'company', type:'string'},
         {name:'price', type:'float'},
         {name:'change', type:'float'},
