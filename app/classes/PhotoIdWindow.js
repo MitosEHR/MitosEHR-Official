@@ -17,7 +17,7 @@ Ext.define('App.classes.PhotoIdWindow', {
 					allowScriptAccess: 'always',
 					quality          : 'high'
 				},
-				url        : 'lib/webcam_control/camcanvas.swf'
+				url        : 'lib/webcam/samples/basic/camcanvas.swf'
 			}
 		});
 		me.callParent(arguments);
