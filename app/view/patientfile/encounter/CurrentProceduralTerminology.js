@@ -14,6 +14,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     bodyPadding:5,
     bodyStyle: 'background-color:#fff',
     layout:'border',
+    pid:null,
     eid:null,
     initComponent:function () {
         var me = this;
@@ -274,17 +275,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                                     dropGroup:'CPTGridDDGroup'
                                 }
 
-                            ],
-                            listeners:{
-                                scope:me,
-                                drop:me.onEncounterCptDrop,
-                                beforedrop:me.beforeEncounterCptDrop
-                            }
+                            ]
                         },
-                        plugins:me.cptFormEdit,
-                        listeners:{
-                            selectionchange:me.onEncounterCptSelectionChange
-                        }
+                        plugins:me.cptFormEdit
 
                     }
                 ]
@@ -345,30 +338,13 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     },
 
     loadCptQuickReferenceGrid:function (filter) {
-        var patient = app.getCurrPatient(), pid = patient.pid;
-        //this.referenceCptStore.proxy.extraParams = {pid:pid, eid:app.currEncounterId, filter:filter};
-        this.referenceCptStore.load({params:{pid:pid, eid:app.currEncounterId, filter:filter}});
-    },
-
-    onEncounterCptSelectionChange:function (sm, selections) {
-
-
-    },
-    onEncounterCptDrop:function (node, data, dropRec, dropPosition) {
-
-
+        this.referenceCptStore.load({params:{pid:this.pid, eid:this.eid, filter:filter}});
     },
 
     beforesync:function(options){
         if(options.create){
             options.create[0].data.eid = this.eid;
         }
-    },
-
-    beforeEncounterCptDrop:function(node, data){
-//        say(data);
-//        data.records[0].data.eid = app.currEncounterId;
-//        say(data);
     },
 
     afterCptAdded:function(model, index){
@@ -378,9 +354,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         Ext.Function.defer(function(){
             me.encounterCptStoreLoad(null);
         }, 500);
-
-//        me.cptFormEdit.cancelEdit();
-//        me.cptFormEdit.startEdit(index, 0);
     },
 
     gridItemClick:function (view) {
@@ -397,6 +370,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     },
 
     encounterCptStoreLoad:function(eid, callback){
+        if(app.getCurrPatient()){
+            this.pid = app.getCurrPatient().pid;
+        }
         this.eid = eid ? eid : app.currEncounterId;
         this.encounterCptStore.proxy.extraParams = {eid:eid ? eid : app.currEncounterId, filter:null};
         this.encounterCptStore.load({

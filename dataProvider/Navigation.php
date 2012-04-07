@@ -36,7 +36,7 @@ class Navigation {
             array( 'text' => $this->t['dashboard'][$this->lang],     'disabled'=> ($this->ACL->hasPermission('access_dashboard')       ? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoDash',      'id' => 'panelDashboard' ),
             array( 'text' => $this->t['calendar'][$this->lang],      'disabled'=> ($this->ACL->hasPermission('access_calendar')        ? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'icoCalendar',  'id' => 'panelCalendar' ),
             array( 'text' => $this->t['messages'][$this->lang],      'disabled'=> ($this->ACL->hasPermission('access_messages')        ? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'mail',         'id' => 'panelMessages' ),
-            array( 'text' => $this->t['patient_Search'][$this->lang],'disabled'=> ($this->ACL->hasPermission('access_patient_search')  ? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'searchUsers',  'id' => 'panelPatientSearch' ),
+            array( 'text' => $this->t['patient_Search'][$this->lang],'disabled'=> ($this->ACL->hasPermission('access_patient_search')  ? false:true), 'leaf' => true, 'cls' => 'file', 'iconCls' => 'searchUsers',  'id' => 'panelPatientSearch' )
         );
         // *************************************************************************************
         // Patient Folder
@@ -47,17 +47,17 @@ class Navigation {
                 array( 'text' => $this->t['patient_summary'][$this->lang],  'disabled'=> ($this->ACL->hasPermission('access_patient_summary')? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelSummary' ),
                 array( 'text' => $this->t['visist_history'][$this->lang],   'disabled'=> ($this->ACL->hasPermission('access_patient_visits') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelVisits' ),
                 array( 'text' => $this->t['encounter'][$this->lang],        'disabled'=> ($this->ACL->hasPermission('access_encounters')     ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelEncounter' ),
+                array( 'text' => $this->t['visit_payment'][$this->lang],    'disabled'=> ($this->ACL->hasPermission('access_visit_payment')  ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelVisitPayment' )
             )
         ));
         // *************************************************************************************
         // Fees Folder
         // *************************************************************************************
-        array_push( $nav, array( 'text' => 'Fees', 'cls' => 'folder', 'expanded' => true, 'children' =>
+        array_push( $nav, array( 'text' => $this->t['billing_manager'][$this->lang], 'cls' => 'folder', 'expanded' => true, 'children' =>
             array(
-                array( 'text' => $this->t['fees_sheet'][$this->lang],   'leaf' => true, 'cls' => 'file', 'id' => 'panelFeesSheet' ),
                 array( 'text' => $this->t['payment'][$this->lang],      'leaf' => true, 'cls' => 'file', 'id' => 'panelPayments' ),
                 array( 'text' => $this->t['checkout'][$this->lang],     'leaf' => true, 'cls' => 'file', 'id' => 'panelCheckout' ),
-                array( 'text' => $this->t['billing'][$this->lang],      'leaf' => true, 'cls' => 'file', 'id' => 'panelBilling' ),
+                array( 'text' => $this->t['billing'][$this->lang],      'leaf' => true, 'cls' => 'file', 'id' => 'panelBilling' )
             )
         ));
         // *************************************************************************************
@@ -83,7 +83,7 @@ class Navigation {
                 array( 'text' => 'Roles',           'disabled'=> ($this->ACL->hasPermission('access_roles')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelRoles' ),
                 array( 'text' => 'Layouts',         'disabled'=> ($this->ACL->hasPermission('access_layouts')         ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLayout' ),
                 array( 'text' => 'Lists',           'disabled'=> ($this->ACL->hasPermission('access_lists')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLists' ),
-                array( 'text' => 'Event Log',       'disabled'=> ($this->ACL->hasPermission('access_event_log')       ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLog' ),
+                array( 'text' => 'Event Log',       'disabled'=> ($this->ACL->hasPermission('access_event_log')       ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLog' )
             )
         ));
         // *************************************************************************************
@@ -95,7 +95,7 @@ class Navigation {
                 array( 'text' => 'Address Book',    'leaf' => true, 'cls' => 'file', 'id' => 'panelAddressbook' ),
                 array( 'text' => 'Office Notes',    'leaf' => true, 'cls' => 'file', 'id' => 'panelOfficeNotes' ),
                 array( 'text' => 'My Settings',     'leaf' => true, 'cls' => 'file', 'id' => 'panelMySettings' ),
-                array( 'text' => 'My Account',      'leaf' => true, 'cls' => 'file', 'id' => 'panelMyAccount' ),
+                array( 'text' => 'My Account',      'leaf' => true, 'cls' => 'file', 'id' => 'panelMyAccount' )
             )
         ));
 
@@ -137,21 +137,25 @@ class Navigation {
                 'en_US' => 'Encounter',
                 'es'    => 'Encuentro',
             ),
+            'visit_payment' => array(
+                'en_US' => 'Visit Payment',
+                'es'    => 'Pago de Visita',
+            ),
+            'billing_manager' => array(
+                'en_US' => 'Billing Area',
+                'es'    => 'Area de Facturacion',
+            ),
             'billing' => array(
-                'en_US' => 'Billing',
-                'es'    => 'Cobro',
+                'en_US' => 'Encounter Billing',
+                'es'    => 'Facturacion de Encouentro',
             ),
             'checkout' => array(
                 'en_US' => 'Checkout',
                 'es'    => 'Salida',
             ),
-            'fees_sheet' => array(
-                'en_US' => 'Fees Sheet',
-                'es'    => 'Libreta de Pago',
-            ),
             'payment' => array(
-                'en_US' => 'Payment',
-                'es'    => 'Pagos',
+                'en_US' => 'Payment Entry',
+                'es'    => 'Entrada de Pagos',
             )
         );
     }

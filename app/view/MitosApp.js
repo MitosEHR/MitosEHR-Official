@@ -51,11 +51,11 @@ Ext.define('App.view.MitosApp', {
 		'App.view.patientfile.Visits',
 		'App.view.patientfile.Encounter',
 		'App.view.patientfile.MedicalWindow',
+		'App.view.patientfile.VisitPayment',
 
 
 		'App.view.fees.Billing',
 		'App.view.fees.Checkout',
-		'App.view.fees.FeesSheet',
 		'App.view.fees.Payments',
 
 		'App.view.administration.Facilities',
@@ -461,6 +461,7 @@ Ext.define('App.view.MitosApp', {
 				Ext.create('App.view.patientfile.Summary'),
 				Ext.create('App.view.patientfile.Visits'),
 				Ext.create('App.view.patientfile.Encounter'),
+				Ext.create('App.view.patientfile.VisitPayment'),
 
 
 			/**
@@ -468,7 +469,6 @@ Ext.define('App.view.MitosApp', {
 			 */
 				Ext.create('App.view.fees.Billing'),
 				Ext.create('App.view.fees.Checkout'),
-				Ext.create('App.view.fees.FeesSheet'),
 				Ext.create('App.view.fees.Payments'),
 
 
@@ -630,10 +630,7 @@ Ext.define('App.view.MitosApp', {
 
 	newPatient: function() {
 		var me = this;
-		me.navigateTo('panelNewPatient', function() {
-			me.patientUnset();
-
-		});
+		me.navigateTo('panelNewPatient');
 	},
 
 	createEmergency: function() {
