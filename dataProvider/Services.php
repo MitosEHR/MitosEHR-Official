@@ -261,10 +261,16 @@ class Services {
     }
 
     public function updateCptCode(stdClass $params){
+        $data = get_object_vars($params);
 
+        unset($data['id'],$data['eid'],$data['code'],$data['code_text'],$data['code_text_medium']);
+        $params->id = intval($params->id);
+        $this->db->setSQL($this->db->sqlBind($data, 'encounter_codes_cpt', 'U', "id='$params->id'"));
+        $this->db->execLog();
         return $params;
     }
-    public function deeleteCptCode(stdClass $params){
+
+    public function deleteCptCode(stdClass $params){
         return $params;
     }
 
@@ -292,7 +298,7 @@ class Services {
      * @return array
      */
     public function getCptByEid($eid){
-        $this->db->setSQL("SELECT DISTINCT ecc.id, ecc.status, cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
+        $this->db->setSQL("SELECT DISTINCT ecc.*, cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
                              FROM encounter_codes_cpt AS ecc
                         left JOIN cpt_codes AS cpt ON ecc.code = cpt.code
                             WHERE ecc.eid = '$eid' ORDER BY ecc.id ASC");

@@ -56,19 +56,23 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             layout:'anchor',
                             columnWidth:.5,
                             margin:'0 3 0 0',
-                            defaults:{ xtype:'textfield', anchor:'100%' },
+                            defaults:{ xtype:'textfield' },
                             items:[
                                 {
                                     fieldLabel:'Place Of Service',
-                                    name:'place_of_service'
+                                    name:'place_of_service',
+                                    anchor:'100%'
                                 },
                                 {
+                                    xtype:'checkbox',
+                                    labelWidth:105,
                                     fieldLabel:'Emergency?',
                                     name:'emergency'
                                 },
                                 {
                                     fieldLabel:'Charges',
-                                    name:'charge'
+                                    name:'charge',
+                                    anchor:'100%'
                                 }
                             ]
                         },
@@ -356,7 +360,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     },
 
     beforesync:function(options){
-        options.create[0].data.eid = this.eid;
+        if(options.create){
+            options.create[0].data.eid = this.eid;
+        }
     },
 
     beforeEncounterCptDrop:function(node, data){

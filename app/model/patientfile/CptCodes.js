@@ -14,7 +14,7 @@ Ext.define('App.model.patientfile.CptCodes', {
         {name: 'code_text', type: 'string'},
         {name: 'code_text_medium', type: 'string'},
         {name: 'place_of_service', type: 'string'},
-        {name: 'emergency', type: 'string'},
+        {name: 'emergency', type: 'bool'},
         {name: 'charge', type: 'string'},
         {name: 'days_of_units', type: 'string'},
         {name: 'essdt_plan', type: 'string'},
