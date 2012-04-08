@@ -12,6 +12,7 @@ Ext.define('App.classes.LivePatientSearch', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.patienlivetsearch',
 	hideLabel    : true,
+    anchor      : '100%',
 	initComponent: function() {
 		var me = this;
 
@@ -50,7 +51,6 @@ Ext.define('App.classes.LivePatientSearch', {
 			typeAhead   : false,
 			hideTrigger : true,
 			minChars    : 1,
-			anchor      : '100%',
 			listConfig  : {
 				loadingText: 'Searching...',
 				//emptyText	: 'No matching posts found.',

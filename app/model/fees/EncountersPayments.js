@@ -6,7 +6,7 @@
  * Time: 11:09 PM
  */
 
-Ext.define('App.model.fees.Payment', {
+Ext.define('App.model.fees.EncountersPayments', {
 	extend: 'Ext.data.Model',
 	fields: [
         {name: 'id', type: 'int'},
@@ -33,10 +33,15 @@ Ext.define('App.model.fees.Payment', {
         {name: 'deductible', type: 'string'},
         {name: 'takeback', type: 'string'}
 	],
-	proxy : {
-		type: 'direct',
-		api : {
-
-		}
-	}
+    proxy : {
+        type: 'direct',
+        api : {
+            read  : Fees.getEncountersByPayment
+        },
+        reader     : {
+            type: 'json',
+            root: 'encounters',
+            totalProperty:'totals'
+        }
+    }
 });

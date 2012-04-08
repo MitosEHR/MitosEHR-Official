@@ -55,7 +55,6 @@ Ext.define('App.view.MitosApp', {
 
 
 		'App.view.fees.Billing',
-		'App.view.fees.Checkout',
 		'App.view.fees.Payments',
 
 		'App.view.administration.Facilities',
@@ -468,7 +467,6 @@ Ext.define('App.view.MitosApp', {
 			 * Fees Area
 			 */
 				Ext.create('App.view.fees.Billing'),
-				Ext.create('App.view.fees.Checkout'),
 				Ext.create('App.view.fees.Payments'),
 
 
@@ -697,7 +695,7 @@ Ext.define('App.view.MitosApp', {
 	},
 
     chargePatient: function() {
-        this.navigateTo('panelCheckout');
+        this.navigateTo('panelVisitPayment');
 	},
 
 	openPatientVisits: function() {

@@ -71,9 +71,43 @@ class Fees extends Encounter {
 
     }
 
+    public function getEncountersByPayment(stdClass $params){
 
+        $sql = "SELECT enc.eid,
+                       enc.pid,
+                       enc.prov_uid AS encounterProviderUid,
+                       enc.start_date,
+                       enc.billing_stage,
+                       demo.title,
+                       demo.fname,
+                       demo.mname,
+                       demo.lname,
+                       demo.provider AS primaryProviderUid
+                  FROM form_data_encounter AS enc
+             LEFT JOIN form_data_demographics AS demo ON demo.pid = enc.pid
+              ORDER BY enc.start_date ASC ";
+        $this->db->setSQL($sql);
+        $encounters = array();
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
 
+            $row['primaryProvider'] = $row['primaryProviderUid'] == null ? 'None' : $this->user->getUserNameById($row['primaryProviderUid']);
+            $row['encounterProvider'] = $row['encounterProviderUid'] == null ? 'None' : $this->user->getUserNameById($row['encounterProviderUid']);
 
+            $row['patientName'] = $row['title'].' '.$this->patient->fullname($row['fname'],$row['mname'],$row['lname']);
+            $encounters[] = $row;
+        }
+        $total = count($encounters);
+        $encounters = array_slice($encounters, $params->start, $params->limit);
+        return array('totals' => $total, 'encounters' => $encounters);
 
+    }
 }
+
+
+
+//$params = new stdClass();
+//
+//$p = new Fees($params);
+//echo '<pre>';
+//print_r($p->getEncountersByPayment($params));
 

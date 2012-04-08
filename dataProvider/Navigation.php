@@ -56,7 +56,6 @@ class Navigation {
         array_push( $nav, array( 'text' => $this->t['billing_manager'][$this->lang], 'cls' => 'folder', 'expanded' => true, 'children' =>
             array(
                 array( 'text' => $this->t['payment'][$this->lang],      'leaf' => true, 'cls' => 'file', 'id' => 'panelPayments' ),
-                array( 'text' => $this->t['checkout'][$this->lang],     'leaf' => true, 'cls' => 'file', 'id' => 'panelCheckout' ),
                 array( 'text' => $this->t['billing'][$this->lang],      'leaf' => true, 'cls' => 'file', 'id' => 'panelBilling' )
             )
         ));

@@ -105,6 +105,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/QRCptCodes.js"></script>
         <script type="text/javascript" src="app/model/patientfile/CptCodes.js"></script>
         <script type="text/javascript" src="app/model/fees/Billing.js"></script>
+        <script type="text/javascript" src="app/model/fees/EncountersPayments.js"></script>
 
 
         <!-- Stores -->
@@ -123,6 +124,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/patientfile/EncounterEventHistory.js"></script>
         <script type="text/javascript" src="app/store/patientfile/QRCptCodes.js"></script>
         <script type="text/javascript" src="app/store/fees/Billing.js"></script>
+        <script type="text/javascript" src="app/store/fees/EncountersPayments.js"></script>
 
 
         <!-- Classes -->
@@ -140,6 +142,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/Authorizations.js"></script>
         <script type="text/javascript" src="app/classes/combo/CodesTypes.js"></script>
         <script type="text/javascript" src="app/classes/combo/Facilities.js"></script>
+        <script type="text/javascript" src="app/classes/combo/BillingFacilities.js"></script>
         <script type="text/javascript" src="app/classes/combo/InsurancePayerType.js"></script>
         <script type="text/javascript" src="app/classes/combo/Languages.js"></script>
         <script type="text/javascript" src="app/classes/combo/Lists.js"></script>

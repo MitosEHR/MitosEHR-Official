@@ -3,6 +3,11 @@
 /* = disabled nodes
 
 ----------------------------------------------- */
+
+.check-bg {
+    background: url(check_bg.png) no-repeat white 5px 5px !important;
+}
+
 .tree-node-disabled .x-grid-cell {
     -moz-opacity: 0.5;
     opacity:.5;
