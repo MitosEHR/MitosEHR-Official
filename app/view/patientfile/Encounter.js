@@ -817,6 +817,8 @@ Ext.define('App.view.patientfile.Encounter', {
 
                 me.encounterEventHistoryStore.load({params:{eid:eid}});
 
+                me.soapPanel.query('icdsfieldset')[0].loadIcds(record[0].soap().getAt(0).data.icdxCodes);
+
                 me.CurrentProceduralTerminology.encounterCptStoreLoad(null, function(){
                     me.CurrentProceduralTerminology.setDefaultQRCptCodes();
                 });

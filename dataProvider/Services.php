@@ -208,7 +208,10 @@ class Services {
     }
 
     public function getIcdxByEid($eid){
-        $this->db->setSQL("SELECT * FROM encounter_codes_icdx WHERE eid = '$eid' ORDER BY id ASC");
+        $this->db->setSQL("SELECT eci.code, ic.code_text
+                             FROM encounter_codes_icdx as eci
+                             LEFT JOIN icd_codes as ic ON ic.code = eci.code
+                            WHERE eci.eid = '$eid' ORDER BY eci.id ASC");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
 

@@ -307,9 +307,9 @@ class Encounter {
         $this->db->setSQL("SELECT * FROM form_data_soap WHERE eid = '$eid' ORDER BY date DESC");
         $soap = $this->db->fetchRecords(PDO::FETCH_ASSOC);
 
-        $icdxs = '';
+        $icdxs = array();
         foreach($this->services->getIcdxByEid($eid) as $code){
-            $icdxs .= $code['code'].', ';
+            $icdxs[] = $code;
         }
         $soap[0]['icdxCodes'] = $icdxs;
         return $soap;
@@ -493,6 +493,7 @@ class Encounter {
         foreach($this->services->getIcdxByEid($eid) as $code){
             $icdxs .= $code['code'].', ';
         }
+
         $icdxs = substr($icdxs, 0, -2);
         $soap = $this->getSoapByEid($eid);
         $soap[0]['assessment'] = $soap[0]['assessment'].' <span style="font-weight:bold; text-decoration:none">[ '.$icdxs.' ]</span> ';
@@ -541,4 +542,4 @@ class Encounter {
 //json_decode($json);
 //$e = new Encounter();
 //echo '<pre>';
-//print_r($e->getProgressNoteByEid(7));
+//print_r($e->getSoapByEid(7));
