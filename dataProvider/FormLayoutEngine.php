@@ -93,7 +93,7 @@ class FormLayoutEngine {
 
             if($item['xtype'] == 'fieldset' && $item['title'] == 'Assessment' ){
                 $item['items'][] = array(
-                    'xtype' => 'icdsPanel',
+                    'xtype' => 'icdsfieldset',
                     'emptyText'=>'Search For Diagnosis Codes',
                     'name'=>'icdxCodes'
                 );

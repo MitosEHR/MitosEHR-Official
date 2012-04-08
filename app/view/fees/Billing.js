@@ -187,10 +187,12 @@ Ext.define('App.view.fees.Billing', {
             defaultTitle:'Encounter Billing Details',
             title:'Encounter Billing Details',
             layout:'border',
+            bodyStyle: 'background-color:#fff',
             items:[
                 Ext.create('Ext.container.Container',{
                     region:'center',
                     layout:'border',
+                    style: 'background-color:#fff',
                     items:[
                         me.icdPanel = Ext.create('App.view.patientfile.encounter.ICDs',{
                             title:'Encounter ICDs',

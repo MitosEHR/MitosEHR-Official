@@ -92,7 +92,7 @@ Ext.define('App.classes.LiveICDXSearch', {
         var id = this.getId();
         this.triggerConfig = {
             tag:'div', cls:'x-form-twin-triggers', style:'display:block;', cn:[
-                {tag:"img", style:Ext.isIE ? 'margin-left:-6;height:19px' : '', src:Ext.BLANK_IMAGE_URL, id:"trigger2" + id, name:"trigger2" + id, cls:"x-form-trigger " + this.trigger2Class}
+                {tag:"img", style:Ext.isIE ? 'margin-left:0;height:21px' : '', src:Ext.BLANK_IMAGE_URL, id:"trigger2" + id, name:"trigger2" + id, cls:"x-form-trigger " + this.trigger2Class}
             ]};
         this.triggerEl.replaceWith(this.triggerConfig);
         this.triggerEl.on('mouseup', function (e) {
