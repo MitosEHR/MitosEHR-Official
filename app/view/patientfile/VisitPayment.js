@@ -27,7 +27,7 @@ Ext.define('App.view.patientfile.VisitPayment', {
         });
 
         me.pageBody = Ext.create('Ext.form.Panel', {
-            title:'Charge Patient',
+            title:'Visit Payment',
             defaults:{
                 bodyStyle:'padding:15px',
                 bodyBorder:true,
@@ -44,119 +44,112 @@ Ext.define('App.view.patientfile.VisitPayment', {
                     items:[
                         {
                             xtype:'fieldset',
-                            title:'Payment Receipt',
-                            margin:'5 5 5 5',
+                            style: 'background-color:#DFE8F6',
+                            margin:5,
                             flex:2,
                             defaults: { labelWidth:110 },
-                            items:[
+                            items: [
                                 {
                                     xtype:'container',
-                                    layout:'absolute',
-                                    items: [
-                                        {
+                                    layout:'hbox',
+                                    margin:'0 0 20 0',
+                                    items:[
+                                        /*{
                                             fieldLabel: 'Facility',
                                             xtype     : 'mitos.facilitiescombo',
-                                            labelWidth:60
-                                        },
+                                            labelWidth: 108
+                                        },*/
                                         {
                                             fieldLabel: 'Date',
                                             xtype     : 'datefield',
-                                            labelWidth:60,
-                                            x: 280
+                                            margin:'0 257 0 0',
+                                            width:263,
+                                            labelWidth: 108
                                         },
                                         {
-                                            fieldLabel: 'No', //Encounter Number
-                                            xtype     : 'displayfield',
-                                            labelWidth:60,
-                                            x:555
+                                            fieldLabel: 'No',
+                                            xtype     : 'textfield',
+                                            labelWidth: 60
+                                        }
+                                    ],
+                                    bbar:[
+                                        {
+                                            text:'Save & Print'
+                                        },
+                                        '-',
+                                        {
+                                            text:'Cancel'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype:'container',
+                                    layout:'hbox',
+                                    items:[
+                                        {
+                                            xtype: 'textfield',
+                                            fieldLabel: 'Received From',
+                                            margin:'0 25 0 0',
+                                            labelWidth: 108,
+                                            width:491
                                         },
                                         {
-                                            xtype:'textfield',
-                                            fieldLabel:'Received From',
-                                            labelWidth:110,
-                                            anchor:'65%',
-                                            y:40
-                                        },
-                                        {
-                                            xtype:'mitos.currency',
-                                            fieldLabel:'Amount',
-                                            labelWidth:60,
-                                            x:516,
-                                            y:40
+                                            xtype: 'mitos.currency',
+                                            fieldLabel: 'Amount',
+                                            labelWidth: 60
+                                        }
 
-                                        },
+                                    ]
+                                },
+                                {
+                                    xtype:'container',
+                                    layout:'hbox',
+                                    items:[
                                         {
                                             xtype:'combobox',
                                             fieldLabel:'For Payment of',
-                                            labelWidth:110,
-                                            anchor:'65%',
+                                            labelWidth:108,
+                                            margin:'0 25 0 0',
                                             store:paymentDescription,
                                             queryMode: 'local',
                                             displayField: 'name',
-                                            y:80
+                                            width:491
                                         },
+
                                         {
                                             fieldLabel: 'Paid by',
-                                            xtype     : 'mitos.paymentmethodcombo',
-                                            labelWidth:60,
-                                            x:516,
-                                            y:80
-                                        },
-                                        {
-                                            xtype:'textfield',
-                                            fieldLabel:'Description',
-                                            labelWidth:110,
-                                            anchor:'100%',
-                                            y:120
-                                        },
-                                        {
-                                            xtype:'displayfield',
-                                            fieldLabel:'Next Appointment',
-                                            labelWidth:110,
-                                            y:160
-                                        },
-                                        {
-                                            xtype:'container',
-                                            y:220,
-                                            layout: {
-                                                   type: 'table',
-                                                   columns: 1,
-                                                   rows: 6
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'label',
-                                                    text: 'Accounted Amount',
-                                                    rowspan:2,
-                                                    colspan:1
-                                                },
-                                                {
-                                                    xtype: 'label',
-                                                    text: '$',
-                                                    rowspan:2,
-                                                    colspan:1
-                                                },
-                                                {
-                                                    xtype:'label',
-                                                    text:'Payment Amount',
-                                                    rowspan:2,
-                                                    colspan:1
-                                                },
-                                                {
-                                                    xtype:'label',
-                                                    text:'$'
-                                                },
-                                                {
-                                                    xtype:'label',
-                                                    text:'Balance Due'
-                                                },
-                                                {
-                                                    xtype:'label',
-                                                    text:'$'
-                                                }
-                                            ]
+                                            xtype: 'mitos.paymentmethodcombo',
+                                            labelWidth:60
                                         }
                                     ]
+                                },
+                                {
+                                    xtype:'textfield',
+                                    fieldLabel:'Description',
+                                    labelWidth:108,
+                                    anchor:'100%'
+                                },
+                                {
+                                    xtype:'textfield',
+                                    fieldLabel:'Next Appointment',
+                                    labelWidth:108,
+                                    margin:'50 0 0 0'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    fieldLabel: 'Accounted Amount',
+                                    labelWidth:108,
+                                    margin:'20 0 5 0'
+                                },
+                                {
+                                    xtype:'textfield',
+                                    fieldLabel:'Payment Amount',
+                                    labelWidth:108
+                                },
+                                {
+                                    xtype:'textfield',
+                                    fieldLabel:'Balance Due',
+                                    labelWidth:108
                                 }
                             ]
                         },
@@ -223,16 +216,6 @@ Ext.define('App.view.patientfile.VisitPayment', {
                             ]
                         }
                     ]
-                }
-            ],
-            bbar:[
-                '->',
-                {
-                    itemId:'move-next',
-                    text:'Next',
-                    handler:function () {
-                        app.navigateTo('panelPayments');
-                    }
                 }
             ]
         });
