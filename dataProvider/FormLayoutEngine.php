@@ -93,9 +93,8 @@ class FormLayoutEngine {
 
             if($item['xtype'] == 'fieldset' && $item['title'] == 'Assessment' ){
                 $item['items'][] = array(
-                    'xtype' => 'liveicdxsearch',
-                    'margin'=>'10 5 15 5',
-                    'emptyText'=>'Diagnostic Codes',
+                    'xtype' => 'icdsPanel',
+                    'emptyText'=>'Search For Diagnosis Codes',
                     'name'=>'icdxCodes'
                 );
             }

@@ -67,25 +67,25 @@ Ext.define('App.classes.LiveICDXSearch', {
 					return '<div class="search-item">{code}: {code_text}</div>';
 				}
 			},
-			pageSize    : 10,
-            listeners:{
-                scope:me,
-                select:me.codeSelected
-            }
+			pageSize    : 10
+//            listeners:{
+//                scope:me,
+//                select:me.codeSelected
+//            }
 		}, null);
 
 		me.callParent();
 	},
 
-    codeSelected:function(combo, record){
-        var value = record[0].data.code;
-        if(this.oldValue){
-            combo.setRawValue(this.oldValue + value + ', ');
-        }else{
-            combo.setRawValue(value + ', ');
-        }
-        this.oldValue = combo.getRawValue();
-    },
+//    codeSelected:function(combo, record){
+//        var value = record[0].data.code;
+//        if(this.oldValue){
+//            combo.setRawValue(this.oldValue + value + ', ');
+//        }else{
+//            combo.setRawValue(value + ', ');
+//        }
+//        this.oldValue = combo.getRawValue();
+//    },
 
     onRender:function (ct, position) {
         this.callParent(arguments);
