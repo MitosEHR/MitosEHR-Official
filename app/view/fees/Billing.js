@@ -188,11 +188,22 @@ Ext.define('App.view.fees.Billing', {
             title:'Encounter Billing Details',
             layout:'border',
             items:[
-                //me.icdsPanel = Ext.create(''),
-
-                me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
-                    region:'center'
+                Ext.create('Ext.container.Container',{
+                    region:'center',
+                    layout:'border',
+                    items:[
+                        me.icdPanel = Ext.create('App.view.patientfile.encounter.ICDs',{
+                            title:'Encounter ICDs',
+                            border:true,
+                            margin:'5 5 0 5',
+                            region:'north'
+                        }),
+                        me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
+                            region:'center'
+                        })
+                    ]
                 }),
+
                 me.progressNote = Ext.create('App.view.patientfile.ProgressNote', {
                     title:'Encounter Progress Note',
                     region:'east',

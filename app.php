@@ -182,6 +182,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/patientfile/Visits.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Summary.js"></script>
         <script type="text/javascript" src="app/view/patientfile/encounter/CurrentProceduralTerminology.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/encounter/ICDs.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Encounter.js"></script>
         <script type="text/javascript" src="app/view/patientfile/VisitPayment.js"></script>
         <script type="text/javascript" src="app/view/patientfile/NewPatient.js"></script>

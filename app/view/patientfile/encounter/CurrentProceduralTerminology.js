@@ -7,7 +7,7 @@
  */
 Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     extend:'Ext.panel.Panel',
-    allias:'widget.currentproceduralterminology',
+    alias:'widget.currentproceduralterminology',
     autoScroll:true,
     border:false,
     bodyBorder:false,
