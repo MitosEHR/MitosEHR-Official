@@ -422,7 +422,6 @@ Ext.define('App.view.fees.Payments', {
         me.callParent(arguments);
     },
 
-
     onBtnClick:function(btn){
         var me = this;
 
@@ -433,7 +432,6 @@ Ext.define('App.view.fees.Payments', {
         }else if(btn.action == 'new'){
             me.window.show();
         }
-
     },
 
     /**
