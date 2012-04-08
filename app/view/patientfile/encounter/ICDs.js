@@ -49,14 +49,18 @@ Ext.define('App.view.patientfile.encounter.ICDs', {
             {
                 xtype:'liveicdxsearch',
                 emptyText:me.emptyText,
+                name:'icdxCodes',
                 listeners:{
                     scope:me,
-                    select:me.onLiveIcdSelect
+                    select:me.onLiveIcdSelect,
+                    blur:function(btn){
+                        btn.reset();
+                    }
                 }
             },
             {
                 xtype:'container',
-                itemId:'idcs'
+                itemId:'idcsContainer'
                 //manageOverflow:1
             }
 
@@ -68,26 +72,31 @@ Ext.define('App.view.patientfile.encounter.ICDs', {
 
 
     onLiveIcdSelect:function(field, model){
-        field.up('fieldset').getComponent('idcs').add({
+        this.addIcd(model[0].data.code, model[0].data.code_text);
+        field.reset();
+    },
+
+    addIcd:function(code, text){
+        this.getIcdContainer().add({
             xtype:'customtrigger',
-            value:model[0].data.code,
-            name : 'icdxCodes',
-            width:80,
+            value:code,
+            width:70,
             style:'float:left',
+            name:'icdxCodes',
             listeners:{
                 afterrender:function(btn){
                     Ext.create('Ext.tip.ToolTip', {
                         target: btn.id,
-                        html: model[0].data.code_text
+                        html: text
                     });
                     btn.setEditable(false);
                 }
             }
         });
+    },
 
-        field.reset();
-
+    getIcdContainer:function(){
+        return this.getComponent('idcsContainer');
     }
-
 
 });

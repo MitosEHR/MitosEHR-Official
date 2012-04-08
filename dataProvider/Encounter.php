@@ -354,7 +354,6 @@ class Encounter {
         $this->setEid($params->eid);
 
         $data = get_object_vars($params);
-        $icdcCodes = $data['icdxCodes'];
         unset($data['id'],$data['icdxCodes']);
         $this->db->setSQL($this->db->sqlBind($data, 'form_data_soap', 'U', "id='".$params->id."'"));
         $this->db->execLog();
@@ -362,16 +361,32 @@ class Encounter {
         $this->db->setSQL("DELETE FROM encounter_codes_icdx WHERE eid = '$params->eid'");
         $this->db->execOnly();
 
-        $icdcCodes = explode(',', substr(trim($icdcCodes), 0, -1));
-        foreach($icdcCodes as $icdcCode){
-            $icdc['eid'] = $data['eid'];
-            $icdc['code'] = trim($icdcCode);
-            $this->db->setSQL($this->db->sqlBind($icdc, 'encounter_codes_icdx', 'I'));
-            $this->db->execOnly();
-        }
+        $this->updateEncounterIcdxCodes($params);
+
+
         $this->addEncounterHistoryEvent('SOAP updated');
         return $params;
     }
+
+    public function updateEncounterIcdxCodes(stdClass $params){
+
+        $this->setEid($params->eid);
+
+        if(!is_string($params->icdxCodes)){
+            foreach($params->icdxCodes as $icdcCode){
+                $icdc['eid'] = $params->eid;
+                $icdc['code'] = trim($icdcCode);
+                $this->db->setSQL($this->db->sqlBind($icdc, 'encounter_codes_icdx', 'I'));
+                $this->db->execOnly();
+            }
+        }else{
+            $icdc['eid'] = $params->eid;
+            $icdc['code'] = trim($params->icdxCodes);
+            $this->db->setSQL($this->db->sqlBind($icdc, 'encounter_codes_icdx', 'I'));
+            $this->db->execOnly();
+        }
+    }
+
     /**
      * @param stdClass $params
      * @return stdClass
@@ -522,7 +537,8 @@ class Encounter {
     }
 
 }
-
+//$json = ""
+//json_decode($json);
 //$e = new Encounter();
 //echo '<pre>';
 //print_r($e->getProgressNoteByEid(7));

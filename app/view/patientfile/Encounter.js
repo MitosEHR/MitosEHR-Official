@@ -734,6 +734,12 @@ Ext.define('App.view.patientfile.Encounter', {
                             record = store.getAt(0).speechdictation().getAt(0);
                         }
                         values = me.addDefaultData(values);
+
+                        say(form);
+                        say(values);
+                        say(record);
+
+
                         record.set(values);
                         record.save({
                             callback:function () {
