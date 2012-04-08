@@ -188,7 +188,7 @@ Ext.define('App.view.fees.Billing', {
             title:'Encounter Billing Details',
             layout:'border',
             items:[
-                me.icdsPanel = Ext.create(''),
+                //me.icdsPanel = Ext.create(''),
 
                 me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                     region:'center'
