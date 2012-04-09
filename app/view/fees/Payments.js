@@ -169,14 +169,13 @@ Ext.define('App.view.fees.Payments', {
         me.window = Ext.create('Ext.window.Window', {
             title:'Add New Payment',
             closeAction:'hide',
-            height:300,
-            width:1028,
             modal:true,
             items:[
                 {
                     xtype:'form',
-                    height:180,
-                    defaults:{ height:140, margin:5 },
+                    //height:190,
+                    defaults:{ margin:5 },
+                    border:false,
                     items:[
                         {
                             xtype:'fieldset',
@@ -276,13 +275,13 @@ Ext.define('App.view.fees.Payments', {
                             ]
                         }
                     ],
-                    bbar:[
+                    buttons:[
                         {
-                            text:'Search'
+                            text:'Save'
                         },
                         '-',
                         {
-                            text:'Reset'
+                            text:'Cancel'
                         }
                     ]
                 }
