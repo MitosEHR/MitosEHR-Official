@@ -67,6 +67,9 @@ Ext.define('App.panel.login.Login',{
             waitMsgTarget	: true,
             frame			: false,
             border			: false,
+            width			: 483,
+            padding         : '0 0 5 0',
+            bodyPadding     : '5 5 0 5',
             baseParams		: { auth: 'true' },
             fieldDefaults	: { msgTarget: 'side', labelWidth: 300 },
             defaults		: { anchor: '100%' },
@@ -135,11 +138,14 @@ Ext.define('App.panel.login.Login',{
 
             }],
             buttons: [{
+                xtype:'checkbox',
+                name:'checkin'
+            },'Check-In Mode','->',{
                 text    : 'Login',
                 name    : 'btn_login',
                 scope   : me,
                 handler : me.onSubmit
-            },{
+            },'-',{
                 text    : 'Reset',
                 name    : 'btn_reset',
                 scope   : me,
@@ -151,8 +157,6 @@ Ext.define('App.panel.login.Login',{
          */
         me.winLogon = Ext.create('widget.window', {
             title			: 'MitosEHR Logon',
-            width			: 495,
-            height			: 320,
             closeAction		: 'hide',
             plain			: true,
             modal			: false,
@@ -190,9 +194,12 @@ Ext.define('App.panel.login.Login',{
         var me = this,
             formPanel = this.formLogin,
             form = formPanel.getForm(),
-            params = form.getValues();
+            params = form.getValues(),
+            checkInMode = me.formLogin.query('checkbox')[0].getValue();
         if(form.isValid()){
             formPanel.el.mask('Sending credentials...');
+            params.checkInMode = checkInMode;
+            console.log(params);
             authProcedures.login(params, function(provider, response){
                 if(response.result.success){
                     window.location = './';

@@ -37,7 +37,9 @@ if(isset($_SESSION['user']['auth'])){
         /**
          * if mobile go to mobile app, else go to app
          */
-        if ($mobile->isMobile()) {
+        if($_SESSION['site']['checkInMode']){
+            include_once("checkin/checkin.php");
+        }elseif($mobile->isMobile()) {
 		    include_once("app_mobile.php");
         }else{
             include_once("app.php");

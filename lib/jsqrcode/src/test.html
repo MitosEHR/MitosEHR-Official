@@ -1,11 +1,8 @@
 <html>
 <head>
     <title>QRCODE</title>
-
     <style type="text/css">
     </style>
-
-
     <script type="text/javascript" src="grid.js"></script>
     <script type="text/javascript" src="version.js"></script>
     <script type="text/javascript" src="detector.js"></script>
@@ -23,35 +20,8 @@
     <script type="text/javascript" src="findpat.js"></script>
     <script type="text/javascript" src="alignpat.js"></script>
     <script type="text/javascript" src="databr.js"></script>
-
     <script type="text/javascript">
-        var gCtx = null;
-        var gCanvas = null;
-
-        var imageData = null;
-        var ii = 0;
-        var jj = 0;
-        var c = 0;
-
-
-        function dragenter(e) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
-
-        function dragover(e) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
-        function drop(e) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            var dt = e.dataTransfer;
-            var files = dt.files;
-
-            handleFiles(files);
-        }
+        var gCtx, gCanvas, imageData, c = 0, done = 0;
 
         function handleFiles(f) {
             var o = [];
@@ -70,21 +40,19 @@
         }
 
         function read(a) {
-            alert('do stuff with: ' + a );
+            done = 1;
+            alert(a);
         }
 
         function load() {
             initCanvas(640, 480);
             qrcode.callback = read;
             qrcode.decode("meqrthumb.png");
-            setTimeout(setwebcam(),5000);
+            scanning();
         }
 
         function initCanvas(ww, hh) {
             gCanvas = document.getElementById("qr-canvas");
-            gCanvas.addEventListener("dragenter", dragenter, false);
-            gCanvas.addEventListener("dragover", dragover, false);
-            gCanvas.addEventListener("drop", drop, false);
             var w = ww;
             var h = hh;
             gCanvas.style.width = w + "px";
@@ -116,27 +84,32 @@
             if (c >= 320 * 240 * 4) {
                 c = 0;
                 gCtx.putImageData(imageData, 0, 0);
+                try {
+                    qrcode.decode();
+                    done = 1;
+                }
+                catch (e) {
+                    console.log(e);
+                    setTimeout(captureToCanvas, 500);
+                }
             }
         }
 
         function captureToCanvas() {
             flash = document.getElementById("embedflash");
+            if(!flash) return;
             flash.ccCapture();
-            qrcode.decode();
+
         }
 
-        function setwebcam()
-        {
-            if(stype==1)
-            {
-                setTimeout(captureToCanvas, 500);
-                return;
-            }
-            stype=1;
-            setTimeout(captureToCanvas, 500);
+        function scanning() {
+            setTimeout(function () {
+                if (done == 0) {
+                    captureToCanvas();
+                    //scanning()
+                }
+            }, 1000);
         }
-
-
     </script>
 
 </head>
@@ -157,9 +130,7 @@
 
 
 </div>
-<button onclick="captureToCanvas()">Capture</button>
-<br>
-<canvas id="qr-canvas" width="640" height="480"></canvas>
+<canvas id="qr-canvas" style="display:none;" width="640" height="480"></canvas>
 </body>
 
 </html>

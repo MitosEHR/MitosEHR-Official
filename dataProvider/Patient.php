@@ -176,7 +176,7 @@ class Patient extends Person {
         $root =  $_SESSION['site']['root'];
         $site = $_SESSION['site']['site'];
         $path = $root.'/sites/'.$site.'/patients/'.$pid;
-        $data = 'name:'.$fullname.'|pid:'.$pid;
+        $data = '{"name":"'.$fullname.'","pid":'.$pid.',"ehr": "MitosEHR"}';
         $PNG_TEMP_DIR = $path;
         include($root."/lib/phpqrcode/qrlib.php");
         $filename = $PNG_TEMP_DIR. '/patientDataQrCode.png';
