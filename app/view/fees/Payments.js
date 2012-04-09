@@ -134,9 +134,22 @@ Ext.define('App.view.fees.Payments', {
 
         });
 
+
+        me.gridFormItems = Ext.create('App.classes.grid.RowFormEditing', {
+            autoCancel:false,
+            errorSummary:false,
+            clicksToEdit:1,
+            enableRemove:true,
+            listeners:{
+                scope:me,
+                beforeedit:me.beforeCptEdit
+            }
+        });
+
         me.grid = Ext.create('Ext.grid.Panel', {
             region:'center',
             store:me.encountersStore,
+            plugins:me.gridFormItems,
             columns:[
                 {
                     header:'Service Date'
@@ -312,13 +325,122 @@ Ext.define('App.view.fees.Payments', {
                         }
                     ]
                 });
-
             }
         };
 
         me.pageBody = [ me.forms, me.grid ];
         me.callParent(arguments);
     },
+
+    beforeCptEdit:function(editor, e){
+        say(editor.editor);
+        say(e.record.data);
+        this.addCptFields(editor.editor, e.record.data)
+    },
+
+
+    addCptFields:function(editor, cpts){
+
+        editor.removeAll();
+
+        var testData = this.testData();
+
+        Ext.each(testData, function(cpt){
+            editor.add({
+                xtype:'fieldcontainer',
+                layout:'hbox',
+                items:[
+                    {
+                        xtype:'textfield',
+                        width:100,
+                        name:'code',
+                        readOnly:true,
+                        margin: '0 5 0 10'
+                    },
+                    {
+                        xtype:'textfield',
+                        name:'copay',
+                        readOnly:true,
+                        width:400,
+                        margin: '0 5 0 5'
+                    },
+                    {
+                        xtype:'mitos.currency',
+                        name:'remaining',
+                        readOnly:true,
+                        width:100,
+                        margin: '0 5 0 5'
+                    },
+                    {
+                        xtype:'mitos.currency',
+                        name:'allowed',
+                        readOnly:true,
+                        width:100,
+                        margin: '0 5 0 5'
+                    },
+                    {
+                        xtype:'mitos.currency',
+                        name:'payment',
+                        readOnly:true,
+                        width:100,
+                        margin: '0 5 0 5'
+                    },
+                    {
+                        xtype:'mitos.currency',
+                        name:'deductible',
+                        readOnly:true,
+                        width:100,
+                        margin: '0 5 0 5'
+                    },
+                    {
+                        xtype:'mitos.currency',
+                        name:'takeback',
+                        readOnly:true,
+                        width:100,
+                        margin: '0 5 0 5'
+                    },
+                    {
+                        xtype:'checkbox',
+                        name:'takeback',
+                        readOnly:true,
+                        width:50,
+                        margin: '0 5 0 5'
+                    },
+                    {
+                        xtype:'textfield',
+                        name:'takeback',
+                        readOnly:true,
+                        width:100,
+                        margin: '0 5 0 5'
+                    }
+                ]
+            })
+        });
+    },
+
+    testData:function(){
+        var data = [],
+            p = (Math.random() *  4) + 1,
+            i;
+
+        floor = Math.floor((Math.random()*6)+1);
+
+        for (i = 0; i < floor; i++) {
+            data.push({
+                data1: Math.floor(Math.max((Math.random() * 100), floor)),
+                data2: Math.floor(Math.max((Math.random() * 100), floor)),
+                data3: Math.floor(Math.max((Math.random() * 100), floor)),
+                data4: Math.floor(Math.max((Math.random() * 100), floor)),
+                data5: Math.floor(Math.max((Math.random() * 100), floor)),
+                data6: Math.floor(Math.max((Math.random() * 100), floor)),
+                data7: Math.floor(Math.max((Math.random() * 100), floor)),
+                data8: Math.floor(Math.max((Math.random() * 100), floor)),
+                data9: Math.floor(Math.max((Math.random() * 100), floor))
+            });
+        }
+        return data;
+    },
+
 
     onBtnClick:function(btn){
         var me = this;
