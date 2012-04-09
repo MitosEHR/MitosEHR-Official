@@ -54,3 +54,78 @@ Ext.override(Ext.grid.ViewDropZone, {
     }
 
 });
+
+Ext.override(Ext.layout.ContextItem, {
+
+    setHeight: function (height, dirty /*, private {Boolean} force */) {
+        var me = this,
+            comp = me.target,
+            frameBody, frameInfo, padding;
+
+        if (isNaN(height)) {
+            return;
+        }
+
+        if (height < 0) {
+            height = 0;
+        }
+        if (!me.wrapsComponent) {
+            if (!me.setProp('height', height, dirty)) {
+                return NaN;
+            }
+        } else {
+            height = Ext.Number.constrain(height, comp.minHeight || 0, comp.maxHeight);
+            if (!me.setProp('height', height, dirty)) {
+                return NaN;
+            }
+
+            frameBody = me.frameBodyContext;
+            if (frameBody){
+                frameInfo = me.getFrameInfo();
+                frameBody.setHeight(height - frameInfo.height, dirty);
+            }
+        }
+
+        return height;
+    },
+
+    setWidth: function (width, dirty /*, private {Boolean} force */) {
+        var me = this,
+            comp = me.target,
+            frameBody, frameInfo, padding;
+
+        if (isNaN(width)) {
+            return;
+        }
+
+        if (width < 0) {
+            width = 0;
+        }
+        if (!me.wrapsComponent) {
+            if (!me.setProp('width', width, dirty)) {
+                return NaN;
+            }
+        } else {
+            width = Ext.Number.constrain(width, comp.minWidth || 0, comp.maxWidth);
+            if (!me.setProp('width', width, dirty)) {
+                return NaN;
+            }
+
+            //if ((frameBody = me.target.frameBody) && (frameBody = me.getEl(frameBody))){
+            frameBody = me.frameBodyContext;
+            if (frameBody) {
+                frameInfo = me.getFrameInfo();
+                frameBody.setWidth(width - frameInfo.width, dirty);
+            }
+
+            /*if (owner.frameMC) {
+                frameContext = ownerContext.frameContext ||
+                        (ownerContext.frameContext = ownerContext.getEl('frameMC'));
+                width += (frameContext.paddingInfo || frameContext.getPaddingInfo()).width;
+            }*/
+        }
+
+        return width;
+    }
+
+});
