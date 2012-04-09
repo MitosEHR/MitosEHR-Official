@@ -369,7 +369,6 @@ class Encounter {
     }
 
     public function updateEncounterIcdxCodes(stdClass $params){
-
         $this->setEid($params->eid);
 
         if(!is_string($params->icdxCodes)){
@@ -385,6 +384,13 @@ class Encounter {
             $this->db->setSQL($this->db->sqlBind($icdc, 'encounter_codes_icdx', 'I'));
             $this->db->execOnly();
         }
+
+        return $params;
+    }
+
+    public function getEncounterIcdxCodes(stdClass $params){
+        $this->setEid($params->eid);
+        return $this->services->getIcdxByEid($params->eid);
     }
 
     /**

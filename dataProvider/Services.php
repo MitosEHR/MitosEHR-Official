@@ -241,7 +241,7 @@ class Services {
             $record = $this->getCptUsedByPid($params->pid);
         }elseif($params->filter === 2){
             $record = $this->getCptUsedByClinic($params->pid);
-        }elseif($params->filter === null){
+        }else{
             $record = $this->getCptByEid($params->eid);
         }
 

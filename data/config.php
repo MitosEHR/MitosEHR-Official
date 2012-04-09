@@ -29,6 +29,12 @@ $API = array(
             'updateSoapById'=>array(
                 'len'=>1
             ),
+            'getEncounterIcdxCodes'=>array(
+                'len'=>1
+            ),
+            'updateEncounterIcdxCodes'=>array(
+                'len'=>1
+            ),
             'updateReviewOfSystemsChecksById'=>array(
                 'len'=>1
             ),

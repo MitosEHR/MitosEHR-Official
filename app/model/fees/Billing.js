@@ -19,7 +19,8 @@ Ext.define('App.model.fees.Billing', {
         {name: 'billing_facility', type: 'string'},
         {name: 'start_date', type: 'string'},
         {name: 'close_date', type: 'string'},
-        {name: 'billing_stage', type: 'int'}
+        {name: 'billing_stage', type: 'int'},
+        {name: 'icdxCodes', type: 'auto'}
     ],
     proxy : {
         type: 'direct',
@@ -29,7 +30,7 @@ Ext.define('App.model.fees.Billing', {
         reader     : {
             type: 'json',
             root: 'encounters',
-            totalProperty:'totals'
+            totalProperty: 'totals'
         }
     }
 

@@ -87,7 +87,6 @@ Ext.define('App.view.patientfile.encounter.ICDs', {
             field = me.getIcdLiveSearch();
         me.removeIcds();
         Ext.each(records, function(record){
-            say(record);
             me.addIcd(record.code, record.code_text);
         });
         field.reset();

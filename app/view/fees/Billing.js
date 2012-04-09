@@ -194,11 +194,16 @@ Ext.define('App.view.fees.Billing', {
                     layout:'border',
                     style: 'background-color:#fff',
                     items:[
-                        me.icdPanel = Ext.create('App.view.patientfile.encounter.ICDs',{
-                            title:'Encounter ICDs',
-                            border:true,
-                            margin:'5 5 0 5',
-                            region:'north'
+                        me.icdForm = Ext.create('Ext.form.Panel',{
+                            region:'north',
+                            border: false,
+                            items:[
+                                {
+                                    xtype:'icdsfieldset',
+                                    title:'Encounter ICDs',
+                                    margin:'5 5 0 5'
+                                }
+                            ]
                         }),
                         me.cptPanel = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
                             region:'center'
@@ -243,7 +248,8 @@ Ext.define('App.view.fees.Billing', {
                     text:'Save',
                     scope:me,
                     action:'save',
-                    tooltip:'Save Billing Details'
+                    tooltip:'Save Billing Details',
+                    handler:me.onBtnSave
                 },
 
                 {
@@ -316,12 +322,16 @@ Ext.define('App.view.fees.Billing', {
                 pageInfo = me.encounterBillingDetails.query('tbtext[action="page"]'),
                 rowIndex = model[0].index;
 
+            me.pid = model[0].data.pid;
+            me.eid = model[0].data.eid;
 
-            me.updateProgressNote(model[0].data.eid);
+            me.updateProgressNote(me.eid);
             me.encounterBillingDetails.setTitle(title + ' ( ' + model[0].data.patientName + ' )');
 
-            me.cptPanel.pid = model[0].data.pid;
-            me.cptPanel.encounterCptStoreLoad(model[0].data.eid, function () {
+            me.getEncounterIcds();
+
+            me.cptPanel.pid = me.pid;
+            me.cptPanel.encounterCptStoreLoad(me.eid, function () {
                 me.cptPanel.setDefaultQRCptCodes();
             });
 
@@ -350,7 +360,31 @@ Ext.define('App.view.fees.Billing', {
     },
 
     onBtnSave:function () {
-        this.goToEncounterList();
+        var me = this,
+            form = me.icdForm.getForm(),
+            values = form.getValues();
+
+        me.updateEncounterIcds(values);
+        me.msg('Sweet!', 'Encounter Billing Data Updated');
+    },
+
+    getEncounterIcds:function(){
+        var me = this;
+
+        Encounter.getEncounterIcdxCodes({eid:me.eid},function(provider, response){
+            me.icdForm.down('icdsfieldset').loadIcds(response.result);
+        });
+    },
+
+    updateEncounterIcds:function(data){
+        var me = this;
+
+        data.eid = me.eid;
+
+        Encounter.updateEncounterIcdxCodes(data, function(provider, response){
+            say(response.result);
+            return true;
+        });
     },
 
     reloadGrid:function () {
