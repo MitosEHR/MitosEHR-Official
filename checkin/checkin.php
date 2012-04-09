@@ -103,7 +103,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
                     }
                     catch (e) {
                         //console.log(e);
-                        setTimeout(captureToCanvas, 500);
+                        setTimeout(captureToCanvas,1000);
                     }
                 }
             }
@@ -121,7 +121,7 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
                         captureToCanvas();
                         //scanning()
                     }
-                }, 1000);
+                }, 5000);
             }
         </script>
         <link rel="shortcut icon" href="favicon.ico" >

@@ -29,7 +29,7 @@ Ext.define('App.panel.checkin.Checkin',{
                         '<param name="movie" value="camcanvas.swf"/>' +
                         '<param name="quality" value="high"/>' +
                         '<param name="allowScriptAccess" value="always"/>' +
-                        '<embed allowScriptAccess="always" id="embedflash" src="checkin/camcanvas.swf" quality="high" width="320" height="240"' +
+                        '<embed src="checkin/camcanvas.swf" width="320" height="240" quality="high" allowScriptAccess="always" id="embedflash" ' +
                         'type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
                         'mayscript="true"/>' +
                         '</object>' +
