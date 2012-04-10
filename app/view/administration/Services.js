@@ -105,6 +105,27 @@ Ext.define('App.view.administration.Services', {
 										fieldLabel: 'Code',
 										name      : 'code'
 
+									},
+									{
+										xtype: 'numberfield',
+										fieldLabel: 'Frequency',
+										value:0,
+										name      : 'frequency'
+
+									},
+									{
+										xtype: 'numberfield',
+										fieldLabel: 'Times to Perform',
+										value:0,
+										name      : 'code',
+										tooltip:'Please enter a number greater than 1 or just check "Perform once"'
+
+									},
+									{
+										boxLabel: 'perform only once',
+										xtype: 'checkboxfield',
+										name      : 'perform'
+
 									}
 								]
 							},
