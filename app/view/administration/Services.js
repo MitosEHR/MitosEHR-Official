@@ -71,39 +71,29 @@ Ext.define('App.view.administration.Services', {
 				errorSummary: false,
 				clicksToEdit: 1,
 				formItems   : [
-					{ layout         : 'column',
-						region       : 'center',
-						defaults     : { border: false, columnWidth: .5, defaultType: 'textfield', layout: 'anchor'},
-						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor: '80%' },
-						items        : [
+					{
+
+						xtype: 'tabpanel',
+						hidden:true,
+						items: [
 							{
-								xtype : 'tabpanel',
-								layout: 'fit',
+								title : 'general',
+								xtype : 'container',
+								layout:'column',
+
 								items : [
 									{
-										title   : 'general',
-										xtype   : 'container',
-										defaults: { margin: '0 0 10 10'},
+										xtype   : 'fieldcontainer',
+										defaults: { margin: '5 0 5 10'},
 										items   : [
 											{
+
 												xtype     : 'textfield',
 												fieldLabel: 'Immunization Name',
 												name      : 'immunization_name'
 
 											},
-											{
-												xtype     : 'textfield',
-												fieldLabel: 'Sex',
-												name      : 'sex'
 
-											},
-											{
-												boxLabel: 'Must be pregnant',
-												xtype   : 'checkboxfield',
-												margin  : '0 0 10 120',
-												name    : 'pregnant'
-
-											},
 											{
 												xtype     : 'textfield',
 												fieldLabel: 'Coding System',
@@ -115,113 +105,34 @@ Ext.define('App.view.administration.Services', {
 												fieldLabel: 'Code',
 												name      : 'code'
 
-											},
-											{
-												xtype:'container',
-												layout:'hbox',
-												items:
-													[
-														{
-															xtype     : 'numberfield',
-															fieldLabel: 'Frequency',
-															value     : 0,
-															minValue  : 0,
-															name      : 'frequency'
-
-														},{
-														xtype     : 'mitos.timecombo',
-														name      : 'frequency',
-														defaultValue:'Month'
-
-													}
-													]
-											},
-											{
-												xtype     : 'numberfield',
-												fieldLabel: 'Times to Perform',
-												value     : 0,
-												minValue  : 0,
-												name      : 'times',
-												tooltip   : 'Please enter a number greater than 1 or just check "Perform once"'
-
-											},
-											{
-												boxLabel: 'perform only once',
-												xtype   : 'checkboxfield',
-												margin  : '0 0 10 125',
-												name    : 'perform'
-
-											}
-										]
-									},{
-										title   : 'Active Problems',
-										xtype  : 'grid',
-										itemId : 'patientSurgeryListGrid',
-										columns: [
-											{
-												header   : 'Type',
-												width    : 100,
-												dataIndex: 'type'
-											},
-											{
-												header   : 'Diagnosis Code',
-												width    : 100,
-												dataIndex: 'diagnosis_code'
 											}
 
+
 										]
-									},{
-										title   : 'general',
-										xtype   : 'container',
-										defaults: { margin: '0 0 10 10'},
+
+									},
+									{
+										xtype   : 'fieldcontainer',
+										defaults: { margin: '5 0 5 20'},
+										width   : 450,
 										items   : [
 											{
-												xtype     : 'textfield',
-												fieldLabel: 'Immunization Name',
-												name      : 'immunization_name'
-
-											},
-											{
-												xtype     : 'textfield',
-												fieldLabel: 'Sex',
-												name      : 'sex'
-
-											},
-											{
-												boxLabel: 'Must be pregnant',
-												xtype   : 'checkboxfield',
-												margin  : '0 0 10 120',
-												name    : 'pregnant'
-
-											},
-											{
-												xtype     : 'textfield',
-												fieldLabel: 'Coding System',
-												name      : 'coding_system'
-
-											},
-											{
-												xtype     : 'textfield',
-												fieldLabel: 'Code',
-												name      : 'code'
-
-											},
-											{
-											xtype:'container',
-											layout:'hbox',
-											items:
-												[
+												xtype : 'container',
+												layout: 'hbox',
+												items : [
 													{
 														xtype     : 'numberfield',
 														fieldLabel: 'Frequency',
+
 														value     : 0,
 														minValue  : 0,
 														name      : 'frequency'
 
-													},{
-														xtype     : 'mitos.timecombo',
-														name      : 'frequency',
-													  defaultValue:'Month'
+													},
+													{
+														xtype: 'mitos.timecombo',
+														name : 'frequency'
+
 
 													}
 												]
@@ -229,6 +140,7 @@ Ext.define('App.view.administration.Services', {
 											{
 												xtype     : 'numberfield',
 												fieldLabel: 'Times to Perform',
+
 												value     : 0,
 												minValue  : 0,
 												name      : 'times',
@@ -238,78 +150,255 @@ Ext.define('App.view.administration.Services', {
 											{
 												boxLabel: 'perform only once',
 												xtype   : 'checkboxfield',
-												margin  : '0 0 10 125',
+												margin  : '5 0 0 115',
 												name    : 'perform'
 
 											}
 										]
+									},
+									{
+										xtype   : 'fieldcontainer',
+										defaults: { margin: '0 0 10 10'},
+										items   : [
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Sex',
+												name      : 'sex',
+												labelWidth: 25
+
+											},
+											{
+												boxLabel: 'Must be pregnant',
+												xtype   : 'checkboxfield',
+												margin  : '0 0 0 45',
+												name    : 'pregnant'
+
+											}
+
+
+										]
+									}
+
+
+								]
+							},
+							{
+								title  : 'Active Problems',
+								xtype  : 'grid',
+								width  : 300,
+								columns: [
+									{
+										header   : 'Code',
+										flex     : 1,
+										dataIndex: 'code'
+									},
+									{
+										header   : 'Name',
+										flex     : 1,
+										dataIndex: 'name'
+									}
+
+								]
+							},
+							{
+								title  : 'Medications',
+								xtype  : 'grid',
+								width  : 300,
+								columns: [
+									{
+										header   : 'Name',
+										flex     : 1,
+										dataIndex: 'name'
+									}
+								]
+							},
+							{
+								title  : 'Labs',
+								xtype  : 'grid',
+								width  : 300,
+								columns: [
+									{
+										header   : 'Value Name',
+										flex     : 1,
+										dataIndex: 'value_name'
+									},
+									{
+										header   : 'Less Than',
+										flex     : 1,
+										dataIndex: 'less_than'
+									},
+									{
+										header   : 'Greater Than',
+										flex     : 1,
+										dataIndex: 'greater_than'
+									},
+									{
+										header   : 'Equal To',
+										flex     : 1,
+										dataIndex: 'equal_to'
+									}
+
+								]
+							}
+
+						]
+
+
+					},
+					{
+						xtype   : 'container',
+						layout: 'column',
+						items : [
+
+							{
+								xtype    : 'fieldcontainer',
+								msgTarget: 'under',
+								items    : [
+									{
+
+										fieldLabel: 'Type',
+										xtype: 'mitos.codestypescombo',
+										name: 'code_type'
+									},
+									{
+
+										fieldLabel: 'Code',
+										xtype: 'textfield',
+										name: 'code'
+									},
+									{
+
+										fieldLabel: 'Modifier',
+										xtype: 'textfield',
+										name: 'mod'
+									}
+
+								]
+							},
+							{
+								xtype    : 'fieldcontainer',
+								margin:'0 0 0 10',
+								items    : [
+									{
+
+										fieldLabel: 'Description',
+										xtype: 'textfield',
+										name: 'code_text'
+									},
+									{
+										fieldLabel: 'Category',
+										xtype: 'mitos.titlescombo',
+										name: 'title'
+									}
+								]
+							},
+							{
+								xtype    : 'fieldcontainer',
+								margin:'0 0 0 20',
+								items    : [
+
+									{
+
+										boxLabel: 'Reportable?',
+										xtype: 'checkboxfield',
+										name: 'reportable'
+
+									}
+									,
+									{
+
+										boxLabel: 'Active?',
+										labelWidth: 75,
+										xtype: 'checkboxfield',
+										name: 'active'
+
+
 									}
 								]
 							}
-						]
-
-					},
-					{ xtype   : 'container',
-						hidden: true,
-						layout: 'column',
-						items : [
-
-							{
-								xtype    : 'fieldcontainer',
-								defaults : { labelWidth: 70 },
-								msgTarget: 'under',
-								items    : [
-									{ width: 200, fieldLabel: 'Type', xtype: 'mitos.codestypescombo', name: 'code_type' },
-									{ width: 155, fieldLabel: 'Code', xtype: 'textfield', name: 'code', labelWidth: 40 },
-									{ width: 200, fieldLabel: 'Modifier', xtype: 'textfield', name: 'mod' },
-									{ width: 280, fieldLabel: 'Active?', xtype: 'mitos.checkbox', name: 'active' }
-								]
-							},
-							{
-								xtype    : 'fieldcontainer',
-								defaults : { labelWidth: 70 },
-								msgTarget: 'under',
-								items    : [
-									{ width: 380, fieldLabel: 'Description', xtype: 'textfield', name: 'code_text' },
-									{ width: 200, fieldLabel: 'Category', xtype: 'mitos.titlescombo', name: 'title' },
-									// placeholder
-									{ width: 200, fieldLabel: 'Reportable?', xtype: 'mitos.checkbox', name: 'reportable' }
-								]
-							}
 
 
 						]
 
 					},
-					{ xtype   : 'container',
+					{
+						xtype   : 'container',
 						layout: 'column',
-						hidden: true,
+						hidden:true,
 						items : [
+
 							{
 								xtype    : 'fieldcontainer',
-								defaults : { labelWidth: 70 },
 								msgTarget: 'under',
 								items    : [
-									{ width: 200, fieldLabel: 'Type', xtype: 'mitos.codestypescombo', name: 'code_type' },
-									{ width: 155, fieldLabel: 'Code', xtype: 'textfield', name: 'code', labelWidth: 40 },
-									{ width: 200, fieldLabel: 'Modifier', xtype: 'textfield', name: 'mod' },
-									{ width: 280, fieldLabel: 'Active?', xtype: 'mitos.checkbox', name: 'active' }
+									{
+
+										fieldLabel: 'Type',
+										xtype: 'mitos.codestypescombo',
+										name: 'code_type'
+									},
+									{
+
+										fieldLabel: 'Code',
+										xtype: 'textfield',
+										name: 'code'
+									},
+									{
+
+										fieldLabel: 'Modifier',
+										xtype: 'textfield',
+										name: 'mod'
+									}
+
 								]
 							},
 							{
 								xtype    : 'fieldcontainer',
-								defaults : { labelWidth: 70 },
-								msgTarget: 'under',
+								margin:'0 0 0 10',
 								items    : [
-									{ width: 380, fieldLabel: 'Description', xtype: 'textfield', name: 'code_text' },
-									{ width: 200, fieldLabel: 'Category', xtype: 'mitos.titlescombo', name: 'title' },
-									// placeholder
-									{ width: 200, fieldLabel: 'Reportable?', xtype: 'mitos.checkbox', name: 'reportable' }
+									{
+
+										fieldLabel: 'Description',
+										xtype: 'textfield',
+										name: 'code_text'
+									},
+									{
+										fieldLabel: 'Category',
+										xtype: 'mitos.titlescombo',
+										name: 'title'
+									}
+								]
+							},
+							{
+								xtype    : 'fieldcontainer',
+								margin:'0 0 0 20',
+								items    : [
+
+									{
+
+										boxLabel: 'Reportable?',
+										xtype: 'checkboxfield',
+										name: 'reportable'
+
+									}
+									,
+									{
+
+										boxLabel: 'Active?',
+										labelWidth: 75,
+										xtype: 'checkboxfield',
+										name: 'active'
+
+
+									}
 								]
 							}
+
+
 						]
 
 					}
+
 				]
 			}),
 
