@@ -33,11 +33,11 @@ class Services {
         /*
          * define $code_table
          */
-        if($params->code_type == 'cpt'){
+        if($params->code_type == 'cpt' || $params->code_type == 1){
             $code_table = 'cpt_codes';
-        }elseif($params->code_type == 'icd'){
+        }elseif($params->code_type == 'icd' || $params->code_type == 2){
             $code_table = 'icd_codes';
-        }elseif($params->code_type == 'hcpcs'){
+        }elseif($params->code_type == 'hcpcs' || $params->code_type == 3){
             $code_table = 'hcpcs_codes';
         }else{
             $code_table = 'cvx_codes';

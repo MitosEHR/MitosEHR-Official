@@ -27,7 +27,7 @@ Ext.define('App.view.administration.Services', {
 
 		me.active = 1;
 		me.query = '';
-		me.code_type = 'all'
+        me.code_type = '2';
 
 		Ext.define('ServiceModel', {
 			extend: 'Ext.data.Model',
@@ -36,7 +36,7 @@ Ext.define('App.view.administration.Services', {
 				{name: 'code_text', type: 'string'},
 				{name: 'code_text_short', type: 'string'},
 				{name: 'code', type: 'string'},
-				{name: 'code_type', type: 'int'},
+				{name: 'code_type', type: 'string'},
 				{name: 'modifier', type: 'string'},
 				{name: 'units', type: 'string'},
 				{name: 'fee', type: 'int'},
@@ -80,6 +80,8 @@ Ext.define('App.view.administration.Services', {
 				return 'ICD9';
 			} else if(val == '3') {
 				return 'HCPCS';
+			} else if(val == '100') {
+				return 'CVX';
 			}
 			return val;
 		}
@@ -344,6 +346,8 @@ Ext.define('App.view.administration.Services', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
+        this.servicesGrid.query('combobox')[0].setValue("2");
+        this.store.proxy.extraParams = {active: this.active, code_type: this.code_type, query: this.query};
 		this.store.load();
 		callback(true);
 	}
