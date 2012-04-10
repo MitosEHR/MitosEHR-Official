@@ -28,13 +28,29 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		me.ImmuListStore = Ext.create('App.store.patientfile.Immunization');
 		me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization', {
 			groupField: 'immunization_name',
-			sorters   : ['immunization_name', 'administered_date']
+			sorters   : ['immunization_name', 'administered_date'],
+			autoSync:true
 		});
-		me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
-		me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues');
-		me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
-		me.patientDentalStore = Ext.create('App.store.patientfile.Dental');
-		me.patientMedicationsStore = Ext.create('App.store.patientfile.Medications');
+		me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies',{
+
+			autoSync:true
+		});
+		me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues',{
+
+			autoSync:true
+		});
+		me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery',{
+
+			autoSync:true
+		});
+		me.patientDentalStore = Ext.create('App.store.patientfile.Dental',{
+
+			autoSync:true
+		});
+		me.patientMedicationsStore = Ext.create('App.store.patientfile.Medications',{
+
+			autoSync:true
+		});
 
 		me.items = [
 			{
