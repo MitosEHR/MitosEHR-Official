@@ -114,6 +114,8 @@ class authProcedures {
 
             $_SESSION['lang']['code']       = $params->lang;
 
+            $_SESSION['site']['checkInMode']  = $params->checkInMode;
+
             return array('success'=>true);
         }
     }

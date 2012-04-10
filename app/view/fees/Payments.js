@@ -20,102 +20,98 @@ Ext.define('App.view.fees.Payments', {
 
         me.encountersStore = Ext.create('App.store.fees.EncountersPayments');
 
-        me.forms = Ext.create('Ext.container.Container',{
-            layout: 'card',
-            region: 'north',
+        me.forms = Ext.create('Ext.container.Container', {
+            layout:'card',
+            region:'north',
             defaults:{ buttonAlign:'left'},
             items:[
                 {
-                    xtype: 'form',
-                    height: 180,
-                    defaults:{ height: 140, margin: 5 },
+                    xtype:'form',
+                    height:145,
+                    bodyPadding:10,
+                    border:true,
+                    bodyStyle:'background-color:transparent',
+                    margin:'0 0 5 0',
                     items:[
                         {
-                            xtype: 'fieldset',
-                            anchor: '100%',
-                            style: 'background-color:#DFE8F6',
+                            xtype:'fieldcontainer',
+                            layout:'hbox',
                             items:[
                                 {
-                                    xtype: 'fieldcontainer',
-                                    layout: 'hbox',
-                                    items:[
-                                        {
-                                            fieldLabel: 'Paying Entity',
-                                            xtype: 'mitos.payingentitycombo',
-                                            labelWidth: 95,
-                                            width: 230
-                                        },
-                                        {
-                                            xtype: 'patienlivetsearch',
-                                            fieldLabel: 'From',
-                                            hideLabel: false,
-                                            itemId: 'patientFrom',
-                                            name: 'from',
-                                            anchor: null,
-                                            labelWidth: 42,
-                                            width: 470,
-                                            margin: '0 0 0 25'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            fieldLabel: 'No',
-                                            name: 'transaction_number',
-                                            labelWidth: 45,
-                                            width: 230,
-                                            labelAlign: 'right',
-                                            margin: '0 0 0 25',
-                                            fieldStyle: 'text-align: right;'
-                                        }
+                                    fieldLabel:'Paying Entity',
+                                    xtype:'mitos.payingentitycombo',
+                                    labelWidth:95,
+                                    width:230
+                                },
+                                {
+                                    xtype:'patienlivetsearch',
+                                    fieldLabel:'From',
+                                    hideLabel:false,
+                                    itemId:'patientFrom',
+                                    name:'from',
+                                    anchor:null,
+                                    labelWidth:42,
+                                    width:470,
+                                    margin:'0 0 0 25'
+                                },
+                                {
+                                    xtype:'textfield',
+                                    fieldLabel:'No',
+                                    name:'transaction_number',
+                                    labelWidth:45,
+                                    width:230,
+                                    labelAlign:'right',
+                                    margin:'0 0 0 25',
+                                    fieldStyle:'text-align: right;'
+                                }
 
-                                    ]
+                            ]
+                        },
+                        {
+                            xtype:'fieldcontainer',
+                            layout:'hbox',
+                            items:[
+                                {
+                                    fieldLabel:'Payment Method',
+                                    xtype:'mitos.paymentmethodcombo',
+                                    labelWidth:95,
+                                    width:230
                                 },
                                 {
-                                    xtype: 'fieldcontainer',
-                                    layout: 'hbox',
-                                    items:[
-                                        {
-                                            fieldLabel: 'Payment Method',
-                                            xtype: 'mitos.paymentmethodcombo',
-                                            labelWidth:95,
-                                            width:230
-                                        },
-                                        {
-                                            xtype: 'mitos.billingfacilitiescombo',
-                                            fieldLabel: 'Pay To',
-                                            labelWidth: 42,
-                                            width: 470,
-                                            margin: '0 0 0 25'
-                                        },
-                                        {
-                                            xtype: 'mitos.currency',
-                                            fieldLabel: 'Amount',
-                                            name: 'amount',
-                                            labelWidth: 45,
-                                            width: 230,
-                                            labelAlign: 'right',
-                                            margin: '0 0 0 25',
-                                            enableKeyEvents: true
-                                        }
-                                    ]
+                                    xtype:'mitos.billingfacilitiescombo',
+                                    fieldLabel:'Pay To',
+                                    labelWidth:42,
+                                    width:470,
+                                    margin:'0 0 0 25'
                                 },
                                 {
-                                    xtype: 'fieldcontainer',
-                                    layout: 'hbox',
-                                    items:[
-                                        {
-                                            fieldLabel: 'From',
-                                            xtype: 'datefield',
-                                            labelWidth: 95,
-                                            width: 230
-                                        },
-                                        {
-                                            fieldLabel: 'To',
-                                            xtype: 'datefield',
-                                            margin: '0 0 0 25',
-                                            labelWidth: 42,
-                                            width: 230
-                                        }
-                                    ]
+                                    xtype:'mitos.currency',
+                                    fieldLabel:'Amount',
+                                    name:'amount',
+                                    labelWidth:45,
+                                    width:230,
+                                    labelAlign:'right',
+                                    margin:'0 0 0 25',
+                                    enableKeyEvents:true
+                                }
+                            ]
+                        },
+                        {
+                            xtype:'fieldcontainer',
+                            layout:'hbox',
+                            items:[
+                                {
+                                    fieldLabel:'From',
+                                    xtype:'datefield',
+                                    labelWidth:95,
+                                    width:230
+                                },
+                                {
+                                    fieldLabel:'To',
+                                    xtype:'datefield',
+                                    margin:'0 0 0 25',
+                                    labelWidth:42,
+                                    width:230
                                 }
                             ]
                         }
@@ -170,123 +166,122 @@ Ext.define('App.view.fees.Payments', {
             ]
         });
 
-        me.window =  Ext.create('Ext.window.Window',{
+        me.window = Ext.create('Ext.window.Window', {
             title:'Add New Payment',
             closeAction:'hide',
-            height:300,
-            width:1028,
             modal:true,
             items:[
                 {
-                    xtype: 'form',
-                    height: 180,
-                    defaults:{ height: 140, margin: 5 },
+                    xtype:'form',
+                    //height:190,
+                    defaults:{ margin:5 },
+                    border:false,
                     items:[
                         {
-                            xtype: 'fieldset',
-                            anchor: '100%',
-                            style: 'background-color:#DFE8F6',
+                            xtype:'fieldset',
+                            anchor:'100%',
+                            style:'background-color:#DFE8F6',
                             items:[
                                 {
-                                    xtype: 'fieldcontainer',
-                                    layout: 'hbox',
+                                    xtype:'fieldcontainer',
+                                    layout:'hbox',
                                     items:[
                                         {
-                                            fieldLabel: 'Paying Entity',
-                                            xtype: 'mitos.payingentitycombo',
-                                            labelWidth: 95,
-                                            width: 230
-                                        },
-                                        {
-                                            xtype: 'patienlivetsearch',
-                                            fieldLabel: 'From',
-                                            hideLabel: false,
-                                            itemId: 'patientFrom',
-                                            name: 'from',
-                                            anchor: null,
-                                            labelWidth: 42,
-                                            width: 470,
-                                            margin: '0 0 0 25'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            fieldLabel: 'No',
-                                            name: 'transaction_number',
-                                            labelWidth: 45,
-                                            width: 230,
-                                            labelAlign: 'right',
-                                            margin: '0 0 0 25',
-                                            fieldStyle: 'text-align: right;'
-                                        }
-
-                                    ]
-                                },
-                                {
-                                    xtype: 'fieldcontainer',
-                                    layout: 'hbox',
-                                    items:[
-                                        {
-                                            fieldLabel: 'Payment Method',
-                                            xtype: 'mitos.paymentmethodcombo',
-                                            labelWidth: 95,
+                                            fieldLabel:'Paying Entity',
+                                            xtype:'mitos.payingentitycombo',
+                                            labelWidth:95,
                                             width:230
                                         },
                                         {
-                                            xtype: 'mitos.billingfacilitiescombo',
-                                            fieldLabel: 'Pay To',
-                                            labelWidth: 42,
-                                            width: 470,
-                                            margin: '0 0 0 25'
+                                            xtype:'patienlivetsearch',
+                                            fieldLabel:'From',
+                                            hideLabel:false,
+                                            itemId:'patientFrom',
+                                            name:'from',
+                                            anchor:null,
+                                            labelWidth:42,
+                                            width:470,
+                                            margin:'0 0 0 25'
                                         },
                                         {
-                                            xtype: 'mitos.currency',
-                                            fieldLabel: 'Amount',
-                                            name: 'amount',
-                                            labelWidth: 45,
-                                            width: 230,
-                                            labelAlign: 'right',
-                                            margin: '0 0 0 25',
-                                            enableKeyEvents: true
+                                            xtype:'textfield',
+                                            fieldLabel:'No',
+                                            name:'transaction_number',
+                                            labelWidth:45,
+                                            width:230,
+                                            labelAlign:'right',
+                                            margin:'0 0 0 25',
+                                            fieldStyle:'text-align: right;'
                                         }
+
                                     ]
                                 },
                                 {
-                                    xtype: 'fieldcontainer',
-                                    layout: 'hbox',
+                                    xtype:'fieldcontainer',
+                                    layout:'hbox',
                                     items:[
                                         {
-                                            fieldLabel: 'From',
-                                            xtype: 'datefield',
-                                            labelWidth: 95,
-                                            width: 230
+                                            fieldLabel:'Payment Method',
+                                            xtype:'mitos.paymentmethodcombo',
+                                            labelWidth:95,
+                                            width:230
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            fieldLabel: 'Notes',
-                                            labelWidth: 42,
-                                            width: 725,
-                                            margin: '0 0 0 25'
+                                            xtype:'mitos.billingfacilitiescombo',
+                                            fieldLabel:'Pay To',
+                                            labelWidth:42,
+                                            width:470,
+                                            margin:'0 0 0 25'
+                                        },
+                                        {
+                                            xtype:'mitos.currency',
+                                            fieldLabel:'Amount',
+                                            name:'amount',
+                                            labelWidth:45,
+                                            width:230,
+                                            labelAlign:'right',
+                                            margin:'0 0 0 25',
+                                            enableKeyEvents:true
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype:'fieldcontainer',
+                                    layout:'hbox',
+                                    items:[
+                                        {
+                                            fieldLabel:'From',
+                                            xtype:'datefield',
+                                            labelWidth:95,
+                                            width:230
+                                        },
+                                        {
+                                            xtype:'textfield',
+                                            fieldLabel:'Notes',
+                                            labelWidth:42,
+                                            width:725,
+                                            margin:'0 0 0 25'
                                         }
 
 
                                     ]
                                 },
                                 {
-                                    fieldLabel: 'To',
-                                    xtype: 'datefield',
-                                    labelWidth: 95,
-                                    width: 230
+                                    fieldLabel:'To',
+                                    xtype:'datefield',
+                                    labelWidth:95,
+                                    width:230
                                 }
                             ]
                         }
                     ],
-                    bbar:[
+                    buttons:[
                         {
-                            text:'Search'
+                            text:'Save'
                         },
                         '-',
                         {
-                            text:'Reset'
+                            text:'Cancel'
                         }
                     ]
                 }
@@ -295,7 +290,7 @@ Ext.define('App.view.fees.Payments', {
 
         me.listeners = {
             scope:me,
-            beforerender:function(){
+            beforerender:function () {
                 me.getPageBody().addDocked({
                     xtype:'toolbar',
                     items:[
@@ -309,12 +304,12 @@ Ext.define('App.view.fees.Payments', {
                         },
                         '-',
                         {
-                            text:'Payment Details'//,
-                            //action:'details',
-                            //enableToggle:true,
-                            //toggleGroup:'payment',
-                            //scope:me,
-                           // handler:me.onBtnClick
+                            text:'Payment Details',
+                            action:'details',
+                            enableToggle:true,
+                            toggleGroup:'payment',
+                            scope:me,
+                            handler:me.onBtnClick
                         },
                         '->',
                         {
@@ -332,20 +327,18 @@ Ext.define('App.view.fees.Payments', {
         me.callParent(arguments);
     },
 
-    beforeCptEdit:function(editor, e){
-        say(editor.editor);
-        say(e.record.data);
+    beforeCptEdit:function (editor, e) {
         this.addCptFields(editor.editor, e.record.data)
     },
 
 
-    addCptFields:function(editor, cpts){
+    addCptFields:function (editor, cpts) {
 
         editor.removeAll();
 
         var testData = this.testData();
 
-        Ext.each(testData, function(cpt){
+        Ext.each(testData, function (cpt) {
             editor.add({
                 xtype:'fieldcontainer',
                 layout:'hbox',
@@ -355,101 +348,100 @@ Ext.define('App.view.fees.Payments', {
                         width:100,
                         name:'code',
                         readOnly:true,
-                        margin: '0 5 0 10'
+                        margin:'0 5 0 10'
                     },
                     {
                         xtype:'textfield',
                         name:'copay',
                         readOnly:true,
                         width:400,
-                        margin: '0 5 0 5'
+                        margin:'0 5 0 5'
                     },
                     {
                         xtype:'mitos.currency',
                         name:'remaining',
                         readOnly:true,
                         width:100,
-                        margin: '0 5 0 5'
+                        margin:'0 5 0 5'
                     },
                     {
                         xtype:'mitos.currency',
                         name:'allowed',
                         readOnly:true,
                         width:100,
-                        margin: '0 5 0 5'
+                        margin:'0 5 0 5'
                     },
                     {
                         xtype:'mitos.currency',
                         name:'payment',
                         readOnly:true,
                         width:100,
-                        margin: '0 5 0 5'
+                        margin:'0 5 0 5'
                     },
                     {
                         xtype:'mitos.currency',
                         name:'deductible',
                         readOnly:true,
                         width:100,
-                        margin: '0 5 0 5'
+                        margin:'0 5 0 5'
                     },
                     {
                         xtype:'mitos.currency',
                         name:'takeback',
                         readOnly:true,
                         width:100,
-                        margin: '0 5 0 5'
+                        margin:'0 5 0 5'
                     },
                     {
                         xtype:'checkbox',
                         name:'takeback',
                         readOnly:true,
                         width:50,
-                        margin: '0 5 0 5'
+                        margin:'0 5 0 5'
                     },
                     {
                         xtype:'textfield',
                         name:'takeback',
                         readOnly:true,
                         width:100,
-                        margin: '0 5 0 5'
+                        margin:'0 5 0 5'
                     }
                 ]
             })
         });
     },
 
-    testData:function(){
+    testData:function () {
         var data = [],
-            p = (Math.random() *  4) + 1,
             i;
 
-        floor = Math.floor((Math.random()*6)+1);
+        floor = Math.floor((Math.random() * 6) + 1);
 
         for (i = 0; i < floor; i++) {
             data.push({
-                data1: Math.floor(Math.max((Math.random() * 100), floor)),
-                data2: Math.floor(Math.max((Math.random() * 100), floor)),
-                data3: Math.floor(Math.max((Math.random() * 100), floor)),
-                data4: Math.floor(Math.max((Math.random() * 100), floor)),
-                data5: Math.floor(Math.max((Math.random() * 100), floor)),
-                data6: Math.floor(Math.max((Math.random() * 100), floor)),
-                data7: Math.floor(Math.max((Math.random() * 100), floor)),
-                data8: Math.floor(Math.max((Math.random() * 100), floor)),
-                data9: Math.floor(Math.max((Math.random() * 100), floor))
+                data1:Math.floor(Math.max((Math.random() * 100), floor)),
+                data2:Math.floor(Math.max((Math.random() * 100), floor)),
+                data3:Math.floor(Math.max((Math.random() * 100), floor)),
+                data4:Math.floor(Math.max((Math.random() * 100), floor)),
+                data5:Math.floor(Math.max((Math.random() * 100), floor)),
+                data6:Math.floor(Math.max((Math.random() * 100), floor)),
+                data7:Math.floor(Math.max((Math.random() * 100), floor)),
+                data8:Math.floor(Math.max((Math.random() * 100), floor)),
+                data9:Math.floor(Math.max((Math.random() * 100), floor))
             });
         }
         return data;
     },
 
 
-    onBtnClick:function(btn){
+    onBtnClick:function (btn) {
         var me = this;
 
-        if(btn.action == 'search'){
+        if (btn.action == 'search') {
             me.forms.getLayout().setActiveItem(0);
-        }else if(btn.action == 'details'){
+        } else if (btn.action == 'details') {
             me.forms.getLayout().setActiveItem(1);
-        }else if(btn.action == 'new'){
+        } else if (btn.action == 'new') {
             me.window.show();
         }
     },

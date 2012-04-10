@@ -5,16 +5,14 @@
 
 	var gCtx = null;
 	var gCanvas = null;
-
 	var imageData = null;
-	var ii=0;
-	var jj=0;
 	var c=0;
+    var stype=0;
+
 
 	function pageLoad() { 
 		initCanvas(320,240);
 	} 
-
 
 	function initCanvas(ww,hh)
 	{
@@ -47,15 +45,23 @@
 			c+=4;
 		} 
 
-		if(c>=320*240*4) { 
-			c=0;
-      			gCtx.putImageData(imageData, 0,0);
-		} 
+        if(c>=320*240*4) {
+            c=0;
+            gCtx.putImageData(imageData, 0,0);
+            try{
+                qrcode.decode();
+            }
+            catch(e){
+                console.log(e);
+                setTimeout(captureToCanvas, 500);
+            }
+        }
  	} 
 
         function captureToCanvas() {
-		flash = document.getElementById("embedflash");
-		flash.ccCapture();
+            flash = document.getElementById("embedflash");
+            if(!flash) return;
+            flash.ccCapture();
         }
 
  </script>
