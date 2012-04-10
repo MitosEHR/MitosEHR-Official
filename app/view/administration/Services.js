@@ -16,7 +16,6 @@ Ext.define('App.view.administration.Services', {
 	extend       : 'App.classes.RenderPanel',
 	id           : 'panelServices',
 	pageTitle    : 'Services',
-	pageLayout   : 'border',
 	uses         : [
 		'App.classes.GridPanel',
 		'App.classes.combo.CodesTypes',
@@ -78,8 +77,9 @@ Ext.define('App.view.administration.Services', {
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor: '80%' },
 						items        : [
 							{
-								xtype: 'container',
+								xtype: 'tabpanel',
 								items: [
+
 									{
 										fieldLabel     : 'Immunization Name',
 										name           : 'immunization_name'
@@ -230,12 +230,6 @@ Ext.define('App.view.administration.Services', {
 			}),
 
 
-			listeners: {
-				scope    : me,
-				itemclick: function(view, record) {
-					me.onItemclick(me.store, record, 'Edit Service');
-				}
-			},
 			tbar     : Ext.create('Ext.PagingToolbar', {
 				store      : me.store,
 				displayInfo: true,
@@ -270,112 +264,10 @@ Ext.define('App.view.administration.Services', {
 			})
 		}); // END GRID
 
-		me.servicesFormPanel = Ext.create('Ext.form.FormPanel', {
-			title        : 'Add Service',
-			region       : 'north',
-			collapsible  : true,
-			collapsed    : true,
-			titleCollapse: true,
-			animCollapse : false,
-			collapseMode : 'header',
-			height       : 150,
-			margin       : '0 0 3 0',
-			layout       : 'anchor',
-			bodyBorder   : true,
-			bodyPadding  : '10 10 0 10',
-			listeners    : {
-				collapse: function() {
-					me.action('close');
-				},
-				expand  : function() {
-					me.onNew(this, 'ServiceModel');
-				}
-			},
-			defaults     : {
-				labelWidth: 50,
-				anchor    : '100%',
-				layout    : {
-					type          : 'hbox',
-					defaultMargins: {top: 0, right: 25, bottom: 0, left: 0}
-				}
-			},
-			items        : [
-				{
-					xtype: 'textfield', hidden: true, name: 'id'
-				},
-				{
-					xtype    : 'fieldcontainer',
-					defaults : { labelWidth: 70 },
-					msgTarget: 'under',
-					items    : [
-						{ width: 200, fieldLabel: 'Type', xtype: 'mitos.codestypescombo', name: 'code_type' },
-						{ width: 155, fieldLabel: 'Code', xtype: 'textfield', name: 'code', labelWidth: 40 },
-						{ width: 200, fieldLabel: 'Modifier', xtype: 'textfield', name: 'mod' },
-						{ width: 280, fieldLabel: 'Active?', xtype: 'mitos.checkbox', name: 'active' }
-					]
-				},
-				{
-					xtype    : 'fieldcontainer',
-					defaults : { labelWidth: 70 },
-					msgTarget: 'under',
-					items    : [
-						{ width: 380, fieldLabel: 'Description', xtype: 'textfield', name: 'code_text' },
-						{ width: 200, fieldLabel: 'Category', xtype: 'mitos.titlescombo', name: 'title' },
-						// placeholder
-						{ width: 200, fieldLabel: 'Reportable?', xtype: 'mitos.checkbox', name: 'reportable' }
-					]
-				},
-				{
-					xtype    : 'fieldcontainer',
-					defaults : { labelWidth: 70 },
-					msgTarget: 'under',
-					items    : [
-						//<?php include_once ($_SESSION['site']['root']."/app/administration/services/fees_taxes.ejs.php") ?>
-					]
-				}
-			],
-			dockedItems  : [
-				{
-					xtype: 'toolbar',
-					dock : 'bottom',
-					items: [
-						{
-							text   : 'Save',
-							iconCls: 'save',
-							handler: function() {
-								me.onSave(me.servicesFormPanel, me.store);
-							}
-						},
-						'-',
-						{
-							text   : 'Reset / New',
-							handler: function() {
-								me.onNew(me.servicesFormPanel, 'ModelService');
-							}
-						},
-						'-',
-						{
-							text   : 'Close / Cancel',
-							handler: function() {
-								var formPanel = this.up('form'),
-									form = formPanel.getForm();
-								formPanel.collapse();
-								form.reset();
-							}
-						},
-						'->',
-						{
-							text    : 'Not all fields are required for all codes or code types.',
-							disabled: true
-
-						}
-					]
-				}
-			]
-		});
 
 
-		me.pageBody = [ me.servicesFormPanel, me.servicesGrid ];
+
+		me.pageBody = [ me.servicesGrid ];
 		me.callParent(arguments);
 	}, // end of initComponent
 
@@ -408,60 +300,13 @@ Ext.define('App.view.administration.Services', {
 	},
 
 	onNew: function(form, model) {
-		form.getForm().reset();
-		var newModel = Ext.ModelManager.create({}, model);
-		form.getForm().loadRecord(newModel);
+//		form.getForm().reset();
+//		var newModel = Ext.ModelManager.create({}, model);
+//		form.getForm().loadRecord(newModel);
 	},
 
-	onSave: function(panel, store) {
-		var form = panel.getForm(),
-			record = form.getRecord(),
-			values = form.getValues(),
-			storeIndex = store.indexOf(record);
-		if(storeIndex == -1) {
-			store.add(values);
-		} else {
-			record.set(values);
-		}
-		store.sync();
-		store.load();
-		store.on('load', function() {
-			panel.collapse();
-		});
-	},
 
-	onDelete: function(form, store) {
-		Ext.Msg.show({
-			title  : 'Please confirm...',
-			icon   : Ext.MessageBox.QUESTION,
-			msg    : 'Are you sure to delete this record?',
-			buttons: Ext.Msg.YESNO,
-			scope  : this,
-			fn     : function(btn) {
-				if(btn == 'yes') {
-					var currentRec = form.getRecord();
-					store.remove(currentRec);
-					store.destroy();
-					this.servicesFormPanel.collapse();
-				}
-			}
-		});
-	},
 
-	onItemclick: function(store, record) {
-		var form = this.servicesFormPanel;
-		form.expand();
-		form.setTitle('Edit Service');
-		form.getForm().loadRecord(record);
-	},
-
-	action  : function(action) {
-		var formPanel = this.servicesFormPanel;
-
-		if(action == 'close') {
-			formPanel.setTitle('Add Service');
-		}
-	},
 	/**
 	 * This function is called from MitosAPP.js when
 	 * this panel is selected in the navigation panel.
