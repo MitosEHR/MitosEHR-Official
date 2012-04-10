@@ -91,18 +91,19 @@ Ext.define('App.view.administration.Services', {
 
 									},
 									{
-										fieldLabel: '',
-										name      : ''
+										boxLabel: 'Must be pregnant',
+										xtype: 'checkboxfield',
+										name      : 'pregnant'
 
 									},
 									{
-										fieldLabel: 'Immunization Manufacturer',
-										name      : 'manufacturer'
+										fieldLabel: 'Coding System',
+										name      : 'coding_system'
 
 									},
 									{
-										fieldLabel: 'Immunization Lot Number',
-										name      : 'lot_number'
+										fieldLabel: 'Code',
+										name      : 'code'
 
 									}
 								]
