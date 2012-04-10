@@ -12,7 +12,7 @@ Ext.define('App.classes.LivePatientSearch', {
 	extend       : 'Ext.form.ComboBox',
 	alias        : 'widget.patienlivetsearch',
 	hideLabel    : true,
-    anchor      : '100%',
+
 	initComponent: function() {
 		var me = this;
 

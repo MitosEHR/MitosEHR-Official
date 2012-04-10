@@ -253,11 +253,11 @@ Ext.define('App.view.MitosApp', {
 					bodyPadding: '8 11 5 11',
 					margin     : '0 0 0 3',
 					style      : 'float:left',
-					layout     : 'anchor',
 					items      : [
 						{
 							xtype    : 'patienlivetsearch',
 							emptyText: 'Patient Live Search...',
+                            fieldStyle:'width:230',
 							listeners: {
 								scope : me,
 								select: me.liveSearchSelect,
