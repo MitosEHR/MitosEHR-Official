@@ -367,7 +367,7 @@ Ext.define('App.view.MitosApp', {
 				{
 					xtype      : 'panel',
 					title      : lang.patientPoolArea,
-					layout     : 'vbox',
+					layout     : 'fit',
 					region     : 'south',
 					itemId     : 'patientPoolArea',
 					bodyPadding: 5,
@@ -382,6 +382,7 @@ Ext.define('App.view.MitosApp', {
 							loadMask         : false,
 							cls              : 'patient-pool-view',
 							tpl              : '<tpl for=".">' +
+
 								'<div class="patient-pool-btn x-btn x-btn-default-large">' +
 								'<div class="patient_btn_img"><img src="ui_icons/user_32.png"></div>' +
 								'<div class="patient_btn_info">' +
@@ -876,11 +877,7 @@ Ext.define('App.view.MitosApp', {
 			'<div class="patient_btn_name">{name}</div>',
 			'<div class="patient_btn_record">( {pid} )</div>',
 			'</div>',
-			'</div>', {
-				defaultValue: function(v) {
-					return (v) ? v : 'No Patient Selected';
-				}
-			});
+			'</div>');
 	},
 
     patientBtnRender:function(btn){

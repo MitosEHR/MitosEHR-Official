@@ -245,8 +245,10 @@ cursor: pointer !important;
     color: #666666;
 }
 .patient-pool-btn{
-    width: 100%;
     margin-bottom: 3px;
+    float:none;
+    min-width: 188px;
+    border-width:1px 1px 1px 1px;
 }
 .patient-pool-btn-small{
 
