@@ -94,9 +94,9 @@ Ext.define('App.view.administration.Services', {
 		}
 
 		me.servicesGrid = Ext.create('App.classes.GridPanel', {
-			region   : 'center',
-			store    : me.store,
-			columns  : [
+			region : 'center',
+			store  : me.store,
+			columns: [
 				{ header: 'id', sortable: false, dataIndex: 'id', hidden: true},
 				{ width: 80, header: 'Code Type', sortable: true, dataIndex: 'code_type', renderer: code_type },
 				{ width: 80, header: 'Code', sortable: true, dataIndex: 'code' },
@@ -106,6 +106,160 @@ Ext.define('App.view.administration.Services', {
 				{ flex: 1, header: 'Description', sortable: true, dataIndex: 'code_text' },
 				{ width: 100, header: 'Standard', sortable: true, dataIndex: 'none' }
 			],
+			plugins: Ext.create('App.classes.grid.RowFormEditing', {
+				autoCancel  : false,
+				errorSummary: false,
+				clicksToEdit: 1,
+				formItems   : [
+					{ layout         : 'column',
+						region       : 'center',
+						defaults     : { border: false, columnWidth: .5, defaultType: 'textfield', layout: 'anchor'},
+						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor: '80%' },
+						items        : [
+							{
+								xtype: 'container',
+								items: [
+									{
+										fieldLabel     : 'Immunization Name',
+										name           : 'immunization_name',
+										itemId         : 'immuName',
+										action         : 'immuName',
+										enableKeyEvents: true,
+										listeners      : {
+											scope: me,
+											focus: me.onCodeFieldFocus
+										}
+									},
+									{
+										fieldLabel     : 'Immunization (CVX Code)',
+										name           : 'immunization_id',
+										itemId         : 'immuCode',
+										action         : 'immuCode',
+										enableKeyEvents: true,
+										listeners      : {
+											scope: me,
+											focus: me.onCodeFieldFocus
+										}
+									},
+									{
+										fieldLabel: 'Date Administered',
+										xtype     : 'datefield',
+										format    : 'Y-m-d H:i:s',
+										name      : 'administered_date'
+									},
+									{
+										fieldLabel: 'Immunization Manufacturer',
+										name      : 'manufacturer'
+
+									},
+									{
+										fieldLabel: 'Immunization Lot Number',
+										name      : 'lot_number'
+
+									}
+								]
+							},
+							{
+								xtype: 'container',
+								items: [
+									{
+										fieldLabel: 'Ocurrence',
+										xtype     : 'mitos.occurrencecombo',
+										name      : 'ocurrence'
+
+									},
+									{
+										fieldLabel: 'Name and Title of Immunization Administrator',
+										name      : 'administered_by'
+
+									},
+									{
+										fieldLabel: 'Date Immunization Information Statements Given',
+										xtype     : 'datefield',
+										format    : 'Y-m-d H:i:s',
+										name      : 'education_date'
+									},
+									{
+										fieldLabel: 'Date of VIS Statement (?)',
+										xtype     : 'datefield',
+										format    : 'Y-m-d H:i:s',
+										name      : 'vis_date'
+									},
+									{
+										fieldLabel: 'Notes',
+										xtype     : 'textarea',
+										height    : 70,
+										name      : 'note'
+
+									}
+								]
+							}
+						]
+
+					},
+					{ xtype   : 'container',
+						layout: 'column',
+						items : [
+
+							{
+								xtype    : 'fieldcontainer',
+								defaults : { labelWidth: 70 },
+								msgTarget: 'under',
+								items    : [
+									{ width: 200, fieldLabel: 'Type', xtype: 'mitos.codestypescombo', name: 'code_type' },
+									{ width: 155, fieldLabel: 'Code', xtype: 'textfield', name: 'code', labelWidth: 40 },
+									{ width: 200, fieldLabel: 'Modifier', xtype: 'textfield', name: 'mod' },
+									{ width: 280, fieldLabel: 'Active?', xtype: 'mitos.checkbox', name: 'active' }
+								]
+							},
+							{
+								xtype    : 'fieldcontainer',
+								defaults : { labelWidth: 70 },
+								msgTarget: 'under',
+								items    : [
+									{ width: 380, fieldLabel: 'Description', xtype: 'textfield', name: 'code_text' },
+									{ width: 200, fieldLabel: 'Category', xtype: 'mitos.titlescombo', name: 'title' },
+									// placeholder
+									{ width: 200, fieldLabel: 'Reportable?', xtype: 'mitos.checkbox', name: 'reportable' }
+								]
+							}
+
+
+						]
+
+					},
+					{ xtype   : 'container',
+						layout: 'column',
+						items : [
+							{
+								xtype    : 'fieldcontainer',
+								defaults : { labelWidth: 70 },
+								msgTarget: 'under',
+								items    : [
+									{ width: 200, fieldLabel: 'Type', xtype: 'mitos.codestypescombo', name: 'code_type' },
+									{ width: 155, fieldLabel: 'Code', xtype: 'textfield', name: 'code', labelWidth: 40 },
+									{ width: 200, fieldLabel: 'Modifier', xtype: 'textfield', name: 'mod' },
+									{ width: 280, fieldLabel: 'Active?', xtype: 'mitos.checkbox', name: 'active' }
+								]
+							},
+							{
+								xtype    : 'fieldcontainer',
+								defaults : { labelWidth: 70 },
+								msgTarget: 'under',
+								items    : [
+									{ width: 380, fieldLabel: 'Description', xtype: 'textfield', name: 'code_text' },
+									{ width: 200, fieldLabel: 'Category', xtype: 'mitos.titlescombo', name: 'title' },
+									// placeholder
+									{ width: 200, fieldLabel: 'Reportable?', xtype: 'mitos.checkbox', name: 'reportable' }
+								]
+							}
+						]
+
+					}
+				]
+			}),
+
+
 			listeners: {
 				scope    : me,
 				itemclick: function(view, record) {
@@ -249,6 +403,7 @@ Ext.define('App.view.administration.Services', {
 				}
 			]
 		});
+
 
 		me.pageBody = [ me.servicesFormPanel, me.servicesGrid ];
 		me.callParent(arguments);
