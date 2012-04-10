@@ -27,52 +27,11 @@ Ext.define('App.view.administration.Services', {
 
 		me.active = 1;
 		me.query = '';
-		me.code_type = 'all'
+        me.code_type = '2';
 
-		Ext.define('ServiceModel', {
-			extend: 'Ext.data.Model',
-			fields: [
-				{name: 'id', type: 'int'},
-				{name: 'code_text', type: 'string'},
-				{name: 'code_text_short', type: 'string'},
-				{name: 'code', type: 'string'},
-				{name: 'code_type', type: 'int'},
-				{name: 'modifier', type: 'string'},
-				{name: 'units', type: 'string'},
-				{name: 'fee', type: 'int'},
-				{name: 'superbill', type: 'string'},
-				{name: 'related_code', type: 'string'},
-				{name: 'taxrates', type: 'string'},
-				{name: 'cyp_factor', type: 'string'},
-				{name: 'active', type: 'string'},
-				{name: 'reportable', type: 'string'}
-			]
+		me.store = Ext.create('App.store.administration.Services');
 
-		});
 
-		me.store = Ext.create('Ext.data.Store', {
-			model: 'ServiceModel',
-			proxy: {
-				type       : 'direct',
-				api        : {
-					read  : Services.getServices,
-					create: Services.addService,
-					update: Services.updateService
-				},
-				reader     : {
-					totalProperty: 'totals',
-					root         : 'rows'
-				},
-				extraParams: {
-					code_type: me.code_type,
-					query    : me.query,
-					active   : me.active
-				}
-			},
-
-			remoteSort: true,
-			autoLoad  : false
-		});
 		function code_type(val) {
 			if(val == '1') {
 				return 'CPT4';
@@ -80,6 +39,8 @@ Ext.define('App.view.administration.Services', {
 				return 'ICD9';
 			} else if(val == '3') {
 				return 'HCPCS';
+			} else if(val == '100') {
+				return 'CVX';
 			}
 			return val;
 		}
@@ -121,31 +82,18 @@ Ext.define('App.view.administration.Services', {
 								items: [
 									{
 										fieldLabel     : 'Immunization Name',
-										name           : 'immunization_name',
-										itemId         : 'immuName',
-										action         : 'immuName',
-										enableKeyEvents: true,
-										listeners      : {
-											scope: me,
-											focus: me.onCodeFieldFocus
-										}
+										name           : 'immunization_name'
+
 									},
 									{
-										fieldLabel     : 'Immunization (CVX Code)',
-										name           : 'immunization_id',
-										itemId         : 'immuCode',
-										action         : 'immuCode',
-										enableKeyEvents: true,
-										listeners      : {
-											scope: me,
-											focus: me.onCodeFieldFocus
-										}
+										fieldLabel     : 'Sex',
+										name           : 'sex'
+
 									},
 									{
-										fieldLabel: 'Date Administered',
-										xtype     : 'datefield',
-										format    : 'Y-m-d H:i:s',
-										name      : 'administered_date'
+										fieldLabel: '',
+										name      : ''
+
 									},
 									{
 										fieldLabel: 'Immunization Manufacturer',
@@ -499,6 +447,8 @@ Ext.define('App.view.administration.Services', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
+        this.servicesGrid.query('combobox')[0].setValue("2");
+        this.store.proxy.extraParams = {active: this.active, code_type: this.code_type, query: this.query};
 		this.store.load();
 		callback(true);
 	}
