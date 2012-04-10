@@ -26,7 +26,7 @@ Ext.define('App.view.administration.Services', {
 
 		me.active = 1;
 		me.query = '';
-        me.code_type = '2';
+		me.code_type = '2';
 
 		me.store = Ext.create('App.store.administration.Services');
 
@@ -77,90 +77,172 @@ Ext.define('App.view.administration.Services', {
 						fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor: '80%' },
 						items        : [
 							{
-								xtype: 'tabpanel',
-								items: [
+								xtype : 'tabpanel',
+								layout: 'fit',
+								items : [
+									{
+										title   : 'general',
+										xtype   : 'container',
+										defaults: { margin: '0 0 10 10'},
+										items   : [
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Immunization Name',
+												name      : 'immunization_name'
 
-									{
-										fieldLabel     : 'Immunization Name',
-										name           : 'immunization_name'
+											},
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Sex',
+												name      : 'sex'
 
-									},
-									{
-										fieldLabel     : 'Sex',
-										name           : 'sex'
+											},
+											{
+												boxLabel: 'Must be pregnant',
+												xtype   : 'checkboxfield',
+												margin  : '0 0 10 120',
+												name    : 'pregnant'
 
-									},
-									{
-										boxLabel: 'Must be pregnant',
-										xtype: 'checkboxfield',
-										name      : 'pregnant'
+											},
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Coding System',
+												name      : 'coding_system'
 
-									},
-									{
-										fieldLabel: 'Coding System',
-										name      : 'coding_system'
+											},
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Code',
+												name      : 'code'
 
-									},
-									{
-										fieldLabel: 'Code',
-										name      : 'code'
+											},
+											{
+												xtype:'container',
+												layout:'hbox',
+												items:
+													[
+														{
+															xtype     : 'numberfield',
+															fieldLabel: 'Frequency',
+															value     : 0,
+															minValue  : 0,
+															name      : 'frequency'
 
-									},
-									{
-										xtype: 'numberfield',
-										fieldLabel: 'Frequency',
-										value:0,
-										name      : 'frequency'
+														},{
+														xtype     : 'mitos.timecombo',
+														name      : 'frequency',
+														defaultValue:'Month'
 
-									},
-									{
-										xtype: 'numberfield',
-										fieldLabel: 'Times to Perform',
-										value:0,
-										name      : 'code',
-										tooltip:'Please enter a number greater than 1 or just check "Perform once"'
+													}
+													]
+											},
+											{
+												xtype     : 'numberfield',
+												fieldLabel: 'Times to Perform',
+												value     : 0,
+												minValue  : 0,
+												name      : 'times',
+												tooltip   : 'Please enter a number greater than 1 or just check "Perform once"'
 
-									},
-									{
-										boxLabel: 'perform only once',
-										xtype: 'checkboxfield',
-										name      : 'perform'
+											},
+											{
+												boxLabel: 'perform only once',
+												xtype   : 'checkboxfield',
+												margin  : '0 0 10 125',
+												name    : 'perform'
 
-									}
-								]
-							},
-							{
-								xtype: 'container',
-								items: [
-									{
-										fieldLabel: 'Ocurrence',
-										xtype     : 'mitos.occurrencecombo',
-										name      : 'ocurrence'
+											}
+										]
+									},{
+										title   : 'Active Problems',
+										xtype  : 'grid',
+										itemId : 'patientSurgeryListGrid',
+										columns: [
+											{
+												header   : 'Type',
+												width    : 100,
+												dataIndex: 'type'
+											},
+											{
+												header   : 'Diagnosis Code',
+												width    : 100,
+												dataIndex: 'diagnosis_code'
+											}
 
-									},
-									{
-										fieldLabel: 'Name and Title of Immunization Administrator',
-										name      : 'administered_by'
+										]
+									},{
+										title   : 'general',
+										xtype   : 'container',
+										defaults: { margin: '0 0 10 10'},
+										items   : [
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Immunization Name',
+												name      : 'immunization_name'
 
-									},
-									{
-										fieldLabel: 'Date Immunization Information Statements Given',
-										xtype     : 'datefield',
-										format    : 'Y-m-d H:i:s',
-										name      : 'education_date'
-									},
-									{
-										fieldLabel: 'Date of VIS Statement (?)',
-										xtype     : 'datefield',
-										format    : 'Y-m-d H:i:s',
-										name      : 'vis_date'
-									},
-									{
-										fieldLabel: 'Notes',
-										xtype     : 'textarea',
-										height    : 70,
-										name      : 'note'
+											},
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Sex',
+												name      : 'sex'
 
+											},
+											{
+												boxLabel: 'Must be pregnant',
+												xtype   : 'checkboxfield',
+												margin  : '0 0 10 120',
+												name    : 'pregnant'
+
+											},
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Coding System',
+												name      : 'coding_system'
+
+											},
+											{
+												xtype     : 'textfield',
+												fieldLabel: 'Code',
+												name      : 'code'
+
+											},
+											{
+											xtype:'container',
+											layout:'hbox',
+											items:
+												[
+													{
+														xtype     : 'numberfield',
+														fieldLabel: 'Frequency',
+														value     : 0,
+														minValue  : 0,
+														name      : 'frequency'
+
+													},{
+														xtype     : 'mitos.timecombo',
+														name      : 'frequency',
+													  defaultValue:'Month'
+
+													}
+												]
+											},
+											{
+												xtype     : 'numberfield',
+												fieldLabel: 'Times to Perform',
+												value     : 0,
+												minValue  : 0,
+												name      : 'times',
+												tooltip   : 'Please enter a number greater than 1 or just check "Perform once"'
+
+											},
+											{
+												boxLabel: 'perform only once',
+												xtype   : 'checkboxfield',
+												margin  : '0 0 10 125',
+												name    : 'perform'
+
+											}
+										]
 									}
 								]
 							}
@@ -168,6 +250,7 @@ Ext.define('App.view.administration.Services', {
 
 					},
 					{ xtype   : 'container',
+						hidden: true,
 						layout: 'column',
 						items : [
 
@@ -200,6 +283,7 @@ Ext.define('App.view.administration.Services', {
 					},
 					{ xtype   : 'container',
 						layout: 'column',
+						hidden: true,
 						items : [
 							{
 								xtype    : 'fieldcontainer',
@@ -230,7 +314,7 @@ Ext.define('App.view.administration.Services', {
 			}),
 
 
-			tbar     : Ext.create('Ext.PagingToolbar', {
+			tbar: Ext.create('Ext.PagingToolbar', {
 				store      : me.store,
 				displayInfo: true,
 				emptyMsg   : "No Office Notes to display",
@@ -263,8 +347,6 @@ Ext.define('App.view.administration.Services', {
 				}]
 			})
 		}); // END GRID
-
-
 
 
 		me.pageBody = [ me.servicesGrid ];
@@ -306,7 +388,6 @@ Ext.define('App.view.administration.Services', {
 	},
 
 
-
 	/**
 	 * This function is called from MitosAPP.js when
 	 * this panel is selected in the navigation panel.
@@ -314,8 +395,8 @@ Ext.define('App.view.administration.Services', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
-        this.servicesGrid.query('combobox')[0].setValue("2");
-        this.store.proxy.extraParams = {active: this.active, code_type: this.code_type, query: this.query};
+		this.servicesGrid.query('combobox')[0].setValue("2");
+		this.store.proxy.extraParams = {active: this.active, code_type: this.code_type, query: this.query};
 		this.store.load();
 		callback(true);
 	}
