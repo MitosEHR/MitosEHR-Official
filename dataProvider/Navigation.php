@@ -72,7 +72,7 @@ class Navigation {
             $this->ACL->hasPermission('access_layouts') ||
             $this->ACL->hasPermission('access_lists') ||
             $this->ACL->hasPermission('access_event_log')
-        ) array_push( $nav, array( 'text' => 'Administration', 'cls' => 'folder', 'expanded' => false, 'children' =>
+        ) array_push( $nav, array( 'text' => 'Administration', 'cls' => 'folder', 'expanded' => true, 'children' =>
             array(
                 array( 'text' => 'Global Settings', 'disabled'=> ($this->ACL->hasPermission('access_gloabal_settings')? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelGlobals' ),
                 array( 'text' => 'Facilities',      'disabled'=> ($this->ACL->hasPermission('access_facilities')      ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelFacilities' ),

@@ -70,11 +70,19 @@ Ext.define('App.view.administration.Services', {
 				autoCancel  : false,
 				errorSummary: false,
 				clicksToEdit: 1,
+                listeners:{
+                    scope:me,
+	                beforeedit:me.beforeServiceEdit
+                },
 				formItems   : [
 					{
-
+						/**
+						 * CVX Container
+ 						 */
 						xtype: 'tabpanel',
 						hidden:true,
+						itemId:'100',
+						action:'100',
 						items: [
 							{
 								title : 'general',
@@ -246,8 +254,14 @@ Ext.define('App.view.administration.Services', {
 
 					},
 					{
+						/**
+						 * CPT Container
+ 						 */
 						xtype   : 'container',
 						layout: 'column',
+						itemId:'1',
+						action:'1',
+						hidden:true,
 						items : [
 
 							{
@@ -322,8 +336,95 @@ Ext.define('App.view.administration.Services', {
 
 					},
 					{
+						/**
+						 * ICD9 Container
+ 						 */
 						xtype   : 'container',
 						layout: 'column',
+						itemId:'2',
+						action:'2',
+						hidden:true,
+						items : [
+
+							{
+								xtype    : 'fieldcontainer',
+								msgTarget: 'under',
+								items    : [
+									{
+
+										fieldLabel: 'Type',
+										xtype: 'mitos.codestypescombo',
+										name: 'code_type'
+									},
+									{
+
+										fieldLabel: 'Code',
+										xtype: 'textfield',
+										name: 'code'
+									},
+									{
+
+										fieldLabel: 'Modifier',
+										xtype: 'textfield',
+										name: 'mod'
+									}
+
+								]
+							},
+							{
+								xtype    : 'fieldcontainer',
+								margin:'0 0 0 10',
+								items    : [
+									{
+
+										fieldLabel: 'Description',
+										xtype: 'textfield',
+										name: 'code_text'
+									},
+									{
+										fieldLabel: 'Category',
+										xtype: 'mitos.titlescombo',
+										name: 'title'
+									}
+								]
+							},
+							{
+								xtype    : 'fieldcontainer',
+								margin:'0 0 0 20',
+								items    : [
+
+									{
+
+										boxLabel: 'Reportable?',
+										xtype: 'checkboxfield',
+										name: 'reportable'
+
+									}
+									,
+									{
+
+										boxLabel: 'Active?',
+										labelWidth: 75,
+										xtype: 'checkboxfield',
+										name: 'active'
+
+
+									}
+								]
+							}
+
+
+						]
+
+					},
+					{
+						/**
+						 * HCPSC Container
+ 						 */
+						xtype   : 'container',
+						layout: 'column',
+						itemId:'3',
+						action:'3',
 						hidden:true,
 						items : [
 
@@ -441,6 +542,51 @@ Ext.define('App.view.administration.Services', {
 		me.pageBody = [ me.servicesGrid ];
 		me.callParent(arguments);
 	}, // end of initComponent
+
+    beforeServiceEdit:function(context, e){
+
+
+		var editor = context.editor,
+//			cptForm = editor.getComponent('1'),
+//			icdForm = editor.getComponent('2'),
+//			hcpcsForm = editor.getComponent('3'),
+//			cvxForm = editor.getComponent('100'),
+			code_type = e.record.data.code_type;
+
+	    /**
+	     * TODO: disable/enable the fields
+	     */
+
+	    if(!this.currForm){
+			this.currForm = editor.query('[action="'+code_type+'"]')[0];
+		    this.currForm.show();
+	    }else{
+		    this.currForm.hide();
+		    this.currForm = editor.query('[action="'+code_type+'"]')[0];
+		    this.currForm.show();
+	    }
+
+//	    if(this.code_type != code_type){
+//
+//		    say(editor);
+//            say(cptForm);
+//            say(icdForm);
+//            say(hcpcsForm);
+//            say(cvxForm);
+//
+//
+//		    if(code_type == 1){
+//                say('CPT');
+//            }else if(code_type == 2){
+//                say('ICD9');
+//            }else if(code_type == 100){
+//                say('CVX');
+//            }else{
+//                say('HCPCS');
+//            }
+//	    }
+
+    },
 
 	onSearch: function(field) {
 

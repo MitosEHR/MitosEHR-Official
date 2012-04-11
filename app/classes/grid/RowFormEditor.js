@@ -418,7 +418,6 @@ Ext.define('App.classes.grid.RowFormEditor', {
         // make sure our row is selected before editing
         context.grid.getSelectionModel().select(record);
 
-        say(record);
         // Reload the record data
         me.loadRecord(record);
 

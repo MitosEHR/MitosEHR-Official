@@ -54,7 +54,12 @@ class Services {
         $records = $this->db->fetchRecords(PDO::FETCH_CLASS);
         $records = $this->db->filterByQuery($records, 'active', $params->active);
         $total   = count($records);
-        $records = $this->db->filterByStartLimit($records,$params);
+        $recs = $this->db->filterByStartLimit($records,$params);
+	    $records = array();
+	    foreach($recs as $rec){
+		    $rec->code_type = $params->code_type;
+			$records[] = $rec;
+	    }
         return array('totals'=>$total,'rows'=>$records);
     }
 
