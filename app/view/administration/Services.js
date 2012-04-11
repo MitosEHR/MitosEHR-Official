@@ -81,7 +81,6 @@ Ext.define('App.view.administration.Services', {
  						 */
 						xtype: 'tabpanel',
 						hidden:true,
-						itemId:'100',
 						action:'100',
 						items: [
 							{
@@ -259,7 +258,6 @@ Ext.define('App.view.administration.Services', {
  						 */
 						xtype   : 'container',
 						layout: 'column',
-						itemId:'1',
 						action:'1',
 						hidden:true,
 						items : [
@@ -341,7 +339,6 @@ Ext.define('App.view.administration.Services', {
  						 */
 						xtype   : 'container',
 						layout: 'column',
-						itemId:'2',
 						action:'2',
 						hidden:true,
 						items : [
@@ -423,7 +420,6 @@ Ext.define('App.view.administration.Services', {
  						 */
 						xtype   : 'container',
 						layout: 'column',
-						itemId:'3',
 						action:'3',
 						hidden:true,
 						items : [
@@ -551,19 +547,35 @@ Ext.define('App.view.administration.Services', {
 //			icdForm = editor.getComponent('2'),
 //			hcpcsForm = editor.getComponent('3'),
 //			cvxForm = editor.getComponent('100'),
-			code_type = e.record.data.code_type;
+			code_type = e.record.data.code_type,
+			nextForm = editor.query('[action="'+code_type+'"]')[0];
 
 	    /**
 	     * TODO: disable/enable the fields
 	     */
-
 	    if(!this.currForm){
-			this.currForm = editor.query('[action="'+code_type+'"]')[0];
-		    this.currForm.show();
-	    }else{
+
+		    Ext.each(nextForm.query(), function(field){
+			    field.enable();
+		    });
+
+		    nextForm.show();
+			this.currForm = nextForm;
+
+	    }else if(this.currForm !== nextForm){
+
+		    Ext.each(this.currForm.query(), function(field){
+                field.disable();
+            });
+
+		    Ext.each(nextForm.query(), function(field){
+                field.enable();
+            });
+
 		    this.currForm.hide();
-		    this.currForm = editor.query('[action="'+code_type+'"]')[0];
-		    this.currForm.show();
+		    nextForm.show();
+		    this.currForm = nextForm;
+
 	    }
 
 //	    if(this.code_type != code_type){
