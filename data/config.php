@@ -341,6 +341,15 @@ $API = array(
             ),
             'deleteCptCode'=>array(
                'len'=>1
+            ),
+            'getActiveProblems'=>array(
+               'len'=>1
+            ),
+            'addActiveProblems'=>array(
+               'len'=>1
+            ),
+            'removeActiveProblems'=>array(
+               'len'=>1
             )
         )
     ),    /**

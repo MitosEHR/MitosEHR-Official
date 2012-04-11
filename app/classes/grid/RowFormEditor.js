@@ -126,7 +126,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
         ]);
 
         me.keyNav = new Ext.util.KeyNav(me.el, {
-            enter: plugin.completeEdit,
+            //enter: plugin.completeEdit,
             esc: plugin.onEscKey,
             scope: plugin
         });

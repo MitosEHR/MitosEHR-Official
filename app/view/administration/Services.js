@@ -30,6 +30,7 @@ Ext.define('App.view.administration.Services', {
 
 		me.store = Ext.create('App.store.administration.Services');
 
+		me.activeProblemsStore = Ext.create('App.store.administration.ActiveProblems');
 
 		function code_type(val) {
 			if(val == '1') {
@@ -82,72 +83,107 @@ Ext.define('App.view.administration.Services', {
 						xtype: 'tabpanel',
 						hidden:true,
 						action:'100',
+						layout:'fit',
+						plain:true,
+						defaults:{ },
 						items: [
 							{
 								title : 'general',
 								xtype : 'container',
-								layout:'column',
-
+								padding:10,
+								layout:'vbox',
 								items : [
 									{
+										/**
+										 * line One
+										 */
 										xtype   : 'fieldcontainer',
-										defaults: { margin: '5 0 5 10'},
+										layout:'hbox',
+										defaults:{ margin:'0 10 5 0', disable:true },
 										items   : [
 											{
 
 												xtype     : 'textfield',
 												fieldLabel: 'Immunization Name',
-												name      : 'immunization_name'
-
-											},
-
-											{
-												xtype     : 'textfield',
-												fieldLabel: 'Coding System',
-												name      : 'coding_system'
-
+												name      : 'code_text',
+												labelWidth:130,
+												width:640
 											},
 											{
-												xtype     : 'textfield',
-												fieldLabel: 'Code',
-												name      : 'code'
+												xtype     : 'mitos.sexcombo',
+												fieldLabel: 'Sex',
+												name      : 'sex',
+												width     : 100,
+												labelWidth: 30
 
 											}
 
 
 										]
+									},
+									{
+										/**
+										 * Line two
+										 */
+										xtype   : 'fieldcontainer',
+										layout:'hbox',
+										defaults:{ margin:'0 10 5 0', disable:true },
+										items   : [
+											{
+												xtype     : 'mitos.codestypescombo',
+												fieldLabel: 'Coding System',
+												labelWidth:130,
+												value     : 'CVX',
+												name      : 'code_type',
+												readOnly:true
+
+											},
+											{
+												xtype     : 'numberfield',
+												fieldLabel: 'Frequency',
+												margin:'0 0 5 0',
+												value     : 0,
+												minValue  : 0,
+												width:150,
+												name      : 'frequency'
+
+											},
+											{
+												xtype: 'mitos.timecombo',
+												name : 'frequency',
+												width:100
+
+											},
+											{
+												fieldLabel: 'Must be pregnant',
+												xtype   : 'checkboxfield',
+												labelWidth:105,
+												name    : 'pregnant'
+
+											}
+
+										]
 
 									},
 									{
+										/**
+										 * Line three
+										 */
 										xtype   : 'fieldcontainer',
-										defaults: { margin: '5 0 5 20'},
-										width   : 450,
+										layout:'hbox',
+										defaults:{ margin:'0 10 5 0', disable:true },
 										items   : [
 											{
-												xtype : 'container',
-												layout: 'hbox',
-												items : [
-													{
-														xtype     : 'numberfield',
-														fieldLabel: 'Frequency',
+												xtype     : 'textfield',
+												fieldLabel: 'Code',
+												name      : 'code',
+												labelWidth:130
 
-														value     : 0,
-														minValue  : 0,
-														name      : 'frequency'
-
-													},
-													{
-														xtype: 'mitos.timecombo',
-														name : 'frequency'
-
-
-													}
-												]
 											},
 											{
 												xtype     : 'numberfield',
 												fieldLabel: 'Times to Perform',
-
+												width     : 250,
 												value     : 0,
 												minValue  : 0,
 												name      : 'times',
@@ -155,57 +191,51 @@ Ext.define('App.view.administration.Services', {
 
 											},
 											{
-												boxLabel: 'perform only once',
+												fieldLabel: 'perform only once',
 												xtype   : 'checkboxfield',
-												margin  : '5 0 0 115',
+												labelWidth:105,
+												//margin  : '5 0 0 10',
 												name    : 'perform'
 
 											}
-										]
-									},
-									{
-										xtype   : 'fieldcontainer',
-										defaults: { margin: '0 0 10 10'},
-										items   : [
-											{
-												xtype     : 'textfield',
-												fieldLabel: 'Sex',
-												name      : 'sex',
-												labelWidth: 25
 
-											},
-											{
-												boxLabel: 'Must be pregnant',
-												xtype   : 'checkboxfield',
-												margin  : '0 0 0 45',
-												name    : 'pregnant'
-
-											}
 
 
 										]
+
 									}
-
 
 								]
 							},
 							{
 								title  : 'Active Problems',
 								xtype  : 'grid',
-								width  : 300,
+								margin:5,
+								store: me.activeProblemsStore,
 								columns: [
 									{
 										header   : 'Code',
-										flex     : 1,
+										width     : 100,
 										dataIndex: 'code'
 									},
 									{
-										header   : 'Name',
+										header   : 'Description',
 										flex     : 1,
-										dataIndex: 'name'
+										dataIndex: 'code_text'
 									}
 
-								]
+								],
+								bbar:{
+									xtype:'liveicdxsearch',
+									margin:5,
+									fieldLabel:'Add Problem',
+									hideLabel:false,
+									disable:true,
+									listeners:{
+										scope:me,
+										select:me.addActiveProblem
+									}
+								}
 							},
 							{
 								title  : 'Medications',
@@ -250,7 +280,6 @@ Ext.define('App.view.administration.Services', {
 
 						]
 
-
 					},
 					{
 						/**
@@ -265,6 +294,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
+								defaults:{ disable:true },
 								items    : [
 									{
 
@@ -290,6 +320,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
+								defaults:{ disable:true },
 								items    : [
 									{
 
@@ -307,6 +338,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
+								defaults:{ disable:true },
 								items    : [
 
 									{
@@ -346,6 +378,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
+								defaults:{ disable:true },
 								items    : [
 									{
 
@@ -371,6 +404,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
+								defaults:{ disable:true },
 								items    : [
 									{
 
@@ -388,6 +422,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
+								defaults:{ disable:true },
 								items    : [
 
 									{
@@ -427,6 +462,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
+								defaults:{ disable:true },
 								items    : [
 									{
 
@@ -452,6 +488,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
+								defaults:{ disable:true },
 								items    : [
 									{
 
@@ -469,6 +506,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
+								defaults:{ disable:true },
 								items    : [
 
 									{
@@ -565,7 +603,8 @@ Ext.define('App.view.administration.Services', {
 	    }else if(this.currForm !== nextForm){
 
 		    Ext.each(this.currForm.query(), function(field){
-                field.disable();
+			    say(field)
+				    //field.disable();
             });
 
 		    Ext.each(nextForm.query(), function(field){
@@ -632,6 +671,13 @@ Ext.define('App.view.administration.Services', {
 //		form.getForm().reset();
 //		var newModel = Ext.ModelManager.create({}, model);
 //		form.getForm().loadRecord(newModel);
+	},
+
+	addActiveProblem:function(field, model){
+
+		say(field);
+		this.activeProblemsStore.add(model[0]);
+
 	},
 
 

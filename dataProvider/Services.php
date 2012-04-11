@@ -342,6 +342,22 @@ class Services {
         return array('totals'=>count($records),'rows'=>$records);
     }
 
+
+	public function getActiveProblems(stdClass $params){
+
+		return $params;
+	}
+
+	public function addActiveProblems(stdClass $params){
+
+		return $params;
+	}
+
+	public function removeActiveProblems(stdClass $params){
+
+		return $params;
+	}
+
 }
 
 //$params = new stdClass();
