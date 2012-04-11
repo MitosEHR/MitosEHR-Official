@@ -44,7 +44,6 @@ Ext.define('App.view.patientfile.VisitPayment', {
                     items:[
                         {
                             xtype:'fieldset',
-                            style: 'background-color:#DFE8F6',
                             margin:5,
                             flex:2,
                             defaults: { labelWidth:110 },
@@ -62,14 +61,16 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                         {
                                             fieldLabel: 'Date',
                                             xtype     : 'datefield',
-                                            margin:'0 257 0 0',
-                                            width:263,
-                                            labelWidth: 108
+                                            margin:'0 245 0 0',
+                                            labelWidth: 108,
+                                            anchor:'35%'
+
                                         },
                                         {
                                             fieldLabel: 'No',
                                             xtype     : 'textfield',
-                                            labelWidth: 60
+                                            labelWidth: 60,
+                                            anchor:'35%'
                                         }
                                     ],
                                     bbar:[
@@ -96,7 +97,8 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                         {
                                             xtype: 'mitos.currency',
                                             fieldLabel: 'Amount',
-                                            labelWidth: 60
+                                            labelWidth: 60,
+                                            anchor:'37.9%'
                                         }
 
                                     ]
@@ -113,7 +115,8 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                             store:paymentDescription,
                                             queryMode: 'local',
                                             displayField: 'name',
-                                            width:491
+                                            anchor:'100%'
+                                            //width:491
                                         },
 
                                         {
@@ -133,23 +136,27 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                     xtype:'textfield',
                                     fieldLabel:'Next Appointment',
                                     labelWidth:108,
+                                    anchor:'37.9%',
                                     margin:'50 0 0 0'
                                 },
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'Accounted Amount',
                                     labelWidth:108,
+                                    anchor:'37.9%',
                                     margin:'20 0 5 0'
                                 },
                                 {
                                     xtype:'textfield',
                                     fieldLabel:'Payment Amount',
-                                    labelWidth:108
+                                    labelWidth:108,
+                                    anchor:'37.9%'
                                 },
                                 {
                                     xtype:'textfield',
                                     fieldLabel:'Balance Due',
-                                    labelWidth:108
+                                    labelWidth:108,
+                                    anchor:'37.9%'
                                 }
                             ]
                         },
