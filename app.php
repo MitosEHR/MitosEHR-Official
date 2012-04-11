@@ -154,6 +154,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/posCodes.js"></script>
         <script type="text/javascript" src="app/classes/combo/Roles.js"></script>
         <script type="text/javascript" src="app/classes/combo/AllergyTypes.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Sex.js"></script>
         <script type="text/javascript" src="app/classes/combo/MedicalIssues.js"></script>
         <script type="text/javascript" src="app/classes/combo/TaxId.js"></script>
         <script type="text/javascript" src="app/classes/combo/Titles.js"></script>
