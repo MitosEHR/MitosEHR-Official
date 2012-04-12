@@ -194,6 +194,9 @@ $API = array(
             ),
             'updatePatientMedications'=>array(
                'len'=>1
+            ),
+            'getMedicationLiveSearch'=>array(
+               'len'=>1
             )
         ),
 
@@ -340,6 +343,15 @@ $API = array(
                'len'=>1
             ),
             'deleteCptCode'=>array(
+               'len'=>1
+            ),
+            'getActiveProblems'=>array(
+               'len'=>1
+            ),
+            'addActiveProblems'=>array(
+               'len'=>1
+            ),
+            'removeActiveProblems'=>array(
                'len'=>1
             )
         )

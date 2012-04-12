@@ -330,8 +330,7 @@ Ext.define('App.view.fees.Billing', {
 
             me.getEncounterIcds();
 
-            me.cptPanel.pid = me.pid;
-            me.cptPanel.encounterCptStoreLoad(me.eid, function () {
+            me.cptPanel.encounterCptStoreLoad(me.pid, me.eid, function() {
                 me.cptPanel.setDefaultQRCptCodes();
             });
 

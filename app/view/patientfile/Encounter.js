@@ -819,7 +819,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
                 me.soapPanel.query('icdsfieldset')[0].loadIcds(record[0].soap().getAt(0).data.icdxCodes);
 
-                me.CurrentProceduralTerminology.encounterCptStoreLoad(null, function(){
+                me.CurrentProceduralTerminology.encounterCptStoreLoad(record[0].data.pid, eid, function(){
                     me.CurrentProceduralTerminology.setDefaultQRCptCodes();
                 });
             }

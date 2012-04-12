@@ -107,6 +107,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/fees/Billing.js"></script>
         <script type="text/javascript" src="app/model/fees/EncountersPayments.js"></script>
         <script type="text/javascript" src="app/model/administration/Services.js"></script>
+        <script type="text/javascript" src="app/model/administration/ActiveProblems.js"></script>
 
 
 
@@ -128,6 +129,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/fees/Billing.js"></script>
         <script type="text/javascript" src="app/store/fees/EncountersPayments.js"></script>
         <script type="text/javascript" src="app/store/administration/Services.js"></script>
+        <script type="text/javascript" src="app/store/administration/ActiveProblems.js"></script>
 
 
         <!-- Classes -->
@@ -138,6 +140,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/LiveICDXSearch.js"></script>
         <script type="text/javascript" src="app/classes/LiveCPTSearch.js"></script>
         <script type="text/javascript" src="app/classes/LivePatientSearch.js"></script>
+        <script type="text/javascript" src="app/classes/LiveMedicationSearch.js"></script>
         <script type="text/javascript" src="app/classes/ManagedIframe.js"></script>
         <script type="text/javascript" src="app/classes/PhotoIdWindow.js"></script>
         <script type="text/javascript" src="app/classes/CalCategoryComboBox.js"></script>
