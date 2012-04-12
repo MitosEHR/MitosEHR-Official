@@ -85,7 +85,6 @@ Ext.define('App.view.administration.Services', {
 						action:'100',
 						layout:'fit',
 						plain:true,
-						defaults:{ },
 						items: [
 							{
 								title : 'general',
@@ -99,7 +98,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true, action:'field_100' },
+										defaults:{ margin:'0 10 5 0', disabled:true, action:'field' },
 										items   : [
 											{
 
@@ -127,7 +126,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true , action:'field_100'  },
+										defaults:{ margin:'0 10 5 0', disabled:true , action:'field'  },
 										items   : [
 											{
 												xtype     : 'mitos.codestypescombo',
@@ -171,7 +170,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true , action:'field_100'  },
+										defaults:{ margin:'0 10 5 0', disabled:true , action:'field'  },
 										items   : [
 											{
 												xtype     : 'textfield',
@@ -294,7 +293,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true, action:'field_1'  },
+								defaults:{ disabled:true, action:'field'  },
 								items    : [
 									{
 
@@ -320,7 +319,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true, action:'field_1' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 									{
 
@@ -338,7 +337,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true, action:'field_1' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 
 									{
@@ -378,7 +377,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true, action:'field_2' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 									{
 
@@ -404,7 +403,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true, action:'field_2'  },
+								defaults:{ disabled:true, action:'field'  },
 								items    : [
 									{
 
@@ -422,7 +421,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true, action:'field_2'  },
+								defaults:{ disabled:true, action:'field'  },
 								items    : [
 
 									{
@@ -462,7 +461,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true, action:'field_3'  },
+								defaults:{ disabled:true, action:'field'  },
 								items    : [
 									{
 
@@ -488,7 +487,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true, action:'field_3' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 									{
 
@@ -506,7 +505,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true, action:'field_3' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 
 									{
@@ -602,18 +601,21 @@ Ext.define('App.view.administration.Services', {
 
 	    }else if(this.currForm !== nextForm){
 
-		    say(this.currForm.query(''));
-		    Ext.each(this.currForm.query(''), function(field){
-
+		    //say(this.currForm.query('[action="field"]'));
+		    Ext.each(this.currForm.query('[action="field"]'), function(field){
+					say(field);
 				   field.disable();
             });
-
-		    Ext.each(nextForm.query('[action="field_'+code_type+'"]'), function(field){
+			say('break');
+		    //say(nextForm.query('[action="field"]'));
+		    Ext.each(nextForm.query('[action="field"]'), function(field){
+			    say(field);
                 field.enable();
             });
 
 		    this.currForm.hide();
 		    nextForm.show();
+		    //
 		    this.currForm = nextForm;
 
 	    }
