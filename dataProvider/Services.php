@@ -279,6 +279,12 @@ class Services {
     }
 
     public function deleteCptCode(stdClass $params){
+		$this->db->setSQL("SELECT status FROM encounter_codes_cpt WHERE id = '$params->id'");
+		$cpt = $this->db->fetchRecord();
+	    if($cpt['status'] == 0){
+		    $this->db->setSQL("DELETE FROM encounter_codes_cpt WHERE id ='$params->id'");
+            $this->db->execLog();
+	    }
         return $params;
     }
 

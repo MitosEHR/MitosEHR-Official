@@ -109,7 +109,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                     fieldLabel:'Diagnosis',
                     hideLabel:false,
                     name:'diagnosis'
-
                 }
             ],
             listeners:{
@@ -333,7 +332,9 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
     onLiveCptSelect:function (btn, record) {
         var me = this;
         btn.reset();
-        me.encounterCptStore.add(record[0]);
+	    delete record[0].data.id;
+	    record[0].data.eid = me.eid;
+        me.encounterCptStore.add(record[0].data);
 
     },
 
@@ -352,7 +353,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         app.msg('Sweet!', 'CPT added to this Encounter');
 
         Ext.Function.defer(function(){
-            me.encounterCptStoreLoad(null);
+            me.encounterCptStoreLoad();
         }, 500);
     },
 
@@ -369,12 +370,10 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         }
     },
 
-    encounterCptStoreLoad:function(eid, callback){
-        if(app.getCurrPatient()){
-            this.pid = app.getCurrPatient().pid;
-        }
-        this.eid = eid ? eid : app.currEncounterId;
-        this.encounterCptStore.proxy.extraParams = {eid:eid ? eid : app.currEncounterId, filter:null};
+    encounterCptStoreLoad:function(pid, eid, callback){
+        this.pid = pid ? pid : this.pid;
+        this.eid = eid ? eid : this.eid;
+        this.encounterCptStore.proxy.extraParams = {eid:this.eid, filter:null};
         this.encounterCptStore.load({
             callback:function(){
                 callback ? callback() : null;
