@@ -99,7 +99,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true },
+										defaults:{ margin:'0 10 5 0', disable:true, action:'field_100' },
 										items   : [
 											{
 
@@ -127,7 +127,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true },
+										defaults:{ margin:'0 10 5 0', disable:true , action:'field_100'  },
 										items   : [
 											{
 												xtype     : 'mitos.codestypescombo',
@@ -171,7 +171,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true },
+										defaults:{ margin:'0 10 5 0', disable:true , action:'field_100'  },
 										items   : [
 											{
 												xtype     : 'textfield',
@@ -294,7 +294,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_1'  },
 								items    : [
 									{
 
@@ -320,7 +320,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_1' },
 								items    : [
 									{
 
@@ -338,7 +338,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_1' },
 								items    : [
 
 									{
@@ -378,7 +378,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_2' },
 								items    : [
 									{
 
@@ -404,7 +404,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_2'  },
 								items    : [
 									{
 
@@ -422,7 +422,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_2'  },
 								items    : [
 
 									{
@@ -462,7 +462,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_3'  },
 								items    : [
 									{
 
@@ -488,7 +488,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_3' },
 								items    : [
 									{
 
@@ -506,7 +506,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true },
+								defaults:{ disable:true, action:'field_3' },
 								items    : [
 
 									{
@@ -602,12 +602,13 @@ Ext.define('App.view.administration.Services', {
 
 	    }else if(this.currForm !== nextForm){
 
-		    Ext.each(this.currForm.query(), function(field){
-			    say(field)
-				    //field.disable();
+		    say(this.currForm.query(''));
+		    Ext.each(this.currForm.query(''), function(field){
+
+				   field.disable();
             });
 
-		    Ext.each(nextForm.query(), function(field){
+		    Ext.each(nextForm.query('[action="field_'+code_type+'"]'), function(field){
                 field.enable();
             });
 
