@@ -246,7 +246,18 @@ Ext.define('App.view.administration.Services', {
 										flex     : 1,
 										dataIndex: 'name'
 									}
-								]
+								],
+								bbar:{
+									xtype:'medicationlivetsearch',
+									margin:5,
+									fieldLabel:'Add Problem',
+									hideLabel:false,
+									disable:true,
+									listeners:{
+										scope:me,
+										select:me.addMedicataion
+									}
+								}
 							},
 							{
 								title  : 'Labs',
@@ -580,10 +591,6 @@ Ext.define('App.view.administration.Services', {
 
 
 		var editor = context.editor,
-//			cptForm = editor.getComponent('1'),
-//			icdForm = editor.getComponent('2'),
-//			hcpcsForm = editor.getComponent('3'),
-//			cvxForm = editor.getComponent('100'),
 			code_type = e.record.data.code_type,
 			nextForm = editor.query('[action="'+code_type+'"]')[0];
 
@@ -601,13 +608,10 @@ Ext.define('App.view.administration.Services', {
 
 	    }else if(this.currForm !== nextForm){
 
-		    //say(this.currForm.query('[action="field"]'));
 		    Ext.each(this.currForm.query('[action="field"]'), function(field){
 					say(field);
 				   field.disable();
             });
-			say('break');
-		    //say(nextForm.query('[action="field"]'));
 		    Ext.each(nextForm.query('[action="field"]'), function(field){
 			    say(field);
                 field.enable();
@@ -615,30 +619,9 @@ Ext.define('App.view.administration.Services', {
 
 		    this.currForm.hide();
 		    nextForm.show();
-		    //
 		    this.currForm = nextForm;
 
 	    }
-
-//	    if(this.code_type != code_type){
-//
-//		    say(editor);
-//            say(cptForm);
-//            say(icdForm);
-//            say(hcpcsForm);
-//            say(cvxForm);
-//
-//
-//		    if(code_type == 1){
-//                say('CPT');
-//            }else if(code_type == 2){
-//                say('ICD9');
-//            }else if(code_type == 100){
-//                say('CVX');
-//            }else{
-//                say('HCPCS');
-//            }
-//	    }
 
     },
 
@@ -677,6 +660,12 @@ Ext.define('App.view.administration.Services', {
 	},
 
 	addActiveProblem:function(field, model){
+
+		say(field);
+		this.activeProblemsStore.add(model[0]);
+
+	},
+	addMedicataion:function(field, model){
 
 		say(field);
 		this.activeProblemsStore.add(model[0]);

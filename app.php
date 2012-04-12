@@ -140,6 +140,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/LiveICDXSearch.js"></script>
         <script type="text/javascript" src="app/classes/LiveCPTSearch.js"></script>
         <script type="text/javascript" src="app/classes/LivePatientSearch.js"></script>
+        <script type="text/javascript" src="app/classes/LiveMedicationSearch.js"></script>
         <script type="text/javascript" src="app/classes/ManagedIframe.js"></script>
         <script type="text/javascript" src="app/classes/PhotoIdWindow.js"></script>
         <script type="text/javascript" src="app/classes/CalCategoryComboBox.js"></script>

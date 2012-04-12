@@ -194,6 +194,9 @@ $API = array(
             ),
             'updatePatientMedications'=>array(
                'len'=>1
+            ),
+            'getMedicationLiveSearch'=>array(
+               'len'=>1
             )
         ),
 
