@@ -75,7 +75,7 @@ Ext.define('App.view.MitosApp', {
 
 	],
 
-    minWidthToFullMode: 1600,
+    minWidthToFullMode: 1680,
 
 	initComponent: function() {
 
