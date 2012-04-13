@@ -31,6 +31,7 @@ Ext.define('App.view.administration.Services', {
 		me.store = Ext.create('App.store.administration.Services');
 
 		me.activeProblemsStore = Ext.create('App.store.administration.ActiveProblems');
+		me.medicationsStore = Ext.create('App.store.administration.Medications');
 
 		function code_type(val) {
 			if(val == '1') {
@@ -240,11 +241,13 @@ Ext.define('App.view.administration.Services', {
 								title  : 'Medications',
 								xtype  : 'grid',
 								width  : 300,
+								store: me.medicationsStore,
 								columns: [
+
 									{
 										header   : 'Name',
 										flex     : 1,
-										dataIndex: 'name'
+										dataIndex: 'PROPRIETARYNAME'
 									}
 								],
 								bbar:{
@@ -255,7 +258,7 @@ Ext.define('App.view.administration.Services', {
 									disable:true,
 									listeners:{
 										scope:me,
-										select:me.addMedicataion
+										select:me.addMedications
 									}
 								}
 							},
@@ -661,14 +664,14 @@ Ext.define('App.view.administration.Services', {
 
 	addActiveProblem:function(field, model){
 
-		say(field);
+
 		this.activeProblemsStore.add(model[0]);
 
 	},
-	addMedicataion:function(field, model){
+	addMedications:function(field, model){
 
-		say(field);
-		this.activeProblemsStore.add(model[0]);
+
+		this.medicationsStore.add(model[0]);
 
 	},
 
